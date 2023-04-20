@@ -1,4 +1,8 @@
-import { ExporterUpdateInput } from '.keystone/types'; // eslint-disable-line
+import { ExporterUpdateInput, ExporterCompanyUpdateInput } from '.keystone/types'; // eslint-disable-line
+
+interface SuccessResponse {
+  success: boolean;
+}
 
 interface ApplicationRelationship {
   id: string;
@@ -78,6 +82,18 @@ interface Account extends ExporterUpdateInput {
   optHash?: string;
   otpExpiry?: Date;
   sessionIdentifier?: string;
+  isVerified: boolean;
+}
+
+interface ApplicationExporterCompanyAddress extends ApplicationRelationship {
+  addressLine1?: string;
+  addressLine2?: string;
+  careOf?: string;
+  locality?: string;
+  region?: string;
+  postalCode?: string;
+  country?: string;
+  premises?: string;
 }
 
 interface Application {
@@ -94,7 +110,7 @@ interface Application {
   exporter: ApplicationExporter;
   policyAndExport: ApplicationRelationship;
   exporterCompany: ApplicationExporterCompany;
-  exporterCompanyAddress: ApplicationRelationship;
+  exporterCompanyAddress: ApplicationExporterCompanyAddress;
   exporterBusiness: ApplicationRelationship;
   exporterBroker: ApplicationRelationship;
   buyer: ApplicationBuyer;
@@ -116,6 +132,10 @@ interface CompanyResponse {
   applicationId: string;
 }
 
+interface DeleteApplicationByReferenceNumberVariables {
+  referenceNumber: number;
+}
+
 interface CompaniesHouseAddress {
   careOf: string | null;
   premises: string | null;
@@ -127,19 +147,21 @@ interface CompaniesHouseAddress {
   country: string | null;
 }
 
-interface CompanyHouseResponse {
+interface CompanyHouseResponse extends SuccessResponse {
   companyName: string;
   registeredOfficeAddress: CompaniesHouseAddress;
   companyNumber: string;
   dateOfCreation: string;
   sicCodes: Array<string>;
-  success: boolean;
   apiError: boolean;
 }
 
-interface EmailResponse {
-  success: boolean;
+interface EmailResponse extends SuccessResponse {
   emailRecipient: string;
+}
+
+interface GetCompaniesHouseInformationVariables {
+  companiesHouseNumber: string;
 }
 
 interface ConnectId {
@@ -169,16 +191,10 @@ interface VerifyEmailAddressVariables {
   token: string;
 }
 
-interface VerifyEmailAddressResponse {
-  success: boolean;
+interface VerifyEmailAddressResponse extends SuccessResponse {
   accountId?: string;
   expired?: boolean;
   emailRecipient?: string;
-}
-
-interface SendExporterEmailVariables {
-  exporterId: string;
-  referenceNumber?: string;
 }
 
 interface AccountCreationVariables {
@@ -203,12 +219,7 @@ interface InsuranceFeedbackVariables {
   otherComments?: string;
 }
 
-interface InsuranceFeedbackResponse {
-  success: boolean;
-}
-
-interface AccountSignInResponse {
-  success: boolean;
+interface AccountSignInResponse extends SuccessResponse {
   accountId?: string;
 }
 
@@ -217,8 +228,7 @@ interface VerifyAccountSignInCodeVariables {
   securityCode: string;
 }
 
-interface VerifyAccountSignInCodeResponse {
-  success: boolean;
+interface VerifyAccountSignInCodeResponse extends SuccessResponse {
   expired?: boolean;
   accountId?: string;
   firstName?: string;
@@ -236,17 +246,30 @@ interface AddOtpToAccountVariables {
   email: string;
 }
 
-interface AddAndGetOtpResponse {
-  success: boolean;
+interface AddAndGetOtpResponse extends SuccessResponse {
   securityCode?: string;
+}
+
+interface SendExporterEmailVariables {
+  exporterId: string;
+  referenceNumber?: string;
 }
 
 interface SubmitApplicationVariables {
   applicationId: string;
 }
 
-interface SubmitApplicationResponse {
-  success: boolean;
+interface UpdateExporterCompanyAndCompanyAddressVariablesData {
+  address?: ApplicationExporterCompanyAddress;
+  sicCodes?: [string];
+  oldSicCodes?: [string];
+  exporterCompany?: ExporterCompanyUpdateInput;
+}
+
+interface UpdateExporterCompanyAndCompanyAddressVariables {
+  companyId: string;
+  companyAddressId: string;
+  data: UpdateExporterCompanyAndCompanyAddressVariablesData;
 }
 
 export {
@@ -263,20 +286,23 @@ export {
   ApplicationDeclaration,
   ApplicationEligibility,
   ApplicationExporterCompany,
+  ApplicationRelationship,
   ApplicationSubmissionEmailVariables,
   BufferEncoding,
   CompanyHouseResponse,
   CompanyResponse,
   Country,
   Currency,
+  DeleteApplicationByReferenceNumberVariables,
   EmailResponse,
+  GetCompaniesHouseInformationVariables,
   NotifyPeronsalisation,
   InsuranceFeedbackVariables,
-  InsuranceFeedbackResponse,
   SicCodes,
-  SubmitApplicationVariables,
-  SubmitApplicationResponse,
   SendExporterEmailVariables,
+  SubmitApplicationVariables,
+  SuccessResponse,
+  UpdateExporterCompanyAndCompanyAddressVariables,
   VerifyEmailAddressVariables,
   VerifyEmailAddressResponse,
   VerifyAccountSignInCodeVariables,

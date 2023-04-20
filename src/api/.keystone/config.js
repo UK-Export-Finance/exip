@@ -51,172 +51,6 @@ var SHARED_ELIGIBILITY = {
   BUYER_COUNTRY: "buyerCountry",
   HAS_MINIMUM_UK_GOODS_OR_SERVICES: "hasMinimumUkGoodsOrServices",
   VALID_EXPORTER_LOCATION: "validExporterLocation"
-<<<<<<< HEAD
-=======
-};
-var shared_eligibility_default = SHARED_ELIGIBILITY;
-
-// constants/field-ids/shared/index.ts
-var SHARED = {
-  POLICY_TYPE: "policyType",
-  SINGLE_POLICY_TYPE: "singlePolicyType",
-  MULTIPLE_POLICY_TYPE: "multiplePolicyType"
-};
-var shared_default = SHARED;
-
-// constants/field-ids/insurance/policy-and-exports/index.ts
-var SHARED_CONTRACT_POLICY = {
-  REQUESTED_START_DATE: "requestedStartDate",
-  CREDIT_PERIOD_WITH_BUYER: "creditPeriodWithBuyer",
-  POLICY_CURRENCY_CODE: "policyCurrencyCode"
-};
-var POLICY_AND_EXPORTS = {
-  ...shared_default,
-  TYPE_OF_POLICY: {
-    POLICY_TYPE: shared_default.POLICY_TYPE
-  },
-  CONTRACT_POLICY: {
-    ...SHARED_CONTRACT_POLICY,
-    SINGLE: {
-      CONTRACT_COMPLETION_DATE: "contractCompletionDate",
-      TOTAL_CONTRACT_VALUE: "totalValueOfContract"
-    },
-    MULTIPLE: {
-      TOTAL_MONTHS_OF_COVER: "totalMonthsOfCover",
-      TOTAL_SALES_TO_BUYER: "totalSalesToBuyer",
-      MAXIMUM_BUYER_WILL_OWE: "maximumBuyerWillOwe"
-    }
-  },
-  ABOUT_GOODS_OR_SERVICES: {
-    DESCRIPTION: "goodsOrServicesDescription",
-    FINAL_DESTINATION: "finalDestinationCountryCode"
-  }
-};
-var policy_and_exports_default = POLICY_AND_EXPORTS;
-
-// constants/field-ids/insurance/exporter-business/index.ts
-var EXPORTER_BUSINESS = {
-  COMPANY_HOUSE: {
-    SEARCH: "companiesHouseSearch",
-    INPUT: "companiesHouseNumber",
-    COMPANY_NAME: "companyName",
-    COMPANY_ADDRESS: "registeredOfficeAddress",
-    COMPANY_NUMBER: "companyNumber",
-    COMPANY_INCORPORATED: "dateOfCreation",
-    COMPANY_SIC: "sicCodes",
-    FINANCIAL_YEAR_END_DATE: "financialYearEndDate",
-    REGISTED_OFFICE_ADDRESS: {
-      ADDRESS_LINE_1: "addressLine1",
-      ADDRESS_LINE_2: "addressLine2",
-      CARE_OF: "careOf",
-      LOCALITY: "locality",
-      REGION: "region",
-      POSTAL_CODE: "postalCode",
-      COUNTRY: "country",
-      PREMISES: "premises"
-    }
-  },
-  YOUR_COMPANY: {
-    YOUR_BUSINESS: "yourBusiness",
-    TRADING_ADDRESS: "hasTradingAddress",
-    TRADING_NAME: "hasTradingName",
-    WEBSITE: "companyWebsite",
-    PHONE_NUMBER: "phoneNumber"
-  },
-  NATURE_OF_YOUR_BUSINESS: {
-    GOODS_OR_SERVICES: "goodsOrServicesSupplied",
-    YEARS_EXPORTING: "totalYearsExporting",
-    EMPLOYEES_UK: "totalEmployeesUK",
-    EMPLOYEES_INTERNATIONAL: "totalEmployeesInternational"
-  },
-  TURNOVER: {
-    FINANCIAL_YEAR_END_DATE: "financialYearEndDate",
-    ESTIMATED_ANNUAL_TURNOVER: "estimatedAnnualTurnover",
-    PERCENTAGE_TURNOVER: "exportsTurnoverPercentage"
-  },
-  BROKER: {
-    HEADING: "broker",
-    USING_BROKER: "isUsingBroker",
-    NAME: "name",
-    ADDRESS_LINE_1: "addressLine1",
-    ADDRESS_LINE_2: "addressLine2",
-    TOWN: "town",
-    COUNTY: "county",
-    POSTCODE: "postcode",
-    EMAIL: "email",
-    DETAILS: "whyAppointBroker"
-  }
-};
-var exporter_business_default = EXPORTER_BUSINESS;
-
-// constants/field-ids/insurance/your-buyer/index.ts
-var YOUR_BUYER = {
-  COMPANY_OR_ORGANISATION: {
-    NAME: "companyOrOrganisationName",
-    ADDRESS: "address",
-    COUNTRY: "country",
-    REGISTRATION_NUMBER: "registrationNumber",
-    WEBSITE: "website",
-    FIRST_NAME: "contactFirstName",
-    LAST_NAME: "contactLastName",
-    POSITION: "contactPosition",
-    EMAIL: "contactEmail",
-    CAN_CONTACT_BUYER: "canContactBuyer"
-  },
-  WORKING_WITH_BUYER: {
-    CONNECTED_WITH_BUYER: "exporterIsConnectedWithBuyer",
-    TRADED_WITH_BUYER: "exporterHasTradedWithBuyer"
-  }
-};
-var your_buyer_default = YOUR_BUYER;
-
-// constants/field-ids/insurance/declarations/index.ts
-var DECLARATIONS = {
-  AGREE_CONFIDENTIALITY: "agreeToConfidentiality",
-  AGREE_ANTI_BRIBERY: "agreeToAntiBribery",
-  HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: "hasAntiBriberyCodeOfConduct",
-  WILL_EXPORT_WITH_CODE_OF_CONDUCT: "willExportWithAntiBriberyCodeOfConduct",
-  AGREE_CONFIRMATION_ACKNOWLEDGEMENTS: "agreeToConfirmationAndAcknowledgements",
-  AGREE_HOW_YOUR_DATA_WILL_BE_USED: "agreeHowDataWillBeUsed"
-};
-var declarations_default = DECLARATIONS;
-
-// constants/field-ids/insurance/check-your-answers/index.ts
-var CHECK_YOUR_ANSWERS = {
-  ELIGIBILITY: "eligibility",
-  POLICY_AND_EXPORT: "policyAndExport",
-  EXPORTER_BUSINESS: "exporterBusiness",
-  BUYER: "buyer"
-};
-var check_your_answers_default = CHECK_YOUR_ANSWERS;
-
-// constants/field-ids/insurance/index.ts
-var INSURANCE_FIELD_IDS = {
-  ELIGIBILITY: {
-    ...shared_eligibility_default,
-    WANT_COVER_OVER_MAX_AMOUNT: "wantCoverOverMaxAmount",
-    WANT_COVER_OVER_MAX_PERIOD: "wantCoverOverMaxPeriod",
-    OTHER_PARTIES_INVOLVED: "otherPartiesInvolved",
-    LETTER_OF_CREDIT: "paidByLetterOfCredit",
-    PRE_CREDIT_PERIOD: "needPreCreditPeriodCover",
-    COMPANIES_HOUSE_NUMBER: "hasCompaniesHouseNumber",
-    ACCOUNT_TO_APPLY_ONLINE: "alreadyHaveAnAccount"
-  },
-  SUBMISSION_DEADLINE: "submissionDeadline",
-  POLICY_AND_EXPORTS: policy_and_exports_default,
-  EXPORTER_BUSINESS: exporter_business_default,
-  YOUR_BUYER: your_buyer_default,
-  DECLARATIONS: declarations_default,
-  CHECK_YOUR_ANSWERS: check_your_answers_default
-};
-var insurance_default = INSURANCE_FIELD_IDS;
-
-// constants/index.ts
-import_dotenv.default.config();
-var ANSWERS = {
-  YES: "Yes",
-  NO: "No"
->>>>>>> main-application
 };
 var shared_eligibility_default = SHARED_ELIGIBILITY;
 
@@ -398,7 +232,6 @@ var APPLICATION = {
     SUBMITTED: "Submitted to UKEF"
   }
 };
-<<<<<<< HEAD
 
 // constants/field-values/index.ts
 var { POLICY_TYPE, POLICY_AND_EXPORT } = APPLICATION;
@@ -426,8 +259,6 @@ var ANSWERS = {
   YES: "Yes",
   NO: "No"
 };
-=======
->>>>>>> main-application
 var GBP_CURRENCY_CODE = "GBP";
 var FIELD_IDS = {
   ACCOUNT: {
@@ -570,16 +401,6 @@ var fileSystem = {
 };
 var file_system_default = fileSystem;
 
-// file-system/index.ts
-var import_fs = require("fs");
-var readFile = (filePath) => import_fs.promises.readFile(filePath);
-var unlink = (filePath) => import_fs.promises.unlink(filePath);
-var fileSystem = {
-  readFile,
-  unlink
-};
-var file_system_default = fileSystem;
-
 // integrations/notify/index.ts
 var import_dotenv2 = __toESM(require("dotenv"));
 var import_notifications_node_client = require("notifications-node-client");
@@ -603,24 +424,11 @@ var notify = {
       const personalisation = variables;
       if (file) {
         personalisation.linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true, isCsv: fileIsCsv });
-<<<<<<< HEAD
-        await notifyClient.sendEmail(templateId, sendToEmailAddress, {
-          personalisation,
-          reference: null
-        });
-      } else {
-        await notifyClient.sendEmail(templateId, sendToEmailAddress, {
-          personalisation,
-          reference: null
-        });
-      }
-=======
       }
       await notifyClient.sendEmail(templateId, sendToEmailAddress, {
         personalisation,
         reference: null
       });
->>>>>>> main-application
       return {
         success: true,
         emailRecipient: sendToEmailAddress
@@ -709,13 +517,6 @@ var applicationSubmitted = {
       const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.UNDERWRITING_TEAM.NOTIFICATION;
       const emailAddress = process.env.UNDERWRITING_TEAM_EMAIL;
       const file = await file_system_default.readFile(csvPath);
-<<<<<<< HEAD
-      const fileIsCsv = true;
-      const fileBuffer = Buffer.from(file);
-      const response = await callNotify(templateId, emailAddress, variables, fileBuffer, fileIsCsv);
-      await file_system_default.unlink(csvPath);
-      return response;
-=======
       if (file) {
         const fileIsCsv = true;
         const fileBuffer = Buffer.from(file);
@@ -724,7 +525,6 @@ var applicationSubmitted = {
         return response;
       }
       throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
->>>>>>> main-application
     } catch (err) {
       console.error(err);
       throw new Error(`Sending application submitted email to underwriting team ${err}`);
@@ -1387,15 +1187,223 @@ var session = (0, import_session.statelessSessions)({
   secret: sessionSecret
 });
 
-// custom-schema.ts
+// custom-schema/index.ts
 var import_schema = require("@graphql-tools/schema");
-var import_axios = __toESM(require("axios"));
-var import_dotenv4 = __toESM(require("dotenv"));
 
-// custom-resolvers/create-account.ts
+// custom-schema/type-defs.ts
+var typeDefs = `
+  type Account {
+    id: String
+    firstName: String
+    lastName: String
+    email: String
+    isVerified: Boolean
+  }
+
+  input AccountInput {
+    firstName: String
+    lastName: String
+    email: String
+    password: String
+  }
+
+  type CreateAccountResponse {
+    success: Boolean
+    id: String
+    firstName: String
+    lastName: String
+    email: String
+    verificationHash: String
+  }
+
+  # fields from registered_office_address object
+  type CompaniesHouseCompanyAddress {
+    addressLine1: String
+    addressLine2: String
+    careOf: String
+    locality: String
+    region: String
+    postalCode: String
+    country: String
+    premises: String
+  }
+
+  type CompaniesHouseResponse {
+    companyName: String
+    registeredOfficeAddress: ExporterCompanyAddress
+    companyNumber: String
+    dateOfCreation: String
+    sicCodes: [String]
+    financialYearEndDate: DateTime
+    success: Boolean
+    apiError: Boolean
+  }
+
+  type ExporterCompanyAddress {
+    addressLine1: String
+    addressLine2: String
+    careOf: String
+    locality: String
+    region: String
+    postalCode: String
+    country: String
+    premises: String
+  }
+
+  input OldSicCodes {
+    id: String
+  }
+
+  input ExporterCompanyAddressInput {
+    addressLine1: String
+    addressLine2: String
+    careOf: String
+    locality: String
+    region: String
+    postalCode: String
+    country: String
+    premises: String
+  }
+
+  type ExporterCompanyAndCompanyAddress {
+    id: ID
+    registeredOfficeAddress: ExporterCompanyAddress
+    companyName: String
+    companyNumber: String
+    dateOfCreation: DateTime
+    hasTradingAddress: String
+    hasTradingName: String
+    companyWebsite: String
+    phoneNumber: String
+  }
+
+  input ExporterCompanyAndCompanyAddressInput {
+    address: ExporterCompanyAddressInput
+    sicCodes: [String]
+    companyName: String
+    companyNumber: String
+    dateOfCreation: DateTime
+    hasTradingAddress: String
+    hasTradingName: String
+    companyWebsite: String
+    phoneNumber: String
+    financialYearEndDate: DateTime
+    oldSicCodes: [OldSicCodes]
+  }
+
+  type EmailResponse {
+    success: Boolean
+    emailRecipient: String
+  }
+
+  type SuccessResponse {
+    success: Boolean!
+  }
+
+  type AccountSignInResponse {
+    accountId: String
+    firstName: String
+    lastName: String
+    token: String
+    sessionIdentifier: String
+    expires: DateTime
+    success: Boolean!
+  }
+
+  type AddAndGetOtpResponse {
+    success: Boolean!
+    securityCode: String!
+  }
+
+  type VerifyAccountEmailAddressResponse {
+    success: Boolean!
+    accountId: String
+  }
+
+  type Mutation {
+    """ create an account """
+    createAccount(
+      firstName: String!
+      lastName: String!
+      email: String!
+      password: String!
+    ): CreateAccountResponse
+
+    """ verify an account's email address """
+    verifyAccountEmailAddress(
+      token: String!
+    ): VerifyAccountEmailAddressResponse
+
+    """ send confirm email address email """
+    sendEmailConfirmEmailAddress(
+      exporterId: String!
+    ): EmailResponse
+
+    """ validate credentials, generate and email a OTP security code """
+    accountSignIn(
+      email: String!
+      password: String!
+    ): AccountSignInResponse
+
+    """ generate and email a new OTP security code """
+    accountSignInSendNewCode(
+      accountId: String!
+    ): AccountSignInResponse
+
+    """ verify an account's OTP security code """
+    verifyAccountSignInCode(
+      accountId: String!
+      securityCode: String!
+    ): AccountSignInResponse
+
+    """ add an OTP security code to an account """
+    addAndGetOTP(
+      email: String!
+    ): AddAndGetOtpResponse
+
+    """ update exporter company and company address """
+    updateExporterCompanyAndCompanyAddress(
+      companyId: ID!
+      companyAddressId: ID!
+      data: ExporterCompanyAndCompanyAddressInput!
+    ): ExporterCompanyAndCompanyAddress
+
+    """ delete an application by reference number """
+    deleteApplicationByReferenceNumber(
+      referenceNumber: Int!
+    ): SuccessResponse
+
+    """ submit an application """
+    submitApplication(
+      applicationId: String!
+    ): SuccessResponse
+
+    """ send email for insurance feedback """
+    sendEmailInsuranceFeedback(
+      satisfaction: String
+      improvement: String
+      otherComments: String
+    ): SuccessResponse
+  }
+
+  type Query {
+    """ get an account by email """
+    getAccountByEmail(
+      email: String!
+    ): Account
+
+    """ get companies house information """
+    getCompaniesHouseInformation(
+      companiesHouseNumber: String!
+    ): CompaniesHouseResponse
+  }
+`;
+var type_defs_default = typeDefs;
+
+// custom-resolvers/mutations/create-account.ts
 var import_crypto = __toESM(require("crypto"));
 
-// helpers/get-account-by-field.ts
+// helpers/get-account-by-field/index.ts
 var getAccountByField = async (context, field, value) => {
   try {
     console.info("Getting exporter account by field/value");
@@ -1418,7 +1426,7 @@ var getAccountByField = async (context, field, value) => {
 };
 var get_account_by_field_default = getAccountByField;
 
-// custom-resolvers/create-account.ts
+// custom-resolvers/mutations/create-account.ts
 var { EMAIL, ENCRYPTION } = ACCOUNT;
 var {
   RANDOM_BYTES_SIZE,
@@ -1463,7 +1471,7 @@ var createAccount = async (root, variables, context) => {
 };
 var create_account_default = createAccount;
 
-// custom-resolvers/verify-account-email-address.ts
+// custom-resolvers/mutations/verify-account-email-address.ts
 var import_date_fns2 = require("date-fns");
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
@@ -1506,7 +1514,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
 };
 var verify_account_email_address_default = verifyAccountEmailAddress;
 
-// helpers/get-exporter-by-id.ts
+// helpers/get-exporter-by-id/index.ts
 var getExporterById = async (context, exporterId) => {
   try {
     console.info("Getting exporter by ID");
@@ -1523,7 +1531,7 @@ var getExporterById = async (context, exporterId) => {
 };
 var get_exporter_by_id_default = getExporterById;
 
-// custom-resolvers/send-email-confirm-email-address.ts
+// custom-resolvers/mutations/send-email-confirm-email-address.ts
 var sendEmailConfirmEmailAddress = async (root, variables, context) => {
   try {
     const exporter = await get_exporter_by_id_default(context, variables.exporterId);
@@ -1546,7 +1554,7 @@ var sendEmailConfirmEmailAddress = async (root, variables, context) => {
 };
 var send_email_confirm_email_address_default = sendEmailConfirmEmailAddress;
 
-// helpers/is-valid-account-password.ts
+// helpers/is-valid-account-password/index.ts
 var import_crypto2 = __toESM(require("crypto"));
 var { ENCRYPTION: ENCRYPTION2 } = ACCOUNT;
 var {
@@ -1568,7 +1576,7 @@ var isValidAccountPassword = (password2, salt, hash) => {
 };
 var is_valid_account_password_default = isValidAccountPassword;
 
-// helpers/generate-otp.ts
+// helpers/generate-otp/index.ts
 var import_crypto3 = __toESM(require("crypto"));
 var import_otplib = require("otplib");
 var { ENCRYPTION: ENCRYPTION3, OTP } = ACCOUNT;
@@ -1604,7 +1612,7 @@ var generate = {
 };
 var generate_otp_default = generate;
 
-// helpers/generate-otp-and-update-account.ts
+// helpers/generate-otp-and-update-account/index.ts
 var generateOTPAndUpdateAccount = async (context, accountId) => {
   try {
     console.info("Adding OTP to exporter account");
@@ -1630,7 +1638,7 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
 };
 var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
 
-// custom-resolvers/account-sign-in.ts
+// custom-resolvers/mutations/account-sign-in.ts
 var accountSignIn = async (root, variables, context) => {
   try {
     console.info("Signing in exporter account");
@@ -1665,7 +1673,7 @@ var accountSignIn = async (root, variables, context) => {
 };
 var account_sign_in_default = accountSignIn;
 
-// custom-resolvers/account-sign-in-new-code.ts
+// custom-resolvers/mutations/account-sign-in-new-code.ts
 var accountSignInSendNewCode = async (root, variables, context) => {
   try {
     console.info("Generating and sending new sign in code for exporter account");
@@ -1694,10 +1702,10 @@ var accountSignInSendNewCode = async (root, variables, context) => {
 };
 var account_sign_in_new_code_default = accountSignInSendNewCode;
 
-// custom-resolvers/verify-account-sign-in-code.ts
+// custom-resolvers/mutations/verify-account-sign-in-code.ts
 var import_date_fns3 = require("date-fns");
 
-// helpers/is-valid-otp.ts
+// helpers/is-valid-otp/index.ts
 var import_crypto4 = __toESM(require("crypto"));
 var { ENCRYPTION: ENCRYPTION4 } = ACCOUNT;
 var {
@@ -1722,7 +1730,7 @@ var isValidOTP = (securityCode, otpSalt, otpHash) => {
 };
 var is_valid_otp_default = isValidOTP;
 
-// helpers/create-jwt.ts
+// helpers/create-jwt/index.ts
 var import_crypto5 = __toESM(require("crypto"));
 var import_jsonwebtoken = __toESM(require("jsonwebtoken"));
 var {
@@ -1753,7 +1761,7 @@ var create = {
 };
 var create_jwt_default = create;
 
-// custom-resolvers/verify-account-sign-in-code.ts
+// custom-resolvers/mutations/verify-account-sign-in-code.ts
 var {
   JWT: { SESSION_EXPIRY }
 } = ACCOUNT;
@@ -1818,7 +1826,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
 };
 var verify_account_sign_in_code_default = verifyAccountSignInCode;
 
-// custom-resolvers/add-and-get-OTP.ts
+// custom-resolvers/mutations/add-and-get-OTP.ts
 var addAndGetOTP = async (root, variables, context) => {
   try {
     console.info("Adding OTP to exporter account");
@@ -1840,7 +1848,7 @@ var addAndGetOTP = async (root, variables, context) => {
 };
 var add_and_get_OTP_default = addAndGetOTP;
 
-// custom-resolvers/delete-application-by-refrence-number.ts
+// custom-resolvers/mutations/delete-application-by-refrence-number.ts
 var deleteApplicationByReferenceNumber = async (root, variables, context) => {
   try {
     console.info("Deleting application by reference number");
@@ -1871,12 +1879,65 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 };
 var delete_application_by_refrence_number_default = deleteApplicationByReferenceNumber;
 
-<<<<<<< HEAD
-=======
-// custom-resolvers/submit-application.ts
+// helpers/map-sic-codes/index.ts
+var mapSicCodes = (company, sicCodes) => {
+  const mapped = [];
+  if (!sicCodes || !sicCodes.length) {
+    return mapped;
+  }
+  sicCodes.forEach((code) => {
+    const codeToAdd = {
+      sicCode: code,
+      exporterCompany: {
+        connect: {
+          id: company.id
+        }
+      }
+    };
+    mapped.push(codeToAdd);
+  });
+  return mapped;
+};
+
+// custom-resolvers/mutations/update-exporter-company-and-company-address.ts
+var updateExporterCompanyAndCompanyAddress = async (root, variables, context) => {
+  try {
+    console.info("Updating application exporter company and exporter company address for ", variables.companyId);
+    const { address, sicCodes, oldSicCodes, ...exporterCompany } = variables.data;
+    const company = await context.db.ExporterCompany.updateOne({
+      where: { id: variables.companyId },
+      data: exporterCompany
+    });
+    await context.db.ExporterCompanyAddress.updateOne({
+      where: { id: variables.companyAddressId },
+      data: address
+    });
+    const mappedSicCodes = mapSicCodes(company, sicCodes);
+    if (exporterCompany && oldSicCodes && oldSicCodes.length) {
+      await context.db.ExporterCompanySicCode.deleteMany({
+        where: oldSicCodes
+      });
+    }
+    if (mappedSicCodes && mappedSicCodes.length) {
+      mappedSicCodes.forEach(async (sicCodeObj) => {
+        await context.db.ExporterCompanySicCode.createOne({
+          data: sicCodeObj
+        });
+      });
+    }
+    return {
+      id: variables.companyId
+    };
+  } catch (err) {
+    console.error("Error updating application - exporter company and exporter company address", { err });
+    throw new Error(`Updating application - exporter company and exporter company address ${err}`);
+  }
+};
+var update_exporter_company_and_company_address_default = updateExporterCompanyAndCompanyAddress;
+
+// custom-resolvers/mutations/submit-application.ts
 var import_date_fns5 = require("date-fns");
 
->>>>>>> main-application
 // helpers/get-populated-application.ts
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application) => {
@@ -2020,7 +2081,6 @@ var DEFAULT = {
   EMPTY: "-"
 };
 
-<<<<<<< HEAD
 // content-strings/csv.ts
 var CSV_SECTION_TITLES = {
   ELIGIBILITY: "Eligibility",
@@ -2029,8 +2089,6 @@ var CSV_SECTION_TITLES = {
   BUYER: "Your buyer"
 };
 
-=======
->>>>>>> main-application
 // generate-csv/map-application-to-csv/helpers/csv-row-seperator/index.ts
 var ROW_SEPERATOR = csv_row_default(DEFAULT.EMPTY, DEFAULT.EMPTY);
 var csv_row_seperator_default = ROW_SEPERATOR;
@@ -2423,10 +2481,7 @@ var {
 var mapEligibility = (application) => {
   const { eligibility } = application;
   const mapped = [
-<<<<<<< HEAD
     csv_row_default(CSV_SECTION_TITLES.ELIGIBILITY, ""),
-=======
->>>>>>> main-application
     csv_row_default(FIELDS_ELIGIBILITY[BUYER_COUNTRY2].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY2].name),
     csv_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[VALID_EXPORTER_LOCATION2])),
     csv_row_default(FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES2])),
@@ -2441,23 +2496,10 @@ var mapEligibility = (application) => {
 };
 var map_eligibility_default = mapEligibility;
 
-<<<<<<< HEAD
 // generate-csv/map-application-to-csv/helpers/policy-type/index.ts
-var isSinglePolicyType = (policyType) => {
-  if (policyType === FIELD_VALUES.POLICY_TYPE.SINGLE) {
-    return true;
-  }
-  return false;
-};
-var isMultiPolicyType = (policyType) => {
-  if (policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE) {
-    return true;
-  }
-  return false;
-};
+var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
+var isMultiPolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
-=======
->>>>>>> main-application
 // generate-csv/map-application-to-csv/helpers/format-currency/index.ts
 var formatCurrency = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
   style: "currency",
@@ -2467,18 +2509,10 @@ var formatCurrency = (number, currencyCode, decimalPoints) => number.toLocaleStr
 });
 var format_currency_default = formatCurrency;
 
-<<<<<<< HEAD
 // generate-csv/map-application-to-csv/helpers/map-month-string/index.ts
-var mapMonthString = (answer) => {
-  if (answer === 1) {
-    return `${answer} month`;
-  }
-  return `${answer} months`;
-};
+var mapMonthString = (answer) => answer === 1 ? `${answer} month` : `${answer} months`;
 var map_month_string_default = mapMonthString;
 
-=======
->>>>>>> main-application
 // generate-csv/map-application-to-csv/map-policy-and-export/index.ts
 var CONTENT_STRINGS = {
   ...POLICY_AND_EXPORTS_FIELDS,
@@ -2487,7 +2521,6 @@ var CONTENT_STRINGS = {
   MULTIPLE: POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY.MULTIPLE
 };
 var {
-<<<<<<< HEAD
   TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 },
   CONTRACT_POLICY: {
     REQUESTED_START_DATE,
@@ -2512,19 +2545,10 @@ var mapMultiplePolicyFields = (application) => {
     csv_row_default(String(CONTENT_STRINGS.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default(policyAndExport[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
   ];
 };
-=======
-  TYPE_OF_POLICY: { POLICY_TYPE },
-  CONTRACT_POLICY: {
-    REQUESTED_START_DATE,
-    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE }
-  }
-} = insurance_default.POLICY_AND_EXPORTS;
->>>>>>> main-application
 var mapPolicyAndExport = (application) => {
   let mapped = [];
   const { policyAndExport } = application;
   mapped = [
-<<<<<<< HEAD
     csv_row_default(CSV_SECTION_TITLES.POLICY_AND_EXPORT, ""),
     csv_row_default(String(CONTENT_STRINGS[POLICY_TYPE2].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE2]),
     csv_row_default(String(CONTENT_STRINGS[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[REQUESTED_START_DATE]))
@@ -2536,13 +2560,6 @@ var mapPolicyAndExport = (application) => {
   if (isMultiPolicyType(policyType)) {
     mapped = [...mapped, ...mapMultiplePolicyFields(application)];
   }
-=======
-    csv_row_default(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE]),
-    csv_row_default(String(CONTENT_STRINGS[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[REQUESTED_START_DATE])),
-    csv_row_default(String(CONTENT_STRINGS.SINGLE[CONTRACT_COMPLETION_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[CONTRACT_COMPLETION_DATE])),
-    csv_row_default(String(CONTENT_STRINGS.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE))
-  ];
->>>>>>> main-application
   return mapped;
 };
 var map_policy_and_export_default = mapPolicyAndExport;
@@ -2565,7 +2582,6 @@ var {
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
   BROKER: { USING_BROKER: USING_BROKER2, NAME: BROKER_NAME, ADDRESS_LINE_1: ADDRESS_LINE_12, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL3 }
 } = exporter_business_default;
-<<<<<<< HEAD
 var mapExporterBroker = (application) => {
   const { exporterBroker } = application;
   let mapped = [csv_row_default(CONTENT_STRINGS2[USING_BROKER2].SUMMARY?.TITLE, exporterBroker[USING_BROKER2])];
@@ -2586,11 +2602,6 @@ var mapExporter = (application) => {
   const { exporterCompany, exporterBusiness } = application;
   const mapped = [
     csv_row_default(CSV_SECTION_TITLES.EXPORTER_BUSINESS, ""),
-=======
-var mapExporter = (application) => {
-  const { exporterCompany, exporterBusiness, exporterBroker } = application;
-  const mapped = [
->>>>>>> main-application
     // exporter company fields
     csv_row_default(CONTENT_STRINGS2[COMPANY_NUMBER2].SUMMARY?.TITLE, exporterCompany[COMPANY_NUMBER2]),
     csv_row_default(CONTENT_STRINGS2[COMPANY_NAME2].SUMMARY?.TITLE, exporterCompany[COMPANY_NAME2]),
@@ -2609,19 +2620,8 @@ var mapExporter = (application) => {
     csv_row_default(CONTENT_STRINGS2[EMPLOYEES_INTERNATIONAL2].SUMMARY?.TITLE, exporterBusiness[EMPLOYEES_INTERNATIONAL2]),
     csv_row_default(CONTENT_STRINGS2[ESTIMATED_ANNUAL_TURNOVER2].SUMMARY?.TITLE, exporterBusiness[ESTIMATED_ANNUAL_TURNOVER2]),
     csv_row_default(CONTENT_STRINGS2[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, exporterBusiness[PERCENTAGE_TURNOVER2]),
-<<<<<<< HEAD
     // exporter broker fields
     ...mapExporterBroker(application)
-=======
-    // broker fields
-    csv_row_default(CONTENT_STRINGS2[USING_BROKER2].SUMMARY?.TITLE, exporterBroker[USING_BROKER2]),
-    csv_row_default(CONTENT_STRINGS2[BROKER_NAME].SUMMARY?.TITLE, exporterBroker[BROKER_NAME]),
-    csv_row_default(
-      CONTENT_STRINGS2[ADDRESS_LINE_12].SUMMARY?.TITLE,
-      `${exporterBroker[ADDRESS_LINE_12]} ${csv_new_line_default} ${exporterBroker[TOWN]} ${csv_new_line_default} ${exporterBroker[COUNTY]} ${csv_new_line_default} ${exporterBroker[POSTCODE]}`
-    ),
-    csv_row_default(CONTENT_STRINGS2[EMAIL3].SUMMARY?.TITLE, exporterBroker[EMAIL3])
->>>>>>> main-application
   ];
   return mapped;
 };
@@ -2639,10 +2639,7 @@ var {
 var mapBuyer = (application) => {
   const { buyer } = application;
   const mapped = [
-<<<<<<< HEAD
     csv_row_default(CSV_SECTION_TITLES.BUYER, ""),
-=======
->>>>>>> main-application
     csv_row_default(String(CONTENT_STRINGS3[NAME2].SUMMARY?.TITLE), buyer[NAME2]),
     csv_row_default(String(CONTENT_STRINGS3[ADDRESS].SUMMARY?.TITLE), buyer[ADDRESS]),
     csv_row_default(String(CONTENT_STRINGS3[REGISTRATION_NUMBER].SUMMARY?.TITLE), buyer[REGISTRATION_NUMBER]),
@@ -2661,21 +2658,6 @@ var map_buyer_default = mapBuyer;
 
 // generate-csv/map-application-to-csv/index.ts
 var mapApplicationToCsv = (application) => {
-<<<<<<< HEAD
-  const mapped = [
-    csv_row_seperator_default,
-    ...map_reference_number_and_dates_default(application),
-    csv_row_seperator_default,
-    ...map_eligibility_default(application),
-    csv_row_seperator_default,
-    ...map_policy_and_export_default(application),
-    csv_row_seperator_default,
-    ...map_exporter_default(application),
-    csv_row_seperator_default,
-    ...map_buyer_default(application)
-  ];
-  return mapped;
-=======
   try {
     const mapped = [
       csv_row_seperator_default,
@@ -2694,22 +2676,11 @@ var mapApplicationToCsv = (application) => {
     console.error(err);
     throw new Error(`Mapping application to CSV ${err}`);
   }
->>>>>>> main-application
 };
 var map_application_to_csv_default = mapApplicationToCsv;
 
 // generate-csv/index.ts
 var csv = (application) => {
-<<<<<<< HEAD
-  const { referenceNumber } = application;
-  return new Promise((resolve) => {
-    const filePath = `${referenceNumber}.csv`;
-    const csvData = map_application_to_csv_default(application);
-    (0, import_csv_stringify.stringify)(csvData, { header: true }, (err, output) => {
-      import_fs2.default.writeFile(filePath, output, () => resolve(String(filePath)));
-    });
-  });
-=======
   try {
     console.info("Generating CSV file");
     const { referenceNumber } = application;
@@ -2724,14 +2695,13 @@ var csv = (application) => {
     console.error(err);
     throw new Error(`Generating CSV file ${err}`);
   }
->>>>>>> main-application
 };
 var generate2 = {
   csv
 };
 var generate_csv_default = generate2;
 
-// custom-resolvers/submit-application.ts
+// custom-resolvers/mutations/submit-application.ts
 var submitApplication = async (root, variables, context) => {
   try {
     console.info("Submitting application");
@@ -2773,7 +2743,7 @@ var submitApplication = async (root, variables, context) => {
 };
 var submit_application_default = submitApplication;
 
-// custom-resolvers/send-email-insurance-feedback.ts
+// custom-resolvers/mutations/send-email-insurance-feedback.ts
 var sendEmailInsuranceFeedback = async (root, variables) => {
   try {
     console.info("Generating and sending email for insurance feedback");
@@ -2793,7 +2763,11 @@ var sendEmailInsuranceFeedback = async (root, variables) => {
 };
 var send_email_insurance_feedback_default = sendEmailInsuranceFeedback;
 
-// helpers/create-full-timestamp-from-day-month.ts
+// custom-resolvers/queries/get-companies-house-information.ts
+var import_axios = __toESM(require("axios"));
+var import_dotenv4 = __toESM(require("dotenv"));
+
+// helpers/create-full-timestamp-from-day-month/index.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
   if (day && month) {
     return /* @__PURE__ */ new Date(`${(/* @__PURE__ */ new Date()).getFullYear()}-${month}-${day}`);
@@ -2802,7 +2776,7 @@ var createFullTimestampFromDayAndMonth = (day, month) => {
 };
 var create_full_timestamp_from_day_month_default = createFullTimestampFromDayAndMonth;
 
-// helpers/mapCompaniesHouseFields.ts
+// helpers/map-companies-house-fields/index.ts
 var mapCompaniesHouseFields = (companiesHouseResponse) => {
   return {
     companyName: companiesHouseResponse.company_name,
@@ -2827,329 +2801,70 @@ var mapCompaniesHouseFields = (companiesHouseResponse) => {
   };
 };
 
-// helpers/mapSicCodes.ts
-var mapSicCodes = (company, sicCodes) => {
-  const mapped = [];
-  if (!sicCodes || !sicCodes.length) {
-    return mapped;
-  }
-  sicCodes.forEach((code) => {
-    const codeToAdd = {
-      sicCode: code,
-      exporterCompany: {
-        connect: {
-          id: company.id
-        }
-      }
-    };
-    mapped.push(codeToAdd);
-  });
-  return mapped;
-};
-
-// custom-schema.ts
+// custom-resolvers/queries/get-companies-house-information.ts
 import_dotenv4.default.config();
 var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
+var getCompaniesHouseInformation = async (root, variables) => {
+  try {
+    const { companiesHouseNumber } = variables;
+    console.info("Calling Companies House API for ", companiesHouseNumber);
+    const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, "0");
+    const response = await (0, import_axios.default)({
+      method: "get",
+      url: `${companiesHouseURL}/company/${sanitisedRegNo}`,
+      auth: { username, password: "" },
+      validateStatus(status) {
+        const acceptableStatus = [200, 404];
+        return acceptableStatus.includes(status);
+      }
+    });
+    if (!response.data || response.status === 404) {
+      return {
+        success: false
+      };
+    }
+    const mappedResponse = mapCompaniesHouseFields(response.data);
+    return {
+      ...mappedResponse,
+      success: true
+    };
+  } catch (err) {
+    console.error("Error calling Companies House API", { err });
+    return {
+      apiError: true,
+      success: false
+    };
+  }
+};
+var get_companies_house_information_default = getCompaniesHouseInformation;
+
+// custom-resolvers/index.ts
+var customResolvers = {
+  Mutation: {
+    createAccount: create_account_default,
+    accountSignIn: account_sign_in_default,
+    accountSignInSendNewCode: account_sign_in_new_code_default,
+    verifyAccountEmailAddress: verify_account_email_address_default,
+    sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
+    verifyAccountSignInCode: verify_account_sign_in_code_default,
+    addAndGetOTP: add_and_get_OTP_default,
+    deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
+    updateExporterCompanyAndCompanyAddress: update_exporter_company_and_company_address_default,
+    submitApplication: submit_application_default,
+    sendEmailInsuranceFeedback: send_email_insurance_feedback_default
+  },
+  Query: {
+    getCompaniesHouseInformation: get_companies_house_information_default
+  }
+};
+var custom_resolvers_default = customResolvers;
+
+// custom-schema/index.ts
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
   schemas: [schema],
-  typeDefs: `
-      type Account {
-        id: String
-        firstName: String
-        lastName: String
-        email: String
-        isVerified: Boolean
-      }
-
-      input AccountInput {
-        firstName: String
-        lastName: String
-        email: String
-        password: String
-      }
-
-      type CreateAccountResponse {
-        success: Boolean
-        id: String
-        firstName: String
-        lastName: String
-        email: String
-        verificationHash: String
-      }
-
-      # fields from registered_office_address object
-      type CompaniesHouseCompanyAddress {
-        addressLine1: String
-        addressLine2: String
-        careOf: String
-        locality: String
-        region: String
-        postalCode: String
-        country: String
-        premises: String
-      }
-
-      type CompaniesHouseResponse {
-        companyName: String
-        registeredOfficeAddress: ExporterCompanyAddress
-        companyNumber: String
-        dateOfCreation: String
-        sicCodes: [String]
-        financialYearEndDate: DateTime
-        success: Boolean
-        apiError: Boolean
-      }
-
-      type ExporterCompanyAddress {
-        addressLine1: String
-        addressLine2: String
-        careOf: String
-        locality: String
-        region: String
-        postalCode: String
-        country: String
-        premises: String
-      }
-
-      input OldSicCodes {
-        id: String
-      }
-
-      input ExporterCompanyAddressInput {
-        addressLine1: String
-        addressLine2: String
-        careOf: String
-        locality: String
-        region: String
-        postalCode: String
-        country: String
-        premises: String
-      }
-
-      type ExporterCompanyAndCompanyAddress {
-        id: ID
-        registeredOfficeAddress: ExporterCompanyAddress
-        companyName: String
-        companyNumber: String
-        dateOfCreation: DateTime
-        hasTradingAddress: String
-        hasTradingName: String
-        companyWebsite: String
-        phoneNumber: String
-      }
-
-      input ExporterCompanyAndCompanyAddressInput {
-        address: ExporterCompanyAddressInput
-        sicCodes: [String]
-        companyName: String
-        companyNumber: String
-        dateOfCreation: DateTime
-        hasTradingAddress: String
-        hasTradingName: String
-        companyWebsite: String
-        phoneNumber: String
-        financialYearEndDate: DateTime
-        oldSicCodes: [OldSicCodes]
-      }
-
-      type EmailResponse {
-        success: Boolean
-        emailRecipient: String
-      }
-
-      type SuccessResponse {
-        success: Boolean!
-      }
-
-      type AccountSignInResponse {
-        accountId: String
-        firstName: String
-        lastName: String
-        token: String
-        sessionIdentifier: String
-        expires: DateTime
-        success: Boolean!
-      }
-
-      type AddAndGetOtpResponse {
-        success: Boolean!
-        securityCode: String!
-      }
-
-      type VerifyAccountEmailAddressResponse {
-        success: Boolean!
-        accountId: String
-      }
-
-      type SuccessResponse {
-        success: Boolean!
-      }
-
-      type Mutation {
-        """ create an account """
-        createAccount(
-          firstName: String!
-          lastName: String!
-          email: String!
-          password: String!
-        ): CreateAccountResponse
-
-        """ verify an account's email address """
-        verifyAccountEmailAddress(
-          token: String!
-        ): VerifyAccountEmailAddressResponse
-
-        """ send email for insurance feedback """
-        sendEmailInsuranceFeedback(
-          satisfaction: String
-          improvement: String
-          otherComments: String
-        ): SuccessResponse
-
-        """ send confirm email address email """
-        sendEmailConfirmEmailAddress(
-          exporterId: String!
-        ): EmailResponse
-
-        """ validate credentials, generate and email a OTP security code """
-        accountSignIn(
-          email: String!
-          password: String!
-        ): AccountSignInResponse
-
-        """ generate and email a new OTP security code """
-        accountSignInSendNewCode(
-          accountId: String!
-        ): AccountSignInResponse
-
-        """ verify an account's OTP security code """
-        verifyAccountSignInCode(
-          accountId: String!
-          securityCode: String!
-        ): AccountSignInResponse
-
-        """ add an OTP security code to an account """
-        addAndGetOTP(
-          email: String!
-        ): AddAndGetOtpResponse
-
-        """ update exporter company and company address """
-        updateExporterCompanyAndCompanyAddress(
-          companyId: ID!
-          companyAddressId: ID!
-          data: ExporterCompanyAndCompanyAddressInput!
-        ): ExporterCompanyAndCompanyAddress
-
-        """ delete an application by reference number """
-        deleteApplicationByReferenceNumber(
-          referenceNumber: Int!
-        ): SuccessResponse
-
-        """ submit an application """
-        submitApplication(
-          applicationId: String!
-        ): SuccessResponse
-      }
-
-      type Query {
-        """ get an account by email """
-        getAccountByEmail(
-          email: String!
-        ): Account
-
-        """ get companies house information """
-        getCompaniesHouseInformation(
-          companiesHouseNumber: String!
-        ): CompaniesHouseResponse
-      }
-    `,
-  resolvers: {
-    Mutation: {
-      createAccount: create_account_default,
-      accountSignIn: account_sign_in_default,
-      accountSignInSendNewCode: account_sign_in_new_code_default,
-      verifyAccountEmailAddress: verify_account_email_address_default,
-      sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
-      sendEmailInsuranceFeedback: send_email_insurance_feedback_default,
-      verifyAccountSignInCode: verify_account_sign_in_code_default,
-      addAndGetOTP: add_and_get_OTP_default,
-      deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
-      submitApplication: submit_application_default,
-      updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
-        try {
-          console.info("Updating application exporter company and exporter company address for ", variables.companyId);
-          const { address, sicCodes, oldSicCodes, ...exporterCompany } = variables.data;
-          const company = await context.db.ExporterCompany.updateOne({
-            where: { id: variables.companyId },
-            data: exporterCompany
-          });
-          await context.db.ExporterCompanyAddress.updateOne({
-            where: { id: variables.companyAddressId },
-            data: address
-          });
-          const mappedSicCodes = mapSicCodes(company, sicCodes);
-          if (exporterCompany && oldSicCodes && oldSicCodes.length) {
-            await context.db.ExporterCompanySicCode.deleteMany({
-              where: oldSicCodes
-            });
-          }
-          if (mappedSicCodes && mappedSicCodes.length) {
-            mappedSicCodes.forEach(async (sicCodeObj) => {
-              await context.db.ExporterCompanySicCode.createOne({
-                data: sicCodeObj
-              });
-            });
-          }
-          return {
-            id: variables.companyId
-          };
-        } catch (err) {
-          console.error("Error updating application - exporter company and exporter company address", { err });
-          throw new Error(`Updating application - exporter company and exporter company address ${err}`);
-        }
-      }
-    },
-    Query: {
-      /**
-       * Call for companies house API
-       * @param variables - companies house number is received as a string within variables
-       * @returns either mapped response or success false flag with or without apiError
-       */
-      getCompaniesHouseInformation: async (root, variables) => {
-        try {
-          const { companiesHouseNumber } = variables;
-          console.info("Calling Companies House API for ", companiesHouseNumber);
-          const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, "0");
-          const response = await (0, import_axios.default)({
-            method: "get",
-            url: `${companiesHouseURL}/company/${sanitisedRegNo}`,
-            auth: { username, password: "" },
-            validateStatus(status) {
-              const acceptableStatus = [200, 404];
-              return acceptableStatus.includes(status);
-            }
-          });
-          if (!response.data || response.status === 404) {
-            return {
-              success: false
-            };
-          }
-          const mappedResponse = mapCompaniesHouseFields(response.data);
-          return {
-            ...mappedResponse,
-            success: true
-          };
-        } catch (err) {
-          console.error("Error calling Companies House API", { err });
-          return {
-            apiError: true,
-            success: false
-          };
-        }
-      }
-    }
-  }
+  typeDefs: type_defs_default,
+  resolvers: custom_resolvers_default
 });
 
 // keystone.ts
