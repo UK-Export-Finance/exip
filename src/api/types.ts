@@ -161,12 +161,6 @@ interface NotifyPeronsalisation {
   linkToFile?: string;
 }
 
-interface SicCodes {
-  sicCode: string;
-  exporterCompany: ConnectObj;
-  application: ConnectObj;
-}
-
 interface VerifyEmailAddressVariables {
   token: string;
 }
