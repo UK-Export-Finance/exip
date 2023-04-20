@@ -31,18 +31,22 @@ describe('controllers/insurance/account/password-reset/link-sent', () => {
     });
   });
 
-  describe('get', () => {
-    it('should render template', () => {
-      get(req, res);
+  it('should render template', () => {
+    get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-        ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS,
-          BACK_LINK: req.headers.referer,
-        }),
-        exporterEmail: req.session.emailAddressForPasswordReset,
-      });
+    expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS,
+        BACK_LINK: req.headers.referer,
+      }),
+      exporterEmail: mockAccount.email,
     });
+  });
+
+  it('should delete emailAddressForPasswordReset from req.session', async () => {
+    get(req, res);
+
+    expect(req.session.emailAddressForPasswordReset).toBeUndefined();
   });
 
   describe('when there is no req.session.emailAddressForPasswordReset', () => {

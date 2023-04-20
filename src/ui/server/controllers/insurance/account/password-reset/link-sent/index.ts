@@ -23,11 +23,15 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
+  const exporterEmail = emailAddressForPasswordReset;
+
+  delete req.session.emailAddressForPasswordReset;
+
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS,
       BACK_LINK: req.headers.referer,
     }),
-    exporterEmail: emailAddressForPasswordReset,
+    exporterEmail,
   });
 };
