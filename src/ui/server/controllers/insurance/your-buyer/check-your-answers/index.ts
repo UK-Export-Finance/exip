@@ -11,9 +11,7 @@ const { CHECK_YOUR_ANSWERS: CHECK_YOUR_ANSWERS_TEMPLATE } = TEMPLATES.INSURANCE.
 
 export const TEMPLATE = CHECK_YOUR_ANSWERS_TEMPLATE;
 
-const { INSURANCE_ROOT, ALL_SECTIONS, YOUR_BUYER: YOUR_BUYER_ROUTES } = ROUTES.INSURANCE;
-
-const { CHECK_YOUR_ANSWERS_SAVE_AND_BACK } = YOUR_BUYER_ROUTES;
+const { INSURANCE_ROOT, ALL_SECTIONS } = ROUTES.INSURANCE;
 
 /**
  * gets the template for check your answers page
@@ -40,7 +38,6 @@ const get = (req: Request, res: Response) => {
       }),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS_SAVE_AND_BACK}`,
       SUMMARY_LIST: summaryList,
     });
   } catch (err) {

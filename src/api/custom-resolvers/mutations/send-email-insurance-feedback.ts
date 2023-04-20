@@ -1,5 +1,5 @@
-import sendEmail from '../emails';
-import { InsuranceFeedbackVariables, InsuranceFeedbackResponse } from '../types';
+import sendEmail from '../../emails';
+import { InsuranceFeedbackVariables, SuccessResponse } from '../../types';
 
 /**
  * sendEmailInsuranceFeedback
@@ -8,7 +8,7 @@ import { InsuranceFeedbackVariables, InsuranceFeedbackResponse } from '../types'
  * @param {Object} GraphQL variables for the insurance feedback
  * @returns {Object} Object with success flag
  */
-const sendEmailInsuranceFeedback = async (root: any, variables: InsuranceFeedbackVariables): Promise<InsuranceFeedbackResponse> => {
+const sendEmailInsuranceFeedback = async (root: any, variables: InsuranceFeedbackVariables): Promise<SuccessResponse> => {
   try {
     console.info('Generating and sending email for insurance feedback');
 

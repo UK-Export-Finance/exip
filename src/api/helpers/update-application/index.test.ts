@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import updateApplication from '.';
 import baseConfig from '../../keystone';
-import { mockApplication } from '../../test-mocks';
 import { Application } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -20,7 +19,7 @@ describe('helpers/update-application', () => {
   beforeEach(async () => {
     // create a new application
     application = (await context.query.Application.createOne({
-      data: mockApplication,
+      data: {},
       query: 'id updatedAt',
     })) as Application;
   });
@@ -50,9 +49,9 @@ describe('helpers/update-application', () => {
       try {
         await updateApplication.timestamp(context, application.id);
       } catch (err) {
-        const exepctedKeystoneError = 'Access denied: You cannot update that Application - it may not exist';
+        const expectedKeystoneError = 'Access denied: You cannot update that Application - it may not exist';
 
-        const expected = new Error(`Updating application updatedAt timestamp ${exepctedKeystoneError}`);
+        const expected = new Error(`Updating application updatedAt timestamp ${expectedKeystoneError}`);
 
         expect(err).toEqual(expected);
       }

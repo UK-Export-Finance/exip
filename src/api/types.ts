@@ -147,13 +147,12 @@ interface CompaniesHouseAddress {
   country: string | null;
 }
 
-interface CompanyHouseResponse {
+interface CompanyHouseResponse extends SuccessResponse {
   companyName: string;
   registeredOfficeAddress: CompaniesHouseAddress;
   companyNumber: string;
   dateOfCreation: string;
   sicCodes: Array<string>;
-  success: boolean;
   apiError: boolean;
 }
 
@@ -218,10 +217,6 @@ interface InsuranceFeedbackVariables {
   satisfaction?: string;
   improvement?: string;
   otherComments?: string;
-}
-
-interface InsuranceFeedbackResponse {
-  success: boolean;
 }
 
 interface AccountSignInResponse extends SuccessResponse {
@@ -303,7 +298,6 @@ export {
   GetCompaniesHouseInformationVariables,
   NotifyPeronsalisation,
   InsuranceFeedbackVariables,
-  InsuranceFeedbackResponse,
   SicCodes,
   SendExporterEmailVariables,
   SubmitApplicationVariables,

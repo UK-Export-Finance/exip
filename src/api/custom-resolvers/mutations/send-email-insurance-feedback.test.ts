@@ -1,13 +1,13 @@
 import dotenv from 'dotenv';
 import sendEmailInsuranceFeedback from './send-email-insurance-feedback';
-import sendEmail from '../emails';
-import { mockInsuranceFeedback, mockSendEmailResponse, mockAccount } from '../test-mocks';
-import { InsuranceFeedbackVariables } from '../types';
+import sendEmail from '../../emails';
+import { mockInsuranceFeedback, mockSendEmailResponse, mockAccount } from '../../test-mocks';
+import { InsuranceFeedbackVariables } from '../../types';
 
 dotenv.config();
 
 describe('custom-resolvers/send-email-insurance-feedback', () => {
-  jest.mock('../emails');
+  jest.mock('../../emails');
 
   let sendInsuranceFeedbackEmailSpy = jest.fn();
 
