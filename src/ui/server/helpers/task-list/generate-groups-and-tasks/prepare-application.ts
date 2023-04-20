@@ -14,9 +14,10 @@ const { PREPARE_APPLICATION } = TASKS.LIST;
 /**
  * createPrepareApplicationTasks
  * @param {Number} Application reference number
- * @param {String} Application policy type
- * @param {Array} otherGroups Task list groups
- * @returns {Array} Tasks
+ * @param {Array} Task list groups
+ * @param {String} Application "Policy type"
+ * @param {String} Application "Is using broker" flag
+ * @returns {Array} Prepare application tasks
  */
 const createPrepareApplicationTasks = (
   referenceNumber: number,

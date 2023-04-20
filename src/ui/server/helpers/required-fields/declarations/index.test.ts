@@ -35,6 +35,16 @@ describe('server/helpers/required-fields/declarations', () => {
         expect(result).toEqual(expected);
       });
     });
+
+    describe('when hasAntiBriberyCodeOfConduct is not provided/submitted', () => {
+      it(`should return an array with just ${HAS_ANTI_BRIBERY_CODE_OF_CONDUCT} field ID`, () => {
+        const result = getAntiBriberyCodeOfConductTasks();
+
+        const expected = [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT];
+
+        expect(result).toEqual(expected);
+      });
+    });
   });
 
   describe('requiredFields', () => {
