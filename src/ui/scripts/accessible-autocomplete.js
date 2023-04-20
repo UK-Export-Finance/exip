@@ -7,7 +7,7 @@ const init = () => {
 
   accessibleAutocomplete.enhanceSelectElement({
     selectElement: element,
-    defaultValue: ''
+    defaultValue: '',
   });
 };
 

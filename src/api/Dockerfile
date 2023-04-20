@@ -31,15 +31,15 @@ COPY --chown=node:node ./schema.graphql .
 COPY --chown=node:node ./schema.prisma .
 COPY --chown=node:node ./package.json .
 COPY --chown=node:node ./package-lock.json .
+COPY --chown=node:node ./auth.ts .
 COPY --chown=node:node ./.keystone ./.keystone
 COPY --chown=node:node ./custom-resolvers ./custom-resolvers
+COPY --chown=node:node ./custom-schema ./custom-schema
 COPY --chown=node:node ./emails ./emails
 COPY --chown=node:node ./helpers ./helpers
 COPY --chown=node:node ./integrations ./integrations
-COPY --chown=node:node ./auth.ts .
 COPY --chown=node:node ./constants ./constants
 COPY --chown=node:node ./content-strings ./content-strings
-COPY --chown=node:node ./custom-schema.ts .
 COPY --chown=node:node ./file-system ./file-system
 COPY --chown=node:node ./generate-csv ./generate-csv
 
@@ -71,6 +71,7 @@ COPY --chown=node:node --from=build /app/integrations ./integrations
 COPY --chown=node:node --from=build /app/helpers ./helpers
 COPY --chown=node:node --from=build /app/emails ./emails
 COPY --chown=node:node --from=build /app/custom-resolvers ./custom-resolvers
+COPY --chown=node:node --from=build /app/custom-schema ./custom-schema
 COPY --chown=node:node --from=build /app/file-system ./file-system
 COPY --chown=node:node --from=build /app/generate-csv ./generate-csv
 
