@@ -1,6 +1,6 @@
 import sendEmail from '../index';
 import { ANSWERS, EMAIL_TEMPLATE_IDS } from '../../constants';
-import { SubmitApplicationResponse, ApplicationSubmissionEmailVariables, Application } from '../../types';
+import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } from '../../types';
 
 /**
  * applicationSubmittedEmails.send
@@ -9,7 +9,7 @@ import { SubmitApplicationResponse, ApplicationSubmissionEmailVariables, Applica
  * @param {String} Path to CSV file for underwriting team email
  * @returns {Object} Object with success flag and emailRecipient
  */
-const send = async (application: Application, csvPath: string): Promise<SubmitApplicationResponse> => {
+const send = async (application: Application, csvPath: string): Promise<SuccessResponse> => {
   try {
     const { referenceNumber, exporter, exporterCompany, buyer, declaration } = application as Application;
 

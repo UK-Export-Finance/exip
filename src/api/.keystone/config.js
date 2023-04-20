@@ -1206,15 +1206,228 @@ var session = (0, import_session.statelessSessions)({
   secret: sessionSecret
 });
 
-// custom-schema.ts
+// custom-schema/index.ts
 var import_schema = require("@graphql-tools/schema");
-var import_axios = __toESM(require("axios"));
-var import_dotenv4 = __toESM(require("dotenv"));
 
-// custom-resolvers/create-account.ts
+// custom-schema/type-defs.ts
+var typeDefs = `
+  type Account {
+    id: String
+    firstName: String
+    lastName: String
+    email: String
+    isVerified: Boolean
+  }
+
+  input AccountInput {
+    firstName: String
+    lastName: String
+    email: String
+    password: String
+  }
+
+  type CreateAccountResponse {
+    success: Boolean
+    id: String
+    firstName: String
+    lastName: String
+    email: String
+    verificationHash: String
+  }
+
+  # fields from registered_office_address object
+  type CompaniesHouseCompanyAddress {
+    addressLine1: String
+    addressLine2: String
+    careOf: String
+    locality: String
+    region: String
+    postalCode: String
+    country: String
+    premises: String
+  }
+
+  type CompaniesHouseResponse {
+    companyName: String
+    registeredOfficeAddress: ExporterCompanyAddress
+    companyNumber: String
+    dateOfCreation: String
+    sicCodes: [String]
+    financialYearEndDate: DateTime
+    success: Boolean
+    apiError: Boolean
+  }
+
+  type ExporterCompanyAddress {
+    addressLine1: String
+    addressLine2: String
+    careOf: String
+    locality: String
+    region: String
+    postalCode: String
+    country: String
+    premises: String
+  }
+
+  input OldSicCodes {
+    id: String
+  }
+
+  input ExporterCompanyAddressInput {
+    addressLine1: String
+    addressLine2: String
+    careOf: String
+    locality: String
+    region: String
+    postalCode: String
+    country: String
+    premises: String
+  }
+
+  type ExporterCompanyAndCompanyAddress {
+    id: ID
+    registeredOfficeAddress: ExporterCompanyAddress
+    companyName: String
+    companyNumber: String
+    dateOfCreation: DateTime
+    hasTradingAddress: String
+    hasTradingName: String
+    companyWebsite: String
+    phoneNumber: String
+  }
+
+  input ExporterCompanyAndCompanyAddressInput {
+    address: ExporterCompanyAddressInput
+    sicCodes: [String]
+    companyName: String
+    companyNumber: String
+    dateOfCreation: DateTime
+    hasTradingAddress: String
+    hasTradingName: String
+    companyWebsite: String
+    phoneNumber: String
+    financialYearEndDate: DateTime
+    oldSicCodes: [OldSicCodes]
+  }
+
+  type EmailResponse {
+    success: Boolean
+    emailRecipient: String
+  }
+
+  type SuccessResponse {
+    success: Boolean!
+  }
+
+  type AccountSignInResponse {
+    accountId: String
+    firstName: String
+    lastName: String
+    token: String
+    sessionIdentifier: String
+    expires: DateTime
+    success: Boolean!
+  }
+
+  type AddAndGetOtpResponse {
+    success: Boolean!
+    securityCode: String!
+  }
+
+  type VerifyAccountEmailAddressResponse {
+    success: Boolean!
+    accountId: String
+  }
+
+  type Mutation {
+    """ create an account """
+    createAccount(
+      firstName: String!
+      lastName: String!
+      email: String!
+      password: String!
+    ): CreateAccountResponse
+
+    """ verify an account's email address """
+    verifyAccountEmailAddress(
+      token: String!
+    ): VerifyAccountEmailAddressResponse
+
+    """ send confirm email address email """
+    sendEmailConfirmEmailAddress(
+      exporterId: String!
+    ): EmailResponse
+
+    """ validate credentials, generate and email a OTP security code """
+    accountSignIn(
+      email: String!
+      password: String!
+    ): AccountSignInResponse
+
+    """ generate and email a new OTP security code """
+    accountSignInSendNewCode(
+      accountId: String!
+    ): AccountSignInResponse
+
+    """ verify an account's OTP security code """
+    verifyAccountSignInCode(
+      accountId: String!
+      securityCode: String!
+    ): AccountSignInResponse
+
+    """ add an OTP security code to an account """
+    addAndGetOTP(
+      email: String!
+    ): AddAndGetOtpResponse
+
+    """ send email with password reset link """
+    sendEmailPasswordResetLink(
+      email: String!
+    ): SuccessResponse
+
+    """ update exporter company and company address """
+    updateExporterCompanyAndCompanyAddress(
+      companyId: ID!
+      companyAddressId: ID!
+      data: ExporterCompanyAndCompanyAddressInput!
+    ): ExporterCompanyAndCompanyAddress
+
+    """ delete an application by reference number """
+    deleteApplicationByReferenceNumber(
+      referenceNumber: Int!
+    ): SuccessResponse
+
+    """ submit an application """
+    submitApplication(
+      applicationId: String!
+    ): SuccessResponse
+
+    """ send email for insurance feedback """
+    sendEmailInsuranceFeedback(
+      satisfaction: String
+      improvement: String
+      otherComments: String
+    ): SuccessResponse
+  }
+
+  type Query {
+    """ get an account by email """
+    getAccountByEmail(
+      email: String!
+    ): Account
+
+    """ get companies house information """
+    getCompaniesHouseInformation(
+      companiesHouseNumber: String!
+    ): CompaniesHouseResponse
+  }
+`;
+var type_defs_default = typeDefs;
+
+// custom-resolvers/mutations/create-account.ts
 var import_crypto = __toESM(require("crypto"));
 
-// helpers/get-account-by-field.ts
+// helpers/get-account-by-field/index.ts
 var getAccountByField = async (context, field, value) => {
   try {
     console.info("Getting exporter account by field/value");
@@ -1237,7 +1450,7 @@ var getAccountByField = async (context, field, value) => {
 };
 var get_account_by_field_default = getAccountByField;
 
-// custom-resolvers/create-account.ts
+// custom-resolvers/mutations/create-account.ts
 var { EMAIL, ENCRYPTION } = ACCOUNT;
 var {
   RANDOM_BYTES_SIZE,
@@ -1282,7 +1495,7 @@ var createAccount = async (root, variables, context) => {
 };
 var create_account_default = createAccount;
 
-// custom-resolvers/verify-account-email-address.ts
+// custom-resolvers/mutations/verify-account-email-address.ts
 var import_date_fns2 = require("date-fns");
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
@@ -1325,7 +1538,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
 };
 var verify_account_email_address_default = verifyAccountEmailAddress;
 
-// helpers/get-exporter-by-id.ts
+// helpers/get-exporter-by-id/index.ts
 var getExporterById = async (context, exporterId) => {
   try {
     console.info("Getting exporter by ID");
@@ -1342,7 +1555,7 @@ var getExporterById = async (context, exporterId) => {
 };
 var get_exporter_by_id_default = getExporterById;
 
-// custom-resolvers/send-email-confirm-email-address.ts
+// custom-resolvers/mutations/send-email-confirm-email-address.ts
 var sendEmailConfirmEmailAddress = async (root, variables, context) => {
   try {
     const exporter = await get_exporter_by_id_default(context, variables.exporterId);
@@ -1365,7 +1578,7 @@ var sendEmailConfirmEmailAddress = async (root, variables, context) => {
 };
 var send_email_confirm_email_address_default = sendEmailConfirmEmailAddress;
 
-// helpers/is-valid-account-password.ts
+// helpers/is-valid-account-password/index.ts
 var import_crypto2 = __toESM(require("crypto"));
 var { ENCRYPTION: ENCRYPTION2 } = ACCOUNT;
 var {
@@ -1387,7 +1600,7 @@ var isValidAccountPassword = (password2, salt, hash) => {
 };
 var is_valid_account_password_default = isValidAccountPassword;
 
-// helpers/generate-otp.ts
+// helpers/generate-otp/index.ts
 var import_crypto3 = __toESM(require("crypto"));
 var import_otplib = require("otplib");
 var { ENCRYPTION: ENCRYPTION3, OTP } = ACCOUNT;
@@ -1423,7 +1636,7 @@ var generate = {
 };
 var generate_otp_default = generate;
 
-// helpers/generate-otp-and-update-account.ts
+// helpers/generate-otp-and-update-account/index.ts
 var generateOTPAndUpdateAccount = async (context, accountId) => {
   try {
     console.info("Adding OTP to exporter account");
@@ -1449,7 +1662,7 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
 };
 var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
 
-// custom-resolvers/account-sign-in.ts
+// custom-resolvers/mutations/account-sign-in.ts
 var accountSignIn = async (root, variables, context) => {
   try {
     console.info("Signing in exporter account");
@@ -1484,7 +1697,7 @@ var accountSignIn = async (root, variables, context) => {
 };
 var account_sign_in_default = accountSignIn;
 
-// custom-resolvers/account-sign-in-new-code.ts
+// custom-resolvers/mutations/account-sign-in-new-code.ts
 var accountSignInSendNewCode = async (root, variables, context) => {
   try {
     console.info("Generating and sending new sign in code for exporter account");
@@ -1513,10 +1726,10 @@ var accountSignInSendNewCode = async (root, variables, context) => {
 };
 var account_sign_in_new_code_default = accountSignInSendNewCode;
 
-// custom-resolvers/verify-account-sign-in-code.ts
+// custom-resolvers/mutations/verify-account-sign-in-code.ts
 var import_date_fns3 = require("date-fns");
 
-// helpers/is-valid-otp.ts
+// helpers/is-valid-otp/index.ts
 var import_crypto4 = __toESM(require("crypto"));
 var { ENCRYPTION: ENCRYPTION4 } = ACCOUNT;
 var {
@@ -1541,7 +1754,7 @@ var isValidOTP = (securityCode, otpSalt, otpHash) => {
 };
 var is_valid_otp_default = isValidOTP;
 
-// helpers/create-jwt.ts
+// helpers/create-jwt/index.ts
 var import_crypto5 = __toESM(require("crypto"));
 var import_jsonwebtoken = __toESM(require("jsonwebtoken"));
 var {
@@ -1572,7 +1785,7 @@ var create = {
 };
 var create_jwt_default = create;
 
-// custom-resolvers/verify-account-sign-in-code.ts
+// custom-resolvers/mutations/verify-account-sign-in-code.ts
 var {
   JWT: { SESSION_EXPIRY }
 } = ACCOUNT;
@@ -1637,7 +1850,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
 };
 var verify_account_sign_in_code_default = verifyAccountSignInCode;
 
-// custom-resolvers/add-and-get-OTP.ts
+// custom-resolvers/mutations/add-and-get-OTP.ts
 var addAndGetOTP = async (root, variables, context) => {
   try {
     console.info("Adding OTP to exporter account");
@@ -1659,7 +1872,7 @@ var addAndGetOTP = async (root, variables, context) => {
 };
 var add_and_get_OTP_default = addAndGetOTP;
 
-// custom-resolvers/send-email-password-reset-link.ts
+// custom-resolvers/mutations/send-email-password-reset-link.ts
 var import_crypto6 = __toESM(require("crypto"));
 var {
   ENCRYPTION: {
@@ -1700,7 +1913,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
 };
 var send_email_password_reset_link_default = sendEmailPasswordResetLink;
 
-// custom-resolvers/delete-application-by-refrence-number.ts
+// custom-resolvers/mutations/delete-application-by-refrence-number.ts
 var deleteApplicationByReferenceNumber = async (root, variables, context) => {
   try {
     console.info("Deleting application by reference number");
@@ -1731,7 +1944,63 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 };
 var delete_application_by_refrence_number_default = deleteApplicationByReferenceNumber;
 
-// custom-resolvers/submit-application.ts
+// helpers/map-sic-codes/index.ts
+var mapSicCodes = (company, sicCodes) => {
+  const mapped = [];
+  if (!sicCodes || !sicCodes.length) {
+    return mapped;
+  }
+  sicCodes.forEach((code) => {
+    const codeToAdd = {
+      sicCode: code,
+      exporterCompany: {
+        connect: {
+          id: company.id
+        }
+      }
+    };
+    mapped.push(codeToAdd);
+  });
+  return mapped;
+};
+
+// custom-resolvers/mutations/update-exporter-company-and-company-address.ts
+var updateExporterCompanyAndCompanyAddress = async (root, variables, context) => {
+  try {
+    console.info("Updating application exporter company and exporter company address for ", variables.companyId);
+    const { address, sicCodes, oldSicCodes, ...exporterCompany } = variables.data;
+    const company = await context.db.ExporterCompany.updateOne({
+      where: { id: variables.companyId },
+      data: exporterCompany
+    });
+    await context.db.ExporterCompanyAddress.updateOne({
+      where: { id: variables.companyAddressId },
+      data: address
+    });
+    const mappedSicCodes = mapSicCodes(company, sicCodes);
+    if (exporterCompany && oldSicCodes && oldSicCodes.length) {
+      await context.db.ExporterCompanySicCode.deleteMany({
+        where: oldSicCodes
+      });
+    }
+    if (mappedSicCodes && mappedSicCodes.length) {
+      mappedSicCodes.forEach(async (sicCodeObj) => {
+        await context.db.ExporterCompanySicCode.createOne({
+          data: sicCodeObj
+        });
+      });
+    }
+    return {
+      id: variables.companyId
+    };
+  } catch (err) {
+    console.error("Error updating application - exporter company and exporter company address", { err });
+    throw new Error(`Updating application - exporter company and exporter company address ${err}`);
+  }
+};
+var update_exporter_company_and_company_address_default = updateExporterCompanyAndCompanyAddress;
+
+// custom-resolvers/mutations/submit-application.ts
 var import_date_fns5 = require("date-fns");
 
 // helpers/get-populated-application.ts
@@ -2497,7 +2766,7 @@ var generate2 = {
 };
 var generate_csv_default = generate2;
 
-// custom-resolvers/submit-application.ts
+// custom-resolvers/mutations/submit-application.ts
 var submitApplication = async (root, variables, context) => {
   try {
     console.info("Submitting application");
@@ -2539,7 +2808,7 @@ var submitApplication = async (root, variables, context) => {
 };
 var submit_application_default = submitApplication;
 
-// custom-resolvers/send-email-insurance-feedback.ts
+// custom-resolvers/mutations/send-email-insurance-feedback.ts
 var sendEmailInsuranceFeedback = async (root, variables) => {
   try {
     console.info("Generating and sending email for insurance feedback");
@@ -2559,7 +2828,11 @@ var sendEmailInsuranceFeedback = async (root, variables) => {
 };
 var send_email_insurance_feedback_default = sendEmailInsuranceFeedback;
 
-// helpers/create-full-timestamp-from-day-month.ts
+// custom-resolvers/queries/get-companies-house-information.ts
+var import_axios = __toESM(require("axios"));
+var import_dotenv4 = __toESM(require("dotenv"));
+
+// helpers/create-full-timestamp-from-day-month/index.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
   if (day && month) {
     return /* @__PURE__ */ new Date(`${(/* @__PURE__ */ new Date()).getFullYear()}-${month}-${day}`);
@@ -2568,7 +2841,7 @@ var createFullTimestampFromDayAndMonth = (day, month) => {
 };
 var create_full_timestamp_from_day_month_default = createFullTimestampFromDayAndMonth;
 
-// helpers/mapCompaniesHouseFields.ts
+// helpers/map-companies-house-fields/index.ts
 var mapCompaniesHouseFields = (companiesHouseResponse) => {
   return {
     companyName: companiesHouseResponse.company_name,
@@ -2593,335 +2866,71 @@ var mapCompaniesHouseFields = (companiesHouseResponse) => {
   };
 };
 
-// helpers/mapSicCodes.ts
-var mapSicCodes = (company, sicCodes) => {
-  const mapped = [];
-  if (!sicCodes || !sicCodes.length) {
-    return mapped;
-  }
-  sicCodes.forEach((code) => {
-    const codeToAdd = {
-      sicCode: code,
-      exporterCompany: {
-        connect: {
-          id: company.id
-        }
-      }
-    };
-    mapped.push(codeToAdd);
-  });
-  return mapped;
-};
-
-// custom-schema.ts
+// custom-resolvers/queries/get-companies-house-information.ts
 import_dotenv4.default.config();
 var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
+var getCompaniesHouseInformation = async (root, variables) => {
+  try {
+    const { companiesHouseNumber } = variables;
+    console.info("Calling Companies House API for ", companiesHouseNumber);
+    const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, "0");
+    const response = await (0, import_axios.default)({
+      method: "get",
+      url: `${companiesHouseURL}/company/${sanitisedRegNo}`,
+      auth: { username, password: "" },
+      validateStatus(status) {
+        const acceptableStatus = [200, 404];
+        return acceptableStatus.includes(status);
+      }
+    });
+    if (!response.data || response.status === 404) {
+      return {
+        success: false
+      };
+    }
+    const mappedResponse = mapCompaniesHouseFields(response.data);
+    return {
+      ...mappedResponse,
+      success: true
+    };
+  } catch (err) {
+    console.error("Error calling Companies House API", { err });
+    return {
+      apiError: true,
+      success: false
+    };
+  }
+};
+var get_companies_house_information_default = getCompaniesHouseInformation;
+
+// custom-resolvers/index.ts
+var customResolvers = {
+  Mutation: {
+    createAccount: create_account_default,
+    accountSignIn: account_sign_in_default,
+    accountSignInSendNewCode: account_sign_in_new_code_default,
+    verifyAccountEmailAddress: verify_account_email_address_default,
+    sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
+    verifyAccountSignInCode: verify_account_sign_in_code_default,
+    addAndGetOTP: add_and_get_OTP_default,
+    sendEmailPasswordResetLink: send_email_password_reset_link_default,
+    deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
+    updateExporterCompanyAndCompanyAddress: update_exporter_company_and_company_address_default,
+    submitApplication: submit_application_default,
+    sendEmailInsuranceFeedback: send_email_insurance_feedback_default
+  },
+  Query: {
+    getCompaniesHouseInformation: get_companies_house_information_default
+  }
+};
+var custom_resolvers_default = customResolvers;
+
+// custom-schema/index.ts
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
   schemas: [schema],
-  typeDefs: `
-      type Account {
-        id: String
-        firstName: String
-        lastName: String
-        email: String
-        isVerified: Boolean
-      }
-
-      input AccountInput {
-        firstName: String
-        lastName: String
-        email: String
-        password: String
-      }
-
-      type CreateAccountResponse {
-        success: Boolean
-        id: String
-        firstName: String
-        lastName: String
-        email: String
-        verificationHash: String
-      }
-
-      # fields from registered_office_address object
-      type CompaniesHouseCompanyAddress {
-        addressLine1: String
-        addressLine2: String
-        careOf: String
-        locality: String
-        region: String
-        postalCode: String
-        country: String
-        premises: String
-      }
-
-      type CompaniesHouseResponse {
-        companyName: String
-        registeredOfficeAddress: ExporterCompanyAddress
-        companyNumber: String
-        dateOfCreation: String
-        sicCodes: [String]
-        financialYearEndDate: DateTime
-        success: Boolean
-        apiError: Boolean
-      }
-
-      type ExporterCompanyAddress {
-        addressLine1: String
-        addressLine2: String
-        careOf: String
-        locality: String
-        region: String
-        postalCode: String
-        country: String
-        premises: String
-      }
-
-      input OldSicCodes {
-        id: String
-      }
-
-      input ExporterCompanyAddressInput {
-        addressLine1: String
-        addressLine2: String
-        careOf: String
-        locality: String
-        region: String
-        postalCode: String
-        country: String
-        premises: String
-      }
-
-      type ExporterCompanyAndCompanyAddress {
-        id: ID
-        registeredOfficeAddress: ExporterCompanyAddress
-        companyName: String
-        companyNumber: String
-        dateOfCreation: DateTime
-        hasTradingAddress: String
-        hasTradingName: String
-        companyWebsite: String
-        phoneNumber: String
-      }
-
-      input ExporterCompanyAndCompanyAddressInput {
-        address: ExporterCompanyAddressInput
-        sicCodes: [String]
-        companyName: String
-        companyNumber: String
-        dateOfCreation: DateTime
-        hasTradingAddress: String
-        hasTradingName: String
-        companyWebsite: String
-        phoneNumber: String
-        financialYearEndDate: DateTime
-        oldSicCodes: [OldSicCodes]
-      }
-
-      type EmailResponse {
-        success: Boolean
-        emailRecipient: String
-      }
-
-      type SuccessResponse {
-        success: Boolean!
-      }
-
-      type AccountSignInResponse {
-        accountId: String
-        firstName: String
-        lastName: String
-        token: String
-        sessionIdentifier: String
-        expires: DateTime
-        success: Boolean!
-      }
-
-      type AddAndGetOtpResponse {
-        success: Boolean!
-        securityCode: String!
-      }
-
-      type VerifyAccountEmailAddressResponse {
-        success: Boolean!
-        accountId: String
-      }
-
-      type SuccessResponse {
-        success: Boolean!
-      }
-
-      type Mutation {
-        """ create an account """
-        createAccount(
-          firstName: String!
-          lastName: String!
-          email: String!
-          password: String!
-        ): CreateAccountResponse
-
-        """ verify an account's email address """
-        verifyAccountEmailAddress(
-          token: String!
-        ): VerifyAccountEmailAddressResponse
-
-        """ send email for insurance feedback """
-        sendEmailInsuranceFeedback(
-          satisfaction: String
-          improvement: String
-          otherComments: String
-        ): SuccessResponse
-
-        """ send confirm email address email """
-        sendEmailConfirmEmailAddress(
-          exporterId: String!
-        ): EmailResponse
-
-        """ validate credentials, generate and email a OTP security code """
-        accountSignIn(
-          email: String!
-          password: String!
-        ): AccountSignInResponse
-
-        """ generate and email a new OTP security code """
-        accountSignInSendNewCode(
-          accountId: String!
-        ): AccountSignInResponse
-
-        """ verify an account's OTP security code """
-        verifyAccountSignInCode(
-          accountId: String!
-          securityCode: String!
-        ): AccountSignInResponse
-
-        """ add an OTP security code to an account """
-        addAndGetOTP(
-          email: String!
-        ): AddAndGetOtpResponse
-
-        """ send email with password reset link """
-        sendEmailPasswordResetLink(
-          email: String!
-        ): SuccessResponse
-
-        """ update exporter company and company address """
-        updateExporterCompanyAndCompanyAddress(
-          companyId: ID!
-          companyAddressId: ID!
-          data: ExporterCompanyAndCompanyAddressInput!
-        ): ExporterCompanyAndCompanyAddress
-
-        """ delete an application by reference number """
-        deleteApplicationByReferenceNumber(
-          referenceNumber: Int!
-        ): SuccessResponse
-
-        """ submit an application """
-        submitApplication(
-          applicationId: String!
-        ): SuccessResponse
-      }
-
-      type Query {
-        """ get an account by email """
-        getAccountByEmail(
-          email: String!
-        ): Account
-
-        """ get companies house information """
-        getCompaniesHouseInformation(
-          companiesHouseNumber: String!
-        ): CompaniesHouseResponse
-      }
-    `,
-  resolvers: {
-    Mutation: {
-      createAccount: create_account_default,
-      accountSignIn: account_sign_in_default,
-      accountSignInSendNewCode: account_sign_in_new_code_default,
-      verifyAccountEmailAddress: verify_account_email_address_default,
-      sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
-      sendEmailInsuranceFeedback: send_email_insurance_feedback_default,
-      verifyAccountSignInCode: verify_account_sign_in_code_default,
-      addAndGetOTP: add_and_get_OTP_default,
-      deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
-      submitApplication: submit_application_default,
-      sendEmailPasswordResetLink: send_email_password_reset_link_default,
-      updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
-        try {
-          console.info("Updating application exporter company and exporter company address for ", variables.companyId);
-          const { address, sicCodes, oldSicCodes, ...exporterCompany } = variables.data;
-          const company = await context.db.ExporterCompany.updateOne({
-            where: { id: variables.companyId },
-            data: exporterCompany
-          });
-          await context.db.ExporterCompanyAddress.updateOne({
-            where: { id: variables.companyAddressId },
-            data: address
-          });
-          const mappedSicCodes = mapSicCodes(company, sicCodes);
-          if (exporterCompany && oldSicCodes && oldSicCodes.length) {
-            await context.db.ExporterCompanySicCode.deleteMany({
-              where: oldSicCodes
-            });
-          }
-          if (mappedSicCodes && mappedSicCodes.length) {
-            mappedSicCodes.forEach(async (sicCodeObj) => {
-              await context.db.ExporterCompanySicCode.createOne({
-                data: sicCodeObj
-              });
-            });
-          }
-          return {
-            id: variables.companyId
-          };
-        } catch (err) {
-          console.error("Error updating application - exporter company and exporter company address", { err });
-          throw new Error(`Updating application - exporter company and exporter company address ${err}`);
-        }
-      }
-    },
-    Query: {
-      /**
-       * Call for companies house API
-       * @param variables - companies house number is received as a string within variables
-       * @returns either mapped response or success false flag with or without apiError
-       */
-      getCompaniesHouseInformation: async (root, variables) => {
-        try {
-          const { companiesHouseNumber } = variables;
-          console.info("Calling Companies House API for ", companiesHouseNumber);
-          const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, "0");
-          const response = await (0, import_axios.default)({
-            method: "get",
-            url: `${companiesHouseURL}/company/${sanitisedRegNo}`,
-            auth: { username, password: "" },
-            validateStatus(status) {
-              const acceptableStatus = [200, 404];
-              return acceptableStatus.includes(status);
-            }
-          });
-          if (!response.data || response.status === 404) {
-            return {
-              success: false
-            };
-          }
-          const mappedResponse = mapCompaniesHouseFields(response.data);
-          return {
-            ...mappedResponse,
-            success: true
-          };
-        } catch (err) {
-          console.error("Error calling Companies House API", { err });
-          return {
-            apiError: true,
-            success: false
-          };
-        }
-      }
-    }
-  }
+  typeDefs: type_defs_default,
+  resolvers: custom_resolvers_default
 });
 
 // keystone.ts
