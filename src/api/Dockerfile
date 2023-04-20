@@ -24,14 +24,6 @@ RUN npm ci --legacy-peer-deps
 RUN npm cache clean --force
 
 # Copy API
-COPY --chown=node:node ./keystone.ts .
-COPY --chown=node:node ./schema.ts .
-COPY --chown=node:node ./types.ts .
-COPY --chown=node:node ./schema.graphql .
-COPY --chown=node:node ./schema.prisma .
-COPY --chown=node:node ./package.json .
-COPY --chown=node:node ./package-lock.json .
-COPY --chown=node:node ./auth.ts .
 COPY --chown=node:node ./.keystone ./.keystone
 COPY --chown=node:node ./custom-resolvers ./custom-resolvers
 COPY --chown=node:node ./custom-schema ./custom-schema
@@ -42,6 +34,14 @@ COPY --chown=node:node ./constants ./constants
 COPY --chown=node:node ./content-strings ./content-strings
 COPY --chown=node:node ./file-system ./file-system
 COPY --chown=node:node ./generate-csv ./generate-csv
+COPY --chown=node:node ./keystone.ts .
+COPY --chown=node:node ./schema.ts .
+COPY --chown=node:node ./types.ts .
+COPY --chown=node:node ./schema.graphql .
+COPY --chown=node:node ./schema.prisma .
+COPY --chown=node:node ./package.json .
+COPY --chown=node:node ./package-lock.json .
+COPY --chown=node:node ./auth.ts .
 
 # Build with all dependencies
 RUN npm run build
