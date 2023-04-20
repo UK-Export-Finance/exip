@@ -10,10 +10,12 @@ const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
 /**
  * generateGroupsAndTasks
  * @param {Number} Application reference number
- * @param {String} Application policy type
+ * @param {String} Application "Policy type"
+ * @param {String} Application "Is using broker" flag
+ * @param {String} Application "Has anti-bribery code of conduct" flag
  * @returns {Array} Task list groups and tasks
  */
-const generateGroupsAndTasks = (referenceNumber: number, policyType?: string, isUsingBroker?: string): TaskListData => {
+const generateGroupsAndTasks = (referenceNumber: number, policyType?: string, isUsingBroker?: string, hasAntiBriberyCodeOfConduct?: string): TaskListData => {
   let groups = [
     {
       title: INITIAL_CHECKS.HEADING,
@@ -36,7 +38,7 @@ const generateGroupsAndTasks = (referenceNumber: number, policyType?: string, is
     {
       title: SUBMIT_APPLICATION.HEADING,
       id: GROUP_IDS.SUBMIT_APPLICATION,
-      tasks: submitApplicationTasks(referenceNumber, groups),
+      tasks: submitApplicationTasks(referenceNumber, groups, hasAntiBriberyCodeOfConduct),
     },
   ] as TaskListData;
 

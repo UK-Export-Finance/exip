@@ -30,6 +30,7 @@ export const get = (req: Request, res: Response) => {
     application.referenceNumber,
     application.policyAndExport.policyType,
     application.exporterBroker.isUsingBroker,
+    application.declaration.hasAntiBriberyCodeOfConduct,
   );
 
   const taskListData = generateTaskList(taskListStructure, flatApplicationData);
