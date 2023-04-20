@@ -437,6 +437,7 @@ var notify = {
         emailRecipient: sendToEmailAddress
       };
     } catch (err) {
+      console.error(err);
       throw new Error(`Calling Notify API. Unable to send email ${err}`);
     }
   }
@@ -491,8 +492,8 @@ var passwordResetLink = async (emailAddress, firstName, passwordResetHash) => {
   try {
     console.info("Sending email for account password reset");
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
-    const variables = { passwordResetToken: passwordResetHash };
-    const response = await callNotify(templateId, emailAddress, variables, firstName);
+    const variables = { firstName, passwordResetToken: passwordResetHash };
+    const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (err) {
     console.error(err);
