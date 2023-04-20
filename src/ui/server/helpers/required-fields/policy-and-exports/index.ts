@@ -21,6 +21,7 @@ export const getContractPolicyTasks = (policyType?: string): object => {
 
 /**
  * Required fields for the insurance - policy and exports section
+ * @param {String} Application "Policy type"
  * @returns {Array} Required field IDs
  */
 const requiredFields = (policyType?: string) =>

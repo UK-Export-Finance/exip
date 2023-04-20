@@ -4,6 +4,7 @@ import generateGroupsAndTasks from '.';
 import { FIELD_IDS, TASK_IDS } from '../../../constants';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { TASKS } from '../../../content-strings';
+import declarationsRequiredFields from '../../required-fields/declarations';
 import { mockApplication } from '../../../test-mocks';
 
 const { SUBMIT_APPLICATION } = TASKS.LIST;
@@ -15,23 +16,27 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  DECLARATIONS: { AGREE_CONFIDENTIALITY, AGREE_ANTI_BRIBERY },
   CHECK_YOUR_ANSWERS,
   CHECK_YOUR_ANSWERS: { POLICY_AND_EXPORT, EXPORTER_BUSINESS, BUYER },
 } = FIELD_IDS.INSURANCE;
 
 describe('server/helpers/task-list/submit-application', () => {
   it('should return EXIP `submit application` tasks', () => {
-    const { referenceNumber } = mockApplication;
+    const { referenceNumber, policyAndExport, exporterBroker, declaration } = mockApplication;
 
-    const groupsAndTasks = generateGroupsAndTasks(referenceNumber);
+    const groupsAndTasks = generateGroupsAndTasks(
+      referenceNumber,
+      policyAndExport.policyType,
+      exporterBroker.isUsingBroker,
+      declaration.hasAntiBriberyCodeOfConduct,
+    );
 
     const initialChecksGroup = groupsAndTasks[0];
     const prepareApplicationGroup = groupsAndTasks[1];
 
     const previousGroups = [initialChecksGroup, prepareApplicationGroup];
 
-    const result = createSubmitApplicationTasks(referenceNumber, previousGroups);
+    const result = createSubmitApplicationTasks(referenceNumber, previousGroups, declaration.hasAntiBriberyCodeOfConduct);
 
     const initialChecksFields = getAllTasksFieldsInAGroup(initialChecksGroup);
     const prepareApplicationFields = getAllTasksFieldsInAGroup(prepareApplicationGroup);
@@ -50,7 +55,7 @@ describe('server/helpers/task-list/submit-application', () => {
       href: `${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`,
       title: SUBMIT_APPLICATION.TASKS.DECLARATIONS_AND_SUBMIT,
       id: TASK_IDS.SUBMIT_APPLICATION.DECLARATIONS_AND_SUBMIT,
-      fields: [AGREE_CONFIDENTIALITY, AGREE_ANTI_BRIBERY, 'temp'],
+      fields: declarationsRequiredFields(declaration.hasAntiBriberyCodeOfConduct),
       dependencies: expectedDependencies,
     };
 

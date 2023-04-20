@@ -4,7 +4,7 @@ import { TASKS } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
-const { STATUS: { IN_PROGRESS } } = TASKS;
+const { STATUS: { IN_PROGRESS, COMPLETED } } = TASKS;
 
 const { taskList } = partials.insurancePartials;
 
@@ -64,7 +64,7 @@ context('Insurance - Declarations - How your data will be used page - Save and g
       cy.url().should('eq', expected);
     });
 
-    it('should retain the status of task `declarations` as `in progress`', () => {
+    it(`should retain the status of task 'declarations' as '${IN_PROGRESS}'`, () => {
       cy.checkTaskStatus(task, IN_PROGRESS);
     });
   });
@@ -84,8 +84,8 @@ context('Insurance - Declarations - How your data will be used page - Save and g
       cy.url().should('eq', expected);
     });
 
-    it('should retain the status of task `declarations` as `in progress`', () => {
-      cy.checkTaskStatus(task, IN_PROGRESS);
+    it(`should update the status of task 'declarations' to '${COMPLETED}'`, () => {
+      cy.checkTaskStatus(task, COMPLETED);
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {

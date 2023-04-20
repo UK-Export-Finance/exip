@@ -15,11 +15,11 @@ const {
 /**
  * getAntiBriberyCodeOfConductTasks
  * Get anti-bribery code of conduct tasks depending on if "has anti-bribery code of conduct" answer
- * @param {String} Has anti-bribery code of conduct answer
+ * @param {String} Application "Has anti-bribery code of conduct" flag
  * @returns {Array} Anti-bribery code of conduct tasks
  */
-export const getAntiBriberyCodeOfConductTasks = (hasAntiBriberyCodeOfConduct: string): Array<string> => {
-  if (hasAntiBriberyCodeOfConduct === FIELD_VALUES.YES) {
+export const getAntiBriberyCodeOfConductTasks = (hasAntiBriberyCodeOfConduct?: string): Array<string> => {
+  if (hasAntiBriberyCodeOfConduct && hasAntiBriberyCodeOfConduct === FIELD_VALUES.YES) {
     return [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT, WILL_EXPORT_WITH_CODE_OF_CONDUCT];
   }
 
@@ -30,7 +30,7 @@ export const getAntiBriberyCodeOfConductTasks = (hasAntiBriberyCodeOfConduct: st
  * Required fields for the insurance - declarations section
  * @param {Array} Required field IDs
  */
-const requiredFields = (hasAntiBriberyCodeOfConduct: string): Array<string> => {
+const requiredFields = (hasAntiBriberyCodeOfConduct?: string): Array<string> => {
   const fields = [
     AGREE_CONFIDENTIALITY,
     AGREE_ANTI_BRIBERY,

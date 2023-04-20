@@ -1,7 +1,9 @@
 import dashboardPage from '../../../pages/insurance/dashboard';
 import header from '../../../partials/header';
+import taskList from '../../../partials/insurance/taskList';
 import { APPLICATION } from '../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
+import { TASKS } from '../../../../../content-strings';
 
 const { table } = dashboardPage;
 
@@ -11,9 +13,15 @@ const {
   APPLICATION_SUBMITTED,
 } = INSURANCE_ROUTES;
 
+const { initialChecks, prepareApplication, submitApplication } = taskList;
+
+const { COMPLETED } = TASKS.STATUS;
+
 context('Insurance - application submitted page - As an Exporter, I want to submit my completed export insurance application, So that UKEF can process and make a decision on my application', () => {
   let referenceNumber;
   let url;
+
+  const dashboardUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication().then((refNumber) => {
@@ -43,9 +51,7 @@ context('Insurance - application submitted page - As an Exporter, I want to subm
     const submittedStatus = APPLICATION.STATUS.SUBMITTED;
 
     beforeEach(() => {
-      url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
-
-      cy.navigateToUrl(url);
+      cy.navigateToUrl(dashboardUrl);
 
       header.navigation.applications().click();
     });
@@ -54,6 +60,31 @@ context('Insurance - application submitted page - As an Exporter, I want to subm
       const cell = table.body.row(referenceNumber).status();
 
       cy.checkText(cell, submittedStatus);
+    });
+  });
+
+  describe('when going back to the application', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(dashboardUrl);
+
+      const applicationLink = table.body.row(referenceNumber).referenceNumber();
+
+      applicationLink.click();
+    });
+
+    it(`should render 'initial checks' task statuses as ${COMPLETED}`, () => {
+      cy.checkTaskStatus(initialChecks.tasks.eligibility, COMPLETED);
+    });
+
+    it(`should render 'prepare application' task statuses as ${COMPLETED}`, () => {
+      cy.checkTaskStatus(prepareApplication.tasks.policyTypeAndExports, COMPLETED);
+      cy.checkTaskStatus(prepareApplication.tasks.exporterBusiness, COMPLETED);
+      cy.checkTaskStatus(prepareApplication.tasks.buyer, COMPLETED);
+    });
+
+    it(`should render 'submit application' task statuses as ${COMPLETED}`, () => {
+      cy.checkTaskStatus(submitApplication.tasks.checkAnswers, COMPLETED);
+      cy.checkTaskStatus(submitApplication.tasks.declarationsAndSubmit, COMPLETED);
     });
   });
 });

@@ -1,12 +1,17 @@
 import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import { isAfter } from 'date-fns';
 import { APPLICATION } from '../constants';
+import getPopulatedApplication from '../helpers/get-populated-application';
 import applicationSubmittedEmails from '../emails/send-application-submitted-emails';
+import generate from '../generate-csv';
 import { SubmitApplicationVariables, SubmitApplicationResponse } from '../types';
 
 /**
  * submitApplication
- * Submit an application - changes application status and sends emails to the exporter and UKEF underwriting team
+ * Submit an application
+ * 1) Change application status, add submission date
+ * 2) Generate a CSV for the UKEF underwriting team
+ * 3) Sends emails to the exporter and UKEF underwriting team
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the SubmitApplication mutation
  * @param {Object} KeystoneJS context API
@@ -39,14 +44,19 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
           submissionDate: now,
         };
 
-        await context.db.Application.updateOne({
+        const updatedApplication = await context.db.Application.updateOne({
           where: { id: application.id },
           data: update,
         });
 
-        const { referenceNumber, exporterId, buyerId, declarationId, exporterCompanyId } = application;
+        // get a fully populated application for CSV generation
+        const populatedApplication = await getPopulatedApplication(context, updatedApplication);
 
-        await applicationSubmittedEmails.send(context, referenceNumber, exporterId, buyerId, declarationId, exporterCompanyId);
+        // generate a CSV for UKEF underwriting team email
+        const csvPath = await generate.csv(populatedApplication);
+
+        // send all "application submitted" emails
+        await applicationSubmittedEmails.send(populatedApplication, csvPath);
 
         return {
           success: true,
