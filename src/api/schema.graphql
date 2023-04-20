@@ -1691,6 +1691,9 @@ type Mutation {
 
   """ submit an application """
   submitApplication(applicationId: String!): SuccessResponse
+
+  """ send email for insurance feedback """
+  sendEmailInsuranceFeedback(satisfaction: String, improvement: String, otherComments: String): SuccessResponse
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure

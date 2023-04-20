@@ -9,6 +9,7 @@ import {
   deleteApplicationByReferenceNumber,
   updateExporterCompanyAndCompanyAddress,
   submitApplication,
+  sendEmailInsuranceFeedback,
 } from './mutations';
 import { getCompaniesHouseInformation } from './queries';
 
@@ -29,6 +30,7 @@ const customResolvers = {
     deleteApplicationByReferenceNumber,
     updateExporterCompanyAndCompanyAddress,
     submitApplication,
+    sendEmailInsuranceFeedback,
   },
   Query: {
     getCompaniesHouseInformation,

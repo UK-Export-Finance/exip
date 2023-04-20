@@ -184,6 +184,13 @@ const typeDefs = `
     submitApplication(
       applicationId: String!
     ): SuccessResponse
+
+    """ send email for insurance feedback """
+    sendEmailInsuranceFeedback(
+      satisfaction: String
+      improvement: String
+      otherComments: String
+    ): SuccessResponse
   }
 
   type Query {
