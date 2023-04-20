@@ -1,6 +1,9 @@
 import dotenv from 'dotenv';
 import { Algorithm } from 'jsonwebtoken';
-import { BufferEncoding } from './types';
+import { BufferEncoding } from '../types';
+import INSURANCE_FIELD_IDS from './field-ids/insurance';
+export * from './application';
+export * from './field-values';
 
 dotenv.config();
 
@@ -9,32 +12,14 @@ export const ANSWERS = {
   NO: 'No',
 };
 
-export const APPLICATION = {
-  SUBMISSION_TYPE: {
-    MIA: 'Manual Inclusion Application',
-  },
-  SUBMISSION_DEADLINE_IN_MONTHS: 1,
-  POLICY_TYPE: {
-    SINGLE: 'Single contract policy',
-    MULTIPLE: 'Multiple contract policy',
-  },
-  POLICY_AND_EXPORT: {
-    TOTAL_VALUE_OF_CONTRACT: {
-      MINIMUM: 1,
-      MAXIMUM: 499999,
-    },
-  },
-  STATUS: {
-    DRAFT: 'Draft',
-    SUBMITTED: 'Submitted to UKEF',
-  },
-};
+export const GBP_CURRENCY_CODE = 'GBP';
 
 export const FIELD_IDS = {
   ACCOUNT: {
     EMAIL: 'email',
     VERIFICATION_HASH: 'verificationHash',
   },
+  ...INSURANCE_FIELD_IDS,
 };
 
 /**
@@ -137,3 +122,5 @@ export const EMAIL_TEMPLATE_IDS = {
     INSURANCE: '4d3d7944-e894-4527-aee6-692038c84107',
   },
 };
+
+export const ACCEPTED_FILE_TYPES = ['.csv'];

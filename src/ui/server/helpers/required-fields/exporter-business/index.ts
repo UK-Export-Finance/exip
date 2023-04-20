@@ -25,7 +25,7 @@ const { USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL } = BROKER;
 /**
  * getBrokerTasks
  * Get broker section tasks depending on the isUsingBroker field
- * @param {String} isUsingBroker
+ * @param {String} Application "Is using broker" flag
  * @returns {Array} Array of tasks
  */
 export const getBrokerTasks = (isUsingBroker?: string): Array<string> => {
