@@ -1,35 +1,15 @@
 import dotenv from 'dotenv';
 import { Algorithm } from 'jsonwebtoken';
 import { BufferEncoding } from '../types';
-
 import INSURANCE_FIELD_IDS from './field-ids/insurance';
+export * from './application';
+export * from './field-values';
 
 dotenv.config();
 
 export const ANSWERS = {
   YES: 'Yes',
   NO: 'No',
-};
-
-export const APPLICATION = {
-  SUBMISSION_TYPE: {
-    MIA: 'Manual Inclusion Application',
-  },
-  SUBMISSION_DEADLINE_IN_MONTHS: 1,
-  POLICY_TYPE: {
-    SINGLE: 'Single contract policy',
-    MULTIPLE: 'Multiple contract policy',
-  },
-  POLICY_AND_EXPORT: {
-    TOTAL_VALUE_OF_CONTRACT: {
-      MINIMUM: 1,
-      MAXIMUM: 499999,
-    },
-  },
-  STATUS: {
-    DRAFT: 'Draft',
-    SUBMITTED: 'Submitted to UKEF',
-  },
 };
 
 export const GBP_CURRENCY_CODE = 'GBP';

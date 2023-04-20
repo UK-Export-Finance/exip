@@ -1,7 +1,7 @@
 import mapYesNoField from '.';
 import { DEFAULT } from '../../../../content-strings';
 
-describe('api/generate-csv/map-application-to-csv/helpers/mappings/map-yes-no-field', () => {
+describe('api/generate-csv/map-application-to-csv/helpers/map-yes-no-field', () => {
   describe('when value is true', () => {
     const value = true;
 

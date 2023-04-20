@@ -1,5 +1,6 @@
 import mapEligibility from '.';
 import FIELD_IDS from '../../../constants/field-ids/insurance';
+import { CSV_SECTION_TITLES } from '../../../content-strings';
 import { FIELDS_ELIGIBILITY as CONTENT_STRINGS } from '../../../content-strings/fields/insurance/eligibility';
 import csvRow from '../helpers/csv-row';
 import mapYesNoField from '../helpers/map-yes-no-field';
@@ -24,6 +25,7 @@ describe('api/generate-csv/map-application-to-csv/map-eligibility', () => {
     const { eligibility } = mockApplication;
 
     const expected = [
+      csvRow(CSV_SECTION_TITLES.ELIGIBILITY, ''),
       csvRow(CONTENT_STRINGS[BUYER_COUNTRY].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY].name),
       csvRow(CONTENT_STRINGS[VALID_EXPORTER_LOCATION].SUMMARY?.TITLE, mapYesNoField(eligibility[VALID_EXPORTER_LOCATION])),
       csvRow(CONTENT_STRINGS[HAS_MINIMUM_UK_GOODS_OR_SERVICES].SUMMARY?.TITLE, mapYesNoField(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES])),

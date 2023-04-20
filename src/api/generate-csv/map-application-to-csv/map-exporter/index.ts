@@ -1,5 +1,7 @@
 import FIELD_IDS from '../../../constants/field-ids/insurance/exporter-business';
+import { CSV_SECTION_TITLES } from '../../../content-strings';
 import { FIELDS } from '../../../content-strings/fields/insurance/your-business';
+import { ANSWERS } from '../../../constants';
 import csvRow from '../helpers/csv-row';
 import formatDate from '../helpers/format-date';
 import NEW_LINE from '../helpers/csv-new-line';
@@ -21,15 +23,43 @@ const {
 } = FIELD_IDS;
 
 /**
+ * mapExporterBroker
+ * Map an application's exporter broker fields into an array of objects for CSV generation
+ * @param {Object} Application
+ * @returns {Array} Array of objects for CSV generation
+ */
+export const mapExporterBroker = (application: Application) => {
+  const { exporterBroker } = application;
+
+  let mapped = [csvRow(CONTENT_STRINGS[USING_BROKER].SUMMARY?.TITLE, exporterBroker[USING_BROKER])];
+
+  if (exporterBroker[USING_BROKER] === ANSWERS.YES) {
+    mapped = [
+      ...mapped,
+      csvRow(CONTENT_STRINGS[BROKER_NAME].SUMMARY?.TITLE, exporterBroker[BROKER_NAME]),
+      csvRow(
+        CONTENT_STRINGS[ADDRESS_LINE_1].SUMMARY?.TITLE,
+        `${exporterBroker[ADDRESS_LINE_1]} ${NEW_LINE} ${exporterBroker[TOWN]} ${NEW_LINE} ${exporterBroker[COUNTY]} ${NEW_LINE} ${exporterBroker[POSTCODE]}`,
+      ),
+      csvRow(CONTENT_STRINGS[EMAIL].SUMMARY?.TITLE, exporterBroker[EMAIL]),
+    ];
+  }
+
+  return mapped;
+};
+
+/**
  * mapExporter
  * Map an application's exporter fields into an array of objects for CSV generation
  * @param {Object} Application
  * @returns {Array} Array of objects for CSV generation
  */
 const mapExporter = (application: Application) => {
-  const { exporterCompany, exporterBusiness, exporterBroker } = application;
+  const { exporterCompany, exporterBusiness } = application;
 
   const mapped = [
+    csvRow(CSV_SECTION_TITLES.EXPORTER_BUSINESS, ''),
+
     // exporter company fields
     csvRow(CONTENT_STRINGS[COMPANY_NUMBER].SUMMARY?.TITLE, exporterCompany[COMPANY_NUMBER]),
     csvRow(CONTENT_STRINGS[COMPANY_NAME].SUMMARY?.TITLE, exporterCompany[COMPANY_NAME]),
@@ -50,14 +80,8 @@ const mapExporter = (application: Application) => {
     csvRow(CONTENT_STRINGS[ESTIMATED_ANNUAL_TURNOVER].SUMMARY?.TITLE, exporterBusiness[ESTIMATED_ANNUAL_TURNOVER]),
     csvRow(CONTENT_STRINGS[PERCENTAGE_TURNOVER].SUMMARY?.TITLE, exporterBusiness[PERCENTAGE_TURNOVER]),
 
-    // broker fields
-    csvRow(CONTENT_STRINGS[USING_BROKER].SUMMARY?.TITLE, exporterBroker[USING_BROKER]),
-    csvRow(CONTENT_STRINGS[BROKER_NAME].SUMMARY?.TITLE, exporterBroker[BROKER_NAME]),
-    csvRow(
-      CONTENT_STRINGS[ADDRESS_LINE_1].SUMMARY?.TITLE,
-      `${exporterBroker[ADDRESS_LINE_1]} ${NEW_LINE} ${exporterBroker[TOWN]} ${NEW_LINE} ${exporterBroker[COUNTY]} ${NEW_LINE} ${exporterBroker[POSTCODE]}`,
-    ),
-    csvRow(CONTENT_STRINGS[EMAIL].SUMMARY?.TITLE, exporterBroker[EMAIL]),
+    // exporter broker fields
+    ...mapExporterBroker(application),
   ];
 
   return mapped;

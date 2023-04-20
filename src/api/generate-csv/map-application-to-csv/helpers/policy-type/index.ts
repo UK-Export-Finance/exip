@@ -1,4 +1,4 @@
-import { FIELD_VALUES } from '../../constants';
+import { FIELD_VALUES } from '../../../../constants';
 
 /**
  * isSinglePolicyType
