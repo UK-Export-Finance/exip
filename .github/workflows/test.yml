@@ -42,7 +42,7 @@ jobs:
     needs: setup
     environment:
       name: ${{ needs.setup.outputs.environment }}
-    runs-on: [ self-hosted, linux ]
+    runs-on: ubuntu-latest
     steps:
       - name: Timezone
         uses: szenius/set-timezone@v1.2
