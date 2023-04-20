@@ -22,7 +22,7 @@ const MANAGE_ACCOUNT = `${INSURANCE_ROOT}/manage-account`;
 
 const PASSWORD_RESET = {
   ROOT: `${INSURANCE_ROOT}${PASSWORD_RESET_ROOT}`,
-  LINK_SENT: `${INSURANCE_ROOT}/link-sent`,
+  LINK_SENT: `${INSURANCE_ROOT}${PASSWORD_RESET_ROOT}/link-sent`,
 };
 
 const SIGN_OUT = `${INSURANCE_ROOT}/sign-out`;

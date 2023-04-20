@@ -94,6 +94,27 @@ const ACCOUNT = {
     ROOT: {
       PAGE_TITLE: 'Enter your email to reset your password',
     },
+    LINK_SENT: {
+      PAGE_TITLE: "We've emailed you a link to reset your password",
+      CHECK_YOUR_INBOX: 'Check your inbox for',
+      FOLLOW_THE_LINK: 'Then follow the link to reset your password',
+      NOT_RECEIVED_ANYTHING: {
+        HEADING: 'If you have not received anything after 5 minutes',
+        YOU_CAN: 'You can',
+        LINK: {
+          TEXT: 'get a new password reset link.',
+          HREF: INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.ROOT,
+        },
+      },
+      NOT_YOUR_EMAIL_ADDRESS: {
+        HEADING: 'If this is not your email address',
+        NEED_TO: "You'll need to",
+        LINK: {
+          TEXT: 'enter your email address again.',
+          HREF: INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.ROOT,
+        },
+      },
+    },
   },
   SIGNED_OUT: {
     PAGE_TITLE: 'For your security, we signed you out',

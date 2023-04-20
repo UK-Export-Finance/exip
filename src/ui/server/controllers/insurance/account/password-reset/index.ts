@@ -60,7 +60,7 @@ export const get = (req: Request, res: Response) =>
  */
 export const post = async (req: Request, res: Response) => {
   try {
-    const email = sanitiseValue(FIELD_ID, req.body[FIELD_ID]);
+    const email = String(sanitiseValue(FIELD_ID, req.body[FIELD_ID]));
 
     const validationErrors = generateValidationErrors(req.body);
 
@@ -76,10 +76,12 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
-    const response = await api.keystone.account.sendEmailPasswordResetLink(String(email));
+    const response = await api.keystone.account.sendEmailPasswordResetLink(email);
 
-    // valid sign in code - update the session and redirect to the dashboard
     if (response.success) {
+      // store the email address in local session, for consumption in the next part of the flow.
+      req.session.emailAddressForPasswordReset = email;
+
       return res.redirect(LINK_SENT);
     }
 
