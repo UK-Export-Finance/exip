@@ -1,6 +1,12 @@
-const csvRow = (fieldName: string, answer: string | number) => ({
-  Field: fieldName,
-  Answer: answer,
-});
+const csvRow = (fieldName: string, answer?: string | number) => {
+  const value = answer || '';
+
+  const row = {
+    Field: fieldName,
+    Answer: value,
+  };
+
+  return row;
+};
 
 export default csvRow;

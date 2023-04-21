@@ -1,6 +1,6 @@
 import mapExporter, { mapExporterBroker } from '.';
 import FIELD_IDS from '../../../constants/field-ids/insurance/exporter-business';
-import { CSV_SECTION_TITLES } from '../../../content-strings';
+import { CSV } from '../../../content-strings';
 import { FIELDS } from '../../../content-strings/fields/insurance/your-business';
 import { ANSWERS } from '../../../constants';
 import csvRow from '../helpers/csv-row';
@@ -73,7 +73,7 @@ describe('api/generate-csv/map-application-to-csv/map-exporter', () => {
       const { exporterCompany, exporterBusiness } = mockApplication;
 
       const expected = [
-        csvRow(CSV_SECTION_TITLES.EXPORTER_BUSINESS, ''),
+        csvRow(CSV.SECTION_TITLES.EXPORTER_BUSINESS, ''),
 
         // exporter company fields
         csvRow(CONTENT_STRINGS[COMPANY_NUMBER].SUMMARY?.TITLE, exporterCompany[COMPANY_NUMBER]),

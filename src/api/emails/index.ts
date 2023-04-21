@@ -142,7 +142,7 @@ const applicationSubmitted = {
 
         // NOTE: no need to handle an error from fs.unlink here,
         // if it errors, it will go into the catch handler below.
-        await fileSystem.unlink(csvPath);
+        // await fileSystem.unlink(csvPath);
 
         return response;
       }

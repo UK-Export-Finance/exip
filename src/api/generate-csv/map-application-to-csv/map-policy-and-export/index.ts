@@ -1,5 +1,5 @@
 import FIELD_IDS from '../../../constants/field-ids/insurance';
-import { CSV_SECTION_TITLES } from '../../../content-strings';
+import { CSV } from '../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS } from '../../../content-strings/fields/insurance';
 import { GBP_CURRENCY_CODE } from '../../../constants';
 import { isSinglePolicyType, isMultiPolicyType } from '../helpers/policy-type';
@@ -58,7 +58,7 @@ const mapPolicyAndExport = (application: Application) => {
   const { policyAndExport } = application;
 
   mapped = [
-    csvRow(CSV_SECTION_TITLES.POLICY_AND_EXPORT, ''),
+    csvRow(CSV.SECTION_TITLES.POLICY_AND_EXPORT, ''),
     csvRow(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE]),
     csvRow(String(CONTENT_STRINGS[REQUESTED_START_DATE].SUMMARY?.TITLE), formatDate(policyAndExport[REQUESTED_START_DATE])),
   ];

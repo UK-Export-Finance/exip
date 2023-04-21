@@ -1,5 +1,5 @@
 import FIELD_IDS from '../../../constants/field-ids/insurance';
-import { CSV_SECTION_TITLES } from '../../../content-strings';
+import { CSV } from '../../../content-strings';
 import { FIELDS_ELIGIBILITY as CONTENT_STRINGS } from '../../../content-strings/fields/insurance/eligibility';
 import csvRow from '../helpers/csv-row';
 import mapYesNoField from '../helpers/map-yes-no-field';
@@ -27,7 +27,7 @@ const mapEligibility = (application: Application) => {
   const { eligibility } = application;
 
   const mapped = [
-    csvRow(CSV_SECTION_TITLES.ELIGIBILITY, ''),
+    csvRow(CSV.SECTION_TITLES.ELIGIBILITY, ''),
     csvRow(CONTENT_STRINGS[BUYER_COUNTRY].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY].name),
     csvRow(CONTENT_STRINGS[VALID_EXPORTER_LOCATION].SUMMARY?.TITLE, mapYesNoField(eligibility[VALID_EXPORTER_LOCATION])),
     csvRow(CONTENT_STRINGS[HAS_MINIMUM_UK_GOODS_OR_SERVICES].SUMMARY?.TITLE, mapYesNoField(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES])),

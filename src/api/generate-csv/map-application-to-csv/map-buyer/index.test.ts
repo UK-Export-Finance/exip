@@ -1,6 +1,6 @@
 import mapBuyer from '.';
 import FIELD_IDS from '../../../constants/field-ids/insurance/your-buyer';
-import { CSV_SECTION_TITLES } from '../../../content-strings';
+import { CSV } from '../../../content-strings';
 import { YOUR_BUYER_FIELDS } from '../../../content-strings/fields/insurance/your-buyer';
 import NEW_LINE from '../helpers/csv-new-line';
 import csvRow from '../helpers/csv-row';
@@ -23,7 +23,7 @@ describe('api/generate-csv/map-application-to-csv/map-buyer', () => {
     const { buyer } = mockApplication;
 
     const expected = [
-      csvRow(CSV_SECTION_TITLES.BUYER, ''),
+      csvRow(CSV.SECTION_TITLES.BUYER, ''),
       csvRow(String(CONTENT_STRINGS[NAME].SUMMARY?.TITLE), buyer[NAME]),
       csvRow(String(CONTENT_STRINGS[ADDRESS].SUMMARY?.TITLE), buyer[ADDRESS]),
       csvRow(String(CONTENT_STRINGS[REGISTRATION_NUMBER].SUMMARY?.TITLE), buyer[REGISTRATION_NUMBER]),
