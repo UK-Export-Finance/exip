@@ -5,11 +5,15 @@ import YOUR_BUYER from '../constants/field-ids/insurance/your-buyer';
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT;
 
 const {
-  COMPANY_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME },
+  COMPANY_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
+  YOUR_COMPANY: { WEBSITE, PHONE_NUMBER },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER },
+  BROKER: { NAME: BROKER_NAME, ADDRESS_LINE_1: BROKER_ADDRESS, EMAIL: BROKER_EMAIL },
 } = EXPORTER_BUSINESS;
 
 const {
-  COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME },
+  COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS },
 } = YOUR_BUYER;
 
 export const CSV = {
@@ -25,7 +29,21 @@ export const CSV = {
     [LAST_NAME]: 'Applicant last name',
     [EMAIL]: 'Applicant email address',
     [EXPORTER_COMPANY_NAME]: 'Exporter company name',
+    [EXPORTER_COMPANY_ADDRESS]: 'Exporter registered office address',
+    [EXPORTER_COMPANY_SIC]: 'Exporter standard industry classification (SIC) codes and nature of business',
+    [WEBSITE]: 'Exporter Company website (optional)',
+    [PHONE_NUMBER]: 'Exporter telephone number (optional)',
+    [GOODS_OR_SERVICES]: 'Goods or services the business supplies',
+    [YEARS_EXPORTING]: 'Exporter years exporting',
+    [EMPLOYEES_UK]: 'Exporter UK Exmployees',
+    [EMPLOYEES_INTERNATIONAL]: 'Exporter worldwide employees including UK employees',
+    [ESTIMATED_ANNUAL_TURNOVER]: 'Exporter estimated turnover this current financial year',
+    [BROKER_NAME]: 'Name of broker or company',
+    [BROKER_ADDRESS]: 'Broker address',
+    [BROKER_EMAIL]: 'Broker email address',
     [COUNTRY]: 'Buyer location',
-    [BUYER_COMPANY_NAME]: 'Buyer company name',
+    [BUYER_COMPANY_NAME]: 'Buyer company or organisation name',
+    [BUYER_REGISTRATION_NUMBER]: 'Buyer registration number (optional)',
+    [BUYER_CONTACT_DETAILS]: 'Buyer contact details',
   },
 };

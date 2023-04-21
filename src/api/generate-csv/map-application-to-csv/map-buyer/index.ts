@@ -26,14 +26,11 @@ const mapBuyer = (application: Application) => {
 
   const mapped = [
     csvRow(CSV.SECTION_TITLES.BUYER, ''),
-    csvRow(String(CONTENT_STRINGS[NAME].SUMMARY?.TITLE), buyer[NAME]),
+    csvRow(CSV.FIELDS[NAME], buyer[NAME]),
     csvRow(String(CONTENT_STRINGS[ADDRESS].SUMMARY?.TITLE), buyer[ADDRESS]),
-    csvRow(String(CONTENT_STRINGS[REGISTRATION_NUMBER].SUMMARY?.TITLE), buyer[REGISTRATION_NUMBER]),
+    csvRow(CSV.FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
     csvRow(String(CONTENT_STRINGS[WEBSITE].SUMMARY?.TITLE), buyer[WEBSITE]),
-    csvRow(
-      String(CONTENT_STRINGS[FIRST_NAME].SUMMARY?.TITLE),
-      `${buyer[FIRST_NAME]} ${buyer[LAST_NAME]} ${NEW_LINE} ${buyer[POSITION]} ${NEW_LINE} ${buyer[EMAIL]}`,
-    ),
+    csvRow(CSV.FIELDS[FIRST_NAME], `${buyer[FIRST_NAME]} ${buyer[LAST_NAME]} ${NEW_LINE} ${buyer[POSITION]} ${NEW_LINE} ${buyer[EMAIL]}`),
     csvRow(String(CONTENT_STRINGS[CAN_CONTACT_BUYER].SUMMARY?.TITLE), buyer[CAN_CONTACT_BUYER]),
     csvRow(String(CONTENT_STRINGS[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), buyer[CONNECTED_WITH_BUYER]),
     csvRow(String(CONTENT_STRINGS[TRADED_WITH_BUYER].SUMMARY?.TITLE), buyer[TRADED_WITH_BUYER]),

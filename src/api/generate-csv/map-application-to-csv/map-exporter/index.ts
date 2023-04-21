@@ -15,7 +15,7 @@ const CONTENT_STRINGS = {
 };
 
 const {
-  COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_NAME, COMPANY_ADDRESS, COMPANY_INCORPORATED, COMPANY_SIC, FINANCIAL_YEAR_END_DATE },
+  COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_NAME, COMPANY_ADDRESS, REGISTED_OFFICE_ADDRESS, COMPANY_INCORPORATED, COMPANY_SIC, FINANCIAL_YEAR_END_DATE },
   YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
@@ -36,12 +36,12 @@ export const mapExporterBroker = (application: Application) => {
   if (exporterBroker[USING_BROKER] === ANSWERS.YES) {
     mapped = [
       ...mapped,
-      csvRow(CONTENT_STRINGS[BROKER_NAME].SUMMARY?.TITLE, exporterBroker[BROKER_NAME]),
+      csvRow(CSV.FIELDS[BROKER_NAME], exporterBroker[BROKER_NAME]),
       csvRow(
-        CONTENT_STRINGS[ADDRESS_LINE_1].SUMMARY?.TITLE,
+        CSV.FIELDS[ADDRESS_LINE_1],
         `${exporterBroker[ADDRESS_LINE_1]} ${NEW_LINE} ${exporterBroker[TOWN]} ${NEW_LINE} ${exporterBroker[COUNTY]} ${NEW_LINE} ${exporterBroker[POSTCODE]}`,
       ),
-      csvRow(CONTENT_STRINGS[EMAIL].SUMMARY?.TITLE, exporterBroker[EMAIL]),
+      csvRow(CSV.FIELDS[EMAIL], exporterBroker[EMAIL]),
     ];
   }
 
@@ -57,27 +57,45 @@ export const mapExporterBroker = (application: Application) => {
 const mapExporter = (application: Application) => {
   const { exporterCompany, exporterBusiness } = application;
 
+  const address = exporterCompany[COMPANY_ADDRESS];
+
+  const { ADDRESS_LINE_2, CARE_OF, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PREMISES } = REGISTED_OFFICE_ADDRESS;
+
+  const mappedAddress = `
+    ${address[ADDRESS_LINE_1]},\n
+    ${address[ADDRESS_LINE_2]},\n
+    ${address[CARE_OF]},\n
+    ${address[LOCALITY]},\n
+    ${address[REGION]},\n
+    ${address[POSTAL_CODE]},\n
+    ${address[COUNTRY]},\n
+    ${address[PREMISES]},
+  `;
+
   const mapped = [
     csvRow(CSV.SECTION_TITLES.EXPORTER_BUSINESS, ''),
 
     // exporter company fields
     csvRow(CONTENT_STRINGS[COMPANY_NUMBER].SUMMARY?.TITLE, exporterCompany[COMPANY_NUMBER]),
     csvRow(CSV.FIELDS[COMPANY_NAME], exporterCompany[COMPANY_NAME]),
-    csvRow(CONTENT_STRINGS[COMPANY_ADDRESS].SUMMARY?.TITLE, exporterCompany[COMPANY_ADDRESS]),
     csvRow(CONTENT_STRINGS[COMPANY_INCORPORATED].SUMMARY?.TITLE, formatDate(exporterCompany[COMPANY_INCORPORATED])),
-    csvRow(CONTENT_STRINGS[COMPANY_SIC].SUMMARY?.TITLE, exporterCompany[COMPANY_SIC]),
-    csvRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, formatDate(exporterCompany[FINANCIAL_YEAR_END_DATE])),
+
+    csvRow(CSV.FIELDS[COMPANY_ADDRESS], mappedAddress),
+
     csvRow(CONTENT_STRINGS[TRADING_NAME].SUMMARY?.TITLE, exporterCompany[TRADING_NAME]),
     csvRow(CONTENT_STRINGS[TRADING_ADDRESS].SUMMARY?.TITLE, exporterCompany[TRADING_ADDRESS]),
-    csvRow(CONTENT_STRINGS[WEBSITE].SUMMARY?.TITLE, exporterCompany[WEBSITE]),
-    csvRow(CONTENT_STRINGS[PHONE_NUMBER].SUMMARY?.TITLE, exporterCompany[PHONE_NUMBER]),
+
+    csvRow(CSV.FIELDS[COMPANY_SIC], exporterCompany[COMPANY_SIC]),
+    csvRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, formatDate(exporterCompany[FINANCIAL_YEAR_END_DATE])),
+    csvRow(CSV.FIELDS[WEBSITE], exporterCompany[WEBSITE]),
+    csvRow(CSV.FIELDS[PHONE_NUMBER], exporterCompany[PHONE_NUMBER]),
 
     // exporter business fields
-    csvRow(CONTENT_STRINGS[GOODS_OR_SERVICES].SUMMARY?.TITLE, exporterBusiness[GOODS_OR_SERVICES]),
-    csvRow(CONTENT_STRINGS[YEARS_EXPORTING].SUMMARY?.TITLE, exporterBusiness[YEARS_EXPORTING]),
-    csvRow(CONTENT_STRINGS[EMPLOYEES_UK].SUMMARY?.TITLE, exporterBusiness[EMPLOYEES_UK]),
-    csvRow(CONTENT_STRINGS[EMPLOYEES_INTERNATIONAL].SUMMARY?.TITLE, exporterBusiness[EMPLOYEES_INTERNATIONAL]),
-    csvRow(CONTENT_STRINGS[ESTIMATED_ANNUAL_TURNOVER].SUMMARY?.TITLE, exporterBusiness[ESTIMATED_ANNUAL_TURNOVER]),
+    csvRow(CSV.FIELDS[GOODS_OR_SERVICES], exporterBusiness[GOODS_OR_SERVICES]),
+    csvRow(CSV.FIELDS[YEARS_EXPORTING], exporterBusiness[YEARS_EXPORTING]),
+    csvRow(CSV.FIELDS[EMPLOYEES_UK], exporterBusiness[EMPLOYEES_UK]),
+    csvRow(CSV.FIELDS[EMPLOYEES_INTERNATIONAL], exporterBusiness[EMPLOYEES_INTERNATIONAL]),
+    csvRow(CSV.FIELDS[ESTIMATED_ANNUAL_TURNOVER], exporterBusiness[ESTIMATED_ANNUAL_TURNOVER]),
     csvRow(CONTENT_STRINGS[PERCENTAGE_TURNOVER].SUMMARY?.TITLE, exporterBusiness[PERCENTAGE_TURNOVER]),
 
     // exporter broker fields

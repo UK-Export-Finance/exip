@@ -56,6 +56,15 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('exporterCompany', application.id));
   }
 
+  const exporterCompanyAddress = await context.db.ExporterCompanyAddress.findOne({
+    where: { id: exporterCompany.registeredOfficeAddressId },
+  });
+
+  const populatedExporterCompany = {
+    ...exporterCompany,
+    registeredOfficeAddress: exporterCompanyAddress,
+  };
+
   const exporterBusiness = await context.db.ExporterBusiness.findOne({
     where: { id: exporterBusinessId },
   });
@@ -109,7 +118,7 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     },
     policyAndExport: populatedPolicyAndExport,
     exporter,
-    exporterCompany,
+    exporterCompany: populatedExporterCompany,
     exporterBusiness,
     exporterBroker,
     buyer: populatedBuyer,

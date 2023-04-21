@@ -46,16 +46,9 @@ describe('helpers/get-country-by-field', () => {
   });
 
   describe('when a country is not found', () => {
-    beforeEach(async () => {
-      // delete the country so it will not be found
-      await context.query.Country.deleteOne({
-        where: { id: country.id },
-      });
-    });
-
     it('should throw an error', async () => {
       try {
-        await getCountryByField(context, field, value);
+        await getCountryByField(context, field, 'invalidIsoCode');
       } catch (err) {
         const errorMessage = 'Getting country by field/value';
 
