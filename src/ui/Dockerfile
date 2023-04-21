@@ -72,4 +72,4 @@ CMD wget \
 CMD ["npm", "run", "start"]
 
 # Non-root user
-USER node
+# USER node
