@@ -1,5 +1,6 @@
 import { Context, Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
 import getExporterById from './get-exporter-by-id';
+import getCountryByField from './get-country-by-field';
 import { Application } from '../types';
 
 export const generateErrorMessage = (section: string, applicationId: number) =>
@@ -38,6 +39,14 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
   if (!policyAndExport) {
     throw new Error(generateErrorMessage('policyAndExport', application.id));
   }
+
+  const finalDestinationCountry = await getCountryByField(context, 'isoCode', policyAndExport.finalDestinationCountryCode);
+
+  const populatedPolicyAndExport = {
+    ...policyAndExport,
+    // TODO: tidy/rename this field.
+    finalDestinationCountryCode: finalDestinationCountry[0],
+  };
 
   const exporterCompany = await context.db.ExporterCompany.findOne({
     where: { id: exporterCompanyId },
@@ -98,7 +107,7 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
       ...eligibility,
       buyerCountry,
     },
-    policyAndExport,
+    policyAndExport: populatedPolicyAndExport,
     exporter,
     exporterCompany,
     exporterBusiness,

@@ -1,6 +1,7 @@
 import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import { mockApplicationEligibility, mockSinglePolicyAndExport } from '../test-mocks/mock-application';
 import { mockAccount, mockBuyer, mockExporterCompany, mockApplicationDeclaration } from '../test-mocks';
+import mockCountries from '../test-mocks/mock-countries';
 import { Account, ApplicationBuyer, ApplicationDeclaration } from '../types';
 
 /**
@@ -35,13 +36,14 @@ export const updateBuyer = async (context: Context, buyerId: string, countryId: 
  * @returns {Object} Application
  */
 export const createFullApplication = async (context: Context) => {
-  const countries = await context.query.Country.findMany({
-    query: 'id isoCode',
+  const countries = await context.query.Country.createMany({
+    data: mockCountries,
+    query: 'id isoCode name',
   });
 
-  const eligibilityCountry = countries.find((country) => country.isoCode === mockApplicationEligibility.buyerCountry.isoCode);
+  const country = countries.find((c) => c.isoCode === mockApplicationEligibility.buyerCountry.isoCode);
 
-  if (!eligibilityCountry) {
+  if (!country) {
     throw new Error('No country found from mock country ISO code');
   }
 
@@ -73,7 +75,7 @@ export const createFullApplication = async (context: Context) => {
       ...mockApplicationEligibility,
       buyerCountry: {
         connect: {
-          id: eligibilityCountry.id,
+          id: country.id,
         },
       },
     },
@@ -85,7 +87,10 @@ export const createFullApplication = async (context: Context) => {
     where: {
       id: application.policyAndExport.id,
     },
-    data: mockSinglePolicyAndExport,
+    data: {
+      ...mockSinglePolicyAndExport,
+      finalDestinationCountryCode: country.isoCode,
+    },
     query: 'id',
   })) as ApplicationDeclaration;
 

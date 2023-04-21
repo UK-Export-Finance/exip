@@ -12,6 +12,7 @@ import { Application } from '../../../types';
 const CONTENT_STRINGS = {
   ...POLICY_AND_EXPORTS_FIELDS,
   ...POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY,
+  ...POLICY_AND_EXPORTS_FIELDS.ABOUT_GOODS_OR_SERVICES,
   SINGLE: POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY.SINGLE,
   MULTIPLE: POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY.MULTIPLE,
 };
@@ -22,15 +23,28 @@ const {
     REQUESTED_START_DATE,
     SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+    CREDIT_PERIOD_WITH_BUYER,
+    POLICY_CURRENCY_CODE,
   },
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
 } = FIELD_IDS.POLICY_AND_EXPORTS;
+
+export const mapPolicyAndExportIntro = (application: Application) => {
+  const { policyAndExport } = application;
+
+  const mapped = [
+    csvRow(CSV.SECTION_TITLES.POLICY_AND_EXPORT, ''),
+    csvRow(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE]),
+    csvRow(String(CONTENT_STRINGS[REQUESTED_START_DATE].SUMMARY?.TITLE), formatDate(policyAndExport[REQUESTED_START_DATE])),
+  ];
+
+  return mapped;
+};
 
 export const mapSinglePolicyFields = (application: Application) => {
   const { policyAndExport } = application;
 
   return [
-    csvRow(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE]),
-    csvRow(String(CONTENT_STRINGS[REQUESTED_START_DATE].SUMMARY?.TITLE), formatDate(policyAndExport[REQUESTED_START_DATE])),
     csvRow(String(CONTENT_STRINGS.SINGLE[CONTRACT_COMPLETION_DATE].SUMMARY?.TITLE), formatDate(policyAndExport[CONTRACT_COMPLETION_DATE])),
     csvRow(String(CONTENT_STRINGS.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), formatCurrency(policyAndExport[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE)),
   ];
@@ -46,6 +60,19 @@ export const mapMultiplePolicyFields = (application: Application) => {
   ];
 };
 
+export const mapPolicyAndExportOutro = (application: Application) => {
+  const { policyAndExport } = application;
+
+  const mapped = [
+    csvRow(String(CONTENT_STRINGS[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policyAndExport[CREDIT_PERIOD_WITH_BUYER]),
+    csvRow(String(CONTENT_STRINGS[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policyAndExport[POLICY_CURRENCY_CODE]),
+    csvRow(String(CONTENT_STRINGS[DESCRIPTION].SUMMARY?.TITLE), policyAndExport[DESCRIPTION]),
+    csvRow(String(CONTENT_STRINGS[FINAL_DESTINATION].SUMMARY?.TITLE), policyAndExport[FINAL_DESTINATION].name),
+  ];
+
+  return mapped;
+};
+
 /**
  * mapPolicyAndExport
  * Map an application's policy and export fields into an array of objects for CSV generation
@@ -53,15 +80,7 @@ export const mapMultiplePolicyFields = (application: Application) => {
  * @returns {Array} Array of objects for CSV generation
  */
 const mapPolicyAndExport = (application: Application) => {
-  let mapped = [];
-
-  const { policyAndExport } = application;
-
-  mapped = [
-    csvRow(CSV.SECTION_TITLES.POLICY_AND_EXPORT, ''),
-    csvRow(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE]),
-    csvRow(String(CONTENT_STRINGS[REQUESTED_START_DATE].SUMMARY?.TITLE), formatDate(policyAndExport[REQUESTED_START_DATE])),
-  ];
+  let mapped = mapPolicyAndExportIntro(application);
 
   const policyType = application.policyAndExport[POLICY_TYPE];
 
@@ -72,6 +91,9 @@ const mapPolicyAndExport = (application: Application) => {
   if (isMultiPolicyType(policyType)) {
     mapped = [...mapped, ...mapMultiplePolicyFields(application)];
   }
+
+  mapped = [...mapped, ...mapPolicyAndExportOutro(application)];
+
   return mapped;
 };
 

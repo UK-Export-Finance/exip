@@ -1425,7 +1425,7 @@ var getAccountByField = async (context, field, value) => {
       take: 1
     });
     if (!exportersArray || !exportersArray.length || !exportersArray[0]) {
-      console.info("Getting exporter by field - no exporter exists with the provided field/value");
+      console.info("Getting exporter account by field - no exporter exists with the provided field/value");
       return false;
     }
     const exporter = exportersArray[0];
@@ -1949,6 +1949,29 @@ var update_exporter_company_and_company_address_default = updateExporterCompanyA
 // custom-resolvers/mutations/submit-application.ts
 var import_date_fns5 = require("date-fns");
 
+// helpers/get-country-by-field/index.ts
+var getCountryByField = async (context, field, value) => {
+  try {
+    console.info("Getting country by field/value");
+    const countriesArray = await context.db.Country.findMany({
+      where: {
+        [field]: { equals: value }
+      },
+      take: 1
+    });
+    if (!countriesArray || !countriesArray.length || !countriesArray[0]) {
+      console.info("Getting country by field - no country exists with the provided field/value");
+      return false;
+    }
+    const country = countriesArray[0];
+    return country;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Getting country by field/value ${err}`);
+  }
+};
+var get_country_by_field_default = getCountryByField;
+
 // helpers/get-populated-application.ts
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application) => {
@@ -1970,6 +1993,12 @@ var getPopulatedApplication = async (context, application) => {
   if (!policyAndExport) {
     throw new Error(generateErrorMessage("policyAndExport", application.id));
   }
+  const finalDestinationCountry = await get_country_by_field_default(context, "isoCode", policyAndExport.finalDestinationCountryCode);
+  const populatedPolicyAndExport = {
+    ...policyAndExport,
+    // TODO: tidy/rename this field.
+    finalDestinationCountryCode: finalDestinationCountry[0]
+  };
   const exporterCompany = await context.db.ExporterCompany.findOne({
     where: { id: exporterCompanyId }
   });
@@ -2016,7 +2045,7 @@ var getPopulatedApplication = async (context, application) => {
       ...eligibility,
       buyerCountry
     },
-    policyAndExport,
+    policyAndExport: populatedPolicyAndExport,
     exporter,
     exporterCompany,
     exporterBusiness,
@@ -2542,6 +2571,7 @@ var map_month_string_default = mapMonthString;
 var CONTENT_STRINGS2 = {
   ...POLICY_AND_EXPORTS_FIELDS,
   ...POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY,
+  ...POLICY_AND_EXPORTS_FIELDS.ABOUT_GOODS_OR_SERVICES,
   SINGLE: POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY.SINGLE,
   MULTIPLE: POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY.MULTIPLE
 };
@@ -2550,14 +2580,24 @@ var {
   CONTRACT_POLICY: {
     REQUESTED_START_DATE,
     SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-    MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE }
-  }
+    MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+    CREDIT_PERIOD_WITH_BUYER,
+    POLICY_CURRENCY_CODE
+  },
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION }
 } = insurance_default.POLICY_AND_EXPORTS;
+var mapPolicyAndExportIntro = (application) => {
+  const { policyAndExport } = application;
+  const mapped = [
+    csv_row_default(CSV.SECTION_TITLES.POLICY_AND_EXPORT, ""),
+    csv_row_default(String(CONTENT_STRINGS2[POLICY_TYPE3].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE3]),
+    csv_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[REQUESTED_START_DATE]))
+  ];
+  return mapped;
+};
 var mapSinglePolicyFields = (application) => {
   const { policyAndExport } = application;
   return [
-    csv_row_default(String(CONTENT_STRINGS2[POLICY_TYPE3].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE3]),
-    csv_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[REQUESTED_START_DATE])),
     csv_row_default(String(CONTENT_STRINGS2.SINGLE[CONTRACT_COMPLETION_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[CONTRACT_COMPLETION_DATE])),
     csv_row_default(String(CONTENT_STRINGS2.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE))
   ];
@@ -2570,14 +2610,18 @@ var mapMultiplePolicyFields = (application) => {
     csv_row_default(String(CONTENT_STRINGS2.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default(policyAndExport[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
   ];
 };
-var mapPolicyAndExport = (application) => {
-  let mapped = [];
+var mapPolicyAndExportOutro = (application) => {
   const { policyAndExport } = application;
-  mapped = [
-    csv_row_default(CSV.SECTION_TITLES.POLICY_AND_EXPORT, ""),
-    csv_row_default(String(CONTENT_STRINGS2[POLICY_TYPE3].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE3]),
-    csv_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[REQUESTED_START_DATE]))
+  const mapped = [
+    csv_row_default(String(CONTENT_STRINGS2[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policyAndExport[CREDIT_PERIOD_WITH_BUYER]),
+    csv_row_default(String(CONTENT_STRINGS2[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policyAndExport[POLICY_CURRENCY_CODE]),
+    csv_row_default(String(CONTENT_STRINGS2[DESCRIPTION].SUMMARY?.TITLE), policyAndExport[DESCRIPTION]),
+    csv_row_default(String(CONTENT_STRINGS2[FINAL_DESTINATION].SUMMARY?.TITLE), policyAndExport[FINAL_DESTINATION].name)
   ];
+  return mapped;
+};
+var mapPolicyAndExport = (application) => {
+  let mapped = mapPolicyAndExportIntro(application);
   const policyType = application.policyAndExport[POLICY_TYPE3];
   if (isSinglePolicyType(policyType)) {
     mapped = [...mapped, ...mapSinglePolicyFields(application)];
@@ -2585,6 +2629,7 @@ var mapPolicyAndExport = (application) => {
   if (isMultiPolicyType(policyType)) {
     mapped = [...mapped, ...mapMultiplePolicyFields(application)];
   }
+  mapped = [...mapped, ...mapPolicyAndExportOutro(application)];
   return mapped;
 };
 var map_policy_and_export_default = mapPolicyAndExport;
@@ -2629,7 +2674,7 @@ var mapExporter = (application) => {
     csv_row_default(CSV.SECTION_TITLES.EXPORTER_BUSINESS, ""),
     // exporter company fields
     csv_row_default(CONTENT_STRINGS3[COMPANY_NUMBER2].SUMMARY?.TITLE, exporterCompany[COMPANY_NUMBER2]),
-    csv_row_default(CONTENT_STRINGS3[COMPANY_NAME2].SUMMARY?.TITLE, exporterCompany[COMPANY_NAME2]),
+    csv_row_default(CSV.FIELDS[COMPANY_NAME2], exporterCompany[COMPANY_NAME2]),
     csv_row_default(CONTENT_STRINGS3[COMPANY_ADDRESS2].SUMMARY?.TITLE, exporterCompany[COMPANY_ADDRESS2]),
     csv_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(exporterCompany[COMPANY_INCORPORATED2])),
     csv_row_default(CONTENT_STRINGS3[COMPANY_SIC2].SUMMARY?.TITLE, exporterCompany[COMPANY_SIC2]),

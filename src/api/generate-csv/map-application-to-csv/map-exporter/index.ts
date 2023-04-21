@@ -62,7 +62,7 @@ const mapExporter = (application: Application) => {
 
     // exporter company fields
     csvRow(CONTENT_STRINGS[COMPANY_NUMBER].SUMMARY?.TITLE, exporterCompany[COMPANY_NUMBER]),
-    csvRow(CONTENT_STRINGS[COMPANY_NAME].SUMMARY?.TITLE, exporterCompany[COMPANY_NAME]),
+    csvRow(CSV.FIELDS[COMPANY_NAME], exporterCompany[COMPANY_NAME]),
     csvRow(CONTENT_STRINGS[COMPANY_ADDRESS].SUMMARY?.TITLE, exporterCompany[COMPANY_ADDRESS]),
     csvRow(CONTENT_STRINGS[COMPANY_INCORPORATED].SUMMARY?.TITLE, formatDate(exporterCompany[COMPANY_INCORPORATED])),
     csvRow(CONTENT_STRINGS[COMPANY_SIC].SUMMARY?.TITLE, exporterCompany[COMPANY_SIC]),
