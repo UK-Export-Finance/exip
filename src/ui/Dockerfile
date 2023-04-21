@@ -58,9 +58,6 @@ COPY --chown=node:node --from=build /app/server ./server
 COPY --chown=node:node --from=build /app/templates ./templates
 COPY --chown=node:node --from=build /app/types ./types
 
-# Non-root user
-USER node
-
 # Container healthcheck
 HEALTHCHECK \
 --interval=60s \
@@ -73,3 +70,6 @@ CMD wget \
 
 # Execute Script
 CMD ["npm", "run", "start"]
+
+# Non-root user
+USER node
