@@ -1964,12 +1964,6 @@ var getPopulatedApplication = async (context, application) => {
   if (!exporter) {
     throw new Error(generateErrorMessage("exporter", application.id));
   }
-  const buyerCountry = await context.db.Country.findOne({
-    where: { id: eligibility?.buyerCountryId }
-  });
-  if (!buyerCountry) {
-    throw new Error(generateErrorMessage("buyerCountry", application.id));
-  }
   const policyAndExport = await context.db.PolicyAndExport.findOne({
     where: { id: policyAndExportId }
   });
@@ -2000,6 +1994,16 @@ var getPopulatedApplication = async (context, application) => {
   if (!buyer) {
     throw new Error(generateErrorMessage("buyer", application.id));
   }
+  const buyerCountry = await context.db.Country.findOne({
+    where: { id: buyer.countryId }
+  });
+  if (!buyerCountry) {
+    throw new Error(generateErrorMessage("populated buyer", application.id));
+  }
+  const populatedBuyer = {
+    ...buyer,
+    country: buyerCountry
+  };
   const declaration = await context.db.Declaration.findOne({
     where: { id: declarationId }
   });
@@ -2017,7 +2021,7 @@ var getPopulatedApplication = async (context, application) => {
     exporterCompany,
     exporterBusiness,
     exporterBroker,
-    buyer,
+    buyer: populatedBuyer,
     declaration
   };
   return populatedApplication;
@@ -2443,7 +2447,7 @@ var YOUR_BUYER_FIELDS = {
 // content-strings/fields/insurance/index.ts
 var REFERENCE_NUMBER = {
   SUMMARY: {
-    TITLE: "Application reference"
+    TITLE: "Application reference number"
   }
 };
 var DATE_SUBMITTED = {
@@ -2508,8 +2512,8 @@ var mapSecondaryKeyInformation = (application) => {
   const { policyAndExport } = application;
   const mapped = [
     csv_row_default(KEY_INFORMATION),
-    csv_row_default(FIELDS3[EXPORTER_COMPANY_NAME2], application.exporterBusiness[EXPORTER_COMPANY_NAME2]),
-    csv_row_default(FIELDS3[COUNTRY2], application.buyer[COUNTRY2]),
+    csv_row_default(FIELDS3[EXPORTER_COMPANY_NAME2], application.exporterCompany[EXPORTER_COMPANY_NAME2]),
+    csv_row_default(FIELDS3[COUNTRY2], application.buyer[COUNTRY2].name),
     csv_row_default(FIELDS3[BUYER_COMPANY_NAME2], application.buyer[BUYER_COMPANY_NAME2]),
     csv_row_default(String(CONTENT_STRINGS[POLICY_TYPE2].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE2])
   ];

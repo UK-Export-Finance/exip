@@ -31,14 +31,6 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('exporter', application.id));
   }
 
-  const buyerCountry = await context.db.Country.findOne({
-    where: { id: eligibility?.buyerCountryId },
-  });
-
-  if (!buyerCountry) {
-    throw new Error(generateErrorMessage('buyerCountry', application.id));
-  }
-
   const policyAndExport = await context.db.PolicyAndExport.findOne({
     where: { id: policyAndExportId },
   });
@@ -79,6 +71,19 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('buyer', application.id));
   }
 
+  const buyerCountry = await context.db.Country.findOne({
+    where: { id: buyer.countryId },
+  });
+
+  if (!buyerCountry) {
+    throw new Error(generateErrorMessage('populated buyer', application.id));
+  }
+
+  const populatedBuyer = {
+    ...buyer,
+    country: buyerCountry,
+  };
+
   const declaration = await context.db.Declaration.findOne({
     where: { id: declarationId },
   });
@@ -98,7 +103,7 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     exporterCompany,
     exporterBusiness,
     exporterBroker,
-    buyer,
+    buyer: populatedBuyer,
     declaration,
   };
 

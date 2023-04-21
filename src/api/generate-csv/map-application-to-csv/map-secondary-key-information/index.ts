@@ -36,8 +36,8 @@ const mapSecondaryKeyInformation = (application: Application) => {
 
   const mapped = [
     csvRow(KEY_INFORMATION),
-    csvRow(FIELDS[EXPORTER_COMPANY_NAME], application.exporterBusiness[EXPORTER_COMPANY_NAME]),
-    csvRow(FIELDS[COUNTRY], application.buyer[COUNTRY]),
+    csvRow(FIELDS[EXPORTER_COMPANY_NAME], application.exporterCompany[EXPORTER_COMPANY_NAME]),
+    csvRow(FIELDS[COUNTRY], application.buyer[COUNTRY].name),
     csvRow(FIELDS[BUYER_COMPANY_NAME], application.buyer[BUYER_COMPANY_NAME]),
     csvRow(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE]),
   ];

@@ -4,8 +4,9 @@ import { Context, Application as KeystoneApplication } from '.keystone/types'; /
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import baseConfig from '../keystone';
 import getPopulatedApplication, { generateErrorMessage } from './get-populated-application';
-import { Application } from '../types';
 import { createFullApplication } from '../test-helpers';
+import mockCountries from '../test-mocks/mock-countries';
+import { Application } from '../types';
 
 const dbUrl = String(process.env.DATABASE_URL);
 const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
@@ -44,7 +45,17 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.exporterBusiness.id).toEqual(application.exporterBusiness.id);
     expect(result.exporterBroker.id).toEqual(application.exporterBroker.id);
     expect(result.buyer.id).toEqual(application.buyer.id);
+
     expect(result.declaration.id).toEqual(application.declaration.id);
+  });
+
+  it('should return an application with populated buyer country', async () => {
+    const result = await getPopulatedApplication(context, applicationIds);
+
+    const expectedCountry = mockCountries[1];
+
+    expect(result.buyer.country?.name).toEqual(expectedCountry.name);
+    expect(result.buyer.country?.isoCode).toEqual(expectedCountry.isoCode);
   });
 
   it('should throw an error when eligibility does not exist', async () => {
@@ -129,6 +140,17 @@ describe('api/helpers/get-populated-application', () => {
 
     try {
       await getPopulatedApplication(context, { ...applicationIds, buyerId: invalidId });
+    } catch (err) {
+      const expected = new Error(generateErrorMessage('buyer', applicationIds.id));
+      expect(err).toEqual(expected);
+    }
+  });
+
+  it('should throw an error when buyer country does not exist', async () => {
+    const invalidId = applicationIds.id;
+
+    try {
+      await getPopulatedApplication(context, { ...applicationIds, buyer: { countryId: invalidId } });
     } catch (err) {
       const expected = new Error(generateErrorMessage('buyer', applicationIds.id));
       expect(err).toEqual(expected);

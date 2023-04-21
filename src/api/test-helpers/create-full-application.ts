@@ -9,13 +9,20 @@ import { Account, ApplicationBuyer, ApplicationDeclaration } from '../types';
  * @param {String} Buyer ID
  * @returns {Object} Buyer
  */
-export const updateBuyer = async (context: Context, buyerId: string): Promise<ApplicationBuyer> => {
+export const updateBuyer = async (context: Context, buyerId: string, countryId: string): Promise<ApplicationBuyer> => {
   const buyer = (await context.query.Buyer.updateOne({
     where: {
       id: buyerId,
     },
-    data: mockBuyer,
-    query: 'id exporterIsConnectedWithBuyer',
+    data: {
+      ...mockBuyer,
+      country: {
+        connect: {
+          id: countryId,
+        },
+      },
+    },
+    query: 'id exporterIsConnectedWithBuyer country { name isoCode }',
   })) as ApplicationBuyer;
 
   return buyer;
@@ -83,7 +90,7 @@ export const createFullApplication = async (context: Context) => {
   })) as ApplicationDeclaration;
 
   // update the buyer so there is a name
-  const buyer = await updateBuyer(context, application.buyer.id);
+  const buyer = await updateBuyer(context, application.buyer.id, countries[0].id);
 
   // update the exporter company so we have a company name
   const exporterCompany = (await context.query.ExporterCompany.updateOne({
