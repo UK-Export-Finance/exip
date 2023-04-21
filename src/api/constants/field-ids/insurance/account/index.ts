@@ -4,6 +4,7 @@ const ACCOUNT = {
   EMAIL: 'email',
   PASSWORD: 'password',
   SECURITY_CODE: 'securityCode',
+  VERIFICATION_HASH: 'verificationHash',
 };
 
 export default ACCOUNT;

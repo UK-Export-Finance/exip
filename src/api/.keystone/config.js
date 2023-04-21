@@ -46,6 +46,14 @@ var import_date_fns = require("date-fns");
 // constants/index.ts
 var import_dotenv = __toESM(require("dotenv"));
 
+// constants/field-ids/shared/index.ts
+var SHARED = {
+  POLICY_TYPE: "policyType",
+  SINGLE_POLICY_TYPE: "singlePolicyType",
+  MULTIPLE_POLICY_TYPE: "multiplePolicyType"
+};
+var shared_default = SHARED;
+
 // constants/field-ids/shared-eligibility/index.ts
 var SHARED_ELIGIBILITY = {
   BUYER_COUNTRY: "buyerCountry",
@@ -60,17 +68,10 @@ var ACCOUNT = {
   LAST_NAME: "lastName",
   EMAIL: "email",
   PASSWORD: "password",
-  SECURITY_CODE: "securityCode"
+  SECURITY_CODE: "securityCode",
+  VERIFICATION_HASH: "verificationHash"
 };
 var account_default = ACCOUNT;
-
-// constants/field-ids/shared/index.ts
-var SHARED = {
-  POLICY_TYPE: "policyType",
-  SINGLE_POLICY_TYPE: "singlePolicyType",
-  MULTIPLE_POLICY_TYPE: "multiplePolicyType"
-};
-var shared_default = SHARED;
 
 // constants/field-ids/insurance/policy-and-exports/index.ts
 var SHARED_CONTRACT_POLICY = {
@@ -220,6 +221,13 @@ var INSURANCE_FIELD_IDS = {
 };
 var insurance_default = INSURANCE_FIELD_IDS;
 
+// constants/field-ids/index.ts
+var FIELD_IDS = {
+  ...shared_default,
+  ...shared_eligibility_default,
+  INSURANCE: insurance_default
+};
+
 // constants/application.ts
 var APPLICATION = {
   SUBMISSION_TYPE: {
@@ -271,13 +279,6 @@ var ANSWERS = {
   NO: "No"
 };
 var GBP_CURRENCY_CODE = "GBP";
-var FIELD_IDS = {
-  ACCOUNT: {
-    EMAIL: "email",
-    VERIFICATION_HASH: "verificationHash"
-  },
-  ...insurance_default
-};
 var ACCOUNT2 = {
   EMAIL: {
     VERIFICATION_EXPIRY: () => {
@@ -1486,7 +1487,7 @@ var import_date_fns2 = require("date-fns");
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
     console.info("Verifying exporter email address");
-    const exporter = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.VERIFICATION_HASH, variables.token);
+    const exporter = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.VERIFICATION_HASH, variables.token);
     if (exporter) {
       const { id } = exporter;
       const now = /* @__PURE__ */ new Date();
@@ -1653,7 +1654,7 @@ var accountSignIn = async (root, variables, context) => {
   try {
     console.info("Signing in exporter account");
     const { email, password: password2 } = variables;
-    const exporter = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.EMAIL, email);
+    const exporter = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
     if (!exporter) {
       console.info("Unable to validate exporter account - no account found");
       return { success: false };
@@ -1841,7 +1842,7 @@ var addAndGetOTP = async (root, variables, context) => {
   try {
     console.info("Adding OTP to exporter account");
     const { email } = variables;
-    const exporter = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.EMAIL, email);
+    const exporter = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
     if (!exporter) {
       console.info("Unable to generate and add OTP to exporter account - no account found");
       return { success: false };
@@ -2186,19 +2187,12 @@ var FIELDS_ELIGIBILITY = {
   }
 };
 
-// constants/field-ids/index.ts
-var FIELD_IDS2 = {
-  ...shared_default,
-  ...shared_eligibility_default,
-  INSURANCE: insurance_default
-};
-
 // content-strings/fields/insurance/policy-and-exports/index.ts
-var { POLICY_AND_EXPORTS: POLICY_AND_EXPORTS2 } = FIELD_IDS2.INSURANCE;
+var { POLICY_AND_EXPORTS: POLICY_AND_EXPORTS2 } = FIELD_IDS.INSURANCE;
 var { CONTRACT_POLICY, ABOUT_GOODS_OR_SERVICES } = POLICY_AND_EXPORTS2;
 var POLICY_AND_EXPORTS_FIELDS = {
   [POLICY_AND_EXPORTS2.POLICY_TYPE]: {
-    ID: FIELD_IDS2.POLICY_TYPE,
+    ID: FIELD_IDS.POLICY_TYPE,
     SUMMARY: {
       TITLE: "Policy type"
     }
