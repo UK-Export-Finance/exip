@@ -75,9 +75,6 @@ COPY --chown=node:node --from=build /app/file-system ./file-system
 COPY --chown=node:node --from=build /app/generate-csv ./generate-csv
 COPY --chown=node:node --from=build /app/csv ./csv
 
-# Non-root user
-USER node
-
 # Container healthcheck
 HEALTHCHECK \
 --interval=60s \
@@ -90,3 +87,6 @@ CMD wget \
 
 # Execute Script
 CMD ["npm", "run", "start"]
+
+# Non-root user
+USER node
