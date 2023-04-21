@@ -8,6 +8,7 @@ import addAndGetOTP from './add-and-get-OTP';
 import deleteApplicationByReferenceNumber from './delete-application-by-refrence-number';
 import updateExporterCompanyAndCompanyAddress from './update-exporter-company-and-company-address';
 import submitApplication from './submit-application';
+import sendEmailInsuranceFeedback from './send-email-insurance-feedback';
 
 export {
   createAccount,
@@ -20,4 +21,5 @@ export {
   deleteApplicationByReferenceNumber,
   updateExporterCompanyAndCompanyAddress,
   submitApplication,
+  sendEmailInsuranceFeedback,
 };

@@ -2816,6 +2816,26 @@ var submitApplication = async (root, variables, context) => {
 };
 var submit_application_default = submitApplication;
 
+// custom-resolvers/mutations/send-email-insurance-feedback.ts
+var sendEmailInsuranceFeedback = async (root, variables) => {
+  try {
+    console.info("Generating and sending email for insurance feedback");
+    const emailResponse = await emails_default.insuranceFeedbackEmail(variables);
+    if (emailResponse.success) {
+      return {
+        ...emailResponse
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Generating and sending email for insurance feedback ${err}`);
+  }
+};
+var send_email_insurance_feedback_default = sendEmailInsuranceFeedback;
+
 // custom-resolvers/queries/get-companies-house-information.ts
 var import_axios = __toESM(require("axios"));
 var import_dotenv4 = __toESM(require("dotenv"));
@@ -2904,7 +2924,8 @@ var customResolvers = {
     addAndGetOTP: add_and_get_OTP_default,
     deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
     updateExporterCompanyAndCompanyAddress: update_exporter_company_and_company_address_default,
-    submitApplication: submit_application_default
+    submitApplication: submit_application_default,
+    sendEmailInsuranceFeedback: send_email_insurance_feedback_default
   },
   Query: {
     getCompaniesHouseInformation: get_companies_house_information_default
