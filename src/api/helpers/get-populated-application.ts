@@ -45,7 +45,7 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
   const populatedPolicyAndExport = {
     ...policyAndExport,
     // TODO: tidy/rename this field.
-    finalDestinationCountryCode: finalDestinationCountry[0],
+    finalDestinationCountryCode: finalDestinationCountry,
   };
 
   const exporterCompany = await context.db.ExporterCompany.findOne({
