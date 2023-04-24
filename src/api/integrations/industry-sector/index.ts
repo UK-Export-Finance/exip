@@ -3,9 +3,9 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const username: any = process.env.MULESOFT_API_UKEF_MDM_EA_KEY;
-const secret: any = process.env.MULESOFT_API_UKEF_MDM_EA_SECRET;
-const industrySectorUrl: any = process.env.UKEF_INDUSTRY_SECTOR_API;
+const username: any = process.env.MULESOFT_API_MDM_EA_INDUSTRY_SECTOR_KEY;
+const secret: any = process.env.MULESOFT_API_MDM_EA_INDUSTRY_SECTOR_SECRET;
+const industrySectorUrl: any = process.env.MULESOFT_API_MDM_EA_INDUSTRY_SECTOR_URL;
 
 /**
  * getIndustrySectorNames

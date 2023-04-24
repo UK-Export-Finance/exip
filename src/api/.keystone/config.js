@@ -2901,9 +2901,9 @@ var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => {
 var import_axios = __toESM(require("axios"));
 var import_dotenv4 = __toESM(require("dotenv"));
 import_dotenv4.default.config();
-var username = process.env.MULESOFT_API_UKEF_MDM_EA_KEY;
-var secret = process.env.MULESOFT_API_UKEF_MDM_EA_SECRET;
-var industrySectorUrl = process.env.UKEF_INDUSTRY_SECTOR_API;
+var username = process.env.MULESOFT_API_MDM_EA_INDUSTRY_SECTOR_KEY;
+var secret = process.env.MULESOFT_API_MDM_EA_INDUSTRY_SECTOR_SECRET;
+var industrySectorUrl = process.env.MULESOFT_API_MDM_EA_INDUSTRY_SECTOR_URL;
 var getIndustrySectorNames = async () => {
   try {
     console.info("Calling map industry sector API");
