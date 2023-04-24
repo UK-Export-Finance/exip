@@ -1,16 +1,4 @@
-import createAccount from './create-account';
-import verifyAccountEmailAddress from './verify-account-email-address';
-import sendEmailConfirmEmailAddress from './send-email-confirm-email-address';
-import accountSignIn from './account-sign-in';
-import accountSignInSendNewCode from './account-sign-in-new-code';
-import verifyAccountSignInCode from './verify-account-sign-in-code';
-import addAndGetOTP from './add-and-get-OTP';
-import sendEmailPasswordResetLink from './send-email-password-reset-link';
-import deleteApplicationByReferenceNumber from './delete-application-by-refrence-number';
-import submitApplication from './submit-application';
-import sendEmailInsuranceFeedback from './send-email-insurance-feedback';
-
-export {
+import {
   createAccount,
   verifyAccountEmailAddress,
   sendEmailConfirmEmailAddress,
@@ -18,8 +6,37 @@ export {
   accountSignInSendNewCode,
   verifyAccountSignInCode,
   addAndGetOTP,
-  sendEmailPasswordResetLink,
   deleteApplicationByReferenceNumber,
+  updateExporterCompanyAndCompanyAddress,
   submitApplication,
+  sendEmailPasswordResetLink,
   sendEmailInsuranceFeedback,
+} from './mutations';
+import { getCompaniesHouseInformation } from './queries';
+
+/**
+ * customResolvers
+ * Custom resolvers to add to the keystone generated GraphQL API
+ * @returns {Object} Object with custom queries and mutations
+ */
+const customResolvers = {
+  Mutation: {
+    createAccount,
+    accountSignIn,
+    accountSignInSendNewCode,
+    verifyAccountEmailAddress,
+    sendEmailConfirmEmailAddress,
+    verifyAccountSignInCode,
+    addAndGetOTP,
+    deleteApplicationByReferenceNumber,
+    updateExporterCompanyAndCompanyAddress,
+    submitApplication,
+    sendEmailPasswordResetLink,
+    sendEmailInsuranceFeedback,
+  },
+  Query: {
+    getCompaniesHouseInformation,
+  },
 };
+
+export default customResolvers;
