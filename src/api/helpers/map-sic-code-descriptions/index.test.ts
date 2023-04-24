@@ -1,5 +1,5 @@
 import mapSicCodeDescriptions from '.';
-import mockSectors from '../../test-mocks/mock-sectors';
+import mockSectors from '../../test-mocks/mock-industry-sectors';
 
 describe('mapSicCodes', () => {
   let mockSicCodes = [] as Array<string>;

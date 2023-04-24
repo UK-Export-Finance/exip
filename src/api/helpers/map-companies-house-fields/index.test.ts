@@ -1,4 +1,4 @@
-import mockSectors from '../../test-mocks/mock-sectors';
+import mockIndustrySectors from '../../test-mocks/mock-industry-sectors';
 import { mapCompaniesHouseFields, CompanyHouseResponse } from '.';
 import createFullTimestampFromDayAndMonth from '../create-full-timestamp-from-day-month';
 import mapSicCodeDescriptions from '../map-sic-code-descriptions';
@@ -31,7 +31,7 @@ describe('mapCompaniesHouseFields()', () => {
 
   describe('when some fields from the response are null', () => {
     it('should return a response with certain fields as null which are not present in response', () => {
-      const result = mapCompaniesHouseFields(companyHouseResponseMock, mockSectors);
+      const result = mapCompaniesHouseFields(companyHouseResponseMock, mockIndustrySectors);
 
       const expected = {
         companyName: companyHouseResponseMock.company_name,
@@ -48,7 +48,7 @@ describe('mapCompaniesHouseFields()', () => {
         companyNumber: companyHouseResponseMock.company_number,
         dateOfCreation: companyHouseResponseMock.date_of_creation,
         sicCodes: companyHouseResponseMock.sic_codes,
-        industrySectorNames: mapSicCodeDescriptions(companyHouseResponseMock.sic_codes, mockSectors),
+        industrySectorNames: mapSicCodeDescriptions(companyHouseResponseMock.sic_codes, mockIndustrySectors),
         financialYearEndDate: createFullTimestampFromDayAndMonth(
           companyHouseResponseMock.accounts.accounting_reference_date.day,
           companyHouseResponseMock.accounts.accounting_reference_date.month,
@@ -66,7 +66,7 @@ describe('mapCompaniesHouseFields()', () => {
       companyHouseResponseMock.registered_office_address.address_line_2 = 'Downing';
       companyHouseResponseMock.registered_office_address.country = 'United Kingdom';
 
-      const result = mapCompaniesHouseFields(companyHouseResponseMock, mockSectors);
+      const result = mapCompaniesHouseFields(companyHouseResponseMock, mockIndustrySectors);
 
       const expected = {
         companyName: companyHouseResponseMock.company_name,
@@ -83,7 +83,7 @@ describe('mapCompaniesHouseFields()', () => {
         companyNumber: companyHouseResponseMock.company_number,
         dateOfCreation: companyHouseResponseMock.date_of_creation,
         sicCodes: companyHouseResponseMock.sic_codes,
-        industrySectorNames: mapSicCodeDescriptions(companyHouseResponseMock.sic_codes, mockSectors),
+        industrySectorNames: mapSicCodeDescriptions(companyHouseResponseMock.sic_codes, mockIndustrySectors),
         financialYearEndDate: createFullTimestampFromDayAndMonth(
           companyHouseResponseMock.accounts.accounting_reference_date.day,
           companyHouseResponseMock.accounts.accounting_reference_date.month,

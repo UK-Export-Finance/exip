@@ -1,6 +1,6 @@
 import { IndustrySector } from '../types';
 
-const mockSectors = [
+const mockIndustrySectors = [
   {
     id: 1,
     ukefIndustryId: '12345',
@@ -18,4 +18,4 @@ const mockSectors = [
   },
 ] as Array<IndustrySector>;
 
-export default mockSectors;
+export default mockIndustrySectors;
