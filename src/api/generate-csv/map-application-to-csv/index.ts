@@ -1,9 +1,10 @@
 import ROW_SEPERATOR from './helpers/csv-row-seperator';
-import mapReferenceNumberAndDates from './map-reference-number-and-dates';
-import mapEligibility from './map-eligibility';
+import mapKeyInformation from './map-key-information';
+import mapSecondaryKeyInformation from './map-secondary-key-information';
 import mapPolicyAndExport from './map-policy-and-export';
 import mapExporter from './map-exporter';
 import mapBuyer from './map-buyer';
+import mapEligibility from './map-eligibility';
 import { Application } from '../../types';
 
 /**
@@ -17,11 +18,11 @@ const mapApplicationToCsv = (application: Application) => {
     const mapped = [
       ROW_SEPERATOR,
 
-      ...mapReferenceNumberAndDates(application),
+      ...mapKeyInformation(application),
 
       ROW_SEPERATOR,
 
-      ...mapEligibility(application),
+      ...mapSecondaryKeyInformation(application),
 
       ROW_SEPERATOR,
 
@@ -34,6 +35,10 @@ const mapApplicationToCsv = (application: Application) => {
       ROW_SEPERATOR,
 
       ...mapBuyer(application),
+
+      ROW_SEPERATOR,
+
+      ...mapEligibility(application),
     ];
 
     return mapped;
