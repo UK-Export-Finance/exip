@@ -12,9 +12,9 @@ import { isPopulatedArray } from '../../../array';
 const mapSicCodes = (applicationSicCodes: Array<ApplicationExporterSicCodes>) => {
   if (isPopulatedArray(applicationSicCodes)) {
     const sicCodes = applicationSicCodes.map((eachSicCode) => String(eachSicCode.sicCode));
-    const sicCodeDescriptions = applicationSicCodes.map((eachSicCode) => String(eachSicCode.industrySectorName));
+    const industrySectorNames = applicationSicCodes.map((eachSicCode) => String(eachSicCode.industrySectorName));
 
-    return generateSicCodesValue(sicCodes, sicCodeDescriptions);
+    return generateSicCodesValue(sicCodes, industrySectorNames);
   }
 
   return DEFAULT.EMPTY;

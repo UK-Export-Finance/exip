@@ -16,11 +16,11 @@ const { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COM
 
 describe('server/helpers/summary-lists/company-house-summary-list', () => {
   describe('generateSicCodesValue', () => {
-    describe('when sicCodes and sicCodeDescriptions both are populated', () => {
+    describe('when sicCodes and industrySectorNames both are populated', () => {
       it('should return sic code and description as a single string with line break', () => {
-        const result = generateSicCodesValue(mockCompany.sicCodes, mockCompany.sicCodeDescriptions);
+        const result = generateSicCodesValue(mockCompany.sicCodes, mockCompany.industrySectorNames);
 
-        const expected = `${mockCompany.sicCodes[0]} - ${mockCompany.sicCodeDescriptions[0]} </br>`;
+        const expected = `${mockCompany.sicCodes[0]} - ${mockCompany.industrySectorNames[0]} </br>`;
 
         expect(result).toEqual(expected);
       });
@@ -36,14 +36,14 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
       });
     });
 
-    describe('when sicCodes and sicCodeDescriptions both are populated and have multiple values', () => {
+    describe('when sicCodes and industrySectorNames both are populated and have multiple values', () => {
       it('should return sic code and description as a single string with line break', () => {
         const sicCodes = [...mockCompany.sicCodes, '12345'];
-        const sicCodeDescriptions = [...mockCompany.sicCodeDescriptions, 'test 2'];
+        const industrySectorNames = [...mockCompany.industrySectorNames, 'test 2'];
 
-        const result = generateSicCodesValue(sicCodes, sicCodeDescriptions);
+        const result = generateSicCodesValue(sicCodes, industrySectorNames);
 
-        const expected = `${sicCodes[0]} - ${sicCodeDescriptions[0]} </br>${sicCodes[1]} - ${sicCodeDescriptions[1]} </br>`;
+        const expected = `${sicCodes[0]} - ${industrySectorNames[0]} </br>${sicCodes[1]} - ${industrySectorNames[1]} </br>`;
 
         expect(result).toEqual(expected);
       });
@@ -61,7 +61,7 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
       });
     });
 
-    describe('when sicCodes is only populated', () => {
+    describe('when sicCodes only has one value and industrySectorNames is not populated', () => {
       it('should return sic code as a single string with line break', () => {
         const result = generateSicCodesValue(mockCompany.sicCodes);
 
@@ -124,7 +124,7 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
             field: getFieldById(FIELDS, COMPANY_SIC),
             data: mockCompany,
           },
-          generateSicCodesValue(mockCompany.sicCodes, mockCompany.sicCodeDescriptions),
+          generateSicCodesValue(mockCompany.sicCodes, mockCompany.industrySectorNames),
         ),
       ];
 

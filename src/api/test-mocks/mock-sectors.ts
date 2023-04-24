@@ -1,4 +1,4 @@
-import { Sectors } from '../types';
+import { IndustrySector } from '../types';
 
 const mockSectors = [
   {
@@ -16,6 +16,6 @@ const mockSectors = [
     ukefIndustryId: '98765',
     ukefIndustryName: 'Test 3 name',
   },
-] as Array<Sectors>;
+] as Array<IndustrySector>;
 
 export default mockSectors;

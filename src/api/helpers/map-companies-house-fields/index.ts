@@ -1,6 +1,6 @@
 import createFullTimestampFromDayAndMonth from '../create-full-timestamp-from-day-month';
 import mapSicCodeDescriptions from '../map-sic-code-descriptions';
-import { Sectors } from '../../types';
+import { IndustrySector } from '../../types';
 
 interface CompaniesHouseAddress {
   care_of: string | null;
@@ -38,7 +38,7 @@ interface CompanyHouseResponse {
  * mapping function to change names to camel case
  * response from companies house API does not follow camel case so requires mapping and conversion
  */
-const mapCompaniesHouseFields = (companiesHouseResponse: CompanyHouseResponse, sectors: Array<Sectors>) => {
+const mapCompaniesHouseFields = (companiesHouseResponse: CompanyHouseResponse, sectors: Array<IndustrySector>) => {
   return {
     companyName: companiesHouseResponse.company_name,
     registeredOfficeAddress: {
@@ -54,7 +54,7 @@ const mapCompaniesHouseFields = (companiesHouseResponse: CompanyHouseResponse, s
     companyNumber: companiesHouseResponse.company_number,
     dateOfCreation: companiesHouseResponse.date_of_creation,
     sicCodes: companiesHouseResponse.sic_codes,
-    sicCodeDescriptions: mapSicCodeDescriptions(companiesHouseResponse.sic_codes, sectors),
+    industrySectorNames: mapSicCodeDescriptions(companiesHouseResponse.sic_codes, sectors),
     // creates timestamp for financialYearEndDate from day and month if exist
     financialYearEndDate: createFullTimestampFromDayAndMonth(
       companiesHouseResponse.accounts?.accounting_reference_date?.day,

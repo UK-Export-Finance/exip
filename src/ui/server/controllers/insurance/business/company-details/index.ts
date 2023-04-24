@@ -89,7 +89,7 @@ const get = (req: Request, res: Response) => {
       [WEBSITE]: exporterCompany?.[WEBSITE],
       [PHONE_NUMBER]: exporterCompany?.[PHONE_NUMBER],
     };
-
+    console.log(exporterCompany);
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: COMPANY_DETAILS,

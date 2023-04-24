@@ -17,7 +17,7 @@ const updateExporterCompanyAndCompanyAddress = async (
 ): Promise<ApplicationRelationship> => {
   try {
     console.info('Updating application exporter company and exporter company address for ', variables.companyId);
-    const { address, sicCodes, sicCodeDescriptions, oldSicCodes, ...exporterCompany } = variables.data;
+    const { address, sicCodes, industrySectorNames, oldSicCodes, ...exporterCompany } = variables.data;
 
     const company = await context.db.ExporterCompany.updateOne({
       where: { id: variables.companyId },
@@ -29,7 +29,7 @@ const updateExporterCompanyAndCompanyAddress = async (
       data: address,
     });
 
-    const mappedSicCodes = mapSicCodes(company, sicCodes, sicCodeDescriptions);
+    const mappedSicCodes = mapSicCodes(company, sicCodes, industrySectorNames);
 
     // if the update contains exporterCompany and there are oldSicCodes in the db, delete them
     if (exporterCompany && oldSicCodes && oldSicCodes.length) {

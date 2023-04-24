@@ -54,9 +54,9 @@ interface ApplicationExporterSicCodes {
   industrySectorName?: string;
 }
 
-interface ApplicationExporterSicCodeDescriptions {
+interface ApplicationExporterindustrySectorNames {
   id: string;
-  sicCodeDescription?: string;
+  industrySectorNames?: string;
 }
 
 interface ApplicationExporterCompany {
@@ -152,7 +152,7 @@ export {
   ApplicationFlat,
   ApplicationPolicyAndExport,
   ApplicationExporterSicCodes,
-  ApplicationExporterSicCodeDescriptions,
+  ApplicationExporterindustrySectorNames,
   ApplicationExporterBusiness,
   ApplicationExporterBroker,
   ApplicationBuyer,

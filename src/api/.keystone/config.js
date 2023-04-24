@@ -267,9 +267,11 @@ var FIELD_IDS = {
   },
   ...insurance_default
 };
-var API_ENDPOINTS = {
-  CURRENCY: "/currency",
-  INDUSTRY_SECTORS: "/map-industry-sector?size=1000"
+var EXTERNAL_API_ENDPOINTS = {
+  MULESOFT_MDM_EA: {
+    CURRENCY: "/currency",
+    INDUSTRY_SECTORS: "/map-industry-sector?size=1000"
+  }
 };
 var ACCOUNT = {
   EMAIL: {
@@ -1312,7 +1314,7 @@ var typeDefs = `
     companyNumber: String
     dateOfCreation: String
     sicCodes: [String]
-    sicCodeDescriptions: [String]
+    industrySectorNames: [String]
     financialYearEndDate: DateTime
     success: Boolean
     apiError: Boolean
@@ -1359,7 +1361,7 @@ var typeDefs = `
   input ExporterCompanyAndCompanyAddressInput {
     address: ExporterCompanyAddressInput
     sicCodes: [String]
-    sicCodeDescriptions: [String]
+    industrySectorNames: [String]
     companyName: String
     companyNumber: String
     dateOfCreation: DateTime
@@ -1960,19 +1962,19 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 var delete_application_by_refrence_number_default = deleteApplicationByReferenceNumber;
 
 // helpers/map-sic-codes/index.ts
-var mapSicCodes = (company, sicCodes, sicCodeDescriptions) => {
+var mapSicCodes = (company, sicCodes, industrySectorNames) => {
   const mapped = [];
   if (!sicCodes || !sicCodes.length) {
     return mapped;
   }
   sicCodes.forEach((code, index) => {
-    let sicCodeDescription = "";
-    if (sicCodeDescriptions && sicCodeDescriptions[index]) {
-      sicCodeDescription = sicCodeDescriptions[index];
+    let industrySectorName = "";
+    if (industrySectorNames && industrySectorNames[index]) {
+      industrySectorName = industrySectorNames[index];
     }
     const codeToAdd = {
       sicCode: code,
-      industrySectorName: sicCodeDescription,
+      industrySectorName,
       exporterCompany: {
         connect: {
           id: company.id
@@ -1988,7 +1990,7 @@ var mapSicCodes = (company, sicCodes, sicCodeDescriptions) => {
 var updateExporterCompanyAndCompanyAddress = async (root, variables, context) => {
   try {
     console.info("Updating application exporter company and exporter company address for ", variables.companyId);
-    const { address, sicCodes, sicCodeDescriptions, oldSicCodes, ...exporterCompany } = variables.data;
+    const { address, sicCodes, industrySectorNames, oldSicCodes, ...exporterCompany } = variables.data;
     const company = await context.db.ExporterCompany.updateOne({
       where: { id: variables.companyId },
       data: exporterCompany
@@ -1997,7 +1999,7 @@ var updateExporterCompanyAndCompanyAddress = async (root, variables, context) =>
       where: { id: variables.companyAddressId },
       data: address
     });
-    const mappedSicCodes = mapSicCodes(company, sicCodes, sicCodeDescriptions);
+    const mappedSicCodes = mapSicCodes(company, sicCodes, industrySectorNames);
     if (exporterCompany && oldSicCodes && oldSicCodes.length) {
       await context.db.ExporterCompanySicCode.deleteMany({
         where: oldSicCodes
@@ -2863,15 +2865,15 @@ var create_full_timestamp_from_day_month_default = createFullTimestampFromDayAnd
 
 // helpers/map-sic-code-descriptions/index.ts
 var mapSicCodeDescriptions = (sicCodes, sectors) => {
-  const sicCodeDescriptions = [];
+  const industrySectorNames = [];
   if (!sicCodes || !sicCodes.length || !sectors || !sectors.length) {
-    return sicCodeDescriptions;
+    return industrySectorNames;
   }
   sicCodes.forEach((sicCode) => {
     const sicCodeSector = sectors.find((sector) => sector.ukefIndustryId === sicCode);
-    sicCodeDescriptions.push(sicCodeSector?.ukefIndustryName);
+    industrySectorNames.push(sicCodeSector?.ukefIndustryName);
   });
-  return sicCodeDescriptions;
+  return industrySectorNames;
 };
 var map_sic_code_descriptions_default = mapSicCodeDescriptions;
 
@@ -2892,7 +2894,7 @@ var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => {
     companyNumber: companiesHouseResponse.company_number,
     dateOfCreation: companiesHouseResponse.date_of_creation,
     sicCodes: companiesHouseResponse.sic_codes,
-    sicCodeDescriptions: map_sic_code_descriptions_default(companiesHouseResponse.sic_codes, sectors),
+    industrySectorNames: map_sic_code_descriptions_default(companiesHouseResponse.sic_codes, sectors),
     // creates timestamp for financialYearEndDate from day and month if exist
     financialYearEndDate: create_full_timestamp_from_day_month_default(
       companiesHouseResponse.accounts?.accounting_reference_date?.day,
@@ -2905,12 +2907,13 @@ var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => {
 var import_axios = __toESM(require("axios"));
 var import_dotenv4 = __toESM(require("dotenv"));
 import_dotenv4.default.config();
+var { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
 var username = process.env.MULESOFT_API_MDM_EA_KEY;
 var secret = process.env.MULESOFT_API_MDM_EA_SECRET;
-var industrySectorUrl = `${process.env.MULESOFT_API_MDM_EA_URL}${API_ENDPOINTS.INDUSTRY_SECTORS}`;
+var industrySectorUrl = `${process.env.MULESOFT_API_MDM_EA_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`;
 var getIndustrySectorNames = async () => {
   try {
-    console.info("Calling map industry sector API");
+    console.info("Calling industry sector API");
     const response = await (0, import_axios.default)({
       method: "get",
       url: `${industrySectorUrl}`,
@@ -2920,7 +2923,7 @@ var getIndustrySectorNames = async () => {
         return acceptableStatus.includes(status);
       }
     });
-    if (!response.data || response.status === 404) {
+    if (!response.data || response.status !== 200) {
       return {
         success: false
       };
@@ -2930,7 +2933,7 @@ var getIndustrySectorNames = async () => {
       success: true
     };
   } catch (err) {
-    console.error("Error calling map industry sector API ", { err });
+    console.error("Error calling industry sector API ", { err });
     return {
       apiError: true,
       success: false

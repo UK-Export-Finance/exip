@@ -1,12 +1,14 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
-import { API_ENDPOINTS } from '../../constants';
+import { EXTERNAL_API_ENDPOINTS } from '../../constants';
 
 dotenv.config();
 
+const { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
+
 const username: any = process.env.MULESOFT_API_MDM_EA_KEY;
 const secret: any = process.env.MULESOFT_API_MDM_EA_SECRET;
-const industrySectorUrl: any = `${process.env.MULESOFT_API_MDM_EA_URL}${API_ENDPOINTS.INDUSTRY_SECTORS}`;
+const industrySectorUrl: any = `${process.env.MULESOFT_API_MDM_EA_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`;
 
 /**
  * getIndustrySectorNames
@@ -15,7 +17,7 @@ const industrySectorUrl: any = `${process.env.MULESOFT_API_MDM_EA_URL}${API_ENDP
  */
 const getIndustrySectorNames = async () => {
   try {
-    console.info('Calling map industry sector API');
+    console.info('Calling industry sector API');
 
     const response = await axios({
       method: 'get',
@@ -28,7 +30,7 @@ const getIndustrySectorNames = async () => {
     });
 
     // if no data in response or status is not 200 then return blank object
-    if (!response.data || response.status === 404) {
+    if (!response.data || response.status !== 200) {
       return {
         success: false,
       };
@@ -39,7 +41,7 @@ const getIndustrySectorNames = async () => {
       success: true,
     };
   } catch (err) {
-    console.error('Error calling map industry sector API ', { err });
+    console.error('Error calling industry sector API ', { err });
     return {
       apiError: true,
       success: false,

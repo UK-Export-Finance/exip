@@ -11,9 +11,9 @@ describe('helpers/summary-lists/your-business/sic-code-mapping', () => {
     const response = mapSicCodes(sicCodes);
 
     const sicCodesMapped = sicCodes.map((eachSicCode) => String(eachSicCode.sicCode));
-    const sicCodeDescriptionsMapped = sicCodes.map((eachSicCode) => String(eachSicCode.industrySectorName));
+    const industrySectorNamesMapped = sicCodes.map((eachSicCode) => String(eachSicCode.industrySectorName));
 
-    const expected = generateSicCodesValue(sicCodesMapped, sicCodeDescriptionsMapped);
+    const expected = generateSicCodesValue(sicCodesMapped, industrySectorNamesMapped);
 
     expect(response).toEqual(expected);
   });
@@ -24,9 +24,9 @@ describe('helpers/summary-lists/your-business/sic-code-mapping', () => {
     const response = mapSicCodes(sicCodes);
 
     const sicCodesMapped = sicCodes.map((eachSicCode) => String(eachSicCode.sicCode));
-    const sicCodeDescriptionsMapped = sicCodes.map((eachSicCode) => String(eachSicCode.industrySectorName));
+    const industrySectorNamesMapped = sicCodes.map((eachSicCode) => String(eachSicCode.industrySectorName));
 
-    const expected = generateSicCodesValue(sicCodesMapped, sicCodeDescriptionsMapped);
+    const expected = generateSicCodesValue(sicCodesMapped, industrySectorNamesMapped);
 
     expect(response).toEqual(expected);
   });

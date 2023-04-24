@@ -17,7 +17,7 @@ const companiesHouseQuery = gql`
       companyNumber
       dateOfCreation
       sicCodes
-      sicCodeDescriptions
+      industrySectorNames
       financialYearEndDate
       success
       apiError

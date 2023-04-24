@@ -41,7 +41,7 @@ const typeDefs = `
     companyNumber: String
     dateOfCreation: String
     sicCodes: [String]
-    sicCodeDescriptions: [String]
+    industrySectorNames: [String]
     financialYearEndDate: DateTime
     success: Boolean
     apiError: Boolean
@@ -88,7 +88,7 @@ const typeDefs = `
   input ExporterCompanyAndCompanyAddressInput {
     address: ExporterCompanyAddressInput
     sicCodes: [String]
-    sicCodeDescriptions: [String]
+    industrySectorNames: [String]
     companyName: String
     companyNumber: String
     dateOfCreation: DateTime

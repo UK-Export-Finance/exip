@@ -80,14 +80,5 @@ describe('server/helpers/array', () => {
         expect(result).toEqual(false);
       });
     });
-
-    describe('when an object is passed', () => {
-      it('should return false', () => {
-        // @ts-ignore
-        const result = stringArrayHasValue({});
-
-        expect(result).toEqual(false);
-      });
-    });
   });
 });

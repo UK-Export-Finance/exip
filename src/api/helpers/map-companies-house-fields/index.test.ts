@@ -48,7 +48,7 @@ describe('mapCompaniesHouseFields()', () => {
         companyNumber: companyHouseResponseMock.company_number,
         dateOfCreation: companyHouseResponseMock.date_of_creation,
         sicCodes: companyHouseResponseMock.sic_codes,
-        sicCodeDescriptions: mapSicCodeDescriptions(companyHouseResponseMock.sic_codes, mockSectors),
+        industrySectorNames: mapSicCodeDescriptions(companyHouseResponseMock.sic_codes, mockSectors),
         financialYearEndDate: createFullTimestampFromDayAndMonth(
           companyHouseResponseMock.accounts.accounting_reference_date.day,
           companyHouseResponseMock.accounts.accounting_reference_date.month,
@@ -83,7 +83,7 @@ describe('mapCompaniesHouseFields()', () => {
         companyNumber: companyHouseResponseMock.company_number,
         dateOfCreation: companyHouseResponseMock.date_of_creation,
         sicCodes: companyHouseResponseMock.sic_codes,
-        sicCodeDescriptions: mapSicCodeDescriptions(companyHouseResponseMock.sic_codes, mockSectors),
+        industrySectorNames: mapSicCodeDescriptions(companyHouseResponseMock.sic_codes, mockSectors),
         financialYearEndDate: createFullTimestampFromDayAndMonth(
           companyHouseResponseMock.accounts.accounting_reference_date.day,
           companyHouseResponseMock.accounts.accounting_reference_date.month,

@@ -622,8 +622,9 @@ CREATE TABLE IF NOT EXISTS `ExporterCompanyAddress` (
 
 CREATE TABLE IF NOT EXISTS `ExporterCompanySicCode` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+	`exporterCompany` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sicCode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `exporterCompany` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+	`industrySectorName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
 	KEY `ExporterCompanySicCode_exporterCompany_idx` (`exporterCompany`),
   CONSTRAINT `ExporterCompanySicCode_exporterCompany_fkey` FOREIGN KEY (`exporterCompany`) REFERENCES `ExporterCompany` (`id`) ON DELETE SET NULL ON UPDATE CASCADE

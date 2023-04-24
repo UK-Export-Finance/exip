@@ -189,7 +189,7 @@ context('Insurance - Your business - Company details page - company house search
   });
 
   describe('when the company has multiple sic codes', () => {
-    it('should display all the sic codes', () => {
+    it('should display all the sic codes in the summary list', () => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES);

@@ -19,7 +19,7 @@ export const isPopulatedArray = (arr?: Array<any>): boolean => {
  * @returns {Boolean}
  */
 export const stringArrayHasValue = (index: number, array?: Array<string>) => {
-  if (array && array.length && array[index]) {
+  if (array && isPopulatedArray(array) && array[index]) {
     return true;
   }
 

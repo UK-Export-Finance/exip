@@ -4,10 +4,10 @@ import { CompanyResponse, SicCodes } from '../../types';
  * maps sic codes from response and adds to an array to add to the database
  * @param {CompanyResponse} company
  * @param {Array<string>} sicCodes
- * @param {Array<string>} sicCodeDescriptions
+ * @param {Array<string>} industrySectorNames
  * @returns {Array} sicCodesToAdd
  */
-const mapSicCodes = (company: CompanyResponse, sicCodes?: Array<string>, sicCodeDescriptions?: Array<string>) => {
+const mapSicCodes = (company: CompanyResponse, sicCodes?: Array<string>, industrySectorNames?: Array<string>) => {
   const mapped = [] as Array<SicCodes>;
 
   if (!sicCodes || !sicCodes.length) {
@@ -15,16 +15,16 @@ const mapSicCodes = (company: CompanyResponse, sicCodes?: Array<string>, sicCode
   }
 
   sicCodes.forEach((code, index) => {
-    let sicCodeDescription = '';
+    let industrySectorName = '';
 
-    // if sicCodeDescriptions has value at index, then add it to the database
-    if (sicCodeDescriptions && sicCodeDescriptions[index]) {
-      sicCodeDescription = sicCodeDescriptions[index];
+    // if industrySectorNames has value at index, then add it to the object
+    if (industrySectorNames && industrySectorNames[index]) {
+      industrySectorName = industrySectorNames[index];
     }
 
     const codeToAdd = {
       sicCode: code,
-      industrySectorName: sicCodeDescription,
+      industrySectorName,
       exporterCompany: {
         connect: {
           id: company.id,

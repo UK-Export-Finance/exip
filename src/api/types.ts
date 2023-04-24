@@ -264,7 +264,7 @@ interface UpdateExporterCompanyAndCompanyAddressVariablesData {
   address?: ApplicationExporterCompanyAddress;
   sicCodes?: [string];
   oldSicCodes?: [string];
-  sicCodeDescriptions?: [string];
+  industrySectorNames?: [string];
   exporterCompany?: ExporterCompanyUpdateInput;
 }
 
@@ -274,7 +274,7 @@ interface UpdateExporterCompanyAndCompanyAddressVariables {
   data: UpdateExporterCompanyAndCompanyAddressVariablesData;
 }
 
-interface Sectors {
+interface IndustrySector {
   id?: number;
   ukefIndustryId?: string;
   ukefIndustryName: string;
@@ -306,7 +306,7 @@ export {
   GetCompaniesHouseInformationVariables,
   NotifyPeronsalisation,
   InsuranceFeedbackVariables,
-  Sectors,
+  IndustrySector,
   SicCodes,
   SendExporterEmailVariables,
   SubmitApplicationVariables,

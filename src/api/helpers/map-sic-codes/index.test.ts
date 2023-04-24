@@ -12,14 +12,14 @@ describe('mapSicCodes', () => {
       id: '123',
       applicationId: '321',
     };
-    const sicCodeDescriptions = [mockSectors[0].ukefIndustryName, mockSectors[1].ukefIndustryName];
+    const industrySectorNames = [mockSectors[0].ukefIndustryName, mockSectors[1].ukefIndustryName];
 
-    const response = mapSicCodes(mockCompanyResponse, mockSicCodes, sicCodeDescriptions);
+    const response = mapSicCodes(mockCompanyResponse, mockSicCodes, industrySectorNames);
 
     const expected = [
       {
         sicCode: mockSicCodes[0],
-        industrySectorName: sicCodeDescriptions[0],
+        industrySectorName: industrySectorNames[0],
         exporterCompany: {
           connect: {
             id: mockCompanyResponse.id,
@@ -28,7 +28,7 @@ describe('mapSicCodes', () => {
       },
       {
         sicCode: mockSicCodes[1],
-        industrySectorName: sicCodeDescriptions[1],
+        industrySectorName: industrySectorNames[1],
         exporterCompany: {
           connect: {
             id: mockCompanyResponse.id,
