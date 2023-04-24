@@ -143,7 +143,7 @@ const checkYourBusinessSummaryList = ({
     const fieldId = COMPANY_SIC;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.EXPORTER_COMPANY[fieldId][0];
+    const expectedValue = `${application.EXPORTER_COMPANY[fieldId][0]} - Financial intermediation not elsewhere classified`;
 
     assertRow(fieldId, expectedKey, expectedValue);
   },

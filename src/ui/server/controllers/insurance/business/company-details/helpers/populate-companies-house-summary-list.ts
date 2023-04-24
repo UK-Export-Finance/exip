@@ -5,7 +5,7 @@ import { ApplicationExporterCompany } from '../../../../../../types';
 
 const {
   EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_SIC },
+    COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_SIC, COMPANY_SIC_DESCRIPTION, SIC_CODE, INDUSTRY_SECTOR_NAME },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -16,7 +16,8 @@ const {
  */
 const mapDatabaseResponse = (exporterCompany: ApplicationExporterCompany): ApplicationExporterCompany => ({
   ...exporterCompany,
-  [COMPANY_SIC]: mapSicCodes(exporterCompany[COMPANY_SIC]),
+  [COMPANY_SIC]: mapSicCodes(exporterCompany[COMPANY_SIC], SIC_CODE),
+  [COMPANY_SIC_DESCRIPTION]: mapSicCodes(exporterCompany[COMPANY_SIC], INDUSTRY_SECTOR_NAME),
 });
 
 /**

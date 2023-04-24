@@ -183,6 +183,7 @@ interface NotifyPeronsalisation {
 
 interface SicCodes {
   sicCode: string;
+  industrySectorName: string;
   exporterCompany: ConnectObj;
   application: ConnectObj;
 }
@@ -263,6 +264,7 @@ interface UpdateExporterCompanyAndCompanyAddressVariablesData {
   address?: ApplicationExporterCompanyAddress;
   sicCodes?: [string];
   oldSicCodes?: [string];
+  sicCodeDescriptions?: [string];
   exporterCompany?: ExporterCompanyUpdateInput;
 }
 
@@ -270,6 +272,12 @@ interface UpdateExporterCompanyAndCompanyAddressVariables {
   companyId: string;
   companyAddressId: string;
   data: UpdateExporterCompanyAndCompanyAddressVariablesData;
+}
+
+interface Sectors {
+  id?: number;
+  ukefIndustryId?: string;
+  ukefIndustryName: string;
 }
 
 export {
@@ -298,6 +306,7 @@ export {
   GetCompaniesHouseInformationVariables,
   NotifyPeronsalisation,
   InsuranceFeedbackVariables,
+  Sectors,
   SicCodes,
   SendExporterEmailVariables,
   SubmitApplicationVariables,

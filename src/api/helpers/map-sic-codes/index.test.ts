@@ -1,5 +1,6 @@
 import { mapSicCodes } from '.';
 import { CompanyResponse } from '../../types';
+import mockSectors from '../../test-mocks/mock-sectors';
 
 describe('mapSicCodes', () => {
   let mockSicCodes = [] as Array<string>;
@@ -11,12 +12,14 @@ describe('mapSicCodes', () => {
       id: '123',
       applicationId: '321',
     };
+    const sicCodeDescriptions = [mockSectors[0].ukefIndustryName, mockSectors[1].ukefIndustryName];
 
-    const response = mapSicCodes(mockCompanyResponse, mockSicCodes);
+    const response = mapSicCodes(mockCompanyResponse, mockSicCodes, sicCodeDescriptions);
 
     const expected = [
       {
         sicCode: mockSicCodes[0],
+        industrySectorName: sicCodeDescriptions[0],
         exporterCompany: {
           connect: {
             id: mockCompanyResponse.id,
@@ -25,6 +28,7 @@ describe('mapSicCodes', () => {
       },
       {
         sicCode: mockSicCodes[1],
+        industrySectorName: sicCodeDescriptions[1],
         exporterCompany: {
           connect: {
             id: mockCompanyResponse.id,
@@ -54,7 +58,7 @@ describe('mapSicCodes', () => {
       applicationId: '321',
     };
 
-    const response = mapSicCodes(mockCompanyResponse, null);
+    const response = mapSicCodes(mockCompanyResponse);
 
     expect(response).toEqual([]);
   });

@@ -7,7 +7,10 @@ const EXPORTER_BUSINESS = {
     COMPANY_NUMBER: 'companyNumber',
     COMPANY_INCORPORATED: 'dateOfCreation',
     COMPANY_SIC: 'sicCodes',
+    COMPANY_SIC_DESCRIPTION: 'sicCodeDescriptions',
     FINANCIAL_YEAR_END_DATE: 'financialYearEndDate',
+    SIC_CODE: 'sicCode',
+    INDUSTRY_SECTOR_NAME: 'industrySectorName',
     REGISTED_OFFICE_ADDRESS: {
       ADDRESS_LINE_1: 'addressLine1',
       ADDRESS_LINE_2: 'addressLine2',

@@ -2,6 +2,7 @@ import mapSicCodes from '.';
 import { DEFAULT } from '../../../../content-strings';
 import { ApplicationExporterSicCodes } from '../../../../../types';
 import { mockSicCodes } from '../../../../test-mocks';
+import { generateSicCodesValue } from '../../company-house-summary-list';
 
 describe('helpers/summary-lists/your-business/sic-code-mapping', () => {
   it('should return a string with multiple sic codes if provided with more than one', () => {
@@ -9,7 +10,10 @@ describe('helpers/summary-lists/your-business/sic-code-mapping', () => {
 
     const response = mapSicCodes(sicCodes);
 
-    const expected = `${mockSicCodes[0].sicCode},${mockSicCodes[1].sicCode}`;
+    const sicCodesMapped = sicCodes.map((eachSicCode) => String(eachSicCode.sicCode));
+    const sicCodeDescriptionsMapped = sicCodes.map((eachSicCode) => String(eachSicCode.industrySectorName));
+
+    const expected = generateSicCodesValue(sicCodesMapped, sicCodeDescriptionsMapped);
 
     expect(response).toEqual(expected);
   });
@@ -19,7 +23,10 @@ describe('helpers/summary-lists/your-business/sic-code-mapping', () => {
 
     const response = mapSicCodes(sicCodes);
 
-    const expected = `${mockSicCodes[0].sicCode}`;
+    const sicCodesMapped = sicCodes.map((eachSicCode) => String(eachSicCode.sicCode));
+    const sicCodeDescriptionsMapped = sicCodes.map((eachSicCode) => String(eachSicCode.industrySectorName));
+
+    const expected = generateSicCodesValue(sicCodesMapped, sicCodeDescriptionsMapped);
 
     expect(response).toEqual(expected);
   });

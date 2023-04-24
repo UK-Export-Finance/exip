@@ -16,12 +16,59 @@ const { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COM
 
 describe('server/helpers/summary-lists/company-house-summary-list', () => {
   describe('generateSicCodesValue', () => {
-    it('should return sic codes as a single string', () => {
-      const mockSicCodes = mockCompany.sicCodes;
-      const result = generateSicCodesValue(mockSicCodes);
+    describe('when sicCodes and sicCodeDescriptions both are populated', () => {
+      it('should return sic code and description as a single string with line break', () => {
+        const result = generateSicCodesValue(mockCompany.sicCodes, mockCompany.sicCodeDescriptions);
 
-      const expected = mockSicCodes.toString();
-      expect(result).toEqual(expected);
+        const expected = `${mockCompany.sicCodes[0]} - ${mockCompany.sicCodeDescriptions[0]} </br>`;
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when sicCodes is only populated', () => {
+      it('should return sic code as a single string with line break', () => {
+        const result = generateSicCodesValue(mockCompany.sicCodes);
+
+        const expected = `${mockCompany.sicCodes[0]} </br>`;
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when sicCodes and sicCodeDescriptions both are populated and have multiple values', () => {
+      it('should return sic code and description as a single string with line break', () => {
+        const sicCodes = [...mockCompany.sicCodes, '12345'];
+        const sicCodeDescriptions = [...mockCompany.sicCodeDescriptions, 'test 2'];
+
+        const result = generateSicCodesValue(sicCodes, sicCodeDescriptions);
+
+        const expected = `${sicCodes[0]} - ${sicCodeDescriptions[0]} </br>${sicCodes[1]} - ${sicCodeDescriptions[1]} </br>`;
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when sicCodes is populated and has multiple values', () => {
+      it('should return sic code and description as a single string with line break', () => {
+        const sicCodes = [...mockCompany.sicCodes, '12345'];
+
+        const result = generateSicCodesValue(sicCodes);
+
+        const expected = `${sicCodes[0]} </br>${sicCodes[1]} </br>`;
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when sicCodes is only populated', () => {
+      it('should return sic code as a single string with line break', () => {
+        const result = generateSicCodesValue(mockCompany.sicCodes);
+
+        const expected = `${mockCompany.sicCodes[0]} </br>`;
+
+        expect(result).toEqual(expected);
+      });
     });
 
     describe('when sic codes is an empty array', () => {
@@ -77,7 +124,7 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
             field: getFieldById(FIELDS, COMPANY_SIC),
             data: mockCompany,
           },
-          mockCompany[COMPANY_SIC].toString(),
+          generateSicCodesValue(mockCompany.sicCodes, mockCompany.sicCodeDescriptions),
         ),
       ];
 

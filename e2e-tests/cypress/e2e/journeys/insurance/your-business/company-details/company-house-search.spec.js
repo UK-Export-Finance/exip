@@ -4,7 +4,7 @@ import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-st
 import partials from '../../../../partials';
 import { saveAndBackButton } from '../../../../pages/shared';
 import {
-  ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER, COMPANIES_HOUSE_NUMBER_NO_SIC_CODE,
+  ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER, COMPANIES_HOUSE_NUMBER_NO_SIC_CODE, COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES,
 } from '../../../../../../constants';
 
 const {
@@ -184,7 +184,23 @@ context('Insurance - Your business - Company details page - company house search
 
       cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].key(), SUMMARY_LIST_FIELDS.COMPANY_SIC.text);
 
-      cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].value(), '64999');
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].value(), '64999 - Financial intermediation not elsewhere classified');
+    });
+  });
+
+  describe('when the company has multiple sic codes', () => {
+    it('should display all the sic codes', () => {
+      cy.navigateToUrl(url);
+
+      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES);
+      saveAndBackButton().click();
+
+      task.link().click();
+
+      partials.yourBusinessSummaryList[COMPANY_SIC].value().contains('01440 - Raising of camels and camelids');
+      partials.yourBusinessSummaryList[COMPANY_SIC].value().contains('13100 - Preparation and spinning of textile fibres');
+      partials.yourBusinessSummaryList[COMPANY_SIC].value().contains('55209 - Other holiday and other collective accommodation');
+      partials.yourBusinessSummaryList[COMPANY_SIC].value().contains('56102 - Unlicensed restaurants and cafes');
     });
   });
 

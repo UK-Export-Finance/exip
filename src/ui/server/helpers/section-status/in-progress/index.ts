@@ -1,5 +1,5 @@
 import { getSubmittedFields } from '../../get-submitted-fields';
-import isPopulatedArray from '../../is-populated-array';
+import { isPopulatedArray } from '../../array';
 import { ApplicationFlat } from '../../../../types';
 
 /**

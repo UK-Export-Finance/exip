@@ -982,7 +982,8 @@ var lists = {
   ExporterCompanySicCode: (0, import_core.list)({
     fields: {
       exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany.sicCodes" }),
-      sicCode: (0, import_fields.text)()
+      sicCode: (0, import_fields.text)(),
+      industrySectorName: (0, import_fields.text)()
     },
     access: import_access.allowAll
   }),
@@ -1234,6 +1235,7 @@ var typeDefs = `
     companyNumber: String
     dateOfCreation: String
     sicCodes: [String]
+    sicCodeDescriptions: [String]
     financialYearEndDate: DateTime
     success: Boolean
     apiError: Boolean
@@ -1280,6 +1282,7 @@ var typeDefs = `
   input ExporterCompanyAndCompanyAddressInput {
     address: ExporterCompanyAddressInput
     sicCodes: [String]
+    sicCodeDescriptions: [String]
     companyName: String
     companyNumber: String
     dateOfCreation: DateTime
@@ -1880,14 +1883,19 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 var delete_application_by_refrence_number_default = deleteApplicationByReferenceNumber;
 
 // helpers/map-sic-codes/index.ts
-var mapSicCodes = (company, sicCodes) => {
+var mapSicCodes = (company, sicCodes, sicCodeDescriptions) => {
   const mapped = [];
   if (!sicCodes || !sicCodes.length) {
     return mapped;
   }
-  sicCodes.forEach((code) => {
+  sicCodes.forEach((code, index) => {
+    let sicCodeDescription = "";
+    if (sicCodeDescriptions && sicCodeDescriptions[index]) {
+      sicCodeDescription = sicCodeDescriptions[index];
+    }
     const codeToAdd = {
       sicCode: code,
+      industrySectorName: sicCodeDescription,
       exporterCompany: {
         connect: {
           id: company.id
@@ -1903,7 +1911,7 @@ var mapSicCodes = (company, sicCodes) => {
 var updateExporterCompanyAndCompanyAddress = async (root, variables, context) => {
   try {
     console.info("Updating application exporter company and exporter company address for ", variables.companyId);
-    const { address, sicCodes, oldSicCodes, ...exporterCompany } = variables.data;
+    const { address, sicCodes, sicCodeDescriptions, oldSicCodes, ...exporterCompany } = variables.data;
     const company = await context.db.ExporterCompany.updateOne({
       where: { id: variables.companyId },
       data: exporterCompany
@@ -1912,7 +1920,7 @@ var updateExporterCompanyAndCompanyAddress = async (root, variables, context) =>
       where: { id: variables.companyAddressId },
       data: address
     });
-    const mappedSicCodes = mapSicCodes(company, sicCodes);
+    const mappedSicCodes = mapSicCodes(company, sicCodes, sicCodeDescriptions);
     if (exporterCompany && oldSicCodes && oldSicCodes.length) {
       await context.db.ExporterCompanySicCode.deleteMany({
         where: oldSicCodes
@@ -1938,7 +1946,7 @@ var update_exporter_company_and_company_address_default = updateExporterCompanyA
 // custom-resolvers/mutations/submit-application.ts
 var import_date_fns5 = require("date-fns");
 
-// helpers/get-populated-application.ts
+// helpers/get-populated-application/index.ts
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application) => {
   console.info("Getting populated application");
@@ -2764,8 +2772,8 @@ var sendEmailInsuranceFeedback = async (root, variables) => {
 var send_email_insurance_feedback_default = sendEmailInsuranceFeedback;
 
 // custom-resolvers/queries/get-companies-house-information.ts
-var import_axios = __toESM(require("axios"));
-var import_dotenv4 = __toESM(require("dotenv"));
+var import_axios2 = __toESM(require("axios"));
+var import_dotenv5 = __toESM(require("dotenv"));
 
 // helpers/create-full-timestamp-from-day-month/index.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
@@ -2776,8 +2784,22 @@ var createFullTimestampFromDayAndMonth = (day, month) => {
 };
 var create_full_timestamp_from_day_month_default = createFullTimestampFromDayAndMonth;
 
+// helpers/map-sic-code-descriptions/index.ts
+var mapSicCodeDescriptions = (sicCodes, sectors) => {
+  const sicCodeDescriptions = [];
+  if (!sicCodes || !sicCodes.length || !sectors || !sectors.length) {
+    return sicCodeDescriptions;
+  }
+  sicCodes.forEach((sicCode) => {
+    const sicCodeSector = sectors.find((sector) => sector.ukefIndustryId === sicCode);
+    sicCodeDescriptions.push(sicCodeSector?.ukefIndustryName);
+  });
+  return sicCodeDescriptions;
+};
+var map_sic_code_descriptions_default = mapSicCodeDescriptions;
+
 // helpers/map-companies-house-fields/index.ts
-var mapCompaniesHouseFields = (companiesHouseResponse) => {
+var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => {
   return {
     companyName: companiesHouseResponse.company_name,
     registeredOfficeAddress: {
@@ -2793,6 +2815,7 @@ var mapCompaniesHouseFields = (companiesHouseResponse) => {
     companyNumber: companiesHouseResponse.company_number,
     dateOfCreation: companiesHouseResponse.date_of_creation,
     sicCodes: companiesHouseResponse.sic_codes,
+    sicCodeDescriptions: map_sic_code_descriptions_default(companiesHouseResponse.sic_codes, sectors),
     // creates timestamp for financialYearEndDate from day and month if exist
     financialYearEndDate: create_full_timestamp_from_day_month_default(
       companiesHouseResponse.accounts?.accounting_reference_date?.day,
@@ -2801,19 +2824,20 @@ var mapCompaniesHouseFields = (companiesHouseResponse) => {
   };
 };
 
-// custom-resolvers/queries/get-companies-house-information.ts
+// integrations/industry-sector/index.ts
+var import_axios = __toESM(require("axios"));
+var import_dotenv4 = __toESM(require("dotenv"));
 import_dotenv4.default.config();
-var username = process.env.COMPANIES_HOUSE_API_KEY;
-var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
-var getCompaniesHouseInformation = async (root, variables) => {
+var username = process.env.MULESOFT_API_UKEF_MDM_EA_KEY;
+var secret = process.env.MULESOFT_API_UKEF_MDM_EA_SECRET;
+var industrySectorUrl = process.env.UKEF_INDUSTRY_SECTOR_API;
+var getIndustrySectorNames = async () => {
   try {
-    const { companiesHouseNumber } = variables;
-    console.info("Calling Companies House API for ", companiesHouseNumber);
-    const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, "0");
+    console.info("Calling map industry sector API");
     const response = await (0, import_axios.default)({
       method: "get",
-      url: `${companiesHouseURL}/company/${sanitisedRegNo}`,
-      auth: { username, password: "" },
+      url: `${industrySectorUrl}`,
+      auth: { username, password: secret },
       validateStatus(status) {
         const acceptableStatus = [200, 404];
         return acceptableStatus.includes(status);
@@ -2824,7 +2848,50 @@ var getCompaniesHouseInformation = async (root, variables) => {
         success: false
       };
     }
-    const mappedResponse = mapCompaniesHouseFields(response.data);
+    return {
+      data: response.data,
+      success: true
+    };
+  } catch (err) {
+    console.error("Error calling map industry sector API ", { err });
+    return {
+      apiError: true,
+      success: false
+    };
+  }
+};
+var industry_sector_default = getIndustrySectorNames;
+
+// custom-resolvers/queries/get-companies-house-information.ts
+import_dotenv5.default.config();
+var username2 = process.env.COMPANIES_HOUSE_API_KEY;
+var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
+var getCompaniesHouseInformation = async (root, variables) => {
+  try {
+    const { companiesHouseNumber } = variables;
+    console.info("Calling Companies House API for ", companiesHouseNumber);
+    const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, "0");
+    const response = await (0, import_axios2.default)({
+      method: "get",
+      url: `${companiesHouseURL}/company/${sanitisedRegNo}`,
+      auth: { username: username2, password: "" },
+      validateStatus(status) {
+        const acceptableStatus = [200, 404];
+        return acceptableStatus.includes(status);
+      }
+    });
+    if (!response.data || response.status === 404) {
+      return {
+        success: false
+      };
+    }
+    const industrySectorNames = await industry_sector_default();
+    if (!industrySectorNames.success || industrySectorNames.apiError) {
+      return {
+        success: false
+      };
+    }
+    const mappedResponse = mapCompaniesHouseFields(response.data, industrySectorNames.data);
     return {
       ...mappedResponse,
       success: true

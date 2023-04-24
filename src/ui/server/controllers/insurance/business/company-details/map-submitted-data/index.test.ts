@@ -29,6 +29,7 @@ describe('controllers/insurance/business/company-details/map-submitted-data', ()
           country: '',
         },
         sicCodes: mockBody.sicCodes,
+        sicCodeDescriptions: mockBody.sicCodeDescriptions,
         oldSicCodes: getSicCodeIDsFromApplication(mockApplication),
       };
 
@@ -50,6 +51,7 @@ describe('controllers/insurance/business/company-details/map-submitted-data', ()
     delete mockBodyWithoutFields.apiError;
     delete mockBodyWithoutFields.companyNumber;
     delete mockBodyWithoutFields.sicCodes;
+    delete mockBodyWithoutFields.sicCodeDescriptions;
 
     it(`should return the formBody without ${INPUT} success,and __typename fields and add an empty address object`, () => {
       const response = mapSubmittedData(mockBodyWithoutFields, mockApplication);
