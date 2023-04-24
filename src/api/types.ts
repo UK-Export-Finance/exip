@@ -283,6 +283,7 @@ interface IndustrySector {
 export {
   Account,
   AccountCreationVariables,
+  ApplicationExporterCompanyAddress,
   AccountInput,
   AccountSignInVariables,
   AccountSignInSendNewCodeVariables,

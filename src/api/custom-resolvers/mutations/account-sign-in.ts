@@ -23,7 +23,7 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
     const { email, password } = variables;
 
     // Get the account the email is associated with.
-    const exporter = await getAccountByField(context, FIELD_IDS.ACCOUNT.EMAIL, email);
+    const exporter = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
 
     if (!exporter) {
       console.info('Unable to validate exporter account - no account found');
