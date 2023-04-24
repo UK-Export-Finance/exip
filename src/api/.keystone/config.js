@@ -2122,10 +2122,10 @@ var import_csv_stringify = require("csv-stringify");
 
 // generate-csv/map-application-to-csv/helpers/csv-row/index.ts
 var csvRow = (fieldName, answer) => {
-  const value = answer || "";
+  const value = answer || answer === 0 ? answer : "";
   const row = {
     Field: fieldName,
-    Answer: value
+    Answer: String(value)
   };
   return row;
 };
@@ -2139,11 +2139,16 @@ var DEFAULT = {
 // content-strings/csv.ts
 var { FIRST_NAME, LAST_NAME, EMAIL: EMAIL2 } = account_default;
 var {
+  CONTRACT_POLICY: {
+    SINGLE: { CONTRACT_COMPLETION_DATE }
+  }
+} = policy_and_exports_default;
+var {
   COMPANY_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
   YOUR_COMPANY: { WEBSITE, PHONE_NUMBER },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER },
-  BROKER: { NAME: BROKER_NAME, ADDRESS_LINE_1: BROKER_ADDRESS, EMAIL: BROKER_EMAIL }
+  BROKER: { USING_BROKER, NAME: BROKER_NAME, ADDRESS_LINE_1: BROKER_ADDRESS, EMAIL: BROKER_EMAIL }
 } = exporter_business_default;
 var {
   COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS }
@@ -2160,6 +2165,7 @@ var CSV = {
     [FIRST_NAME]: "Applicant first name",
     [LAST_NAME]: "Applicant last name",
     [EMAIL2]: "Applicant email address",
+    [CONTRACT_COMPLETION_DATE]: "Date expected for contract to complete",
     [EXPORTER_COMPANY_NAME]: "Exporter company name",
     [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
     [EXPORTER_COMPANY_SIC]: "Exporter standard industry classification (SIC) codes and nature of business",
@@ -2170,11 +2176,12 @@ var CSV = {
     [EMPLOYEES_UK]: "Exporter UK Exmployees",
     [EMPLOYEES_INTERNATIONAL]: "Exporter worldwide employees including UK employees",
     [ESTIMATED_ANNUAL_TURNOVER]: "Exporter estimated turnover this current financial year",
+    [USING_BROKER]: "Using a broker for this insurance",
     [BROKER_NAME]: "Name of broker or company",
     [BROKER_ADDRESS]: "Broker address",
     [BROKER_EMAIL]: "Broker email address",
     [COUNTRY]: "Buyer location",
-    [BUYER_COMPANY_NAME]: "Buyer company or organisation name",
+    [BUYER_COMPANY_NAME]: "Buyer company name",
     [BUYER_REGISTRATION_NUMBER]: "Buyer registration number (optional)",
     [BUYER_CONTACT_DETAILS]: "Buyer contact details"
   }
@@ -2322,7 +2329,7 @@ var {
   YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER: PHONE_NUMBER2, WEBSITE: WEBSITE2 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL2 },
   TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2, PERCENTAGE_TURNOVER },
-  BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, EMAIL: EMAIL3 }
+  BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL3 }
 } = EXPORTER_BUSINESS2;
 var FIELDS = {
   COMPANY_DETAILS: {
@@ -2412,7 +2419,7 @@ var FIELDS = {
     }
   },
   BROKER: {
-    [USING_BROKER]: {
+    [USING_BROKER2]: {
       SUMMARY: {
         TITLE: "Using a broker for this insurance?"
       }
@@ -2533,7 +2540,7 @@ var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL4 } = account_
 var mapKeyInformation = (application) => {
   const mapped = [
     csv_row_default(REFERENCE_NUMBER.SUMMARY.TITLE, application.referenceNumber),
-    csv_row_default(DATE_SUBMITTED.SUMMARY.TITLE, format_date_default(application.submissionDate)),
+    csv_row_default(DATE_SUBMITTED.SUMMARY.TITLE, format_date_default(application.submissionDate, "dd-MM-yyyy")),
     csv_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application.submissionDate)),
     csv_row_default(FIELDS2[FIRST_NAME2], application.exporter[FIRST_NAME2]),
     csv_row_default(FIELDS2[LAST_NAME2], application.exporter[LAST_NAME2]),
@@ -2604,7 +2611,7 @@ var {
   TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE3 },
   CONTRACT_POLICY: {
     REQUESTED_START_DATE,
-    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+    SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2, TOTAL_CONTRACT_VALUE },
     MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
     CREDIT_PERIOD_WITH_BUYER,
     POLICY_CURRENCY_CODE
@@ -2616,14 +2623,14 @@ var mapPolicyAndExportIntro = (application) => {
   const mapped = [
     csv_row_default(CSV.SECTION_TITLES.POLICY_AND_EXPORT, ""),
     csv_row_default(String(CONTENT_STRINGS2[POLICY_TYPE3].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE3]),
-    csv_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[REQUESTED_START_DATE]))
+    csv_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[REQUESTED_START_DATE], "dd-MMM-yy"))
   ];
   return mapped;
 };
 var mapSinglePolicyFields = (application) => {
   const { policyAndExport } = application;
   return [
-    csv_row_default(String(CONTENT_STRINGS2.SINGLE[CONTRACT_COMPLETION_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[CONTRACT_COMPLETION_DATE])),
+    csv_row_default(String(CONTENT_STRINGS2.SINGLE[CONTRACT_COMPLETION_DATE2].SUMMARY?.TITLE), format_date_default(policyAndExport[CONTRACT_COMPLETION_DATE2], "dd-MMM-yy")),
     csv_row_default(String(CONTENT_STRINGS2.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE))
   ];
 };
@@ -2663,6 +2670,18 @@ var map_policy_and_export_default = mapPolicyAndExport;
 var NEW_LINE = "\r\n";
 var csv_new_line_default = NEW_LINE;
 
+// generate-csv/map-application-to-csv/map-exporter/map-address/index.ts
+var mapExporterAddress = (address) => {
+  let addressString = "";
+  Object.keys(address).forEach((field) => {
+    if (address[field] && field !== "id" && field !== "__typename") {
+      addressString += `${address[field]}${csv_new_line_default}`;
+    }
+  });
+  return addressString;
+};
+var map_address_default = mapExporterAddress;
+
 // generate-csv/map-application-to-csv/map-exporter/index.ts
 var CONTENT_STRINGS3 = {
   ...FIELDS.COMPANY_DETAILS,
@@ -2671,16 +2690,16 @@ var CONTENT_STRINGS3 = {
   ...FIELDS.BROKER
 };
 var {
-  COMPANY_HOUSE: { COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_NAME: COMPANY_NAME2, COMPANY_ADDRESS: COMPANY_ADDRESS2, REGISTED_OFFICE_ADDRESS, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
+  COMPANY_HOUSE: { COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_NAME: COMPANY_NAME2, COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
   YOUR_COMPANY: { TRADING_NAME: TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE3, PHONE_NUMBER: PHONE_NUMBER3 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL3 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
-  BROKER: { USING_BROKER: USING_BROKER2, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL5 }
+  BROKER: { USING_BROKER: USING_BROKER3, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL5 }
 } = exporter_business_default;
 var mapExporterBroker = (application) => {
   const { exporterBroker } = application;
-  let mapped = [csv_row_default(CONTENT_STRINGS3[USING_BROKER2].SUMMARY?.TITLE, exporterBroker[USING_BROKER2])];
-  if (exporterBroker[USING_BROKER2] === ANSWERS.YES) {
+  let mapped = [csv_row_default(CSV.FIELDS[USING_BROKER3], exporterBroker[USING_BROKER3])];
+  if (exporterBroker[USING_BROKER3] === ANSWERS.YES) {
     mapped = [
       ...mapped,
       csv_row_default(CSV.FIELDS[BROKER_NAME2], exporterBroker[BROKER_NAME2]),
@@ -2695,36 +2714,17 @@ var mapExporterBroker = (application) => {
 };
 var mapExporter = (application) => {
   const { exporterCompany, exporterBusiness } = application;
-  const address = exporterCompany[COMPANY_ADDRESS2];
-  const { ADDRESS_LINE_2, CARE_OF, LOCALITY, REGION, POSTAL_CODE, COUNTRY: COUNTRY3, PREMISES } = REGISTED_OFFICE_ADDRESS;
-  const mappedAddress = `
-    ${address[ADDRESS_LINE_12]},
-
-    ${address[ADDRESS_LINE_2]},
-
-    ${address[CARE_OF]},
-
-    ${address[LOCALITY]},
-
-    ${address[REGION]},
-
-    ${address[POSTAL_CODE]},
-
-    ${address[COUNTRY3]},
-
-    ${address[PREMISES]},
-  `;
   const mapped = [
     csv_row_default(CSV.SECTION_TITLES.EXPORTER_BUSINESS, ""),
     // exporter company fields
     csv_row_default(CONTENT_STRINGS3[COMPANY_NUMBER2].SUMMARY?.TITLE, exporterCompany[COMPANY_NUMBER2]),
     csv_row_default(CSV.FIELDS[COMPANY_NAME2], exporterCompany[COMPANY_NAME2]),
-    csv_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(exporterCompany[COMPANY_INCORPORATED2])),
-    csv_row_default(CSV.FIELDS[COMPANY_ADDRESS2], mappedAddress),
+    csv_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(exporterCompany[COMPANY_INCORPORATED2], "dd-MMM-yy")),
+    csv_row_default(CSV.FIELDS[COMPANY_ADDRESS2], map_address_default(exporterCompany[COMPANY_ADDRESS2])),
     csv_row_default(CONTENT_STRINGS3[TRADING_NAME2].SUMMARY?.TITLE, exporterCompany[TRADING_NAME2]),
     csv_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, exporterCompany[TRADING_ADDRESS2]),
     csv_row_default(CSV.FIELDS[COMPANY_SIC2], exporterCompany[COMPANY_SIC2]),
-    csv_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, format_date_default(exporterCompany[FINANCIAL_YEAR_END_DATE2])),
+    csv_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, format_date_default(exporterCompany[FINANCIAL_YEAR_END_DATE2], "d MMMM")),
     csv_row_default(CSV.FIELDS[WEBSITE3], exporterCompany[WEBSITE3]),
     csv_row_default(CSV.FIELDS[PHONE_NUMBER3], exporterCompany[PHONE_NUMBER3]),
     // exporter business fields
@@ -2732,8 +2732,8 @@ var mapExporter = (application) => {
     csv_row_default(CSV.FIELDS[YEARS_EXPORTING3], exporterBusiness[YEARS_EXPORTING3]),
     csv_row_default(CSV.FIELDS[EMPLOYEES_UK3], exporterBusiness[EMPLOYEES_UK3]),
     csv_row_default(CSV.FIELDS[EMPLOYEES_INTERNATIONAL3], exporterBusiness[EMPLOYEES_INTERNATIONAL3]),
-    csv_row_default(CSV.FIELDS[ESTIMATED_ANNUAL_TURNOVER3], exporterBusiness[ESTIMATED_ANNUAL_TURNOVER3]),
-    csv_row_default(CONTENT_STRINGS3[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, exporterBusiness[PERCENTAGE_TURNOVER2]),
+    csv_row_default(CSV.FIELDS[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default(exporterBusiness[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
+    csv_row_default(CONTENT_STRINGS3[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${exporterBusiness[PERCENTAGE_TURNOVER2]}%`),
     // exporter broker fields
     ...mapExporterBroker(application)
   ];

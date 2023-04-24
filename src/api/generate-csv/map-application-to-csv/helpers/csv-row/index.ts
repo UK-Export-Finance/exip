@@ -1,9 +1,9 @@
 const csvRow = (fieldName: string, answer?: string | number) => {
-  const value = answer || '';
+  const value = answer || answer === 0 ? answer : '';
 
   const row = {
     Field: fieldName,
-    Answer: value,
+    Answer: String(value),
   };
 
   return row;

@@ -1,15 +1,22 @@
 import ACCOUNT from '../constants/field-ids/insurance/account';
+import POLICY_AND_EXPORTS from '../constants/field-ids/insurance/policy-and-exports';
 import EXPORTER_BUSINESS from '../constants/field-ids/insurance/exporter-business';
 import YOUR_BUYER from '../constants/field-ids/insurance/your-buyer';
 
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT;
 
 const {
+  CONTRACT_POLICY: {
+    SINGLE: { CONTRACT_COMPLETION_DATE },
+  },
+} = POLICY_AND_EXPORTS;
+
+const {
   COMPANY_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
   YOUR_COMPANY: { WEBSITE, PHONE_NUMBER },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER },
-  BROKER: { NAME: BROKER_NAME, ADDRESS_LINE_1: BROKER_ADDRESS, EMAIL: BROKER_EMAIL },
+  BROKER: { USING_BROKER, NAME: BROKER_NAME, ADDRESS_LINE_1: BROKER_ADDRESS, EMAIL: BROKER_EMAIL },
 } = EXPORTER_BUSINESS;
 
 const {
@@ -28,6 +35,7 @@ export const CSV = {
     [FIRST_NAME]: 'Applicant first name',
     [LAST_NAME]: 'Applicant last name',
     [EMAIL]: 'Applicant email address',
+    [CONTRACT_COMPLETION_DATE]: 'Date expected for contract to complete',
     [EXPORTER_COMPANY_NAME]: 'Exporter company name',
     [EXPORTER_COMPANY_ADDRESS]: 'Exporter registered office address',
     [EXPORTER_COMPANY_SIC]: 'Exporter standard industry classification (SIC) codes and nature of business',
@@ -38,11 +46,12 @@ export const CSV = {
     [EMPLOYEES_UK]: 'Exporter UK Exmployees',
     [EMPLOYEES_INTERNATIONAL]: 'Exporter worldwide employees including UK employees',
     [ESTIMATED_ANNUAL_TURNOVER]: 'Exporter estimated turnover this current financial year',
+    [USING_BROKER]: 'Using a broker for this insurance',
     [BROKER_NAME]: 'Name of broker or company',
     [BROKER_ADDRESS]: 'Broker address',
     [BROKER_EMAIL]: 'Broker email address',
     [COUNTRY]: 'Buyer location',
-    [BUYER_COMPANY_NAME]: 'Buyer company or organisation name',
+    [BUYER_COMPANY_NAME]: 'Buyer company name',
     [BUYER_REGISTRATION_NUMBER]: 'Buyer registration number (optional)',
     [BUYER_CONTACT_DETAILS]: 'Buyer contact details',
   },

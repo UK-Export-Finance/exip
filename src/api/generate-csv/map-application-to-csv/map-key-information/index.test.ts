@@ -17,7 +17,7 @@ describe('api/generate-csv/map-application-to-csv/map-key-information', () => {
 
     const expected = [
       csvRow(REFERENCE_NUMBER.SUMMARY.TITLE, mockApplication.referenceNumber),
-      csvRow(DATE_SUBMITTED.SUMMARY.TITLE, formatDate(mockApplication.submissionDate)),
+      csvRow(DATE_SUBMITTED.SUMMARY.TITLE, formatDate(mockApplication.submissionDate, 'dd-MM-yyyy')),
       csvRow(TIME_SUBMITTED.SUMMARY.TITLE, formatTimeOfDay(mockApplication.submissionDate)),
       csvRow(FIELDS[FIRST_NAME], mockApplication.exporter[FIRST_NAME]),
       csvRow(FIELDS[LAST_NAME], mockApplication.exporter[LAST_NAME]),

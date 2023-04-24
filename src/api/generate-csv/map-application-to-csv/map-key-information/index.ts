@@ -19,7 +19,7 @@ const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT;
 const mapKeyInformation = (application: Application) => {
   const mapped = [
     csvRow(REFERENCE_NUMBER.SUMMARY.TITLE, application.referenceNumber),
-    csvRow(DATE_SUBMITTED.SUMMARY.TITLE, formatDate(application.submissionDate)),
+    csvRow(DATE_SUBMITTED.SUMMARY.TITLE, formatDate(application.submissionDate, 'dd-MM-yyyy')),
     csvRow(TIME_SUBMITTED.SUMMARY.TITLE, formatTimeOfDay(application.submissionDate)),
     csvRow(FIELDS[FIRST_NAME], application.exporter[FIRST_NAME]),
     csvRow(FIELDS[LAST_NAME], application.exporter[LAST_NAME]),
