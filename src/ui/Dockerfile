@@ -2,7 +2,7 @@
 # 1. BUILD
 ###################
 
-FROM node:18.15-alpine3.16 AS build
+FROM node:20.0-alpine3.16 AS build
 
 # Build variables
 ARG GITHUB_SHA
@@ -44,7 +44,7 @@ RUN npm ci --legacy-peer-deps --omit=dev --ignore-scripts
 # 2. PRODUCTION
 ###################
 
-FROM node:18.15-alpine3.16 AS production
+FROM node:20.0-alpine3.16 AS production
 
 WORKDIR /app
 
@@ -58,9 +58,6 @@ COPY --chown=node:node --from=build /app/server ./server
 COPY --chown=node:node --from=build /app/templates ./templates
 COPY --chown=node:node --from=build /app/types ./types
 
-# Non-root user
-USER node
-
 # Container healthcheck
 HEALTHCHECK \
 --interval=60s \
@@ -73,3 +70,6 @@ CMD wget \
 
 # Execute Script
 CMD ["npm", "run", "start"]
+
+# Non-root user
+# USER node

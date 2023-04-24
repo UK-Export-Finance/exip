@@ -2,7 +2,7 @@
 # 1. BUILD
 ###################
 
-FROM node:18.15-alpine3.16 AS build
+FROM node:20.0-alpine3.16 AS build
 
 # Build variables
 ARG GITHUB_SHA
@@ -24,22 +24,24 @@ RUN npm ci --legacy-peer-deps
 RUN npm cache clean --force
 
 # Copy API
-COPY --chown=node:node ./.keystone ./.keystone
-COPY --chown=node:node ./custom-resolvers ./custom-resolvers
-COPY --chown=node:node ./emails ./emails
-COPY --chown=node:node ./helpers ./helpers
-COPY --chown=node:node ./integrations ./integrations
-COPY --chown=node:node ./test-mocks ./test-mocks
-COPY --chown=node:node ./auth.ts .
-COPY --chown=node:node ./constants.ts .
-COPY --chown=node:node ./custom-schema.ts .
 COPY --chown=node:node ./keystone.ts .
 COPY --chown=node:node ./schema.ts .
 COPY --chown=node:node ./types.ts .
 COPY --chown=node:node ./schema.graphql .
 COPY --chown=node:node ./schema.prisma .
-COPY --chown=node:node ./package.json .
-COPY --chown=node:node ./package-lock.json .
+COPY --chown=node:node ./auth.ts .
+COPY --chown=node:node ./.keystone ./.keystone
+COPY --chown=node:node ./custom-resolvers ./custom-resolvers
+COPY --chown=node:node ./emails ./emails
+COPY --chown=node:node ./helpers ./helpers
+COPY --chown=node:node ./integrations ./integrations
+COPY --chown=node:node ./constants ./constants
+COPY --chown=node:node ./content-strings ./content-strings
+COPY --chown=node:node ./custom-schema ./custom-schema
+COPY --chown=node:node ./file-system ./file-system
+COPY --chown=node:node ./generate-csv ./generate-csv
+COPY --chown=node:node ./csv ./csv
+
 
 # Build with all dependencies
 RUN npm run build
@@ -56,7 +58,7 @@ USER node
 # 2. PRODUCTION
 ###################
 
-FROM node:18.15-alpine3.16 AS production
+FROM node:20.0-alpine3.16 AS production
 
 WORKDIR /app
 
@@ -69,9 +71,9 @@ COPY --chown=node:node --from=build /app/integrations ./integrations
 COPY --chown=node:node --from=build /app/helpers ./helpers
 COPY --chown=node:node --from=build /app/emails ./emails
 COPY --chown=node:node --from=build /app/custom-resolvers ./custom-resolvers
-
-# Non-root user
-USER node
+COPY --chown=node:node --from=build /app/file-system ./file-system
+COPY --chown=node:node --from=build /app/generate-csv ./generate-csv
+COPY --chown=node:node --from=build /app/csv ./csv
 
 # Container healthcheck
 HEALTHCHECK \
@@ -85,3 +87,6 @@ CMD wget \
 
 # Execute Script
 CMD ["npm", "run", "start"]
+
+# Non-root user
+# USER node

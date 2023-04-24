@@ -1,3 +1,4 @@
+import { DEFAULT } from '../../content-strings';
 import { FIELD_VALUES } from '../../constants';
 
 /**
@@ -15,7 +16,7 @@ const mapYesNoField = (answer?: boolean) => {
     return FIELD_VALUES.YES;
   }
 
-  return answer;
+  return DEFAULT.EMPTY;
 };
 
 export default mapYesNoField;
