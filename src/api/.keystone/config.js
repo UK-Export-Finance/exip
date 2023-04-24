@@ -267,6 +267,10 @@ var FIELD_IDS = {
   },
   ...insurance_default
 };
+var API_ENDPOINTS = {
+  CURRENCY: "/currency",
+  INDUSTRY_SECTORS: "/map-industry-sector?size=1000"
+};
 var ACCOUNT = {
   EMAIL: {
     VERIFICATION_EXPIRY: () => {
@@ -2901,9 +2905,9 @@ var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => {
 var import_axios = __toESM(require("axios"));
 var import_dotenv4 = __toESM(require("dotenv"));
 import_dotenv4.default.config();
-var username = process.env.MULESOFT_API_MDM_EA_INDUSTRY_SECTOR_KEY;
-var secret = process.env.MULESOFT_API_MDM_EA_INDUSTRY_SECTOR_SECRET;
-var industrySectorUrl = process.env.MULESOFT_API_MDM_EA_INDUSTRY_SECTOR_URL;
+var username = process.env.MULESOFT_API_MDM_EA_KEY;
+var secret = process.env.MULESOFT_API_MDM_EA_SECRET;
+var industrySectorUrl = `${process.env.MULESOFT_API_MDM_EA_URL}${API_ENDPOINTS.INDUSTRY_SECTORS}`;
 var getIndustrySectorNames = async () => {
   try {
     console.info("Calling map industry sector API");

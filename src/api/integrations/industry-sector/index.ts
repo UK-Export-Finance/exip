@@ -1,11 +1,12 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
+import { API_ENDPOINTS } from '../../constants';
 
 dotenv.config();
 
-const username: any = process.env.MULESOFT_API_MDM_EA_INDUSTRY_SECTOR_KEY;
-const secret: any = process.env.MULESOFT_API_MDM_EA_INDUSTRY_SECTOR_SECRET;
-const industrySectorUrl: any = process.env.MULESOFT_API_MDM_EA_INDUSTRY_SECTOR_URL;
+const username: any = process.env.MULESOFT_API_MDM_EA_KEY;
+const secret: any = process.env.MULESOFT_API_MDM_EA_SECRET;
+const industrySectorUrl: any = `${process.env.MULESOFT_API_MDM_EA_URL}${API_ENDPOINTS.INDUSTRY_SECTORS}`;
 
 /**
  * getIndustrySectorNames

@@ -28,3 +28,8 @@ export const API = {
     },
   },
 };
+
+export const API_ENDPOINTS = {
+  CURRENCY: '/currency',
+  INDUSTRY_SECTORS: '/map-industry-sector?size=1000',
+};

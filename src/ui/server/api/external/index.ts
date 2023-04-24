@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import axios, { AxiosBasicCredentials, AxiosResponse, RawAxiosRequestConfig } from 'axios';
+import { API_ENDPOINTS } from '../../constants';
 
 dotenv.config();
 
@@ -30,7 +31,7 @@ const external = {
     try {
       const config: RawAxiosRequestConfig = {
         method: 'GET',
-        url: process.env.MULESOFT_API_MDM_EA_URL,
+        url: `${process.env.MULESOFT_API_MDM_EA_URL}${API_ENDPOINTS.CURRENCY}`,
         headers: {
           'Content-Type': 'application/json',
         },
