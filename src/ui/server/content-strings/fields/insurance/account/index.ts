@@ -44,4 +44,14 @@ export const ACCOUNT_FIELDS = {
       HINT: 'Enter the email address you used to create your account.',
     },
   },
+  NEW_PASSWORD: {
+    [PASSWORD]: {
+      LABEL: 'Enter a new password',
+      // TODO: shared hint for create account and new password
+      HINT: {
+        INTRO: 'Your password must contain at least 14 characters and have:',
+        RULES: ['an uppercase letter', 'a lowercase letter', 'a number', 'a special character'],
+      },
+    },
+  },
 };
