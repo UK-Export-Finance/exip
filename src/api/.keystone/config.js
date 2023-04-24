@@ -533,6 +533,7 @@ var applicationSubmitted = {
         const fileIsCsv = true;
         const fileBuffer = Buffer.from(file);
         const response = await callNotify(templateId, emailAddress, variables, fileBuffer, fileIsCsv);
+        await file_system_default.unlink(csvPath);
         return response;
       }
       throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
