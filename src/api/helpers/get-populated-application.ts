@@ -44,7 +44,6 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
 
   const populatedPolicyAndExport = {
     ...policyAndExport,
-    // TODO: tidy/rename this field.
     finalDestinationCountryCode: finalDestinationCountry,
   };
 
