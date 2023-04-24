@@ -350,6 +350,30 @@ var EMAIL_TEMPLATE_IDS = {
 };
 var ACCEPTED_FILE_TYPES = [".csv"];
 
+// helpers/update-application/index.ts
+var timestamp = async (context, applicationId) => {
+  try {
+    console.info("Updating application updatedAt timestamp");
+    const now = /* @__PURE__ */ new Date();
+    const application = await context.db.Application.updateOne({
+      where: {
+        id: applicationId
+      },
+      data: {
+        updatedAt: now
+      }
+    });
+    return application;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Updating application updatedAt timestamp ${err}`);
+  }
+};
+var updateApplication = {
+  timestamp
+};
+var update_application_default = updateApplication;
+
 // file-system/index.ts
 var import_fs = require("fs");
 var import_path = __toESM(require("path"));
@@ -845,6 +869,13 @@ var lists = {
       }),
       finalDestinationCountryCode: (0, import_fields.text)()
     },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
+    },
     access: import_access.allowAll
   },
   Exporter: (0, import_core.list)({
@@ -912,6 +943,13 @@ var lists = {
       estimatedAnnualTurnover: (0, import_fields.integer)(),
       exportsTurnoverPercentage: (0, import_fields.integer)()
     },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
+    },
     access: import_access.allowAll
   }),
   ExporterBroker: (0, import_core.list)({
@@ -931,6 +969,13 @@ var lists = {
       county: (0, import_fields.text)(),
       postcode: (0, import_fields.text)(),
       email: (0, import_fields.text)()
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
     },
     access: import_access.allowAll
   }),
@@ -977,6 +1022,13 @@ var lists = {
       phoneNumber: (0, import_fields.text)(),
       financialYearEndDate: (0, import_fields.timestamp)()
     },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
+    },
     access: import_access.allowAll
   }),
   ExporterCompanySicCode: (0, import_core.list)({
@@ -1020,6 +1072,13 @@ var lists = {
         ]
       })
     },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
+    },
     access: import_access.allowAll
   }),
   Country: (0, import_core.list)({
@@ -1056,6 +1115,13 @@ var lists = {
       exporterBusiness: (0, import_fields.checkbox)(),
       buyer: (0, import_fields.checkbox)()
     },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
+    },
     access: import_access.allowAll
   }),
   Declaration: (0, import_core.list)({
@@ -1082,6 +1148,13 @@ var lists = {
       }),
       agreeToConfirmationAndAcknowledgements: (0, import_fields.checkbox)(),
       agreeHowDataWillBeUsed: (0, import_fields.checkbox)()
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
     },
     access: import_access.allowAll
   }),
@@ -2441,7 +2514,7 @@ var TIME_SUBMITTED = {
 
 // generate-csv/map-application-to-csv/helpers/format-date/index.ts
 var import_date_fns4 = require("date-fns");
-var formatDate = (timestamp2, dateFormat = "d MMMM yyyy") => (0, import_date_fns4.format)(new Date(timestamp2), dateFormat);
+var formatDate = (timestamp3, dateFormat = "d MMMM yyyy") => (0, import_date_fns4.format)(new Date(timestamp3), dateFormat);
 var format_date_default = formatDate;
 
 // generate-csv/map-application-to-csv/helpers/format-time-of-day/index.ts
