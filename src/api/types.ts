@@ -281,6 +281,7 @@ interface UpdateExporterCompanyAndCompanyAddressVariables {
 export {
   Account,
   AccountCreationVariables,
+  ApplicationExporterCompanyAddress,
   AccountInput,
   AccountSendEmailPasswordResetLinkVariables,
   AccountSignInVariables,

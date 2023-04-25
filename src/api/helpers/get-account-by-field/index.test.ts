@@ -36,7 +36,7 @@ describe('helpers/get-account-by-field', () => {
   });
 
   it('should return an exporter/account by ID', async () => {
-    const result = await getAccountByField(context, field, value);
+    const result = (await getAccountByField(context, field, value)) as Account;
 
     expect(result.id).toEqual(account.id);
     expect(result.firstName).toEqual(account.firstName);

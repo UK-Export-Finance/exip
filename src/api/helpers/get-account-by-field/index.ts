@@ -19,10 +19,9 @@ const getAccountByField = async (context: Context, field: string, value: string)
       take: 1,
     });
 
-    // ensure that we have found an acount with the requsted field/value
+    // ensure that we have found an account with the requsted field/value
     if (!exportersArray || !exportersArray.length || !exportersArray[0]) {
-      // throw new Error('Getting exporter by field - no exporter exists with the provided field/value');
-      console.info('Getting exporter by field - no exporter exists with the provided field/value');
+      console.info('Getting exporter account by field - no exporter exists with the provided field/value');
 
       return false;
     }
