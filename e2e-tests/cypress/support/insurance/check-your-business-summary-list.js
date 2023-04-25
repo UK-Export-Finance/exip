@@ -14,6 +14,7 @@ const {
         COMPANY_ADDRESS,
         COMPANY_INCORPORATED,
         COMPANY_SIC,
+        INDUSTRY_SECTOR_NAME,
         FINANCIAL_YEAR_END_DATE,
       },
       YOUR_COMPANY: {
@@ -143,7 +144,7 @@ const checkYourBusinessSummaryList = ({
     const fieldId = COMPANY_SIC;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = `${application.EXPORTER_COMPANY[fieldId][0]} - Financial intermediation not elsewhere classified`;
+    const expectedValue = `${application.EXPORTER_COMPANY[fieldId][0]} - ${application.EXPORTER_COMPANY[INDUSTRY_SECTOR_NAME][0]}`;
 
     assertRow(fieldId, expectedKey, expectedValue);
   },
