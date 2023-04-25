@@ -1,10 +1,12 @@
 import mapExporter, { mapExporterBroker } from '.';
 import FIELD_IDS from '../../../constants/field-ids/insurance/exporter-business';
-import { CSV_SECTION_TITLES } from '../../../content-strings';
+import { CSV } from '../../../content-strings';
 import { FIELDS } from '../../../content-strings/fields/insurance/your-business';
-import { ANSWERS } from '../../../constants';
+import { ANSWERS, GBP_CURRENCY_CODE } from '../../../constants';
 import csvRow from '../helpers/csv-row';
+import mapExporterAddress from './map-address';
 import formatDate from '../helpers/format-date';
+import formatCurrency from '../helpers/format-currency';
 import NEW_LINE from '../helpers/csv-new-line';
 import { mockApplication } from '../../../test-mocks';
 
@@ -32,13 +34,13 @@ describe('api/generate-csv/map-application-to-csv/map-exporter', () => {
         const { exporterBroker } = mockApplication;
 
         const expected = [
-          csvRow(CONTENT_STRINGS[USING_BROKER].SUMMARY?.TITLE, exporterBroker[USING_BROKER]),
-          csvRow(CONTENT_STRINGS[BROKER_NAME].SUMMARY?.TITLE, exporterBroker[BROKER_NAME]),
+          csvRow(CSV.FIELDS[USING_BROKER], exporterBroker[USING_BROKER]),
+          csvRow(CSV.FIELDS[BROKER_NAME], exporterBroker[BROKER_NAME]),
           csvRow(
-            CONTENT_STRINGS[ADDRESS_LINE_1].SUMMARY?.TITLE,
+            CSV.FIELDS[ADDRESS_LINE_1],
             `${exporterBroker[ADDRESS_LINE_1]} ${NEW_LINE} ${exporterBroker[TOWN]} ${NEW_LINE} ${exporterBroker[COUNTY]} ${NEW_LINE} ${exporterBroker[POSTCODE]}`,
           ),
-          csvRow(CONTENT_STRINGS[EMAIL].SUMMARY?.TITLE, exporterBroker[EMAIL]),
+          csvRow(CSV.FIELDS[EMAIL], exporterBroker[EMAIL]),
         ];
 
         expect(result).toEqual(expected);
@@ -59,7 +61,7 @@ describe('api/generate-csv/map-application-to-csv/map-exporter', () => {
 
         const { exporterBroker } = mockApplicationNoBroker;
 
-        const expected = [csvRow(CONTENT_STRINGS[USING_BROKER].SUMMARY?.TITLE, exporterBroker[USING_BROKER])];
+        const expected = [csvRow(CSV.FIELDS[USING_BROKER], exporterBroker[USING_BROKER])];
 
         expect(result).toEqual(expected);
       });
@@ -73,27 +75,30 @@ describe('api/generate-csv/map-application-to-csv/map-exporter', () => {
       const { exporterCompany, exporterBusiness } = mockApplication;
 
       const expected = [
-        csvRow(CSV_SECTION_TITLES.EXPORTER_BUSINESS, ''),
+        csvRow(CSV.SECTION_TITLES.EXPORTER_BUSINESS, ''),
 
         // exporter company fields
         csvRow(CONTENT_STRINGS[COMPANY_NUMBER].SUMMARY?.TITLE, exporterCompany[COMPANY_NUMBER]),
-        csvRow(CONTENT_STRINGS[COMPANY_NAME].SUMMARY?.TITLE, exporterCompany[COMPANY_NAME]),
-        csvRow(CONTENT_STRINGS[COMPANY_ADDRESS].SUMMARY?.TITLE, exporterCompany[COMPANY_ADDRESS]),
-        csvRow(CONTENT_STRINGS[COMPANY_INCORPORATED].SUMMARY?.TITLE, formatDate(exporterCompany[COMPANY_INCORPORATED])),
-        csvRow(CONTENT_STRINGS[COMPANY_SIC].SUMMARY?.TITLE, exporterCompany[COMPANY_SIC]),
-        csvRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, formatDate(exporterCompany[FINANCIAL_YEAR_END_DATE])),
+        csvRow(CSV.FIELDS[COMPANY_NAME], exporterCompany[COMPANY_NAME]),
+        csvRow(CONTENT_STRINGS[COMPANY_INCORPORATED].SUMMARY?.TITLE, formatDate(exporterCompany[COMPANY_INCORPORATED], 'dd-MMM-yy')),
+
+        csvRow(CSV.FIELDS[COMPANY_ADDRESS], mapExporterAddress(exporterCompany[COMPANY_ADDRESS])),
+
         csvRow(CONTENT_STRINGS[TRADING_NAME].SUMMARY?.TITLE, exporterCompany[TRADING_NAME]),
         csvRow(CONTENT_STRINGS[TRADING_ADDRESS].SUMMARY?.TITLE, exporterCompany[TRADING_ADDRESS]),
-        csvRow(CONTENT_STRINGS[WEBSITE].SUMMARY?.TITLE, exporterCompany[WEBSITE]),
-        csvRow(CONTENT_STRINGS[PHONE_NUMBER].SUMMARY?.TITLE, exporterCompany[PHONE_NUMBER]),
+
+        csvRow(CSV.FIELDS[COMPANY_SIC], exporterCompany[COMPANY_SIC]),
+        csvRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, formatDate(exporterCompany[FINANCIAL_YEAR_END_DATE], 'd MMMM')),
+        csvRow(CSV.FIELDS[WEBSITE], exporterCompany[WEBSITE]),
+        csvRow(CSV.FIELDS[PHONE_NUMBER], exporterCompany[PHONE_NUMBER]),
 
         // exporter business fields
-        csvRow(CONTENT_STRINGS[GOODS_OR_SERVICES].SUMMARY?.TITLE, exporterBusiness[GOODS_OR_SERVICES]),
-        csvRow(CONTENT_STRINGS[YEARS_EXPORTING].SUMMARY?.TITLE, exporterBusiness[YEARS_EXPORTING]),
-        csvRow(CONTENT_STRINGS[EMPLOYEES_UK].SUMMARY?.TITLE, exporterBusiness[EMPLOYEES_UK]),
-        csvRow(CONTENT_STRINGS[EMPLOYEES_INTERNATIONAL].SUMMARY?.TITLE, exporterBusiness[EMPLOYEES_INTERNATIONAL]),
-        csvRow(CONTENT_STRINGS[ESTIMATED_ANNUAL_TURNOVER].SUMMARY?.TITLE, exporterBusiness[ESTIMATED_ANNUAL_TURNOVER]),
-        csvRow(CONTENT_STRINGS[PERCENTAGE_TURNOVER].SUMMARY?.TITLE, exporterBusiness[PERCENTAGE_TURNOVER]),
+        csvRow(CSV.FIELDS[GOODS_OR_SERVICES], exporterBusiness[GOODS_OR_SERVICES]),
+        csvRow(CSV.FIELDS[YEARS_EXPORTING], exporterBusiness[YEARS_EXPORTING]),
+        csvRow(CSV.FIELDS[EMPLOYEES_UK], exporterBusiness[EMPLOYEES_UK]),
+        csvRow(CSV.FIELDS[EMPLOYEES_INTERNATIONAL], exporterBusiness[EMPLOYEES_INTERNATIONAL]),
+        csvRow(CSV.FIELDS[ESTIMATED_ANNUAL_TURNOVER], formatCurrency(exporterBusiness[ESTIMATED_ANNUAL_TURNOVER], GBP_CURRENCY_CODE)),
+        csvRow(CONTENT_STRINGS[PERCENTAGE_TURNOVER].SUMMARY?.TITLE, `${exporterBusiness[PERCENTAGE_TURNOVER]}%`),
 
         // exporter broker fields
         ...mapExporterBroker(mockApplication),

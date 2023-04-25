@@ -46,6 +46,14 @@ var import_date_fns = require("date-fns");
 // constants/index.ts
 var import_dotenv = __toESM(require("dotenv"));
 
+// constants/field-ids/shared/index.ts
+var SHARED = {
+  POLICY_TYPE: "policyType",
+  SINGLE_POLICY_TYPE: "singlePolicyType",
+  MULTIPLE_POLICY_TYPE: "multiplePolicyType"
+};
+var shared_default = SHARED;
+
 // constants/field-ids/shared-eligibility/index.ts
 var SHARED_ELIGIBILITY = {
   BUYER_COUNTRY: "buyerCountry",
@@ -54,13 +62,17 @@ var SHARED_ELIGIBILITY = {
 };
 var shared_eligibility_default = SHARED_ELIGIBILITY;
 
-// constants/field-ids/shared/index.ts
-var SHARED = {
-  POLICY_TYPE: "policyType",
-  SINGLE_POLICY_TYPE: "singlePolicyType",
-  MULTIPLE_POLICY_TYPE: "multiplePolicyType"
+// constants/field-ids/insurance/account/index.ts
+var ACCOUNT = {
+  FIRST_NAME: "firstName",
+  LAST_NAME: "lastName",
+  EMAIL: "email",
+  PASSWORD: "password",
+  SECURITY_CODE: "securityCode",
+  VERIFICATION_HASH: "verificationHash",
+  PASSWORD_RESET_HASH: "passwordResetHash"
 };
-var shared_default = SHARED;
+var account_default = ACCOUNT;
 
 // constants/field-ids/insurance/policy-and-exports/index.ts
 var SHARED_CONTRACT_POLICY = {
@@ -201,6 +213,7 @@ var INSURANCE_FIELD_IDS = {
     ACCOUNT_TO_APPLY_ONLINE: "alreadyHaveAnAccount"
   },
   SUBMISSION_DEADLINE: "submissionDeadline",
+  ACCOUNT: account_default,
   POLICY_AND_EXPORTS: policy_and_exports_default,
   EXPORTER_BUSINESS: exporter_business_default,
   YOUR_BUYER: your_buyer_default,
@@ -208,6 +221,13 @@ var INSURANCE_FIELD_IDS = {
   CHECK_YOUR_ANSWERS: check_your_answers_default
 };
 var insurance_default = INSURANCE_FIELD_IDS;
+
+// constants/field-ids/index.ts
+var FIELD_IDS = {
+  ...shared_default,
+  ...shared_eligibility_default,
+  INSURANCE: insurance_default
+};
 
 // constants/application.ts
 var APPLICATION = {
@@ -260,13 +280,11 @@ var ANSWERS = {
   NO: "No"
 };
 var GBP_CURRENCY_CODE = "GBP";
-var FIELD_IDS = {
-  ACCOUNT: {
-    EMAIL: "email",
-    VERIFICATION_HASH: "verificationHash",
-    PASSWORD_RESET_HASH: "passwordResetHash"
-  },
-  ...insurance_default
+var EXTERNAL_API_ENDPOINTS = {
+  MULESOFT_MDM_EA: {
+    CURRENCY: "/currency",
+    INDUSTRY_SECTORS: "/map-industry-sector?size=1000"
+  }
 };
 var DATE_5_MINUTES_FROM_NOW = () => {
   const now = /* @__PURE__ */ new Date();
@@ -274,7 +292,7 @@ var DATE_5_MINUTES_FROM_NOW = () => {
   const future = new Date(now.setMilliseconds(milliseconds));
   return future;
 };
-var ACCOUNT = {
+var ACCOUNT2 = {
   EMAIL: {
     VERIFICATION_EXPIRY: () => {
       const now = /* @__PURE__ */ new Date();
@@ -462,6 +480,7 @@ var notify = {
         emailRecipient: sendToEmailAddress
       };
     } catch (err) {
+      console.error(err);
       throw new Error(`Calling Notify API. Unable to send email ${err}`);
     }
   }
@@ -1053,7 +1072,8 @@ var lists = {
   ExporterCompanySicCode: (0, import_core.list)({
     fields: {
       exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany.sicCodes" }),
-      sicCode: (0, import_fields.text)()
+      sicCode: (0, import_fields.text)(),
+      industrySectorName: (0, import_fields.text)()
     },
     access: import_access.allowAll
   }),
@@ -1326,6 +1346,7 @@ var typeDefs = `
     companyNumber: String
     dateOfCreation: String
     sicCodes: [String]
+    industrySectorNames: [String]
     financialYearEndDate: DateTime
     success: Boolean
     apiError: Boolean
@@ -1372,6 +1393,7 @@ var typeDefs = `
   input ExporterCompanyAndCompanyAddressInput {
     address: ExporterCompanyAddressInput
     sicCodes: [String]
+    industrySectorNames: [String]
     companyName: String
     companyNumber: String
     dateOfCreation: DateTime
@@ -1527,7 +1549,7 @@ var getAccountByField = async (context, field, value) => {
       take: 1
     });
     if (!exportersArray || !exportersArray.length || !exportersArray[0]) {
-      console.info("Getting exporter by field - no exporter exists with the provided field/value");
+      console.info("Getting exporter account by field - no exporter exists with the provided field/value");
       return false;
     }
     const exporter = exportersArray[0];
@@ -1541,7 +1563,7 @@ var get_account_by_field_default = getAccountByField;
 
 // helpers/encrypt-password/index.ts
 var import_crypto = __toESM(require("crypto"));
-var { ENCRYPTION } = ACCOUNT;
+var { ENCRYPTION } = ACCOUNT2;
 var {
   RANDOM_BYTES_SIZE,
   STRING_TYPE,
@@ -1561,7 +1583,7 @@ var encryptPassword = (password2) => {
 var encrypt_password_default = encryptPassword;
 
 // custom-resolvers/mutations/create-account.ts
-var { EMAIL, ENCRYPTION: ENCRYPTION2 } = ACCOUNT;
+var { EMAIL, ENCRYPTION: ENCRYPTION2 } = ACCOUNT2;
 var {
   STRING_TYPE: STRING_TYPE2,
   PBKDF2: { ITERATIONS: ITERATIONS2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 },
@@ -1608,7 +1630,7 @@ var import_date_fns2 = require("date-fns");
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
     console.info("Verifying exporter email address");
-    const exporter = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.VERIFICATION_HASH, variables.token);
+    const exporter = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.VERIFICATION_HASH, variables.token);
     if (exporter) {
       const { id } = exporter;
       const now = /* @__PURE__ */ new Date();
@@ -1688,7 +1710,7 @@ var send_email_confirm_email_address_default = sendEmailConfirmEmailAddress;
 
 // helpers/is-valid-account-password/index.ts
 var import_crypto3 = __toESM(require("crypto"));
-var { ENCRYPTION: ENCRYPTION3 } = ACCOUNT;
+var { ENCRYPTION: ENCRYPTION3 } = ACCOUNT2;
 var {
   STRING_TYPE: STRING_TYPE3,
   PBKDF2: { ITERATIONS: ITERATIONS3, DIGEST_ALGORITHM: DIGEST_ALGORITHM3 },
@@ -1711,7 +1733,7 @@ var is_valid_account_password_default = isValidAccountPassword;
 // helpers/generate-otp/index.ts
 var import_crypto4 = __toESM(require("crypto"));
 var import_otplib = require("otplib");
-var { ENCRYPTION: ENCRYPTION4, OTP } = ACCOUNT;
+var { ENCRYPTION: ENCRYPTION4, OTP } = ACCOUNT2;
 var {
   RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE2,
   STRING_TYPE: STRING_TYPE4,
@@ -1775,7 +1797,7 @@ var accountSignIn = async (root, variables, context) => {
   try {
     console.info("Signing in exporter account");
     const { email, password: password2 } = variables;
-    const exporter = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.EMAIL, email);
+    const exporter = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
     if (!exporter) {
       console.info("Unable to validate exporter account - no account found");
       return { success: false };
@@ -1839,7 +1861,7 @@ var import_date_fns3 = require("date-fns");
 
 // helpers/is-valid-otp/index.ts
 var import_crypto5 = __toESM(require("crypto"));
-var { ENCRYPTION: ENCRYPTION5 } = ACCOUNT;
+var { ENCRYPTION: ENCRYPTION5 } = ACCOUNT2;
 var {
   STRING_TYPE: STRING_TYPE5,
   PBKDF2: { ITERATIONS: ITERATIONS5, DIGEST_ALGORITHM: DIGEST_ALGORITHM5 },
@@ -1871,7 +1893,7 @@ var {
     KEY: { SIGNATURE, ENCODING, STRING_ENCODING },
     TOKEN: { EXPIRY, ALGORITHM }
   }
-} = ACCOUNT;
+} = ACCOUNT2;
 var PRIV_KEY = Buffer.from(SIGNATURE, ENCODING).toString(STRING_ENCODING);
 var createJWT = (accountId) => {
   const sessionIdentifier = import_crypto6.default.randomBytes(RANDOM_BYTES_SIZE3).toString(STRING_TYPE6);
@@ -1896,7 +1918,7 @@ var create_jwt_default = create;
 // custom-resolvers/mutations/verify-account-sign-in-code.ts
 var {
   JWT: { SESSION_EXPIRY }
-} = ACCOUNT;
+} = ACCOUNT2;
 var verifyAccountSignInCode = async (root, variables, context) => {
   try {
     console.info("Verifying exporter account sign in code");
@@ -1963,7 +1985,7 @@ var addAndGetOTP = async (root, variables, context) => {
   try {
     console.info("Adding OTP to exporter account");
     const { email } = variables;
-    const exporter = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.EMAIL, email);
+    const exporter = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
     if (!exporter) {
       console.info("Unable to generate and add OTP to exporter account - no account found");
       return { success: false };
@@ -1990,12 +2012,12 @@ var {
       PBKDF2: { KEY_LENGTH: KEY_LENGTH6 }
     }
   }
-} = ACCOUNT;
+} = ACCOUNT2;
 var sendEmailPasswordResetLink = async (root, variables, context) => {
   try {
     console.info("Sending password reset email");
     const { email } = variables;
-    const exporter = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.EMAIL, email);
+    const exporter = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
     if (!exporter) {
       console.info("Unable to send password reset email - no account found");
       return { success: false };
@@ -2003,7 +2025,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
     const passwordResetHash = import_crypto7.default.pbkdf2Sync(email, exporter.salt, ITERATIONS6, KEY_LENGTH6, DIGEST_ALGORITHM6).toString(STRING_TYPE7);
     const accountUpdate = {
       passwordResetHash,
-      passwordResetExpiry: ACCOUNT.PASSWORD_RESET_EXPIRY()
+      passwordResetExpiry: ACCOUNT2.PASSWORD_RESET_EXPIRY()
     };
     await context.db.Exporter.updateOne({
       where: { id: exporter.id },
@@ -2100,14 +2122,19 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 var delete_application_by_refrence_number_default = deleteApplicationByReferenceNumber;
 
 // helpers/map-sic-codes/index.ts
-var mapSicCodes = (company, sicCodes) => {
+var mapSicCodes = (company, sicCodes, industrySectorNames) => {
   const mapped = [];
   if (!sicCodes || !sicCodes.length) {
     return mapped;
   }
-  sicCodes.forEach((code) => {
+  sicCodes.forEach((code, index) => {
+    let industrySectorName = "";
+    if (industrySectorNames && industrySectorNames[index]) {
+      industrySectorName = industrySectorNames[index];
+    }
     const codeToAdd = {
       sicCode: code,
+      industrySectorName,
       exporterCompany: {
         connect: {
           id: company.id
@@ -2123,7 +2150,7 @@ var mapSicCodes = (company, sicCodes) => {
 var updateExporterCompanyAndCompanyAddress = async (root, variables, context) => {
   try {
     console.info("Updating application exporter company and exporter company address for ", variables.companyId);
-    const { address, sicCodes, oldSicCodes, ...exporterCompany } = variables.data;
+    const { address, sicCodes, industrySectorNames, oldSicCodes, ...exporterCompany } = variables.data;
     const company = await context.db.ExporterCompany.updateOne({
       where: { id: variables.companyId },
       data: exporterCompany
@@ -2132,7 +2159,7 @@ var updateExporterCompanyAndCompanyAddress = async (root, variables, context) =>
       where: { id: variables.companyAddressId },
       data: address
     });
-    const mappedSicCodes = mapSicCodes(company, sicCodes);
+    const mappedSicCodes = mapSicCodes(company, sicCodes, industrySectorNames);
     if (exporterCompany && oldSicCodes && oldSicCodes.length) {
       await context.db.ExporterCompanySicCode.deleteMany({
         where: oldSicCodes
@@ -2158,7 +2185,30 @@ var update_exporter_company_and_company_address_default = updateExporterCompanyA
 // custom-resolvers/mutations/submit-application.ts
 var import_date_fns6 = require("date-fns");
 
-// helpers/get-populated-application.ts
+// helpers/get-country-by-field/index.ts
+var getCountryByField = async (context, field, value) => {
+  try {
+    console.info("Getting country by field/value");
+    const countriesArray = await context.db.Country.findMany({
+      where: {
+        [field]: { equals: value }
+      },
+      take: 1
+    });
+    if (!countriesArray || !countriesArray.length || !countriesArray[0]) {
+      console.info("Getting country by field - no country exists with the provided field/value");
+      return false;
+    }
+    const country = countriesArray[0];
+    return country;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Getting country by field/value ${err}`);
+  }
+};
+var get_country_by_field_default = getCountryByField;
+
+// helpers/get-populated-application/index.ts
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application) => {
   console.info("Getting populated application");
@@ -2173,24 +2223,30 @@ var getPopulatedApplication = async (context, application) => {
   if (!exporter) {
     throw new Error(generateErrorMessage("exporter", application.id));
   }
-  const buyerCountry = await context.db.Country.findOne({
-    where: { id: eligibility?.buyerCountryId }
-  });
-  if (!buyerCountry) {
-    throw new Error(generateErrorMessage("buyerCountry", application.id));
-  }
   const policyAndExport = await context.db.PolicyAndExport.findOne({
     where: { id: policyAndExportId }
   });
   if (!policyAndExport) {
     throw new Error(generateErrorMessage("policyAndExport", application.id));
   }
+  const finalDestinationCountry = await get_country_by_field_default(context, "isoCode", policyAndExport.finalDestinationCountryCode);
+  const populatedPolicyAndExport = {
+    ...policyAndExport,
+    finalDestinationCountryCode: finalDestinationCountry
+  };
   const exporterCompany = await context.db.ExporterCompany.findOne({
     where: { id: exporterCompanyId }
   });
   if (!exporterCompany) {
     throw new Error(generateErrorMessage("exporterCompany", application.id));
   }
+  const exporterCompanyAddress = await context.db.ExporterCompanyAddress.findOne({
+    where: { id: exporterCompany.registeredOfficeAddressId }
+  });
+  const populatedExporterCompany = {
+    ...exporterCompany,
+    registeredOfficeAddress: exporterCompanyAddress
+  };
   const exporterBusiness = await context.db.ExporterBusiness.findOne({
     where: { id: exporterBusinessId }
   });
@@ -2209,6 +2265,16 @@ var getPopulatedApplication = async (context, application) => {
   if (!buyer) {
     throw new Error(generateErrorMessage("buyer", application.id));
   }
+  const buyerCountry = await context.db.Country.findOne({
+    where: { id: buyer.countryId }
+  });
+  if (!buyerCountry) {
+    throw new Error(generateErrorMessage("populated buyer", application.id));
+  }
+  const populatedBuyer = {
+    ...buyer,
+    country: buyerCountry
+  };
   const declaration = await context.db.Declaration.findOne({
     where: { id: declarationId }
   });
@@ -2221,12 +2287,12 @@ var getPopulatedApplication = async (context, application) => {
       ...eligibility,
       buyerCountry
     },
-    policyAndExport,
+    policyAndExport: populatedPolicyAndExport,
     exporter,
-    exporterCompany,
+    exporterCompany: populatedExporterCompany,
     exporterBusiness,
     exporterBroker,
-    buyer,
+    buyer: populatedBuyer,
     declaration
   };
   return populatedApplication;
@@ -2290,10 +2356,14 @@ var import_fs2 = __toESM(require("fs"));
 var import_csv_stringify = require("csv-stringify");
 
 // generate-csv/map-application-to-csv/helpers/csv-row/index.ts
-var csvRow = (fieldName, answer) => ({
-  Field: fieldName,
-  Answer: answer
-});
+var csvRow = (fieldName, answer) => {
+  const value = answer || answer === 0 ? answer : "";
+  const row = {
+    Field: fieldName,
+    Answer: String(value)
+  };
+  return row;
+};
 var csv_row_default = csvRow;
 
 // content-strings/default.ts
@@ -2302,11 +2372,54 @@ var DEFAULT = {
 };
 
 // content-strings/csv.ts
-var CSV_SECTION_TITLES = {
-  ELIGIBILITY: "Eligibility",
-  POLICY_AND_EXPORT: "Type of policy and exports",
-  EXPORTER_BUSINESS: "About your business",
-  BUYER: "Your buyer"
+var { FIRST_NAME, LAST_NAME, EMAIL: EMAIL2 } = account_default;
+var {
+  CONTRACT_POLICY: {
+    SINGLE: { CONTRACT_COMPLETION_DATE }
+  }
+} = policy_and_exports_default;
+var {
+  COMPANY_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
+  YOUR_COMPANY: { WEBSITE, PHONE_NUMBER },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER },
+  BROKER: { USING_BROKER, NAME: BROKER_NAME, ADDRESS_LINE_1: BROKER_ADDRESS, EMAIL: BROKER_EMAIL }
+} = exporter_business_default;
+var {
+  COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS }
+} = your_buyer_default;
+var CSV = {
+  SECTION_TITLES: {
+    KEY_INFORMATION: "Key information",
+    POLICY_AND_EXPORT: "Type of policy and exports",
+    EXPORTER_BUSINESS: "About your business",
+    BUYER: "Your buyer",
+    ELIGIBILITY: "Eligibility"
+  },
+  FIELDS: {
+    [FIRST_NAME]: "Applicant first name",
+    [LAST_NAME]: "Applicant last name",
+    [EMAIL2]: "Applicant email address",
+    [CONTRACT_COMPLETION_DATE]: "Date expected for contract to complete",
+    [EXPORTER_COMPANY_NAME]: "Exporter company name",
+    [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
+    [EXPORTER_COMPANY_SIC]: "Exporter standard industry classification (SIC) codes and nature of business",
+    [WEBSITE]: "Exporter Company website (optional)",
+    [PHONE_NUMBER]: "Exporter telephone number (optional)",
+    [GOODS_OR_SERVICES]: "Goods or services the business supplies",
+    [YEARS_EXPORTING]: "Exporter years exporting",
+    [EMPLOYEES_UK]: "Exporter UK Exmployees",
+    [EMPLOYEES_INTERNATIONAL]: "Exporter worldwide employees including UK employees",
+    [ESTIMATED_ANNUAL_TURNOVER]: "Exporter estimated turnover this current financial year",
+    [USING_BROKER]: "Using a broker for this insurance",
+    [BROKER_NAME]: "Name of broker or company",
+    [BROKER_ADDRESS]: "Broker address",
+    [BROKER_EMAIL]: "Broker email address",
+    [COUNTRY]: "Buyer location",
+    [BUYER_COMPANY_NAME]: "Buyer company name",
+    [BUYER_REGISTRATION_NUMBER]: "Buyer registration number (optional)",
+    [BUYER_CONTACT_DETAILS]: "Buyer contact details"
+  }
 };
 
 // generate-csv/map-application-to-csv/helpers/csv-row-seperator/index.ts
@@ -2374,19 +2487,12 @@ var FIELDS_ELIGIBILITY = {
   }
 };
 
-// constants/field-ids/index.ts
-var FIELD_IDS2 = {
-  ...shared_default,
-  ...shared_eligibility_default,
-  INSURANCE: insurance_default
-};
-
 // content-strings/fields/insurance/policy-and-exports/index.ts
-var { POLICY_AND_EXPORTS: POLICY_AND_EXPORTS2 } = FIELD_IDS2.INSURANCE;
+var { POLICY_AND_EXPORTS: POLICY_AND_EXPORTS2 } = FIELD_IDS.INSURANCE;
 var { CONTRACT_POLICY, ABOUT_GOODS_OR_SERVICES } = POLICY_AND_EXPORTS2;
 var POLICY_AND_EXPORTS_FIELDS = {
   [POLICY_AND_EXPORTS2.POLICY_TYPE]: {
-    ID: FIELD_IDS2.POLICY_TYPE,
+    ID: FIELD_IDS.POLICY_TYPE,
     SUMMARY: {
       TITLE: "Policy type"
     }
@@ -2455,10 +2561,10 @@ var POLICY_AND_EXPORTS_FIELDS = {
 var { EXPORTER_BUSINESS: EXPORTER_BUSINESS2 } = insurance_default;
 var {
   COMPANY_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS },
-  YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
-  TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-  BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, EMAIL: EMAIL2 }
+  YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER: PHONE_NUMBER2, WEBSITE: WEBSITE2 },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL2 },
+  TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2, PERCENTAGE_TURNOVER },
+  BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL3 }
 } = EXPORTER_BUSINESS2;
 var FIELDS = {
   COMPANY_DETAILS: {
@@ -2502,41 +2608,41 @@ var FIELDS = {
         TITLE: "Different trading address?"
       }
     },
-    [WEBSITE]: {
+    [WEBSITE2]: {
       SUMMARY: {
         TITLE: "Company website (optional)"
       }
     },
-    [PHONE_NUMBER]: {
+    [PHONE_NUMBER2]: {
       SUMMARY: {
         TITLE: "UK telephone number (optional)"
       }
     }
   },
   NATURE_OF_YOUR_BUSINESS: {
-    [GOODS_OR_SERVICES]: {
+    [GOODS_OR_SERVICES2]: {
       SUMMARY: {
         TITLE: "Goods or services your business supplies"
       }
     },
-    [YEARS_EXPORTING]: {
+    [YEARS_EXPORTING2]: {
       SUMMARY: {
         TITLE: "Years exporting"
       }
     },
-    [EMPLOYEES_UK]: {
+    [EMPLOYEES_UK2]: {
       SUMMARY: {
         TITLE: "UK employees"
       }
     },
-    [EMPLOYEES_INTERNATIONAL]: {
+    [EMPLOYEES_INTERNATIONAL2]: {
       SUMMARY: {
         TITLE: "Worldwide employees including UK employees"
       }
     }
   },
   TURNOVER: {
-    [ESTIMATED_ANNUAL_TURNOVER]: {
+    [ESTIMATED_ANNUAL_TURNOVER2]: {
       SUMMARY: {
         TITLE: "Estimated turnover this current financial year"
       }
@@ -2548,7 +2654,7 @@ var FIELDS = {
     }
   },
   BROKER: {
-    [USING_BROKER]: {
+    [USING_BROKER2]: {
       SUMMARY: {
         TITLE: "Using a broker for this insurance?"
       }
@@ -2563,7 +2669,7 @@ var FIELDS = {
         TITLE: "Broker's address"
       }
     },
-    [EMAIL2]: {
+    [EMAIL3]: {
       SUMMARY: {
         TITLE: "Broker's email"
       }
@@ -2637,7 +2743,7 @@ var YOUR_BUYER_FIELDS = {
 // content-strings/fields/insurance/index.ts
 var REFERENCE_NUMBER = {
   SUMMARY: {
-    TITLE: "Application reference"
+    TITLE: "Application reference number"
   }
 };
 var DATE_SUBMITTED = {
@@ -2663,16 +2769,238 @@ var formatTimeOfDay = (date) => {
 };
 var format_time_of_day_default = formatTimeOfDay;
 
-// generate-csv/map-application-to-csv/map-reference-number-and-dates/index.ts
-var mapReferenceNumberAndDates = (application) => {
+// generate-csv/map-application-to-csv/map-key-information/index.ts
+var { FIELDS: FIELDS2 } = CSV;
+var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL4 } = account_default;
+var mapKeyInformation = (application) => {
   const mapped = [
     csv_row_default(REFERENCE_NUMBER.SUMMARY.TITLE, application.referenceNumber),
-    csv_row_default(DATE_SUBMITTED.SUMMARY.TITLE, format_date_default(application.submissionDate)),
-    csv_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application.submissionDate))
+    csv_row_default(DATE_SUBMITTED.SUMMARY.TITLE, format_date_default(application.submissionDate, "dd-MM-yyyy")),
+    csv_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application.submissionDate)),
+    csv_row_default(FIELDS2[FIRST_NAME2], application.exporter[FIRST_NAME2]),
+    csv_row_default(FIELDS2[LAST_NAME2], application.exporter[LAST_NAME2]),
+    csv_row_default(FIELDS2[EMAIL4], application.exporter[EMAIL4])
   ];
   return mapped;
 };
-var map_reference_number_and_dates_default = mapReferenceNumberAndDates;
+var map_key_information_default = mapKeyInformation;
+
+// generate-csv/map-application-to-csv/map-secondary-key-information/index.ts
+var {
+  SECTION_TITLES: { KEY_INFORMATION },
+  FIELDS: FIELDS3
+} = CSV;
+var CONTENT_STRINGS = {
+  ...POLICY_AND_EXPORTS_FIELDS
+};
+var {
+  EXPORTER_BUSINESS: {
+    COMPANY_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME2 }
+  },
+  YOUR_BUYER: {
+    COMPANY_OR_ORGANISATION: { COUNTRY: COUNTRY2, NAME: BUYER_COMPANY_NAME2 }
+  },
+  POLICY_AND_EXPORTS: {
+    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 }
+  }
+} = insurance_default;
+var mapSecondaryKeyInformation = (application) => {
+  const { policyAndExport } = application;
+  const mapped = [
+    csv_row_default(KEY_INFORMATION),
+    csv_row_default(FIELDS3[EXPORTER_COMPANY_NAME2], application.exporterCompany[EXPORTER_COMPANY_NAME2]),
+    csv_row_default(FIELDS3[COUNTRY2], application.buyer[COUNTRY2].name),
+    csv_row_default(FIELDS3[BUYER_COMPANY_NAME2], application.buyer[BUYER_COMPANY_NAME2]),
+    csv_row_default(String(CONTENT_STRINGS[POLICY_TYPE2].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE2])
+  ];
+  return mapped;
+};
+var map_secondary_key_information_default = mapSecondaryKeyInformation;
+
+// generate-csv/map-application-to-csv/helpers/policy-type/index.ts
+var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
+var isMultiPolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+
+// generate-csv/map-application-to-csv/helpers/format-currency/index.ts
+var formatCurrency = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
+  style: "currency",
+  currency: currencyCode,
+  minimumFractionDigits: decimalPoints || 0,
+  maximumFractionDigits: decimalPoints || 0
+});
+var format_currency_default = formatCurrency;
+
+// generate-csv/map-application-to-csv/helpers/map-month-string/index.ts
+var mapMonthString = (answer) => answer === 1 ? `${answer} month` : `${answer} months`;
+var map_month_string_default = mapMonthString;
+
+// generate-csv/map-application-to-csv/map-policy-and-export/index.ts
+var CONTENT_STRINGS2 = {
+  ...POLICY_AND_EXPORTS_FIELDS,
+  ...POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY,
+  ...POLICY_AND_EXPORTS_FIELDS.ABOUT_GOODS_OR_SERVICES,
+  SINGLE: POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY.SINGLE,
+  MULTIPLE: POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY.MULTIPLE
+};
+var {
+  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE3 },
+  CONTRACT_POLICY: {
+    REQUESTED_START_DATE,
+    SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2, TOTAL_CONTRACT_VALUE },
+    MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+    CREDIT_PERIOD_WITH_BUYER,
+    POLICY_CURRENCY_CODE
+  },
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION }
+} = insurance_default.POLICY_AND_EXPORTS;
+var mapPolicyAndExportIntro = (application) => {
+  const { policyAndExport } = application;
+  const mapped = [
+    csv_row_default(CSV.SECTION_TITLES.POLICY_AND_EXPORT, ""),
+    csv_row_default(String(CONTENT_STRINGS2[POLICY_TYPE3].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE3]),
+    csv_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[REQUESTED_START_DATE], "dd-MMM-yy"))
+  ];
+  return mapped;
+};
+var mapSinglePolicyFields = (application) => {
+  const { policyAndExport } = application;
+  return [
+    csv_row_default(String(CONTENT_STRINGS2.SINGLE[CONTRACT_COMPLETION_DATE2].SUMMARY?.TITLE), format_date_default(policyAndExport[CONTRACT_COMPLETION_DATE2], "dd-MMM-yy")),
+    csv_row_default(String(CONTENT_STRINGS2.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE))
+  ];
+};
+var mapMultiplePolicyFields = (application) => {
+  const { policyAndExport } = application;
+  return [
+    csv_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), map_month_string_default(policyAndExport[TOTAL_MONTHS_OF_COVER])),
+    csv_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
+    csv_row_default(String(CONTENT_STRINGS2.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default(policyAndExport[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
+  ];
+};
+var mapPolicyAndExportOutro = (application) => {
+  const { policyAndExport } = application;
+  const mapped = [
+    csv_row_default(String(CONTENT_STRINGS2[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policyAndExport[CREDIT_PERIOD_WITH_BUYER]),
+    csv_row_default(String(CONTENT_STRINGS2[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policyAndExport[POLICY_CURRENCY_CODE]),
+    csv_row_default(String(CONTENT_STRINGS2[DESCRIPTION].SUMMARY?.TITLE), policyAndExport[DESCRIPTION]),
+    csv_row_default(String(CONTENT_STRINGS2[FINAL_DESTINATION].SUMMARY?.TITLE), policyAndExport[FINAL_DESTINATION].name)
+  ];
+  return mapped;
+};
+var mapPolicyAndExport = (application) => {
+  let mapped = mapPolicyAndExportIntro(application);
+  const policyType = application.policyAndExport[POLICY_TYPE3];
+  if (isSinglePolicyType(policyType)) {
+    mapped = [...mapped, ...mapSinglePolicyFields(application)];
+  }
+  if (isMultiPolicyType(policyType)) {
+    mapped = [...mapped, ...mapMultiplePolicyFields(application)];
+  }
+  mapped = [...mapped, ...mapPolicyAndExportOutro(application)];
+  return mapped;
+};
+var map_policy_and_export_default = mapPolicyAndExport;
+
+// generate-csv/map-application-to-csv/helpers/csv-new-line/index.ts
+var NEW_LINE = "\r\n";
+var csv_new_line_default = NEW_LINE;
+
+// generate-csv/map-application-to-csv/map-exporter/map-address/index.ts
+var mapExporterAddress = (address) => {
+  let addressString = "";
+  Object.keys(address).forEach((field) => {
+    if (address[field] && field !== "id" && field !== "__typename") {
+      addressString += `${address[field]}${csv_new_line_default}`;
+    }
+  });
+  return addressString;
+};
+var map_address_default = mapExporterAddress;
+
+// generate-csv/map-application-to-csv/map-exporter/index.ts
+var CONTENT_STRINGS3 = {
+  ...FIELDS.COMPANY_DETAILS,
+  ...FIELDS.NATURE_OF_YOUR_BUSINESS,
+  ...FIELDS.TURNOVER,
+  ...FIELDS.BROKER
+};
+var {
+  COMPANY_HOUSE: { COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_NAME: COMPANY_NAME2, COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
+  YOUR_COMPANY: { TRADING_NAME: TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE3, PHONE_NUMBER: PHONE_NUMBER3 },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL3 },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
+  BROKER: { USING_BROKER: USING_BROKER3, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL5 }
+} = exporter_business_default;
+var mapExporterBroker = (application) => {
+  const { exporterBroker } = application;
+  let mapped = [csv_row_default(CSV.FIELDS[USING_BROKER3], exporterBroker[USING_BROKER3])];
+  if (exporterBroker[USING_BROKER3] === ANSWERS.YES) {
+    mapped = [
+      ...mapped,
+      csv_row_default(CSV.FIELDS[BROKER_NAME2], exporterBroker[BROKER_NAME2]),
+      csv_row_default(
+        CSV.FIELDS[ADDRESS_LINE_12],
+        `${exporterBroker[ADDRESS_LINE_12]} ${csv_new_line_default} ${exporterBroker[TOWN]} ${csv_new_line_default} ${exporterBroker[COUNTY]} ${csv_new_line_default} ${exporterBroker[POSTCODE]}`
+      ),
+      csv_row_default(CSV.FIELDS[EMAIL5], exporterBroker[EMAIL5])
+    ];
+  }
+  return mapped;
+};
+var mapExporter = (application) => {
+  const { exporterCompany, exporterBusiness } = application;
+  const mapped = [
+    csv_row_default(CSV.SECTION_TITLES.EXPORTER_BUSINESS, ""),
+    // exporter company fields
+    csv_row_default(CONTENT_STRINGS3[COMPANY_NUMBER2].SUMMARY?.TITLE, exporterCompany[COMPANY_NUMBER2]),
+    csv_row_default(CSV.FIELDS[COMPANY_NAME2], exporterCompany[COMPANY_NAME2]),
+    csv_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(exporterCompany[COMPANY_INCORPORATED2], "dd-MMM-yy")),
+    csv_row_default(CSV.FIELDS[COMPANY_ADDRESS2], map_address_default(exporterCompany[COMPANY_ADDRESS2])),
+    csv_row_default(CONTENT_STRINGS3[TRADING_NAME2].SUMMARY?.TITLE, exporterCompany[TRADING_NAME2]),
+    csv_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, exporterCompany[TRADING_ADDRESS2]),
+    csv_row_default(CSV.FIELDS[COMPANY_SIC2], exporterCompany[COMPANY_SIC2]),
+    csv_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, format_date_default(exporterCompany[FINANCIAL_YEAR_END_DATE2], "d MMMM")),
+    csv_row_default(CSV.FIELDS[WEBSITE3], exporterCompany[WEBSITE3]),
+    csv_row_default(CSV.FIELDS[PHONE_NUMBER3], exporterCompany[PHONE_NUMBER3]),
+    // exporter business fields
+    csv_row_default(CSV.FIELDS[GOODS_OR_SERVICES3], exporterBusiness[GOODS_OR_SERVICES3]),
+    csv_row_default(CSV.FIELDS[YEARS_EXPORTING3], exporterBusiness[YEARS_EXPORTING3]),
+    csv_row_default(CSV.FIELDS[EMPLOYEES_UK3], exporterBusiness[EMPLOYEES_UK3]),
+    csv_row_default(CSV.FIELDS[EMPLOYEES_INTERNATIONAL3], exporterBusiness[EMPLOYEES_INTERNATIONAL3]),
+    csv_row_default(CSV.FIELDS[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default(exporterBusiness[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
+    csv_row_default(CONTENT_STRINGS3[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${exporterBusiness[PERCENTAGE_TURNOVER2]}%`),
+    // exporter broker fields
+    ...mapExporterBroker(application)
+  ];
+  return mapped;
+};
+var map_exporter_default = mapExporter;
+
+// generate-csv/map-application-to-csv/map-buyer/index.ts
+var CONTENT_STRINGS4 = {
+  ...YOUR_BUYER_FIELDS.COMPANY_OR_ORGANISATION,
+  ...YOUR_BUYER_FIELDS.WORKING_WITH_BUYER
+};
+var {
+  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, REGISTRATION_NUMBER, WEBSITE: WEBSITE4, FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, POSITION, EMAIL: EMAIL6, CAN_CONTACT_BUYER },
+  WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER }
+} = your_buyer_default;
+var mapBuyer = (application) => {
+  const { buyer } = application;
+  const mapped = [
+    csv_row_default(CSV.SECTION_TITLES.BUYER, ""),
+    csv_row_default(CSV.FIELDS[NAME2], buyer[NAME2]),
+    csv_row_default(String(CONTENT_STRINGS4[ADDRESS].SUMMARY?.TITLE), buyer[ADDRESS]),
+    csv_row_default(CSV.FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
+    csv_row_default(String(CONTENT_STRINGS4[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
+    csv_row_default(CSV.FIELDS[FIRST_NAME3], `${buyer[FIRST_NAME3]} ${buyer[LAST_NAME3]} ${csv_new_line_default} ${buyer[POSITION]} ${csv_new_line_default} ${buyer[EMAIL6]}`),
+    csv_row_default(String(CONTENT_STRINGS4[CAN_CONTACT_BUYER].SUMMARY?.TITLE), buyer[CAN_CONTACT_BUYER]),
+    csv_row_default(String(CONTENT_STRINGS4[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), buyer[CONNECTED_WITH_BUYER]),
+    csv_row_default(String(CONTENT_STRINGS4[TRADED_WITH_BUYER].SUMMARY?.TITLE), buyer[TRADED_WITH_BUYER])
+  ];
+  return mapped;
+};
+var map_buyer_default = mapBuyer;
 
 // generate-csv/map-application-to-csv/helpers/map-yes-no-field/index.ts
 var mapYesNoField = (answer) => {
@@ -2701,7 +3029,7 @@ var {
 var mapEligibility = (application) => {
   const { eligibility } = application;
   const mapped = [
-    csv_row_default(CSV_SECTION_TITLES.ELIGIBILITY, ""),
+    csv_row_default(CSV.SECTION_TITLES.ELIGIBILITY, ""),
     csv_row_default(FIELDS_ELIGIBILITY[BUYER_COUNTRY2].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY2].name),
     csv_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[VALID_EXPORTER_LOCATION2])),
     csv_row_default(FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES2])),
@@ -2716,180 +3044,22 @@ var mapEligibility = (application) => {
 };
 var map_eligibility_default = mapEligibility;
 
-// generate-csv/map-application-to-csv/helpers/policy-type/index.ts
-var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
-var isMultiPolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
-
-// generate-csv/map-application-to-csv/helpers/format-currency/index.ts
-var formatCurrency = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
-  style: "currency",
-  currency: currencyCode,
-  minimumFractionDigits: decimalPoints || 0,
-  maximumFractionDigits: decimalPoints || 0
-});
-var format_currency_default = formatCurrency;
-
-// generate-csv/map-application-to-csv/helpers/map-month-string/index.ts
-var mapMonthString = (answer) => answer === 1 ? `${answer} month` : `${answer} months`;
-var map_month_string_default = mapMonthString;
-
-// generate-csv/map-application-to-csv/map-policy-and-export/index.ts
-var CONTENT_STRINGS = {
-  ...POLICY_AND_EXPORTS_FIELDS,
-  ...POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY,
-  SINGLE: POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY.SINGLE,
-  MULTIPLE: POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY.MULTIPLE
-};
-var {
-  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 },
-  CONTRACT_POLICY: {
-    REQUESTED_START_DATE,
-    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-    MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE }
-  }
-} = insurance_default.POLICY_AND_EXPORTS;
-var mapSinglePolicyFields = (application) => {
-  const { policyAndExport } = application;
-  return [
-    csv_row_default(String(CONTENT_STRINGS[POLICY_TYPE2].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE2]),
-    csv_row_default(String(CONTENT_STRINGS[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[REQUESTED_START_DATE])),
-    csv_row_default(String(CONTENT_STRINGS.SINGLE[CONTRACT_COMPLETION_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[CONTRACT_COMPLETION_DATE])),
-    csv_row_default(String(CONTENT_STRINGS.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE))
-  ];
-};
-var mapMultiplePolicyFields = (application) => {
-  const { policyAndExport } = application;
-  return [
-    csv_row_default(String(CONTENT_STRINGS.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), map_month_string_default(policyAndExport[TOTAL_MONTHS_OF_COVER])),
-    csv_row_default(String(CONTENT_STRINGS.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
-    csv_row_default(String(CONTENT_STRINGS.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default(policyAndExport[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
-  ];
-};
-var mapPolicyAndExport = (application) => {
-  let mapped = [];
-  const { policyAndExport } = application;
-  mapped = [
-    csv_row_default(CSV_SECTION_TITLES.POLICY_AND_EXPORT, ""),
-    csv_row_default(String(CONTENT_STRINGS[POLICY_TYPE2].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE2]),
-    csv_row_default(String(CONTENT_STRINGS[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[REQUESTED_START_DATE]))
-  ];
-  const policyType = application.policyAndExport[POLICY_TYPE2];
-  if (isSinglePolicyType(policyType)) {
-    mapped = [...mapped, ...mapSinglePolicyFields(application)];
-  }
-  if (isMultiPolicyType(policyType)) {
-    mapped = [...mapped, ...mapMultiplePolicyFields(application)];
-  }
-  return mapped;
-};
-var map_policy_and_export_default = mapPolicyAndExport;
-
-// generate-csv/map-application-to-csv/helpers/csv-new-line/index.ts
-var NEW_LINE = "\r\n";
-var csv_new_line_default = NEW_LINE;
-
-// generate-csv/map-application-to-csv/map-exporter/index.ts
-var CONTENT_STRINGS2 = {
-  ...FIELDS.COMPANY_DETAILS,
-  ...FIELDS.NATURE_OF_YOUR_BUSINESS,
-  ...FIELDS.TURNOVER,
-  ...FIELDS.BROKER
-};
-var {
-  COMPANY_HOUSE: { COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_NAME: COMPANY_NAME2, COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
-  YOUR_COMPANY: { TRADING_NAME: TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE2, PHONE_NUMBER: PHONE_NUMBER2 },
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL2 },
-  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
-  BROKER: { USING_BROKER: USING_BROKER2, NAME: BROKER_NAME, ADDRESS_LINE_1: ADDRESS_LINE_12, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL3 }
-} = exporter_business_default;
-var mapExporterBroker = (application) => {
-  const { exporterBroker } = application;
-  let mapped = [csv_row_default(CONTENT_STRINGS2[USING_BROKER2].SUMMARY?.TITLE, exporterBroker[USING_BROKER2])];
-  if (exporterBroker[USING_BROKER2] === ANSWERS.YES) {
-    mapped = [
-      ...mapped,
-      csv_row_default(CONTENT_STRINGS2[BROKER_NAME].SUMMARY?.TITLE, exporterBroker[BROKER_NAME]),
-      csv_row_default(
-        CONTENT_STRINGS2[ADDRESS_LINE_12].SUMMARY?.TITLE,
-        `${exporterBroker[ADDRESS_LINE_12]} ${csv_new_line_default} ${exporterBroker[TOWN]} ${csv_new_line_default} ${exporterBroker[COUNTY]} ${csv_new_line_default} ${exporterBroker[POSTCODE]}`
-      ),
-      csv_row_default(CONTENT_STRINGS2[EMAIL3].SUMMARY?.TITLE, exporterBroker[EMAIL3])
-    ];
-  }
-  return mapped;
-};
-var mapExporter = (application) => {
-  const { exporterCompany, exporterBusiness } = application;
-  const mapped = [
-    csv_row_default(CSV_SECTION_TITLES.EXPORTER_BUSINESS, ""),
-    // exporter company fields
-    csv_row_default(CONTENT_STRINGS2[COMPANY_NUMBER2].SUMMARY?.TITLE, exporterCompany[COMPANY_NUMBER2]),
-    csv_row_default(CONTENT_STRINGS2[COMPANY_NAME2].SUMMARY?.TITLE, exporterCompany[COMPANY_NAME2]),
-    csv_row_default(CONTENT_STRINGS2[COMPANY_ADDRESS2].SUMMARY?.TITLE, exporterCompany[COMPANY_ADDRESS2]),
-    csv_row_default(CONTENT_STRINGS2[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(exporterCompany[COMPANY_INCORPORATED2])),
-    csv_row_default(CONTENT_STRINGS2[COMPANY_SIC2].SUMMARY?.TITLE, exporterCompany[COMPANY_SIC2]),
-    csv_row_default(CONTENT_STRINGS2[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, format_date_default(exporterCompany[FINANCIAL_YEAR_END_DATE2])),
-    csv_row_default(CONTENT_STRINGS2[TRADING_NAME2].SUMMARY?.TITLE, exporterCompany[TRADING_NAME2]),
-    csv_row_default(CONTENT_STRINGS2[TRADING_ADDRESS2].SUMMARY?.TITLE, exporterCompany[TRADING_ADDRESS2]),
-    csv_row_default(CONTENT_STRINGS2[WEBSITE2].SUMMARY?.TITLE, exporterCompany[WEBSITE2]),
-    csv_row_default(CONTENT_STRINGS2[PHONE_NUMBER2].SUMMARY?.TITLE, exporterCompany[PHONE_NUMBER2]),
-    // exporter business fields
-    csv_row_default(CONTENT_STRINGS2[GOODS_OR_SERVICES2].SUMMARY?.TITLE, exporterBusiness[GOODS_OR_SERVICES2]),
-    csv_row_default(CONTENT_STRINGS2[YEARS_EXPORTING2].SUMMARY?.TITLE, exporterBusiness[YEARS_EXPORTING2]),
-    csv_row_default(CONTENT_STRINGS2[EMPLOYEES_UK2].SUMMARY?.TITLE, exporterBusiness[EMPLOYEES_UK2]),
-    csv_row_default(CONTENT_STRINGS2[EMPLOYEES_INTERNATIONAL2].SUMMARY?.TITLE, exporterBusiness[EMPLOYEES_INTERNATIONAL2]),
-    csv_row_default(CONTENT_STRINGS2[ESTIMATED_ANNUAL_TURNOVER2].SUMMARY?.TITLE, exporterBusiness[ESTIMATED_ANNUAL_TURNOVER2]),
-    csv_row_default(CONTENT_STRINGS2[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, exporterBusiness[PERCENTAGE_TURNOVER2]),
-    // exporter broker fields
-    ...mapExporterBroker(application)
-  ];
-  return mapped;
-};
-var map_exporter_default = mapExporter;
-
-// generate-csv/map-application-to-csv/map-buyer/index.ts
-var CONTENT_STRINGS3 = {
-  ...YOUR_BUYER_FIELDS.COMPANY_OR_ORGANISATION,
-  ...YOUR_BUYER_FIELDS.WORKING_WITH_BUYER
-};
-var {
-  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, REGISTRATION_NUMBER, WEBSITE: WEBSITE3, FIRST_NAME, LAST_NAME, POSITION, EMAIL: EMAIL4, CAN_CONTACT_BUYER },
-  WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER }
-} = your_buyer_default;
-var mapBuyer = (application) => {
-  const { buyer } = application;
-  const mapped = [
-    csv_row_default(CSV_SECTION_TITLES.BUYER, ""),
-    csv_row_default(String(CONTENT_STRINGS3[NAME2].SUMMARY?.TITLE), buyer[NAME2]),
-    csv_row_default(String(CONTENT_STRINGS3[ADDRESS].SUMMARY?.TITLE), buyer[ADDRESS]),
-    csv_row_default(String(CONTENT_STRINGS3[REGISTRATION_NUMBER].SUMMARY?.TITLE), buyer[REGISTRATION_NUMBER]),
-    csv_row_default(String(CONTENT_STRINGS3[WEBSITE3].SUMMARY?.TITLE), buyer[WEBSITE3]),
-    csv_row_default(
-      String(CONTENT_STRINGS3[FIRST_NAME].SUMMARY?.TITLE),
-      `${buyer[FIRST_NAME]} ${buyer[LAST_NAME]} ${csv_new_line_default} ${buyer[POSITION]} ${csv_new_line_default} ${buyer[EMAIL4]}`
-    ),
-    csv_row_default(String(CONTENT_STRINGS3[CAN_CONTACT_BUYER].SUMMARY?.TITLE), buyer[CAN_CONTACT_BUYER]),
-    csv_row_default(String(CONTENT_STRINGS3[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), buyer[CONNECTED_WITH_BUYER]),
-    csv_row_default(String(CONTENT_STRINGS3[TRADED_WITH_BUYER].SUMMARY?.TITLE), buyer[TRADED_WITH_BUYER])
-  ];
-  return mapped;
-};
-var map_buyer_default = mapBuyer;
-
 // generate-csv/map-application-to-csv/index.ts
 var mapApplicationToCsv = (application) => {
   try {
     const mapped = [
       csv_row_seperator_default,
-      ...map_reference_number_and_dates_default(application),
+      ...map_key_information_default(application),
       csv_row_seperator_default,
-      ...map_eligibility_default(application),
+      ...map_secondary_key_information_default(application),
       csv_row_seperator_default,
       ...map_policy_and_export_default(application),
       csv_row_seperator_default,
       ...map_exporter_default(application),
       csv_row_seperator_default,
-      ...map_buyer_default(application)
+      ...map_buyer_default(application),
+      csv_row_seperator_default,
+      ...map_eligibility_default(application)
     ];
     return mapped;
   } catch (err) {
@@ -2984,8 +3154,8 @@ var sendEmailInsuranceFeedback = async (root, variables) => {
 var send_email_insurance_feedback_default = sendEmailInsuranceFeedback;
 
 // custom-resolvers/queries/get-companies-house-information.ts
-var import_axios = __toESM(require("axios"));
-var import_dotenv4 = __toESM(require("dotenv"));
+var import_axios2 = __toESM(require("axios"));
+var import_dotenv5 = __toESM(require("dotenv"));
 
 // helpers/create-full-timestamp-from-day-month/index.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
@@ -2996,8 +3166,22 @@ var createFullTimestampFromDayAndMonth = (day, month) => {
 };
 var create_full_timestamp_from_day_month_default = createFullTimestampFromDayAndMonth;
 
+// helpers/map-sic-code-descriptions/index.ts
+var mapSicCodeDescriptions = (sicCodes, sectors) => {
+  const industrySectorNames = [];
+  if (!sicCodes || !sicCodes.length || !sectors || !sectors.length) {
+    return industrySectorNames;
+  }
+  sicCodes.forEach((sicCode) => {
+    const sicCodeSector = sectors.find((sector) => sector.ukefIndustryId === sicCode);
+    industrySectorNames.push(sicCodeSector?.ukefIndustryName);
+  });
+  return industrySectorNames;
+};
+var map_sic_code_descriptions_default = mapSicCodeDescriptions;
+
 // helpers/map-companies-house-fields/index.ts
-var mapCompaniesHouseFields = (companiesHouseResponse) => {
+var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => {
   return {
     companyName: companiesHouseResponse.company_name,
     registeredOfficeAddress: {
@@ -3013,6 +3197,7 @@ var mapCompaniesHouseFields = (companiesHouseResponse) => {
     companyNumber: companiesHouseResponse.company_number,
     dateOfCreation: companiesHouseResponse.date_of_creation,
     sicCodes: companiesHouseResponse.sic_codes,
+    industrySectorNames: map_sic_code_descriptions_default(companiesHouseResponse.sic_codes, sectors),
     // creates timestamp for financialYearEndDate from day and month if exist
     financialYearEndDate: create_full_timestamp_from_day_month_default(
       companiesHouseResponse.accounts?.accounting_reference_date?.day,
@@ -3021,19 +3206,58 @@ var mapCompaniesHouseFields = (companiesHouseResponse) => {
   };
 };
 
-// custom-resolvers/queries/get-companies-house-information.ts
+// integrations/industry-sector/index.ts
+var import_axios = __toESM(require("axios"));
+var import_dotenv4 = __toESM(require("dotenv"));
 import_dotenv4.default.config();
-var username = process.env.COMPANIES_HOUSE_API_KEY;
+var { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
+var username = process.env.MULESOFT_API_MDM_EA_KEY;
+var secret = process.env.MULESOFT_API_MDM_EA_SECRET;
+var industrySectorUrl = `${process.env.MULESOFT_API_MDM_EA_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`;
+var getIndustrySectorNames = async () => {
+  try {
+    console.info("Calling industry sector API");
+    const response = await (0, import_axios.default)({
+      method: "get",
+      url: `${industrySectorUrl}`,
+      auth: { username, password: secret },
+      validateStatus(status) {
+        const acceptableStatus = [200, 404];
+        return acceptableStatus.includes(status);
+      }
+    });
+    if (!response.data || response.status !== 200) {
+      return {
+        success: false
+      };
+    }
+    return {
+      data: response.data,
+      success: true
+    };
+  } catch (err) {
+    console.error("Error calling industry sector API ", { err });
+    return {
+      apiError: true,
+      success: false
+    };
+  }
+};
+var industry_sector_default = getIndustrySectorNames;
+
+// custom-resolvers/queries/get-companies-house-information.ts
+import_dotenv5.default.config();
+var username2 = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
 var getCompaniesHouseInformation = async (root, variables) => {
   try {
     const { companiesHouseNumber } = variables;
     console.info("Calling Companies House API for ", companiesHouseNumber);
     const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, "0");
-    const response = await (0, import_axios.default)({
+    const response = await (0, import_axios2.default)({
       method: "get",
       url: `${companiesHouseURL}/company/${sanitisedRegNo}`,
-      auth: { username, password: "" },
+      auth: { username: username2, password: "" },
       validateStatus(status) {
         const acceptableStatus = [200, 404];
         return acceptableStatus.includes(status);
@@ -3044,7 +3268,13 @@ var getCompaniesHouseInformation = async (root, variables) => {
         success: false
       };
     }
-    const mappedResponse = mapCompaniesHouseFields(response.data);
+    const industrySectorNames = await industry_sector_default();
+    if (!industrySectorNames.success || industrySectorNames.apiError) {
+      return {
+        success: false
+      };
+    }
+    const mappedResponse = mapCompaniesHouseFields(response.data, industrySectorNames.data);
     return {
       ...mappedResponse,
       success: true
@@ -3094,10 +3324,10 @@ var customResolvers = {
     verifyAccountSignInCode: verify_account_sign_in_code_default,
     addAndGetOTP: add_and_get_OTP_default,
     accountPasswordReset: account_password_reset_default,
+    sendEmailPasswordResetLink: send_email_password_reset_link_default,
     deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
     updateExporterCompanyAndCompanyAddress: update_exporter_company_and_company_address_default,
     submitApplication: submit_application_default,
-    sendEmailPasswordResetLink: send_email_password_reset_link_default,
     sendEmailInsuranceFeedback: send_email_insurance_feedback_default
   },
   Query: {

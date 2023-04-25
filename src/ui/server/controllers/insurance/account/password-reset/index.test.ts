@@ -101,12 +101,10 @@ describe('controllers/insurance/account/password-reset', () => {
     });
 
     describe('when there are no validation errors', () => {
-      let sanitisedEmail: string;
+      const sanitisedEmail = sanitiseValue(FIELD_ID, validBody[FIELD_ID]);
 
       beforeEach(() => {
         req.body = validBody;
-
-        sanitisedEmail = String(sanitiseValue(FIELD_ID, validBody[FIELD_ID]));
       });
 
       it('should call api.keystone.account.sendEmailPasswordResetLink', async () => {
@@ -142,21 +140,21 @@ describe('controllers/insurance/account/password-reset', () => {
           expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
-    });
 
-    describe('api error handling', () => {
-      describe('when the send email password reset link API call fails', () => {
-        beforeEach(() => {
-          req.body = validBody;
+      describe('api error handling', () => {
+        describe('when the send email password reset link API call fails', () => {
+          beforeEach(() => {
+            req.body = validBody;
 
-          sendEmailPasswordResetLinkSpy = jest.fn(() => Promise.reject());
-          api.keystone.account.sendEmailPasswordResetLink = sendEmailPasswordResetLinkSpy;
-        });
+            sendEmailPasswordResetLinkSpy = jest.fn(() => Promise.reject());
+            api.keystone.account.sendEmailPasswordResetLink = sendEmailPasswordResetLinkSpy;
+          });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-          await post(req, res);
+          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
         });
       });
     });

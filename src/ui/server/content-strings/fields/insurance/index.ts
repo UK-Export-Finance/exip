@@ -7,7 +7,7 @@ export * from './declarations';
 
 export const REFERENCE_NUMBER = {
   SUMMARY: {
-    TITLE: 'Application reference',
+    TITLE: 'Application reference number',
   },
 };
 

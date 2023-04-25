@@ -1,7 +1,7 @@
 import { PAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import api from '../../../../api';
-import isPopulatedArray from '../../../../helpers/is-populated-array';
+import { isPopulatedArray } from '../../../../helpers/array';
 import { mapCisCountries } from '../../../../helpers/mappings/map-cis-countries';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';

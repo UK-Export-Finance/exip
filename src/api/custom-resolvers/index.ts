@@ -7,10 +7,10 @@ import {
   verifyAccountSignInCode,
   addAndGetOTP,
   accountPasswordReset,
+  sendEmailPasswordResetLink,
   deleteApplicationByReferenceNumber,
   updateExporterCompanyAndCompanyAddress,
   submitApplication,
-  sendEmailPasswordResetLink,
   sendEmailInsuranceFeedback,
 } from './mutations';
 import { getCompaniesHouseInformation, getAccountPasswordResetToken } from './queries';
@@ -30,10 +30,10 @@ const customResolvers = {
     verifyAccountSignInCode,
     addAndGetOTP,
     accountPasswordReset,
+    sendEmailPasswordResetLink,
     deleteApplicationByReferenceNumber,
     updateExporterCompanyAndCompanyAddress,
     submitApplication,
-    sendEmailPasswordResetLink,
     sendEmailInsuranceFeedback,
   },
   Query: {

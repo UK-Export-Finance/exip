@@ -12,7 +12,7 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
     const { token, password: newPassword } = variables;
 
     // get the account the token is associated with.
-    const account = await getAccountByField(context, FIELD_IDS.ACCOUNT.PASSWORD_RESET_HASH, token);
+    const account = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD_RESET_HASH, token);
 
     if (!account) {
       console.info('Unable to reset account password - account does not exist');

@@ -183,6 +183,13 @@ interface NotifyPeronsalisation {
   linkToFile?: string;
 }
 
+interface SicCodes {
+  sicCode: string;
+  industrySectorName: string;
+  exporterCompany: ConnectObj;
+  application: ConnectObj;
+}
+
 interface VerifyEmailAddressVariables {
   token: string;
 }
@@ -191,12 +198,6 @@ interface VerifyEmailAddressResponse extends SuccessResponse {
   accountId?: string;
   expired?: boolean;
   emailRecipient?: string;
-}
-
-interface SicCodes {
-  sicCode: string;
-  exporterCompany: ConnectObj;
-  application: ConnectObj;
 }
 
 interface AccountCreationVariables {
@@ -282,6 +283,7 @@ interface UpdateExporterCompanyAndCompanyAddressVariablesData {
   address?: ApplicationExporterCompanyAddress;
   sicCodes?: [string];
   oldSicCodes?: [string];
+  industrySectorNames?: [string];
   exporterCompany?: ExporterCompanyUpdateInput;
 }
 
@@ -291,9 +293,16 @@ interface UpdateExporterCompanyAndCompanyAddressVariables {
   data: UpdateExporterCompanyAndCompanyAddressVariablesData;
 }
 
+interface IndustrySector {
+  id?: number;
+  ukefIndustryId?: string;
+  ukefIndustryName: string;
+}
+
 export {
   Account,
   AccountCreationVariables,
+  ApplicationExporterCompanyAddress,
   AccountInput,
   AccountSendEmailPasswordResetLinkVariables,
   AccountSignInVariables,
@@ -321,6 +330,7 @@ export {
   GetAccountPasswordResetTokenResponse,
   NotifyPeronsalisation,
   InsuranceFeedbackVariables,
+  IndustrySector,
   SicCodes,
   SendExporterEmailVariables,
   SubmitApplicationVariables,

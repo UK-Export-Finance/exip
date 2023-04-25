@@ -30,7 +30,7 @@ const sendEmailPasswordResetLink = async (root: any, variables: AccountSendEmail
     const { email } = variables;
 
     // Get the account the email is associated with.
-    const exporter = await getAccountByField(context, FIELD_IDS.ACCOUNT.EMAIL, email);
+    const exporter = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
 
     if (!exporter) {
       console.info('Unable to send password reset email - no account found');

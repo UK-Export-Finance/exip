@@ -1,5 +1,5 @@
 import { DEFAULT, TASKS } from '../../content-strings';
-import isPopulatedArray from '../is-populated-array';
+import { isPopulatedArray } from '../array';
 import { ApplicationFlat, TaskListData, TaskListDataGroup, TaskListDataTask } from '../../../types';
 import sectionIsComplete from '../section-status/is-complete';
 import sectionIsInProgress from '../section-status/in-progress';

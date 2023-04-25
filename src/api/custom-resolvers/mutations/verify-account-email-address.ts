@@ -16,13 +16,14 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
     console.info('Verifying exporter email address');
 
     // get the account the token is associated with.
-    const exporter = await getAccountByField(context, FIELD_IDS.ACCOUNT.VERIFICATION_HASH, variables.token);
+    const exporter = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.VERIFICATION_HASH, variables.token);
 
     if (exporter) {
       const { id } = exporter;
 
       // check that the verification period has not expired.
       const now = new Date();
+      // const canActivateExporter = isBefore(now, exporter[verificationExpiryFieldId]);
       const canActivateExporter = isBefore(now, exporter.verificationExpiry);
 
       if (!canActivateExporter) {

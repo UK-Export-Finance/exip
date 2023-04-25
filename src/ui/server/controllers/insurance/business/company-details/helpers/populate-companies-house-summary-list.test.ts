@@ -7,7 +7,7 @@ import { ApplicationExporterCompany } from '../../../../../../types';
 
 const {
   EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_SIC },
+    COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_SIC, INDUSTRY_SECTOR_NAMES, SIC_CODE, INDUSTRY_SECTOR_NAME },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -33,7 +33,8 @@ describe('controllers/insurance/business/companies-details/helpers/populate-comp
 
         const expected = {
           ...exporterCompany,
-          [COMPANY_SIC]: mapSicCodes(exporterCompany[COMPANY_SIC]),
+          [COMPANY_SIC]: mapSicCodes(exporterCompany[COMPANY_SIC], SIC_CODE),
+          [INDUSTRY_SECTOR_NAMES]: mapSicCodes(exporterCompany[COMPANY_SIC], INDUSTRY_SECTOR_NAME),
         } as ApplicationExporterCompany;
 
         expect(response).toEqual(companyHouseSummaryList(expected));
@@ -51,7 +52,8 @@ describe('controllers/insurance/business/companies-details/helpers/populate-comp
 
       const expected = {
         ...exporterCompany,
-        [COMPANY_SIC]: mapSicCodes(exporterCompany[COMPANY_SIC]),
+        [COMPANY_SIC]: mapSicCodes(exporterCompany[COMPANY_SIC], SIC_CODE),
+        [INDUSTRY_SECTOR_NAMES]: mapSicCodes(exporterCompany[COMPANY_SIC], INDUSTRY_SECTOR_NAME),
       };
 
       expect(response).toEqual(expected);
