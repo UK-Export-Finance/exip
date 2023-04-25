@@ -2,11 +2,11 @@ import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
 import { Context, Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import baseConfig from '../keystone';
-import getPopulatedApplication, { generateErrorMessage } from './get-populated-application';
-import { createFullApplication } from '../test-helpers';
-import mockCountries from '../test-mocks/mock-countries';
-import { Application } from '../types';
+import baseConfig from '../../keystone';
+import getPopulatedApplication, { generateErrorMessage } from '.';
+import { createFullApplication } from '../../test-helpers';
+import mockCountries from '../../test-mocks/mock-countries';
+import { Application } from '../../types';
 
 const dbUrl = String(process.env.DATABASE_URL);
 const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };

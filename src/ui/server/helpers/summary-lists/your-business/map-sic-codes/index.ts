@@ -1,7 +1,7 @@
 import { generateSicCodesValue } from '../../company-house-summary-list';
 import { DEFAULT } from '../../../../content-strings';
 import { ApplicationExporterSicCodes } from '../../../../../types';
-import isPopulatedArray from '../../../is-populated-array';
+import { isPopulatedArray } from '../../../array';
 
 /**
  * mapSicCodes
@@ -12,8 +12,9 @@ import isPopulatedArray from '../../../is-populated-array';
 const mapSicCodes = (applicationSicCodes: Array<ApplicationExporterSicCodes>) => {
   if (isPopulatedArray(applicationSicCodes)) {
     const sicCodes = applicationSicCodes.map((eachSicCode) => String(eachSicCode.sicCode));
+    const industrySectorNames = applicationSicCodes.map((eachSicCode) => String(eachSicCode.industrySectorName));
 
-    return generateSicCodesValue(sicCodes);
+    return generateSicCodesValue(sicCodes, industrySectorNames);
   }
 
   return DEFAULT.EMPTY;

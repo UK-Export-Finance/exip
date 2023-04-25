@@ -5,7 +5,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import companiesHouseSearch from './helpers/companies-house-search.helper';
 import companyDetailsValidation from './validation/company-details';
-import isPopulatedArray from '../../../../helpers/is-populated-array';
+import { isPopulatedArray } from '../../../../helpers/array';
 import mapAndSave from '../map-and-save';
 import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-house-summary-list';
 import isChangeRoute from '../../../../helpers/is-change-route';
@@ -151,6 +151,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
 
     // checks if input is correctly formatted before searching
     const response = await companiesHouseSearch(body);
+
     const { validationErrors, apiError, company } = response;
 
     if (apiError) {

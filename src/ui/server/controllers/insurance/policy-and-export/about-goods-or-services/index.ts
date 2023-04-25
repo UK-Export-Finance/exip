@@ -2,7 +2,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import api from '../../../../api';
-import isPopulatedArray from '../../../../helpers/is-populated-array';
+import { isPopulatedArray } from '../../../../helpers/array';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { objectHasProperty } from '../../../../helpers/object';

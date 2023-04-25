@@ -4,8 +4,9 @@ import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-st
 import partials from '../../../../partials';
 import { saveAndBackButton } from '../../../../pages/shared';
 import {
-  ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER, COMPANIES_HOUSE_NUMBER_NO_SIC_CODE,
+  ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER, COMPANIES_HOUSE_NUMBER_NO_SIC_CODE, COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES,
 } from '../../../../../../constants';
+import application from '../../../../../fixtures/application';
 
 const {
   EXPORTER_BUSINESS: {
@@ -15,6 +16,7 @@ const {
       COMPANY_NUMBER,
       COMPANY_INCORPORATED,
       COMPANY_SIC,
+      INDUSTRY_SECTOR_NAME,
       SUMMARY_LIST,
     },
   },
@@ -169,22 +171,38 @@ context('Insurance - Your business - Company details page - company house search
 
       cy.checkText(partials.yourBusinessSummaryList[COMPANY_NAME].key(), SUMMARY_LIST_FIELDS.COMPANY_NAME.text);
 
-      cy.checkText(partials.yourBusinessSummaryList[COMPANY_NAME].value(), 'DHG PROPERTY FINANCE LIMITED');
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_NAME].value(), application.EXPORTER_COMPANY[COMPANY_NAME]);
 
       cy.checkText(partials.yourBusinessSummaryList[COMPANY_ADDRESS].key(), SUMMARY_LIST_FIELDS.COMPANY_ADDRESS.text);
 
-      partials.yourBusinessSummaryList[COMPANY_ADDRESS].value().contains('Unit 3 Lewis Court');
-      partials.yourBusinessSummaryList[COMPANY_ADDRESS].value().contains('Cardiff');
-      partials.yourBusinessSummaryList[COMPANY_ADDRESS].value().contains('South Glamorgan');
-      partials.yourBusinessSummaryList[COMPANY_ADDRESS].value().contains('CF24 5HQ');
+      partials.yourBusinessSummaryList[COMPANY_ADDRESS].value().contains(application.EXPORTER_COMPANY[COMPANY_ADDRESS].addressLine1);
+      partials.yourBusinessSummaryList[COMPANY_ADDRESS].value().contains(application.EXPORTER_COMPANY[COMPANY_ADDRESS].locality);
+      partials.yourBusinessSummaryList[COMPANY_ADDRESS].value().contains(application.EXPORTER_COMPANY[COMPANY_ADDRESS].region);
+      partials.yourBusinessSummaryList[COMPANY_ADDRESS].value().contains(application.EXPORTER_COMPANY[COMPANY_ADDRESS].postalCode);
 
       cy.checkText(partials.yourBusinessSummaryList[COMPANY_INCORPORATED].key(), SUMMARY_LIST_FIELDS.COMPANY_INCORPORATED.text);
 
-      cy.checkText(partials.yourBusinessSummaryList[COMPANY_INCORPORATED].value(), '10 April 2014');
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_INCORPORATED].value(), application.EXPORTER_COMPANY[COMPANY_INCORPORATED]);
 
       cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].key(), SUMMARY_LIST_FIELDS.COMPANY_SIC.text);
 
-      cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].value(), '64999');
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].value(), `${application.EXPORTER_COMPANY[COMPANY_SIC][0]} - ${application.EXPORTER_COMPANY[INDUSTRY_SECTOR_NAME][0]}`);
+    });
+  });
+
+  describe('when the company has multiple sic codes', () => {
+    it('should display all the sic codes in the summary list', () => {
+      cy.navigateToUrl(url);
+
+      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES);
+      saveAndBackButton().click();
+
+      task.link().click();
+
+      partials.yourBusinessSummaryList[COMPANY_SIC].value().contains('01440 - Raising of camels and camelids');
+      partials.yourBusinessSummaryList[COMPANY_SIC].value().contains('13100 - Preparation and spinning of textile fibres');
+      partials.yourBusinessSummaryList[COMPANY_SIC].value().contains('55209 - Other holiday and other collective accommodation');
+      partials.yourBusinessSummaryList[COMPANY_SIC].value().contains('56102 - Unlicensed restaurants and cafes');
     });
   });
 

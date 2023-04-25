@@ -1,6 +1,6 @@
 import { ApolloResponse } from '../../../../types';
 import apollo from '../../../graphql/apollo';
-import isPopulatedArray from '../../../helpers/is-populated-array';
+import { isPopulatedArray } from '../../../helpers/array';
 import getDeclarationAntiBriberyQuery from '../../../graphql/queries/declarations/anti-bribery';
 import getDeclarationConfirmationAndAcknowledgementQuery from '../../../graphql/queries/declarations/confirmation-and-acknowledgement';
 import getDeclarationHowDataWillBeUsedQuery from '../../../graphql/queries/declarations/how-data-will-be-used';

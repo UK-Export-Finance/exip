@@ -177,10 +177,11 @@ model ExporterCompany {
 }
 
 model ExporterCompanySicCode {
-  id                String           @id @default(cuid())
-  exporterCompany   ExporterCompany? @relation("ExporterCompanySicCode_exporterCompany", fields: [exporterCompanyId], references: [id])
-  exporterCompanyId String?          @map("exporterCompany")
-  sicCode           String           @default("")
+  id                 String           @id @default(cuid())
+  exporterCompany    ExporterCompany? @relation("ExporterCompanySicCode_exporterCompany", fields: [exporterCompanyId], references: [id])
+  exporterCompanyId  String?          @map("exporterCompany")
+  sicCode            String           @default("")
+  industrySectorName String           @default("")
 
   @@index([exporterCompanyId])
 }

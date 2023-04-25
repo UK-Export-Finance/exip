@@ -897,6 +897,7 @@ type ExporterCompanySicCode {
   id: ID!
   exporterCompany: ExporterCompany
   sicCode: String
+  industrySectorName: String
 }
 
 input ExporterCompanySicCodeWhereUniqueInput {
@@ -910,16 +911,19 @@ input ExporterCompanySicCodeWhereInput {
   id: IDFilter
   exporterCompany: ExporterCompanyWhereInput
   sicCode: StringFilter
+  industrySectorName: StringFilter
 }
 
 input ExporterCompanySicCodeOrderByInput {
   id: OrderDirection
   sicCode: OrderDirection
+  industrySectorName: OrderDirection
 }
 
 input ExporterCompanySicCodeUpdateInput {
   exporterCompany: ExporterCompanyRelateToOneForUpdateInput
   sicCode: String
+  industrySectorName: String
 }
 
 input ExporterCompanySicCodeUpdateArgs {
@@ -930,6 +934,7 @@ input ExporterCompanySicCodeUpdateArgs {
 input ExporterCompanySicCodeCreateInput {
   exporterCompany: ExporterCompanyRelateToOneForCreateInput
   sicCode: String
+  industrySectorName: String
 }
 
 type Buyer {
@@ -1931,6 +1936,7 @@ type CompaniesHouseResponse {
   companyNumber: String
   dateOfCreation: String
   sicCodes: [String]
+  industrySectorNames: [String]
   financialYearEndDate: DateTime
   success: Boolean
   apiError: Boolean
@@ -1966,6 +1972,7 @@ type ExporterCompanyAndCompanyAddress {
 input ExporterCompanyAndCompanyAddressInput {
   address: ExporterCompanyAddressInput
   sicCodes: [String]
+  industrySectorNames: [String]
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime

@@ -10,6 +10,7 @@ const {
   EXPORTER_BUSINESS: {
     COMPANY_HOUSE: {
       COMPANY_SIC,
+      INDUSTRY_SECTOR_NAME,
     },
   },
 } = FIELD_IDS.INSURANCE;
@@ -104,7 +105,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     it('should remove old sic codes from company summary list', () => {
-      cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].value(), EXPORTER_COMPANY[COMPANY_SIC][0]);
+      cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].value(), `${EXPORTER_COMPANY[COMPANY_SIC][0]} - ${EXPORTER_COMPANY[INDUSTRY_SECTOR_NAME][0]}`);
     });
   });
 });

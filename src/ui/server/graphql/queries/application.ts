@@ -57,6 +57,7 @@ const applicationQuery = gql`
           sicCodes {
             id
             sicCode
+            industrySectorName
           }
           registeredOfficeAddress {
             id

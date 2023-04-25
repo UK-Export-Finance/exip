@@ -14,6 +14,13 @@ export const ANSWERS = {
 
 export const GBP_CURRENCY_CODE = 'GBP';
 
+export const EXTERNAL_API_ENDPOINTS = {
+  MULESOFT_MDM_EA: {
+    CURRENCY: '/currency',
+    INDUSTRY_SECTORS: '/map-industry-sector?size=1000',
+  },
+};
+
 export const ACCOUNT = {
   EMAIL: {
     VERIFICATION_EXPIRY: () => {

@@ -34,6 +34,7 @@ const {
     EXPORTER_BUSINESS: {
       COMPANY_HOUSE: {
         COMPANY_SIC,
+        INDUSTRY_SECTOR_NAME,
         COMPANY_NUMBER,
         COMPANY_NAME,
         COMPANY_ADDRESS,
@@ -147,6 +148,7 @@ const application = {
       premises: '',
     },
     [COMPANY_SIC]: ['64999'],
+    [INDUSTRY_SECTOR_NAME]: ['Financial intermediation not elsewhere classified'],
     [FINANCIAL_YEAR_END_DATE]: '31 July',
     [TRADING_NAME]: FIELD_VALUES.YES,
     [TRADING_ADDRESS]: FIELD_VALUES.YES,

@@ -2,6 +2,7 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 import { mapCompaniesHouseFields } from '../../helpers/map-companies-house-fields';
 import { GetCompaniesHouseInformationVariables } from '../../types';
+import getIndustrySectorNames from '../../integrations/industry-sector';
 
 dotenv.config();
 
@@ -41,8 +42,17 @@ const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHo
       };
     }
 
+    // gets all industry sectors
+    const industrySectorNames = await getIndustrySectorNames();
+
+    if (!industrySectorNames.success || industrySectorNames.apiError) {
+      return {
+        success: false,
+      };
+    }
+
     // maps response to camelCase fields
-    const mappedResponse = mapCompaniesHouseFields(response.data);
+    const mappedResponse = mapCompaniesHouseFields(response.data, industrySectorNames.data);
 
     return {
       ...mappedResponse,
