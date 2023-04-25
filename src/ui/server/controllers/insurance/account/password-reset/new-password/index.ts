@@ -3,8 +3,8 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from './validation';
-// import { sanitiseValue } from '../../../../helpers/sanitise-data';
-// import api from '../../../../api';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
+import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 
 const {
@@ -42,14 +42,21 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.NEW_P
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} New password page
  */
-export const get = (req: Request, res: Response) =>
-  res.render(TEMPLATE, {
+export const get = (req: Request, res: Response) => {
+  const { token } = req.query;
+
+  if (!token) {
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+  }
+
+  return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS,
       BACK_LINK: req.headers.referer,
     }),
     ...PAGE_VARIABLES,
   });
+};
 
 /**
  * post
@@ -60,6 +67,12 @@ export const get = (req: Request, res: Response) =>
  */
 export const post = async (req: Request, res: Response) => {
   try {
+    const { token } = req.query;
+
+    if (!token) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
+
     const validationErrors = generateValidationErrors(req.body);
 
     if (validationErrors) {
@@ -74,18 +87,18 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
-    // const response = await api.keystone.account.sendEmailPasswordResetLink(email);
+    const password = String(sanitiseValue(FIELD_ID, req.body[FIELD_ID]));
 
-    // if (response.success) {
-    //   // store the email address in local session, for consumption in the next part of the flow.
-    //   req.session.emailAddressForPasswordReset = email;
+    const response = await api.keystone.account.passwordReset(token, password);
 
-    //   return res.redirect(LINK_SENT);
-    // }
+    if (response.success) {
+      // set a success flag for consumption in the next part of the flow.
+      req.session.passwordResetSuccess = true;
 
-    // return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(SUCCESS);
+    }
 
-    return res.redirect(SUCCESS);
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   } catch (err) {
     console.error('Error verifying account sign in code', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

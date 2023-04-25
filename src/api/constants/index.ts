@@ -18,6 +18,7 @@ export const FIELD_IDS = {
   ACCOUNT: {
     EMAIL: 'email',
     VERIFICATION_HASH: 'verificationHash',
+    PASSWORD_RESET_HASH: 'passwordResetHash',
   },
   ...INSURANCE_FIELD_IDS,
 };

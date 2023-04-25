@@ -263,7 +263,8 @@ var GBP_CURRENCY_CODE = "GBP";
 var FIELD_IDS = {
   ACCOUNT: {
     EMAIL: "email",
-    VERIFICATION_HASH: "verificationHash"
+    VERIFICATION_HASH: "verificationHash",
+    PASSWORD_RESET_HASH: "passwordResetHash"
   },
   ...insurance_default
 };
@@ -461,6 +462,7 @@ var notify = {
         emailRecipient: sendToEmailAddress
       };
     } catch (err) {
+      console.log("CATCH ERRRRR ", err?.response?.data);
       throw new Error(`Calling Notify API. Unable to send email ${err}`);
     }
   }
@@ -515,8 +517,10 @@ var passwordResetLink = async (emailAddress, firstName, passwordResetHash) => {
   try {
     console.info("Sending email for account password reset");
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
-    const variables = { passwordResetToken: passwordResetHash };
-    const response = await callNotify(templateId, emailAddress, variables, firstName);
+    console.log("----- email ", emailAddress);
+    const variables = { firstName, passwordResetToken: passwordResetHash };
+    const response = await callNotify(templateId, emailAddress, variables);
+    console.log("----- response ", response);
     return response;
   } catch (err) {
     console.error(err);
@@ -914,8 +918,8 @@ var lists = {
       otpExpiry: (0, import_fields.timestamp)(),
       sessionExpiry: (0, import_fields.timestamp)(),
       sessionIdentifier: (0, import_fields.text)(),
-      passwordResetHash: (0, import_fields.text)(),
-      passwordResetExpiry: (0, import_fields.timestamp)(),
+      passwordResetHash: (0, import_fields.text)({ validation: { isRequired: false } }),
+      passwordResetExpiry: (0, import_fields.timestamp)({ validation: { isRequired: false } }),
       applications: (0, import_fields.relationship)({
         ref: "Application",
         many: true
@@ -1457,6 +1461,12 @@ var typeDefs = `
       email: String!
     ): SuccessResponse
 
+    """ reset account password """
+    accountPasswordReset(
+      token: String!
+      password: String!
+    ): SuccessResponse
+
     """ update exporter company and company address """
     updateExporterCompanyAndCompanyAddress(
       companyId: ID!
@@ -1497,7 +1507,7 @@ var typeDefs = `
 var type_defs_default = typeDefs;
 
 // custom-resolvers/mutations/create-account.ts
-var import_crypto = __toESM(require("crypto"));
+var import_crypto2 = __toESM(require("crypto"));
 
 // helpers/get-account-by-field/index.ts
 var getAccountByField = async (context, field, value) => {
@@ -1522,8 +1532,9 @@ var getAccountByField = async (context, field, value) => {
 };
 var get_account_by_field_default = getAccountByField;
 
-// custom-resolvers/mutations/create-account.ts
-var { EMAIL, ENCRYPTION } = ACCOUNT;
+// helpers/encrypt-password/index.ts
+var import_crypto = __toESM(require("crypto"));
+var { ENCRYPTION } = ACCOUNT;
 var {
   RANDOM_BYTES_SIZE,
   STRING_TYPE,
@@ -1532,6 +1543,26 @@ var {
     PBKDF2: { KEY_LENGTH }
   }
 } = ENCRYPTION;
+var encryptPassword = (password2) => {
+  const salt = import_crypto.default.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
+  const hash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+  return {
+    salt,
+    hash
+  };
+};
+var encrypt_password_default = encryptPassword;
+
+// custom-resolvers/mutations/create-account.ts
+var { EMAIL, ENCRYPTION: ENCRYPTION2 } = ACCOUNT;
+var {
+  RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE2,
+  STRING_TYPE: STRING_TYPE2,
+  PBKDF2: { ITERATIONS: ITERATIONS2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 },
+  PASSWORD: {
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH2 }
+  }
+} = ENCRYPTION2;
 var createAccount = async (root, variables, context) => {
   console.info("Creating new exporter account for ", variables.email);
   try {
@@ -1541,16 +1572,15 @@ var createAccount = async (root, variables, context) => {
       console.info(`Unable to create new exporter account for ${variables.email} - account already exists`);
       return { success: false };
     }
-    const salt = import_crypto.default.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
-    const passwordHash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
-    const verificationHash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+    const { salt, hash } = encrypt_password_default(password2);
+    const verificationHash = import_crypto2.default.pbkdf2Sync(password2, salt, ITERATIONS2, KEY_LENGTH2, DIGEST_ALGORITHM2).toString(STRING_TYPE2);
     const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
     const account = {
       firstName,
       lastName,
       email,
       salt,
-      hash: passwordHash,
+      hash,
       verificationHash,
       verificationExpiry
     };
@@ -1651,18 +1681,18 @@ var sendEmailConfirmEmailAddress = async (root, variables, context) => {
 var send_email_confirm_email_address_default = sendEmailConfirmEmailAddress;
 
 // helpers/is-valid-account-password/index.ts
-var import_crypto2 = __toESM(require("crypto"));
-var { ENCRYPTION: ENCRYPTION2 } = ACCOUNT;
+var import_crypto3 = __toESM(require("crypto"));
+var { ENCRYPTION: ENCRYPTION3 } = ACCOUNT;
 var {
-  STRING_TYPE: STRING_TYPE2,
-  PBKDF2: { ITERATIONS: ITERATIONS2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 },
+  STRING_TYPE: STRING_TYPE3,
+  PBKDF2: { ITERATIONS: ITERATIONS3, DIGEST_ALGORITHM: DIGEST_ALGORITHM3 },
   PASSWORD: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH2 }
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH3 }
   }
-} = ENCRYPTION2;
+} = ENCRYPTION3;
 var isValidAccountPassword = (password2, salt, hash) => {
   console.info("Validating exporter account password");
-  const hashVerify = import_crypto2.default.pbkdf2Sync(password2, salt, ITERATIONS2, KEY_LENGTH2, DIGEST_ALGORITHM2).toString(STRING_TYPE2);
+  const hashVerify = import_crypto3.default.pbkdf2Sync(password2, salt, ITERATIONS3, KEY_LENGTH3, DIGEST_ALGORITHM3).toString(STRING_TYPE3);
   if (hash === hashVerify) {
     console.info("Valid exporter account password");
     return true;
@@ -1673,24 +1703,24 @@ var isValidAccountPassword = (password2, salt, hash) => {
 var is_valid_account_password_default = isValidAccountPassword;
 
 // helpers/generate-otp/index.ts
-var import_crypto3 = __toESM(require("crypto"));
+var import_crypto4 = __toESM(require("crypto"));
 var import_otplib = require("otplib");
-var { ENCRYPTION: ENCRYPTION3, OTP } = ACCOUNT;
+var { ENCRYPTION: ENCRYPTION4, OTP } = ACCOUNT;
 var {
-  RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE2,
-  STRING_TYPE: STRING_TYPE3,
-  PBKDF2: { ITERATIONS: ITERATIONS3, DIGEST_ALGORITHM: DIGEST_ALGORITHM3 },
+  RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE3,
+  STRING_TYPE: STRING_TYPE4,
+  PBKDF2: { ITERATIONS: ITERATIONS4, DIGEST_ALGORITHM: DIGEST_ALGORITHM4 },
   OTP: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH3 }
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH4 }
   }
-} = ENCRYPTION3;
+} = ENCRYPTION4;
 var generateOtp = () => {
   try {
     console.info("Generating OTP");
-    const salt = import_crypto3.default.randomBytes(RANDOM_BYTES_SIZE2).toString(STRING_TYPE3);
+    const salt = import_crypto4.default.randomBytes(RANDOM_BYTES_SIZE3).toString(STRING_TYPE4);
     import_otplib.authenticator.options = { digits: OTP.DIGITS };
     const securityCode = import_otplib.authenticator.generate(salt);
-    const hash = import_crypto3.default.pbkdf2Sync(securityCode, salt, ITERATIONS3, KEY_LENGTH3, DIGEST_ALGORITHM3).toString(STRING_TYPE3);
+    const hash = import_crypto4.default.pbkdf2Sync(securityCode, salt, ITERATIONS4, KEY_LENGTH4, DIGEST_ALGORITHM4).toString(STRING_TYPE4);
     const expiry = OTP.VERIFICATION_EXPIRY();
     return {
       securityCode,
@@ -1802,19 +1832,19 @@ var account_sign_in_new_code_default = accountSignInSendNewCode;
 var import_date_fns3 = require("date-fns");
 
 // helpers/is-valid-otp/index.ts
-var import_crypto4 = __toESM(require("crypto"));
-var { ENCRYPTION: ENCRYPTION4 } = ACCOUNT;
+var import_crypto5 = __toESM(require("crypto"));
+var { ENCRYPTION: ENCRYPTION5 } = ACCOUNT;
 var {
-  STRING_TYPE: STRING_TYPE4,
-  PBKDF2: { ITERATIONS: ITERATIONS4, DIGEST_ALGORITHM: DIGEST_ALGORITHM4 },
+  STRING_TYPE: STRING_TYPE5,
+  PBKDF2: { ITERATIONS: ITERATIONS5, DIGEST_ALGORITHM: DIGEST_ALGORITHM5 },
   OTP: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH4 }
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH5 }
   }
-} = ENCRYPTION4;
+} = ENCRYPTION5;
 var isValidOTP = (securityCode, otpSalt, otpHash) => {
   try {
     console.info("Validating OTP");
-    const hashVerify = import_crypto4.default.pbkdf2Sync(securityCode, otpSalt, ITERATIONS4, KEY_LENGTH4, DIGEST_ALGORITHM4).toString(STRING_TYPE4);
+    const hashVerify = import_crypto5.default.pbkdf2Sync(securityCode, otpSalt, ITERATIONS5, KEY_LENGTH5, DIGEST_ALGORITHM5).toString(STRING_TYPE5);
     if (otpHash === hashVerify) {
       return true;
     }
@@ -1827,10 +1857,10 @@ var isValidOTP = (securityCode, otpSalt, otpHash) => {
 var is_valid_otp_default = isValidOTP;
 
 // helpers/create-jwt/index.ts
-var import_crypto5 = __toESM(require("crypto"));
+var import_crypto6 = __toESM(require("crypto"));
 var import_jsonwebtoken = __toESM(require("jsonwebtoken"));
 var {
-  ENCRYPTION: { RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE3, STRING_TYPE: STRING_TYPE5 },
+  ENCRYPTION: { RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE4, STRING_TYPE: STRING_TYPE6 },
   JWT: {
     KEY: { SIGNATURE, ENCODING, STRING_ENCODING },
     TOKEN: { EXPIRY, ALGORITHM }
@@ -1838,7 +1868,7 @@ var {
 } = ACCOUNT;
 var PRIV_KEY = Buffer.from(SIGNATURE, ENCODING).toString(STRING_ENCODING);
 var createJWT = (accountId) => {
-  const sessionIdentifier = import_crypto5.default.randomBytes(RANDOM_BYTES_SIZE3).toString(STRING_TYPE5);
+  const sessionIdentifier = import_crypto6.default.randomBytes(RANDOM_BYTES_SIZE4).toString(STRING_TYPE6);
   const expiresIn = EXPIRY;
   const payload = {
     sub: accountId,
@@ -1945,13 +1975,13 @@ var addAndGetOTP = async (root, variables, context) => {
 var add_and_get_OTP_default = addAndGetOTP;
 
 // custom-resolvers/mutations/send-email-password-reset-link.ts
-var import_crypto6 = __toESM(require("crypto"));
+var import_crypto7 = __toESM(require("crypto"));
 var {
   ENCRYPTION: {
-    STRING_TYPE: STRING_TYPE6,
-    PBKDF2: { ITERATIONS: ITERATIONS5, DIGEST_ALGORITHM: DIGEST_ALGORITHM5 },
+    STRING_TYPE: STRING_TYPE7,
+    PBKDF2: { ITERATIONS: ITERATIONS6, DIGEST_ALGORITHM: DIGEST_ALGORITHM6 },
     PASSWORD: {
-      PBKDF2: { KEY_LENGTH: KEY_LENGTH5 }
+      PBKDF2: { KEY_LENGTH: KEY_LENGTH6 }
     }
   }
 } = ACCOUNT;
@@ -1964,7 +1994,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
       console.info("Unable to send password reset email - no account found");
       return { success: false };
     }
-    const passwordResetHash = import_crypto6.default.pbkdf2Sync(email, exporter.salt, ITERATIONS5, KEY_LENGTH5, DIGEST_ALGORITHM5).toString(STRING_TYPE6);
+    const passwordResetHash = import_crypto7.default.pbkdf2Sync(email, exporter.salt, ITERATIONS6, KEY_LENGTH6, DIGEST_ALGORITHM6).toString(STRING_TYPE7);
     const accountUpdate = {
       passwordResetHash,
       passwordResetExpiry: ACCOUNT.PASSWORD_RESET_EXPIRY()
@@ -1984,6 +2014,50 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
   }
 };
 var send_email_password_reset_link_default = sendEmailPasswordResetLink;
+
+// custom-resolvers/mutations/account-password-reset.ts
+var import_date_fns4 = require("date-fns");
+var accountPasswordReset = async (root, variables, context) => {
+  console.info("Resetting account password");
+  try {
+    const { token, password: newPassword } = variables;
+    const account = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.PASSWORD_RESET_HASH, token);
+    if (!account) {
+      console.info("Unable to reset account password - account does not exist");
+      return { success: false };
+    }
+    const { id: accountId, passwordResetExpiry } = account;
+    const now = /* @__PURE__ */ new Date();
+    const hasExpired = (0, import_date_fns4.isAfter)(now, passwordResetExpiry);
+    if (hasExpired) {
+      console.info("Unable to reset account password - - verification period has expired");
+      return {
+        success: false,
+        expired: true
+      };
+    }
+    const { salt, hash } = encrypt_password_default(newPassword);
+    const accountUpdate = {
+      salt,
+      hash,
+      passwordResetHash: "",
+      passwordResetExpiry: null
+    };
+    const response = await context.db.Exporter.updateOne({
+      where: {
+        id: accountId
+      },
+      data: accountUpdate
+    });
+    return {
+      ...response,
+      success: true
+    };
+  } catch (err) {
+    throw new Error(`Resetting account password ${err}`);
+  }
+};
+var account_password_reset_default = accountPasswordReset;
 
 // custom-resolvers/mutations/delete-application-by-refrence-number.ts
 var deleteApplicationByReferenceNumber = async (root, variables, context) => {
@@ -2073,7 +2147,7 @@ var updateExporterCompanyAndCompanyAddress = async (root, variables, context) =>
 var update_exporter_company_and_company_address_default = updateExporterCompanyAndCompanyAddress;
 
 // custom-resolvers/mutations/submit-application.ts
-var import_date_fns5 = require("date-fns");
+var import_date_fns6 = require("date-fns");
 
 // helpers/get-populated-application.ts
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
@@ -2569,8 +2643,8 @@ var TIME_SUBMITTED = {
 };
 
 // generate-csv/map-application-to-csv/helpers/format-date/index.ts
-var import_date_fns4 = require("date-fns");
-var formatDate = (timestamp3, dateFormat = "d MMMM yyyy") => (0, import_date_fns4.format)(new Date(timestamp3), dateFormat);
+var import_date_fns5 = require("date-fns");
+var formatDate = (timestamp3, dateFormat = "d MMMM yyyy") => (0, import_date_fns5.format)(new Date(timestamp3), dateFormat);
 var format_date_default = formatDate;
 
 // generate-csv/map-application-to-csv/helpers/format-time-of-day/index.ts
@@ -2848,7 +2922,7 @@ var submitApplication = async (root, variables, context) => {
     if (application) {
       const hasDraftStatus = application.status === APPLICATION.STATUS.DRAFT;
       const now = /* @__PURE__ */ new Date();
-      const validSubmissionDate = (0, import_date_fns5.isAfter)(new Date(application.submissionDeadline), now);
+      const validSubmissionDate = (0, import_date_fns6.isAfter)(new Date(application.submissionDeadline), now);
       const canSubmit = hasDraftStatus && validSubmissionDate;
       if (canSubmit) {
         const update = {
@@ -2986,6 +3060,7 @@ var customResolvers = {
     sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
     verifyAccountSignInCode: verify_account_sign_in_code_default,
     addAndGetOTP: add_and_get_OTP_default,
+    accountPasswordReset: account_password_reset_default,
     deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
     updateExporterCompanyAndCompanyAddress: update_exporter_company_and_company_address_default,
     submitApplication: submit_application_default,

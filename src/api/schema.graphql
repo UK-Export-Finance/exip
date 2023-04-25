@@ -1696,6 +1696,9 @@ type Mutation {
   """ send email with password reset link """
   sendEmailPasswordResetLink(email: String!): SuccessResponse
 
+  """ reset account password """
+  accountPasswordReset(token: String!, password: String!): SuccessResponse
+
   """ update exporter company and company address """
   updateExporterCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: ExporterCompanyAndCompanyAddressInput!): ExporterCompanyAndCompanyAddress
 

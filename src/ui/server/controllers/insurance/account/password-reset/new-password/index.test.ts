@@ -4,6 +4,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from './validation';
+import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
 
@@ -17,14 +18,20 @@ const {
       PASSWORD_RESET: { SUCCESS },
     },
   },
+  PROBLEM_WITH_SERVICE,
 } = ROUTES;
 
 describe('controllers/insurance/account/password-reset/new-password', () => {
   let req: Request;
   let res: Response;
 
+  const mockToken = 'mock-token';
+
   beforeEach(() => {
     req = mockReq();
+
+    req.query.token = mockToken;
+
     res = mockRes();
   });
 
@@ -68,9 +75,17 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
   });
 
   describe('post', () => {
+    const passwordResetResponse = { success: true };
+
+    let passwordResetSpy = jest.fn(() => Promise.resolve(passwordResetResponse));
+
     const validBody = {
       [FIELD_ID]: mockAccount.password,
     };
+
+    beforeEach(() => {
+      api.keystone.account.passwordReset = passwordResetSpy;
+    });
 
     describe('when there are validation errors', () => {
       it('should render template with validation errors and submitted values', async () => {
@@ -88,7 +103,7 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
       });
     });
 
-    describe('when there are NO validation errors', () => {
+    describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = validBody;
       });
@@ -97,6 +112,37 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(SUCCESS);
+      });
+
+      describe('when the api.keystone.account.passwordReset does not return success=true', () => {
+        beforeEach(() => {
+          passwordResetSpy = jest.fn(() => Promise.resolve({ success: false }));
+
+          api.keystone.account.passwordReset = passwordResetSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('api error handling', () => {
+        describe('when the password reset API call fails', () => {
+          beforeEach(() => {
+            // req.body = validBody;
+
+            passwordResetSpy = jest.fn(() => Promise.reject());
+            api.keystone.account.passwordReset = passwordResetSpy;
+          });
+
+          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          });
+        });
       });
     });
   });

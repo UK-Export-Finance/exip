@@ -173,6 +173,12 @@ const typeDefs = `
       email: String!
     ): SuccessResponse
 
+    """ reset account password """
+    accountPasswordReset(
+      token: String!
+      password: String!
+    ): SuccessResponse
+
     """ update exporter company and company address """
     updateExporterCompanyAndCompanyAddress(
       companyId: ID!

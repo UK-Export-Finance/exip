@@ -11,6 +11,7 @@ import { get as requestNewCodeGet, post as requestNewCodePost } from '../../../c
 import { get as passwordResetGet, post as passwordResetPost } from '../../../controllers/insurance/account/password-reset';
 import { get as passwordResetLinkSentGet } from '../../../controllers/insurance/account/password-reset/link-sent';
 import { get as newPasswordGet, post as newPasswordPost } from '../../../controllers/insurance/account/password-reset/new-password';
+import { get as passwordSuccessGet } from '../../../controllers/insurance/account/password-reset/success';
 import { get as signOutGet } from '../../../controllers/insurance/account/sign-out';
 import { get as signedOutGet } from '../../../controllers/insurance/account/signed-out';
 
@@ -24,7 +25,7 @@ describe('routes/insurance/account', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(13);
+    expect(get).toHaveBeenCalledTimes(14);
     expect(post).toHaveBeenCalledTimes(6);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.YOUR_DETAILS, yourDetailsGet);
@@ -52,6 +53,8 @@ describe('routes/insurance/account', () => {
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD, newPasswordGet);
     expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD, newPasswordPost);
+
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.SUCCESS, passwordSuccessGet);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SIGN_OUT, signOutGet);
 

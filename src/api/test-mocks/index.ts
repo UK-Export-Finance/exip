@@ -15,6 +15,7 @@ const {
   },
 } = ACCOUNT.ENCRYPTION;
 
+// TODO: use new helper
 const generatePassword = (password: string) => {
   const salt = crypto.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
 
@@ -36,6 +37,8 @@ export const mockAccount = {
   verificationExpiry: ACCOUNT.EMAIL.VERIFICATION_EXPIRY(),
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
+  passwordResetHash: 'mockPasswordResetHash',
+  passwordResetExpiry: ACCOUNT.PASSWORD_RESET_EXPIRY(),
 } as Account;
 
 export const mockOTP = {

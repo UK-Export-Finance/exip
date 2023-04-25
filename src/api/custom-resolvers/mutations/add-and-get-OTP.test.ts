@@ -8,10 +8,10 @@ import { mockAccount, mockOTP } from '../../test-mocks';
 import { Account, AddAndGetOtpResponse } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
+dotenv.config();
+
 const dbUrl = String(process.env.DATABASE_URL);
 const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
 

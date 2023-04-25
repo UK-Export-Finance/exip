@@ -103,9 +103,9 @@ const passwordResetLink = async (emailAddress: string, firstName: string, passwo
 
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
 
-    const variables = { passwordResetToken: passwordResetHash };
+    const variables = { firstName, passwordResetToken: passwordResetHash };
 
-    const response = await callNotify(templateId, emailAddress, variables, firstName);
+    const response = await callNotify(templateId, emailAddress, variables);
 
     return response;
   } catch (err) {
