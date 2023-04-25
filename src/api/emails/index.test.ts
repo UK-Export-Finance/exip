@@ -141,6 +141,45 @@ describe('emails', () => {
     });
   });
 
+  describe('passwordResetLink', () => {
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
+    const mockPasswordResetHash = '123456';
+
+    const expectedVariables = {
+      firstName,
+      passwordResetToken: mockPasswordResetHash,
+    };
+
+    test('it should call notify.sendEmail and return the response', async () => {
+      notify.sendEmail = sendEmailSpy;
+
+      const result = await sendEmail.passwordResetLink(email, firstName, mockPasswordResetHash);
+
+      expect(sendEmailSpy).toHaveBeenCalledTimes(1);
+      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, expectedVariables);
+
+      const expected = mockSendEmailResponse;
+
+      expect(result).toEqual(expected);
+    });
+
+    describe('error handling', () => {
+      beforeAll(async () => {
+        notify.sendEmail = jest.fn(() => Promise.reject(mockErrorMessage));
+      });
+
+      test('should throw an error', async () => {
+        try {
+          await sendEmail.passwordResetLink(email, firstName, mockPasswordResetHash);
+        } catch (err) {
+          const expected = new Error(`Sending email for account password reset Error: Sending email ${mockErrorMessage}`);
+
+          expect(err).toEqual(expected);
+        }
+      });
+    });
+  });
+
   describe('applicationSubmittedEmail', () => {
     describe('exporter', () => {
       const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;

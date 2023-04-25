@@ -524,6 +524,8 @@ CREATE TABLE `Exporter` (
   `otpSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 	`sessionExpiry` datetime(3) DEFAULT NULL,
   `sessionIdentifier` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+	`passwordResetHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `passwordResetExpiry` datetime(3) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

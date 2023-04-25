@@ -5,6 +5,7 @@ const { EMAIL, PASSWORD, SECURITY_CODE } = ACCOUNT;
 const accountFormFields = {
   [EMAIL]: {
     label: () => cy.get(`[data-cy="${EMAIL}-label"]`),
+    hint: () => cy.get(`[data-cy="${EMAIL}-hint"]`),
     input: () => cy.get(`[data-cy="${EMAIL}-input"]`),
     errorMessage: () => cy.get(`[data-cy="${EMAIL}-error-message"]`),
   },

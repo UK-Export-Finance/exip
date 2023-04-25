@@ -170,6 +170,11 @@ const typeDefs = `
       email: String!
     ): AddAndGetOtpResponse
 
+    """ send email with password reset link """
+    sendEmailPasswordResetLink(
+      email: String!
+    ): SuccessResponse
+
     """ update exporter company and company address """
     updateExporterCompanyAndCompanyAddress(
       companyId: ID!

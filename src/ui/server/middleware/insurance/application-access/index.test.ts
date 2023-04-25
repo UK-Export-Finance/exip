@@ -27,7 +27,7 @@ describe('middleware/insurance/application-access', () => {
         ...Object.values(ELIGIBILITY),
         ...Object.values(ACCOUNT.CREATE),
         ...Object.values(ACCOUNT.SIGN_IN),
-        ...Object.values(ACCOUNT.RESET_PASSWORD),
+        ...Object.values(ACCOUNT.PASSWORD_RESET),
         DASHBOARD,
         NO_ACCESS_TO_APPLICATION,
       ];
