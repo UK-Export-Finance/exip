@@ -53,9 +53,9 @@ const ACCOUNT = {
         SUCCESSFULLY_SIGNED_OUT: 'You have successfully signed out.',
       },
       PAGE_TITLE: 'Sign in',
-      RESET_PASSWORD: {
+      PASSWORD_RESET: {
         TEXT: 'Reset password',
-        HREF: INSURANCE_ROUTES.ACCOUNT.RESET_PASSWORD.ROOT,
+        HREF: INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.ROOT,
       },
       NEED_TO_CREATE_ACCOUNT: {
         HEADING: 'If you need to create an account',
@@ -88,6 +88,11 @@ const ACCOUNT = {
         },
         OUTRO: 'for help signing in.',
       },
+    },
+  },
+  PASSWORD_RESET: {
+    ROOT: {
+      PAGE_TITLE: 'Enter your email to reset your password',
     },
   },
   SIGNED_OUT: {
