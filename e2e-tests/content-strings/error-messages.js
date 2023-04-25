@@ -6,7 +6,7 @@ export const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP);
 export const ERROR_MESSAGES = {
   [FIELD_IDS.BUYER_COUNTRY]: 'Select where your buyer is based',
   [FIELD_IDS.VALID_BUYER_BODY]: 'Select if your buyer is a government or public sector body',
-  [FIELD_IDS.VALID_EXPORTER_LOCATION]: 'Select whether your company is based in the UK, Channel Islands, Isle of Man or not',
+  [FIELD_IDS.VALID_EXPORTER_LOCATION]: "Select whether you're exporting from a business base in the UK, Channel Islands, Isle of Man or not",
   [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
     IS_EMPTY: 'Select if 20% of your export contract value is made up from UK goods/services or not',
   },
