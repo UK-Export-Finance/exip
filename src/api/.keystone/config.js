@@ -285,6 +285,12 @@ var EXTERNAL_API_ENDPOINTS = {
     INDUSTRY_SECTORS: "/map-industry-sector?size=1000"
   }
 };
+var DATE_5_MINUTES_FROM_NOW = () => {
+  const now = /* @__PURE__ */ new Date();
+  const milliseconds = 3e5;
+  const future = new Date(now.setMilliseconds(milliseconds));
+  return future;
+};
 var ACCOUNT2 = {
   EMAIL: {
     VERIFICATION_EXPIRY: () => {
@@ -312,15 +318,11 @@ var ACCOUNT2 = {
       }
     }
   },
+  PASSWORD_RESET_EXPIRY: DATE_5_MINUTES_FROM_NOW,
   // One time password
   OTP: {
     DIGITS: 6,
-    VERIFICATION_EXPIRY: () => {
-      const now = /* @__PURE__ */ new Date();
-      const milliseconds = 3e5;
-      const future = new Date(now.setMilliseconds(milliseconds));
-      return future;
-    }
+    VERIFICATION_EXPIRY: DATE_5_MINUTES_FROM_NOW
   },
   // JSON web token
   JWT: {
@@ -345,7 +347,8 @@ var ACCOUNT2 = {
 var EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
     CONFIRM_EMAIL: "24022e94-171c-4044-b0ee-d22418116575",
-    SECURITY_CODE: "b92650d1-9187-4510-ace2-5eec7ca7e626"
+    SECURITY_CODE: "b92650d1-9187-4510-ace2-5eec7ca7e626",
+    PASSWORD_RESET: "86d5f582-e1d3-4b55-b103-50141401fd13"
   },
   APPLICATION: {
     SUBMISSION: {
@@ -483,6 +486,7 @@ var notify = {
         emailRecipient: sendToEmailAddress
       };
     } catch (err) {
+      console.error(err);
       throw new Error(`Calling Notify API. Unable to send email ${err}`);
     }
   }
@@ -531,6 +535,18 @@ var securityCodeEmail = async (emailAddress, firstName, securityCode) => {
   } catch (err) {
     console.error(err);
     throw new Error(`Sending security code email for account sign in ${err}`);
+  }
+};
+var passwordResetLink = async (emailAddress, firstName, passwordResetHash) => {
+  try {
+    console.info("Sending email for account password reset");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
+    const variables = { firstName, passwordResetToken: passwordResetHash };
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending email for account password reset ${err}`);
   }
 };
 var applicationSubmitted = {
@@ -606,6 +622,7 @@ var insuranceFeedbackEmail = async (variables) => {
 var sendEmail = {
   confirmEmailAddress,
   securityCodeEmail,
+  passwordResetLink,
   applicationSubmitted,
   documentsEmail,
   insuranceFeedbackEmail
@@ -923,6 +940,8 @@ var lists = {
       otpExpiry: (0, import_fields.timestamp)(),
       sessionExpiry: (0, import_fields.timestamp)(),
       sessionIdentifier: (0, import_fields.text)(),
+      passwordResetHash: (0, import_fields.text)(),
+      passwordResetExpiry: (0, import_fields.timestamp)(),
       applications: (0, import_fields.relationship)({
         ref: "Application",
         many: true
@@ -1482,6 +1501,11 @@ var typeDefs = `
       email: String!
     ): AddAndGetOtpResponse
 
+    """ send email with password reset link """
+    sendEmailPasswordResetLink(
+      email: String!
+    ): SuccessResponse
+
     """ update exporter company and company address """
     updateExporterCompanyAndCompanyAddress(
       companyId: ID!
@@ -1968,6 +1992,47 @@ var addAndGetOTP = async (root, variables, context) => {
   }
 };
 var add_and_get_OTP_default = addAndGetOTP;
+
+// custom-resolvers/mutations/send-email-password-reset-link.ts
+var import_crypto6 = __toESM(require("crypto"));
+var {
+  ENCRYPTION: {
+    STRING_TYPE: STRING_TYPE6,
+    PBKDF2: { ITERATIONS: ITERATIONS5, DIGEST_ALGORITHM: DIGEST_ALGORITHM5 },
+    PASSWORD: {
+      PBKDF2: { KEY_LENGTH: KEY_LENGTH5 }
+    }
+  }
+} = ACCOUNT2;
+var sendEmailPasswordResetLink = async (root, variables, context) => {
+  try {
+    console.info("Sending password reset email");
+    const { email } = variables;
+    const exporter = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    if (!exporter) {
+      console.info("Unable to send password reset email - no account found");
+      return { success: false };
+    }
+    const passwordResetHash = import_crypto6.default.pbkdf2Sync(email, exporter.salt, ITERATIONS5, KEY_LENGTH5, DIGEST_ALGORITHM5).toString(STRING_TYPE6);
+    const accountUpdate = {
+      passwordResetHash,
+      passwordResetExpiry: ACCOUNT2.PASSWORD_RESET_EXPIRY()
+    };
+    await context.db.Exporter.updateOne({
+      where: { id: exporter.id },
+      data: accountUpdate
+    });
+    const emailResponse = await emails_default.passwordResetLink(email, exporter.firstName, passwordResetHash);
+    if (emailResponse.success) {
+      return emailResponse;
+    }
+    return { success: false };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending password reset email (sendEmailPasswordResetLink mutation) ${err}`);
+  }
+};
+var send_email_password_reset_link_default = sendEmailPasswordResetLink;
 
 // custom-resolvers/mutations/delete-application-by-refrence-number.ts
 var deleteApplicationByReferenceNumber = async (root, variables, context) => {
@@ -3178,6 +3243,7 @@ var customResolvers = {
     sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
     verifyAccountSignInCode: verify_account_sign_in_code_default,
     addAndGetOTP: add_and_get_OTP_default,
+    sendEmailPasswordResetLink: send_email_password_reset_link_default,
     deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
     updateExporterCompanyAndCompanyAddress: update_exporter_company_and_company_address_default,
     submitApplication: submit_application_default,

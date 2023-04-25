@@ -82,6 +82,8 @@ interface Account extends ExporterUpdateInput {
   optHash?: string;
   otpExpiry?: Date;
   sessionIdentifier?: string;
+  passwordResetHash: string;
+  passwordResetExpiry: Date;
   isVerified: boolean;
 }
 
@@ -205,6 +207,10 @@ interface AccountCreationVariables {
   password: string;
 }
 
+interface AccountSendEmailPasswordResetLinkVariables {
+  email: string;
+}
+
 interface AccountSignInVariables {
   email: string;
   password: string;
@@ -295,6 +301,7 @@ export {
   AccountCreationVariables,
   ApplicationExporterCompanyAddress,
   AccountInput,
+  AccountSendEmailPasswordResetLinkVariables,
   AccountSignInVariables,
   AccountSignInSendNewCodeVariables,
   AccountSignInResponse,

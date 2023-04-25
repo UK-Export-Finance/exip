@@ -107,6 +107,8 @@ model Exporter {
   otpExpiry                 DateTime?
   sessionExpiry             DateTime?
   sessionIdentifier         String        @default("")
+  passwordResetHash         String        @default("")
+  passwordResetExpiry       DateTime?
   applications              Application[] @relation("Exporter_applications")
   from_Application_exporter Application[] @relation("Application_exporter")
 }

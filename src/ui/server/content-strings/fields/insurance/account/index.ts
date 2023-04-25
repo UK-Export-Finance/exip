@@ -38,4 +38,10 @@ export const ACCOUNT_FIELDS = {
       LABEL: 'Password',
     },
   },
+  PASSWORD_RESET: {
+    [EMAIL]: {
+      LABEL: 'Email address',
+      HINT: 'Enter the email address you used to create your account.',
+    },
+  },
 };

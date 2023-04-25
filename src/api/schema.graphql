@@ -453,6 +453,8 @@ type Exporter {
   otpExpiry: DateTime
   sessionExpiry: DateTime
   sessionIdentifier: String
+  passwordResetHash: String
+  passwordResetExpiry: DateTime
   applications(where: ApplicationWhereInput! = {}, orderBy: [ApplicationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ApplicationWhereUniqueInput): [Application!]
   applicationsCount(where: ApplicationWhereInput! = {}): Int
 }
@@ -481,6 +483,8 @@ input ExporterWhereInput {
   otpExpiry: DateTimeNullableFilter
   sessionExpiry: DateTimeNullableFilter
   sessionIdentifier: StringFilter
+  passwordResetHash: StringFilter
+  passwordResetExpiry: DateTimeNullableFilter
   applications: ApplicationManyRelationFilter
 }
 
@@ -512,6 +516,8 @@ input ExporterOrderByInput {
   otpExpiry: OrderDirection
   sessionExpiry: OrderDirection
   sessionIdentifier: OrderDirection
+  passwordResetHash: OrderDirection
+  passwordResetExpiry: OrderDirection
 }
 
 input ExporterUpdateInput {
@@ -530,6 +536,8 @@ input ExporterUpdateInput {
   otpExpiry: DateTime
   sessionExpiry: DateTime
   sessionIdentifier: String
+  passwordResetHash: String
+  passwordResetExpiry: DateTime
   applications: ApplicationRelateToManyForUpdateInput
 }
 
@@ -561,6 +569,8 @@ input ExporterCreateInput {
   otpExpiry: DateTime
   sessionExpiry: DateTime
   sessionIdentifier: String
+  passwordResetHash: String
+  passwordResetExpiry: DateTime
   applications: ApplicationRelateToManyForCreateInput
 }
 
@@ -1753,6 +1763,9 @@ type Mutation {
 
   """ add an OTP security code to an account """
   addAndGetOTP(email: String!): AddAndGetOtpResponse
+
+  """ send email with password reset link """
+  sendEmailPasswordResetLink(email: String!): SuccessResponse
 
   """ update exporter company and company address """
   updateExporterCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: ExporterCompanyAndCompanyAddressInput!): ExporterCompanyAndCompanyAddress
