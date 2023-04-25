@@ -131,8 +131,6 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
       describe('api error handling', () => {
         describe('when the password reset API call fails', () => {
           beforeEach(() => {
-            // req.body = validBody;
-
             passwordResetSpy = jest.fn(() => Promise.reject());
             api.keystone.account.passwordReset = passwordResetSpy;
           });
