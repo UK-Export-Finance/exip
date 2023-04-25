@@ -29,8 +29,7 @@ const {
   ACCOUNT: { EMAIL },
 } = INSURANCE_FIELD_IDS;
 
-// TODO
-context('Insurance - Account - Password reset - link sent page - As an Exporter,', () => {
+context('Insurance - Account - Password reset - link sent page - As an Exporter, I want to reset the password on my UKEF digital service account, So that I can securely access my UKEF digital service account', () => {
   let url;
 
   // TODDO - go to "already have account", click yes.
