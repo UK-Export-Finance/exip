@@ -6,21 +6,35 @@ import fieldGroupItem from './generate-field-group-item';
 import getFieldById from '../get-field-by-id';
 import { ApplicationExporterCompany, CompanyHouseResponse, SummaryListItemData } from '../../../types';
 import generateMultipleFieldHtml from '../generate-multiple-field-html';
+import { stringArrayHasValue, isPopulatedArray } from '../array';
 
 const {
   EXPORTER_BUSINESS: { COMPANY_HOUSE },
 } = FIELD_IDS.INSURANCE;
 
-const { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC } = COMPANY_HOUSE;
+const { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, INDUSTRY_SECTOR_NAMES } = COMPANY_HOUSE;
 
 /**
  * generateSicCodesValue
- * @param {String} Sic codes
+ * generates string with sicCode and description with line breaks
+ * maps through sicCodes, and if there is a description at that index, string will contain description
+ * @param {Array<string>} sicCodes
+ * @param {Array<string>} industrySectorNames
  * @returns {String} Sic codes as a single string or default empty string
  */
-const generateSicCodesValue = (sicCodes?: Array<string>): string => {
-  if (sicCodes && sicCodes.length) {
-    return sicCodes.toString();
+const generateSicCodesValue = (sicCodes?: Array<string>, industrySectorNames?: Array<string>): string => {
+  if (sicCodes && isPopulatedArray(sicCodes)) {
+    const string = [] as Array<string>;
+
+    sicCodes.forEach((sicCode, index) => {
+      if (industrySectorNames && stringArrayHasValue(index, industrySectorNames)) {
+        string.push(`${sicCode} - ${industrySectorNames[index]} </br>`);
+      } else {
+        string.push(`${sicCode} </br>`);
+      }
+    });
+
+    return string.join('');
   }
 
   return DEFAULT.EMPTY;
@@ -62,7 +76,7 @@ const generateFields = (companyDetails: CompanyHouseResponse | ApplicationExport
         field: getFieldById(FIELDS, COMPANY_SIC),
         data: companyDetails,
       },
-      generateSicCodesValue(companyDetails[COMPANY_SIC]),
+      generateSicCodesValue(companyDetails[COMPANY_SIC], companyDetails[INDUSTRY_SECTOR_NAMES]),
     ),
   ] as Array<SummaryListItemData>;
 

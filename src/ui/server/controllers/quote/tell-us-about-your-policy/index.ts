@@ -1,7 +1,7 @@
 import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
-import isPopulatedArray from '../../../helpers/is-populated-array';
+import { isPopulatedArray } from '../../../helpers/array';
 import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';

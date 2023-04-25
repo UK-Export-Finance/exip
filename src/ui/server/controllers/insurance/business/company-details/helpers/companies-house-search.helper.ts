@@ -1,6 +1,6 @@
 import api from '../../../../../api';
 import companiesHouseValidation from '../validation/companies-house';
-import isPopulatedArray from '../../../../../helpers/is-populated-array';
+import { isPopulatedArray } from '../../../../../helpers/array';
 import companyHouseResponseValidation from '../validation/companies-house-response';
 import { RequestBody, CompanyHouseResponse } from '../../../../../../types';
 import { FIELD_IDS } from '../../../../../constants';

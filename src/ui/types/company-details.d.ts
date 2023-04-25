@@ -9,6 +9,7 @@ interface CompanyDetails {
 interface SicCode {
   id: string;
   sicCode: string;
+  industrySectorName: string;
 }
 
 export { CompanyDetails, SicCode };

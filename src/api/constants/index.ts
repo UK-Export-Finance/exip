@@ -14,6 +14,13 @@ export const ANSWERS = {
 
 export const GBP_CURRENCY_CODE = 'GBP';
 
+export const EXTERNAL_API_ENDPOINTS = {
+  MULESOFT_MDM_EA: {
+    CURRENCY: '/currency',
+    INDUSTRY_SECTORS: '/map-industry-sector?size=1000',
+  },
+};
+
 /**
  * DATE_5_MINUTES_FROM_NOW
  * Generate a date that is 5 minutes from now

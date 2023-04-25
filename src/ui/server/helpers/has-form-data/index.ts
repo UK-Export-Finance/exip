@@ -1,4 +1,4 @@
-import isPopulatedArray from '../is-populated-array';
+import { isPopulatedArray } from '../array';
 import { RequestBody } from '../../../types';
 
 /**

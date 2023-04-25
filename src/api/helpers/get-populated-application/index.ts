@@ -1,7 +1,7 @@
 import { Context, Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
-import getExporterById from './get-exporter-by-id';
-import getCountryByField from './get-country-by-field';
-import { Application } from '../types';
+import getExporterById from '../get-exporter-by-id';
+import getCountryByField from '../get-country-by-field';
+import { Application } from '../../types';
 
 export const generateErrorMessage = (section: string, applicationId: number) =>
   `Getting populated application - no ${section} found for application ${applicationId}`;

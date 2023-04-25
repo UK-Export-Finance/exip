@@ -1,4 +1,4 @@
-import isPopulatedArray from '../../is-populated-array';
+import { isPopulatedArray } from '../../array';
 import { getSubmittedFields } from '../../get-submitted-fields';
 import { ApplicationFlat } from '../../../../types';
 
