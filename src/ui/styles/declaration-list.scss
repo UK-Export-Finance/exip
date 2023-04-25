@@ -1,5 +1,5 @@
 .counter-list--bold {
-  >li::before {
+  > li::before {
     font-weight: bold;
   }
 }
@@ -22,7 +22,7 @@
   }
 
   > li::before {
-    content: "(" counter(count, lower-alpha) ") ";
+    content: '(' counter(count, lower-alpha) ') ';
     position: absolute;
     top: 0;
     left: -1em;
@@ -40,7 +40,7 @@
   }
 
   > li::before {
-    content: "(" counter(count, lower-roman) ") ";
+    content: '(' counter(count, lower-roman) ') ';
     position: absolute;
     top: 0;
     left: -1em;

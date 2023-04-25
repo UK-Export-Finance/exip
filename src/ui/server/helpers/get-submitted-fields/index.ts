@@ -1,4 +1,4 @@
-import isPopulatedArray from '../is-populated-array';
+import { isPopulatedArray } from '../array';
 import { ApplicationFlat } from '../../../types';
 import isFieldFalseOrZero from '../is-field-false-or-zero';
 

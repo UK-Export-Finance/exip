@@ -907,6 +907,7 @@ type ExporterCompanySicCode {
   id: ID!
   exporterCompany: ExporterCompany
   sicCode: String
+  industrySectorName: String
 }
 
 input ExporterCompanySicCodeWhereUniqueInput {
@@ -920,16 +921,19 @@ input ExporterCompanySicCodeWhereInput {
   id: IDFilter
   exporterCompany: ExporterCompanyWhereInput
   sicCode: StringFilter
+  industrySectorName: StringFilter
 }
 
 input ExporterCompanySicCodeOrderByInput {
   id: OrderDirection
   sicCode: OrderDirection
+  industrySectorName: OrderDirection
 }
 
 input ExporterCompanySicCodeUpdateInput {
   exporterCompany: ExporterCompanyRelateToOneForUpdateInput
   sicCode: String
+  industrySectorName: String
 }
 
 input ExporterCompanySicCodeUpdateArgs {
@@ -940,6 +944,7 @@ input ExporterCompanySicCodeUpdateArgs {
 input ExporterCompanySicCodeCreateInput {
   exporterCompany: ExporterCompanyRelateToOneForCreateInput
   sicCode: String
+  industrySectorName: String
 }
 
 type Buyer {
@@ -1678,9 +1683,6 @@ type Mutation {
   """ verify an account's email address """
   verifyAccountEmailAddress(token: String!): VerifyAccountEmailAddressResponse
 
-  """ send email for insurance feedback """
-  sendEmailInsuranceFeedback(satisfaction: String, improvement: String, otherComments: String): SuccessResponse
-
   """ send confirm email address email """
   sendEmailConfirmEmailAddress(exporterId: String!): EmailResponse
 
@@ -1707,6 +1709,9 @@ type Mutation {
 
   """ submit an application """
   submitApplication(applicationId: String!): SuccessResponse
+
+  """ send email for insurance feedback """
+  sendEmailInsuranceFeedback(satisfaction: String, improvement: String, otherComments: String): SuccessResponse
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure
@@ -1944,6 +1949,7 @@ type CompaniesHouseResponse {
   companyNumber: String
   dateOfCreation: String
   sicCodes: [String]
+  industrySectorNames: [String]
   financialYearEndDate: DateTime
   success: Boolean
   apiError: Boolean
@@ -1979,6 +1985,7 @@ type ExporterCompanyAndCompanyAddress {
 input ExporterCompanyAndCompanyAddressInput {
   address: ExporterCompanyAddressInput
   sicCodes: [String]
+  industrySectorNames: [String]
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime

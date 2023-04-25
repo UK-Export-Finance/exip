@@ -39,10 +39,6 @@ services:
     volumes:
       - ./.api/src:/app/src:ro
       - ./.api/src/.keystone:/app/src/.keystone:ro
-      # TODO: Volumes permissions
-      # - ./src/api/generate-csv:/app/generate-csv:rw
-      # - ./src/api/file-system:/app/file-system:rw
-      # - ./src/api/csv:/app/csv:rw
     environment:
       NODE_ENV:
       PORT: ${API_PORT}
@@ -58,6 +54,9 @@ services:
       UNDERWRITING_TEAM_EMAIL:
       FEEDBACK_EMAIL_RECIPIENT:
       MOCK_ACCOUNT_PASSWORD:
+      MULESOFT_API_MDM_EA_URL:
+      MULESOFT_API_MDM_EA_KEY:
+      MULESOFT_API_MDM_EA_SECRET:
 
   ui:
     build:

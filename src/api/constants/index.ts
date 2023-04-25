@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import { Algorithm } from 'jsonwebtoken';
 import { BufferEncoding } from '../types';
-import INSURANCE_FIELD_IDS from './field-ids/insurance';
+export * from './field-ids';
 export * from './application';
 export * from './field-values';
 
@@ -14,12 +14,11 @@ export const ANSWERS = {
 
 export const GBP_CURRENCY_CODE = 'GBP';
 
-export const FIELD_IDS = {
-  ACCOUNT: {
-    EMAIL: 'email',
-    VERIFICATION_HASH: 'verificationHash',
+export const EXTERNAL_API_ENDPOINTS = {
+  MULESOFT_MDM_EA: {
+    CURRENCY: '/currency',
+    INDUSTRY_SECTORS: '/map-industry-sector?size=1000',
   },
-  ...INSURANCE_FIELD_IDS,
 };
 
 /**

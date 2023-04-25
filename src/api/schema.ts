@@ -5,6 +5,7 @@ import { document } from '@keystone-6/fields-document';
 import { addMonths } from 'date-fns';
 import { Lists } from '.keystone/types'; // eslint-disable-line
 import { ANSWERS, APPLICATION } from './constants';
+import updateApplication from './helpers/update-application';
 import sendEmail from './emails';
 import { AccountInput } from './types';
 
@@ -349,6 +350,13 @@ export const lists = {
       }),
       finalDestinationCountryCode: text(),
     },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
+    },
     access: allowAll,
   },
   Exporter: list({
@@ -430,6 +438,13 @@ export const lists = {
       estimatedAnnualTurnover: integer(),
       exportsTurnoverPercentage: integer(),
     },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
+    },
     access: allowAll,
   }),
   ExporterBroker: list({
@@ -449,6 +464,13 @@ export const lists = {
       county: text(),
       postcode: text(),
       email: text(),
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
     },
     access: allowAll,
   }),
@@ -495,12 +517,20 @@ export const lists = {
       phoneNumber: text(),
       financialYearEndDate: timestamp(),
     },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
+    },
     access: allowAll,
   }),
   ExporterCompanySicCode: list({
     fields: {
       exporterCompany: relationship({ ref: 'ExporterCompany.sicCodes' }),
       sicCode: text(),
+      industrySectorName: text(),
     },
     access: allowAll,
   }),
@@ -536,6 +566,13 @@ export const lists = {
           { label: ANSWERS.NO, value: ANSWERS.NO },
         ],
       }),
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
     },
     access: allowAll,
   }),
@@ -573,6 +610,13 @@ export const lists = {
       exporterBusiness: checkbox(),
       buyer: checkbox(),
     },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
+    },
     access: allowAll,
   }),
   Declaration: list({
@@ -599,6 +643,13 @@ export const lists = {
       }),
       agreeToConfirmationAndAcknowledgements: checkbox(),
       agreeHowDataWillBeUsed: checkbox(),
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
     },
     access: allowAll,
   }),
