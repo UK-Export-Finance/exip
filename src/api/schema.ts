@@ -528,6 +528,7 @@ export const lists = {
     fields: {
       exporterCompany: relationship({ ref: 'ExporterCompany.sicCodes' }),
       sicCode: text(),
+      industrySectorName: text(),
     },
     access: allowAll,
   }),

@@ -5,7 +5,7 @@ import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { policyAndExportSummaryList } from '../../../../helpers/summary-lists/policy-and-export';
-import isPopulatedArray from '../../../../helpers/is-populated-array';
+import { isPopulatedArray } from '../../../../helpers/array';
 import api from '../../../../api';
 import requiredFields from '../../../../helpers/required-fields/policy-and-exports';
 import sectionStatus from '../../../../helpers/section-status';

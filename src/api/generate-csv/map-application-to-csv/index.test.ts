@@ -1,10 +1,11 @@
 import mapApplicationToCsv from '.';
 import ROW_SEPERATOR from './helpers/csv-row-seperator';
-import mapReferenceNumberAndDates from './map-reference-number-and-dates';
-import mapEligibility from './map-eligibility';
+import mapKeyInformation from './map-key-information';
+import mapSecondaryKeyInformation from './map-secondary-key-information';
 import mapPolicyAndExport from './map-policy-and-export';
 import mapExporter from './map-exporter';
 import mapBuyer from './map-buyer';
+import mapEligibility from './map-eligibility';
 import { mockApplication } from '../../test-mocks';
 
 describe('api/generate-csv/map-application-to-csv/index', () => {
@@ -14,11 +15,11 @@ describe('api/generate-csv/map-application-to-csv/index', () => {
     const expected = [
       ROW_SEPERATOR,
 
-      ...mapReferenceNumberAndDates(mockApplication),
+      ...mapKeyInformation(mockApplication),
 
       ROW_SEPERATOR,
 
-      ...mapEligibility(mockApplication),
+      ...mapSecondaryKeyInformation(mockApplication),
 
       ROW_SEPERATOR,
 
@@ -31,6 +32,10 @@ describe('api/generate-csv/map-application-to-csv/index', () => {
       ROW_SEPERATOR,
 
       ...mapBuyer(mockApplication),
+
+      ROW_SEPERATOR,
+
+      ...mapEligibility(mockApplication),
     ];
 
     expect(result).toEqual(expected);

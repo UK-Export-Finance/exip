@@ -21,7 +21,7 @@ const addAndGetOTP = async (root: any, variables: AddOtpToAccountVariables, cont
     const { email } = variables;
 
     // Get the account the email is associated with.
-    const exporter = await getAccountByField(context, FIELD_IDS.ACCOUNT.EMAIL, email);
+    const exporter = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
 
     if (!exporter) {
       console.info('Unable to generate and add OTP to exporter account - no account found');
