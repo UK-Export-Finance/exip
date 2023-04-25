@@ -48,6 +48,7 @@ Cypress.Commands.add('submitEligibilityAndStartAccountSignIn', require('./insura
 
 Cypress.Commands.add('completeAndSubmitCreateAccountForm', require('./insurance/account/complete-and-submit-create-account-form'));
 Cypress.Commands.add('completeAndSubmitSignInAccountForm', require('./insurance/account/complete-and-submit-sign-in-account-form'));
+Cypress.Commands.add('completeAndSubmitNewPasswordAccountForm', require('./insurance/account/complete-and-submit-new-password-account-form'));
 Cypress.Commands.add('getExporterByEmail', require('./insurance/account/get-exporter-by-email'));
 Cypress.Commands.add('verifyAccountEmail', require('./insurance/account/verify-account-email'));
 
@@ -106,6 +107,7 @@ Cypress.Commands.add('assertSummaryListRowValueNew', require('./assert-summary-l
 Cypress.Commands.add('submitAndAssertRadioErrors', require('./submit-and-assert-radio-errors'));
 Cypress.Commands.add('submitAndAssertFieldErrors', require('./submit-and-assert-field-errors'));
 
+Cypress.Commands.add('assertPasswordLabelHintAndInput', require('./insurance/account/assert-password-label-hint-and-input'));
 Cypress.Commands.add('assertPasswordRevealButton', require('./insurance/account/assert-password-reveal-button'));
 Cypress.Commands.add('assertConfirmEmailPageContent', require('./insurance/account/assert-confirm-email-page-content'));
 

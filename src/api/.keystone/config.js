@@ -462,7 +462,6 @@ var notify = {
         emailRecipient: sendToEmailAddress
       };
     } catch (err) {
-      console.log("CATCH ERRRRR ", err?.response?.data);
       throw new Error(`Calling Notify API. Unable to send email ${err}`);
     }
   }
@@ -517,10 +516,8 @@ var passwordResetLink = async (emailAddress, firstName, passwordResetHash) => {
   try {
     console.info("Sending email for account password reset");
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
-    console.log("----- email ", emailAddress);
     const variables = { firstName, passwordResetToken: passwordResetHash };
     const response = await callNotify(templateId, emailAddress, variables);
-    console.log("----- response ", response);
     return response;
   } catch (err) {
     console.error(err);
@@ -1410,6 +1407,11 @@ var typeDefs = `
     securityCode: String!
   }
 
+  type getAccountPasswordResetTokenResponse {
+    success: Boolean!
+    token: String
+  }
+
   type VerifyAccountEmailAddressResponse {
     success: Boolean!
     accountId: String
@@ -1451,7 +1453,7 @@ var typeDefs = `
       securityCode: String!
     ): AccountSignInResponse
 
-    """ add an OTP security code to an account """
+    """ add an OTP security code to an account and return"""
     addAndGetOTP(
       email: String!
     ): AddAndGetOtpResponse
@@ -1497,6 +1499,11 @@ var typeDefs = `
     getAccountByEmail(
       email: String!
     ): Account
+
+    """ get an account's password reset token """
+    getAccountPasswordResetToken(
+      email: String!
+    ): getAccountPasswordResetTokenResponse
 
     """ get companies house information """
     getCompaniesHouseInformation(
@@ -1556,7 +1563,6 @@ var encrypt_password_default = encryptPassword;
 // custom-resolvers/mutations/create-account.ts
 var { EMAIL, ENCRYPTION: ENCRYPTION2 } = ACCOUNT;
 var {
-  RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE2,
   STRING_TYPE: STRING_TYPE2,
   PBKDF2: { ITERATIONS: ITERATIONS2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 },
   PASSWORD: {
@@ -1707,7 +1713,7 @@ var import_crypto4 = __toESM(require("crypto"));
 var import_otplib = require("otplib");
 var { ENCRYPTION: ENCRYPTION4, OTP } = ACCOUNT;
 var {
-  RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE3,
+  RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE2,
   STRING_TYPE: STRING_TYPE4,
   PBKDF2: { ITERATIONS: ITERATIONS4, DIGEST_ALGORITHM: DIGEST_ALGORITHM4 },
   OTP: {
@@ -1717,7 +1723,7 @@ var {
 var generateOtp = () => {
   try {
     console.info("Generating OTP");
-    const salt = import_crypto4.default.randomBytes(RANDOM_BYTES_SIZE3).toString(STRING_TYPE4);
+    const salt = import_crypto4.default.randomBytes(RANDOM_BYTES_SIZE2).toString(STRING_TYPE4);
     import_otplib.authenticator.options = { digits: OTP.DIGITS };
     const securityCode = import_otplib.authenticator.generate(salt);
     const hash = import_crypto4.default.pbkdf2Sync(securityCode, salt, ITERATIONS4, KEY_LENGTH4, DIGEST_ALGORITHM4).toString(STRING_TYPE4);
@@ -1860,7 +1866,7 @@ var is_valid_otp_default = isValidOTP;
 var import_crypto6 = __toESM(require("crypto"));
 var import_jsonwebtoken = __toESM(require("jsonwebtoken"));
 var {
-  ENCRYPTION: { RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE4, STRING_TYPE: STRING_TYPE6 },
+  ENCRYPTION: { RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE3, STRING_TYPE: STRING_TYPE6 },
   JWT: {
     KEY: { SIGNATURE, ENCODING, STRING_ENCODING },
     TOKEN: { EXPIRY, ALGORITHM }
@@ -1868,7 +1874,7 @@ var {
 } = ACCOUNT;
 var PRIV_KEY = Buffer.from(SIGNATURE, ENCODING).toString(STRING_ENCODING);
 var createJWT = (accountId) => {
-  const sessionIdentifier = import_crypto6.default.randomBytes(RANDOM_BYTES_SIZE4).toString(STRING_TYPE6);
+  const sessionIdentifier = import_crypto6.default.randomBytes(RANDOM_BYTES_SIZE3).toString(STRING_TYPE6);
   const expiresIn = EXPIRY;
   const payload = {
     sub: accountId,
@@ -2026,11 +2032,15 @@ var accountPasswordReset = async (root, variables, context) => {
       console.info("Unable to reset account password - account does not exist");
       return { success: false };
     }
-    const { id: accountId, passwordResetExpiry } = account;
+    const { id: accountId, passwordResetHash, passwordResetExpiry } = account;
+    if (!passwordResetHash || !passwordResetExpiry) {
+      console.info("Unable to reset account password - reset hash or expiry does not exist");
+      return { success: false };
+    }
     const now = /* @__PURE__ */ new Date();
     const hasExpired = (0, import_date_fns4.isAfter)(now, passwordResetExpiry);
     if (hasExpired) {
-      console.info("Unable to reset account password - - verification period has expired");
+      console.info("Unable to reset account password - verification period has expired");
       return {
         success: false,
         expired: true
@@ -2043,14 +2053,13 @@ var accountPasswordReset = async (root, variables, context) => {
       passwordResetHash: "",
       passwordResetExpiry: null
     };
-    const response = await context.db.Exporter.updateOne({
+    await context.db.Exporter.updateOne({
       where: {
         id: accountId
       },
       data: accountUpdate
     });
     return {
-      ...response,
       success: true
     };
   } catch (err) {
@@ -3050,6 +3059,30 @@ var getCompaniesHouseInformation = async (root, variables) => {
 };
 var get_companies_house_information_default = getCompaniesHouseInformation;
 
+// custom-resolvers/queries/get-account-password-reset-token.ts
+var getAccountPasswordResetToken = async (root, variables, context) => {
+  console.info("Getting account password reset token");
+  try {
+    const { email } = variables;
+    const account = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.EMAIL, email);
+    if (!account) {
+      console.info("Unable to get account password reset token - account does not exist");
+      return { success: false };
+    }
+    if (account.passwordResetHash) {
+      return {
+        success: true,
+        token: account.passwordResetHash
+      };
+    }
+    console.info("Unable to get account password reset token - reset hash does not exist");
+    return { success: false };
+  } catch (err) {
+    throw new Error(`Getting account password reset token ${err}`);
+  }
+};
+var get_account_password_reset_token_default = getAccountPasswordResetToken;
+
 // custom-resolvers/index.ts
 var customResolvers = {
   Mutation: {
@@ -3068,7 +3101,8 @@ var customResolvers = {
     sendEmailInsuranceFeedback: send_email_insurance_feedback_default
   },
   Query: {
-    getCompaniesHouseInformation: get_companies_house_information_default
+    getCompaniesHouseInformation: get_companies_house_information_default,
+    getAccountPasswordResetToken: get_account_password_reset_token_default
   }
 };
 var custom_resolvers_default = customResolvers;

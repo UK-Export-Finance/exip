@@ -3,9 +3,9 @@ import { ROUTES, TEMPLATES } from '../../../../../constants';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import { Request, Response } from '../../../../../../types';
 
-export const TEMPLATE = TEMPLATES.INSURANCE.ACCOUNT.PASSWORD_RESET.LINK_SENT;
+export const TEMPLATE = TEMPLATES.INSURANCE.ACCOUNT.PASSWORD_RESET.SUCCESS;
 
-export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.LINK_SENT;
+export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.SUCCESS;
 
 const {
   ACCOUNT: {

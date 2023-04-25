@@ -1690,7 +1690,7 @@ type Mutation {
   """ verify an account's OTP security code """
   verifyAccountSignInCode(accountId: String!, securityCode: String!): AccountSignInResponse
 
-  """ add an OTP security code to an account """
+  """ add an OTP security code to an account and return"""
   addAndGetOTP(email: String!): AddAndGetOtpResponse
 
   """ send email with password reset link """
@@ -1792,6 +1792,9 @@ type Query {
 
   """ get an account by email """
   getAccountByEmail(email: String!): Account
+
+  """ get an account's password reset token """
+  getAccountPasswordResetToken(email: String!): getAccountPasswordResetTokenResponse
 
   """ get companies house information """
   getCompaniesHouseInformation(companiesHouseNumber: String!): CompaniesHouseResponse
@@ -2015,6 +2018,11 @@ type AccountSignInResponse {
 type AddAndGetOtpResponse {
   success: Boolean!
   securityCode: String!
+}
+
+type getAccountPasswordResetTokenResponse {
+  success: Boolean!
+  token: String
 }
 
 type VerifyAccountEmailAddressResponse {

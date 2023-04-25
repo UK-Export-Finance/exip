@@ -224,6 +224,14 @@ interface AccountPasswordResetVariables {
   password: string;
 }
 
+interface GetAccountPasswordResetTokenVariables {
+  email: string;
+}
+
+interface GetAccountPasswordResetTokenResponse extends SuccessResponse {
+  token?: string;
+}
+
 interface InsuranceFeedbackVariables {
   satisfaction?: string;
   improvement?: string;
@@ -309,6 +317,8 @@ export {
   DeleteApplicationByReferenceNumberVariables,
   EmailResponse,
   GetCompaniesHouseInformationVariables,
+  GetAccountPasswordResetTokenVariables,
+  GetAccountPasswordResetTokenResponse,
   NotifyPeronsalisation,
   InsuranceFeedbackVariables,
   SicCodes,

@@ -27,13 +27,13 @@ describe('controllers/insurance/account/password-reset/success', () => {
   describe('get', () => {
     describe('TEMPLATE', () => {
       it('should have the correct template defined', () => {
-        expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ACCOUNT.PASSWORD_RESET.LINK_SENT);
+        expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ACCOUNT.PASSWORD_RESET.SUCCESS);
       });
     });
 
     describe('PAGE_CONTENT_STRINGS', () => {
       it('should have the correct strings', () => {
-        expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.LINK_SENT);
+        expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.SUCCESS);
       });
     });
 

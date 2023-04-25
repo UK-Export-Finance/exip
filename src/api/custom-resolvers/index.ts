@@ -13,7 +13,7 @@ import {
   sendEmailPasswordResetLink,
   sendEmailInsuranceFeedback,
 } from './mutations';
-import { getCompaniesHouseInformation } from './queries';
+import { getCompaniesHouseInformation, getAccountPasswordResetToken } from './queries';
 
 /**
  * customResolvers
@@ -38,6 +38,7 @@ const customResolvers = {
   },
   Query: {
     getCompaniesHouseInformation,
+    getAccountPasswordResetToken,
   },
 };
 
