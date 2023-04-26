@@ -96,7 +96,7 @@ describe('custom-resolvers/account-password-reset', () => {
       account = (await context.query.Exporter.updateOne({
         where: { id: account.id },
         data: {
-          passwordResetHash: 'mock-hash',
+          passwordResetHash: mockAccount.passwordResetHash,
           passwordResetExpiry: null,
         },
       })) as Account;

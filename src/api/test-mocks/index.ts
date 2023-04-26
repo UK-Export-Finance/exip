@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import crypto from 'crypto';
 import { ACCOUNT, ANSWERS } from '../constants';
+import ACCOUNT_FIELD_IDS from '../constants/field-ids/insurance/account';
 import application from './mock-application';
 import { Account } from '../types';
 
@@ -37,7 +38,7 @@ export const mockAccount = {
   verificationExpiry: ACCOUNT.EMAIL.VERIFICATION_EXPIRY(),
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
-  passwordResetHash: 'mockPasswordResetHash',
+  [ACCOUNT_FIELD_IDS.PASSWORD_RESET_HASH]: 'mockResetHash',
   passwordResetExpiry: ACCOUNT.PASSWORD_RESET_EXPIRY(),
 } as Account;
 
