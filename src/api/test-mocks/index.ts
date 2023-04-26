@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
 import crypto from 'crypto';
-import { ACCOUNT, ANSWERS } from '../constants';
-import ACCOUNT_FIELD_IDS from '../constants/field-ids/insurance/account';
+import { ACCOUNT, ANSWERS, FIELD_IDS } from '../constants';
 import application from './mock-application';
 import { Account } from '../types';
 
@@ -15,6 +14,10 @@ const {
     PBKDF2: { KEY_LENGTH },
   },
 } = ACCOUNT.ENCRYPTION;
+
+const {
+  ACCOUNT: { PASSWORD_RESET_HASH },
+} = FIELD_IDS.INSURANCE;
 
 // TODO: use new helper
 const generatePassword = (password: string) => {
@@ -38,7 +41,7 @@ export const mockAccount = {
   verificationExpiry: ACCOUNT.EMAIL.VERIFICATION_EXPIRY(),
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
-  [ACCOUNT_FIELD_IDS.PASSWORD_RESET_HASH]: 'mockResetHash',
+  [PASSWORD_RESET_HASH]: 'mockResetHash',
   passwordResetExpiry: ACCOUNT.PASSWORD_RESET_EXPIRY(),
 } as Account;
 
