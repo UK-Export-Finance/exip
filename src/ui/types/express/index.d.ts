@@ -54,6 +54,7 @@ interface RequestSession {
   accountIdToConfirm?: string;
   accountId?: string;
   user?: RequestSessionUser;
+  emailAddressForPasswordReset?: string;
 }
 
 interface Request {
