@@ -65,10 +65,17 @@ export const mockApplicationDeclaration = {
   agreeHowDataWillBeUsed: true,
 };
 
-export const mockInsuranceFeedback = {
+export const mockInsuranceFeedbackEmail = {
   satisfaction: 'satisfied',
   improvement: 'test',
-  otherComments: '',
+  otherComments: 'comments',
+};
+
+export const mockInsuranceFeedback = {
+  ...mockInsuranceFeedbackEmail,
+  service: 'Insurance',
+  referralUrl: 'www.google.com',
+  product: 'EXIP',
 };
 
 export const mockSendEmailResponse = { success: true, emailRecipient: mockAccount.email };

@@ -280,6 +280,16 @@ interface UpdateExporterCompanyAndCompanyAddressVariables {
   data: UpdateExporterCompanyAndCompanyAddressVariablesData;
 }
 
+interface Feedback {
+  id: string;
+  service: string;
+  satisfaction: string;
+  improvement: string;
+  otherComments: string;
+  referralUrl: string;
+  product: string;
+}
+
 interface IndustrySector {
   id?: number;
   ukefIndustryId?: string;
@@ -311,6 +321,7 @@ export {
   Currency,
   DeleteApplicationByReferenceNumberVariables,
   EmailResponse,
+  Feedback,
   GetCompaniesHouseInformationVariables,
   NotifyPeronsalisation,
   InsuranceFeedbackVariables,

@@ -369,6 +369,13 @@ var EMAIL_TEMPLATE_IDS = {
     INSURANCE: "4d3d7944-e894-4527-aee6-692038c84107"
   }
 };
+var FEEDBACK = {
+  VERY_SATISFIED: "verySatisfied",
+  SATISFIED: "satisfied",
+  NEITHER: "neither",
+  DISSATISFIED: "dissatisfied",
+  VERY_DISSATISIFED: "veryDissatisfied"
+};
 var ACCEPTED_FILE_TYPES = [".csv"];
 
 // helpers/update-application/index.ts
@@ -1266,6 +1273,26 @@ var lists = {
       listView: {
         initialColumns: ["name", "email"]
       }
+    },
+    access: import_access.allowAll
+  }),
+  Feedback: (0, import_core.list)({
+    fields: {
+      service: (0, import_fields.text)(),
+      satisfaction: (0, import_fields.select)({
+        options: [
+          { label: FEEDBACK.VERY_SATISFIED, value: FEEDBACK.VERY_SATISFIED },
+          { label: FEEDBACK.SATISFIED, value: FEEDBACK.SATISFIED },
+          { label: FEEDBACK.NEITHER, value: FEEDBACK.NEITHER },
+          { label: FEEDBACK.DISSATISFIED, value: FEEDBACK.DISSATISFIED },
+          { label: FEEDBACK.VERY_DISSATISIFED, value: FEEDBACK.VERY_DISSATISIFED }
+        ],
+        db: { isNullable: true }
+      }),
+      improvement: (0, import_fields.text)(),
+      otherComments: (0, import_fields.text)(),
+      referralUrl: (0, import_fields.text)(),
+      product: (0, import_fields.text)()
     },
     access: import_access.allowAll
   })
