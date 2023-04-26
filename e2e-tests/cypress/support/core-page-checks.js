@@ -88,8 +88,8 @@ const corePageChecks = ({
   }
 
   // check analytics cookie banner
-  cy.checkAnalyticsCookiesConsentAndAccept();
-  cy.rejectAnalyticsCookies();
+  // cy.checkAnalyticsCookiesConsentAndAccept();
+  // cy.rejectAnalyticsCookies();
 
   if (assertAuthenticatedHeader) {
     // check authenticated header

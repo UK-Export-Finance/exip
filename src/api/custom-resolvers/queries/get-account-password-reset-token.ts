@@ -24,7 +24,7 @@ const getAccountPasswordResetToken = async (
     const { email } = variables;
 
     // Get the account the email is associated with.
-    const account = await getAccountByField(context, FIELD_IDS.ACCOUNT.EMAIL, email);
+    const account = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
 
     if (!account) {
       console.info('Unable to get account password reset token - account does not exist');

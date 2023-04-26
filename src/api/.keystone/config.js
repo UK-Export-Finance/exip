@@ -2049,7 +2049,7 @@ var accountPasswordReset = async (root, variables, context) => {
   console.info("Resetting account password");
   try {
     const { token, password: newPassword } = variables;
-    const account = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.PASSWORD_RESET_HASH, token);
+    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD_RESET_HASH, token);
     if (!account) {
       console.info("Unable to reset account password - account does not exist");
       return { success: false };
@@ -3294,7 +3294,7 @@ var getAccountPasswordResetToken = async (root, variables, context) => {
   console.info("Getting account password reset token");
   try {
     const { email } = variables;
-    const account = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.EMAIL, email);
+    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
     if (!account) {
       console.info("Unable to get account password reset token - account does not exist");
       return { success: false };
