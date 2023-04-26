@@ -62,15 +62,6 @@ var SHARED_ELIGIBILITY = {
 };
 var shared_eligibility_default = SHARED_ELIGIBILITY;
 
-<<<<<<< HEAD
-// constants/field-ids/shared/index.ts
-var SHARED = {
-  POLICY_TYPE: "policyType",
-  SINGLE_POLICY_TYPE: "singlePolicyType",
-  MULTIPLE_POLICY_TYPE: "multiplePolicyType"
-};
-var shared_default = SHARED;
-=======
 // constants/field-ids/insurance/account/index.ts
 var ACCOUNT = {
   FIRST_NAME: "firstName",
@@ -81,7 +72,6 @@ var ACCOUNT = {
   VERIFICATION_HASH: "verificationHash"
 };
 var account_default = ACCOUNT;
->>>>>>> main-application
 
 // constants/field-ids/insurance/policy-and-exports/index.ts
 var SHARED_CONTRACT_POLICY = {
@@ -90,8 +80,6 @@ var SHARED_CONTRACT_POLICY = {
   POLICY_CURRENCY_CODE: "policyCurrencyCode"
 };
 var POLICY_AND_EXPORTS = {
-<<<<<<< HEAD
-=======
   ...shared_default,
   TYPE_OF_POLICY: {
     POLICY_TYPE: shared_default.POLICY_TYPE
@@ -235,7 +223,6 @@ var insurance_default = INSURANCE_FIELD_IDS;
 
 // constants/field-ids/index.ts
 var FIELD_IDS = {
->>>>>>> main-application
   ...shared_default,
   ...shared_eligibility_default,
   INSURANCE: insurance_default
@@ -304,11 +291,7 @@ var DATE_5_MINUTES_FROM_NOW = () => {
   const future = new Date(now.setMilliseconds(milliseconds));
   return future;
 };
-<<<<<<< HEAD
-var ACCOUNT = {
-=======
 var ACCOUNT2 = {
->>>>>>> main-application
   EMAIL: {
     VERIFICATION_EXPIRY: () => {
       const now = /* @__PURE__ */ new Date();
@@ -551,13 +534,8 @@ var passwordResetLink = async (emailAddress, firstName, passwordResetHash) => {
   try {
     console.info("Sending email for account password reset");
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
-<<<<<<< HEAD
-    const variables = { passwordResetToken: passwordResetHash };
-    const response = await callNotify(templateId, emailAddress, variables, firstName);
-=======
     const variables = { firstName, passwordResetToken: passwordResetHash };
     const response = await callNotify(templateId, emailAddress, variables);
->>>>>>> main-application
     return response;
   } catch (err) {
     console.error(err);
@@ -1988,11 +1966,7 @@ var addAndGetOTP = async (root, variables, context) => {
 };
 var add_and_get_OTP_default = addAndGetOTP;
 
-<<<<<<< HEAD
-// custom-resolvers/send-email-password-reset-link.ts
-=======
 // custom-resolvers/mutations/send-email-password-reset-link.ts
->>>>>>> main-application
 var import_crypto6 = __toESM(require("crypto"));
 var {
   ENCRYPTION: {
@@ -2002,20 +1976,12 @@ var {
       PBKDF2: { KEY_LENGTH: KEY_LENGTH5 }
     }
   }
-<<<<<<< HEAD
-} = ACCOUNT;
-=======
 } = ACCOUNT2;
->>>>>>> main-application
 var sendEmailPasswordResetLink = async (root, variables, context) => {
   try {
     console.info("Sending password reset email");
     const { email } = variables;
-<<<<<<< HEAD
-    const exporter = await get_account_by_field_default(context, FIELD_IDS.ACCOUNT.EMAIL, email);
-=======
     const exporter = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
->>>>>>> main-application
     if (!exporter) {
       console.info("Unable to send password reset email - no account found");
       return { success: false };
@@ -2023,11 +1989,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
     const passwordResetHash = import_crypto6.default.pbkdf2Sync(email, exporter.salt, ITERATIONS5, KEY_LENGTH5, DIGEST_ALGORITHM5).toString(STRING_TYPE6);
     const accountUpdate = {
       passwordResetHash,
-<<<<<<< HEAD
-      passwordResetExpiry: ACCOUNT.PASSWORD_RESET_EXPIRY()
-=======
       passwordResetExpiry: ACCOUNT2.PASSWORD_RESET_EXPIRY()
->>>>>>> main-application
     };
     await context.db.Exporter.updateOne({
       where: { id: exporter.id },
@@ -2045,11 +2007,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
 };
 var send_email_password_reset_link_default = sendEmailPasswordResetLink;
 
-<<<<<<< HEAD
-// custom-resolvers/delete-application-by-refrence-number.ts
-=======
 // custom-resolvers/mutations/delete-application-by-refrence-number.ts
->>>>>>> main-application
 var deleteApplicationByReferenceNumber = async (root, variables, context) => {
   try {
     console.info("Deleting application by reference number");
@@ -2080,12 +2038,6 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 };
 var delete_application_by_refrence_number_default = deleteApplicationByReferenceNumber;
 
-<<<<<<< HEAD
-// custom-resolvers/submit-application.ts
-var import_date_fns5 = require("date-fns");
-
-// helpers/get-populated-application.ts
-=======
 // helpers/map-sic-codes/index.ts
 var mapSicCodes = (company, sicCodes, industrySectorNames) => {
   const mapped = [];
@@ -2174,7 +2126,6 @@ var getCountryByField = async (context, field, value) => {
 var get_country_by_field_default = getCountryByField;
 
 // helpers/get-populated-application/index.ts
->>>>>>> main-application
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application) => {
   console.info("Getting populated application");
@@ -2995,11 +2946,7 @@ var {
 var mapEligibility = (application) => {
   const { eligibility } = application;
   const mapped = [
-<<<<<<< HEAD
-    csv_row_default(CSV_SECTION_TITLES.ELIGIBILITY, ""),
-=======
     csv_row_default(CSV.SECTION_TITLES.ELIGIBILITY, ""),
->>>>>>> main-application
     csv_row_default(FIELDS_ELIGIBILITY[BUYER_COUNTRY2].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY2].name),
     csv_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[VALID_EXPORTER_LOCATION2])),
     csv_row_default(FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES2])),
@@ -3014,169 +2961,6 @@ var mapEligibility = (application) => {
 };
 var map_eligibility_default = mapEligibility;
 
-<<<<<<< HEAD
-// generate-csv/map-application-to-csv/helpers/policy-type/index.ts
-var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
-var isMultiPolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
-
-// generate-csv/map-application-to-csv/helpers/format-currency/index.ts
-var formatCurrency = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
-  style: "currency",
-  currency: currencyCode,
-  minimumFractionDigits: decimalPoints || 0,
-  maximumFractionDigits: decimalPoints || 0
-});
-var format_currency_default = formatCurrency;
-
-// generate-csv/map-application-to-csv/helpers/map-month-string/index.ts
-var mapMonthString = (answer) => answer === 1 ? `${answer} month` : `${answer} months`;
-var map_month_string_default = mapMonthString;
-
-// generate-csv/map-application-to-csv/map-policy-and-export/index.ts
-var CONTENT_STRINGS = {
-  ...POLICY_AND_EXPORTS_FIELDS,
-  ...POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY,
-  SINGLE: POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY.SINGLE,
-  MULTIPLE: POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY.MULTIPLE
-};
-var {
-  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 },
-  CONTRACT_POLICY: {
-    REQUESTED_START_DATE,
-    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-    MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE }
-  }
-} = insurance_default.POLICY_AND_EXPORTS;
-var mapSinglePolicyFields = (application) => {
-  const { policyAndExport } = application;
-  return [
-    csv_row_default(String(CONTENT_STRINGS[POLICY_TYPE2].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE2]),
-    csv_row_default(String(CONTENT_STRINGS[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[REQUESTED_START_DATE])),
-    csv_row_default(String(CONTENT_STRINGS.SINGLE[CONTRACT_COMPLETION_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[CONTRACT_COMPLETION_DATE])),
-    csv_row_default(String(CONTENT_STRINGS.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE))
-  ];
-};
-var mapMultiplePolicyFields = (application) => {
-  const { policyAndExport } = application;
-  return [
-    csv_row_default(String(CONTENT_STRINGS.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), map_month_string_default(policyAndExport[TOTAL_MONTHS_OF_COVER])),
-    csv_row_default(String(CONTENT_STRINGS.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
-    csv_row_default(String(CONTENT_STRINGS.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default(policyAndExport[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
-  ];
-};
-var mapPolicyAndExport = (application) => {
-  let mapped = [];
-  const { policyAndExport } = application;
-  mapped = [
-    csv_row_default(CSV_SECTION_TITLES.POLICY_AND_EXPORT, ""),
-    csv_row_default(String(CONTENT_STRINGS[POLICY_TYPE2].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE2]),
-    csv_row_default(String(CONTENT_STRINGS[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[REQUESTED_START_DATE]))
-  ];
-  const policyType = application.policyAndExport[POLICY_TYPE2];
-  if (isSinglePolicyType(policyType)) {
-    mapped = [...mapped, ...mapSinglePolicyFields(application)];
-  }
-  if (isMultiPolicyType(policyType)) {
-    mapped = [...mapped, ...mapMultiplePolicyFields(application)];
-  }
-  return mapped;
-};
-var map_policy_and_export_default = mapPolicyAndExport;
-
-// generate-csv/map-application-to-csv/helpers/csv-new-line/index.ts
-var NEW_LINE = "\r\n";
-var csv_new_line_default = NEW_LINE;
-
-// generate-csv/map-application-to-csv/map-exporter/index.ts
-var CONTENT_STRINGS2 = {
-  ...FIELDS.COMPANY_DETAILS,
-  ...FIELDS.NATURE_OF_YOUR_BUSINESS,
-  ...FIELDS.TURNOVER,
-  ...FIELDS.BROKER
-};
-var {
-  COMPANY_HOUSE: { COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_NAME: COMPANY_NAME2, COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
-  YOUR_COMPANY: { TRADING_NAME: TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE2, PHONE_NUMBER: PHONE_NUMBER2 },
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL2 },
-  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
-  BROKER: { USING_BROKER: USING_BROKER2, NAME: BROKER_NAME, ADDRESS_LINE_1: ADDRESS_LINE_12, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL3 }
-} = exporter_business_default;
-var mapExporterBroker = (application) => {
-  const { exporterBroker } = application;
-  let mapped = [csv_row_default(CONTENT_STRINGS2[USING_BROKER2].SUMMARY?.TITLE, exporterBroker[USING_BROKER2])];
-  if (exporterBroker[USING_BROKER2] === ANSWERS.YES) {
-    mapped = [
-      ...mapped,
-      csv_row_default(CONTENT_STRINGS2[BROKER_NAME].SUMMARY?.TITLE, exporterBroker[BROKER_NAME]),
-      csv_row_default(
-        CONTENT_STRINGS2[ADDRESS_LINE_12].SUMMARY?.TITLE,
-        `${exporterBroker[ADDRESS_LINE_12]} ${csv_new_line_default} ${exporterBroker[TOWN]} ${csv_new_line_default} ${exporterBroker[COUNTY]} ${csv_new_line_default} ${exporterBroker[POSTCODE]}`
-      ),
-      csv_row_default(CONTENT_STRINGS2[EMAIL3].SUMMARY?.TITLE, exporterBroker[EMAIL3])
-    ];
-  }
-  return mapped;
-};
-var mapExporter = (application) => {
-  const { exporterCompany, exporterBusiness } = application;
-  const mapped = [
-    csv_row_default(CSV_SECTION_TITLES.EXPORTER_BUSINESS, ""),
-    // exporter company fields
-    csv_row_default(CONTENT_STRINGS2[COMPANY_NUMBER2].SUMMARY?.TITLE, exporterCompany[COMPANY_NUMBER2]),
-    csv_row_default(CONTENT_STRINGS2[COMPANY_NAME2].SUMMARY?.TITLE, exporterCompany[COMPANY_NAME2]),
-    csv_row_default(CONTENT_STRINGS2[COMPANY_ADDRESS2].SUMMARY?.TITLE, exporterCompany[COMPANY_ADDRESS2]),
-    csv_row_default(CONTENT_STRINGS2[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(exporterCompany[COMPANY_INCORPORATED2])),
-    csv_row_default(CONTENT_STRINGS2[COMPANY_SIC2].SUMMARY?.TITLE, exporterCompany[COMPANY_SIC2]),
-    csv_row_default(CONTENT_STRINGS2[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, format_date_default(exporterCompany[FINANCIAL_YEAR_END_DATE2])),
-    csv_row_default(CONTENT_STRINGS2[TRADING_NAME2].SUMMARY?.TITLE, exporterCompany[TRADING_NAME2]),
-    csv_row_default(CONTENT_STRINGS2[TRADING_ADDRESS2].SUMMARY?.TITLE, exporterCompany[TRADING_ADDRESS2]),
-    csv_row_default(CONTENT_STRINGS2[WEBSITE2].SUMMARY?.TITLE, exporterCompany[WEBSITE2]),
-    csv_row_default(CONTENT_STRINGS2[PHONE_NUMBER2].SUMMARY?.TITLE, exporterCompany[PHONE_NUMBER2]),
-    // exporter business fields
-    csv_row_default(CONTENT_STRINGS2[GOODS_OR_SERVICES2].SUMMARY?.TITLE, exporterBusiness[GOODS_OR_SERVICES2]),
-    csv_row_default(CONTENT_STRINGS2[YEARS_EXPORTING2].SUMMARY?.TITLE, exporterBusiness[YEARS_EXPORTING2]),
-    csv_row_default(CONTENT_STRINGS2[EMPLOYEES_UK2].SUMMARY?.TITLE, exporterBusiness[EMPLOYEES_UK2]),
-    csv_row_default(CONTENT_STRINGS2[EMPLOYEES_INTERNATIONAL2].SUMMARY?.TITLE, exporterBusiness[EMPLOYEES_INTERNATIONAL2]),
-    csv_row_default(CONTENT_STRINGS2[ESTIMATED_ANNUAL_TURNOVER2].SUMMARY?.TITLE, exporterBusiness[ESTIMATED_ANNUAL_TURNOVER2]),
-    csv_row_default(CONTENT_STRINGS2[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, exporterBusiness[PERCENTAGE_TURNOVER2]),
-    // exporter broker fields
-    ...mapExporterBroker(application)
-  ];
-  return mapped;
-};
-var map_exporter_default = mapExporter;
-
-// generate-csv/map-application-to-csv/map-buyer/index.ts
-var CONTENT_STRINGS3 = {
-  ...YOUR_BUYER_FIELDS.COMPANY_OR_ORGANISATION,
-  ...YOUR_BUYER_FIELDS.WORKING_WITH_BUYER
-};
-var {
-  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, REGISTRATION_NUMBER, WEBSITE: WEBSITE3, FIRST_NAME, LAST_NAME, POSITION, EMAIL: EMAIL4, CAN_CONTACT_BUYER },
-  WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER }
-} = your_buyer_default;
-var mapBuyer = (application) => {
-  const { buyer } = application;
-  const mapped = [
-    csv_row_default(CSV_SECTION_TITLES.BUYER, ""),
-    csv_row_default(String(CONTENT_STRINGS3[NAME2].SUMMARY?.TITLE), buyer[NAME2]),
-    csv_row_default(String(CONTENT_STRINGS3[ADDRESS].SUMMARY?.TITLE), buyer[ADDRESS]),
-    csv_row_default(String(CONTENT_STRINGS3[REGISTRATION_NUMBER].SUMMARY?.TITLE), buyer[REGISTRATION_NUMBER]),
-    csv_row_default(String(CONTENT_STRINGS3[WEBSITE3].SUMMARY?.TITLE), buyer[WEBSITE3]),
-    csv_row_default(
-      String(CONTENT_STRINGS3[FIRST_NAME].SUMMARY?.TITLE),
-      `${buyer[FIRST_NAME]} ${buyer[LAST_NAME]} ${csv_new_line_default} ${buyer[POSITION]} ${csv_new_line_default} ${buyer[EMAIL4]}`
-    ),
-    csv_row_default(String(CONTENT_STRINGS3[CAN_CONTACT_BUYER].SUMMARY?.TITLE), buyer[CAN_CONTACT_BUYER]),
-    csv_row_default(String(CONTENT_STRINGS3[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), buyer[CONNECTED_WITH_BUYER]),
-    csv_row_default(String(CONTENT_STRINGS3[TRADED_WITH_BUYER].SUMMARY?.TITLE), buyer[TRADED_WITH_BUYER])
-  ];
-  return mapped;
-};
-var map_buyer_default = mapBuyer;
-
-=======
->>>>>>> main-application
 // generate-csv/map-application-to-csv/index.ts
 var mapApplicationToCsv = (application) => {
   try {
@@ -3447,314 +3231,8 @@ var custom_resolvers_default = customResolvers;
 // custom-schema/index.ts
 var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
   schemas: [schema],
-<<<<<<< HEAD
-  typeDefs: `
-      type Account {
-        id: String
-        firstName: String
-        lastName: String
-        email: String
-        isVerified: Boolean
-      }
-
-      input AccountInput {
-        firstName: String
-        lastName: String
-        email: String
-        password: String
-      }
-
-      type CreateAccountResponse {
-        success: Boolean
-        id: String
-        firstName: String
-        lastName: String
-        email: String
-        verificationHash: String
-      }
-
-      # fields from registered_office_address object
-      type CompaniesHouseCompanyAddress {
-        addressLine1: String
-        addressLine2: String
-        careOf: String
-        locality: String
-        region: String
-        postalCode: String
-        country: String
-        premises: String
-      }
-
-      type CompaniesHouseResponse {
-        companyName: String
-        registeredOfficeAddress: ExporterCompanyAddress
-        companyNumber: String
-        dateOfCreation: String
-        sicCodes: [String]
-        financialYearEndDate: DateTime
-        success: Boolean
-        apiError: Boolean
-      }
-
-      type ExporterCompanyAddress {
-        addressLine1: String
-        addressLine2: String
-        careOf: String
-        locality: String
-        region: String
-        postalCode: String
-        country: String
-        premises: String
-      }
-
-      input OldSicCodes {
-        id: String
-      }
-
-      input ExporterCompanyAddressInput {
-        addressLine1: String
-        addressLine2: String
-        careOf: String
-        locality: String
-        region: String
-        postalCode: String
-        country: String
-        premises: String
-      }
-
-      type ExporterCompanyAndCompanyAddress {
-        id: ID
-        registeredOfficeAddress: ExporterCompanyAddress
-        companyName: String
-        companyNumber: String
-        dateOfCreation: DateTime
-        hasTradingAddress: String
-        hasTradingName: String
-        companyWebsite: String
-        phoneNumber: String
-      }
-
-      input ExporterCompanyAndCompanyAddressInput {
-        address: ExporterCompanyAddressInput
-        sicCodes: [String]
-        companyName: String
-        companyNumber: String
-        dateOfCreation: DateTime
-        hasTradingAddress: String
-        hasTradingName: String
-        companyWebsite: String
-        phoneNumber: String
-        financialYearEndDate: DateTime
-        oldSicCodes: [OldSicCodes]
-      }
-
-      type EmailResponse {
-        success: Boolean
-        emailRecipient: String
-      }
-
-      type SuccessResponse {
-        success: Boolean!
-      }
-
-      type AccountSignInResponse {
-        accountId: String
-        firstName: String
-        lastName: String
-        token: String
-        sessionIdentifier: String
-        expires: DateTime
-        success: Boolean!
-      }
-
-      type AddAndGetOtpResponse {
-        success: Boolean!
-        securityCode: String!
-      }
-
-      type VerifyAccountEmailAddressResponse {
-        success: Boolean!
-        accountId: String
-      }
-
-      type SuccessResponse {
-        success: Boolean!
-      }
-
-      type Mutation {
-        """ create an account """
-        createAccount(
-          firstName: String!
-          lastName: String!
-          email: String!
-          password: String!
-        ): CreateAccountResponse
-
-        """ verify an account's email address """
-        verifyAccountEmailAddress(
-          token: String!
-        ): VerifyAccountEmailAddressResponse
-
-        """ send email for insurance feedback """
-        sendEmailInsuranceFeedback(
-          satisfaction: String
-          improvement: String
-          otherComments: String
-        ): SuccessResponse
-
-        """ send confirm email address email """
-        sendEmailConfirmEmailAddress(
-          exporterId: String!
-        ): EmailResponse
-
-        """ validate credentials, generate and email a OTP security code """
-        accountSignIn(
-          email: String!
-          password: String!
-        ): AccountSignInResponse
-
-        """ generate and email a new OTP security code """
-        accountSignInSendNewCode(
-          accountId: String!
-        ): AccountSignInResponse
-
-        """ verify an account's OTP security code """
-        verifyAccountSignInCode(
-          accountId: String!
-          securityCode: String!
-        ): AccountSignInResponse
-
-        """ add an OTP security code to an account """
-        addAndGetOTP(
-          email: String!
-        ): AddAndGetOtpResponse
-
-        """ send email with password reset link """
-        sendEmailPasswordResetLink(
-          email: String!
-        ): SuccessResponse
-
-        """ update exporter company and company address """
-        updateExporterCompanyAndCompanyAddress(
-          companyId: ID!
-          companyAddressId: ID!
-          data: ExporterCompanyAndCompanyAddressInput!
-        ): ExporterCompanyAndCompanyAddress
-
-        """ delete an application by reference number """
-        deleteApplicationByReferenceNumber(
-          referenceNumber: Int!
-        ): SuccessResponse
-
-        """ submit an application """
-        submitApplication(
-          applicationId: String!
-        ): SuccessResponse
-      }
-
-      type Query {
-        """ get an account by email """
-        getAccountByEmail(
-          email: String!
-        ): Account
-
-        """ get companies house information """
-        getCompaniesHouseInformation(
-          companiesHouseNumber: String!
-        ): CompaniesHouseResponse
-      }
-    `,
-  resolvers: {
-    Mutation: {
-      createAccount: create_account_default,
-      accountSignIn: account_sign_in_default,
-      accountSignInSendNewCode: account_sign_in_new_code_default,
-      verifyAccountEmailAddress: verify_account_email_address_default,
-      sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
-      sendEmailInsuranceFeedback: send_email_insurance_feedback_default,
-      verifyAccountSignInCode: verify_account_sign_in_code_default,
-      addAndGetOTP: add_and_get_OTP_default,
-      deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
-      submitApplication: submit_application_default,
-      sendEmailPasswordResetLink: send_email_password_reset_link_default,
-      updateExporterCompanyAndCompanyAddress: async (root, variables, context) => {
-        try {
-          console.info("Updating application exporter company and exporter company address for ", variables.companyId);
-          const { address, sicCodes, oldSicCodes, ...exporterCompany } = variables.data;
-          const company = await context.db.ExporterCompany.updateOne({
-            where: { id: variables.companyId },
-            data: exporterCompany
-          });
-          await context.db.ExporterCompanyAddress.updateOne({
-            where: { id: variables.companyAddressId },
-            data: address
-          });
-          const mappedSicCodes = mapSicCodes(company, sicCodes);
-          if (exporterCompany && oldSicCodes && oldSicCodes.length) {
-            await context.db.ExporterCompanySicCode.deleteMany({
-              where: oldSicCodes
-            });
-          }
-          if (mappedSicCodes && mappedSicCodes.length) {
-            mappedSicCodes.forEach(async (sicCodeObj) => {
-              await context.db.ExporterCompanySicCode.createOne({
-                data: sicCodeObj
-              });
-            });
-          }
-          return {
-            id: variables.companyId
-          };
-        } catch (err) {
-          console.error("Error updating application - exporter company and exporter company address", { err });
-          throw new Error(`Updating application - exporter company and exporter company address ${err}`);
-        }
-      }
-    },
-    Query: {
-      /**
-       * Call for companies house API
-       * @param variables - companies house number is received as a string within variables
-       * @returns either mapped response or success false flag with or without apiError
-       */
-      getCompaniesHouseInformation: async (root, variables) => {
-        try {
-          const { companiesHouseNumber } = variables;
-          console.info("Calling Companies House API for ", companiesHouseNumber);
-          const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, "0");
-          const response = await (0, import_axios.default)({
-            method: "get",
-            url: `${companiesHouseURL}/company/${sanitisedRegNo}`,
-            auth: { username, password: "" },
-            validateStatus(status) {
-              const acceptableStatus = [200, 404];
-              return acceptableStatus.includes(status);
-            }
-          });
-          if (!response.data || response.status === 404) {
-            return {
-              success: false
-            };
-          }
-          const mappedResponse = mapCompaniesHouseFields(response.data);
-          return {
-            ...mappedResponse,
-            success: true
-          };
-        } catch (err) {
-          console.error("Error calling Companies House API", { err });
-          return {
-            apiError: true,
-            success: false
-          };
-        }
-      }
-    }
-  }
-=======
   typeDefs: type_defs_default,
   resolvers: custom_resolvers_default
->>>>>>> main-application
 });
 
 // keystone.ts

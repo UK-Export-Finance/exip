@@ -87,7 +87,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   } catch (err) {
-    console.error('Error verifying account sign in code', { err });
+    console.error('Error posting account password reset form', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };

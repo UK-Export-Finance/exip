@@ -1,7 +1,5 @@
 import partials from '../../../../../partials';
-import { backLink, submitButton } from '../../../../../pages/shared';
-import { signInPage } from '../../../../../pages/insurance/account/sign-in';
-import { yourDetailsPage } from '../../../../../pages/insurance/account/create';
+import { submitButton } from '../../../../../pages/shared';
 import { linkSentPage } from '../../../../../pages/insurance/account/password-reset';
 import accountFormFields from '../../../../../partials/insurance/accountFormFields';
 import { PAGES } from '../../../../../../../content-strings';
@@ -29,32 +27,30 @@ const {
   ACCOUNT: { EMAIL },
 } = INSURANCE_FIELD_IDS;
 
-// TODO
-context('Insurance - Account - Password reset - link sent page - As an Exporter,', () => {
-  let url;
+const passwordResetUrl = `${Cypress.config('baseUrl')}${PASSWORD_RESET_ROOT}`;
+const linkSentUrl = `${Cypress.config('baseUrl')}${LINK_SENT}`;
 
-  // TODDO - go to "already have account", click yes.
+const completeAndSubmitPasswordResetForm = () => {
+  cy.keyboardInput(accountFormFields[EMAIL].input(), mockAccount[EMAIL]);
+
+  submitButton().click();
+
+  cy.url().should('eq', linkSentUrl);
+};
+
+const goToPasswordResetLinkSentPage = () => {
+  cy.navigateToUrl(passwordResetUrl);
+
+  cy.url().should('eq', passwordResetUrl);
+
+  completeAndSubmitPasswordResetForm();
+};
+
+context('Insurance - Account - Password reset - link sent page - As an Exporter, I want to reset the password on my UKEF digital service account, So that I can securely access my UKEF digital service account', () => {
   before(() => {
     cy.navigateToUrl(START);
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
-
-    // go back to create account page
-    backLink().click();
-
-    // navigate to sign in page
-    yourDetailsPage.signInButtonLink().click();
-
-    // navigate to password reset page
-    signInPage.resetPasswordLink().click();
-
-    cy.keyboardInput(accountFormFields[EMAIL].input(), mockAccount[EMAIL]);
-
-    submitButton().click();
-
-    url = `${Cypress.config('baseUrl')}${LINK_SENT}`;
-
-    cy.url().should('eq', url);
   });
 
   beforeEach(() => {
@@ -65,26 +61,32 @@ context('Insurance - Account - Password reset - link sent page - As an Exporter,
     cy.deleteAccount();
   });
 
-  it('renders core page elements', () => {
-    cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: LINK_SENT,
-      backLink: PASSWORD_RESET_ROOT,
-      assertAuthenticatedHeader: false,
-      assertSubmitButton: false,
+  describe('when visiting the page', () => {
+    before(() => {
+      cy.saveSession();
+
+      goToPasswordResetLinkSentPage();
+    });
+
+    it('renders core page elements', () => {
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: LINK_SENT,
+        backLink: PASSWORD_RESET_ROOT,
+        assertAuthenticatedHeader: false,
+        assertSubmitButton: false,
+      });
     });
   });
 
   describe('page tests', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      goToPasswordResetLinkSentPage();
     });
 
     it('should render a header with href to insurance start', () => {
       partials.header.serviceName().should('have.attr', 'href', START);
     });
-
-    // TODO: page content
 
     it('should render `check your inbox` copy with the submitted email', () => {
       const expected = `${CHECK_YOUR_INBOX} ${mockAccount[EMAIL]}`;
@@ -98,7 +100,7 @@ context('Insurance - Account - Password reset - link sent page - As an Exporter,
 
     describe('`not received anything` section', () => {
       beforeEach(() => {
-        cy.navigateToUrl(url);
+        goToPasswordResetLinkSentPage();
       });
 
       it('should render a heading', () => {
@@ -114,7 +116,7 @@ context('Insurance - Account - Password reset - link sent page - As an Exporter,
 
     describe('`not your email address` section', () => {
       beforeEach(() => {
-        cy.navigateToUrl(url);
+        goToPasswordResetLinkSentPage();
       });
 
       it('should render a heading', () => {
