@@ -46,10 +46,11 @@ const pageVariables = () => ({
  */
 const get = (req: Request, res: Response) => {
   try {
-    // flash for originUrl for href for button for redirect
-    req.flash('feedbackOriginUrl', req.headers.referer);
-    // flash for originUrl for consumption by api
-    req.flash('feedbackOriginUrlAPI', req.headers.referer);
+    /**
+     * flash containing origin of user when clicking the feedback form
+     * used by post request as variable passed to API
+     */
+    req.flash('serviceOriginUrl', req.headers.referer);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -92,7 +93,12 @@ const post = async (req: Request, res: Response) => {
       });
     }
 
-    const referralUrl = req.flash('feedbackOriginUrlAPI');
+    const referralUrl = req.flash('serviceOriginUrl');
+    /**
+     * reflash for consumption by feedback-confirmation controller
+     * allows for redirect back to service after completing the feedback
+     */
+    req.flash('serviceOriginUrl', referralUrl);
 
     if (objectHasKeysAndValues(feedback)) {
       const emailVariables = {

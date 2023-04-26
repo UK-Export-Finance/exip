@@ -77,10 +77,10 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
 
-    it('should add feedbackOriginUrl to req.flash', async () => {
+    it('should add serviceOriginUrl to req.flash', async () => {
       get(req, res);
 
-      expect(req.flash).toHaveBeenCalledWith('feedbackOriginUrl', req.headers.referer);
+      expect(req.flash).toHaveBeenCalledWith('serviceOriginUrl', req.headers.referer);
     });
   });
 
@@ -88,7 +88,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
     beforeEach(() => {
       req.flash = (property: string) => {
         const obj = {
-          feedbackOriginUrlAPI: req.headers.referer,
+          serviceOriginUrl: req.headers.referer,
         };
 
         return obj[property];
