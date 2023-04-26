@@ -48,9 +48,10 @@ Cypress.Commands.add('submitEligibilityAndStartAccountSignIn', require('./insura
 
 Cypress.Commands.add('completeAndSubmitCreateAccountForm', require('./insurance/account/complete-and-submit-create-account-form'));
 Cypress.Commands.add('completeAndSubmitSignInAccountForm', require('./insurance/account/complete-and-submit-sign-in-account-form'));
-Cypress.Commands.add('completeAndSubmitNewPasswordAccountForm', require('./insurance/account/complete-and-submit-new-password-account-form'));
 
 Cypress.Commands.add('completeAndSubmitPasswordResetForm', require('./insurance/account/complete-and-submit-password-reset-form'));
+Cypress.Commands.add('completeAndSubmitNewPasswordAccountForm', require('./insurance/account/complete-and-submit-new-password-account-form'));
+
 Cypress.Commands.add('getExporterByEmail', require('./insurance/account/get-exporter-by-email'));
 Cypress.Commands.add('verifyAccountEmail', require('./insurance/account/verify-account-email'));
 

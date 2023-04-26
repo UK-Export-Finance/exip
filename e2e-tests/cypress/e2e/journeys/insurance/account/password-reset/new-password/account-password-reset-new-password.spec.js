@@ -1,26 +1,26 @@
 import partials from '../../../../../partials';
-import { backLink, submitButton } from '../../../../../pages/shared';
-import { signInPage } from '../../../../../pages/insurance/account/sign-in';
-import { yourDetailsPage } from '../../../../../pages/insurance/account/create';
-import accountFormFields from '../../../../../partials/insurance/accountFormFields';
 import { BUTTONS, PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { ACCOUNT_FIELDS } from '../../../../../../../content-strings/fields/insurance/account';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import api from '../../../../../../support/api';
-import mockAccount from '../../../../../../fixtures/account';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD;
 
 const {
   START,
   ACCOUNT: {
-    PASSWORD_RESET: { LINK_SENT, NEW_PASSWORD, SUCCESS },
+    PASSWORD_RESET: {
+      ROOT: PASSWORD_RESET_ROOT,
+      LINK_SENT,
+      NEW_PASSWORD,
+      SUCCESS,
+    },
   },
 } = ROUTES;
 
 const {
-  ACCOUNT: { EMAIL, PASSWORD },
+  ACCOUNT: { PASSWORD },
 } = INSURANCE_FIELD_IDS;
 
 const FIELD_STRINGS = ACCOUNT_FIELDS.NEW_PASSWORD[PASSWORD];
@@ -30,22 +30,12 @@ context('Insurance - Account - Password reset - new password page - As an Export
   let resetPasswordToken;
 
   before(() => {
-    cy.navigateToUrl(START);
-    cy.submitEligibilityAndStartAccountCreation();
-    cy.completeAndSubmitCreateAccountForm();
-
-    // go back to create account page
-    backLink().click();
-
-    // navigate to sign in page
-    yourDetailsPage.signInButtonLink().click();
+    cy.completeAndSubmitCreateAccountForm({ navigateToAccountCreationPage: true });
 
     // navigate to password reset page
-    signInPage.resetPasswordLink().click();
+    cy.navigateToUrl(PASSWORD_RESET_ROOT);
 
-    cy.keyboardInput(accountFormFields[EMAIL].input(), mockAccount[EMAIL]);
-
-    submitButton().click();
+    cy.completeAndSubmitPasswordResetForm();
 
     url = `${Cypress.config('baseUrl')}${LINK_SENT}`;
 
