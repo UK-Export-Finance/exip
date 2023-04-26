@@ -122,4 +122,11 @@ export const EMAIL_TEMPLATE_IDS = {
   },
 };
 
+export const FEEDBACK = {
+  VERY_SATISFIED: 'verySatisfied',
+  SATISFIED: 'satisfied',
+  NEITHER: 'neither',
+  DISSATISFIED: 'dissatisfied',
+  VERY_DISSATISIFED: 'veryDissatisfied',
+};
 export const ACCEPTED_FILE_TYPES = ['.csv'];

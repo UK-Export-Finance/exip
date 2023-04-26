@@ -310,3 +310,13 @@ model User {
   email    String @unique @default("")
   password String
 }
+
+model Feedback {
+  id            String  @id @default(cuid())
+  service       String  @default("")
+  satisfaction  String?
+  improvement   String  @default("")
+  otherComments String  @default("")
+  referralUrl   String  @default("")
+  product       String  @default("")
+}

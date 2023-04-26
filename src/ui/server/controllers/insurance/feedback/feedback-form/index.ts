@@ -1,12 +1,14 @@
 import { PAGES, FIELDS } from '../../../../content-strings';
-import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
+import { TEMPLATES, ROUTES, FIELD_IDS, INSURANCE, SERVICE_NAME } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { objectHasKeysAndValues } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
 import { Request, Response, InsuranceFeedbackVariables } from '../../../../../types';
 import api from '../../../../api';
 
-const { SATISFACTION, IMPROVEMENT, OTHER_COMMENTS, VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED } = FIELD_IDS.FEEDBACK;
+const {
+  FEEDBACK: { SATISFACTION, IMPROVEMENT, OTHER_COMMENTS, VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED, REFERRAL_URL, SERVICE, PRODUCT },
+} = FIELD_IDS;
 
 const { FEEDBACK_PAGE } = PAGES;
 const { FEEDBACK: FEEDBACK_TEMPLATE } = TEMPLATES.INSURANCE;
@@ -44,7 +46,11 @@ const pageVariables = () => ({
  */
 const get = (req: Request, res: Response) => {
   try {
-    req.flash('feedbackOriginUrl', req.headers.referer);
+    /**
+     * flash containing origin of user when clicking the feedback form
+     * used by post request as variable passed to API
+     */
+    req.flash('serviceOriginUrl', req.headers.referer);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -87,6 +93,13 @@ const post = async (req: Request, res: Response) => {
       });
     }
 
+    const referralUrl = req.flash('serviceOriginUrl');
+    /**
+     * reflash for consumption by feedback-confirmation controller
+     * allows for redirect back to service after completing the feedback
+     */
+    req.flash('serviceOriginUrl', referralUrl);
+
     if (objectHasKeysAndValues(feedback)) {
       const emailVariables = {
         // satisfaction will be null if not selected so set as empty string if null
@@ -95,9 +108,20 @@ const post = async (req: Request, res: Response) => {
         [OTHER_COMMENTS]: feedback[OTHER_COMMENTS],
       } as InsuranceFeedbackVariables;
 
+      const feedbackVariables = {
+        [SATISFACTION]: feedback[SATISFACTION] ?? '',
+        [IMPROVEMENT]: feedback[IMPROVEMENT],
+        [OTHER_COMMENTS]: feedback[OTHER_COMMENTS],
+        [SERVICE]: INSURANCE,
+        [REFERRAL_URL]: referralUrl?.toString(),
+        [PRODUCT]: SERVICE_NAME,
+      };
+
+      const saveResponse = await api.keystone.feedback.create(feedbackVariables);
+
       const emailResponse = await api.keystone.feedbackEmails.insurance(emailVariables);
 
-      if (!emailResponse) {
+      if (!emailResponse || !saveResponse) {
         return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
       }
     }
