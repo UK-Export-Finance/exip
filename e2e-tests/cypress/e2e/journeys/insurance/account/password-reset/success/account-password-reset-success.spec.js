@@ -64,7 +64,7 @@ context('Insurance - Account - Password reset - success page - I want to reset m
         cy.corePageChecks({
           pageTitle: CONTENT_STRINGS.PAGE_TITLE,
           currentHref: successUrl,
-          assertBackLink: false, // TODO remove back link from page
+          assertBackLink: false,
           assertAuthenticatedHeader: false,
           assertSubmitButton: false,
         });
