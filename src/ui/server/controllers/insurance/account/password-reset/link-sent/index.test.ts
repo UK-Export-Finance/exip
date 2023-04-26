@@ -43,6 +43,12 @@ describe('controllers/insurance/account/password-reset/link-sent', () => {
     });
   });
 
+  it('should add req.session.emailAddressForPasswordReset to req.flash', () => {
+    get(req, res);
+
+    expect(req.flash).toHaveBeenCalledWith('emailAddressForPasswordReset', mockAccount.email);
+  });
+
   it('should delete emailAddressForPasswordReset from req.session', async () => {
     get(req, res);
 

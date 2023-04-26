@@ -19,11 +19,19 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.LINK_
 export const get = (req: Request, res: Response) => {
   const { emailAddressForPasswordReset } = req.session;
 
-  if (!emailAddressForPasswordReset) {
+  /**
+   * Add the email to req.flash
+   * This prevents an issue where the email will be undefined if:
+   * - The page is refreshed
+   * - A user navigates away and comes back to the page
+   */
+  req.flash('emailAddressForPasswordReset', emailAddressForPasswordReset);
+
+  const exporterEmail = emailAddressForPasswordReset || req.flash('emailAddressForPasswordReset');
+
+  if (!exporterEmail) {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
-
-  const exporterEmail = emailAddressForPasswordReset;
 
   delete req.session.emailAddressForPasswordReset;
 
