@@ -5,6 +5,7 @@ import { get as dashboardGet } from '../../controllers/insurance/dashboard';
 import { get as allSectionsGet } from '../../controllers/insurance/all-sections';
 import { get as pageNotFoundGet } from '../../controllers/insurance/page-not-found';
 import { get as noAccessToApplicationGet } from '../../controllers/insurance/no-access-to-application';
+import { get as noAccessApplicationSubmittedGet } from '../../controllers/insurance/no-access-application-submitted';
 import { get as applicationSubmittedGet } from '../../controllers/insurance/application-submitted';
 import { get as feedbackGet, post as feedbackPost } from '../../controllers/insurance/feedback/feedback-form';
 import { get as feedbackConfirmationGet } from '../../controllers/insurance/feedback/feedback-confirmation';
@@ -19,7 +20,7 @@ describe('routes/insurance', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(83);
+    expect(get).toHaveBeenCalledTimes(84);
     expect(post).toHaveBeenCalledTimes(85);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.START, startGet);
@@ -32,6 +33,8 @@ describe('routes/insurance', () => {
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.PAGE_NOT_FOUND, pageNotFoundGet);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.NO_ACCESS_TO_APPLICATION, noAccessToApplicationGet);
+
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.NO_ACCESS_APPLICATION_SUBMITTED, noAccessApplicationSubmittedGet);
 
     expect(get).toHaveBeenCalledWith(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.APPLICATION_SUBMITTED}`, applicationSubmittedGet);
 

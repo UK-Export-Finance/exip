@@ -26,6 +26,7 @@ import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT, PHASE_BANNER } from './
 import { requiredQuoteEligibilityDataProvided } from './middleware/required-data-provided/quote';
 import { requiredInsuranceEligibilityDataProvided } from './middleware/required-data-provided/insurance/eligibility';
 import applicationAccess from './middleware/insurance/application-access';
+import applicationStatus from './middleware/insurance/application-status';
 import getApplication from './middleware/insurance/get-application';
 import userSession from './middleware/insurance/user-session';
 
@@ -118,6 +119,7 @@ app.use('/quote', requiredQuoteEligibilityDataProvided);
 app.use('/insurance/eligibility', requiredInsuranceEligibilityDataProvided);
 app.use('/insurance/:referenceNumber/*', getApplication);
 app.use('/insurance/:referenceNumber/*', applicationAccess);
+app.use('/insurance/:referenceNumber/*', applicationStatus);
 app.use('/', userSession);
 
 app.use('/', rootRoute);

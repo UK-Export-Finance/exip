@@ -21,6 +21,7 @@ export const INSURANCE_TEMPLATES = {
   NEED_TO_START_NEW_APPLICATION: 'insurance/check-your-answers/need-to-start-new-application.njk',
   PAGE_NOT_FOUND: 'insurance/page-not-found.njk',
   NO_ACCESS_TO_APPLICATION: 'insurance/do-not-have-application-access.njk',
+  NO_ACCESS_APPLICATION_SUBMITTED: 'insurance/cannot-access-application-submitted.njk',
   APPLICATION_SUBMITTED: 'insurance/application-submitted.njk',
   FEEDBACK: 'insurance/feedback.njk',
   FEEDBACK_SENT: 'insurance/feedback-confirmation.njk',
