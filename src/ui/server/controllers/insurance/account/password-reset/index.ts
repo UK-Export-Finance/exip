@@ -60,8 +60,6 @@ export const get = (req: Request, res: Response) =>
  */
 export const post = async (req: Request, res: Response) => {
   try {
-    const email = sanitiseValue(FIELD_ID, req.body[FIELD_ID]);
-
     const validationErrors = generateValidationErrors(req.body);
 
     if (validationErrors) {
@@ -76,16 +74,20 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
-    const response = await api.keystone.account.sendEmailPasswordResetLink(String(email));
+    const email = String(sanitiseValue(FIELD_ID, req.body[FIELD_ID]));
 
-    // valid sign in code - update the session and redirect to the dashboard
+    const response = await api.keystone.account.sendEmailPasswordResetLink(email);
+
     if (response.success) {
+      // store the email address in local session, for consumption in the next part of the flow.
+      req.session.emailAddressForPasswordReset = email;
+
       return res.redirect(LINK_SENT);
     }
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   } catch (err) {
-    console.error('Error verifying account sign in code', { err });
+    console.error('Error posting account password reset form', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
 };

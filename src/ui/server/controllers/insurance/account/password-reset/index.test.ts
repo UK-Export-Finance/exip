@@ -101,8 +101,12 @@ describe('controllers/insurance/account/password-reset', () => {
     });
 
     describe('when there are no validation errors', () => {
+      let sanitisedEmail: string;
+
       beforeEach(() => {
         req.body = validBody;
+
+        sanitisedEmail = String(sanitiseValue(FIELD_ID, validBody[FIELD_ID]));
       });
 
       it('should call api.keystone.account.sendEmailPasswordResetLink', async () => {
@@ -110,9 +114,13 @@ describe('controllers/insurance/account/password-reset', () => {
 
         expect(sendEmailPasswordResetLinkSpy).toHaveBeenCalledTimes(1);
 
-        const sanitisedEmail = sanitiseValue(FIELD_ID, validBody[FIELD_ID]);
-
         expect(sendEmailPasswordResetLinkSpy).toHaveBeenCalledWith(sanitisedEmail);
+      });
+
+      it('should add the submitted email to req.session.emailAddressForPasswordReset', async () => {
+        await post(req, res);
+
+        expect(req.session.emailAddressForPasswordReset).toEqual(sanitisedEmail);
       });
 
       it(`should redirect to ${LINK_SENT}`, async () => {
