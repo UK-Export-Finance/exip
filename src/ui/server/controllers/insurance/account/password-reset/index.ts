@@ -60,8 +60,6 @@ export const get = (req: Request, res: Response) =>
  */
 export const post = async (req: Request, res: Response) => {
   try {
-    const email = String(sanitiseValue(FIELD_ID, req.body[FIELD_ID]));
-
     const validationErrors = generateValidationErrors(req.body);
 
     if (validationErrors) {
@@ -75,6 +73,8 @@ export const post = async (req: Request, res: Response) => {
         validationErrors,
       });
     }
+
+    const email = String(sanitiseValue(FIELD_ID, req.body[FIELD_ID]));
 
     const response = await api.keystone.account.sendEmailPasswordResetLink(email);
 
