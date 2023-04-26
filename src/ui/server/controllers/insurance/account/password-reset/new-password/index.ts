@@ -14,7 +14,7 @@ const {
 const {
   INSURANCE: {
     ACCOUNT: {
-      PASSWORD_RESET: { SUCCESS },
+      PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, SUCCESS },
     },
   },
 } = ROUTES;
@@ -46,7 +46,7 @@ export const get = (req: Request, res: Response) => {
   const { token } = req.query;
 
   if (!token) {
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PASSWORD_RESET_ROOT);
   }
 
   return res.render(TEMPLATE, {
@@ -70,7 +70,7 @@ export const post = async (req: Request, res: Response) => {
     const { token } = req.query;
 
     if (!token) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PASSWORD_RESET_ROOT);
     }
 
     const validationErrors = generateValidationErrors(req.body);

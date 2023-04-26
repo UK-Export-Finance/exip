@@ -15,7 +15,7 @@ const {
 const {
   INSURANCE: {
     ACCOUNT: {
-      PASSWORD_RESET: { SUCCESS },
+      PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, SUCCESS },
     },
   },
   PROBLEM_WITH_SERVICE,
@@ -72,6 +72,16 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
         ...PAGE_VARIABLES,
       });
     });
+
+    describe('when there is no req.query.token', () => {
+      it(`should redirect to ${PASSWORD_RESET_ROOT}`, async () => {
+        delete req.query.token;
+
+        get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PASSWORD_RESET_ROOT);
+      });
+    });
   });
 
   describe('post', () => {
@@ -100,6 +110,16 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
           submittedValues: req.body,
           validationErrors: generateValidationErrors(req.body),
         });
+      });
+    });
+
+    describe('when there is no req.query.token', () => {
+      it(`should redirect to ${PASSWORD_RESET_ROOT}`, async () => {
+        delete req.query.token;
+
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PASSWORD_RESET_ROOT);
       });
     });
 
