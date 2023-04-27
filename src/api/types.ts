@@ -229,8 +229,13 @@ interface GetAccountPasswordResetTokenVariables {
   email: string;
 }
 
-interface GetAccountPasswordResetTokenResponse extends SuccessResponse {
+interface VerifyAccountPasswordResetTokenVariables {
+  token: string;
+}
+
+interface AccountPasswordResetTokenResponse extends SuccessResponse {
   token?: string;
+  expired?: boolean;
 }
 
 interface InsuranceFeedbackVariables {
@@ -338,7 +343,7 @@ export {
   Feedback,
   GetCompaniesHouseInformationVariables,
   GetAccountPasswordResetTokenVariables,
-  GetAccountPasswordResetTokenResponse,
+  AccountPasswordResetTokenResponse,
   NotifyPeronsalisation,
   InsuranceFeedbackVariables,
   IndustrySector,
@@ -349,6 +354,7 @@ export {
   UpdateExporterCompanyAndCompanyAddressVariables,
   VerifyEmailAddressVariables,
   VerifyEmailAddressResponse,
+  VerifyAccountPasswordResetTokenVariables,
   VerifyAccountSignInCodeVariables,
   VerifyAccountSignInCodeResponse,
   VerifyAccountSesssionVariables,

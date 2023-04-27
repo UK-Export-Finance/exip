@@ -124,9 +124,10 @@ const typeDefs = `
     securityCode: String!
   }
 
-  type getAccountPasswordResetTokenResponse {
+  type AccountPasswordResetTokenResponse {
     success: Boolean!
     token: String
+    expired: Boolean
   }
 
   type VerifyAccountEmailAddressResponse {
@@ -220,7 +221,12 @@ const typeDefs = `
     """ get an account's password reset token """
     getAccountPasswordResetToken(
       email: String!
-    ): getAccountPasswordResetTokenResponse
+    ): AccountPasswordResetTokenResponse
+
+    """ verify an account's password reset token """
+    verifyAccountPasswordResetToken(
+      token: String!
+    ): AccountPasswordResetTokenResponse
 
     """ get companies house information """
     getCompaniesHouseInformation(

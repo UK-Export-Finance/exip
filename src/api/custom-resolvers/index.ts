@@ -13,7 +13,7 @@ import {
   submitApplication,
   sendEmailInsuranceFeedback,
 } from './mutations';
-import { getCompaniesHouseInformation, getAccountPasswordResetToken } from './queries';
+import { getCompaniesHouseInformation, getAccountPasswordResetToken, verifyAccountPasswordResetToken } from './queries';
 
 /**
  * customResolvers
@@ -39,6 +39,7 @@ const customResolvers = {
   Query: {
     getCompaniesHouseInformation,
     getAccountPasswordResetToken,
+    verifyAccountPasswordResetToken,
   },
 };
 
