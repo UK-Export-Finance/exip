@@ -96,7 +96,7 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'Enter the last name of the exporter contact',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.EMAIL_ADDRESS]: {
-        INCORRECT_FORMAT: 'Enter the email address for the exporter contact in the correct format - for example name@example.com',
+        INCORRECT_FORMAT: 'Enter the email address for the exporter contact in the correct format, like name@example.com',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.POSITION]: {
         IS_EMPTY: 'Enter the position at company of the exporter contact',
@@ -143,7 +143,7 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'Enter the town or city for your broker',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.EMAIL]: {
-        INCORRECT_FORMAT: 'Enter the email address for the broker in the correct format - for example name@example.com',
+        INCORRECT_FORMAT: 'Enter the email address for the broker in the correct format, like name@example.com',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.POSTCODE]: {
         IS_EMPTY: 'Enter the postcode for your broker',
@@ -257,7 +257,7 @@ export const ERROR_MESSAGES = {
             IS_EMPTY: 'Enter your last name',
           },
           [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
-            INCORRECT_FORMAT: 'Enter your email address in the correct format - for example name@example.com',
+            INCORRECT_FORMAT: 'Enter your email address in the correct format, like name@example.com',
             ACCOUNT_ALREADY_EXISTS: 'There is already an account with this email address. Please sign in or reset your password',
           },
           [FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD]: {
