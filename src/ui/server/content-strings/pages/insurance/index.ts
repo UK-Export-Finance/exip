@@ -1,4 +1,4 @@
-import { GBP_CURRENCY_CODE, PRODUCT, ROUTES } from '../../../constants';
+import { GBP_CURRENCY_CODE, PRODUCT, ROUTES, CONTACT_DETAILS } from '../../../constants';
 import { LINKS } from '../../links';
 import { BUTTONS } from '../../buttons';
 import ELIGIBILITY from './eligibility';
@@ -110,6 +110,15 @@ const NO_ACCESS_TO_APPLICATION_PAGE = {
   CHECK_URL: "Please check the URL you've entered.",
 };
 
+const NO_ACCESS_APPLICATION_SUBMITTED_PAGE = {
+  PAGE_TITLE: 'This application has been submitted to UKEF',
+  PROCESSING: 'We are currently processing your application.',
+  CONTACT_FURTHER_INFORMATION: 'We will contact you if any further information is required, and when a decision has been made.',
+  WITHDRAW:
+    'If you would like to withdraw your application or have any other queries, please contact our underwriting team quoting your application reference number:',
+  CONTACT: CONTACT_DETAILS.EMAIL.UNDERWRITING,
+};
+
 export default {
   START,
   ACCOUNT,
@@ -125,4 +134,5 @@ export default {
   DECLARATIONS,
   CHECK_YOUR_ANSWERS,
   APPLICATION_SUBMITTED,
+  NO_ACCESS_APPLICATION_SUBMITTED_PAGE,
 };

@@ -166,15 +166,6 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
 
         cy.url().should('eq', expectedUrl);
       });
-
-      describe('when going back to the page', () => {
-        it('should have the submitted value', () => {
-          // TEMP until previous page is built
-          cy.navigateToUrl(`${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`);
-
-          singleInputField(FIELD_ID).input().should('be.checked');
-        });
-      });
     });
   });
 });

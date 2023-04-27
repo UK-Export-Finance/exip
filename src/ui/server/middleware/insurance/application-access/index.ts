@@ -1,7 +1,7 @@
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { Next, Request, Response } from '../../../../types';
 
-const { PAGE_NOT_FOUND, ELIGIBILITY, ACCOUNT, DASHBOARD, NO_ACCESS_TO_APPLICATION } = INSURANCE_ROUTES;
+const { PAGE_NOT_FOUND, ELIGIBILITY, ACCOUNT, DASHBOARD, NO_ACCESS_TO_APPLICATION, NO_ACCESS_APPLICATION_SUBMITTED } = INSURANCE_ROUTES;
 
 export const IRRELEVANT_ROUTES = [
   PAGE_NOT_FOUND,
@@ -11,6 +11,7 @@ export const IRRELEVANT_ROUTES = [
   ...Object.values(ACCOUNT.PASSWORD_RESET),
   DASHBOARD,
   NO_ACCESS_TO_APPLICATION,
+  NO_ACCESS_APPLICATION_SUBMITTED,
 ];
 
 export const applicationAccessMiddleware = async (req: Request, res: Response, next: Next) => {
@@ -18,7 +19,6 @@ export const applicationAccessMiddleware = async (req: Request, res: Response, n
 
   const isIrrelevantRoute = (route: string) => IRRELEVANT_ROUTES.includes(route);
 
-  // do not run any checks if the requested route is not an application route.
   if (isIrrelevantRoute(url)) {
     return next();
   }
@@ -29,9 +29,11 @@ export const applicationAccessMiddleware = async (req: Request, res: Response, n
    * Otherwise, redirect to the "no access" page.
    */
   if (req.session.user && res.locals.application) {
+    const { application } = res.locals;
+
     const { id: userId } = req.session.user;
 
-    const { exporter } = res.locals.application;
+    const { exporter } = application;
 
     if (exporter && exporter.id === userId) {
       return next();
