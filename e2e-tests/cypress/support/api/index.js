@@ -232,7 +232,7 @@ const addAndGetOTP = async (emailAddress) => {
   let email = emailAddress;
 
   if (!email) {
-    email = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1')
+    email = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
   }
 
   try {

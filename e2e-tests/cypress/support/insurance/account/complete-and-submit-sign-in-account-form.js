@@ -28,7 +28,6 @@ const completeAndSubmitSignInAccountForm = (email = account[EMAIL], password = a
   cy.keyboardInput(accountFormFields[EMAIL].input(), email);
   cy.keyboardInput(accountFormFields[PASSWORD].input(), password);
 
-  console.log('COMPLETE SIGN IN form .... email ', email);
   submitButton().click();
 
   // assert we are on the 'enter code' page'
