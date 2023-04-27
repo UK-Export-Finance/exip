@@ -22,7 +22,19 @@ const {
  * @returns {Express.Response.render} "Password reset - success" page
  */
 export const get = (req: Request, res: Response) => {
-  if (!req.session.passwordResetSuccess) {
+  const { passwordResetSuccess } = req.session;
+
+  /**
+   * Add the success flag to req.flash
+   * This prevents an issue where the success flag will be undefined if:
+   * - The page is refreshed
+   * - A user navigates away and comes back to the page
+   */
+  req.flash('passwordResetSuccess', String(passwordResetSuccess));
+
+  const success = passwordResetSuccess || req.flash('passwordResetSuccess');
+
+  if (!success) {
     return res.redirect(PASSWORD_RESET_ROOT);
   }
 

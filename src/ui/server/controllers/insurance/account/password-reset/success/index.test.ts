@@ -16,10 +16,12 @@ describe('controllers/insurance/account/password-reset/success', () => {
   let req: Request;
   let res: Response;
 
+  const mockPasswordResetSuccess = true;
+
   beforeEach(() => {
     req = mockReq();
 
-    req.session.passwordResetSuccess = true;
+    req.session.passwordResetSuccess = mockPasswordResetSuccess;
 
     res = mockRes();
   });
@@ -47,6 +49,12 @@ describe('controllers/insurance/account/password-reset/success', () => {
         }),
         SIGN_IN_URL: SIGN_IN_ROOT,
       });
+    });
+
+    it('should add req.session.passwordResetSuccess to req.flash', () => {
+      get(req, res);
+
+      expect(req.flash).toHaveBeenCalledWith('passwordResetSuccess', String(mockPasswordResetSuccess));
     });
 
     it('should delete req.session.passwordResetSuccess', () => {
