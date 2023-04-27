@@ -43,7 +43,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
   });
 
   after(() => {
-    // cy.deleteAccount();
+    cy.deleteAccount();
   });
 
   it('renders core page elements', () => {
