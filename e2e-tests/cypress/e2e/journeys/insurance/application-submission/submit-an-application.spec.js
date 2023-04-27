@@ -56,30 +56,4 @@ context('Insurance - application submitted page - As an Exporter, I want to subm
       cy.checkText(cell, submittedStatus);
     });
   });
-
-  // TODO: check if to move or delete
-  // describe('when going back to the application', () => {
-  //   beforeEach(() => {
-  //     cy.navigateToUrl(dashboardUrl);
-
-  //     const applicationLink = table.body.row(referenceNumber).referenceNumber();
-
-  //     applicationLink.click();
-  //   });
-
-  //   it(`should render 'initial checks' task statuses as ${COMPLETED}`, () => {
-  //     cy.checkTaskStatus(initialChecks.tasks.eligibility, COMPLETED);
-  //   });
-
-  //   it(`should render 'prepare application' task statuses as ${COMPLETED}`, () => {
-  //     cy.checkTaskStatus(prepareApplication.tasks.policyTypeAndExports, COMPLETED);
-  //     cy.checkTaskStatus(prepareApplication.tasks.exporterBusiness, COMPLETED);
-  //     cy.checkTaskStatus(prepareApplication.tasks.buyer, COMPLETED);
-  //   });
-
-  //   it(`should render 'submit application' task statuses as ${COMPLETED}`, () => {
-  //     cy.checkTaskStatus(submitApplication.tasks.checkAnswers, COMPLETED);
-  //     cy.checkTaskStatus(submitApplication.tasks.declarationsAndSubmit, COMPLETED);
-  //   });
-  // });
 });

@@ -24,9 +24,10 @@ describe('controllers/insurance/no-access-application-submitted', () => {
     it('should render template', () => {
       get(req, res);
 
-      const expectedVariables = {
-        ...insuranceCorePageVariables({ PAGE_CONTENT_STRINGS: PAGES.INSURANCE.NO_ACCESS_APPLICATION_SUBMITTED_PAGE, BACK_LINK: req.headers.referer }),
-      };
+      const expectedVariables = insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.NO_ACCESS_APPLICATION_SUBMITTED_PAGE,
+        BACK_LINK: req.headers.referer,
+      });
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });

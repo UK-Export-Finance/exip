@@ -4,6 +4,14 @@ import { Next, Request, Response } from '../../../../types';
 
 const { APPLICATION_SUBMITTED, NO_ACCESS_APPLICATION_SUBMITTED } = INSURANCE_ROUTES;
 
+/**
+ * middleware to check if application is submitted
+ * if submitted, access is not allowed to application apart from application submitted page
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @param {Next}
+ * @returns {Express.Response.redirect} redirects to no access page or next
+ */
 export const applicationStatusMiddleware = async (req: Request, res: Response, next: Next) => {
   const { baseUrl: url } = req;
 
