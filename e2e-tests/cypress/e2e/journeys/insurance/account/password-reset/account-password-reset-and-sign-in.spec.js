@@ -18,9 +18,10 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 context('Insurance - Account - Password reset and sign in - As an Exporter, I want to login to my UKEF digital service account after my password reset, So that I can securely access my digital service account with UKEF', () => {
-  const successUrl = `${Cypress.config('baseUrl')}${SUCCESS}`;
-  const signInUrl = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
-  const enterCodeUrl = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
+  const baseUrl = Cypress.config('baseUrl');
+  const successUrl = `${baseUrl}${SUCCESS}`;
+  const signInUrl = `${baseUrl}${SIGN_IN_ROOT}`;
+  const enterCodeUrl = `${baseUrl}${ENTER_CODE}`;
 
   let newPasswordUrl;
 
@@ -48,7 +49,7 @@ context('Insurance - Account - Password reset and sign in - As an Exporter, I wa
       // Get an account's password reset token
       const resetPasswordToken = await api.getAccountPasswordResetToken();
 
-      newPasswordUrl = `${Cypress.config('baseUrl')}${NEW_PASSWORD}?token=${resetPasswordToken}`;
+      newPasswordUrl = `${baseUrl}${NEW_PASSWORD}?token=${resetPasswordToken}`;
     });
 
     describe('when progressing to the sign page and completing/submitting the form', () => {
@@ -88,7 +89,7 @@ context('Insurance - Account - Password reset and sign in - As an Exporter, I wa
 
         submitButton().click();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+        const expectedUrl = `${baseUrl}${DASHBOARD}`;
 
         cy.url().should('eq', expectedUrl);
       });
