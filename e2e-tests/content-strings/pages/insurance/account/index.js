@@ -115,6 +115,12 @@ const ACCOUNT = {
         },
       },
     },
+    NEW_PASSWORD: {
+      PAGE_TITLE: 'Reset your password',
+    },
+    SUCCESS: {
+      PAGE_TITLE: "You've successfully reset your password",
+    },
   },
   SIGNED_OUT: {
     PAGE_TITLE: 'For your security, we signed you out',

@@ -9,6 +9,7 @@ import accountSignInSendNewCodeMutation from '../../../graphql/mutations/account
 import verifyAccountSignInCodeMutation from '../../../graphql/mutations/account/verify-sign-in-code';
 import sendEmailPasswordResetLinkMutation from '../../../graphql/mutations/account/send-email-password-reset-link';
 import verifyAccountSessionMutation from '../../../graphql/mutations/account/verify-session';
+import accountPasswordResetMutation from '../../../graphql/mutations/account/password-reset';
 
 const account = {
   create: async (variables: Account) => {
@@ -250,6 +251,33 @@ const account = {
     } catch (err) {
       console.error(err);
       throw new Error('Sending email for account password reset');
+    }
+  },
+  passwordReset: async (token: string, password: string) => {
+    try {
+      console.info('Resetting account password');
+
+      const variables = { token, password };
+
+      const response = (await apollo('POST', accountPasswordResetMutation, variables)) as ApolloResponse;
+
+      if (response.errors) {
+        console.error('GraphQL error resetting account password ', response.errors);
+      }
+
+      if (response?.networkError?.result?.errors) {
+        console.error('GraphQL network error resetting account password ', response.networkError.result.errors);
+      }
+
+      if (response?.data?.accountPasswordReset) {
+        return response.data.accountPasswordReset;
+      }
+
+      console.error(response);
+      throw new Error('Resetting account password');
+    } catch (err) {
+      console.error(err);
+      throw new Error('Resetting account password');
     }
   },
 };

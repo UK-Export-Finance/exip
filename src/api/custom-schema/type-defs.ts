@@ -124,6 +124,11 @@ const typeDefs = `
     securityCode: String!
   }
 
+  type getAccountPasswordResetTokenResponse {
+    success: Boolean!
+    token: String
+  }
+
   type VerifyAccountEmailAddressResponse {
     success: Boolean!
     accountId: String
@@ -165,7 +170,7 @@ const typeDefs = `
       securityCode: String!
     ): AccountSignInResponse
 
-    """ add an OTP security code to an account """
+    """ add an OTP security code to an account and return"""
     addAndGetOTP(
       email: String!
     ): AddAndGetOtpResponse
@@ -173,6 +178,12 @@ const typeDefs = `
     """ send email with password reset link """
     sendEmailPasswordResetLink(
       email: String!
+    ): SuccessResponse
+
+    """ reset account password """
+    accountPasswordReset(
+      token: String!
+      password: String!
     ): SuccessResponse
 
     """ update exporter company and company address """
@@ -205,6 +216,11 @@ const typeDefs = `
     getAccountByEmail(
       email: String!
     ): Account
+
+    """ get an account's password reset token """
+    getAccountPasswordResetToken(
+      email: String!
+    ): getAccountPasswordResetTokenResponse
 
     """ get companies house information """
     getCompaniesHouseInformation(

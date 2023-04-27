@@ -55,6 +55,7 @@ interface RequestSession {
   accountId?: string;
   user?: RequestSessionUser;
   emailAddressForPasswordReset?: string;
+  passwordResetSuccess?: boolean;
 }
 
 interface Request {

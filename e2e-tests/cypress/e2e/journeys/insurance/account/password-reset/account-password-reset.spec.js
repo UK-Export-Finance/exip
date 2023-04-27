@@ -29,9 +29,7 @@ context('Insurance - Account - Password reset page - As an Exporter, I want to r
   let url;
 
   before(() => {
-    cy.navigateToUrl(START);
-    cy.submitEligibilityAndStartAccountCreation();
-    cy.completeAndSubmitCreateAccountForm();
+    cy.completeAndSubmitCreateAccountForm({ navigateToAccountCreationPage: true });
 
     // go back to create account page
     backLink().click();

@@ -82,8 +82,8 @@ interface Account extends ExporterUpdateInput {
   optHash?: string;
   otpExpiry?: Date;
   sessionIdentifier?: string;
-  passwordResetHash: string;
-  passwordResetExpiry: Date;
+  passwordResetHash?: string;
+  passwordResetExpiry?: Date;
   isVerified: boolean;
 }
 
@@ -220,6 +220,19 @@ interface AccountSignInSendNewCodeVariables {
   accountId: string;
 }
 
+interface AccountPasswordResetVariables {
+  token: string;
+  password: string;
+}
+
+interface GetAccountPasswordResetTokenVariables {
+  email: string;
+}
+
+interface GetAccountPasswordResetTokenResponse extends SuccessResponse {
+  token?: string;
+}
+
 interface InsuranceFeedbackVariables {
   satisfaction?: string;
   improvement?: string;
@@ -305,6 +318,7 @@ export {
   AccountSignInVariables,
   AccountSignInSendNewCodeVariables,
   AccountSignInResponse,
+  AccountPasswordResetVariables,
   AddOtpToAccountVariables,
   AddAndGetOtpResponse,
   Application,
@@ -323,6 +337,8 @@ export {
   EmailResponse,
   Feedback,
   GetCompaniesHouseInformationVariables,
+  GetAccountPasswordResetTokenVariables,
+  GetAccountPasswordResetTokenResponse,
   NotifyPeronsalisation,
   InsuranceFeedbackVariables,
   IndustrySector,

@@ -1,10 +1,8 @@
 import partials from '../../../../../partials';
-import { submitButton } from '../../../../../pages/shared';
 import { linkSentPage } from '../../../../../pages/insurance/account/password-reset';
-import accountFormFields from '../../../../../partials/insurance/accountFormFields';
 import { PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import mockAccount from '../../../../../../fixtures/account';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.LINK_SENT;
@@ -21,29 +19,20 @@ const {
   ACCOUNT: {
     PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, LINK_SENT },
   },
-} = ROUTES;
+} = INSURANCE_ROUTES;
 
 const {
   ACCOUNT: { EMAIL },
 } = INSURANCE_FIELD_IDS;
 
 const passwordResetUrl = `${Cypress.config('baseUrl')}${PASSWORD_RESET_ROOT}`;
-const linkSentUrl = `${Cypress.config('baseUrl')}${LINK_SENT}`;
-
-const completeAndSubmitPasswordResetForm = () => {
-  cy.keyboardInput(accountFormFields[EMAIL].input(), mockAccount[EMAIL]);
-
-  submitButton().click();
-
-  cy.url().should('eq', linkSentUrl);
-};
 
 const goToPasswordResetLinkSentPage = () => {
   cy.navigateToUrl(passwordResetUrl);
 
   cy.url().should('eq', passwordResetUrl);
 
-  completeAndSubmitPasswordResetForm();
+  cy.completeAndSubmitPasswordResetForm();
 };
 
 context('Insurance - Account - Password reset - link sent page - As an Exporter, I want to reset the password on my UKEF digital service account, So that I can securely access my UKEF digital service account', () => {

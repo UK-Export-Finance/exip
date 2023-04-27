@@ -5,6 +5,16 @@ const {
   FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, SECURITY_CODE,
 } = ACCOUNT;
 
+const PASSWORD_HINT = {
+  INTRO: 'Your password must contain at least 14 characters and have:',
+  RULES: [
+    'an uppercase letter',
+    'a lowercase letter',
+    'a number',
+    'a special character',
+  ],
+};
+
 export const ACCOUNT_FIELDS = {
   [EMAIL]: {
     LABEL: 'Email address',
@@ -28,15 +38,7 @@ export const ACCOUNT_FIELDS = {
       },
       [PASSWORD]: {
         LABEL: 'Create a password',
-        HINT: {
-          INTRO: 'Your password must contain at least 14 characters and have:',
-          RULES: [
-            'an uppercase letter',
-            'a lowercase letter',
-            'a number',
-            'a special character',
-          ],
-        },
+        HINT: PASSWORD_HINT,
       },
     },
   },
@@ -48,7 +50,13 @@ export const ACCOUNT_FIELDS = {
   PASSWORD_RESET: {
     [EMAIL]: {
       LABEL: 'Email address',
-      HINT: 'Enter the email address you used to create your account.',
+      HINT: PASSWORD_HINT,
+    },
+  },
+  NEW_PASSWORD: {
+    [PASSWORD]: {
+      LABEL: 'Enter a new password',
+      HINT: PASSWORD_HINT,
     },
   },
 };

@@ -11,6 +11,13 @@ const accountFormFields = {
   },
   [PASSWORD]: {
     label: () => cy.get(`[data-cy="${PASSWORD}-label"]`),
+    hint: {
+      intro: () => cy.get(`[data-cy="${PASSWORD}-hint-intro"]`),
+      listItem1: () => cy.get(`[data-cy="${PASSWORD}-hint-list-item-1"]`),
+      listItem2: () => cy.get(`[data-cy="${PASSWORD}-hint-list-item-2"]`),
+      listItem3: () => cy.get(`[data-cy="${PASSWORD}-hint-list-item-3"]`),
+      listItem4: () => cy.get(`[data-cy="${PASSWORD}-hint-list-item-4"]`),
+    },
     input: () => cy.get(`[data-cy="${PASSWORD}-input"]`),
     revealButton: () => cy.get('.moj-password-reveal__button'),
     errorMessage: () => cy.get(`[data-cy="${PASSWORD}-error-message"]`),
