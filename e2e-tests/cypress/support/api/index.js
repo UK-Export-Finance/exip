@@ -48,6 +48,14 @@ const queryStrings = {
       }
     }
   `,
+  getAccountPasswordResetToken: () => gql`
+    query GetAccountPasswordResetToken($email: String!) {
+      getAccountPasswordResetToken(email: $email) {
+        success
+        token
+      }
+    }
+  `,
   getApplicationByReferenceNumber: (referenceNumber) => `
     {
       applications (
@@ -230,6 +238,27 @@ const addAndGetOTP = async (email) => {
 };
 
 /**
+ * getAccountPasswordResetToken
+ * Get an account's password reset token
+ * @param {String} Account ID
+ * @returns {Object} Account password reset token
+ */
+const getAccountPasswordResetToken = async (email) => {
+  try {
+    const responseBody = await apollo.query({
+      query: queryStrings.getAccountPasswordResetToken(),
+      variables: { email },
+    }).then((response) => response.data.getAccountPasswordResetToken);
+
+    return responseBody.token;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error('Getting account password rest token ', { err });
+  }
+};
+
+/**
  * getApplicationByReferenceNumber
  * Get's an application by reference number from the API
  * @param {Number} Application reference number
@@ -361,6 +390,7 @@ const api = {
   updateExporter,
   deleteExportersById,
   addAndGetOTP,
+  getAccountPasswordResetToken,
   getApplicationByReferenceNumber,
   deleteApplicationByReferenceNumber,
   declarations,

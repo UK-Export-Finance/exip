@@ -2,6 +2,7 @@ export const BUTTONS = {
   CONTINUE: 'Continue',
   CONTINUE_NEXT_SECTION: 'Continue to next section',
   CONFIRM_AND_CONTINUE: 'Confirm and continue',
+  CONTINUE_TO_SIGN_IN: 'Continue to sign in',
   RETURN_TO_EXISTING_APPLICATION: 'Return to my existing application',
   SUBMIT: 'Submit',
   START_APPLICATION: 'Start an application',

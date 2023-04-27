@@ -86,7 +86,6 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
        * or have email inbox testing capabilities which can be risky/flaky.
        * This approach practically mimics "get my security code from my email inbox".
        */
-
       const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
       validSecurityCode = await api.addAndGetOTP(exporterEmail);

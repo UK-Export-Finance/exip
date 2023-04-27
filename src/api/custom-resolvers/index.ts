@@ -6,13 +6,14 @@ import {
   accountSignInSendNewCode,
   verifyAccountSignInCode,
   addAndGetOTP,
+  accountPasswordReset,
   sendEmailPasswordResetLink,
   deleteApplicationByReferenceNumber,
   updateExporterCompanyAndCompanyAddress,
   submitApplication,
   sendEmailInsuranceFeedback,
 } from './mutations';
-import { getCompaniesHouseInformation } from './queries';
+import { getCompaniesHouseInformation, getAccountPasswordResetToken } from './queries';
 
 /**
  * customResolvers
@@ -28,6 +29,7 @@ const customResolvers = {
     sendEmailConfirmEmailAddress,
     verifyAccountSignInCode,
     addAndGetOTP,
+    accountPasswordReset,
     sendEmailPasswordResetLink,
     deleteApplicationByReferenceNumber,
     updateExporterCompanyAndCompanyAddress,
@@ -36,6 +38,7 @@ const customResolvers = {
   },
   Query: {
     getCompaniesHouseInformation,
+    getAccountPasswordResetToken,
   },
 };
 

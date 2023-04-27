@@ -5,6 +5,7 @@ const ACCOUNT = {
   PASSWORD: 'password',
   SECURITY_CODE: 'securityCode',
   VERIFICATION_HASH: 'verificationHash',
+  PASSWORD_RESET_HASH: 'passwordResetHash',
 };
 
 export default ACCOUNT;

@@ -2,12 +2,12 @@ import { Context } from '.keystone/types'; // eslint-disable-line
 import crypto from 'crypto';
 import { ACCOUNT } from '../../constants';
 import getAccountByField from '../../helpers/get-account-by-field';
+import encryptPassword from '../../helpers/encrypt-password';
 import { AccountCreationVariables } from '../../types';
 
 const { EMAIL, ENCRYPTION } = ACCOUNT;
 
 const {
-  RANDOM_BYTES_SIZE,
   STRING_TYPE,
   PBKDF2: { ITERATIONS, DIGEST_ALGORITHM },
   PASSWORD: {
@@ -30,20 +30,21 @@ const createAccount = async (root: any, variables: AccountCreationVariables, con
       return { success: false };
     }
 
-    const salt = crypto.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
+    // generate encrypted password
+    const { salt, hash } = encryptPassword(password);
 
-    const passwordHash = crypto.pbkdf2Sync(password, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
-
+    // generate email verification hash/token and expiry.
     const verificationHash = crypto.pbkdf2Sync(password, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
 
     const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
 
+    // update the account
     const account = {
       firstName,
       lastName,
       email,
       salt,
-      hash: passwordHash,
+      hash,
       verificationHash,
       verificationExpiry,
     };

@@ -102,20 +102,10 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     });
 
     describe('password', () => {
-      const fieldId = PASSWORD;
-      const field = accountFormFields[fieldId];
-
       it('renders a label, hint, and input', () => {
-        field.label().should('exist');
-        cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
+        const passwordFieldStrings = ACCOUNT_FIELDS.CREATE.YOUR_DETAILS[PASSWORD];
 
-        cy.checkText(yourDetailsPage[fieldId].hint.intro(), FIELD_STRINGS[fieldId].HINT.INTRO);
-        cy.checkText(yourDetailsPage[fieldId].hint.listItem1(), FIELD_STRINGS[fieldId].HINT.RULES[0]);
-        cy.checkText(yourDetailsPage[fieldId].hint.listItem2(), FIELD_STRINGS[fieldId].HINT.RULES[1]);
-        cy.checkText(yourDetailsPage[fieldId].hint.listItem3(), FIELD_STRINGS[fieldId].HINT.RULES[2]);
-        cy.checkText(yourDetailsPage[fieldId].hint.listItem4(), FIELD_STRINGS[fieldId].HINT.RULES[3]);
-
-        field.input().should('exist');
+        cy.assertPasswordLabelHintAndInput(passwordFieldStrings);
       });
 
       it('should render a reveal button that shows/reveals the password input', () => {
