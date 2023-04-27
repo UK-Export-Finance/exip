@@ -40,7 +40,7 @@ const completeInsuranceEligibilitySignInAndGoToDashboard = (emailAddress) => {
     cy.completeAndSubmitSignInAccountForm(emailAddress);
 
     // get the OTP security code
-    cy.accountAddAndGetOTP(emailAddress).then((securityCode) => {
+    cy.accountAddAndGetOTP().then((securityCode) => {
       cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), securityCode);
 
       // submit the OTP security code
