@@ -17,6 +17,7 @@ export default () => {
   submitButton().click();
 
   cy.completeAndSubmitCompanyDetails();
+  cy.completeAndSubmitYourContact();
   cy.completeAndSubmitNatureOfYourBusiness();
   cy.completeAndSubmitTurnoverForm();
   cy.completeAndSubmitBrokerForm();

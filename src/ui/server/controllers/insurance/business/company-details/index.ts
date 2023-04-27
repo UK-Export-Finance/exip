@@ -38,7 +38,7 @@ const {
   COMPANIES_HOUSE_UNAVAILABLE,
   NO_COMPANIES_HOUSE_NUMBER,
   COMPANY_DETAILS_SAVE_AND_BACK,
-  NATURE_OF_BUSINESS_ROOT,
+  CONTACT_ROOT,
   CHECK_YOUR_ANSWERS,
 } = EXPORTER_BUSINESS_ROUTES;
 
@@ -271,7 +271,7 @@ const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CONTACT_ROOT}`);
   } catch (err) {
     console.error('Error updating application - your business - company details', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

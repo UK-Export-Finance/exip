@@ -89,6 +89,18 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.PHONE_NUMBER]: {
         INCORRECT_FORMAT: 'Enter a UK telephone number',
       },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.FIRST_NAME]: {
+        IS_EMPTY: 'Enter the first name of the exporter contact',
+      },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.LAST_NAME]: {
+        IS_EMPTY: 'Enter the last name of the exporter contact',
+      },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.EMAIL_ADDRESS]: {
+        INCORRECT_FORMAT: 'Enter the email address for the exporter contact in the correct format - for example name@example.com',
+      },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.POSITION]: {
+        IS_EMPTY: 'Enter the position at company of the exporter contact',
+      },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {
         IS_EMPTY: 'Enter the goods or services that your company supplies',
         ABOVE_MAXIMUM: 'Description of goods and services that your company supplies cannot be more than 1000 characters',

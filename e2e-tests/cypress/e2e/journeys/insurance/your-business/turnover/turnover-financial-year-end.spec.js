@@ -38,6 +38,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
       task.link().click();
 
       cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitYourContact();
       cy.completeAndSubmitNatureOfYourBusiness();
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;

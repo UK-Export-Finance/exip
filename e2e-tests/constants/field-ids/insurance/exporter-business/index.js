@@ -11,6 +11,13 @@ export const EXPORTER_BUSINESS = {
     FINANCIAL_YEAR_END_DATE: 'financialYearEndDate',
     SUMMARY_LIST: 'summaryList',
   },
+  CONTACT: {
+    COMPANY_NAME: 'companyName',
+    FIRST_NAME: 'firstName',
+    LAST_NAME: 'lastName',
+    EMAIL_ADDRESS: 'emailAddress',
+    POSITION: 'position',
+  },
   YOUR_COMPANY: {
     YOUR_BUSINESS: 'yourBusiness',
     TRADING_NAME: 'hasTradingName',

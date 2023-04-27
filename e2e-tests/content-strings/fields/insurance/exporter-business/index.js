@@ -78,7 +78,24 @@ export const EXPORTER_BUSINESS_FIELDS = {
       TITLE: 'UK telephone number (optional)',
     },
   },
-
+  CONTACT: {
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.COMPANY_NAME]: {
+      LABEL: 'Your company name',
+      HINT: 'This information comes from Companies House',
+    },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.FIRST_NAME]: {
+      LABEL: 'First name',
+    },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.LAST_NAME]: {
+      LABEL: 'Last name',
+    },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.EMAIL_ADDRESS]: {
+      LABEL: 'Email address',
+    },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.POSITION]: {
+      LABEL: 'Position at company',
+    },
+  },
   NATURE_OF_YOUR_BUSINESS: {
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {
       LABEL: 'What goods or services does your company supply?',

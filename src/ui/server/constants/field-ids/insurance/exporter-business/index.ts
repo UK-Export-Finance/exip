@@ -22,6 +22,13 @@ const EXPORTER_BUSINESS = {
       PREMISES: 'premises',
     },
   },
+  CONTACT: {
+    COMPANY_NAME: 'companyName',
+    FIRST_NAME: 'firstName',
+    LAST_NAME: 'lastName',
+    EMAIL_ADDRESS: 'emailAddress',
+    POSITION: 'position',
+  },
   YOUR_COMPANY: {
     YOUR_BUSINESS: 'yourBusiness',
     TRADING_ADDRESS: 'hasTradingAddress',

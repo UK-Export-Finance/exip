@@ -3,6 +3,7 @@ import { FIELD_IDS } from '../../../../constants';
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
   COMPANY_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS },
+  CONTACT: { FIRST_NAME, LAST_NAME, EMAIL_ADDRESS, POSITION, COMPANY_NAME: CONTACT_COMPANY_NAME },
   YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
   TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
@@ -60,6 +61,24 @@ export const FIELDS = {
       SUMMARY: {
         TITLE: 'UK telephone number (optional)',
       },
+    },
+  },
+  CONTACT: {
+    [CONTACT_COMPANY_NAME]: {
+      LABEL: 'Your company name',
+      HINT: 'This information comes from Companies House',
+    },
+    [FIRST_NAME]: {
+      LABEL: 'First name',
+    },
+    [LAST_NAME]: {
+      LABEL: 'Last name',
+    },
+    [EMAIL_ADDRESS]: {
+      LABEL: 'Email address',
+    },
+    [POSITION]: {
+      LABEL: 'Position at company',
     },
   },
   NATURE_OF_YOUR_BUSINESS: {
