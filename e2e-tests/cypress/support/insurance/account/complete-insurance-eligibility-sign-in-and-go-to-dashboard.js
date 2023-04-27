@@ -24,6 +24,7 @@ const {
  * 6) Add a new OTP/security code and get it directly from the API
  * 7) Complete and submit the "enter security code" form
  * 8) Check we are on the dashbooard
+ * @param {String} Account email address
  */
 const completeInsuranceEligibilitySignInAndGoToDashboard = (emailAddress) => {
   // complete insurance eligibility forms/flow
@@ -40,7 +41,7 @@ const completeInsuranceEligibilitySignInAndGoToDashboard = (emailAddress) => {
     cy.completeAndSubmitSignInAccountForm(emailAddress);
 
     // get the OTP security code
-    cy.accountAddAndGetOTP().then((securityCode) => {
+    cy.accountAddAndGetOTP(emailAddress).then((securityCode) => {
       cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), securityCode);
 
       // submit the OTP security code

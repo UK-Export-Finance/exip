@@ -225,15 +225,20 @@ const deleteExportersById = async (id) => {
  * The alternative approach is to either intercept the UI requests and fake the security code validation,
  * or have email inbox testing capabilities which can be risky/flaky.
  * This approach practically mimics "get my security code from my email inbox".
+ * @param {String} Account email address
  * @returns {Object} security code
  */
-const addAndGetOTP = async () => {
-  const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+const addAndGetOTP = async (emailAddress) => {
+  let email = emailAddress;
+
+  if (!email) {
+    email = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+  }
 
   try {
     const responseBody = await apollo.query({
       query: queryStrings.addAndGetOTP(),
-      variables: { email: accountEmail },
+      variables: { email },
     }).then((response) => response.data.addAndGetOTP);
 
     return responseBody.securityCode;
