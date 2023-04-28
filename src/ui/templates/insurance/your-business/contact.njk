@@ -4,6 +4,7 @@
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/hint/macro.njk" import govukHint %}
+{% import '../../components/personal-details-input.njk' as personalDetailsInput %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -63,97 +64,46 @@
           }
         }) }}
 
-        {{ govukInput({
-          id: FIELDS.FIRST_NAME.ID,
-          name: FIELDS.FIRST_NAME.ID,
-          value: submittedValues[FIELDS.FIRST_NAME.ID] or application.exporterBusiness[FIELDS.FIRST_NAME.ID],
-          label: {
-            text: FIELDS.FIRST_NAME.LABEL,
-            classes: "govuk-label--s",
-            attributes: {
-              "data-cy": FIELDS.FIRST_NAME.ID + "-label"
-            }
-          },
-          classes: "govuk-input--width-10",
-          attributes: {
-            "data-cy": FIELDS.FIRST_NAME.ID
-          },
-          errorMessage: validationErrors.errorList[FIELDS.FIRST_NAME.ID] and {
-            text: validationErrors.errorList[FIELDS.FIRST_NAME.ID].text,
-            attributes: {
-              "data-cy": FIELDS.FIRST_NAME.ID + "-error"
-            }
-          }
+        {{ personalDetailsInput.render({
+          class: "govuk-input--width-10",
+          fieldId: FIELDS.FIRST_NAME.ID,
+          label: FIELDS.FIRST_NAME.LABEL,
+          labelClass: "govuk-label--s",
+          validationErrors: validationErrors,
+          submittedValues: submittedValues,
+          applicationAnswers: application.exporterBusiness
         }) }}
 
-        {{ govukInput({
-          id: FIELDS.LAST_NAME.ID,
-          name: FIELDS.LAST_NAME.ID,
-          value: submittedValues[FIELDS.LAST_NAME.ID] or application.exporterBusiness[FIELDS.LAST_NAME.ID],
-          label: {
-            text: FIELDS.LAST_NAME.LABEL,
-            classes: "govuk-label--s",
-            attributes: {
-              "data-cy": FIELDS.LAST_NAME.ID + "-label"
-            }
-          },
-          classes: "govuk-input--width-10",
-          attributes: {
-            "data-cy": FIELDS.LAST_NAME.ID
-          },
-          errorMessage: validationErrors.errorList[FIELDS.LAST_NAME.ID] and {
-            text: validationErrors.errorList[FIELDS.LAST_NAME.ID].text,
-            attributes: {
-              "data-cy": FIELDS.LAST_NAME.ID + "-error"
-            }
-          }
+        {{ personalDetailsInput.render({
+          class: "govuk-input--width-10",
+          fieldId: FIELDS.LAST_NAME.ID,
+          label: FIELDS.LAST_NAME.LABEL,
+          labelClass: "govuk-label--s",
+          validationErrors: validationErrors,
+          submittedValues: submittedValues,
+          applicationAnswers: application.exporterBusiness
         }) }}
 
-        {{ govukInput({
-          id: FIELDS.EMAIL_ADDRESS.ID,
-          name: FIELDS.EMAIL_ADDRESS.ID,
-          value: submittedValues[FIELDS.EMAIL_ADDRESS.ID] or application.exporterBusiness[FIELDS.EMAIL_ADDRESS.ID],
-          label: {
-            text: FIELDS.EMAIL_ADDRESS.LABEL,
-            classes: "govuk-label--s",
-            attributes: {
-              "data-cy": FIELDS.EMAIL_ADDRESS.ID + "-label"
-            }
-          },
-          classes: "govuk-input--width-10",
-          attributes: {
-            "data-cy": FIELDS.EMAIL_ADDRESS.ID
-          },
-          errorMessage: validationErrors.errorList[FIELDS.EMAIL_ADDRESS.ID] and {
-            text: validationErrors.errorList[FIELDS.EMAIL_ADDRESS.ID].text,
-            attributes: {
-              "data-cy": FIELDS.EMAIL_ADDRESS.ID + "-error"
-            }
-          }
+        {{ personalDetailsInput.render({
+          class: "govuk-input--width-10",
+          fieldId: FIELDS.EMAIL_ADDRESS.ID,
+          label: FIELDS.EMAIL_ADDRESS.LABEL,
+          labelClass: "govuk-label--s",
+          validationErrors: validationErrors,
+          submittedValues: submittedValues,
+          applicationAnswers: application.exporterBusiness
         }) }}
 
-        {{ govukInput({
-          id: FIELDS.POSITION.ID,
-          name: FIELDS.POSITION.ID,
-          value: submittedValues[FIELDS.POSITION.ID] or application.exporterBusiness[FIELDS.POSITION.ID],
-          label: {
-            text: FIELDS.POSITION.LABEL,
-            classes: "govuk-label--s",
-            attributes: {
-              "data-cy": FIELDS.POSITION.ID + "-label"
-            }
-          },
-          classes: "govuk-input--width-10",
-          attributes: {
-            "data-cy": FIELDS.POSITION.ID
-          },
-          errorMessage: validationErrors.errorList[FIELDS.POSITION.ID] and {
-            text: validationErrors.errorList[FIELDS.POSITION.ID].text,
-            attributes: {
-              "data-cy": FIELDS.POSITION.ID + "-error"
-            }
-          }
+        {{ personalDetailsInput.render({
+          class: "govuk-input--width-10",
+          fieldId: FIELDS.POSITION.ID,
+          label: FIELDS.POSITION.LABEL,
+          labelClass: "govuk-label--s",
+          validationErrors: validationErrors,
+          submittedValues: submittedValues,
+          applicationAnswers: application.exporterBusiness
         }) }}
+
       </div>
 
       <div class="govuk-grid-column-three-quarters-from-desktop govuk-!-margin-top-5">

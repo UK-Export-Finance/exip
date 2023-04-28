@@ -2,7 +2,7 @@ import { PAGES } from '../../../../content-strings';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/exporter-business';
 import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
-import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
+import { FIELDS, ACCOUNT_FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
@@ -35,15 +35,15 @@ const pageVariables = (referenceNumber: number) => ({
     },
     FIRST_NAME: {
       ID: FIRST_NAME,
-      ...CONTACT_FIELDS[FIRST_NAME],
+      ...ACCOUNT_FIELDS[FIRST_NAME],
     },
     LAST_NAME: {
       ID: LAST_NAME,
-      ...CONTACT_FIELDS[LAST_NAME],
+      ...ACCOUNT_FIELDS[LAST_NAME],
     },
     EMAIL_ADDRESS: {
       ID: EMAIL,
-      ...CONTACT_FIELDS[EMAIL],
+      ...ACCOUNT_FIELDS[EMAIL],
     },
     POSITION: {
       ID: POSITION,

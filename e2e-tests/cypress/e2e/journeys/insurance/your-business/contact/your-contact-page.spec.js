@@ -3,6 +3,7 @@ import partials from '../../../../partials';
 import { saveAndBackButton } from '../../../../pages/shared';
 import { PAGES, BUTTONS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
+import { ACCOUNT_FIELDS } from '../../../../../../content-strings/fields/insurance/account';
 import { ROUTES } from '../../../../../../constants';
 import { EXPORTER_BUSINESS as EXPORTER_BUSINESS_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/exporter-business';
 import { ACCOUNT as ACCOUNT_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/account';
@@ -85,7 +86,7 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
 
     it(`should display ${COMPANY_NAME} section and populate company name from application`, () => {
       const fieldId = COMPANY_NAME;
-      const field = yourContactPage[fieldId];
+      const field = yourContactPage.field(fieldId);
 
       cy.checkText(field.label(), FIELDS.CONTACT[fieldId].LABEL);
 
@@ -106,7 +107,7 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
 
       field.input().should('exist');
 
-      cy.checkText(field.label(), FIELDS.CONTACT[fieldId].LABEL);
+      cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
     });
 
     it(`should display ${LAST_NAME} field`, () => {
@@ -115,7 +116,7 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
 
       field.input().should('exist');
 
-      cy.checkText(field.label(), FIELDS.CONTACT[fieldId].LABEL);
+      cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
     });
 
     it(`should display ${EMAIL} field`, () => {
@@ -124,7 +125,7 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
 
       field.input().should('exist');
 
-      cy.checkText(field.label(), FIELDS.CONTACT[fieldId].LABEL);
+      cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
     });
 
     it(`should display ${POSITION} field`, () => {

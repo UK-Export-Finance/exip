@@ -9,7 +9,6 @@ const {
   TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   BROKER: { HEADING, USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN, EMAIL },
 } = EXPORTER_BUSINESS;
-const { FIRST_NAME, LAST_NAME, EMAIL: EMAIL_ADDRESS } = FIELD_IDS.INSURANCE.ACCOUNT;
 
 export const FIELDS = {
   COMPANY_DETAILS: {
@@ -68,15 +67,6 @@ export const FIELDS = {
     [CONTACT_COMPANY_NAME]: {
       LABEL: 'Your company name',
       HINT: 'This information comes from Companies House',
-    },
-    [FIRST_NAME]: {
-      LABEL: 'First name',
-    },
-    [LAST_NAME]: {
-      LABEL: 'Last name',
-    },
-    [EMAIL_ADDRESS]: {
-      LABEL: 'Email address',
     },
     [POSITION]: {
       LABEL: 'Position at company',

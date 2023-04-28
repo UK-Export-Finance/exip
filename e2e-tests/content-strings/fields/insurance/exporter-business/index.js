@@ -83,15 +83,6 @@ export const EXPORTER_BUSINESS_FIELDS = {
       LABEL: 'Your company name',
       HINT: 'This information comes from Companies House',
     },
-    [FIELD_IDS.INSURANCE.ACCOUNT.FIRST_NAME]: {
-      LABEL: 'First name',
-    },
-    [FIELD_IDS.INSURANCE.ACCOUNT.LAST_NAME]: {
-      LABEL: 'Last name',
-    },
-    [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
-      LABEL: 'Email address',
-    },
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.POSITION]: {
       LABEL: 'Position at company',
     },

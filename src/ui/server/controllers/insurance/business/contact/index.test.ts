@@ -7,7 +7,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
-import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
+import { FIELDS, ACCOUNT_FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -56,15 +56,15 @@ describe('controllers/insurance/business/contact', () => {
           },
           FIRST_NAME: {
             ID: FIRST_NAME,
-            ...CONTACT_FIELDS[FIRST_NAME],
+            ...ACCOUNT_FIELDS[FIRST_NAME],
           },
           LAST_NAME: {
             ID: LAST_NAME,
-            ...CONTACT_FIELDS[LAST_NAME],
+            ...ACCOUNT_FIELDS[LAST_NAME],
           },
           EMAIL_ADDRESS: {
             ID: EMAIL,
-            ...CONTACT_FIELDS[EMAIL],
+            ...ACCOUNT_FIELDS[EMAIL],
           },
           POSITION: {
             ID: POSITION,

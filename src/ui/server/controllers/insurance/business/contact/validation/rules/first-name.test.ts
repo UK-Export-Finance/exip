@@ -2,7 +2,7 @@ import firstName from './first-name';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/account';
 import { RequestBody } from '../../../../../../../types';
-import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
+import nameValidation from '../../../../../../shared-validation/name';
 
 const { FIRST_NAME: FIELD_ID } = FIELD_IDS;
 
@@ -19,10 +19,10 @@ describe('controllers/insurance/business/contact/validation/rules/first-name', (
     [FIELD_ID]: '',
   } as RequestBody;
 
-  it('should return the result of emptyFieldValidation', () => {
+  it('should return the result of nameValidation', () => {
     const response = firstName(mockBody, mockErrors);
 
-    const expected = emptyFieldValidation(mockBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+    const expected = nameValidation(mockBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
 
     expect(response).toEqual(expected);
   });
