@@ -60,11 +60,12 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF e
     let secondReferenceNumber;
 
     before(() => {
-      // sign out / clear the user session.
+      cy.saveSession();
 
-      // TODO: EMS-1334 - when the authenticated header has been built, update this to click on the sign out link.
-      cy.clearCookies();
-      Cypress.session.clearCurrentSessionData();
+      cy.navigateToUrl(url);
+
+      // sign out of the current account
+      header.navigation.signOut().click();
 
       cy.completeSignInAndGoToApplication(secondAccountEmail).then((refNumber) => {
         referenceNumbers = [...referenceNumbers, refNumber];
