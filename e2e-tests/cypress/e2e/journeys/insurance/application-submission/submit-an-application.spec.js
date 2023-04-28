@@ -11,14 +11,14 @@ const {
   APPLICATION_SUBMITTED,
 } = INSURANCE_ROUTES;
 
-context('Insurance - application submitted page - As an Exporter, I want to submit my completed export insurance application, So that UKEF can process and make a decision on my application', () => {
+context('Insurance - submit an application - As an Exporter, I want to submit my completed export insurance application, So that UKEF can process and make a decision on my application', () => {
   let referenceNumber;
   let url;
 
   const dashboardUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
   before(() => {
-    cy.completeSignInAndSubmitAnApplication().then((refNumber) => {
+    cy.completeSignInAndSubmitAnApplication({}).then((refNumber) => {
       referenceNumber = refNumber;
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
