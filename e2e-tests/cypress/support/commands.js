@@ -79,6 +79,7 @@ Cypress.Commands.add('completeAndSubmitAboutGoodsOrServicesForm', require('./ins
 
 Cypress.Commands.add('completeAndSubmitCompanyDetails', require('./insurance/complete-and-submit-company-details'));
 
+Cypress.Commands.add('completeAndSubmitYourContact', require('./insurance/complete-and-submit-your-contact-form'));
 Cypress.Commands.add('completeAndSubmitNatureOfYourBusiness', require('./insurance/complete-and-submit-nature-of-your-business'));
 Cypress.Commands.add('completeAndSubmitTurnoverForm', require('./insurance/complete-and-submit-turnover-form'));
 Cypress.Commands.add('completeAndSubmitBrokerForm', require('./insurance/complete-and-submit-broker-form'));

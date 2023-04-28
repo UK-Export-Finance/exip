@@ -34,6 +34,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
       task.link().click();
 
       cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitYourContact();
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
 
