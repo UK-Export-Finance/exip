@@ -15,7 +15,7 @@ const {
 const {
   INSURANCE: {
     ACCOUNT: {
-      PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, SUCCESS },
+      PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, SUCCESS, LINK_EXPIRED },
     },
   },
   PROBLEM_WITH_SERVICE,
@@ -36,6 +36,14 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
   });
 
   describe('get', () => {
+    const verifyPasswordResetTokenResponse = { success: true };
+
+    let verifyAccountPasswordResetTokenSpy = jest.fn(() => Promise.resolve(verifyPasswordResetTokenResponse));
+
+    beforeEach(() => {
+      api.keystone.account.verifyPasswordResetToken = verifyAccountPasswordResetTokenSpy;
+    });
+
     describe('PAGE_VARIABLES', () => {
       it('should have correct properties', () => {
         const expected = {
@@ -61,8 +69,8 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
       });
     });
 
-    it('should render template', () => {
-      get(req, res);
+    it('should render template', async () => {
+      await get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...insuranceCorePageVariables({
@@ -80,6 +88,49 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
         get(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PASSWORD_RESET_ROOT);
+      });
+    });
+
+    describe('when the api.keystone.account.verifyPasswordResetToken returns success=false', () => {
+      beforeEach(() => {
+        verifyAccountPasswordResetTokenSpy = jest.fn(() => Promise.resolve({ success: false }));
+
+        api.keystone.account.verifyPasswordResetToken = verifyAccountPasswordResetTokenSpy;
+      });
+
+      it(`should redirect to ${LINK_EXPIRED}`, async () => {
+        await get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(LINK_EXPIRED);
+      });
+    });
+
+    describe('when the api.keystone.account.verifyPasswordResetToken returns expired=false', () => {
+      beforeEach(() => {
+        verifyAccountPasswordResetTokenSpy = jest.fn(() => Promise.resolve({ success: true, expired: true }));
+
+        api.keystone.account.verifyPasswordResetToken = verifyAccountPasswordResetTokenSpy;
+      });
+
+      it(`should redirect to ${LINK_EXPIRED}`, async () => {
+        await get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(LINK_EXPIRED);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('when the verify account password reset token API call fails', () => {
+        beforeEach(() => {
+          verifyAccountPasswordResetTokenSpy = jest.fn(() => Promise.reject());
+          api.keystone.account.verifyPasswordResetToken = verifyAccountPasswordResetTokenSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });

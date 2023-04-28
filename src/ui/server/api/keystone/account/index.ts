@@ -10,6 +10,7 @@ import verifyAccountSignInCodeMutation from '../../../graphql/mutations/account/
 import sendEmailPasswordResetLinkMutation from '../../../graphql/mutations/account/send-email-password-reset-link';
 import verifyAccountSessionMutation from '../../../graphql/mutations/account/verify-session';
 import accountPasswordResetMutation from '../../../graphql/mutations/account/password-reset';
+import verifyAccountPasswordResetTokenQuery from '../../../graphql/queries/account/verify-account-password-reset-token';
 
 const account = {
   create: async (variables: Account) => {
@@ -251,6 +252,33 @@ const account = {
     } catch (err) {
       console.error(err);
       throw new Error('Sending email for account password reset');
+    }
+  },
+  verifyPasswordResetToken: async (token: string) => {
+    try {
+      console.info('Verifying account password reset token');
+
+      const variables = { token };
+
+      const response = (await apollo('POST', verifyAccountPasswordResetTokenQuery, variables)) as ApolloResponse;
+
+      if (response.errors) {
+        console.error('GraphQL error verifying account password reset token ', response.errors);
+      }
+
+      if (response?.networkError?.result?.errors) {
+        console.error('GraphQL network error verifying account password reset token ', response.networkError.result.errors);
+      }
+
+      if (response?.data?.verifyAccountPasswordResetToken) {
+        return response.data.verifyAccountPasswordResetToken;
+      }
+
+      console.error(response);
+      throw new Error('Verifying account password reset token');
+    } catch (err) {
+      console.error(err);
+      throw new Error('Verifying account password reset token');
     }
   },
   passwordReset: async (token: string, password: string) => {

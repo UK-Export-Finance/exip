@@ -35,18 +35,8 @@ context('Insurance - Account - Password reset - success page - I want to reset m
 
   describe(`when visiting ${NEW_PASSWORD} with a token query param`, () => {
     beforeEach(async () => {
-      /**
-       * Get an account's password reset token directly from the API,
-       * so that we can visit the `new password` page and continue the journey.
-       * This is to ensure that we are testing a real world scenario.
-       *
-       * The alternative approach is to either intercept the UI requests and fake the password reset token generation,
-       * or have email inbox testing capabilities which can be risky/flaky.
-       * This approach practically mimics "get my password reset link from my email inbox".
-       */
-      const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
-
-      const resetPasswordToken = await api.getAccountPasswordResetToken(exporterEmail);
+      // Get an account's password reset token
+      const resetPasswordToken = await api.getAccountPasswordResetToken();
 
       newPasswordUrl = `${Cypress.config('baseUrl')}${NEW_PASSWORD}?token=${resetPasswordToken}`;
     });

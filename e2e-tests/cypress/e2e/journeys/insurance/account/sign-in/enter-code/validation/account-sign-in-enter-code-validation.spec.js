@@ -4,7 +4,6 @@ import dashboardPage from '../../../../../../pages/insurance/dashboard';
 import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../../constants/routes/insurance';
-import api from '../../../../../../../support/api';
 
 const {
   START,
@@ -76,19 +75,11 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
   describe('when submitting a valid security code', () => {
     let validSecurityCode;
 
-    before(async () => {
-      /**
-       * Create and get an OTP for the exporter's account directly from the API,
-       * so that we can assert enter a valid security code and continue the journey.
-       * This is to ensure that we are testing a real world scenario.
-       *
-       * The alternative approach is to either intercept the UI requests and fake the security code validation,
-       * or have email inbox testing capabilities which can be risky/flaky.
-       * This approach practically mimics "get my security code from my email inbox".
-       */
-      const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
-
-      validSecurityCode = await api.addAndGetOTP(exporterEmail);
+    before(() => {
+      // create and get an OTP for the exporter's account
+      cy.accountAddAndGetOTP().then((securityCode) => {
+        validSecurityCode = securityCode;
+      });
     });
 
     it(`should redirect to ${DASHBOARD}`, () => {

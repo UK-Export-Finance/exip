@@ -1,7 +1,7 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { FIELD_IDS } from '../../constants';
 import getAccountByField from '../../helpers/get-account-by-field';
-import { GetAccountPasswordResetTokenVariables, GetAccountPasswordResetTokenResponse } from '../../types';
+import { GetAccountPasswordResetTokenVariables, AccountPasswordResetTokenResponse } from '../../types';
 
 /**
  * getAccountPasswordResetToken
@@ -17,7 +17,7 @@ const getAccountPasswordResetToken = async (
   root: any,
   variables: GetAccountPasswordResetTokenVariables,
   context: Context,
-): Promise<GetAccountPasswordResetTokenResponse> => {
+): Promise<AccountPasswordResetTokenResponse> => {
   console.info('Getting account password reset token');
 
   try {

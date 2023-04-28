@@ -10,6 +10,7 @@ import { get as enterCodeGet, post as enterCodePost } from '../../../controllers
 import { get as requestNewCodeGet, post as requestNewCodePost } from '../../../controllers/insurance/account/sign-in/request-new-code';
 import { get as passwordResetGet, post as passwordResetPost } from '../../../controllers/insurance/account/password-reset';
 import { get as passwordResetLinkSentGet } from '../../../controllers/insurance/account/password-reset/link-sent';
+import { get as passwordResetLinkExpiredGet } from '../../../controllers/insurance/account/password-reset/link-expired';
 import { get as newPasswordGet, post as newPasswordPost } from '../../../controllers/insurance/account/password-reset/new-password';
 import { get as passwordResetSuccessGet } from '../../../controllers/insurance/account/password-reset/success';
 import { get as signOutGet } from '../../../controllers/insurance/account/sign-out';
@@ -41,6 +42,8 @@ insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.ROOT, passwor
 insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.ROOT, passwordResetPost);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.LINK_SENT, passwordResetLinkSentGet);
+
+insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.LINK_EXPIRED, passwordResetLinkExpiredGet);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD, newPasswordGet);
 insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD, newPasswordPost);
