@@ -4,7 +4,8 @@ import { saveAndBackButton } from '../../../../pages/shared';
 import { PAGES, BUTTONS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
 import { ROUTES } from '../../../../../../constants';
-import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/exporter-business';
+import { EXPORTER_BUSINESS as EXPORTER_BUSINESS_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/exporter-business';
+import { ACCOUNT as ACCOUNT_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/account';
 import application from '../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.CONTACT;
@@ -12,12 +13,11 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.CONTACT;
 const {
   CONTACT: {
     COMPANY_NAME,
-    FIRST_NAME,
-    LAST_NAME,
-    EMAIL_ADDRESS,
     POSITION,
   },
-} = FIELD_IDS;
+} = EXPORTER_BUSINESS_FIELD_IDS;
+
+const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
 const {
   ROOT,
@@ -100,7 +100,7 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
       cy.checkText(yourContactPage.contactDetailsHint(), CONTENT_STRINGS.CONTACT_DETAILS.HINT);
     });
 
-    it(`should display ${FIRST_NAME} section`, () => {
+    it(`should display ${FIRST_NAME} field`, () => {
       const fieldId = FIRST_NAME;
       const field = yourContactPage.field(fieldId);
 
@@ -109,7 +109,7 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
       cy.checkText(field.label(), FIELDS.CONTACT[fieldId].LABEL);
     });
 
-    it(`should display ${LAST_NAME} section`, () => {
+    it(`should display ${LAST_NAME} field`, () => {
       const fieldId = LAST_NAME;
       const field = yourContactPage.field(fieldId);
 
@@ -118,8 +118,8 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
       cy.checkText(field.label(), FIELDS.CONTACT[fieldId].LABEL);
     });
 
-    it(`should display ${EMAIL_ADDRESS} section`, () => {
-      const fieldId = EMAIL_ADDRESS;
+    it(`should display ${EMAIL} field`, () => {
+      const fieldId = EMAIL;
       const field = yourContactPage.field(fieldId);
 
       field.input().should('exist');
@@ -127,7 +127,7 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
       cy.checkText(field.label(), FIELDS.CONTACT[fieldId].LABEL);
     });
 
-    it(`should display ${POSITION} section`, () => {
+    it(`should display ${POSITION} field`, () => {
       const fieldId = POSITION;
       const field = yourContactPage.field(fieldId);
 

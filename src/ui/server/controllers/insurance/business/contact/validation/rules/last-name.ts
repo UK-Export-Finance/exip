@@ -1,11 +1,9 @@
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import FIELD_IDS from '../../../../../../constants/field-ids/insurance/exporter-business';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/account';
 import { RequestBody } from '../../../../../../../types';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 
-const {
-  CONTACT: { LAST_NAME: FIELD_ID },
-} = FIELD_IDS;
+const { LAST_NAME: FIELD_ID } = FIELD_IDS;
 
 const {
   EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGE },

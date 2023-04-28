@@ -1,12 +1,10 @@
 import firstName from './first-name';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import FIELD_IDS from '../../../../../../constants/field-ids/insurance/exporter-business';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/account';
 import { RequestBody } from '../../../../../../../types';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 
-const {
-  CONTACT: { FIRST_NAME: FIELD_ID },
-} = FIELD_IDS;
+const { FIRST_NAME: FIELD_ID } = FIELD_IDS;
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 const ERROR_MESSAGE = EXPORTER_BUSINESS[FIELD_ID];

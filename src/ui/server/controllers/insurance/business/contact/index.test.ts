@@ -2,6 +2,7 @@ import { PAGES } from '../../../../content-strings';
 import { pageVariables, get, post, TEMPLATE } from '.';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/exporter-business';
+import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
@@ -10,7 +11,8 @@ import { FIELDS } from '../../../../content-strings/fields/insurance/your-busine
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
-const { COMPANY_NAME, FIRST_NAME, LAST_NAME, EMAIL_ADDRESS, POSITION } = FIELD_IDS.CONTACT;
+const { COMPANY_NAME, POSITION } = FIELD_IDS.CONTACT;
+const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
 const { CONTACT } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { CONTACT: CONTACT_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -61,8 +63,8 @@ describe('controllers/insurance/business/contact', () => {
             ...CONTACT_FIELDS[LAST_NAME],
           },
           EMAIL_ADDRESS: {
-            ID: EMAIL_ADDRESS,
-            ...CONTACT_FIELDS[EMAIL_ADDRESS],
+            ID: EMAIL,
+            ...CONTACT_FIELDS[EMAIL],
           },
           POSITION: {
             ID: POSITION,
@@ -140,7 +142,7 @@ describe('controllers/insurance/business/contact', () => {
         req.body = {
           [FIRST_NAME]: 'test',
           [LAST_NAME]: 'test',
-          [EMAIL_ADDRESS]: 'test@test.com',
+          [EMAIL]: 'test@test.com',
           [POSITION]: 'test',
         };
 

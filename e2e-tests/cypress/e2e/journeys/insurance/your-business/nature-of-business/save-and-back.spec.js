@@ -92,7 +92,10 @@ context('Insurance - Your business - Nature of your business page - Save and bac
 
     it(`should retain the ${GOODS_OR_SERVICES} input on the page and the other fields should be empty`, () => {
       task.link().click();
+      // company details submit
       submitButton().click();
+      // your contact page submit
+      cy.completeAndSubmitYourContact();
 
       natureOfBusiness[GOODS_OR_SERVICES].input().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
       natureOfBusiness[YEARS_EXPORTING].input().should('have.value', '');
@@ -124,7 +127,10 @@ context('Insurance - Your business - Nature of your business page - Save and bac
 
     it(`should retain the ${GOODS_OR_SERVICES} input on the page and the other fields should be empty`, () => {
       task.link().click();
+      // company details submit
       submitButton().click();
+      // your contact page submit
+      cy.completeAndSubmitYourContact();
 
       natureOfBusiness[GOODS_OR_SERVICES].input().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
       natureOfBusiness[YEARS_EXPORTING].input().should('have.value', application.EXPORTER_BUSINESS[YEARS_EXPORTING]);

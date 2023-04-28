@@ -2,16 +2,16 @@ import { yourContactPage } from '../../../../../pages/your-business';
 import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES } from '../../../../../../../constants';
-import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/exporter-business';
+import { EXPORTER_BUSINESS as EXPORTER_BUSINESS_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/exporter-business';
+import { ACCOUNT as ACCOUNT_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/account';
 
 const {
   CONTACT: {
-    FIRST_NAME,
-    LAST_NAME,
-    EMAIL_ADDRESS,
     POSITION,
   },
-} = FIELD_IDS;
+} = EXPORTER_BUSINESS_FIELD_IDS;
+
+const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
 const {
   ROOT,
@@ -51,7 +51,7 @@ describe('Insurance - Your business - Contact page - form validation', () => {
 
     yourContactPage.field(FIRST_NAME).input().clear();
     yourContactPage.field(LAST_NAME).input().clear();
-    yourContactPage.field(EMAIL_ADDRESS).input().clear();
+    yourContactPage.field(EMAIL).input().clear();
     yourContactPage.field(POSITION).input().clear();
   });
 
@@ -99,8 +99,8 @@ describe('Insurance - Your business - Contact page - form validation', () => {
     });
   });
 
-  describe(EMAIL_ADDRESS, () => {
-    const FIELD_ID = EMAIL_ADDRESS;
+  describe(EMAIL, () => {
+    const FIELD_ID = EMAIL;
     const ERROR_MESSAGE = YOUR_CONTACT_ERRORS[FIELD_ID];
 
     const ERROR_ASSERTIONS = {

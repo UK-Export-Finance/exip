@@ -14,7 +14,7 @@ const {
 } = FIELD_IDS.INSURANCE;
 
 let url;
-let natureOfBusinessUrl;
+let yourContactUrl;
 
 const completeAllFields = (phoneNumber) => {
   cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
@@ -34,7 +34,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
-      natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
+      yourContactUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.CONTACT}`;
 
       cy.navigateToUrl(url);
 
@@ -67,7 +67,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     it('should redirect to next page', () => {
-      cy.url().should('eq', natureOfBusinessUrl);
+      cy.url().should('eq', yourContactUrl);
     });
   });
 
@@ -84,7 +84,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should redirect to next page', () => {
-        cy.url().should('eq', natureOfBusinessUrl);
+        cy.url().should('eq', yourContactUrl);
       });
     });
 
@@ -100,7 +100,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should redirect to next page', () => {
-        cy.url().should('eq', natureOfBusinessUrl);
+        cy.url().should('eq', yourContactUrl);
       });
     });
 
@@ -116,7 +116,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should redirect to next page', () => {
-        cy.url().should('eq', natureOfBusinessUrl);
+        cy.url().should('eq', yourContactUrl);
       });
     });
 
@@ -132,7 +132,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should redirect to next page', () => {
-        cy.url().should('eq', natureOfBusinessUrl);
+        cy.url().should('eq', yourContactUrl);
       });
     });
 
@@ -148,7 +148,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should redirect to next page', () => {
-        cy.url().should('eq', natureOfBusinessUrl);
+        cy.url().should('eq', yourContactUrl);
       });
     });
 
@@ -164,7 +164,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should redirect to next page', () => {
-        cy.url().should('eq', natureOfBusinessUrl);
+        cy.url().should('eq', yourContactUrl);
       });
     });
 
@@ -180,7 +180,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should redirect to next page', () => {
-        cy.url().should('eq', natureOfBusinessUrl);
+        cy.url().should('eq', yourContactUrl);
       });
     });
 
@@ -196,7 +196,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should redirect to next page', () => {
-        cy.url().should('eq', natureOfBusinessUrl);
+        cy.url().should('eq', yourContactUrl);
       });
     });
 
@@ -212,7 +212,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should redirect to next page', () => {
-        cy.url().should('eq', natureOfBusinessUrl);
+        cy.url().should('eq', yourContactUrl);
       });
     });
   });

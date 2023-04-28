@@ -1,12 +1,10 @@
 import emailAddress from './email-address';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import FIELD_IDS from '../../../../../../constants/field-ids/insurance/exporter-business';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/account';
 import { RequestBody } from '../../../../../../../types';
 import emailValidation from '../../../../../../shared-validation/email';
 
-const {
-  CONTACT: { EMAIL_ADDRESS: FIELD_ID },
-} = FIELD_IDS;
+const { EMAIL: FIELD_ID } = FIELD_IDS;
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 const ERROR_MESSAGE = EXPORTER_BUSINESS[FIELD_ID];

@@ -98,6 +98,8 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
       // submit company details form
       submitButton().click();
+      // your contact page submit
+      cy.completeAndSubmitYourContact();
       // submit nature of business form
       submitButton().click();
       // submit turnover form
@@ -144,6 +146,8 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
         // submit company details form
         submitButton().click();
+        // your contact page submit
+        cy.completeAndSubmitYourContact();
         // submit nature of business form
         submitButton().click();
         // submit turnover form
@@ -181,6 +185,8 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
         // submit company details form
         submitButton().click();
+        // your contact page submit
+        cy.completeAndSubmitYourContact();
         // submit nature of business form
         submitButton().click();
         // submit turnover form
