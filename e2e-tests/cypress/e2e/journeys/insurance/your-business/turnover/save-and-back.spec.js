@@ -91,6 +91,8 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
       task.link().click();
       // submit company details form
       submitButton().click();
+            // your contact page submit
+            cy.completeAndSubmitYourContact();
       // submit nature of business form
       submitButton().click();
 
@@ -123,6 +125,8 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
       task.link().click();
       // submit company details form
       submitButton().click();
+            // your contact page submit
+            cy.completeAndSubmitYourContact();
       // submit nature of business form
       submitButton().click();
 

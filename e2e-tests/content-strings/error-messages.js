@@ -89,13 +89,13 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.PHONE_NUMBER]: {
         INCORRECT_FORMAT: 'Enter a UK telephone number',
       },
-      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.FIRST_NAME]: {
+      [FIELD_IDS.INSURANCE.ACCOUNT.FIRST_NAME]: {
         IS_EMPTY: 'Enter the first name of the exporter contact',
       },
-      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.LAST_NAME]: {
+      [FIELD_IDS.INSURANCE.ACCOUNT.LAST_NAME]: {
         IS_EMPTY: 'Enter the last name of the exporter contact',
       },
-      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.EMAIL_ADDRESS]: {
+      [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
         INCORRECT_FORMAT: 'Enter the email address for the exporter contact in the correct format, like name@example.com',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.POSITION]: {
