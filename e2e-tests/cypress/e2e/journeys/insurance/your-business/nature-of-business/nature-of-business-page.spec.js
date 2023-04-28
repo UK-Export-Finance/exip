@@ -43,6 +43,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
       task.link().click();
 
       cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitYourContact();
 
       natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
 
@@ -64,7 +65,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`,
-      backLink: `${ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`,
+      backLink: `${ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.CONTACT}`,
     });
   });
 

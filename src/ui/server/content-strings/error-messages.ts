@@ -77,7 +77,7 @@ export const ERROR_MESSAGES = {
     },
     EXPORTER_BUSINESS: {
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT]: {
-        INCORRECT_FORMAT: 'Enter your Companies House registration number in the correct format - for example, 8989898 or SC907816',
+        INCORRECT_FORMAT: 'Enter your Companies House registration number in the correct format, like 8989898 or SC907816',
         NOT_FOUND: 'The number you entered does not match any company in Companies House - try again',
         TECHNICAL_ISSUES: 'Due to technical issues, you cannot search for your Companies House registration number right now - try again in few minutes',
       },
@@ -92,6 +92,18 @@ export const ERROR_MESSAGES = {
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.PHONE_NUMBER]: {
         INCORRECT_FORMAT: 'Enter a UK telephone number',
+      },
+      [FIELD_IDS.INSURANCE.ACCOUNT.FIRST_NAME]: {
+        IS_EMPTY: 'Enter the first name of the exporter contact',
+      },
+      [FIELD_IDS.INSURANCE.ACCOUNT.LAST_NAME]: {
+        IS_EMPTY: 'Enter the last name of the exporter contact',
+      },
+      [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
+        INCORRECT_FORMAT: 'Enter the email address for the exporter contact in the correct format, like name@example.com',
+      },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.POSITION]: {
+        IS_EMPTY: 'Enter the position at company of the exporter contact',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {
         IS_EMPTY: 'Enter the goods or services that your company supplies',
@@ -113,7 +125,7 @@ export const ERROR_MESSAGES = {
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.ESTIMATED_ANNUAL_TURNOVER]: {
         IS_EMPTY: 'Enter your estimated annual turnover for this current financial year',
-        INCORRECT_FORMAT: 'Enter your estimated annual turnover for the current financial year in the correct format - for example, whole numbers only',
+        INCORRECT_FORMAT: 'Enter your estimated annual turnover for the current financial year in the correct format, like whole numbers only',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.PERCENTAGE_TURNOVER]: {
         IS_EMPTY: 'Enter your estimated percentage of turnover from exports',
@@ -135,7 +147,7 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'Enter the town or city for your broker',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.EMAIL]: {
-        INCORRECT_FORMAT: 'Enter the email address for the broker in the correct format - for example name@example.com',
+        INCORRECT_FORMAT: 'Enter the email address for the broker in the correct format, like name@example.com',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.POSTCODE]: {
         IS_EMPTY: 'Enter the postcode for your broker',
@@ -154,8 +166,8 @@ export const ERROR_MESSAGES = {
           ABOVE_MAXIMUM: 'The credit period you have with your buyer cannot be more than 1000 characters.',
         },
         [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.REQUESTED_START_DATE]: {
-          INCORRECT_FORMAT: 'Enter a policy start date in the correct format - for example, 06 11 2023',
-          NOT_A_NUMBER: 'Enter a policy start date in the correct format - for example, 06 11 2023',
+          INCORRECT_FORMAT: 'Enter a policy start date in the correct format, like 06 11 2023',
+          NOT_A_NUMBER: 'Enter a policy start date in the correct format, like 06 11 2023',
           BEFORE_EARLIEST: 'You cannot enter a policy start date in the past - enter a future date',
         },
         [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
@@ -163,8 +175,8 @@ export const ERROR_MESSAGES = {
         },
         SINGLE: {
           [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {
-            INCORRECT_FORMAT: 'Enter a contract completion date in the correct format - for example, 06 11 2023',
-            NOT_A_NUMBER: 'Enter a contract completion date in the correct format - for example, 06 11 2023',
+            INCORRECT_FORMAT: 'Enter a contract completion date in the correct format, like 06 11 2023',
+            NOT_A_NUMBER: 'Enter a contract completion date in the correct format, like 06 11 2023',
             BEFORE_EARLIEST: 'You cannot enter a contract completion date in the past - enter a future date',
             AFTER_LATEST:
               "Your contract completion date is more than 2 years after your policy start date. You'll need to speak with an export finance manager, if you still want to apply",
@@ -249,12 +261,12 @@ export const ERROR_MESSAGES = {
             IS_EMPTY: 'Enter your last name',
           },
           [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
-            INCORRECT_FORMAT: 'Enter your email address in the correct format - for example name@example.com',
+            INCORRECT_FORMAT: 'Enter your email address in the correct format, like name@example.com',
             ACCOUNT_ALREADY_EXISTS: 'There is already an account with this email address. Please sign in or reset your password',
           },
           [FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD]: {
             INCORRECT_FORMAT:
-              'Enter a password in the correct format - for example, 14 characters long with an uppercase letter, lower case letter, number and special character',
+              'Enter a password in the correct format, like 14 characters long with an uppercase letter, lower case letter, number and special character',
           },
         },
       },
@@ -271,7 +283,7 @@ export const ERROR_MESSAGES = {
       },
       PASSWORD_RESET: {
         [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
-          INCORRECT_FORMAT: 'Enter your email address in the correct format - for example name@example.com',
+          INCORRECT_FORMAT: 'Enter your email address in the correct format, like name@example.com',
         },
       },
     },
