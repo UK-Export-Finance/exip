@@ -16,7 +16,7 @@ context('Insurance - application submitted page', () => {
   let url;
 
   before(() => {
-    cy.completeSignInAndSubmitAnApplication().then((refNumber) => {
+    cy.completeSignInAndSubmitAnApplication({}).then((refNumber) => {
       referenceNumber = refNumber;
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
