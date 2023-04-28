@@ -19,7 +19,7 @@ context('Insurance - no access to application when application is submitted', ()
   const url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
   before(() => {
-    cy.completeSignInAndSubmitAnApplication().then((refNumber) => {
+    cy.completeSignInAndSubmitAnApplication({}).then((refNumber) => {
       referenceNumber = refNumber;
 
       const submittedUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;

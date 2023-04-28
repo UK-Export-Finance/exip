@@ -28,6 +28,8 @@ const {
   PREPERATION_OF_STATEMENT,
 } = CONTENT_STRINGS;
 
+const startRoute = ROUTES.QUOTE.START;
+
 context('Accessibility statement page', () => {
   beforeEach(() => {
     cy.login();
@@ -49,6 +51,10 @@ context('Accessibility statement page', () => {
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
     });
+  });
+
+  it('should render a header with href to quote start', () => {
+    partials.header.serviceName().should('have.attr', 'href', startRoute);
   });
 
   it('renders a service link', () => {
