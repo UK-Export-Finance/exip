@@ -1,7 +1,11 @@
 import { yesRadio, noRadio, submitButton } from '../../../e2e/pages/shared';
 import { FIELD_VALUES } from '../../../../constants';
 
-export default (answer) => {
+/**
+ * completeAndSubmitAntiBriberyExportingWithCodeOfConductForm
+ * @param {String} Yes/no answer
+ */
+const completeAndSubmitAntiBriberyExportingWithCodeOfConductForm = (answer) => {
   if (answer === FIELD_VALUES.NO) {
     noRadio().click();
   } else {
@@ -10,3 +14,5 @@ export default (answer) => {
 
   submitButton().click();
 };
+
+export default completeAndSubmitAntiBriberyExportingWithCodeOfConductForm;
