@@ -7,7 +7,7 @@ import mockAccount from '../fixtures/account';
 const {
   INSURANCE: {
     DASHBOARD,
-    ACCOUNT: { MANAGE_ACCOUNT, SIGN_OUT },
+    ACCOUNT: { MANAGE, SIGN_OUT },
   },
 } = ROUTES;
 
@@ -22,7 +22,7 @@ const {
 const checkAuthenticatedHeader = () => {
   const expectedAccountName = `${mockAccount[FIRST_NAME]} ${mockAccount[LAST_NAME]}`;
 
-  cy.checkLink(header.navigation.manageAccount(), MANAGE_ACCOUNT, expectedAccountName);
+  cy.checkLink(header.navigation.manageAccount(), MANAGE, expectedAccountName);
   cy.checkLink(header.navigation.applications(), DASHBOARD, HEADER.APPLICATIONS.TEXT);
   cy.checkLink(header.navigation.signOut(), SIGN_OUT, HEADER.SIGN_OUT.TEXT);
 };

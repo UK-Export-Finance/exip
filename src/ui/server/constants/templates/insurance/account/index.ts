@@ -17,5 +17,6 @@ export const ACCOUNT_TEMPLATES = {
     NEW_PASSWORD: 'insurance/account/password-reset/new-password.njk',
     SUCCESS: 'insurance/account/password-reset/success.njk',
   },
+  MANAGE: 'insurance/account/manage.njk',
   SIGNED_OUT: 'insurance/account/signed-out.njk',
 };
