@@ -60,7 +60,8 @@ export const get = (req: Request, res: Response) => {
   const renderSuccessBanner = successFlash.includes('newAccountVerified') || false;
 
   const importantFlash = req.flash('importantBanner');
-  const renderImportantBanner = importantFlash.includes('successfulSignOut') || false;
+
+  const hasSignedOut = importantFlash.includes('successfulSignOut') || false;
 
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
@@ -70,7 +71,8 @@ export const get = (req: Request, res: Response) => {
     ...PAGE_VARIABLES,
     userName: getUserNameFromSession(req.session.user),
     renderSuccessBanner,
-    renderImportantBanner,
+    renderImportantBanner: hasSignedOut,
+    renderBackLink: !hasSignedOut,
   });
 };
 
@@ -91,6 +93,7 @@ export const post = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...PAGE_VARIABLES,
+      renderBackLink: true,
       userName: getUserNameFromSession(req.session.user),
       submittedValues: req.body,
       validationErrors,
@@ -121,6 +124,7 @@ export const post = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...PAGE_VARIABLES,
+      renderBackLink: true,
       userName: getUserNameFromSession(req.session.user),
       submittedValues: req.body,
       validationErrors,

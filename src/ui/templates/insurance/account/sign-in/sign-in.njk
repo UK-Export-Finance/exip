@@ -11,13 +11,15 @@
 
 {% block content %}
 
-  {{ govukBackLink({
-    text: CONTENT_STRINGS.LINKS.BACK,
-    href: BACK_LINK,
-    attributes: {
-      "data-cy": "back-link"
-    }
-  }) }}
+  {% if renderBackLink %}
+    {{ govukBackLink({
+      text: CONTENT_STRINGS.LINKS.BACK,
+      href: BACK_LINK,
+      attributes: {
+        "data-cy": "back-link"
+      }
+    }) }}
+  {% endif %}
 
   {% if validationErrors.summary %}
     {{ govukErrorSummary({

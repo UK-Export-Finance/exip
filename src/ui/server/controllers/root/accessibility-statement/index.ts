@@ -1,19 +1,20 @@
-import { BUTTONS, COOKIES_CONSENT, FOOTER, LINKS, PRODUCT, PAGES, PHASE_BANNER } from '../../../content-strings';
+import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
+import corePageVariables from '../../../helpers/page-variables/core/quote';
 import { Request, Response } from '../../../../types';
 
-export const get = (req: Request, res: Response) => {
-  return res.render(TEMPLATES.ACCESSIBILITY_STATEMENT, {
-    CONTENT_STRINGS: {
-      COOKIES_CONSENT,
-      BUTTONS,
-      FOOTER,
-      LINKS,
-      PRODUCT,
-      PHASE_BANNER,
-      ...PAGES.ACCESSIBILITY_STATEMENT_PAGE,
-    },
-    BACK_LINK: req.headers.referer,
-    FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
-  });
-};
+/**
+ * get
+ * Render the Quote Accessibility statement page
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.render} Quote Accessibility statement page
+ */
+export const get = (req: Request, res: Response) =>
+  res.render(
+    TEMPLATES.ACCESSIBILITY_STATEMENT,
+    corePageVariables({
+      PAGE_CONTENT_STRINGS: PAGES.ACCESSIBILITY_STATEMENT_PAGE,
+      BACK_LINK: req.headers.referer,
+    }),
+  );

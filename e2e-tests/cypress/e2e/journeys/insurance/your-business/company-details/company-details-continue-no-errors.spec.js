@@ -20,7 +20,7 @@ const { EXPORTER_COMPANY } = application;
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section", () => {
   let referenceNumber;
   let url;
-  let natureOfBusinessUrl;
+  let contactUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -28,7 +28,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
-      natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
+      contactUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.CONTACT}`;
 
       cy.navigateToUrl(url);
 
@@ -57,8 +57,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         submitButton().click();
       });
 
-      it(`should redirect to ${natureOfBusinessUrl}`, () => {
-        cy.url().should('eq', natureOfBusinessUrl);
+      it(`should redirect to ${contactUrl}`, () => {
+        cy.url().should('eq', contactUrl);
       });
     });
 
@@ -77,8 +77,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         submitButton().click();
       });
 
-      it(`should redirect to ${natureOfBusinessUrl}`, () => {
-        cy.url().should('eq', natureOfBusinessUrl);
+      it(`should redirect to ${contactUrl}`, () => {
+        cy.url().should('eq', contactUrl);
       });
     });
   });

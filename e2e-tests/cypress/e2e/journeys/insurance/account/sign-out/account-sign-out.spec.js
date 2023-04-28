@@ -1,4 +1,5 @@
 import header from '../../../../partials/header';
+import { backLink } from '../../../../pages/shared';
 import { signInPage } from '../../../../pages/insurance/account/sign-in';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
@@ -34,7 +35,7 @@ context('Insurance - Account - Sign out - As an Exporter, I want to be able to s
       header.navigation.signOut().click();
     });
 
-    it(`should redirect to ${SIGN_IN_ROOT} and display an 'important' banner with signed out copy`, () => {
+    it(`should redirect to ${SIGN_IN_ROOT}, display an 'important' banner with signed out copy and NOT render a back link`, () => {
       const expectedUrl = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
 
       cy.url().should('eq', expectedUrl);
@@ -42,6 +43,8 @@ context('Insurance - Account - Sign out - As an Exporter, I want to be able to s
       signInPage.importantBanner.container().should('exist');
 
       cy.checkText(signInPage.importantBanner.heading(), CONTENT_STRINGS.IMPORTANT_BANNER.SUCCESSFULLY_SIGNED_OUT);
+
+      backLink().should('not.exist');
     });
 
     it(`should now redirect to ${SIGN_IN_ROOT} when visiting an authenticated page because the user session has been deleted`, () => {

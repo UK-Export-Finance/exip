@@ -21,6 +21,15 @@ export const COMPANIES_HOUSE_UNAVAILABLE = {
   INFORMATION: '(You may lose any information you entered on the previous page.)',
 };
 
+export const CONTACT = {
+  ...SHARED,
+  PAGE_TITLE: 'Your contact details',
+  CONTACT_DETAILS: {
+    LABEL: 'Contact details',
+    HINT: 'This will be the name on the contract policy',
+  },
+};
+
 export const NATURE_OF_YOUR_BUSINESS = {
   ...SHARED,
   PAGE_TITLE: 'Nature of your business',

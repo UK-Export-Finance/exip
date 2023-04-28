@@ -26,7 +26,7 @@ const { VALID_PHONE_NUMBERS } = mockPhoneNumbers;
 const {
   INSURANCE_ROOT,
   EXPORTER_BUSINESS: {
-    NATURE_OF_BUSINESS_ROOT,
+    CONTACT_ROOT,
     CHECK_YOUR_ANSWERS,
     COMPANY_DETAILS_CHANGE,
     COMPANY_DETAILS_ROOT,
@@ -103,7 +103,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
+        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CONTACT_ROOT}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 

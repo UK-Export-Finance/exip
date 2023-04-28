@@ -16,6 +16,12 @@ const PASSWORD_HINT = {
 };
 
 export const ACCOUNT_FIELDS = {
+  [FIRST_NAME]: {
+    LABEL: 'First name',
+  },
+  [LAST_NAME]: {
+    LABEL: 'Last name',
+  },
   [EMAIL]: {
     LABEL: 'Email address',
   },
