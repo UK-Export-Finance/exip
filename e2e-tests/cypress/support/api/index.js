@@ -218,11 +218,23 @@ const deleteExportersById = async (id) => {
 
 /**
  * addAndGetOTP
- * Add a OTP to an exporter account and return the security code
- * @param {String} Exporter email address
+ * Create and get an OTP for the exporter's account directly from the API,
+ * so that we can assert enter a valid security code and continue the journey.
+ * This is to ensure that we are testing a real world scenario.
+ *
+ * The alternative approach is to either intercept the UI requests and fake the security code validation,
+ * or have email inbox testing capabilities which can be risky/flaky.
+ * This approach practically mimics "get my security code from my email inbox".
+ * @param {String} Account email address
  * @returns {Object} security code
  */
-const addAndGetOTP = async (email) => {
+const addAndGetOTP = async (emailAddress) => {
+  let email = emailAddress;
+
+  if (!email) {
+    email = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+  }
+
   try {
     const responseBody = await apollo.query({
       query: queryStrings.addAndGetOTP(),
@@ -239,15 +251,22 @@ const addAndGetOTP = async (email) => {
 
 /**
  * getAccountPasswordResetToken
- * Get an account's password reset token
- * @param {String} Account ID
- * @returns {Object} Account password reset token
+ * Get an account's password reset token directly from the API,
+ * so that we can visit the `new password` page and continue the journey.
+ * This is to ensure that we are testing a real world scenario.
+ *
+ * The alternative approach is to either intercept the UI requests and fake the password reset token generation,
+ * or have email inbox testing capabilities which can be risky/flaky.
+ * This approach practically mimics "get my password reset link from my email inbox".
+ * @returns {String} Account password reset token
  */
-const getAccountPasswordResetToken = async (email) => {
+const getAccountPasswordResetToken = async () => {
+  const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+
   try {
     const responseBody = await apollo.query({
       query: queryStrings.getAccountPasswordResetToken(),
-      variables: { email },
+      variables: { email: accountEmail },
     }).then((response) => response.data.getAccountPasswordResetToken);
 
     return responseBody.token;

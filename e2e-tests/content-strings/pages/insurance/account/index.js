@@ -115,6 +115,11 @@ const ACCOUNT = {
         },
       },
     },
+    LINK_EXPIRED: {
+      PAGE_TITLE: 'Your password reset link has expired',
+      PASSWORD_NOT_RESET: 'Your password has not been reset.',
+      IF_YOU_WOULD_LIKE: 'If you would still like to reset your password we can send you a new link.',
+    },
     NEW_PASSWORD: {
       PAGE_TITLE: 'Reset your password',
     },

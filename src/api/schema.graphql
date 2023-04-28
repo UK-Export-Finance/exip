@@ -1868,7 +1868,10 @@ type Query {
   getAccountByEmail(email: String!): Account
 
   """ get an account's password reset token """
-  getAccountPasswordResetToken(email: String!): getAccountPasswordResetTokenResponse
+  getAccountPasswordResetToken(email: String!): AccountPasswordResetTokenResponse
+
+  """ verify an account's password reset token """
+  verifyAccountPasswordResetToken(token: String!): AccountPasswordResetTokenResponse
 
   """ get companies house information """
   getCompaniesHouseInformation(companiesHouseNumber: String!): CompaniesHouseResponse
@@ -2096,9 +2099,10 @@ type AddAndGetOtpResponse {
   securityCode: String!
 }
 
-type getAccountPasswordResetTokenResponse {
+type AccountPasswordResetTokenResponse {
   success: Boolean!
   token: String
+  expired: Boolean
 }
 
 type VerifyAccountEmailAddressResponse {

@@ -13,6 +13,7 @@ export const ACCOUNT_TEMPLATES = {
   PASSWORD_RESET: {
     ROOT: 'insurance/account/password-reset/password-reset.njk',
     LINK_SENT: 'insurance/account/password-reset/link-sent.njk',
+    LINK_EXPIRED: 'insurance/account/password-reset/link-expired.njk',
     NEW_PASSWORD: 'insurance/account/password-reset/new-password.njk',
     SUCCESS: 'insurance/account/password-reset/success.njk',
   },
