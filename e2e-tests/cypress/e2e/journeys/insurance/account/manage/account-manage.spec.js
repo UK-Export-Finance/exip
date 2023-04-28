@@ -1,10 +1,10 @@
-import partials from '../../../partials';
-import enterCodePage from '../../../pages/insurance/account/sign-in/enterCode';
-import manageAccountPage from '../../../pages/insurance/account/manage';
-import { submitButton } from '../../../pages/shared';
-import { PAGES } from '../../../../../content-strings';
-import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insurance';
-import { INSURANCE_ROUTES as ROUTES } from '../../../../../constants/routes/insurance';
+import partials from '../../../../partials';
+import enterCodePage from '../../../../pages/insurance/account/sign-in/enterCode';
+import manageAccountPage from '../../../../pages/insurance/account/manage';
+import { submitButton } from '../../../../pages/shared';
+import { PAGES } from '../../../../../../content-strings';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.MANAGE;
 
