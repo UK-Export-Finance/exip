@@ -14,7 +14,7 @@ const {
 const {
   INSURANCE: {
     ACCOUNT: {
-      PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, SUCCESS },
+      PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, SUCCESS, LINK_EXPIRED },
     },
   },
 } = ROUTES;
@@ -37,25 +37,36 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.NEW_P
 
 /**
  * get
- * Render the New password page
+ * Verify the token is valid and if so, render the New password page.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} New password page
  */
-export const get = (req: Request, res: Response) => {
-  const { token } = req.query;
+export const get = async (req: Request, res: Response) => {
+  try {
+    const { token } = req.query;
 
-  if (!token) {
-    return res.redirect(PASSWORD_RESET_ROOT);
+    if (!token) {
+      return res.redirect(PASSWORD_RESET_ROOT);
+    }
+
+    const response = await api.keystone.account.verifyPasswordResetToken(token);
+
+    if (!response.success || response.expired) {
+      return res.redirect(LINK_EXPIRED);
+    }
+
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...PAGE_VARIABLES,
+    });
+  } catch (err) {
+    console.error('Error verifying account password reset token', { err });
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
-
-  return res.render(TEMPLATE, {
-    ...insuranceCorePageVariables({
-      PAGE_CONTENT_STRINGS,
-      BACK_LINK: req.headers.referer,
-    }),
-    ...PAGE_VARIABLES,
-  });
 };
 
 /**

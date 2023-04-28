@@ -70,7 +70,8 @@ var ACCOUNT = {
   PASSWORD: "password",
   SECURITY_CODE: "securityCode",
   VERIFICATION_HASH: "verificationHash",
-  PASSWORD_RESET_HASH: "passwordResetHash"
+  PASSWORD_RESET_HASH: "passwordResetHash",
+  PASSWORD_RESET_EXPIRY: "passwordResetExpiry"
 };
 var account_default = ACCOUNT;
 
@@ -1456,9 +1457,10 @@ var typeDefs = `
     securityCode: String!
   }
 
-  type getAccountPasswordResetTokenResponse {
+  type AccountPasswordResetTokenResponse {
     success: Boolean!
     token: String
+    expired: Boolean
   }
 
   type VerifyAccountEmailAddressResponse {
@@ -1552,7 +1554,12 @@ var typeDefs = `
     """ get an account's password reset token """
     getAccountPasswordResetToken(
       email: String!
-    ): getAccountPasswordResetTokenResponse
+    ): AccountPasswordResetTokenResponse
+
+    """ verify an account's password reset token """
+    verifyAccountPasswordResetToken(
+      token: String!
+    ): AccountPasswordResetTokenResponse
 
     """ get companies house information """
     getCompaniesHouseInformation(
@@ -3340,6 +3347,36 @@ var getAccountPasswordResetToken = async (root, variables, context) => {
 };
 var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
+// custom-resolvers/queries/verify-account-password-reset-token.ts
+var import_date_fns7 = require("date-fns");
+var {
+  ACCOUNT: { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY }
+} = FIELD_IDS.INSURANCE;
+var verifyAccountPasswordResetToken = async (root, variables, context) => {
+  console.info("Verifying account password reset token");
+  try {
+    const { token } = variables;
+    const account = await get_account_by_field_default(context, PASSWORD_RESET_HASH, token);
+    if (!account) {
+      console.info("Unable to verify account password reset token - account does not exist");
+      return { success: false };
+    }
+    const now = /* @__PURE__ */ new Date();
+    const hasExpired = (0, import_date_fns7.isAfter)(now, account[PASSWORD_RESET_EXPIRY]);
+    if (hasExpired) {
+      console.info("Account password reset token has expired");
+      return {
+        success: false,
+        expired: true
+      };
+    }
+    return { success: true };
+  } catch (err) {
+    throw new Error(`Verifying account password reset token ${err}`);
+  }
+};
+var verify_account_password_reset_token_default = verifyAccountPasswordResetToken;
+
 // custom-resolvers/index.ts
 var customResolvers = {
   Mutation: {
@@ -3359,7 +3396,8 @@ var customResolvers = {
   },
   Query: {
     getCompaniesHouseInformation: get_companies_house_information_default,
-    getAccountPasswordResetToken: get_account_password_reset_token_default
+    getAccountPasswordResetToken: get_account_password_reset_token_default,
+    verifyAccountPasswordResetToken: verify_account_password_reset_token_default
   }
 };
 var custom_resolvers_default = customResolvers;
