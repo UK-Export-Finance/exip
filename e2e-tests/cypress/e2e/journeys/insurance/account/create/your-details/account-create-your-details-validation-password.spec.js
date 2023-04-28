@@ -1,6 +1,5 @@
-import { submitButton } from '../../../../../pages/shared';
-import partials from '../../../../../partials';
 import accountFormFields from '../../../../../partials/insurance/accountFormFields';
+import { INVALID_PASSWORDS } from '../../../../../../../constants/examples';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -22,22 +21,13 @@ const {
   },
 } = ERROR_MESSAGES;
 
-const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT;
-
-const submitAndAssertFieldErrors = (fieldValue) => {
-  const field = accountFormFields[PASSWORD];
-
-  cy.keyboardInput(field.input(), fieldValue);
-
-  submitButton().click();
-
-  cy.checkText(
-    partials.errorSummaryListItems().eq(3),
-    expectedMessage,
-  );
-
-  cy.checkText(field.errorMessage(), `Error: ${expectedMessage}`);
-};
+const fieldErrorAssertions = (value) => ({
+  field: accountFormFields[PASSWORD],
+  value,
+  fieldIndex: 3,
+  errorSummaryLength: 4,
+  errorMessage: YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT,
+});
 
 context('Insurance - Account - Create - Your details page - form validation - password', () => {
   let url;
@@ -59,32 +49,72 @@ context('Insurance - Account - Create - Your details page - form validation - pa
   });
 
   it('should render a validation error when password does not have the minimum amount of characters', () => {
-    const invalidPassword = 'Mock1!';
+    const submittedValue = INVALID_PASSWORDS.NOT_MINIMUM_CHARACTERS;
 
-    submitAndAssertFieldErrors(invalidPassword);
+    const {
+      field,
+      value,
+      fieldIndex,
+      errorSummaryLength,
+      errorMessage,
+    } = fieldErrorAssertions(submittedValue);
+
+    cy.submitAndAssertFieldErrors(field, value, fieldIndex, errorSummaryLength, errorMessage);
   });
 
   it('should render a validation error when password does not contain an uppercase letter', () => {
-    const invalidPassword = 'mockpassword1!';
+    const submittedValue = INVALID_PASSWORDS.NO_UPPERCASE_LETTER;
 
-    submitAndAssertFieldErrors(invalidPassword);
+    const {
+      field,
+      value,
+      fieldIndex,
+      errorSummaryLength,
+      errorMessage,
+    } = fieldErrorAssertions(submittedValue);
+
+    cy.submitAndAssertFieldErrors(field, value, fieldIndex, errorSummaryLength, errorMessage);
   });
 
   it('should render a validation error when password does not contain a lowercase letter', () => {
-    const invalidPassword = 'MOCKPASSWORD1!';
+    const submittedValue = INVALID_PASSWORDS.NO_LOWERCASE_LETTER;
 
-    submitAndAssertFieldErrors(invalidPassword);
+    const {
+      field,
+      value,
+      fieldIndex,
+      errorSummaryLength,
+      errorMessage,
+    } = fieldErrorAssertions(submittedValue);
+
+    cy.submitAndAssertFieldErrors(field, value, fieldIndex, errorSummaryLength, errorMessage);
   });
 
   it('should render a validation error when password does not contain a number', () => {
-    const invalidPassword = 'Mockpassword!';
+    const submittedValue = INVALID_PASSWORDS.NO_NUMBER;
 
-    submitAndAssertFieldErrors(invalidPassword);
+    const {
+      field,
+      value,
+      fieldIndex,
+      errorSummaryLength,
+      errorMessage,
+    } = fieldErrorAssertions(submittedValue);
+
+    cy.submitAndAssertFieldErrors(field, value, fieldIndex, errorSummaryLength, errorMessage);
   });
 
   it('should render a validation error when password does not contain a special character', () => {
-    const invalidPassword = 'Mockpassword1';
+    const submittedValue = INVALID_PASSWORDS.NO_SPECIAL_CHARACTER;
 
-    submitAndAssertFieldErrors(invalidPassword);
+    const {
+      field,
+      value,
+      fieldIndex,
+      errorSummaryLength,
+      errorMessage,
+    } = fieldErrorAssertions(submittedValue);
+
+    cy.submitAndAssertFieldErrors(field, value, fieldIndex, errorSummaryLength, errorMessage);
   });
 });
