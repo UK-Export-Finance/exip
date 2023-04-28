@@ -87,6 +87,7 @@ describe('controllers/insurance/account/sign-in', () => {
         userName: getUserNameFromSession(req.session.user),
         renderSuccessBanner: false,
         renderImportantBanner: false,
+        renderBackLink: true,
       });
     });
 
@@ -102,7 +103,7 @@ describe('controllers/insurance/account/sign-in', () => {
         };
       });
 
-      it('should render template with renderSuccessBanner', () => {
+      it('should render template with renderSuccessBanner and renderBackLink as true', () => {
         get(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
@@ -114,11 +115,12 @@ describe('controllers/insurance/account/sign-in', () => {
           userName: getUserNameFromSession(req.session.user),
           renderSuccessBanner: true,
           renderImportantBanner: false,
+          renderBackLink: true,
         });
       });
     });
 
-    describe("when req.flash('successBanner') includes 'newAccountVerified')", () => {
+    describe("when req.flash('importantFlash') includes 'successfulSignOut')", () => {
       beforeEach(() => {
         req.flash = (property: string) => {
           const obj = {
@@ -130,7 +132,7 @@ describe('controllers/insurance/account/sign-in', () => {
         };
       });
 
-      it('should render template with renderSuccessBanner', () => {
+      it('should render template with renderImportantBanner and renderBackLink as false', () => {
         get(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
@@ -142,6 +144,7 @@ describe('controllers/insurance/account/sign-in', () => {
           userName: getUserNameFromSession(req.session.user),
           renderSuccessBanner: false,
           renderImportantBanner: true,
+          renderBackLink: false,
         });
       });
     });
@@ -176,6 +179,7 @@ describe('controllers/insurance/account/sign-in', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...PAGE_VARIABLES,
+          renderBackLink: true,
           userName: getUserNameFromSession(req.session.user),
           submittedValues: req.body,
           validationErrors: generateValidationErrors(req.body),
@@ -231,6 +235,7 @@ describe('controllers/insurance/account/sign-in', () => {
               BACK_LINK: req.headers.referer,
             }),
             ...PAGE_VARIABLES,
+            renderBackLink: true,
             userName: getUserNameFromSession(req.session.user),
             submittedValues: req.body,
             validationErrors: generateValidationErrors({}),
