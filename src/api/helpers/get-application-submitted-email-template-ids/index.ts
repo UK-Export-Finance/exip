@@ -7,6 +7,12 @@ const {
   },
 } = EMAIL_TEMPLATE_IDS;
 
+/**
+ * getApplicationSubmittedEmailTemplateIds
+ * Get "application submitted" email template IDs team depending on submitted answers
+ * @param {Object} Application
+ * @returns {Object} Email template IDs for exporter and underwriting
+ */
 const getApplicationSubmittedEmailTemplateIds = (application: Application) => {
   const { buyer, declaration } = application;
 
