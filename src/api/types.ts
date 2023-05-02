@@ -125,6 +125,7 @@ interface ApplicationSubmissionEmailVariables {
   firstName: string;
   referenceNumber: number;
   buyerName: string;
+  buyerLocation: string;
 }
 
 type BufferEncoding = 'hex' | 'base64' | 'ascii';

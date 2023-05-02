@@ -4,7 +4,8 @@ import sendApplicationSubmittedEmails from '.';
 import baseConfig from '../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import sendEmail from '../index';
-import { ANSWERS, EMAIL_TEMPLATE_IDS } from '../../constants';
+import { ANSWERS } from '../../constants';
+import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-application-submitted-email-template-ids';
 import { createFullApplication } from '../../test-helpers';
 import { Application, ApplicationSubmissionEmailVariables } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -60,6 +61,7 @@ describe('emails/send-email-application-submitted', () => {
         firstName,
         referenceNumber,
         buyerName: companyOrOrganisationName,
+        buyerLocation: buyer.country?.name,
         exporterCompanyName: companyName,
       } as ApplicationSubmissionEmailVariables;
     });
@@ -71,12 +73,22 @@ describe('emails/send-email-application-submitted', () => {
       expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars);
     });
 
-    test('it should call sendEmail.documentsEmail with correct template ID ', async () => {
+    test('it should call sendEmail.applicationSubmitted.exporter with the correct template ID', async () => {
+      await sendApplicationSubmittedEmails.send(application, mockCsvPath);
+
+      expect(underwritingTeamEmailSpy).toHaveBeenCalledTimes(1);
+
+      const templateId = getApplicationSubmittedEmailTemplateIds(application).underwritingTeam;
+
+      expect(underwritingTeamEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, mockCsvPath, templateId);
+    });
+
+    test('it should call sendEmail.documentsEmail with the correct template ID', async () => {
       await sendApplicationSubmittedEmails.send(application, mockCsvPath);
 
       expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
-      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
+      const templateId = getApplicationSubmittedEmailTemplateIds(application).exporter;
 
       expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateId);
     });
@@ -89,12 +101,12 @@ describe('emails/send-email-application-submitted', () => {
         };
       });
 
-      test('it should call sendEmail.documentsEmail with correct template ID', async () => {
+      test('it should call sendEmail.documentsEmail with the correct template ID', async () => {
         await sendApplicationSubmittedEmails.send(application, mockCsvPath);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
-        const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;
+        const templateId = getApplicationSubmittedEmailTemplateIds(application).exporter;
 
         expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateId);
       });
@@ -138,7 +150,7 @@ describe('emails/send-email-application-submitted', () => {
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
-        const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY;
+        const templateId = getApplicationSubmittedEmailTemplateIds(application).exporter;
 
         expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateId);
       });
