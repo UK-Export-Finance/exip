@@ -275,6 +275,13 @@ export const ERROR_MESSAGES = {
       },
       [FIELD_IDS.INSURANCE.ACCOUNT.SECURITY_CODE]: {
         INCORRECT: 'Enter your 6-digit security code - for example, 356515. You cannot enter letters or special characters.',
+        ACCOUNT_DOES_NOT_EXIST: 'Enter the email address used when creating your account',
+      },
+      PASSWORD_RESET: {
+        [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
+          INCORRECT_FORMAT: 'Enter your email address in the correct format, like name@example.com',
+          ACCOUNT_DOES_NOT_EXIST: 'Enter the email address used when creating your account',
+        },
       },
     },
     DECLARATIONS: {

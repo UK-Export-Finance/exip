@@ -284,6 +284,7 @@ export const ERROR_MESSAGES = {
       PASSWORD_RESET: {
         [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
           INCORRECT_FORMAT: 'Enter your email address in the correct format, like name@example.com',
+          ACCOUNT_DOES_NOT_EXIST: 'Enter the email address used when creating your account',
         },
       },
     },

@@ -5,6 +5,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import generateValidationErrors from './validation';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import api from '../../../../api';
+import accountDoesNotExistValidation from './validation/account-does-not-exist';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -60,7 +61,7 @@ export const get = (req: Request, res: Response) =>
  */
 export const post = async (req: Request, res: Response) => {
   try {
-    const validationErrors = generateValidationErrors(req.body);
+    let validationErrors = generateValidationErrors(req.body);
 
     if (validationErrors) {
       return res.render(TEMPLATE, {
@@ -85,7 +86,18 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(LINK_SENT);
     }
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    // no account found
+    validationErrors = accountDoesNotExistValidation();
+
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...PAGE_VARIABLES,
+      submittedValues: req.body,
+      validationErrors,
+    });
   } catch (err) {
     console.error('Error posting account password reset form', { err });
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
