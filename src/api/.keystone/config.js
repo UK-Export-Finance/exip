@@ -2351,12 +2351,12 @@ var getApplicationSubmittedEmailTemplateIds = (application) => {
     templateIds.exporter = EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY;
   }
-  const isConectedWithBuyer = buyer.exporterIsConnectedWithBuyer && buyer.exporterIsConnectedWithBuyer === ANSWERS.YES;
-  if (isConectedWithBuyer) {
+  const isConnectedWithBuyer = buyer.exporterIsConnectedWithBuyer && buyer.exporterIsConnectedWithBuyer === ANSWERS.YES;
+  if (isConnectedWithBuyer) {
     templateIds.exporter = EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_TRADING_HISTORY;
   }
-  if (hasAntiBriberyCodeOfConduct && isConectedWithBuyer) {
+  if (hasAntiBriberyCodeOfConduct && isConnectedWithBuyer) {
     templateIds.exporter = EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY;
   }
