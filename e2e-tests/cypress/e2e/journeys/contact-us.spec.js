@@ -5,6 +5,8 @@ import { ROUTES } from '../../../constants';
 
 const CONTENT_STRINGS = PAGES.CONTACT_US_PAGE;
 
+const { GENERAL_ENQUIRIES, APPLICATION_ENQUIRES } = CONTENT_STRINGS;
+
 context('Contact us page', () => {
   const url = ROUTES.CONTACT_US;
 
@@ -36,20 +38,12 @@ context('Contact us page', () => {
     cy.checkText(contactUsPage.whoToContactText(), CONTENT_STRINGS.WHO_TO_CONTACT);
   });
 
-  it('renders a general enquiries section', () => {
-    const { generalEnquiries } = contactUsPage;
-    const { GENERAL_ENQUIRIES } = CONTENT_STRINGS;
-
-    cy.checkText(generalEnquiries.heading(), GENERAL_ENQUIRIES.HEADING);
-    cy.checkText(generalEnquiries.telephone(), `${GENERAL_ENQUIRIES.TELEPHONE.PREFIX} ${GENERAL_ENQUIRIES.TELEPHONE.VALUE}`);
-    cy.checkText(generalEnquiries.email(), `${GENERAL_ENQUIRIES.EMAIL.PREFIX} ${GENERAL_ENQUIRIES.EMAIL.VALUE}`);
-    cy.checkText(generalEnquiries.openingHours(), GENERAL_ENQUIRIES.OPENING_TIMES);
-    cy.checkLink(generalEnquiries.callChargesLink(), GENERAL_ENQUIRIES.CALL_CHARGES.HREF, GENERAL_ENQUIRIES.CALL_CHARGES.TEXT);
+  it('renders a `general enquiries` section', () => {
+    cy.assertCustomerServiceContactDetailsContent(GENERAL_ENQUIRIES.HEADING);
   });
 
   it('renders an application enquiries section', () => {
     const { applicationEnquires } = contactUsPage;
-    const { APPLICATION_ENQUIRES } = CONTENT_STRINGS;
 
     cy.checkText(applicationEnquires.heading(), APPLICATION_ENQUIRES.HEADING);
     cy.checkText(applicationEnquires.email(), `${APPLICATION_ENQUIRES.EMAIL.PREFIX} ${APPLICATION_ENQUIRES.EMAIL.VALUE}`);

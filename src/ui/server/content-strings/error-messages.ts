@@ -261,7 +261,7 @@ export const ERROR_MESSAGES = {
             IS_EMPTY: 'Enter your last name',
           },
           [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
-            INCORRECT_FORMAT: 'Enter your email address in the correct format, like name@example.com',
+            INCORRECT_FORMAT: 'Enter an email address in the correct format, like name@example.com',
             ACCOUNT_ALREADY_EXISTS: 'There is already an account with this email address. Please sign in or reset your password',
           },
           [FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD]: {
@@ -283,7 +283,7 @@ export const ERROR_MESSAGES = {
       },
       PASSWORD_RESET: {
         [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
-          INCORRECT_FORMAT: 'Enter your email address in the correct format, like name@example.com',
+          INCORRECT_FORMAT: 'Enter an email address in the correct format, like name@example.com',
           ACCOUNT_DOES_NOT_EXIST: 'Enter the email address used when creating your account',
         },
       },
