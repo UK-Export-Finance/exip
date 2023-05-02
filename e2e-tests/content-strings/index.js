@@ -1,6 +1,7 @@
 import PAGE_STRINGS from './pages';
 
 export * from './buttons';
+export * from './contact';
 export * from './cookies-consent';
 export * from './default';
 export * from './error-messages';

@@ -117,6 +117,8 @@ Cypress.Commands.add('assertConfirmEmailPageContent', require('./insurance/accou
 
 Cypress.Commands.add('assertSubmitAndSaveButtons', require('./insurance/assert-submit-and-save-buttons'));
 
+Cypress.Commands.add('assertCustomerServiceContactDetailsContent', require('./assert-customer-service-contact-details-content'));
+
 Cypress.Commands.add('checkText', require('./check-text'));
 Cypress.Commands.add('checkValue', require('./check-value'));
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));

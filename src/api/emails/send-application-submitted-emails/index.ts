@@ -1,5 +1,5 @@
 import sendEmail from '../index';
-import { ANSWERS, EMAIL_TEMPLATE_IDS } from '../../constants';
+import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-application-submitted-email-template-ids';
 import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } from '../../types';
 
 /**
@@ -11,7 +11,7 @@ import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } fro
  */
 const send = async (application: Application, csvPath: string): Promise<SuccessResponse> => {
   try {
-    const { referenceNumber, exporter, exporterCompany, buyer, declaration } = application as Application;
+    const { referenceNumber, exporter, exporterCompany, buyer, policyAndExport } = application as Application;
 
     // generate email variables
     const { email, firstName } = exporter;
@@ -21,54 +21,38 @@ const send = async (application: Application, csvPath: string): Promise<SuccessR
       firstName,
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
+      buyerLocation: buyer.country?.name,
       exporterCompanyName: exporterCompany.companyName,
+      requestedStartDate: policyAndExport.requestedStartDate,
     } as ApplicationSubmissionEmailVariables;
 
-    // send "application submitted" email to the exporter
+    // send "application submitted" email receipt to the exporter
     const exporterSubmittedResponse = await sendEmail.applicationSubmitted.exporter(sendEmailVars);
 
     if (!exporterSubmittedResponse.success) {
       throw new Error('Sending application submitted email to exporter');
     }
 
-    // send "application submitted" email to the underwriting team
+    // get email template IDs depending on the submitted answers
+    const templateIds = getApplicationSubmittedEmailTemplateIds(application);
 
-    const underwritingTeamSubmittedResponse = await sendEmail.applicationSubmitted.underwritingTeam(sendEmailVars, csvPath);
+    // send "application submitted" email to the underwriting team
+    const underwritingTeamSubmittedResponse = await sendEmail.applicationSubmitted.underwritingTeam(sendEmailVars, csvPath, templateIds.underwritingTeam);
 
     if (!underwritingTeamSubmittedResponse.success) {
       throw new Error('Sending application submitted email to underwriting team');
     }
 
     // send "documents" email to the exporter depending on submitted answers
-    let documentsResponse;
-
-    let templateId = '';
-
-    const hasAntiBriberyCodeOfConduct = declaration.hasAntiBriberyCodeOfConduct === ANSWERS.YES;
-
-    if (hasAntiBriberyCodeOfConduct) {
-      templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY;
-    }
-
-    const isConectedWithBuyer = buyer.exporterIsConnectedWithBuyer && buyer.exporterIsConnectedWithBuyer === ANSWERS.YES;
-
-    if (isConectedWithBuyer) {
-      templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;
-    }
-
-    if (hasAntiBriberyCodeOfConduct && isConectedWithBuyer) {
-      templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
-    }
-
-    if (templateId) {
-      documentsResponse = await sendEmail.documentsEmail(sendEmailVars, templateId);
+    if (templateIds.exporter) {
+      const documentsResponse = await sendEmail.documentsEmail(sendEmailVars, templateIds.exporter);
 
       if (!documentsResponse.success) {
         throw new Error(`Sending application submitted emails ${documentsResponse}`);
       }
     }
 
-    // no need to send "documents" email
+    // no need to send "documents" email to exporter
     return {
       success: true,
     };

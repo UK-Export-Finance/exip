@@ -8,7 +8,7 @@ const {
     ROOT,
     DASHBOARD,
     ALL_SECTIONS,
-    ACCOUNT: { MANAGE_ACCOUNT, SIGN_OUT },
+    ACCOUNT: { MANAGE, SIGN_OUT },
   },
 } = ROUTES;
 
@@ -50,13 +50,13 @@ context('Insurance - header - authenticated - As an Exporter, I want the system 
     it('should render', () => {
       const expectedAccountName = `${mockAccount[FIRST_NAME]} ${mockAccount[LAST_NAME]}`;
 
-      cy.checkLink(selector(), MANAGE_ACCOUNT, expectedAccountName);
+      cy.checkLink(selector(), MANAGE, expectedAccountName);
     });
 
-    it(`should redirect to ${MANAGE_ACCOUNT} when clicking the link`, () => {
+    it(`should redirect to ${MANAGE} when clicking the link`, () => {
       selector().click();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${MANAGE_ACCOUNT}`;
+      const expectedUrl = `${Cypress.config('baseUrl')}${MANAGE}`;
 
       cy.url().should('eq', expectedUrl);
     });

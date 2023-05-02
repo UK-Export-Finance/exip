@@ -1,4 +1,5 @@
 import cookieBanner from './cookieBanner';
+import customerServiceContactDetails from './customerServiceContactDetails';
 import footer from './footer';
 import header from './header';
 import insurancePartials from './insurance';
@@ -10,6 +11,7 @@ import yourBusinessSummaryList from './yourBusinessSummaryList';
 const partials = {
   ukGoodsOrServicesCalculateDescription,
   cookieBanner,
+  customerServiceContactDetails,
   errorSummaryListItems: () => cy.get('.govuk-error-summary li'),
   errorSummaryListItemLinks: () => cy.get('.govuk-error-summary li a'),
   footer,

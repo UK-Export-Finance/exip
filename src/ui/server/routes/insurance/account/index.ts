@@ -13,6 +13,7 @@ import { get as passwordResetLinkSentGet } from '../../../controllers/insurance/
 import { get as passwordResetLinkExpiredGet } from '../../../controllers/insurance/account/password-reset/link-expired';
 import { get as newPasswordGet, post as newPasswordPost } from '../../../controllers/insurance/account/password-reset/new-password';
 import { get as passwordResetSuccessGet } from '../../../controllers/insurance/account/password-reset/success';
+import { get as manageGet } from '../../../controllers/insurance/account/manage';
 import { get as signOutGet } from '../../../controllers/insurance/account/sign-out';
 import { get as signedOutGet } from '../../../controllers/insurance/account/signed-out';
 
@@ -49,6 +50,8 @@ insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD,
 insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD, newPasswordPost);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.SUCCESS, passwordResetSuccessGet);
+
+insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.MANAGE, manageGet);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SIGN_OUT, signOutGet);
 
