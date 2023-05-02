@@ -1,0 +1,16 @@
+{% macro render(params) %}
+  {% set content = params.content %}
+
+  <h2 class="govuk-heading-m govuk-!-margin-top-9" data-cy="customer-service-heading">{{ content.HEADING }}</h2>
+  <p data-cy="customer-service-telephone">{{ content.TELEPHONE.PREFIX }} {{ content.TELEPHONE.VALUE }}</p>
+  <p data-cy="customer-service-email">{{ content.EMAIL.PREFIX }} {{ content.EMAIL.VALUE }}</p>
+  <p data-cy="customer-service-opening-hours">{{ content.OPENING_TIMES }}</p>
+
+  <a
+    class="govuk-link"
+    href="{{ content.CALL_CHARGES.HREF }}"
+    data-cy="customer-service-call-charges"
+  >{{ content.CALL_CHARGES.TEXT }}
+  </a>
+
+{% endmacro %}
