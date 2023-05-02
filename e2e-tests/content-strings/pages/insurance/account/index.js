@@ -1,4 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import { CUSTOMER_SERVICE_CONTACT_DETAILS } from '../../../contact';
 
 const ACCOUNT = {
   CREATE: {
@@ -125,6 +126,14 @@ const ACCOUNT = {
     },
     SUCCESS: {
       PAGE_TITLE: "You've successfully reset your password",
+    },
+  },
+  MANAGE: {
+    PAGE_TITLE: 'Your account',
+    INTRO: 'To update information relating to your account(for example your email address), please contact our customer service helpline.',
+    CUSTOMER_SERVICE: {
+      HEADING: 'UK Export Finance customer service helpline',
+      ...CUSTOMER_SERVICE_CONTACT_DETAILS,
     },
   },
   SIGNED_OUT: {

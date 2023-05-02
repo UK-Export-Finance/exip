@@ -1,5 +1,6 @@
 {% extends 'index.njk' %}
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/back-link/macro.njk' import govukBackLink %}
+{% import './components/customer-service-helpline.njk' as customerServiceHelpline %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -22,16 +23,9 @@
 
       <p data-cy="who-to-contact">{{ CONTENT_STRINGS.WHO_TO_CONTACT }}</p>
 
-      <h2 class="govuk-heading-m govuk-!-margin-top-9" data-cy="general-enquiries-heading">{{ CONTENT_STRINGS.GENERAL_ENQUIRIES.HEADING }}</h2>
-      <p data-cy="general-enquiries-telephone">{{ CONTENT_STRINGS.GENERAL_ENQUIRIES.TELEPHONE.PREFIX }} {{ CONTENT_STRINGS.GENERAL_ENQUIRIES.TELEPHONE.VALUE }}</p>
-      <p data-cy="general-enquiries-email">{{ CONTENT_STRINGS.GENERAL_ENQUIRIES.EMAIL.PREFIX }} {{ CONTENT_STRINGS.GENERAL_ENQUIRIES.EMAIL.VALUE }}</p>
-      <p data-cy="general-enquiries-opening-hours">{{ CONTENT_STRINGS.GENERAL_ENQUIRIES.OPENING_TIMES }}</p>
-      <a
-        class="govuk-link"
-        href="{{ CONTENT_STRINGS.GENERAL_ENQUIRIES.CALL_CHARGES.HREF }}"
-        data-cy="general-enquiries-call-charges"
-      >{{ CONTENT_STRINGS.GENERAL_ENQUIRIES.CALL_CHARGES.TEXT }}
-      </a>
+      {{customerServiceHelpline.render({
+        content: CONTENT_STRINGS.GENERAL_ENQUIRIES
+      }) }}
 
       <h2 class="govuk-heading-m govuk-!-margin-top-9" data-cy="application-enquiries-heading">{{ CONTENT_STRINGS.APPLICATION_ENQUIRES.HEADING }}</h2>
       <p data-cy="application-enquiries-email">{{ CONTENT_STRINGS.APPLICATION_ENQUIRES.EMAIL.PREFIX }} {{ CONTENT_STRINGS.APPLICATION_ENQUIRES.EMAIL.VALUE }}</p>

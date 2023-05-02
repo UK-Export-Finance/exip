@@ -20,7 +20,7 @@ const completeDeclarations = ({ exportingWithCodeOfConduct = true }) => {
 
   cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct();
 
-  if (exportingWithCodeOfConduct === true) {
+  if (exportingWithCodeOfConduct) {
     cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct(FIELD_VALUES.YES);
   } else {
     cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct(FIELD_VALUES.NO);
