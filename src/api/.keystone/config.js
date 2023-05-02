@@ -363,7 +363,9 @@ var EMAIL_TEMPLATE_IDS = {
         }
       },
       UNDERWRITING_TEAM: {
-        NOTIFICATION: "676e4655-1e82-4094-9e3e-387ea91f44df"
+        NOTIFICATION_TRADING_HISTORY: "34457439-bf9c-46e3-bd05-b8732ed682fb",
+        NOTIFICATION_ANTI_BRIBERY: "8be12c98-b2c7-4992-8920-925aa37b6391",
+        NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY: "7f0541dd-1dae-4d51-9ebc-87d2a624f8d2"
       }
     }
   },
@@ -578,10 +580,9 @@ var applicationSubmitted = {
    * @param {Object} ApplicationSubmissionEmailVariables
    * @returns {Object} callNotify response
    */
-  underwritingTeam: async (variables, csvPath) => {
+  underwritingTeam: async (variables, csvPath, templateId) => {
     try {
       console.info("Sending application submitted email to underwriting team");
-      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.UNDERWRITING_TEAM.NOTIFICATION;
       const emailAddress = process.env.UNDERWRITING_TEAM_EMAIL;
       const file = await file_system_default.readFile(csvPath);
       if (file) {
@@ -2333,41 +2334,61 @@ var getPopulatedApplication = async (context, application) => {
 };
 var get_populated_application_default = getPopulatedApplication;
 
+// helpers/get-application-submitted-email-template-ids/index.ts
+var {
+  APPLICATION: {
+    SUBMISSION: { EXPORTER, UNDERWRITING_TEAM }
+  }
+} = EMAIL_TEMPLATE_IDS;
+var getApplicationSubmittedEmailTemplateIds = (application) => {
+  const { buyer, declaration } = application;
+  const templateIds = {
+    underwritingTeam: "",
+    exporter: ""
+  };
+  const hasAntiBriberyCodeOfConduct = declaration.hasAntiBriberyCodeOfConduct === ANSWERS.YES;
+  if (hasAntiBriberyCodeOfConduct) {
+    templateIds.exporter = EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY;
+    templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY;
+  }
+  const isConnectedWithBuyer = buyer.exporterIsConnectedWithBuyer && buyer.exporterIsConnectedWithBuyer === ANSWERS.YES;
+  if (isConnectedWithBuyer) {
+    templateIds.exporter = EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;
+    templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_TRADING_HISTORY;
+  }
+  if (hasAntiBriberyCodeOfConduct && isConnectedWithBuyer) {
+    templateIds.exporter = EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
+    templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY;
+  }
+  return templateIds;
+};
+var get_application_submitted_email_template_ids_default = getApplicationSubmittedEmailTemplateIds;
+
 // emails/send-application-submitted-emails/index.ts
 var send = async (application, csvPath) => {
   try {
-    const { referenceNumber, exporter, exporterCompany, buyer, declaration } = application;
+    const { referenceNumber, exporter, exporterCompany, buyer, policyAndExport } = application;
     const { email, firstName } = exporter;
     const sendEmailVars = {
       emailAddress: email,
       firstName,
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
-      exporterCompanyName: exporterCompany.companyName
+      buyerLocation: buyer.country?.name,
+      exporterCompanyName: exporterCompany.companyName,
+      requestedStartDate: policyAndExport.requestedStartDate
     };
     const exporterSubmittedResponse = await emails_default.applicationSubmitted.exporter(sendEmailVars);
     if (!exporterSubmittedResponse.success) {
       throw new Error("Sending application submitted email to exporter");
     }
-    const underwritingTeamSubmittedResponse = await emails_default.applicationSubmitted.underwritingTeam(sendEmailVars, csvPath);
+    const templateIds = get_application_submitted_email_template_ids_default(application);
+    const underwritingTeamSubmittedResponse = await emails_default.applicationSubmitted.underwritingTeam(sendEmailVars, csvPath, templateIds.underwritingTeam);
     if (!underwritingTeamSubmittedResponse.success) {
       throw new Error("Sending application submitted email to underwriting team");
     }
-    let documentsResponse;
-    let templateId = "";
-    const hasAntiBriberyCodeOfConduct = declaration.hasAntiBriberyCodeOfConduct === ANSWERS.YES;
-    if (hasAntiBriberyCodeOfConduct) {
-      templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY;
-    }
-    const isConectedWithBuyer = buyer.exporterIsConnectedWithBuyer && buyer.exporterIsConnectedWithBuyer === ANSWERS.YES;
-    if (isConectedWithBuyer) {
-      templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;
-    }
-    if (hasAntiBriberyCodeOfConduct && isConectedWithBuyer) {
-      templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
-    }
-    if (templateId) {
-      documentsResponse = await emails_default.documentsEmail(sendEmailVars, templateId);
+    if (templateIds.exporter) {
+      const documentsResponse = await emails_default.documentsEmail(sendEmailVars, templateIds.exporter);
       if (!documentsResponse.success) {
         throw new Error(`Sending application submitted emails ${documentsResponse}`);
       }

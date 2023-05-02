@@ -147,11 +147,9 @@ const applicationSubmitted = {
    * @param {Object} ApplicationSubmissionEmailVariables
    * @returns {Object} callNotify response
    */
-  underwritingTeam: async (variables: ApplicationSubmissionEmailVariables, csvPath: string): Promise<EmailResponse> => {
+  underwritingTeam: async (variables: ApplicationSubmissionEmailVariables, csvPath: string, templateId: string): Promise<EmailResponse> => {
     try {
       console.info('Sending application submitted email to underwriting team');
-
-      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.UNDERWRITING_TEAM.NOTIFICATION;
 
       const emailAddress = process.env.UNDERWRITING_TEAM_EMAIL as string;
 
