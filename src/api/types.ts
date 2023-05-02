@@ -98,6 +98,10 @@ interface ApplicationExporterCompanyAddress extends ApplicationRelationship {
   premises?: string;
 }
 
+interface ApplicationPolicyAndExport extends ApplicationRelationship {
+  requestedStartDate: Date;
+}
+
 interface Application {
   id: string;
   referenceNumber: number;
@@ -110,7 +114,7 @@ interface Application {
   previousStatus?: string;
   eligibility: ApplicationEligibility;
   exporter: ApplicationExporter;
-  policyAndExport: ApplicationRelationship;
+  policyAndExport: ApplicationPolicyAndExport;
   exporterCompany: ApplicationExporterCompany;
   exporterCompanyAddress: ApplicationExporterCompanyAddress;
   exporterBusiness: ApplicationRelationship;

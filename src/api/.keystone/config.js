@@ -2367,7 +2367,7 @@ var get_application_submitted_email_template_ids_default = getApplicationSubmitt
 // emails/send-application-submitted-emails/index.ts
 var send = async (application, csvPath) => {
   try {
-    const { referenceNumber, exporter, exporterCompany, buyer } = application;
+    const { referenceNumber, exporter, exporterCompany, buyer, policyAndExport } = application;
     const { email, firstName } = exporter;
     const sendEmailVars = {
       emailAddress: email,
@@ -2375,7 +2375,8 @@ var send = async (application, csvPath) => {
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
       buyerLocation: buyer.country?.name,
-      exporterCompanyName: exporterCompany.companyName
+      exporterCompanyName: exporterCompany.companyName,
+      requestedStartDate: policyAndExport.requestedStartDate
     };
     const exporterSubmittedResponse = await emails_default.applicationSubmitted.exporter(sendEmailVars);
     if (!exporterSubmittedResponse.success) {

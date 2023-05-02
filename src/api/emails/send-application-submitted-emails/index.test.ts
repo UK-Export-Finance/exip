@@ -51,7 +51,7 @@ describe('emails/send-email-application-submitted', () => {
     let expectedSendEmailVars: ApplicationSubmissionEmailVariables;
 
     beforeEach(() => {
-      const { referenceNumber, exporter, exporterCompany, buyer } = application;
+      const { referenceNumber, exporter, exporterCompany, buyer, policyAndExport } = application;
       const { email, firstName } = exporter;
       const { companyName } = exporterCompany;
       const { companyOrOrganisationName } = buyer;
@@ -63,6 +63,7 @@ describe('emails/send-email-application-submitted', () => {
         buyerName: companyOrOrganisationName,
         buyerLocation: buyer.country?.name,
         exporterCompanyName: companyName,
+        requestedStartDate: policyAndExport.requestedStartDate,
       } as ApplicationSubmissionEmailVariables;
     });
 
