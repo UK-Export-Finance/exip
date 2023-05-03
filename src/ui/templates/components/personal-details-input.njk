@@ -14,7 +14,7 @@
   {{ govukInput({
     id: fieldId,
     name: fieldId,
-    value: submittedValues[fieldId] or applicationAnswers[FIELDS.FIRST_NAME.ID],
+    value: submittedValues[fieldId] or applicationAnswers[fieldId],
     label: {
       text: label,
       classes: labelClass,
