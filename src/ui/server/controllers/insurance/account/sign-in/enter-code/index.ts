@@ -6,6 +6,7 @@ import getUserNameFromSession from '../../../../../helpers/get-user-name-from-se
 import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import securityCodeValidationErrors from './validation/rules/security-code';
+import { objectHasKeysAndValues } from '../../../../../helpers/object';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 
@@ -110,7 +111,7 @@ export const post = async (req: Request, res: Response) => {
       };
 
       // if there is eligibility in the session, create application.
-      if (req.session.submittedData && req.session.submittedData.insuranceEligibility) {
+      if (req.session.submittedData && objectHasKeysAndValues(req.session.submittedData.insuranceEligibility)) {
         const eligibilityAnswers = req.session.submittedData.insuranceEligibility;
 
         const application = await api.keystone.application.create(eligibilityAnswers, accountId);

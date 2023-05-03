@@ -1,4 +1,3 @@
-import { submitButton } from '../../../../../../pages/shared';
 import { enterCodePage } from '../../../../../../pages/insurance/account/sign-in';
 import dashboardPage from '../../../../../../pages/insurance/dashboard';
 import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
@@ -85,9 +84,7 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
     it(`should redirect to ${DASHBOARD}`, () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), validSecurityCode);
-
-      submitButton().click();
+      cy.completeAndSubmitEnterCodeAccountForm(validSecurityCode);
 
       const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 

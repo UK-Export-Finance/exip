@@ -245,7 +245,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
 
-        describe('when there is no application', () => {
+        describe('when an application is not succesfully created', () => {
           beforeEach(() => {
             // @ts-ignore
             createApplicationSpy = jest.fn(() => Promise.resolve());
@@ -258,6 +258,16 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
 
             expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
           });
+        });
+      });
+
+      describe('when req.session.submittedData.insuranceEligibility is an empty object', () => {
+        it('should NOT call api.keystone.application.create', async () => {
+          req.session.submittedData.insuranceEligibility = {};
+
+          await post(req, res);
+
+          expect(createApplicationSpy).toHaveBeenCalledTimes(0);
         });
       });
 
