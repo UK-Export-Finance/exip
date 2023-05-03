@@ -26,8 +26,11 @@ const {
  * @returns {Object}
  */
 export const generateAddressObject = (answers: ApplicationBuyer) => {
+  // replace new lines with line breaks to display in summary list
+  const address = answers[ADDRESS].replaceAll('\r\n', '<br />');
+
   return {
-    address: answers[ADDRESS],
+    address,
     country: answers[COUNTRY]?.name,
   };
 };

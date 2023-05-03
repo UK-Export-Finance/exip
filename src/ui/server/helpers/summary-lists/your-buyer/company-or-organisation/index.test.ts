@@ -28,8 +28,10 @@ describe('server/helpers/summary-lists/your-buyer/company-or-organisation-fields
       it('should return a fully populated object', () => {
         const response = generateAddressObject(mockApplicationBuyer);
 
+        const address = mockApplicationBuyer[ADDRESS].replaceAll('\r\n', '<br />');
+
         const expected = {
-          address: mockApplicationBuyer[ADDRESS],
+          address,
           country: mockApplicationBuyer[COUNTRY].name,
         };
 
@@ -43,8 +45,10 @@ describe('server/helpers/summary-lists/your-buyer/company-or-organisation-fields
 
         const response = generateAddressObject(mockApplicationBuyer);
 
+        const address = mockApplicationBuyer[ADDRESS].replaceAll('\r\n', '<br />');
+
         const expected = {
-          address: mockApplicationBuyer[ADDRESS],
+          address,
           country: undefined,
         };
 
