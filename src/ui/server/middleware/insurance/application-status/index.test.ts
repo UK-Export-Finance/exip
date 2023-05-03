@@ -1,12 +1,19 @@
 import applicationStatusMiddleware from '.';
 import { ROUTES } from '../../../constants/routes';
 import { APPLICATION } from '../../../constants';
+import POLICY_AND_EXPORTS_FIELD_IDS from '../../../constants/field-ids/insurance/policy-and-exports';
 import { mockReq, mockRes, mockApplication, mockAccount } from '../../../test-mocks';
 import { Next, Request, Response } from '../../../../types';
 
 const {
-  INSURANCE: { INSURANCE_ROOT, NO_ACCESS_APPLICATION_SUBMITTED, APPLICATION_SUBMITTED },
+  INSURANCE: { INSURANCE_ROOT, NO_ACCESS_APPLICATION_SUBMITTED, APPLICATION_SUBMITTED, CHECK_YOUR_ANSWERS, COMPLETE_OTHER_SECTIONS },
 } = ROUTES;
+
+const {
+  TYPE_OF_POLICY: { POLICY_TYPE },
+} = POLICY_AND_EXPORTS_FIELD_IDS;
+
+const { referenceNumber } = mockApplication;
 
 describe('middleware/insurance/application-status', () => {
   let req: Request;
@@ -23,7 +30,7 @@ describe('middleware/insurance/application-status', () => {
     res.locals.application = mockApplication;
   });
 
-  describe('when res.locals.application has status of submitted', () => {
+  describe(`when res.locals.application has status of ${APPLICATION.STATUS.SUBMITTED}`, () => {
     beforeEach(() => {
       req.session.user = {
         ...mockAccount,
@@ -44,9 +51,34 @@ describe('middleware/insurance/application-status', () => {
 
       expect(res.redirect).toHaveBeenCalledWith(NO_ACCESS_APPLICATION_SUBMITTED);
     });
+
+    describe(`when the route is ${APPLICATION_SUBMITTED}`, () => {
+      beforeEach(() => {
+        req.session.user = {
+          ...mockAccount,
+          id: mockApplication.exporter.id,
+        };
+
+        res.locals.application = {
+          ...mockApplication,
+          status: APPLICATION.STATUS.SUBMITTED,
+          id: mockApplication.exporter.id,
+        };
+
+        req.baseUrl = `${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
+
+        next = nextSpy;
+      });
+
+      it('should call next()', async () => {
+        await applicationStatusMiddleware(req, res, next);
+
+        expect(nextSpy).toHaveBeenCalledTimes(1);
+      });
+    });
   });
 
-  describe(`when res.locals.application has status of submitted but route is ${APPLICATION_SUBMITTED}`, () => {
+  describe(`when res.locals.application does NOT have a status of ${APPLICATION.STATUS.SUBMITTED}`, () => {
     beforeEach(() => {
       req.session.user = {
         ...mockAccount,
@@ -55,11 +87,8 @@ describe('middleware/insurance/application-status', () => {
 
       res.locals.application = {
         ...mockApplication,
-        status: APPLICATION.STATUS.SUBMITTED,
         id: mockApplication.exporter.id,
       };
-
-      req.baseUrl = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${APPLICATION_SUBMITTED}`;
 
       next = nextSpy;
     });
@@ -71,25 +100,37 @@ describe('middleware/insurance/application-status', () => {
     });
   });
 
-  describe('when res.locals.application does not have a status of submitted', () => {
+  describe('when the route is a "check your answers" route', () => {
     beforeEach(() => {
-      req.session.user = {
-        ...mockAccount,
-        id: mockApplication.exporter.id,
-      };
-
-      res.locals.application = {
-        ...mockApplication,
-        id: mockApplication.exporter.id,
-      };
+      req.baseUrl = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`;
 
       next = nextSpy;
     });
 
-    it('should call next()', async () => {
-      await applicationStatusMiddleware(req, res, next);
+    describe('when an application has all required fields/answers for the "check your answers" routes/section', () => {
+      it('should call next()', async () => {
+        await applicationStatusMiddleware(req, res, next);
 
-      expect(nextSpy).toHaveBeenCalledTimes(1);
+        expect(nextSpy).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    describe('when an application does NOT have all required fields/answers for the "check your answers" routes/section', () => {
+      beforeEach(() => {
+        const mockApplicationWithIncompleteFields = mockApplication;
+
+        delete mockApplicationWithIncompleteFields.policyAndExport[POLICY_TYPE];
+
+        res.locals.application = mockApplicationWithIncompleteFields;
+      });
+
+      it(`should redirect to ${COMPLETE_OTHER_SECTIONS}`, async () => {
+        await applicationStatusMiddleware(req, res, next);
+
+        const expectedUrl = `${INSURANCE_ROOT}/${referenceNumber}${COMPLETE_OTHER_SECTIONS}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expectedUrl);
+      });
     });
   });
 });

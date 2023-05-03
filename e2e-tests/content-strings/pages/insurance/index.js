@@ -8,6 +8,7 @@ import * as EXPORTER_BUSINESS from './exporter-business';
 import * as YOUR_BUYER from './your-buyer';
 import * as DECLARATIONS from './declarations';
 import * as CHECK_YOUR_ANSWERS from './check-your-answers';
+import COMPLETE_OTHER_SECTIONS from './complete-other-sections';
 import * as APPLICATION_SUBMITTED from './application-submitted';
 import formatCurrency from '../../../cypress/e2e/helpers/format-currency';
 
@@ -135,6 +136,7 @@ const INSURANCE = {
   YOUR_BUYER,
   DECLARATIONS,
   CHECK_YOUR_ANSWERS,
+  COMPLETE_OTHER_SECTIONS,
   APPLICATION_SUBMITTED,
   NO_ACCESS_APPLICATION_SUBMITTED_PAGE,
 };

@@ -16,6 +16,7 @@ Cypress.Commands.add('saveSession', require('./save-session'));
 Cypress.Commands.add('login', require('./login'));
 Cypress.Commands.add('checkPhaseBanner', require('./check-phase-banner'));
 Cypress.Commands.add('navigateToUrl', require('./navigate-to-url'));
+Cypress.Commands.add('assertUrl', require('./assert-url'));
 Cypress.Commands.add('clickBackLink', require('./click-back-link'));
 
 Cypress.Commands.add('submitQuoteAnswersHappyPathSinglePolicy', require('./quote/submit-answers-happy-path-single-policy'));

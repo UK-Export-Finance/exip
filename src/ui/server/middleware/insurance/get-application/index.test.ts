@@ -1,5 +1,6 @@
 import getApplicationMiddleware, { RELEVANT_ROUTES } from '.';
-import { ROUTES } from '../../../constants';
+import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
+import { ROOT as CHECK_YOUR_ANSWERS_ROOT } from '../../../constants/routes/insurance/check-your-answers';
 import api from '../../../api';
 import { mockReq, mockRes, mockApplication } from '../../../test-mocks';
 import { Next, Request, Response } from '../../../../types';
@@ -12,10 +13,10 @@ const {
   POLICY_AND_EXPORTS,
   EXPORTER_BUSINESS,
   YOUR_BUYER,
+  COMPLETE_OTHER_SECTIONS,
   DECLARATIONS,
-  CHECK_YOUR_ANSWERS,
   APPLICATION_SUBMITTED,
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 describe('middleware/insurance/get-application', () => {
   let req: Request;
@@ -40,7 +41,8 @@ describe('middleware/insurance/get-application', () => {
         EXPORTER_BUSINESS.ROOT,
         YOUR_BUYER.ROOT,
         DECLARATIONS.ROOT,
-        CHECK_YOUR_ANSWERS.ROOT,
+        CHECK_YOUR_ANSWERS_ROOT,
+        COMPLETE_OTHER_SECTIONS,
         APPLICATION_SUBMITTED,
       ];
 
@@ -94,10 +96,10 @@ describe('middleware/insurance/get-application', () => {
         api.keystone.application.get = getApplicationSpy;
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.PAGE_NOT_FOUND}`, async () => {
+      it(`should redirect to ${INSURANCE_ROUTES.PAGE_NOT_FOUND}`, async () => {
         await getApplicationMiddleware(req, res, next);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.PAGE_NOT_FOUND);
+        expect(res.redirect).toHaveBeenCalledWith(INSURANCE_ROUTES.PAGE_NOT_FOUND);
       });
     });
 
@@ -108,19 +110,19 @@ describe('middleware/insurance/get-application', () => {
         api.keystone.application.get = getApplicationSpy;
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.PAGE_NOT_FOUND}`, async () => {
+      it(`should redirect to ${INSURANCE_ROUTES.PAGE_NOT_FOUND}`, async () => {
         await getApplicationMiddleware(req, res, next);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.PAGE_NOT_FOUND);
+        expect(res.redirect).toHaveBeenCalledWith(INSURANCE_ROUTES.PAGE_NOT_FOUND);
       });
     });
 
     describe('when there no req.params.referenceNumber', () => {
-      it(`should redirect to ${ROUTES.INSURANCE.PAGE_NOT_FOUND}`, async () => {
+      it(`should redirect to ${INSURANCE_ROUTES.PAGE_NOT_FOUND}`, async () => {
         delete req.params.referenceNumber;
         await getApplicationMiddleware(req, res, next);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.PAGE_NOT_FOUND);
+        expect(res.redirect).toHaveBeenCalledWith(INSURANCE_ROUTES.PAGE_NOT_FOUND);
       });
     });
   });

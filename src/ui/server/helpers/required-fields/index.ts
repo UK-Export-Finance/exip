@@ -24,7 +24,7 @@ const requiredFields = (application: ApplicationFlat) => [
   ...requiredPolicyAndExportFields(application[POLICY_TYPE]),
   ...requiredExporterBusinessFields(),
   ...requiredYourBuyerFields(),
-  ...requiredSectionReviewFields(),
+  ...requiredSectionReviewFields(application),
   ...requiredDeclarationsFields(application[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT]),
 ];
 

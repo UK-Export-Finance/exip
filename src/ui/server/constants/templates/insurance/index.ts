@@ -23,6 +23,7 @@ export const INSURANCE_TEMPLATES = {
   NO_ACCESS_TO_APPLICATION: 'insurance/do-not-have-application-access.njk',
   NO_ACCESS_APPLICATION_SUBMITTED: 'insurance/cannot-access-application-submitted.njk',
   APPLICATION_SUBMITTED: 'insurance/application-submitted.njk',
+  COMPLETE_OTHER_SECTIONS: 'insurance/complete-other-sections.njk',
   FEEDBACK: 'insurance/feedback.njk',
   FEEDBACK_SENT: 'insurance/feedback-confirmation.njk',
 };

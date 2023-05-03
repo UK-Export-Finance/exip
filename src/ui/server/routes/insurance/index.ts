@@ -10,6 +10,7 @@ import { get as pageNotFoundGet } from '../../controllers/insurance/page-not-fou
 import { get as noAccessToApplicationGet } from '../../controllers/insurance/no-access-to-application';
 import { get as noAccessApplicationSubmittedGet } from '../../controllers/insurance/no-access-application-submitted';
 import { get as applicationSubmittedGet } from '../../controllers/insurance/application-submitted';
+import { get as completeOtherSectionsGet } from '../../controllers/insurance/complete-other-sections';
 import { get as feedbackGet, post as feedbackPost } from '../../controllers/insurance/feedback/feedback-form';
 import { get as feedbackConfirmationGet } from '../../controllers/insurance/feedback/feedback-confirmation';
 
@@ -51,6 +52,8 @@ insuranceRouter.use(INSURANCE_ROOT, insuranceBusinessRouter);
 insuranceRouter.use(INSURANCE_ROOT, insuranceYourBuyerRouter);
 insuranceRouter.use(INSURANCE_ROOT, insuranceDeclarationsRouter);
 insuranceRouter.use(INSURANCE_ROOT, insuranceCheckYourAnswersRouter);
+
+insuranceRouter.get(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.COMPLETE_OTHER_SECTIONS}`, completeOtherSectionsGet);
 
 insuranceRouter.get(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.APPLICATION_SUBMITTED}`, applicationSubmittedGet);
 

@@ -1,10 +1,10 @@
-const ROOT = '/check-your-answers';
+export const ROOT = '/check-your-answers';
 const TYPE_OF_POLICY_ROOT = `${ROOT}/type-of-policy-and-exports`;
 const YOUR_BUSINESS_ROOT = `${ROOT}/your-business`;
 const YOUR_BUYER_ROOT = `${ROOT}/your-buyer`;
 
 export const CHECK_YOUR_ANSWERS = {
-  ROOT,
+  // ROOT,
   ELIGIBILITY: `${ROOT}/eligibility`,
   START_NEW_APPLICATION: `${ROOT}/start-a-new-application`,
   TYPE_OF_POLICY: TYPE_OF_POLICY_ROOT,
