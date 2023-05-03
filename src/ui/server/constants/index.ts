@@ -17,3 +17,4 @@ export * from './ukef-contact-details';
 export const INSURANCE = 'Insurance';
 export const QUOTE = 'Quote';
 export const SERVICE_NAME = 'EXIP';
+export const SECURE_OPTION_COOKIE = '__Secure-optionalCookies';
