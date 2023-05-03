@@ -22,9 +22,39 @@ describe('middleware/cookies-consent', () => {
     });
   });
 
+  describe("when req.cookies['__Secure-optionalCookies'] exists", () => {
+    beforeEach(() => {
+      req.cookies['__Secure-optionalCookies'] = 'mock';
+    });
+
+    it('should add cookieConsentDecision=true to res.locals', () => {
+      cookiesConsent(req, res, next);
+
+      expect(res.locals.cookieConsentDecision).toEqual(true);
+    });
+  });
+
   describe('when req.cookies.optionalCookies is `true`', () => {
     beforeEach(() => {
       req.cookies.optionalCookies = 'true';
+    });
+
+    it('should add cookieConsent=true to res.locals', () => {
+      cookiesConsent(req, res, next);
+
+      expect(res.locals.cookieConsent).toEqual(true);
+    });
+
+    it('should add process.env.GOOGLE_ANALYTICS_ID to res.locals.googleAnalyticsId', () => {
+      cookiesConsent(req, res, next);
+
+      expect(res.locals.googleAnalyticsId).toEqual(process.env.GOOGLE_ANALYTICS_ID);
+    });
+  });
+
+  describe("when req.cookies['__Secure-optionalCookies'] is `true`", () => {
+    beforeEach(() => {
+      req.cookies['__Secure-optionalCookies'] = 'true';
     });
 
     it('should add cookieConsent=true to res.locals', () => {

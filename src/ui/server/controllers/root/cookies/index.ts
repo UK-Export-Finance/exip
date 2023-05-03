@@ -21,15 +21,11 @@ export const get = (req: Request, res: Response) => {
   // store the previous URL so that we can use this in the POST res.render.
   req.flash('previousUrl', req.headers.referer);
 
-  // TODO: Remove after debug
-  // eslint-disable-next-line no-console
-  console.log('cookies page', req.cookies);
-
   return res.render(TEMPLATE, {
     userName: getUserNameFromSession(req.session.user),
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
     FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
-    submittedValue: req.cookies.optionalCookies,
+    submittedValue: req.cookies.optionalCookies || req.cookies['__Secure-optionalCookies'],
   });
 };
 
@@ -60,7 +56,7 @@ export const post = (req: Request, res: Response) => {
     userName: getUserNameFromSession(req.session.user),
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: backLink, START_ROUTE: startRoute }),
     FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
-    submittedValue: req.cookies.optionalCookies,
+    submittedValue: req.cookies.optionalCookies || req.cookies['__Secure-optionalCookies'],
     showSuccessMessage: true,
     showSuccessMessageGoBackLink,
   });

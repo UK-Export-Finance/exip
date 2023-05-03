@@ -4,17 +4,12 @@ import { Request, Response } from '../../../types';
 dotenv.config();
 
 export const cookiesConsent = (req: Request, res: Response, next: () => void) => {
-  // TODO: Remove after debug
-  // eslint-disable-next-line no-console
-  console.log('coooookies', req.cookies);
-  // eslint-disable-next-line no-console
-  console.log('optionalcookie', req.cookies.optionalCookies);
   if (req.cookies) {
-    if (req.cookies.optionalCookies) {
+    if (req.cookies.optionalCookies || req.cookies['__Secure-optionalCookies']) {
       res.locals.cookieConsentDecision = true;
     }
 
-    if (req.cookies.optionalCookies === 'true') {
+    if (req.cookies.optionalCookies === 'true' || req.cookies['__Secure-optionalCookies'] === 'true') {
       res.locals.cookieConsent = true;
       res.locals.googleAnalyticsId = process.env.GOOGLE_ANALYTICS_ID;
     } else {
