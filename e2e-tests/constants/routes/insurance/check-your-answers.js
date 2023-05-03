@@ -1,4 +1,4 @@
-const ROOT = '/check-your-answers';
+export const ROOT = '/check-your-answers';
 
 export const CHECK_YOUR_ANSWERS = {
   ROOT,
