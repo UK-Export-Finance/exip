@@ -1,5 +1,5 @@
 import { ERROR_MESSAGES, FIELDS, PAGES, PRODUCT } from '../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
+import { FIELD_IDS, ROUTES, TEMPLATES, SECURE_OPTION_COOKIE } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
@@ -25,7 +25,7 @@ export const get = (req: Request, res: Response) => {
     userName: getUserNameFromSession(req.session.user),
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
     FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
-    submittedValue: req.cookies.optionalCookies || req.cookies['__Secure-optionalCookies'],
+    submittedValue: req.cookies.optionalCookies || req.cookies[SECURE_OPTION_COOKIE],
   });
 };
 
@@ -56,7 +56,7 @@ export const post = (req: Request, res: Response) => {
     userName: getUserNameFromSession(req.session.user),
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: backLink, START_ROUTE: startRoute }),
     FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
-    submittedValue: req.cookies.optionalCookies || req.cookies['__Secure-optionalCookies'],
+    submittedValue: req.cookies.optionalCookies || req.cookies[SECURE_OPTION_COOKIE],
     showSuccessMessage: true,
     showSuccessMessageGoBackLink,
   });

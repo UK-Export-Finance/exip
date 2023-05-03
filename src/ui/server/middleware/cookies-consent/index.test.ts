@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv';
 import { mockNext, mockReq, mockRes } from '../../test-mocks';
 import { Request, Response } from '../../../types';
 import { cookiesConsent } from '.';
+import { SECURE_OPTION_COOKIE } from '../../constants';
 
 dotenv.config();
 
@@ -24,7 +25,7 @@ describe('middleware/cookies-consent', () => {
 
   describe("when req.cookies['__Secure-optionalCookies'] exists", () => {
     beforeEach(() => {
-      req.cookies['__Secure-optionalCookies'] = 'mock';
+      req.cookies[SECURE_OPTION_COOKIE] = 'mock';
       req.cookies.optionalCookies = undefined;
     });
 
@@ -38,7 +39,7 @@ describe('middleware/cookies-consent', () => {
   describe('when req.cookies.optionalCookies is `true`', () => {
     beforeEach(() => {
       req.cookies.optionalCookies = 'true';
-      req.cookies['__Secure-optionalCookies'] = undefined;
+      req.cookies[SECURE_OPTION_COOKIE] = undefined;
     });
 
     it('should add cookieConsent=true to res.locals', () => {
@@ -56,7 +57,7 @@ describe('middleware/cookies-consent', () => {
 
   describe("when req.cookies['__Secure-optionalCookies'] is `true`", () => {
     beforeEach(() => {
-      req.cookies['__Secure-optionalCookies'] = 'true';
+      req.cookies[SECURE_OPTION_COOKIE] = 'true';
       req.cookies.optionalCookies = undefined;
     });
 
@@ -76,7 +77,7 @@ describe('middleware/cookies-consent', () => {
   describe('when req.cookies.optionalCookies is NOT `true`', () => {
     beforeEach(() => {
       req.cookies.optionalCookies = 'false';
-      req.cookies['__Secure-optionalCookies'] = undefined;
+      req.cookies[SECURE_OPTION_COOKIE] = undefined;
     });
 
     it('should add cookieConsent=false to res.locals', () => {
