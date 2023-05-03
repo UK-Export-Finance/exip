@@ -25,6 +25,7 @@ describe('middleware/cookies-consent', () => {
   describe("when req.cookies['__Secure-optionalCookies'] exists", () => {
     beforeEach(() => {
       req.cookies['__Secure-optionalCookies'] = 'mock';
+      req.cookies.optionalCookies = undefined;
     });
 
     it('should add cookieConsentDecision=true to res.locals', () => {
@@ -37,6 +38,7 @@ describe('middleware/cookies-consent', () => {
   describe('when req.cookies.optionalCookies is `true`', () => {
     beforeEach(() => {
       req.cookies.optionalCookies = 'true';
+      req.cookies['__Secure-optionalCookies'] = undefined;
     });
 
     it('should add cookieConsent=true to res.locals', () => {
@@ -55,6 +57,7 @@ describe('middleware/cookies-consent', () => {
   describe("when req.cookies['__Secure-optionalCookies'] is `true`", () => {
     beforeEach(() => {
       req.cookies['__Secure-optionalCookies'] = 'true';
+      req.cookies.optionalCookies = undefined;
     });
 
     it('should add cookieConsent=true to res.locals', () => {
@@ -73,6 +76,7 @@ describe('middleware/cookies-consent', () => {
   describe('when req.cookies.optionalCookies is NOT `true`', () => {
     beforeEach(() => {
       req.cookies.optionalCookies = 'false';
+      req.cookies['__Secure-optionalCookies'] = undefined;
     });
 
     it('should add cookieConsent=false to res.locals', () => {
