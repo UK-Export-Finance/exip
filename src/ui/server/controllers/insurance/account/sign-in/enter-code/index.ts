@@ -125,7 +125,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(DASHBOARD);
     }
 
-    // incorrect sign in code - force validation errors by mimicking empty form submission)
+    // incorrect sign in code - force validation errors by mimicking empty form submission
     validationErrors = securityCodeValidationErrors({}, {});
 
     return res.render(TEMPLATE, {

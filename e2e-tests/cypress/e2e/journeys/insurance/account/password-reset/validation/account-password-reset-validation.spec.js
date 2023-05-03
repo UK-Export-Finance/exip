@@ -17,7 +17,7 @@ const {
 const {
   INSURANCE: {
     ACCOUNT: {
-      CREATE: { YOUR_DETAILS: YOUR_DETAILS_ERROR_MESSAGES },
+      PASSWORD_RESET: PASSWORD_RESET_ERROR_MESSAGES,
     },
   },
 } = ERROR_MESSAGES;
@@ -28,7 +28,7 @@ const ERROR_ASSERTIONS = {
   errorField: field,
   expectedErrorsCount: 1,
   errorIndex: 0,
-  errorMessage: YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT,
+  errorMessage: PASSWORD_RESET_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT,
 };
 
 const {
@@ -70,5 +70,13 @@ context('Insurance - Account - Password reset page - form validation', () => {
     const inputValue = INVALID_EMAILS.NO_DOMAIN;
 
     cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, errorMessage);
+  });
+
+  it('should render a validation error when email is valid, but the account does not exist', () => {
+    const inputValue = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_2');
+
+    const expectedErrorMessage = PASSWORD_RESET_ERROR_MESSAGES[EMAIL].ACCOUNT_DOES_NOT_EXIST;
+
+    cy.submitAndAssertFieldErrors(errorField, inputValue, errorIndex, expectedErrorsCount, expectedErrorMessage);
   });
 });

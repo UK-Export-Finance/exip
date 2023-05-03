@@ -6,6 +6,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import api from '../../../../api';
+import accountDoesNotExistValidation from './validation/account-does-not-exist';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockAccount } from '../../../../test-mocks';
 
@@ -19,7 +20,6 @@ const {
       PASSWORD_RESET: { LINK_SENT },
     },
   },
-  PROBLEM_WITH_SERVICE,
 } = ROUTES;
 
 describe('controllers/insurance/account/password-reset', () => {
@@ -134,10 +134,18 @@ describe('controllers/insurance/account/password-reset', () => {
           api.keystone.account.sendEmailPasswordResetLink = sendEmailPasswordResetLinkSpy;
         });
 
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        it('should render template with validation errors and submitted values', async () => {
           await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+            ...insuranceCorePageVariables({
+              PAGE_CONTENT_STRINGS,
+              BACK_LINK: req.headers.referer,
+            }),
+            ...PAGE_VARIABLES,
+            submittedValues: req.body,
+            validationErrors: accountDoesNotExistValidation(),
+          });
         });
       });
 
