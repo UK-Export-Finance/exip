@@ -4,6 +4,11 @@ import { Request, Response } from '../../../types';
 dotenv.config();
 
 export const cookiesConsent = (req: Request, res: Response, next: () => void) => {
+  // TODO: Remove after debug
+  // eslint-disable-next-line no-console
+  console.log('coooookies', req.cookies);
+  // eslint-disable-next-line no-console
+  console.log('optionalcookie', req.cookies.optionalCookies);
   if (req.cookies) {
     if (req.cookies.optionalCookies) {
       res.locals.cookieConsentDecision = true;
