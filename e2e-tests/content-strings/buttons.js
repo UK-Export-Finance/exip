@@ -16,7 +16,7 @@ export const BUTTONS = {
   SEARCH: 'Search',
   SIGN_IN: 'Sign in',
   SEND_NEW_SECURITY_CODE: 'Send new security code',
-  SEND_NEW_LINK: 'Send new a new link',
+  SEND_NEW_LINK: 'Send me a new link',
   SEND_FEEDBACK: 'Send feedback',
   BACK_TO_SERVICE: 'Back to service',
 };
