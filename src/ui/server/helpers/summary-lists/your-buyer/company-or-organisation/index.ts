@@ -6,6 +6,7 @@ import getFieldById from '../../../get-field-by-id';
 import { ApplicationBuyer, SummaryListItemData } from '../../../../../types';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import generateChangeLink from '../../../generate-change-link';
+import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
 
 const { YOUR_BUYER: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
@@ -27,7 +28,7 @@ const {
  */
 export const generateAddressObject = (answers: ApplicationBuyer) => {
   // replace new lines with line breaks to display in summary list
-  const address = answers[ADDRESS].replaceAll('\r\n', '<br />');
+  const address = replaceNewLineWithLineBreak(answers[ADDRESS]);
 
   return {
     address,
