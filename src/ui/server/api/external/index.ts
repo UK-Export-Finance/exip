@@ -7,7 +7,7 @@ dotenv.config();
 const { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
 const headers = {
   'Content-Type': 'application/json',
-  [process.env.APIM_MDM_KEY]: process.env.APIM_MDM_VALUE,
+  [String(process.env.APIM_MDM_KEY)]: process.env.APIM_MDM_VALUE,
 };
 
 const external = {
