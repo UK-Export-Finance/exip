@@ -9,7 +9,11 @@ import { Request, Response } from '../../../../../types';
 
 const {
   PROBLEM_WITH_SERVICE,
-  INSURANCE: { INSURANCE_ROOT, START, ALL_SECTIONS },
+  INSURANCE: {
+    INSURANCE_ROOT,
+    ALL_SECTIONS,
+    ELIGIBILITY: { BUYER_COUNTRY },
+  },
 } = ROUTES;
 
 describe('controllers/insurance/check-your-answers/start-new-application', () => {
@@ -29,7 +33,7 @@ describe('controllers/insurance/check-your-answers/start-new-application', () =>
       const result = pageVariables(mockApplication.referenceNumber);
 
       const expected = {
-        START_NEW_APPLICATION_URL: START,
+        START_NEW_APPLICATION_URL: BUYER_COUNTRY,
         RETURN_TO_APPLICATION_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`,
       };
 

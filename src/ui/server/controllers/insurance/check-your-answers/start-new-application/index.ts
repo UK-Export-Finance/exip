@@ -9,7 +9,11 @@ export const TEMPLATE = TEMPLATES.INSURANCE.NEED_TO_START_NEW_APPLICATION;
 
 const {
   PROBLEM_WITH_SERVICE,
-  INSURANCE: { START, INSURANCE_ROOT, ALL_SECTIONS },
+  INSURANCE: {
+    INSURANCE_ROOT,
+    ALL_SECTIONS,
+    ELIGIBILITY: { BUYER_COUNTRY },
+  },
 } = ROUTES;
 
 /**
@@ -19,7 +23,7 @@ const {
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
-  START_NEW_APPLICATION_URL: START,
+  START_NEW_APPLICATION_URL: BUYER_COUNTRY,
   RETURN_TO_APPLICATION_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
 });
 

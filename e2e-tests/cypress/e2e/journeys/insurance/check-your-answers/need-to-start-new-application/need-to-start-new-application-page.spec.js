@@ -8,6 +8,7 @@ const {
   ROOT: INSURANCE_ROOT,
   START,
   ALL_SECTIONS,
+  ELIGIBILITY: { BUYER_COUNTRY },
   CHECK_YOUR_ANSWERS: { ELIGIBILITY, START_NEW_APPLICATION },
 } = ROUTES.INSURANCE;
 
@@ -84,7 +85,7 @@ context('Insurance - Check your answers - Need to start new application page', (
     });
 
     it('renders a `start new application` link button', () => {
-      cy.checkLink(linkButtons.startNewApplication(), START, BUTTONS.START_A_NEW_APPLICATION);
+      cy.checkLink(linkButtons.startNewApplication(), BUYER_COUNTRY, BUTTONS.START_A_NEW_APPLICATION);
     });
 
     it('renders a `return to my existing application` link button', () => {
