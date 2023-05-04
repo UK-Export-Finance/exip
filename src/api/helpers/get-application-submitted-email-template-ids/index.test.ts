@@ -25,7 +25,7 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
     expect(result).toEqual(expected);
   });
 
-  describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct and buyer has exporterIsConnectedWithBuyer answer of `Yes`', () => {
+  describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct and buyer has exporterHasTradedWithBuyer answer of `Yes`', () => {
     beforeEach(() => {
       application = {
         ...mockApplication,
@@ -48,7 +48,7 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
     });
   });
 
-  describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct and does NOT have exporterIsConnectedWithBuyer', () => {
+  describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct and does NOT have exporterHasTradedWithBuyer', () => {
     beforeEach(() => {
       application = {
         ...mockApplication,
@@ -59,7 +59,7 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
         },
         buyer: {
           ...mockApplication.buyer,
-          exporterIsConnectedWithBuyer: ANSWERS.NO,
+          exporterHasTradedWithBuyer: ANSWERS.NO,
         },
       };
     });
@@ -76,7 +76,7 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
     });
   });
 
-  describe('when the declaration has an answer of `Yes` for hasAntiBriberyCodeOfConduct and does NOT have exporterIsConnectedWithBuyer', () => {
+  describe('when the declaration has an answer of `Yes` for hasAntiBriberyCodeOfConduct and does NOT have exporterHasTradedWithBuyer', () => {
     beforeEach(async () => {
       application = {
         ...mockApplication,
@@ -86,7 +86,7 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
         },
         buyer: {
           ...mockApplication.buyer,
-          exporterIsConnectedWithBuyer: ANSWERS.NO,
+          exporterHasTradedWithBuyer: ANSWERS.NO,
         },
       };
     });

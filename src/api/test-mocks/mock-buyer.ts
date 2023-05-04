@@ -19,7 +19,7 @@ const mockBuyer = {
   contactEmail: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
   canContactBuyer: true,
   exporterIsConnectedWithBuyer: ANSWERS.YES,
-  exporterHasTradedWithBuyer: true,
+  exporterHasTradedWithBuyer: ANSWERS.YES,
 };
 
 export default mockBuyer;
