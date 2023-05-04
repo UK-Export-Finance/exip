@@ -1,18 +1,12 @@
 import requiredFields from '.';
 import FIELD_IDS from '../../constants/field-ids/insurance';
 import flattenApplicationData from '../flatten-application-data';
-import requiredEligibilityFields from './eligibility';
-import requiredPolicyAndExportFields from './policy-and-exports';
-import requiredExporterBusinessFields from './exporter-business';
-import requiredYourBuyerFields from './your-buyer';
-import requiredSectionReviewFields from './prepare-application';
+import requiredPrepareApplicationFields from './prepare-application';
+import requiredCheckYourAnswersFields from './check-your-answers';
 import requiredDeclarationsFields from './declarations';
 import { mockApplication } from '../../test-mocks';
 
 const {
-  POLICY_AND_EXPORTS: {
-    TYPE_OF_POLICY: { POLICY_TYPE },
-  },
   DECLARATIONS: { HAS_ANTI_BRIBERY_CODE_OF_CONDUCT },
 } = FIELD_IDS;
 
@@ -23,11 +17,8 @@ describe('server/helpers/required-fields/index', () => {
     const result = requiredFields(flatApplicationData);
 
     const expected = [
-      ...requiredEligibilityFields(),
-      ...requiredPolicyAndExportFields(flatApplicationData[POLICY_TYPE]),
-      ...requiredExporterBusinessFields(),
-      ...requiredYourBuyerFields(),
-      ...requiredSectionReviewFields(flatApplicationData),
+      ...requiredPrepareApplicationFields(flatApplicationData),
+      ...requiredCheckYourAnswersFields(),
       ...requiredDeclarationsFields(flatApplicationData[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT]),
     ];
 

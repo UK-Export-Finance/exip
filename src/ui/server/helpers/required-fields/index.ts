@@ -1,16 +1,10 @@
 import FIELD_IDS from '../../constants/field-ids/insurance';
-import requiredEligibilityFields from './eligibility';
-import requiredPolicyAndExportFields from './policy-and-exports';
-import requiredExporterBusinessFields from './exporter-business';
-import requiredYourBuyerFields from './your-buyer';
-import requiredSectionReviewFields from './prepare-application';
+import requiredPrepareApplicationFields from './prepare-application';
+import requiredCheckYourAnswersFields from './check-your-answers';
 import requiredDeclarationsFields from './declarations';
 import { ApplicationFlat } from '../../../types';
 
 const {
-  POLICY_AND_EXPORTS: {
-    TYPE_OF_POLICY: { POLICY_TYPE },
-  },
   DECLARATIONS: { HAS_ANTI_BRIBERY_CODE_OF_CONDUCT },
 } = FIELD_IDS;
 
@@ -20,11 +14,8 @@ const {
  * @returns {Array} Required field IDs
  */
 const requiredFields = (application: ApplicationFlat) => [
-  ...requiredEligibilityFields(),
-  ...requiredPolicyAndExportFields(application[POLICY_TYPE]),
-  ...requiredExporterBusinessFields(),
-  ...requiredYourBuyerFields(),
-  ...requiredSectionReviewFields(application),
+  ...requiredPrepareApplicationFields(application),
+  ...requiredCheckYourAnswersFields(),
   ...requiredDeclarationsFields(application[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT]),
 ];
 
