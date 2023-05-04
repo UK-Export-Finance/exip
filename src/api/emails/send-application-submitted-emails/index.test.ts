@@ -94,11 +94,16 @@ describe('emails/send-email-application-submitted', () => {
       expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateId);
     });
 
-    describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct and buyer has exporterIsConnectedWithBuyer answer of `Yes`', () => {
+    describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct and buyer has exporterHasTradedWithBuyer answer of `Yes`', () => {
       beforeEach(() => {
         application.declaration = {
           ...application.declaration,
           hasAntiBriberyCodeOfConduct: ANSWERS.NO,
+        };
+
+        application.buyer = {
+          ...application.buyer,
+          exporterHasTradedWithBuyer: ANSWERS.YES,
         };
       });
 
@@ -113,7 +118,7 @@ describe('emails/send-email-application-submitted', () => {
       });
     });
 
-    describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct and does NOT have exporterIsConnectedWithBuyer', () => {
+    describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct and does NOT have exporterHasTradedWithBuyer', () => {
       beforeEach(() => {
         application.declaration = {
           ...application.declaration,
@@ -122,7 +127,7 @@ describe('emails/send-email-application-submitted', () => {
 
         application.buyer = {
           ...application.buyer,
-          exporterIsConnectedWithBuyer: ANSWERS.NO,
+          exporterHasTradedWithBuyer: ANSWERS.NO,
         };
       });
 
@@ -133,7 +138,7 @@ describe('emails/send-email-application-submitted', () => {
       });
     });
 
-    describe('when the declaration has an answer of `Yes` for hasAntiBriberyCodeOfConduct and does NOT have exporterIsConnectedWithBuyer', () => {
+    describe('when the declaration has an answer of `Yes` for hasAntiBriberyCodeOfConduct and does NOT have exporterHasTradedWithBuyer', () => {
       beforeEach(async () => {
         application.declaration = {
           ...application.declaration,
@@ -142,7 +147,7 @@ describe('emails/send-email-application-submitted', () => {
 
         application.buyer = {
           ...application.buyer,
-          exporterIsConnectedWithBuyer: ANSWERS.NO,
+          exporterHasTradedWithBuyer: ANSWERS.NO,
         };
       });
 
