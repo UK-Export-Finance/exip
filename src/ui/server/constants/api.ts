@@ -33,6 +33,6 @@ export const EXTERNAL_API_ENDPOINTS = {
   MULESOFT_MDM_EA: {
     CURRENCY: '/currencies',
     INDUSTRY_SECTORS: '/sector-industries',
-    MARKETS: '/markets?active=Y',
+    MARKETS: '/markets',
   },
 };
