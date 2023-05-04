@@ -43,8 +43,8 @@ const { summaryList } = checkYourAnswersPolicyAndExports;
 context('Insurance - Change your answers - Policy and exports - Change multiple to single policy type - Summary List', () => {
   const baseUrl = Cypress.config('baseUrl');
   let url;
-  let allSectionsUrl;
   let referenceNumber;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -165,7 +165,7 @@ context('Insurance - Change your answers - Policy and exports - Change multiple 
         );
       });
 
-      it(`contract value summary list row change link should redirect to ${SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
+      it(`'total contract value' summary list row change link should redirect to ${SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
         summaryList.field(TOTAL_CONTRACT_VALUE).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE, TOTAL_CONTRACT_VALUE, 'label');

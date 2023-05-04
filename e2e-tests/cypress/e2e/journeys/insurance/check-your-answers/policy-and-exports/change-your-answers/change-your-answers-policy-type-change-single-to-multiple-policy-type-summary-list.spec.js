@@ -1,20 +1,23 @@
 import partials from '../../../../../partials';
 import { FIELD_IDS, ROUTES, FIELD_VALUES } from '../../../../../../../constants';
-import { submitButton } from '../../../../../pages/shared';
+import { submitButton, saveAndBackButton } from '../../../../../pages/shared';
 import { checkYourAnswersPolicyAndExports } from '../../../../../pages/insurance/check-your-answers';
-import { DEFAULT, LINKS } from '../../../../../../../content-strings';
+import { LINKS } from '../../../../../../../content-strings';
 import { typeOfPolicyPage } from '../../../../../pages/insurance/policy-and-export';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy-and-exports';
+import formatCurrency from '../../../../../helpers/format-currency';
+import application from '../../../../../../fixtures/application';
 
 const {
   ROOT: INSURANCE_ROOT,
+  ALL_SECTIONS,
   POLICY_AND_EXPORTS: {
     TYPE_OF_POLICY_CHECK_AND_CHANGE,
     MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+    MULTIPLE_CONTRACT_POLICY,
+    ABOUT_GOODS_OR_SERVICES,
   },
-  CHECK_YOUR_ANSWERS: {
-    TYPE_OF_POLICY,
-  },
+  CHECK_YOUR_ANSWERS,
 } = ROUTES.INSURANCE;
 
 const {
@@ -41,8 +44,10 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 const { summaryList } = checkYourAnswersPolicyAndExports;
 
 context('Insurance - Change your answers - Policy and exports - Change single to multiple policy type - Summary List', () => {
+  const baseUrl = Cypress.config('baseUrl');
   let url;
   let referenceNumber;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -54,9 +59,11 @@ context('Insurance - Change your answers - Policy and exports - Change single to
       // To get past "Eligibility" check your answers page
       cy.submitCheckYourAnswersForm();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
+
+      allSectionsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
     });
   });
 
@@ -79,9 +86,9 @@ context('Insurance - Change your answers - Policy and exports - Change single to
       cy.navigateToUrl(url);
       summaryList.field(fieldId).changeLink().click();
 
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_CHECK_AND_CHANGE}#heading`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_CHECK_AND_CHANGE}#heading`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
   });
 
@@ -95,61 +102,83 @@ context('Insurance - Change your answers - Policy and exports - Change single to
       submitButton().click();
     });
 
-    it(`should redirect to ${TYPE_OF_POLICY}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}#heading`;
+    it(`should redirect to ${MULTIPLE_CONTRACT_POLICY}`, () => {
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}#heading`;
 
-      cy.url().should('eq', expected);
-    });
-
-    it('should render the new answer', () => {
-      const expected = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
-      cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
+      cy.assertUrl(expected);
     });
   });
 
-  describe('`Add` links', () => {
+  describe(`after completing (now required) fields in ${MULTIPLE_CONTRACT_POLICY} and proceeding to ${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      cy.navigateToUrl(`${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}#heading`);
+
+      // complete the form/now required fields for a multiple contract policy
+      cy.completeAndSubmitMultipleContractPolicyForm();
+
+      cy.assertUrl(`${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}#heading`);
+
+      // go back to "all sections"
+      saveAndBackButton().click();
+
+      cy.assertUrl(allSectionsUrl);
     });
 
-    it('should have empty summary list row values and links for the empty multiple policy specific fields', () => {
-      cy.assertSummaryListRowValueNew(summaryList, TOTAL_MONTHS_OF_COVER, DEFAULT.EMPTY);
+    it(`should render the new answer when navigating back to ${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY} from ${ALL_SECTIONS}`, () => {
+      cy.navigateToUrl(allSectionsUrl);
+      cy.assertUrl(allSectionsUrl);
 
-      cy.checkText(
-        summaryList.field(TOTAL_MONTHS_OF_COVER).changeLink(),
-        `${LINKS.ADD} ${MULTIPLE_FIELD_STRINGS[TOTAL_MONTHS_OF_COVER].SUMMARY.TITLE}`,
-      );
+      // go into the "insurance - check your answers" section
+      task.link().click();
 
-      cy.assertSummaryListRowValueNew(summaryList, TOTAL_SALES_TO_BUYER, DEFAULT.EMPTY);
+      // submit check your answers - eligibility
+      submitButton().click();
 
-      cy.checkText(
-        summaryList.field(TOTAL_SALES_TO_BUYER).changeLink(),
-        `${LINKS.ADD} ${MULTIPLE_FIELD_STRINGS[TOTAL_SALES_TO_BUYER].SUMMARY.TITLE}`,
-      );
+      cy.assertUrl(url);
 
-      cy.assertSummaryListRowValueNew(summaryList, MAXIMUM_BUYER_WILL_OWE, DEFAULT.EMPTY);
-
-      cy.checkText(
-        summaryList.field(MAXIMUM_BUYER_WILL_OWE).changeLink(),
-        `${LINKS.ADD} ${MULTIPLE_FIELD_STRINGS[MAXIMUM_BUYER_WILL_OWE].SUMMARY.TITLE}`,
-      );
+      const expected = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+      cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
     });
 
-    it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
-      summaryList.field(TOTAL_MONTHS_OF_COVER).changeLink().click();
-      cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE, TOTAL_MONTHS_OF_COVER, 'label');
+    describe('Updated summary list', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-      cy.clickBackLink();
+      it('should render the new answers and `change` links to the newly submitted fields', () => {
+        const expectedTotalMonthsOfCover = `${application.POLICY_AND_EXPORTS[TOTAL_MONTHS_OF_COVER]} months`;
 
-      summaryList.field(TOTAL_SALES_TO_BUYER).changeLink().click();
-      cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE, TOTAL_SALES_TO_BUYER, 'label');
+        cy.assertSummaryListRowValueNew(summaryList, TOTAL_MONTHS_OF_COVER, expectedTotalMonthsOfCover);
 
-      cy.clickBackLink();
+        cy.checkText(
+          summaryList.field(TOTAL_MONTHS_OF_COVER).changeLink(),
+          `${LINKS.CHANGE} ${MULTIPLE_FIELD_STRINGS[TOTAL_MONTHS_OF_COVER].SUMMARY.TITLE}`,
+        );
 
-      summaryList.field(MAXIMUM_BUYER_WILL_OWE).changeLink().click();
-      cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE, MAXIMUM_BUYER_WILL_OWE, 'label');
+        const expectedTotalSalesToBuyer = formatCurrency(application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
 
-      cy.clickBackLink();
+        cy.assertSummaryListRowValueNew(summaryList, TOTAL_SALES_TO_BUYER, expectedTotalSalesToBuyer);
+
+        cy.checkText(
+          summaryList.field(TOTAL_SALES_TO_BUYER).changeLink(),
+          `${LINKS.CHANGE} ${MULTIPLE_FIELD_STRINGS[TOTAL_SALES_TO_BUYER].SUMMARY.TITLE}`,
+        );
+
+        const expectedMaximumBuyerWillOwe = formatCurrency(application.POLICY_AND_EXPORTS[MAXIMUM_BUYER_WILL_OWE]);
+
+        cy.assertSummaryListRowValueNew(summaryList, MAXIMUM_BUYER_WILL_OWE, expectedMaximumBuyerWillOwe);
+
+        cy.checkText(
+          summaryList.field(MAXIMUM_BUYER_WILL_OWE).changeLink(),
+          `${LINKS.CHANGE} ${MULTIPLE_FIELD_STRINGS[MAXIMUM_BUYER_WILL_OWE].SUMMARY.TITLE}`,
+        );
+      });
+
+      it(`'maximum buyer will owe' summary list row change link should redirect to ${MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
+        summaryList.field(MAXIMUM_BUYER_WILL_OWE).changeLink().click();
+
+        cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE, MAXIMUM_BUYER_WILL_OWE, 'label');
+      });
     });
   });
 });
