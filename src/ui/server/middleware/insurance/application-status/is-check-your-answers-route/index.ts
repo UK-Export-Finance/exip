@@ -9,7 +9,7 @@ const { CHECK_YOUR_ANSWERS, INSURANCE_ROOT } = INSURANCE_ROUTES;
  * @returns {Array} Check your answers routes with insurance/{referenceNumber} prefix
  */
 export const mapCheckYourAnswersRoutes = (referenceNumber: number) => {
-  const routesArray = Object.values(CHECK_YOUR_ANSWERS);
+  const routesArray = Object.values(CHECK_YOUR_ANSWERS).filter((route) => route !== CHECK_YOUR_ANSWERS.ROOT);
 
   const mapped = routesArray.map((route) => `${INSURANCE_ROOT}/${referenceNumber}${route}`);
 

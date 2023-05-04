@@ -11,7 +11,7 @@ describe('middleware/insurance/application-status/is-check-your-answers-route', 
     it('should return an array of mapped routes', () => {
       const result = mapCheckYourAnswersRoutes(referenceNumber);
 
-      const routes = Object.values(CHECK_YOUR_ANSWERS);
+      const routes = Object.values(CHECK_YOUR_ANSWERS).filter((route) => route !== CHECK_YOUR_ANSWERS.ROOT);
 
       const expected = routes.map((route) => `${INSURANCE_ROOT}/${referenceNumber}${route}`);
 
