@@ -2,6 +2,7 @@ import { PAGES, PRODUCT } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
 import { Request, Response } from '../../../../types';
 import corePageVariables from '../../../helpers/page-variables/core';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 
 const startRoute = ROUTES.QUOTE.START;
 
@@ -21,5 +22,6 @@ export const get = (req: Request, res: Response) => {
       PRODUCT: { DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC },
       START_ROUTE: startRoute,
     }),
+    userName: getUserNameFromSession(req.session.user),
   });
 };

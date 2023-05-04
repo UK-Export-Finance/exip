@@ -4,7 +4,7 @@ dotenv.config();
 
 const mockBuyer = {
   companyOrOrganisationName: 'Test name',
-  address: 'Test \r\n address',
+  address: 'Address line 1 \r\n Address line 2 \r\n Test town \r\n Test Postcode \r\n United Kingdom',
   country: {
     isoCode: 'GBR',
     name: 'United Kingdom',
