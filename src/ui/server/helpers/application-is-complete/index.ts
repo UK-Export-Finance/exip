@@ -4,7 +4,7 @@ import requiredEligibilityFields from '../required-fields/eligibility';
 import requiredPolicyAndExportFields from '../required-fields/policy-and-exports';
 import requiredExporterBusinessFields from '../required-fields/exporter-business';
 import requiredYourBuyerFields from '../required-fields/your-buyer';
-import requiredSectionReviewFields from '../required-fields/section-review';
+import requiredSectionReviewFields from '../required-fields/prepare-application';
 import requiredDeclarationsFields from '../required-fields/declarations';
 import { ApplicationFlat } from '../../../types';
 

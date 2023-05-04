@@ -5,7 +5,7 @@ import requiredEligibilityFields from './eligibility';
 import requiredPolicyAndExportFields from './policy-and-exports';
 import requiredExporterBusinessFields from './exporter-business';
 import requiredYourBuyerFields from './your-buyer';
-import requiredSectionReviewFields from './section-review';
+import requiredSectionReviewFields from './prepare-application';
 import requiredDeclarationsFields from './declarations';
 import { mockApplication } from '../../test-mocks';
 
