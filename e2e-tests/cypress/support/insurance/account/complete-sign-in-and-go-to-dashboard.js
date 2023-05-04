@@ -1,12 +1,4 @@
-import { submitButton } from '../../../e2e/pages/shared';
-import { enterCodePage } from '../../../e2e/pages/insurance/account/sign-in';
-import { FIELD_IDS, ROUTES } from '../../../../constants';
-
-const {
-  INSURANCE: {
-    ACCOUNT: { SECURITY_CODE },
-  },
-} = FIELD_IDS;
+import { ROUTES } from '../../../../constants';
 
 const {
   INSURANCE: { DASHBOARD },
@@ -30,10 +22,8 @@ const completeSignInAndGoToDashboard = () => cy.createAccount({}).then((verifyAc
 
   // get the OTP security code
   cy.accountAddAndGetOTP().then((securityCode) => {
-    cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), securityCode);
-
     // submit the OTP security code
-    submitButton().click();
+    cy.completeAndSubmitEnterCodeAccountForm(securityCode);
 
     // assert we are on the dashboard
     const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
