@@ -1,6 +1,5 @@
 import getApplicationMiddleware, { RELEVANT_ROUTES } from '.';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
-import { ROOT as CHECK_YOUR_ANSWERS_ROOT } from '../../../constants/routes/insurance/check-your-answers';
 import api from '../../../api';
 import { mockReq, mockRes, mockApplication } from '../../../test-mocks';
 import { Next, Request, Response } from '../../../../types';
@@ -14,6 +13,7 @@ const {
   EXPORTER_BUSINESS,
   YOUR_BUYER,
   COMPLETE_OTHER_SECTIONS,
+  CHECK_YOUR_ANSWERS,
   DECLARATIONS,
   APPLICATION_SUBMITTED,
 } = INSURANCE_ROUTES;
@@ -41,7 +41,7 @@ describe('middleware/insurance/get-application', () => {
         EXPORTER_BUSINESS.ROOT,
         YOUR_BUYER.ROOT,
         DECLARATIONS.ROOT,
-        CHECK_YOUR_ANSWERS_ROOT,
+        CHECK_YOUR_ANSWERS.ROOT,
         COMPLETE_OTHER_SECTIONS,
         APPLICATION_SUBMITTED,
       ];
