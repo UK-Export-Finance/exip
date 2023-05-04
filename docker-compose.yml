@@ -90,4 +90,4 @@ services:
       GOV_NOTIFY_EMAIL_RECIPIENT_2:
       UNDERWRITING_TEAM_EMAIL:
       MOCK_ACCOUNT_PASSWORD:
-    entrypoint: npx nodemon src/index.ts -L
+    command: npx nodemon server/index.ts -L
