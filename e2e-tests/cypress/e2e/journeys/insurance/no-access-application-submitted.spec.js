@@ -57,7 +57,6 @@ context('Insurance - no access to application when application is submitted', ()
         currentHref: NO_ACCESS_APPLICATION_SUBMITTED,
         assertSubmitButton: false,
         backLink: DASHBOARD,
-        assertAuthenticatedHeader: false,
       });
     });
 
