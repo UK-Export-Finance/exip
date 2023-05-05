@@ -4,7 +4,7 @@ import apollo from './apollo';
 const queryStrings = {
   createAnAccount: () => gql`
     mutation CreateAccount($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
-      createAccount(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
+      createAnAccount(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
         success
         id
         firstName
