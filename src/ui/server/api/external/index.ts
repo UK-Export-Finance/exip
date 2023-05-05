@@ -1,24 +1,22 @@
 import dotenv from 'dotenv';
-import axios, { AxiosBasicCredentials, AxiosResponse, RawAxiosRequestConfig } from 'axios';
+import axios, { AxiosResponse, RawAxiosRequestConfig } from 'axios';
 import { EXTERNAL_API_ENDPOINTS } from '../../constants';
 
 dotenv.config();
 
 const { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
+const headers = {
+  'Content-Type': 'application/json',
+  [String(process.env.APIM_MDM_KEY)]: process.env.APIM_MDM_VALUE,
+};
 
 const external = {
   getCountries: async () => {
     try {
       const config: RawAxiosRequestConfig = {
         method: 'GET',
-        url: process.env.MULESOFT_API_CIS_URL,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        auth: {
-          username: process.env.MULESOFT_API_CIS_KEY,
-          password: process.env.MULESOFT_API_CIS_SECRET,
-        } as AxiosBasicCredentials,
+        url: `${process.env.APIM_MDM_URL}${MULESOFT_MDM_EA.MARKETS}`,
+        headers,
       };
 
       const response: AxiosResponse = await axios(config);
@@ -33,14 +31,8 @@ const external = {
     try {
       const config: RawAxiosRequestConfig = {
         method: 'GET',
-        url: `${process.env.MULESOFT_API_MDM_EA_URL}${MULESOFT_MDM_EA.CURRENCY}`,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        auth: {
-          username: process.env.MULESOFT_API_MDM_EA_KEY,
-          password: process.env.MULESOFT_API_MDM_EA_SECRET,
-        } as AxiosBasicCredentials,
+        url: `${process.env.APIM_MDM_URL}${MULESOFT_MDM_EA.CURRENCY}`,
+        headers,
       };
 
       const response: AxiosResponse = await axios(config);
