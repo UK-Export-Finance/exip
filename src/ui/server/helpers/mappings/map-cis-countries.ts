@@ -84,7 +84,7 @@ export const mapCisCountry = (country: CisCountry, selectedIsoCode?: string): Co
     name: country.marketName,
     isoCode: country.isoCode,
     value: country.isoCode,
-    riskCategory: mapRiskCategory(country.ESRAClasificationDesc),
+    riskCategory: mapRiskCategory(country.ESRAClassificationDesc),
     shortTermCover: country.shortTermCoverAvailabilityDesc,
     nbiIssueAvailable: mapNbiIssueAvailable(country.NBIIssue),
   } as Country;
