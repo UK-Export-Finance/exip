@@ -18,7 +18,7 @@ describe('emails', () => {
   const mockFileSystemResponse = Buffer.from(mockCsvFile);
 
   const writeFileSpy = jest.fn(() => Promise.resolve(mockFileSystemResponse));
-  const unlinkSpy = jest.fn(() => Promise.resolve());
+  const unlinkSpy = jest.fn(() => Promise.resolve(true));
 
   const { email, firstName, verificationHash } = mockAccount;
   const { referenceNumber } = mockApplication;
@@ -34,7 +34,7 @@ describe('emails', () => {
     firstName,
     referenceNumber,
     buyerName: companyOrOrganisationName,
-    exporterCompanyName: companyName,
+    buyerLocation: companyName,
   };
 
   const mockErrorMessage = 'Mock error';
@@ -181,13 +181,13 @@ describe('emails', () => {
   });
 
   describe('applicationSubmittedEmail', () => {
-    describe('exporter', () => {
+    describe('account', () => {
       const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
 
       test('it should call notify.sendEmail and return the response', async () => {
         notify.sendEmail = sendEmailSpy;
 
-        const result = await sendEmail.applicationSubmitted.exporter(variables);
+        const result = await sendEmail.applicationSubmitted.account(variables);
 
         expect(sendEmailSpy).toHaveBeenCalledTimes(1);
         expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, variables);
@@ -204,9 +204,9 @@ describe('emails', () => {
 
         test('should throw an error', async () => {
           try {
-            await sendEmail.applicationSubmitted.exporter(variables);
+            await sendEmail.applicationSubmitted.account(variables);
           } catch (err) {
-            const expected = new Error(`Sending application submitted email to exporter Error: Sending email ${mockErrorMessage}`);
+            const expected = new Error(`Sending application submitted email to account Error: Sending email ${mockErrorMessage}`);
 
             expect(err).toEqual(expected);
           }
@@ -215,12 +215,12 @@ describe('emails', () => {
     });
 
     describe('underwritingTeam', () => {
-      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.UNDERWRITING_TEAM.NOTIFICATION;
+      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY;
 
       test('it should call notify.sendEmail and return the response', async () => {
         notify.sendEmail = sendEmailSpy;
 
-        const result = await sendEmail.applicationSubmitted.underwritingTeam(variables, mockCsvPath);
+        const result = await sendEmail.applicationSubmitted.underwritingTeam(variables, mockCsvPath, templateId);
 
         expect(sendEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -242,7 +242,7 @@ describe('emails', () => {
 
         test('should throw an error', async () => {
           try {
-            await sendEmail.applicationSubmitted.underwritingTeam(variables, mockCsvPath);
+            await sendEmail.applicationSubmitted.underwritingTeam(variables, mockCsvPath, templateId);
           } catch (err) {
             const expected = new Error(`Sending application submitted email to underwriting team Error: Sending email ${mockErrorMessage}`);
 

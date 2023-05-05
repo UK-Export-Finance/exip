@@ -15,7 +15,7 @@ const {
 
 /**
  * createAccount
- * Create an exporter account directly from the API,
+ * Create an account directly from the API,
  * @param {String}: First name
  * @param {String}: Last name
  * @param {String}: Email address
@@ -28,9 +28,9 @@ const createAccount = ({
   emailAddress = email,
   accountPassword = password,
 }) =>
-  api.createExporterAccount(nameFirst, nameLast, emailAddress, accountPassword).then((createdExporter) => createdExporter)
-    .then((exporter) => {
-      const { verificationHash } = exporter;
+  api.createAnAccount(nameFirst, nameLast, emailAddress, accountPassword).then((createdExporter) => createdExporter)
+    .then((createdAccount) => {
+      const { verificationHash } = createdAccount;
 
       const url = `${Cypress.config('baseUrl')}${VERIFY_EMAIL}?token=${verificationHash}`;
 

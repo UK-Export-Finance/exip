@@ -42,14 +42,14 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
 
   beforeEach(async () => {
     // wipe the table so we have a clean slate.
-    const exporters = await context.query.Exporter.findMany();
+    const accounts = await context.query.Account.findMany();
 
-    await context.query.Exporter.deleteMany({
-      where: exporters,
+    await context.query.Account.deleteMany({
+      where: accounts,
     });
 
     // create an account
-    account = (await context.query.Exporter.createOne({
+    account = (await context.query.Account.createOne({
       data: mockAccount,
       query: 'id',
     })) as Account;
@@ -63,7 +63,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     result = await sendEmailPasswordResetLink({}, variables, context);
 
     // get the latest account
-    account = (await context.query.Exporter.findOne({
+    account = (await context.query.Account.findOne({
       where: { id: account.id },
       query: 'id email firstName passwordResetHash passwordResetExpiry',
     })) as Account;
@@ -112,13 +112,13 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     expect(passwordResetLinkSpy).toHaveBeenCalledWith(email, firstName, passwordResetHash);
   });
 
-  describe('when no exporter is found', () => {
+  describe('when no account is found', () => {
     test('it should return success=false', async () => {
       // wipe the table so we have a clean slate.
-      const exporters = await context.query.Exporter.findMany();
+      const accounts = await context.query.Account.findMany();
 
-      await context.query.Exporter.deleteMany({
-        where: exporters,
+      await context.query.Account.deleteMany({
+        where: accounts,
       });
 
       result = await sendEmailPasswordResetLink({}, variables, context);

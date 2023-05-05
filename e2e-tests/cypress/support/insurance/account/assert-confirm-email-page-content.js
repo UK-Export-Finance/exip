@@ -23,12 +23,12 @@ const havingProblemsSection = {
 
     cy.checkText(confirmEmailPage.havingProblems.heading(), expected);
   },
-  requestNewLink: (exporterId) => {
+  requestNewLink: (accountId) => {
     cy.checkText(confirmEmailPage.havingProblems.requestNew.youCan(), YOU_CAN);
 
     cy.checkText(confirmEmailPage.havingProblems.requestNew.link(), LINK.TEXT);
 
-    const expected = `${LINK.HREF}?id=${exporterId}`;
+    const expected = `${LINK.HREF}?id=${accountId}`;
     confirmEmailPage.havingProblems.requestNew.link().should('have.attr', 'href', expected);
 
     cy.checkText(confirmEmailPage.havingProblems.requestNew.ifNotReceived(), IF_NOT_RECEIVED);
@@ -42,11 +42,11 @@ const havingProblemsSection = {
   },
 };
 
-export default (exporterId) => {
+export default (accountId) => {
   checkYourEmail();
 
   havingProblemsSection.heading();
-  havingProblemsSection.requestNewLink(exporterId);
+  havingProblemsSection.requestNewLink(accountId);
   havingProblemsSection.enteredWrongEmail();
   havingProblemsSection.createAccountLink();
 };

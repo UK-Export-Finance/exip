@@ -4,7 +4,7 @@ const {
   ACCOUNT: { CREATE: { VERIFY_EMAIL }, SIGN_IN },
 } = ROUTES;
 
-const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
 /**
  * verifyAccountEmail
@@ -14,12 +14,12 @@ const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 const verifyAccountEmail = () => {
   try {
     // get exporter
-    cy.getExporterByEmail(exporterEmail).then((response) => {
+    cy.getAccountByEmail(accountEmail).then((response) => {
       const { data } = response.body;
 
-      const [firstExporter] = data.exporters;
+      const [firstAccount] = data.exporters;
 
-      const { verificationHash } = firstExporter;
+      const { verificationHash } = firstAccount;
 
       // mimic clicking email verification link
       cy.navigateToUrl(`${Cypress.config('baseUrl')}${VERIFY_EMAIL}?token=${verificationHash}`);
@@ -32,7 +32,7 @@ const verifyAccountEmail = () => {
   } catch (err) {
     console.error(err);
 
-    throw new Error('Verifying exporter account email');
+    throw new Error('Verifying account email');
   }
 };
 

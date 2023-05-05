@@ -1,7 +1,7 @@
 import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import getExporterById from '.';
+import getAccountById from '.';
 import baseConfig from '../../keystone';
 import { mockAccount } from '../../test-mocks';
 import { Account } from '../../types';
@@ -14,38 +14,38 @@ dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
 
-describe('helpers/get-exporter-by-id', () => {
+describe('helpers/get-account-by-id', () => {
   let account: Account;
 
   beforeEach(async () => {
-    // create a new exporter
-    account = (await context.query.Exporter.createOne({
+    // create a new account
+    account = (await context.query.Account.createOne({
       data: mockAccount,
       query: 'id firstName lastName',
     })) as Account;
   });
 
-  it('should return an exporter/account by ID', async () => {
-    const result = await getExporterById(context, account.id);
+  it('should return an account/account by ID', async () => {
+    const result = await getAccountById(context, account.id);
 
     expect(result.id).toEqual(account.id);
     expect(result.firstName).toEqual(account.firstName);
     expect(result.lastName).toEqual(account.lastName);
   });
 
-  describe('when an exporter/account is not found', () => {
+  describe('when an account is not found', () => {
     beforeEach(async () => {
-      // delete the exporter so it will not be found
-      await context.query.Exporter.deleteOne({
+      // delete the account so it will not be found
+      await context.query.Account.deleteOne({
         where: { id: account.id },
       });
     });
 
     it('should throw an error', async () => {
       try {
-        await getExporterById(context, account.id);
+        await getAccountById(context, account.id);
       } catch (err) {
-        const expected = new Error('Getting exporter by ID');
+        const expected = new Error('Getting account by ID');
         expect(err).toEqual(expected);
       }
     });

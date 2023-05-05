@@ -74,7 +74,7 @@ type Application {
   status: String
   previousStatus: String
   policyAndExport: PolicyAndExport
-  exporter: Exporter
+  owner: Account
   exporterBusiness: ExporterBusiness
   exporterCompany: ExporterCompany
   exporterBroker: ExporterBroker
@@ -104,7 +104,7 @@ input ApplicationWhereInput {
   status: StringFilter
   previousStatus: StringFilter
   policyAndExport: PolicyAndExportWhereInput
-  exporter: ExporterWhereInput
+  owner: AccountWhereInput
   exporterBusiness: ExporterBusinessWhereInput
   exporterCompany: ExporterCompanyWhereInput
   exporterBroker: ExporterBrokerWhereInput
@@ -214,7 +214,7 @@ input ApplicationUpdateInput {
   status: String
   previousStatus: String
   policyAndExport: PolicyAndExportRelateToOneForUpdateInput
-  exporter: ExporterRelateToOneForUpdateInput
+  owner: AccountRelateToOneForUpdateInput
   exporterBusiness: ExporterBusinessRelateToOneForUpdateInput
   exporterCompany: ExporterCompanyRelateToOneForUpdateInput
   exporterBroker: ExporterBrokerRelateToOneForUpdateInput
@@ -235,9 +235,9 @@ input PolicyAndExportRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input ExporterRelateToOneForUpdateInput {
-  create: ExporterCreateInput
-  connect: ExporterWhereUniqueInput
+input AccountRelateToOneForUpdateInput {
+  create: AccountCreateInput
+  connect: AccountWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -293,7 +293,7 @@ input ApplicationCreateInput {
   status: String
   previousStatus: String
   policyAndExport: PolicyAndExportRelateToOneForCreateInput
-  exporter: ExporterRelateToOneForCreateInput
+  owner: AccountRelateToOneForCreateInput
   exporterBusiness: ExporterBusinessRelateToOneForCreateInput
   exporterCompany: ExporterCompanyRelateToOneForCreateInput
   exporterBroker: ExporterBrokerRelateToOneForCreateInput
@@ -312,9 +312,9 @@ input PolicyAndExportRelateToOneForCreateInput {
   connect: PolicyAndExportWhereUniqueInput
 }
 
-input ExporterRelateToOneForCreateInput {
-  create: ExporterCreateInput
-  connect: ExporterWhereUniqueInput
+input AccountRelateToOneForCreateInput {
+  create: AccountCreateInput
+  connect: AccountWhereUniqueInput
 }
 
 input ExporterBusinessRelateToOneForCreateInput {
@@ -436,7 +436,7 @@ input PolicyAndExportCreateInput {
   finalDestinationCountryCode: String
 }
 
-type Exporter {
+type Account {
   id: ID!
   createdAt: DateTime
   updatedAt: DateTime
@@ -459,14 +459,14 @@ type Exporter {
   applicationsCount(where: ApplicationWhereInput! = {}): Int
 }
 
-input ExporterWhereUniqueInput {
+input AccountWhereUniqueInput {
   id: ID
 }
 
-input ExporterWhereInput {
-  AND: [ExporterWhereInput!]
-  OR: [ExporterWhereInput!]
-  NOT: [ExporterWhereInput!]
+input AccountWhereInput {
+  AND: [AccountWhereInput!]
+  OR: [AccountWhereInput!]
+  NOT: [AccountWhereInput!]
   id: IDFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
@@ -499,7 +499,7 @@ input ApplicationManyRelationFilter {
   none: ApplicationWhereInput
 }
 
-input ExporterOrderByInput {
+input AccountOrderByInput {
   id: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
@@ -520,7 +520,7 @@ input ExporterOrderByInput {
   passwordResetExpiry: OrderDirection
 }
 
-input ExporterUpdateInput {
+input AccountUpdateInput {
   createdAt: DateTime
   updatedAt: DateTime
   firstName: String
@@ -548,12 +548,12 @@ input ApplicationRelateToManyForUpdateInput {
   connect: [ApplicationWhereUniqueInput!]
 }
 
-input ExporterUpdateArgs {
-  where: ExporterWhereUniqueInput!
-  data: ExporterUpdateInput!
+input AccountUpdateArgs {
+  where: AccountWhereUniqueInput!
+  data: AccountUpdateInput!
 }
 
-input ExporterCreateInput {
+input AccountCreateInput {
   createdAt: DateTime
   updatedAt: DateTime
   firstName: String
@@ -1637,12 +1637,12 @@ type Mutation {
   updatePolicyAndExports(data: [PolicyAndExportUpdateArgs!]!): [PolicyAndExport]
   deletePolicyAndExport(where: PolicyAndExportWhereUniqueInput!): PolicyAndExport
   deletePolicyAndExports(where: [PolicyAndExportWhereUniqueInput!]!): [PolicyAndExport]
-  createExporter(data: ExporterCreateInput!): Exporter
-  createExporters(data: [ExporterCreateInput!]!): [Exporter]
-  updateExporter(where: ExporterWhereUniqueInput!, data: ExporterUpdateInput!): Exporter
-  updateExporters(data: [ExporterUpdateArgs!]!): [Exporter]
-  deleteExporter(where: ExporterWhereUniqueInput!): Exporter
-  deleteExporters(where: [ExporterWhereUniqueInput!]!): [Exporter]
+  createAccount(data: AccountCreateInput!): Account
+  createAccounts(data: [AccountCreateInput!]!): [Account]
+  updateAccount(where: AccountWhereUniqueInput!, data: AccountUpdateInput!): Account
+  updateAccounts(data: [AccountUpdateArgs!]!): [Account]
+  deleteAccount(where: AccountWhereUniqueInput!): Account
+  deleteAccounts(where: [AccountWhereUniqueInput!]!): [Account]
   createExporterBusiness(data: ExporterBusinessCreateInput!): ExporterBusiness
   createExporterBusinesses(data: [ExporterBusinessCreateInput!]!): [ExporterBusiness]
   updateExporterBusiness(where: ExporterBusinessWhereUniqueInput!, data: ExporterBusinessUpdateInput!): ExporterBusiness
@@ -1744,13 +1744,13 @@ type Mutation {
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
 
   """ create an account """
-  createAccount(firstName: String!, lastName: String!, email: String!, password: String!): CreateAccountResponse
+  createAnAccount(firstName: String!, lastName: String!, email: String!, password: String!): CreateAnAccountResponse
 
   """ verify an account's email address """
   verifyAccountEmailAddress(token: String!): VerifyAccountEmailAddressResponse
 
   """ send confirm email address email """
-  sendEmailConfirmEmailAddress(exporterId: String!): EmailResponse
+  sendEmailConfirmEmailAddress(accountId: String!): EmailResponse
 
   """ validate credentials, generate and email a OTP security code """
   accountSignIn(email: String!, password: String!): AccountSignInResponse
@@ -1810,9 +1810,9 @@ type Query {
   policyAndExports(where: PolicyAndExportWhereInput! = {}, orderBy: [PolicyAndExportOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyAndExportWhereUniqueInput): [PolicyAndExport!]
   policyAndExport(where: PolicyAndExportWhereUniqueInput!): PolicyAndExport
   policyAndExportsCount(where: PolicyAndExportWhereInput! = {}): Int
-  exporters(where: ExporterWhereInput! = {}, orderBy: [ExporterOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExporterWhereUniqueInput): [Exporter!]
-  exporter(where: ExporterWhereUniqueInput!): Exporter
-  exportersCount(where: ExporterWhereInput! = {}): Int
+  accounts(where: AccountWhereInput! = {}, orderBy: [AccountOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AccountWhereUniqueInput): [Account!]
+  account(where: AccountWhereUniqueInput!): Account
+  accountsCount(where: AccountWhereInput! = {}): Int
   exporterBusinesses(where: ExporterBusinessWhereInput! = {}, orderBy: [ExporterBusinessOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExporterBusinessWhereUniqueInput): [ExporterBusiness!]
   exporterBusiness(where: ExporterBusinessWhereUniqueInput!): ExporterBusiness
   exporterBusinessesCount(where: ExporterBusinessWhereInput! = {}): Int
@@ -1865,7 +1865,7 @@ type Query {
   authenticatedItem: AuthenticatedItem
 
   """ get an account by email """
-  getAccountByEmail(email: String!): Account
+  getAccountByEmail(email: String!): AccountResponse
 
   """ get an account's password reset token """
   getAccountPasswordResetToken(email: String!): AccountPasswordResetTokenResponse
@@ -1986,7 +1986,7 @@ enum KeystoneAdminUISortDirection {
   DESC
 }
 
-type Account {
+type AccountResponse {
   id: String
   firstName: String
   lastName: String
@@ -2001,7 +2001,7 @@ input AccountInput {
   password: String
 }
 
-type CreateAccountResponse {
+type CreateAnAccountResponse {
   success: Boolean
   id: String
   firstName: String

@@ -10,9 +10,9 @@ const {
   ACCOUNT: { CREATE: { CONFIRM_EMAIL, VERIFY_EMAIL, VERIFY_EMAIL_LINK_EXPIRED } },
 } = ROUTES;
 
-context('Insurance - Account - Create - Confirm email page - expired token - As an Exporter I want to verify my email address, So that I can activate my email address and use it to create a digital service account with UKEF', () => {
+context('Insurance - Account - Create - Confirm email page - expired token - As an Account I want to verify my email address, So that I can activate my email address and use it to create a digital service account with UKEF', () => {
   let url;
-  let exporter;
+  let account;
 
   before(() => {
     cy.navigateToUrl(START);
@@ -34,24 +34,24 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
   });
 
   describe(`When a verification token has expired and exporter navigates to ${VERIFY_EMAIL} with the expired token`, () => {
-    let updatedExporter;
+    let updatedAccount;
 
     beforeEach(async () => {
       /**
-       * Get the exporter so that we can use the ID
+       * Get the account so that we can use the ID
        * to update the verification period.
        */
-      const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+      const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
-      const exportersResponse = await api.getExporterByEmail(exporterEmail);
+      const accountsResponse = await api.getAccountByEmail(accountEmail);
 
-      const { data } = exportersResponse.body;
+      const { data } = accountsResponse.body;
 
-      const [firstExporter] = data.exporters;
-      exporter = firstExporter;
+      const [firstAccount] = data.accounts;
+      account = firstAccount;
 
       /**
-       * Update the exporter's verification expiry date via the API,
+       * Update the account's verification expiry date via the API,
        * so that we can mimic missing the verification period.
        */
       const today = new Date();
@@ -61,22 +61,22 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
         verificationExpiry: lastMonth,
       };
 
-      updatedExporter = await api.updateExporter(exporter.id, updateObj);
+      updatedAccount = await api.updateAccount(account.id, updateObj);
     });
 
     it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED} and render core page elements and content`, () => {
-      const { verificationHash } = updatedExporter;
+      const { verificationHash } = updatedAccount;
 
       cy.navigateToUrl(`${Cypress.config('baseUrl')}${VERIFY_EMAIL}?token=${verificationHash}`);
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${VERIFY_EMAIL_LINK_EXPIRED}?id=${exporter.id}`;
+      const expectedUrl = `${Cypress.config('baseUrl')}${VERIFY_EMAIL_LINK_EXPIRED}?id=${account.id}`;
 
       cy.url().should('eq', expectedUrl);
 
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-        currentHref: `${VERIFY_EMAIL}?token=${exporter.verificationHash}`,
-        backLink: `${CONFIRM_EMAIL}?id=${exporter.id}`,
+        currentHref: `${VERIFY_EMAIL}?token=${account.verificationHash}`,
+        backLink: `${CONFIRM_EMAIL}?id=${account.id}`,
         assertSubmitButton: false,
         assertAuthenticatedHeader: false,
       });

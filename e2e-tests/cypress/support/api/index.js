@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 import apollo from './apollo';
 
 const queryStrings = {
-  createExporterAccount: () => gql`
+  createAnAccount: () => gql`
     mutation CreateAccount($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
       createAccount(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
         success
@@ -14,9 +14,9 @@ const queryStrings = {
       }
     }
   `,
-  getExporterByEmail: (email) => `
+  getAccountByEmail: (email) => `
     {
-      exporters (
+      accounts (
         orderBy: { updatedAt: desc }
         where: { email: { equals: "${email}" } }
         take: 1
@@ -25,17 +25,17 @@ const queryStrings = {
         verificationHash
       }
     }`,
-  updateExporter: () => gql`
-    mutation UpdateExporter($where: ExporterWhereUniqueInput!, $data: ExporterUpdateInput!)  {
-      updateExporter(where: $where, data: $data) {
+  updateAccount: () => gql`
+    mutation UpdateAccount($where: AccountWhereUniqueInput!, $data: AccountUpdateInput!)  {
+      updateAccount(where: $where, data: $data) {
         id
         verificationHash
       }
     }
   `,
-  deleteExportersById: () => gql`
-    mutation DeleteExporters($where: [ExporterWhereUniqueInput!]!)  {
-      deleteExporters(where: $where) {
+  deleteAccountsById: () => gql`
+    mutation DeleteAccounts($where: [AccountWhereUniqueInput!]!)  {
+      deleteAccounts(where: $where) {
         id
       }
     }
@@ -122,35 +122,35 @@ const queryStrings = {
 };
 
 /**
- * createExporterAccount
- * Create an exporter account
+ * createAnAccount
+ * Create an account
  * @param {String} First name
  * @param {String} Last name
  * @param {String} Email address
  * @param {String} Password
- * @returns {Object} Exporter account
+ * @returns {Object} Account
  */
-const createExporterAccount = (firstName, lastName, email, password) =>
+const createAnAccount = (firstName, lastName, email, password) =>
   apollo.query({
-    query: queryStrings.createExporterAccount(),
+    query: queryStrings.createAnAccount(),
     variables: {
       firstName,
       lastName,
       email,
       password,
     },
-  }).then((response) => response.data.createAccount);
+  }).then((response) => response.data.createAnAccount);
 
 /**
- * getExporterByEmail
- * Get's an exporter by email from the API
- * @param {String} Exporter email address
- * @returns {Object} Exporter
+ * getAccountByEmail
+ * Get's an account by email from the API
+ * @param {String} Account email address
+ * @returns {Object} Account
  */
-const getExporterByEmail = async (email) => {
+const getAccountByEmail = async (email) => {
   try {
     const baseUrl = Cypress.config('apiUrl');
-    const url = `${baseUrl}?query=${queryStrings.getExporterByEmail(email)}`;
+    const url = `${baseUrl}?query=${queryStrings.getAccountByEmail(email)}`;
 
     const response = await cy.request({
       headers: {
@@ -160,65 +160,65 @@ const getExporterByEmail = async (email) => {
     });
 
     if (!response.body || !response.body.data) {
-      throw new Error('Getting exporter by email ', { response });
+      throw new Error('Getting account by email ', { response });
     }
 
     return response;
   } catch (err) {
     console.error(err);
 
-    throw new Error('Getting exporter by email ', { err });
+    throw new Error('Getting account by email ', { err });
   }
 };
 
 /**
- * updateExporter
- * Update an exporter
+ * updateAccount
+ * Update an account
  * @param {String} Account ID
  * @returns {String} Account ID
  */
-const updateExporter = async (id, updateObj) => {
+const updateAccount = async (id, updateObj) => {
   try {
     const responseBody = await apollo.query({
-      query: queryStrings.updateExporter(),
+      query: queryStrings.updateAccount(),
       variables: {
         where: { id },
         data: updateObj,
       },
-    }).then((response) => response.data.updateExporter);
+    }).then((response) => response.data.updateAccount);
 
     return responseBody;
   } catch (err) {
     console.error(err);
 
-    throw new Error('Updating exporter', { err });
+    throw new Error('Updating account', { err });
   }
 };
 
 /**
- * deleteExportersById
- * Delete exporters by ID
+ * deleteAccountsById
+ * Delete accounts by ID
  * @param {String} Account ID
  * @returns {String} Account ID
  */
-const deleteExportersById = async (id) => {
+const deleteAccountsById = async (id) => {
   try {
     const responseBody = await apollo.query({
-      query: queryStrings.deleteExportersById(),
+      query: queryStrings.deleteAccountsById(),
       variables: { where: { id } },
-    }).then((response) => response.data.deleteExporters);
+    }).then((response) => response.data.deleteAccounts);
 
     return responseBody.id;
   } catch (err) {
     console.error(err);
 
-    throw new Error('Deleting exporters by ID ', { err });
+    throw new Error('Deleting accounts by ID ', { err });
   }
 };
 
 /**
  * addAndGetOTP
- * Create and get an OTP for the exporter's account directly from the API,
+ * Create and get an OTP for an account directly from the API,
  * so that we can assert enter a valid security code and continue the journey.
  * This is to ensure that we are testing a real world scenario.
  *
@@ -404,10 +404,10 @@ const declarations = {
 };
 
 const api = {
-  createExporterAccount,
-  getExporterByEmail,
-  updateExporter,
-  deleteExportersById,
+  createAnAccount,
+  getAccountByEmail,
+  updateAccount,
+  deleteAccountsById,
   addAndGetOTP,
   getAccountPasswordResetToken,
   getApplicationByReferenceNumber,

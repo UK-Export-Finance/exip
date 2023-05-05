@@ -1,5 +1,5 @@
 import {
-  createAccount,
+  createAnAccount,
   verifyAccountEmailAddress,
   sendEmailConfirmEmailAddress,
   accountSignIn,
@@ -22,7 +22,7 @@ import { getCompaniesHouseInformation, getAccountPasswordResetToken, verifyAccou
  */
 const customResolvers = {
   Mutation: {
-    createAccount,
+    createAnAccount,
     accountSignIn,
     accountSignInSendNewCode,
     verifyAccountEmailAddress,

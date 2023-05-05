@@ -27,9 +27,9 @@ export const get = (req: Request, res: Response) => {
    */
   req.flash('emailAddressForPasswordReset', emailAddressForPasswordReset);
 
-  const exporterEmail = emailAddressForPasswordReset || req.flash('emailAddressForPasswordReset');
+  const accountEmail = emailAddressForPasswordReset || req.flash('emailAddressForPasswordReset');
 
-  if (!exporterEmail) {
+  if (!accountEmail) {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
@@ -40,6 +40,6 @@ export const get = (req: Request, res: Response) => {
       PAGE_CONTENT_STRINGS,
       BACK_LINK: req.headers.referer,
     }),
-    exporterEmail,
+    accountEmail,
   });
 };

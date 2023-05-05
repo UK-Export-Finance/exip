@@ -11,10 +11,10 @@ import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } fro
  */
 const send = async (application: Application, csvPath: string): Promise<SuccessResponse> => {
   try {
-    const { referenceNumber, exporter, exporterCompany, buyer, policyAndExport } = application as Application;
+    const { referenceNumber, owner, exporterCompany, buyer, policyAndExport } = application as Application;
 
     // generate email variables
-    const { email, firstName } = exporter;
+    const { email, firstName } = owner;
 
     const sendEmailVars = {
       emailAddress: email,
@@ -26,11 +26,11 @@ const send = async (application: Application, csvPath: string): Promise<SuccessR
       requestedStartDate: policyAndExport.requestedStartDate,
     } as ApplicationSubmissionEmailVariables;
 
-    // send "application submitted" email receipt to the exporter
-    const exporterSubmittedResponse = await sendEmail.applicationSubmitted.exporter(sendEmailVars);
+    // send "application submitted" email receipt to the application's owner/account
+    const accountSubmittedResponse = await sendEmail.applicationSubmitted.account(sendEmailVars);
 
-    if (!exporterSubmittedResponse.success) {
-      throw new Error('Sending application submitted email to exporter');
+    if (!accountSubmittedResponse.success) {
+      throw new Error('Sending application submitted email to owner/account');
     }
 
     // get email template IDs depending on the submitted answers
@@ -43,16 +43,16 @@ const send = async (application: Application, csvPath: string): Promise<SuccessR
       throw new Error('Sending application submitted email to underwriting team');
     }
 
-    // send "documents" email to the exporter depending on submitted answers
-    if (templateIds.exporter) {
-      const documentsResponse = await sendEmail.documentsEmail(sendEmailVars, templateIds.exporter);
+    // send "documents" email to the application's owner/account depending on submitted answers
+    if (templateIds.account) {
+      const documentsResponse = await sendEmail.documentsEmail(sendEmailVars, templateIds.account);
 
       if (!documentsResponse.success) {
         throw new Error(`Sending application submitted emails ${documentsResponse}`);
       }
     }
 
-    // no need to send "documents" email to exporter
+    // no need to send "documents" email to application's owner/account
     return {
       success: true,
     };

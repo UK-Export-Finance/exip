@@ -3,7 +3,7 @@ import { Account } from '../../types';
 
 const getAccountByField = async (context: Context, field: string, value: string): Promise<Account | boolean> => {
   try {
-    console.info('Getting exporter account by field/value');
+    console.info('Getting account by field/value');
 
     /**
      * Get an account by a particular field and value.
@@ -12,7 +12,7 @@ const getAccountByField = async (context: Context, field: string, value: string)
      * Because this is low volume service, there is no need to improve this.
      * However if volumes increase dramatically we will need to improve this.
      */
-    const exportersArray = await context.db.Exporter.findMany({
+    const accountsArray = await context.db.Account.findMany({
       where: {
         [field]: { equals: value },
       },
@@ -20,18 +20,18 @@ const getAccountByField = async (context: Context, field: string, value: string)
     });
 
     // ensure that we have found an account with the requsted field/value
-    if (!exportersArray || !exportersArray.length || !exportersArray[0]) {
-      console.info('Getting exporter account by field - no exporter exists with the provided field/value');
+    if (!accountsArray || !accountsArray.length || !accountsArray[0]) {
+      console.info('Getting account by field - no account exists with the provided field/value');
 
       return false;
     }
 
-    const exporter = exportersArray[0] as Account;
+    const account = accountsArray[0] as Account;
 
-    return exporter;
+    return account;
   } catch (err) {
     console.error(err);
-    throw new Error(`Getting exporter account by field/value ${err}`);
+    throw new Error(`Getting account by field/value ${err}`);
   }
 };
 

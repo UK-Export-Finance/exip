@@ -17,7 +17,7 @@ dotenv.config();
 const context = getContext(config, PrismaModule) as Context;
 
 describe('custom-resolvers/account-sign-in', () => {
-  let exporter: Account;
+  let account: Account;
 
   jest.mock('../../emails');
   jest.mock('../../helpers/generate-otp');
@@ -39,20 +39,18 @@ describe('custom-resolvers/account-sign-in', () => {
     jest.resetAllMocks();
   });
 
-  let account: Account;
-
   let result: AccountSignInResponse;
 
   beforeAll(async () => {
     // wipe the table so we have a clean slate.
-    const exporters = await context.query.Exporter.findMany();
+    const accounts = await context.query.Account.findMany();
 
-    await context.query.Exporter.deleteMany({
-      where: exporters,
+    await context.query.Account.deleteMany({
+      where: accounts,
     });
 
     // create an account
-    exporter = (await context.query.Exporter.createOne({
+    account = (await context.query.Account.createOne({
       data: mockAccount,
       query: 'id',
     })) as Account;
@@ -65,8 +63,8 @@ describe('custom-resolvers/account-sign-in', () => {
 
     result = await accountSignIn({}, variables, context);
 
-    account = (await context.query.Exporter.findOne({
-      where: { id: exporter.id },
+    account = (await context.query.Account.findOne({
+      where: { id: account.id },
       query: 'id firstName email otpSalt otpHash otpExpiry',
     })) as Account;
   });
@@ -107,10 +105,10 @@ describe('custom-resolvers/account-sign-in', () => {
     });
   });
 
-  describe('when exporter is not verified', () => {
+  describe('when account is not verified', () => {
     test('it should return success=false', async () => {
-      await context.query.Exporter.updateOne({
-        where: { id: exporter.id },
+      await context.query.Account.updateOne({
+        where: { id: account.id },
         data: {
           isVerified: false,
         },
@@ -124,13 +122,13 @@ describe('custom-resolvers/account-sign-in', () => {
     });
   });
 
-  describe('when no exporter is found', () => {
+  describe('when no account is found', () => {
     test('it should return success=false', async () => {
       // wipe the table so we have a clean slate.
-      const exporters = await context.query.Exporter.findMany();
+      const accounts = await context.query.Account.findMany();
 
-      await context.query.Exporter.deleteMany({
-        where: exporters,
+      await context.query.Account.deleteMany({
+        where: accounts,
       });
 
       result = await accountSignIn({}, variables, context);

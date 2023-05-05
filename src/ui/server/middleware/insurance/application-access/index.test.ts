@@ -57,11 +57,11 @@ describe('middleware/insurance/application-access', () => {
       req.baseUrl = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`;
     });
 
-    describe("when req.session.user.id matches the application's exporter/account ID", () => {
+    describe("when req.session.user.id matches the application's owner ID", () => {
       beforeEach(() => {
         req.session.user = {
           ...mockAccount,
-          id: mockApplication.exporter.id,
+          id: mockApplication.owner.id,
         };
 
         next = nextSpy;
@@ -74,7 +74,7 @@ describe('middleware/insurance/application-access', () => {
       });
     });
 
-    describe("when req.session.accountId does NOT match the application's exporter/account ID", () => {
+    describe("when req.session.accountId does NOT match the application's owner ID", () => {
       beforeEach(() => {
         req.session.accountId = '1234';
         next = nextSpy;
@@ -87,12 +87,12 @@ describe('middleware/insurance/application-access', () => {
       });
     });
 
-    describe('when res.locals.application does not have an exporter ID', () => {
+    describe('when res.locals.application does not have an owner ID', () => {
       beforeEach(() => {
         res.locals.application = {
           ...mockApplication,
           // @ts-ignore
-          exporter: {},
+          owner: {},
         };
 
         next = nextSpy;

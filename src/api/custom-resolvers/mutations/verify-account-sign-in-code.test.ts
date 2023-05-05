@@ -4,7 +4,7 @@ import { subMinutes } from 'date-fns';
 import verifyAccountSignInCode from './verify-account-sign-in-code';
 import create from '../../helpers/create-jwt';
 import { ACCOUNT } from '../../constants';
-import getExporterById from '../../helpers/get-exporter-by-id';
+import getAccountById from '../../helpers/get-account-by-id';
 import generate from '../../helpers/generate-otp';
 import generateOTPAndUpdateAccount from '../../helpers/generate-otp-and-update-account';
 import baseConfig from '../../keystone';
@@ -27,8 +27,8 @@ const {
 } = ACCOUNT;
 
 describe('custom-resolvers/verify-account-sign-in-code', () => {
-  let exporter: Account;
-  let updatedExporter: Account;
+  let account: Account;
+  let updatedAccount: Account;
   let variables: VerifyAccountSignInCodeVariables;
   let result: VerifyAccountSignInCodeResponse;
 
@@ -44,27 +44,27 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
 
   beforeEach(async () => {
     // create an account
-    exporter = (await context.query.Exporter.createOne({
+    account = (await context.query.Account.createOne({
       data: mockAccount,
       query: 'id firstName lastName email salt hash verificationHash sessionExpiry',
     })) as Account;
 
     // generate OTP and update the account
-    const { securityCode } = await generateOTPAndUpdateAccount(context, exporter.id);
+    const { securityCode } = await generateOTPAndUpdateAccount(context, account.id);
 
     variables = {
-      accountId: exporter.id,
+      accountId: account.id,
       securityCode,
     };
 
     result = await verifyAccountSignInCode({}, variables, context);
 
-    updatedExporter = await getExporterById(context, exporter.id);
+    updatedAccount = await getAccountById(context, account.id);
   });
 
   afterEach(async () => {
-    await context.query.Exporter.deleteOne({
-      where: { id: exporter.id },
+    await context.query.Account.deleteOne({
+      where: { id: account.id },
     });
   });
 
@@ -73,9 +73,9 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
   });
 
   test('it should return account details', async () => {
-    expect(result.accountId).toEqual(exporter.id);
-    expect(result.firstName).toEqual(exporter.firstName);
-    expect(result.lastName).toEqual(exporter.lastName);
+    expect(result.accountId).toEqual(account.id);
+    expect(result.firstName).toEqual(account.firstName);
+    expect(result.lastName).toEqual(account.lastName);
   });
 
   test('it should return JWT', async () => {
@@ -84,9 +84,9 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
   });
 
   it('should save a session identifier', () => {
-    expect(updatedExporter.sessionIdentifier).toEqual(mockJWT.sessionIdentifier);
+    expect(updatedAccount.sessionIdentifier).toEqual(mockJWT.sessionIdentifier);
 
-    expect(typeof updatedExporter.sessionExpiry).toEqual('object');
+    expect(typeof updatedAccount.sessionExpiry).toEqual('object');
   });
 
   describe('session expiry date', () => {
@@ -115,7 +115,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
     });
 
     it('should save a session expiry date to the account', () => {
-      const expiry = new Date(updatedExporter.sessionExpiry);
+      const expiry = new Date(updatedAccount.sessionExpiry);
 
       const expiryDay = expiry.getDay();
       const expiryMonth = expiry.getMonth();
@@ -130,9 +130,9 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
   });
 
   it("should nullify thhe account's OTP fields", () => {
-    expect(updatedExporter.otpSalt).toEqual('');
-    expect(updatedExporter.otpHash).toEqual('');
-    expect(updatedExporter.otpExpiry).toEqual(null);
+    expect(updatedAccount.otpSalt).toEqual('');
+    expect(updatedAccount.otpHash).toEqual('');
+    expect(updatedAccount.otpExpiry).toEqual(null);
   });
 
   describe('when the provided sign in code is invalid', () => {
@@ -148,9 +148,9 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
     });
   });
 
-  describe('when no exporter is found', () => {
+  describe('when no account is found', () => {
     test('it should return success=false', async () => {
-      // no need to delete here - exporter is (correctly) already deleted due to afterEach()
+      // no need to delete here - account is (correctly) already deleted due to afterEach()
 
       result = await verifyAccountSignInCode({}, variables, context);
 
@@ -160,10 +160,10 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
     });
   });
 
-  describe(`when the exporter's OTP has expired`, () => {
+  describe(`when the account's OTP has expired`, () => {
     beforeAll(async () => {
       // create an account
-      exporter = (await context.query.Exporter.createOne({
+      account = (await context.query.Account.createOne({
         data: mockAccount,
         query: 'id firstName lastName email salt hash verificationHash otpExpiry',
       })) as Account;
@@ -180,8 +180,8 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
       const previousTime = subMinutes(today, 6);
 
       // update the account
-      const updateResponse = await context.db.Exporter.updateOne({
-        where: { id: exporter.id },
+      const updateResponse = await context.db.Account.updateOne({
+        where: { id: account.id },
         data: {
           otpSalt: salt,
           otpHash: hash,
@@ -190,13 +190,13 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
       });
 
       // update variables
-      updatedExporter = {
-        ...exporter,
+      updatedAccount = {
+        ...account,
         ...updateResponse,
       } as Account;
 
       variables = {
-        accountId: updatedExporter.id,
+        accountId: updatedAccount.id,
         securityCode: '1',
       };
 
@@ -211,10 +211,10 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
     });
   });
 
-  describe('when the exporter does not have OTP salt, hash or expiry', () => {
+  describe('when the account does not have OTP salt, hash or expiry', () => {
     test('it should return success=false', async () => {
       // create an account
-      exporter = (await context.query.Exporter.createOne({
+      account = (await context.query.Account.createOne({
         data: mockAccount,
         query: 'id firstName lastName email salt hash verificationHash',
       })) as Account;

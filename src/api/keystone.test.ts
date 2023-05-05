@@ -23,7 +23,7 @@ describe('Create an Application', () => {
     application = (await context.query.Application.createOne({
       data: {},
       query:
-        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status previousStatus eligibility { id } policyAndExport { id } exporter { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id } buyer { id } sectionReview { id } declaration { id }',
+        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status previousStatus eligibility { id } policyAndExport { id } owner { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id } buyer { id } sectionReview { id } declaration { id }',
     })) as Application;
   });
 
@@ -236,8 +236,8 @@ describe('Create an Application', () => {
   });
 });
 
-describe('Exporter', () => {
-  let exporter: Account;
+describe('Account', () => {
+  let account: Account;
 
   describe('create', () => {
     jest.mock('./emails');
@@ -247,21 +247,21 @@ describe('Exporter', () => {
     beforeAll(async () => {
       sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
 
-      exporter = (await context.query.Exporter.createOne({
+      account = (await context.query.Account.createOne({
         data: mockAccount,
         query: 'id createdAt updatedAt firstName lastName email salt hash isVerified verificationHash verificationExpiry',
       })) as Account;
     });
 
     test('it should have an ID', () => {
-      expect(exporter.id).toBeDefined();
-      expect(typeof exporter.id).toEqual('string');
+      expect(account.id).toBeDefined();
+      expect(typeof account.id).toEqual('string');
     });
 
     test('it should have created and updated dates', () => {
-      const createdAtDay = new Date(exporter.createdAt).getDate();
-      const createdAtMonth = new Date(exporter.createdAt).getMonth();
-      const createdAtYear = new Date(exporter.createdAt).getFullYear();
+      const createdAtDay = new Date(account.createdAt).getDate();
+      const createdAtMonth = new Date(account.createdAt).getMonth();
+      const createdAtYear = new Date(account.createdAt).getFullYear();
 
       const expectedDay = new Date().getDate();
       const expectedMonth = new Date().getMonth();
@@ -271,9 +271,9 @@ describe('Exporter', () => {
       expect(createdAtMonth).toEqual(expectedMonth);
       expect(createdAtYear).toEqual(expectedYear);
 
-      const updatedAtDay = new Date(exporter.updatedAt).getDate();
-      const updatedAtMonth = new Date(exporter.updatedAt).getMonth();
-      const updatedAtYear = new Date(exporter.updatedAt).getFullYear();
+      const updatedAtDay = new Date(account.updatedAt).getDate();
+      const updatedAtMonth = new Date(account.updatedAt).getMonth();
+      const updatedAtYear = new Date(account.updatedAt).getFullYear();
 
       expect(updatedAtDay).toEqual(expectedDay);
       expect(updatedAtMonth).toEqual(expectedMonth);
@@ -281,7 +281,7 @@ describe('Exporter', () => {
     });
 
     test('it should call sendEmail.confirmEmailAddress', () => {
-      const { email, firstName, verificationHash } = exporter;
+      const { email, firstName, verificationHash } = account;
 
       expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
       expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, firstName, verificationHash);
@@ -294,13 +294,13 @@ describe('Exporter', () => {
     const accountUpdate = { firstName: 'Updated' };
 
     beforeAll(async () => {
-      exporter = (await context.query.Exporter.createOne({
+      account = (await context.query.Account.createOne({
         data: mockAccount,
         query: 'id',
       })) as Account;
 
-      updatedExporter = (await context.query.Exporter.updateOne({
-        where: { id: exporter.id },
+      updatedExporter = (await context.query.Account.updateOne({
+        where: { id: account.id },
         data: accountUpdate,
         query: 'id createdAt updatedAt firstName lastName email salt hash isVerified verificationHash verificationExpiry',
       })) as Account;
@@ -311,7 +311,7 @@ describe('Exporter', () => {
     });
 
     test('it should update updatedAt', () => {
-      expect(updatedExporter.updatedAt).not.toEqual(exporter.createdAt);
+      expect(updatedExporter.updatedAt).not.toEqual(account.createdAt);
     });
   });
 });
@@ -352,7 +352,7 @@ describe('Application timestamp updates', () => {
     application = (await context.query.Application.createOne({
       data: {},
       query:
-        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status previousStatus eligibility { id } policyAndExport { id } exporter { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id } buyer { id } sectionReview { id } declaration { id }',
+        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status previousStatus eligibility { id } policyAndExport { id } owner { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id } buyer { id } sectionReview { id } declaration { id }',
     })) as Application;
   });
 

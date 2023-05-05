@@ -34,7 +34,7 @@ export const mockMultiplePolicyAndExport = {
   maximumBuyerWillOwe: 1000,
 };
 
-export const mockExporter = {
+export const mockOwner = {
   id: mockAccount.id,
 };
 
@@ -127,7 +127,7 @@ const mockApplication = {
     wantCoverOverMaxPeriod: false,
   },
   status: APPLICATION.STATUS.DRAFT,
-  exporter: mockExporter,
+  owner: mockOwner,
   policyAndExport: mockSinglePolicyAndExport,
   exporterCompany: mockExporterCompany,
   exporterBusiness: mockExporterBusiness,

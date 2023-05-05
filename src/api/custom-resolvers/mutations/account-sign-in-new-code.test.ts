@@ -17,7 +17,7 @@ dotenv.config();
 const context = getContext(config, PrismaModule) as Context;
 
 describe('custom-resolvers/account-sign-in-new-code', () => {
-  let exporter: Account;
+  let account: Account;
 
   jest.mock('../../emails');
   jest.mock('../../helpers/generate-otp');
@@ -30,22 +30,20 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
     jest.resetAllMocks();
   });
 
-  let account: Account;
-
   let result: AccountSignInResponse;
 
   let variables: AccountSignInSendNewCodeVariables;
 
   beforeEach(async () => {
     // wipe the table so we have a clean slate.
-    const exporters = await context.query.Exporter.findMany();
+    const accounts = await context.query.Account.findMany();
 
-    await context.query.Exporter.deleteMany({
-      where: exporters,
+    await context.query.Account.deleteMany({
+      where: accounts,
     });
 
     // create an account
-    exporter = (await context.query.Exporter.createOne({
+    account = (await context.query.Account.createOne({
       data: mockAccount,
       query: 'id',
     })) as Account;
@@ -57,13 +55,13 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
     sendEmail.securityCodeEmail = securityCodeEmailSpy;
 
     variables = {
-      accountId: exporter.id,
+      accountId: account.id,
     };
 
     result = await accountSignInSendNewCode({}, variables, context);
 
-    account = (await context.query.Exporter.findOne({
-      where: { id: exporter.id },
+    account = (await context.query.Account.findOne({
+      where: { id: account.id },
       query: 'id firstName email otpSalt otpHash otpExpiry',
     })) as Account;
   });
@@ -92,13 +90,13 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
     });
   });
 
-  describe('when no exporter is found', () => {
+  describe('when no account is found', () => {
     test('it should return success=false', async () => {
       // wipe the table so we have a clean slate.
-      const exporters = await context.query.Exporter.findMany();
+      const accounts = await context.query.Account.findMany();
 
-      await context.query.Exporter.deleteMany({
-        where: exporters,
+      await context.query.Account.deleteMany({
+        where: accounts,
       });
 
       result = await accountSignInSendNewCode({}, variables, context);
@@ -120,7 +118,7 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
       } catch (err) {
         expect(securityCodeEmailSpy).toHaveBeenCalledTimes(1);
 
-        const expected = new Error(`Generating and sending new sign in code for exporter account (accountSignInSendNewCode mutation) ${mockSendEmailResponse}`);
+        const expected = new Error(`Generating and sending new sign in code for account (accountSignInSendNewCode mutation) ${mockSendEmailResponse}`);
         expect(err).toEqual(expected);
       }
     });

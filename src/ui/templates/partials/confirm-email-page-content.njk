@@ -1,5 +1,5 @@
-{% if exporterEmail %}
-  <p data-cy="we-sent-link-to">{{ CONTENT_STRINGS.WE_SENT_LINK_TO }} {{ exporterEmail }}</p>
+{% if accountEmail %}
+  <p data-cy="we-sent-link-to">{{ CONTENT_STRINGS.WE_SENT_LINK_TO }} {{ accountEmail }}</p>
 {% endif %}
 
 <p class="govuk-!-margin-bottom-9" data-cy="check-your-email">{{ CONTENT_STRINGS.CHECK_YOUR_EMAIL }}</p>
@@ -12,7 +12,7 @@
   <span data-cy="request-new-you-can">{{ REQUEST_NEW.YOU_CAN }}</span>
   <a
     class="govuk-link"
-    href="{{ REQUEST_NEW.LINK.HREF }}?id={{ exporterId }}"
+    href="{{ REQUEST_NEW.LINK.HREF }}?id={{ accountId }}"
     data-cy="request-new-link"
   >
     {{ REQUEST_NEW.LINK.TEXT }}

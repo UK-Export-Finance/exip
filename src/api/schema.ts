@@ -38,8 +38,8 @@ export const lists = {
       }),
       previousStatus: text(),
       policyAndExport: relationship({ ref: 'PolicyAndExport' }),
-      exporter: relationship({
-        ref: 'Exporter',
+      owner: relationship({
+        ref: 'Account',
         many: false,
       }),
       exporterBusiness: relationship({ ref: 'ExporterBusiness' }),
@@ -288,7 +288,7 @@ export const lists = {
               },
             });
 
-            // add the application ID to the declaration entry.
+            // add the application ID to the section review entry.
             await context.db.SectionReview.updateOne({
               where: { id: sectionReviewId },
               data: {
@@ -359,7 +359,7 @@ export const lists = {
     },
     access: allowAll,
   },
-  Exporter: list({
+  Account: list({
     fields: {
       createdAt: timestamp(),
       updatedAt: timestamp(),
@@ -391,7 +391,7 @@ export const lists = {
         const accountInputData = resolvedData as AccountInput;
 
         if (operation === 'create') {
-          console.info('Creating new exporter account');
+          console.info('Creating new account');
 
           // add dates
           const now = new Date();
@@ -415,7 +415,7 @@ export const lists = {
         }
 
         if (operation === 'update') {
-          console.info('Updating exporter account');
+          console.info('Updating account');
 
           // add dates
           accountInputData.updatedAt = new Date();

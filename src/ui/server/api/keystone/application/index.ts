@@ -22,7 +22,7 @@ const createInitialApplication = async (accountId: string) => {
     if (accountId) {
       variables = {
         data: {
-          exporter: {
+          owner: {
             connect: { id: accountId },
           },
         },

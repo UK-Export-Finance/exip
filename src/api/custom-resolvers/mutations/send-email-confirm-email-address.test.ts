@@ -16,7 +16,7 @@ dotenv.config();
 const context = getContext(config, PrismaModule) as Context;
 
 describe('custom-resolvers/send-email-confirm-email-address', () => {
-  let exporter: Account;
+  let account: Account;
   let variables: SendExporterEmailVariables;
 
   jest.mock('../../emails');
@@ -28,13 +28,13 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
   });
 
   beforeEach(async () => {
-    exporter = (await context.query.Exporter.createOne({
+    account = (await context.query.Account.createOne({
       data: mockAccount,
       query: 'id firstName lastName email salt hash verificationHash',
     })) as Account;
 
     variables = {
-      exporterId: exporter.id,
+      accountId: account.id,
     };
 
     jest.resetAllMocks();
@@ -47,7 +47,7 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
   test('it should call sendEmail.confirmEmailAddress and return success=true', async () => {
     const result = await sendEmailConfirmEmailAddress({}, variables, context);
 
-    const { email, firstName, verificationHash } = exporter;
+    const { email, firstName, verificationHash } = account;
 
     expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
     expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, firstName, verificationHash);
@@ -60,13 +60,13 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
     expect(result).toEqual(expected);
   });
 
-  describe('when no exporter is found', () => {
+  describe('when no account is found', () => {
     test('it should return success=false', async () => {
       // wipe the table so we have a clean slate.
-      const exporters = await context.query.Exporter.findMany();
+      const accounts = await context.query.Account.findMany();
 
-      await context.query.Exporter.deleteMany({
-        where: exporters,
+      await context.query.Account.deleteMany({
+        where: accounts,
       });
 
       const result = await sendEmailConfirmEmailAddress({}, variables, context);

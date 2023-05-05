@@ -30,14 +30,14 @@ describe('custom-resolvers/get-account-password-reset-token', () => {
 
   beforeEach(async () => {
     // wipe the table so we have a clean slate.
-    const exporters = await context.query.Exporter.findMany();
+    const accounts = await context.query.Account.findMany();
 
-    await context.query.Exporter.deleteMany({
-      where: exporters,
+    await context.query.Account.deleteMany({
+      where: accounts,
     });
 
-    // create a new exporter
-    account = (await context.query.Exporter.createOne({
+    // create a new account
+    account = (await context.query.Account.createOne({
       data: mockAccount,
       query: 'id email',
     })) as Account;
@@ -57,7 +57,7 @@ describe('custom-resolvers/get-account-password-reset-token', () => {
   describe(`when the account does not have ${PASSWORD_RESET_HASH}`, () => {
     test('it should return success=false', async () => {
       // update the account so it does not have a PASSWORD_RESET_HASH
-      await context.query.Exporter.updateOne({
+      await context.query.Account.updateOne({
         where: { id: account.id },
         data: {
           [PASSWORD_RESET_HASH]: '',
@@ -75,10 +75,10 @@ describe('custom-resolvers/get-account-password-reset-token', () => {
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
       // wipe the table so we have a clean slate.
-      const exporters = await context.query.Exporter.findMany();
+      const accounts = await context.query.Account.findMany();
 
-      await context.query.Exporter.deleteMany({
-        where: exporters,
+      await context.query.Account.deleteMany({
+        where: accounts,
       });
 
       result = await getAccountPasswordResetToken({}, variables, context);

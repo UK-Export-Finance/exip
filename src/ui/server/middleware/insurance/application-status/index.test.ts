@@ -34,13 +34,13 @@ describe('middleware/insurance/application-status', () => {
     beforeEach(() => {
       req.session.user = {
         ...mockAccount,
-        id: mockApplication.exporter.id,
+        id: mockApplication.owner.id,
       };
 
       res.locals.application = {
         ...mockApplication,
         status: APPLICATION.STATUS.SUBMITTED,
-        id: mockApplication.exporter.id,
+        id: mockApplication.owner.id,
       };
 
       next = nextSpy;
@@ -56,13 +56,13 @@ describe('middleware/insurance/application-status', () => {
       beforeEach(() => {
         req.session.user = {
           ...mockAccount,
-          id: mockApplication.exporter.id,
+          id: mockApplication.owner.id,
         };
 
         res.locals.application = {
           ...mockApplication,
           status: APPLICATION.STATUS.SUBMITTED,
-          id: mockApplication.exporter.id,
+          id: mockApplication.owner.id,
         };
 
         req.baseUrl = `${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
@@ -82,12 +82,12 @@ describe('middleware/insurance/application-status', () => {
     beforeEach(() => {
       req.session.user = {
         ...mockAccount,
-        id: mockApplication.exporter.id,
+        id: mockApplication.owner.id,
       };
 
       res.locals.application = {
         ...mockApplication,
-        id: mockApplication.exporter.id,
+        id: mockApplication.owner.id,
       };
 
       next = nextSpy;

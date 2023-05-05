@@ -1,4 +1,4 @@
-import createAccount from './create-account';
+import createAnAccount from './create-an-account';
 import verifyAccountEmailAddress from './verify-account-email-address';
 import sendEmailConfirmEmailAddress from './send-email-confirm-email-address';
 import accountSignIn from './account-sign-in';
@@ -13,7 +13,7 @@ import submitApplication from './submit-application';
 import sendEmailInsuranceFeedback from './send-email-insurance-feedback';
 
 export {
-  createAccount,
+  createAnAccount,
   verifyAccountEmailAddress,
   sendEmailConfirmEmailAddress,
   accountSignIn,

@@ -44,7 +44,7 @@ export const mockMultiplePolicyAndExport = {
   maximumBuyerWillOwe: 1000,
 };
 
-export const mockExporter = {
+export const mockAccount = {
   id: 'clfv9uv6v00csoqz2pm7nftfv',
 };
 
@@ -129,7 +129,7 @@ const mockApplication = {
     ...mockApplicationEligibility,
   },
   status: APPLICATION.STATUS.SUBMITTED,
-  exporter: mockExporter,
+  owner: mockAccount,
   policyAndExport: {
     id: 'clav8by1i0007kgoqies0dbfc',
     ...mockSinglePolicyAndExport,

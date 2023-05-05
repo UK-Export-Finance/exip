@@ -39,7 +39,7 @@ export const callNotify = async (templateId: string, emailAddress: string, varia
 
 /**
  * confirmEmailAddress
- * Send "confirm your email address" email to an exporter
+ * Send "confirm your email address" email to an account
  * @param {String} Email address
  * @param {String} First name
  * @param {String} Verification hash
@@ -65,7 +65,7 @@ const confirmEmailAddress = async (emailAddress: string, firstName: string, veri
 
 /**
  * securityCodeEmail
- * Send the security code email to an exporter
+ * Send the security code email to an account
  * @param {String} Email address
  * @param {String} First name
  * @param {String} Security code
@@ -91,7 +91,7 @@ const securityCodeEmail = async (emailAddress: string, firstName: string, securi
 
 /**
  * passwordResetLink
- * Send "reset your password" email to an exporter
+ * Send "reset your password" email to an account
  * @param {String} Email address
  * @param {String} First name
  * @param {String} Password reet token
@@ -117,14 +117,14 @@ const passwordResetLink = async (emailAddress: string, firstName: string, passwo
 
 const applicationSubmitted = {
   /**
-   * applicationSubmitted.exporter
-   * Send "application submitted" email to an exporter
+   * applicationSubmitted.account
+   * Send "application submitted" email to an account
    * @param {Object} ApplicationSubmissionEmailVariables
    * @returns {Object} callNotify response
    */
-  exporter: async (variables: ApplicationSubmissionEmailVariables): Promise<EmailResponse> => {
+  account: async (variables: ApplicationSubmissionEmailVariables): Promise<EmailResponse> => {
     try {
-      console.info('Sending application submitted email to exporter');
+      console.info('Sending application submitted email to account');
 
       const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
 
@@ -136,7 +136,7 @@ const applicationSubmitted = {
     } catch (err) {
       console.error(err);
 
-      throw new Error(`Sending application submitted email to exporter ${err}`);
+      throw new Error(`Sending application submitted email to account ${err}`);
     }
   },
   /**
@@ -151,7 +151,7 @@ const applicationSubmitted = {
     try {
       console.info('Sending application submitted email to underwriting team');
 
-      const emailAddress = process.env.UNDERWRITING_TEAM_EMAIL as string;
+      const emailAddress = String(process.env.UNDERWRITING_TEAM_EMAIL);
 
       // NOTE: no need to handle any file system errors here.
       // if something errors, it will fall into the catch handler below.
@@ -182,7 +182,7 @@ const applicationSubmitted = {
 
 /**
  * documentsEmail
- * Send "we need some documents from you" email to an exporter
+ * Send "we need some documents from you" email to an account
  * @param {Object} ApplicationSubmissionEmailVariables
  * @param {Boolean} Flag for sending anto-bribery/trading history template
  * @returns {Object} callNotify response

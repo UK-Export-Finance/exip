@@ -77,8 +77,8 @@ describe('controllers/insurance/account/create/confirm-email', () => {
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),
-        exporterEmail: mockGetAccountResponse.email,
-        exporterId: mockGetAccountResponse.id,
+        accountEmail: mockGetAccountResponse.email,
+        accountId: mockGetAccountResponse.id,
       });
     });
 

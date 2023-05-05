@@ -2,7 +2,7 @@ import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import baseConfig from '../../keystone';
-import createAccount from './create-account';
+import createAccount from './create-an-account';
 import { ACCOUNT } from '../../constants';
 import { mockAccount } from '../../test-mocks';
 import { Account } from '../../types';
@@ -24,7 +24,7 @@ const {
   },
 } = ENCRYPTION;
 
-describe('custom-resolvers/create-account', () => {
+describe('custom-resolvers/create-an-account', () => {
   let account: Account;
 
   const mockPassword = String(process.env.MOCK_ACCOUNT_PASSWORD);
@@ -42,10 +42,10 @@ describe('custom-resolvers/create-account', () => {
 
   beforeEach(async () => {
     // wipe the table so we have a clean slate.
-    const exporters = await context.query.Exporter.findMany();
+    const accounts = await context.query.Account.findMany();
 
-    await context.query.Exporter.deleteMany({
-      where: exporters,
+    await context.query.Account.deleteMany({
+      where: accounts,
     });
 
     // create an account
@@ -90,10 +90,10 @@ describe('custom-resolvers/create-account', () => {
     });
 
     it('should not create the account', async () => {
-      const exporters = await context.query.Exporter.findMany();
+      const accounts = await context.query.Account.findMany();
 
       // should only have the first created account
-      expect(exporters.length).toEqual(1);
+      expect(accounts.length).toEqual(1);
     });
   });
 });

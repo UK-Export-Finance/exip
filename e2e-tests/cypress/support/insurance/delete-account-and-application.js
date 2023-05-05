@@ -15,7 +15,7 @@ const deleteAccountAndApplication = (referenceNumber) => {
   } catch (err) {
     console.error(err);
 
-    throw new Error('Deleting exporter account and application');
+    throw new Error('Deleting account and application');
   }
 };
 

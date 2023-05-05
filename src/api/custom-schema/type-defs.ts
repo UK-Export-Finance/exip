@@ -1,5 +1,5 @@
 const typeDefs = `
-  type Account {
+  type AccountResponse {
     id: String
     firstName: String
     lastName: String
@@ -14,7 +14,7 @@ const typeDefs = `
     password: String
   }
 
-  type CreateAccountResponse {
+  type CreateAnAccountResponse {
     success: Boolean
     id: String
     firstName: String
@@ -137,12 +137,12 @@ const typeDefs = `
 
   type Mutation {
     """ create an account """
-    createAccount(
+    createAnAccount(
       firstName: String!
       lastName: String!
       email: String!
       password: String!
-    ): CreateAccountResponse
+    ): CreateAnAccountResponse
 
     """ verify an account's email address """
     verifyAccountEmailAddress(
@@ -151,7 +151,7 @@ const typeDefs = `
 
     """ send confirm email address email """
     sendEmailConfirmEmailAddress(
-      exporterId: String!
+      accountId: String!
     ): EmailResponse
 
     """ validate credentials, generate and email a OTP security code """
@@ -216,7 +216,7 @@ const typeDefs = `
     """ get an account by email """
     getAccountByEmail(
       email: String!
-    ): Account
+    ): AccountResponse
 
     """ get an account's password reset token """
     getAccountPasswordResetToken(

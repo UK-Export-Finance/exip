@@ -47,8 +47,8 @@ export const createFullApplication = async (context: Context) => {
     throw new Error('No country found from mock country ISO code');
   }
 
-  // create a new exporter
-  const exporter = (await context.query.Exporter.createOne({
+  // create a new account
+  const account = (await context.query.Account.createOne({
     data: mockAccount,
     query: 'id firstName email',
   })) as Account;
@@ -56,11 +56,11 @@ export const createFullApplication = async (context: Context) => {
   // create a new application
   const application = (await context.query.Application.createOne({
     query:
-      'id referenceNumber eligibility { id } policyAndExport { id } exporter { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id } buyer { id } declaration { id }',
+      'id referenceNumber eligibility { id } policyAndExport { id } owner { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id } buyer { id } declaration { id }',
     data: {
-      exporter: {
+      owner: {
         connect: {
-          id: exporter.id,
+          id: account.id,
         },
       },
     },
@@ -117,7 +117,7 @@ export const createFullApplication = async (context: Context) => {
 
   return {
     ...application,
-    exporter,
+    owner: account,
     exporterCompany,
     buyer,
     declaration,

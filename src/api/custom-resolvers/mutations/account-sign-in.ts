@@ -18,36 +18,36 @@ import { AccountSignInVariables, AccountSignInResponse } from '../../types';
  */
 const accountSignIn = async (root: any, variables: AccountSignInVariables, context: Context): Promise<AccountSignInResponse> => {
   try {
-    console.info('Signing in exporter account');
+    console.info('Signing in account');
 
     const { email, password } = variables;
 
     // Get the account the email is associated with.
-    const exporter = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    const account = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
 
-    if (!exporter) {
-      console.info('Unable to validate exporter account - no account found');
-
-      return { success: false };
-    }
-
-    if (!exporter.isVerified) {
-      console.info('Unable to validate exporter account - account is not verified');
+    if (!account) {
+      console.info('Unable to validate account - no account found');
 
       return { success: false };
     }
 
-    if (isValidAccountPassword(password, exporter.salt, exporter.hash)) {
+    if (!account.isVerified) {
+      console.info('Unable to validate account - account is not verified');
+
+      return { success: false };
+    }
+
+    if (isValidAccountPassword(password, account.salt, account.hash)) {
       // generate OTP and update the account
-      const { securityCode } = await generateOTPAndUpdateAccount(context, exporter.id);
+      const { securityCode } = await generateOTPAndUpdateAccount(context, account.id);
 
       // send "security code" email.
-      const emailResponse = await sendEmail.securityCodeEmail(email, exporter.firstName, securityCode);
+      const emailResponse = await sendEmail.securityCodeEmail(email, account.firstName, securityCode);
 
       if (emailResponse.success) {
         return {
           ...emailResponse,
-          accountId: exporter.id,
+          accountId: account.id,
         };
       }
 
