@@ -9,7 +9,7 @@ import api from '../../api';
 const getAccountByEmail = (email) => {
   try {
     api.getAccountByEmail(email).then((response) => {
-      if (!response.body || !response.body.data) {
+      if (!response?.body || !response?.body?.data) {
         throw new Error('Getting account by email', { response });
       }
 
