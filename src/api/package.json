@@ -35,7 +35,7 @@
     "@keystone-6/core": "^5.2.0",
     "@keystone-6/fields-document": "^7.0.0",
     "axios": "^1.4.0",
-    "csv-stringify": "^6.3.3",
+    "csv-stringify": "^6.3.4",
     "date-fns": "^2.30.0",
     "dotenv": "16.0.2",
     "jsonwebtoken": "^9.0.0",
