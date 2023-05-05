@@ -52,7 +52,6 @@ CREATE TABLE `Application` (
   KEY `Application_eligibility_idx` (`eligibility`),
   KEY `Application_referenceNumber_idx` (`referenceNumber`),
   KEY `Application_policyAndExport_idx` (`policyAndExport`),
-	KEY `Application_exporter_idx` (`exporter`),
   KEY `Application_exporterCompany_idx` (`exporterCompany`),
   KEY `Application_exporterBusiness_idx` (`exporterBusiness`),
   KEY `Application_exporterBroker_idx` (`exporterBroker`),
