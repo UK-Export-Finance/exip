@@ -1,4 +1,4 @@
-import canAccessCheckYourAnswersRoutes from '.';
+import canAccessSubmitYourApplicationRoutes from '.';
 import POLICY_AND_EXPORTS_FIELD_IDS from '../../constants/field-ids/insurance/policy-and-exports';
 import { mockApplication } from '../../test-mocks';
 
@@ -6,10 +6,10 @@ const {
   TYPE_OF_POLICY: { POLICY_TYPE },
 } = POLICY_AND_EXPORTS_FIELD_IDS;
 
-describe('helpers/can-access-check-your-answers-routes', () => {
+describe('helpers/can-access-submit-your-application-routes', () => {
   describe('when an application has all required fields/answers', () => {
     it('should return true', () => {
-      const result = canAccessCheckYourAnswersRoutes(mockApplication);
+      const result = canAccessSubmitYourApplicationRoutes(mockApplication);
 
       expect(result).toEqual(true);
     });
@@ -21,7 +21,7 @@ describe('helpers/can-access-check-your-answers-routes', () => {
 
       delete mockApplicationWithIncompleteFields.policyAndExport[POLICY_TYPE];
 
-      const result = canAccessCheckYourAnswersRoutes(mockApplicationWithIncompleteFields);
+      const result = canAccessSubmitYourApplicationRoutes(mockApplicationWithIncompleteFields);
 
       expect(result).toEqual(false);
     });

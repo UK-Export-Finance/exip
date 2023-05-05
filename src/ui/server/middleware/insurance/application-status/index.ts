@@ -1,7 +1,7 @@
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { APPLICATION } from '../../../constants';
-import isCheckYourAnswersRoute from './is-check-your-answers-route';
-import canAccessCheckYourAnswersRoutes from '../../../helpers/can-access-check-your-answers-routes';
+import isSubmitYourApplicationRoute from './is-submit-your-application-route';
+import canAccessSubmitYourApplicationRoutes from '../../../helpers/can-access-submit-your-application-routes';
 import { Next, Request, Response } from '../../../../types';
 
 const { APPLICATION_SUBMITTED, NO_ACCESS_APPLICATION_SUBMITTED, INSURANCE_ROOT, COMPLETE_OTHER_SECTIONS } = INSURANCE_ROUTES;
@@ -37,10 +37,11 @@ export const applicationStatusMiddleware = async (req: Request, res: Response, n
     }
 
     /**
-     * If the URL is a "check your answers" route and required data for these routes is missing,
+     * If the URL is a route in the "submit your appication" group ("check your answers" or "declarations")
+     * and required data for these routes is missing,
      * do not allow the user to view/access these routes and redirect to COMPLETE_OTHER_SECTIONS.
      */
-    if (isCheckYourAnswersRoute(url, referenceNumber) && !canAccessCheckYourAnswersRoutes(application)) {
+    if (isSubmitYourApplicationRoute(url, referenceNumber) && !canAccessSubmitYourApplicationRoutes(application)) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${COMPLETE_OTHER_SECTIONS}`);
     }
   }
