@@ -10,7 +10,7 @@ const {
   ACCOUNT: { CREATE: { CONFIRM_EMAIL, VERIFY_EMAIL, VERIFY_EMAIL_LINK_EXPIRED } },
 } = ROUTES;
 
-context('Insurance - Account - Create - Confirm email page - expired token - As an Account I want to verify my email address, So that I can activate my email address and use it to create a digital service account with UKEF', () => {
+context('Insurance - Account - Create - Confirm email page - expired token - As an Exporter I want to verify my email address, So that I can activate my email address and use it to create a digital service account with UKEF', () => {
   let url;
   let account;
 
