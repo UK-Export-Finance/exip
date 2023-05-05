@@ -28,7 +28,7 @@ const getApplicationSubmittedEmailTemplateIds = (application: Application) => {
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY;
   }
 
-  const isConnectedWithBuyer = buyer.exporterIsConnectedWithBuyer && buyer.exporterIsConnectedWithBuyer === ANSWERS.YES;
+  const isConnectedWithBuyer = buyer.exporterHasTradedWithBuyer && buyer.exporterHasTradedWithBuyer === ANSWERS.YES;
 
   if (isConnectedWithBuyer) {
     templateIds.exporter = EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;

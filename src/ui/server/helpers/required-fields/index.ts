@@ -15,7 +15,7 @@ const {
  */
 const requiredFields = (application: ApplicationFlat) => [
   ...requiredPrepareApplicationFields(application),
-  ...requiredCheckYourAnswersFields(),
+  ...requiredCheckYourAnswersFields(application),
   ...requiredDeclarationsFields(application[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT]),
 ];
 

@@ -4,6 +4,7 @@ import { ROUTES, TEMPLATES } from '../../../constants';
 import { Request, Response } from '../../../../types';
 import { mockReq, mockRes } from '../../../test-mocks';
 import corePageVariables from '../../../helpers/page-variables/core';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 
 const startRoute = ROUTES.QUOTE.START;
 
@@ -37,6 +38,7 @@ describe('controllers/root/contact-us', () => {
           PRODUCT: { DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC },
           START_ROUTE: startRoute,
         }),
+        userName: getUserNameFromSession(req.session.user),
       });
     });
   });

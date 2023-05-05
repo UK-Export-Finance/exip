@@ -13,7 +13,6 @@ const { INSURANCE } = ROUTES;
 const {
   INSURANCE_ROOT,
   POLICY_AND_EXPORTS: { CHECK_YOUR_ANSWERS },
-  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE;
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 
@@ -138,18 +137,6 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
-
-          expect(res.redirect).toHaveBeenCalledWith(expected);
-        });
-      });
-
-      describe("when the url's last substring is `check-and-change`", () => {
-        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-          req.originalUrl = ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY_CHECK_AND_CHANGE;
-
-          await post(req, res);
-
-          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

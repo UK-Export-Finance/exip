@@ -8,14 +8,12 @@ import generateValidationErrors from './validation';
 import { isMultiPolicyType, isSinglePolicyType } from '../../../../helpers/policy-type';
 import mapAndSave from '../map-and-save';
 import isChangeRoute from '../../../../helpers/is-change-route';
-import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE: {
     INSURANCE_ROOT,
     POLICY_AND_EXPORTS: { CHECK_YOUR_ANSWERS },
-    CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   },
 } = ROUTES;
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
@@ -102,13 +100,10 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
-    if (isCheckAndChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
-    }
-
     if (isSinglePolicyType(req.body[FIELD_ID])) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`);
     }
+
     if (isMultiPolicyType(req.body[FIELD_ID])) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`);
     }

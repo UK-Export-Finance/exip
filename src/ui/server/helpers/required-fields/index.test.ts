@@ -18,7 +18,7 @@ describe('server/helpers/required-fields/index', () => {
 
     const expected = [
       ...requiredPrepareApplicationFields(flatApplicationData),
-      ...requiredCheckYourAnswersFields(),
+      ...requiredCheckYourAnswersFields(flatApplicationData),
       ...requiredDeclarationsFields(flatApplicationData[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT]),
     ];
 
