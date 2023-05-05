@@ -1,13 +1,23 @@
-import FIELD_IDS from '../../../constants/field-ids/insurance';
+import POLICY_AND_EXPORT_FIELD_IDS from '../../../constants/field-ids/insurance/policy-and-exports';
+import requiredEligibilityFields from '../eligibility';
+import requiredPolicyAndExportFields from '../policy-and-exports';
+import requiredExporterBusinessFields from '../exporter-business';
+import requiredYourBuyerFields from '../your-buyer';
+import { ApplicationFlat } from '../../../../types';
 
-const { CHECK_YOUR_ANSWERS } = FIELD_IDS;
-
-const { ELIGIBILITY, POLICY_AND_EXPORT, EXPORTER_BUSINESS, BUYER } = CHECK_YOUR_ANSWERS;
+const {
+  TYPE_OF_POLICY: { POLICY_TYPE },
+} = POLICY_AND_EXPORT_FIELD_IDS;
 
 /**
  * Required fields for the insurance - check your answers section
  * @returns {Array} Required field IDs
  */
-const requiredFields = (): Array<string> => [ELIGIBILITY, POLICY_AND_EXPORT, EXPORTER_BUSINESS, BUYER];
+const requiredFields = (application: ApplicationFlat): Array<string> => [
+  ...requiredEligibilityFields(),
+  ...requiredPolicyAndExportFields(application[POLICY_TYPE]),
+  ...requiredExporterBusinessFields(),
+  ...requiredYourBuyerFields(),
+];
 
 export default requiredFields;

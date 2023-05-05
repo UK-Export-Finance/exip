@@ -9,6 +9,7 @@ import * as account from './account';
 import * as policyAndExport from './policy-and-export';
 import * as checkYourAnswers from './check-your-answers';
 import * as declarations from './declarations';
+import completeOtherSectionsPage from './complete-other-sections';
 import applicationSubmittedPage from './applicationSubmitted';
 import * as feedback from './feedback';
 
@@ -25,6 +26,7 @@ const insurancePages = {
   checkYourAnswers,
   declarations,
   applicationSubmittedPage,
+  completeOtherSectionsPage,
   feedback,
 };
 

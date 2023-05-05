@@ -8,6 +8,7 @@ import EXPORTER_BUSINESS from './your-business';
 import YOUR_BUYER from './your-buyer';
 import DECLARATIONS from './declarations';
 import CHECK_YOUR_ANSWERS from './check-your-answers';
+import COMPLETE_OTHER_SECTIONS from './complete-other-sections';
 import APPLICATION_SUBMITTED from './application-submitted';
 import formatCurrency from '../../../helpers/format-currency';
 
@@ -133,6 +134,7 @@ export default {
   YOUR_BUYER,
   DECLARATIONS,
   CHECK_YOUR_ANSWERS,
+  COMPLETE_OTHER_SECTIONS,
   APPLICATION_SUBMITTED,
   NO_ACCESS_APPLICATION_SUBMITTED_PAGE,
 };

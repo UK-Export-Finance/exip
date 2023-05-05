@@ -27,7 +27,7 @@ describe('server/helpers/required-fields/index', () => {
       ...requiredPolicyAndExportFields(flatApplicationData[POLICY_TYPE]),
       ...requiredExporterBusinessFields(),
       ...requiredYourBuyerFields(),
-      ...requiredSectionReviewFields(),
+      ...requiredSectionReviewFields(flatApplicationData),
       ...requiredDeclarationsFields(flatApplicationData[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT]),
     ];
 

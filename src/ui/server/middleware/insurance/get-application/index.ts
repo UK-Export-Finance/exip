@@ -1,10 +1,11 @@
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
-import { Next, Request, Response } from '../../../../types';
 import getApplication from '../../../helpers/get-application';
+import { Next, Request, Response } from '../../../../types';
 
 const { PAGE_NOT_FOUND } = INSURANCE_ROUTES;
 
-const { ALL_SECTIONS, POLICY_AND_EXPORTS, EXPORTER_BUSINESS, YOUR_BUYER, DECLARATIONS, CHECK_YOUR_ANSWERS, APPLICATION_SUBMITTED } = INSURANCE_ROUTES;
+const { ALL_SECTIONS, POLICY_AND_EXPORTS, EXPORTER_BUSINESS, YOUR_BUYER } = INSURANCE_ROUTES;
+const { COMPLETE_OTHER_SECTIONS, CHECK_YOUR_ANSWERS, DECLARATIONS, APPLICATION_SUBMITTED } = INSURANCE_ROUTES;
 
 /**
  * RELEVANT_ROUTES
@@ -18,6 +19,7 @@ export const RELEVANT_ROUTES = [
   YOUR_BUYER.ROOT,
   DECLARATIONS.ROOT,
   CHECK_YOUR_ANSWERS.ROOT,
+  COMPLETE_OTHER_SECTIONS,
   APPLICATION_SUBMITTED,
 ];
 

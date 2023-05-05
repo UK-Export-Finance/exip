@@ -44,6 +44,7 @@ export const INSURANCE_ROUTES = {
   DECLARATIONS,
   CHECK_YOUR_ANSWERS,
   APPLICATION_SUBMITTED: '/application-submitted',
+  COMPLETE_OTHER_SECTIONS: '/complete-other-sections',
   FEEDBACK: `${INSURANCE_ROOT}/give-feedback`,
   FEEDBACK_SENT: `${INSURANCE_ROOT}/feedback-sent`,
 };
