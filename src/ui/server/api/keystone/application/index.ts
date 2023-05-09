@@ -6,7 +6,7 @@ import declarations from './declarations';
 import createApplicationMutation from '../../../graphql/mutations/create-application';
 import getApplicationQuery from '../../../graphql/queries/application';
 import updateApplicationPolicyAndExportMutation from '../../../graphql/mutations/update-application/policy-and-export';
-import updateApplicationCompanyMutation from '../../../graphql/mutations/update-application/exporter-company';
+import updateApplicationCompanyMutation from '../../../graphql/mutations/update-application/company';
 import updateBusinessMutation from '../../../graphql/mutations/update-application/exporter-business';
 import updateExporterBrokerMutation from '../../../graphql/mutations/update-application/exporter-broker';
 import updateBuyerMutation from '../../../graphql/mutations/update-application/exporter-buyer';

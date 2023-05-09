@@ -776,17 +776,8 @@ var lists = {
           try {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
-            const {
-              referenceNumber,
-              eligibilityId,
-              policyAndExportId,
-              companyId,
-              businessId,
-              exporterBrokerId,
-              buyerId,
-              sectionReviewId,
-              declarationId
-            } = item;
+            const { referenceNumber, eligibilityId } = item;
+            const { policyAndExportId, companyId, businessId, exporterBrokerId, buyerId, sectionReviewId, declarationId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -2182,7 +2173,7 @@ var mapSicCodes = (company, sicCodes, industrySectorNames) => {
   return mapped;
 };
 
-// custom-resolvers/mutations/update-exporter-company-and-company-address.ts
+// custom-resolvers/mutations/update-company-and-company-address.ts
 var updateCompanyAndExporterCompanyAddress = async (root, variables, context) => {
   try {
     console.info("Updating application company and exporter company address for ", variables.companyId);
@@ -2191,7 +2182,7 @@ var updateCompanyAndExporterCompanyAddress = async (root, variables, context) =>
       where: { id: variables.companyId },
       data: company
     });
-    await context.db.ExporterExporterCompanyAddress.updateOne({
+    await context.db.ExporterCompanyAddress.updateOne({
       where: { id: variables.companyAddressId },
       data: address
     });
@@ -2216,7 +2207,7 @@ var updateCompanyAndExporterCompanyAddress = async (root, variables, context) =>
     throw new Error(`Updating application - company and exporter company address ${err}`);
   }
 };
-var update_exporter_company_and_company_address_default = updateCompanyAndExporterCompanyAddress;
+var update_company_and_company_address_default = updateCompanyAndExporterCompanyAddress;
 
 // custom-resolvers/mutations/submit-application.ts
 var import_date_fns6 = require("date-fns");
@@ -2276,7 +2267,7 @@ var getPopulatedApplication = async (context, application) => {
   if (!company) {
     throw new Error(generateErrorMessage("company", application.id));
   }
-  const companyAddress = await context.db.ExporterExporterCompanyAddress.findOne({
+  const companyAddress = await context.db.ExporterCompanyAddress.findOne({
     where: { id: company.registeredOfficeAddressId }
   });
   const populatedCompany = {
@@ -3413,7 +3404,7 @@ var customResolvers = {
     accountPasswordReset: account_password_reset_default,
     sendEmailPasswordResetLink: send_email_password_reset_link_default,
     deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
-    updateCompanyAndExporterCompanyAddress: update_exporter_company_and_company_address_default,
+    updateCompanyAndExporterCompanyAddress: update_company_and_company_address_default,
     submitApplication: submit_application_default,
     sendEmailInsuranceFeedback: send_email_insurance_feedback_default
   },
