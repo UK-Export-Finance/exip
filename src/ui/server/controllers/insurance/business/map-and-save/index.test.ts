@@ -215,18 +215,18 @@ describe('controllers/insurance/business/map-and-save', () => {
       ...mockBroker,
     };
 
-    const mockSaveExporterBroker = jest.fn(() => Promise.resolve({}));
-    save.exporterBroker = mockSaveExporterBroker;
+    const mockSaveBroker = jest.fn(() => Promise.resolve({}));
+    save.broker = mockSaveBroker;
 
     const mockValidationErrors = generateValidationErrors(NAME, 'error', {});
 
     describe('when the form has data', () => {
       describe('when the form has validation errors ', () => {
-        it('should call save.exporterBroker with application, populated submitted data and validationErrors.errorList', async () => {
+        it('should call save.broker with application, populated submitted data and validationErrors.errorList', async () => {
           await mapAndSave.broker(mockFormBody, mockApplication, mockValidationErrors);
 
-          expect(save.exporterBroker).toHaveBeenCalledTimes(1);
-          expect(save.exporterBroker).toHaveBeenCalledWith(mockApplication, mockFormBody, mockValidationErrors?.errorList);
+          expect(save.broker).toHaveBeenCalledTimes(1);
+          expect(save.broker).toHaveBeenCalledWith(mockApplication, mockFormBody, mockValidationErrors?.errorList);
         });
 
         it('should return true', async () => {
@@ -237,11 +237,11 @@ describe('controllers/insurance/business/map-and-save', () => {
       });
 
       describe('when the form does NOT have validation errors ', () => {
-        it('should call save.exporterBroker with application and populated submitted data', async () => {
+        it('should call save.broker with application and populated submitted data', async () => {
           await mapAndSave.broker(mockFormBody, mockApplication);
 
-          expect(save.exporterBroker).toHaveBeenCalledTimes(1);
-          expect(save.exporterBroker).toHaveBeenCalledWith(mockApplication, mockFormBody);
+          expect(save.broker).toHaveBeenCalledTimes(1);
+          expect(save.broker).toHaveBeenCalledWith(mockApplication, mockFormBody);
         });
 
         it('should return true', async () => {

@@ -1,4 +1,4 @@
-import FIELD_IDS from '../../../constants/field-ids/insurance/exporter-business';
+import FIELD_IDS from '../../../constants/field-ids/insurance/business';
 import { CSV } from '../../../content-strings';
 import { FIELDS } from '../../../content-strings/fields/insurance/your-business';
 import { ANSWERS, GBP_CURRENCY_CODE } from '../../../constants';
@@ -25,25 +25,22 @@ const {
 } = FIELD_IDS;
 
 /**
- * mapExporterBroker
- * Map an application's exporter broker fields into an array of objects for CSV generation
+ * mapBroker
+ * Map an application's broker fields into an array of objects for CSV generation
  * @param {Object} Application
  * @returns {Array} Array of objects for CSV generation
  */
-export const mapExporterBroker = (application: Application) => {
-  const { exporterBroker } = application;
+export const mapBroker = (application: Application) => {
+  const { broker } = application;
 
-  let mapped = [csvRow(CSV.FIELDS[USING_BROKER], exporterBroker[USING_BROKER])];
+  let mapped = [csvRow(CSV.FIELDS[USING_BROKER], broker[USING_BROKER])];
 
-  if (exporterBroker[USING_BROKER] === ANSWERS.YES) {
+  if (broker[USING_BROKER] === ANSWERS.YES) {
     mapped = [
       ...mapped,
-      csvRow(CSV.FIELDS[BROKER_NAME], exporterBroker[BROKER_NAME]),
-      csvRow(
-        CSV.FIELDS[ADDRESS_LINE_1],
-        `${exporterBroker[ADDRESS_LINE_1]} ${NEW_LINE} ${exporterBroker[TOWN]} ${NEW_LINE} ${exporterBroker[COUNTY]} ${NEW_LINE} ${exporterBroker[POSTCODE]}`,
-      ),
-      csvRow(CSV.FIELDS[EMAIL], exporterBroker[EMAIL]),
+      csvRow(CSV.FIELDS[BROKER_NAME], broker[BROKER_NAME]),
+      csvRow(CSV.FIELDS[ADDRESS_LINE_1], `${broker[ADDRESS_LINE_1]} ${NEW_LINE} ${broker[TOWN]} ${NEW_LINE} ${broker[COUNTY]} ${NEW_LINE} ${broker[POSTCODE]}`),
+      csvRow(CSV.FIELDS[EMAIL], broker[EMAIL]),
     ];
   }
 
@@ -85,8 +82,8 @@ const mapExporter = (application: Application) => {
     csvRow(CSV.FIELDS[ESTIMATED_ANNUAL_TURNOVER], formatCurrency(business[ESTIMATED_ANNUAL_TURNOVER], GBP_CURRENCY_CODE)),
     csvRow(CONTENT_STRINGS[PERCENTAGE_TURNOVER].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER]}%`),
 
-    // exporter broker fields
-    ...mapExporterBroker(application),
+    // broker fields
+    ...mapBroker(application),
   ];
 
   return mapped;

@@ -3,7 +3,7 @@ import partials from '../../../../partials';
 import { saveAndBackButton, submitButton } from '../../../../pages/shared';
 import { TASKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
-import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/exporter-business';
+import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/business';
 import application from '../../../../../fixtures/application';
 
 const {

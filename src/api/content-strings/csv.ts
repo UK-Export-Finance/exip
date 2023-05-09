@@ -1,6 +1,6 @@
 import ACCOUNT from '../constants/field-ids/insurance/account';
 import POLICY_AND_EXPORTS from '../constants/field-ids/insurance/policy-and-exports';
-import EXPORTER_BUSINESS from '../constants/field-ids/insurance/exporter-business';
+import EXPORTER_BUSINESS from '../constants/field-ids/insurance/business';
 import YOUR_BUYER from '../constants/field-ids/insurance/your-buyer';
 
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT;

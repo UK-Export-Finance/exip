@@ -1,5 +1,5 @@
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import FIELD_IDS from '../../../../../../constants/field-ids/insurance/exporter-business';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
 import { NumberErrorMessage, RequestBody } from '../../../../../../../types';
 import percentageNumberValidation from '../../../../../../helpers/percentage-number-validation';
 

@@ -5,7 +5,7 @@ import { ROUTES, FIELD_VALUES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
-import mockApplication, { mockExporterBroker } from '../../../../test-mocks/mock-application';
+import mockApplication, { mockBroker } from '../../../../test-mocks/mock-application';
 import generateChangeLink from '../../../generate-change-link';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
@@ -22,7 +22,7 @@ const {
 
 describe('server/helpers/summary-lists/your-business/broker-fields', () => {
   describe('generateBrokerFields', () => {
-    const mockAnswers = mockExporterBroker;
+    const mockAnswers = mockBroker;
     const { referenceNumber } = mockApplication;
     const checkAndChange = false;
 
@@ -46,16 +46,16 @@ describe('server/helpers/summary-lists/your-business/broker-fields', () => {
   });
 
   describe('optionalBrokerFields', () => {
-    const mockAnswers = mockExporterBroker;
+    const mockAnswers = mockBroker;
     const { referenceNumber } = mockApplication;
     const checkAndChange = false;
 
     const mockAddress = {
-      [ADDRESS_LINE_1]: mockExporterBroker[ADDRESS_LINE_1],
-      [ADDRESS_LINE_2]: mockExporterBroker[ADDRESS_LINE_2],
-      [TOWN]: mockExporterBroker[TOWN],
-      [COUNTY]: mockExporterBroker[COUNTY],
-      [POSTCODE]: mockExporterBroker[POSTCODE],
+      [ADDRESS_LINE_1]: mockBroker[ADDRESS_LINE_1],
+      [ADDRESS_LINE_2]: mockBroker[ADDRESS_LINE_2],
+      [TOWN]: mockBroker[TOWN],
+      [COUNTY]: mockBroker[COUNTY],
+      [POSTCODE]: mockBroker[POSTCODE],
     };
 
     describe(`${USING_BROKER} is Yes`, () => {

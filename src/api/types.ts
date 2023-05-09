@@ -87,7 +87,7 @@ interface Account extends AccountUpdateInput {
   isVerified: boolean;
 }
 
-interface ApplicationExporterCompanyAddress extends ApplicationRelationship {
+interface ApplicationCompanyAddress extends ApplicationRelationship {
   addressLine1?: string;
   addressLine2?: string;
   careOf?: string;
@@ -116,9 +116,9 @@ interface Application {
   owner: ApplicationOwner;
   policyAndExport: ApplicationPolicyAndExport;
   company: ApplicationCompany;
-  companyAddress: ApplicationExporterCompanyAddress;
+  companyAddress: ApplicationCompanyAddress;
   business: ApplicationRelationship;
-  exporterBroker: ApplicationRelationship;
+  broker: ApplicationRelationship;
   buyer: ApplicationBuyer;
   sectionReview: ApplicationRelationship;
   declaration: ApplicationDeclaration;
@@ -289,18 +289,18 @@ interface SubmitApplicationVariables {
   applicationId: string;
 }
 
-interface UpdateCompanyAndExporterCompanyAddressVariablesData {
-  address?: ApplicationExporterCompanyAddress;
+interface UpdateCompanyAndCompanyAddressVariablesData {
+  address?: ApplicationCompanyAddress;
   sicCodes?: [string];
   oldSicCodes?: [string];
   industrySectorNames?: [string];
   company?: ExporterCompanyUpdateInput;
 }
 
-interface UpdateCompanyAndExporterCompanyAddressVariables {
+interface UpdateCompanyAndCompanyAddressVariables {
   companyId: string;
   companyAddressId: string;
-  data: UpdateCompanyAndExporterCompanyAddressVariablesData;
+  data: UpdateCompanyAndCompanyAddressVariablesData;
 }
 
 interface Feedback {
@@ -322,7 +322,7 @@ interface IndustrySector {
 export {
   Account,
   AccountCreationVariables,
-  ApplicationExporterCompanyAddress,
+  ApplicationCompanyAddress,
   AccountInput,
   AccountSendEmailPasswordResetLinkVariables,
   AccountSignInVariables,
@@ -356,7 +356,7 @@ export {
   SendExporterEmailVariables,
   SubmitApplicationVariables,
   SuccessResponse,
-  UpdateCompanyAndExporterCompanyAddressVariables,
+  UpdateCompanyAndCompanyAddressVariables,
   VerifyEmailAddressVariables,
   VerifyEmailAddressResponse,
   VerifyAccountPasswordResetTokenVariables,

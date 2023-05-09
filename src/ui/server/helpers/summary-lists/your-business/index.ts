@@ -3,7 +3,7 @@ import generateYourCompanyFields from './your-company-fields';
 import generateNatureOfYourBusinessFields from './nature-of-your-business-fields';
 import generateTurnoverFields from './turnover-fields';
 import { generateBrokerFields } from './broker-fields';
-import { ApplicationCompany, ApplicationBusiness, ApplicationExporterBroker, SummaryListItemData } from '../../../../types';
+import { ApplicationCompany, ApplicationBusiness, ApplicationBroker, SummaryListItemData } from '../../../../types';
 
 /**
  * generateFields
@@ -16,7 +16,7 @@ import { ApplicationCompany, ApplicationBusiness, ApplicationExporterBroker, Sum
 const generateFields = (
   answersCompany: ApplicationCompany,
   answersBusiness: ApplicationBusiness,
-  answersExporterBroker: ApplicationExporterBroker,
+  answersBroker: ApplicationBroker,
   referenceNumber: number,
   checkAndChange: boolean,
 ) => {
@@ -26,7 +26,7 @@ const generateFields = (
     ...generateYourCompanyFields(answersCompany, referenceNumber, checkAndChange),
     ...generateNatureOfYourBusinessFields(answersBusiness, referenceNumber, checkAndChange),
     ...generateTurnoverFields(answersBusiness, referenceNumber, checkAndChange),
-    ...generateBrokerFields(answersExporterBroker, referenceNumber, checkAndChange),
+    ...generateBrokerFields(answersBroker, referenceNumber, checkAndChange),
   ];
 
   return fields;
@@ -44,11 +44,11 @@ const generateFields = (
 const yourBusinessSummaryList = (
   answersCompany: ApplicationCompany,
   answersBusiness: ApplicationBusiness,
-  answersExporterBroker: ApplicationExporterBroker,
+  answersBroker: ApplicationBroker,
   referenceNumber: number,
   checkAndChange = false,
 ) => {
-  const fields = generateFields(answersCompany, answersBusiness, answersExporterBroker, referenceNumber, checkAndChange);
+  const fields = generateFields(answersCompany, answersBusiness, answersBroker, referenceNumber, checkAndChange);
 
   const summaryList = generateSummaryListRows(fields);
 

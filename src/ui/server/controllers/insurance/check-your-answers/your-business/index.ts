@@ -5,7 +5,7 @@ import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { yourBusinessSummaryList } from '../../../../helpers/summary-lists/your-business';
-import requiredFields from '../../../../helpers/required-fields/exporter-business';
+import requiredFields from '../../../../helpers/required-fields/business';
 import sectionStatus from '../../../../helpers/section-status';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
@@ -51,13 +51,13 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber, exporterBroker, company, business } = application;
+    const { referenceNumber, broker, company, business } = application;
 
     const checkAndChange = true;
 
-    const summaryList = yourBusinessSummaryList(company, business, exporterBroker, referenceNumber, checkAndChange);
+    const summaryList = yourBusinessSummaryList(company, business, broker, referenceNumber, checkAndChange);
 
-    const exporterFields = requiredFields(exporterBroker.isUsingBroker);
+    const exporterFields = requiredFields(broker.isUsingBroker);
 
     const status = sectionStatus(exporterFields, application);
 

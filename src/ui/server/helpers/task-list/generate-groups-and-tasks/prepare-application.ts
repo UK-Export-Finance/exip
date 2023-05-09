@@ -3,7 +3,7 @@ import { GROUP_IDS, TASK_IDS, ROUTES } from '../../../constants';
 import { TASKS } from '../../../content-strings';
 import { getGroupById, getAllTasksFieldsInAGroup } from '../task-helpers';
 import policyAndExportsRequiredFields from '../../required-fields/policy-and-exports';
-import businessRequiredFields from '../../required-fields/exporter-business';
+import businessRequiredFields from '../../required-fields/business';
 import yourBuyerRequiredFields from '../../required-fields/your-buyer';
 
 const { INSURANCE } = ROUTES;

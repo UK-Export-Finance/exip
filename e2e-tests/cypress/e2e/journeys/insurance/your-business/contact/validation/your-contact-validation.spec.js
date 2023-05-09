@@ -2,7 +2,7 @@ import { yourContactPage } from '../../../../../pages/your-business';
 import partials from '../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES } from '../../../../../../../constants';
-import { EXPORTER_BUSINESS as EXPORTER_BUSINESS_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/exporter-business';
+import { EXPORTER_BUSINESS as EXPORTER_BUSINESS_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
 import { ACCOUNT as ACCOUNT_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/account';
 
 const {

@@ -1,7 +1,7 @@
 import { broker } from '../../../../../pages/your-business';
 import partials from '../../../../../partials';
 import { ROUTES } from '../../../../../../../constants';
-import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/exporter-business';
+import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 
 const {

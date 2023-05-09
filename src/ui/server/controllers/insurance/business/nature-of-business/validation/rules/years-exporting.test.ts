@@ -10,7 +10,7 @@ const {
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 
-describe('controllers/insurance/business/nature-of-business/validation/rules/years-exporter', () => {
+describe('controllers/insurance/business/nature-of-business/validation/rules/years-exporting', () => {
   const mockErrors = {
     summary: [],
     errorList: {},
