@@ -71,7 +71,7 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
       it(`should render ${TABLE_HEADERS.REFERENCE_NUMBER} cell`, () => {
         const expected = TABLE_HEADERS.REFERENCE_NUMBER;
 
-        cy.checkText(table.headers.referenceNumberLink(), expected);
+        cy.checkText(table.headers.referenceNumber(), expected);
       });
 
       it(`should render ${TABLE_HEADERS.BUYER_LOCATION} cell`, () => {
