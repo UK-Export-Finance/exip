@@ -15,7 +15,8 @@ const dashboardPage = {
       row: (referenceNumber) => ({
         status: () => cy.get(`[data-cy="ref-${referenceNumber}-status"]`),
         lastUpdated: () => cy.get(`[data-cy="ref-${referenceNumber}-lastUpdated"]`),
-        referenceNumber: () => cy.get(`[data-cy="ref-${referenceNumber}-referenceNumber"]`),
+        referenceNumber: () => cy.get(`[data-cy="ref-${referenceNumber}-referenceNumber-link"]`),
+        referenceNumberNoLink: () => cy.get(`[data-cy="ref-${referenceNumber}-referenceNumber"]`),
         buyerLocation: () => cy.get(`[data-cy="ref-${referenceNumber}-buyerLocation"]`),
         buyerName: () => cy.get(`[data-cy="ref-${referenceNumber}-buyerName"]`),
         insuredFor: () => cy.get(`[data-cy="ref-${referenceNumber}-insuredFor"]`),
