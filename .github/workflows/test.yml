@@ -84,12 +84,9 @@ jobs:
           SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
           BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
           BASIC_AUTH_SECRET: ${{ secrets.BASIC_AUTH_SECRET }}
-          MULESOFT_API_CIS_URL: ${{ secrets.MULESOFT_API_CIS_URL }}
-          MULESOFT_API_CIS_KEY: ${{ secrets.MULESOFT_API_CIS_KEY }}
-          MULESOFT_API_CIS_SECRET: ${{ secrets.MULESOFT_API_CIS_SECRET }}
-          MULESOFT_API_MDM_EA_URL: ${{ secrets.MULESOFT_API_MDM_EA_URL }}
-          MULESOFT_API_MDM_EA_KEY: ${{ secrets.MULESOFT_API_MDM_EA_KEY }}
-          MULESOFT_API_MDM_EA_SECRET: ${{ secrets.MULESOFT_API_MDM_EA_SECRET }}
+          APIM_MDM_URL: ${{ secrets.APIM_MDM_URL }}
+          APIM_MDM_KEY: ${{ secrets.APIM_MDM_KEY }}
+          APIM_MDM_VALUE: ${{ secrets.APIM_MDM_VALUE }}
           GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
           GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
           COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
@@ -144,12 +141,9 @@ jobs:
           SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
           BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
           BASIC_AUTH_SECRET: ${{ secrets.BASIC_AUTH_SECRET }}
-          MULESOFT_API_CIS_URL: ${{ secrets.MULESOFT_API_CIS_URL }}
-          MULESOFT_API_CIS_KEY: ${{ secrets.MULESOFT_API_CIS_KEY }}
-          MULESOFT_API_CIS_SECRET: ${{ secrets.MULESOFT_API_CIS_SECRET }}
-          MULESOFT_API_MDM_EA_URL: ${{ secrets.MULESOFT_API_MDM_EA_URL }}
-          MULESOFT_API_MDM_EA_KEY: ${{ secrets.MULESOFT_API_MDM_EA_KEY }}
-          MULESOFT_API_MDM_EA_SECRET: ${{ secrets.MULESOFT_API_MDM_EA_SECRET }}
+          APIM_MDM_URL: ${{ secrets.APIM_MDM_URL }}
+          APIM_MDM_KEY: ${{ secrets.APIM_MDM_KEY }}
+          APIM_MDM_VALUE: ${{ secrets.APIM_MDM_VALUE }}
           GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
           GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
           COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}

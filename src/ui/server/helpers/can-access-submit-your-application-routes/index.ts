@@ -1,17 +1,18 @@
 import flattenApplicationData from '../flatten-application-data';
-import requiredFields from '../required-fields/section-review';
+import requiredFields from '../required-fields/prepare-application';
 import sectionStatus from '../section-status';
 import { TASKS } from '../../content-strings';
 import { Application } from '../../../types';
 
 /**
- * canAccessCheckYourAnswersRoutes
- * Check if an application has submitted previous fields/sections required before accessing the "check your answers" section/routes.
+ * canAccessSubmitYourApplicationRoutes
+ * Check if an application has submitted previous fields/sections required before accessing the "submit your application" group/sections/routes.
+ * The "submit your application" group includes all routes for "check your answers" and "declarations".
  * @param {Object} Application
  * @param {String} Current URL
  * @returns {Boolean}
  */
-const canAccessCheckYourAnswersRoutes = (application: Application) => {
+const canAccessSubmitYourApplicationRoutes = (application: Application) => {
   const flatApplicationData = flattenApplicationData(application);
 
   const fields = requiredFields(flatApplicationData);
@@ -25,4 +26,4 @@ const canAccessCheckYourAnswersRoutes = (application: Application) => {
   return true;
 };
 
-export default canAccessCheckYourAnswersRoutes;
+export default canAccessSubmitYourApplicationRoutes;
