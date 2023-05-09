@@ -70,7 +70,7 @@ interface ApplicationExporterCompany {
   sicCodes: Array<ApplicationExporterSicCodes>;
 }
 
-interface ApplicationExporterBusiness {
+interface ApplicationBusiness {
   id: string;
   goodsOrServices?: string;
   totalYearsExporting?: string;
@@ -115,7 +115,7 @@ interface ApplicationSectionReview {
   id: string;
   eligibility?: boolean;
   policyAndExport?: boolean;
-  exporterBusiness?: boolean;
+  business?: boolean;
   buyer?: boolean;
 }
 
@@ -134,7 +134,7 @@ interface Application extends ApplicationCore {
   owner: ApplicationOwner;
   policyAndExport: ApplicationPolicyAndExport;
   exporterCompany: ApplicationExporterCompany;
-  exporterBusiness: ApplicationExporterBusiness;
+  business: ApplicationBusiness;
   exporterBroker: ApplicationExporterBroker;
   buyer: ApplicationBuyer;
   sectionReview: ApplicationSectionReview;
@@ -153,7 +153,7 @@ export {
   ApplicationPolicyAndExport,
   ApplicationExporterSicCodes,
   ApplicationExporterindustrySectorNames,
-  ApplicationExporterBusiness,
+  ApplicationBusiness,
   ApplicationExporterBroker,
   ApplicationBuyer,
   ApplicationSectionReview,

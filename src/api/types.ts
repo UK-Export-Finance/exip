@@ -117,7 +117,7 @@ interface Application {
   policyAndExport: ApplicationPolicyAndExport;
   exporterCompany: ApplicationExporterCompany;
   exporterCompanyAddress: ApplicationExporterCompanyAddress;
-  exporterBusiness: ApplicationRelationship;
+  business: ApplicationRelationship;
   exporterBroker: ApplicationRelationship;
   buyer: ApplicationBuyer;
   sectionReview: ApplicationRelationship;

@@ -4,7 +4,7 @@ import { ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import mapPercentage from '../../../map-percentage';
-import { ApplicationExporterBusiness, SummaryListItemData } from '../../../../../types';
+import { ApplicationBusiness, SummaryListItemData } from '../../../../../types';
 import generateChangeLink from '../../../generate-change-link';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
@@ -22,11 +22,11 @@ const {
 /**
  * generateTurnover
  * Create all your turnover fields and values for the Insurance - Turnover govukSummaryList
- * @param {ApplicationExporterBusiness} answers exporter turnover
+ * @param {ApplicationBusiness} answers exporter turnover
  * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Object} All turnover fields and values in an object structure for GOVUK summary list structure
  */
-const generateTurnoverFields = (answers: ApplicationExporterBusiness, referenceNumber: number, checkAndChange: boolean) => {
+const generateTurnoverFields = (answers: ApplicationBusiness, referenceNumber: number, checkAndChange: boolean) => {
   const fields = [
     fieldGroupItem(
       {

@@ -77,7 +77,7 @@ describe('controllers/insurance/business/save-data', () => {
     });
   });
 
-  describe('exporterBusiness', () => {
+  describe('business', () => {
     const mockFormBody = {
       [GOODS_OR_SERVICES]: 'test',
       [YEARS_EXPORTING]: '5',
@@ -86,42 +86,42 @@ describe('controllers/insurance/business/save-data', () => {
     };
 
     beforeEach(() => {
-      api.keystone.application.update.exporterBusiness = updateApplicationSpy;
+      api.keystone.application.update.business = updateApplicationSpy;
     });
 
     describe('when errorList is provided', () => {
       const mockValidationErrors = generateValidationErrors(EMPLOYEES_UK, 'error', {});
 
-      it(`should call api.keystone.application.update.exporterBusiness with ${GOODS_OR_SERVICES}, ${YEARS_EXPORTING}, ${EMPLOYEES_INTERNATIONAL} but not ${EMPLOYEES_UK}`, async () => {
-        await save.exporterBusiness(mockApplication, mockFormBody, mockValidationErrors.errorList);
+      it(`should call api.keystone.application.update.business with ${GOODS_OR_SERVICES}, ${YEARS_EXPORTING}, ${EMPLOYEES_INTERNATIONAL} but not ${EMPLOYEES_UK}`, async () => {
+        await save.business(mockApplication, mockFormBody, mockValidationErrors.errorList);
 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
         const dataToSave = stripEmptyFormFields(getDataToSave(mockFormBody, mockValidationErrors.errorList));
         const expectedSanitisedData = sanitiseData(dataToSave);
-        expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.exporterBusiness.id, expectedSanitisedData);
+        expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.business.id, expectedSanitisedData);
       });
 
       it('should return the API response', async () => {
-        const result = await save.exporterBusiness(mockApplication, mockFormBody);
+        const result = await save.business(mockApplication, mockFormBody);
 
         expect(result).toEqual(mockUpdateApplicationResponse);
       });
     });
 
     describe('when errorList is NOT provided', () => {
-      it(`should call api.keystone.application.update.exporterBusiness with ${GOODS_OR_SERVICES}, ${YEARS_EXPORTING}, ${EMPLOYEES_INTERNATIONAL} and ${EMPLOYEES_UK}`, async () => {
-        await save.exporterBusiness(mockApplication, mockFormBody);
+      it(`should call api.keystone.application.update.business with ${GOODS_OR_SERVICES}, ${YEARS_EXPORTING}, ${EMPLOYEES_INTERNATIONAL} and ${EMPLOYEES_UK}`, async () => {
+        await save.business(mockApplication, mockFormBody);
 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
         const dataToSave = getDataToSave(mockFormBody);
         const expectedSanitisedData = sanitiseData(dataToSave);
-        expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.exporterBusiness.id, expectedSanitisedData);
+        expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.business.id, expectedSanitisedData);
       });
 
       it('should return the API response', async () => {
-        const result = await save.exporterBusiness(mockApplication, mockFormBody);
+        const result = await save.business(mockApplication, mockFormBody);
 
         expect(result).toEqual(mockUpdateApplicationResponse);
       });
@@ -199,7 +199,7 @@ describe('controllers/insurance/business/save-data', () => {
       });
     });
 
-    describe('update exporterBusiness call', () => {
+    describe('update business call', () => {
       const mockFormBody = {
         [GOODS_OR_SERVICES]: 'test',
         [YEARS_EXPORTING]: '5',
@@ -210,14 +210,14 @@ describe('controllers/insurance/business/save-data', () => {
       describe('when there is an error', () => {
         beforeEach(() => {
           updateApplicationSpy = jest.fn(() => Promise.reject());
-          api.keystone.application.update.exporterBusiness = updateApplicationSpy;
+          api.keystone.application.update.business = updateApplicationSpy;
         });
 
         it('should throw an error', async () => {
           try {
-            await save.exporterBusiness(mockApplication, mockFormBody);
+            await save.business(mockApplication, mockFormBody);
           } catch (err) {
-            const expected = new Error("Updating application's exporterBusiness");
+            const expected = new Error("Updating application's business");
             expect(err).toEqual(expected);
           }
         });

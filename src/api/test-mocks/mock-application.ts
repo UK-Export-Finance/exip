@@ -78,7 +78,7 @@ export const mockExporterCompany = {
   __typename: 'ExporterCompany',
 };
 
-export const mockExporterBusiness = {
+export const mockBusiness = {
   id: 'clcyyopna0158m8noaglyy9gg',
   goodsOrServicesSupplied: 'ABC',
   totalYearsExporting: '20',
@@ -102,7 +102,7 @@ export const mockSectionReview = {
   id: 'clflcq9w4002moqzlnr5yhamr',
   eligibility: true,
   policyAndExport: true,
-  exporterBusiness: true,
+  business: true,
   buyer: true,
 };
 
@@ -136,7 +136,7 @@ const mockApplication = {
   },
   exporterCompany: mockExporterCompany,
   exporterCompanyAddress: mockExporterCompany.registeredOfficeAddress,
-  exporterBusiness: mockExporterBusiness,
+  business: mockBusiness,
   exporterBroker: mockExporterBroker,
   buyer: mockApplicationBuyer,
   sectionReview: mockSectionReview,

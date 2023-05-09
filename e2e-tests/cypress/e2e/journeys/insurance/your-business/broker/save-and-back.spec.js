@@ -29,7 +29,7 @@ const {
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.prepareApplication.tasks.exporterBusiness;
+const task = taskList.prepareApplication.tasks.business;
 
 context('Insurance - Your business - Broker page - Save and back', () => {
   let referenceNumber;

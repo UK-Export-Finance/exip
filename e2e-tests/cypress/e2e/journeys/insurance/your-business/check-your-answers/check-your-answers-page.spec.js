@@ -30,7 +30,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.CHECK_YOUR_ANSWERS;
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.prepareApplication.tasks.exporterBusiness;
+const task = taskList.prepareApplication.tasks.business;
 
 context('Insurance - Your Business - Check your answers - As an exporter, I want to check my answers to the your business section', () => {
   let referenceNumber;

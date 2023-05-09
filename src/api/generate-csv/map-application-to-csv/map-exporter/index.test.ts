@@ -72,7 +72,7 @@ describe('api/generate-csv/map-application-to-csv/map-exporter', () => {
     it('should return an array of mapped exporter fields', () => {
       const result = mapExporter(mockApplication);
 
-      const { exporterCompany, exporterBusiness } = mockApplication;
+      const { exporterCompany, business } = mockApplication;
 
       const expected = [
         csvRow(CSV.SECTION_TITLES.EXPORTER_BUSINESS, ''),
@@ -92,13 +92,13 @@ describe('api/generate-csv/map-application-to-csv/map-exporter', () => {
         csvRow(CSV.FIELDS[WEBSITE], exporterCompany[WEBSITE]),
         csvRow(CSV.FIELDS[PHONE_NUMBER], exporterCompany[PHONE_NUMBER]),
 
-        // exporter business fields
-        csvRow(CSV.FIELDS[GOODS_OR_SERVICES], exporterBusiness[GOODS_OR_SERVICES]),
-        csvRow(CSV.FIELDS[YEARS_EXPORTING], exporterBusiness[YEARS_EXPORTING]),
-        csvRow(CSV.FIELDS[EMPLOYEES_UK], exporterBusiness[EMPLOYEES_UK]),
-        csvRow(CSV.FIELDS[EMPLOYEES_INTERNATIONAL], exporterBusiness[EMPLOYEES_INTERNATIONAL]),
-        csvRow(CSV.FIELDS[ESTIMATED_ANNUAL_TURNOVER], formatCurrency(exporterBusiness[ESTIMATED_ANNUAL_TURNOVER], GBP_CURRENCY_CODE)),
-        csvRow(CONTENT_STRINGS[PERCENTAGE_TURNOVER].SUMMARY?.TITLE, `${exporterBusiness[PERCENTAGE_TURNOVER]}%`),
+        // business fields
+        csvRow(CSV.FIELDS[GOODS_OR_SERVICES], business[GOODS_OR_SERVICES]),
+        csvRow(CSV.FIELDS[YEARS_EXPORTING], business[YEARS_EXPORTING]),
+        csvRow(CSV.FIELDS[EMPLOYEES_UK], business[EMPLOYEES_UK]),
+        csvRow(CSV.FIELDS[EMPLOYEES_INTERNATIONAL], business[EMPLOYEES_INTERNATIONAL]),
+        csvRow(CSV.FIELDS[ESTIMATED_ANNUAL_TURNOVER], formatCurrency(business[ESTIMATED_ANNUAL_TURNOVER], GBP_CURRENCY_CODE)),
+        csvRow(CONTENT_STRINGS[PERCENTAGE_TURNOVER].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER]}%`),
 
         // exporter broker fields
         ...mapExporterBroker(mockApplication),

@@ -23,7 +23,7 @@ describe('Create an Application', () => {
     application = (await context.query.Application.createOne({
       data: {},
       query:
-        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status previousStatus eligibility { id } policyAndExport { id } owner { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id } buyer { id } sectionReview { id } declaration { id }',
+        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status previousStatus eligibility { id } policyAndExport { id } owner { id } exporterCompany { id } business { id } exporterBroker { id } buyer { id } sectionReview { id } declaration { id }',
     })) as Application;
   });
 
@@ -95,9 +95,9 @@ describe('Create an Application', () => {
     expect(typeof application.exporterCompany.id).toEqual('string');
   });
 
-  test('it should have an exporter business id', () => {
-    expect(application.exporterBusiness).toBeDefined();
-    expect(typeof application.exporterBusiness.id).toEqual('string');
+  test('it should have a business id', () => {
+    expect(application.business).toBeDefined();
+    expect(typeof application.business.id).toEqual('string');
   });
 
   test('it should have an exporter broker id', () => {
@@ -141,14 +141,14 @@ describe('Create an Application', () => {
   });
 
   test('it should add the application ID to the policy and export entry', async () => {
-    const exporterBusiness = await context.query.ExporterBusiness.findOne({
+    const business = await context.query.Business.findOne({
       where: {
-        id: application.exporterBusiness.id,
+        id: application.business.id,
       },
       query: 'id application { id }',
     });
 
-    expect(exporterBusiness.application.id).toEqual(application.id);
+    expect(business.application.id).toEqual(application.id);
   });
 
   test('it should add the application ID to the policy and export entry', async () => {
@@ -352,7 +352,7 @@ describe('Application timestamp updates', () => {
     application = (await context.query.Application.createOne({
       data: {},
       query:
-        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status previousStatus eligibility { id } policyAndExport { id } owner { id } exporterCompany { id } exporterBusiness { id } exporterBroker { id } buyer { id } sectionReview { id } declaration { id }',
+        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status previousStatus eligibility { id } policyAndExport { id } owner { id } exporterCompany { id } business { id } exporterBroker { id } buyer { id } sectionReview { id } declaration { id }',
     })) as Application;
   });
 
@@ -381,10 +381,10 @@ describe('Application timestamp updates', () => {
     });
   });
 
-  describe('ExporterBusiness', () => {
+  describe('Business', () => {
     test('it should call updateApplication.timestamp', async () => {
-      await context.query.ExporterBusiness.updateOne({
-        where: { id: application.exporterBusiness.id },
+      await context.query.Business.updateOne({
+        where: { id: application.business.id },
         data: {},
         query: 'id',
       });

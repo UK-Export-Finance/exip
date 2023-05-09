@@ -21,7 +21,7 @@ const {
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.prepareApplication.tasks.exporterBusiness;
+const task = taskList.prepareApplication.tasks.business;
 
 const { summaryList } = checkYourAnswers;
 

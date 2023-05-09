@@ -20,49 +20,49 @@ model ReferenceNumber {
 }
 
 model Application {
-  id                                String             @id @default(cuid())
-  createdAt                         DateTime?
-  updatedAt                         DateTime?
-  eligibility                       Eligibility?       @relation("Application_eligibility", fields: [eligibilityId], references: [id])
-  eligibilityId                     String?            @map("eligibility")
-  referenceNumber                   Int?
-  submissionDeadline                DateTime?
-  submissionDate                    DateTime?
-  submissionType                    String?            @default("Manual Inclusion Application")
-  status                            String             @default("")
-  previousStatus                    String             @default("")
-  policyAndExport                   PolicyAndExport?   @relation("Application_policyAndExport", fields: [policyAndExportId], references: [id])
-  policyAndExportId                 String?            @map("policyAndExport")
-  owner                             Account?           @relation("Application_owner", fields: [ownerId], references: [id])
-  ownerId                           String?            @map("owner")
-  exporterBusiness                  ExporterBusiness?  @relation("Application_exporterBusiness", fields: [exporterBusinessId], references: [id])
-  exporterBusinessId                String?            @map("exporterBusiness")
-  exporterCompany                   ExporterCompany?   @relation("Application_exporterCompany", fields: [exporterCompanyId], references: [id])
-  exporterCompanyId                 String?            @map("exporterCompany")
-  exporterBroker                    ExporterBroker?    @relation("Application_exporterBroker", fields: [exporterBrokerId], references: [id])
-  exporterBrokerId                  String?            @map("exporterBroker")
-  buyer                             Buyer?             @relation("Application_buyer", fields: [buyerId], references: [id])
-  buyerId                           String?            @map("buyer")
-  sectionReview                     SectionReview?     @relation("Application_sectionReview", fields: [sectionReviewId], references: [id])
-  sectionReviewId                   String?            @map("sectionReview")
-  declaration                       Declaration?       @relation("Application_declaration", fields: [declarationId], references: [id])
-  declarationId                     String?            @map("declaration")
-  from_ReferenceNumber_application  ReferenceNumber[]  @relation("ReferenceNumber_application")
-  from_PolicyAndExport_application  PolicyAndExport[]  @relation("PolicyAndExport_application")
-  from_Account_applications         Account[]          @relation("Account_applications")
-  from_ExporterBusiness_application ExporterBusiness[] @relation("ExporterBusiness_application")
-  from_ExporterBroker_application   ExporterBroker[]   @relation("ExporterBroker_application")
-  from_ExporterCompany_application  ExporterCompany[]  @relation("ExporterCompany_application")
-  from_Buyer_application            Buyer[]            @relation("Buyer_application")
-  from_Eligibility_application      Eligibility[]      @relation("Eligibility_application")
-  from_SectionReview_application    SectionReview[]    @relation("SectionReview_application")
-  from_Declaration_application      Declaration[]      @relation("Declaration_application")
+  id                               String            @id @default(cuid())
+  createdAt                        DateTime?
+  updatedAt                        DateTime?
+  eligibility                      Eligibility?      @relation("Application_eligibility", fields: [eligibilityId], references: [id])
+  eligibilityId                    String?           @map("eligibility")
+  referenceNumber                  Int?
+  submissionDeadline               DateTime?
+  submissionDate                   DateTime?
+  submissionType                   String?           @default("Manual Inclusion Application")
+  status                           String            @default("")
+  previousStatus                   String            @default("")
+  policyAndExport                  PolicyAndExport?  @relation("Application_policyAndExport", fields: [policyAndExportId], references: [id])
+  policyAndExportId                String?           @map("policyAndExport")
+  owner                            Account?          @relation("Application_owner", fields: [ownerId], references: [id])
+  ownerId                          String?           @map("owner")
+  business                         Business?         @relation("Application_business", fields: [businessId], references: [id])
+  businessId                       String?           @map("business")
+  exporterCompany                  ExporterCompany?  @relation("Application_exporterCompany", fields: [exporterCompanyId], references: [id])
+  exporterCompanyId                String?           @map("exporterCompany")
+  exporterBroker                   ExporterBroker?   @relation("Application_exporterBroker", fields: [exporterBrokerId], references: [id])
+  exporterBrokerId                 String?           @map("exporterBroker")
+  buyer                            Buyer?            @relation("Application_buyer", fields: [buyerId], references: [id])
+  buyerId                          String?           @map("buyer")
+  sectionReview                    SectionReview?    @relation("Application_sectionReview", fields: [sectionReviewId], references: [id])
+  sectionReviewId                  String?           @map("sectionReview")
+  declaration                      Declaration?      @relation("Application_declaration", fields: [declarationId], references: [id])
+  declarationId                    String?           @map("declaration")
+  from_ReferenceNumber_application ReferenceNumber[] @relation("ReferenceNumber_application")
+  from_PolicyAndExport_application PolicyAndExport[] @relation("PolicyAndExport_application")
+  from_Account_applications        Account[]         @relation("Account_applications")
+  from_Business_application        Business[]        @relation("Business_application")
+  from_ExporterBroker_application  ExporterBroker[]  @relation("ExporterBroker_application")
+  from_ExporterCompany_application ExporterCompany[] @relation("ExporterCompany_application")
+  from_Buyer_application           Buyer[]           @relation("Buyer_application")
+  from_Eligibility_application     Eligibility[]     @relation("Eligibility_application")
+  from_SectionReview_application   SectionReview[]   @relation("SectionReview_application")
+  from_Declaration_application     Declaration[]     @relation("Declaration_application")
 
   @@index([eligibilityId])
   @@index([referenceNumber])
   @@index([policyAndExportId])
   @@index([ownerId])
-  @@index([exporterBusinessId])
+  @@index([businessId])
   @@index([exporterCompanyId])
   @@index([exporterBrokerId])
   @@index([buyerId])
@@ -113,17 +113,17 @@ model Account {
   from_Application_owner Application[] @relation("Application_owner")
 }
 
-model ExporterBusiness {
-  id                                String        @id @default(cuid())
-  application                       Application?  @relation("ExporterBusiness_application", fields: [applicationId], references: [id])
-  applicationId                     String?       @map("application")
-  goodsOrServicesSupplied           String        @default("") @mysql.VarChar(1000)
-  totalYearsExporting               Int?
-  totalEmployeesUK                  Int?
-  totalEmployeesInternational       Int?
-  estimatedAnnualTurnover           Int?
-  exportsTurnoverPercentage         Int?
-  from_Application_exporterBusiness Application[] @relation("Application_exporterBusiness")
+model Business {
+  id                          String        @id @default(cuid())
+  application                 Application?  @relation("Business_application", fields: [applicationId], references: [id])
+  applicationId               String?       @map("application")
+  goodsOrServicesSupplied     String        @default("") @mysql.VarChar(1000)
+  totalYearsExporting         Int?
+  totalEmployeesUK            Int?
+  totalEmployeesInternational Int?
+  estimatedAnnualTurnover     Int?
+  exportsTurnoverPercentage   Int?
+  from_Application_business   Application[] @relation("Application_business")
 
   @@index([applicationId])
 }
@@ -245,7 +245,7 @@ model SectionReview {
   applicationId                  String?       @map("application")
   eligibility                    Boolean       @default(false)
   policyAndExport                Boolean       @default(false)
-  exporterBusiness               Boolean       @default(false)
+  business                       Boolean       @default(false)
   buyer                          Boolean       @default(false)
   from_Application_sectionReview Application[] @relation("Application_sectionReview")
 

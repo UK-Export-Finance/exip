@@ -1,10 +1,10 @@
-import { ExporterBusiness } from '../../types';
+import { Business } from '../../types';
 
 const mockExporterNatureOfBusiness = {
   goodsOrServicesSupplied: 'ABC',
   totalYearsExporting: '2,0',
   totalEmployeesInternational: '1,000',
   totalEmployeesUK: '4,00',
-} as ExporterBusiness;
+} as Business;
 
 export default mockExporterNatureOfBusiness;

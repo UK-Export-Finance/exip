@@ -56,9 +56,9 @@ const natureOfBusiness = async (formBody: RequestBody, application: Application,
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await save.exporterBusiness(application, dataToSave, validationErrors.errorList);
+        saveResponse = await save.business(application, dataToSave, validationErrors.errorList);
       } else {
-        saveResponse = await save.exporterBusiness(application, dataToSave);
+        saveResponse = await save.business(application, dataToSave);
       }
 
       if (!saveResponse) {
@@ -91,9 +91,9 @@ const turnover = async (formBody: RequestBody, application: Application, validat
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await save.exporterBusiness(application, dataToSave, validationErrors.errorList);
+        saveResponse = await save.business(application, dataToSave, validationErrors.errorList);
       } else {
-        saveResponse = await save.exporterBusiness(application, dataToSave);
+        saveResponse = await save.business(application, dataToSave);
       }
 
       if (!saveResponse) {

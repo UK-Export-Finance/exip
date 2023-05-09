@@ -3,7 +3,7 @@ import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
-import { ApplicationExporterBusiness, SummaryListItemData } from '../../../../../types';
+import { ApplicationBusiness, SummaryListItemData } from '../../../../../types';
 import generateChangeLink from '../../../generate-change-link';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
@@ -21,11 +21,11 @@ const {
 /**
  * generateNatureOfYourBusinessFields
  * Create all your nature of your business fields and values for the Insurance - Nature of your business govukSummaryList
- * @param {ApplicationExporterBusiness} answers exporter nature of your business
+ * @param {ApplicationBusiness} answers exporter nature of your business
  * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Object} All nature of your business fields and values in an object structure for GOVUK summary list structure
  */
-const generateNatureOfYourBusinessFields = (answers: ApplicationExporterBusiness, referenceNumber: number, checkAndChange: boolean) => {
+const generateNatureOfYourBusinessFields = (answers: ApplicationBusiness, referenceNumber: number, checkAndChange: boolean) => {
   const fields = [
     fieldGroupItem({
       field: getFieldById(FIELDS.NATURE_OF_YOUR_BUSINESS, GOODS_OR_SERVICES),

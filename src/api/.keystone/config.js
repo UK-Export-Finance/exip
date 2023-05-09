@@ -196,7 +196,7 @@ var declarations_default = DECLARATIONS;
 var CHECK_YOUR_ANSWERS = {
   ELIGIBILITY: "eligibility",
   POLICY_AND_EXPORT: "policyAndExport",
-  EXPORTER_BUSINESS: "exporterBusiness",
+  EXPORTER_BUSINESS: "business",
   BUYER: "buyer"
 };
 var check_your_answers_default = CHECK_YOUR_ANSWERS;
@@ -667,7 +667,7 @@ var lists = {
         ref: "Account",
         many: false
       }),
-      exporterBusiness: (0, import_fields.relationship)({ ref: "ExporterBusiness" }),
+      business: (0, import_fields.relationship)({ ref: "Business" }),
       exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" }),
       exporterBroker: (0, import_fields.relationship)({ ref: "ExporterBroker" }),
       buyer: (0, import_fields.relationship)({ ref: "Buyer" }),
@@ -717,12 +717,12 @@ var lists = {
                 }
               }
             });
-            const { id: exporterBusinessId } = await context.db.ExporterBusiness.createOne({
+            const { id: businessId } = await context.db.Business.createOne({
               data: {}
             });
-            modifiedData.exporterBusiness = {
+            modifiedData.business = {
               connect: {
-                id: exporterBusinessId
+                id: businessId
               }
             };
             const { id: exporterBrokerId } = await context.db.ExporterBroker.createOne({
@@ -781,7 +781,7 @@ var lists = {
               eligibilityId,
               policyAndExportId,
               exporterCompanyId,
-              exporterBusinessId,
+              businessId,
               exporterBrokerId,
               buyerId,
               sectionReviewId,
@@ -827,8 +827,8 @@ var lists = {
                 }
               }
             });
-            await context.db.ExporterBusiness.updateOne({
-              where: { id: exporterBusinessId },
+            await context.db.Business.updateOne({
+              where: { id: businessId },
               data: {
                 application: {
                   connect: {
@@ -979,7 +979,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  ExporterBusiness: (0, import_core.list)({
+  Business: (0, import_core.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       goodsOrServicesSupplied: (0, import_fields.text)({
@@ -1160,7 +1160,7 @@ var lists = {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       eligibility: (0, import_fields.checkbox)(),
       policyAndExport: (0, import_fields.checkbox)(),
-      exporterBusiness: (0, import_fields.checkbox)(),
+      business: (0, import_fields.checkbox)(),
       buyer: (0, import_fields.checkbox)()
     },
     hooks: {
@@ -2248,7 +2248,7 @@ var get_country_by_field_default = getCountryByField;
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application) => {
   console.info("Getting populated application");
-  const { eligibilityId, ownerId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId, buyerId, declarationId } = application;
+  const { eligibilityId, ownerId, policyAndExportId, exporterCompanyId, businessId, exporterBrokerId, buyerId, declarationId } = application;
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId }
   });
@@ -2283,11 +2283,11 @@ var getPopulatedApplication = async (context, application) => {
     ...exporterCompany,
     registeredOfficeAddress: exporterCompanyAddress
   };
-  const exporterBusiness = await context.db.ExporterBusiness.findOne({
-    where: { id: exporterBusinessId }
+  const business = await context.db.Business.findOne({
+    where: { id: businessId }
   });
-  if (!exporterBusiness) {
-    throw new Error(generateErrorMessage("exporterBusiness", application.id));
+  if (!business) {
+    throw new Error(generateErrorMessage("business", application.id));
   }
   const exporterBroker = await context.db.ExporterBroker.findOne({
     where: { id: exporterBrokerId }
@@ -2326,7 +2326,7 @@ var getPopulatedApplication = async (context, application) => {
     policyAndExport: populatedPolicyAndExport,
     owner: account,
     exporterCompany: populatedExporterCompany,
-    exporterBusiness,
+    business,
     exporterBroker,
     buyer: populatedBuyer,
     declaration
@@ -3004,7 +3004,7 @@ var mapExporterBroker = (application) => {
   return mapped;
 };
 var mapExporter = (application) => {
-  const { exporterCompany, exporterBusiness } = application;
+  const { exporterCompany, business } = application;
   const mapped = [
     csv_row_default(CSV.SECTION_TITLES.EXPORTER_BUSINESS, ""),
     // exporter company fields
@@ -3018,13 +3018,13 @@ var mapExporter = (application) => {
     csv_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, format_date_default(exporterCompany[FINANCIAL_YEAR_END_DATE2], "d MMMM")),
     csv_row_default(CSV.FIELDS[WEBSITE3], exporterCompany[WEBSITE3]),
     csv_row_default(CSV.FIELDS[PHONE_NUMBER3], exporterCompany[PHONE_NUMBER3]),
-    // exporter business fields
-    csv_row_default(CSV.FIELDS[GOODS_OR_SERVICES3], exporterBusiness[GOODS_OR_SERVICES3]),
-    csv_row_default(CSV.FIELDS[YEARS_EXPORTING3], exporterBusiness[YEARS_EXPORTING3]),
-    csv_row_default(CSV.FIELDS[EMPLOYEES_UK3], exporterBusiness[EMPLOYEES_UK3]),
-    csv_row_default(CSV.FIELDS[EMPLOYEES_INTERNATIONAL3], exporterBusiness[EMPLOYEES_INTERNATIONAL3]),
-    csv_row_default(CSV.FIELDS[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default(exporterBusiness[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
-    csv_row_default(CONTENT_STRINGS3[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${exporterBusiness[PERCENTAGE_TURNOVER2]}%`),
+    // business fields
+    csv_row_default(CSV.FIELDS[GOODS_OR_SERVICES3], business[GOODS_OR_SERVICES3]),
+    csv_row_default(CSV.FIELDS[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
+    csv_row_default(CSV.FIELDS[EMPLOYEES_UK3], business[EMPLOYEES_UK3]),
+    csv_row_default(CSV.FIELDS[EMPLOYEES_INTERNATIONAL3], business[EMPLOYEES_INTERNATIONAL3]),
+    csv_row_default(CSV.FIELDS[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
+    csv_row_default(CONTENT_STRINGS3[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
     // exporter broker fields
     ...mapExporterBroker(application)
   ];

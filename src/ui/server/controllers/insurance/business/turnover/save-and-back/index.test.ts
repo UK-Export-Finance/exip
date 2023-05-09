@@ -1,7 +1,7 @@
 import { Request, Response } from '../../../../../../types';
 import { post } from '.';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
-import { mockReq, mockRes, mockApplication, mockExporterBusinessTurnover } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockBusinessTurnover } from '../../../../../test-mocks';
 import mapAndSave from '../../map-and-save';
 
 const {
@@ -31,7 +31,7 @@ describe('controllers/insurance/business/turnover/save-and-back', () => {
   });
 
   describe('post - save and back', () => {
-    const validBody = mockExporterBusinessTurnover;
+    const validBody = mockBusinessTurnover;
 
     describe('when there are no validation errors', () => {
       it('should redirect to all sections page', async () => {

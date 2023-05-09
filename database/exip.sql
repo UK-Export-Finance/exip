@@ -39,7 +39,7 @@ CREATE TABLE `Application` (
 	`submissionDate` datetime(3) DEFAULT NULL,
   `submissionType` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'Manual Inclusion Application',
   `policyAndExport` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `exporterBusiness` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `business` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `exporterBroker` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`exporterCompany` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`buyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE `Application` (
   KEY `Application_referenceNumber_idx` (`referenceNumber`),
   KEY `Application_policyAndExport_idx` (`policyAndExport`),
   KEY `Application_exporterCompany_idx` (`exporterCompany`),
-  KEY `Application_exporterBusiness_idx` (`exporterBusiness`),
+  KEY `Application_business_idx` (`business`),
   KEY `Application_exporterBroker_idx` (`exporterBroker`),
 	KEY `Application_buyer_idx` (`buyer`),
 	KEY `Application_declaration_idx` (`declaration`),
@@ -63,7 +63,7 @@ CREATE TABLE `Application` (
 	CONSTRAINT `Application_declaration_fkey` FOREIGN KEY (`declaration`) REFERENCES `Declaration` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_eligibility_fkey` FOREIGN KEY (`eligibility`) REFERENCES `Eligibility` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_exporterBroker_fkey` FOREIGN KEY (`exporterBroker`) REFERENCES `ExporterBroker` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Application_exporterBusiness_fkey` FOREIGN KEY (`exporterBusiness`) REFERENCES `ExporterBusiness` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Application_business_fkey` FOREIGN KEY (`business`) REFERENCES `Business` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_exporterCompany_fkey` FOREIGN KEY (`exporterCompany`) REFERENCES `ExporterCompany` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_policyAndExport_fkey` FOREIGN KEY (`policyAndExport`) REFERENCES `PolicyAndExport` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
 	CONSTRAINT `Application_sectionReview_fkey` FOREIGN KEY (`sectionReview`) REFERENCES `SectionReview` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -554,10 +554,10 @@ CREATE TABLE `ExporterBroker` (
 
 
 
-# Dump of table ExporterBusiness
+# Dump of table Business
 # ------------------------------------------------------------
 
-CREATE TABLE `ExporterBusiness` (
+CREATE TABLE `Business` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `totalEmployeesInternational` int DEFAULT NULL,
@@ -567,8 +567,8 @@ CREATE TABLE `ExporterBusiness` (
 	`estimatedAnnualTurnover` int DEFAULT NULL,
   `exportsTurnoverPercentage` int DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `ExporterBusiness_application_idx` (`application`),
-  CONSTRAINT `ExporterBusiness_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  KEY `Business_application_idx` (`application`),
+  CONSTRAINT `Business_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -596,7 +596,7 @@ CREATE TABLE IF NOT EXISTS `ExporterCompany` (
   KEY `ExporterCompany_business_idx` (`business`),
   CONSTRAINT `ExporterCompany_address_fkey` FOREIGN KEY (`registeredOfficeAddress`) REFERENCES `ExporterCompanyAddress` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `ExporterCompany_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `ExporterCompany_business_fkey` FOREIGN KEY (`business`) REFERENCES `ExporterBusiness` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `ExporterCompany_business_fkey` FOREIGN KEY (`business`) REFERENCES `Business` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -711,7 +711,7 @@ CREATE TABLE `SectionReview` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `eligibility` tinyint(1) NOT NULL DEFAULT '0',
   `policyAndExport` tinyint(1) NOT NULL DEFAULT '0',
-  `exporterBusiness` tinyint(1) NOT NULL DEFAULT '0',
+  `business` tinyint(1) NOT NULL DEFAULT '0',
   `buyer` tinyint(1) NOT NULL DEFAULT '0',
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),

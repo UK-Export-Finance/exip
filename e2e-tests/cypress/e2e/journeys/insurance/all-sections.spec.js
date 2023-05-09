@@ -97,7 +97,7 @@ context('Insurance - All sections - new application', () => {
         });
 
         it('should render a `your business` task with link and `not started` status', () => {
-          const task = taskList.prepareApplication.tasks.exporterBusiness;
+          const task = taskList.prepareApplication.tasks.business;
 
           const expectedLink = TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS;
 

@@ -45,7 +45,7 @@
           name: FIELDS.GOODS_OR_SERVICES.ID,
           id: FIELDS.GOODS_OR_SERVICES.ID,
           maxlength: FIELDS.GOODS_OR_SERVICES.MAXIMUM,
-          value: submittedValues[FIELDS.GOODS_OR_SERVICES.ID] or application.exporterBusiness[FIELDS.GOODS_OR_SERVICES.ID],
+          value: submittedValues[FIELDS.GOODS_OR_SERVICES.ID] or application.business[FIELDS.GOODS_OR_SERVICES.ID],
           label: {
             text: FIELDS.GOODS_OR_SERVICES.LABEL,
             classes: "govuk-label--m",
@@ -77,7 +77,7 @@
         {{ govukInput({
           id: FIELDS.YEARS_EXPORTING.ID,
           name: FIELDS.YEARS_EXPORTING.ID,
-          value: submittedValues[FIELDS.YEARS_EXPORTING.ID] or application.exporterBusiness[FIELDS.YEARS_EXPORTING.ID],
+          value: submittedValues[FIELDS.YEARS_EXPORTING.ID] or application.business[FIELDS.YEARS_EXPORTING.ID],
           label: {
             text: FIELDS.YEARS_EXPORTING.LABEL,
             classes: "govuk-label--m",
@@ -118,7 +118,7 @@
         {{ govukInput({
           id: FIELDS.EMPLOYEES_UK.ID,
           name: FIELDS.EMPLOYEES_UK.ID,
-          value: submittedValues[FIELDS.EMPLOYEES_UK.ID] or application.exporterBusiness[FIELDS.EMPLOYEES_UK.ID],
+          value: submittedValues[FIELDS.EMPLOYEES_UK.ID] or application.business[FIELDS.EMPLOYEES_UK.ID],
           label: {
             text: FIELDS.EMPLOYEES_UK.LABEL,
             classes: "govuk-body",
@@ -143,7 +143,7 @@
         {{ govukInput({
           id: FIELDS.EMPLOYEES_INTERNATIONAL.ID,
           name: FIELDS.EMPLOYEES_INTERNATIONAL.ID,
-          value: submittedValues[FIELDS.EMPLOYEES_INTERNATIONAL.ID] or application.exporterBusiness[FIELDS.EMPLOYEES_INTERNATIONAL.ID],
+          value: submittedValues[FIELDS.EMPLOYEES_INTERNATIONAL.ID] or application.business[FIELDS.EMPLOYEES_INTERNATIONAL.ID],
           label: {
             text: FIELDS.EMPLOYEES_INTERNATIONAL.LABEL,
             classes: "govuk-body",

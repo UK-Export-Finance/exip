@@ -70,7 +70,7 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
       const checkAndChange = true;
       const summaryList = yourBusinessSummaryList(
         mockApplication.exporterCompany,
-        mockApplication.exporterBusiness,
+        mockApplication.business,
         mockApplication.exporterBroker,
         mockApplication.referenceNumber,
         checkAndChange,

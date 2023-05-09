@@ -54,20 +54,20 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
     });
   });
 
-  describe('when an application has exporterBusiness fields', () => {
-    it('should return the relevant exporterBusiness fields', () => {
+  describe('when an application has business fields', () => {
+    it('should return the relevant business fields', () => {
       const result = mapApplicationToFormFields(mockApplication);
 
       const expected = {
         ...mockApplication,
         [SUBMISSION_DEADLINE]: formatDate(mockApplication[SUBMISSION_DEADLINE]),
-        exporterBusiness: {
-          ...mockApplication.exporterBusiness,
-          [YEARS_EXPORTING]: transformNumberToString(mockApplication.exporterBusiness[YEARS_EXPORTING]),
-          [EMPLOYEES_UK]: transformNumberToString(mockApplication.exporterBusiness[EMPLOYEES_UK]),
-          [EMPLOYEES_INTERNATIONAL]: transformNumberToString(mockApplication.exporterBusiness[EMPLOYEES_INTERNATIONAL]),
-          [PERCENTAGE_TURNOVER]: transformNumberToString(mockApplication.exporterBusiness[PERCENTAGE_TURNOVER]),
-          [ESTIMATED_ANNUAL_TURNOVER]: transformNumberToString(mockApplication.exporterBusiness[ESTIMATED_ANNUAL_TURNOVER]),
+        business: {
+          ...mockApplication.business,
+          [YEARS_EXPORTING]: transformNumberToString(mockApplication.business[YEARS_EXPORTING]),
+          [EMPLOYEES_UK]: transformNumberToString(mockApplication.business[EMPLOYEES_UK]),
+          [EMPLOYEES_INTERNATIONAL]: transformNumberToString(mockApplication.business[EMPLOYEES_INTERNATIONAL]),
+          [PERCENTAGE_TURNOVER]: transformNumberToString(mockApplication.business[PERCENTAGE_TURNOVER]),
+          [ESTIMATED_ANNUAL_TURNOVER]: transformNumberToString(mockApplication.business[ESTIMATED_ANNUAL_TURNOVER]),
         },
       };
 

@@ -57,7 +57,7 @@ export const get = async (req: Request, res: Response) => {
 
     const summaryList = yourBusinessSummaryList(
       application.exporterCompany,
-      application.exporterBusiness,
+      application.business,
       application.exporterBroker,
       referenceNumber,
       checkAndChange,

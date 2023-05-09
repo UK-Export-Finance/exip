@@ -23,7 +23,7 @@ const {
 } = FIELD_IDS.INSURANCE;
 
 const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.exporterBusiness;
+const task = taskList.prepareApplication.tasks.business;
 
 const { IN_PROGRESS } = TASKS.STATUS;
 

@@ -36,7 +36,6 @@ export const mockExporterCompany = {
 
 export const mockBuyer = {
   companyOrOrganisationName: 'Mock buyer',
-  // buyerLocation: mockCountries[0].name,
   exporterIsConnectedWithBuyer: ANSWERS.YES,
 };
 

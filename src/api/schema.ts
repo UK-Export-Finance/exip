@@ -42,7 +42,7 @@ export const lists = {
         ref: 'Account',
         many: false,
       }),
-      exporterBusiness: relationship({ ref: 'ExporterBusiness' }),
+      business: relationship({ ref: 'Business' }),
       exporterCompany: relationship({ ref: 'ExporterCompany' }),
       exporterBroker: relationship({ ref: 'ExporterBroker' }),
       buyer: relationship({ ref: 'Buyer' }),
@@ -108,14 +108,14 @@ export const lists = {
               },
             });
 
-            // generate and attach a new 'exporter business' relationship
-            const { id: exporterBusinessId } = await context.db.ExporterBusiness.createOne({
+            // generate and attach a new 'business' relationship
+            const { id: businessId } = await context.db.Business.createOne({
               data: {},
             });
 
-            modifiedData.exporterBusiness = {
+            modifiedData.business = {
               connect: {
-                id: exporterBusinessId,
+                id: businessId,
               },
             };
 
@@ -197,7 +197,7 @@ export const lists = {
               eligibilityId,
               policyAndExportId,
               exporterCompanyId,
-              exporterBusinessId,
+              businessId,
               exporterBrokerId,
               buyerId,
               sectionReviewId,
@@ -252,9 +252,9 @@ export const lists = {
               },
             });
 
-            // add the application ID to the exporter business entry.
-            await context.db.ExporterBusiness.updateOne({
-              where: { id: exporterBusinessId },
+            // add the application ID to the business entry.
+            await context.db.Business.updateOne({
+              where: { id: businessId },
               data: {
                 application: {
                   connect: {
@@ -426,7 +426,7 @@ export const lists = {
     },
     access: allowAll,
   }),
-  ExporterBusiness: list({
+  Business: list({
     fields: {
       application: relationship({ ref: 'Application' }),
       goodsOrServicesSupplied: text({
@@ -607,7 +607,7 @@ export const lists = {
       application: relationship({ ref: 'Application' }),
       eligibility: checkbox(),
       policyAndExport: checkbox(),
-      exporterBusiness: checkbox(),
+      business: checkbox(),
       buyer: checkbox(),
     },
     hooks: {

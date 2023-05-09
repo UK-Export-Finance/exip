@@ -1,11 +1,11 @@
 import gql from 'graphql-tag';
 
-const updateExporterBusinessMutation = gql`
-  mutation ($where: ExporterBusinessWhereUniqueInput!, $data: ExporterBusinessUpdateInput!) {
-    updateExporterBusiness(where: $where, data: $data) {
+const updateBusinessMutation = gql`
+  mutation ($where: BusinessWhereUniqueInput!, $data: BusinessUpdateInput!) {
+    updateBusiness(where: $where, data: $data) {
       id
     }
   }
 `;
 
-export default updateExporterBusinessMutation;
+export default updateBusinessMutation;

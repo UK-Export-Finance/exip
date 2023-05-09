@@ -12,7 +12,7 @@ import mockApplications from './mock-applications';
 import mockPhoneNumbers from './mock-phone-numbers';
 import mockSicCodes from './mock-sic-codes';
 import mockExporterNatureOfBusiness from './mock-exporter-business-nature-of-business';
-import mockExporterBusinessTurnover from './mock-exporter-business-turnover';
+import mockBusinessTurnover from './mock-exporter-business-turnover';
 import mockBroker from './mock-broker';
 import mockBuyer from './mock-buyer';
 import mockDeclarations from './mock-declarations';
@@ -76,7 +76,7 @@ export {
   mockCurrencies,
   mockDeclarations,
   mockExporterNatureOfBusiness,
-  mockExporterBusinessTurnover,
+  mockBusinessTurnover,
   mockInsuranceFeedback,
   mockNext,
   mockSession,

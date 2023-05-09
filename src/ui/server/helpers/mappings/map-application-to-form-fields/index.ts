@@ -58,14 +58,14 @@ const mapApplicationToFormFields = (application: Application): object => {
       };
     }
 
-    if (application.exporterBusiness) {
-      mapped.exporterBusiness = {
-        ...mapped.exporterBusiness,
-        [YEARS_EXPORTING]: transformNumberToString(application.exporterBusiness[YEARS_EXPORTING]),
-        [EMPLOYEES_UK]: transformNumberToString(application.exporterBusiness[EMPLOYEES_UK]),
-        [EMPLOYEES_INTERNATIONAL]: transformNumberToString(application.exporterBusiness[EMPLOYEES_INTERNATIONAL]),
-        [PERCENTAGE_TURNOVER]: transformNumberToString(application.exporterBusiness[PERCENTAGE_TURNOVER]),
-        [ESTIMATED_ANNUAL_TURNOVER]: transformNumberToString(application.exporterBusiness[ESTIMATED_ANNUAL_TURNOVER]),
+    if (application.business) {
+      mapped.business = {
+        ...mapped.business,
+        [YEARS_EXPORTING]: transformNumberToString(application.business[YEARS_EXPORTING]),
+        [EMPLOYEES_UK]: transformNumberToString(application.business[EMPLOYEES_UK]),
+        [EMPLOYEES_INTERNATIONAL]: transformNumberToString(application.business[EMPLOYEES_INTERNATIONAL]),
+        [PERCENTAGE_TURNOVER]: transformNumberToString(application.business[PERCENTAGE_TURNOVER]),
+        [ESTIMATED_ANNUAL_TURNOVER]: transformNumberToString(application.business[ESTIMATED_ANNUAL_TURNOVER]),
       };
     }
 
