@@ -6,7 +6,7 @@ import { SummaryListItemData, ApplicationBuyer } from '../../../../types';
 /**
  * generateFields
  * Create all fields for the insurance - Your business govukSummaryList
- * @param {ApplicationBuyer} answersExporterCompany Application buyer object
+ * @param {ApplicationBuyer} answersCompany Application buyer object
  * @param {Number} referenceNumber
  * @returns {Object} All your business values in an object structure for GOVUK summary list structure
  */
@@ -24,7 +24,7 @@ const generateFields = (answersBuyer: ApplicationBuyer, referenceNumber: number,
 /**
  * yourBuyerSummaryList
  * Create multiple groups with govukSummaryList data structure
- * @param {ApplicationBuyer} answersExporterCompany Application buyer object
+ * @param {ApplicationBuyer} answersCompany Application buyer object
  * @param {Number} referenceNumber
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */

@@ -18,12 +18,12 @@ const mapSubmittedData = (formBody: RequestBody, application: Application): obje
   const { __typename, success, _csrf, apiError, ...populatedData } = formBody;
 
   if (!populatedData.registeredOfficeAddress) {
-    // create empty exporterCompanyAddress if not part of request
+    // create empty companyAddress if not part of request
     populatedData.address = {};
   } else {
     const { registeredOfficeAddress } = populatedData;
 
-    // populates exporterCompanyAddress for db with value or empty string if null
+    // populates companyAddress for db with value or empty string if null
     populatedData.address = {
       addressLine1: registeredOfficeAddress.addressLine1 ?? '',
       addressLine2: registeredOfficeAddress.addressLine2 ?? '',

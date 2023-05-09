@@ -2,7 +2,7 @@ import { Account } from './account';
 import { AnswersContent, AnswersFieldGroups } from './answers';
 import {
   Application,
-  ApplicationExporterCompany,
+  ApplicationCompany,
   ApplicationFlat,
   ApplicationPolicyAndExport,
   ApplicationExporterSicCodes,
@@ -59,7 +59,7 @@ export {
   Application,
   ApplicationFlat,
   ApplicationPolicyAndExport,
-  ApplicationExporterCompany,
+  ApplicationCompany,
   ApplicationExporterSicCodes,
   ApplicationExporterindustrySectorNames,
   ApplicationBusiness,

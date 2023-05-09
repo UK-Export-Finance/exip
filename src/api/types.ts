@@ -29,7 +29,7 @@ interface ApplicationOwner extends ApplicationRelationship {
   lastName: string;
 }
 
-interface ApplicationExporterCompany {
+interface ApplicationCompany {
   id: string;
   companyName?: string;
 }
@@ -115,8 +115,8 @@ interface Application {
   eligibility: ApplicationEligibility;
   owner: ApplicationOwner;
   policyAndExport: ApplicationPolicyAndExport;
-  exporterCompany: ApplicationExporterCompany;
-  exporterCompanyAddress: ApplicationExporterCompanyAddress;
+  company: ApplicationCompany;
+  companyAddress: ApplicationExporterCompanyAddress;
   business: ApplicationRelationship;
   exporterBroker: ApplicationRelationship;
   buyer: ApplicationBuyer;
@@ -191,7 +191,7 @@ interface NotifyPeronsalisation {
 interface SicCodes {
   sicCode: string;
   industrySectorName: string;
-  exporterCompany: ConnectObj;
+  company: ConnectObj;
   application: ConnectObj;
 }
 
@@ -289,18 +289,18 @@ interface SubmitApplicationVariables {
   applicationId: string;
 }
 
-interface UpdateExporterCompanyAndCompanyAddressVariablesData {
+interface UpdateCompanyAndExporterCompanyAddressVariablesData {
   address?: ApplicationExporterCompanyAddress;
   sicCodes?: [string];
   oldSicCodes?: [string];
   industrySectorNames?: [string];
-  exporterCompany?: ExporterCompanyUpdateInput;
+  company?: ExporterCompanyUpdateInput;
 }
 
-interface UpdateExporterCompanyAndCompanyAddressVariables {
+interface UpdateCompanyAndExporterCompanyAddressVariables {
   companyId: string;
   companyAddressId: string;
-  data: UpdateExporterCompanyAndCompanyAddressVariablesData;
+  data: UpdateCompanyAndExporterCompanyAddressVariablesData;
 }
 
 interface Feedback {
@@ -335,7 +335,7 @@ export {
   ApplicationBuyer,
   ApplicationDeclaration,
   ApplicationEligibility,
-  ApplicationExporterCompany,
+  ApplicationCompany,
   ApplicationRelationship,
   ApplicationSubmissionEmailVariables,
   BufferEncoding,
@@ -356,7 +356,7 @@ export {
   SendExporterEmailVariables,
   SubmitApplicationVariables,
   SuccessResponse,
-  UpdateExporterCompanyAndCompanyAddressVariables,
+  UpdateCompanyAndExporterCompanyAddressVariables,
   VerifyEmailAddressVariables,
   VerifyEmailAddressResponse,
   VerifyAccountPasswordResetTokenVariables,

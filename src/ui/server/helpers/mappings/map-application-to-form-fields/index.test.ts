@@ -94,15 +94,15 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
     });
   });
 
-  describe(`when an application has exporterCompany.${FINANCIAL_YEAR_END_DATE} field`, () => {
+  describe(`when an application has company.${FINANCIAL_YEAR_END_DATE} field`, () => {
     it('should return mapped date field', () => {
       const result = mapApplicationToFormFields(mockApplication);
 
       const expected = {
         ...mockApplication,
-        exporterCompany: {
-          ...mockApplication.exporterCompany,
-          [FINANCIAL_YEAR_END_DATE]: mapFinancialYearEndDate(mockApplication.exporterCompany[FINANCIAL_YEAR_END_DATE]),
+        company: {
+          ...mockApplication.company,
+          [FINANCIAL_YEAR_END_DATE]: mapFinancialYearEndDate(mockApplication.company[FINANCIAL_YEAR_END_DATE]),
         },
       };
 

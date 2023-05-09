@@ -57,7 +57,7 @@ export const generateContactDetailsObject = (answers: ApplicationBuyer) => {
  * Create all company or organisation fields and values for the Insurance - Your buyer govukSummaryList
  * @param {ApplicationBuyer} answers buyer data
  * @param {Number} referenceNumber application reference number
- * @returns {Object} All exporter company fields and values in an object structure for GOVUK summary list structure
+ * @returns {Object} All company fields and values in an object structure for GOVUK summary list structure
  */
 const generateCompanyOrOrganisationFields = (answers: ApplicationBuyer, referenceNumber: number, checkAndChange: boolean) => {
   const addressObject = generateAddressObject(answers);

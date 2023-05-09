@@ -33,7 +33,7 @@ const get = (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const summaryList = yourBusinessSummaryList(application.exporterCompany, application.business, application.exporterBroker, refNumber);
+    const summaryList = yourBusinessSummaryList(application.company, application.business, application.exporterBroker, refNumber);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

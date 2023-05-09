@@ -20,7 +20,7 @@ describe('mapSicCodes', () => {
       {
         sicCode: mockSicCodes[0],
         industrySectorName: industrySectorNames[0],
-        exporterCompany: {
+        company: {
           connect: {
             id: mockCompanyResponse.id,
           },
@@ -29,7 +29,7 @@ describe('mapSicCodes', () => {
       {
         sicCode: mockSicCodes[1],
         industrySectorName: industrySectorNames[1],
-        exporterCompany: {
+        company: {
           connect: {
             id: mockCompanyResponse.id,
           },

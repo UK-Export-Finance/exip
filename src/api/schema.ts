@@ -43,7 +43,7 @@ export const lists = {
         many: false,
       }),
       business: relationship({ ref: 'Business' }),
-      exporterCompany: relationship({ ref: 'ExporterCompany' }),
+      company: relationship({ ref: 'Company' }),
       exporterBroker: relationship({ ref: 'ExporterBroker' }),
       buyer: relationship({ ref: 'Buyer' }),
       sectionReview: relationship({ ref: 'SectionReview' }),
@@ -86,23 +86,23 @@ export const lists = {
               },
             };
 
-            // generate and attach a new `exporter company` relationship
-            const { id: exporterCompanyId } = await context.db.ExporterCompany.createOne({
+            // generate and attach a new `company` relationship
+            const { id: companyId } = await context.db.Company.createOne({
               data: {},
             });
 
-            modifiedData.exporterCompany = {
+            modifiedData.company = {
               connect: {
-                id: exporterCompanyId,
+                id: companyId,
               },
             };
 
-            // generate a new `exporter company address` relationship with the exporter company
-            await context.db.ExporterCompanyAddress.createOne({
+            // generate a new `exporter company address` relationship with the company
+            await context.db.ExporterExporterCompanyAddress.createOne({
               data: {
-                exporterCompany: {
+                company: {
                   connect: {
-                    id: exporterCompanyId,
+                    id: companyId,
                   },
                 },
               },
@@ -192,17 +192,9 @@ export const lists = {
 
             const applicationId = item.id;
 
-            const {
-              referenceNumber,
-              eligibilityId,
-              policyAndExportId,
-              exporterCompanyId,
-              businessId,
-              exporterBrokerId,
-              buyerId,
-              sectionReviewId,
-              declarationId,
-            } = item;
+            const { referenceNumber, eligibilityId } = item;
+
+            const { policyAndExportId, companyId, businessId, exporterBrokerId, buyerId, sectionReviewId, declarationId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -240,9 +232,9 @@ export const lists = {
               },
             });
 
-            // add the application ID to the exporter company entry.
-            await context.db.ExporterCompany.updateOne({
-              where: { id: exporterCompanyId },
+            // add the application ID to the company entry.
+            await context.db.Company.updateOne({
+              where: { id: companyId },
               data: {
                 application: {
                   connect: {
@@ -476,7 +468,7 @@ export const lists = {
   }),
   ExporterCompanyAddress: list({
     fields: {
-      exporterCompany: relationship({ ref: 'ExporterCompany.registeredOfficeAddress' }),
+      company: relationship({ ref: 'Company.registeredOfficeAddress' }),
       addressLine1: text(),
       addressLine2: text(),
       careOf: text(),
@@ -488,12 +480,12 @@ export const lists = {
     },
     access: allowAll,
   }),
-  ExporterCompany: list({
+  Company: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      registeredOfficeAddress: relationship({ ref: 'ExporterCompanyAddress.exporterCompany' }),
+      registeredOfficeAddress: relationship({ ref: 'ExporterCompanyAddress.company' }),
       sicCodes: relationship({
-        ref: 'ExporterCompanySicCode.exporterCompany',
+        ref: 'ExporterCompanySicCode.company',
         many: true,
       }),
       companyName: text(),
@@ -528,7 +520,7 @@ export const lists = {
   }),
   ExporterCompanySicCode: list({
     fields: {
-      exporterCompany: relationship({ ref: 'ExporterCompany.sicCodes' }),
+      company: relationship({ ref: 'Company.sicCodes' }),
       sicCode: text(),
       industrySectorName: text(),
     },

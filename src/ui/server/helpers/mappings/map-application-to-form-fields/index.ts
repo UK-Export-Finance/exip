@@ -51,10 +51,10 @@ const mapApplicationToFormFields = (application: Application): object => {
       };
     }
 
-    if (application.exporterCompany && application.exporterCompany[FINANCIAL_YEAR_END_DATE]) {
-      mapped.exporterCompany = {
-        ...mapped.exporterCompany,
-        [FINANCIAL_YEAR_END_DATE]: mapFinancialYearEndDate(application.exporterCompany[FINANCIAL_YEAR_END_DATE]),
+    if (application.company && application.company[FINANCIAL_YEAR_END_DATE]) {
+      mapped.company = {
+        ...mapped.company,
+        [FINANCIAL_YEAR_END_DATE]: mapFinancialYearEndDate(application.company[FINANCIAL_YEAR_END_DATE]),
       };
     }
 

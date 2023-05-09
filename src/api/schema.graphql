@@ -76,7 +76,7 @@ type Application {
   policyAndExport: PolicyAndExport
   owner: Account
   business: Business
-  exporterCompany: ExporterCompany
+  company: Company
   exporterBroker: ExporterBroker
   buyer: Buyer
   sectionReview: SectionReview
@@ -106,7 +106,7 @@ input ApplicationWhereInput {
   policyAndExport: PolicyAndExportWhereInput
   owner: AccountWhereInput
   business: BusinessWhereInput
-  exporterCompany: ExporterCompanyWhereInput
+  company: CompanyWhereInput
   exporterBroker: ExporterBrokerWhereInput
   buyer: BuyerWhereInput
   sectionReview: SectionReviewWhereInput
@@ -216,7 +216,7 @@ input ApplicationUpdateInput {
   policyAndExport: PolicyAndExportRelateToOneForUpdateInput
   owner: AccountRelateToOneForUpdateInput
   business: BusinessRelateToOneForUpdateInput
-  exporterCompany: ExporterCompanyRelateToOneForUpdateInput
+  company: CompanyRelateToOneForUpdateInput
   exporterBroker: ExporterBrokerRelateToOneForUpdateInput
   buyer: BuyerRelateToOneForUpdateInput
   sectionReview: SectionReviewRelateToOneForUpdateInput
@@ -247,9 +247,9 @@ input BusinessRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input ExporterCompanyRelateToOneForUpdateInput {
-  create: ExporterCompanyCreateInput
-  connect: ExporterCompanyWhereUniqueInput
+input CompanyRelateToOneForUpdateInput {
+  create: CompanyCreateInput
+  connect: CompanyWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -295,7 +295,7 @@ input ApplicationCreateInput {
   policyAndExport: PolicyAndExportRelateToOneForCreateInput
   owner: AccountRelateToOneForCreateInput
   business: BusinessRelateToOneForCreateInput
-  exporterCompany: ExporterCompanyRelateToOneForCreateInput
+  company: CompanyRelateToOneForCreateInput
   exporterBroker: ExporterBrokerRelateToOneForCreateInput
   buyer: BuyerRelateToOneForCreateInput
   sectionReview: SectionReviewRelateToOneForCreateInput
@@ -322,9 +322,9 @@ input BusinessRelateToOneForCreateInput {
   connect: BusinessWhereUniqueInput
 }
 
-input ExporterCompanyRelateToOneForCreateInput {
-  create: ExporterCompanyCreateInput
-  connect: ExporterCompanyWhereUniqueInput
+input CompanyRelateToOneForCreateInput {
+  create: CompanyCreateInput
+  connect: CompanyWhereUniqueInput
 }
 
 input ExporterBrokerRelateToOneForCreateInput {
@@ -719,7 +719,7 @@ input ExporterBrokerCreateInput {
 
 type ExporterCompanyAddress {
   id: ID!
-  exporterCompany: ExporterCompany
+  company: Company
   addressLine1: String
   addressLine2: String
   careOf: String
@@ -739,7 +739,7 @@ input ExporterCompanyAddressWhereInput {
   OR: [ExporterCompanyAddressWhereInput!]
   NOT: [ExporterCompanyAddressWhereInput!]
   id: IDFilter
-  exporterCompany: ExporterCompanyWhereInput
+  company: CompanyWhereInput
   addressLine1: StringFilter
   addressLine2: StringFilter
   careOf: StringFilter
@@ -763,7 +763,7 @@ input ExporterCompanyAddressOrderByInput {
 }
 
 input ExporterCompanyAddressUpdateInput {
-  exporterCompany: ExporterCompanyRelateToOneForUpdateInput
+  company: CompanyRelateToOneForUpdateInput
   addressLine1: String
   addressLine2: String
   careOf: String
@@ -780,7 +780,7 @@ input ExporterCompanyAddressUpdateArgs {
 }
 
 input ExporterCompanyAddressCreateInput {
-  exporterCompany: ExporterCompanyRelateToOneForCreateInput
+  company: CompanyRelateToOneForCreateInput
   addressLine1: String
   addressLine2: String
   careOf: String
@@ -791,7 +791,7 @@ input ExporterCompanyAddressCreateInput {
   premises: String
 }
 
-type ExporterCompany {
+type Company {
   id: ID!
   application: Application
   registeredOfficeAddress: ExporterCompanyAddress
@@ -807,14 +807,14 @@ type ExporterCompany {
   financialYearEndDate: DateTime
 }
 
-input ExporterCompanyWhereUniqueInput {
+input CompanyWhereUniqueInput {
   id: ID
 }
 
-input ExporterCompanyWhereInput {
-  AND: [ExporterCompanyWhereInput!]
-  OR: [ExporterCompanyWhereInput!]
-  NOT: [ExporterCompanyWhereInput!]
+input CompanyWhereInput {
+  AND: [CompanyWhereInput!]
+  OR: [CompanyWhereInput!]
+  NOT: [CompanyWhereInput!]
   id: IDFilter
   application: ApplicationWhereInput
   registeredOfficeAddress: ExporterCompanyAddressWhereInput
@@ -835,7 +835,7 @@ input ExporterCompanySicCodeManyRelationFilter {
   none: ExporterCompanySicCodeWhereInput
 }
 
-input ExporterCompanyOrderByInput {
+input CompanyOrderByInput {
   id: OrderDirection
   companyName: OrderDirection
   companyNumber: OrderDirection
@@ -847,7 +847,7 @@ input ExporterCompanyOrderByInput {
   financialYearEndDate: OrderDirection
 }
 
-input ExporterCompanyUpdateInput {
+input CompanyUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   registeredOfficeAddress: ExporterCompanyAddressRelateToOneForUpdateInput
   sicCodes: ExporterCompanySicCodeRelateToManyForUpdateInput
@@ -874,12 +874,12 @@ input ExporterCompanySicCodeRelateToManyForUpdateInput {
   connect: [ExporterCompanySicCodeWhereUniqueInput!]
 }
 
-input ExporterCompanyUpdateArgs {
-  where: ExporterCompanyWhereUniqueInput!
-  data: ExporterCompanyUpdateInput!
+input CompanyUpdateArgs {
+  where: CompanyWhereUniqueInput!
+  data: CompanyUpdateInput!
 }
 
-input ExporterCompanyCreateInput {
+input CompanyCreateInput {
   application: ApplicationRelateToOneForCreateInput
   registeredOfficeAddress: ExporterCompanyAddressRelateToOneForCreateInput
   sicCodes: ExporterCompanySicCodeRelateToManyForCreateInput
@@ -905,7 +905,7 @@ input ExporterCompanySicCodeRelateToManyForCreateInput {
 
 type ExporterCompanySicCode {
   id: ID!
-  exporterCompany: ExporterCompany
+  company: Company
   sicCode: String
   industrySectorName: String
 }
@@ -919,7 +919,7 @@ input ExporterCompanySicCodeWhereInput {
   OR: [ExporterCompanySicCodeWhereInput!]
   NOT: [ExporterCompanySicCodeWhereInput!]
   id: IDFilter
-  exporterCompany: ExporterCompanyWhereInput
+  company: CompanyWhereInput
   sicCode: StringFilter
   industrySectorName: StringFilter
 }
@@ -931,7 +931,7 @@ input ExporterCompanySicCodeOrderByInput {
 }
 
 input ExporterCompanySicCodeUpdateInput {
-  exporterCompany: ExporterCompanyRelateToOneForUpdateInput
+  company: CompanyRelateToOneForUpdateInput
   sicCode: String
   industrySectorName: String
 }
@@ -942,7 +942,7 @@ input ExporterCompanySicCodeUpdateArgs {
 }
 
 input ExporterCompanySicCodeCreateInput {
-  exporterCompany: ExporterCompanyRelateToOneForCreateInput
+  company: CompanyRelateToOneForCreateInput
   sicCode: String
   industrySectorName: String
 }
@@ -1661,12 +1661,12 @@ type Mutation {
   updateExporterCompanyAddresses(data: [ExporterCompanyAddressUpdateArgs!]!): [ExporterCompanyAddress]
   deleteExporterCompanyAddress(where: ExporterCompanyAddressWhereUniqueInput!): ExporterCompanyAddress
   deleteExporterCompanyAddresses(where: [ExporterCompanyAddressWhereUniqueInput!]!): [ExporterCompanyAddress]
-  createExporterCompany(data: ExporterCompanyCreateInput!): ExporterCompany
-  createExporterCompanies(data: [ExporterCompanyCreateInput!]!): [ExporterCompany]
-  updateExporterCompany(where: ExporterCompanyWhereUniqueInput!, data: ExporterCompanyUpdateInput!): ExporterCompany
-  updateExporterCompanies(data: [ExporterCompanyUpdateArgs!]!): [ExporterCompany]
-  deleteExporterCompany(where: ExporterCompanyWhereUniqueInput!): ExporterCompany
-  deleteExporterCompanies(where: [ExporterCompanyWhereUniqueInput!]!): [ExporterCompany]
+  createCompany(data: CompanyCreateInput!): Company
+  createCompanies(data: [CompanyCreateInput!]!): [Company]
+  updateCompany(where: CompanyWhereUniqueInput!, data: CompanyUpdateInput!): Company
+  updateCompanies(data: [CompanyUpdateArgs!]!): [Company]
+  deleteCompany(where: CompanyWhereUniqueInput!): Company
+  deleteCompanies(where: [CompanyWhereUniqueInput!]!): [Company]
   createExporterCompanySicCode(data: ExporterCompanySicCodeCreateInput!): ExporterCompanySicCode
   createExporterCompanySicCodes(data: [ExporterCompanySicCodeCreateInput!]!): [ExporterCompanySicCode]
   updateExporterCompanySicCode(where: ExporterCompanySicCodeWhereUniqueInput!, data: ExporterCompanySicCodeUpdateInput!): ExporterCompanySicCode
@@ -1770,8 +1770,8 @@ type Mutation {
   """ reset account password """
   accountPasswordReset(token: String!, password: String!): SuccessResponse
 
-  """ update exporter company and company address """
-  updateExporterCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: ExporterCompanyAndCompanyAddressInput!): ExporterCompanyAndCompanyAddress
+  """ update company and company address """
+  updateCompanyAndExporterCompanyAddress(companyId: ID!, companyAddressId: ID!, data: CompanyAndExporterCompanyAddressInput!): CompanyAndExporterCompanyAddress
 
   """ delete an application by reference number """
   deleteApplicationByReferenceNumber(referenceNumber: Int!): SuccessResponse
@@ -1822,9 +1822,9 @@ type Query {
   exporterCompanyAddresses(where: ExporterCompanyAddressWhereInput! = {}, orderBy: [ExporterCompanyAddressOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExporterCompanyAddressWhereUniqueInput): [ExporterCompanyAddress!]
   exporterCompanyAddress(where: ExporterCompanyAddressWhereUniqueInput!): ExporterCompanyAddress
   exporterCompanyAddressesCount(where: ExporterCompanyAddressWhereInput! = {}): Int
-  exporterCompanies(where: ExporterCompanyWhereInput! = {}, orderBy: [ExporterCompanyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExporterCompanyWhereUniqueInput): [ExporterCompany!]
-  exporterCompany(where: ExporterCompanyWhereUniqueInput!): ExporterCompany
-  exporterCompaniesCount(where: ExporterCompanyWhereInput! = {}): Int
+  companies(where: CompanyWhereInput! = {}, orderBy: [CompanyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanyWhereUniqueInput): [Company!]
+  company(where: CompanyWhereUniqueInput!): Company
+  companiesCount(where: CompanyWhereInput! = {}): Int
   exporterCompanySicCodes(where: ExporterCompanySicCodeWhereInput! = {}, orderBy: [ExporterCompanySicCodeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExporterCompanySicCodeWhereUniqueInput): [ExporterCompanySicCode!]
   exporterCompanySicCode(where: ExporterCompanySicCodeWhereUniqueInput!): ExporterCompanySicCode
   exporterCompanySicCodesCount(where: ExporterCompanySicCodeWhereInput! = {}): Int
@@ -2010,7 +2010,7 @@ type CreateAnAccountResponse {
   verificationHash: String
 }
 
-type CompaniesHouseCompanyAddress {
+type CompaniesHouseExporterCompanyAddress {
   addressLine1: String
   addressLine2: String
   careOf: String
@@ -2048,7 +2048,7 @@ input ExporterCompanyAddressInput {
   premises: String
 }
 
-type ExporterCompanyAndCompanyAddress {
+type CompanyAndExporterCompanyAddress {
   id: ID
   registeredOfficeAddress: ExporterCompanyAddress
   companyName: String
@@ -2060,7 +2060,7 @@ type ExporterCompanyAndCompanyAddress {
   phoneNumber: String
 }
 
-input ExporterCompanyAndCompanyAddressInput {
+input CompanyAndExporterCompanyAddressInput {
   address: ExporterCompanyAddressInput
   sicCodes: [String]
   industrySectorNames: [String]

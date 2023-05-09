@@ -27,13 +27,13 @@ describe('controllers/insurance/business/save-data', () => {
     };
 
     beforeEach(() => {
-      api.keystone.application.update.exporterCompany = updateApplicationSpy;
+      api.keystone.application.update.company = updateApplicationSpy;
     });
 
     describe('when errorList is provided', () => {
       const mockValidationErrors = generateValidationErrors(PHONE_NUMBER, 'error', {});
 
-      it(`should call api.keystone.application.update.exporterCompany with ${TRADING_ADDRESS}, ${TRADING_NAME} but not ${PHONE_NUMBER}`, async () => {
+      it(`should call api.keystone.application.update.company with ${TRADING_ADDRESS}, ${TRADING_NAME} but not ${PHONE_NUMBER}`, async () => {
         await save.companyDetails(mockApplication, mockFormBody, mockValidationErrors.errorList);
 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
@@ -41,8 +41,8 @@ describe('controllers/insurance/business/save-data', () => {
         const dataToSave = stripEmptyFormFields(getDataToSave(mockFormBody, mockValidationErrors.errorList));
         const expectedSanitisedData = sanitiseData(dataToSave);
         expect(updateApplicationSpy).toHaveBeenCalledWith(
-          mockApplication.exporterCompany.id,
-          mockApplication.exporterCompany.registeredOfficeAddress.id,
+          mockApplication.company.id,
+          mockApplication.company.registeredOfficeAddress.id,
           expectedSanitisedData,
         );
       });
@@ -55,7 +55,7 @@ describe('controllers/insurance/business/save-data', () => {
     });
 
     describe('when errorList is NOT provided', () => {
-      it(`should call api.keystone.application.update.exporterCompany with ${TRADING_ADDRESS}, ${TRADING_NAME} and ${PHONE_NUMBER}`, async () => {
+      it(`should call api.keystone.application.update.company with ${TRADING_ADDRESS}, ${TRADING_NAME} and ${PHONE_NUMBER}`, async () => {
         await save.companyDetails(mockApplication, mockFormBody);
 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
@@ -63,8 +63,8 @@ describe('controllers/insurance/business/save-data', () => {
         const dataToSave = getDataToSave(mockFormBody);
         const expectedSanitisedData = sanitiseData(dataToSave);
         expect(updateApplicationSpy).toHaveBeenCalledWith(
-          mockApplication.exporterCompany.id,
-          mockApplication.exporterCompany.registeredOfficeAddress.id,
+          mockApplication.company.id,
+          mockApplication.company.registeredOfficeAddress.id,
           expectedSanitisedData,
         );
       });
@@ -175,7 +175,7 @@ describe('controllers/insurance/business/save-data', () => {
   });
 
   describe('api error handling', () => {
-    describe('update exporterCompany call', () => {
+    describe('update company call', () => {
       const mockFormBody = {
         [TRADING_NAME]: 'true',
         [TRADING_ADDRESS]: 'false',
@@ -185,7 +185,7 @@ describe('controllers/insurance/business/save-data', () => {
       describe('when there is an error', () => {
         beforeEach(() => {
           updateApplicationSpy = jest.fn(() => Promise.reject());
-          api.keystone.application.update.exporterCompany = updateApplicationSpy;
+          api.keystone.application.update.company = updateApplicationSpy;
         });
 
         it('should throw an error', async () => {

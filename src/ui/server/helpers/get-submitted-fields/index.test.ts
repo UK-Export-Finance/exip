@@ -42,7 +42,7 @@ describe('server/helpers/get-submitted-fields', () => {
           ...mockApplication,
         };
 
-        mockApplicationNoSic.exporterCompany.sicCodes = [];
+        mockApplicationNoSic.company.sicCodes = [];
         const mockApplicationNoSicFlat = flattenApplicationData(mockApplicationNoSic);
 
         const result = hasSubmittedField(mockApplicationNoSicFlat, 'sicCodes');

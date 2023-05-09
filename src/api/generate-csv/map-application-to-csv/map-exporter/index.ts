@@ -57,25 +57,25 @@ export const mapExporterBroker = (application: Application) => {
  * @returns {Array} Array of objects for CSV generation
  */
 const mapExporter = (application: Application) => {
-  const { exporterCompany, business } = application;
+  const { company, business } = application;
 
   const mapped = [
     csvRow(CSV.SECTION_TITLES.EXPORTER_BUSINESS, ''),
 
-    // exporter company fields
-    csvRow(CONTENT_STRINGS[COMPANY_NUMBER].SUMMARY?.TITLE, exporterCompany[COMPANY_NUMBER]),
-    csvRow(CSV.FIELDS[COMPANY_NAME], exporterCompany[COMPANY_NAME]),
-    csvRow(CONTENT_STRINGS[COMPANY_INCORPORATED].SUMMARY?.TITLE, formatDate(exporterCompany[COMPANY_INCORPORATED], 'dd-MMM-yy')),
+    // company fields
+    csvRow(CONTENT_STRINGS[COMPANY_NUMBER].SUMMARY?.TITLE, company[COMPANY_NUMBER]),
+    csvRow(CSV.FIELDS[COMPANY_NAME], company[COMPANY_NAME]),
+    csvRow(CONTENT_STRINGS[COMPANY_INCORPORATED].SUMMARY?.TITLE, formatDate(company[COMPANY_INCORPORATED], 'dd-MMM-yy')),
 
-    csvRow(CSV.FIELDS[COMPANY_ADDRESS], mapExporterAddress(exporterCompany[COMPANY_ADDRESS])),
+    csvRow(CSV.FIELDS[COMPANY_ADDRESS], mapExporterAddress(company[COMPANY_ADDRESS])),
 
-    csvRow(CONTENT_STRINGS[TRADING_NAME].SUMMARY?.TITLE, exporterCompany[TRADING_NAME]),
-    csvRow(CONTENT_STRINGS[TRADING_ADDRESS].SUMMARY?.TITLE, exporterCompany[TRADING_ADDRESS]),
+    csvRow(CONTENT_STRINGS[TRADING_NAME].SUMMARY?.TITLE, company[TRADING_NAME]),
+    csvRow(CONTENT_STRINGS[TRADING_ADDRESS].SUMMARY?.TITLE, company[TRADING_ADDRESS]),
 
-    csvRow(CSV.FIELDS[COMPANY_SIC], exporterCompany[COMPANY_SIC]),
-    csvRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, formatDate(exporterCompany[FINANCIAL_YEAR_END_DATE], 'd MMMM')),
-    csvRow(CSV.FIELDS[WEBSITE], exporterCompany[WEBSITE]),
-    csvRow(CSV.FIELDS[PHONE_NUMBER], exporterCompany[PHONE_NUMBER]),
+    csvRow(CSV.FIELDS[COMPANY_SIC], company[COMPANY_SIC]),
+    csvRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, formatDate(company[FINANCIAL_YEAR_END_DATE], 'd MMMM')),
+    csvRow(CSV.FIELDS[WEBSITE], company[WEBSITE]),
+    csvRow(CSV.FIELDS[PHONE_NUMBER], company[PHONE_NUMBER]),
 
     // business fields
     csvRow(CSV.FIELDS[GOODS_OR_SERVICES], business[GOODS_OR_SERVICES]),

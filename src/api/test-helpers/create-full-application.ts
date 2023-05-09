@@ -1,6 +1,6 @@
 import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import { mockApplicationEligibility, mockSinglePolicyAndExport } from '../test-mocks/mock-application';
-import { mockAccount, mockBuyer, mockExporterCompany, mockApplicationDeclaration } from '../test-mocks';
+import { mockAccount, mockBuyer, mockCompany, mockApplicationDeclaration } from '../test-mocks';
 import mockCountries from '../test-mocks/mock-countries';
 import { Account, ApplicationBuyer, ApplicationDeclaration } from '../types';
 
@@ -56,7 +56,7 @@ export const createFullApplication = async (context: Context) => {
   // create a new application
   const application = (await context.query.Application.createOne({
     query:
-      'id referenceNumber eligibility { id } policyAndExport { id } owner { id } exporterCompany { id } business { id } exporterBroker { id } buyer { id } declaration { id }',
+      'id referenceNumber eligibility { id } policyAndExport { id } owner { id } company { id } business { id } exporterBroker { id } buyer { id } declaration { id }',
     data: {
       owner: {
         connect: {
@@ -97,12 +97,12 @@ export const createFullApplication = async (context: Context) => {
   // update the buyer so there is a name
   const buyer = await updateBuyer(context, application.buyer.id, countries[0].id);
 
-  // update the exporter company so we have a company name
-  const exporterCompany = (await context.query.ExporterCompany.updateOne({
+  // update the company so we have a company name
+  const company = (await context.query.Company.updateOne({
     where: {
-      id: application.exporterCompany.id,
+      id: application.company.id,
     },
-    data: mockExporterCompany,
+    data: mockCompany,
     query: 'id',
   })) as ApplicationDeclaration;
 
@@ -118,7 +118,7 @@ export const createFullApplication = async (context: Context) => {
   return {
     ...application,
     owner: account,
-    exporterCompany,
+    company,
     buyer,
     declaration,
   };

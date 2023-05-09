@@ -6,7 +6,7 @@ import declarations from './declarations';
 import createApplicationMutation from '../../../graphql/mutations/create-application';
 import getApplicationQuery from '../../../graphql/queries/application';
 import updateApplicationPolicyAndExportMutation from '../../../graphql/mutations/update-application/policy-and-export';
-import updateApplicationExporterCompanyMutation from '../../../graphql/mutations/update-application/exporter-company';
+import updateApplicationCompanyMutation from '../../../graphql/mutations/update-application/exporter-company';
 import updateBusinessMutation from '../../../graphql/mutations/update-application/exporter-business';
 import updateExporterBrokerMutation from '../../../graphql/mutations/update-application/exporter-broker';
 import updateBuyerMutation from '../../../graphql/mutations/update-application/exporter-buyer';
@@ -200,9 +200,9 @@ const application = {
         throw new Error('Updating application business');
       }
     },
-    exporterCompany: async (companyId: string, companyAddressId: string, update: object) => {
+    company: async (companyId: string, companyAddressId: string, update: object) => {
       try {
-        console.info('Updating application exporter company');
+        console.info('Updating application company');
 
         const variables = {
           companyId,
@@ -210,25 +210,25 @@ const application = {
           data: update,
         };
 
-        const response = (await apollo('POST', updateApplicationExporterCompanyMutation, variables)) as ApolloResponse;
+        const response = (await apollo('POST', updateApplicationCompanyMutation, variables)) as ApolloResponse;
 
         if (response.errors) {
-          console.error('GraphQL error updating application exporter company ', response.errors);
+          console.error('GraphQL error updating application company ', response.errors);
         }
 
         if (response?.networkError?.result?.errors) {
-          console.error('GraphQL network error updating application exporter company ', response.networkError.result.errors);
+          console.error('GraphQL network error updating application company ', response.networkError.result.errors);
         }
 
-        if (response?.data?.updateExporterCompanyAndCompanyAddress) {
-          return response.data.updateExporterCompanyAndCompanyAddress;
+        if (response?.data?.updateCompanyAndExporterCompanyAddress) {
+          return response.data.updateCompanyAndExporterCompanyAddress;
         }
 
         console.error(response);
-        throw new Error('Updating application exporter company');
+        throw new Error('Updating application company');
       } catch (err) {
         console.error(err);
-        throw new Error('Updating application exporter company');
+        throw new Error('Updating application company');
       }
     },
     buyer: async (id: string, update: InsuranceSubmittedBuyer) => {

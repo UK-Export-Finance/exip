@@ -25,7 +25,7 @@ const mapSicCodes = (company: CompanyResponse, sicCodes?: Array<string>, industr
     const codeToAdd = {
       sicCode: code,
       industrySectorName,
-      exporterCompany: {
+      company: {
         connect: {
           id: company.id,
         },

@@ -44,7 +44,7 @@ const applicationQuery = gql`
         owner {
           id
         }
-        exporterCompany {
+        company {
           id
           companyName
           companyNumber

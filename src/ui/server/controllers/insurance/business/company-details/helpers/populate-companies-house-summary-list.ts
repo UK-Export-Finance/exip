@@ -1,7 +1,7 @@
 import { companyHouseSummaryList } from '../../../../../helpers/summary-lists/company-house-summary-list';
 import mapSicCodes from '../../../../../helpers/mappings/map-sic-codes';
 import { FIELD_IDS } from '../../../../../constants';
-import { ApplicationExporterCompany } from '../../../../../../types';
+import { ApplicationCompany } from '../../../../../../types';
 
 const {
   EXPORTER_BUSINESS: {
@@ -11,26 +11,26 @@ const {
 
 /**
  * maps database response and returns body in correct format for summary list
- * @param {object} exporterCompany
- * @returns {CompanyHouseResponse} reformatted exporterCompany
+ * @param {object} company
+ * @returns {CompanyHouseResponse} reformatted company
  */
-const mapDatabaseResponse = (exporterCompany: ApplicationExporterCompany): ApplicationExporterCompany => ({
-  ...exporterCompany,
-  [COMPANY_SIC]: mapSicCodes(exporterCompany[COMPANY_SIC], SIC_CODE),
-  [INDUSTRY_SECTOR_NAMES]: mapSicCodes(exporterCompany[COMPANY_SIC], INDUSTRY_SECTOR_NAME),
+const mapDatabaseResponse = (company: ApplicationCompany): ApplicationCompany => ({
+  ...company,
+  [COMPANY_SIC]: mapSicCodes(company[COMPANY_SIC], SIC_CODE),
+  [INDUSTRY_SECTOR_NAMES]: mapSicCodes(company[COMPANY_SIC], INDUSTRY_SECTOR_NAME),
 });
 
 /**
- * receives exporterCompany and maps it to correct format and returns summaryList for company details
- * @param {object} exporterCompany
+ * receives company and maps it to correct format and returns summaryList for company details
+ * @param {object} company
  * @returns {Array<SummaryListItemData>} summaryList for company details
  */
-const populateCompaniesHouseSummaryList = (exporterCompany: ApplicationExporterCompany) => {
-  if (!exporterCompany[COMPANY_NUMBER]) {
+const populateCompaniesHouseSummaryList = (company: ApplicationCompany) => {
+  if (!company[COMPANY_NUMBER]) {
     return null;
   }
 
-  const companyDetails = mapDatabaseResponse(exporterCompany);
+  const companyDetails = mapDatabaseResponse(company);
 
   return companyHouseSummaryList(companyDetails);
 };

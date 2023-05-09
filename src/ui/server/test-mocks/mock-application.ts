@@ -38,7 +38,7 @@ export const mockOwner = {
   id: mockAccount.id,
 };
 
-export const mockExporterCompany = {
+export const mockCompany = {
   id: 'clcyyopn40148m8noyar9wxrn',
   companyName: 'Test Name',
   companyNumber: '0123456',
@@ -65,7 +65,7 @@ export const mockExporterCompany = {
     __typename: 'ExporterCompanyAddress',
   },
   financialYearEndDate: new Date(),
-  __typename: 'ExporterCompany',
+  __typename: 'Company',
 };
 
 export const mockBusiness = {
@@ -129,7 +129,7 @@ const mockApplication = {
   status: APPLICATION.STATUS.DRAFT,
   owner: mockOwner,
   policyAndExport: mockSinglePolicyAndExport,
-  exporterCompany: mockExporterCompany,
+  company: mockCompany,
   business: mockBusiness,
   exporterBroker: mockExporterBroker,
   buyer: mockApplicationBuyer,

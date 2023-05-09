@@ -15,14 +15,14 @@ const {
  * @returns {Array<Object>} sicCodeIDArray
  */
 const getSicCodeIDsFromApplication = (application: Application) => {
-  const { exporterCompany } = application;
+  const { company } = application;
 
   // if no sic codes stored in application, then return empty array
-  if (!objectHasProperty(exporterCompany, COMPANY_SIC)) {
+  if (!objectHasProperty(company, COMPANY_SIC)) {
     return [];
   }
 
-  const sicCodeIDArray = exporterCompany[COMPANY_SIC].map((code: ApplicationExporterSicCodes) => ({ id: code.id }));
+  const sicCodeIDArray = company[COMPANY_SIC].map((code: ApplicationExporterSicCodes) => ({ id: code.id }));
 
   return sicCodeIDArray;
 };

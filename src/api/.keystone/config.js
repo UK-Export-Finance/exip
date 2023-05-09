@@ -668,7 +668,7 @@ var lists = {
         many: false
       }),
       business: (0, import_fields.relationship)({ ref: "Business" }),
-      exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany" }),
+      company: (0, import_fields.relationship)({ ref: "Company" }),
       exporterBroker: (0, import_fields.relationship)({ ref: "ExporterBroker" }),
       buyer: (0, import_fields.relationship)({ ref: "Buyer" }),
       sectionReview: (0, import_fields.relationship)({ ref: "SectionReview" }),
@@ -700,19 +700,19 @@ var lists = {
                 id: policyAndExportId
               }
             };
-            const { id: exporterCompanyId } = await context.db.ExporterCompany.createOne({
+            const { id: companyId } = await context.db.Company.createOne({
               data: {}
             });
-            modifiedData.exporterCompany = {
+            modifiedData.company = {
               connect: {
-                id: exporterCompanyId
+                id: companyId
               }
             };
-            await context.db.ExporterCompanyAddress.createOne({
+            await context.db.ExporterExporterCompanyAddress.createOne({
               data: {
-                exporterCompany: {
+                company: {
                   connect: {
-                    id: exporterCompanyId
+                    id: companyId
                   }
                 }
               }
@@ -780,7 +780,7 @@ var lists = {
               referenceNumber,
               eligibilityId,
               policyAndExportId,
-              exporterCompanyId,
+              companyId,
               businessId,
               exporterBrokerId,
               buyerId,
@@ -817,8 +817,8 @@ var lists = {
                 }
               }
             });
-            await context.db.ExporterCompany.updateOne({
-              where: { id: exporterCompanyId },
+            await context.db.Company.updateOne({
+              where: { id: companyId },
               data: {
                 application: {
                   connect: {
@@ -1029,7 +1029,7 @@ var lists = {
   }),
   ExporterCompanyAddress: (0, import_core.list)({
     fields: {
-      exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany.registeredOfficeAddress" }),
+      company: (0, import_fields.relationship)({ ref: "Company.registeredOfficeAddress" }),
       addressLine1: (0, import_fields.text)(),
       addressLine2: (0, import_fields.text)(),
       careOf: (0, import_fields.text)(),
@@ -1041,12 +1041,12 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  ExporterCompany: (0, import_core.list)({
+  Company: (0, import_core.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      registeredOfficeAddress: (0, import_fields.relationship)({ ref: "ExporterCompanyAddress.exporterCompany" }),
+      registeredOfficeAddress: (0, import_fields.relationship)({ ref: "ExporterCompanyAddress.company" }),
       sicCodes: (0, import_fields.relationship)({
-        ref: "ExporterCompanySicCode.exporterCompany",
+        ref: "ExporterCompanySicCode.company",
         many: true
       }),
       companyName: (0, import_fields.text)(),
@@ -1081,7 +1081,7 @@ var lists = {
   }),
   ExporterCompanySicCode: (0, import_core.list)({
     fields: {
-      exporterCompany: (0, import_fields.relationship)({ ref: "ExporterCompany.sicCodes" }),
+      company: (0, import_fields.relationship)({ ref: "Company.sicCodes" }),
       sicCode: (0, import_fields.text)(),
       industrySectorName: (0, import_fields.text)()
     },
@@ -1359,7 +1359,7 @@ var typeDefs = `
   }
 
   # fields from registered_office_address object
-  type CompaniesHouseCompanyAddress {
+  type CompaniesHouseExporterCompanyAddress {
     addressLine1: String
     addressLine2: String
     careOf: String
@@ -1408,7 +1408,7 @@ var typeDefs = `
     premises: String
   }
 
-  type ExporterCompanyAndCompanyAddress {
+  type CompanyAndExporterCompanyAddress {
     id: ID
     registeredOfficeAddress: ExporterCompanyAddress
     companyName: String
@@ -1420,7 +1420,7 @@ var typeDefs = `
     phoneNumber: String
   }
 
-  input ExporterCompanyAndCompanyAddressInput {
+  input CompanyAndExporterCompanyAddressInput {
     address: ExporterCompanyAddressInput
     sicCodes: [String]
     industrySectorNames: [String]
@@ -1522,12 +1522,12 @@ var typeDefs = `
       password: String!
     ): SuccessResponse
 
-    """ update exporter company and company address """
-    updateExporterCompanyAndCompanyAddress(
+    """ update company and company address """
+    updateCompanyAndExporterCompanyAddress(
       companyId: ID!
       companyAddressId: ID!
-      data: ExporterCompanyAndCompanyAddressInput!
-    ): ExporterCompanyAndCompanyAddress
+      data: CompanyAndExporterCompanyAddressInput!
+    ): CompanyAndExporterCompanyAddress
 
     """ delete an application by reference number """
     deleteApplicationByReferenceNumber(
@@ -2171,7 +2171,7 @@ var mapSicCodes = (company, sicCodes, industrySectorNames) => {
     const codeToAdd = {
       sicCode: code,
       industrySectorName,
-      exporterCompany: {
+      company: {
         connect: {
           id: company.id
         }
@@ -2183,20 +2183,20 @@ var mapSicCodes = (company, sicCodes, industrySectorNames) => {
 };
 
 // custom-resolvers/mutations/update-exporter-company-and-company-address.ts
-var updateExporterCompanyAndCompanyAddress = async (root, variables, context) => {
+var updateCompanyAndExporterCompanyAddress = async (root, variables, context) => {
   try {
-    console.info("Updating application exporter company and exporter company address for ", variables.companyId);
-    const { address, sicCodes, industrySectorNames, oldSicCodes, ...exporterCompany } = variables.data;
-    const company = await context.db.ExporterCompany.updateOne({
+    console.info("Updating application company and exporter company address for ", variables.companyId);
+    const { address, sicCodes, industrySectorNames, oldSicCodes, ...company } = variables.data;
+    const updatedCompany = await context.db.Company.updateOne({
       where: { id: variables.companyId },
-      data: exporterCompany
+      data: company
     });
-    await context.db.ExporterCompanyAddress.updateOne({
+    await context.db.ExporterExporterCompanyAddress.updateOne({
       where: { id: variables.companyAddressId },
       data: address
     });
-    const mappedSicCodes = mapSicCodes(company, sicCodes, industrySectorNames);
-    if (exporterCompany && oldSicCodes && oldSicCodes.length) {
+    const mappedSicCodes = mapSicCodes(updatedCompany, sicCodes, industrySectorNames);
+    if (company && oldSicCodes && oldSicCodes.length) {
       await context.db.ExporterCompanySicCode.deleteMany({
         where: oldSicCodes
       });
@@ -2212,11 +2212,11 @@ var updateExporterCompanyAndCompanyAddress = async (root, variables, context) =>
       id: variables.companyId
     };
   } catch (err) {
-    console.error("Error updating application - exporter company and exporter company address", { err });
-    throw new Error(`Updating application - exporter company and exporter company address ${err}`);
+    console.error("Error updating application - company and exporter company address", { err });
+    throw new Error(`Updating application - company and exporter company address ${err}`);
   }
 };
-var update_exporter_company_and_company_address_default = updateExporterCompanyAndCompanyAddress;
+var update_exporter_company_and_company_address_default = updateCompanyAndExporterCompanyAddress;
 
 // custom-resolvers/mutations/submit-application.ts
 var import_date_fns6 = require("date-fns");
@@ -2248,7 +2248,7 @@ var get_country_by_field_default = getCountryByField;
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application) => {
   console.info("Getting populated application");
-  const { eligibilityId, ownerId, policyAndExportId, exporterCompanyId, businessId, exporterBrokerId, buyerId, declarationId } = application;
+  const { eligibilityId, ownerId, policyAndExportId, companyId, businessId, exporterBrokerId, buyerId, declarationId } = application;
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId }
   });
@@ -2270,18 +2270,18 @@ var getPopulatedApplication = async (context, application) => {
     ...policyAndExport,
     finalDestinationCountryCode: finalDestinationCountry
   };
-  const exporterCompany = await context.db.ExporterCompany.findOne({
-    where: { id: exporterCompanyId }
+  const company = await context.db.Company.findOne({
+    where: { id: companyId }
   });
-  if (!exporterCompany) {
-    throw new Error(generateErrorMessage("exporterCompany", application.id));
+  if (!company) {
+    throw new Error(generateErrorMessage("company", application.id));
   }
-  const exporterCompanyAddress = await context.db.ExporterCompanyAddress.findOne({
-    where: { id: exporterCompany.registeredOfficeAddressId }
+  const companyAddress = await context.db.ExporterExporterCompanyAddress.findOne({
+    where: { id: company.registeredOfficeAddressId }
   });
-  const populatedExporterCompany = {
-    ...exporterCompany,
-    registeredOfficeAddress: exporterCompanyAddress
+  const populatedCompany = {
+    ...company,
+    registeredOfficeAddress: companyAddress
   };
   const business = await context.db.Business.findOne({
     where: { id: businessId }
@@ -2325,7 +2325,7 @@ var getPopulatedApplication = async (context, application) => {
     },
     policyAndExport: populatedPolicyAndExport,
     owner: account,
-    exporterCompany: populatedExporterCompany,
+    company: populatedCompany,
     business,
     exporterBroker,
     buyer: populatedBuyer,
@@ -2368,7 +2368,7 @@ var get_application_submitted_email_template_ids_default = getApplicationSubmitt
 // emails/send-application-submitted-emails/index.ts
 var send = async (application, csvPath) => {
   try {
-    const { referenceNumber, owner, exporterCompany, buyer, policyAndExport } = application;
+    const { referenceNumber, owner, company, buyer, policyAndExport } = application;
     const { email, firstName } = owner;
     const sendEmailVars = {
       emailAddress: email,
@@ -2376,7 +2376,7 @@ var send = async (application, csvPath) => {
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
       buyerLocation: buyer.country?.name,
-      exporterCompanyName: exporterCompany.companyName,
+      companyName: company.companyName,
       requestedStartDate: policyAndExport.requestedStartDate
     };
     const accountSubmittedResponse = await emails_default.applicationSubmitted.account(sendEmailVars);
@@ -2864,7 +2864,7 @@ var mapSecondaryKeyInformation = (application) => {
   const { policyAndExport } = application;
   const mapped = [
     csv_row_default(KEY_INFORMATION),
-    csv_row_default(FIELDS3[EXPORTER_COMPANY_NAME2], application.exporterCompany[EXPORTER_COMPANY_NAME2]),
+    csv_row_default(FIELDS3[EXPORTER_COMPANY_NAME2], application.company[EXPORTER_COMPANY_NAME2]),
     csv_row_default(FIELDS3[COUNTRY2], application.buyer[COUNTRY2].name),
     csv_row_default(FIELDS3[BUYER_COMPANY_NAME2], application.buyer[BUYER_COMPANY_NAME2]),
     csv_row_default(String(CONTENT_STRINGS[POLICY_TYPE2].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE2])
@@ -3004,20 +3004,20 @@ var mapExporterBroker = (application) => {
   return mapped;
 };
 var mapExporter = (application) => {
-  const { exporterCompany, business } = application;
+  const { company, business } = application;
   const mapped = [
     csv_row_default(CSV.SECTION_TITLES.EXPORTER_BUSINESS, ""),
-    // exporter company fields
-    csv_row_default(CONTENT_STRINGS3[COMPANY_NUMBER2].SUMMARY?.TITLE, exporterCompany[COMPANY_NUMBER2]),
-    csv_row_default(CSV.FIELDS[COMPANY_NAME2], exporterCompany[COMPANY_NAME2]),
-    csv_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(exporterCompany[COMPANY_INCORPORATED2], "dd-MMM-yy")),
-    csv_row_default(CSV.FIELDS[COMPANY_ADDRESS2], map_address_default(exporterCompany[COMPANY_ADDRESS2])),
-    csv_row_default(CONTENT_STRINGS3[TRADING_NAME2].SUMMARY?.TITLE, exporterCompany[TRADING_NAME2]),
-    csv_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, exporterCompany[TRADING_ADDRESS2]),
-    csv_row_default(CSV.FIELDS[COMPANY_SIC2], exporterCompany[COMPANY_SIC2]),
-    csv_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, format_date_default(exporterCompany[FINANCIAL_YEAR_END_DATE2], "d MMMM")),
-    csv_row_default(CSV.FIELDS[WEBSITE3], exporterCompany[WEBSITE3]),
-    csv_row_default(CSV.FIELDS[PHONE_NUMBER3], exporterCompany[PHONE_NUMBER3]),
+    // company fields
+    csv_row_default(CONTENT_STRINGS3[COMPANY_NUMBER2].SUMMARY?.TITLE, company[COMPANY_NUMBER2]),
+    csv_row_default(CSV.FIELDS[COMPANY_NAME2], company[COMPANY_NAME2]),
+    csv_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
+    csv_row_default(CSV.FIELDS[COMPANY_ADDRESS2], map_address_default(company[COMPANY_ADDRESS2])),
+    csv_row_default(CONTENT_STRINGS3[TRADING_NAME2].SUMMARY?.TITLE, company[TRADING_NAME2]),
+    csv_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, company[TRADING_ADDRESS2]),
+    csv_row_default(CSV.FIELDS[COMPANY_SIC2], company[COMPANY_SIC2]),
+    csv_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM")),
+    csv_row_default(CSV.FIELDS[WEBSITE3], company[WEBSITE3]),
+    csv_row_default(CSV.FIELDS[PHONE_NUMBER3], company[PHONE_NUMBER3]),
     // business fields
     csv_row_default(CSV.FIELDS[GOODS_OR_SERVICES3], business[GOODS_OR_SERVICES3]),
     csv_row_default(CSV.FIELDS[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
@@ -3413,7 +3413,7 @@ var customResolvers = {
     accountPasswordReset: account_password_reset_default,
     sendEmailPasswordResetLink: send_email_password_reset_link_default,
     deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
-    updateExporterCompanyAndCompanyAddress: update_exporter_company_and_company_address_default,
+    updateCompanyAndExporterCompanyAddress: update_exporter_company_and_company_address_default,
     submitApplication: submit_application_default,
     sendEmailInsuranceFeedback: send_email_insurance_feedback_default
   },

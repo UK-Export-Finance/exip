@@ -48,7 +48,7 @@ export const mockAccount = {
   id: 'clfv9uv6v00csoqz2pm7nftfv',
 };
 
-export const mockExporterCompany = {
+export const mockCompany = {
   id: 'clcyyopn40148m8noyar9wxrn',
   companyName: 'Test Name',
   companyNumber: '0123456',
@@ -75,7 +75,7 @@ export const mockExporterCompany = {
     __typename: 'ExporterCompanyAddress',
   },
   financialYearEndDate: new Date(),
-  __typename: 'ExporterCompany',
+  __typename: 'Company',
 };
 
 export const mockBusiness = {
@@ -134,8 +134,8 @@ const mockApplication = {
     id: 'clav8by1i0007kgoqies0dbfc',
     ...mockSinglePolicyAndExport,
   },
-  exporterCompany: mockExporterCompany,
-  exporterCompanyAddress: mockExporterCompany.registeredOfficeAddress,
+  company: mockCompany,
+  companyAddress: mockCompany.registeredOfficeAddress,
   business: mockBusiness,
   exporterBroker: mockExporterBroker,
   buyer: mockApplicationBuyer,

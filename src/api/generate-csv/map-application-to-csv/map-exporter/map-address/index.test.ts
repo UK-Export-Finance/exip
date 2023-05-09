@@ -1,7 +1,7 @@
 import mapExporterAddress from '.';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/exporter-business';
 import NEW_LINE from '../../helpers/csv-new-line';
-import { mockExporterCompany } from '../../../../test-mocks/mock-application';
+import { mockCompany } from '../../../../test-mocks/mock-application';
 
 const {
   COMPANY_HOUSE: {
@@ -12,7 +12,7 @@ const {
 
 describe('api/generate-csv/map-application-to-csv/map-exporter/map-address', () => {
   it('should return a string from address fields', () => {
-    const address = mockExporterCompany[COMPANY_ADDRESS];
+    const address = mockCompany[COMPANY_ADDRESS];
 
     const result = mapExporterAddress(address);
 

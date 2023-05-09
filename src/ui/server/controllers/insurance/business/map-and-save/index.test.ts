@@ -27,7 +27,7 @@ describe('controllers/insurance/business/map-and-save', () => {
       [TRADING_NAME]: 'true',
       [TRADING_ADDRESS]: 'false',
       [PHONE_NUMBER]: '*99',
-      [COMPANY_NUMBER]: mockApplication.exporterCompany.companyNumber,
+      [COMPANY_NUMBER]: mockApplication.company.companyNumber,
     };
 
     const mockSaveCompanyDetails = jest.fn(() => Promise.resolve({}));

@@ -30,7 +30,7 @@ export const mockOTP = {
 
 export const mockApplication = application;
 
-export const mockExporterCompany = {
+export const mockCompany = {
   companyName: 'Mock company name',
 };
 

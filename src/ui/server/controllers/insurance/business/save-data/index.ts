@@ -6,7 +6,7 @@ import { Application, RequestBody } from '../../../../../types';
 
 /**
  * gets fields to add to the database and sanitises them
- * saves to exporterCompany tables in database via api call
+ * saves to company tables in database via api call
  * @param {Application} application
  * @param {RequestBody} formBody
  * @param {Object} errorList
@@ -19,12 +19,12 @@ const companyDetails = async (application: Application, formBody: RequestBody, e
   // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);
 
-  const exporterCompanyId = application.exporterCompany?.id;
-  const exporterCompanyAddressId = application.exporterCompany?.registeredOfficeAddress?.id;
+  const companyId = application.company?.id;
+  const companyAddressId = application.company?.registeredOfficeAddress?.id;
 
   try {
     // send the form data to the API for database update.
-    const saveResponse = await api.keystone.application.update.exporterCompany(exporterCompanyId, exporterCompanyAddressId, sanitisedData);
+    const saveResponse = await api.keystone.application.update.company(companyId, companyAddressId, sanitisedData);
     return saveResponse;
   } catch (err) {
     throw new Error("Updating application's companyDetails");

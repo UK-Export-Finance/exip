@@ -3,7 +3,7 @@ import sendEmail, { callNotify } from '.';
 import fileSystem from '../file-system';
 import notify from '../integrations/notify';
 import { EMAIL_TEMPLATE_IDS } from '../constants';
-import { mockAccount, mockApplication, mockExporterCompany, mockBuyer, mockSendEmailResponse } from '../test-mocks';
+import { mockAccount, mockApplication, mockCompany, mockBuyer, mockSendEmailResponse } from '../test-mocks';
 
 dotenv.config();
 
@@ -22,7 +22,7 @@ describe('emails', () => {
 
   const { email, firstName, verificationHash } = mockAccount;
   const { referenceNumber } = mockApplication;
-  const { companyName } = mockExporterCompany;
+  const { companyName } = mockCompany;
   const { companyOrOrganisationName } = mockBuyer;
 
   const mockCsvPath = '/path-to-csv';

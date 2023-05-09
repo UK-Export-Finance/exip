@@ -117,17 +117,17 @@ describe('controllers/insurance/business/companies-details', () => {
   });
 
   describe('get', () => {
-    describe('when application has populated exporterCompany data', () => {
+    describe('when application has populated company data', () => {
       it('should render the company-details template with correct variables', () => {
         get(req, res);
-        const { exporterCompany, referenceNumber } = mockApplication;
+        const { company, referenceNumber } = mockApplication;
 
         const submittedValues = {
-          [COMPANY_HOUSE.INPUT]: exporterCompany?.[COMPANY_HOUSE.COMPANY_NUMBER],
-          [TRADING_NAME]: exporterCompany?.[TRADING_NAME],
-          [TRADING_ADDRESS]: exporterCompany?.[TRADING_ADDRESS],
-          [WEBSITE]: exporterCompany?.[WEBSITE],
-          [PHONE_NUMBER]: exporterCompany?.[PHONE_NUMBER],
+          [COMPANY_HOUSE.INPUT]: company?.[COMPANY_HOUSE.COMPANY_NUMBER],
+          [TRADING_NAME]: company?.[TRADING_NAME],
+          [TRADING_ADDRESS]: company?.[TRADING_ADDRESS],
+          [WEBSITE]: company?.[WEBSITE],
+          [PHONE_NUMBER]: company?.[PHONE_NUMBER],
         };
 
         expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
@@ -138,16 +138,16 @@ describe('controllers/insurance/business/companies-details', () => {
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(referenceNumber, COMPANY_DETAILS_ROUTE),
           submittedValues,
-          SUMMARY_LIST: populateCompaniesHouseSummaryList(exporterCompany),
+          SUMMARY_LIST: populateCompaniesHouseSummaryList(company),
         });
       });
     });
 
-    describe('when application does not have populated exporterCompany data', () => {
+    describe('when application does not have populated company data', () => {
       it('should render the company-details template with correct variables', () => {
         const mockApplicationNoData = {
           ...mockApplication,
-          exporterCompany: {
+          company: {
             id: '13456',
             registeredOfficeAddress: {
               id: '2345',
@@ -160,14 +160,14 @@ describe('controllers/insurance/business/companies-details', () => {
 
         get(req, res);
 
-        const { exporterCompany, referenceNumber } = mockApplicationNoData;
+        const { company, referenceNumber } = mockApplicationNoData;
 
         const submittedValues = {
-          [COMPANY_HOUSE.INPUT]: exporterCompany?.[COMPANY_HOUSE.COMPANY_NUMBER],
-          [TRADING_NAME]: exporterCompany?.[TRADING_NAME],
-          [TRADING_ADDRESS]: exporterCompany?.[TRADING_ADDRESS],
-          [WEBSITE]: exporterCompany?.[WEBSITE],
-          [PHONE_NUMBER]: exporterCompany?.[PHONE_NUMBER],
+          [COMPANY_HOUSE.INPUT]: company?.[COMPANY_HOUSE.COMPANY_NUMBER],
+          [TRADING_NAME]: company?.[TRADING_NAME],
+          [TRADING_ADDRESS]: company?.[TRADING_ADDRESS],
+          [WEBSITE]: company?.[WEBSITE],
+          [PHONE_NUMBER]: company?.[PHONE_NUMBER],
         };
 
         expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {

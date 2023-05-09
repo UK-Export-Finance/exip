@@ -59,7 +59,7 @@ interface ApplicationExporterindustrySectorNames {
   industrySectorNames?: string;
 }
 
-interface ApplicationExporterCompany {
+interface ApplicationCompany {
   id: string;
   companyName?: string;
   companyNumber?: string;
@@ -133,7 +133,7 @@ interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   owner: ApplicationOwner;
   policyAndExport: ApplicationPolicyAndExport;
-  exporterCompany: ApplicationExporterCompany;
+  company: ApplicationCompany;
   business: ApplicationBusiness;
   exporterBroker: ApplicationExporterBroker;
   buyer: ApplicationBuyer;
@@ -144,11 +144,11 @@ interface Application extends ApplicationCore {
 interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore, ApplicationOwner {
   buyerCountry: string;
 }
-type ApplicationFlat = ApplicationFlatCore & ApplicationPolicyAndExport & ApplicationExporterCompany & ApplicationDeclaration;
+type ApplicationFlat = ApplicationFlatCore & ApplicationPolicyAndExport & ApplicationCompany & ApplicationDeclaration;
 
 export {
   Application,
-  ApplicationExporterCompany,
+  ApplicationCompany,
   ApplicationFlat,
   ApplicationPolicyAndExport,
   ApplicationExporterSicCodes,

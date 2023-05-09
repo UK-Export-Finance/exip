@@ -8,7 +8,7 @@ import addAndGetOTP from './add-and-get-OTP';
 import sendEmailPasswordResetLink from './send-email-password-reset-link';
 import accountPasswordReset from './account-password-reset';
 import deleteApplicationByReferenceNumber from './delete-application-by-refrence-number';
-import updateExporterCompanyAndCompanyAddress from './update-exporter-company-and-company-address';
+import updateCompanyAndExporterCompanyAddress from './update-exporter-company-and-company-address';
 import submitApplication from './submit-application';
 import sendEmailInsuranceFeedback from './send-email-insurance-feedback';
 
@@ -23,7 +23,7 @@ export {
   sendEmailPasswordResetLink,
   accountPasswordReset,
   deleteApplicationByReferenceNumber,
-  updateExporterCompanyAndCompanyAddress,
+  updateCompanyAndExporterCompanyAddress,
   submitApplication,
   sendEmailInsuranceFeedback,
 };
