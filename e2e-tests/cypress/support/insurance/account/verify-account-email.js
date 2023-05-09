@@ -17,7 +17,7 @@ const verifyAccountEmail = () => {
     cy.getAccountByEmail(accountEmail).then((response) => {
       const { data } = response.body;
 
-      const [firstAccount] = data.exporters;
+      const [firstAccount] = data.accounts;
 
       const { verificationHash } = firstAccount;
 

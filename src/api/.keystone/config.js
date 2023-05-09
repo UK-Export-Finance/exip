@@ -283,8 +283,9 @@ var ANSWERS = {
 var GBP_CURRENCY_CODE = "GBP";
 var EXTERNAL_API_ENDPOINTS = {
   MULESOFT_MDM_EA: {
-    CURRENCY: "/currency",
-    INDUSTRY_SECTORS: "/map-industry-sector?size=1000"
+    CURRENCY: "/currencies",
+    INDUSTRY_SECTORS: "/sector-industries",
+    MARKETS: "/markets"
   }
 };
 var DATE_5_MINUTES_FROM_NOW = () => {
@@ -3266,16 +3267,17 @@ var import_axios = __toESM(require("axios"));
 var import_dotenv4 = __toESM(require("dotenv"));
 import_dotenv4.default.config();
 var { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
-var username = process.env.MULESOFT_API_MDM_EA_KEY;
-var secret = process.env.MULESOFT_API_MDM_EA_SECRET;
-var industrySectorUrl = `${process.env.MULESOFT_API_MDM_EA_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`;
+var headers = {
+  "Content-Type": "application/json",
+  [String(process.env.APIM_MDM_KEY)]: process.env.APIM_MDM_VALUE
+};
 var getIndustrySectorNames = async () => {
   try {
     console.info("Calling industry sector API");
     const response = await (0, import_axios.default)({
       method: "get",
-      url: `${industrySectorUrl}`,
-      auth: { username, password: secret },
+      url: `${process.env.APIM_MDM_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`,
+      headers,
       validateStatus(status) {
         const acceptableStatus = [200, 404];
         return acceptableStatus.includes(status);
@@ -3302,7 +3304,7 @@ var industry_sector_default = getIndustrySectorNames;
 
 // custom-resolvers/queries/get-companies-house-information.ts
 import_dotenv5.default.config();
-var username2 = process.env.COMPANIES_HOUSE_API_KEY;
+var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
 var getCompaniesHouseInformation = async (root, variables) => {
   try {
@@ -3312,7 +3314,7 @@ var getCompaniesHouseInformation = async (root, variables) => {
     const response = await (0, import_axios2.default)({
       method: "get",
       url: `${companiesHouseURL}/company/${sanitisedRegNo}`,
-      auth: { username: username2, password: "" },
+      auth: { username, password: "" },
       validateStatus(status) {
         const acceptableStatus = [200, 404];
         return acceptableStatus.includes(status);
