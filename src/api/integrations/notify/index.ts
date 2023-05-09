@@ -40,6 +40,7 @@ const notify = {
       };
     } catch (err) {
       console.error(err);
+
       throw new Error(`Calling Notify API. Unable to send email ${err}`);
     }
   },

@@ -62,7 +62,7 @@ describe('emails/send-email-application-submitted', () => {
         referenceNumber,
         buyerName: companyOrOrganisationName,
         buyerLocation: buyer.country?.name,
-        companyName,
+        exporterCompanyName: companyName,
         requestedStartDate: policyAndExport.requestedStartDate,
       } as ApplicationSubmissionEmailVariables;
     });

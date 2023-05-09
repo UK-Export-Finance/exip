@@ -708,7 +708,7 @@ var lists = {
                 id: companyId
               }
             };
-            await context.db.ExporterExporterCompanyAddress.createOne({
+            await context.db.ExporterCompanyAddress.createOne({
               data: {
                 company: {
                   connect: {
@@ -2367,7 +2367,7 @@ var send = async (application, csvPath) => {
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
       buyerLocation: buyer.country?.name,
-      companyName: company.companyName,
+      exporterCompanyName: company.companyName,
       requestedStartDate: policyAndExport.requestedStartDate
     };
     const accountSubmittedResponse = await emails_default.applicationSubmitted.account(sendEmailVars);
