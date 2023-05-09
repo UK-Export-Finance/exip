@@ -40,7 +40,7 @@
         <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
       </div>
 
-      {% if application.exporterCompany[FIELDS.FINANCIAL_YEAR_END_DATE.ID] %}
+      {% if application.company[FIELDS.FINANCIAL_YEAR_END_DATE.ID] %}
         <div class="govuk-grid-column-three-quarters-from-desktop">
           <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-cy="{{FIELDS.FINANCIAL_YEAR_END_DATE.ID}}-label">{{ FIELDS.FINANCIAL_YEAR_END_DATE.LABEL }}</h2>
 
@@ -51,7 +51,7 @@
             }
           }) }}
 
-          <p class="govuk-body" data-cy="{{FIELDS.FINANCIAL_YEAR_END_DATE.ID}}">{{ application.exporterCompany[FIELDS.FINANCIAL_YEAR_END_DATE.ID] }}</p>
+          <p class="govuk-body" data-cy="{{FIELDS.FINANCIAL_YEAR_END_DATE.ID}}">{{ application.company[FIELDS.FINANCIAL_YEAR_END_DATE.ID] }}</p>
         </div>
       {% endif %}
 
@@ -61,7 +61,7 @@
         {{ govukInput({
           id: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID,
           name: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID,
-          value: submittedValues[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID] or application.exporterBusiness[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID],
+          value: submittedValues[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID] or application.business[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID],
           label: {
             text: FIELDS.ESTIMATED_ANNUAL_TURNOVER.LABEL,
             classes: "govuk-body",
@@ -93,7 +93,7 @@
         {{ govukInput({
           id: FIELDS.PERCENTAGE_TURNOVER.ID,
           name: FIELDS.PERCENTAGE_TURNOVER.ID,
-          value: submittedValues[FIELDS.PERCENTAGE_TURNOVER.ID] or application.exporterBusiness[FIELDS.PERCENTAGE_TURNOVER.ID],
+          value: submittedValues[FIELDS.PERCENTAGE_TURNOVER.ID] or application.business[FIELDS.PERCENTAGE_TURNOVER.ID],
           label: {
             text: FIELDS.PERCENTAGE_TURNOVER.LABEL,
             classes: "govuk-body",

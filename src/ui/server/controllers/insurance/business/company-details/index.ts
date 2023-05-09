@@ -79,15 +79,15 @@ const get = (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const { exporterCompany } = application;
+    const { company } = application;
 
     // values from application if they exist
     const submittedValues = {
-      [COMPANY_HOUSE.INPUT]: exporterCompany?.[COMPANY_HOUSE.COMPANY_NUMBER],
-      [TRADING_NAME]: exporterCompany?.[TRADING_NAME],
-      [TRADING_ADDRESS]: exporterCompany?.[TRADING_ADDRESS],
-      [WEBSITE]: exporterCompany?.[WEBSITE],
-      [PHONE_NUMBER]: exporterCompany?.[PHONE_NUMBER],
+      [COMPANY_HOUSE.INPUT]: company?.[COMPANY_HOUSE.COMPANY_NUMBER],
+      [TRADING_NAME]: company?.[TRADING_NAME],
+      [TRADING_ADDRESS]: company?.[TRADING_ADDRESS],
+      [WEBSITE]: company?.[WEBSITE],
+      [PHONE_NUMBER]: company?.[PHONE_NUMBER],
     };
 
     return res.render(TEMPLATE, {
@@ -99,7 +99,7 @@ const get = (req: Request, res: Response) => {
       ...pageVariables(application.referenceNumber, req.originalUrl),
       submittedValues,
       // summary list for company details
-      SUMMARY_LIST: populateCompaniesHouseSummaryList(exporterCompany),
+      SUMMARY_LIST: populateCompaniesHouseSummaryList(company),
     });
   } catch (err) {
     console.error('Error getting company details', { err });

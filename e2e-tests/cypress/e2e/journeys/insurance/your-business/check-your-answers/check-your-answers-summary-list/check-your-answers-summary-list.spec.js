@@ -48,7 +48,7 @@ const {
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.prepareApplication.tasks.exporterBusiness;
+const task = taskList.prepareApplication.tasks.business;
 
 context('Insurance - Your business - Check your answers - Summary list - your business', () => {
   let referenceNumber;

@@ -33,7 +33,7 @@ const insuranceStart = ROUTES.INSURANCE.START;
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.prepareApplication.tasks.exporterBusiness;
+const task = taskList.prepareApplication.tasks.business;
 
 context('Insurance - Your business - Contact page - As an Exporter I want to enter the details of my export application contact so that UKEF will have clarity on who to contact while processing my Export Insurance Application', () => {
   let referenceNumber;

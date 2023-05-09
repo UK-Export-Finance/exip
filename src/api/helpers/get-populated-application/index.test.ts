@@ -27,8 +27,8 @@ describe('api/helpers/get-populated-application', () => {
       eligibilityId: application.eligibility.id,
       policyAndExportId: application.policyAndExport.id,
       ownerId: application.owner.id,
-      exporterCompanyId: application.exporterCompany.id,
-      exporterBusinessId: application.exporterBusiness.id,
+      companyId: application.company.id,
+      businessId: application.business.id,
       exporterBrokerId: application.exporterBroker.id,
       buyerId: application.buyer.id,
       declarationId: application.declaration.id,
@@ -41,8 +41,8 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.eligibility.id).toEqual(application.eligibility.id);
     expect(result.policyAndExport.id).toEqual(application.policyAndExport.id);
     expect(result.owner.id).toEqual(application.owner.id);
-    expect(result.exporterCompany.id).toEqual(application.exporterCompany.id);
-    expect(result.exporterBusiness.id).toEqual(application.exporterBusiness.id);
+    expect(result.company.id).toEqual(application.company.id);
+    expect(result.business.id).toEqual(application.business.id);
     expect(result.exporterBroker.id).toEqual(application.exporterBroker.id);
     expect(result.buyer.id).toEqual(application.buyer.id);
 
@@ -102,24 +102,24 @@ describe('api/helpers/get-populated-application', () => {
     }
   });
 
-  it('should throw an error when exporterCompany does not exist', async () => {
+  it('should throw an error when company does not exist', async () => {
     const invalidId = applicationIds.id;
 
     try {
-      await getPopulatedApplication(context, { ...applicationIds, exporterCompanyId: invalidId });
+      await getPopulatedApplication(context, { ...applicationIds, companyId: invalidId });
     } catch (err) {
-      const expected = new Error(generateErrorMessage('exporterCompany', applicationIds.id));
+      const expected = new Error(generateErrorMessage('company', applicationIds.id));
       expect(err).toEqual(expected);
     }
   });
 
-  it('should throw an error when exporterBusiness does not exist', async () => {
+  it('should throw an error when business does not exist', async () => {
     const invalidId = applicationIds.id;
 
     try {
-      await getPopulatedApplication(context, { ...applicationIds, exporterBusinessId: invalidId });
+      await getPopulatedApplication(context, { ...applicationIds, businessId: invalidId });
     } catch (err) {
-      const expected = new Error(generateErrorMessage('exporterBusiness', applicationIds.id));
+      const expected = new Error(generateErrorMessage('business', applicationIds.id));
       expect(err).toEqual(expected);
     }
   });

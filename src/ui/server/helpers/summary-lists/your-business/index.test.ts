@@ -4,7 +4,7 @@ import generateNatureOfYourBusinessFields from './nature-of-your-business-fields
 import generateYourCompanyFields from './your-company-fields';
 import generateTurnoverFields from './turnover-fields';
 import { generateBrokerFields } from './broker-fields';
-import mockApplication, { mockExporterCompany, mockExporterBusiness, mockExporterBroker } from '../../../test-mocks/mock-application';
+import mockApplication, { mockCompany, mockBusiness, mockExporterBroker } from '../../../test-mocks/mock-application';
 
 describe('server/helpers/summary-lists/your-business', () => {
   const { referenceNumber } = mockApplication;
@@ -12,12 +12,12 @@ describe('server/helpers/summary-lists/your-business', () => {
 
   describe('generateFields', () => {
     it('should return fields and values from the submitted data/answers', () => {
-      const result = generateFields(mockExporterCompany, mockExporterBusiness, mockExporterBroker, referenceNumber, checkAndChange);
+      const result = generateFields(mockCompany, mockBusiness, mockExporterBroker, referenceNumber, checkAndChange);
 
       const expected = [
-        ...generateYourCompanyFields(mockExporterCompany, referenceNumber, checkAndChange),
-        ...generateNatureOfYourBusinessFields(mockExporterBusiness, referenceNumber, checkAndChange),
-        ...generateTurnoverFields(mockExporterBusiness, referenceNumber, checkAndChange),
+        ...generateYourCompanyFields(mockCompany, referenceNumber, checkAndChange),
+        ...generateNatureOfYourBusinessFields(mockBusiness, referenceNumber, checkAndChange),
+        ...generateTurnoverFields(mockBusiness, referenceNumber, checkAndChange),
         ...generateBrokerFields(mockExporterBroker, referenceNumber, checkAndChange),
       ];
 
@@ -27,9 +27,9 @@ describe('server/helpers/summary-lists/your-business', () => {
 
   describe('yourBusinessSummaryList', () => {
     it('should return an array of summary list rows', () => {
-      const result = yourBusinessSummaryList(mockExporterCompany, mockExporterBusiness, mockExporterBroker, referenceNumber);
+      const result = yourBusinessSummaryList(mockCompany, mockBusiness, mockExporterBroker, referenceNumber);
 
-      const fields = generateFields(mockExporterCompany, mockExporterBusiness, mockExporterBroker, referenceNumber, checkAndChange);
+      const fields = generateFields(mockCompany, mockBusiness, mockExporterBroker, referenceNumber, checkAndChange);
 
       const expected = generateSummaryListRows(fields);
 

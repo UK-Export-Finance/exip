@@ -7,7 +7,7 @@ import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/f
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.prepareApplication.tasks.exporterBusiness;
+const task = taskList.prepareApplication.tasks.business;
 
 const {
   TURNOVER: {

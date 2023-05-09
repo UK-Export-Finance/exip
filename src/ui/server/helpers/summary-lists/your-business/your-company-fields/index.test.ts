@@ -7,7 +7,7 @@ import formatDate from '../../../date/format-date';
 import generateYourCompanyFields from '.';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import sicCodeMapping from '../map-sic-codes';
-import mockApplication, { mockExporterCompany } from '../../../../test-mocks/mock-application';
+import mockApplication, { mockCompany } from '../../../../test-mocks/mock-application';
 import generateChangeLink from '../../../generate-change-link';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
@@ -30,7 +30,7 @@ const {
 } = FIELDS;
 
 describe('server/helpers/summary-lists/your-business/your-company-fields', () => {
-  const mockAnswers = mockExporterCompany;
+  const mockAnswers = mockCompany;
   const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 

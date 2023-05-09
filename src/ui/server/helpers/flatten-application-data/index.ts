@@ -8,7 +8,7 @@ import { Application, ApplicationFlat } from '../../../types';
  * @returns {Object} Application as a single level object
  */
 const flattenApplicationData = (application: Application): ApplicationFlat => {
-  const { policyAndExport, exporterCompany, exporterBroker, exporterBusiness, buyer, sectionReview, declaration } = application;
+  const { policyAndExport, company, exporterBroker, business, buyer, sectionReview, declaration } = application;
 
   const flattened = {
     ...application.eligibility,
@@ -21,8 +21,8 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
     status: application.status,
     buyerCountry: application.eligibility?.buyerCountry?.isoCode,
     ...policyAndExport,
-    ...exporterCompany,
-    ...exporterBusiness,
+    ...company,
+    ...business,
     ...exporterBroker,
     ...buyer,
     ...getYesAndTrueAnswerProperties(sectionReview),

@@ -11,7 +11,7 @@ import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } fro
  */
 const send = async (application: Application, csvPath: string): Promise<SuccessResponse> => {
   try {
-    const { referenceNumber, owner, exporterCompany, buyer, policyAndExport } = application as Application;
+    const { referenceNumber, owner, company, buyer, policyAndExport } = application as Application;
 
     // generate email variables
     const { email, firstName } = owner;
@@ -22,7 +22,7 @@ const send = async (application: Application, csvPath: string): Promise<SuccessR
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
       buyerLocation: buyer.country?.name,
-      exporterCompanyName: exporterCompany.companyName,
+      exporterCompanyName: company.companyName,
       requestedStartDate: policyAndExport.requestedStartDate,
     } as ApplicationSubmissionEmailVariables;
 

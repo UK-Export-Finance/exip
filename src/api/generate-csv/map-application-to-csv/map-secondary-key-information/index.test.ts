@@ -34,7 +34,7 @@ describe('api/generate-csv/map-application-to-csv/map-secondary-key-information'
 
     const expected = [
       csvRow(KEY_INFORMATION),
-      csvRow(FIELDS[EXPORTER_COMPANY_NAME], mockApplication.exporterCompany[EXPORTER_COMPANY_NAME]),
+      csvRow(FIELDS[EXPORTER_COMPANY_NAME], mockApplication.company[EXPORTER_COMPANY_NAME]),
       csvRow(FIELDS[COUNTRY], mockApplication.buyer[COUNTRY].name),
       csvRow(FIELDS[BUYER_COMPANY_NAME], mockApplication.buyer[BUYER_COMPANY_NAME]),
       csvRow(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE]),

@@ -3,7 +3,7 @@ import { GROUP_IDS, TASK_IDS, ROUTES } from '../../../constants';
 import { TASKS } from '../../../content-strings';
 import { getGroupById, getAllTasksFieldsInAGroup } from '../task-helpers';
 import policyAndExportsRequiredFields from '../../required-fields/policy-and-exports';
-import exporterBusinessRequiredFields from '../../required-fields/exporter-business';
+import businessRequiredFields from '../../required-fields/exporter-business';
 import yourBuyerRequiredFields from '../../required-fields/your-buyer';
 
 const { INSURANCE } = ROUTES;
@@ -41,7 +41,7 @@ const createPrepareApplicationTasks = (
     href: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTER_BUSINESS_ROUTES.COMPANY_DETAILS}`,
     title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
     id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
-    fields: exporterBusinessRequiredFields(isUsingBroker),
+    fields: businessRequiredFields(isUsingBroker),
     dependencies: [...POLICY_TYPE_AND_EXPORTS.dependencies],
   };
 

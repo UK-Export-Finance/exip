@@ -22,7 +22,7 @@ const {
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.prepareApplication.tasks.exporterBusiness;
+const task = taskList.prepareApplication.tasks.business;
 
 const YOUR_CONTACT_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 

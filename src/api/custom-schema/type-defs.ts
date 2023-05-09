@@ -24,7 +24,7 @@ const typeDefs = `
   }
 
   # fields from registered_office_address object
-  type CompaniesHouseCompanyAddress {
+  type CompaniesHouseExporterCompanyAddress {
     addressLine1: String
     addressLine2: String
     careOf: String
@@ -73,7 +73,7 @@ const typeDefs = `
     premises: String
   }
 
-  type ExporterCompanyAndCompanyAddress {
+  type CompanyAndExporterCompanyAddress {
     id: ID
     registeredOfficeAddress: ExporterCompanyAddress
     companyName: String
@@ -85,7 +85,7 @@ const typeDefs = `
     phoneNumber: String
   }
 
-  input ExporterCompanyAndCompanyAddressInput {
+  input CompanyAndExporterCompanyAddressInput {
     address: ExporterCompanyAddressInput
     sicCodes: [String]
     industrySectorNames: [String]
@@ -187,12 +187,12 @@ const typeDefs = `
       password: String!
     ): SuccessResponse
 
-    """ update exporter company and company address """
-    updateExporterCompanyAndCompanyAddress(
+    """ update company and company address """
+    updateCompanyAndExporterCompanyAddress(
       companyId: ID!
       companyAddressId: ID!
-      data: ExporterCompanyAndCompanyAddressInput!
-    ): ExporterCompanyAndCompanyAddress
+      data: CompanyAndExporterCompanyAddressInput!
+    ): CompanyAndExporterCompanyAddress
 
     """ delete an application by reference number """
     deleteApplicationByReferenceNumber(

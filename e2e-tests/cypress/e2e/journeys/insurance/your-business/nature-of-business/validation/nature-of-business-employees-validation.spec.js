@@ -8,7 +8,7 @@ const NATURE_OF_BUSINESS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.prepareApplication.tasks.exporterBusiness;
+const task = taskList.prepareApplication.tasks.business;
 
 const {
   NATURE_OF_YOUR_BUSINESS: {

@@ -1,4 +1,4 @@
-interface ExporterBusiness {
+interface Business {
   goodsOrServicesSupplied?: string;
   totalYearsExporting?: string;
   totalEmployeesUK?: string;
@@ -7,4 +7,4 @@ interface ExporterBusiness {
   exportsTurnoverPercentage?: string;
 }
 
-export { ExporterBusiness };
+export { Business };

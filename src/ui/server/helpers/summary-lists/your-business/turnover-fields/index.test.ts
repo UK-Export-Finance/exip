@@ -5,7 +5,7 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import generateTurnoverFields from '.';
 import mapPercentage from '../../../map-percentage';
-import mockApplication, { mockExporterBusiness } from '../../../../test-mocks/mock-application';
+import mockApplication, { mockBusiness } from '../../../../test-mocks/mock-application';
 import generateChangeLink from '../../../generate-change-link';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
@@ -21,7 +21,7 @@ const {
 } = FIELD_IDS;
 
 describe('server/helpers/summary-lists/your-business/turnover-fields', () => {
-  const mockAnswers = mockExporterBusiness;
+  const mockAnswers = mockBusiness;
   const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 

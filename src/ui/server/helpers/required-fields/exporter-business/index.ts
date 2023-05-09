@@ -40,7 +40,7 @@ export const getBrokerTasks = (isUsingBroker?: string): Array<string> => {
 };
 
 /**
- * Required fields for the insurance - exporter business section
+ * Required fields for the insurance - business section
  * @param {String} Is using broker
  * @returns {Array} Required field IDs
  */

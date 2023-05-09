@@ -2,12 +2,12 @@ import { Account } from './account';
 import { AnswersContent, AnswersFieldGroups } from './answers';
 import {
   Application,
-  ApplicationExporterCompany,
+  ApplicationCompany,
   ApplicationFlat,
   ApplicationPolicyAndExport,
   ApplicationExporterSicCodes,
   ApplicationExporterindustrySectorNames,
-  ApplicationExporterBusiness,
+  ApplicationBusiness,
   ApplicationExporterBroker,
   ApplicationBuyer,
 } from './application';
@@ -18,7 +18,7 @@ import { CompanyHouseResponse } from './company-house-response';
 import { Country } from './country';
 import { Currency } from './currency';
 import { NumberErrorMessage } from './errors';
-import { ExporterBusiness } from './exporter-business';
+import { Business } from './exporter-business';
 import { Next, Request, RequestBody, RequestSession, RequestSessionUser, Response } from './express';
 import { RequiredDataStateInsuranceEligibility, RequiredDataStateQuoteEligibility } from './required-data-state';
 import { PricingGrid, PricingGridMonth, PricingGridRate } from './pricing-grid';
@@ -59,10 +59,10 @@ export {
   Application,
   ApplicationFlat,
   ApplicationPolicyAndExport,
-  ApplicationExporterCompany,
+  ApplicationCompany,
   ApplicationExporterSicCodes,
   ApplicationExporterindustrySectorNames,
-  ApplicationExporterBusiness,
+  ApplicationBusiness,
   ApplicationExporterBroker,
   ApplicationBuyer,
   ApolloResponse,
@@ -75,7 +75,7 @@ export {
   Country,
   Currency,
   NumberErrorMessage,
-  ExporterBusiness,
+  Business,
   InsuranceEligibility,
   InsuranceEligibilityCore,
   InsuranceFeedbackVariables,

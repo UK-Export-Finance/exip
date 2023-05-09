@@ -59,7 +59,7 @@ interface ApplicationExporterindustrySectorNames {
   industrySectorNames?: string;
 }
 
-interface ApplicationExporterCompany {
+interface ApplicationCompany {
   id: string;
   companyName?: string;
   companyNumber?: string;
@@ -70,7 +70,7 @@ interface ApplicationExporterCompany {
   sicCodes: Array<ApplicationExporterSicCodes>;
 }
 
-interface ApplicationExporterBusiness {
+interface ApplicationBusiness {
   id: string;
   goodsOrServices?: string;
   totalYearsExporting?: string;
@@ -115,7 +115,7 @@ interface ApplicationSectionReview {
   id: string;
   eligibility?: boolean;
   policyAndExport?: boolean;
-  exporterBusiness?: boolean;
+  business?: boolean;
   buyer?: boolean;
 }
 
@@ -133,8 +133,8 @@ interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   owner: ApplicationOwner;
   policyAndExport: ApplicationPolicyAndExport;
-  exporterCompany: ApplicationExporterCompany;
-  exporterBusiness: ApplicationExporterBusiness;
+  company: ApplicationCompany;
+  business: ApplicationBusiness;
   exporterBroker: ApplicationExporterBroker;
   buyer: ApplicationBuyer;
   sectionReview: ApplicationSectionReview;
@@ -144,16 +144,16 @@ interface Application extends ApplicationCore {
 interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore, ApplicationOwner {
   buyerCountry: string;
 }
-type ApplicationFlat = ApplicationFlatCore & ApplicationPolicyAndExport & ApplicationExporterCompany & ApplicationDeclaration;
+type ApplicationFlat = ApplicationFlatCore & ApplicationPolicyAndExport & ApplicationCompany & ApplicationDeclaration;
 
 export {
   Application,
-  ApplicationExporterCompany,
+  ApplicationCompany,
   ApplicationFlat,
   ApplicationPolicyAndExport,
   ApplicationExporterSicCodes,
   ApplicationExporterindustrySectorNames,
-  ApplicationExporterBusiness,
+  ApplicationBusiness,
   ApplicationExporterBroker,
   ApplicationBuyer,
   ApplicationSectionReview,

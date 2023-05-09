@@ -38,7 +38,7 @@ export const mockOwner = {
   id: mockAccount.id,
 };
 
-export const mockExporterCompany = {
+export const mockCompany = {
   id: 'clcyyopn40148m8noyar9wxrn',
   companyName: 'Test Name',
   companyNumber: '0123456',
@@ -65,10 +65,10 @@ export const mockExporterCompany = {
     __typename: 'ExporterCompanyAddress',
   },
   financialYearEndDate: new Date(),
-  __typename: 'ExporterCompany',
+  __typename: 'Company',
 };
 
-export const mockExporterBusiness = {
+export const mockBusiness = {
   id: 'clcyyopna0158m8noaglyy9gg',
   goodsOrServicesSupplied: 'ABC',
   totalYearsExporting: '20',
@@ -92,7 +92,7 @@ export const mockSectionReview = {
   id: 'clflcq9w4002moqzlnr5yhamr',
   eligibility: true,
   policyAndExport: true,
-  exporterBusiness: true,
+  business: true,
   buyer: true,
 };
 
@@ -129,8 +129,8 @@ const mockApplication = {
   status: APPLICATION.STATUS.DRAFT,
   owner: mockOwner,
   policyAndExport: mockSinglePolicyAndExport,
-  exporterCompany: mockExporterCompany,
-  exporterBusiness: mockExporterBusiness,
+  company: mockCompany,
+  business: mockBusiness,
   exporterBroker: mockExporterBroker,
   buyer: mockApplicationBuyer,
   sectionReview: mockSectionReview,

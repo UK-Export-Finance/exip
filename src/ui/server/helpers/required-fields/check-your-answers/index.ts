@@ -1,7 +1,7 @@
 import POLICY_AND_EXPORT_FIELD_IDS from '../../../constants/field-ids/insurance/policy-and-exports';
 import requiredEligibilityFields from '../eligibility';
 import requiredPolicyAndExportFields from '../policy-and-exports';
-import requiredExporterBusinessFields from '../exporter-business';
+import requiredBusinessFields from '../exporter-business';
 import requiredYourBuyerFields from '../your-buyer';
 import { ApplicationFlat } from '../../../../types';
 
@@ -16,7 +16,7 @@ const {
 const requiredFields = (application: ApplicationFlat): Array<string> => [
   ...requiredEligibilityFields(),
   ...requiredPolicyAndExportFields(application[POLICY_TYPE]),
-  ...requiredExporterBusinessFields(),
+  ...requiredBusinessFields(),
   ...requiredYourBuyerFields(),
 ];
 

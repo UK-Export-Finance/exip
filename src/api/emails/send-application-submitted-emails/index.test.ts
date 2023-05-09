@@ -51,9 +51,9 @@ describe('emails/send-email-application-submitted', () => {
     let expectedSendEmailVars: ApplicationSubmissionEmailVariables;
 
     beforeEach(() => {
-      const { referenceNumber, owner, exporterCompany, buyer, policyAndExport } = application;
+      const { referenceNumber, owner, company, buyer, policyAndExport } = application;
       const { email, firstName } = owner;
-      const { companyName } = exporterCompany;
+      const { companyName } = company;
       const { companyOrOrganisationName } = buyer;
 
       expectedSendEmailVars = {

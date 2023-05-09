@@ -44,7 +44,7 @@ const applicationQuery = gql`
         owner {
           id
         }
-        exporterCompany {
+        company {
           id
           companyName
           companyNumber
@@ -71,7 +71,7 @@ const applicationQuery = gql`
             premises
           }
         }
-        exporterBusiness {
+        business {
           id
           goodsOrServicesSupplied
           totalYearsExporting
@@ -113,7 +113,7 @@ const applicationQuery = gql`
           id
           eligibility
           policyAndExport
-          exporterBusiness
+          business
           buyer
         }
         declaration {

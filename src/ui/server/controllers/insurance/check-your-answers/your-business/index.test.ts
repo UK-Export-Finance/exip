@@ -69,8 +69,8 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
       await get(req, res);
       const checkAndChange = true;
       const summaryList = yourBusinessSummaryList(
-        mockApplication.exporterCompany,
-        mockApplication.exporterBusiness,
+        mockApplication.company,
+        mockApplication.business,
         mockApplication.exporterBroker,
         mockApplication.referenceNumber,
         checkAndChange,

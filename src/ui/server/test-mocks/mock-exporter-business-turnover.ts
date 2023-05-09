@@ -1,8 +1,8 @@
-import { ExporterBusiness } from '../../types';
+import { Business } from '../../types';
 
-const mockExporterBusinessTurnover = {
+const mockBusinessTurnover = {
   estimatedAnnualTurnover: '155220',
   exportsTurnoverPercentage: '2,0',
-} as ExporterBusiness;
+} as Business;
 
-export default mockExporterBusinessTurnover;
+export default mockBusinessTurnover;

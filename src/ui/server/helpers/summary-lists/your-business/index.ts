@@ -3,19 +3,19 @@ import generateYourCompanyFields from './your-company-fields';
 import generateNatureOfYourBusinessFields from './nature-of-your-business-fields';
 import generateTurnoverFields from './turnover-fields';
 import { generateBrokerFields } from './broker-fields';
-import { ApplicationExporterCompany, ApplicationExporterBusiness, ApplicationExporterBroker, SummaryListItemData } from '../../../../types';
+import { ApplicationCompany, ApplicationBusiness, ApplicationExporterBroker, SummaryListItemData } from '../../../../types';
 
 /**
  * generateFields
  * Create all fields for the insurance - Your business govukSummaryList
- * @param {ApplicationExporterCompany} answersExporterCompany Application exporterCompany object
- * @param {ApplicationExporterBusiness} answersExporterBusiness Application exporterCompany object
+ * @param {ApplicationCompany} answersCompany Application company object
+ * @param {ApplicationBusiness} answersBusiness Application company object
  * @param {Number} referenceNumber
  * @returns {Object} All your business values in an object structure for GOVUK summary list structure
  */
 const generateFields = (
-  answersExporterCompany: ApplicationExporterCompany,
-  answersExporterBusiness: ApplicationExporterBusiness,
+  answersCompany: ApplicationCompany,
+  answersBusiness: ApplicationBusiness,
   answersExporterBroker: ApplicationExporterBroker,
   referenceNumber: number,
   checkAndChange: boolean,
@@ -23,9 +23,9 @@ const generateFields = (
   let fields = [] as Array<SummaryListItemData>;
 
   fields = [
-    ...generateYourCompanyFields(answersExporterCompany, referenceNumber, checkAndChange),
-    ...generateNatureOfYourBusinessFields(answersExporterBusiness, referenceNumber, checkAndChange),
-    ...generateTurnoverFields(answersExporterBusiness, referenceNumber, checkAndChange),
+    ...generateYourCompanyFields(answersCompany, referenceNumber, checkAndChange),
+    ...generateNatureOfYourBusinessFields(answersBusiness, referenceNumber, checkAndChange),
+    ...generateTurnoverFields(answersBusiness, referenceNumber, checkAndChange),
     ...generateBrokerFields(answersExporterBroker, referenceNumber, checkAndChange),
   ];
 
@@ -35,20 +35,20 @@ const generateFields = (
 /**
  * yourBusinessSummaryList
  * Create multiple groups with govukSummaryList data structure
- * @param {ApplicationExporterCompany} answersExporterCompany Application exporterCompany object
- * @param {ApplicationExporterBusiness} answersExporterBusiness Application exporterBusiness object
+ * @param {ApplicationCompany} answersCompany Application company object
+ * @param {ApplicationBusiness} answersBusiness Application business object
  * @param {Number} referenceNumber
  * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section.  Default as false
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 const yourBusinessSummaryList = (
-  answersExporterCompany: ApplicationExporterCompany,
-  answersExporterBusiness: ApplicationExporterBusiness,
+  answersCompany: ApplicationCompany,
+  answersBusiness: ApplicationBusiness,
   answersExporterBroker: ApplicationExporterBroker,
   referenceNumber: number,
   checkAndChange = false,
 ) => {
-  const fields = generateFields(answersExporterCompany, answersExporterBusiness, answersExporterBroker, referenceNumber, checkAndChange);
+  const fields = generateFields(answersCompany, answersBusiness, answersExporterBroker, referenceNumber, checkAndChange);
 
   const summaryList = generateSummaryListRows(fields);
 

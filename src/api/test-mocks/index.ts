@@ -30,13 +30,12 @@ export const mockOTP = {
 
 export const mockApplication = application;
 
-export const mockExporterCompany = {
+export const mockCompany = {
   companyName: 'Mock company name',
 };
 
 export const mockBuyer = {
   companyOrOrganisationName: 'Mock buyer',
-  // buyerLocation: mockCountries[0].name,
   exporterIsConnectedWithBuyer: ANSWERS.YES,
 };
 

@@ -9,7 +9,7 @@ import {
   accountPasswordReset,
   sendEmailPasswordResetLink,
   deleteApplicationByReferenceNumber,
-  updateExporterCompanyAndCompanyAddress,
+  updateCompanyAndExporterCompanyAddress,
   submitApplication,
   sendEmailInsuranceFeedback,
 } from './mutations';
@@ -32,7 +32,7 @@ const customResolvers = {
     accountPasswordReset,
     sendEmailPasswordResetLink,
     deleteApplicationByReferenceNumber,
-    updateExporterCompanyAndCompanyAddress,
+    updateCompanyAndExporterCompanyAddress,
     submitApplication,
     sendEmailInsuranceFeedback,
   },

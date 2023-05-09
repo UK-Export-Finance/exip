@@ -49,7 +49,7 @@ context('Insurance - Complete `prepare your application` tasks', () => {
     });
 
     it(`renders a 'your business' task with a status of ${COMPLETED}`, () => {
-      cy.checkText(prepareApplication.tasks.exporterBusiness.status(), COMPLETED);
+      cy.checkText(prepareApplication.tasks.business.status(), COMPLETED);
     });
 
     it(`renders a 'your buyer' task with a status of ${COMPLETED}`, () => {

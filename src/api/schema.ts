@@ -42,8 +42,8 @@ export const lists = {
         ref: 'Account',
         many: false,
       }),
-      exporterBusiness: relationship({ ref: 'ExporterBusiness' }),
-      exporterCompany: relationship({ ref: 'ExporterCompany' }),
+      business: relationship({ ref: 'Business' }),
+      company: relationship({ ref: 'Company' }),
       exporterBroker: relationship({ ref: 'ExporterBroker' }),
       buyer: relationship({ ref: 'Buyer' }),
       sectionReview: relationship({ ref: 'SectionReview' }),
@@ -86,36 +86,36 @@ export const lists = {
               },
             };
 
-            // generate and attach a new `exporter company` relationship
-            const { id: exporterCompanyId } = await context.db.ExporterCompany.createOne({
+            // generate and attach a new `company` relationship
+            const { id: companyId } = await context.db.Company.createOne({
               data: {},
             });
 
-            modifiedData.exporterCompany = {
+            modifiedData.company = {
               connect: {
-                id: exporterCompanyId,
+                id: companyId,
               },
             };
 
-            // generate a new `exporter company address` relationship with the exporter company
+            // generate a new `exporter company address` relationship with the company
             await context.db.ExporterCompanyAddress.createOne({
               data: {
-                exporterCompany: {
+                company: {
                   connect: {
-                    id: exporterCompanyId,
+                    id: companyId,
                   },
                 },
               },
             });
 
-            // generate and attach a new 'exporter business' relationship
-            const { id: exporterBusinessId } = await context.db.ExporterBusiness.createOne({
+            // generate and attach a new 'business' relationship
+            const { id: businessId } = await context.db.Business.createOne({
               data: {},
             });
 
-            modifiedData.exporterBusiness = {
+            modifiedData.business = {
               connect: {
-                id: exporterBusinessId,
+                id: businessId,
               },
             };
 
@@ -192,17 +192,9 @@ export const lists = {
 
             const applicationId = item.id;
 
-            const {
-              referenceNumber,
-              eligibilityId,
-              policyAndExportId,
-              exporterCompanyId,
-              exporterBusinessId,
-              exporterBrokerId,
-              buyerId,
-              sectionReviewId,
-              declarationId,
-            } = item;
+            const { referenceNumber, eligibilityId } = item;
+
+            const { policyAndExportId, companyId, businessId, exporterBrokerId, buyerId, sectionReviewId, declarationId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -240,9 +232,9 @@ export const lists = {
               },
             });
 
-            // add the application ID to the exporter company entry.
-            await context.db.ExporterCompany.updateOne({
-              where: { id: exporterCompanyId },
+            // add the application ID to the company entry.
+            await context.db.Company.updateOne({
+              where: { id: companyId },
               data: {
                 application: {
                   connect: {
@@ -252,9 +244,9 @@ export const lists = {
               },
             });
 
-            // add the application ID to the exporter business entry.
-            await context.db.ExporterBusiness.updateOne({
-              where: { id: exporterBusinessId },
+            // add the application ID to the business entry.
+            await context.db.Business.updateOne({
+              where: { id: businessId },
               data: {
                 application: {
                   connect: {
@@ -426,7 +418,7 @@ export const lists = {
     },
     access: allowAll,
   }),
-  ExporterBusiness: list({
+  Business: list({
     fields: {
       application: relationship({ ref: 'Application' }),
       goodsOrServicesSupplied: text({
@@ -476,7 +468,7 @@ export const lists = {
   }),
   ExporterCompanyAddress: list({
     fields: {
-      exporterCompany: relationship({ ref: 'ExporterCompany.registeredOfficeAddress' }),
+      company: relationship({ ref: 'Company.registeredOfficeAddress' }),
       addressLine1: text(),
       addressLine2: text(),
       careOf: text(),
@@ -488,12 +480,12 @@ export const lists = {
     },
     access: allowAll,
   }),
-  ExporterCompany: list({
+  Company: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      registeredOfficeAddress: relationship({ ref: 'ExporterCompanyAddress.exporterCompany' }),
+      registeredOfficeAddress: relationship({ ref: 'ExporterCompanyAddress.company' }),
       sicCodes: relationship({
-        ref: 'ExporterCompanySicCode.exporterCompany',
+        ref: 'ExporterCompanySicCode.company',
         many: true,
       }),
       companyName: text(),
@@ -528,7 +520,7 @@ export const lists = {
   }),
   ExporterCompanySicCode: list({
     fields: {
-      exporterCompany: relationship({ ref: 'ExporterCompany.sicCodes' }),
+      company: relationship({ ref: 'Company.sicCodes' }),
       sicCode: text(),
       industrySectorName: text(),
     },
@@ -607,7 +599,7 @@ export const lists = {
       application: relationship({ ref: 'Application' }),
       eligibility: checkbox(),
       policyAndExport: checkbox(),
-      exporterBusiness: checkbox(),
+      business: checkbox(),
       buyer: checkbox(),
     },
     hooks: {

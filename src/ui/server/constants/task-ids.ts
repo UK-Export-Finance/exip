@@ -10,7 +10,7 @@ export const TASK_IDS = {
   },
   PREPARE_APPLICATION: {
     POLICY_TYPE_AND_EXPORTS: 'policyTypeAndExports',
-    EXPORTER_BUSINESS: 'exporterBusiness',
+    EXPORTER_BUSINESS: 'business',
     BUYER: 'buyer',
   },
   SUBMIT_APPLICATION: {

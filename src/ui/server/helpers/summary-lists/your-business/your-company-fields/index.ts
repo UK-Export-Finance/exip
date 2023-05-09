@@ -4,7 +4,7 @@ import { ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
-import { ApplicationExporterCompany, SummaryListItemData } from '../../../../../types';
+import { ApplicationCompany, SummaryListItemData } from '../../../../../types';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import mapSicCodes from '../map-sic-codes';
 import generateChangeLink from '../../../generate-change-link';
@@ -31,12 +31,12 @@ const {
 /**
  * generateYourCompanyFields
  * Create all your company fields and values for the Insurance - Company details govukSummaryList
- * @param {ApplicationExporterCompany} answers exporter company data
+ * @param {ApplicationCompany} answers company data
  * @param {Number} referenceNumber application reference number
  * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
- * @returns {Object} All exporter company fields and values in an object structure for GOVUK summary list structure
+ * @returns {Object} All company fields and values in an object structure for GOVUK summary list structure
  */
-const generateYourCompanyFields = (answers: ApplicationExporterCompany, referenceNumber: number, checkAndChange: boolean) => {
+const generateYourCompanyFields = (answers: ApplicationCompany, referenceNumber: number, checkAndChange: boolean) => {
   const fields = [
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, COMPANY_NUMBER),

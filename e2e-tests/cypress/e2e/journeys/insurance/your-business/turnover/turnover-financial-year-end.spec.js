@@ -19,7 +19,7 @@ const {
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.prepareApplication.tasks.exporterBusiness;
+const task = taskList.prepareApplication.tasks.business;
 
 const fieldId = FINANCIAL_YEAR_END_DATE;
 const field = turnover[fieldId];

@@ -16,7 +16,7 @@ export const generateErrorMessage = (section: string, applicationId: number) =>
 const getPopulatedApplication = async (context: Context, application: KeystoneApplication): Promise<Application> => {
   console.info('Getting populated application');
 
-  const { eligibilityId, ownerId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId, buyerId, declarationId } = application;
+  const { eligibilityId, ownerId, policyAndExportId, companyId, businessId, exporterBrokerId, buyerId, declarationId } = application;
 
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId },
@@ -47,29 +47,29 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     finalDestinationCountryCode: finalDestinationCountry,
   };
 
-  const exporterCompany = await context.db.ExporterCompany.findOne({
-    where: { id: exporterCompanyId },
+  const company = await context.db.Company.findOne({
+    where: { id: companyId },
   });
 
-  if (!exporterCompany) {
-    throw new Error(generateErrorMessage('exporterCompany', application.id));
+  if (!company) {
+    throw new Error(generateErrorMessage('company', application.id));
   }
 
-  const exporterCompanyAddress = await context.db.ExporterCompanyAddress.findOne({
-    where: { id: exporterCompany.registeredOfficeAddressId },
+  const companyAddress = await context.db.ExporterCompanyAddress.findOne({
+    where: { id: company.registeredOfficeAddressId },
   });
 
-  const populatedExporterCompany = {
-    ...exporterCompany,
-    registeredOfficeAddress: exporterCompanyAddress,
+  const populatedCompany = {
+    ...company,
+    registeredOfficeAddress: companyAddress,
   };
 
-  const exporterBusiness = await context.db.ExporterBusiness.findOne({
-    where: { id: exporterBusinessId },
+  const business = await context.db.Business.findOne({
+    where: { id: businessId },
   });
 
-  if (!exporterBusiness) {
-    throw new Error(generateErrorMessage('exporterBusiness', application.id));
+  if (!business) {
+    throw new Error(generateErrorMessage('business', application.id));
   }
 
   const exporterBroker = await context.db.ExporterBroker.findOne({
@@ -117,8 +117,8 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     },
     policyAndExport: populatedPolicyAndExport,
     owner: account,
-    exporterCompany: populatedExporterCompany,
-    exporterBusiness,
+    company: populatedCompany,
+    business,
     exporterBroker,
     buyer: populatedBuyer,
     declaration,
