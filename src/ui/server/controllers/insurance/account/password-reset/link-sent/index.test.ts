@@ -39,7 +39,7 @@ describe('controllers/insurance/account/password-reset/link-sent', () => {
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
       }),
-      exporterEmail: mockAccount.email,
+      accountEmail: mockAccount.email,
     });
   });
 

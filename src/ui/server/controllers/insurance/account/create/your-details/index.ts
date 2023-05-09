@@ -124,7 +124,7 @@ export const post = async (req: Request, res: Response) => {
       }
     }
 
-    // store the exporter account ID in local session, for consumption in the next part of the flow.
+    // store the account ID in local session, for consumption in the next part of the flow.
     req.session.accountIdToConfirm = saveResponse.id;
 
     return res.redirect(CONFIRM_EMAIL);

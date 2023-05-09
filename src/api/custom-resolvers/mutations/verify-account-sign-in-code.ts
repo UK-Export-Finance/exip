@@ -1,7 +1,7 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { isAfter } from 'date-fns';
 import { ACCOUNT } from '../../constants';
-import getExporterById from '../../helpers/get-exporter-by-id';
+import getAccountById from '../../helpers/get-account-by-id';
 import isValidOTP from '../../helpers/is-valid-otp';
 import create from '../../helpers/create-jwt';
 import { VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../../types';
@@ -20,30 +20,30 @@ const {
  */
 const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignInCodeVariables, context: Context): Promise<VerifyAccountSignInCodeResponse> => {
   try {
-    console.info('Verifying exporter account sign in code');
+    console.info('Verifying account sign in code');
 
     const { accountId, securityCode } = variables;
 
-    // get the exporter
-    const exporter = await getExporterById(context, accountId);
+    // get the account
+    const account = await getAccountById(context, accountId);
 
-    if (!exporter) {
-      console.info('Unable to verify exporter account sign in code - no exporter exists with the provided ID');
-
-      return {
-        success: false,
-      };
-    }
-
-    if (!exporter.otpSalt || !exporter.otpHash || !exporter.otpExpiry) {
-      console.info('Unable to verify exporter account sign in code - no OTP available for this account');
+    if (!account) {
+      console.info('Unable to verify account sign in code - no account exists with the provided ID');
 
       return {
         success: false,
       };
     }
 
-    const { otpSalt, otpHash, otpExpiry } = exporter;
+    if (!account.otpSalt || !account.otpHash || !account.otpExpiry) {
+      console.info('Unable to verify account sign in code - no OTP available for this account');
+
+      return {
+        success: false,
+      };
+    }
+
+    const { otpSalt, otpHash, otpExpiry } = account;
 
     // check that the verification period has not expired.
     const now = new Date();
@@ -51,7 +51,7 @@ const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignIn
     const hasExpired = isAfter(now, otpExpiry);
 
     if (hasExpired) {
-      console.info('Unable to verify exporter account sign in code - verification period has expired');
+      console.info('Unable to verify account sign in code - verification period has expired');
 
       return {
         success: false,
@@ -77,16 +77,16 @@ const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignIn
         otpExpiry: null,
       };
 
-      await context.db.Exporter.updateOne({
+      await context.db.Account.updateOne({
         where: { id: accountId },
         data: accountUpdate,
       });
 
       return {
         success: true,
-        accountId: exporter.id,
-        lastName: exporter.lastName,
-        firstName: exporter.firstName,
+        accountId: account.id,
+        lastName: account.lastName,
+        firstName: account.firstName,
         ...jwt,
         expires: accountUpdate.sessionExpiry,
       };
@@ -97,7 +97,7 @@ const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignIn
     };
   } catch (err) {
     console.error(err);
-    throw new Error(`Verifying exporter account sign in code and generating JWT (verifyAccountSignInCode mutation) ${err}`);
+    throw new Error(`Verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) ${err}`);
   }
 };
 

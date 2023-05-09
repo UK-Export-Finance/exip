@@ -28,24 +28,24 @@ context('Insurance - Account - Create - Resend confirm email page - As an Export
     cy.deleteAccount();
   });
 
-  let exporter;
+  let account;
   let url;
 
   describe('core page elements and content', () => {
     before(() => {
       /**
-       * Get the exporter ID directly from the API,
+       * Get the account ID directly from the API,
        * so that we can assert that the URL and `request a new link` has the correct ID.
        */
-      const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+      const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
-      api.getExporterByEmail(exporterEmail).then((response) => {
+      api.getAccountByEmail(accountEmail).then((response) => {
         const { data } = response.body;
 
-        const [firstExporter] = data.exporters;
-        exporter = firstExporter;
+        const [firstAccount] = data.accounts;
+        account = firstAccount;
 
-        url = `${CONFIRM_EMAIL_RESENT}?id=${exporter.id}`;
+        url = `${CONFIRM_EMAIL_RESENT}?id=${account.id}`;
 
         cy.url().should('eq', `${Cypress.config('baseUrl')}${url}`);
       });
@@ -55,7 +55,7 @@ context('Insurance - Account - Create - Resend confirm email page - As an Export
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: url,
-        backLink: `${CONFIRM_EMAIL}?id=${exporter.id}`,
+        backLink: `${CONFIRM_EMAIL}?id=${account.id}`,
         assertSubmitButton: false,
         assertAuthenticatedHeader: false,
       });
@@ -64,7 +64,7 @@ context('Insurance - Account - Create - Resend confirm email page - As an Export
     it('renders all `confirm email` page content', () => {
       cy.navigateToUrl(url);
 
-      cy.assertConfirmEmailPageContent(exporter.id);
+      cy.assertConfirmEmailPageContent(account.id);
     });
   });
 });

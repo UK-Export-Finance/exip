@@ -16,16 +16,16 @@ const {
 } = ENCRYPTION;
 
 const createAccount = async (root: any, variables: AccountCreationVariables, context: Context) => {
-  console.info('Creating new exporter account for ', variables.email);
+  console.info('Creating new account for ', variables.email);
 
   try {
     const { firstName, lastName, email, password } = variables;
 
     // check if an account with the email already exists
-    const exporter = await getAccountByField(context, 'email', email);
+    const account = await getAccountByField(context, 'email', email);
 
-    if (exporter) {
-      console.info(`Unable to create new exporter account for ${variables.email} - account already exists`);
+    if (account) {
+      console.info(`Unable to create a new account for ${variables.email} - account already exists`);
 
       return { success: false };
     }
@@ -39,7 +39,7 @@ const createAccount = async (root: any, variables: AccountCreationVariables, con
     const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
 
     // update the account
-    const account = {
+    const accountUpdate = {
       firstName,
       lastName,
       email,
@@ -49,8 +49,8 @@ const createAccount = async (root: any, variables: AccountCreationVariables, con
       verificationExpiry,
     };
 
-    const response = await context.db.Exporter.createOne({
-      data: account,
+    const response = await context.db.Account.createOne({
+      data: accountUpdate,
     });
 
     return {
@@ -58,7 +58,7 @@ const createAccount = async (root: any, variables: AccountCreationVariables, con
       success: true,
     };
   } catch (err) {
-    throw new Error(`Creating new exporter account ${err}`);
+    throw new Error(`Creating a new account ${err}`);
   }
 };
 

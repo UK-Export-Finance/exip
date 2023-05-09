@@ -17,7 +17,7 @@ const {
 
 /**
  * sendEmailPasswordResetLink
- * Generate a password reset hash, update exporter account and send a link to the account via email
+ * Generate a password reset hash, update account and send a link to the account via email
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the SendEmailPasswordResetLink mutation
  * @param {Object} KeystoneJS context API
@@ -30,27 +30,27 @@ const sendEmailPasswordResetLink = async (root: any, variables: AccountSendEmail
     const { email } = variables;
 
     // Get the account the email is associated with.
-    const exporter = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    const account = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
 
-    if (!exporter) {
+    if (!account) {
       console.info('Unable to send password reset email - no account found');
 
       return { success: false };
     }
 
-    const passwordResetHash = crypto.pbkdf2Sync(email, exporter.salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+    const passwordResetHash = crypto.pbkdf2Sync(email, account.salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
 
     const accountUpdate = {
       passwordResetHash,
       passwordResetExpiry: ACCOUNT.PASSWORD_RESET_EXPIRY(),
     };
 
-    (await context.db.Exporter.updateOne({
-      where: { id: exporter.id },
+    (await context.db.Account.updateOne({
+      where: { id: account.id },
       data: accountUpdate,
     })) as Account;
 
-    const emailResponse = await sendEmail.passwordResetLink(email, exporter.firstName, passwordResetHash);
+    const emailResponse = await sendEmail.passwordResetLink(email, account.firstName, passwordResetHash);
 
     if (emailResponse.success) {
       return emailResponse;

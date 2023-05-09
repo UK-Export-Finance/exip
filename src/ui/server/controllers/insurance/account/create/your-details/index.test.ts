@@ -149,7 +149,7 @@ describe('controllers/insurance/account/create/your-details', () => {
         expect(saveData.account).toHaveBeenCalledWith(req.body);
       });
 
-      it('should add the exporter ID to req.session.accountIdToConfirm', async () => {
+      it('should add the account ID to req.session.accountIdToConfirm', async () => {
         await post(req, res);
 
         expect(req.session.accountIdToConfirm).toEqual(mockSaveDataResponse.id);

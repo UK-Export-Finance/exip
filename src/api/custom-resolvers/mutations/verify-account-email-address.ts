@@ -13,21 +13,20 @@ import { VerifyEmailAddressVariables, VerifyEmailAddressResponse } from '../../t
  */
 const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddressVariables, context: Context): Promise<VerifyEmailAddressResponse> => {
   try {
-    console.info('Verifying exporter email address');
+    console.info('Verifying account email address');
 
     // get the account the token is associated with.
-    const exporter = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.VERIFICATION_HASH, variables.token);
+    const account = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.VERIFICATION_HASH, variables.token);
 
-    if (exporter) {
-      const { id } = exporter;
+    if (account) {
+      const { id } = account;
 
       // check that the verification period has not expired.
       const now = new Date();
-      // const canActivateExporter = isBefore(now, exporter[verificationExpiryFieldId]);
-      const canActivateExporter = isBefore(now, exporter.verificationExpiry);
+      const canActivateAccount = isBefore(now, account.verificationExpiry);
 
-      if (!canActivateExporter) {
-        console.info('Unable to verify exporter email - verification period has expired');
+      if (!canActivateAccount) {
+        console.info('Unable to verify account email - verification period has expired');
 
         return {
           expired: true,
@@ -37,8 +36,8 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
       }
 
       // mark the account has verified and nullify the verification hash and expiry.
-      await context.db.Exporter.updateOne({
-        where: { id: exporter.id },
+      await context.db.Account.updateOne({
+        where: { id: account.id },
         data: {
           isVerified: true,
           verificationHash: '',
@@ -49,18 +48,18 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
       return {
         success: true,
         accountId: id,
-        emailRecipient: exporter.email,
+        emailRecipient: account.email,
       };
     }
 
-    console.info('Unable to verify exporter email - no account found');
+    console.info('Unable to verify account email - no account found');
 
     return {
       success: false,
     };
   } catch (err) {
     console.error(err);
-    throw new Error(`Verifying exporter email address ${err}`);
+    throw new Error(`Verifying account email address ${err}`);
   }
 };
 

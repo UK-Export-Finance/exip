@@ -1,5 +1,5 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
-import getExporterById from '../../helpers/get-exporter-by-id';
+import getAccountById from '../../helpers/get-account-by-id';
 import generateOTPAndUpdateAccount from '../../helpers/generate-otp-and-update-account';
 import sendEmail from '../../emails';
 import { AccountSignInSendNewCodeVariables, AccountSignInResponse } from '../../types';
@@ -15,31 +15,31 @@ import { AccountSignInSendNewCodeVariables, AccountSignInResponse } from '../../
  */
 const accountSignInSendNewCode = async (root: any, variables: AccountSignInSendNewCodeVariables, context: Context): Promise<AccountSignInResponse> => {
   try {
-    console.info('Generating and sending new sign in code for exporter account');
+    console.info('Generating and sending new sign in code for account');
 
     const { accountId } = variables;
 
-    // get the exporter
-    const exporter = await getExporterById(context, accountId);
+    // get the account
+    const account = await getAccountById(context, accountId);
 
-    if (!exporter) {
-      console.info('Unable to validate exporter account - no account found');
+    if (!account) {
+      console.info('Unable to validate account - no account found');
 
       return { success: false };
     }
 
     // generate OTP and update the account
-    const { securityCode } = await generateOTPAndUpdateAccount(context, exporter.id);
+    const { securityCode } = await generateOTPAndUpdateAccount(context, account.id);
 
     // send "security code" email.
-    const { email, firstName } = exporter;
+    const { email, firstName } = account;
 
     const emailResponse = await sendEmail.securityCodeEmail(email, firstName, securityCode);
 
     if (emailResponse.success) {
       return {
         ...emailResponse,
-        accountId: exporter.id,
+        accountId: account.id,
       };
     }
 
@@ -48,7 +48,7 @@ const accountSignInSendNewCode = async (root: any, variables: AccountSignInSendN
     };
   } catch (err) {
     console.error(err);
-    throw new Error(`Generating and sending new sign in code for exporter account (accountSignInSendNewCode mutation) ${err}`);
+    throw new Error(`Generating and sending new sign in code for account (accountSignInSendNewCode mutation) ${err}`);
   }
 };
 

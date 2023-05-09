@@ -22,30 +22,30 @@ describe('helpers/get-account-by-field', () => {
 
   beforeEach(async () => {
     // wipe the table so we have a clean slate.
-    const exporters = await context.query.Exporter.findMany();
+    const accounts = await context.query.Account.findMany();
 
-    await context.query.Exporter.deleteMany({
-      where: exporters,
+    await context.query.Account.deleteMany({
+      where: accounts,
     });
 
-    // create a new exporter
-    account = (await context.query.Exporter.createOne({
+    // create a new account
+    account = (await context.query.Account.createOne({
       data: mockAccount,
       query: 'id firstName lastName',
     })) as Account;
   });
 
-  it('should return an exporter/account by ID', async () => {
+  it('should return an account by ID', async () => {
     const result = (await getAccountByField(context, field, value)) as Account;
 
     expect(result.id).toEqual(account.id);
     expect(result.firstName).toEqual(account.firstName);
   });
 
-  describe('when an exporter/account is not found', () => {
+  describe('when an account is not found', () => {
     beforeEach(async () => {
-      // delete the exporter so it will not be found
-      await context.query.Exporter.deleteOne({
+      // delete the account so it will not be found
+      await context.query.Account.deleteOne({
         where: { id: account.id },
       });
     });
@@ -54,7 +54,7 @@ describe('helpers/get-account-by-field', () => {
       try {
         await getAccountByField(context, field, value);
       } catch (err) {
-        const errorMessage = 'Getting exporter account by field/value';
+        const errorMessage = 'Getting account by field/value';
 
         const newError = new Error(errorMessage);
 

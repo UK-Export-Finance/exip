@@ -4,14 +4,14 @@ import { AddAndGetOtpResponse } from '../../types';
 
 /**
  * generateOTPAndUpdateAccount
- * - Generate an OTP, save to the exporter account
+ * - Generate an OTP, save to the account
  * @param {Object} KeystoneJS context API
  * @param {String} Exporter account ID
  * @returns {Object} Object with success flag and security code
  */
 const generateOTPAndUpdateAccount = async (context: Context, accountId: string): Promise<AddAndGetOtpResponse> => {
   try {
-    console.info('Adding OTP to exporter account');
+    console.info('Adding OTP to an account');
     // generate OTP.
     const otp = generate.otp();
 
@@ -24,7 +24,7 @@ const generateOTPAndUpdateAccount = async (context: Context, accountId: string):
       otpExpiry: expiry,
     };
 
-    await context.db.Exporter.updateOne({
+    await context.db.Account.updateOne({
       where: { id: accountId },
       data: accountUpdate,
     });
@@ -35,7 +35,7 @@ const generateOTPAndUpdateAccount = async (context: Context, accountId: string):
     };
   } catch (err) {
     console.error(err);
-    throw new Error(`Adding OTP to exporter account ${err}`);
+    throw new Error(`Adding OTP to an account ${err}`);
   }
 };
 

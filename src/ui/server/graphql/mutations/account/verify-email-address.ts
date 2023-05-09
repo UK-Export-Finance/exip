@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-const verifyExporterEmailMutation = gql`
+const verifyAccountEmailMutation = gql`
   mutation VerifyAccountEmailAddress($token: String!) {
     verifyAccountEmailAddress(token: $token) {
       success
@@ -9,4 +9,4 @@ const verifyExporterEmailMutation = gql`
   }
 `;
 
-export default verifyExporterEmailMutation;
+export default verifyAccountEmailMutation;

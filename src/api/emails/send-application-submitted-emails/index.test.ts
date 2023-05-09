@@ -41,7 +41,7 @@ describe('emails/send-email-application-submitted', () => {
     underwritingTeamEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
     documentsEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
-    sendEmail.applicationSubmitted.exporter = applicationSubmittedEmailSpy;
+    sendEmail.applicationSubmitted.account = applicationSubmittedEmailSpy;
     sendEmail.applicationSubmitted.underwritingTeam = underwritingTeamEmailSpy;
 
     sendEmail.documentsEmail = documentsEmailSpy;
@@ -51,8 +51,8 @@ describe('emails/send-email-application-submitted', () => {
     let expectedSendEmailVars: ApplicationSubmissionEmailVariables;
 
     beforeEach(() => {
-      const { referenceNumber, exporter, exporterCompany, buyer, policyAndExport } = application;
-      const { email, firstName } = exporter;
+      const { referenceNumber, owner, exporterCompany, buyer, policyAndExport } = application;
+      const { email, firstName } = owner;
       const { companyName } = exporterCompany;
       const { companyOrOrganisationName } = buyer;
 
@@ -67,14 +67,14 @@ describe('emails/send-email-application-submitted', () => {
       } as ApplicationSubmissionEmailVariables;
     });
 
-    test('it should call sendEmail.applicationSubmitted.exporter', async () => {
+    test('it should call sendEmail.applicationSubmitted.account', async () => {
       await sendApplicationSubmittedEmails.send(application, mockCsvPath);
 
       expect(applicationSubmittedEmailSpy).toHaveBeenCalledTimes(1);
       expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars);
     });
 
-    test('it should call sendEmail.applicationSubmitted.exporter with the correct template ID', async () => {
+    test('it should call sendEmail.applicationSubmitted.account with the correct template ID', async () => {
       await sendApplicationSubmittedEmails.send(application, mockCsvPath);
 
       expect(underwritingTeamEmailSpy).toHaveBeenCalledTimes(1);
@@ -89,7 +89,7 @@ describe('emails/send-email-application-submitted', () => {
 
       expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
-      const templateId = getApplicationSubmittedEmailTemplateIds(application).exporter;
+      const templateId = getApplicationSubmittedEmailTemplateIds(application).account;
 
       expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateId);
     });
@@ -112,7 +112,7 @@ describe('emails/send-email-application-submitted', () => {
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
-        const templateId = getApplicationSubmittedEmailTemplateIds(application).exporter;
+        const templateId = getApplicationSubmittedEmailTemplateIds(application).account;
 
         expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateId);
       });
@@ -156,7 +156,7 @@ describe('emails/send-email-application-submitted', () => {
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
-        const templateId = getApplicationSubmittedEmailTemplateIds(application).exporter;
+        const templateId = getApplicationSubmittedEmailTemplateIds(application).account;
 
         expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateId);
       });
@@ -173,7 +173,7 @@ describe('emails/send-email-application-submitted', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.applicationSubmitted.exporter = jest.fn(() => Promise.reject(mockSendEmailResponse));
+      sendEmail.applicationSubmitted.account = jest.fn(() => Promise.reject(mockSendEmailResponse));
     });
 
     test('should throw an error', async () => {

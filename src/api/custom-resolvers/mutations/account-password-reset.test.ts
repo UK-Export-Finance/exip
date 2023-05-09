@@ -37,14 +37,14 @@ describe('custom-resolvers/account-password-reset', () => {
 
   beforeEach(async () => {
     // wipe the table so we have a clean slate.
-    const accounts = await context.query.Exporter.findMany();
+    const accounts = await context.query.Account.findMany();
 
-    await context.query.Exporter.deleteMany({
+    await context.query.Account.deleteMany({
       where: accounts,
     });
 
     // create an account
-    account = (await context.query.Exporter.createOne({
+    account = (await context.query.Account.createOne({
       data: mockAccount,
       query: 'id',
     })) as Account;
@@ -56,7 +56,7 @@ describe('custom-resolvers/account-password-reset', () => {
 
     result = await accountPasswordReset({}, variables, context);
 
-    account = (await context.query.Exporter.findOne({
+    account = (await context.query.Account.findOne({
       where: { id: account.id },
       query: 'id salt hash passwordResetHash passwordResetExpiry',
     })) as Account;
@@ -72,7 +72,7 @@ describe('custom-resolvers/account-password-reset', () => {
 
   test("it should update the account's salt and hash", async () => {
     // get the latest account
-    account = (await context.query.Exporter.findOne({
+    account = (await context.query.Account.findOne({
       where: { id: account.id },
       query: 'id salt hash passwordResetHash passwordResetExpiry',
     })) as Account;
@@ -93,7 +93,7 @@ describe('custom-resolvers/account-password-reset', () => {
 
   describe('when the account does not have a password reset expiry', () => {
     test('it should return success=false', async () => {
-      account = (await context.query.Exporter.updateOne({
+      account = (await context.query.Account.updateOne({
         where: { id: account.id },
         data: {
           passwordResetHash: mockAccount.passwordResetHash,
@@ -113,7 +113,7 @@ describe('custom-resolvers/account-password-reset', () => {
 
   describe('when the account does not have a password reset hash', () => {
     test('it should return success=false', async () => {
-      account = (await context.query.Exporter.updateOne({
+      account = (await context.query.Account.updateOne({
         where: { id: account.id },
         data: {
           passwordResetHash: '',
@@ -137,7 +137,7 @@ describe('custom-resolvers/account-password-reset', () => {
       const milliseconds = 300000;
       const oneMinuteAgo = new Date(now.setMilliseconds(-milliseconds)).toISOString();
 
-      account = (await context.query.Exporter.updateOne({
+      account = (await context.query.Account.updateOne({
         where: { id: account.id },
         data: {
           passwordResetHash: mockAccount.passwordResetHash,
@@ -161,9 +161,9 @@ describe('custom-resolvers/account-password-reset', () => {
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
       // wipe the table so we have a clean slate.
-      const accounts = await context.query.Exporter.findMany();
+      const accounts = await context.query.Account.findMany();
 
-      await context.query.Exporter.deleteMany({
+      await context.query.Account.deleteMany({
         where: accounts,
       });
 

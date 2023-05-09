@@ -53,7 +53,7 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
       passwordResetExpiry: null,
     };
 
-    await context.db.Exporter.updateOne({
+    await context.db.Account.updateOne({
       where: {
         id: accountId,
       },

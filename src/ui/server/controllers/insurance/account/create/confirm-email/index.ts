@@ -21,20 +21,20 @@ export const get = async (req: Request, res: Response) => {
     const { accountIdToConfirm } = req.session;
     const { id } = req.query;
 
-    const exporterId = accountIdToConfirm || id;
+    const accountId = accountIdToConfirm || id;
 
-    if (!exporterId) {
+    if (!accountId) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
     delete req.session.accountIdToConfirm;
 
-    let exporterEmail;
+    let accountEmail;
 
-    if (exporterId) {
-      const exporter = await api.keystone.account.get(exporterId);
+    if (accountId) {
+      const account = await api.keystone.account.get(accountId);
 
-      exporterEmail = exporter.email;
+      accountEmail = account.email;
     }
 
     return res.render(TEMPLATE, {
@@ -43,8 +43,8 @@ export const get = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       userName: getUserNameFromSession(req.session.user),
-      exporterEmail,
-      exporterId,
+      accountEmail,
+      accountId,
     });
   } catch (err) {
     console.error("Error getting exporter by email and rendering 'confirm email' page", { err });

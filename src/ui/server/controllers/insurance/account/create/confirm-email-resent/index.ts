@@ -27,15 +27,15 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const exporter = await api.keystone.account.sendEmailConfirmEmailAddress(id);
+    const account = await api.keystone.account.sendEmailConfirmEmailAddress(id);
 
-    if (!exporter.success) {
+    if (!account.success) {
       console.error("Error sending new email verification for account creation and rendering 'new link sent' page");
 
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const exporterEmail = exporter.emailRecipient;
+    const accountEmail = account.emailRecipient;
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -43,8 +43,8 @@ export const get = async (req: Request, res: Response) => {
         BACK_LINK: `${req.headers.referer}?id=${id}`,
       }),
       userName: getUserNameFromSession(req.session.user),
-      exporterEmail,
-      exporterId: id,
+      accountEmail,
+      accountId: id,
     });
   } catch (err) {
     console.error("Error sending new email verification for account creation and rendering 'new link sent' page", { err });

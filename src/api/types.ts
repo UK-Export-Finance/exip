@@ -1,4 +1,4 @@
-import { ExporterUpdateInput, ExporterCompanyUpdateInput } from '.keystone/types'; // eslint-disable-line
+import { AccountUpdateInput, ExporterCompanyUpdateInput } from '.keystone/types'; // eslint-disable-line
 
 interface SuccessResponse {
   success: boolean;
@@ -23,7 +23,7 @@ interface ApplicationEligibility extends ApplicationRelationship {
   wantCoverOverMaxPeriod: boolean;
 }
 
-interface ApplicationExporter extends ApplicationRelationship {
+interface ApplicationOwner extends ApplicationRelationship {
   email: string;
   firstName: string;
   lastName: string;
@@ -70,7 +70,7 @@ interface AccountInput {
   verificationExpiry: Date;
 }
 
-interface Account extends ExporterUpdateInput {
+interface Account extends AccountUpdateInput {
   id: string;
   email: string;
   firstName: string;
@@ -113,7 +113,7 @@ interface Application {
   status: string;
   previousStatus?: string;
   eligibility: ApplicationEligibility;
-  exporter: ApplicationExporter;
+  owner: ApplicationOwner;
   policyAndExport: ApplicationPolicyAndExport;
   exporterCompany: ApplicationExporterCompany;
   exporterCompanyAddress: ApplicationExporterCompanyAddress;
@@ -281,7 +281,7 @@ interface AddAndGetOtpResponse extends SuccessResponse {
 }
 
 interface SendExporterEmailVariables {
-  exporterId: string;
+  accountId: string;
   referenceNumber?: string;
 }
 

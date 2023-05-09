@@ -12,16 +12,16 @@ const { FIELDS } = CSV;
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT;
 
 describe('api/generate-csv/map-application-to-csv/map-key-information', () => {
-  it('should return an array of mapped buyer fields', () => {
+  it('should return an array of mapped key information', () => {
     const result = mapPolicyAndExport(mockApplication);
 
     const expected = [
       csvRow(REFERENCE_NUMBER.SUMMARY.TITLE, mockApplication.referenceNumber),
       csvRow(DATE_SUBMITTED.SUMMARY.TITLE, formatDate(mockApplication.submissionDate, 'dd-MM-yyyy')),
       csvRow(TIME_SUBMITTED.SUMMARY.TITLE, formatTimeOfDay(mockApplication.submissionDate)),
-      csvRow(FIELDS[FIRST_NAME], mockApplication.exporter[FIRST_NAME]),
-      csvRow(FIELDS[LAST_NAME], mockApplication.exporter[LAST_NAME]),
-      csvRow(FIELDS[EMAIL], mockApplication.exporter[EMAIL]),
+      csvRow(FIELDS[FIRST_NAME], mockApplication.owner[FIRST_NAME]),
+      csvRow(FIELDS[LAST_NAME], mockApplication.owner[LAST_NAME]),
+      csvRow(FIELDS[EMAIL], mockApplication.owner[EMAIL]),
     ];
 
     expect(result).toEqual(expected);

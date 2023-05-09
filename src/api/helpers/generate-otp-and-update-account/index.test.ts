@@ -26,14 +26,14 @@ describe('helpers/generate-otp-and-update-account', () => {
 
   beforeEach(async () => {
     // wipe the table so we have a clean slate.
-    const exporters = await context.query.Exporter.findMany();
+    const accounts = await context.query.Account.findMany();
 
-    await context.query.Exporter.deleteMany({
-      where: exporters,
+    await context.query.Account.deleteMany({
+      where: accounts,
     });
 
-    // create a new exporter
-    account = (await context.query.Exporter.createOne({
+    // create a new account
+    account = (await context.query.Account.createOne({
       data: mockAccount,
       query: 'id firstName lastName email salt hash verificationHash',
     })) as Account;
@@ -42,7 +42,7 @@ describe('helpers/generate-otp-and-update-account', () => {
 
     jest.clearAllMocks();
 
-    account = (await context.query.Exporter.findOne({
+    account = (await context.query.Account.findOne({
       where: { id: account.id },
       query: 'otpSalt otpHash otpExpiry',
     })) as Account;
@@ -76,7 +76,7 @@ describe('helpers/generate-otp-and-update-account', () => {
       try {
         await generateOTPAndUpdateAccount(context, account.id);
       } catch (err) {
-        const expected = new Error(`Adding OTP to exporter account Error: ${mockOTPError}`);
+        const expected = new Error(`Adding OTP to an account Error: ${mockOTPError}`);
         expect(err).toEqual(expected);
       }
     });

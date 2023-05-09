@@ -1,8 +1,8 @@
 import { ApolloResponse, Account } from '../../../../types';
 import apollo from '../../../graphql/apollo';
-import createExporterMutation from '../../../graphql/mutations/account/create';
-import getExporterQuery from '../../../graphql/queries/account/get';
-import verifyExporterEmailAddressMutation from '../../../graphql/mutations/account/verify-email-address';
+import createAccountMutation from '../../../graphql/mutations/account/create';
+import getAccountQuery from '../../../graphql/queries/account/get';
+import verifyAccountEmailAddressMutation from '../../../graphql/mutations/account/verify-email-address';
 import sendEmailConfirmEmailAddressMutation from '../../../graphql/mutations/account/send-email-confirm-email-address';
 import accountSignInMutation from '../../../graphql/mutations/account/sign-in';
 import accountSignInSendNewCodeMutation from '../../../graphql/mutations/account/sign-in-send-new-code';
@@ -15,70 +15,70 @@ import verifyAccountPasswordResetTokenQuery from '../../../graphql/queries/accou
 const account = {
   create: async (variables: Account) => {
     try {
-      console.info('Creating exporter account');
+      console.info('Creating an account');
 
-      const response = (await apollo('POST', createExporterMutation, variables)) as ApolloResponse;
+      const response = (await apollo('POST', createAccountMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error creating exporter account ', response.errors);
+        console.error('GraphQL error creating an account ', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error creating exporter account ', response.networkError.result.errors);
+        console.error('GraphQL network error creating an account ', response.networkError.result.errors);
       }
 
-      if (response?.data?.createAccount) {
-        return response.data.createAccount;
+      if (response?.data?.createAnAccount) {
+        return response.data.createAnAccount;
       }
 
       console.error(response);
-      throw new Error('Creating exporter account');
+      throw new Error('Creating an account');
     } catch (err) {
       console.error(err);
-      throw new Error('Creating exporter account');
+      throw new Error('Creating an account');
     }
   },
   get: async (id: string) => {
     try {
-      console.info('Getting exporter account');
+      console.info('Getting an account');
 
       const variables = { id };
 
-      const response = (await apollo('POST', getExporterQuery, variables)) as ApolloResponse;
+      const response = (await apollo('POST', getAccountQuery, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error getting exporter account ', response.errors);
+        console.error('GraphQL error getting an account ', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error getting exporter account ', response.networkError.result.errors);
+        console.error('GraphQL network error getting an account ', response.networkError.result.errors);
       }
 
-      if (response?.data?.exporter) {
-        return response.data.exporter;
+      if (response?.data?.account) {
+        return response.data.account;
       }
 
       console.error(response);
-      throw new Error('Getting exporter account');
+      throw new Error('Getting an account');
     } catch (err) {
       console.error(err);
-      throw new Error('Getting exporter account');
+      throw new Error('Getting an account');
     }
   },
   verifyEmailAddress: async (token: string) => {
     try {
-      console.info('Verifying exporter email address');
+      console.info('Verifying account email address');
 
       const variables = { token };
 
-      const response = (await apollo('POST', verifyExporterEmailAddressMutation, variables)) as ApolloResponse;
+      const response = (await apollo('POST', verifyAccountEmailAddressMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error verifying exporter email address ', response.errors);
+        console.error('GraphQL error verifying account email address ', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error verifying exporter email address ', response.networkError.result.errors);
+        console.error('GraphQL network error verifying account email address ', response.networkError.result.errors);
       }
 
       if (response?.data?.verifyAccountEmailAddress) {
@@ -86,17 +86,17 @@ const account = {
       }
 
       console.error(response);
-      throw new Error('Verifying exporter email address');
+      throw new Error('Verifying account email address');
     } catch (err) {
       console.error(err);
-      throw new Error('Verifying exporter email address');
+      throw new Error('Verifying account email address');
     }
   },
-  sendEmailConfirmEmailAddress: async (exporterId: string) => {
+  sendEmailConfirmEmailAddress: async (accountId: string) => {
     try {
       console.info('Sending email verification for account creation');
 
-      const variables = { exporterId };
+      const variables = { accountId };
 
       const response = (await apollo('POST', sendEmailConfirmEmailAddressMutation, variables)) as ApolloResponse;
 
@@ -121,18 +121,18 @@ const account = {
   },
   signIn: async (email: string, password: string) => {
     try {
-      console.info('Signing in exporter account');
+      console.info('Signing in account');
 
       const variables = { email, password };
 
       const response = (await apollo('POST', accountSignInMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error signing in exporter account ', response.errors);
+        console.error('GraphQL error signing in account ', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error signing in exporter account ', response.networkError.result.errors);
+        console.error('GraphQL network error signing in account ', response.networkError.result.errors);
       }
 
       if (response?.data?.accountSignIn) {
@@ -140,26 +140,26 @@ const account = {
       }
 
       console.error(response);
-      throw new Error('Signing in exporter account');
+      throw new Error('Signing in account');
     } catch (err) {
       console.error(err);
-      throw new Error('Signing in exporter account');
+      throw new Error('Signing in account');
     }
   },
   signInSendNewCode: async (accountId: string) => {
     try {
-      console.info('Sending new sign in code for exporter account');
+      console.info('Sending new sign in code for account');
 
       const variables = { accountId };
 
       const response = (await apollo('POST', accountSignInSendNewCodeMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error sending new sign in code for exporter account ', response.errors);
+        console.error('GraphQL error sending new sign in code for account ', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error sending new sign in code for exporter account ', response.networkError.result.errors);
+        console.error('GraphQL network error sending new sign in code for account ', response.networkError.result.errors);
       }
 
       if (response?.data?.accountSignInSendNewCode) {
@@ -167,26 +167,26 @@ const account = {
       }
 
       console.error(response);
-      throw new Error('Sending new sign in code for exporter account');
+      throw new Error('Sending new sign in code for account');
     } catch (err) {
       console.error(err);
-      throw new Error('Sending new sign in code for exporter account');
+      throw new Error('Sending new sign in code for account');
     }
   },
   verifyAccountSignInCode: async (accountId: string, securityCode: string) => {
     try {
-      console.info('Verifying exporter account sign in code');
+      console.info('Verifying account sign in code');
 
       const variables = { accountId, securityCode };
 
       const response = (await apollo('POST', verifyAccountSignInCodeMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error verifying exporter account sign in code ', response.errors);
+        console.error('GraphQL error verifying account sign in code ', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error verifying exporter account sign in code ', response.networkError.result.errors);
+        console.error('GraphQL network error verifying account sign in code ', response.networkError.result.errors);
       }
 
       if (response?.data?.verifyAccountSignInCode) {
@@ -194,26 +194,26 @@ const account = {
       }
 
       console.error(response);
-      throw new Error('Verifying exporter account sign in code');
+      throw new Error('Verifying account sign in code');
     } catch (err) {
       console.error(err);
-      throw new Error('Verifying exporter account sign in code');
+      throw new Error('Verifying account sign in code');
     }
   },
   verifyAccountSession: async (token: string) => {
     try {
-      console.info('Verifying exporter account session');
+      console.info('Verifying account session');
 
       const variables = { token };
 
       const response = (await apollo('POST', verifyAccountSessionMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error verifying exporter account session ', response.errors);
+        console.error('GraphQL error verifying account session ', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error verifying exporter account session ', response.networkError.result.errors);
+        console.error('GraphQL network error verifying account session ', response.networkError.result.errors);
       }
 
       if (response?.data?.verifyAccountSession) {
@@ -221,10 +221,10 @@ const account = {
       }
 
       console.error(response);
-      throw new Error('Verifying exporter account session');
+      throw new Error('Verifying account session');
     } catch (err) {
       console.error(err);
-      throw new Error('Verifying exporter account session');
+      throw new Error('Verifying account session');
     }
   },
   sendEmailPasswordResetLink: async (email: string) => {
@@ -236,11 +236,11 @@ const account = {
       const response = (await apollo('POST', sendEmailPasswordResetLinkMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error sending new sign in code for exporter account ', response.errors);
+        console.error('GraphQL error sending new sign in code for account ', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error sending new sign in code for exporter account ', response.networkError.result.errors);
+        console.error('GraphQL network error sending new sign in code for account ', response.networkError.result.errors);
       }
 
       if (response?.data?.sendEmailPasswordResetLink) {

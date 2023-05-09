@@ -1,5 +1,5 @@
 import { Context, Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
-import getExporterById from '../get-exporter-by-id';
+import getAccountById from '../get-account-by-id';
 import getCountryByField from '../get-country-by-field';
 import { Application } from '../../types';
 
@@ -16,7 +16,7 @@ export const generateErrorMessage = (section: string, applicationId: number) =>
 const getPopulatedApplication = async (context: Context, application: KeystoneApplication): Promise<Application> => {
   console.info('Getting populated application');
 
-  const { eligibilityId, exporterId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId, buyerId, declarationId } = application;
+  const { eligibilityId, ownerId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId, buyerId, declarationId } = application;
 
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId },
@@ -26,10 +26,10 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('eligibility', application.id));
   }
 
-  const exporter = await getExporterById(context, exporterId);
+  const account = await getAccountById(context, ownerId);
 
-  if (!exporter) {
-    throw new Error(generateErrorMessage('exporter', application.id));
+  if (!account) {
+    throw new Error(generateErrorMessage('account', application.id));
   }
 
   const policyAndExport = await context.db.PolicyAndExport.findOne({
@@ -116,7 +116,7 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
       buyerCountry,
     },
     policyAndExport: populatedPolicyAndExport,
-    exporter,
+    owner: account,
     exporterCompany: populatedExporterCompany,
     exporterBusiness,
     exporterBroker,

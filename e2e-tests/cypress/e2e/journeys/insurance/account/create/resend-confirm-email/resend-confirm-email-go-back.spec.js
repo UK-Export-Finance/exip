@@ -15,7 +15,7 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
   });
 
   let expectedUrl;
-  let exporter;
+  let account;
 
   before(() => {
     cy.saveSession();
@@ -30,22 +30,22 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
 
   beforeEach(() => {
     /**
-     * Get the exporter ID directly from the API,
+     * Get the account ID directly from the API,
      * so that we can assert that the URL and `request a new link` has the correct ID.
      */
-    const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+    const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
-    api.getExporterByEmail(exporterEmail).then((response) => {
+    api.getAccountByEmail(accountEmail).then((response) => {
       const { data } = response.body;
 
-      const [firstExporter] = data.exporters;
-      exporter = firstExporter;
+      const [firstAccount] = data.accounts;
+      account = firstAccount;
 
       cy.url().should('eq', confirmEmailUrl);
 
       confirmEmailPage.havingProblems.requestNew.link().click();
 
-      expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL_RESENT}?id=${exporter.id}`;
+      expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL_RESENT}?id=${account.id}`;
 
       cy.url().should('eq', expectedUrl);
 
@@ -54,7 +54,7 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
   });
 
   it('renders the page without error and have the account ID in the URL params', () => {
-    expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}?id=${exporter.id}`;
+    expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}?id=${account.id}`;
 
     cy.url().should('eq', expectedUrl);
   });

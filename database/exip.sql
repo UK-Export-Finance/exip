@@ -39,7 +39,6 @@ CREATE TABLE `Application` (
 	`submissionDate` datetime(3) DEFAULT NULL,
   `submissionType` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'Manual Inclusion Application',
   `policyAndExport` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-	`exporter` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `exporterBusiness` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `exporterBroker` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`exporterCompany` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -48,26 +47,27 @@ CREATE TABLE `Application` (
 	`previousStatus` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`declaration` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`sectionReview` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+	`owner` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Application_eligibility_idx` (`eligibility`),
   KEY `Application_referenceNumber_idx` (`referenceNumber`),
   KEY `Application_policyAndExport_idx` (`policyAndExport`),
-	KEY `Application_exporter_idx` (`exporter`),
   KEY `Application_exporterCompany_idx` (`exporterCompany`),
   KEY `Application_exporterBusiness_idx` (`exporterBusiness`),
   KEY `Application_exporterBroker_idx` (`exporterBroker`),
 	KEY `Application_buyer_idx` (`buyer`),
 	KEY `Application_declaration_idx` (`declaration`),
 	KEY `Application_sectionReview_idx` (`sectionReview`),
+	KEY `Application_owner_idx` (`owner`),
 	CONSTRAINT `Application_buyer_fkey` FOREIGN KEY (`buyer`) REFERENCES `Buyer` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
 	CONSTRAINT `Application_declaration_fkey` FOREIGN KEY (`declaration`) REFERENCES `Declaration` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_eligibility_fkey` FOREIGN KEY (`eligibility`) REFERENCES `Eligibility` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-	CONSTRAINT `Application_exporter_fkey` FOREIGN KEY (`exporter`) REFERENCES `Exporter` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_exporterBroker_fkey` FOREIGN KEY (`exporterBroker`) REFERENCES `ExporterBroker` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_exporterBusiness_fkey` FOREIGN KEY (`exporterBusiness`) REFERENCES `ExporterBusiness` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_exporterCompany_fkey` FOREIGN KEY (`exporterCompany`) REFERENCES `ExporterCompany` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_policyAndExport_fkey` FOREIGN KEY (`policyAndExport`) REFERENCES `PolicyAndExport` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-	CONSTRAINT `Application_sectionReview_fkey` FOREIGN KEY (`sectionReview`) REFERENCES `SectionReview` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+	CONSTRAINT `Application_sectionReview_fkey` FOREIGN KEY (`sectionReview`) REFERENCES `SectionReview` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+	CONSTRAINT `Application_owner_fkey` FOREIGN KEY (`owner`) REFERENCES `Account` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -502,29 +502,29 @@ CREATE TABLE IF NOT EXISTS `Eligibility` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-# Dump of table Exporter
+# Dump of table Account
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `Exporter`;
+DROP TABLE IF EXISTS `Account`;
 
-CREATE TABLE `Exporter` (
+CREATE TABLE `Account` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdAt` datetime(3) DEFAULT NULL,
+  `updatedAt` datetime(3) DEFAULT NULL,
   `firstName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `lastName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `hash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `salt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `createdAt` datetime(3) DEFAULT NULL,
-  `updatedAt` datetime(3) DEFAULT NULL,
-	`isVerified` tinyint(1) NOT NULL DEFAULT '0',
-  `verificationExpiry` datetime(3) DEFAULT NULL,
+  `hash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `isVerified` tinyint(1) NOT NULL DEFAULT '0',
   `verificationHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-	`otpExpiry` datetime(3) DEFAULT NULL,
-  `otpHash` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `verificationExpiry` datetime(3) DEFAULT NULL,
   `otpSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-	`sessionExpiry` datetime(3) DEFAULT NULL,
+  `otpHash` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `otpExpiry` datetime(3) DEFAULT NULL,
+  `sessionExpiry` datetime(3) DEFAULT NULL,
   `sessionIdentifier` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-	`passwordResetHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `passwordResetHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `passwordResetExpiry` datetime(3) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

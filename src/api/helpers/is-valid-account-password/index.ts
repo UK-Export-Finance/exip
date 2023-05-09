@@ -20,17 +20,17 @@ const {
  * @returns {Booealn}
  */
 const isValidAccountPassword = (password: string, salt: string, hash: string) => {
-  console.info('Validating exporter account password');
+  console.info('Validating account password');
 
   const hashVerify = crypto.pbkdf2Sync(password, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
 
   if (hash === hashVerify) {
-    console.info('Valid exporter account password');
+    console.info('Valid account password');
 
     return true;
   }
 
-  console.info('Invalid exporter account password');
+  console.info('Invalid account password');
 
   return false;
 };

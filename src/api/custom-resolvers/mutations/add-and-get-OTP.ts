@@ -16,21 +16,21 @@ import { AddOtpToAccountVariables, AddAndGetOtpResponse } from '../../types';
  */
 const addAndGetOTP = async (root: any, variables: AddOtpToAccountVariables, context: Context): Promise<AddAndGetOtpResponse> => {
   try {
-    console.info('Adding OTP to exporter account');
+    console.info('Adding OTP to an account');
 
     const { email } = variables;
 
     // Get the account the email is associated with.
-    const exporter = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    const account = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
 
-    if (!exporter) {
-      console.info('Unable to generate and add OTP to exporter account - no account found');
+    if (!account) {
+      console.info('Unable to generate and add OTP to an account - no account found');
 
       return { success: false };
     }
 
     // generate OTP and update the account
-    const { securityCode } = await generateOTPAndUpdateAccount(context, exporter.id);
+    const { securityCode } = await generateOTPAndUpdateAccount(context, account.id);
 
     return {
       success: true,
@@ -38,7 +38,7 @@ const addAndGetOTP = async (root: any, variables: AddOtpToAccountVariables, cont
     };
   } catch (err) {
     console.error(err);
-    throw new Error(`Adding OTP to exporter account (addAndGetOTP mutation) ${err}`);
+    throw new Error(`Adding OTP to an account (addAndGetOTP mutation) ${err}`);
   }
 };
 

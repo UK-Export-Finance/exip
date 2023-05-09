@@ -283,8 +283,9 @@ var ANSWERS = {
 var GBP_CURRENCY_CODE = "GBP";
 var EXTERNAL_API_ENDPOINTS = {
   MULESOFT_MDM_EA: {
-    CURRENCY: "/currency",
-    INDUSTRY_SECTORS: "/map-industry-sector?size=1000"
+    CURRENCY: "/currencies",
+    INDUSTRY_SECTORS: "/sector-industries",
+    MARKETS: "/markets"
   }
 };
 var DATE_5_MINUTES_FROM_NOW = () => {
@@ -555,21 +556,21 @@ var passwordResetLink = async (emailAddress, firstName, passwordResetHash) => {
 };
 var applicationSubmitted = {
   /**
-   * applicationSubmitted.exporter
-   * Send "application submitted" email to an exporter
+   * applicationSubmitted.account
+   * Send "application submitted" email to an account
    * @param {Object} ApplicationSubmissionEmailVariables
    * @returns {Object} callNotify response
    */
-  exporter: async (variables) => {
+  account: async (variables) => {
     try {
-      console.info("Sending application submitted email to exporter");
+      console.info("Sending application submitted email to account");
       const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
       const { emailAddress } = variables;
       const response = await callNotify(templateId, emailAddress, variables);
       return response;
     } catch (err) {
       console.error(err);
-      throw new Error(`Sending application submitted email to exporter ${err}`);
+      throw new Error(`Sending application submitted email to account ${err}`);
     }
   },
   /**
@@ -583,7 +584,7 @@ var applicationSubmitted = {
   underwritingTeam: async (variables, csvPath, templateId) => {
     try {
       console.info("Sending application submitted email to underwriting team");
-      const emailAddress = process.env.UNDERWRITING_TEAM_EMAIL;
+      const emailAddress = String(process.env.UNDERWRITING_TEAM_EMAIL);
       const file = await file_system_default.readFile(csvPath);
       if (file) {
         const fileIsCsv = true;
@@ -662,8 +663,8 @@ var lists = {
       }),
       previousStatus: (0, import_fields.text)(),
       policyAndExport: (0, import_fields.relationship)({ ref: "PolicyAndExport" }),
-      exporter: (0, import_fields.relationship)({
-        ref: "Exporter",
+      owner: (0, import_fields.relationship)({
+        ref: "Account",
         many: false
       }),
       exporterBusiness: (0, import_fields.relationship)({ ref: "ExporterBusiness" }),
@@ -923,7 +924,7 @@ var lists = {
     },
     access: import_access.allowAll
   },
-  Exporter: (0, import_core.list)({
+  Account: (0, import_core.list)({
     fields: {
       createdAt: (0, import_fields.timestamp)(),
       updatedAt: (0, import_fields.timestamp)(),
@@ -954,7 +955,7 @@ var lists = {
       resolveInput: async ({ operation, resolvedData }) => {
         const accountInputData = resolvedData;
         if (operation === "create") {
-          console.info("Creating new exporter account");
+          console.info("Creating new account");
           const now = /* @__PURE__ */ new Date();
           accountInputData.createdAt = now;
           accountInputData.updatedAt = now;
@@ -970,7 +971,7 @@ var lists = {
           }
         }
         if (operation === "update") {
-          console.info("Updating exporter account");
+          console.info("Updating account");
           accountInputData.updatedAt = /* @__PURE__ */ new Date();
         }
         return accountInputData;
@@ -1333,7 +1334,7 @@ var import_schema = require("@graphql-tools/schema");
 
 // custom-schema/type-defs.ts
 var typeDefs = `
-  type Account {
+  type AccountResponse {
     id: String
     firstName: String
     lastName: String
@@ -1348,7 +1349,7 @@ var typeDefs = `
     password: String
   }
 
-  type CreateAccountResponse {
+  type CreateAnAccountResponse {
     success: Boolean
     id: String
     firstName: String
@@ -1471,12 +1472,12 @@ var typeDefs = `
 
   type Mutation {
     """ create an account """
-    createAccount(
+    createAnAccount(
       firstName: String!
       lastName: String!
       email: String!
       password: String!
-    ): CreateAccountResponse
+    ): CreateAnAccountResponse
 
     """ verify an account's email address """
     verifyAccountEmailAddress(
@@ -1485,7 +1486,7 @@ var typeDefs = `
 
     """ send confirm email address email """
     sendEmailConfirmEmailAddress(
-      exporterId: String!
+      accountId: String!
     ): EmailResponse
 
     """ validate credentials, generate and email a OTP security code """
@@ -1550,7 +1551,7 @@ var typeDefs = `
     """ get an account by email """
     getAccountByEmail(
       email: String!
-    ): Account
+    ): AccountResponse
 
     """ get an account's password reset token """
     getAccountPasswordResetToken(
@@ -1570,28 +1571,28 @@ var typeDefs = `
 `;
 var type_defs_default = typeDefs;
 
-// custom-resolvers/mutations/create-account.ts
+// custom-resolvers/mutations/create-an-account.ts
 var import_crypto2 = __toESM(require("crypto"));
 
 // helpers/get-account-by-field/index.ts
 var getAccountByField = async (context, field, value) => {
   try {
-    console.info("Getting exporter account by field/value");
-    const exportersArray = await context.db.Exporter.findMany({
+    console.info("Getting account by field/value");
+    const accountsArray = await context.db.Account.findMany({
       where: {
         [field]: { equals: value }
       },
       take: 1
     });
-    if (!exportersArray || !exportersArray.length || !exportersArray[0]) {
-      console.info("Getting exporter account by field - no exporter exists with the provided field/value");
+    if (!accountsArray || !accountsArray.length || !accountsArray[0]) {
+      console.info("Getting account by field - no account exists with the provided field/value");
       return false;
     }
-    const exporter = exportersArray[0];
-    return exporter;
+    const account = accountsArray[0];
+    return account;
   } catch (err) {
     console.error(err);
-    throw new Error(`Getting exporter account by field/value ${err}`);
+    throw new Error(`Getting account by field/value ${err}`);
   }
 };
 var get_account_by_field_default = getAccountByField;
@@ -1617,7 +1618,7 @@ var encryptPassword = (password2) => {
 };
 var encrypt_password_default = encryptPassword;
 
-// custom-resolvers/mutations/create-account.ts
+// custom-resolvers/mutations/create-an-account.ts
 var { EMAIL, ENCRYPTION: ENCRYPTION2 } = ACCOUNT2;
 var {
   STRING_TYPE: STRING_TYPE2,
@@ -1627,18 +1628,18 @@ var {
   }
 } = ENCRYPTION2;
 var createAccount = async (root, variables, context) => {
-  console.info("Creating new exporter account for ", variables.email);
+  console.info("Creating new account for ", variables.email);
   try {
     const { firstName, lastName, email, password: password2 } = variables;
-    const exporter = await get_account_by_field_default(context, "email", email);
-    if (exporter) {
-      console.info(`Unable to create new exporter account for ${variables.email} - account already exists`);
+    const account = await get_account_by_field_default(context, "email", email);
+    if (account) {
+      console.info(`Unable to create a new account for ${variables.email} - account already exists`);
       return { success: false };
     }
     const { salt, hash } = encrypt_password_default(password2);
     const verificationHash = import_crypto2.default.pbkdf2Sync(password2, salt, ITERATIONS2, KEY_LENGTH2, DIGEST_ALGORITHM2).toString(STRING_TYPE2);
     const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
-    const account = {
+    const accountUpdate = {
       firstName,
       lastName,
       email,
@@ -1647,39 +1648,39 @@ var createAccount = async (root, variables, context) => {
       verificationHash,
       verificationExpiry
     };
-    const response = await context.db.Exporter.createOne({
-      data: account
+    const response = await context.db.Account.createOne({
+      data: accountUpdate
     });
     return {
       ...response,
       success: true
     };
   } catch (err) {
-    throw new Error(`Creating new exporter account ${err}`);
+    throw new Error(`Creating a new account ${err}`);
   }
 };
-var create_account_default = createAccount;
+var create_an_account_default = createAccount;
 
 // custom-resolvers/mutations/verify-account-email-address.ts
 var import_date_fns2 = require("date-fns");
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
-    console.info("Verifying exporter email address");
-    const exporter = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.VERIFICATION_HASH, variables.token);
-    if (exporter) {
-      const { id } = exporter;
+    console.info("Verifying account email address");
+    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.VERIFICATION_HASH, variables.token);
+    if (account) {
+      const { id } = account;
       const now = /* @__PURE__ */ new Date();
-      const canActivateExporter = (0, import_date_fns2.isBefore)(now, exporter.verificationExpiry);
-      if (!canActivateExporter) {
-        console.info("Unable to verify exporter email - verification period has expired");
+      const canActivateAccount = (0, import_date_fns2.isBefore)(now, account.verificationExpiry);
+      if (!canActivateAccount) {
+        console.info("Unable to verify account email - verification period has expired");
         return {
           expired: true,
           success: false,
           accountId: id
         };
       }
-      await context.db.Exporter.updateOne({
-        where: { id: exporter.id },
+      await context.db.Account.updateOne({
+        where: { id: account.id },
         data: {
           isVerified: true,
           verificationHash: "",
@@ -1689,48 +1690,48 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
       return {
         success: true,
         accountId: id,
-        emailRecipient: exporter.email
+        emailRecipient: account.email
       };
     }
-    console.info("Unable to verify exporter email - no account found");
+    console.info("Unable to verify account email - no account found");
     return {
       success: false
     };
   } catch (err) {
     console.error(err);
-    throw new Error(`Verifying exporter email address ${err}`);
+    throw new Error(`Verifying account email address ${err}`);
   }
 };
 var verify_account_email_address_default = verifyAccountEmailAddress;
 
-// helpers/get-exporter-by-id/index.ts
-var getExporterById = async (context, exporterId) => {
+// helpers/get-account-by-id/index.ts
+var getAccountById = async (context, accountId) => {
   try {
-    console.info("Getting exporter by ID");
-    const exporter = await context.db.Exporter.findOne({
+    console.info("Getting account by ID");
+    const account = await context.db.Account.findOne({
       where: {
-        id: exporterId
+        id: accountId
       }
     });
-    return exporter;
+    return account;
   } catch (err) {
     console.error(err);
-    throw new Error(`Getting exporter by ID ${err}`);
+    throw new Error(`Getting account by ID ${err}`);
   }
 };
-var get_exporter_by_id_default = getExporterById;
+var get_account_by_id_default = getAccountById;
 
 // custom-resolvers/mutations/send-email-confirm-email-address.ts
 var sendEmailConfirmEmailAddress = async (root, variables, context) => {
   try {
-    const exporter = await get_exporter_by_id_default(context, variables.exporterId);
-    if (!exporter) {
-      console.info("Sending email verification for account creation - no exporter exists with the provided ID");
+    const account = await get_account_by_id_default(context, variables.accountId);
+    if (!account) {
+      console.info("Sending email verification for account creation - no account exists with the provided ID");
       return {
         success: false
       };
     }
-    const { email, firstName, verificationHash } = exporter;
+    const { email, firstName, verificationHash } = account;
     const emailResponse = await emails_default.confirmEmailAddress(email, firstName, verificationHash);
     if (emailResponse.success) {
       return emailResponse;
@@ -1754,13 +1755,13 @@ var {
   }
 } = ENCRYPTION3;
 var isValidAccountPassword = (password2, salt, hash) => {
-  console.info("Validating exporter account password");
+  console.info("Validating account password");
   const hashVerify = import_crypto3.default.pbkdf2Sync(password2, salt, ITERATIONS3, KEY_LENGTH3, DIGEST_ALGORITHM3).toString(STRING_TYPE3);
   if (hash === hashVerify) {
-    console.info("Valid exporter account password");
+    console.info("Valid account password");
     return true;
   }
-  console.info("Invalid exporter account password");
+  console.info("Invalid account password");
   return false;
 };
 var is_valid_account_password_default = isValidAccountPassword;
@@ -1804,7 +1805,7 @@ var generate_otp_default = generate;
 // helpers/generate-otp-and-update-account/index.ts
 var generateOTPAndUpdateAccount = async (context, accountId) => {
   try {
-    console.info("Adding OTP to exporter account");
+    console.info("Adding OTP to an account");
     const otp = generate_otp_default.otp();
     const { securityCode, salt, hash, expiry } = otp;
     const accountUpdate = {
@@ -1812,7 +1813,7 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
       otpHash: hash,
       otpExpiry: expiry
     };
-    await context.db.Exporter.updateOne({
+    await context.db.Account.updateOne({
       where: { id: accountId },
       data: accountUpdate
     });
@@ -1822,7 +1823,7 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
     };
   } catch (err) {
     console.error(err);
-    throw new Error(`Adding OTP to exporter account ${err}`);
+    throw new Error(`Adding OTP to an account ${err}`);
   }
 };
 var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
@@ -1830,24 +1831,24 @@ var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
 // custom-resolvers/mutations/account-sign-in.ts
 var accountSignIn = async (root, variables, context) => {
   try {
-    console.info("Signing in exporter account");
+    console.info("Signing in account");
     const { email, password: password2 } = variables;
-    const exporter = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
-    if (!exporter) {
-      console.info("Unable to validate exporter account - no account found");
+    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    if (!account) {
+      console.info("Unable to validate account - no account found");
       return { success: false };
     }
-    if (!exporter.isVerified) {
-      console.info("Unable to validate exporter account - account is not verified");
+    if (!account.isVerified) {
+      console.info("Unable to validate account - account is not verified");
       return { success: false };
     }
-    if (is_valid_account_password_default(password2, exporter.salt, exporter.hash)) {
-      const { securityCode } = await generate_otp_and_update_account_default(context, exporter.id);
-      const emailResponse = await emails_default.securityCodeEmail(email, exporter.firstName, securityCode);
+    if (is_valid_account_password_default(password2, account.salt, account.hash)) {
+      const { securityCode } = await generate_otp_and_update_account_default(context, account.id);
+      const emailResponse = await emails_default.securityCodeEmail(email, account.firstName, securityCode);
       if (emailResponse.success) {
         return {
           ...emailResponse,
-          accountId: exporter.id
+          accountId: account.id
         };
       }
       return {
@@ -1865,20 +1866,20 @@ var account_sign_in_default = accountSignIn;
 // custom-resolvers/mutations/account-sign-in-new-code.ts
 var accountSignInSendNewCode = async (root, variables, context) => {
   try {
-    console.info("Generating and sending new sign in code for exporter account");
+    console.info("Generating and sending new sign in code for account");
     const { accountId } = variables;
-    const exporter = await get_exporter_by_id_default(context, accountId);
-    if (!exporter) {
-      console.info("Unable to validate exporter account - no account found");
+    const account = await get_account_by_id_default(context, accountId);
+    if (!account) {
+      console.info("Unable to validate account - no account found");
       return { success: false };
     }
-    const { securityCode } = await generate_otp_and_update_account_default(context, exporter.id);
-    const { email, firstName } = exporter;
+    const { securityCode } = await generate_otp_and_update_account_default(context, account.id);
+    const { email, firstName } = account;
     const emailResponse = await emails_default.securityCodeEmail(email, firstName, securityCode);
     if (emailResponse.success) {
       return {
         ...emailResponse,
-        accountId: exporter.id
+        accountId: account.id
       };
     }
     return {
@@ -1886,7 +1887,7 @@ var accountSignInSendNewCode = async (root, variables, context) => {
     };
   } catch (err) {
     console.error(err);
-    throw new Error(`Generating and sending new sign in code for exporter account (accountSignInSendNewCode mutation) ${err}`);
+    throw new Error(`Generating and sending new sign in code for account (accountSignInSendNewCode mutation) ${err}`);
   }
 };
 var account_sign_in_new_code_default = accountSignInSendNewCode;
@@ -1956,26 +1957,26 @@ var {
 } = ACCOUNT2;
 var verifyAccountSignInCode = async (root, variables, context) => {
   try {
-    console.info("Verifying exporter account sign in code");
+    console.info("Verifying account sign in code");
     const { accountId, securityCode } = variables;
-    const exporter = await get_exporter_by_id_default(context, accountId);
-    if (!exporter) {
-      console.info("Unable to verify exporter account sign in code - no exporter exists with the provided ID");
+    const account = await get_account_by_id_default(context, accountId);
+    if (!account) {
+      console.info("Unable to verify account sign in code - no account exists with the provided ID");
       return {
         success: false
       };
     }
-    if (!exporter.otpSalt || !exporter.otpHash || !exporter.otpExpiry) {
-      console.info("Unable to verify exporter account sign in code - no OTP available for this account");
+    if (!account.otpSalt || !account.otpHash || !account.otpExpiry) {
+      console.info("Unable to verify account sign in code - no OTP available for this account");
       return {
         success: false
       };
     }
-    const { otpSalt, otpHash, otpExpiry } = exporter;
+    const { otpSalt, otpHash, otpExpiry } = account;
     const now = /* @__PURE__ */ new Date();
     const hasExpired = (0, import_date_fns3.isAfter)(now, otpExpiry);
     if (hasExpired) {
-      console.info("Unable to verify exporter account sign in code - verification period has expired");
+      console.info("Unable to verify account sign in code - verification period has expired");
       return {
         success: false,
         expired: true
@@ -1992,15 +1993,15 @@ var verifyAccountSignInCode = async (root, variables, context) => {
         otpHash: "",
         otpExpiry: null
       };
-      await context.db.Exporter.updateOne({
+      await context.db.Account.updateOne({
         where: { id: accountId },
         data: accountUpdate
       });
       return {
         success: true,
-        accountId: exporter.id,
-        lastName: exporter.lastName,
-        firstName: exporter.firstName,
+        accountId: account.id,
+        lastName: account.lastName,
+        firstName: account.firstName,
         ...jwt,
         expires: accountUpdate.sessionExpiry
       };
@@ -2010,7 +2011,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
     };
   } catch (err) {
     console.error(err);
-    throw new Error(`Verifying exporter account sign in code and generating JWT (verifyAccountSignInCode mutation) ${err}`);
+    throw new Error(`Verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) ${err}`);
   }
 };
 var verify_account_sign_in_code_default = verifyAccountSignInCode;
@@ -2018,21 +2019,21 @@ var verify_account_sign_in_code_default = verifyAccountSignInCode;
 // custom-resolvers/mutations/add-and-get-OTP.ts
 var addAndGetOTP = async (root, variables, context) => {
   try {
-    console.info("Adding OTP to exporter account");
+    console.info("Adding OTP to an account");
     const { email } = variables;
-    const exporter = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
-    if (!exporter) {
-      console.info("Unable to generate and add OTP to exporter account - no account found");
+    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    if (!account) {
+      console.info("Unable to generate and add OTP to an account - no account found");
       return { success: false };
     }
-    const { securityCode } = await generate_otp_and_update_account_default(context, exporter.id);
+    const { securityCode } = await generate_otp_and_update_account_default(context, account.id);
     return {
       success: true,
       securityCode
     };
   } catch (err) {
     console.error(err);
-    throw new Error(`Adding OTP to exporter account (addAndGetOTP mutation) ${err}`);
+    throw new Error(`Adding OTP to an account (addAndGetOTP mutation) ${err}`);
   }
 };
 var add_and_get_OTP_default = addAndGetOTP;
@@ -2052,21 +2053,21 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
   try {
     console.info("Sending password reset email");
     const { email } = variables;
-    const exporter = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
-    if (!exporter) {
+    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    if (!account) {
       console.info("Unable to send password reset email - no account found");
       return { success: false };
     }
-    const passwordResetHash = import_crypto7.default.pbkdf2Sync(email, exporter.salt, ITERATIONS6, KEY_LENGTH6, DIGEST_ALGORITHM6).toString(STRING_TYPE7);
+    const passwordResetHash = import_crypto7.default.pbkdf2Sync(email, account.salt, ITERATIONS6, KEY_LENGTH6, DIGEST_ALGORITHM6).toString(STRING_TYPE7);
     const accountUpdate = {
       passwordResetHash,
       passwordResetExpiry: ACCOUNT2.PASSWORD_RESET_EXPIRY()
     };
-    await context.db.Exporter.updateOne({
-      where: { id: exporter.id },
+    await context.db.Account.updateOne({
+      where: { id: account.id },
       data: accountUpdate
     });
-    const emailResponse = await emails_default.passwordResetLink(email, exporter.firstName, passwordResetHash);
+    const emailResponse = await emails_default.passwordResetLink(email, account.firstName, passwordResetHash);
     if (emailResponse.success) {
       return emailResponse;
     }
@@ -2110,7 +2111,7 @@ var accountPasswordReset = async (root, variables, context) => {
       passwordResetHash: "",
       passwordResetExpiry: null
     };
-    await context.db.Exporter.updateOne({
+    await context.db.Account.updateOne({
       where: {
         id: accountId
       },
@@ -2247,16 +2248,16 @@ var get_country_by_field_default = getCountryByField;
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application) => {
   console.info("Getting populated application");
-  const { eligibilityId, exporterId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId, buyerId, declarationId } = application;
+  const { eligibilityId, ownerId, policyAndExportId, exporterCompanyId, exporterBusinessId, exporterBrokerId, buyerId, declarationId } = application;
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId }
   });
   if (!eligibility) {
     throw new Error(generateErrorMessage("eligibility", application.id));
   }
-  const exporter = await get_exporter_by_id_default(context, exporterId);
-  if (!exporter) {
-    throw new Error(generateErrorMessage("exporter", application.id));
+  const account = await get_account_by_id_default(context, ownerId);
+  if (!account) {
+    throw new Error(generateErrorMessage("account", application.id));
   }
   const policyAndExport = await context.db.PolicyAndExport.findOne({
     where: { id: policyAndExportId }
@@ -2323,7 +2324,7 @@ var getPopulatedApplication = async (context, application) => {
       buyerCountry
     },
     policyAndExport: populatedPolicyAndExport,
-    exporter,
+    owner: account,
     exporterCompany: populatedExporterCompany,
     exporterBusiness,
     exporterBroker,
@@ -2344,20 +2345,20 @@ var getApplicationSubmittedEmailTemplateIds = (application) => {
   const { buyer, declaration } = application;
   const templateIds = {
     underwritingTeam: "",
-    exporter: ""
+    account: ""
   };
   const hasAntiBriberyCodeOfConduct = declaration.hasAntiBriberyCodeOfConduct === ANSWERS.YES;
   if (hasAntiBriberyCodeOfConduct) {
-    templateIds.exporter = EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY;
+    templateIds.account = EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY;
   }
   const isConnectedWithBuyer = buyer.exporterHasTradedWithBuyer && buyer.exporterHasTradedWithBuyer === ANSWERS.YES;
   if (isConnectedWithBuyer) {
-    templateIds.exporter = EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;
+    templateIds.account = EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_TRADING_HISTORY;
   }
   if (hasAntiBriberyCodeOfConduct && isConnectedWithBuyer) {
-    templateIds.exporter = EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
+    templateIds.account = EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY;
   }
   return templateIds;
@@ -2367,8 +2368,8 @@ var get_application_submitted_email_template_ids_default = getApplicationSubmitt
 // emails/send-application-submitted-emails/index.ts
 var send = async (application, csvPath) => {
   try {
-    const { referenceNumber, exporter, exporterCompany, buyer, policyAndExport } = application;
-    const { email, firstName } = exporter;
+    const { referenceNumber, owner, exporterCompany, buyer, policyAndExport } = application;
+    const { email, firstName } = owner;
     const sendEmailVars = {
       emailAddress: email,
       firstName,
@@ -2378,17 +2379,17 @@ var send = async (application, csvPath) => {
       exporterCompanyName: exporterCompany.companyName,
       requestedStartDate: policyAndExport.requestedStartDate
     };
-    const exporterSubmittedResponse = await emails_default.applicationSubmitted.exporter(sendEmailVars);
-    if (!exporterSubmittedResponse.success) {
-      throw new Error("Sending application submitted email to exporter");
+    const accountSubmittedResponse = await emails_default.applicationSubmitted.account(sendEmailVars);
+    if (!accountSubmittedResponse.success) {
+      throw new Error("Sending application submitted email to owner/account");
     }
     const templateIds = get_application_submitted_email_template_ids_default(application);
     const underwritingTeamSubmittedResponse = await emails_default.applicationSubmitted.underwritingTeam(sendEmailVars, csvPath, templateIds.underwritingTeam);
     if (!underwritingTeamSubmittedResponse.success) {
       throw new Error("Sending application submitted email to underwriting team");
     }
-    if (templateIds.exporter) {
-      const documentsResponse = await emails_default.documentsEmail(sendEmailVars, templateIds.exporter);
+    if (templateIds.account) {
+      const documentsResponse = await emails_default.documentsEmail(sendEmailVars, templateIds.account);
       if (!documentsResponse.success) {
         throw new Error(`Sending application submitted emails ${documentsResponse}`);
       }
@@ -2832,9 +2833,9 @@ var mapKeyInformation = (application) => {
     csv_row_default(REFERENCE_NUMBER.SUMMARY.TITLE, application.referenceNumber),
     csv_row_default(DATE_SUBMITTED.SUMMARY.TITLE, format_date_default(application.submissionDate, "dd-MM-yyyy")),
     csv_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application.submissionDate)),
-    csv_row_default(FIELDS2[FIRST_NAME2], application.exporter[FIRST_NAME2]),
-    csv_row_default(FIELDS2[LAST_NAME2], application.exporter[LAST_NAME2]),
-    csv_row_default(FIELDS2[EMAIL4], application.exporter[EMAIL4])
+    csv_row_default(FIELDS2[FIRST_NAME2], application.owner[FIRST_NAME2]),
+    csv_row_default(FIELDS2[LAST_NAME2], application.owner[LAST_NAME2]),
+    csv_row_default(FIELDS2[EMAIL4], application.owner[EMAIL4])
   ];
   return mapped;
 };
@@ -3266,16 +3267,17 @@ var import_axios = __toESM(require("axios"));
 var import_dotenv4 = __toESM(require("dotenv"));
 import_dotenv4.default.config();
 var { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
-var username = process.env.MULESOFT_API_MDM_EA_KEY;
-var secret = process.env.MULESOFT_API_MDM_EA_SECRET;
-var industrySectorUrl = `${process.env.MULESOFT_API_MDM_EA_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`;
+var headers = {
+  "Content-Type": "application/json",
+  [String(process.env.APIM_MDM_KEY)]: process.env.APIM_MDM_VALUE
+};
 var getIndustrySectorNames = async () => {
   try {
     console.info("Calling industry sector API");
     const response = await (0, import_axios.default)({
       method: "get",
-      url: `${industrySectorUrl}`,
-      auth: { username, password: secret },
+      url: `${process.env.APIM_MDM_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`,
+      headers,
       validateStatus(status) {
         const acceptableStatus = [200, 404];
         return acceptableStatus.includes(status);
@@ -3302,7 +3304,7 @@ var industry_sector_default = getIndustrySectorNames;
 
 // custom-resolvers/queries/get-companies-house-information.ts
 import_dotenv5.default.config();
-var username2 = process.env.COMPANIES_HOUSE_API_KEY;
+var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
 var getCompaniesHouseInformation = async (root, variables) => {
   try {
@@ -3312,7 +3314,7 @@ var getCompaniesHouseInformation = async (root, variables) => {
     const response = await (0, import_axios2.default)({
       method: "get",
       url: `${companiesHouseURL}/company/${sanitisedRegNo}`,
-      auth: { username: username2, password: "" },
+      auth: { username, password: "" },
       validateStatus(status) {
         const acceptableStatus = [200, 404];
         return acceptableStatus.includes(status);
@@ -3401,7 +3403,7 @@ var verify_account_password_reset_token_default = verifyAccountPasswordResetToke
 // custom-resolvers/index.ts
 var customResolvers = {
   Mutation: {
-    createAccount: create_account_default,
+    createAnAccount: create_an_account_default,
     accountSignIn: account_sign_in_default,
     accountSignInSendNewCode: account_sign_in_new_code_default,
     verifyAccountEmailAddress: verify_account_email_address_default,

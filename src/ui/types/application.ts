@@ -1,7 +1,7 @@
 import { InsuranceEligibilityCore } from './submitted-data';
 import { Country } from './country';
 
-interface ApplicationExporter {
+interface ApplicationOwner {
   id: string;
 }
 
@@ -131,7 +131,7 @@ interface ApplicationDeclaration {
 
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
-  exporter: ApplicationExporter;
+  owner: ApplicationOwner;
   policyAndExport: ApplicationPolicyAndExport;
   exporterCompany: ApplicationExporterCompany;
   exporterBusiness: ApplicationExporterBusiness;
@@ -141,7 +141,7 @@ interface Application extends ApplicationCore {
   declaration: ApplicationDeclaration;
 }
 
-interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore, ApplicationExporter {
+interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore, ApplicationOwner {
   buyerCountry: string;
 }
 type ApplicationFlat = ApplicationFlatCore & ApplicationPolicyAndExport & ApplicationExporterCompany & ApplicationDeclaration;

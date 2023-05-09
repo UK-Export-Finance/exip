@@ -41,7 +41,7 @@ const applicationQuery = gql`
           goodsOrServicesDescription
           finalDestinationCountryCode
         }
-        exporter {
+        owner {
           id
         }
         exporterCompany {

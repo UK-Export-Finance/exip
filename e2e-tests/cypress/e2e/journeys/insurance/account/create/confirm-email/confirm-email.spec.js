@@ -25,7 +25,7 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
     cy.saveSession();
   });
 
-  let exporter;
+  let account;
   let expectedUrl;
 
   after(() => {
@@ -35,16 +35,16 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
   describe('page URL and content', () => {
     beforeEach(() => {
       /**
-       * Get the exporter ID directly from the API,
+       * Get the account ID directly from the API,
        * so that we can assert that `request a new link` has the correct ID.
        */
-      const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+      const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
-      api.getExporterByEmail(exporterEmail).then((response) => {
+      api.getAccountByEmail(accountEmail).then((response) => {
         const { data } = response.body;
 
-        const [firstExporter] = data.exporters;
-        exporter = firstExporter;
+        const [firstAccount] = data.accounts;
+        account = firstAccount;
       });
     });
 
@@ -55,7 +55,7 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
 
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-        currentHref: `${CONFIRM_EMAIL}?id=${exporter.id}`,
+        currentHref: `${CONFIRM_EMAIL}?id=${account.id}`,
         backLink: YOUR_DETAILS,
         assertSubmitButton: false,
         assertAuthenticatedHeader: false,
@@ -65,7 +65,7 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
       });
 
       // assert confirm email content
-      cy.assertConfirmEmailPageContent(exporter.id);
+      cy.assertConfirmEmailPageContent(account.id);
     });
   });
 });

@@ -26,7 +26,7 @@ describe('api/helpers/get-populated-application', () => {
       id: application.id,
       eligibilityId: application.eligibility.id,
       policyAndExportId: application.policyAndExport.id,
-      exporterId: application.exporter.id,
+      ownerId: application.owner.id,
       exporterCompanyId: application.exporterCompany.id,
       exporterBusinessId: application.exporterBusiness.id,
       exporterBrokerId: application.exporterBroker.id,
@@ -40,7 +40,7 @@ describe('api/helpers/get-populated-application', () => {
 
     expect(result.eligibility.id).toEqual(application.eligibility.id);
     expect(result.policyAndExport.id).toEqual(application.policyAndExport.id);
-    expect(result.exporter.id).toEqual(application.exporter.id);
+    expect(result.owner.id).toEqual(application.owner.id);
     expect(result.exporterCompany.id).toEqual(application.exporterCompany.id);
     expect(result.exporterBusiness.id).toEqual(application.exporterBusiness.id);
     expect(result.exporterBroker.id).toEqual(application.exporterBroker.id);
@@ -73,7 +73,7 @@ describe('api/helpers/get-populated-application', () => {
     const invalidId = applicationIds.policyAndExportId;
 
     try {
-      await getPopulatedApplication(context, { ...applicationIds, exporterId: invalidId });
+      await getPopulatedApplication(context, { ...applicationIds, accountId: invalidId });
     } catch (err) {
       const expected = new Error(generateErrorMessage('exporter', applicationIds.id));
       expect(err).toEqual(expected);

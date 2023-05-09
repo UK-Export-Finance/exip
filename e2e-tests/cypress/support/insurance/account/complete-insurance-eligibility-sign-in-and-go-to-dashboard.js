@@ -32,7 +32,7 @@ const completeInsuranceEligibilitySignInAndGoToDashboard = (emailAddress) => {
 
   cy.submitInsuranceEligibilityAnswersHappyPath();
 
-  // create an exporter account
+  // create an account
   return cy.createAccount({ emailAddress }).then((verifyAccountUrl) => {
     // verify the account by navigating to the "verify account" page
     cy.navigateToUrl(verifyAccountUrl);

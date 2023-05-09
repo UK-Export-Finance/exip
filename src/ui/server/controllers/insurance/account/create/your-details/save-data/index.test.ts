@@ -40,7 +40,7 @@ describe('controllers/account/create/your-details/save-data', () => {
         try {
           await save.account(mockFormBody);
         } catch (err) {
-          const expected = new Error('Creating exporter account');
+          const expected = new Error('Creating account');
           expect(err).toEqual(expected);
         }
       });

@@ -1,28 +1,28 @@
 import api from '../../api';
 
-const exporterEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
 /**
  * deleteAccount
- * Get the exporter and delete.
+ * Get an account and delete.
  * This prevents account tests from failing, where an account/email must be unique and verified.
  * @param {String}: Email address
  */
-const deleteAccount = (email = exporterEmail) => {
+const deleteAccount = (email = accountEmail) => {
   try {
-    // get the exporter.
-    api.getExporterByEmail(email).then((response) => {
+    // get the account.
+    api.getAccountByEmail(email).then((response) => {
       const { data } = response.body;
 
-      const [firstExporter] = data.exporters;
-      const exporter = firstExporter;
+      const [firstAccount] = data.accounts;
+      const account = firstAccount;
 
-      return api.deleteExportersById(exporter.id).then((id) => id);
+      return api.deleteAccountsById(account.id).then((id) => id);
     });
   } catch (err) {
     console.error(err);
 
-    throw new Error('Deleting exporter account');
+    throw new Error('Deleting account');
   }
 };
 

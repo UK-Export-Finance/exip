@@ -24,7 +24,7 @@ export const applicationAccessMiddleware = async (req: Request, res: Response, n
   }
 
   /**
-   * If the session exporter/account ID matches the application's exporter/account id,
+   * If the session account ID matches the application's owner/account id,
    * allow the user to view/access the application.
    * Otherwise, redirect to the "no access" page.
    */
@@ -33,9 +33,9 @@ export const applicationAccessMiddleware = async (req: Request, res: Response, n
 
     const { id: userId } = req.session.user;
 
-    const { exporter } = application;
+    const { owner } = application;
 
-    if (exporter && exporter.id === userId) {
+    if (owner && owner.id === userId) {
       return next();
     }
 

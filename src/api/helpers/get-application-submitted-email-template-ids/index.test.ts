@@ -18,7 +18,7 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
     const result = getApplicationSubmittedEmailTemplateIds(application);
 
     const expected = {
-      exporter: EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY,
+      account: EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY,
       underwritingTeam: UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY,
     };
 
@@ -40,7 +40,7 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
       const result = getApplicationSubmittedEmailTemplateIds(application);
 
       const expected = {
-        exporter: EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY,
+        account: EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY,
         underwritingTeam: UNDERWRITING_TEAM.NOTIFICATION_TRADING_HISTORY,
       };
 
@@ -68,7 +68,7 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
       const result = getApplicationSubmittedEmailTemplateIds(application);
 
       const expected = {
-        exporter: '',
+        account: '',
         underwritingTeam: '',
       };
 
@@ -95,7 +95,7 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
       const result = getApplicationSubmittedEmailTemplateIds(application);
 
       const expected = {
-        exporter: EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY,
+        account: EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY,
         underwritingTeam: UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY,
       };
 

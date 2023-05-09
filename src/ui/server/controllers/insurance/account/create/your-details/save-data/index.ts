@@ -17,7 +17,7 @@ const account = async (formBody: RequestBody) => {
 
     return saveResponse;
   } catch (err) {
-    throw new Error('Creating exporter account');
+    throw new Error('Creating account');
   }
 };
 
