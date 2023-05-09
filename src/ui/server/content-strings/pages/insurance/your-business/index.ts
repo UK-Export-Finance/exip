@@ -1,4 +1,4 @@
-import { COMPANY_DETAILS } from './exporter-business';
+import { COMPANY_DETAILS } from './company';
 
 const SHARED = {
   HEADING_CAPTION: 'Your business',

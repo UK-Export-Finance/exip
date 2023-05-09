@@ -1,6 +1,6 @@
 import { companyDetails } from '../../../../pages/your-business';
 import { ERROR_MESSAGES, DEFAULT } from '../../../../../../content-strings';
-import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
+import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import partials from '../../../../partials';
 import { saveAndBackButton } from '../../../../pages/shared';
 import {

@@ -1,4 +1,4 @@
-import { ROUTES, TEMPLATES } from '../../../constants';
+import { ROUTES, TEMPLATES, APPLICATION } from '../../../constants';
 import { PAGES } from '../../../content-strings';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
@@ -39,6 +39,7 @@ export const get = async (req: Request, res: Response) => {
         INSURANCE_ROOT,
         ALL_SECTIONS,
       },
+      SUBMITTED_STATUS: APPLICATION.STATUS.SUBMITTED,
     });
   } catch (err) {
     console.error("Error getting applications and rendering 'dashboard' page ", { err });

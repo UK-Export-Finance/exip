@@ -29,7 +29,7 @@ describe('api/helpers/get-populated-application', () => {
       ownerId: application.owner.id,
       companyId: application.company.id,
       businessId: application.business.id,
-      exporterBrokerId: application.exporterBroker.id,
+      brokerId: application.broker.id,
       buyerId: application.buyer.id,
       declarationId: application.declaration.id,
     };
@@ -43,7 +43,7 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.owner.id).toEqual(application.owner.id);
     expect(result.company.id).toEqual(application.company.id);
     expect(result.business.id).toEqual(application.business.id);
-    expect(result.exporterBroker.id).toEqual(application.exporterBroker.id);
+    expect(result.broker.id).toEqual(application.broker.id);
     expect(result.buyer.id).toEqual(application.buyer.id);
 
     expect(result.declaration.id).toEqual(application.declaration.id);
@@ -124,13 +124,13 @@ describe('api/helpers/get-populated-application', () => {
     }
   });
 
-  it('should throw an error when exporterBroker does not exist', async () => {
+  it('should throw an error when broker does not exist', async () => {
     const invalidId = applicationIds.id;
 
     try {
-      await getPopulatedApplication(context, { ...applicationIds, exporterBrokerId: invalidId });
+      await getPopulatedApplication(context, { ...applicationIds, brokerId: invalidId });
     } catch (err) {
-      const expected = new Error(generateErrorMessage('exporterBroker', applicationIds.id));
+      const expected = new Error(generateErrorMessage('broker', applicationIds.id));
       expect(err).toEqual(expected);
     }
   });

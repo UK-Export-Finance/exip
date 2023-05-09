@@ -31,10 +31,10 @@ describe('controllers/insurance/all-sections', () => {
     it('should render template', () => {
       get(req, res);
 
-      const { referenceNumber, policyAndExport, exporterBroker, declaration } = mockApplication;
+      const { referenceNumber, policyAndExport, broker, declaration } = mockApplication;
 
       const { policyType } = policyAndExport;
-      const { isUsingBroker } = exporterBroker;
+      const { isUsingBroker } = broker;
       const { hasAntiBriberyCodeOfConduct } = declaration;
 
       const flatApplicationData = flattenApplicationData(mockApplication);

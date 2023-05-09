@@ -1,6 +1,6 @@
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES, ROUTES } from '../../../../constants';
-import FIELD_IDS from '../../../../constants/field-ids/insurance/exporter-business';
+import FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
 import { FIELDS, ACCOUNT_FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';

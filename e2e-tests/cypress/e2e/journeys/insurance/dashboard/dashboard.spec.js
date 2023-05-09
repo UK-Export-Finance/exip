@@ -126,7 +126,7 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
         });
 
         it('should render a link to the application', () => {
-          const applicationLink = table.body.row(referenceNumber).referenceNumber();
+          const applicationLink = table.body.row(referenceNumber).referenceNumberLink();
 
           const expected = {
             href: expectedUrl,
@@ -137,7 +137,7 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
         });
 
         it('should redirect to the application', () => {
-          const applicationLink = table.body.row(referenceNumber).referenceNumber();
+          const applicationLink = table.body.row(referenceNumber).referenceNumberLink();
 
           applicationLink.click();
 

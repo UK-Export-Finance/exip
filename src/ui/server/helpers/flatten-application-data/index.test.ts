@@ -6,7 +6,7 @@ describe('server/helpers/flatten-application-data', () => {
   it('should return an application with a flat structure with no nested objects', () => {
     const result = flattenApplicationData(mockApplication);
 
-    const { policyAndExport, company, exporterBroker, business, buyer, sectionReview, declaration } = mockApplication;
+    const { policyAndExport, company, broker, business, buyer, sectionReview, declaration } = mockApplication;
 
     const expected = {
       ...mockApplication.eligibility,
@@ -21,7 +21,7 @@ describe('server/helpers/flatten-application-data', () => {
       ...policyAndExport,
       ...company,
       ...business,
-      ...exporterBroker,
+      ...broker,
       ...buyer,
       ...getYesAndTrueAnswerProperties(sectionReview),
       ...getYesAndTrueAnswerProperties(declaration),

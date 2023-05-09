@@ -44,7 +44,7 @@ export const lists = {
       }),
       business: relationship({ ref: 'Business' }),
       company: relationship({ ref: 'Company' }),
-      exporterBroker: relationship({ ref: 'ExporterBroker' }),
+      broker: relationship({ ref: 'Broker' }),
       buyer: relationship({ ref: 'Buyer' }),
       sectionReview: relationship({ ref: 'SectionReview' }),
       declaration: relationship({ ref: 'Declaration' }),
@@ -97,8 +97,8 @@ export const lists = {
               },
             };
 
-            // generate a new `exporter company address` relationship with the company
-            await context.db.ExporterCompanyAddress.createOne({
+            // generate a new `company address` relationship with the company
+            await context.db.CompanyAddress.createOne({
               data: {
                 company: {
                   connect: {
@@ -119,14 +119,14 @@ export const lists = {
               },
             };
 
-            // generate and attach a new 'exporter broker' relationship
-            const { id: exporterBrokerId } = await context.db.ExporterBroker.createOne({
+            // generate and attach a new 'broker' relationship
+            const { id: brokerId } = await context.db.Broker.createOne({
               data: {},
             });
 
-            modifiedData.exporterBroker = {
+            modifiedData.broker = {
               connect: {
-                id: exporterBrokerId,
+                id: brokerId,
               },
             };
 
@@ -194,7 +194,7 @@ export const lists = {
 
             const { referenceNumber, eligibilityId } = item;
 
-            const { policyAndExportId, companyId, businessId, exporterBrokerId, buyerId, sectionReviewId, declarationId } = item;
+            const { policyAndExportId, companyId, businessId, brokerId, buyerId, sectionReviewId, declarationId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -256,9 +256,9 @@ export const lists = {
               },
             });
 
-            // add the application ID to the exporter broker entry.
-            await context.db.ExporterBroker.updateOne({
-              where: { id: exporterBrokerId },
+            // add the application ID to the broker entry.
+            await context.db.Broker.updateOne({
+              where: { id: brokerId },
               data: {
                 application: {
                   connect: {
@@ -439,7 +439,7 @@ export const lists = {
     },
     access: allowAll,
   }),
-  ExporterBroker: list({
+  Broker: list({
     fields: {
       application: relationship({ ref: 'Application' }),
       isUsingBroker: select({
@@ -466,7 +466,7 @@ export const lists = {
     },
     access: allowAll,
   }),
-  ExporterCompanyAddress: list({
+  CompanyAddress: list({
     fields: {
       company: relationship({ ref: 'Company.registeredOfficeAddress' }),
       addressLine1: text(),
@@ -483,9 +483,9 @@ export const lists = {
   Company: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      registeredOfficeAddress: relationship({ ref: 'ExporterCompanyAddress.company' }),
+      registeredOfficeAddress: relationship({ ref: 'CompanyAddress.company' }),
       sicCodes: relationship({
-        ref: 'ExporterCompanySicCode.company',
+        ref: 'CompanySicCode.company',
         many: true,
       }),
       companyName: text(),
@@ -518,7 +518,7 @@ export const lists = {
     },
     access: allowAll,
   }),
-  ExporterCompanySicCode: list({
+  CompanySicCode: list({
     fields: {
       company: relationship({ ref: 'Company.sicCodes' }),
       sicCode: text(),

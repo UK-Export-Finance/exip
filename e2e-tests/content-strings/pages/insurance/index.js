@@ -4,7 +4,7 @@ import { PRODUCT, ROUTES, CONTACT_DETAILS } from '../../../constants';
 import POLICY_AND_EXPORTS from './policy-and-exports';
 import * as ELIGIBILITY_PAGES from './eligibility';
 import * as ACCOUNT_PAGES from './account';
-import * as EXPORTER_BUSINESS from './exporter-business';
+import * as EXPORTER_BUSINESS from './business';
 import * as YOUR_BUYER from './your-buyer';
 import * as DECLARATIONS from './declarations';
 import * as CHECK_YOUR_ANSWERS from './check-your-answers';

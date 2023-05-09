@@ -1,5 +1,5 @@
-import mapExporter, { mapExporterBroker } from '.';
-import FIELD_IDS from '../../../constants/field-ids/insurance/exporter-business';
+import mapExporter, { mapBroker } from '.';
+import FIELD_IDS from '../../../constants/field-ids/insurance/business';
 import { CSV } from '../../../content-strings';
 import { FIELDS } from '../../../content-strings/fields/insurance/your-business';
 import { ANSWERS, GBP_CURRENCY_CODE } from '../../../constants';
@@ -26,21 +26,21 @@ const {
 } = FIELD_IDS;
 
 describe('api/generate-csv/map-application-to-csv/map-exporter', () => {
-  describe('mapExporterBroker', () => {
+  describe('mapBroker', () => {
     describe(`when ${USING_BROKER} is ${ANSWERS.YES}`, () => {
       it('should return an array of mapped exporter fields', () => {
-        const result = mapExporterBroker(mockApplication);
+        const result = mapBroker(mockApplication);
 
-        const { exporterBroker } = mockApplication;
+        const { broker } = mockApplication;
 
         const expected = [
-          csvRow(CSV.FIELDS[USING_BROKER], exporterBroker[USING_BROKER]),
-          csvRow(CSV.FIELDS[BROKER_NAME], exporterBroker[BROKER_NAME]),
+          csvRow(CSV.FIELDS[USING_BROKER], broker[USING_BROKER]),
+          csvRow(CSV.FIELDS[BROKER_NAME], broker[BROKER_NAME]),
           csvRow(
             CSV.FIELDS[ADDRESS_LINE_1],
-            `${exporterBroker[ADDRESS_LINE_1]} ${NEW_LINE} ${exporterBroker[TOWN]} ${NEW_LINE} ${exporterBroker[COUNTY]} ${NEW_LINE} ${exporterBroker[POSTCODE]}`,
+            `${broker[ADDRESS_LINE_1]} ${NEW_LINE} ${broker[TOWN]} ${NEW_LINE} ${broker[COUNTY]} ${NEW_LINE} ${broker[POSTCODE]}`,
           ),
-          csvRow(CSV.FIELDS[EMAIL], exporterBroker[EMAIL]),
+          csvRow(CSV.FIELDS[EMAIL], broker[EMAIL]),
         ];
 
         expect(result).toEqual(expected);
@@ -51,17 +51,17 @@ describe('api/generate-csv/map-application-to-csv/map-exporter', () => {
       it('should return an array of mapped exporter fields', () => {
         const mockApplicationNoBroker = {
           ...mockApplication,
-          exporterBroker: {
-            ...mockApplication.exporterBroker,
+          broker: {
+            ...mockApplication.broker,
             [USING_BROKER]: ANSWERS.NO,
           },
         };
 
-        const result = mapExporterBroker(mockApplicationNoBroker);
+        const result = mapBroker(mockApplicationNoBroker);
 
-        const { exporterBroker } = mockApplicationNoBroker;
+        const { broker } = mockApplicationNoBroker;
 
-        const expected = [csvRow(CSV.FIELDS[USING_BROKER], exporterBroker[USING_BROKER])];
+        const expected = [csvRow(CSV.FIELDS[USING_BROKER], broker[USING_BROKER])];
 
         expect(result).toEqual(expected);
       });
@@ -100,8 +100,8 @@ describe('api/generate-csv/map-application-to-csv/map-exporter', () => {
         csvRow(CSV.FIELDS[ESTIMATED_ANNUAL_TURNOVER], formatCurrency(business[ESTIMATED_ANNUAL_TURNOVER], GBP_CURRENCY_CODE)),
         csvRow(CONTENT_STRINGS[PERCENTAGE_TURNOVER].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER]}%`),
 
-        // exporter broker fields
-        ...mapExporterBroker(mockApplication),
+        // broker fields
+        ...mapBroker(mockApplication),
       ];
 
       expect(result).toEqual(expected);

@@ -5,8 +5,8 @@ import mockAccount from './mock-account';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
 import { Application } from '../../types';
-import mockBroker from './mock-broker';
-import mockBuyer from './mock-buyer';
+import broker from './mock-broker';
+import buyer from './mock-buyer';
 
 dotenv.config();
 
@@ -62,7 +62,7 @@ export const mockCompany = {
     postalCode: 'Post code',
     country: '',
     premises: '',
-    __typename: 'ExporterCompanyAddress',
+    __typename: 'CompanyAddress',
   },
   financialYearEndDate: new Date(),
   __typename: 'Company',
@@ -78,14 +78,14 @@ export const mockBusiness = {
   exportsTurnoverPercentage: '20',
 };
 
-export const mockExporterBroker = {
+export const mockBroker = {
   id: 'clcyyopna0158m8noaglyy9gg',
-  ...mockBroker,
+  ...broker,
 };
 
 export const mockApplicationBuyer = {
   id: 'clcyyopna0158m8noaglyy9aa',
-  ...mockBuyer,
+  ...buyer,
 };
 
 export const mockSectionReview = {
@@ -131,7 +131,7 @@ const mockApplication = {
   policyAndExport: mockSinglePolicyAndExport,
   company: mockCompany,
   business: mockBusiness,
-  exporterBroker: mockExporterBroker,
+  broker: mockBroker,
   buyer: mockApplicationBuyer,
   sectionReview: mockSectionReview,
   declaration: mockApplicationDeclaration,

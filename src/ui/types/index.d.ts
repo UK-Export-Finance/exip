@@ -8,7 +8,7 @@ import {
   ApplicationExporterSicCodes,
   ApplicationExporterindustrySectorNames,
   ApplicationBusiness,
-  ApplicationExporterBroker,
+  ApplicationBroker,
   ApplicationBuyer,
 } from './application';
 import { ApolloResponse } from './apollo';
@@ -18,7 +18,7 @@ import { CompanyHouseResponse } from './company-house-response';
 import { Country } from './country';
 import { Currency } from './currency';
 import { NumberErrorMessage } from './errors';
-import { Business } from './exporter-business';
+import { Business } from './business';
 import { Next, Request, RequestBody, RequestSession, RequestSessionUser, Response } from './express';
 import { RequiredDataStateInsuranceEligibility, RequiredDataStateQuoteEligibility } from './required-data-state';
 import { PricingGrid, PricingGridMonth, PricingGridRate } from './pricing-grid';
@@ -63,7 +63,7 @@ export {
   ApplicationExporterSicCodes,
   ApplicationExporterindustrySectorNames,
   ApplicationBusiness,
-  ApplicationExporterBroker,
+  ApplicationBroker,
   ApplicationBuyer,
   ApolloResponse,
   CisCountry,

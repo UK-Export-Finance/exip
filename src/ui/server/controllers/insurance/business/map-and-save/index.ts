@@ -117,9 +117,9 @@ const broker = async (formBody: RequestBody, application: Application, validatio
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await save.exporterBroker(application, formBody, validationErrors.errorList);
+        saveResponse = await save.broker(application, formBody, validationErrors.errorList);
       } else {
-        saveResponse = await save.exporterBroker(application, formBody);
+        saveResponse = await save.broker(application, formBody);
       }
 
       if (!saveResponse) {

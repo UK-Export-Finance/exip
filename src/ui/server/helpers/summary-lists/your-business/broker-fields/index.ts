@@ -4,7 +4,7 @@ import { ROUTES, FIELD_VALUES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
-import { ApplicationBusiness, SummaryListItemData } from '../../../../../types';
+import { ApplicationBroker, SummaryListItemData } from '../../../../../types';
 import generateChangeLink from '../../../generate-change-link';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
@@ -22,12 +22,12 @@ const {
 /**
  * optionalBrokerFields
  * if yes selected for broker, populates and returns optional fields in an array
- * @param {ApplicationBusiness} answers
+ * @param {ApplicationBroker} answers
  * @param {Number} referenceNumber
  * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} optional broker fields if yes selected
  */
-const optionalBrokerFields = (answers: ApplicationBusiness, referenceNumber: number, checkAndChange: boolean) => {
+const optionalBrokerFields = (answers: ApplicationBroker, referenceNumber: number, checkAndChange: boolean) => {
   let fields = [] as Array<SummaryListItemData>;
 
   // if yes selected then will populate optional fields, else will return empty array
@@ -72,10 +72,10 @@ const optionalBrokerFields = (answers: ApplicationBusiness, referenceNumber: num
 /**
  * generateBrokerFields
  * Create all your broker fields and values for the Insurance - Broker govukSummaryList
- * @param {ApplicationBusiness} answers exporter broker
+ * @param {ApplicationBroker} answers
  * @returns {Object} All broker fields and values in an object structure for GOVUK summary list structure
  */
-const generateBrokerFields = (answers: ApplicationBusiness, referenceNumber: number, checkAndChange: boolean) => {
+const generateBrokerFields = (answers: ApplicationBroker, referenceNumber: number, checkAndChange: boolean) => {
   const fields = [
     fieldGroupItem({
       field: getFieldById(FIELDS.BROKER, USING_BROKER),

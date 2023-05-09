@@ -2,7 +2,7 @@ import { broker } from '../../../../../pages/your-business';
 import partials from '../../../../../partials';
 import { submitButton } from '../../../../../pages/shared';
 import { ROUTES, INVALID_POSTCODES, VALID_POSTCODES } from '../../../../../../../constants';
-import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/exporter-business';
+import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 
 const {

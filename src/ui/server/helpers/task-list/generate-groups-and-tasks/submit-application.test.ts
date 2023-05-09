@@ -22,14 +22,13 @@ const {
 
 describe('server/helpers/task-list/submit-application', () => {
   it('should return EXIP `submit application` tasks', () => {
-    const { referenceNumber, policyAndExport, exporterBroker, declaration } = mockApplication;
+    const { referenceNumber, policyAndExport, broker, declaration } = mockApplication;
 
-    const groupsAndTasks = generateGroupsAndTasks(
-      referenceNumber,
-      policyAndExport.policyType,
-      exporterBroker.isUsingBroker,
-      declaration.hasAntiBriberyCodeOfConduct,
-    );
+    const { policyType } = policyAndExport;
+    const { isUsingBroker } = broker;
+    const { hasAntiBriberyCodeOfConduct } = declaration;
+
+    const groupsAndTasks = generateGroupsAndTasks(referenceNumber, policyType, isUsingBroker, hasAntiBriberyCodeOfConduct);
 
     const initialChecksGroup = groupsAndTasks[0];
     const prepareApplicationGroup = groupsAndTasks[1];

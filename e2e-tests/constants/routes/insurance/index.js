@@ -1,7 +1,7 @@
 import { PRODUCT } from '../../product';
 import { ACCOUNT } from './account';
 import { POLICY_AND_EXPORTS } from './policy-and-export';
-import { EXPORTER_BUSINESS } from './exporter-business';
+import { EXPORTER_BUSINESS } from './business';
 import { YOUR_BUYER } from './your-buyer';
 import { DECLARATIONS } from './declarations';
 import { CHECK_YOUR_ANSWERS } from './check-your-answers';

@@ -25,7 +25,7 @@ const { PHONE_NUMBER, WEBSITE, YOUR_BUSINESS, ...YOUR_COMPANY_FIELDS } = YOUR_CO
 const { FINANCIAL_YEAR_END_DATE, ...TURNOVER_FIELDS } = TURNOVER;
 const { USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL } = BROKER;
 
-describe('server/helpers/required-fields/exporter-business', () => {
+describe('server/helpers/required-fields/business', () => {
   describe('getBrokerTasks', () => {
     describe(`when isUsingBroker is "${FIELD_VALUES.YES}"`, () => {
       it('should return multiple field ids in an array', () => {
@@ -56,7 +56,7 @@ describe('server/helpers/required-fields/exporter-business', () => {
 
   describe('requiredFields', () => {
     it('should return array of required fields', () => {
-      const result = requiredFields(mockApplication.exporterBroker.isUsingBroker);
+      const result = requiredFields(mockApplication.broker.isUsingBroker);
 
       const expected = Object.values({
         ...YOUR_COMPANY_FIELDS,
@@ -64,7 +64,7 @@ describe('server/helpers/required-fields/exporter-business', () => {
         ...NATURE_OF_YOUR_BUSINESS,
         ...TURNOVER_FIELDS,
         USING_BROKER,
-        ...getBrokerTasks(mockApplication.exporterBroker.isUsingBroker),
+        ...getBrokerTasks(mockApplication.broker.isUsingBroker),
       });
 
       expect(result).toEqual(expected);

@@ -1,6 +1,6 @@
 import { FIELD_VALUES } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import FIELD_IDS from '../../../../../../constants/field-ids/insurance/exporter-business';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
 import { RequestBody } from '../../../../../../../types';
 import postCodeValidation from '../../../../../../shared-validation/postcode';
 

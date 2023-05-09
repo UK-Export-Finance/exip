@@ -2,9 +2,9 @@ import { turnover } from '../../../../pages/your-business';
 import partials from '../../../../partials';
 import { saveAndBackButton } from '../../../../pages/shared';
 import { PAGES, BUTTONS } from '../../../../../../content-strings';
-import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
+import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { ROUTES } from '../../../../../../constants';
-import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/exporter-business';
+import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/business';
 import application from '../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER;

@@ -2,7 +2,7 @@ import { natureOfBusiness } from '../../../../pages/your-business';
 import partials from '../../../../partials';
 import { submitButton, saveAndBackButton } from '../../../../pages/shared';
 import { PAGES, BUTTONS } from '../../../../../../content-strings';
-import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/exporter-business';
+import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import application from '../../../../../fixtures/application';
 

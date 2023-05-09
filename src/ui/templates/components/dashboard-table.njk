@@ -6,6 +6,7 @@
   {% set applications = params.applications %}
   {% set insuranceRoute = params.insuranceRoute %}
   {% set allSectionsRoute = params.allSectionsRoute %}
+  {% set submittedStatus = params.submittedStatus %}
 
   <table class="govuk-table">
     <thead>
@@ -37,12 +38,20 @@
           <td class="govuk-table__cell" data-cy="{{ refString + refNumber + '-lastUpdated' }}">{{ application.lastUpdated }} </td>
 
           <td class="govuk-table__cell">
-            <a
-              class="govuk-link"
-              href="{{ insuranceRoute }}/{{ application.referenceNumber }}{{ allSectionsRoute }}"
-              data-cy="{{ refString + refNumber + '-referenceNumber' }}"
-            >{{ application.referenceNumber }}
-            </a>
+            {% if application.status == submittedStatus %}
+              <p
+                class="govuk-body"
+                data-cy="{{ refString + refNumber + '-referenceNumber' }}"
+              >{{ application.referenceNumber }}
+              </p>
+            {% else %}
+              <a
+                class="govuk-link"
+                href="{{ insuranceRoute }}/{{ application.referenceNumber }}{{ allSectionsRoute }}"
+                data-cy="{{ refString + refNumber + '-referenceNumber-link' }}"
+              >{{ application.referenceNumber }}
+              </a>
+            {% endif %}
           </td>
 
           <td class="govuk-table__cell" data-cy="{{ refString + refNumber + '-buyerLocation' }}">{{ application.buyerLocation }} </td>

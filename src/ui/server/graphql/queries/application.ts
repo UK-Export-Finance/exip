@@ -80,7 +80,7 @@ const applicationQuery = gql`
           estimatedAnnualTurnover
           exportsTurnoverPercentage
         }
-        exporterBroker {
+        broker {
           id
           isUsingBroker
           name

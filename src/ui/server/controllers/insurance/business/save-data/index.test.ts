@@ -128,46 +128,46 @@ describe('controllers/insurance/business/save-data', () => {
     });
   });
 
-  describe('exporterBroker', () => {
+  describe('broker', () => {
     const mockFormBody = mockBroker;
 
     beforeEach(() => {
-      api.keystone.application.update.exporterBroker = updateApplicationSpy;
+      api.keystone.application.update.broker = updateApplicationSpy;
     });
 
     describe('when errorList is provided', () => {
       const mockValidationErrors = generateValidationErrors(ADDRESS_LINE_1, 'error', {});
 
-      it(`should call api.keystone.application.update.exporterBroker with all fields but not ${ADDRESS_LINE_1}`, async () => {
-        await save.exporterBroker(mockApplication, mockFormBody, mockValidationErrors.errorList);
+      it(`should call api.keystone.application.update.broker with all fields but not ${ADDRESS_LINE_1}`, async () => {
+        await save.broker(mockApplication, mockFormBody, mockValidationErrors.errorList);
 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
         const dataToSave = stripEmptyFormFields(getDataToSave(mockFormBody, mockValidationErrors.errorList));
         const expectedSanitisedData = sanitiseData(dataToSave);
-        expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.exporterBroker.id, expectedSanitisedData);
+        expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.broker.id, expectedSanitisedData);
       });
 
       it('should return the API response', async () => {
-        const result = await save.exporterBroker(mockApplication, mockFormBody);
+        const result = await save.broker(mockApplication, mockFormBody);
 
         expect(result).toEqual(mockUpdateApplicationResponse);
       });
     });
 
     describe('when errorList is NOT provided', () => {
-      it('should call api.keystone.application.update.exporterBroker with all fields', async () => {
-        await save.exporterBroker(mockApplication, mockFormBody);
+      it('should call api.keystone.application.update.broker with all fields', async () => {
+        await save.broker(mockApplication, mockFormBody);
 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
         const dataToSave = getDataToSave(mockFormBody);
         const expectedSanitisedData = sanitiseData(dataToSave);
-        expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.exporterBroker.id, expectedSanitisedData);
+        expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.broker.id, expectedSanitisedData);
       });
 
       it('should return the API response', async () => {
-        const result = await save.exporterBroker(mockApplication, mockFormBody);
+        const result = await save.broker(mockApplication, mockFormBody);
 
         expect(result).toEqual(mockUpdateApplicationResponse);
       });
@@ -224,20 +224,20 @@ describe('controllers/insurance/business/save-data', () => {
       });
     });
 
-    describe('update exporterBroker call', () => {
+    describe('update broker call', () => {
       const mockFormBody = mockBroker;
 
       describe('when there is an error', () => {
         beforeEach(() => {
           updateApplicationSpy = jest.fn(() => Promise.reject());
-          api.keystone.application.update.exporterBroker = updateApplicationSpy;
+          api.keystone.application.update.broker = updateApplicationSpy;
         });
 
         it('should throw an error', async () => {
           try {
-            await save.exporterBroker(mockApplication, mockFormBody);
+            await save.broker(mockApplication, mockFormBody);
           } catch (err) {
-            const expected = new Error("Updating application's exporterBroker");
+            const expected = new Error("Updating application's broker");
             expect(err).toEqual(expected);
           }
         });

@@ -36,7 +36,7 @@ interface ApplicationPolicyAndExport {
   finalDestinationCountryCode?: string;
 }
 
-interface ApplicationExporterCompanyAddress {
+interface ApplicationCompanyAddress {
   id: string;
   addressLine1?: string;
   addressLine2?: string;
@@ -66,7 +66,7 @@ interface ApplicationCompany {
   companyWebsite?: string;
   hasTradingName?: boolean;
   hasTradingAddress?: boolean;
-  registeredOfficeAddress: ApplicationExporterCompanyAddress;
+  registeredOfficeAddress: ApplicationCompanyAddress;
   sicCodes: Array<ApplicationExporterSicCodes>;
 }
 
@@ -78,7 +78,7 @@ interface ApplicationBusiness {
   totalEmployeesInternational?: string;
 }
 
-interface ApplicationExporterBroker {
+interface ApplicationBroker {
   id: string;
   isUsingBroker?: string;
   name?: string;
@@ -135,7 +135,7 @@ interface Application extends ApplicationCore {
   policyAndExport: ApplicationPolicyAndExport;
   company: ApplicationCompany;
   business: ApplicationBusiness;
-  exporterBroker: ApplicationExporterBroker;
+  broker: ApplicationBroker;
   buyer: ApplicationBuyer;
   sectionReview: ApplicationSectionReview;
   declaration: ApplicationDeclaration;
@@ -154,7 +154,7 @@ export {
   ApplicationExporterSicCodes,
   ApplicationExporterindustrySectorNames,
   ApplicationBusiness,
-  ApplicationExporterBroker,
+  ApplicationBroker,
   ApplicationBuyer,
   ApplicationSectionReview,
   ApplicationDeclaration,

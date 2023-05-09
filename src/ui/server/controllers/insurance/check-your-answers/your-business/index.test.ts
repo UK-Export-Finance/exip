@@ -6,7 +6,7 @@ import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { yourBusinessSummaryList } from '../../../../helpers/summary-lists/your-business';
-import requiredFields from '../../../../helpers/required-fields/exporter-business';
+import requiredFields from '../../../../helpers/required-fields/business';
 import sectionStatus from '../../../../helpers/section-status';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
@@ -71,12 +71,12 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
       const summaryList = yourBusinessSummaryList(
         mockApplication.company,
         mockApplication.business,
-        mockApplication.exporterBroker,
+        mockApplication.broker,
         mockApplication.referenceNumber,
         checkAndChange,
       );
 
-      const exporterFields = requiredFields(mockApplication.exporterBroker.isUsingBroker);
+      const exporterFields = requiredFields(mockApplication.broker.isUsingBroker);
 
       const status = sectionStatus(exporterFields, mockApplication);
 
