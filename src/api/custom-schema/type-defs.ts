@@ -24,7 +24,7 @@ const typeDefs = `
   }
 
   # fields from registered_office_address object
-  type CompaniesHouseCompanyAddress {
+  type CompaniesHouseExporterCompanyAddress {
     addressLine1: String
     addressLine2: String
     careOf: String

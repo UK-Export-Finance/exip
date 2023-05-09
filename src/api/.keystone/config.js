@@ -105,7 +105,7 @@ var POLICY_AND_EXPORTS = {
 };
 var policy_and_exports_default = POLICY_AND_EXPORTS;
 
-// constants/field-ids/insurance/exporter-business/index.ts
+// constants/field-ids/insurance/business/index.ts
 var EXPORTER_BUSINESS = {
   COMPANY_HOUSE: {
     SEARCH: "companiesHouseSearch",
@@ -158,7 +158,7 @@ var EXPORTER_BUSINESS = {
     DETAILS: "whyAppointBroker"
   }
 };
-var exporter_business_default = EXPORTER_BUSINESS;
+var business_default = EXPORTER_BUSINESS;
 
 // constants/field-ids/insurance/your-buyer/index.ts
 var YOUR_BUYER = {
@@ -216,7 +216,7 @@ var INSURANCE_FIELD_IDS = {
   SUBMISSION_DEADLINE: "submissionDeadline",
   ACCOUNT: account_default,
   POLICY_AND_EXPORTS: policy_and_exports_default,
-  EXPORTER_BUSINESS: exporter_business_default,
+  EXPORTER_BUSINESS: business_default,
   YOUR_BUYER: your_buyer_default,
   DECLARATIONS: declarations_default,
   CHECK_YOUR_ANSWERS: check_your_answers_default
@@ -1350,7 +1350,7 @@ var typeDefs = `
   }
 
   # fields from registered_office_address object
-  type CompaniesHouseCompanyAddress {
+  type CompaniesHouseExporterCompanyAddress {
     addressLine1: String
     addressLine2: String
     careOf: String
@@ -2431,7 +2431,7 @@ var {
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER },
   BROKER: { USING_BROKER, NAME: BROKER_NAME, ADDRESS_LINE_1: BROKER_ADDRESS, EMAIL: BROKER_EMAIL }
-} = exporter_business_default;
+} = business_default;
 var {
   COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS }
 } = your_buyer_default;
@@ -2977,7 +2977,7 @@ var {
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL3 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
   BROKER: { USING_BROKER: USING_BROKER3, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL5 }
-} = exporter_business_default;
+} = business_default;
 var mapBroker = (application) => {
   const { broker } = application;
   let mapped = [csv_row_default(CSV.FIELDS[USING_BROKER3], broker[USING_BROKER3])];
