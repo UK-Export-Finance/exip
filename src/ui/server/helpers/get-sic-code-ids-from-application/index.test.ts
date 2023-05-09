@@ -18,10 +18,10 @@ describe('server/helpers/get-sic-code-ids-from-application', () => {
 
       const response = getSicCodeIDsFromApplication(applicationWithMultipleSicCodes);
 
-      const expected = [
-        { id: applicationWithMultipleSicCodes.company.sicCodes[0].id },
-        { id: applicationWithMultipleSicCodes.company.sicCodes[1].id },
-      ];
+      const { company } = applicationWithMultipleSicCodes;
+
+      const expected = [{ id: company.sicCodes[0].id }, { id: company.sicCodes[1].id }];
+
       expect(response).toEqual(expected);
     });
   });

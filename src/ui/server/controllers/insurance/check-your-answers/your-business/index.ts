@@ -51,17 +51,11 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber, exporterBroker } = application;
+    const { referenceNumber, exporterBroker, company, business } = application;
 
     const checkAndChange = true;
 
-    const summaryList = yourBusinessSummaryList(
-      application.company,
-      application.business,
-      application.exporterBroker,
-      referenceNumber,
-      checkAndChange,
-    );
+    const summaryList = yourBusinessSummaryList(company, business, exporterBroker, referenceNumber, checkAndChange);
 
     const exporterFields = requiredFields(exporterBroker.isUsingBroker);
 
