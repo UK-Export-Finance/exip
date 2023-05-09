@@ -60,7 +60,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.navigateToUrl(url);
 
       // go to application
-      const referenceNumberLink = table.body.row(referenceNumber).referenceNumber();
+      const referenceNumberLink = table.body.row(referenceNumber).referenceNumberLink();
 
       referenceNumberLink.click();
 
@@ -99,7 +99,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.navigateToUrl(url);
 
       // go to application
-      const referenceNumberLink = table.body.row(referenceNumber).referenceNumber();
+      const referenceNumberLink = table.body.row(referenceNumber).referenceNumberLink();
 
       referenceNumberLink.click();
 
@@ -131,7 +131,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.navigateToUrl(url);
 
       // go to application
-      const referenceNumberLink = table.body.row(referenceNumber).referenceNumber();
+      const referenceNumberLink = table.body.row(referenceNumber).referenceNumberLink();
 
       referenceNumberLink.click();
 

@@ -50,7 +50,7 @@ context('Insurance - Account - Sign in - I want to enter the new security code s
   });
 
   after(() => {
-    dashboardPage.table.body.lastRow.referenceNumber().click();
+    dashboardPage.table.body.lastRow.referenceNumberLink().click();
 
     cy.getReferenceNumber().then((referenceNumber) => {
       cy.deleteAccountAndApplication(referenceNumber);

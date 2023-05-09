@@ -1,6 +1,6 @@
 import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../content-strings';
-import { ROUTES, TEMPLATES } from '../../../constants';
+import { ROUTES, TEMPLATES, APPLICATION } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import api from '../../../api';
@@ -60,6 +60,7 @@ describe('controllers/insurance/dashboard', () => {
           INSURANCE_ROOT,
           ALL_SECTIONS,
         },
+        SUBMITTED_STATUS: APPLICATION.STATUS.SUBMITTED,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

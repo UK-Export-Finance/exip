@@ -14,7 +14,7 @@ const completeSignInAndGoToApplication = (email) => {
   completeInsuranceEligibilitySignInAndGoToDashboard(email);
 
   // go to the newly created application
-  insurancePages.dashboardPage.table.body.lastRow.referenceNumber().click();
+  insurancePages.dashboardPage.table.body.lastRow.referenceNumberLink().click();
 
   // get the reference number and return for consumption in the test
   cy.getReferenceNumber().then((referenceNumber) => referenceNumber);

@@ -53,7 +53,7 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF e
   });
 
   it('should have the correct reference number', () => {
-    cy.checkText(table.body.firstRow.referenceNumber(), firstReferenceNumber);
+    cy.checkText(table.body.firstRow.referenceNumberLink(), firstReferenceNumber);
   });
 
   describe('when a different exporter logs in and creates an application', () => {
@@ -89,13 +89,13 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF e
       });
 
       it('should NOT have a reference number that equals the first application/reference number, created by a different exporter', () => {
-        table.body.firstRow.referenceNumber().invoke('text').then((refNumber) => {
+        table.body.firstRow.referenceNumberLink().invoke('text').then((refNumber) => {
           expect(refNumber.trim()).to.not.equal(firstReferenceNumber);
         });
       });
 
       it('should have the correct reference number', () => {
-        cy.checkText(table.body.firstRow.referenceNumber(), secondReferenceNumber);
+        cy.checkText(table.body.firstRow.referenceNumberLink(), secondReferenceNumber);
       });
     });
   });

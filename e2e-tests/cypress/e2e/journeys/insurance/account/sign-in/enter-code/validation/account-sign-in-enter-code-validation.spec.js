@@ -49,7 +49,7 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
   });
 
   after(() => {
-    dashboardPage.table.body.lastRow.referenceNumber().click();
+    dashboardPage.table.body.lastRow.referenceNumberLink().click();
 
     cy.getReferenceNumber().then((referenceNumber) => {
       cy.deleteAccountAndApplication(referenceNumber);
