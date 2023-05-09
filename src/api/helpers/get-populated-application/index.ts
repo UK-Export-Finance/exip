@@ -16,7 +16,7 @@ export const generateErrorMessage = (section: string, applicationId: number) =>
 const getPopulatedApplication = async (context: Context, application: KeystoneApplication): Promise<Application> => {
   console.info('Getting populated application');
 
-  const { eligibilityId, ownerId, policyAndExportId, companyId, businessId, exporterBrokerId, buyerId, declarationId } = application;
+  const { eligibilityId, ownerId, policyAndExportId, companyId, businessId, brokerId, buyerId, declarationId } = application;
 
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId },
@@ -55,7 +55,7 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('company', application.id));
   }
 
-  const companyAddress = await context.db.ExporterCompanyAddress.findOne({
+  const companyAddress = await context.db.CompanyAddress.findOne({
     where: { id: company.registeredOfficeAddressId },
   });
 
@@ -72,12 +72,12 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('business', application.id));
   }
 
-  const exporterBroker = await context.db.ExporterBroker.findOne({
-    where: { id: exporterBrokerId },
+  const broker = await context.db.Broker.findOne({
+    where: { id: brokerId },
   });
 
-  if (!exporterBroker) {
-    throw new Error(generateErrorMessage('exporterBroker', application.id));
+  if (!broker) {
+    throw new Error(generateErrorMessage('broker', application.id));
   }
 
   const buyer = await context.db.Buyer.findOne({
@@ -119,7 +119,7 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     owner: account,
     company: populatedCompany,
     business,
-    exporterBroker,
+    broker,
     buyer: populatedBuyer,
     declaration,
   };

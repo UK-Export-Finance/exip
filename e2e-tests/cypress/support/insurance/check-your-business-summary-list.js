@@ -2,7 +2,7 @@ import checkYourAnswersPage from '../../e2e/pages/your-business/check-your-answe
 import getSummaryListField from './get-summary-list-field';
 import { FIELD_IDS } from '../../../constants';
 import { LINKS, DEFAULT } from '../../../content-strings';
-import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../content-strings/fields/insurance/exporter-business';
+import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../content-strings/fields/insurance/business';
 import application from '../../fixtures/application';
 
 const {

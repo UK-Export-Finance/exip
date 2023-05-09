@@ -15,7 +15,7 @@ describe('controllers/insurance/your-buyer/save-data', () => {
   const mockUpdateApplicationResponse = mockApplication;
   let updateApplicationSpy = jest.fn(() => Promise.resolve(mockUpdateApplicationResponse));
 
-  describe('exporterBroker', () => {
+  describe('broker', () => {
     const mockFormBody = mockBuyer;
 
     beforeEach(() => {

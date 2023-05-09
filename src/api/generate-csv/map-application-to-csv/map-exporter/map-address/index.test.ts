@@ -1,5 +1,5 @@
 import mapExporterAddress from '.';
-import FIELD_IDS from '../../../../constants/field-ids/insurance/exporter-business';
+import FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import NEW_LINE from '../../helpers/csv-new-line';
 import { mockCompany } from '../../../../test-mocks/mock-application';
 

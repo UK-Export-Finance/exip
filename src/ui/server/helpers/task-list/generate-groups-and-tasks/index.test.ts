@@ -9,10 +9,10 @@ import { mockApplication } from '../../../test-mocks';
 const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
 
 describe('server/helpers/task-list/generate-groups-and-tasks', () => {
-  const { referenceNumber, policyAndExport, exporterBroker, declaration } = mockApplication;
+  const { referenceNumber, policyAndExport, broker, declaration } = mockApplication;
 
   const { policyType } = policyAndExport;
-  const { isUsingBroker } = exporterBroker;
+  const { isUsingBroker } = broker;
   const { hasAntiBriberyCodeOfConduct } = declaration;
 
   it('should return EXIP groups and tasks', () => {

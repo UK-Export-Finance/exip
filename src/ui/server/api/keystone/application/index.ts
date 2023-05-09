@@ -7,9 +7,9 @@ import createApplicationMutation from '../../../graphql/mutations/create-applica
 import getApplicationQuery from '../../../graphql/queries/application';
 import updateApplicationPolicyAndExportMutation from '../../../graphql/mutations/update-application/policy-and-export';
 import updateApplicationCompanyMutation from '../../../graphql/mutations/update-application/company';
-import updateBusinessMutation from '../../../graphql/mutations/update-application/exporter-business';
-import updateExporterBrokerMutation from '../../../graphql/mutations/update-application/exporter-broker';
-import updateBuyerMutation from '../../../graphql/mutations/update-application/exporter-buyer';
+import updateBusinessMutation from '../../../graphql/mutations/update-application/business';
+import updateBrokerMutation from '../../../graphql/mutations/update-application/broker';
+import updateBuyerMutation from '../../../graphql/mutations/update-application/buyer';
 import submitApplicationMutation from '../../../graphql/mutations/submit-application';
 import updateApplicationSectionReviewMutation from '../../../graphql/mutations/update-application/section-review';
 
@@ -140,34 +140,34 @@ const application = {
         throw new Error('Updating application policy and export');
       }
     },
-    exporterBroker: async (id: string, update: object) => {
+    broker: async (id: string, update: object) => {
       try {
-        console.info('Updating application exporter broker');
+        console.info('Updating application broker');
 
         const variables = {
           where: { id },
           data: update,
         };
 
-        const response = (await apollo('POST', updateExporterBrokerMutation, variables)) as ApolloResponse;
+        const response = (await apollo('POST', updateBrokerMutation, variables)) as ApolloResponse;
 
         if (response.errors) {
-          console.error('GraphQL error updating application exporter broker ', response.errors);
+          console.error('GraphQL error updating application broker ', response.errors);
         }
 
         if (response?.networkError?.result?.errors) {
-          console.error('GraphQL network error updating application exporter broker ', response.networkError.result.errors);
+          console.error('GraphQL network error updating application broker ', response.networkError.result.errors);
         }
 
-        if (response?.data?.updateExporterBroker) {
-          return response.data.updateExporterBroker;
+        if (response?.data?.updateBroker) {
+          return response.data.updateBroker;
         }
 
         console.error(response);
-        throw new Error('Updating application exporter broker');
+        throw new Error('Updating application broker');
       } catch (err) {
         console.error(err);
-        throw new Error('Updating application exporter broker');
+        throw new Error('Updating application broker');
       }
     },
     business: async (id: string, update: object) => {
@@ -220,8 +220,8 @@ const application = {
           console.error('GraphQL network error updating application company ', response.networkError.result.errors);
         }
 
-        if (response?.data?.updateCompanyAndExporterCompanyAddress) {
-          return response.data.updateCompanyAndExporterCompanyAddress;
+        if (response?.data?.updateCompanyAndCompanyAddress) {
+          return response.data.updateCompanyAndCompanyAddress;
         }
 
         console.error(response);

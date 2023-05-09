@@ -1,5 +1,5 @@
 import NEW_LINE from '../../helpers/csv-new-line';
-import { ApplicationExporterCompanyAddress } from '../../../../types';
+import { ApplicationCompanyAddress } from '../../../../types';
 
 /**
  * mapExporterAddress
@@ -7,7 +7,7 @@ import { ApplicationExporterCompanyAddress } from '../../../../types';
  * @param {Object} Exporter address
  * @returns {String} Exporter address string
  */
-const mapExporterAddress = (address: ApplicationExporterCompanyAddress) => {
+const mapExporterAddress = (address: ApplicationCompanyAddress) => {
   let addressString = '';
 
   Object.keys(address).forEach((field) => {

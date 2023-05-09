@@ -1,22 +1,22 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { mapSicCodes } from '../../helpers/map-sic-codes';
-import { UpdateCompanyAndExporterCompanyAddressVariables, ApplicationRelationship, SicCodes } from '../../types';
+import { UpdateCompanyAndCompanyAddressVariables, ApplicationRelationship, SicCodes } from '../../types';
 
 /**
- * updateCompanyAndExporterCompanyAddress
+ * updateCompanyAndCompanyAddress
  * Update a company and company address
  * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the UpdateCompanyAndExporterCompanyAddress mutation
+ * @param {Object} GraphQL variables for the UpdateCompanyAndCompanyAddress mutation
  * @param {Object} KeystoneJS context API
  * @returns {Object} Object with company ID
  */
-const updateCompanyAndExporterCompanyAddress = async (
+const updateCompanyAndCompanyAddress = async (
   root: any,
-  variables: UpdateCompanyAndExporterCompanyAddressVariables,
+  variables: UpdateCompanyAndCompanyAddressVariables,
   context: Context,
 ): Promise<ApplicationRelationship> => {
   try {
-    console.info('Updating application company and exporter company address for ', variables.companyId);
+    console.info('Updating application company and company address for ', variables.companyId);
     const { address, sicCodes, industrySectorNames, oldSicCodes, ...company } = variables.data;
 
     const updatedCompany = await context.db.Company.updateOne({
@@ -24,7 +24,7 @@ const updateCompanyAndExporterCompanyAddress = async (
       data: company,
     });
 
-    await context.db.ExporterCompanyAddress.updateOne({
+    await context.db.CompanyAddress.updateOne({
       where: { id: variables.companyAddressId },
       data: address,
     });
@@ -34,14 +34,14 @@ const updateCompanyAndExporterCompanyAddress = async (
     // if the update contains company and there are oldSicCodes in the db, delete them
     if (company && oldSicCodes && oldSicCodes.length) {
       // delete already existing sic codes from oldSicCodes
-      await context.db.ExporterCompanySicCode.deleteMany({
+      await context.db.CompanySicCode.deleteMany({
         where: oldSicCodes,
       });
     }
 
     if (mappedSicCodes && mappedSicCodes.length) {
       mappedSicCodes.forEach(async (sicCodeObj: SicCodes) => {
-        await context.db.ExporterCompanySicCode.createOne({
+        await context.db.CompanySicCode.createOne({
           data: sicCodeObj,
         });
       });
@@ -51,10 +51,10 @@ const updateCompanyAndExporterCompanyAddress = async (
       id: variables.companyId,
     };
   } catch (err) {
-    console.error('Error updating application - company and exporter company address', { err });
+    console.error('Error updating application - company and company address', { err });
 
-    throw new Error(`Updating application - company and exporter company address ${err}`);
+    throw new Error(`Updating application - company and company address ${err}`);
   }
 };
 
-export default updateCompanyAndExporterCompanyAddress;
+export default updateCompanyAndCompanyAddress;

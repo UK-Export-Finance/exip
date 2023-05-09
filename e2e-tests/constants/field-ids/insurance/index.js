@@ -1,7 +1,7 @@
 import { SHARED_ELIGIBILITY_FIELD_IDS } from '../shared-eligibility';
 import { ACCOUNT } from './account';
 import { POLICY_AND_EXPORTS } from './policy-and-exports';
-import { EXPORTER_BUSINESS } from './exporter-business';
+import { EXPORTER_BUSINESS } from './business';
 import { YOUR_BUYER } from './your-buyer';
 import { DECLARATIONS } from './declarations';
 

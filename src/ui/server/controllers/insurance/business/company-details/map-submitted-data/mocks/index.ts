@@ -13,7 +13,7 @@ export const mockBody = {
   ...mockCompany,
   address: {
     ...mockCompany.registeredOfficeAddress,
-    __typename: 'ExporterCompanyAddress',
+    __typename: 'CompanyAddress',
   },
   companyNumber: 8989898,
 } as RequestBody;

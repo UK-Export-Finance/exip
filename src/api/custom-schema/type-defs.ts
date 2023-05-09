@@ -24,7 +24,7 @@ const typeDefs = `
   }
 
   # fields from registered_office_address object
-  type CompaniesHouseExporterCompanyAddress {
+  type CompaniesHouseCompanyAddress {
     addressLine1: String
     addressLine2: String
     careOf: String
@@ -37,7 +37,7 @@ const typeDefs = `
 
   type CompaniesHouseResponse {
     companyName: String
-    registeredOfficeAddress: ExporterCompanyAddress
+    registeredOfficeAddress: CompanyAddress
     companyNumber: String
     dateOfCreation: String
     sicCodes: [String]
@@ -47,7 +47,7 @@ const typeDefs = `
     apiError: Boolean
   }
 
-  type ExporterCompanyAddress {
+  type CompanyAddress {
     addressLine1: String
     addressLine2: String
     careOf: String
@@ -62,7 +62,7 @@ const typeDefs = `
     id: String
   }
 
-  input ExporterCompanyAddressInput {
+  input CompanyAddressInput {
     addressLine1: String
     addressLine2: String
     careOf: String
@@ -73,9 +73,9 @@ const typeDefs = `
     premises: String
   }
 
-  type CompanyAndExporterCompanyAddress {
+  type CompanyAndCompanyAddress {
     id: ID
-    registeredOfficeAddress: ExporterCompanyAddress
+    registeredOfficeAddress: CompanyAddress
     companyName: String
     companyNumber: String
     dateOfCreation: DateTime
@@ -85,8 +85,8 @@ const typeDefs = `
     phoneNumber: String
   }
 
-  input CompanyAndExporterCompanyAddressInput {
-    address: ExporterCompanyAddressInput
+  input CompanyAndCompanyAddressInput {
+    address: CompanyAddressInput
     sicCodes: [String]
     industrySectorNames: [String]
     companyName: String
@@ -188,11 +188,11 @@ const typeDefs = `
     ): SuccessResponse
 
     """ update company and company address """
-    updateCompanyAndExporterCompanyAddress(
+    updateCompanyAndCompanyAddress(
       companyId: ID!
       companyAddressId: ID!
-      data: CompanyAndExporterCompanyAddressInput!
-    ): CompanyAndExporterCompanyAddress
+      data: CompanyAndCompanyAddressInput!
+    ): CompanyAndCompanyAddress
 
     """ delete an application by reference number """
     deleteApplicationByReferenceNumber(

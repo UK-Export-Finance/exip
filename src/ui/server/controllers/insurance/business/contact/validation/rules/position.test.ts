@@ -1,6 +1,6 @@
 import position from './position';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import FIELD_IDS from '../../../../../../constants/field-ids/insurance/exporter-business';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
 import { RequestBody } from '../../../../../../../types';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 

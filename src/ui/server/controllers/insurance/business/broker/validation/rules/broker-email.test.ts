@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import brokerEmail from './broker-email';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import FIELD_IDS from '../../../../../../constants/field-ids/insurance/exporter-business';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
 import { RequestBody } from '../../../../../../../types';
 import emailValidation from '../../../../../../shared-validation/email';
 

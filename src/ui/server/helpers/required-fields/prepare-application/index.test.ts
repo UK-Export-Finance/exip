@@ -2,7 +2,7 @@ import requiredFields from '.';
 import POLICY_AND_EXPORT_FIELD_IDS from '../../../constants/field-ids/insurance/policy-and-exports';
 import requiredEligibilityFields from '../eligibility';
 import requiredPolicyAndExportFields from '../policy-and-exports';
-import requiredBusinessFields from '../exporter-business';
+import requiredBusinessFields from '../business';
 import requiredYourBuyerFields from '../your-buyer';
 import flattenApplicationData from '../../flatten-application-data';
 import { mockApplication } from '../../../test-mocks';

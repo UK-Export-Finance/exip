@@ -669,7 +669,7 @@ var lists = {
       }),
       business: (0, import_fields.relationship)({ ref: "Business" }),
       company: (0, import_fields.relationship)({ ref: "Company" }),
-      exporterBroker: (0, import_fields.relationship)({ ref: "ExporterBroker" }),
+      broker: (0, import_fields.relationship)({ ref: "Broker" }),
       buyer: (0, import_fields.relationship)({ ref: "Buyer" }),
       sectionReview: (0, import_fields.relationship)({ ref: "SectionReview" }),
       declaration: (0, import_fields.relationship)({ ref: "Declaration" })
@@ -708,7 +708,7 @@ var lists = {
                 id: companyId
               }
             };
-            await context.db.ExporterCompanyAddress.createOne({
+            await context.db.CompanyAddress.createOne({
               data: {
                 company: {
                   connect: {
@@ -725,12 +725,12 @@ var lists = {
                 id: businessId
               }
             };
-            const { id: exporterBrokerId } = await context.db.ExporterBroker.createOne({
+            const { id: brokerId } = await context.db.Broker.createOne({
               data: {}
             });
-            modifiedData.exporterBroker = {
+            modifiedData.broker = {
               connect: {
-                id: exporterBrokerId
+                id: brokerId
               }
             };
             const { id: buyerId } = await context.db.Buyer.createOne({
@@ -777,7 +777,7 @@ var lists = {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
             const { referenceNumber, eligibilityId } = item;
-            const { policyAndExportId, companyId, businessId, exporterBrokerId, buyerId, sectionReviewId, declarationId } = item;
+            const { policyAndExportId, companyId, businessId, brokerId, buyerId, sectionReviewId, declarationId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -828,8 +828,8 @@ var lists = {
                 }
               }
             });
-            await context.db.ExporterBroker.updateOne({
-              where: { id: exporterBrokerId },
+            await context.db.Broker.updateOne({
+              where: { id: brokerId },
               data: {
                 application: {
                   connect: {
@@ -991,7 +991,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  ExporterBroker: (0, import_core.list)({
+  Broker: (0, import_core.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       isUsingBroker: (0, import_fields.select)({
@@ -1018,7 +1018,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  ExporterCompanyAddress: (0, import_core.list)({
+  CompanyAddress: (0, import_core.list)({
     fields: {
       company: (0, import_fields.relationship)({ ref: "Company.registeredOfficeAddress" }),
       addressLine1: (0, import_fields.text)(),
@@ -1035,9 +1035,9 @@ var lists = {
   Company: (0, import_core.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      registeredOfficeAddress: (0, import_fields.relationship)({ ref: "ExporterCompanyAddress.company" }),
+      registeredOfficeAddress: (0, import_fields.relationship)({ ref: "CompanyAddress.company" }),
       sicCodes: (0, import_fields.relationship)({
-        ref: "ExporterCompanySicCode.company",
+        ref: "CompanySicCode.company",
         many: true
       }),
       companyName: (0, import_fields.text)(),
@@ -1070,7 +1070,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  ExporterCompanySicCode: (0, import_core.list)({
+  CompanySicCode: (0, import_core.list)({
     fields: {
       company: (0, import_fields.relationship)({ ref: "Company.sicCodes" }),
       sicCode: (0, import_fields.text)(),
@@ -1350,7 +1350,7 @@ var typeDefs = `
   }
 
   # fields from registered_office_address object
-  type CompaniesHouseExporterCompanyAddress {
+  type CompaniesHouseCompanyAddress {
     addressLine1: String
     addressLine2: String
     careOf: String
@@ -1363,7 +1363,7 @@ var typeDefs = `
 
   type CompaniesHouseResponse {
     companyName: String
-    registeredOfficeAddress: ExporterCompanyAddress
+    registeredOfficeAddress: CompanyAddress
     companyNumber: String
     dateOfCreation: String
     sicCodes: [String]
@@ -1373,7 +1373,7 @@ var typeDefs = `
     apiError: Boolean
   }
 
-  type ExporterCompanyAddress {
+  type CompanyAddress {
     addressLine1: String
     addressLine2: String
     careOf: String
@@ -1388,7 +1388,7 @@ var typeDefs = `
     id: String
   }
 
-  input ExporterCompanyAddressInput {
+  input CompanyAddressInput {
     addressLine1: String
     addressLine2: String
     careOf: String
@@ -1399,9 +1399,9 @@ var typeDefs = `
     premises: String
   }
 
-  type CompanyAndExporterCompanyAddress {
+  type CompanyAndCompanyAddress {
     id: ID
-    registeredOfficeAddress: ExporterCompanyAddress
+    registeredOfficeAddress: CompanyAddress
     companyName: String
     companyNumber: String
     dateOfCreation: DateTime
@@ -1411,8 +1411,8 @@ var typeDefs = `
     phoneNumber: String
   }
 
-  input CompanyAndExporterCompanyAddressInput {
-    address: ExporterCompanyAddressInput
+  input CompanyAndCompanyAddressInput {
+    address: CompanyAddressInput
     sicCodes: [String]
     industrySectorNames: [String]
     companyName: String
@@ -1514,11 +1514,11 @@ var typeDefs = `
     ): SuccessResponse
 
     """ update company and company address """
-    updateCompanyAndExporterCompanyAddress(
+    updateCompanyAndCompanyAddress(
       companyId: ID!
       companyAddressId: ID!
-      data: CompanyAndExporterCompanyAddressInput!
-    ): CompanyAndExporterCompanyAddress
+      data: CompanyAndCompanyAddressInput!
+    ): CompanyAndCompanyAddress
 
     """ delete an application by reference number """
     deleteApplicationByReferenceNumber(
@@ -2174,27 +2174,27 @@ var mapSicCodes = (company, sicCodes, industrySectorNames) => {
 };
 
 // custom-resolvers/mutations/update-company-and-company-address.ts
-var updateCompanyAndExporterCompanyAddress = async (root, variables, context) => {
+var updateCompanyAndCompanyAddress = async (root, variables, context) => {
   try {
-    console.info("Updating application company and exporter company address for ", variables.companyId);
+    console.info("Updating application company and company address for ", variables.companyId);
     const { address, sicCodes, industrySectorNames, oldSicCodes, ...company } = variables.data;
     const updatedCompany = await context.db.Company.updateOne({
       where: { id: variables.companyId },
       data: company
     });
-    await context.db.ExporterCompanyAddress.updateOne({
+    await context.db.CompanyAddress.updateOne({
       where: { id: variables.companyAddressId },
       data: address
     });
     const mappedSicCodes = mapSicCodes(updatedCompany, sicCodes, industrySectorNames);
     if (company && oldSicCodes && oldSicCodes.length) {
-      await context.db.ExporterCompanySicCode.deleteMany({
+      await context.db.CompanySicCode.deleteMany({
         where: oldSicCodes
       });
     }
     if (mappedSicCodes && mappedSicCodes.length) {
       mappedSicCodes.forEach(async (sicCodeObj) => {
-        await context.db.ExporterCompanySicCode.createOne({
+        await context.db.CompanySicCode.createOne({
           data: sicCodeObj
         });
       });
@@ -2203,11 +2203,11 @@ var updateCompanyAndExporterCompanyAddress = async (root, variables, context) =>
       id: variables.companyId
     };
   } catch (err) {
-    console.error("Error updating application - company and exporter company address", { err });
-    throw new Error(`Updating application - company and exporter company address ${err}`);
+    console.error("Error updating application - company and company address", { err });
+    throw new Error(`Updating application - company and company address ${err}`);
   }
 };
-var update_company_and_company_address_default = updateCompanyAndExporterCompanyAddress;
+var update_company_and_company_address_default = updateCompanyAndCompanyAddress;
 
 // custom-resolvers/mutations/submit-application.ts
 var import_date_fns6 = require("date-fns");
@@ -2239,7 +2239,7 @@ var get_country_by_field_default = getCountryByField;
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application) => {
   console.info("Getting populated application");
-  const { eligibilityId, ownerId, policyAndExportId, companyId, businessId, exporterBrokerId, buyerId, declarationId } = application;
+  const { eligibilityId, ownerId, policyAndExportId, companyId, businessId, brokerId, buyerId, declarationId } = application;
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId }
   });
@@ -2267,7 +2267,7 @@ var getPopulatedApplication = async (context, application) => {
   if (!company) {
     throw new Error(generateErrorMessage("company", application.id));
   }
-  const companyAddress = await context.db.ExporterCompanyAddress.findOne({
+  const companyAddress = await context.db.CompanyAddress.findOne({
     where: { id: company.registeredOfficeAddressId }
   });
   const populatedCompany = {
@@ -2280,11 +2280,11 @@ var getPopulatedApplication = async (context, application) => {
   if (!business) {
     throw new Error(generateErrorMessage("business", application.id));
   }
-  const exporterBroker = await context.db.ExporterBroker.findOne({
-    where: { id: exporterBrokerId }
+  const broker = await context.db.Broker.findOne({
+    where: { id: brokerId }
   });
-  if (!exporterBroker) {
-    throw new Error(generateErrorMessage("exporterBroker", application.id));
+  if (!broker) {
+    throw new Error(generateErrorMessage("broker", application.id));
   }
   const buyer = await context.db.Buyer.findOne({
     where: { id: buyerId }
@@ -2318,7 +2318,7 @@ var getPopulatedApplication = async (context, application) => {
     owner: account,
     company: populatedCompany,
     business,
-    exporterBroker,
+    broker,
     buyer: populatedBuyer,
     declaration
   };
@@ -2978,18 +2978,15 @@ var {
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
   BROKER: { USING_BROKER: USING_BROKER3, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL5 }
 } = exporter_business_default;
-var mapExporterBroker = (application) => {
-  const { exporterBroker } = application;
-  let mapped = [csv_row_default(CSV.FIELDS[USING_BROKER3], exporterBroker[USING_BROKER3])];
-  if (exporterBroker[USING_BROKER3] === ANSWERS.YES) {
+var mapBroker = (application) => {
+  const { broker } = application;
+  let mapped = [csv_row_default(CSV.FIELDS[USING_BROKER3], broker[USING_BROKER3])];
+  if (broker[USING_BROKER3] === ANSWERS.YES) {
     mapped = [
       ...mapped,
-      csv_row_default(CSV.FIELDS[BROKER_NAME2], exporterBroker[BROKER_NAME2]),
-      csv_row_default(
-        CSV.FIELDS[ADDRESS_LINE_12],
-        `${exporterBroker[ADDRESS_LINE_12]} ${csv_new_line_default} ${exporterBroker[TOWN]} ${csv_new_line_default} ${exporterBroker[COUNTY]} ${csv_new_line_default} ${exporterBroker[POSTCODE]}`
-      ),
-      csv_row_default(CSV.FIELDS[EMAIL5], exporterBroker[EMAIL5])
+      csv_row_default(CSV.FIELDS[BROKER_NAME2], broker[BROKER_NAME2]),
+      csv_row_default(CSV.FIELDS[ADDRESS_LINE_12], `${broker[ADDRESS_LINE_12]} ${csv_new_line_default} ${broker[TOWN]} ${csv_new_line_default} ${broker[COUNTY]} ${csv_new_line_default} ${broker[POSTCODE]}`),
+      csv_row_default(CSV.FIELDS[EMAIL5], broker[EMAIL5])
     ];
   }
   return mapped;
@@ -3016,8 +3013,8 @@ var mapExporter = (application) => {
     csv_row_default(CSV.FIELDS[EMPLOYEES_INTERNATIONAL3], business[EMPLOYEES_INTERNATIONAL3]),
     csv_row_default(CSV.FIELDS[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
     csv_row_default(CONTENT_STRINGS3[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
-    // exporter broker fields
-    ...mapExporterBroker(application)
+    // broker fields
+    ...mapBroker(application)
   ];
   return mapped;
 };
@@ -3404,7 +3401,7 @@ var customResolvers = {
     accountPasswordReset: account_password_reset_default,
     sendEmailPasswordResetLink: send_email_password_reset_link_default,
     deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
-    updateCompanyAndExporterCompanyAddress: update_company_and_company_address_default,
+    updateCompanyAndCompanyAddress: update_company_and_company_address_default,
     submitApplication: submit_application_default,
     sendEmailInsuranceFeedback: send_email_insurance_feedback_default
   },

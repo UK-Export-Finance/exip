@@ -1,6 +1,6 @@
 import percentageTurnover from './percentage-of-turnover';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import FIELD_IDS from '../../../../../../constants/field-ids/insurance/exporter-business';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
 import { RequestBody, NumberErrorMessage } from '../../../../../../../types';
 import percentageNumberValidation from '../../../../../../helpers/percentage-number-validation';
 

@@ -40,7 +40,7 @@ CREATE TABLE `Application` (
   `submissionType` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT 'Manual Inclusion Application',
   `policyAndExport` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `business` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `exporterBroker` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `broker` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`company` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`buyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -54,7 +54,7 @@ CREATE TABLE `Application` (
   KEY `Application_policyAndExport_idx` (`policyAndExport`),
   KEY `Application_company_idx` (`company`),
   KEY `Application_business_idx` (`business`),
-  KEY `Application_exporterBroker_idx` (`exporterBroker`),
+  KEY `Application_broker_idx` (`broker`),
 	KEY `Application_buyer_idx` (`buyer`),
 	KEY `Application_declaration_idx` (`declaration`),
 	KEY `Application_sectionReview_idx` (`sectionReview`),
@@ -62,7 +62,7 @@ CREATE TABLE `Application` (
 	CONSTRAINT `Application_buyer_fkey` FOREIGN KEY (`buyer`) REFERENCES `Buyer` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
 	CONSTRAINT `Application_declaration_fkey` FOREIGN KEY (`declaration`) REFERENCES `Declaration` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_eligibility_fkey` FOREIGN KEY (`eligibility`) REFERENCES `Eligibility` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Application_exporterBroker_fkey` FOREIGN KEY (`exporterBroker`) REFERENCES `ExporterBroker` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Application_broker_fkey` FOREIGN KEY (`broker`) REFERENCES `Broker` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_business_fkey` FOREIGN KEY (`business`) REFERENCES `Business` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_company_fkey` FOREIGN KEY (`company`) REFERENCES `Company` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_policyAndExport_fkey` FOREIGN KEY (`policyAndExport`) REFERENCES `PolicyAndExport` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -531,12 +531,12 @@ CREATE TABLE `Account` (
 
 
 
-# Dump of table ExporterBroker
+# Dump of table Broker
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `ExporterBroker`;
+DROP TABLE IF EXISTS `Broker`;
 
-CREATE TABLE `ExporterBroker` (
+CREATE TABLE `Broker` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `isUsingBroker` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -548,8 +548,8 @@ CREATE TABLE `ExporterBroker` (
   `postcode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
-  KEY `ExporterBroker_application_idx` (`application`),
-  CONSTRAINT `ExporterBroker_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  KEY `Broker_application_idx` (`application`),
+  CONSTRAINT `Broker_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -594,17 +594,17 @@ CREATE TABLE IF NOT EXISTS `Company` (
   UNIQUE KEY `Company_address_key` (`registeredOfficeAddress`),
   KEY `Company_application_idx` (`application`),
   KEY `Company_business_idx` (`business`),
-  CONSTRAINT `Company_address_fkey` FOREIGN KEY (`registeredOfficeAddress`) REFERENCES `ExporterCompanyAddress` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Company_address_fkey` FOREIGN KEY (`registeredOfficeAddress`) REFERENCES `CompanyAddress` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Company_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Company_business_fkey` FOREIGN KEY (`business`) REFERENCES `Business` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
-# Dump of table ExporterCompanyAddress
+# Dump of table CompanyAddress
 # ------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `ExporterCompanyAddress` (
+CREATE TABLE IF NOT EXISTS `CompanyAddress` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `addressLine1` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `addressLine2` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -619,17 +619,17 @@ CREATE TABLE IF NOT EXISTS `ExporterCompanyAddress` (
 
 
 
-# Dump of table ExporterCompanySicCode
+# Dump of table CompanySicCode
 # ------------------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `ExporterCompanySicCode` (
+CREATE TABLE IF NOT EXISTS `CompanySicCode` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
 	`company` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sicCode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 	`industrySectorName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
-	KEY `ExporterCompanySicCode_company_idx` (`company`),
-  CONSTRAINT `ExporterCompanySicCode_company_fkey` FOREIGN KEY (`company`) REFERENCES `Company` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+	KEY `CompanySicCode_company_idx` (`company`),
+  CONSTRAINT `CompanySicCode_company_fkey` FOREIGN KEY (`company`) REFERENCES `Company` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
