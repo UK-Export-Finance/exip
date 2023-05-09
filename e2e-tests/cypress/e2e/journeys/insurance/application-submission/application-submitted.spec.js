@@ -61,7 +61,7 @@ context('Insurance - application submitted page', () => {
     });
 
     it('renders the reference number', () => {
-      cy.checkText(panel.referenceNumber(), referenceNumber);
+      cy.checkText(panel.referenceNumberLink(), referenceNumber);
     });
 
     it('renders intro copy', () => {

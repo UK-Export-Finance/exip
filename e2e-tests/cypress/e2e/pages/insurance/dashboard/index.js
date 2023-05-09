@@ -15,17 +15,17 @@ const dashboardPage = {
       row: (referenceNumber) => ({
         status: () => cy.get(`[data-cy="ref-${referenceNumber}-status"]`),
         lastUpdated: () => cy.get(`[data-cy="ref-${referenceNumber}-lastUpdated"]`),
-        referenceNumber: () => cy.get(`[data-cy="ref-${referenceNumber}-referenceNumber-link"]`),
-        referenceNumberNoLink: () => cy.get(`[data-cy="ref-${referenceNumber}-referenceNumber"]`),
+        referenceNumberLink: () => cy.get(`[data-cy="ref-${referenceNumber}-referenceNumber-link"]`),
+        referenceNumberText: () => cy.get(`[data-cy="ref-${referenceNumber}-referenceNumber"]`),
         buyerLocation: () => cy.get(`[data-cy="ref-${referenceNumber}-buyerLocation"]`),
         buyerName: () => cy.get(`[data-cy="ref-${referenceNumber}-buyerName"]`),
         insuredFor: () => cy.get(`[data-cy="ref-${referenceNumber}-insuredFor"]`),
       }),
       firstRow: {
-        referenceNumber: () => cy.get('table tbody tr').first().find('td a'),
+        referenceNumberLink: () => cy.get('table tbody tr').first().find('td a'),
       },
       lastRow: {
-        referenceNumber: () => cy.get('table tbody tr').last().find('td a'),
+        referenceNumberLink: () => cy.get('table tbody tr').last().find('td a'),
       },
     },
   },
