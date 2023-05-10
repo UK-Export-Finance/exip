@@ -27,8 +27,6 @@ const send = async (application: Application, csvPath: string): Promise<SuccessR
       requestedStartDate: formatDate(policyAndExport.requestedStartDate),
     } as ApplicationSubmissionEmailVariables;
 
-
-    
     // send "application submitted" email receipt to the application's owner/account
     const accountSubmittedResponse = await sendEmail.applicationSubmitted.account(sendEmailVars);
 

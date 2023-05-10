@@ -34,6 +34,12 @@ interface ApplicationCompany {
   companyName?: string;
 }
 
+interface ApplicationCompanySicCode {
+  id: string;
+  sicCode: string;
+  industrySectorName: string;
+}
+
 interface ApplicationBuyer extends ApplicationRelationship {
   companyOrOrganisationName?: string;
   address?: string;
@@ -116,6 +122,7 @@ interface Application {
   owner: ApplicationOwner;
   policyAndExport: ApplicationPolicyAndExport;
   company: ApplicationCompany;
+  companySicCode: Array<ApplicationCompanySicCode>;
   companyAddress: ApplicationCompanyAddress;
   business: ApplicationRelationship;
   broker: ApplicationRelationship;
@@ -188,7 +195,7 @@ interface NotifyPeronsalisation {
   linkToFile?: string;
 }
 
-interface SicCodes {
+interface SicCode {
   sicCode: string;
   industrySectorName: string;
   company: ConnectObj;
@@ -336,6 +343,7 @@ export {
   ApplicationDeclaration,
   ApplicationEligibility,
   ApplicationCompany,
+  ApplicationCompanySicCode,
   ApplicationRelationship,
   ApplicationSubmissionEmailVariables,
   BufferEncoding,
@@ -352,7 +360,7 @@ export {
   NotifyPeronsalisation,
   InsuranceFeedbackVariables,
   IndustrySector,
-  SicCodes,
+  SicCode,
   SendExporterEmailVariables,
   SubmitApplicationVariables,
   SuccessResponse,

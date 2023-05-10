@@ -55,6 +55,18 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('company', application.id));
   }
 
+  const companySicCodes = await context.db.CompanySicCode.findMany({
+    where: {
+      company: {
+        id: { equals: company.id },
+      },
+    },
+  });
+
+  if (!company) {
+    throw new Error(generateErrorMessage('companySicCode', application.id));
+  }
+
   const companyAddress = await context.db.CompanyAddress.findOne({
     where: { id: company.registeredOfficeAddressId },
   });
@@ -118,6 +130,7 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     policyAndExport: populatedPolicyAndExport,
     owner: account,
     company: populatedCompany,
+    companySicCodes,
     business,
     broker,
     buyer: populatedBuyer,

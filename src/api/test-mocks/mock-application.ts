@@ -6,6 +6,7 @@ import mockCurrencies from './mock-currencies';
 import { Application } from '../types';
 import broker from './mock-broker';
 import buyer from './mock-buyer';
+import mockCompanySicCode from './mock-company-sic-code';
 
 dotenv.config();
 
@@ -135,6 +136,7 @@ const mockApplication = {
     ...mockSinglePolicyAndExport,
   },
   company: mockCompany,
+  companySicCode: [mockCompanySicCode, mockCompanySicCode],
   companyAddress: mockCompany.registeredOfficeAddress,
   business: mockBusiness,
   broker: mockBroker,

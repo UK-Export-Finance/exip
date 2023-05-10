@@ -1,11 +1,11 @@
-import mapExporter, { mapBroker } from '.';
+import mapExporter, { mapSicCodes, mapBroker } from '.';
 import FIELD_IDS from '../../../constants/field-ids/insurance/business';
 import { CSV } from '../../../content-strings';
 import { FIELDS } from '../../../content-strings/fields/insurance/your-business';
 import { ANSWERS, GBP_CURRENCY_CODE } from '../../../constants';
 import csvRow from '../helpers/csv-row';
 import mapExporterAddress from './map-address';
-import formatDate from '../helpers/format-date';
+import formatDate from '../../../helpers/format-date';
 import formatCurrency from '../helpers/format-currency';
 import NEW_LINE from '../helpers/csv-new-line';
 import { mockApplication } from '../../../test-mocks';
@@ -26,6 +26,25 @@ const {
 } = FIELD_IDS;
 
 describe('api/generate-csv/map-application-to-csv/map-exporter', () => {
+  describe('mapSicCodes', () => {
+    it('should return a string of SIC codes', () => {
+      const sicCodes = mockApplication.companySicCode;
+
+      const result = mapSicCodes(sicCodes);
+
+      const first = sicCodes[0];
+      const last = sicCodes[1];
+
+      const expectedFirst = `${first.sicCode} - ${first.industrySectorName}${NEW_LINE}`;
+
+      const expectedLast = `${last.sicCode} - ${last.industrySectorName}${NEW_LINE}`;
+
+      const expected = `${expectedFirst}${expectedLast}`;
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('mapBroker', () => {
     describe(`when ${USING_BROKER} is ${ANSWERS.YES}`, () => {
       it('should return an array of mapped exporter fields', () => {
@@ -72,7 +91,7 @@ describe('api/generate-csv/map-application-to-csv/map-exporter', () => {
     it('should return an array of mapped exporter fields', () => {
       const result = mapExporter(mockApplication);
 
-      const { company, business } = mockApplication;
+      const { company, companySicCode, business } = mockApplication;
 
       const expected = [
         csvRow(CSV.SECTION_TITLES.EXPORTER_BUSINESS, ''),
@@ -87,7 +106,8 @@ describe('api/generate-csv/map-application-to-csv/map-exporter', () => {
         csvRow(CONTENT_STRINGS[TRADING_NAME].SUMMARY?.TITLE, company[TRADING_NAME]),
         csvRow(CONTENT_STRINGS[TRADING_ADDRESS].SUMMARY?.TITLE, company[TRADING_ADDRESS]),
 
-        csvRow(CSV.FIELDS[COMPANY_SIC], company[COMPANY_SIC]),
+        csvRow(CSV.FIELDS[COMPANY_SIC], mapSicCodes(companySicCode)),
+
         csvRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, formatDate(company[FINANCIAL_YEAR_END_DATE], 'd MMMM')),
         csvRow(CSV.FIELDS[WEBSITE], company[WEBSITE]),
         csvRow(CSV.FIELDS[PHONE_NUMBER], company[PHONE_NUMBER]),

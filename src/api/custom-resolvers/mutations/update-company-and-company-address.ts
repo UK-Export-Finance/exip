@@ -1,6 +1,6 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { mapSicCodes } from '../../helpers/map-sic-codes';
-import { UpdateCompanyAndCompanyAddressVariables, ApplicationRelationship, SicCodes } from '../../types';
+import { UpdateCompanyAndCompanyAddressVariables, ApplicationRelationship, SicCode } from '../../types';
 
 /**
  * updateCompanyAndCompanyAddress
@@ -40,7 +40,7 @@ const updateCompanyAndCompanyAddress = async (
     }
 
     if (mappedSicCodes && mappedSicCodes.length) {
-      mappedSicCodes.forEach(async (sicCodeObj: SicCodes) => {
+      mappedSicCodes.forEach(async (sicCodeObj: SicCode) => {
         await context.db.CompanySicCode.createOne({
           data: sicCodeObj,
         });

@@ -1,4 +1,4 @@
-import { CompanyResponse, SicCodes } from '../../types';
+import { CompanyResponse, SicCode } from '../../types';
 
 /**
  * maps sic codes from response and adds to an array to add to the database
@@ -8,7 +8,7 @@ import { CompanyResponse, SicCodes } from '../../types';
  * @returns {Array} sicCodesToAdd
  */
 const mapSicCodes = (company: CompanyResponse, sicCodes?: Array<string>, industrySectorNames?: Array<string>) => {
-  const mapped = [] as Array<SicCodes>;
+  const mapped = [] as Array<SicCode>;
 
   if (!sicCodes || !sicCodes.length) {
     return mapped;
@@ -30,7 +30,7 @@ const mapSicCodes = (company: CompanyResponse, sicCodes?: Array<string>, industr
           id: company.id,
         },
       },
-    } as SicCodes;
+    } as SicCode;
 
     mapped.push(codeToAdd);
   });
@@ -38,4 +38,4 @@ const mapSicCodes = (company: CompanyResponse, sicCodes?: Array<string>, industr
   return mapped;
 };
 
-export { mapSicCodes, CompanyResponse, SicCodes };
+export { mapSicCodes, CompanyResponse };

@@ -442,7 +442,6 @@ var unlink = async (filePath) => {
     console.info(`Deleting file ${filePath}`);
     const file = await readFile(filePath);
     if (file) {
-      await import_fs.promises.unlink(filePath);
     }
     return false;
   } catch (err) {
@@ -2267,6 +2266,16 @@ var getPopulatedApplication = async (context, application) => {
   if (!company) {
     throw new Error(generateErrorMessage("company", application.id));
   }
+  const companySicCodes = await context.db.CompanySicCode.findMany({
+    where: {
+      company: {
+        id: { equals: company.id }
+      }
+    }
+  });
+  if (!company) {
+    throw new Error(generateErrorMessage("companySicCode", application.id));
+  }
   const companyAddress = await context.db.CompanyAddress.findOne({
     where: { id: company.registeredOfficeAddressId }
   });
@@ -2317,6 +2326,7 @@ var getPopulatedApplication = async (context, application) => {
     policyAndExport: populatedPolicyAndExport,
     owner: account,
     company: populatedCompany,
+    companySicCodes,
     business,
     broker,
     buyer: populatedBuyer,
@@ -2356,6 +2366,11 @@ var getApplicationSubmittedEmailTemplateIds = (application) => {
 };
 var get_application_submitted_email_template_ids_default = getApplicationSubmittedEmailTemplateIds;
 
+// helpers/format-date/index.ts
+var import_date_fns5 = require("date-fns");
+var formatDate = (timestamp3, dateFormat = "d MMMM yyyy") => (0, import_date_fns5.format)(new Date(timestamp3), dateFormat);
+var format_date_default = formatDate;
+
 // emails/send-application-submitted-emails/index.ts
 var send = async (application, csvPath) => {
   try {
@@ -2368,7 +2383,7 @@ var send = async (application, csvPath) => {
       buyerName: buyer.companyOrOrganisationName,
       buyerLocation: buyer.country?.name,
       exporterCompanyName: company.companyName,
-      requestedStartDate: policyAndExport.requestedStartDate
+      requestedStartDate: format_date_default(policyAndExport.requestedStartDate)
     };
     const accountSubmittedResponse = await emails_default.applicationSubmitted.account(sendEmailVars);
     if (!accountSubmittedResponse.success) {
@@ -2455,7 +2470,7 @@ var CSV = {
     [PHONE_NUMBER]: "Exporter telephone number (optional)",
     [GOODS_OR_SERVICES]: "Goods or services the business supplies",
     [YEARS_EXPORTING]: "Exporter years exporting",
-    [EMPLOYEES_UK]: "Exporter UK Exmployees",
+    [EMPLOYEES_UK]: "Exporter UK Employees",
     [EMPLOYEES_INTERNATIONAL]: "Exporter worldwide employees including UK employees",
     [ESTIMATED_ANNUAL_TURNOVER]: "Exporter estimated turnover this current financial year",
     [USING_BROKER]: "Using a broker for this insurance",
@@ -2804,15 +2819,11 @@ var TIME_SUBMITTED = {
   }
 };
 
-// generate-csv/map-application-to-csv/helpers/format-date/index.ts
-var import_date_fns5 = require("date-fns");
-var formatDate = (timestamp3, dateFormat = "d MMMM yyyy") => (0, import_date_fns5.format)(new Date(timestamp3), dateFormat);
-var format_date_default = formatDate;
-
 // generate-csv/map-application-to-csv/helpers/format-time-of-day/index.ts
 var formatTimeOfDay = (date) => {
   const fullDate = new Date(date);
-  return `${fullDate.getHours()}:${fullDate.getMinutes()}`;
+  const utcHour = fullDate.getUTCHours();
+  return `${utcHour}:${fullDate.getMinutes()}`;
 };
 var format_time_of_day_default = formatTimeOfDay;
 
@@ -2978,6 +2989,14 @@ var {
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
   BROKER: { USING_BROKER: USING_BROKER3, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL5 }
 } = business_default;
+var mapSicCodes2 = (sicCodes) => {
+  let mapped = "";
+  sicCodes.forEach((sicCodeObj) => {
+    const { sicCode, industrySectorName } = sicCodeObj;
+    mapped += `${sicCode} - ${industrySectorName}${csv_new_line_default}`;
+  });
+  return mapped;
+};
 var mapBroker = (application) => {
   const { broker } = application;
   let mapped = [csv_row_default(CSV.FIELDS[USING_BROKER3], broker[USING_BROKER3])];
@@ -2992,7 +3011,7 @@ var mapBroker = (application) => {
   return mapped;
 };
 var mapExporter = (application) => {
-  const { company, business } = application;
+  const { company, companySicCode, business } = application;
   const mapped = [
     csv_row_default(CSV.SECTION_TITLES.EXPORTER_BUSINESS, ""),
     // company fields
@@ -3002,7 +3021,7 @@ var mapExporter = (application) => {
     csv_row_default(CSV.FIELDS[COMPANY_ADDRESS2], map_address_default(company[COMPANY_ADDRESS2])),
     csv_row_default(CONTENT_STRINGS3[TRADING_NAME2].SUMMARY?.TITLE, company[TRADING_NAME2]),
     csv_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, company[TRADING_ADDRESS2]),
-    csv_row_default(CSV.FIELDS[COMPANY_SIC2], company[COMPANY_SIC2]),
+    csv_row_default(CSV.FIELDS[COMPANY_SIC2], mapSicCodes2(companySicCode)),
     csv_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM")),
     csv_row_default(CSV.FIELDS[WEBSITE3], company[WEBSITE3]),
     csv_row_default(CSV.FIELDS[PHONE_NUMBER3], company[PHONE_NUMBER3]),

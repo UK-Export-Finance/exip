@@ -56,7 +56,7 @@ describe('emails/send-email-application-submitted', () => {
       const { email, firstName } = owner;
       const { companyName } = company;
       const { companyOrOrganisationName } = buyer;
-      
+
       expectedSendEmailVars = {
         emailAddress: email,
         firstName,
