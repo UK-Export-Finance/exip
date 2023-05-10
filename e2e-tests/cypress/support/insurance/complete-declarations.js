@@ -29,7 +29,7 @@ const completeDeclarations = ({ hasAntiBriberyCodeOfConduct = true, exportingWit
   } else {
     cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct(FIELD_VALUES.NO);
   }
-  
+
   cy.completeAndSubmitDeclarationConfirmationAndAcknowledgements();
 
   cy.completeAndSubmitDeclarationHowYourDataWillBeUsed();
