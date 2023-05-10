@@ -739,7 +739,7 @@ export const lists = {
         db: { nativeType: 'VarChar(1000)' },
       }),
       referralUrl: text({
-        db: { nativeType: 'VarChar(1000)' },
+        db: { nativeType: 'VarChar(500)' },
       }),
       product: text(),
     },
