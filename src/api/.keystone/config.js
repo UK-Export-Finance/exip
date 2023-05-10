@@ -366,7 +366,8 @@ var EMAIL_TEMPLATE_IDS = {
       UNDERWRITING_TEAM: {
         NOTIFICATION_TRADING_HISTORY: "34457439-bf9c-46e3-bd05-b8732ed682fb",
         NOTIFICATION_ANTI_BRIBERY: "8be12c98-b2c7-4992-8920-925aa37b6391",
-        NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY: "7f0541dd-1dae-4d51-9ebc-87d2a624f8d2"
+        NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY: "7f0541dd-1dae-4d51-9ebc-87d2a624f8d2",
+        NO_DOCUMENTS: "65b517c6-ae86-470b-9448-194ae5ac44bb"
       }
     }
   },
@@ -2349,24 +2350,30 @@ var getApplicationSubmittedEmailTemplateIds = (application) => {
     underwritingTeam: "",
     account: ""
   };
+  const doesNotHaveAntiBriberyCodeOfConduct = declaration.hasAntiBriberyCodeOfConduct === ANSWERS.NO;
+  const hasNotTradedWithBuyer = buyer.exporterHasTradedWithBuyer === ANSWERS.NO;
+  if (doesNotHaveAntiBriberyCodeOfConduct && hasNotTradedWithBuyer) {
+    templateIds.underwritingTeam = UNDERWRITING_TEAM.NO_DOCUMENTS;
+    return templateIds;
+  }
   const hasAntiBriberyCodeOfConduct = declaration.hasAntiBriberyCodeOfConduct === ANSWERS.YES;
   if (hasAntiBriberyCodeOfConduct) {
     templateIds.account = EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY;
   }
-  const isConnectedWithBuyer = buyer.exporterHasTradedWithBuyer && buyer.exporterHasTradedWithBuyer === ANSWERS.YES;
-  if (isConnectedWithBuyer) {
+  const hasTradedWithBuyer = buyer.exporterHasTradedWithBuyer === ANSWERS.YES;
+  if (hasTradedWithBuyer) {
     templateIds.account = EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_TRADING_HISTORY;
   }
-  if (hasAntiBriberyCodeOfConduct && isConnectedWithBuyer) {
+  if (hasAntiBriberyCodeOfConduct && hasTradedWithBuyer) {
     templateIds.account = EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY;
   }
   console.info("------- temporary debugging dev environment - buyer data \n", buyer);
   console.info("------- temporary debugging dev environment - declaration data \n", declaration);
   console.info("------- temporary debugging dev environment - hasAntiBriberyCodeOfConduct? ", hasAntiBriberyCodeOfConduct);
-  console.info("------- temporary debugging dev environment - isConnectedWithBuyer? ", isConnectedWithBuyer);
+  console.info("------- temporary debugging dev environment - hasTradedWithBuyer? ", hasTradedWithBuyer);
   console.info("------- temporary debugging dev environment - templateIds \n", templateIds);
   return templateIds;
 };

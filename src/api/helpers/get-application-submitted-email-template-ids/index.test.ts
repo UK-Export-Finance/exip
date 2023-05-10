@@ -64,12 +64,12 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
       };
     });
 
-    test('it should return an object with the correct, empty template IDs', async () => {
+    test('it should return an object with only a template ID for underwritingTeam', async () => {
       const result = getApplicationSubmittedEmailTemplateIds(application);
 
       const expected = {
         account: '',
-        underwritingTeam: '',
+        underwritingTeam: UNDERWRITING_TEAM.NO_DOCUMENTS,
       };
 
       expect(result).toEqual(expected);

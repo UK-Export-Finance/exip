@@ -21,6 +21,20 @@ const getApplicationSubmittedEmailTemplateIds = (application: Application) => {
     account: '',
   };
 
+  const doesNotHaveAntiBriberyCodeOfConduct = declaration.hasAntiBriberyCodeOfConduct === ANSWERS.NO;
+  const hasNotTradedWithBuyer = buyer.exporterHasTradedWithBuyer === ANSWERS.NO;
+
+  if (doesNotHaveAntiBriberyCodeOfConduct && hasNotTradedWithBuyer) {
+    /**
+     * No documents required. Therefore:
+     * - We do not need to send the applicant an email.
+     * - We only need to send an email to the underwriting team.
+     */
+    templateIds.underwritingTeam = UNDERWRITING_TEAM.NO_DOCUMENTS;
+
+    return templateIds;
+  }
+
   const hasAntiBriberyCodeOfConduct = declaration.hasAntiBriberyCodeOfConduct === ANSWERS.YES;
 
   if (hasAntiBriberyCodeOfConduct) {
@@ -28,14 +42,14 @@ const getApplicationSubmittedEmailTemplateIds = (application: Application) => {
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY;
   }
 
-  const isConnectedWithBuyer = buyer.exporterHasTradedWithBuyer && buyer.exporterHasTradedWithBuyer === ANSWERS.YES;
+  const hasTradedWithBuyer = buyer.exporterHasTradedWithBuyer === ANSWERS.YES;
 
-  if (isConnectedWithBuyer) {
+  if (hasTradedWithBuyer) {
     templateIds.account = EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_TRADING_HISTORY;
   }
 
-  if (hasAntiBriberyCodeOfConduct && isConnectedWithBuyer) {
+  if (hasAntiBriberyCodeOfConduct && hasTradedWithBuyer) {
     templateIds.account = EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY;
   }
@@ -43,7 +57,7 @@ const getApplicationSubmittedEmailTemplateIds = (application: Application) => {
   console.info('------- temporary debugging dev environment - buyer data \n', buyer);
   console.info('------- temporary debugging dev environment - declaration data \n', declaration);
   console.info('------- temporary debugging dev environment - hasAntiBriberyCodeOfConduct? ', hasAntiBriberyCodeOfConduct);
-  console.info('------- temporary debugging dev environment - isConnectedWithBuyer? ', isConnectedWithBuyer);
+  console.info('------- temporary debugging dev environment - hasTradedWithBuyer? ', hasTradedWithBuyer);
   console.info('------- temporary debugging dev environment - templateIds \n', templateIds);
 
   return templateIds;
