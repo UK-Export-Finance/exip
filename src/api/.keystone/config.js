@@ -442,6 +442,7 @@ var unlink = async (filePath) => {
     console.info(`Deleting file ${filePath}`);
     const file = await readFile(filePath);
     if (file) {
+      await import_fs.promises.unlink(filePath);
     }
     return false;
   } catch (err) {
@@ -3011,7 +3012,7 @@ var mapBroker = (application) => {
   return mapped;
 };
 var mapExporter = (application) => {
-  const { company, companySicCode, business } = application;
+  const { company, companySicCodes, business } = application;
   const mapped = [
     csv_row_default(CSV.SECTION_TITLES.EXPORTER_BUSINESS, ""),
     // company fields
@@ -3021,7 +3022,7 @@ var mapExporter = (application) => {
     csv_row_default(CSV.FIELDS[COMPANY_ADDRESS2], map_address_default(company[COMPANY_ADDRESS2])),
     csv_row_default(CONTENT_STRINGS3[TRADING_NAME2].SUMMARY?.TITLE, company[TRADING_NAME2]),
     csv_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, company[TRADING_ADDRESS2]),
-    csv_row_default(CSV.FIELDS[COMPANY_SIC2], mapSicCodes2(companySicCode)),
+    csv_row_default(CSV.FIELDS[COMPANY_SIC2], mapSicCodes2(companySicCodes)),
     csv_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM")),
     csv_row_default(CSV.FIELDS[WEBSITE3], company[WEBSITE3]),
     csv_row_default(CSV.FIELDS[PHONE_NUMBER3], company[PHONE_NUMBER3]),

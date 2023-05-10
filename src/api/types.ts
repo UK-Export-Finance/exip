@@ -1,4 +1,4 @@
-import { AccountUpdateInput, ExporterCompanyUpdateInput } from '.keystone/types'; // eslint-disable-line
+import { AccountUpdateInput, CompanyUpdateInput } from '.keystone/types'; // eslint-disable-line
 
 interface SuccessResponse {
   success: boolean;
@@ -122,7 +122,7 @@ interface Application {
   owner: ApplicationOwner;
   policyAndExport: ApplicationPolicyAndExport;
   company: ApplicationCompany;
-  companySicCode: Array<ApplicationCompanySicCode>;
+  companySicCodes: Array<ApplicationCompanySicCode>;
   companyAddress: ApplicationCompanyAddress;
   business: ApplicationRelationship;
   broker: ApplicationRelationship;
@@ -301,7 +301,7 @@ interface UpdateCompanyAndCompanyAddressVariablesData {
   sicCodes?: [string];
   oldSicCodes?: [string];
   industrySectorNames?: [string];
-  company?: ExporterCompanyUpdateInput;
+  company?: CompanyUpdateInput;
 }
 
 interface UpdateCompanyAndCompanyAddressVariables {

@@ -10,14 +10,14 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * - exportingWithCodeOfConduct: Should submit "yes" in the "exporting with code of conduct" form. Defaults to "yes".a
  * @return {String} Application reference number
  */
-const completeSignInAndSubmitAnApplication = ({ exportingWithCodeOfConduct }) => {
+const completeSignInAndSubmitAnApplication = ({ hasAntiBriberyCodeOfConduct, exportingWithCodeOfConduct }) => {
   completeSignInAndGoToApplication();
 
   cy.completePrepareApplicationSinglePolicyType();
 
   cy.completeAndSubmitCheckYourAnswers();
 
-  cy.completeAndSubmitDeclarations({ exportingWithCodeOfConduct });
+  cy.completeAndSubmitDeclarations({ hasAntiBriberyCodeOfConduct, exportingWithCodeOfConduct });
 
   return cy.getReferenceNumber().then((referenceNumber) => referenceNumber);
 };

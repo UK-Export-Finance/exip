@@ -71,7 +71,7 @@ const unlink = async (filePath: string) => {
     const file = await readFile(filePath);
 
     if (file) {
-      // await fs.unlink(filePath);
+      await fs.unlink(filePath);
     }
 
     return false;

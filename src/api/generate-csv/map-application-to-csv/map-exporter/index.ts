@@ -72,7 +72,7 @@ export const mapBroker = (application: Application) => {
  * @returns {Array} Array of objects for CSV generation
  */
 const mapExporter = (application: Application) => {
-  const { company, companySicCode, business } = application;
+  const { company, companySicCodes, business } = application;
 
   const mapped = [
     csvRow(CSV.SECTION_TITLES.EXPORTER_BUSINESS, ''),
@@ -87,7 +87,7 @@ const mapExporter = (application: Application) => {
     csvRow(CONTENT_STRINGS[TRADING_NAME].SUMMARY?.TITLE, company[TRADING_NAME]),
     csvRow(CONTENT_STRINGS[TRADING_ADDRESS].SUMMARY?.TITLE, company[TRADING_ADDRESS]),
 
-    csvRow(CSV.FIELDS[COMPANY_SIC], mapSicCodes(companySicCode)),
+    csvRow(CSV.FIELDS[COMPANY_SIC], mapSicCodes(companySicCodes)),
 
     csvRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, formatDate(company[FINANCIAL_YEAR_END_DATE], 'd MMMM')),
     csvRow(CSV.FIELDS[WEBSITE], company[WEBSITE]),
