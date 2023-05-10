@@ -19,7 +19,7 @@ context('Insurance - Check your answers - Need to start new application - start 
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType();
+      cy.completePrepareApplicationSinglePolicyType({});
 
       // go to the check your answers - policy and exports page
       task.link().click();

@@ -25,7 +25,7 @@ export default () => {
   submitButton().click();
 
   cy.completeAndSubmitCompanyOrOrganisationForm();
-  cy.completeAndSubmitWorkingWithBuyerForm();
+  cy.completeAndSubmitWorkingWithBuyerForm({});
 
   submitButton().click();
 };

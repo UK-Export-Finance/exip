@@ -33,7 +33,7 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType();
+      cy.completePrepareApplicationSinglePolicyType({});
 
       task.link().click();
 

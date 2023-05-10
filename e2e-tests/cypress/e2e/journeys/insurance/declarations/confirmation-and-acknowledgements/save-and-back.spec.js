@@ -26,7 +26,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType();
+      cy.completePrepareApplicationSinglePolicyType({});
 
       // go to the page we want to test.
       taskList.submitApplication.tasks.declarationsAndSubmit.link().click();

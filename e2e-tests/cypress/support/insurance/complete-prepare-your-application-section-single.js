@@ -20,7 +20,7 @@ export default ({ exporterHasTradedWithBuyer }) => {
   cy.completeAndSubmitAboutGoodsOrServicesForm();
 
   submitButton().click();
-
+\
   cy.completeAndSubmitCompanyDetails();
   cy.completeAndSubmitYourContact();
   cy.completeAndSubmitNatureOfYourBusiness();
