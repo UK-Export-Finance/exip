@@ -6,6 +6,7 @@ const {
   DECLARATIONS: {
     CONFIDENTIALITY,
     ANTI_BRIBERY: {
+      ROOT: ANTI_BRIBERY_ROOT,
       CODE_OF_CONDUCT,
       EXPORTING_WITH_CODE_OF_CONDUCT,
     },
@@ -38,6 +39,14 @@ context('Insurance - Declaration - cannot skip to any Declarations page without 
 
   it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Declarations - Confidentiality page directly`, () => {
     const url = `${insuranceRoute}/${referenceNumber}${CONFIDENTIALITY}`;
+
+    cy.navigateToUrl(url);
+
+    cy.assertUrl(completeOtherSectionsUrl);
+  });
+
+  it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Declarations - Anti-bribery page directly`, () => {
+    const url = `${insuranceRoute}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 
     cy.navigateToUrl(url);
 
