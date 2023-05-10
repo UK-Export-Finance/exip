@@ -1,5 +1,6 @@
 import sendEmail from '../index';
 import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-application-submitted-email-template-ids';
+import formatDate from '../../helpers/format-date';
 import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } from '../../types';
 
 /**
@@ -23,9 +24,11 @@ const send = async (application: Application, csvPath: string): Promise<SuccessR
       buyerName: buyer.companyOrOrganisationName,
       buyerLocation: buyer.country?.name,
       exporterCompanyName: company.companyName,
-      requestedStartDate: policyAndExport.requestedStartDate,
+      requestedStartDate: formatDate(policyAndExport.requestedStartDate),
     } as ApplicationSubmissionEmailVariables;
 
+
+    
     // send "application submitted" email receipt to the application's owner/account
     const accountSubmittedResponse = await sendEmail.applicationSubmitted.account(sendEmailVars);
 

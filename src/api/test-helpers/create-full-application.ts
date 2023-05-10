@@ -56,7 +56,7 @@ export const createFullApplication = async (context: Context) => {
   // create a new application
   const application = (await context.query.Application.createOne({
     query:
-      'id referenceNumber eligibility { id } policyAndExport { id } owner { id } company { id } business { id } broker { id } buyer { id } declaration { id }',
+      'id referenceNumber eligibility { id } policyAndExport { id requestedStartDate } owner { id } company { id } business { id } broker { id } buyer { id } declaration { id }',
     data: {
       owner: {
         connect: {

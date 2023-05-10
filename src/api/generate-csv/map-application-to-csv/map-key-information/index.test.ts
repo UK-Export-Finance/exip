@@ -3,7 +3,7 @@ import { REFERENCE_NUMBER, DATE_SUBMITTED, TIME_SUBMITTED } from '../../../conte
 import { CSV } from '../../../content-strings';
 import ACCOUNT from '../../../constants/field-ids/insurance/account';
 import csvRow from '../helpers/csv-row';
-import formatDate from '../helpers/format-date';
+import formatDate from '../../../helpers/format-date';
 import formatTimeOfDay from '../helpers/format-time-of-day';
 import { mockApplication } from '../../../test-mocks';
 

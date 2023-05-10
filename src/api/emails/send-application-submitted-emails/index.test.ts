@@ -6,6 +6,7 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import sendEmail from '../index';
 import { ANSWERS } from '../../constants';
 import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-application-submitted-email-template-ids';
+import formatDate from '../../helpers/format-date';
 import { createFullApplication } from '../../test-helpers';
 import { Application, ApplicationSubmissionEmailVariables } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -55,7 +56,7 @@ describe('emails/send-email-application-submitted', () => {
       const { email, firstName } = owner;
       const { companyName } = company;
       const { companyOrOrganisationName } = buyer;
-
+      
       expectedSendEmailVars = {
         emailAddress: email,
         firstName,
@@ -63,7 +64,7 @@ describe('emails/send-email-application-submitted', () => {
         buyerName: companyOrOrganisationName,
         buyerLocation: buyer.country?.name,
         exporterCompanyName: companyName,
-        requestedStartDate: policyAndExport.requestedStartDate,
+        requestedStartDate: formatDate(policyAndExport.requestedStartDate),
       } as ApplicationSubmissionEmailVariables;
     });
 
