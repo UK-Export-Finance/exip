@@ -107,7 +107,7 @@ export const createFullApplication = async (context: Context) => {
   })) as ApplicationCompany;
 
   // create a company SIC codes
-  (await context.query.CompanySicCode.createOne({
+  const companySicCodes = (await context.query.CompanySicCode.createOne({
     data: {
       ...mockCompanySicCode,
       company: {
@@ -130,6 +130,7 @@ export const createFullApplication = async (context: Context) => {
 
   return {
     ...application,
+    companySicCodes,
     owner: account,
     company,
     buyer,

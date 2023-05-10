@@ -36,6 +36,7 @@ interface ApplicationCompany {
 
 interface ApplicationCompanySicCode {
   id: string;
+  companyId: string;
   sicCode: string;
   industrySectorName: string;
 }

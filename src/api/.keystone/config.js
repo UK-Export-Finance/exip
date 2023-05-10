@@ -2363,11 +2363,11 @@ var getApplicationSubmittedEmailTemplateIds = (application) => {
     templateIds.account = EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY;
   }
-  console.log("------- temporary debugging dev environment - buyer data \n", buyer);
-  console.log("------- temporary debugging dev environment - declaration data \n", declaration);
-  console.log("------- temporary debugging dev environment - hasAntiBriberyCodeOfConduct? ", hasAntiBriberyCodeOfConduct);
-  console.log("------- temporary debugging dev environment - isConnectedWithBuyer? ", isConnectedWithBuyer);
-  console.log("------- temporary debugging dev environment - templateIds \n", templateIds);
+  console.info("------- temporary debugging dev environment - buyer data \n", buyer);
+  console.info("------- temporary debugging dev environment - declaration data \n", declaration);
+  console.info("------- temporary debugging dev environment - hasAntiBriberyCodeOfConduct? ", hasAntiBriberyCodeOfConduct);
+  console.info("------- temporary debugging dev environment - isConnectedWithBuyer? ", isConnectedWithBuyer);
+  console.info("------- temporary debugging dev environment - templateIds \n", templateIds);
   return templateIds;
 };
 var get_application_submitted_email_template_ids_default = getApplicationSubmittedEmailTemplateIds;

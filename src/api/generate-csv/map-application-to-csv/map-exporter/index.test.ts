@@ -28,7 +28,7 @@ const {
 describe('api/generate-csv/map-application-to-csv/map-exporter', () => {
   describe('mapSicCodes', () => {
     it('should return a string of SIC codes', () => {
-      const sicCodes = mockApplication.companySicCode;
+      const sicCodes = mockApplication.companySicCodes;
 
       const result = mapSicCodes(sicCodes);
 
@@ -91,7 +91,7 @@ describe('api/generate-csv/map-application-to-csv/map-exporter', () => {
     it('should return an array of mapped exporter fields', () => {
       const result = mapExporter(mockApplication);
 
-      const { company, companySicCode, business } = mockApplication;
+      const { company, companySicCodes, business } = mockApplication;
 
       const expected = [
         csvRow(CSV.SECTION_TITLES.EXPORTER_BUSINESS, ''),
@@ -106,7 +106,7 @@ describe('api/generate-csv/map-application-to-csv/map-exporter', () => {
         csvRow(CONTENT_STRINGS[TRADING_NAME].SUMMARY?.TITLE, company[TRADING_NAME]),
         csvRow(CONTENT_STRINGS[TRADING_ADDRESS].SUMMARY?.TITLE, company[TRADING_ADDRESS]),
 
-        csvRow(CSV.FIELDS[COMPANY_SIC], mapSicCodes(companySicCode)),
+        csvRow(CSV.FIELDS[COMPANY_SIC], mapSicCodes(companySicCodes)),
 
         csvRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, formatDate(company[FINANCIAL_YEAR_END_DATE], 'd MMMM')),
         csvRow(CSV.FIELDS[WEBSITE], company[WEBSITE]),

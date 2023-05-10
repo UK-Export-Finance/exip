@@ -136,7 +136,7 @@ const mockApplication = {
     ...mockSinglePolicyAndExport,
   },
   company: mockCompany,
-  companySicCode: [mockCompanySicCode, mockCompanySicCode],
+  companySicCodes: [mockCompanySicCode, mockCompanySicCode],
   companyAddress: mockCompany.registeredOfficeAddress,
   business: mockBusiness,
   broker: mockBroker,
