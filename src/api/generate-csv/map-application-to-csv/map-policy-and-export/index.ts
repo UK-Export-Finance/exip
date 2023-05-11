@@ -4,7 +4,7 @@ import { POLICY_AND_EXPORTS_FIELDS } from '../../../content-strings/fields/insur
 import { GBP_CURRENCY_CODE } from '../../../constants';
 import { isSinglePolicyType, isMultiPolicyType } from '../helpers/policy-type';
 import csvRow from '../helpers/csv-row';
-import formatDate from '../helpers/format-date';
+import formatDate from '../../../helpers/format-date';
 import formatCurrency from '../helpers/format-currency';
 import mapMonthString from '../helpers/map-month-string';
 import { Application } from '../../../types';

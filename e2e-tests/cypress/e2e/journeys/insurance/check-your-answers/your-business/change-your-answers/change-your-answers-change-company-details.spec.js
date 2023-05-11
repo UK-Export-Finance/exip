@@ -67,7 +67,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType();
+      cy.completePrepareApplicationSinglePolicyType({});
 
       task.link().click();
 

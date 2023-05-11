@@ -1,4 +1,4 @@
-import { AccountUpdateInput, ExporterCompanyUpdateInput } from '.keystone/types'; // eslint-disable-line
+import { AccountUpdateInput, CompanyUpdateInput } from '.keystone/types'; // eslint-disable-line
 
 interface SuccessResponse {
   success: boolean;
@@ -32,6 +32,13 @@ interface ApplicationOwner extends ApplicationRelationship {
 interface ApplicationCompany {
   id: string;
   companyName?: string;
+}
+
+interface ApplicationCompanySicCode {
+  id: string;
+  companyId: string;
+  sicCode: string;
+  industrySectorName: string;
 }
 
 interface ApplicationBuyer extends ApplicationRelationship {
@@ -116,6 +123,7 @@ interface Application {
   owner: ApplicationOwner;
   policyAndExport: ApplicationPolicyAndExport;
   company: ApplicationCompany;
+  companySicCodes: Array<ApplicationCompanySicCode>;
   companyAddress: ApplicationCompanyAddress;
   business: ApplicationRelationship;
   broker: ApplicationRelationship;
@@ -188,7 +196,7 @@ interface NotifyPeronsalisation {
   linkToFile?: string;
 }
 
-interface SicCodes {
+interface SicCode {
   sicCode: string;
   industrySectorName: string;
   company: ConnectObj;
@@ -294,7 +302,7 @@ interface UpdateCompanyAndCompanyAddressVariablesData {
   sicCodes?: [string];
   oldSicCodes?: [string];
   industrySectorNames?: [string];
-  company?: ExporterCompanyUpdateInput;
+  company?: CompanyUpdateInput;
 }
 
 interface UpdateCompanyAndCompanyAddressVariables {
@@ -336,6 +344,7 @@ export {
   ApplicationDeclaration,
   ApplicationEligibility,
   ApplicationCompany,
+  ApplicationCompanySicCode,
   ApplicationRelationship,
   ApplicationSubmissionEmailVariables,
   BufferEncoding,
@@ -352,7 +361,7 @@ export {
   NotifyPeronsalisation,
   InsuranceFeedbackVariables,
   IndustrySector,
-  SicCodes,
+  SicCode,
   SendExporterEmailVariables,
   SubmitApplicationVariables,
   SuccessResponse,

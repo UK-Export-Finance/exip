@@ -42,6 +42,7 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.policyAndExport.id).toEqual(application.policyAndExport.id);
     expect(result.owner.id).toEqual(application.owner.id);
     expect(result.company.id).toEqual(application.company.id);
+    expect(result.companySicCodes[0].companyId).toEqual(application.company.id);
     expect(result.business.id).toEqual(application.business.id);
     expect(result.broker.id).toEqual(application.broker.id);
     expect(result.buyer.id).toEqual(application.buyer.id);
@@ -109,6 +110,15 @@ describe('api/helpers/get-populated-application', () => {
       await getPopulatedApplication(context, { ...applicationIds, companyId: invalidId });
     } catch (err) {
       const expected = new Error(generateErrorMessage('company', applicationIds.id));
+      expect(err).toEqual(expected);
+    }
+  });
+
+  it('should throw an error when companySicCode does not exist', async () => {
+    try {
+      await getPopulatedApplication(context, { ...applicationIds, companyId: application.company.id });
+    } catch (err) {
+      const expected = new Error(generateErrorMessage('companySicCode', applicationIds.id));
       expect(err).toEqual(expected);
     }
   });

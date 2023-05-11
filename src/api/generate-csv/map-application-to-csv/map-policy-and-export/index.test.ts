@@ -4,7 +4,7 @@ import { CSV } from '../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS } from '../../../content-strings/fields/insurance';
 import { GBP_CURRENCY_CODE, FIELD_VALUES } from '../../../constants';
 import csvRow from '../helpers/csv-row';
-import formatDate from '../helpers/format-date';
+import formatDate from '../../../helpers/format-date';
 import formatCurrency from '../helpers/format-currency';
 import mapMonthString from '../helpers/map-month-string';
 import mockApplication, { mockApplicationMultiplePolicy } from '../../../test-mocks/mock-application';

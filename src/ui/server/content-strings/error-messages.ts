@@ -266,7 +266,7 @@ export const ERROR_MESSAGES = {
           },
           [FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD]: {
             INCORRECT_FORMAT:
-              'Enter a password in the correct format, like 14 characters long with an uppercase letter, lower case letter, number and special character',
+              'Enter a password in the correct format - for example, 14 characters long with an uppercase letter, lower case letter, number and special character',
           },
         },
       },

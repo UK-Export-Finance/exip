@@ -261,7 +261,7 @@ export const ERROR_MESSAGES = {
             ACCOUNT_ALREADY_EXISTS: 'There is already an account with this email address. Please sign in or reset your password',
           },
           [FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD]: {
-            INCORRECT_FORMAT: 'Enter a password in the correct format, like 14 characters long with an uppercase letter, lower case letter, number and special character',
+            INCORRECT_FORMAT: 'Enter a password in the correct format - for example, 14 characters long with an uppercase letter, lower case letter, number and special character',
           },
         },
       },
@@ -275,7 +275,6 @@ export const ERROR_MESSAGES = {
       },
       [FIELD_IDS.INSURANCE.ACCOUNT.SECURITY_CODE]: {
         INCORRECT: 'Enter your 6-digit security code - for example, 356515. You cannot enter letters or special characters.',
-        ACCOUNT_DOES_NOT_EXIST: 'Enter the email address used when creating your account',
       },
       PASSWORD_RESET: {
         [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {

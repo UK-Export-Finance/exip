@@ -6,8 +6,13 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
-// runs through the full prepare your application journey for single policy type
-export default () => {
+/**
+ * completePrepareApplicationSinglePolicyType
+ * Runs through the full prepare your application journey for a single policy type
+ * @param {Object} Object with flags on how to complete specific parts of the application
+ * - exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form. Defaults to "yes".
+ */
+export default ({ exporterHasTradedWithBuyer }) => {
   task.link().click();
 
   cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
@@ -25,7 +30,7 @@ export default () => {
   submitButton().click();
 
   cy.completeAndSubmitCompanyOrOrganisationForm();
-  cy.completeAndSubmitWorkingWithBuyerForm();
+  cy.completeAndSubmitWorkingWithBuyerForm({ exporterHasTradedWithBuyer });
 
   submitButton().click();
 };

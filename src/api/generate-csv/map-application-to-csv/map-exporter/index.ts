@@ -4,10 +4,10 @@ import { FIELDS } from '../../../content-strings/fields/insurance/your-business'
 import { ANSWERS, GBP_CURRENCY_CODE } from '../../../constants';
 import csvRow from '../helpers/csv-row';
 import mapExporterAddress from './map-address';
-import formatDate from '../helpers/format-date';
+import formatDate from '../../../helpers/format-date';
 import formatCurrency from '../helpers/format-currency';
 import NEW_LINE from '../helpers/csv-new-line';
-import { Application } from '../../../types';
+import { Application, ApplicationCompanySicCode } from '../../../types';
 
 const CONTENT_STRINGS = {
   ...FIELDS.COMPANY_DETAILS,
@@ -23,6 +23,24 @@ const {
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   BROKER: { USING_BROKER, NAME: BROKER_NAME, ADDRESS_LINE_1, TOWN, COUNTY, POSTCODE, EMAIL },
 } = FIELD_IDS;
+
+/**
+ * mapSicCodes
+ * Map an application's array of company SIC codes into a single string
+ * @param {Array} Application company SIC codes
+ * @returns {String} String of company SIC codes for CSV generation
+ */
+export const mapSicCodes = (sicCodes: Array<ApplicationCompanySicCode>) => {
+  let mapped = '';
+
+  sicCodes.forEach((sicCodeObj) => {
+    const { sicCode, industrySectorName } = sicCodeObj;
+
+    mapped += `${sicCode} - ${industrySectorName}${NEW_LINE}`;
+  });
+
+  return mapped;
+};
 
 /**
  * mapBroker
@@ -54,7 +72,7 @@ export const mapBroker = (application: Application) => {
  * @returns {Array} Array of objects for CSV generation
  */
 const mapExporter = (application: Application) => {
-  const { company, business } = application;
+  const { company, companySicCodes, business } = application;
 
   const mapped = [
     csvRow(CSV.SECTION_TITLES.EXPORTER_BUSINESS, ''),
@@ -69,7 +87,8 @@ const mapExporter = (application: Application) => {
     csvRow(CONTENT_STRINGS[TRADING_NAME].SUMMARY?.TITLE, company[TRADING_NAME]),
     csvRow(CONTENT_STRINGS[TRADING_ADDRESS].SUMMARY?.TITLE, company[TRADING_ADDRESS]),
 
-    csvRow(CSV.FIELDS[COMPANY_SIC], company[COMPANY_SIC]),
+    csvRow(CSV.FIELDS[COMPANY_SIC], mapSicCodes(companySicCodes)),
+
     csvRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, formatDate(company[FINANCIAL_YEAR_END_DATE], 'd MMMM')),
     csvRow(CSV.FIELDS[WEBSITE], company[WEBSITE]),
     csvRow(CSV.FIELDS[PHONE_NUMBER], company[PHONE_NUMBER]),

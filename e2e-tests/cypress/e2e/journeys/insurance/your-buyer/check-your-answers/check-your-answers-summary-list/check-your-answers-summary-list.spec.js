@@ -43,7 +43,7 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
       task.link().click();
 
       cy.completeAndSubmitCompanyOrOrganisationForm();
-      cy.completeAndSubmitWorkingWithBuyerForm();
+      cy.completeAndSubmitWorkingWithBuyerForm({});
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });

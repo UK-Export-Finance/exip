@@ -1,5 +1,6 @@
 import sendEmail from '../index';
 import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-application-submitted-email-template-ids';
+import formatDate from '../../helpers/format-date';
 import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } from '../../types';
 
 /**
@@ -23,10 +24,10 @@ const send = async (application: Application, csvPath: string): Promise<SuccessR
       buyerName: buyer.companyOrOrganisationName,
       buyerLocation: buyer.country?.name,
       exporterCompanyName: company.companyName,
-      requestedStartDate: policyAndExport.requestedStartDate,
+      requestedStartDate: formatDate(policyAndExport.requestedStartDate),
     } as ApplicationSubmissionEmailVariables;
 
-    // send "application submitted" email receipt to the application's owner/account
+    // send "application submitted" email receipt to the applicant
     const accountSubmittedResponse = await sendEmail.applicationSubmitted.account(sendEmailVars);
 
     if (!accountSubmittedResponse.success) {
@@ -43,7 +44,7 @@ const send = async (application: Application, csvPath: string): Promise<SuccessR
       throw new Error('Sending application submitted email to underwriting team');
     }
 
-    // send "documents" email to the application's owner/account depending on submitted answers
+    // send "documents" email to the applicant depending on submitted answers
     if (templateIds.account) {
       const documentsResponse = await sendEmail.documentsEmail(sendEmailVars, templateIds.account);
 
@@ -52,7 +53,7 @@ const send = async (application: Application, csvPath: string): Promise<SuccessR
       }
     }
 
-    // no need to send "documents" email to application's owner/account
+    // no need to send "documents" email to the applicant
     return {
       success: true,
     };

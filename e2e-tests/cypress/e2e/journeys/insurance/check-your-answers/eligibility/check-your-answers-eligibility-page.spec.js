@@ -36,7 +36,7 @@ context('Insurance - Check your answers - Eligibility page - I want to confirm m
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType();
+      cy.completePrepareApplicationSinglePolicyType({});
 
       task.link().click();
 

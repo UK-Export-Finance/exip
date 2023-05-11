@@ -11,22 +11,27 @@ const task = taskList.submitApplication.tasks.declarationsAndSubmit;
  * @param {Object} Object with flags on how to complete specific declaration forms.
  * - exportingWithCodeOfConduct: Should submit "yes" in the "exporting with code of conduct" form. Defaults to "yes".
  */
-const completeDeclarations = ({ exportingWithCodeOfConduct = true }) => {
+const completeDeclarations = ({ hasAntiBriberyCodeOfConduct = true, exportingWithCodeOfConduct = true }) => {
   task.link().click();
 
   cy.completeAndSubmitDeclarationConfidentiality();
 
   cy.completeAndSubmitDeclarationAntiBribery();
 
-  cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct();
+  if (hasAntiBriberyCodeOfConduct) {
+    cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct(FIELD_VALUES.YES);
 
-  if (exportingWithCodeOfConduct) {
-    cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct(FIELD_VALUES.YES);
+    if (exportingWithCodeOfConduct) {
+      cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct(FIELD_VALUES.YES);
+    } else {
+      cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct(FIELD_VALUES.NO);
+    }
   } else {
-    cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct(FIELD_VALUES.NO);
+    cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct(FIELD_VALUES.NO);
   }
 
   cy.completeAndSubmitDeclarationConfirmationAndAcknowledgements();
+
   cy.completeAndSubmitDeclarationHowYourDataWillBeUsed();
 };
 

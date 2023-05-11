@@ -1,6 +1,7 @@
 import { ACCOUNT, ANSWERS, FIELD_IDS } from '../constants';
 import encryptPassword from '../helpers/encrypt-password';
 import application from './mock-application';
+import companySicCode from './mock-company-sic-code';
 import { Account } from '../types';
 
 const {
@@ -33,6 +34,8 @@ export const mockApplication = application;
 export const mockCompany = {
   companyName: 'Mock company name',
 };
+
+export const mockCompanySicCode = companySicCode;
 
 export const mockBuyer = {
   companyOrOrganisationName: 'Mock buyer',

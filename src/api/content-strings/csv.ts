@@ -43,7 +43,7 @@ export const CSV = {
     [PHONE_NUMBER]: 'Exporter telephone number (optional)',
     [GOODS_OR_SERVICES]: 'Goods or services the business supplies',
     [YEARS_EXPORTING]: 'Exporter years exporting',
-    [EMPLOYEES_UK]: 'Exporter UK Exmployees',
+    [EMPLOYEES_UK]: 'Exporter UK Employees',
     [EMPLOYEES_INTERNATIONAL]: 'Exporter worldwide employees including UK employees',
     [ESTIMATED_ANNUAL_TURNOVER]: 'Exporter estimated turnover this current financial year',
     [USING_BROKER]: 'Using a broker for this insurance',

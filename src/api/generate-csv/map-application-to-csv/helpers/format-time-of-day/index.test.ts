@@ -6,7 +6,9 @@ describe('api/generate-csv/map-application-to-csv/helpers/format-time-of-day', (
   it('should return a formatted timme', () => {
     const result = formatTimeOfDay(mockTimestamp);
 
-    const expected = `${mockTimestamp.getHours()}:${mockTimestamp.getMinutes()}`;
+    const utcHour = mockTimestamp.getUTCHours();
+
+    const expected = `${utcHour}:${mockTimestamp.getMinutes()}`;
 
     expect(result).toEqual(expected);
   });

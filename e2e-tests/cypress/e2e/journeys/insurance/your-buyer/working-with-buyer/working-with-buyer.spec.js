@@ -123,7 +123,7 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
     describe('form submission', () => {
       describe('when submitting a fully filled form', () => {
         it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
-          cy.completeAndSubmitWorkingWithBuyerForm();
+          cy.completeAndSubmitWorkingWithBuyerForm({});
 
           cy.url().should('eq', checkYourAnswersUrl);
         });

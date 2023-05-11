@@ -7,7 +7,9 @@
 const formatTimeOfDay = (date: Date) => {
   const fullDate = new Date(date);
 
-  return `${fullDate.getHours()}:${fullDate.getMinutes()}`;
+  const utcHour = fullDate.getUTCHours();
+
+  return `${utcHour}:${fullDate.getMinutes()}`;
 };
 
 export default formatTimeOfDay;

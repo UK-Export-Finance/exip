@@ -1,8 +1,8 @@
 import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import { mockApplicationEligibility, mockSinglePolicyAndExport } from '../test-mocks/mock-application';
-import { mockAccount, mockBuyer, mockCompany, mockApplicationDeclaration } from '../test-mocks';
+import { mockAccount, mockBuyer, mockCompany, mockCompanySicCode, mockApplicationDeclaration } from '../test-mocks';
 import mockCountries from '../test-mocks/mock-countries';
-import { Account, ApplicationBuyer, ApplicationDeclaration } from '../types';
+import { Account, ApplicationBuyer, ApplicationCompany, ApplicationCompanySicCode, ApplicationDeclaration } from '../types';
 
 /**
  * updateBuyer
@@ -56,7 +56,7 @@ export const createFullApplication = async (context: Context) => {
   // create a new application
   const application = (await context.query.Application.createOne({
     query:
-      'id referenceNumber eligibility { id } policyAndExport { id } owner { id } company { id } business { id } broker { id } buyer { id } declaration { id }',
+      'id referenceNumber eligibility { id } policyAndExport { id requestedStartDate } owner { id } company { id } business { id } broker { id } buyer { id } declaration { id }',
     data: {
       owner: {
         connect: {
@@ -104,7 +104,20 @@ export const createFullApplication = async (context: Context) => {
     },
     data: mockCompany,
     query: 'id',
-  })) as ApplicationDeclaration;
+  })) as ApplicationCompany;
+
+  // create a company SIC codes
+  const companySicCodes = (await context.query.CompanySicCode.createOne({
+    data: {
+      ...mockCompanySicCode,
+      company: {
+        connect: {
+          id: company.id,
+        },
+      },
+    },
+    query: 'id',
+  })) as ApplicationCompanySicCode;
 
   // update the declaration so we have a full data set.
   const declaration = (await context.query.Declaration.updateOne({
@@ -117,6 +130,7 @@ export const createFullApplication = async (context: Context) => {
 
   return {
     ...application,
+    companySicCodes,
     owner: account,
     company,
     buyer,
