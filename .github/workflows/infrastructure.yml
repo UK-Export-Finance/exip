@@ -1,76 +1,267 @@
-# This GHA is responsible for `EXIP` base infrastructure
-# creation using AZ CLI. Following resources are created:
+# This GHA is responsible for `EXIP` supporting infrastructure
+# creation and configuration using `az cli` bash scripting.
 #
-# 1. ACR
-# 2. WebApp
+#
+# Standard Azure naming convention has been followed:
+# https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming
+# A minor modification to standard naming convention has been made to not include the region.
+#
+#
+# Following Azure services are consumed:
+# 1. Azure resource group - https://learn.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az-group-create
+# 2. Azure container registry - https://learn.microsoft.com/en-us/cli/azure/acr?view=azure-cli-latest#az-acr-create
+# 3. Azure virtual network - https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview
+# 4. Azure virtual network peer - https://learn.microsoft.com/en-us/cli/azure/network/vnet/peering?view=azure-cli-latest
+# 5. Azure web app - https://learn.microsoft.com/en-us/azure/app-service/overview
+#
+#
+# Execution
+# *********
+# GHA is only invoked when following conditions are satisfied:
+# 1. Push to the `infrastructure` branch only.
+# 2. Exact file path matches `.github/workflows/infrastructure.yml`.
+#
+# Flow
+# ****
+#
+# Note
+# ****
+# Azure CLI will merely ignore the new resource creation if already exist with the same name.
+#
 
 name: Infrastructure 🔨
-run-name: EXIP Base infrastructure build on ${{ github.repository }}
+run-name: EXIP base infrastructure build from ${{ github.repository }}
 
 on:
   push:
-    branches: [ infrastructure ]
-    paths:
-    - '.github/workflows/infrastructure.yml'
+    branches:
+      - infrastructure
+
+    paths: [.github/workflows/infrastructure.yml]
 
 env:
-  product: exip
+  PRODUCT: exip
+  ENVIRONMENT: infrastructure
+  TIMEZONE: 'Europe/London'
+  # Deployment environment target i.e., `development`, `staging`, `production`
+  TARGET: ${{ vars.ENVIRONMENT }}
 
 jobs:
-
-# Development environment
-  development:
-    name: Development 🚀
-    environment: dev
-    runs-on: [ self-hosted, linux, deployment, infrastructure ]
-    env:
-      type: Pre-production
-      plan: dev
-      acr: ${{ secrets.ACR_SERVER }}
-      acr_username: ${{ secrets.ACR_USERNAME }}
-      acr_password: ${{ secrets.ACR_PASSWORD }}
+  # 1. Setup infrastructure variables
+  setup:
+    name: Setup 🔧
+    runs-on: [self-hosted, EXIP, infrastructure]
+    outputs:
+      environment: ${{ env.ENVIRONMENT }}
+      timezone: ${{ env.TIMEZONE }}
     steps:
+      - name: Environment 🧪
+        run: echo "Environment set to ${{ env.ENVIRONMENT }}"
 
-    - name: Azure Login 🔐
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Timezone 🌐
+        run: echo "Timezone set to ${{ env.TIMEZONE }}"
 
-    - name: Azure Defaults ✨
-      uses: azure/cli@v1.0.0
-      with:
-        inlineScript: |
-          az configure --defaults location=${{ secrets.AZURE_REGION }}
-          az configure --defaults group=${{ secrets.RESOURCE_GROUP }}
+  # 2. Base infrastructure creation
+  base:
+    name: Base 🧱
+    needs: setup
+    environment: ${{ needs.setup.outputs.environment }}
+    outputs:
+      environment: ${{ env.ENVIRONMENT }}
+    runs-on: [self-hosted, EXIP, infrastructure]
+    steps:
+      - name: Pre-production 💫
+        if: contains('["development", "staging"]', env.TARGET)
+        run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
-    - name: ACR 📦️
-      uses: azure/cli@v1.0.0
-      with:
-        inlineScript: |
-          az acr create --name ${{ secrets.ACR }} --sku Standard --admin-enabled true
+      - name: Production 💫
+        if: ${{ 'prod' == env.TARGET }}
+        run: echo "TYPE=Production" >> $GITHUB_ENV
 
-    - name: WebApp UI 🌐
-      uses: azure/cli@v1.0.0
-      env:
-        name: ui
-      with:
-        inlineScript: |
-          az webapp create --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
-          --plan ${{ env.plan }} \
-          --deployment-container-image-name ${{ env.acr }}/${{ env.name }}:${{ env.plan }} \
-          --tags "Environment=${{ env.type }}" \
-          --tags "Product=${{ env.product }}"
+      - name: Tags 🏷️
+        run: echo TAGS='Environment=${{ env.TYPE }}' \
+          'Product=${{ env.PRODUCT }}' \
+          'Team=development' >> $GITHUB_ENV
 
-          az webapp deployment container config --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+      - name: Login 🔐
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Azure defaults ✨
+        uses: Azure/cli@v1.0.7
+        with:
+          inlineScript: |
+            # Basic
+            az configure --defaults location=${{ vars.REGION }}
+            az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+
+      - name: Resource group 🏗️
+        uses: Azure/cli@v1.0.7
+        with:
+          inlineScript: |
+            az group create \
+            --name rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --tags ${{ env.TAGS }}
+
+      - name: Log analytics workspace 📝
+        uses: Azure/cli@v1.0.7
+        with:
+          inlineScript: |
+            az monitor log-analytics workspace create \
+            --name log-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --capacity-reservation-level 100 \
+            --ingestion-access Disabled \
+            --query-access Disabled \
+            --quota 0.05 \
+            --retention-time ${{ vars.LOG_RETENTION_DAY }} \
+            --sku Free \
+            --tags ${{ env.TAGS }}
+
+      - name: Container registry 📦️
+        uses: Azure/cli@v1.0.7
+        with:
+          inlineScript: |
+            az acr create \
+            --name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }} \
+            --sku Standard \
+            --admin-enabled true \
+            --workspace log-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --tags ${{ env.TAGS }}
+
+      - name: Virtual network 🧵
+        uses: Azure/cli@v1.0.7
+        with:
+          inlineScript: |
+            az network vnet create \
+            --name vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --address-prefix ${{ secrets.VNET_ADDRESS_PREFIX }} \
+            --subnet-name snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --subnet-prefixes ${{ secrets.VNET_SUBNET_PREFIX }} \
+            --tags ${{ env.TAGS }}
+
+      - name: VNET Peer - AMI 🔀
+        uses: Azure/cli@v1.0.7
+        with:
+          inlineScript: |
+            # Azure Managed Instance (AMI) SQL DB VNET peering
+
+            # Local VNET peer
+            az network vnet peering create \
+            --name vnet-peer-ami-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --remote-vnet $(az network vnet show --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_AMI }} --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_AMI }} --name ${{ secrets.REMOTE_VNET_NAME_AMI }} --query 'id' -o tsv) \
+            --allow-vnet-access 1
+
+            # Remote VNET peer
+            az network vnet peering create \
+            --name vnet-peer-ami-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name  ${{ secrets.REMOTE_VNET_NAME_AMI }} \
+            --remote-vnet $(az network vnet show --name vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} --query 'id' -o tsv) \
+            --allow-vnet-access 1 \
+            --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_AMI }} \
+            --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_AMI }}
+
+            # Fetch peering state
+            echo "Peering state: $(az network vnet peering show \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --name vnet-peer-ami-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --query peeringState)"
+
+      - name: Web app - UI 🌐
+        uses: Azure/cli@v1.0.7
+        with:
+          inlineScript: |
+            az webapp create \
+            --name app-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+            --plan ${{ env.TARGET }} \
+            --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/ui:${{ env.TARGET }} \
+            --vnet vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --tags ${{ env.TAGS }}
+
+      - name: Web app - API 🌐
+        uses: Azure/cli@v1.0.7
+        with:
+          inlineScript: |
+            az webapp create \
+            --name app-api-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+            --plan ${{ env.TARGET }} \
+            --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/api:${{ env.TARGET }} \
+            --vnet vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --tags ${{ env.TAGS }}
+
+  # 3. Web app configuration
+  webapp:
+    name: Web app configuration 🔧
+    needs: base
+    environment: ${{ needs.base.outputs.environment }}
+    runs-on: [self-hosted, EXIP, infrastructure]
+    steps:
+      - name: Pre-production 💫
+        if: contains('["dev", "staging"]', env.TARGET)
+        run: echo "TYPE=Preproduction" >> $GITHUB_ENV
+
+      - name: Production 💫
+        if: ${{ 'prod' == env.TARGET }}
+        run: echo "TYPE=Production" >> $GITHUB_ENV
+
+      - name: Login 🔐
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Azure defaults ✨
+        uses: Azure/cli@v1.0.7
+        with:
+          inlineScript: |
+            # Basic
+            az configure --defaults location=${{ vars.REGION }}
+            az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+
+      - name: CD ✨
+        run: |
+          # Configure continuous deployment via containers
+
+          # UI
+          az webapp deployment container config \
+          --name app-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
           --enable-cd true
 
-          az webapp config set --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
-          --always-on true
+          # API
+          az webapp deployment container config \
+          --name app-api-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --enable-cd true
 
-          az webapp config appsettings set --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+        - name: Configuration ✨
+        run: |
+          # Set a web app's configuration
+
+          # UI
+          az webapp config set \
+          --name app-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --always-on true \
+          --ftps-state Disabled \
+          --http20-enabled true \
+          --min-tls-version '1.2'
+
+          # API
+          az webapp config set \
+          --name app-api-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --always-on true \
+          --ftps-state Disabled \
+          --http20-enabled true \
+          --min-tls-version '1.2'
+
+        - name: Setting ✨
+        run: |
+          # Set a web app's settings
+
+          # UI
+          az webapp config appsettings set \
+          --name app-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
           --settings \
           HTTPS=1 \
-          WEBSITE_DNS_SERVER="168.63.129.16" \
+          WEBSITE_DNS_SERVER=${{ vars.WEBSITE_DNS_SERVER }} \
           WEBSITE_VNET_ROUTE_ALL=1 \
           SESSION_SECRET=${{ secrets.SESSION_SECRET }} \
           BASIC_AUTH_KEY=${{ secrets.BASIC_AUTH_KEY }} \
@@ -84,30 +275,12 @@ jobs:
           APIM_MDM_KEY=${{ secrets.APIM_MDM_KEY }} \
           APIM_MDM_VALUE=${{ secrets.APIM_MDM_VALUE }}
 
-          az webapp log config --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
-          --docker-container-logging filesystem
-
-    - name: WebApp API 🌐
-      uses: azure/cli@v1.0.0
-      env:
-        name: api
-      with:
-        inlineScript: |
-          az webapp create --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
-          --plan ${{ env.plan }} \
-          --deployment-container-image-name ${{ env.acr }}/${{ env.name }}:${{ env.plan }} \
-          --tags "Environment=${{ env.type }}" \
-          --tags "Product=${{ env.product }}"
-
-          az webapp deployment container config --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
-          --enable-cd true
-
-          az webapp config set --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
-          --always-on true
-
-          az webapp config appsettings set --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
+          # API
+          az webapp config appsettings set \
+          --name app-api-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
           --settings \
-          WEBSITE_DNS_SERVER="168.63.129.16" \
+          HTTPS=1 \
+          WEBSITE_DNS_SERVER=${{ vars.WEBSITE_DNS_SERVER }} \
           WEBSITE_VNET_ROUTE_ALL=1 \
           SESSION_SECRET=${{ secrets.SESSION_SECRET }} \
           BASIC_AUTH_KEY=${{ secrets.BASIC_AUTH_KEY }} \
@@ -126,57 +299,26 @@ jobs:
           UNDERWRITING_TEAM_EMAIL=${{ secrets.UNDERWRITING_TEAM_EMAIL }} \
           FEEDBACK_EMAIL_RECIPIENT=${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
 
-          az webapp log config --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
-          --docker-container-logging filesystem
+        - name: Log ✨
+        run: |
+          # Configure logging for a web app.
 
-    - name: MySQL 📝
-      uses: azure/cli@v1.0.0
-      env:
-        name: mysql
-      with:
-        inlineScript: |
-          #TO-DO: Enable
-          # 1. Azure MySQL Flexible server upon UK South availability
-          # 2. Azure Private VNET connection
-
-          # az mysql flexible-server create \
-          # --location ${{ secrets.AZURE_REGION }} \
-          # --resource-group ${{ secrets.RESOURCE_GROUP }} \
-          # --name ${{ env.product }}-${{ env.plan }}-${{ env.name }} \
-          # --database-name ${{ secrets.MYSQL_DATABASE }} \
-          # --admin-user ${{ secrets.MYSQL_DATABASE }} \
-          # --admin-password ${{ secrets.MYSQL_ROOT_PASSWORD }} \
-          # --sku-name Standard_B1s \
-          # --tier Burstable \
-          # --version 8.0 \
-          # --storage-size 10 \
-          # --storage-auto-grow Disabled \
-          # --geo-redundant-backup Disabled \
-          # --iops 360 \
-          # --backup-retention 3
-
-
-# Production environment
-  production:
-    name: Production 🚀
-    environment: prod
-    runs-on: [ self-hosted, linux, deployment, infrastructure ]
-    steps:
-
-    - name: Azure Login 🔐
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: Azure Defaults ✨
-      uses: azure/cli@v1.0.0
-      with:
-        inlineScript: |
-          az configure --defaults location=${{ secrets.AZURE_REGION }}
-          az configure --defaults group=${{ secrets.RESOURCE_GROUP }}
-
-    - name: ACR 📦️
-      uses: azure/cli@v1.0.0
-      with:
-        inlineScript: |
-          az acr create --name ${{ secrets.ACR }} --sku Standard --admin-enabled true
+          # UI
+          az webapp log config \
+          --name app-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --detailed-error-messages true \
+          --failed-request-tracing true \
+          --level ${{ vars.WEBAPP_LOG_LEVEL }} \
+          --application-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
+          --docker-container-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
+          --web-server-logging ${{ vars.WEBAPP_LOG_DESTINATION }}
+        
+          # API
+          az webapp log config \
+          --name app-api-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --detailed-error-messages true \
+          --failed-request-tracing true \
+          --level ${{ vars.WEBAPP_LOG_LEVEL }} \
+          --application-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
+          --docker-container-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
+          --web-server-logging ${{ vars.WEBAPP_LOG_DESTINATION }}
