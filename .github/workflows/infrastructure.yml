@@ -115,7 +115,7 @@ jobs:
             --query-access Disabled \
             --quota 0.05 \
             --retention-time ${{ vars.LOG_RETENTION_DAY }} \
-            --sku Free \
+            --sku ${{ vars.LOG_ANALYTICS_PLAN }} \
             --tags ${{ env.TAGS }}
 
       - name: Container registry 📦️
@@ -173,7 +173,7 @@ jobs:
         with:
           inlineScript: |
             az webapp create \
-            --name app-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+            --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
             --plan ${{ env.TARGET }} \
             --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/ui:${{ env.TARGET }} \
             --vnet vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
@@ -184,7 +184,7 @@ jobs:
         with:
           inlineScript: |
             az webapp create \
-            --name app-api-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+            --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
             --plan ${{ env.TARGET }} \
             --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/api:${{ env.TARGET }} \
             --vnet vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
@@ -218,47 +218,47 @@ jobs:
             az configure --defaults location=${{ vars.REGION }}
             az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
-      - name: CD ✨
+      - name: CD 🔀
         run: |
           # Configure continuous deployment via containers
 
           # UI
           az webapp deployment container config \
-          --name app-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
           --enable-cd true
 
           # API
           az webapp deployment container config \
-          --name app-api-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
           --enable-cd true
 
-        - name: Configuration ✨
+        - name: Configuration 🔨
         run: |
           # Set a web app's configuration
 
           # UI
           az webapp config set \
-          --name app-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
           --always-on true \
           --ftps-state Disabled \
           --http20-enabled true \
-          --min-tls-version '1.2'
+          --min-tls-version '${{ vars.TLS_VERSION }}'
 
           # API
           az webapp config set \
-          --name app-api-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
           --always-on true \
           --ftps-state Disabled \
           --http20-enabled true \
-          --min-tls-version '1.2'
+          --min-tls-version '${{ vars.TLS_VERSION }}'
 
-        - name: Setting ✨
+        - name: Setting 🧱
         run: |
           # Set a web app's settings
 
           # UI
           az webapp config appsettings set \
-          --name app-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
           --settings \
           HTTPS=1 \
           WEBSITE_DNS_SERVER=${{ vars.WEBSITE_DNS_SERVER }} \
@@ -277,7 +277,7 @@ jobs:
 
           # API
           az webapp config appsettings set \
-          --name app-api-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
           --settings \
           HTTPS=1 \
           WEBSITE_DNS_SERVER=${{ vars.WEBSITE_DNS_SERVER }} \
@@ -299,13 +299,13 @@ jobs:
           UNDERWRITING_TEAM_EMAIL=${{ secrets.UNDERWRITING_TEAM_EMAIL }} \
           FEEDBACK_EMAIL_RECIPIENT=${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
 
-        - name: Log ✨
+        - name: Log 📄
         run: |
           # Configure logging for a web app.
 
           # UI
           az webapp log config \
-          --name app-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
           --detailed-error-messages true \
           --failed-request-tracing true \
           --level ${{ vars.WEBAPP_LOG_LEVEL }} \
@@ -315,7 +315,7 @@ jobs:
         
           # API
           az webapp log config \
-          --name app-api-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
           --detailed-error-messages true \
           --failed-request-tracing true \
           --level ${{ vars.WEBAPP_LOG_LEVEL }} \
