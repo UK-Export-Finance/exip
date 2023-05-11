@@ -259,6 +259,7 @@ interface InsuranceFeedbackVariables {
 
 interface AccountSignInResponse extends SuccessResponse {
   accountId?: string;
+  resentVerificationEmail?: boolean;
 }
 
 interface VerifyAccountSignInCodeVariables {

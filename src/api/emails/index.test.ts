@@ -94,7 +94,7 @@ describe('emails', () => {
         try {
           await sendEmail.confirmEmailAddress(email, firstName, verificationHash);
         } catch (err) {
-          const expected = new Error(`Sending email verification for account creation Error: Sending email ${mockErrorMessage}`);
+          const expected = new Error(`Sending confirm email address email Error: Sending email ${mockErrorMessage}`);
 
           expect(err).toEqual(expected);
         }

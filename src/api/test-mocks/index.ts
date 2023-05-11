@@ -8,6 +8,8 @@ const {
   ACCOUNT: { PASSWORD_RESET_HASH },
 } = FIELD_IDS.INSURANCE;
 
+const now = new Date();
+
 export const mockAccount = {
   firstName: 'first',
   lastName: 'last',
@@ -15,7 +17,7 @@ export const mockAccount = {
   ...encryptPassword(String(process.env.MOCK_ACCOUNT_PASSWORD)),
   isVerified: true,
   verificationHash: 'mockVerificationHash',
-  verificationExpiry: ACCOUNT.EMAIL.VERIFICATION_EXPIRY(),
+  verificationExpiry: new Date(now.setMinutes(now.getMinutes() + 1)).toISOString(),
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
   [PASSWORD_RESET_HASH]: 'mockResetHash',

@@ -1,28 +1,18 @@
-import accountFormFields from '../../../../../partials/insurance/accountFormFields';
 import { yourDetailsPage } from '../../../../../pages/insurance/account/create';
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
-import account from '../../../../../../fixtures/account';
+import api from '../../../../../../support/api';
 
 const {
   START,
   ACCOUNT: {
     SIGN_IN: { ROOT: SIGN_IN_ROOT },
+    CREATE: { CONFIRM_EMAIL_RESENT },
   },
 } = ROUTES;
 
-const {
-  ACCOUNT: { EMAIL, PASSWORD },
-} = INSURANCE_FIELD_IDS;
-
-const {
-  INSURANCE: { ACCOUNT: { SIGN_IN: SIGN_IN_ERROR_MESSAGES } },
-} = ERROR_MESSAGES;
-
-const TOTAL_REQUIRED_FIELDS = 2;
-
 context('Insurance - Account - Sign in - Validation - unverified account', () => {
+  let account;
+
   before(() => {
     cy.navigateToUrl(START);
 
@@ -34,8 +24,8 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
 
     yourDetailsPage.signInButtonLink().click();
 
-    const expected = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
-    cy.url().should('eq', expected);
+    const expectedUrl = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
+    cy.assertUrl(expectedUrl);
   });
 
   beforeEach(() => {
@@ -47,12 +37,27 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
   });
 
   describe('when valid credentials are submitted, but the account is not verifed', () => {
-    it('should render a validation error for both fields and retain the submitted values', () => {
-      cy.submitAndAssertFieldErrors(accountFormFields[EMAIL], account[EMAIL], 0, TOTAL_REQUIRED_FIELDS, SIGN_IN_ERROR_MESSAGES[EMAIL].INCORRECT);
-      cy.submitAndAssertFieldErrors(accountFormFields[PASSWORD], account[PASSWORD], 1, TOTAL_REQUIRED_FIELDS, SIGN_IN_ERROR_MESSAGES[PASSWORD].INCORRECT);
+    beforeEach(() => {
+      /**
+     * Get the account ID directly from the API,
+     * so that we can assert that the URL has the correct ID.
+     */
+      const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
-      accountFormFields[EMAIL].input().should('have.value', account[EMAIL]);
-      accountFormFields[PASSWORD].input().should('have.value', account[PASSWORD]);
+      api.getAccountByEmail(accountEmail).then((response) => {
+        const { data } = response.body;
+
+        const [firstAccount] = data.accounts;
+        account = firstAccount;
+
+        cy.completeAndSubmitSignInAccountForm({ assertSuccessUrl: false });
+      });
+    });
+
+    it(`should redirect to ${CONFIRM_EMAIL_RESENT} with account ID in the URL params `, () => {
+      const expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL_RESENT}?id=${account.id}`;
+
+      cy.assertUrl(expectedUrl);
     });
   });
 });

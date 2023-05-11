@@ -390,7 +390,7 @@ export const lists = {
           accountInputData.createdAt = now;
           accountInputData.updatedAt = now;
 
-          // send "confirm email" email
+          // send "confirm email address" email
           try {
             const { firstName, email, verificationHash } = accountInputData;
 
