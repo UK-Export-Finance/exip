@@ -37,11 +37,6 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
 
     const account = accountData as Account;
 
-    // TODO
-    // TODO
-    // TODO
-    // TODO - reset verification expiration
-
     /**
      * Account is found and verified. We can therefore:
      * 1) Check if the password is matches what is encrypted in the database.
