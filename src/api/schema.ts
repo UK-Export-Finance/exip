@@ -732,9 +732,15 @@ export const lists = {
         ],
         db: { isNullable: true },
       }),
-      improvement: text(),
-      otherComments: text(),
-      referralUrl: text(),
+      improvement: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      otherComments: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      referralUrl: text({
+        db: { nativeType: 'VarChar(500)' },
+      }),
       product: text(),
     },
     access: allowAll,

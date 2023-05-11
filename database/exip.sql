@@ -643,9 +643,9 @@ CREATE TABLE `Feedback` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `service` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `satisfaction` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `improvement` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `otherComments` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `referralUrl` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `improvement` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `otherComments` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `referralUrl` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `product` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
