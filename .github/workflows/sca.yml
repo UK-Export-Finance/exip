@@ -15,7 +15,7 @@ on:
       - "*"
 
 env:
-  environment: 'dev'
+  environment: 'qa'
   timezone: 'Europe/London'
 
 jobs:

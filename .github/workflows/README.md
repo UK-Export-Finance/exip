@@ -28,7 +28,7 @@ GitHub Actions is a continuous integration (CI) and continuous delivery (CD) pla
 
 ## Source Code Analysis 🚨
 
-This workflow will run a source code analysis (SCA) on your code whenever a pull request is submitted. The SCA will use the Codacy and Fossa tools to check for any potential security vulnerabilities and licensing issues in your code. If any vulnerabilities or issues are found, the workflow will fail and a notification will be sent to the `#exip-github-actions` Slack channel.
+This workflow will run a source code analysis (SCA) on your code whenever a pull request is submitted. The SCA will use the Codacy and Fossa tools to check for any potential security vulnerabilities and licensing issues in your code. If any vulnerabilities or issues are found.
 
 **Environment variables:**
 
@@ -63,7 +63,7 @@ By using SCA tools, you can help to ensure that your code is secure and complian
 
 ## Lint 🎨
 
-This workflow will run a linting check on your code whenever a pull request is submitted to the `main-application` branch. The linting check will use the `eslint` linter to check for any errors or warnings in your code. If any errors or warnings are found, the workflow will fail and a notification will be sent to the `#exip-github-actions` Slack channel.
+This workflow will run a linting check on your code whenever a pull request is submitted to the `main-application` branch. The linting check will use the `eslint` linter to check for any errors or warnings in your code. If any errors or warnings are found.
 
 **Environment variables:**
 
@@ -81,11 +81,6 @@ This workflow will run a linting check on your code whenever a pull request is s
 
     * 🎨 Run the linting check on the code.
     * 🚨 Report any errors or warnings to the console.
-
-3. **Notification**
-
-    * 🔔 Send a notification to the `#exip-github-actions` Slack channel if the linting check fails.
-    * 📝 The notification includes the status of the workflow, the steps that were run, and the errors or warnings that were found.
 
 **Tips:**
 

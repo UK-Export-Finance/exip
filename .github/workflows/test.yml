@@ -17,7 +17,7 @@ on:
     - 'generate-exip-pricing-grid/**'
 
 env:
-  environment: qa
+  environment: 'qa'
   timezone: 'Europe/London'
 
 jobs:
@@ -55,7 +55,7 @@ jobs:
       - name: Node
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: ${{ vars.NODE_VERSION }}
 
       - name: UI
         working-directory: ./src/ui

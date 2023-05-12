@@ -68,8 +68,6 @@ on:
   push:
     branches:
       - infrastructure
-      #TODO: Remove branch pre-merge
-      - feat/infrastructure
 
     paths: [.github/workflows/infrastructure.yml]
 
