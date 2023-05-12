@@ -217,7 +217,7 @@ jobs:
         with:
           inlineScript: |
             az webapp create \
-            --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+            --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
             --plan appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/ui:${{ env.TARGET }} \
             --vnet vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
@@ -229,7 +229,7 @@ jobs:
         with:
           inlineScript: |
             az webapp create \
-            --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+            --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
             --plan appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/api:${{ env.TARGET }} \
             --vnet vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
