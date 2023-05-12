@@ -144,7 +144,7 @@ jobs:
           inlineScript: |
             az appservice plan create \
             --name appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --is-linux true \
+            --is-linux \
             --sku ${{ vars.APP_SERVICE_PLAN }} \
             --tags ${{ env.TAGS }}
 
