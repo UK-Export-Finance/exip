@@ -30,7 +30,6 @@ COPY ./webpack.common.config.js .
 COPY ./webpack.prod.config.js .
 
 RUN npm ci --legacy-peer-deps --ignore-scripts
-RUN npm cache clean --force
 
 # Build with all dependencies
 RUN npm run build
