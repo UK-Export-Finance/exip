@@ -155,7 +155,6 @@ jobs:
           inlineScript: |
             az monitor log-analytics workspace create \
             --name log-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --capacity-reservation-level 100 \
             --ingestion-access Disabled \
             --query-access Disabled \
             --quota 0.05 \
