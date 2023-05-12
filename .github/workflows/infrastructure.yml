@@ -9,10 +9,11 @@
 #
 # Following Azure services are consumed:
 # 1. Azure resource group - https://learn.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az-group-create
-# 2. Azure container registry - https://learn.microsoft.com/en-us/cli/azure/acr?view=azure-cli-latest#az-acr-create
-# 3. Azure virtual network - https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview
-# 4. Azure virtual network peer - https://learn.microsoft.com/en-us/cli/azure/network/vnet/peering?view=azure-cli-latest
-# 5. Azure web app - https://learn.microsoft.com/en-us/azure/app-service/overview
+# 2. Azure app service plan - https://learn.microsoft.com/en-us/azure/app-service/overview-hosting-plans
+# 3. Azure container registry - https://learn.microsoft.com/en-us/cli/azure/acr?view=azure-cli-latest#az-acr-create
+# 4. Azure virtual network - https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview
+# 5. Azure virtual network peer - https://learn.microsoft.com/en-us/cli/azure/network/vnet/peering?view=azure-cli-latest
+# 6. Azure web app - https://learn.microsoft.com/en-us/azure/app-service/overview
 #
 #
 # Execution
@@ -36,6 +37,8 @@ on:
   push:
     branches:
       - infrastructure
+      #TODO: Remove branch pre-merge
+      - feat/infrastructure
 
     paths: [.github/workflows/infrastructure.yml]
 
@@ -103,6 +106,17 @@ jobs:
             az group create \
             --name rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --tags ${{ env.TAGS }}
+
+      - name: Plan 📝
+        uses: Azure/cli@v1.0.7
+        with:
+          inlineScript: |
+            az appservice plan create \
+            --name appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --is-linux true \
+            --sku ${{ vars.APP_SERVICE_PLAN }} \
+            --tags ${{ env.TAGS }}
+
 
       - name: Log analytics workspace 📝
         uses: Azure/cli@v1.0.7
@@ -174,7 +188,7 @@ jobs:
           inlineScript: |
             az webapp create \
             --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
-            --plan ${{ env.TARGET }} \
+            --plan appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/ui:${{ env.TARGET }} \
             --vnet vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --tags ${{ env.TAGS }}
@@ -185,7 +199,7 @@ jobs:
           inlineScript: |
             az webapp create \
             --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
-            --plan ${{ env.TARGET }} \
+            --plan appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/api:${{ env.TARGET }} \
             --vnet vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --tags ${{ env.TAGS }}
