@@ -17,8 +17,8 @@ const feedback = {
         console.error('GraphQL network error error creating feedback', response.networkError.result.errors);
       }
 
-      if (response?.data?.createInsuranceFeedbackAndEmail) {
-        return response.data.createInsuranceFeedbackAndEmail;
+      if (response?.data?.createFeedbackAndEmail) {
+        return response.data.createFeedbackAndEmail;
       }
 
       console.error(response);

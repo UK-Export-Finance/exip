@@ -206,7 +206,7 @@ const typeDefs = `
     ): SuccessResponse
 
     """ create and send email for insurance feedback """
-    createInsuranceFeedbackAndEmail(
+    createFeedbackAndEmail(
       satisfaction: String
       improvement: String
       otherComments: String

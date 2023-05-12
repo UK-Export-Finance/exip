@@ -1554,7 +1554,7 @@ var typeDefs = `
     ): SuccessResponse
 
     """ create and send email for insurance feedback """
-    createInsuranceFeedbackAndEmail(
+    createFeedbackAndEmail(
       satisfaction: String
       improvement: String
       otherComments: String
@@ -3507,7 +3507,7 @@ var customResolvers = {
     deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
     updateCompanyAndCompanyAddress: update_company_and_company_address_default,
     submitApplication: submit_application_default,
-    createFeedback: create_feedback_default
+    createFeedbackAndEmail: create_feedback_default
   },
   Query: {
     getCompaniesHouseInformation: get_companies_house_information_default,

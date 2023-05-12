@@ -317,7 +317,7 @@ interface UpdateCompanyAndCompanyAddressVariables {
 }
 
 interface Feedback {
-  id?: string;
+  id: string;
   service: string;
   satisfaction: string;
   improvement: string;

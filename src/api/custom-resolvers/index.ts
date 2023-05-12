@@ -11,7 +11,7 @@ import {
   deleteApplicationByReferenceNumber,
   updateCompanyAndCompanyAddress,
   submitApplication,
-  createFeedback,
+  createFeedbackAndEmail,
 } from './mutations';
 import { getCompaniesHouseInformation, getAccountPasswordResetToken, verifyAccountPasswordResetToken } from './queries';
 
@@ -34,7 +34,7 @@ const customResolvers = {
     deleteApplicationByReferenceNumber,
     updateCompanyAndCompanyAddress,
     submitApplication,
-    createFeedback,
+    createFeedbackAndEmail,
   },
   Query: {
     getCompaniesHouseInformation,
