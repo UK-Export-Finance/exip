@@ -64,7 +64,7 @@ context('Insurance - Account - Password reset and sign in - As an Exporter, I wa
 
         cy.url().should('eq', signInUrl);
 
-        cy.completeAndSubmitSignInAccountForm();
+        cy.completeAndSubmitSignInAccountForm({});
       });
 
       it(`should redirect to ${enterCodeUrl}`, () => {

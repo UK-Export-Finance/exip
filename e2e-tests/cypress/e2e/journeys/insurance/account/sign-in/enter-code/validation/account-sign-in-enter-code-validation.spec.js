@@ -37,7 +37,7 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
 
     cy.verifyAccountEmail();
 
-    cy.completeAndSubmitSignInAccountForm();
+    cy.completeAndSubmitSignInAccountForm({});
 
     cy.url().should('eq', url);
   });
