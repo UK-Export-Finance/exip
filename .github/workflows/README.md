@@ -4,70 +4,24 @@ Bash scripts can be a powerful tool for automating tasks.
 
 ## Deployment 🚀
 
-Certainly! Here's a breakdown of the code:
+ ### CICD
+* 🔧 0. Infrastructure
+* 🧪 1. Deployment
+* 🗑️ 2. ACR Purge
 
-```bash
-#!/usr/bin/env bash
-```
+Prompt the user to input a selection.
+If the selection is not empty, the script checks the value and executes the corresponding section:
 
-This is the shebang line that specifies the interpreter to use (in this case, Bash) when executing the script.
+* 🔧 INFRASTRUCTURE: Sets the destination variable to "infrastructure" and the branch variable to "main".
+* 🧪 DEPLOYMENT: Sets the destination variable to "deployment" and the branch variable to "main".
+* 🗑️ ACR PURGE: Sets the destination and branch variables to empty strings. Executes the az acr run command to purge ACR (Azure Container Registry) based on specific filters and age.
 
-```bash
-RED='\033[1;31m'
-GREEN='\033[1;32m'
-BLUE='\033[1;34m'
-YELLOW='\033[1;33m'
-NC='\033[0m'
-```
+If both destination and branch are not empty, the script performs the following steps:
 
-These are variables that store escape codes for different colors. These escape codes are used to colorize the output later in the script.
-
-```bash
-printf "📝 Deployment strategy:\n"
-printf "=======================\n\n"
-printf "${YELLOW}0. Infrastructure 🔧${NC}\n"
-printf "${RED}1. Development 🚀${NC}\n"
-printf "${RED}2. Production 🚀${NC}\n"
-printf "${RED}3. ACR Purge 🗑️${NC}\n\n"
-
-read selection
-```
-
-These lines display a header and a list of deployment options with emojis and colors using `printf`. The `read` command prompts the user to enter their selection and stores it in the `selection` variable.
-
-```bash
-if [ -n "$selection" ]; then
-```
-
-This `if` statement checks if the `selection` variable is not empty.
-
-```bash
-    if [ "$selection" = "0" ]
-    then
-    destination=infrastructure
-    branch=main
-    ...
-```
-
-These `if` statements check the value of `selection` and set the `destination` and `branch` variables accordingly for each deployment option.
-
-```bash
-    if [ -n "$destination" -a -n "$branch" ]
-    then
-    ...
-    fi
-```
-
-This `if` statement checks if both `destination` and `branch` are not empty (i.e., a valid deployment option was selected). If so, it displays the latest commit message for the selected branch, creates a new branch with the `destination` name, pushes it to the remote repository, and then deletes the temporary branch.
-
-```bash
-    else
-    printf "${RED} ❌ Invalid input, terminating.${NC}\n\n";
-    exit 0;
-    fi
-```
-
-If the user entered an invalid selection (i.e., `destination` and `branch` are empty), this code block displays an error message and terminates the script.
+* Checks out the specified branch and pulls the latest changes from the remote repository.
+* Displays the latest commit of the branch.
+* Creates a new branch based on the destination.
+* Forces a push to the remote repository, setting the upstream branch.
 
 # Git Hub Actions
 GitHub Actions is a continuous integration (CI) and continuous delivery (CD) platform that runs in GitHub repositories. GitHub Actions lets you automate your workflows by creating custom jobs that run on different events, such as pushes to a branch or releases.
@@ -151,85 +105,30 @@ This workflow automates the release process by:
 
 ## Infrastructure 🔨
 
-This workflow will build the infrastructure for the EXIP project on Azure. The workflow will create a development environment and a production environment.
+This is a GitHub workflow that builds and deploys infrastructure for EXIP.
 
-**Environment variables:**
+## On
 
-* `product`: The name of the product to build.
-* `type`: The type of environment to build.
-* `plan`: The name of the Azure plan to use.
-* `acr`: The name of the Azure container registry to use.
-* `acr_username`: The username for the Azure container registry.
-* `acr_password`: The password for the Azure container registry.
+  * Push to the `infrastructure` branch 🚀
 
-**Steps:**
+## Jobs
 
-1. **Azure Login 🔐**
+  * **Setup:**
+    * Sets up environment variables and timezone 🌍
+  * **Base:**
+    * Creates a resource group, app service plan, log analytics workspace, container registry, virtual network, and VNET peering 🗼
+    * Creates a web app for the UI and API 🌐
+  * **WebApp:**
+    * Configures continuous deployment for the UI and API 🔀
+    * Sets configuration and settings for the UI and API ⚙️
 
-This step logs in to Azure using the provided credentials.
+## Outputs
 
-2. **Azure Defaults ✨**
+  * **Environment:** The name of the environment, e.g. `development` or `production`.
+  * **Timezone:** The timezone, e.g. `Europe/London`.
 
-This step sets the default Azure location and resource group.
+## Details
 
-3. **ACR 📦️**
+The `Setup` job sets up environment variables and timezone. This is useful for setting things like the Azure subscription ID, resource group name, and location. The `Base` job creates a resource group, app service plan, log analytics workspace, container registry, virtual network, and VNET peering. This is the foundation for all of the other infrastructure that will be created. The `WebApp` job creates a web app for the UI and API. This is the front-end for the EXIP application. The `WebApp` job also configures continuous deployment for the UI and API. This means that changes to the code will be automatically deployed to the production environment. The `WebApp` job also sets configuration and settings for the UI and API. This includes things like the application name, port, and environment variables.
 
-This step creates an Azure container registry.
-
-4. **Development Environment 🚀**
-
-This step creates a development environment on Azure.
-
-5. **Production Environment 🚀**
-
-This step creates a production environment on Azure.
-
-**Tips:**
-
-* Use environment variables to store sensitive information, such as Azure credentials.
-* Use Azure Resource Manager templates to automate the creation of Azure resources.
-* Use Azure Pipelines to automate the deployment of code to Azure.
-
-
-## Deployment 🚀
-
-This workflow will deploy the EXIP project to a development environment on Azure.
-
-**Environment variables:**
-
-* `product`: The name of the product to deploy.
-* `environment`: The name of the environment to deploy to.
-* `credentials`: The Azure credentials to use.
-* `acr`: The name of the Azure container registry to use.
-* `acr_username`: The username for the Azure container registry.
-* `acr_password`: The password for the Azure container registry.
-
-**Steps:**
-
-1. **Azure Login 🔐**
-
-This step logs in to Azure using the provided credentials.
-
-2. **Azure Defaults ✨**
-
-This step sets the default Azure location and resource group.
-
-3. **ACR 📦️**
-
-This step creates an Azure container registry.
-
-4. **API - Deployment 📦️**
-
-This step deploys the API to Azure.
-
-5. **UI - Deployment 🎨**
-
-This step deploys the UI to Azure.
-
-**Tips:**
-
-* Use environment variables to store sensitive information, such as Azure credentials.
-* Use Azure Resource Manager templates to automate the creation of Azure resources.
-* Use Azure Pipelines to automate the deployment of code to Azure.
-
-By following these tips, you can help to ensure that your deployment is secure, scalable, and reliable.
+This GitHub workflow provides a comprehensive and easy-to-use way to build and deploy infrastructure for EXIP.

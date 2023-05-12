@@ -1,6 +1,16 @@
 # This GHA is responsible for `EXIP` supporting infrastructure
 # creation and configuration using `az cli` bash scripting.
 #
+# This is a GitHub Actions workflow for setting up the base infrastructure for the "EXIP" (name of the product) project. The workflow consists of several steps:
+# 
+# Setup: This step sets up the environment variables for the workflow, including the environment name and timezone.
+# Base Infrastructure Creation: This step creates the base infrastructure components using Azure CLI commands. It includes the creation of a resource group, an app service plan,
+# a log analytics workspace, a container registry, a virtual network, VNET peering with an Azure Managed Instance (AMI) # SQL DB, and two web apps (UI and API).
+# 
+# WebApp Configuration: This step configures the created web apps. It enables continuous deployment via containers, sets various configuration settings, such as enabling HTTPS, setting DNS server
+# and VNET routing, configuring app settings, and configuring logging options.
+# The workflow uses Azure CLI and Azure Login actions to interact with the Azure resources. It also uses environment variables and secrets to provide configuration values for the Azure commands.
+# Please note that this is a workflow written in YAML syntax for GitHub Actions, and it is meant to be executed within a GitHub repository with the appropriate Azure credentials and configurations.
 #
 # Standard Azure naming convention has been followed:
 # https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming
@@ -24,6 +34,27 @@
 #
 # Flow
 # ****
+# Infrastructure 🔨
+# This is a GitHub workflow that builds and deploys infrastructure for EXIP.
+# 
+# On:
+# Push to the infrastructure branch
+#
+# Jobs:
+# 1. Setup:
+# Sets up environment variables and timezone.
+#
+# 2. Base:
+# Creates a resource group, app service plan, log analytics workspace, container registry, virtual network, and VNET peering.
+# Creates a web app for the UI and API.
+#
+# 3. WebApp:
+# Configures continuous deployment for the UI and API.
+# Sets configuration and settings for the UI and API.
+#
+# 4. Outputs:
+# Environment: The name of the environment, e.g. development or production.
+# Timezone: The timezone, e.g. Europe/London.
 #
 # Note
 # ****
@@ -204,9 +235,9 @@ jobs:
             --vnet vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --tags ${{ env.TAGS }}
 
-  # 3. Web app configuration
+  # 3. WebApp configuration
   webapp:
-    name: Web app configuration 🔧
+    name: Web App 🔧
     needs: base
     environment: ${{ needs.base.outputs.environment }}
     runs-on: [self-hosted, EXIP, infrastructure]
