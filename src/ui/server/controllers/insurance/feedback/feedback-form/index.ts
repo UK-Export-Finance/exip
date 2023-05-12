@@ -101,27 +101,19 @@ const post = async (req: Request, res: Response) => {
     req.flash('serviceOriginUrl', referralUrl);
 
     if (objectHasKeysAndValues(feedback)) {
-      const emailVariables = {
+      const feedbackVariables = {
         // satisfaction will be null if not selected so set as empty string if null
         [SATISFACTION]: feedback[SATISFACTION] ?? '',
         [IMPROVEMENT]: feedback[IMPROVEMENT],
         [OTHER_COMMENTS]: feedback[OTHER_COMMENTS],
-      } as InsuranceFeedbackVariables;
-
-      const feedbackVariables = {
-        [SATISFACTION]: feedback[SATISFACTION] ?? '',
-        [IMPROVEMENT]: feedback[IMPROVEMENT],
-        [OTHER_COMMENTS]: feedback[OTHER_COMMENTS],
-        [SERVICE]: INSURANCE,
         [REFERRAL_URL]: referralUrl?.toString(),
+        [SERVICE]: INSURANCE,
         [PRODUCT]: SERVICE_NAME,
-      };
+      } as InsuranceFeedbackVariables;
 
       const saveResponse = await api.keystone.feedback.create(feedbackVariables);
 
-      const emailResponse = await api.keystone.feedbackEmails.insurance(emailVariables);
-
-      if (!emailResponse || !saveResponse) {
+      if (!saveResponse || !saveResponse.success) {
         return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
       }
     }

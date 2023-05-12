@@ -742,6 +742,7 @@ export const lists = {
         db: { nativeType: 'VarChar(500)' },
       }),
       product: text(),
+      createdAt: timestamp(),
     },
     access: allowAll,
   }),

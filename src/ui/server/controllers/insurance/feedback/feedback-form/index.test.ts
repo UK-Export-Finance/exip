@@ -1,6 +1,6 @@
 import { TEMPLATE, pageVariables, MAXIMUM, get, post } from '.';
 import { PAGES, FIELDS } from '../../../../content-strings';
-import { TEMPLATES, ROUTES, FIELD_IDS, INSURANCE, SERVICE_NAME } from '../../../../constants';
+import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { mockReq, mockRes, mockInsuranceFeedback } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
@@ -8,7 +8,7 @@ import api from '../../../../api';
 import generateValidationErrors from './validation';
 
 const {
-  FEEDBACK: { SATISFACTION, IMPROVEMENT, OTHER_COMMENTS, VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED, REFERRAL_URL, SERVICE, PRODUCT },
+  FEEDBACK: { SATISFACTION, IMPROVEMENT, OTHER_COMMENTS, VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED, REFERRAL_URL },
 } = FIELD_IDS;
 
 const { FEEDBACK_PAGE } = PAGES;
@@ -94,8 +94,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
         return obj[property];
       };
 
-      api.keystone.feedbackEmails.insurance = jest.fn(() => Promise.resolve({ success: true }));
-      api.keystone.feedback.create = jest.fn(() => Promise.resolve(mockInsuranceFeedback));
+      api.keystone.feedback.create = jest.fn(() => Promise.resolve({ ...mockInsuranceFeedback, success: true }));
     });
 
     describe('when there are no validation errors', () => {
@@ -111,18 +110,6 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
 
-        it('should call api.keystone.feedbackEmails.insurance once with relevant fields', async () => {
-          req.body = body;
-
-          await post(req, res);
-
-          const emailVariables = mockInsuranceFeedback;
-
-          expect(api.keystone.feedbackEmails.insurance).toHaveBeenCalledTimes(1);
-
-          expect(api.keystone.feedbackEmails.insurance).toHaveBeenCalledWith(emailVariables);
-        });
-
         it('should call api.keystone.feedback.create once with relevant fields', async () => {
           req.body = body;
 
@@ -130,9 +117,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
 
           const saveVariables = {
             ...mockInsuranceFeedback,
-            [SERVICE]: INSURANCE,
             [REFERRAL_URL]: req.headers.referer,
-            [PRODUCT]: SERVICE_NAME,
           };
 
           expect(api.keystone.feedback.create).toHaveBeenCalledTimes(1);
@@ -154,14 +139,6 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
 
           const expected = FEEDBACK_SENT;
           expect(res.redirect).toHaveBeenCalledWith(expected);
-        });
-
-        it('should not call api.keystone.feedbackEmails.insurance', async () => {
-          req.body = body;
-
-          await post(req, res);
-
-          expect(api.keystone.feedbackEmails.insurance).toHaveBeenCalledTimes(0);
         });
 
         it('should not call api.keystone.feedback.create', async () => {
@@ -197,22 +174,6 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
           validationErrors,
           submittedValues: body,
         });
-      });
-    });
-
-    describe('when api.keystone.feedbackEmails.insurance does not return a response', () => {
-      beforeEach(() => {
-        api.keystone.feedbackEmails.insurance = jest.fn(() => Promise.resolve(null));
-      });
-
-      const body = mockInsuranceFeedback;
-
-      it('should redirect to problem with service page', async () => {
-        req.body = body;
-
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
       });
     });
 
