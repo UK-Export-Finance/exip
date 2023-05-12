@@ -304,8 +304,7 @@ jobs:
           # UI
           az webapp config appsettings set \
           --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
-          --settings \
-          HTTPS=1 \
+          --settings HTTPS=1 \
           WEBSITE_DNS_SERVER=${{ vars.WEBSITE_DNS_SERVER }} \
           WEBSITE_VNET_ROUTE_ALL=1 \
           SESSION_SECRET=${{ secrets.SESSION_SECRET }} \
@@ -323,8 +322,7 @@ jobs:
           # API
           az webapp config appsettings set \
           --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
-          --settings \
-          HTTPS=1 \
+          --settings HTTPS=1 \
           WEBSITE_DNS_SERVER=${{ vars.WEBSITE_DNS_SERVER }} \
           WEBSITE_VNET_ROUTE_ALL=1 \
           SESSION_SECRET=${{ secrets.SESSION_SECRET }} \
