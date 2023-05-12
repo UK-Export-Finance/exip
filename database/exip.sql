@@ -647,6 +647,7 @@ CREATE TABLE `Feedback` (
   `otherComments` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `referralUrl` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `product` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `createdAt` datetime(3) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
