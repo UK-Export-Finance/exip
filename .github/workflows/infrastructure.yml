@@ -221,6 +221,7 @@ jobs:
             --plan appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/ui:${{ env.TARGET }} \
             --vnet vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --subnet snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --tags ${{ env.TAGS }}
 
       - name: Web app - API 🌐
@@ -232,6 +233,7 @@ jobs:
             --plan appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/api:${{ env.TARGET }} \
             --vnet vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --subnet snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --tags ${{ env.TAGS }}
 
   # 3. WebApp configuration
