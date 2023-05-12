@@ -5,12 +5,12 @@ import sendEmail from '../../emails';
 /**
  * creates feedback in database and sends email
  * adds createdAt timestamp to feedback
- * @param root
- * @param {InsuranceFeedbackVariables} variables
- * @param context
+ * @param {Object} GraphQL root variables
+ * @param {Object} GraphQL variables for the createInsuranceFeedback mutation
+ * @param {Object} KeystoneJS context API
  * @returns {Object} with success true or false and response
  */
-const createInsuranceFeedbackAndEmail = async (root: any, variables: InsuranceFeedbackVariables, context: Context) => {
+const createFeedback = async (root: any, variables: InsuranceFeedbackVariables, context: Context) => {
   console.info('Creating feedback');
 
   try {
@@ -31,7 +31,6 @@ const createInsuranceFeedbackAndEmail = async (root: any, variables: InsuranceFe
     if (response && emailResponse?.success) {
       return {
         ...response,
-        ...emailResponse,
         success: true,
       };
     }
@@ -42,4 +41,4 @@ const createInsuranceFeedbackAndEmail = async (root: any, variables: InsuranceFe
   }
 };
 
-export default createInsuranceFeedbackAndEmail;
+export default createFeedback;

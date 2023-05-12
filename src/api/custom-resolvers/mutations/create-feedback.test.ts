@@ -41,16 +41,18 @@ describe('custom-resolvers/create-feedback', () => {
     });
 
     it('should generate and return the created feedback', () => {
-      expect(feedbackResponse.service).toEqual(variables.service);
-      expect(feedbackResponse.satisfaction).toEqual(variables.satisfaction);
-      expect(feedbackResponse.improvement).toEqual(variables.improvement);
-      expect(feedbackResponse.otherComments).toEqual(variables.otherComments);
-      expect(feedbackResponse.referralUrl).toEqual(variables.referralUrl);
-      expect(feedbackResponse.product).toEqual(variables.product);
-      expect(feedbackResponse.success).toEqual(true);
+      const { service, satisfaction, improvement, otherComments, referralUrl, product, success } = feedbackResponse;
+
+      expect(service).toEqual(variables.service);
+      expect(satisfaction).toEqual(variables.satisfaction);
+      expect(improvement).toEqual(variables.improvement);
+      expect(otherComments).toEqual(variables.otherComments);
+      expect(referralUrl).toEqual(variables.referralUrl);
+      expect(product).toEqual(variables.product);
+      expect(success).toEqual(true);
     });
 
-    it('should generate createdAt timestamp', () => {
+    test('it should generate createdAt timestamp', () => {
       const feedbackCreatedAtTimestamp = format(new Date(feedbackResponse.createdAt), 'dd/mm/yyyy');
       const nowTimestamp = format(new Date(), 'dd/mm/yyyy');
 
@@ -62,7 +64,7 @@ describe('custom-resolvers/create-feedback', () => {
     });
   });
 
-  describe('feedback email not returning a response', () => {
+  describe('when the feedback email does not return a response', () => {
     beforeEach(async () => {
       jest.resetAllMocks();
       sendInsuranceFeedbackEmailSpy = jest.fn(() => Promise.resolve({}));
@@ -72,12 +74,12 @@ describe('custom-resolvers/create-feedback', () => {
       feedbackResponse = (await createInsuranceFeedbackAndEmail({}, variables, context)) as Feedback;
     });
 
-    test('it not return success as false', async () => {
+    test('it should return success=false', async () => {
       expect(feedbackResponse.success).toEqual(false);
     });
   });
 
-  describe('feedback email failing', () => {
+  describe('when the feedback email call fails', () => {
     const mockErrorMessage = 'Mock error';
 
     beforeEach(async () => {

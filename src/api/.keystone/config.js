@@ -1546,7 +1546,7 @@ var typeDefs = `
       applicationId: String!
     ): SuccessResponse
 
-    """ send email for insurance feedback """
+    """ create and send email for insurance feedback """
     createInsuranceFeedbackAndEmail(
       satisfaction: String
       improvement: String
@@ -3223,7 +3223,7 @@ var submitApplication = async (root, variables, context) => {
 var submit_application_default = submitApplication;
 
 // custom-resolvers/mutations/create-feedback.ts
-var createInsuranceFeedbackAndEmail = async (root, variables, context) => {
+var createFeedback = async (root, variables, context) => {
   console.info("Creating feedback");
   try {
     const feedback = {
@@ -3237,7 +3237,6 @@ var createInsuranceFeedbackAndEmail = async (root, variables, context) => {
     if (response && emailResponse?.success) {
       return {
         ...response,
-        ...emailResponse,
         success: true
       };
     }
@@ -3246,7 +3245,7 @@ var createInsuranceFeedbackAndEmail = async (root, variables, context) => {
     throw new Error(`Creating feedback: ${err}`);
   }
 };
-var create_feedback_default = createInsuranceFeedbackAndEmail;
+var create_feedback_default = createFeedback;
 
 // custom-resolvers/queries/get-companies-house-information.ts
 var import_axios2 = __toESM(require("axios"));
@@ -3454,7 +3453,7 @@ var customResolvers = {
     deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
     updateCompanyAndCompanyAddress: update_company_and_company_address_default,
     submitApplication: submit_application_default,
-    createInsuranceFeedbackAndEmail: create_feedback_default
+    createFeedback: create_feedback_default
   },
   Query: {
     getCompaniesHouseInformation: get_companies_house_information_default,

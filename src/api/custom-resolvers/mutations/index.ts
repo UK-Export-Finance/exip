@@ -10,7 +10,7 @@ import accountPasswordReset from './account-password-reset';
 import deleteApplicationByReferenceNumber from './delete-application-by-refrence-number';
 import updateCompanyAndCompanyAddress from './update-company-and-company-address';
 import submitApplication from './submit-application';
-import createInsuranceFeedbackAndEmail from './create-feedback';
+import createFeedback from './create-feedback';
 
 export {
   createAnAccount,
@@ -25,5 +25,5 @@ export {
   deleteApplicationByReferenceNumber,
   updateCompanyAndCompanyAddress,
   submitApplication,
-  createInsuranceFeedbackAndEmail,
+  createFeedback,
 };

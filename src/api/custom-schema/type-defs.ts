@@ -204,7 +204,7 @@ const typeDefs = `
       applicationId: String!
     ): SuccessResponse
 
-    """ send email for insurance feedback """
+    """ create and send email for insurance feedback """
     createInsuranceFeedbackAndEmail(
       satisfaction: String
       improvement: String

@@ -1784,7 +1784,7 @@ type Mutation {
   """ submit an application """
   submitApplication(applicationId: String!): SuccessResponse
 
-  """ send email for insurance feedback """
+  """ create and send email for insurance feedback """
   createInsuranceFeedbackAndEmail(satisfaction: String, improvement: String, otherComments: String, referralUrl: String, product: String, service: String): SuccessResponse
 }
 
