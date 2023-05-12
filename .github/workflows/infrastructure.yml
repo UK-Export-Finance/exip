@@ -231,7 +231,7 @@ jobs:
             # Basic
             az configure --defaults location=${{ vars.REGION }}
             az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
-
+            
       - name: CD 🔀
         run: |
           # Configure continuous deployment via containers
@@ -246,7 +246,7 @@ jobs:
           --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
           --enable-cd true
 
-        - name: Configuration 🔨
+      - name: Configuration 🔨
         run: |
           # Set a web app's configuration
 
@@ -266,7 +266,7 @@ jobs:
           --http20-enabled true \
           --min-tls-version '${{ vars.TLS_VERSION }}'
 
-        - name: Setting 🧱
+      - name: Setting 🧱
         run: |
           # Set a web app's settings
 
@@ -313,7 +313,7 @@ jobs:
           UNDERWRITING_TEAM_EMAIL=${{ secrets.UNDERWRITING_TEAM_EMAIL }} \
           FEEDBACK_EMAIL_RECIPIENT=${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
 
-        - name: Log 📄
+      - name: Log 📄
         run: |
           # Configure logging for a web app.
 
