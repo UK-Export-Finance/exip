@@ -82,8 +82,6 @@ jobs:
           MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
           SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-          BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
-          BASIC_AUTH_SECRET: ${{ secrets.BASIC_AUTH_SECRET }}
           APIM_MDM_URL: ${{ secrets.APIM_MDM_URL }}
           APIM_MDM_KEY: ${{ secrets.APIM_MDM_KEY }}
           APIM_MDM_VALUE: ${{ secrets.APIM_MDM_VALUE }}

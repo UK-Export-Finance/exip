@@ -332,8 +332,6 @@ jobs:
           APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
           APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
           SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
-          BASIC_AUTH_KEY='${{ secrets.BASIC_AUTH_KEY }}' \
-          BASIC_AUTH_SECRET='${{ secrets.BASIC_AUTH_SECRET }}' \
           GOV_NOTIFY_API_KEY='${{ secrets.GOV_NOTIFY_API_KEY }}' \
           COMPANIES_HOUSE_API_URL='${{ secrets.COMPANIES_HOUSE_API_URL }}' \
           COMPANIES_HOUSE_API_KEY='${{ secrets.COMPANIES_HOUSE_API_KEY }}' \
