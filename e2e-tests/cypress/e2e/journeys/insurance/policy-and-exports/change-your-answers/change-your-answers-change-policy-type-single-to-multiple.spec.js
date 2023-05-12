@@ -2,15 +2,19 @@ import { submitButton } from '../../../../pages/shared';
 import { typeOfPolicyPage, checkYourAnswersPage } from '../../../../pages/insurance/policy-and-export';
 import partials from '../../../../partials';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
-import { DEFAULT, LINKS } from '../../../../../../content-strings';
+import { LINKS } from '../../../../../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
+import formatCurrency from '../../../../helpers/format-currency';
+import application from '../../../../../fixtures/application';
 
 const {
   POLICY_AND_EXPORTS: {
     CHECK_YOUR_ANSWERS,
     TYPE_OF_POLICY_CHANGE,
     MULTIPLE_CONTRACT_POLICY_CHANGE,
+    MULTIPLE_CONTRACT_POLICY,
+    ABOUT_GOODS_OR_SERVICES,
   },
 } = ROUTES.INSURANCE;
 
@@ -38,8 +42,10 @@ const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 const { summaryList } = checkYourAnswersPage;
 
 context('Insurance - Policy and exports - Change your answers - Policy type - single to multiple', () => {
+  const baseUrl = Cypress.config('baseUrl');
   let referenceNumber;
-  let url;
+  let checkYourAnswersUrl;
+  let changeLinkHref;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -51,8 +57,10 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
       cy.completeAndSubmitSingleContractPolicyForm();
       cy.completeAndSubmitAboutGoodsOrServicesForm();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      cy.url().should('eq', url);
+      checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      changeLinkHref = `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}`;
+
+      cy.url().should('eq', checkYourAnswersUrl);
     });
   });
 
@@ -64,17 +72,15 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
     cy.deleteAccountAndApplication(referenceNumber);
   });
 
-  const fieldId = POLICY_TYPE;
-
   describe('when clicking the `change` link', () => {
-    before(() => {
-      cy.navigateToUrl(url);
+    beforeEach(() => {
+      cy.navigateToUrl(checkYourAnswersUrl);
 
-      summaryList[fieldId].changeLink().click();
+      summaryList.field(POLICY_TYPE).changeLink().click();
     });
 
     it(`should redirect to ${TYPE_OF_POLICY_CHANGE}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_CHANGE}#heading`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_CHANGE}#heading`;
 
       cy.url().should('eq', expected);
     });
@@ -82,68 +88,81 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
 
   describe('form submission with a new answer', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      cy.navigateToUrl(checkYourAnswersUrl);
 
-      summaryList[fieldId].changeLink().click();
+      summaryList.field(POLICY_TYPE).changeLink().click();
 
-      typeOfPolicyPage[fieldId].multiple.input().click();
+      typeOfPolicyPage[POLICY_TYPE].multiple.input().click();
       submitButton().click();
     });
 
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}#heading`;
+    it(`should redirect to ${MULTIPLE_CONTRACT_POLICY}`, () => {
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}#heading`;
 
       cy.url().should('eq', expected);
     });
 
-    it('should render the new answer', () => {
-      const expected = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
-      cy.assertSummaryListRowValue(summaryList, fieldId, expected);
-    });
-
-    describe('`Add` links', () => {
+    describe(`after completing (now required) fields in ${MULTIPLE_CONTRACT_POLICY} and proceeding to ${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, () => {
       beforeEach(() => {
-        cy.navigateToUrl(url);
+        cy.navigateToUrl(`${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}#heading`);
+
+        // complete the form/now required fields for a multiple contract policy
+        cy.completeAndSubmitMultipleContractPolicyForm();
+
+        cy.assertUrl(`${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}#heading`);
+
+        // proceed to "check your answers"
+        submitButton().click();
+
+        const expectedUrl = `${checkYourAnswersUrl}#heading`;
+
+        cy.assertUrl(expectedUrl);
       });
 
-      it('should have empty summary list row values and links for the empty multiple policy specific fields', () => {
-        cy.assertSummaryListRowValue(summaryList, TOTAL_MONTHS_OF_COVER, DEFAULT.EMPTY);
+      it(`should render the new answer for ${POLICY_TYPE}`, () => {
+        cy.assertSummaryListRowValueNew(summaryList, POLICY_TYPE, FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+      });
 
-        cy.checkText(
-          summaryList[TOTAL_MONTHS_OF_COVER].changeLink(),
-          `${LINKS.ADD} ${MULTIPLE_FIELD_STRINGS[TOTAL_MONTHS_OF_COVER].SUMMARY.TITLE}`,
-        );
+      it(`should render the new answers and 'change' links for ${TOTAL_MONTHS_OF_COVER}`, () => {
+        const fieldId = TOTAL_MONTHS_OF_COVER;
 
-        cy.assertSummaryListRowValue(summaryList, TOTAL_SALES_TO_BUYER, DEFAULT.EMPTY);
+        const expectedTotalMonthsOfCover = `${application.POLICY_AND_EXPORTS[fieldId]} months`;
 
-        cy.checkText(
-          summaryList[TOTAL_SALES_TO_BUYER].changeLink(),
-          `${LINKS.ADD} ${MULTIPLE_FIELD_STRINGS[TOTAL_SALES_TO_BUYER].SUMMARY.TITLE}`,
-        );
+        cy.assertSummaryListRowValueNew(summaryList, fieldId, expectedTotalMonthsOfCover);
 
-        cy.assertSummaryListRowValue(summaryList, MAXIMUM_BUYER_WILL_OWE, DEFAULT.EMPTY);
-
-        cy.checkText(
-          summaryList[MAXIMUM_BUYER_WILL_OWE].changeLink(),
-          `${LINKS.ADD} ${MULTIPLE_FIELD_STRINGS[MAXIMUM_BUYER_WILL_OWE].SUMMARY.TITLE}`,
+        cy.checkLink(
+          summaryList.field(fieldId).changeLink(),
+          `${changeLinkHref}#${fieldId}-label`,
+          `${LINKS.CHANGE} ${MULTIPLE_FIELD_STRINGS[fieldId].SUMMARY.TITLE}`,
         );
       });
 
-      it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHANGE}`, () => {
-        summaryList[TOTAL_MONTHS_OF_COVER].changeLink().click();
-        cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, TOTAL_MONTHS_OF_COVER, 'label');
+      it(`should render the new answer and 'change' link for ${TOTAL_SALES_TO_BUYER}`, () => {
+        const fieldId = TOTAL_SALES_TO_BUYER;
 
-        cy.clickBackLink();
+        const expectedTotalSalesToBuyer = formatCurrency(application.POLICY_AND_EXPORTS[fieldId]);
 
-        summaryList[TOTAL_SALES_TO_BUYER].changeLink().click();
-        cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, TOTAL_SALES_TO_BUYER, 'label');
+        cy.assertSummaryListRowValueNew(summaryList, fieldId, expectedTotalSalesToBuyer);
 
-        cy.clickBackLink();
+        cy.checkLink(
+          summaryList.field(fieldId).changeLink(),
+          `${changeLinkHref}#${fieldId}-label`,
+          `${LINKS.CHANGE} ${MULTIPLE_FIELD_STRINGS[fieldId].SUMMARY.TITLE}`,
+        );
+      });
 
-        summaryList[MAXIMUM_BUYER_WILL_OWE].changeLink().click();
-        cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, MAXIMUM_BUYER_WILL_OWE, 'label');
+      it(`should render the new answer and 'change' link for ${MAXIMUM_BUYER_WILL_OWE}`, () => {
+        const fieldId = MAXIMUM_BUYER_WILL_OWE;
 
-        cy.clickBackLink();
+        const expectedMaximumBuyerWillOwe = formatCurrency(application.POLICY_AND_EXPORTS[fieldId]);
+
+        cy.assertSummaryListRowValueNew(summaryList, fieldId, expectedMaximumBuyerWillOwe);
+
+        cy.checkLink(
+          summaryList.field(fieldId).changeLink(),
+          `${changeLinkHref}#${fieldId}-label`,
+          `${LINKS.CHANGE} ${MULTIPLE_FIELD_STRINGS[fieldId].SUMMARY.TITLE}`,
+        );
       });
     });
   });
