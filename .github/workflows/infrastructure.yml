@@ -2,11 +2,11 @@
 # creation and configuration using `az cli` bash scripting.
 #
 # This is a GitHub Actions workflow for setting up the base infrastructure for the "EXIP" (name of the product) project. The workflow consists of several steps:
-# 
+#
 # Setup: This step sets up the environment variables for the workflow, including the environment name and timezone.
 # Base Infrastructure Creation: This step creates the base infrastructure components using Azure CLI commands. It includes the creation of a resource group, an app service plan,
 # a log analytics workspace, a container registry, a virtual network, VNET peering with an Azure Managed Instance (AMI) # SQL DB, and two web apps (UI and API).
-# 
+#
 # WebApp Configuration: This step configures the created web apps. It enables continuous deployment via containers, sets various configuration settings, such as enabling HTTPS, setting DNS server
 # and VNET routing, configuring app settings, and configuring logging options.
 # The workflow uses Azure CLI and Azure Login actions to interact with the Azure resources. It also uses environment variables and secrets to provide configuration values for the Azure commands.
@@ -36,7 +36,7 @@
 # ****
 # Infrastructure 🔨
 # This is a GitHub workflow that builds and deploys infrastructure for EXIP.
-# 
+#
 # On:
 # Push to the infrastructure branch
 #
@@ -76,7 +76,7 @@ on:
 env:
   PRODUCT: exip
   ENVIRONMENT: infrastructure
-  TIMEZONE: 'Europe/London'
+  TIMEZONE: "Europe/London"
   # Deployment environment target i.e., `development`, `staging`, `production`
   TARGET: ${{ vars.ENVIRONMENT }}
 
@@ -147,7 +147,6 @@ jobs:
             --is-linux \
             --sku ${{ vars.APP_SERVICE_PLAN }} \
             --tags ${{ env.TAGS }}
-
 
       - name: Log analytics workspace 📝
         uses: Azure/cli@v1.0.7
@@ -263,7 +262,7 @@ jobs:
             # Basic
             az configure --defaults location=${{ vars.REGION }}
             az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
-            
+
       - name: CD 🔀
         run: |
           # Configure continuous deployment via containers
@@ -358,7 +357,7 @@ jobs:
           --application-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
           --docker-container-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
           --web-server-logging ${{ vars.WEBAPP_LOG_DESTINATION }}
-        
+
           # API
           az webapp log config \
           --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
