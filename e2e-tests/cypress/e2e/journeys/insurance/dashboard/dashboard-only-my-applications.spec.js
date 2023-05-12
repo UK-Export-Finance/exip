@@ -67,6 +67,7 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF e
       // sign out of the current account
       header.navigation.signOut().click();
 
+      // sign into a different accont
       cy.completeSignInAndGoToApplication(secondAccountEmail).then((refNumber) => {
         referenceNumbers = [...referenceNumbers, refNumber];
 

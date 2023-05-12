@@ -1,6 +1,6 @@
-import noAccessApplicationSubmittedPage from '../../pages/insurance/noAccessApplicationSubmitted';
-import { PAGES } from '../../../../content-strings';
-import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import noAccessApplicationSubmittedPage from '../../../pages/insurance/noAccessApplicationSubmitted';
+import { PAGES } from '../../../../../content-strings';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.NO_ACCESS_APPLICATION_SUBMITTED_PAGE;
 

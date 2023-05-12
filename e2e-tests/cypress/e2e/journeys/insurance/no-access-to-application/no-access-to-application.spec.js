@@ -1,6 +1,6 @@
-import noAccessToApplicationPage from '../../pages/insurance/noAccessToApplication';
-import { PAGES } from '../../../../content-strings';
-import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import noAccessToApplicationPage from '../../../pages/insurance/noAccessToApplication';
+import { PAGES } from '../../../../../content-strings';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.NO_ACCESS_TO_APPLICATION_PAGE;
 
@@ -10,9 +10,9 @@ const {
   NO_ACCESS_TO_APPLICATION,
 } = INSURANCE_ROUTES;
 
-context('Insurance - no access to application page', () => {
+context('Insurance - no access to application page - signed out', () => {
   let referenceNumber;
-  let url;
+  let applicationUrl;
 
   before(() => {
     cy.saveSession();
@@ -21,9 +21,9 @@ context('Insurance - no access to application page', () => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      applicationUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(applicationUrl);
     });
   });
 
@@ -31,18 +31,18 @@ context('Insurance - no access to application page', () => {
     cy.deleteAccountAndApplication(referenceNumber);
   });
 
-  describe('when trying to access an application created by another user', () => {
+  describe('when trying to access an application', () => {
     beforeEach(() => {
-      // clear the session - means we are not a logged in user.
+      // clear the session - means we are not a signed in user.
       cy.clearCookie('exip-session');
 
-      cy.navigateToUrl(url);
+      cy.navigateToUrl(applicationUrl);
     });
 
     it(`should redirect to ${NO_ACCESS_TO_APPLICATION}`, () => {
       const expectedUrl = `${Cypress.config('baseUrl')}${NO_ACCESS_TO_APPLICATION}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders core page elements', () => {
