@@ -1285,9 +1285,15 @@ var lists = {
         ],
         db: { isNullable: true }
       }),
-      improvement: (0, import_fields.text)(),
-      otherComments: (0, import_fields.text)(),
-      referralUrl: (0, import_fields.text)(),
+      improvement: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      }),
+      otherComments: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      }),
+      referralUrl: (0, import_fields.text)({
+        db: { nativeType: "VarChar(500)" }
+      }),
       product: (0, import_fields.text)()
     },
     access: import_access.allowAll

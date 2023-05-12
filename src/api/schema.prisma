@@ -315,8 +315,8 @@ model Feedback {
   id            String  @id @default(cuid())
   service       String  @default("")
   satisfaction  String?
-  improvement   String  @default("")
-  otherComments String  @default("")
-  referralUrl   String  @default("")
+  improvement   String  @default("") @mysql.VarChar(1000)
+  otherComments String  @default("") @mysql.VarChar(1000)
+  referralUrl   String  @default("") @mysql.VarChar(500)
   product       String  @default("")
 }

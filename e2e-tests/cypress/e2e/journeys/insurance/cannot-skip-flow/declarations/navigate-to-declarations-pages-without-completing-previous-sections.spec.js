@@ -15,9 +15,9 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-context('Insurance - Declaration - cannot skip to any Declarations page without completing other required fields/sections', () => {
-  const insuranceRoute = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}`;
+const insuranceRoute = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}`;
 
+context('Insurance - Declaration - cannot skip to any Declarations page without completing other required fields/sections', () => {
   let referenceNumber;
   let completeOtherSectionsUrl;
 
