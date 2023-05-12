@@ -302,7 +302,9 @@ jobs:
           # UI
           az webapp config appsettings set \
           --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
-          --settings HTTPS=1 \
+          --settings \
+          #TODO: Set to `1` once SSL is enabled
+          HTTPS=0 \
           WEBSITE_DNS_SERVER='${{ vars.WEBSITE_DNS_SERVER }}' \
           WEBSITE_VNET_ROUTE_ALL=1 \
           SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
@@ -320,7 +322,7 @@ jobs:
           # API
           az webapp config appsettings set \
           --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
-          --settings HTTPS=1 \
+          --settings \
           WEBSITE_DNS_SERVER=${{ vars.WEBSITE_DNS_SERVER }} \
           WEBSITE_VNET_ROUTE_ALL=1 \
           DATABASE_URL='${{ secrets.DATABASE_URL }}' \
