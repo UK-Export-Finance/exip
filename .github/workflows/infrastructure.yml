@@ -270,12 +270,12 @@ jobs:
 
           # UI
           az webapp deployment container config \
-          --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
           --enable-cd true
 
           # API
           az webapp deployment container config \
-          --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
           --enable-cd true
 
       - name: Configuration 🔨
@@ -284,7 +284,7 @@ jobs:
 
           # UI
           az webapp config set \
-          --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
           --always-on true \
           --ftps-state Disabled \
           --http20-enabled true \
@@ -292,7 +292,7 @@ jobs:
 
           # API
           az webapp config set \
-          --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
           --always-on true \
           --ftps-state Disabled \
           --http20-enabled true \
@@ -304,7 +304,7 @@ jobs:
 
           # UI
           az webapp config appsettings set \
-          --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
           --settings \
           HTTPS=1 \
           WEBSITE_DNS_SERVER=${{ vars.WEBSITE_DNS_SERVER }} \
@@ -323,7 +323,7 @@ jobs:
 
           # API
           az webapp config appsettings set \
-          --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
           --settings \
           HTTPS=1 \
           WEBSITE_DNS_SERVER=${{ vars.WEBSITE_DNS_SERVER }} \
@@ -351,7 +351,7 @@ jobs:
 
           # UI
           az webapp log config \
-          --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
           --detailed-error-messages true \
           --failed-request-tracing true \
           --level ${{ vars.WEBAPP_LOG_LEVEL }} \
@@ -361,7 +361,7 @@ jobs:
         
           # API
           az webapp log config \
-          --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }}.azurewebsites.net \
+          --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
           --detailed-error-messages true \
           --failed-request-tracing true \
           --level ${{ vars.WEBAPP_LOG_LEVEL }} \
