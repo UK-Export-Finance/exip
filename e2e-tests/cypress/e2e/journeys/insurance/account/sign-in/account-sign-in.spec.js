@@ -134,7 +134,7 @@ context('Insurance - Account - Sign in - As an Exporter, I want to sign in into 
       it(`should redirect to ${ENTER_CODE}`, () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitSignInAccountForm();
+        cy.completeAndSubmitSignInAccountForm({});
 
         const expected = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
         cy.url().should('eq', expected);

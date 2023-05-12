@@ -23,7 +23,7 @@ context('Insurance - Account - Sign in - Request new code page - I want to enter
 
     cy.verifyAccountEmail();
 
-    cy.completeAndSubmitSignInAccountForm();
+    cy.completeAndSubmitSignInAccountForm({});
 
     enterCodePage.requestNewCodeLink().click();
 

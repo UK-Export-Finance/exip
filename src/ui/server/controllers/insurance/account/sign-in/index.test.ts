@@ -18,6 +18,7 @@ const {
   INSURANCE: {
     ACCOUNT: {
       SIGN_IN: { ENTER_CODE },
+      CREATE: { CONFIRM_EMAIL_RESENT },
     },
     DASHBOARD,
   },
@@ -240,6 +241,28 @@ describe('controllers/insurance/account/sign-in', () => {
             submittedValues: req.body,
             validationErrors: generateValidationErrors({}),
           });
+        });
+      });
+
+      describe('when the api.keystone.account.signIn returns resentVerificationEmail=true', () => {
+        beforeEach(() => {
+          accountSignInSpy = jest.fn(() =>
+            Promise.resolve({
+              ...accountSignInResponse,
+              success: false,
+              resentVerificationEmail: true,
+            }),
+          );
+
+          api.keystone.account.signIn = accountSignInSpy;
+        });
+
+        it(`should redirect to ${CONFIRM_EMAIL_RESENT} with ID param`, async () => {
+          await post(req, res);
+
+          const expected = `${CONFIRM_EMAIL_RESENT}?id=${accountSignInResponse.accountId}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
     });

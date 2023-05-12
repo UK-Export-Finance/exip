@@ -528,14 +528,14 @@ var callNotify = async (templateId, emailAddress, variables, file, fileIsCsv) =>
 };
 var confirmEmailAddress = async (emailAddress, firstName, verificationHash) => {
   try {
-    console.info("Sending email verification for account creation");
+    console.info("Sending confirm email address email");
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
     const variables = { firstName, confirmToken: verificationHash };
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (err) {
     console.error(err);
-    throw new Error(`Sending email verification for account creation ${err}`);
+    throw new Error(`Sending confirm email address email ${err}`);
   }
 };
 var securityCodeEmail = async (emailAddress, firstName, securityCode) => {
@@ -1299,9 +1299,15 @@ var lists = {
         ],
         db: { isNullable: true }
       }),
-      improvement: (0, import_fields.text)(),
-      otherComments: (0, import_fields.text)(),
-      referralUrl: (0, import_fields.text)(),
+      improvement: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      }),
+      otherComments: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      }),
+      referralUrl: (0, import_fields.text)({
+        db: { nativeType: "VarChar(500)" }
+      }),
       product: (0, import_fields.text)(),
       createdAt: (0, import_fields.timestamp)()
     },
@@ -1459,6 +1465,7 @@ var typeDefs = `
     sessionIdentifier: String
     expires: DateTime
     success: Boolean!
+    resentVerificationEmail: Boolean
   }
 
   type AddAndGetOtpResponse {
@@ -1731,12 +1738,13 @@ var getAccountById = async (context, accountId) => {
 };
 var get_account_by_id_default = getAccountById;
 
-// custom-resolvers/mutations/send-email-confirm-email-address.ts
-var sendEmailConfirmEmailAddress = async (root, variables, context) => {
+// helpers/send-email-confirm-email-address/index.ts
+var send = async (context, accountId) => {
   try {
-    const account = await get_account_by_id_default(context, variables.accountId);
+    console.info("Sending email verification");
+    const account = await get_account_by_id_default(context, accountId);
     if (!account) {
-      console.info("Sending email verification for account creation - no account exists with the provided ID");
+      console.info("Sending email verification - no account exists with the provided account ID");
       return {
         success: false
       };
@@ -1746,13 +1754,34 @@ var sendEmailConfirmEmailAddress = async (root, variables, context) => {
     if (emailResponse.success) {
       return emailResponse;
     }
+    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${emailResponse}`);
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${err}`);
+  }
+};
+var confirmEmailAddressEmail = {
+  send
+};
+var send_email_confirm_email_address_default = confirmEmailAddressEmail;
+
+// custom-resolvers/mutations/send-email-confirm-email-address.ts
+var sendEmailConfirmEmailAddressMutation = async (root, variables, context) => {
+  try {
+    const emailResponse = await send_email_confirm_email_address_default.send(context, variables.accountId);
+    if (emailResponse.success) {
+      return emailResponse;
+    }
     throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${emailResponse}`);
   } catch (err) {
     console.error(err);
     throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${err}`);
   }
 };
-var send_email_confirm_email_address_default = sendEmailConfirmEmailAddress;
+var send_email_confirm_email_address_default2 = sendEmailConfirmEmailAddressMutation;
+
+// custom-resolvers/mutations/account-sign-in.ts
+var import_date_fns4 = require("date-fns");
 
 // helpers/is-valid-account-password/index.ts
 var import_crypto3 = __toESM(require("crypto"));
@@ -1839,20 +1868,45 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
 var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
 
 // custom-resolvers/mutations/account-sign-in.ts
+var { EMAIL: EMAIL2 } = ACCOUNT2;
 var accountSignIn = async (root, variables, context) => {
   try {
     console.info("Signing in account");
     const { email, password: password2 } = variables;
-    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
-    if (!account) {
+    const accountData = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    if (!accountData) {
       console.info("Unable to validate account - no account found");
       return { success: false };
     }
-    if (!account.isVerified) {
-      console.info("Unable to validate account - account is not verified");
-      return { success: false };
-    }
+    const account = accountData;
     if (is_valid_account_password_default(password2, account.salt, account.hash)) {
+      if (!account.isVerified) {
+        console.info("Unable to sign in account - account has not been verified yet");
+        const now = /* @__PURE__ */ new Date();
+        const verificationHasExpired = (0, import_date_fns4.isAfter)(now, account.verificationExpiry);
+        if (account.verificationHash && !verificationHasExpired) {
+          console.info("Account has an unexpired verification token - resetting verification expiry");
+          const accountUpdate = {
+            verificationExpiry: EMAIL2.VERIFICATION_EXPIRY()
+          };
+          await context.db.Account.updateOne({
+            where: { id: account.id },
+            data: accountUpdate
+          });
+          console.info("Account has an unexpired verification token - sending verification email");
+          const emailResponse2 = await send_email_confirm_email_address_default.send(context, account.id);
+          if (emailResponse2.success) {
+            return {
+              success: false,
+              resentVerificationEmail: true,
+              accountId: account.id
+            };
+          }
+          return { success: false };
+        }
+        console.info("Unable to sign in account - account has not been verification has expired");
+        return { success: false };
+      }
       const { securityCode } = await generate_otp_and_update_account_default(context, account.id);
       const emailResponse = await emails_default.securityCodeEmail(email, account.firstName, securityCode);
       if (emailResponse.success) {
@@ -1903,7 +1957,7 @@ var accountSignInSendNewCode = async (root, variables, context) => {
 var account_sign_in_new_code_default = accountSignInSendNewCode;
 
 // custom-resolvers/mutations/verify-account-sign-in-code.ts
-var import_date_fns4 = require("date-fns");
+var import_date_fns5 = require("date-fns");
 
 // helpers/is-valid-otp/index.ts
 var import_crypto5 = __toESM(require("crypto"));
@@ -1984,7 +2038,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
     }
     const { otpSalt, otpHash, otpExpiry } = account;
     const now = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns4.isAfter)(now, otpExpiry);
+    const hasExpired = (0, import_date_fns5.isAfter)(now, otpExpiry);
     if (hasExpired) {
       console.info("Unable to verify account sign in code - verification period has expired");
       return {
@@ -2090,7 +2144,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
 var send_email_password_reset_link_default = sendEmailPasswordResetLink;
 
 // custom-resolvers/mutations/account-password-reset.ts
-var import_date_fns5 = require("date-fns");
+var import_date_fns6 = require("date-fns");
 var accountPasswordReset = async (root, variables, context) => {
   console.info("Resetting account password");
   try {
@@ -2106,7 +2160,7 @@ var accountPasswordReset = async (root, variables, context) => {
       return { success: false };
     }
     const now = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns5.isAfter)(now, passwordResetExpiry);
+    const hasExpired = (0, import_date_fns6.isAfter)(now, passwordResetExpiry);
     if (hasExpired) {
       console.info("Unable to reset account password - verification period has expired");
       return {
@@ -2229,7 +2283,7 @@ var updateCompanyAndCompanyAddress = async (root, variables, context) => {
 var update_company_and_company_address_default = updateCompanyAndCompanyAddress;
 
 // custom-resolvers/mutations/submit-application.ts
-var import_date_fns6 = require("date-fns");
+var import_date_fns7 = require("date-fns");
 
 // helpers/get-country-by-field/index.ts
 var getCountryByField = async (context, field, value) => {
@@ -2398,7 +2452,7 @@ var getApplicationSubmittedEmailTemplateIds = (application) => {
 var get_application_submitted_email_template_ids_default = getApplicationSubmittedEmailTemplateIds;
 
 // emails/send-application-submitted-emails/index.ts
-var send = async (application, csvPath) => {
+var send2 = async (application, csvPath) => {
   try {
     const { referenceNumber, owner, company, buyer, policyAndExport } = application;
     const { email, firstName } = owner;
@@ -2435,7 +2489,7 @@ var send = async (application, csvPath) => {
   }
 };
 var applicationSubmittedEmails = {
-  send
+  send: send2
 };
 var send_application_submitted_emails_default = applicationSubmittedEmails;
 
@@ -2460,7 +2514,7 @@ var DEFAULT = {
 };
 
 // content-strings/csv.ts
-var { FIRST_NAME, LAST_NAME, EMAIL: EMAIL2 } = account_default;
+var { FIRST_NAME, LAST_NAME, EMAIL: EMAIL3 } = account_default;
 var {
   CONTRACT_POLICY: {
     SINGLE: { CONTRACT_COMPLETION_DATE }
@@ -2487,7 +2541,7 @@ var CSV = {
   FIELDS: {
     [FIRST_NAME]: "Applicant first name",
     [LAST_NAME]: "Applicant last name",
-    [EMAIL2]: "Applicant email address",
+    [EMAIL3]: "Applicant email address",
     [CONTRACT_COMPLETION_DATE]: "Date expected for contract to complete",
     [EXPORTER_COMPANY_NAME]: "Exporter company name",
     [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
@@ -2652,7 +2706,7 @@ var {
   YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER: PHONE_NUMBER2, WEBSITE: WEBSITE2 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL2 },
   TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2, PERCENTAGE_TURNOVER },
-  BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL3 }
+  BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL4 }
 } = EXPORTER_BUSINESS2;
 var FIELDS = {
   COMPANY_DETAILS: {
@@ -2757,7 +2811,7 @@ var FIELDS = {
         TITLE: "Broker's address"
       }
     },
-    [EMAIL3]: {
+    [EMAIL4]: {
       SUMMARY: {
         TITLE: "Broker's email"
       }
@@ -2855,7 +2909,7 @@ var format_time_of_day_default = formatTimeOfDay;
 
 // generate-csv/map-application-to-csv/map-key-information/index.ts
 var { FIELDS: FIELDS2 } = CSV;
-var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL4 } = account_default;
+var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL5 } = account_default;
 var mapKeyInformation = (application) => {
   const mapped = [
     csv_row_default(REFERENCE_NUMBER.SUMMARY.TITLE, application.referenceNumber),
@@ -2863,7 +2917,7 @@ var mapKeyInformation = (application) => {
     csv_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application.submissionDate)),
     csv_row_default(FIELDS2[FIRST_NAME2], application.owner[FIRST_NAME2]),
     csv_row_default(FIELDS2[LAST_NAME2], application.owner[LAST_NAME2]),
-    csv_row_default(FIELDS2[EMAIL4], application.owner[EMAIL4])
+    csv_row_default(FIELDS2[EMAIL5], application.owner[EMAIL5])
   ];
   return mapped;
 };
@@ -3013,7 +3067,7 @@ var {
   YOUR_COMPANY: { TRADING_NAME: TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE3, PHONE_NUMBER: PHONE_NUMBER3 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL3 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
-  BROKER: { USING_BROKER: USING_BROKER3, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL5 }
+  BROKER: { USING_BROKER: USING_BROKER3, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL6 }
 } = business_default;
 var mapSicCodes2 = (sicCodes) => {
   let mapped = "";
@@ -3031,7 +3085,7 @@ var mapBroker = (application) => {
       ...mapped,
       csv_row_default(CSV.FIELDS[BROKER_NAME2], broker[BROKER_NAME2]),
       csv_row_default(CSV.FIELDS[ADDRESS_LINE_12], `${broker[ADDRESS_LINE_12]} ${csv_new_line_default} ${broker[TOWN]} ${csv_new_line_default} ${broker[COUNTY]} ${csv_new_line_default} ${broker[POSTCODE]}`),
-      csv_row_default(CSV.FIELDS[EMAIL5], broker[EMAIL5])
+      csv_row_default(CSV.FIELDS[EMAIL6], broker[EMAIL6])
     ];
   }
   return mapped;
@@ -3071,7 +3125,7 @@ var CONTENT_STRINGS4 = {
   ...YOUR_BUYER_FIELDS.WORKING_WITH_BUYER
 };
 var {
-  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, REGISTRATION_NUMBER, WEBSITE: WEBSITE4, FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, POSITION, EMAIL: EMAIL6, CAN_CONTACT_BUYER },
+  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, REGISTRATION_NUMBER, WEBSITE: WEBSITE4, FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, POSITION, EMAIL: EMAIL7, CAN_CONTACT_BUYER },
   WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER }
 } = your_buyer_default;
 var mapBuyer = (application) => {
@@ -3082,7 +3136,7 @@ var mapBuyer = (application) => {
     csv_row_default(String(CONTENT_STRINGS4[ADDRESS].SUMMARY?.TITLE), buyer[ADDRESS]),
     csv_row_default(CSV.FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
     csv_row_default(String(CONTENT_STRINGS4[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
-    csv_row_default(CSV.FIELDS[FIRST_NAME3], `${buyer[FIRST_NAME3]} ${buyer[LAST_NAME3]} ${csv_new_line_default} ${buyer[POSITION]} ${csv_new_line_default} ${buyer[EMAIL6]}`),
+    csv_row_default(CSV.FIELDS[FIRST_NAME3], `${buyer[FIRST_NAME3]} ${buyer[LAST_NAME3]} ${csv_new_line_default} ${buyer[POSITION]} ${csv_new_line_default} ${buyer[EMAIL7]}`),
     csv_row_default(String(CONTENT_STRINGS4[CAN_CONTACT_BUYER].SUMMARY?.TITLE), buyer[CAN_CONTACT_BUYER]),
     csv_row_default(String(CONTENT_STRINGS4[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), buyer[CONNECTED_WITH_BUYER]),
     csv_row_default(String(CONTENT_STRINGS4[TRADED_WITH_BUYER].SUMMARY?.TITLE), buyer[TRADED_WITH_BUYER])
@@ -3190,7 +3244,7 @@ var submitApplication = async (root, variables, context) => {
     if (application) {
       const hasDraftStatus = application.status === APPLICATION.STATUS.DRAFT;
       const now = /* @__PURE__ */ new Date();
-      const validSubmissionDate = (0, import_date_fns6.isAfter)(new Date(application.submissionDeadline), now);
+      const validSubmissionDate = (0, import_date_fns7.isAfter)(new Date(application.submissionDeadline), now);
       const canSubmit = hasDraftStatus && validSubmissionDate;
       if (canSubmit) {
         const update = {
@@ -3409,7 +3463,7 @@ var getAccountPasswordResetToken = async (root, variables, context) => {
 var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
 // custom-resolvers/queries/verify-account-password-reset-token.ts
-var import_date_fns7 = require("date-fns");
+var import_date_fns8 = require("date-fns");
 var {
   ACCOUNT: { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY }
 } = FIELD_IDS.INSURANCE;
@@ -3423,7 +3477,7 @@ var verifyAccountPasswordResetToken = async (root, variables, context) => {
       return { success: false };
     }
     const now = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns7.isAfter)(now, account[PASSWORD_RESET_EXPIRY]);
+    const hasExpired = (0, import_date_fns8.isAfter)(now, account[PASSWORD_RESET_EXPIRY]);
     if (hasExpired) {
       console.info("Account password reset token has expired");
       return {
@@ -3445,7 +3499,7 @@ var customResolvers = {
     accountSignIn: account_sign_in_default,
     accountSignInSendNewCode: account_sign_in_new_code_default,
     verifyAccountEmailAddress: verify_account_email_address_default,
-    sendEmailConfirmEmailAddress: send_email_confirm_email_address_default,
+    sendEmailConfirmEmailAddress: send_email_confirm_email_address_default2,
     verifyAccountSignInCode: verify_account_sign_in_code_default,
     addAndGetOTP: add_and_get_OTP_default,
     accountPasswordReset: account_password_reset_default,

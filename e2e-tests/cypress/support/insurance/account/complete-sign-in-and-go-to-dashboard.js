@@ -18,7 +18,7 @@ const completeSignInAndGoToDashboard = () => cy.createAccount({}).then((verifyAc
   cy.navigateToUrl(verifyAccountUrl);
 
   // sign in to the account. Behind the scenes, an application is created at this point.
-  cy.completeAndSubmitSignInAccountForm();
+  cy.completeAndSubmitSignInAccountForm({});
 
   // get the OTP security code
   cy.accountAddAndGetOTP().then((securityCode) => {

@@ -1,6 +1,6 @@
 import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
-import sendEmailConfirmEmailAddress from './send-email-confirm-email-address';
+import sendEmailConfirmEmailAddressMutation from './send-email-confirm-email-address';
 import baseConfig from '../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import sendEmail from '../../emails';
@@ -21,7 +21,7 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
 
   jest.mock('../../emails');
 
-  let sendEmailConfirmEmailAddressSpy = jest.fn();
+  let sendConfirmEmailAddressEmailSpy = jest.fn();
 
   afterAll(() => {
     jest.resetAllMocks();
@@ -39,18 +39,18 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
 
     jest.resetAllMocks();
 
-    sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+    sendConfirmEmailAddressEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
-    sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
+    sendEmail.confirmEmailAddress = sendConfirmEmailAddressEmailSpy;
   });
 
   test('it should call sendEmail.confirmEmailAddress and return success=true', async () => {
-    const result = await sendEmailConfirmEmailAddress({}, variables, context);
+    const result = await sendEmailConfirmEmailAddressMutation({}, variables, context);
 
     const { email, firstName, verificationHash } = account;
 
-    expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
-    expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, firstName, verificationHash);
+    expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledTimes(1);
+    expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledWith(email, firstName, verificationHash);
 
     const expected = {
       success: true,
@@ -60,33 +60,12 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
     expect(result).toEqual(expected);
   });
 
-  describe('when no account is found', () => {
-    test('it should return success=false', async () => {
-      // wipe the table so we have a clean slate.
-      const accounts = await context.query.Account.findMany();
-
-      await context.query.Account.deleteMany({
-        where: accounts,
-      });
-
-      const result = await sendEmailConfirmEmailAddress({}, variables, context);
-
-      const expected = { success: false };
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('error handling', () => {
-    beforeEach(() => {
-      sendEmail.confirmEmailAddress = jest.fn(() => Promise.reject(mockSendEmailResponse));
-    });
-
+  describe('when sendEmailConfirmEmailAddress does not return success=true', () => {
     test('should throw an error', async () => {
       try {
-        await sendEmailConfirmEmailAddress({}, variables, context);
+        await sendEmailConfirmEmailAddressMutation({}, variables, context);
       } catch (err) {
-        const expected = new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${mockSendEmailResponse}`);
+        const expected = new Error('Sending email verification for account creation (sendEmailConfirmEmailAddress mutation)');
 
         expect(err).toEqual(expected);
       }

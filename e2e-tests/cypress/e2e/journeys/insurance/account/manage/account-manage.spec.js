@@ -44,7 +44,7 @@ context('Insurance - Account - Manage - As an Exporter, I want the service to ha
 
     cy.verifyAccountEmail();
 
-    cy.completeAndSubmitSignInAccountForm();
+    cy.completeAndSubmitSignInAccountForm({});
   });
 
   beforeEach(() => {

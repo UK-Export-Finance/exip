@@ -5,6 +5,7 @@ const accountSignInMutation = gql`
     accountSignIn(email: $email, password: $password) {
       accountId
       success
+      resentVerificationEmail
     }
   }
 `;

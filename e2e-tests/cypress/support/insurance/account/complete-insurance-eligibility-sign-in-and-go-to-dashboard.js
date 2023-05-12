@@ -38,7 +38,7 @@ const completeInsuranceEligibilitySignInAndGoToDashboard = (emailAddress) => {
     cy.navigateToUrl(verifyAccountUrl);
 
     // sign in to the account. Behind the scenes, an application is created at this point.
-    cy.completeAndSubmitSignInAccountForm(emailAddress);
+    cy.completeAndSubmitSignInAccountForm({ emailAddress });
 
     // get the OTP security code
     cy.accountAddAndGetOTP(emailAddress).then((securityCode) => {

@@ -43,7 +43,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
     before(() => {
       cy.verifyAccountEmail();
 
-      cy.completeAndSubmitSignInAccountForm();
+      cy.completeAndSubmitSignInAccountForm({});
 
       cy.url().should('eq', url);
     });

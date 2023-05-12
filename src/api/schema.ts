@@ -390,7 +390,7 @@ export const lists = {
           accountInputData.createdAt = now;
           accountInputData.updatedAt = now;
 
-          // send "confirm email" email
+          // send "confirm email address" email
           try {
             const { firstName, email, verificationHash } = accountInputData;
 
@@ -732,9 +732,15 @@ export const lists = {
         ],
         db: { isNullable: true },
       }),
-      improvement: text(),
-      otherComments: text(),
-      referralUrl: text(),
+      improvement: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      otherComments: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      referralUrl: text({
+        db: { nativeType: 'VarChar(500)' },
+      }),
       product: text(),
       createdAt: timestamp(),
     },

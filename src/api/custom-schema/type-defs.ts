@@ -117,6 +117,7 @@ const typeDefs = `
     sessionIdentifier: String
     expires: DateTime
     success: Boolean!
+    resentVerificationEmail: Boolean
   }
 
   type AddAndGetOtpResponse {

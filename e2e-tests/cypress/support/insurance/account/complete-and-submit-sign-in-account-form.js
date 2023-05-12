@@ -20,19 +20,26 @@ const {
 /**
  * completeAndSubmitSignInAccountForm
  * Complete and submit the "sign in" form
- * @param {String} Email address
- * @param {String} Password
- * @returns {String} Valid OTP
+ * @param {Object} Object with custom values to submit and flag for asserting success URL.
+ * - emailAddress
+ * - password
+ * - assertSuccessUrl
  */
-const completeAndSubmitSignInAccountForm = (email = account[EMAIL], password = account[PASSWORD]) => {
-  cy.keyboardInput(accountFormFields[EMAIL].input(), email);
+const completeAndSubmitSignInAccountForm = ({
+  emailAddress = account[EMAIL],
+  password = account[PASSWORD],
+  assertSuccessUrl = true,
+}) => {
+  cy.keyboardInput(accountFormFields[EMAIL].input(), emailAddress);
   cy.keyboardInput(accountFormFields[PASSWORD].input(), password);
 
   submitButton().click();
 
-  // assert we are on the 'enter code' page'
-  const expectedUrl = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
-  cy.url().should('eq', expectedUrl);
+  if (assertSuccessUrl) {
+    // assert we are on the 'enter code' page'
+    const expectedUrl = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
+    cy.url().should('eq', expectedUrl);
+  }
 };
 
 export default completeAndSubmitSignInAccountForm;

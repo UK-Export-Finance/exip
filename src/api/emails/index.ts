@@ -48,7 +48,7 @@ export const callNotify = async (templateId: string, emailAddress: string, varia
  */
 const confirmEmailAddress = async (emailAddress: string, firstName: string, verificationHash: string): Promise<EmailResponse> => {
   try {
-    console.info('Sending email verification for account creation');
+    console.info('Sending confirm email address email');
 
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
 
@@ -60,7 +60,7 @@ const confirmEmailAddress = async (emailAddress: string, firstName: string, veri
   } catch (err) {
     console.error(err);
 
-    throw new Error(`Sending email verification for account creation ${err}`);
+    throw new Error(`Sending confirm email address email ${err}`);
   }
 };
 
