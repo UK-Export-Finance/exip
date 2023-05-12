@@ -62,9 +62,6 @@ describe('custom-resolvers/account-sign-in', () => {
 
     jest.resetAllMocks();
 
-    // sendConfirmEmailAddressEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
-    // confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
-
     securityCodeEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
     sendEmail.securityCodeEmail = securityCodeEmailSpy;
 
@@ -118,27 +115,30 @@ describe('custom-resolvers/account-sign-in', () => {
       result = await accountSignIn({}, variables, context);
     });
 
-    test('it should reset the account`s verificationExpiry', async () => {
-      const updatedAccount = (await context.query.Account.findOne({
-        where: { id: account.id },
-        query: 'verificationExpiry',
-      })) as Account;
+    describe('verificationExpiry', () => {
+      let updatedAccount: Account;
+      let newExpiryDay: number;
 
-      const originalExpiry = {
-        day: new Date(account.verificationExpiry).getDay(),
-      };
+      beforeEach(async () => {
+        updatedAccount = (await context.query.Account.findOne({
+          where: { id: account.id },
+          query: 'verificationExpiry',
+        })) as Account;
 
-      const expectedExpiry = {
-        day: new Date(EMAIL.VERIFICATION_EXPIRY()).getDate(),
-      };
+        newExpiryDay = new Date(updatedAccount.verificationExpiry).getDate();
+      });
 
-      const newExpiry = {
-        day: new Date(updatedAccount.verificationExpiry).getDate(),
-      };
+      test('it should be reset and have a new day vale', async () => {
+        const expectedExpiryDay = new Date(EMAIL.VERIFICATION_EXPIRY()).getDate();
 
-      expect(newExpiry.day).not.toEqual(originalExpiry.day);
+        expect(newExpiryDay).toEqual(expectedExpiryDay);
+      });
 
-      expect(newExpiry.day).toEqual(expectedExpiry.day);
+      test('the account`s verificationExpiry should NOT have have the same day as the previous verificationExpiry', async () => {
+        const originalExpiryDay = new Date(account.verificationExpiry).getDay();
+
+        expect(newExpiryDay).not.toEqual(originalExpiryDay);
+      });
     });
 
     test('it should call confirmEmailAddressEmail.send', async () => {
