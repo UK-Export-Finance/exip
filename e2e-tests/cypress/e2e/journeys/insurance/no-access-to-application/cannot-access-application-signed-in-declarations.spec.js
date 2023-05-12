@@ -23,7 +23,7 @@ const insuranceRoute = `${baseUrl}${INSURANCE_ROOT}`;
 
 const cannotAccessUrl = `${baseUrl}${NO_ACCESS_TO_APPLICATION}`;
 
-context('Insurance - no access to application page - signed in - declarations', () => {
+context('Insurance - no access to application page - signed in - declarations pages', () => {
   let firstApplicationReferenceNumber;
   let referenceNumbers;
 
