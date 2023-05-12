@@ -7,11 +7,7 @@ const feedback = {
     try {
       console.info('Creating feedback');
 
-      const variables = {
-        data: feedbackVariables,
-      };
-
-      const response = (await apollo('POST', createInsuranceFeedbackMutation, variables)) as ApolloResponse;
+      const response = (await apollo('POST', createInsuranceFeedbackMutation, feedbackVariables)) as ApolloResponse;
 
       if (response.errors) {
         console.error('GraphQL error creating feedback ', response.errors);
@@ -21,8 +17,8 @@ const feedback = {
         console.error('GraphQL network error error creating feedback', response.networkError.result.errors);
       }
 
-      if (response?.data?.createFeedback) {
-        return response.data.createFeedback;
+      if (response?.data?.createFeedbackAndEmail) {
+        return response.data.createFeedbackAndEmail;
       }
 
       console.error(response);

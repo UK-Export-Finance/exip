@@ -3,7 +3,8 @@ import sendEmail, { callNotify } from '.';
 import fileSystem from '../file-system';
 import notify from '../integrations/notify';
 import { EMAIL_TEMPLATE_IDS } from '../constants';
-import { mockAccount, mockApplication, mockCompany, mockBuyer, mockSendEmailResponse } from '../test-mocks';
+import { mockAccount, mockApplication, mockCompany, mockBuyer, mockSendEmailResponse, mockInsuranceFeedback } from '../test-mocks';
+import formatDate from '../helpers/format-date';
 
 dotenv.config();
 
@@ -279,6 +280,50 @@ describe('emails', () => {
           await sendEmail.documentsEmail(variables, templateId);
         } catch (err) {
           const expected = new Error(`Sending documents email Error: Sending email ${mockErrorMessage}`);
+
+          expect(err).toEqual(expected);
+        }
+      });
+    });
+  });
+
+  describe('feedbackEmail', () => {
+    const templateId = EMAIL_TEMPLATE_IDS.FEEDBACK.INSURANCE;
+
+    test('it should call notify.sendEmail and return the response', async () => {
+      notify.sendEmail = sendEmailSpy;
+
+      const emailVariables = {
+        ...mockInsuranceFeedback,
+        createdAt: new Date(),
+      };
+
+      const result = await sendEmail.insuranceFeedbackEmail(emailVariables);
+
+      const resultVariables = {
+        ...emailVariables,
+        date: formatDate(new Date()),
+        time: formatDate(new Date(), 'HH:mm:ss'),
+      };
+
+      expect(sendEmailSpy).toHaveBeenCalledTimes(1);
+      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, resultVariables);
+
+      const expected = mockSendEmailResponse;
+
+      expect(result).toEqual(expected);
+    });
+
+    describe('error handling', () => {
+      beforeAll(async () => {
+        notify.sendEmail = jest.fn(() => Promise.reject(mockErrorMessage));
+      });
+
+      test('should throw an error', async () => {
+        try {
+          await sendEmail.insuranceFeedbackEmail(mockInsuranceFeedback);
+        } catch (err) {
+          const expected = new Error(`Sending insurance feedback email Error: Sending email ${mockErrorMessage}`);
 
           expect(err).toEqual(expected);
         }
