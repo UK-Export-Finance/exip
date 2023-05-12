@@ -5,6 +5,7 @@ interface InsuranceFeedbackVariables {
   otherComments?: string;
   referralUrl?: string;
   product?: string;
+  createdAt?: string;
 }
 
 export { InsuranceFeedbackVariables };

@@ -255,6 +255,10 @@ interface InsuranceFeedbackVariables {
   satisfaction?: string;
   improvement?: string;
   otherComments?: string;
+  referralUrl?: string;
+  createdAt?: Date;
+  date?: string;
+  time?: string;
 }
 
 interface AccountSignInResponse extends SuccessResponse {
@@ -319,6 +323,8 @@ interface Feedback {
   otherComments: string;
   referralUrl: string;
   product: string;
+  createdAt: string;
+  success: boolean;
 }
 
 interface IndustrySector {

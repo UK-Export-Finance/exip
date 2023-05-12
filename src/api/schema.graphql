@@ -1561,6 +1561,7 @@ type Feedback {
   otherComments: String
   referralUrl: String
   product: String
+  createdAt: DateTime
 }
 
 input FeedbackWhereUniqueInput {
@@ -1578,6 +1579,7 @@ input FeedbackWhereInput {
   otherComments: StringFilter
   referralUrl: StringFilter
   product: StringFilter
+  createdAt: DateTimeNullableFilter
 }
 
 input FeedbackOrderByInput {
@@ -1588,6 +1590,7 @@ input FeedbackOrderByInput {
   otherComments: OrderDirection
   referralUrl: OrderDirection
   product: OrderDirection
+  createdAt: OrderDirection
 }
 
 input FeedbackUpdateInput {
@@ -1597,6 +1600,7 @@ input FeedbackUpdateInput {
   otherComments: String
   referralUrl: String
   product: String
+  createdAt: DateTime
 }
 
 input FeedbackUpdateArgs {
@@ -1611,6 +1615,7 @@ input FeedbackCreateInput {
   otherComments: String
   referralUrl: String
   product: String
+  createdAt: DateTime
 }
 
 """
@@ -1780,7 +1785,7 @@ type Mutation {
   submitApplication(applicationId: String!): SuccessResponse
 
   """ send email for insurance feedback """
-  sendEmailInsuranceFeedback(satisfaction: String, improvement: String, otherComments: String): SuccessResponse
+  createInsuranceFeedbackAndEmail(satisfaction: String, improvement: String, otherComments: String, referralUrl: String, product: String, service: String): SuccessResponse
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure

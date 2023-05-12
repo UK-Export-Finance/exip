@@ -736,6 +736,7 @@ export const lists = {
       otherComments: text(),
       referralUrl: text(),
       product: text(),
+      createdAt: timestamp(),
     },
     access: allowAll,
   }),

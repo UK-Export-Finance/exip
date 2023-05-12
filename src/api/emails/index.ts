@@ -3,6 +3,7 @@ import fileSystem from '../file-system';
 import notify from '../integrations/notify';
 import { EmailResponse, ApplicationSubmissionEmailVariables, InsuranceFeedbackVariables } from '../types';
 import dotenv from 'dotenv';
+import formatDate from '../helpers/format-date';
 
 dotenv.config();
 
@@ -217,7 +218,17 @@ const insuranceFeedbackEmail = async (variables: InsuranceFeedbackVariables): Pr
 
     const emailAddress = process.env.FEEDBACK_EMAIL_RECIPIENT as string;
 
-    const response = await callNotify(templateId, emailAddress, variables);
+    const emailVariables = variables;
+    emailVariables.time = '';
+    emailVariables.date = '';
+
+    // formats the createdAt timestamp into date and time for email template
+    if (variables.createdAt) {
+      emailVariables.date = formatDate(variables.createdAt);
+      emailVariables.time = formatDate(variables.createdAt, 'HH:mm:ss');
+    }
+
+    const response = await callNotify(templateId, emailAddress, emailVariables);
 
     return response;
   } catch (err) {

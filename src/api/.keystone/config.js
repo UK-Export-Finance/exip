@@ -41,7 +41,7 @@ var import_core = require("@keystone-6/core");
 var import_access = require("@keystone-6/core/access");
 var import_fields = require("@keystone-6/core/fields");
 var import_fields_document = require("@keystone-6/fields-document");
-var import_date_fns = require("date-fns");
+var import_date_fns2 = require("date-fns");
 
 // constants/index.ts
 var import_dotenv = __toESM(require("dotenv"));
@@ -501,6 +501,13 @@ var notify_default = notify;
 
 // emails/index.ts
 var import_dotenv3 = __toESM(require("dotenv"));
+
+// helpers/format-date/index.ts
+var import_date_fns = require("date-fns");
+var formatDate = (timestamp3, dateFormat = "d MMMM yyyy") => (0, import_date_fns.format)(new Date(timestamp3), dateFormat);
+var format_date_default = formatDate;
+
+// emails/index.ts
 import_dotenv3.default.config();
 var callNotify = async (templateId, emailAddress, variables, file, fileIsCsv) => {
   try {
@@ -617,7 +624,14 @@ var insuranceFeedbackEmail = async (variables) => {
     console.info("Sending insurance feedback email");
     const templateId = EMAIL_TEMPLATE_IDS.FEEDBACK.INSURANCE;
     const emailAddress = process.env.FEEDBACK_EMAIL_RECIPIENT;
-    const response = await callNotify(templateId, emailAddress, variables);
+    const emailVariables = variables;
+    emailVariables.time = "";
+    emailVariables.date = "";
+    if (variables.createdAt) {
+      emailVariables.date = format_date_default(variables.createdAt);
+      emailVariables.time = format_date_default(variables.createdAt, "HH:mm:ss");
+    }
+    const response = await callNotify(templateId, emailAddress, emailVariables);
     return response;
   } catch (err) {
     console.error(err);
@@ -761,7 +775,7 @@ var lists = {
             const now = /* @__PURE__ */ new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
-            modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
+            modifiedData.submissionDeadline = (0, import_date_fns2.addMonths)(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
             modifiedData.submissionType = APPLICATION.SUBMISSION_TYPE.MIA;
             modifiedData.status = APPLICATION.STATUS.DRAFT;
             return modifiedData;
@@ -1288,7 +1302,8 @@ var lists = {
       improvement: (0, import_fields.text)(),
       otherComments: (0, import_fields.text)(),
       referralUrl: (0, import_fields.text)(),
-      product: (0, import_fields.text)()
+      product: (0, import_fields.text)(),
+      createdAt: (0, import_fields.timestamp)()
     },
     access: import_access.allowAll
   })
@@ -1532,10 +1547,13 @@ var typeDefs = `
     ): SuccessResponse
 
     """ send email for insurance feedback """
-    sendEmailInsuranceFeedback(
+    createInsuranceFeedbackAndEmail(
       satisfaction: String
       improvement: String
       otherComments: String
+      referralUrl: String
+      product: String
+      service: String
     ): SuccessResponse
   }
 
@@ -1654,7 +1672,7 @@ var createAccount = async (root, variables, context) => {
 var create_an_account_default = createAccount;
 
 // custom-resolvers/mutations/verify-account-email-address.ts
-var import_date_fns2 = require("date-fns");
+var import_date_fns3 = require("date-fns");
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
     console.info("Verifying account email address");
@@ -1662,7 +1680,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
     if (account) {
       const { id } = account;
       const now = /* @__PURE__ */ new Date();
-      const canActivateAccount = (0, import_date_fns2.isBefore)(now, account.verificationExpiry);
+      const canActivateAccount = (0, import_date_fns3.isBefore)(now, account.verificationExpiry);
       if (!canActivateAccount) {
         console.info("Unable to verify account email - verification period has expired");
         return {
@@ -1885,7 +1903,7 @@ var accountSignInSendNewCode = async (root, variables, context) => {
 var account_sign_in_new_code_default = accountSignInSendNewCode;
 
 // custom-resolvers/mutations/verify-account-sign-in-code.ts
-var import_date_fns3 = require("date-fns");
+var import_date_fns4 = require("date-fns");
 
 // helpers/is-valid-otp/index.ts
 var import_crypto5 = __toESM(require("crypto"));
@@ -1966,7 +1984,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
     }
     const { otpSalt, otpHash, otpExpiry } = account;
     const now = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns3.isAfter)(now, otpExpiry);
+    const hasExpired = (0, import_date_fns4.isAfter)(now, otpExpiry);
     if (hasExpired) {
       console.info("Unable to verify account sign in code - verification period has expired");
       return {
@@ -2072,7 +2090,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
 var send_email_password_reset_link_default = sendEmailPasswordResetLink;
 
 // custom-resolvers/mutations/account-password-reset.ts
-var import_date_fns4 = require("date-fns");
+var import_date_fns5 = require("date-fns");
 var accountPasswordReset = async (root, variables, context) => {
   console.info("Resetting account password");
   try {
@@ -2088,7 +2106,7 @@ var accountPasswordReset = async (root, variables, context) => {
       return { success: false };
     }
     const now = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns4.isAfter)(now, passwordResetExpiry);
+    const hasExpired = (0, import_date_fns5.isAfter)(now, passwordResetExpiry);
     if (hasExpired) {
       console.info("Unable to reset account password - verification period has expired");
       return {
@@ -2378,11 +2396,6 @@ var getApplicationSubmittedEmailTemplateIds = (application) => {
   return templateIds;
 };
 var get_application_submitted_email_template_ids_default = getApplicationSubmittedEmailTemplateIds;
-
-// helpers/format-date/index.ts
-var import_date_fns5 = require("date-fns");
-var formatDate = (timestamp3, dateFormat = "d MMMM yyyy") => (0, import_date_fns5.format)(new Date(timestamp3), dateFormat);
-var format_date_default = formatDate;
 
 // emails/send-application-submitted-emails/index.ts
 var send = async (application, csvPath) => {
@@ -3209,25 +3222,31 @@ var submitApplication = async (root, variables, context) => {
 };
 var submit_application_default = submitApplication;
 
-// custom-resolvers/mutations/send-email-insurance-feedback.ts
-var sendEmailInsuranceFeedback = async (root, variables) => {
+// custom-resolvers/mutations/create-feedback.ts
+var createInsuranceFeedbackAndEmail = async (root, variables, context) => {
+  console.info("Creating feedback");
   try {
-    console.info("Generating and sending email for insurance feedback");
-    const emailResponse = await emails_default.insuranceFeedbackEmail(variables);
-    if (emailResponse.success) {
+    const feedback = {
+      ...variables,
+      createdAt: /* @__PURE__ */ new Date()
+    };
+    const response = await context.db.Feedback.createOne({
+      data: feedback
+    });
+    const emailResponse = await emails_default.insuranceFeedbackEmail(feedback);
+    if (response && emailResponse?.success) {
       return {
-        ...emailResponse
+        ...response,
+        ...emailResponse,
+        success: true
       };
     }
-    return {
-      success: false
-    };
+    return { success: false };
   } catch (err) {
-    console.error(err);
-    throw new Error(`Generating and sending email for insurance feedback ${err}`);
+    throw new Error(`Creating feedback: ${err}`);
   }
 };
-var send_email_insurance_feedback_default = sendEmailInsuranceFeedback;
+var create_feedback_default = createInsuranceFeedbackAndEmail;
 
 // custom-resolvers/queries/get-companies-house-information.ts
 var import_axios2 = __toESM(require("axios"));
@@ -3435,7 +3454,7 @@ var customResolvers = {
     deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
     updateCompanyAndCompanyAddress: update_company_and_company_address_default,
     submitApplication: submit_application_default,
-    sendEmailInsuranceFeedback: send_email_insurance_feedback_default
+    createInsuranceFeedbackAndEmail: create_feedback_default
   },
   Query: {
     getCompaniesHouseInformation: get_companies_house_information_default,

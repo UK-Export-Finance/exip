@@ -36,6 +36,7 @@ export const FIELD_IDS = {
     SERVICE: 'service',
     REFERRAL_URL: 'referralUrl',
     PRODUCT: 'product',
+    CREATED_AT: 'createdAt',
   },
   INSURANCE,
 };

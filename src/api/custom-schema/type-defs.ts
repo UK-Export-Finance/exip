@@ -205,10 +205,13 @@ const typeDefs = `
     ): SuccessResponse
 
     """ send email for insurance feedback """
-    sendEmailInsuranceFeedback(
+    createInsuranceFeedbackAndEmail(
       satisfaction: String
       improvement: String
       otherComments: String
+      referralUrl: String
+      product: String
+      service: String
     ): SuccessResponse
   }
 
