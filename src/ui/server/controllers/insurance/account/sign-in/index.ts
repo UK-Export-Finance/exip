@@ -16,6 +16,7 @@ const {
   INSURANCE: {
     ACCOUNT: {
       SIGN_IN: { ENTER_CODE },
+      CREATE: { CONFIRM_EMAIL_RESENT },
     },
     DASHBOARD,
   },
@@ -113,6 +114,10 @@ export const post = async (req: Request, res: Response) => {
       req.session.accountId = response.accountId;
 
       return res.redirect(ENTER_CODE);
+    }
+
+    if (response.resentVerificationEmail) {
+      return res.redirect(`${CONFIRM_EMAIL_RESENT}?id=${response.accountId}`);
     }
 
     // invalid credentials - force validation errors by mimicking empty form submission

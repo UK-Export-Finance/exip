@@ -26,7 +26,7 @@ const {
  */
 const signInAndGoToUrl = (url) => {
   cy.navigateToUrl(`${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`);
-  cy.completeAndSubmitSignInAccountForm();
+  cy.completeAndSubmitSignInAccountForm({});
 
   // get the OTP security code
   cy.accountAddAndGetOTP().then((securityCode) => {

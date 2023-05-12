@@ -18,7 +18,7 @@ context('Insurance - Account - Sign in - Enter code - without completing eligibi
 
     cy.verifyAccountEmail();
 
-    cy.completeAndSubmitSignInAccountForm();
+    cy.completeAndSubmitSignInAccountForm({});
   });
 
   beforeEach(() => {

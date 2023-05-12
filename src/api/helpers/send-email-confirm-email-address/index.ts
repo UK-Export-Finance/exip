@@ -1,0 +1,48 @@
+import { Context } from '.keystone/types'; // eslint-disable-line
+import getAccountById from '../get-account-by-id';
+import sendEmail from '../../emails';
+import { SuccessResponse } from '../../types';
+
+/**
+ * confirmEmailAddressEmail.send
+ * @param {Object} KeystoneJS context API
+ * @param {String} Account ID
+ * @returns {Object} Object with success flag and emailRecipient
+ */
+const send = async (context: Context, accountId: string): Promise<SuccessResponse> => {
+  try {
+    console.info('Sending email verification');
+
+    // get the account
+    const account = await getAccountById(context, accountId);
+
+    // ensure that we have found an account with the requsted ID.
+    if (!account) {
+      console.info('Sending email verification - no account exists with the provided account ID');
+
+      return {
+        success: false,
+      };
+    }
+
+    // send "confirm email" email.
+    const { email, firstName, verificationHash } = account;
+
+    const emailResponse = await sendEmail.confirmEmailAddress(email, firstName, verificationHash);
+
+    if (emailResponse.success) {
+      return emailResponse;
+    }
+
+    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${emailResponse}`);
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${err}`);
+  }
+};
+
+const confirmEmailAddressEmail = {
+  send,
+};
+
+export default confirmEmailAddressEmail;
