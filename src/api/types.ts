@@ -134,7 +134,7 @@ interface Application {
 
 interface ApplicationSubmissionEmailVariables {
   emailAddress: string;
-  firstName: string;
+  name: string;
   referenceNumber: number;
   buyerName: string;
   buyerLocation: string;
@@ -352,6 +352,7 @@ export {
   ApplicationEligibility,
   ApplicationCompany,
   ApplicationCompanySicCode,
+  ApplicationOwner,
   ApplicationRelationship,
   ApplicationSubmissionEmailVariables,
   BufferEncoding,

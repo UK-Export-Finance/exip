@@ -1,4 +1,5 @@
 import sendEmail from '../index';
+import getFullNameString from '../../helpers/get-full-name-string';
 import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-application-submitted-email-template-ids';
 import formatDate from '../../helpers/format-date';
 import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } from '../../types';
@@ -15,11 +16,11 @@ const send = async (application: Application, csvPath: string): Promise<SuccessR
     const { referenceNumber, owner, company, buyer, policyAndExport } = application as Application;
 
     // generate email variables
-    const { email, firstName } = owner;
+    const { email } = owner;
 
     const sendEmailVars = {
       emailAddress: email,
-      firstName,
+      name: getFullNameString(owner),
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
       buyerLocation: buyer.country?.name,

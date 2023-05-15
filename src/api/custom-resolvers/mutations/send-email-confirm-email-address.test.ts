@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import sendEmailConfirmEmailAddressMutation from './send-email-confirm-email-address';
 import baseConfig from '../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
+import getFullNameString from '../../helpers/get-full-name-string';
 import sendEmail from '../../emails';
 import { mockAccount, mockSendEmailResponse } from '../../test-mocks';
 import { Account, SendExporterEmailVariables } from '../../types';
@@ -47,10 +48,12 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
   test('it should call sendEmail.confirmEmailAddress and return success=true', async () => {
     const result = await sendEmailConfirmEmailAddressMutation({}, variables, context);
 
-    const { email, firstName, verificationHash } = account;
+    const { email, verificationHash } = account;
+
+    const name = getFullNameString(account);
 
     expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledTimes(1);
-    expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledWith(email, firstName, verificationHash);
+    expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledWith(email, name, verificationHash);
 
     const expected = {
       success: true,

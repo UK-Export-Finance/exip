@@ -1,5 +1,6 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import getAccountById from '../get-account-by-id';
+import getFullNameString from '../get-full-name-string';
 import sendEmail from '../../emails';
 import { SuccessResponse } from '../../types';
 
@@ -26,9 +27,11 @@ const send = async (context: Context, accountId: string): Promise<SuccessRespons
     }
 
     // send "confirm email" email.
-    const { email, firstName, verificationHash } = account;
+    const { email, verificationHash } = account;
 
-    const emailResponse = await sendEmail.confirmEmailAddress(email, firstName, verificationHash);
+    const name = getFullNameString(account);
+
+    const emailResponse = await sendEmail.confirmEmailAddress(email, name, verificationHash);
 
     if (emailResponse.success) {
       return emailResponse;

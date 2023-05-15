@@ -2,6 +2,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
 import crypto from 'crypto';
 import { ACCOUNT, FIELD_IDS } from '../../constants';
 import getAccountByField from '../../helpers/get-account-by-field';
+import getFullNameString from '../../helpers/get-full-name-string';
 import sendEmail from '../../emails';
 import { AccountSendEmailPasswordResetLinkVariables, Account, SuccessResponse } from '../../types';
 
@@ -50,7 +51,9 @@ const sendEmailPasswordResetLink = async (root: any, variables: AccountSendEmail
       data: accountUpdate,
     })) as Account;
 
-    const emailResponse = await sendEmail.passwordResetLink(email, account.firstName, passwordResetHash);
+    const name = getFullNameString(account);
+
+    const emailResponse = await sendEmail.passwordResetLink(email, name, passwordResetHash);
 
     if (emailResponse.success) {
       return emailResponse;

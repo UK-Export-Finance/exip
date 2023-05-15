@@ -408,6 +408,14 @@ var updateApplication = {
 };
 var update_application_default = updateApplication;
 
+// helpers/get-full-name-string/index.ts
+var getFullNameString = (account) => {
+  const { firstName, lastName } = account;
+  const fullName = `${firstName} ${lastName}`;
+  return fullName;
+};
+var get_full_name_string_default = getFullNameString;
+
 // file-system/index.ts
 var import_fs = require("fs");
 var import_path = __toESM(require("path"));
@@ -526,11 +534,11 @@ var callNotify = async (templateId, emailAddress, variables, file, fileIsCsv) =>
     throw new Error(`Sending email ${err}`);
   }
 };
-var confirmEmailAddress = async (emailAddress, firstName, verificationHash) => {
+var confirmEmailAddress = async (emailAddress, name, verificationHash) => {
   try {
     console.info("Sending confirm email address email");
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
-    const variables = { firstName, confirmToken: verificationHash };
+    const variables = { name, confirmToken: verificationHash };
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (err) {
@@ -538,11 +546,11 @@ var confirmEmailAddress = async (emailAddress, firstName, verificationHash) => {
     throw new Error(`Sending confirm email address email ${err}`);
   }
 };
-var securityCodeEmail = async (emailAddress, firstName, securityCode) => {
+var securityCodeEmail = async (emailAddress, name, securityCode) => {
   try {
     console.info("Sending security code email for account sign in");
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.SECURITY_CODE;
-    const variables = { firstName, securityCode };
+    const variables = { name, securityCode };
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (err) {
@@ -550,11 +558,11 @@ var securityCodeEmail = async (emailAddress, firstName, securityCode) => {
     throw new Error(`Sending security code email for account sign in ${err}`);
   }
 };
-var passwordResetLink = async (emailAddress, firstName, passwordResetHash) => {
+var passwordResetLink = async (emailAddress, name, passwordResetHash) => {
   try {
     console.info("Sending email for account password reset");
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
-    const variables = { firstName, passwordResetToken: passwordResetHash };
+    const variables = { name, passwordResetToken: passwordResetHash };
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (err) {
@@ -966,8 +974,9 @@ var lists = {
           accountInputData.createdAt = now;
           accountInputData.updatedAt = now;
           try {
-            const { firstName, email, verificationHash } = accountInputData;
-            const emailResponse = await emails_default.confirmEmailAddress(email, firstName, verificationHash);
+            const { email, verificationHash } = accountInputData;
+            const name = get_full_name_string_default(accountInputData);
+            const emailResponse = await emails_default.confirmEmailAddress(email, name, verificationHash);
             if (emailResponse.success) {
               return accountInputData;
             }
@@ -1749,8 +1758,9 @@ var send = async (context, accountId) => {
         success: false
       };
     }
-    const { email, firstName, verificationHash } = account;
-    const emailResponse = await emails_default.confirmEmailAddress(email, firstName, verificationHash);
+    const { email, verificationHash } = account;
+    const name = get_full_name_string_default(account);
+    const emailResponse = await emails_default.confirmEmailAddress(email, name, verificationHash);
     if (emailResponse.success) {
       return emailResponse;
     }
@@ -1908,7 +1918,8 @@ var accountSignIn = async (root, variables, context) => {
         return { success: false };
       }
       const { securityCode } = await generate_otp_and_update_account_default(context, account.id);
-      const emailResponse = await emails_default.securityCodeEmail(email, account.firstName, securityCode);
+      const name = get_full_name_string_default(account);
+      const emailResponse = await emails_default.securityCodeEmail(email, name, securityCode);
       if (emailResponse.success) {
         return {
           ...emailResponse,
@@ -1938,8 +1949,9 @@ var accountSignInSendNewCode = async (root, variables, context) => {
       return { success: false };
     }
     const { securityCode } = await generate_otp_and_update_account_default(context, account.id);
-    const { email, firstName } = account;
-    const emailResponse = await emails_default.securityCodeEmail(email, firstName, securityCode);
+    const { email } = account;
+    const name = get_full_name_string_default(account);
+    const emailResponse = await emails_default.securityCodeEmail(email, name, securityCode);
     if (emailResponse.success) {
       return {
         ...emailResponse,
@@ -2131,7 +2143,8 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
       where: { id: account.id },
       data: accountUpdate
     });
-    const emailResponse = await emails_default.passwordResetLink(email, account.firstName, passwordResetHash);
+    const name = get_full_name_string_default(account);
+    const emailResponse = await emails_default.passwordResetLink(email, name, passwordResetHash);
     if (emailResponse.success) {
       return emailResponse;
     }
@@ -2455,10 +2468,10 @@ var get_application_submitted_email_template_ids_default = getApplicationSubmitt
 var send2 = async (application, csvPath) => {
   try {
     const { referenceNumber, owner, company, buyer, policyAndExport } = application;
-    const { email, firstName } = owner;
+    const { email } = owner;
     const sendEmailVars = {
       emailAddress: email,
-      firstName,
+      name: get_full_name_string_default(owner),
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
       buyerLocation: buyer.country?.name,

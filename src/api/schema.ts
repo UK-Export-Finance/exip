@@ -6,6 +6,7 @@ import { addMonths } from 'date-fns';
 import { Lists } from '.keystone/types'; // eslint-disable-line
 import { ANSWERS, APPLICATION, FEEDBACK } from './constants';
 import updateApplication from './helpers/update-application';
+import getFullNameString from './helpers/get-full-name-string';
 import sendEmail from './emails';
 import { AccountInput } from './types';
 
@@ -392,9 +393,11 @@ export const lists = {
 
           // send "confirm email address" email
           try {
-            const { firstName, email, verificationHash } = accountInputData;
+            const { email, verificationHash } = accountInputData;
 
-            const emailResponse = await sendEmail.confirmEmailAddress(email, firstName, verificationHash);
+            const name = getFullNameString(accountInputData);
+
+            const emailResponse = await sendEmail.confirmEmailAddress(email, name, verificationHash);
 
             if (emailResponse.success) {
               return accountInputData;

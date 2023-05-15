@@ -5,6 +5,7 @@ import baseConfig from './keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import { APPLICATION } from './constants';
 import updateApplication from './helpers/update-application';
+import getFullNameString from './helpers/get-full-name-string';
 import sendEmail from './emails';
 import { mockAccount, mockSendEmailResponse } from './test-mocks';
 import { Application, Account } from './types';
@@ -281,10 +282,12 @@ describe('Account', () => {
     });
 
     test('it should call sendEmail.confirmEmailAddress', () => {
-      const { email, firstName, verificationHash } = account;
+      const { email, verificationHash } = account;
+
+      const name = getFullNameString(account);
 
       expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
-      expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, firstName, verificationHash);
+      expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, name, verificationHash);
     });
   });
 

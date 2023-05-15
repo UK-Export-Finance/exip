@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import baseConfig from '../../keystone';
 import sendEmailPasswordResetLink from './send-email-password-reset-link';
+import getFullNameString from '../../helpers/get-full-name-string';
 import sendEmail from '../../emails';
 import { ACCOUNT } from '../../constants';
 import { mockAccount, mockSendEmailResponse } from '../../test-mocks';
@@ -106,10 +107,12 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
   });
 
   test('it should call sendEmail.passwordResetLink', () => {
-    const { email, firstName, passwordResetHash } = account;
+    const { email, passwordResetHash } = account;
+
+    const name = getFullNameString(account);
 
     expect(passwordResetLinkSpy).toHaveBeenCalledTimes(1);
-    expect(passwordResetLinkSpy).toHaveBeenCalledWith(email, firstName, passwordResetHash);
+    expect(passwordResetLinkSpy).toHaveBeenCalledWith(email, name, passwordResetHash);
   });
 
   describe('when no account is found', () => {
