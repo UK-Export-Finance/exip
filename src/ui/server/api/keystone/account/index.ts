@@ -13,9 +13,14 @@ import accountPasswordResetMutation from '../../../graphql/mutations/account/pas
 import verifyAccountPasswordResetTokenQuery from '../../../graphql/queries/account/verify-account-password-reset-token';
 
 const account = {
-  create: async (variables: Account) => {
+  create: async (urlOrigin: string, accountInput: Account) => {
     try {
       console.info('Creating an account');
+
+      const variables = {
+        urlOrigin,
+        ...accountInput,
+      };
 
       const response = (await apollo('POST', createAccountMutation, variables)) as ApolloResponse;
 
@@ -92,11 +97,11 @@ const account = {
       throw new Error('Verifying account email address');
     }
   },
-  sendEmailConfirmEmailAddress: async (accountId: string) => {
+  sendEmailConfirmEmailAddress: async (urlOrigin: string, accountId: string) => {
     try {
       console.info('Sending email verification for account creation');
 
-      const variables = { accountId };
+      const variables = { urlOrigin, accountId };
 
       const response = (await apollo('POST', sendEmailConfirmEmailAddressMutation, variables)) as ApolloResponse;
 
@@ -227,20 +232,20 @@ const account = {
       throw new Error('Verifying account session');
     }
   },
-  sendEmailPasswordResetLink: async (email: string) => {
+  sendEmailPasswordResetLink: async (urlOrigin: string, email: string) => {
     try {
       console.info('Sending email for account password reset');
 
-      const variables = { email };
+      const variables = { urlOrigin, email };
 
       const response = (await apollo('POST', sendEmailPasswordResetLinkMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error sending new sign in code for account ', response.errors);
+        console.error('GraphQL error sending email for account password reset ', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error sending new sign in code for account ', response.networkError.result.errors);
+        console.error('GraphQL network error sending email for account password reset ', response.networkError.result.errors);
       }
 
       if (response?.data?.sendEmailPasswordResetLink) {

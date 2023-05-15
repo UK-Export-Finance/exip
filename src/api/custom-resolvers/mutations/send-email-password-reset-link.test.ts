@@ -3,9 +3,10 @@ import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import baseConfig from '../../keystone';
 import sendEmailPasswordResetLink from './send-email-password-reset-link';
+import getFullNameString from '../../helpers/get-full-name-string';
 import sendEmail from '../../emails';
 import { ACCOUNT } from '../../constants';
-import { mockAccount, mockSendEmailResponse } from '../../test-mocks';
+import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../test-mocks';
 import { Account, SuccessResponse } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -33,6 +34,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
   let passwordResetLinkSpy = jest.fn();
 
   const variables = {
+    urlOrigin: mockUrlOrigin,
     email: mockAccount.email,
   };
 
@@ -65,7 +67,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     // get the latest account
     account = (await context.query.Account.findOne({
       where: { id: account.id },
-      query: 'id email firstName passwordResetHash passwordResetExpiry',
+      query: 'id email firstName lastName passwordResetHash passwordResetExpiry',
     })) as Account;
   });
 
@@ -106,10 +108,12 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
   });
 
   test('it should call sendEmail.passwordResetLink', () => {
-    const { email, firstName, passwordResetHash } = account;
+    const { email, passwordResetHash } = account;
+
+    const name = getFullNameString(account);
 
     expect(passwordResetLinkSpy).toHaveBeenCalledTimes(1);
-    expect(passwordResetLinkSpy).toHaveBeenCalledWith(email, firstName, passwordResetHash);
+    expect(passwordResetLinkSpy).toHaveBeenCalledWith(mockUrlOrigin, email, name, passwordResetHash);
   });
 
   describe('when no account is found', () => {

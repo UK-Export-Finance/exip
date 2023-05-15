@@ -2,8 +2,9 @@ import dotenv from 'dotenv';
 import sendEmail, { callNotify } from '.';
 import fileSystem from '../file-system';
 import notify from '../integrations/notify';
+import getFullNameString from '../helpers/get-full-name-string';
 import { EMAIL_TEMPLATE_IDS } from '../constants';
-import { mockAccount, mockApplication, mockCompany, mockBuyer, mockSendEmailResponse, mockInsuranceFeedback } from '../test-mocks';
+import { mockAccount, mockApplication, mockCompany, mockBuyer, mockUrlOrigin, mockSendEmailResponse, mockInsuranceFeedback } from '../test-mocks';
 import formatDate from '../helpers/format-date';
 
 dotenv.config();
@@ -21,7 +22,7 @@ describe('emails', () => {
   const writeFileSpy = jest.fn(() => Promise.resolve(mockFileSystemResponse));
   const unlinkSpy = jest.fn(() => Promise.resolve(true));
 
-  const { email, firstName, verificationHash } = mockAccount;
+  const { email, verificationHash } = mockAccount;
   const { referenceNumber } = mockApplication;
   const { companyName } = mockCompany;
   const { companyOrOrganisationName } = mockBuyer;
@@ -30,9 +31,11 @@ describe('emails', () => {
 
   const fileIsCsv = true;
 
+  const fullName = getFullNameString(mockAccount);
+
   const variables = {
     emailAddress: email,
-    firstName,
+    name: fullName,
     referenceNumber,
     buyerName: companyOrOrganisationName,
     buyerLocation: companyName,
@@ -70,12 +73,13 @@ describe('emails', () => {
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
 
     const expectedVariables = {
-      firstName,
+      urlOrigin: mockUrlOrigin,
+      name: fullName,
       confirmToken: verificationHash,
     };
 
     test('it should call notify.sendEmail and return the response', async () => {
-      const result = await sendEmail.confirmEmailAddress(email, firstName, verificationHash);
+      const result = await sendEmail.confirmEmailAddress(email, mockUrlOrigin, fullName, verificationHash);
 
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -93,7 +97,7 @@ describe('emails', () => {
 
       test('should throw an error', async () => {
         try {
-          await sendEmail.confirmEmailAddress(email, firstName, verificationHash);
+          await sendEmail.confirmEmailAddress(email, mockUrlOrigin, fullName, verificationHash);
         } catch (err) {
           const expected = new Error(`Sending confirm email address email Error: Sending email ${mockErrorMessage}`);
 
@@ -108,14 +112,14 @@ describe('emails', () => {
     const mockSecurityCode = '123456';
 
     const expectedVariables = {
-      firstName,
+      name: fullName,
       securityCode: mockSecurityCode,
     };
 
     test('it should call notify.sendEmail and return the response', async () => {
       notify.sendEmail = sendEmailSpy;
 
-      const result = await sendEmail.securityCodeEmail(email, firstName, mockSecurityCode);
+      const result = await sendEmail.securityCodeEmail(email, fullName, mockSecurityCode);
 
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
       expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, expectedVariables);
@@ -132,7 +136,7 @@ describe('emails', () => {
 
       test('should throw an error', async () => {
         try {
-          await sendEmail.securityCodeEmail(email, firstName, verificationHash);
+          await sendEmail.securityCodeEmail(email, fullName, verificationHash);
         } catch (err) {
           const expected = new Error(`Sending security code email for account sign in Error: Sending email ${mockErrorMessage}`);
 
@@ -147,14 +151,15 @@ describe('emails', () => {
     const mockPasswordResetHash = '123456';
 
     const expectedVariables = {
-      firstName,
+      urlOrigin: mockUrlOrigin,
+      name: fullName,
       passwordResetToken: mockPasswordResetHash,
     };
 
     test('it should call notify.sendEmail and return the response', async () => {
       notify.sendEmail = sendEmailSpy;
 
-      const result = await sendEmail.passwordResetLink(email, firstName, mockPasswordResetHash);
+      const result = await sendEmail.passwordResetLink(mockUrlOrigin, email, fullName, mockPasswordResetHash);
 
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
       expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, expectedVariables);
@@ -171,7 +176,7 @@ describe('emails', () => {
 
       test('should throw an error', async () => {
         try {
-          await sendEmail.passwordResetLink(email, firstName, mockPasswordResetHash);
+          await sendEmail.passwordResetLink(mockUrlOrigin, email, fullName, mockPasswordResetHash);
         } catch (err) {
           const expected = new Error(`Sending email for account password reset Error: Sending email ${mockErrorMessage}`);
 

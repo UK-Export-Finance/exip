@@ -46,13 +46,13 @@ export const callNotify = async (templateId: string, emailAddress: string, varia
  * @param {String} Verification hash
  * @returns {Object} callNotify response
  */
-const confirmEmailAddress = async (emailAddress: string, firstName: string, verificationHash: string): Promise<EmailResponse> => {
+const confirmEmailAddress = async (emailAddress: string, urlOrigin: string, name: string, verificationHash: string): Promise<EmailResponse> => {
   try {
     console.info('Sending confirm email address email');
 
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
 
-    const variables = { firstName, confirmToken: verificationHash };
+    const variables = { urlOrigin, name, confirmToken: verificationHash };
 
     const response = await callNotify(templateId, emailAddress, variables);
 
@@ -72,13 +72,13 @@ const confirmEmailAddress = async (emailAddress: string, firstName: string, veri
  * @param {String} Security code
  * @returns {Object} callNotify response
  */
-const securityCodeEmail = async (emailAddress: string, firstName: string, securityCode: string): Promise<EmailResponse> => {
+const securityCodeEmail = async (emailAddress: string, name: string, securityCode: string): Promise<EmailResponse> => {
   try {
     console.info('Sending security code email for account sign in');
 
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.SECURITY_CODE;
 
-    const variables = { firstName, securityCode };
+    const variables = { name, securityCode };
 
     const response = await callNotify(templateId, emailAddress, variables);
 
@@ -98,13 +98,13 @@ const securityCodeEmail = async (emailAddress: string, firstName: string, securi
  * @param {String} Password reet token
  * @returns {Object} callNotify response
  */
-const passwordResetLink = async (emailAddress: string, firstName: string, passwordResetHash: string): Promise<EmailResponse> => {
+const passwordResetLink = async (urlOrigin: string, emailAddress: string, name: string, passwordResetHash: string): Promise<EmailResponse> => {
   try {
     console.info('Sending email for account password reset');
 
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
 
-    const variables = { firstName, passwordResetToken: passwordResetHash };
+    const variables = { urlOrigin, name, passwordResetToken: passwordResetHash };
 
     const response = await callNotify(templateId, emailAddress, variables);
 

@@ -41,7 +41,7 @@ var import_core = require("@keystone-6/core");
 var import_access = require("@keystone-6/core/access");
 var import_fields = require("@keystone-6/core/fields");
 var import_fields_document = require("@keystone-6/fields-document");
-var import_date_fns2 = require("date-fns");
+var import_date_fns = require("date-fns");
 
 // constants/index.ts
 var import_dotenv = __toESM(require("dotenv"));
@@ -408,246 +408,6 @@ var updateApplication = {
 };
 var update_application_default = updateApplication;
 
-// file-system/index.ts
-var import_fs = require("fs");
-var import_path = __toESM(require("path"));
-var fileExists = (filePath) => {
-  const fileBuffer = Buffer.from(filePath);
-  if (fileBuffer.length) {
-    return true;
-  }
-  return false;
-};
-var isAcceptedFileType = (filePath) => {
-  const fileType = import_path.default.extname(filePath);
-  if (ACCEPTED_FILE_TYPES.includes(fileType)) {
-    return true;
-  }
-  return false;
-};
-var readFile = async (filePath) => {
-  try {
-    console.info(`Reading file ${filePath}`);
-    const file = await import_fs.promises.readFile(filePath);
-    if (fileExists(file) && isAcceptedFileType(filePath)) {
-      return file;
-    }
-    throw new Error("Reading file - does not exist or is unaccepted file type");
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Reading file ${err}`);
-  }
-};
-var unlink = async (filePath) => {
-  try {
-    console.info(`Deleting file ${filePath}`);
-    const file = await readFile(filePath);
-    if (file) {
-      await import_fs.promises.unlink(filePath);
-    }
-    return false;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Deleting file ${err}`);
-  }
-};
-var fileSystem = {
-  fileExists,
-  isAcceptedFileType,
-  readFile,
-  unlink
-};
-var file_system_default = fileSystem;
-
-// integrations/notify/index.ts
-var import_dotenv2 = __toESM(require("dotenv"));
-var import_notifications_node_client = require("notifications-node-client");
-import_dotenv2.default.config();
-var notifyKey = process.env.GOV_NOTIFY_API_KEY;
-var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
-var notify = {
-  /**
-   * sendEmail
-   * Send an email via Notify API
-   * @param {String} Template ID
-   * @param {String} Email address
-   * @param {Object} Custom variables for the email template
-   * @param {Buffer} File buffer
-   * @param {Boolean} Flag for if the file is CSV
-   * @returns {Array} Array of objects for CSV generation
-   */
-  sendEmail: async (templateId, sendToEmailAddress, variables, file, fileIsCsv) => {
-    try {
-      console.info("Calling Notify API. templateId: ", templateId);
-      const personalisation = variables;
-      if (file) {
-        personalisation.linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true, isCsv: fileIsCsv });
-      }
-      await notifyClient.sendEmail(templateId, sendToEmailAddress, {
-        personalisation,
-        reference: null
-      });
-      return {
-        success: true,
-        emailRecipient: sendToEmailAddress
-      };
-    } catch (err) {
-      console.error(err);
-      throw new Error(`Calling Notify API. Unable to send email ${err}`);
-    }
-  }
-};
-var notify_default = notify;
-
-// emails/index.ts
-var import_dotenv3 = __toESM(require("dotenv"));
-
-// helpers/format-date/index.ts
-var import_date_fns = require("date-fns");
-var formatDate = (timestamp3, dateFormat = "d MMMM yyyy") => (0, import_date_fns.format)(new Date(timestamp3), dateFormat);
-var format_date_default = formatDate;
-
-// emails/index.ts
-import_dotenv3.default.config();
-var callNotify = async (templateId, emailAddress, variables, file, fileIsCsv) => {
-  try {
-    let emailResponse;
-    if (file && fileIsCsv) {
-      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables, file, fileIsCsv);
-    } else {
-      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables);
-    }
-    if (emailResponse.success) {
-      return emailResponse;
-    }
-    throw new Error(`Sending email ${emailResponse}`);
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Sending email ${err}`);
-  }
-};
-var confirmEmailAddress = async (emailAddress, firstName, verificationHash) => {
-  try {
-    console.info("Sending confirm email address email");
-    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
-    const variables = { firstName, confirmToken: verificationHash };
-    const response = await callNotify(templateId, emailAddress, variables);
-    return response;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Sending confirm email address email ${err}`);
-  }
-};
-var securityCodeEmail = async (emailAddress, firstName, securityCode) => {
-  try {
-    console.info("Sending security code email for account sign in");
-    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.SECURITY_CODE;
-    const variables = { firstName, securityCode };
-    const response = await callNotify(templateId, emailAddress, variables);
-    return response;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Sending security code email for account sign in ${err}`);
-  }
-};
-var passwordResetLink = async (emailAddress, firstName, passwordResetHash) => {
-  try {
-    console.info("Sending email for account password reset");
-    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
-    const variables = { firstName, passwordResetToken: passwordResetHash };
-    const response = await callNotify(templateId, emailAddress, variables);
-    return response;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Sending email for account password reset ${err}`);
-  }
-};
-var applicationSubmitted = {
-  /**
-   * applicationSubmitted.account
-   * Send "application submitted" email to an account
-   * @param {Object} ApplicationSubmissionEmailVariables
-   * @returns {Object} callNotify response
-   */
-  account: async (variables) => {
-    try {
-      console.info("Sending application submitted email to account");
-      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
-      const { emailAddress } = variables;
-      const response = await callNotify(templateId, emailAddress, variables);
-      return response;
-    } catch (err) {
-      console.error(err);
-      throw new Error(`Sending application submitted email to account ${err}`);
-    }
-  },
-  /**
-   * applicationSubmitted.underwritingTeam
-   * Read CSV file, generate a file buffer
-   * Send "application submitted" email to the underwriting team with a link to CSV
-   * We send a file buffer to Notify and Notify generates a unique URL that is then rendered in the email.
-   * @param {Object} ApplicationSubmissionEmailVariables
-   * @returns {Object} callNotify response
-   */
-  underwritingTeam: async (variables, csvPath, templateId) => {
-    try {
-      console.info("Sending application submitted email to underwriting team");
-      const emailAddress = String(process.env.UNDERWRITING_TEAM_EMAIL);
-      const file = await file_system_default.readFile(csvPath);
-      if (file) {
-        const fileIsCsv = true;
-        const fileBuffer = Buffer.from(file);
-        const response = await callNotify(templateId, emailAddress, variables, fileBuffer, fileIsCsv);
-        await file_system_default.unlink(csvPath);
-        return response;
-      }
-      throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
-    } catch (err) {
-      console.error(err);
-      throw new Error(`Sending application submitted email to underwriting team ${err}`);
-    }
-  }
-};
-var documentsEmail = async (variables, templateId) => {
-  try {
-    console.info("Sending documents email");
-    const { emailAddress } = variables;
-    const response = await callNotify(templateId, emailAddress, variables);
-    return response;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Sending documents email ${err}`);
-  }
-};
-var insuranceFeedbackEmail = async (variables) => {
-  try {
-    console.info("Sending insurance feedback email");
-    const templateId = EMAIL_TEMPLATE_IDS.FEEDBACK.INSURANCE;
-    const emailAddress = process.env.FEEDBACK_EMAIL_RECIPIENT;
-    const emailVariables = variables;
-    emailVariables.time = "";
-    emailVariables.date = "";
-    if (variables.createdAt) {
-      emailVariables.date = format_date_default(variables.createdAt);
-      emailVariables.time = format_date_default(variables.createdAt, "HH:mm:ss");
-    }
-    const response = await callNotify(templateId, emailAddress, emailVariables);
-    return response;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Sending insurance feedback email ${err}`);
-  }
-};
-var sendEmail = {
-  confirmEmailAddress,
-  securityCodeEmail,
-  passwordResetLink,
-  applicationSubmitted,
-  documentsEmail,
-  insuranceFeedbackEmail
-};
-var emails_default = sendEmail;
-
 // schema.ts
 var lists = {
   ReferenceNumber: {
@@ -775,7 +535,7 @@ var lists = {
             const now = /* @__PURE__ */ new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
-            modifiedData.submissionDeadline = (0, import_date_fns2.addMonths)(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
+            modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
             modifiedData.submissionType = APPLICATION.SUBMISSION_TYPE.MIA;
             modifiedData.status = APPLICATION.STATUS.DRAFT;
             return modifiedData;
@@ -956,32 +716,6 @@ var lists = {
         ref: "Application",
         many: true
       })
-    },
-    hooks: {
-      resolveInput: async ({ operation, resolvedData }) => {
-        const accountInputData = resolvedData;
-        if (operation === "create") {
-          console.info("Creating new account");
-          const now = /* @__PURE__ */ new Date();
-          accountInputData.createdAt = now;
-          accountInputData.updatedAt = now;
-          try {
-            const { firstName, email, verificationHash } = accountInputData;
-            const emailResponse = await emails_default.confirmEmailAddress(email, firstName, verificationHash);
-            if (emailResponse.success) {
-              return accountInputData;
-            }
-            throw new Error(`Sending email verification for account creation (resolveInput hook) ${emailResponse}`);
-          } catch (err) {
-            throw new Error(`Sending email verification for account creation (resolveInput hook) { err }`);
-          }
-        }
-        if (operation === "update") {
-          console.info("Updating account");
-          accountInputData.updatedAt = /* @__PURE__ */ new Date();
-        }
-        return accountInputData;
-      }
     },
     access: import_access.allowAll
   }),
@@ -1487,6 +1221,7 @@ var typeDefs = `
   type Mutation {
     """ create an account """
     createAnAccount(
+      urlOrigin: String!
       firstName: String!
       lastName: String!
       email: String!
@@ -1527,6 +1262,7 @@ var typeDefs = `
 
     """ send email with password reset link """
     sendEmailPasswordResetLink(
+      urlOrigin: String!
       email: String!
     ): SuccessResponse
 
@@ -1635,6 +1371,254 @@ var encryptPassword = (password2) => {
 };
 var encrypt_password_default = encryptPassword;
 
+// helpers/get-full-name-string/index.ts
+var getFullNameString = (account) => {
+  const { firstName, lastName } = account;
+  const fullName = `${firstName} ${lastName}`;
+  return fullName;
+};
+var get_full_name_string_default = getFullNameString;
+
+// file-system/index.ts
+var import_fs = require("fs");
+var import_path = __toESM(require("path"));
+var fileExists = (filePath) => {
+  const fileBuffer = Buffer.from(filePath);
+  if (fileBuffer.length) {
+    return true;
+  }
+  return false;
+};
+var isAcceptedFileType = (filePath) => {
+  const fileType = import_path.default.extname(filePath);
+  if (ACCEPTED_FILE_TYPES.includes(fileType)) {
+    return true;
+  }
+  return false;
+};
+var readFile = async (filePath) => {
+  try {
+    console.info(`Reading file ${filePath}`);
+    const file = await import_fs.promises.readFile(filePath);
+    if (fileExists(file) && isAcceptedFileType(filePath)) {
+      return file;
+    }
+    throw new Error("Reading file - does not exist or is unaccepted file type");
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Reading file ${err}`);
+  }
+};
+var unlink = async (filePath) => {
+  try {
+    console.info(`Deleting file ${filePath}`);
+    const file = await readFile(filePath);
+    if (file) {
+      await import_fs.promises.unlink(filePath);
+    }
+    return false;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Deleting file ${err}`);
+  }
+};
+var fileSystem = {
+  fileExists,
+  isAcceptedFileType,
+  readFile,
+  unlink
+};
+var file_system_default = fileSystem;
+
+// integrations/notify/index.ts
+var import_dotenv2 = __toESM(require("dotenv"));
+var import_notifications_node_client = require("notifications-node-client");
+import_dotenv2.default.config();
+var notifyKey = process.env.GOV_NOTIFY_API_KEY;
+var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
+var notify = {
+  /**
+   * sendEmail
+   * Send an email via Notify API
+   * @param {String} Template ID
+   * @param {String} Email address
+   * @param {Object} Custom variables for the email template
+   * @param {Buffer} File buffer
+   * @param {Boolean} Flag for if the file is CSV
+   * @returns {Array} Array of objects for CSV generation
+   */
+  sendEmail: async (templateId, sendToEmailAddress, variables, file, fileIsCsv) => {
+    try {
+      console.info("Calling Notify API. templateId: ", templateId);
+      const personalisation = variables;
+      if (file) {
+        personalisation.linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true, isCsv: fileIsCsv });
+      }
+      await notifyClient.sendEmail(templateId, sendToEmailAddress, {
+        personalisation,
+        reference: null
+      });
+      return {
+        success: true,
+        emailRecipient: sendToEmailAddress
+      };
+    } catch (err) {
+      console.error(err);
+      throw new Error(`Calling Notify API. Unable to send email ${err}`);
+    }
+  }
+};
+var notify_default = notify;
+
+// emails/index.ts
+var import_dotenv3 = __toESM(require("dotenv"));
+
+// helpers/format-date/index.ts
+var import_date_fns2 = require("date-fns");
+var formatDate = (timestamp3, dateFormat = "d MMMM yyyy") => (0, import_date_fns2.format)(new Date(timestamp3), dateFormat);
+var format_date_default = formatDate;
+
+// emails/index.ts
+import_dotenv3.default.config();
+var callNotify = async (templateId, emailAddress, variables, file, fileIsCsv) => {
+  try {
+    let emailResponse;
+    if (file && fileIsCsv) {
+      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables, file, fileIsCsv);
+    } else {
+      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables);
+    }
+    if (emailResponse.success) {
+      return emailResponse;
+    }
+    throw new Error(`Sending email ${emailResponse}`);
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending email ${err}`);
+  }
+};
+var confirmEmailAddress = async (emailAddress, urlOrigin, name, verificationHash) => {
+  try {
+    console.info("Sending confirm email address email");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
+    const variables = { urlOrigin, name, confirmToken: verificationHash };
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending confirm email address email ${err}`);
+  }
+};
+var securityCodeEmail = async (emailAddress, name, securityCode) => {
+  try {
+    console.info("Sending security code email for account sign in");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.SECURITY_CODE;
+    const variables = { name, securityCode };
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending security code email for account sign in ${err}`);
+  }
+};
+var passwordResetLink = async (urlOrigin, emailAddress, name, passwordResetHash) => {
+  try {
+    console.info("Sending email for account password reset");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
+    const variables = { urlOrigin, name, passwordResetToken: passwordResetHash };
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending email for account password reset ${err}`);
+  }
+};
+var applicationSubmitted = {
+  /**
+   * applicationSubmitted.account
+   * Send "application submitted" email to an account
+   * @param {Object} ApplicationSubmissionEmailVariables
+   * @returns {Object} callNotify response
+   */
+  account: async (variables) => {
+    try {
+      console.info("Sending application submitted email to account");
+      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
+      const { emailAddress } = variables;
+      const response = await callNotify(templateId, emailAddress, variables);
+      return response;
+    } catch (err) {
+      console.error(err);
+      throw new Error(`Sending application submitted email to account ${err}`);
+    }
+  },
+  /**
+   * applicationSubmitted.underwritingTeam
+   * Read CSV file, generate a file buffer
+   * Send "application submitted" email to the underwriting team with a link to CSV
+   * We send a file buffer to Notify and Notify generates a unique URL that is then rendered in the email.
+   * @param {Object} ApplicationSubmissionEmailVariables
+   * @returns {Object} callNotify response
+   */
+  underwritingTeam: async (variables, csvPath, templateId) => {
+    try {
+      console.info("Sending application submitted email to underwriting team");
+      const emailAddress = String(process.env.UNDERWRITING_TEAM_EMAIL);
+      const file = await file_system_default.readFile(csvPath);
+      if (file) {
+        const fileIsCsv = true;
+        const fileBuffer = Buffer.from(file);
+        const response = await callNotify(templateId, emailAddress, variables, fileBuffer, fileIsCsv);
+        await file_system_default.unlink(csvPath);
+        return response;
+      }
+      throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
+    } catch (err) {
+      console.error(err);
+      throw new Error(`Sending application submitted email to underwriting team ${err}`);
+    }
+  }
+};
+var documentsEmail = async (variables, templateId) => {
+  try {
+    console.info("Sending documents email");
+    const { emailAddress } = variables;
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending documents email ${err}`);
+  }
+};
+var insuranceFeedbackEmail = async (variables) => {
+  try {
+    console.info("Sending insurance feedback email");
+    const templateId = EMAIL_TEMPLATE_IDS.FEEDBACK.INSURANCE;
+    const emailAddress = process.env.FEEDBACK_EMAIL_RECIPIENT;
+    const emailVariables = variables;
+    emailVariables.time = "";
+    emailVariables.date = "";
+    if (variables.createdAt) {
+      emailVariables.date = format_date_default(variables.createdAt);
+      emailVariables.time = format_date_default(variables.createdAt, "HH:mm:ss");
+    }
+    const response = await callNotify(templateId, emailAddress, emailVariables);
+    return response;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending insurance feedback email ${err}`);
+  }
+};
+var sendEmail = {
+  confirmEmailAddress,
+  securityCodeEmail,
+  passwordResetLink,
+  applicationSubmitted,
+  documentsEmail,
+  insuranceFeedbackEmail
+};
+var emails_default = sendEmail;
+
 // custom-resolvers/mutations/create-an-account.ts
 var { EMAIL, ENCRYPTION: ENCRYPTION2 } = ACCOUNT2;
 var {
@@ -1644,10 +1628,10 @@ var {
     PBKDF2: { KEY_LENGTH: KEY_LENGTH2 }
   }
 } = ENCRYPTION2;
-var createAccount = async (root, variables, context) => {
+var createAnAccount = async (root, variables, context) => {
   console.info("Creating new account for ", variables.email);
   try {
-    const { firstName, lastName, email, password: password2 } = variables;
+    const { urlOrigin, firstName, lastName, email, password: password2 } = variables;
     const account = await get_account_by_field_default(context, "email", email);
     if (account) {
       console.info(`Unable to create a new account for ${variables.email} - account already exists`);
@@ -1656,27 +1640,35 @@ var createAccount = async (root, variables, context) => {
     const { salt, hash } = encrypt_password_default(password2);
     const verificationHash = import_crypto2.default.pbkdf2Sync(password2, salt, ITERATIONS2, KEY_LENGTH2, DIGEST_ALGORITHM2).toString(STRING_TYPE2);
     const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
-    const accountUpdate = {
+    const now = /* @__PURE__ */ new Date();
+    const accountData = {
       firstName,
       lastName,
       email,
       salt,
       hash,
       verificationHash,
-      verificationExpiry
+      verificationExpiry,
+      createdAt: now,
+      updatedAt: now
     };
-    const response = await context.db.Account.createOne({
-      data: accountUpdate
+    const creationResponse = await context.db.Account.createOne({
+      data: accountData
     });
-    return {
-      ...response,
-      success: true
-    };
+    const name = get_full_name_string_default(creationResponse);
+    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash);
+    if (emailResponse.success) {
+      return {
+        ...creationResponse,
+        success: true
+      };
+    }
+    throw new Error(`Sending email verification for account creation ${emailResponse}`);
   } catch (err) {
     throw new Error(`Creating a new account ${err}`);
   }
 };
-var create_an_account_default = createAccount;
+var create_an_account_default = createAnAccount;
 
 // custom-resolvers/mutations/verify-account-email-address.ts
 var import_date_fns3 = require("date-fns");
@@ -1739,7 +1731,7 @@ var getAccountById = async (context, accountId) => {
 var get_account_by_id_default = getAccountById;
 
 // helpers/send-email-confirm-email-address/index.ts
-var send = async (context, accountId) => {
+var send = async (context, urlOrigin, accountId) => {
   try {
     console.info("Sending email verification");
     const account = await get_account_by_id_default(context, accountId);
@@ -1749,8 +1741,9 @@ var send = async (context, accountId) => {
         success: false
       };
     }
-    const { email, firstName, verificationHash } = account;
-    const emailResponse = await emails_default.confirmEmailAddress(email, firstName, verificationHash);
+    const { email, verificationHash } = account;
+    const name = get_full_name_string_default(account);
+    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash);
     if (emailResponse.success) {
       return emailResponse;
     }
@@ -1768,7 +1761,7 @@ var send_email_confirm_email_address_default = confirmEmailAddressEmail;
 // custom-resolvers/mutations/send-email-confirm-email-address.ts
 var sendEmailConfirmEmailAddressMutation = async (root, variables, context) => {
   try {
-    const emailResponse = await send_email_confirm_email_address_default.send(context, variables.accountId);
+    const emailResponse = await send_email_confirm_email_address_default.send(context, variables.urlOrigin, variables.accountId);
     if (emailResponse.success) {
       return emailResponse;
     }
@@ -1908,7 +1901,8 @@ var accountSignIn = async (root, variables, context) => {
         return { success: false };
       }
       const { securityCode } = await generate_otp_and_update_account_default(context, account.id);
-      const emailResponse = await emails_default.securityCodeEmail(email, account.firstName, securityCode);
+      const name = get_full_name_string_default(account);
+      const emailResponse = await emails_default.securityCodeEmail(email, name, securityCode);
       if (emailResponse.success) {
         return {
           ...emailResponse,
@@ -1938,8 +1932,9 @@ var accountSignInSendNewCode = async (root, variables, context) => {
       return { success: false };
     }
     const { securityCode } = await generate_otp_and_update_account_default(context, account.id);
-    const { email, firstName } = account;
-    const emailResponse = await emails_default.securityCodeEmail(email, firstName, securityCode);
+    const { email } = account;
+    const name = get_full_name_string_default(account);
+    const emailResponse = await emails_default.securityCodeEmail(email, name, securityCode);
     if (emailResponse.success) {
       return {
         ...emailResponse,
@@ -2116,7 +2111,7 @@ var {
 var sendEmailPasswordResetLink = async (root, variables, context) => {
   try {
     console.info("Sending password reset email");
-    const { email } = variables;
+    const { urlOrigin, email } = variables;
     const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
     if (!account) {
       console.info("Unable to send password reset email - no account found");
@@ -2131,7 +2126,8 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
       where: { id: account.id },
       data: accountUpdate
     });
-    const emailResponse = await emails_default.passwordResetLink(email, account.firstName, passwordResetHash);
+    const name = get_full_name_string_default(account);
+    const emailResponse = await emails_default.passwordResetLink(urlOrigin, email, name, passwordResetHash);
     if (emailResponse.success) {
       return emailResponse;
     }
@@ -2455,14 +2451,14 @@ var get_application_submitted_email_template_ids_default = getApplicationSubmitt
 var send2 = async (application, csvPath) => {
   try {
     const { referenceNumber, owner, company, buyer, policyAndExport } = application;
-    const { email, firstName } = owner;
+    const { email } = owner;
     const sendEmailVars = {
       emailAddress: email,
-      firstName,
+      name: get_full_name_string_default(owner),
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
       buyerLocation: buyer.country?.name,
-      exporterCompanyName: company.companyName,
+      companyName: company.companyName,
       requestedStartDate: format_date_default(policyAndExport.requestedStartDate)
     };
     const accountSubmittedResponse = await emails_default.applicationSubmitted.account(sendEmailVars);

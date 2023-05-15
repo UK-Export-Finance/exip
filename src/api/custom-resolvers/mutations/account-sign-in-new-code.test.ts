@@ -4,6 +4,7 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import accountSignInSendNewCode from './account-sign-in-new-code';
 import baseConfig from '../../keystone';
 import generate from '../../helpers/generate-otp';
+import getFullNameString from '../../helpers/get-full-name-string';
 import sendEmail from '../../emails';
 import { mockAccount, mockOTP, mockSendEmailResponse } from '../../test-mocks';
 import { Account, AccountSignInSendNewCodeVariables, AccountSignInResponse } from '../../types';
@@ -62,7 +63,7 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
 
     account = (await context.query.Account.findOne({
       where: { id: account.id },
-      query: 'id firstName email otpSalt otpHash otpExpiry',
+      query: 'id firstName lastName email otpSalt otpHash otpExpiry',
     })) as Account;
   });
 
@@ -74,10 +75,12 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
     });
 
     test('it should call sendEmail.securityCodeEmail', () => {
-      const { email, firstName } = account;
+      const { email } = account;
+
+      const name = getFullNameString(account);
 
       expect(securityCodeEmailSpy).toHaveBeenCalledTimes(1);
-      expect(securityCodeEmailSpy).toHaveBeenCalledWith(email, firstName, mockOTP.securityCode);
+      expect(securityCodeEmailSpy).toHaveBeenCalledWith(email, name, mockOTP.securityCode);
     });
 
     test('it should return the email response and accountId', () => {

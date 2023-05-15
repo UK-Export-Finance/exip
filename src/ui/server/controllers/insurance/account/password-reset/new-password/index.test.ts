@@ -176,7 +176,16 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
+        req.query.token = mockToken;
         req.body = validBody;
+      });
+
+      it('should call api.keystone.account.passwordReset with req.body and req.headers.origin', async () => {
+        await post(req, res);
+
+        expect(passwordResetSpy).toHaveBeenCalledTimes(1);
+
+        expect(passwordResetSpy).toHaveBeenCalledWith(req.query.token, req.body[FIELD_ID]);
       });
 
       it(`should redirect to ${SUCCESS}`, async () => {
@@ -185,7 +194,7 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
         expect(res.redirect).toHaveBeenCalledWith(SUCCESS);
       });
 
-      describe('when the api.keystone.account.passwordReset does not return success=true', () => {
+      describe('when api.keystone.account.passwordReset does not return success=true', () => {
         beforeEach(() => {
           passwordResetSpy = jest.fn(() => Promise.resolve({ success: false }));
 

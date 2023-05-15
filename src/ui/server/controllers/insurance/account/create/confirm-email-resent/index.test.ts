@@ -50,7 +50,7 @@ describe('controllers/insurance/account/create/confirm-email-resent', () => {
 
       expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
 
-      expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(req.query.id);
+      expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(req.headers.origin, req.query.id);
     });
 
     it('should render template', async () => {

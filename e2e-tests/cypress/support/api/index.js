@@ -3,8 +3,8 @@ import apollo from './apollo';
 
 const queryStrings = {
   createAnAccount: () => gql`
-    mutation CreateAccount($firstName: String!, $lastName: String!, $email: String!, $password: String!) {
-      createAnAccount(firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
+    mutation CreateAccount($urlOrigin: String!, $firstName: String!, $lastName: String!, $email: String!, $password: String!) {
+      createAnAccount(urlOrigin: $urlOrigin, firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
         success
         id
         firstName
@@ -130,10 +130,11 @@ const queryStrings = {
  * @param {String} Password
  * @returns {Object} Account
  */
-const createAnAccount = (firstName, lastName, email, password) =>
+const createAnAccount = (urlOrigin, firstName, lastName, email, password) =>
   apollo.query({
     query: queryStrings.createAnAccount(),
     variables: {
+      urlOrigin,
       firstName,
       lastName,
       email,

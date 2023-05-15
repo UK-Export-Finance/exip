@@ -75,9 +75,11 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
+    const urlOrigin = req.headers.origin;
+
     const email = String(sanitiseValue(FIELD_ID, req.body[FIELD_ID]));
 
-    const response = await api.keystone.account.sendEmailPasswordResetLink(email);
+    const response = await api.keystone.account.sendEmailPasswordResetLink(urlOrigin, email);
 
     if (response.success) {
       // store the email address in local session, for consumption in the next part of the flow.

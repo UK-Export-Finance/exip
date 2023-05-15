@@ -3,6 +3,8 @@ import crypto from 'crypto';
 import { ACCOUNT } from '../../constants';
 import getAccountByField from '../../helpers/get-account-by-field';
 import encryptPassword from '../../helpers/encrypt-password';
+import getFullNameString from '../../helpers/get-full-name-string';
+import sendEmail from '../../emails';
 import { AccountCreationVariables } from '../../types';
 
 const { EMAIL, ENCRYPTION } = ACCOUNT;
@@ -15,11 +17,11 @@ const {
   },
 } = ENCRYPTION;
 
-const createAccount = async (root: any, variables: AccountCreationVariables, context: Context) => {
+const createAnAccount = async (root: any, variables: AccountCreationVariables, context: Context) => {
   console.info('Creating new account for ', variables.email);
 
   try {
-    const { firstName, lastName, email, password } = variables;
+    const { urlOrigin, firstName, lastName, email, password } = variables;
 
     // check if an account with the email already exists
     const account = await getAccountByField(context, 'email', email);
@@ -38,8 +40,10 @@ const createAccount = async (root: any, variables: AccountCreationVariables, con
 
     const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
 
-    // update the account
-    const accountUpdate = {
+    const now = new Date();
+
+    // create account data
+    const accountData = {
       firstName,
       lastName,
       email,
@@ -47,19 +51,30 @@ const createAccount = async (root: any, variables: AccountCreationVariables, con
       hash,
       verificationHash,
       verificationExpiry,
+      createdAt: now,
+      updatedAt: now,
     };
 
-    const response = await context.db.Account.createOne({
-      data: accountUpdate,
+    const creationResponse = await context.db.Account.createOne({
+      data: accountData,
     });
 
-    return {
-      ...response,
-      success: true,
-    };
+    // send "confirm email address" email
+    const name = getFullNameString(creationResponse);
+
+    const emailResponse = await sendEmail.confirmEmailAddress(email, urlOrigin, name, verificationHash);
+
+    if (emailResponse.success) {
+      return {
+        ...creationResponse,
+        success: true,
+      };
+    }
+
+    throw new Error(`Sending email verification for account creation ${emailResponse}`);
   } catch (err) {
     throw new Error(`Creating a new account ${err}`);
   }
 };
 
-export default createAccount;
+export default createAnAccount;

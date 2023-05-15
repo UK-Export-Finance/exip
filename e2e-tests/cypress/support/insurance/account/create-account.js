@@ -13,6 +13,8 @@ const {
   password,
 } = account;
 
+const urlOrigin = Cypress.config('baseUrl');
+
 /**
  * createAccount
  * Create an account directly from the API,
@@ -28,11 +30,11 @@ const createAccount = ({
   emailAddress = email,
   accountPassword = password,
 }) =>
-  api.createAnAccount(nameFirst, nameLast, emailAddress, accountPassword).then((createdExporter) => createdExporter)
+  api.createAnAccount(urlOrigin, nameFirst, nameLast, emailAddress, accountPassword).then((createdExporter) => createdExporter)
     .then((createdAccount) => {
       const { verificationHash } = createdAccount;
 
-      const url = `${Cypress.config('baseUrl')}${VERIFY_EMAIL}?token=${verificationHash}`;
+      const url = `${urlOrigin}${VERIFY_EMAIL}?token=${verificationHash}`;
 
       return url;
     });

@@ -8,12 +8,12 @@ import { RequestBody, Account } from '../../../../../../../types';
  * @param {Express.Request.body} Form data
  * @returns {Object} Saved data
  */
-const account = async (formBody: RequestBody) => {
+const account = async (urlOrigin: string, formBody: RequestBody) => {
   // sanitise the form data.
   const sanitisedData = sanitiseData(formBody) as Account;
 
   try {
-    const saveResponse = await api.keystone.account.create(sanitisedData);
+    const saveResponse = await api.keystone.account.create(urlOrigin, sanitisedData);
 
     return saveResponse;
   } catch (err) {

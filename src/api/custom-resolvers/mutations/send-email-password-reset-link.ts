@@ -2,6 +2,7 @@ import { Context } from '.keystone/types'; // eslint-disable-line
 import crypto from 'crypto';
 import { ACCOUNT, FIELD_IDS } from '../../constants';
 import getAccountByField from '../../helpers/get-account-by-field';
+import getFullNameString from '../../helpers/get-full-name-string';
 import sendEmail from '../../emails';
 import { AccountSendEmailPasswordResetLinkVariables, Account, SuccessResponse } from '../../types';
 
@@ -27,7 +28,7 @@ const sendEmailPasswordResetLink = async (root: any, variables: AccountSendEmail
   try {
     console.info('Sending password reset email');
 
-    const { email } = variables;
+    const { urlOrigin, email } = variables;
 
     // Get the account the email is associated with.
     const account = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
@@ -50,7 +51,9 @@ const sendEmailPasswordResetLink = async (root: any, variables: AccountSendEmail
       data: accountUpdate,
     })) as Account;
 
-    const emailResponse = await sendEmail.passwordResetLink(email, account.firstName, passwordResetHash);
+    const name = getFullNameString(account);
+
+    const emailResponse = await sendEmail.passwordResetLink(urlOrigin, email, name, passwordResetHash);
 
     if (emailResponse.success) {
       return emailResponse;

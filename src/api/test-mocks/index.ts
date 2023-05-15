@@ -67,3 +67,5 @@ export const mockInsuranceFeedback = {
 };
 
 export const mockSendEmailResponse = { success: true, emailRecipient: mockAccount.email };
+
+export const mockUrlOrigin = 'https://mock-origin.com';

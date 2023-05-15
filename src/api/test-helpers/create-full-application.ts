@@ -50,7 +50,7 @@ export const createFullApplication = async (context: Context) => {
   // create a new account
   const account = (await context.query.Account.createOne({
     data: mockAccount,
-    query: 'id firstName email',
+    query: 'id firstName lastName email',
   })) as Account;
 
   // create a new application

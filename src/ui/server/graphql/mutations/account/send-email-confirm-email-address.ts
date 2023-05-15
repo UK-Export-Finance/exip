@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 const sendEmailConfirmEmailAddressMutation = gql`
-  mutation SendEmailConfirmEmailAddress($accountId: String!) {
-    sendEmailConfirmEmailAddress(accountId: $accountId) {
+  mutation SendEmailConfirmEmailAddress($urlOrigin: String!, $accountId: String!) {
+    sendEmailConfirmEmailAddress(urlOrigin: $urlOrigin, accountId: $accountId) {
       success
       emailRecipient
     }

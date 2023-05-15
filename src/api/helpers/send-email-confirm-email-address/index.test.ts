@@ -3,8 +3,9 @@ import dotenv from 'dotenv';
 import confirmEmailAddressEmail from '.';
 import baseConfig from '../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
+import getFullNameString from '../get-full-name-string';
 import sendEmail from '../../emails';
-import { mockAccount, mockSendEmailResponse } from '../../test-mocks';
+import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../test-mocks';
 import { Account } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -40,12 +41,14 @@ describe('helpers/send-email-confirm-email-address', () => {
   });
 
   test('it should call sendEmail.confirmEmailAddress and return success=true', async () => {
-    const result = await confirmEmailAddressEmail.send(context, account.id);
+    const result = await confirmEmailAddressEmail.send(context, mockUrlOrigin, account.id);
 
-    const { email, firstName, verificationHash } = account;
+    const { email, verificationHash } = account;
+
+    const name = getFullNameString(account);
 
     expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
-    expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, firstName, verificationHash);
+    expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, mockUrlOrigin, name, verificationHash);
 
     const expected = {
       success: true,
@@ -64,7 +67,7 @@ describe('helpers/send-email-confirm-email-address', () => {
         where: accounts,
       });
 
-      const result = await confirmEmailAddressEmail.send(context, account.id);
+      const result = await confirmEmailAddressEmail.send(context, mockUrlOrigin, account.id);
 
       const expected = { success: false };
 
@@ -79,7 +82,7 @@ describe('helpers/send-email-confirm-email-address', () => {
 
     test('should throw an error', async () => {
       try {
-        await confirmEmailAddressEmail.send(context, account.id);
+        await confirmEmailAddressEmail.send(context, mockUrlOrigin, account.id);
       } catch (err) {
         const expected = new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${mockSendEmailResponse}`);
 

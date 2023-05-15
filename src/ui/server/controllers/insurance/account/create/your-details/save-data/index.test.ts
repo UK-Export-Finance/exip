@@ -1,7 +1,7 @@
 import save from '.';
 import api from '../../../../../../api';
 import { sanitiseData } from '../../../../../../helpers/sanitise-data';
-import { mockAccount } from '../../../../../../test-mocks';
+import { mockAccount, mockUrlOrigin } from '../../../../../../test-mocks';
 
 describe('controllers/account/create/your-details/save-data', () => {
   const mockCreateAccountResponse = mockAccount;
@@ -15,16 +15,16 @@ describe('controllers/account/create/your-details/save-data', () => {
   });
 
   it('should call api.keystone.account.create with sanitised form data', async () => {
-    await save.account(mockFormBody);
+    await save.account(mockUrlOrigin, mockFormBody);
 
     expect(accountCreateSpy).toHaveBeenCalledTimes(1);
 
     const expectedSanitisedData = sanitiseData(mockFormBody);
-    expect(accountCreateSpy).toHaveBeenCalledWith(expectedSanitisedData);
+    expect(accountCreateSpy).toHaveBeenCalledWith(mockUrlOrigin, expectedSanitisedData);
   });
 
   it('should return the API response', async () => {
-    const result = await save.account(mockFormBody);
+    const result = await save.account(mockUrlOrigin, mockFormBody);
 
     expect(result).toEqual(mockCreateAccountResponse);
   });
@@ -38,7 +38,7 @@ describe('controllers/account/create/your-details/save-data', () => {
 
       it('should throw an error', async () => {
         try {
-          await save.account(mockFormBody);
+          await save.account(mockUrlOrigin, mockFormBody);
         } catch (err) {
           const expected = new Error('Creating account');
           expect(err).toEqual(expected);

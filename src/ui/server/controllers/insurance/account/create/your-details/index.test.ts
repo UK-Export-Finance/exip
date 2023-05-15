@@ -141,12 +141,12 @@ describe('controllers/insurance/account/create/your-details', () => {
         req.body = validBody;
       });
 
-      it('should call saveData.account with req.body', async () => {
+      it('should call saveData.account with req.body and req.headers.origin', async () => {
         await post(req, res);
 
         expect(saveData.account).toHaveBeenCalledTimes(1);
 
-        expect(saveData.account).toHaveBeenCalledWith(req.body);
+        expect(saveData.account).toHaveBeenCalledWith(req.headers.origin, req.body);
       });
 
       it('should add the account ID to req.session.accountIdToConfirm', async () => {

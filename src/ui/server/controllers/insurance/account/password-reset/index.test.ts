@@ -107,12 +107,12 @@ describe('controllers/insurance/account/password-reset', () => {
         req.body = validBody;
       });
 
-      it('should call api.keystone.account.sendEmailPasswordResetLink', async () => {
+      it('should call api.keystone.account.sendEmailPasswordResetLink with req.headers.origin and sanitised email', async () => {
         await post(req, res);
 
         expect(sendEmailPasswordResetLinkSpy).toHaveBeenCalledTimes(1);
 
-        expect(sendEmailPasswordResetLinkSpy).toHaveBeenCalledWith(sanitisedEmail);
+        expect(sendEmailPasswordResetLinkSpy).toHaveBeenCalledWith(req.headers.origin, sanitisedEmail);
       });
 
       it('should add the submitted email to req.session.emailAddressForPasswordReset', async () => {

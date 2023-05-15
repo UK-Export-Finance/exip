@@ -5,6 +5,7 @@ import getAccountByField from '../../helpers/get-account-by-field';
 import confirmEmailAddressEmail from '../../helpers/send-email-confirm-email-address';
 import isValidAccountPassword from '../../helpers/is-valid-account-password';
 import generateOTPAndUpdateAccount from '../../helpers/generate-otp-and-update-account';
+import getFullNameString from '../../helpers/get-full-name-string';
 import sendEmail from '../../emails';
 import { Account, AccountSignInVariables, AccountSignInResponse } from '../../types';
 
@@ -103,7 +104,10 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
       const { securityCode } = await generateOTPAndUpdateAccount(context, account.id);
 
       // send "security code" email.
-      const emailResponse = await sendEmail.securityCodeEmail(email, account.firstName, securityCode);
+
+      const name = getFullNameString(account);
+
+      const emailResponse = await sendEmail.securityCodeEmail(email, name, securityCode);
 
       if (emailResponse.success) {
         return {

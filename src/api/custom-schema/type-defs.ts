@@ -139,6 +139,7 @@ const typeDefs = `
   type Mutation {
     """ create an account """
     createAnAccount(
+      urlOrigin: String!
       firstName: String!
       lastName: String!
       email: String!
@@ -179,6 +180,7 @@ const typeDefs = `
 
     """ send email with password reset link """
     sendEmailPasswordResetLink(
+      urlOrigin: String!
       email: String!
     ): SuccessResponse
 

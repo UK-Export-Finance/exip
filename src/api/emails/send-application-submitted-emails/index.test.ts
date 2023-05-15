@@ -5,6 +5,7 @@ import baseConfig from '../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import sendEmail from '../index';
 import { ANSWERS } from '../../constants';
+import getFullNameString from '../../helpers/get-full-name-string';
 import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-application-submitted-email-template-ids';
 import formatDate from '../../helpers/format-date';
 import { createFullApplication } from '../../test-helpers';
@@ -53,17 +54,17 @@ describe('emails/send-email-application-submitted', () => {
 
     beforeEach(() => {
       const { referenceNumber, owner, company, buyer, policyAndExport } = application;
-      const { email, firstName } = owner;
+      const { email } = owner;
       const { companyName } = company;
       const { companyOrOrganisationName } = buyer;
 
       expectedSendEmailVars = {
         emailAddress: email,
-        firstName,
+        name: getFullNameString(owner),
         referenceNumber,
         buyerName: companyOrOrganisationName,
         buyerLocation: buyer.country?.name,
-        exporterCompanyName: companyName,
+        companyName,
         requestedStartDate: formatDate(policyAndExport.requestedStartDate),
       } as ApplicationSubmissionEmailVariables;
     });
