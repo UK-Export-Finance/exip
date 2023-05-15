@@ -214,6 +214,7 @@ interface VerifyEmailAddressResponse extends SuccessResponse {
 }
 
 interface AccountCreationVariables {
+  urlOrigin: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -221,6 +222,7 @@ interface AccountCreationVariables {
 }
 
 interface AccountSendEmailPasswordResetLinkVariables {
+  urlOrigin: string;
   email: string;
 }
 
@@ -294,6 +296,7 @@ interface AddAndGetOtpResponse extends SuccessResponse {
 }
 
 interface SendExporterEmailVariables {
+  urlOrigin: string;
   accountId: string;
   referenceNumber?: string;
 }

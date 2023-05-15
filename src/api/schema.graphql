@@ -1749,7 +1749,7 @@ type Mutation {
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
 
   """ create an account """
-  createAnAccount(firstName: String!, lastName: String!, email: String!, password: String!): CreateAnAccountResponse
+  createAnAccount(urlOrigin: String!, firstName: String!, lastName: String!, email: String!, password: String!): CreateAnAccountResponse
 
   """ verify an account's email address """
   verifyAccountEmailAddress(token: String!): VerifyAccountEmailAddressResponse
@@ -1770,7 +1770,7 @@ type Mutation {
   addAndGetOTP(email: String!): AddAndGetOtpResponse
 
   """ send email with password reset link """
-  sendEmailPasswordResetLink(email: String!): SuccessResponse
+  sendEmailPasswordResetLink(urlOrigin: String!, email: String!): SuccessResponse
 
   """ reset account password """
   accountPasswordReset(token: String!, password: String!): SuccessResponse

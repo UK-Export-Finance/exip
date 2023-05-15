@@ -63,7 +63,7 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
 
     account = (await context.query.Account.findOne({
       where: { id: account.id },
-      query: 'id firstName email otpSalt otpHash otpExpiry',
+      query: 'id firstName lastName email otpSalt otpHash otpExpiry',
     })) as Account;
   });
 

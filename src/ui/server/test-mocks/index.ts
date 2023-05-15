@@ -28,6 +28,7 @@ const mockReq = () => {
     flash: jest.fn(),
     headers: {
       referer: '/mock',
+      origin: 'https://mock-origin.com',
     },
     method: 'GET',
     originalUrl: 'mock?mockQueryParam',

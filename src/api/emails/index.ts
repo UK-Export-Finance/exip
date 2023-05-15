@@ -46,13 +46,13 @@ export const callNotify = async (templateId: string, emailAddress: string, varia
  * @param {String} Verification hash
  * @returns {Object} callNotify response
  */
-const confirmEmailAddress = async (emailAddress: string, name: string, verificationHash: string): Promise<EmailResponse> => {
+const confirmEmailAddress = async (emailAddress: string, urlOrigin: string, name: string, verificationHash: string): Promise<EmailResponse> => {
   try {
     console.info('Sending confirm email address email');
 
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
 
-    const variables = { name, confirmToken: verificationHash };
+    const variables = { urlOrigin, name, confirmToken: verificationHash };
 
     const response = await callNotify(templateId, emailAddress, variables);
 
@@ -98,13 +98,13 @@ const securityCodeEmail = async (emailAddress: string, name: string, securityCod
  * @param {String} Password reet token
  * @returns {Object} callNotify response
  */
-const passwordResetLink = async (emailAddress: string, name: string, passwordResetHash: string): Promise<EmailResponse> => {
+const passwordResetLink = async (urlOrigin: string, emailAddress: string, name: string, passwordResetHash: string): Promise<EmailResponse> => {
   try {
     console.info('Sending email for account password reset');
 
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
 
-    const variables = { name, passwordResetToken: passwordResetHash };
+    const variables = { urlOrigin, name, passwordResetToken: passwordResetHash };
 
     const response = await callNotify(templateId, emailAddress, variables);
 

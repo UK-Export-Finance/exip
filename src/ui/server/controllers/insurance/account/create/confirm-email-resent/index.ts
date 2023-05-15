@@ -27,7 +27,9 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const account = await api.keystone.account.sendEmailConfirmEmailAddress(id);
+    const urlOrigin = req.headers.origin;
+
+    const account = await api.keystone.account.sendEmailConfirmEmailAddress(urlOrigin, id);
 
     if (!account.success) {
       console.error("Error sending new email verification for account creation and rendering 'new link sent' page");

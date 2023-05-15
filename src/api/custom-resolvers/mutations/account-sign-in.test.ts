@@ -6,6 +6,7 @@ import accountSignIn from './account-sign-in';
 import baseConfig from '../../keystone';
 import confirmEmailAddressEmail from '../../helpers/send-email-confirm-email-address';
 import generate from '../../helpers/generate-otp';
+import getFullNameString from '../../helpers/get-full-name-string';
 import sendEmail from '../../emails';
 import { mockAccount, mockOTP, mockSendEmailResponse } from '../../test-mocks';
 import { Account, AccountSignInResponse } from '../../types';
@@ -69,7 +70,7 @@ describe('custom-resolvers/account-sign-in', () => {
 
     account = (await context.query.Account.findOne({
       where: { id: account.id },
-      query: 'id firstName email otpSalt otpHash otpExpiry verificationExpiry',
+      query: 'id firstName lastName email otpSalt otpHash otpExpiry verificationExpiry',
     })) as Account;
   });
 
@@ -81,10 +82,12 @@ describe('custom-resolvers/account-sign-in', () => {
     });
 
     test('it should call sendEmail.securityCodeEmail', () => {
-      const { email, firstName } = account;
+      const { email } = account;
+
+      const name = getFullNameString(account);
 
       expect(securityCodeEmailSpy).toHaveBeenCalledTimes(1);
-      expect(securityCodeEmailSpy).toHaveBeenCalledWith(email, firstName, mockOTP.securityCode);
+      expect(securityCodeEmailSpy).toHaveBeenCalledWith(email, name, mockOTP.securityCode);
     });
 
     test('it should return the email response and accountId', () => {

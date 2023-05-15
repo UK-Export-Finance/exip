@@ -33,7 +33,10 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
 
   let passwordResetLinkSpy = jest.fn();
 
+  const mockUrlOrigin = 'https://mock-origin.com';
+
   const variables = {
+    urlOrigin: mockUrlOrigin,
     email: mockAccount.email,
   };
 
@@ -66,7 +69,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     // get the latest account
     account = (await context.query.Account.findOne({
       where: { id: account.id },
-      query: 'id email firstName passwordResetHash passwordResetExpiry',
+      query: 'id email firstName lastName passwordResetHash passwordResetExpiry',
     })) as Account;
   });
 
@@ -112,7 +115,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     const name = getFullNameString(account);
 
     expect(passwordResetLinkSpy).toHaveBeenCalledTimes(1);
-    expect(passwordResetLinkSpy).toHaveBeenCalledWith(email, name, passwordResetHash);
+    expect(passwordResetLinkSpy).toHaveBeenCalledWith(mockUrlOrigin, email, name, passwordResetHash);
   });
 
   describe('when no account is found', () => {

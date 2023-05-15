@@ -11,7 +11,7 @@ import { SendExporterEmailVariables } from '../../types';
  */
 const sendEmailConfirmEmailAddressMutation = async (root: any, variables: SendExporterEmailVariables, context: Context) => {
   try {
-    const emailResponse = await confirmEmailAddressEmail.send(context, variables.accountId);
+    const emailResponse = await confirmEmailAddressEmail.send(context, variables.urlOrigin, variables.accountId);
 
     if (emailResponse.success) {
       return emailResponse;

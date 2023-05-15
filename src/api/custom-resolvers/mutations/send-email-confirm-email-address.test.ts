@@ -35,6 +35,7 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
     })) as Account;
 
     variables = {
+      urlOrigin: 'https://mock-origin.com',
       accountId: account.id,
     };
 
@@ -53,7 +54,7 @@ describe('custom-resolvers/send-email-confirm-email-address', () => {
     const name = getFullNameString(account);
 
     expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledTimes(1);
-    expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledWith(email, name, verificationHash);
+    expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledWith(email, variables.urlOrigin, name, verificationHash);
 
     const expected = {
       success: true,

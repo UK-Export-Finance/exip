@@ -5,9 +5,7 @@ import baseConfig from './keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import { APPLICATION } from './constants';
 import updateApplication from './helpers/update-application';
-import getFullNameString from './helpers/get-full-name-string';
-import sendEmail from './emails';
-import { mockAccount, mockSendEmailResponse } from './test-mocks';
+import { mockAccount } from './test-mocks';
 import { Application, Account } from './types';
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -239,57 +237,6 @@ describe('Create an Application', () => {
 
 describe('Account', () => {
   let account: Account;
-
-  describe('create', () => {
-    jest.mock('./emails');
-
-    const sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
-
-    beforeAll(async () => {
-      sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
-
-      account = (await context.query.Account.createOne({
-        data: mockAccount,
-        query: 'id createdAt updatedAt firstName lastName email salt hash isVerified verificationHash verificationExpiry',
-      })) as Account;
-    });
-
-    test('it should have an ID', () => {
-      expect(account.id).toBeDefined();
-      expect(typeof account.id).toEqual('string');
-    });
-
-    test('it should have created and updated dates', () => {
-      const createdAtDay = new Date(account.createdAt).getDate();
-      const createdAtMonth = new Date(account.createdAt).getMonth();
-      const createdAtYear = new Date(account.createdAt).getFullYear();
-
-      const expectedDay = new Date().getDate();
-      const expectedMonth = new Date().getMonth();
-      const expectedYear = new Date().getFullYear();
-
-      expect(createdAtDay).toEqual(expectedDay);
-      expect(createdAtMonth).toEqual(expectedMonth);
-      expect(createdAtYear).toEqual(expectedYear);
-
-      const updatedAtDay = new Date(account.updatedAt).getDate();
-      const updatedAtMonth = new Date(account.updatedAt).getMonth();
-      const updatedAtYear = new Date(account.updatedAt).getFullYear();
-
-      expect(updatedAtDay).toEqual(expectedDay);
-      expect(updatedAtMonth).toEqual(expectedMonth);
-      expect(updatedAtYear).toEqual(expectedYear);
-    });
-
-    test('it should call sendEmail.confirmEmailAddress', () => {
-      const { email, verificationHash } = account;
-
-      const name = getFullNameString(account);
-
-      expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
-      expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, name, verificationHash);
-    });
-  });
 
   describe('update', () => {
     let updatedExporter: Account;

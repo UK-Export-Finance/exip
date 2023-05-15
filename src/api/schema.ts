@@ -6,9 +6,6 @@ import { addMonths } from 'date-fns';
 import { Lists } from '.keystone/types'; // eslint-disable-line
 import { ANSWERS, APPLICATION, FEEDBACK } from './constants';
 import updateApplication from './helpers/update-application';
-import getFullNameString from './helpers/get-full-name-string';
-import sendEmail from './emails';
-import { AccountInput } from './types';
 
 export const lists = {
   ReferenceNumber: {
@@ -378,46 +375,6 @@ export const lists = {
         ref: 'Application',
         many: true,
       }),
-    },
-    hooks: {
-      resolveInput: async ({ operation, resolvedData }): Promise<AccountInput> => {
-        const accountInputData = resolvedData as AccountInput;
-
-        if (operation === 'create') {
-          console.info('Creating new account');
-
-          // add dates
-          const now = new Date();
-          accountInputData.createdAt = now;
-          accountInputData.updatedAt = now;
-
-          // send "confirm email address" email
-          try {
-            const { email, verificationHash } = accountInputData;
-
-            const name = getFullNameString(accountInputData);
-
-            const emailResponse = await sendEmail.confirmEmailAddress(email, name, verificationHash);
-
-            if (emailResponse.success) {
-              return accountInputData;
-            }
-
-            throw new Error(`Sending email verification for account creation (resolveInput hook) ${emailResponse}`);
-          } catch (err) {
-            throw new Error(`Sending email verification for account creation (resolveInput hook) { err }`);
-          }
-        }
-
-        if (operation === 'update') {
-          console.info('Updating account');
-
-          // add dates
-          accountInputData.updatedAt = new Date();
-        }
-
-        return accountInputData;
-      },
     },
     access: allowAll,
   }),

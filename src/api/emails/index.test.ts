@@ -41,6 +41,8 @@ describe('emails', () => {
     buyerLocation: companyName,
   };
 
+  const mockUrlOrigin = 'https://mock-origin.com';
+
   const mockErrorMessage = 'Mock error';
 
   beforeAll(async () => {
@@ -73,12 +75,13 @@ describe('emails', () => {
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
 
     const expectedVariables = {
+      urlOrigin: mockUrlOrigin,
       name: fullName,
       confirmToken: verificationHash,
     };
 
     test('it should call notify.sendEmail and return the response', async () => {
-      const result = await sendEmail.confirmEmailAddress(email, fullName, verificationHash);
+      const result = await sendEmail.confirmEmailAddress(email, mockUrlOrigin, fullName, verificationHash);
 
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -96,7 +99,7 @@ describe('emails', () => {
 
       test('should throw an error', async () => {
         try {
-          await sendEmail.confirmEmailAddress(email, fullName, verificationHash);
+          await sendEmail.confirmEmailAddress(email, mockUrlOrigin, fullName, verificationHash);
         } catch (err) {
           const expected = new Error(`Sending confirm email address email Error: Sending email ${mockErrorMessage}`);
 
@@ -150,6 +153,7 @@ describe('emails', () => {
     const mockPasswordResetHash = '123456';
 
     const expectedVariables = {
+      urlOrigin: mockUrlOrigin,
       name: fullName,
       passwordResetToken: mockPasswordResetHash,
     };
@@ -157,7 +161,7 @@ describe('emails', () => {
     test('it should call notify.sendEmail and return the response', async () => {
       notify.sendEmail = sendEmailSpy;
 
-      const result = await sendEmail.passwordResetLink(email, fullName, mockPasswordResetHash);
+      const result = await sendEmail.passwordResetLink(mockUrlOrigin, email, fullName, mockPasswordResetHash);
 
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
       expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, expectedVariables);
@@ -174,7 +178,7 @@ describe('emails', () => {
 
       test('should throw an error', async () => {
         try {
-          await sendEmail.passwordResetLink(email, fullName, mockPasswordResetHash);
+          await sendEmail.passwordResetLink(mockUrlOrigin, email, fullName, mockPasswordResetHash);
         } catch (err) {
           const expected = new Error(`Sending email for account password reset Error: Sending email ${mockErrorMessage}`);
 

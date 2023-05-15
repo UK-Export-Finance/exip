@@ -10,7 +10,7 @@ import { SuccessResponse } from '../../types';
  * @param {String} Account ID
  * @returns {Object} Object with success flag and emailRecipient
  */
-const send = async (context: Context, accountId: string): Promise<SuccessResponse> => {
+const send = async (context: Context, urlOrigin: string, accountId: string): Promise<SuccessResponse> => {
   try {
     console.info('Sending email verification');
 
@@ -31,7 +31,7 @@ const send = async (context: Context, accountId: string): Promise<SuccessRespons
 
     const name = getFullNameString(account);
 
-    const emailResponse = await sendEmail.confirmEmailAddress(email, name, verificationHash);
+    const emailResponse = await sendEmail.confirmEmailAddress(email, urlOrigin, name, verificationHash);
 
     if (emailResponse.success) {
       return emailResponse;

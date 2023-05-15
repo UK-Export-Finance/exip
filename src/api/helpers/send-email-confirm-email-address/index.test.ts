@@ -19,6 +19,8 @@ const context = getContext(config, PrismaModule) as Context;
 describe('helpers/send-email-confirm-email-address', () => {
   let account: Account;
 
+  const mockUrlOrigin = 'https://mock-origin.com';
+
   jest.mock('../../emails');
 
   let sendEmailConfirmEmailAddressSpy = jest.fn();
@@ -41,14 +43,14 @@ describe('helpers/send-email-confirm-email-address', () => {
   });
 
   test('it should call sendEmail.confirmEmailAddress and return success=true', async () => {
-    const result = await confirmEmailAddressEmail.send(context, account.id);
+    const result = await confirmEmailAddressEmail.send(context, mockUrlOrigin, account.id);
 
     const { email, verificationHash } = account;
 
     const name = getFullNameString(account);
 
     expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
-    expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, name, verificationHash);
+    expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, mockUrlOrigin, name, verificationHash);
 
     const expected = {
       success: true,
@@ -67,7 +69,7 @@ describe('helpers/send-email-confirm-email-address', () => {
         where: accounts,
       });
 
-      const result = await confirmEmailAddressEmail.send(context, account.id);
+      const result = await confirmEmailAddressEmail.send(context, mockUrlOrigin, account.id);
 
       const expected = { success: false };
 
@@ -82,7 +84,7 @@ describe('helpers/send-email-confirm-email-address', () => {
 
     test('should throw an error', async () => {
       try {
-        await confirmEmailAddressEmail.send(context, account.id);
+        await confirmEmailAddressEmail.send(context, mockUrlOrigin, account.id);
       } catch (err) {
         const expected = new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${mockSendEmailResponse}`);
 

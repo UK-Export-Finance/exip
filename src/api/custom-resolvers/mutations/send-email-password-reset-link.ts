@@ -28,7 +28,7 @@ const sendEmailPasswordResetLink = async (root: any, variables: AccountSendEmail
   try {
     console.info('Sending password reset email');
 
-    const { email } = variables;
+    const { urlOrigin, email } = variables;
 
     // Get the account the email is associated with.
     const account = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
@@ -53,7 +53,7 @@ const sendEmailPasswordResetLink = async (root: any, variables: AccountSendEmail
 
     const name = getFullNameString(account);
 
-    const emailResponse = await sendEmail.passwordResetLink(email, name, passwordResetHash);
+    const emailResponse = await sendEmail.passwordResetLink(urlOrigin, email, name, passwordResetHash);
 
     if (emailResponse.success) {
       return emailResponse;
