@@ -61,7 +61,7 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
       it(`should redirect to ${ABOUT_GOODS_OR_SERVICES_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, ABOUT_GOODS_OR_SERVICES_CHANGE, fieldId);
       });
@@ -73,7 +73,7 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(aboutGoodsOrServicesPage[fieldId].input(), newAnswer);
 
@@ -87,7 +87,7 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
       it('should render the new answer', () => {
         const expected = newAnswer;
 
-        cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+        cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
       });
     });
   });
@@ -99,7 +99,7 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
       it(`should redirect to ${ABOUT_GOODS_OR_SERVICES_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, ABOUT_GOODS_OR_SERVICES_CHANGE, fieldId);
       });
@@ -111,7 +111,7 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         aboutGoodsOrServicesPage[fieldId].input().select(newAnswer);
 
@@ -125,7 +125,7 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
       it('should render the new answer', () => {
         const expected = countries[0].name;
 
-        cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+        cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
       });
     });
   });

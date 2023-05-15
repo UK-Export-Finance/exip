@@ -69,7 +69,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHANGE}`, () => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId);
         });
@@ -84,7 +84,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         beforeEach(() => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.keyboardInput(multipleContractPolicyPage[fieldId].yearInput(), newAnswer.year);
 
@@ -98,7 +98,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         it('should render the new answer', () => {
           const expected = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
 
-          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+          cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
         });
       });
     });
@@ -110,7 +110,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHANGE}`, () => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId);
         });
@@ -122,7 +122,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         beforeEach(() => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           multipleContractPolicyPage[fieldId].input().select(newAnswer);
 
@@ -136,7 +136,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         it('should render the new answer', () => {
           const expected = `${newAnswer} months`;
 
-          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+          cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
         });
       });
     });
@@ -148,7 +148,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHANGE}`, () => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId);
         });
@@ -160,7 +160,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         beforeEach(() => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.keyboardInput(multipleContractPolicyPage[fieldId].input(), newAnswer);
 
@@ -174,7 +174,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         it('should render the new answer', () => {
           const expected = formatCurrency(newAnswer);
 
-          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+          cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
         });
       });
     });
@@ -186,7 +186,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHANGE}`, () => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId);
         });
@@ -198,7 +198,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         beforeEach(() => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.keyboardInput(multipleContractPolicyPage[fieldId].input(), newAnswer);
 
@@ -212,7 +212,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         it('should render the new answer', () => {
           const expected = formatCurrency(newAnswer);
 
-          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+          cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
         });
       });
     });
@@ -224,7 +224,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHANGE}`, () => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId);
         });
@@ -236,7 +236,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         beforeEach(() => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.keyboardInput(multipleContractPolicyPage[fieldId].input(), newAnswer);
 
@@ -250,7 +250,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         it('should render the new answer', () => {
           const expected = newAnswer;
 
-          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+          cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
         });
       });
     });
@@ -262,7 +262,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHANGE}`, () => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId);
         });
@@ -274,7 +274,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         beforeEach(() => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           policyCurrencyCodeFormField.input().select(newAnswer);
 
@@ -288,7 +288,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         it('should render the new answer', () => {
           const { name: expected } = currencies[3];
 
-          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+          cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
         });
       });
     });

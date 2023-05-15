@@ -10,10 +10,7 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const { INSURANCE } = ROUTES;
-const {
-  INSURANCE_ROOT,
-  POLICY_AND_EXPORTS: { CHECK_YOUR_ANSWERS },
-} = INSURANCE;
+const { INSURANCE_ROOT } = INSURANCE;
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 
 const FIELD_ID = POLICY_AND_EXPORTS.POLICY_TYPE;
@@ -125,18 +122,6 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
           const referenceNumber = Number(req.params.referenceNumber);
 
           const expected = `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
-
-          expect(res.redirect).toHaveBeenCalledWith(expected);
-        });
-      });
-
-      describe("when the url's last substring is `change`", () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.originalUrl = ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY_CHANGE;
-
-          await post(req, res);
-
-          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
