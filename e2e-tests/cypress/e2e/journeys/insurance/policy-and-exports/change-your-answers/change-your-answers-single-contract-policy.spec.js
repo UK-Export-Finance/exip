@@ -69,7 +69,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHANGE}`, () => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.assertChangeAnswersPageUrl(referenceNumber, SINGLE_CONTRACT_POLICY_CHANGE, fieldId);
         });
@@ -84,7 +84,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         beforeEach(() => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.keyboardInput(singleContractPolicyPage[fieldId].yearInput(), newAnswer.year);
           cy.keyboardInput(singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput(), newAnswer.year + 1);
@@ -99,7 +99,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         it('should render the new answer', () => {
           const expected = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
 
-          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+          cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
         });
       });
     });
@@ -111,7 +111,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHANGE}`, () => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.assertChangeAnswersPageUrl(referenceNumber, SINGLE_CONTRACT_POLICY_CHANGE, fieldId);
         });
@@ -126,7 +126,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         beforeEach(() => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.keyboardInput(singleContractPolicyPage[fieldId].yearInput(), newAnswer.year);
 
@@ -140,7 +140,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         it('should render the new answer', () => {
           const expected = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
 
-          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+          cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
         });
       });
     });
@@ -152,7 +152,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHANGE}`, () => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.assertChangeAnswersPageUrl(referenceNumber, SINGLE_CONTRACT_POLICY_CHANGE, fieldId);
         });
@@ -164,7 +164,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         beforeEach(() => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.keyboardInput(singleContractPolicyPage[fieldId].input(), newAnswer);
 
@@ -178,7 +178,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         it('should render the new answer', () => {
           const expected = formatCurrency(newAnswer);
 
-          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+          cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
         });
       });
     });
@@ -190,7 +190,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHANGE}`, () => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.assertChangeAnswersPageUrl(referenceNumber, SINGLE_CONTRACT_POLICY_CHANGE, fieldId);
         });
@@ -202,7 +202,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         beforeEach(() => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.keyboardInput(singleContractPolicyPage[fieldId].input(), newAnswer);
 
@@ -216,7 +216,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         it('should render the new answer', () => {
           const expected = newAnswer;
 
-          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+          cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
         });
       });
     });
@@ -228,7 +228,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHANGE}`, () => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           cy.assertChangeAnswersPageUrl(referenceNumber, SINGLE_CONTRACT_POLICY_CHANGE, fieldId);
         });
@@ -240,7 +240,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         beforeEach(() => {
           cy.navigateToUrl(url);
 
-          summaryList[fieldId].changeLink().click();
+          summaryList.field(fieldId).changeLink().click();
 
           policyCurrencyCodeFormField.input().select(newAnswer);
 
@@ -254,7 +254,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
         it('should render the new answer', () => {
           const { name: expected } = currencies[3];
 
-          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+          cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
         });
       });
     });

@@ -30,7 +30,7 @@ const {
 
 const assertRow = (fieldId, expectedKey, expectedValue, expectedChangeLinkText) => {
   const { summaryList } = checkYourAnswersPage;
-  const row = summaryList[fieldId];
+  const row = summaryList.field(fieldId);
 
   cy.checkText(
     row.key(),
