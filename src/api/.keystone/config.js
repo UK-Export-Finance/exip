@@ -2462,7 +2462,7 @@ var send2 = async (application, csvPath) => {
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
       buyerLocation: buyer.country?.name,
-      exporterCompanyName: company.companyName,
+      companyName: company.companyName,
       requestedStartDate: format_date_default(policyAndExport.requestedStartDate)
     };
     const accountSubmittedResponse = await emails_default.applicationSubmitted.account(sendEmailVars);

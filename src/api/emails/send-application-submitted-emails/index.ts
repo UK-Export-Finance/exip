@@ -23,7 +23,7 @@ const send = async (application: Application, csvPath: string): Promise<SuccessR
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
       buyerLocation: buyer.country?.name,
-      exporterCompanyName: company.companyName,
+      companyName: company.companyName,
       requestedStartDate: formatDate(policyAndExport.requestedStartDate),
     } as ApplicationSubmissionEmailVariables;
 
