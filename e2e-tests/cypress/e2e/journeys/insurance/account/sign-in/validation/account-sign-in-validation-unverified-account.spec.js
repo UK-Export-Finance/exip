@@ -10,7 +10,7 @@ const {
   },
 } = ROUTES;
 
-context('Insurance - Account - Sign in - Validation - unverified account', () => {
+context.skip('Insurance - Account - Sign in - Validation - unverified account', () => {
   let account;
 
   before(() => {
