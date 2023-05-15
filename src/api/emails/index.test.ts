@@ -4,7 +4,7 @@ import fileSystem from '../file-system';
 import notify from '../integrations/notify';
 import getFullNameString from '../helpers/get-full-name-string';
 import { EMAIL_TEMPLATE_IDS } from '../constants';
-import { mockAccount, mockApplication, mockCompany, mockBuyer, mockSendEmailResponse, mockInsuranceFeedback } from '../test-mocks';
+import { mockAccount, mockApplication, mockCompany, mockBuyer, mockUrlOrigin, mockSendEmailResponse, mockInsuranceFeedback } from '../test-mocks';
 import formatDate from '../helpers/format-date';
 
 dotenv.config();
@@ -40,8 +40,6 @@ describe('emails', () => {
     buyerName: companyOrOrganisationName,
     buyerLocation: companyName,
   };
-
-  const mockUrlOrigin = 'https://mock-origin.com';
 
   const mockErrorMessage = 'Mock error';
 

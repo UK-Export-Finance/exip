@@ -6,7 +6,7 @@ import sendEmailPasswordResetLink from './send-email-password-reset-link';
 import getFullNameString from '../../helpers/get-full-name-string';
 import sendEmail from '../../emails';
 import { ACCOUNT } from '../../constants';
-import { mockAccount, mockSendEmailResponse } from '../../test-mocks';
+import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../test-mocks';
 import { Account, SuccessResponse } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -32,8 +32,6 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
   jest.mock('../../emails');
 
   let passwordResetLinkSpy = jest.fn();
-
-  const mockUrlOrigin = 'https://mock-origin.com';
 
   const variables = {
     urlOrigin: mockUrlOrigin,

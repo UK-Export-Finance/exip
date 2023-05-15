@@ -5,7 +5,7 @@ import baseConfig from '../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import getFullNameString from '../get-full-name-string';
 import sendEmail from '../../emails';
-import { mockAccount, mockSendEmailResponse } from '../../test-mocks';
+import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../test-mocks';
 import { Account } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -18,8 +18,6 @@ const context = getContext(config, PrismaModule) as Context;
 
 describe('helpers/send-email-confirm-email-address', () => {
   let account: Account;
-
-  const mockUrlOrigin = 'https://mock-origin.com';
 
   jest.mock('../../emails');
 

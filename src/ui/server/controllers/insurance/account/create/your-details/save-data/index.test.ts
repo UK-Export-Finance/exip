@@ -1,14 +1,12 @@
 import save from '.';
 import api from '../../../../../../api';
 import { sanitiseData } from '../../../../../../helpers/sanitise-data';
-import { mockAccount } from '../../../../../../test-mocks';
+import { mockAccount, mockUrlOrigin } from '../../../../../../test-mocks';
 
 describe('controllers/account/create/your-details/save-data', () => {
   const mockCreateAccountResponse = mockAccount;
 
   let accountCreateSpy = jest.fn(() => Promise.resolve(mockCreateAccountResponse));
-
-  const mockUrlOrigin = 'https://mock-origin.com';
 
   const mockFormBody = mockAccount;
 
