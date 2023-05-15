@@ -21,7 +21,6 @@ WORKDIR /app
 COPY --chown=node:node package.json .
 COPY --chown=node:node package-lock.json .
 RUN npm ci --legacy-peer-deps
-RUN npm cache clean --force
 
 # Copy API
 COPY --chown=node:node ./keystone.ts .

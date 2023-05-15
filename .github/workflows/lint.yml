@@ -15,7 +15,7 @@ on:
     - 'generate-exip-pricing-grid/**'
 
 env:
-  environment: dev
+  environment: 'qa'
   timezone: 'Europe/London'
 
 jobs:
@@ -52,19 +52,9 @@ jobs:
       - name: Node
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: ${{ vars.NODE_VERSION }}
 
       - name: Linting
         working-directory: ./
         run: |
           npm run lint
-
-      - name: Notification
-        uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-          channel: '#exip-github-actions'
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()  
