@@ -29,11 +29,11 @@ export const get = async (req: Request, res: Response) => {
 
     const accountResponse = await api.keystone.account.get(id);
 
-    let accountEmail;
-
-    if (accountResponse && accountResponse.email) {
-      accountEmail = accountResponse.email;
+    if (!accountResponse || !accountResponse.email) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
+
+    const accountEmail = accountResponse.email;
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

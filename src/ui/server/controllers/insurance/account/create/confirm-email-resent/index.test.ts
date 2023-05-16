@@ -85,8 +85,24 @@ describe('controllers/insurance/account/create/confirm-email-resent', () => {
       });
     });
 
+    describe('when api.keystone.account.get does not return anything', () => {
+      beforeEach(() => {
+        req.query.id = mockAccount.id;
+
+        api.keystone.account.get = jest.fn(() => Promise.resolve());
+      });
+
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      });
+    });
+
     describe('when api.keystone.account.get does not return an email', () => {
       beforeEach(() => {
+        req.query.id = mockAccount.id;
+
         getAccountSpy = jest.fn(() =>
           Promise.resolve({
             success: true,
@@ -97,24 +113,18 @@ describe('controllers/insurance/account/create/confirm-email-resent', () => {
         api.keystone.account.get = getAccountSpy;
       });
 
-      it('should render template with undefined email', async () => {
+      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
         await get(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS,
-            BACK_LINK: `${req.headers.referer}?id=${req.query.id}`,
-          }),
-          userName: getUserNameFromSession(req.session.user),
-          accountEmail: undefined,
-          accountId: req.query.id,
-        });
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
       });
     });
 
     describe('api error handling', () => {
       describe('when there is an error', () => {
         beforeEach(() => {
+          req.query.id = mockAccount.id;
+
           getAccountSpy = jest.fn(() => Promise.reject());
           api.keystone.account.get = getAccountSpy;
         });
