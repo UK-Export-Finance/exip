@@ -18,6 +18,7 @@ import mockBroker from './mock-broker';
 import mockBuyer from './mock-buyer';
 import mockDeclarations from './mock-declarations';
 import { mockInsuranceFeedback } from './mock-feedback';
+import mockBusinessContact from './mock-business-contact';
 
 const mockReq = () => {
   let req = {} as Request;
@@ -72,6 +73,7 @@ export {
   mockApplications,
   mockBroker,
   mockBusiness,
+  mockBusinessContact,
   mockBuyer,
   mockCisCountries,
   mockCountries,

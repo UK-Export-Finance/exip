@@ -6,7 +6,7 @@ import { FIELDS, ACCOUNT_FIELDS } from '../../../../content-strings/fields/insur
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import getFromSessionOrApplication from '../../../../helpers/get-from-session-or-application';
+import getValuesFromUserSessionOrApplication from '../../../../helpers/get-values-from-user-session-or-application';
 import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 import mapAndSave from '../map-and-save';
@@ -77,7 +77,7 @@ const get = (req: Request, res: Response) => {
       }),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      applicationAnswers: getFromSessionOrApplication(application, BUSINESS, BUSINESS_CONTACT_DETAIL, req.session.user),
+      submittedValues: getValuesFromUserSessionOrApplication(application, BUSINESS, BUSINESS_CONTACT_DETAIL, req.session.user),
       ...pageVariables(application.referenceNumber),
     });
   } catch (err) {
@@ -120,7 +120,6 @@ const post = async (req: Request, res: Response) => {
         ...pageVariables(application.referenceNumber),
         validationErrors,
         submittedValues: body,
-        session: req.session.user,
       });
     }
 

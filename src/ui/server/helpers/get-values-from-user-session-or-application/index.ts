@@ -2,7 +2,7 @@ import { RequestSessionUser, Application } from '../../../types';
 import { objectHasKeysAndValues } from '../object';
 
 /**
- * getFromSessionOrApplication
+ * getValuesFromUserSessionOrApplication
  * checks if application contains data for certain section and if it does, then returns that section and field
  * if application does not contain relevant data, returns session
  * @param {Application} application
@@ -11,18 +11,18 @@ import { objectHasKeysAndValues } from '../object';
  * @param {RequestSessionUser} session
  * @returns {Object} session or application section
  */
-const getFromSessionOrApplication = (application: Application, section: string, field: string, session?: RequestSessionUser) => {
+const getValuesFromUserSessionOrApplication = (application: Application, section: string, field: string, userSession?: RequestSessionUser) => {
   if (!application[section] || !application[section][field]) {
-    return session;
+    return userSession;
   }
 
   const { id, __typename, ...sectionObject } = application[section][field];
 
   if (objectHasKeysAndValues(sectionObject)) {
-    return application[section][field];
+    return sectionObject;
   }
 
-  return session;
+  return userSession;
 };
 
-export default getFromSessionOrApplication;
+export default getValuesFromUserSessionOrApplication;

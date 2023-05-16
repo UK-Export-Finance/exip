@@ -203,7 +203,7 @@ const application = {
     },
     businessContact: async (id: string, update: object) => {
       try {
-        console.info('Updating application business contact details');
+        console.info('Updating application business contact');
 
         const variables = {
           where: { id },

@@ -8,7 +8,7 @@ interface ApplicationRelationship {
   id: string;
 }
 
-interface Business extends ApplicationRelationship {
+interface ApplicationBusiness extends ApplicationRelationship {
   businessContactDetail: ApplicationRelationship;
 }
 
@@ -129,7 +129,7 @@ interface Application {
   company: ApplicationCompany;
   companySicCodes: Array<ApplicationCompanySicCode>;
   companyAddress: ApplicationCompanyAddress;
-  business: Business;
+  business: ApplicationBusiness;
   broker: ApplicationRelationship;
   buyer: ApplicationBuyer;
   sectionReview: ApplicationRelationship;

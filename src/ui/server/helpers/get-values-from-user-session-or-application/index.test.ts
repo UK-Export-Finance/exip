@@ -1,4 +1,4 @@
-import getFromSessionOrApplication from '.';
+import getValuesFromUserSessionOrApplication from '.';
 import { mockApplication } from '../../test-mocks';
 import FIELD_IDS from '../../constants/field-ids/insurance/business';
 import { RequestSessionUser } from '../../../types';
@@ -6,7 +6,7 @@ import { RequestSessionUser } from '../../../types';
 const { BUSINESS } = FIELD_IDS;
 const { BUSINESS_CONTACT_DETAIL } = FIELD_IDS.CONTACT;
 
-describe('server/helpers/get-from-session-or-application', () => {
+describe('server/helpers/get-values-from-session-or-application', () => {
   const session = {
     firstName: 'firstName',
     lastName: 'lastName',
@@ -16,9 +16,10 @@ describe('server/helpers/get-from-session-or-application', () => {
 
   describe('when application contains relevant section', () => {
     it('should return application section', () => {
-      const response = getFromSessionOrApplication(mockApplication, BUSINESS, BUSINESS_CONTACT_DETAIL, session);
+      const response = getValuesFromUserSessionOrApplication(mockApplication, BUSINESS, BUSINESS_CONTACT_DETAIL, session);
 
-      const expected = mockApplication[BUSINESS][BUSINESS_CONTACT_DETAIL];
+      const { id, __typename, ...sectionObject } = mockApplication[BUSINESS][BUSINESS_CONTACT_DETAIL];
+      const expected = sectionObject;
 
       expect(response).toEqual(expected);
     });
@@ -36,7 +37,7 @@ describe('server/helpers/get-from-session-or-application', () => {
         position: '',
       };
 
-      const response = getFromSessionOrApplication(mockApplication, BUSINESS, BUSINESS_CONTACT_DETAIL, session);
+      const response = getValuesFromUserSessionOrApplication(mockApplication, BUSINESS, BUSINESS_CONTACT_DETAIL, session);
 
       expect(response).toEqual(session);
     });

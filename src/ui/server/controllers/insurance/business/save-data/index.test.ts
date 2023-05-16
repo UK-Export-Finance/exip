@@ -306,7 +306,7 @@ describe('controllers/insurance/business/save-data', () => {
           try {
             await save.contact(mockApplication, mockFormBody);
           } catch (err) {
-            const expected = new Error("Updating business' contact");
+            const expected = new Error('Updating business contact');
             expect(err).toEqual(expected);
           }
         });

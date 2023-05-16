@@ -97,7 +97,7 @@ const contact = async (application: Application, formBody: RequestBody, errorLis
     const saveResponse = await api.keystone.application.update.businessContact(brokerId, sanitisedData);
     return saveResponse;
   } catch (err) {
-    throw new Error("Updating business' contact");
+    throw new Error('Updating business contact');
   }
 };
 

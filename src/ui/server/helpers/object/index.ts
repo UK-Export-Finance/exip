@@ -9,10 +9,6 @@ type ObjectType = {
  * @returns {Boolean}
  */
 export const objectHasKeysAndValues = (obj: ObjectType) => {
-  if (!obj) {
-    return false;
-  }
-
   const keys = Object.keys(obj);
 
   if (!keys.length) {

@@ -9,9 +9,9 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import generateValidationErrors from './validation';
 import { FIELDS, ACCOUNT_FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockBusinessContact } from '../../../../test-mocks';
 import mapAndSave from '../map-and-save';
-import getFromSessionOrApplication from '../../../../helpers/get-from-session-or-application';
+import getFromSessionOrApplication from '../../../../helpers/get-values-from-user-session-or-application';
 
 const { BUSINESS } = FIELD_IDS;
 const { COMPANY_NAME, POSITION, BUSINESS_CONTACT_DETAIL } = FIELD_IDS.CONTACT;
@@ -95,7 +95,7 @@ describe('controllers/insurance/business/contact', () => {
           }),
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplication),
-          applicationAnswers: getFromSessionOrApplication(mockApplication, BUSINESS, BUSINESS_CONTACT_DETAIL, req.session.user),
+          submittedValues: getFromSessionOrApplication(mockApplication, BUSINESS, BUSINESS_CONTACT_DETAIL, req.session.user),
           ...pageVariables(mockApplication.referenceNumber),
         });
       });
@@ -144,15 +144,8 @@ describe('controllers/insurance/business/contact', () => {
     });
 
     describe('when there are no validation errors', () => {
-      const body = {
-        [FIRST_NAME]: 'firstName',
-        [LAST_NAME]: 'lastName',
-        [EMAIL]: 'test@test.com',
-        [POSITION]: 'CEO',
-      };
-
       it('should redirect to next page', async () => {
-        req.body = body;
+        req.body = mockBusinessContact;
 
         await post(req, res);
 
@@ -161,7 +154,7 @@ describe('controllers/insurance/business/contact', () => {
       });
 
       it('should call mapAndSave.contact once with the contents of body', async () => {
-        req.body = body;
+        req.body = mockBusinessContact;
 
         await post(req, res);
 

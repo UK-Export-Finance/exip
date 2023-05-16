@@ -6,7 +6,7 @@ import mapAndSave from '../../map-and-save';
 const { INSURANCE_ROOT, ALL_SECTIONS } = ROUTES.INSURANCE;
 
 /**
- * saves and goes back to all sections from contact page unless there are database errors
+ * saves and goes back to all sections from contact page unless there are api errors
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} redirects to all sections page on success
