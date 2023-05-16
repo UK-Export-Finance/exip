@@ -30,6 +30,7 @@ const mockReq = () => {
     headers: {
       referer: '/mock',
       origin: 'https://mock-origin.com',
+      host: 'mock-host.com',
     },
     method: 'GET',
     originalUrl: 'mock?mockQueryParam',

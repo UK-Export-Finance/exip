@@ -153,6 +153,7 @@ const typeDefs = `
 
     """ send confirm email address email """
     sendEmailConfirmEmailAddress(
+      urlOrigin: String!
       accountId: String!
     ): EmailResponse
 
