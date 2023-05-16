@@ -112,25 +112,6 @@ describe('controllers/insurance/account/create/confirm-email-resent', () => {
       });
     });
 
-    describe('when api.keystone.account.get does not return success=true', () => {
-      beforeEach(() => {
-        getAccountSpy = jest.fn(() =>
-          Promise.resolve({
-            ...mockGetAccountResponse,
-            success: false,
-          }),
-        );
-
-        api.keystone.account.get = getAccountSpy;
-      });
-
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
-
     describe('api error handling', () => {
       describe('when there is an error', () => {
         beforeEach(() => {

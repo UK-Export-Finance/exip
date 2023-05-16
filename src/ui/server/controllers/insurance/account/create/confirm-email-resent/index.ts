@@ -35,10 +35,6 @@ export const get = async (req: Request, res: Response) => {
       accountEmail = accountResponse.email;
     }
 
-    if (!accountResponse.success) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-    }
-
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
