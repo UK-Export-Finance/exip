@@ -29,21 +29,21 @@ export const get = async (req: Request, res: Response) => {
 
     const accountResponse = await api.keystone.account.get(id);
 
-    if (!accountResponse || !accountResponse.email) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    if (accountResponse?.email) {
+      const accountEmail = accountResponse.email;
+
+      return res.render(TEMPLATE, {
+        ...insuranceCorePageVariables({
+          PAGE_CONTENT_STRINGS,
+          BACK_LINK: `${req.headers.referer}?id=${id}`,
+        }),
+        userName: getUserNameFromSession(req.session.user),
+        accountEmail,
+        accountId: id,
+      });
     }
 
-    const accountEmail = accountResponse.email;
-
-    return res.render(TEMPLATE, {
-      ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS,
-        BACK_LINK: `${req.headers.referer}?id=${id}`,
-      }),
-      userName: getUserNameFromSession(req.session.user),
-      accountEmail,
-      accountId: id,
-    });
+    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   } catch (err) {
     console.error("Error getting account and rendering 'confirm email resent' page", { err });
 
