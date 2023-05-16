@@ -117,6 +117,17 @@ export const lists = {
               },
             };
 
+            // generate a new `business contact detail` relationship with the business
+            await context.db.BusinessContactDetail.createOne({
+              data: {
+                business: {
+                  connect: {
+                    id: businessId,
+                  },
+                },
+              },
+            });
+
             // generate and attach a new 'broker' relationship
             const { id: brokerId } = await context.db.Broker.createOne({
               data: {},
@@ -389,6 +400,9 @@ export const lists = {
       totalEmployeesInternational: integer(),
       estimatedAnnualTurnover: integer(),
       exportsTurnoverPercentage: integer(),
+      businessContactDetail: relationship({
+        ref: 'BusinessContactDetail.business',
+      }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -525,6 +539,16 @@ export const lists = {
           await updateApplication.timestamp(context, item.applicationId);
         }
       },
+    },
+    access: allowAll,
+  }),
+  BusinessContactDetail: list({
+    fields: {
+      business: relationship({ ref: 'Business.businessContactDetail' }),
+      firstName: text(),
+      lastName: text(),
+      email: text(),
+      position: text(),
     },
     access: allowAll,
   }),

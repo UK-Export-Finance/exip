@@ -1,11 +1,12 @@
 import { FIELD_IDS } from '../../../constants';
 import { yourContactPage } from '../../e2e/pages/your-business';
 import { submitButton } from '../../e2e/pages/shared';
-import account from '../../fixtures/account';
+import application from '../../fixtures/application';
 
 const {
   CONTACT: {
     POSITION,
+    BUSINESS_CONTACT_DETAIL,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
@@ -17,12 +18,13 @@ const {
   },
 } = FIELD_IDS.INSURANCE;
 
+const businessContactDetails = application.EXPORTER_BUSINESS[BUSINESS_CONTACT_DETAIL];
+
 export default () => {
-  // TODO: EMS:1513 - change to fixtures and constants on saving PR
-  cy.keyboardInput(yourContactPage.field(FIRST_NAME).input(), 'test');
-  cy.keyboardInput(yourContactPage.field(LAST_NAME).input(), 'test');
-  cy.keyboardInput(yourContactPage.field(EMAIL).input(), account[EMAIL]);
-  cy.keyboardInput(yourContactPage.field(POSITION).input(), 'test');
+  cy.keyboardInput(yourContactPage.field(FIRST_NAME).input(), businessContactDetails[FIRST_NAME]);
+  cy.keyboardInput(yourContactPage.field(LAST_NAME).input(), businessContactDetails[LAST_NAME]);
+  cy.keyboardInput(yourContactPage.field(EMAIL).input(), businessContactDetails[EMAIL]);
+  cy.keyboardInput(yourContactPage.field(POSITION).input(), businessContactDetails[POSITION]);
 
   submitButton().click();
 };

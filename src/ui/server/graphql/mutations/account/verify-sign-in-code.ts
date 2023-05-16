@@ -6,6 +6,7 @@ const verifyAccountSignInCodeMutation = gql`
       success
       firstName
       lastName
+      email
       token
       expires
       accountId

@@ -100,12 +100,13 @@ export const post = async (req: Request, res: Response) => {
 
     // valid sign in code - update the session and redirect to the dashboard
     if (response.success) {
-      const { accountId, firstName, lastName, token, expires } = response;
+      const { accountId, firstName, lastName, email, token, expires } = response;
 
       req.session.user = {
         id: accountId,
         firstName,
         lastName,
+        email,
         token,
         expires,
       };

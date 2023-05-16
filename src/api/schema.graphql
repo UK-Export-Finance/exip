@@ -588,6 +588,7 @@ type Business {
   totalEmployeesInternational: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
+  businessContactDetail: BusinessContactDetail
 }
 
 input BusinessWhereUniqueInput {
@@ -606,6 +607,7 @@ input BusinessWhereInput {
   totalEmployeesInternational: IntNullableFilter
   estimatedAnnualTurnover: IntNullableFilter
   exportsTurnoverPercentage: IntNullableFilter
+  businessContactDetail: BusinessContactDetailWhereInput
 }
 
 input BusinessOrderByInput {
@@ -626,6 +628,13 @@ input BusinessUpdateInput {
   totalEmployeesInternational: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
+  businessContactDetail: BusinessContactDetailRelateToOneForUpdateInput
+}
+
+input BusinessContactDetailRelateToOneForUpdateInput {
+  create: BusinessContactDetailCreateInput
+  connect: BusinessContactDetailWhereUniqueInput
+  disconnect: Boolean
 }
 
 input BusinessUpdateArgs {
@@ -641,6 +650,12 @@ input BusinessCreateInput {
   totalEmployeesInternational: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
+  businessContactDetail: BusinessContactDetailRelateToOneForCreateInput
+}
+
+input BusinessContactDetailRelateToOneForCreateInput {
+  create: BusinessContactDetailCreateInput
+  connect: BusinessContactDetailWhereUniqueInput
 }
 
 type Broker {
@@ -1049,6 +1064,60 @@ input BuyerCreateInput {
 input CountryRelateToOneForCreateInput {
   create: CountryCreateInput
   connect: CountryWhereUniqueInput
+}
+
+type BusinessContactDetail {
+  id: ID!
+  business: Business
+  firstName: String
+  lastName: String
+  email: String
+  position: String
+}
+
+input BusinessContactDetailWhereUniqueInput {
+  id: ID
+}
+
+input BusinessContactDetailWhereInput {
+  AND: [BusinessContactDetailWhereInput!]
+  OR: [BusinessContactDetailWhereInput!]
+  NOT: [BusinessContactDetailWhereInput!]
+  id: IDFilter
+  business: BusinessWhereInput
+  firstName: StringFilter
+  lastName: StringFilter
+  email: StringFilter
+  position: StringFilter
+}
+
+input BusinessContactDetailOrderByInput {
+  id: OrderDirection
+  firstName: OrderDirection
+  lastName: OrderDirection
+  email: OrderDirection
+  position: OrderDirection
+}
+
+input BusinessContactDetailUpdateInput {
+  business: BusinessRelateToOneForUpdateInput
+  firstName: String
+  lastName: String
+  email: String
+  position: String
+}
+
+input BusinessContactDetailUpdateArgs {
+  where: BusinessContactDetailWhereUniqueInput!
+  data: BusinessContactDetailUpdateInput!
+}
+
+input BusinessContactDetailCreateInput {
+  business: BusinessRelateToOneForCreateInput
+  firstName: String
+  lastName: String
+  email: String
+  position: String
 }
 
 type Country {
@@ -1684,6 +1753,12 @@ type Mutation {
   updateBuyers(data: [BuyerUpdateArgs!]!): [Buyer]
   deleteBuyer(where: BuyerWhereUniqueInput!): Buyer
   deleteBuyers(where: [BuyerWhereUniqueInput!]!): [Buyer]
+  createBusinessContactDetail(data: BusinessContactDetailCreateInput!): BusinessContactDetail
+  createBusinessContactDetails(data: [BusinessContactDetailCreateInput!]!): [BusinessContactDetail]
+  updateBusinessContactDetail(where: BusinessContactDetailWhereUniqueInput!, data: BusinessContactDetailUpdateInput!): BusinessContactDetail
+  updateBusinessContactDetails(data: [BusinessContactDetailUpdateArgs!]!): [BusinessContactDetail]
+  deleteBusinessContactDetail(where: BusinessContactDetailWhereUniqueInput!): BusinessContactDetail
+  deleteBusinessContactDetails(where: [BusinessContactDetailWhereUniqueInput!]!): [BusinessContactDetail]
   createCountry(data: CountryCreateInput!): Country
   createCountries(data: [CountryCreateInput!]!): [Country]
   updateCountry(where: CountryWhereUniqueInput!, data: CountryUpdateInput!): Country
@@ -1785,7 +1860,7 @@ type Mutation {
   submitApplication(applicationId: String!): SuccessResponse
 
   """ create and send email for insurance feedback """
-  createFeedbackAndEmail(satisfaction: String, improvement: String, otherComments: String, referralUrl: String, product: String, service: String): SuccessResponse
+  createFeedbackAndSendEmail(satisfaction: String, improvement: String, otherComments: String, referralUrl: String, product: String, service: String): SuccessResponse
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure
@@ -1836,6 +1911,9 @@ type Query {
   buyers(where: BuyerWhereInput! = {}, orderBy: [BuyerOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BuyerWhereUniqueInput): [Buyer!]
   buyer(where: BuyerWhereUniqueInput!): Buyer
   buyersCount(where: BuyerWhereInput! = {}): Int
+  businessContactDetails(where: BusinessContactDetailWhereInput! = {}, orderBy: [BusinessContactDetailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BusinessContactDetailWhereUniqueInput): [BusinessContactDetail!]
+  businessContactDetail(where: BusinessContactDetailWhereUniqueInput!): BusinessContactDetail
+  businessContactDetailsCount(where: BusinessContactDetailWhereInput! = {}): Int
   countries(where: CountryWhereInput! = {}, orderBy: [CountryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CountryWhereUniqueInput): [Country!]
   country(where: CountryWhereUniqueInput!): Country
   countriesCount(where: CountryWhereInput! = {}): Int
@@ -2093,6 +2171,7 @@ type AccountSignInResponse {
   accountId: String
   firstName: String
   lastName: String
+  email: String
   token: String
   sessionIdentifier: String
   expires: DateTime

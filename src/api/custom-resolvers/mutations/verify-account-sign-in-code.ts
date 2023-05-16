@@ -87,6 +87,7 @@ const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignIn
         accountId: account.id,
         lastName: account.lastName,
         firstName: account.firstName,
+        email: account.email,
         ...jwt,
         expires: accountUpdate.sessionExpiry,
       };

@@ -500,6 +500,15 @@ var lists = {
                 id: businessId
               }
             };
+            await context.db.BusinessContactDetail.createOne({
+              data: {
+                business: {
+                  connect: {
+                    id: businessId
+                  }
+                }
+              }
+            });
             const { id: brokerId } = await context.db.Broker.createOne({
               data: {}
             });
@@ -729,7 +738,10 @@ var lists = {
       totalEmployeesUK: (0, import_fields.integer)(),
       totalEmployeesInternational: (0, import_fields.integer)(),
       estimatedAnnualTurnover: (0, import_fields.integer)(),
-      exportsTurnoverPercentage: (0, import_fields.integer)()
+      exportsTurnoverPercentage: (0, import_fields.integer)(),
+      businessContactDetail: (0, import_fields.relationship)({
+        ref: "BusinessContactDetail.business"
+      })
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -866,6 +878,16 @@ var lists = {
           await update_application_default.timestamp(context, item.applicationId);
         }
       }
+    },
+    access: import_access.allowAll
+  }),
+  BusinessContactDetail: (0, import_core.list)({
+    fields: {
+      business: (0, import_fields.relationship)({ ref: "Business.businessContactDetail" }),
+      firstName: (0, import_fields.text)(),
+      lastName: (0, import_fields.text)(),
+      email: (0, import_fields.text)(),
+      position: (0, import_fields.text)()
     },
     access: import_access.allowAll
   }),
@@ -1195,6 +1217,7 @@ var typeDefs = `
     accountId: String
     firstName: String
     lastName: String
+    email: String
     token: String
     sessionIdentifier: String
     expires: DateTime
@@ -1292,7 +1315,7 @@ var typeDefs = `
     ): SuccessResponse
 
     """ create and send email for insurance feedback """
-    createFeedbackAndEmail(
+    createFeedbackAndSendEmail(
       satisfaction: String
       improvement: String
       otherComments: String
@@ -2063,6 +2086,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
         accountId: account.id,
         lastName: account.lastName,
         firstName: account.firstName,
+        email: account.email,
         ...jwt,
         expires: accountUpdate.sessionExpiry
       };
@@ -3505,7 +3529,7 @@ var customResolvers = {
     deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
     updateCompanyAndCompanyAddress: update_company_and_company_address_default,
     submitApplication: submit_application_default,
-    createFeedbackAndEmail: create_feedback_default
+    createFeedbackAndSendEmail: create_feedback_default
   },
   Query: {
     getCompaniesHouseInformation: get_companies_house_information_default,

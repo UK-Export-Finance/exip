@@ -113,6 +113,7 @@ const typeDefs = `
     accountId: String
     firstName: String
     lastName: String
+    email: String
     token: String
     sessionIdentifier: String
     expires: DateTime
@@ -210,7 +211,7 @@ const typeDefs = `
     ): SuccessResponse
 
     """ create and send email for insurance feedback """
-    createFeedbackAndEmail(
+    createFeedbackAndSendEmail(
       satisfaction: String
       improvement: String
       otherComments: String

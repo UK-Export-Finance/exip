@@ -6,10 +6,13 @@ import { FIELDS, ACCOUNT_FIELDS } from '../../../../content-strings/fields/insur
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import getValuesFromUserSessionOrApplication from '../../../../helpers/get-values-from-user-session-or-application';
 import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
+import mapAndSave from '../map-and-save';
 
-const { COMPANY_NAME, POSITION } = FIELD_IDS.CONTACT;
+const { BUSINESS } = FIELD_IDS;
+const { COMPANY_NAME, POSITION, BUSINESS_CONTACT_DETAIL } = FIELD_IDS.CONTACT;
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
 const { CONTACT } = PAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -74,6 +77,7 @@ const get = (req: Request, res: Response) => {
       }),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
+      submittedValues: getValuesFromUserSessionOrApplication(application, BUSINESS, BUSINESS_CONTACT_DETAIL, req.session.user),
       ...pageVariables(application.referenceNumber),
     });
   } catch (err) {
@@ -120,11 +124,11 @@ const post = async (req: Request, res: Response) => {
     }
 
     // // if no errors, then runs save api call to db
-    // const saveResponse = await mapAndSave.turnover(body, application);
+    const saveResponse = await mapAndSave.contact(body, application);
 
-    // if (!saveResponse) {
-    //   return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
-    // }
+    if (!saveResponse) {
+      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    }
 
     // if (isCheckAndChangeRoute(req.originalUrl)) {
     //   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);

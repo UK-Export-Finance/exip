@@ -8,13 +8,12 @@
   {% set labelClass = params.labelClass %}
   {% set hint = params.hint %}
   {% set submittedValues = params.submittedValues %}
-  {% set applicationAnswers = params.submittedAnswers %}
   {% set validationErrors = params.validationErrors %}
 
   {{ govukInput({
     id: fieldId,
     name: fieldId,
-    value: submittedValues[fieldId] or applicationAnswers[fieldId],
+    value: submittedValues[fieldId],
     label: {
       text: label,
       classes: labelClass,

@@ -8,6 +8,7 @@ import { ROUTES } from '../../../../../../constants';
 import { EXPORTER_BUSINESS as EXPORTER_BUSINESS_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/business';
 import { ACCOUNT as ACCOUNT_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/account';
 import application from '../../../../../fixtures/application';
+import account from '../../../../../fixtures/account';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.CONTACT;
 
@@ -15,6 +16,7 @@ const {
   CONTACT: {
     COMPANY_NAME,
     POSITION,
+    BUSINESS_CONTACT_DETAIL,
   },
 } = EXPORTER_BUSINESS_FIELD_IDS;
 
@@ -101,38 +103,46 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
       cy.checkText(yourContactPage.contactDetailsHint(), CONTENT_STRINGS.CONTACT_DETAILS.HINT);
     });
 
-    it(`should display ${FIRST_NAME} field`, () => {
+    it(`should display ${FIRST_NAME} field and be prepopulated`, () => {
       const fieldId = FIRST_NAME;
       const field = yourContactPage.field(fieldId);
 
       field.input().should('exist');
 
+      cy.checkValue(field, account[FIRST_NAME]);
+
       cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
     });
 
-    it(`should display ${LAST_NAME} field`, () => {
+    it(`should display ${LAST_NAME} field and be prepopulated`, () => {
       const fieldId = LAST_NAME;
       const field = yourContactPage.field(fieldId);
 
       field.input().should('exist');
 
+      cy.checkValue(field, account[LAST_NAME]);
+
       cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
     });
 
-    it(`should display ${EMAIL} field`, () => {
+    it(`should display ${EMAIL} field and be prepopulated`, () => {
       const fieldId = EMAIL;
       const field = yourContactPage.field(fieldId);
 
       field.input().should('exist');
 
+      cy.checkValue(field, account[EMAIL]);
+
       cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
     });
 
-    it(`should display ${POSITION} field`, () => {
+    it(`should display ${POSITION} field and should not be prepopulated`, () => {
       const fieldId = POSITION;
       const field = yourContactPage.field(fieldId);
 
       field.input().should('exist');
+
+      cy.checkValue(field, '');
 
       cy.checkText(field.label(), FIELDS.CONTACT[fieldId].LABEL);
     });
@@ -149,6 +159,19 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
       cy.completeAndSubmitYourContact();
 
       cy.url().should('eq', natureOfBusinessUrl);
+    });
+  });
+
+  describe('when going back to the page', () => {
+    const businessContactDetails = application.EXPORTER_BUSINESS[BUSINESS_CONTACT_DETAIL];
+
+    it('should have the submitted values', () => {
+      cy.navigateToUrl(url);
+
+      cy.checkValue(yourContactPage.field(FIRST_NAME), businessContactDetails[FIRST_NAME]);
+      cy.checkValue(yourContactPage.field(LAST_NAME), businessContactDetails[LAST_NAME]);
+      cy.checkValue(yourContactPage.field(EMAIL), businessContactDetails[EMAIL]);
+      cy.checkValue(yourContactPage.field(POSITION), businessContactDetails[POSITION]);
     });
   });
 });

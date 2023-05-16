@@ -10,6 +10,11 @@ import { FIELDS_ELIGIBILITY } from '../../content-strings/fields/insurance/eligi
 
 const {
   INSURANCE: {
+    ACCOUNT: {
+      FIRST_NAME: ACCOUNT_FIRST_NAME,
+      LAST_NAME: ACCOUNT_LAST_NAME,
+      EMAIL: ACCOUNT_EMAIL,
+    },
     ELIGIBILITY: {
       WANT_COVER_OVER_MAX_AMOUNT,
       WANT_COVER_OVER_MAX_PERIOD,
@@ -64,6 +69,10 @@ const {
         COUNTY,
         POSTCODE,
         EMAIL,
+      },
+      CONTACT: {
+        POSITION: CONTACT_POSITION,
+        BUSINESS_CONTACT_DETAIL,
       },
     },
     YOUR_BUYER: {
@@ -160,6 +169,12 @@ const application = {
     [EMPLOYEES_UK]: '2000',
     [ESTIMATED_ANNUAL_TURNOVER]: '65000',
     [PERCENTAGE_TURNOVER]: '0',
+    [BUSINESS_CONTACT_DETAIL]: {
+      [ACCOUNT_FIRST_NAME]: 'Bob',
+      [ACCOUNT_LAST_NAME]: 'Smith',
+      [ACCOUNT_EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
+      [CONTACT_POSITION]: 'EO',
+    },
   },
   EXPORTER_BROKER: {
     [USING_BROKER]: FIELD_VALUES.YES,

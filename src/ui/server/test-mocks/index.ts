@@ -7,7 +7,7 @@ import mockCisCountries from './mock-cis-countries';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
 import mockCompany from './mock-company';
-import mockApplication from './mock-application';
+import mockApplication, { mockBusiness } from './mock-application';
 import mockApplications from './mock-applications';
 import mockUrlOrigin from './mock-url-origin';
 import mockPhoneNumbers from './mock-phone-numbers';
@@ -18,6 +18,7 @@ import mockBroker from './mock-broker';
 import mockBuyer from './mock-buyer';
 import mockDeclarations from './mock-declarations';
 import { mockInsuranceFeedback } from './mock-feedback';
+import mockBusinessContact from './mock-business-contact';
 
 const mockReq = () => {
   let req = {} as Request;
@@ -72,6 +73,8 @@ export {
   mockApplication,
   mockApplications,
   mockBroker,
+  mockBusiness,
+  mockBusinessContact,
   mockBuyer,
   mockCisCountries,
   mockCountries,
