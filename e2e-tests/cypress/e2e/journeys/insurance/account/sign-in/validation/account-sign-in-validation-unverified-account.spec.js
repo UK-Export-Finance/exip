@@ -67,11 +67,5 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
 
       cy.checkText(confirmEmailPage.weSentLinkTo(), expected);
     });
-
-    // it('should render `check your inbox` copy with the submitted email', () => {
-    //   const expected = `${CHECK_YOUR_INBOX.CHECK_YOUR_INBOX} ${accountEmail}`;
-
-    //   cy.checkText(confirmEmailPage.checkInbox(), expected);
-    // });
   });
 });

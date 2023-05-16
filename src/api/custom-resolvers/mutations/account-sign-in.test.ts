@@ -35,8 +35,6 @@ describe('custom-resolvers/account-sign-in', () => {
   const mockPassword = String(process.env.MOCK_ACCOUNT_PASSWORD);
 
   const variables = {
-    // firstName: 'a',
-    // lastName: 'b',
     urlOrigin: mockUrlOrigin,
     email: mockAccount.email,
     password: mockPassword,
