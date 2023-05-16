@@ -7,7 +7,7 @@ const {
   ACCOUNT: { CREATE: { CONFIRM_EMAIL, CONFIRM_EMAIL_RESENT } },
 } = ROUTES;
 
-context.skip('Insurance - Account - Create - Resend confirm email page - Go back to confirm email page via back button', () => {
+context('Insurance - Account - Create - Resend confirm email page - Go back to confirm email page via back button', () => {
   const confirmEmailUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
 
   after(() => {

@@ -20,6 +20,7 @@ interface RequestCookies {
 interface RequestHeaders {
   referer: string;
   origin: string;
+  host: string;
 }
 
 interface ResponseLocals {

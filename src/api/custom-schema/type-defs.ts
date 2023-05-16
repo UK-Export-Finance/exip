@@ -154,11 +154,13 @@ const typeDefs = `
 
     """ send confirm email address email """
     sendEmailConfirmEmailAddress(
+      urlOrigin: String!
       accountId: String!
     ): EmailResponse
 
     """ validate credentials, generate and email a OTP security code """
     accountSignIn(
+      urlOrigin: String!
       email: String!
       password: String!
     ): AccountSignInResponse

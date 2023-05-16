@@ -124,11 +124,11 @@ const account = {
       throw new Error('Sending email verification for account creation');
     }
   },
-  signIn: async (email: string, password: string) => {
+  signIn: async (urlOrigin: string, email: string, password: string) => {
     try {
       console.info('Signing in account');
 
-      const variables = { email, password };
+      const variables = { urlOrigin, email, password };
 
       const response = (await apollo('POST', accountSignInMutation, variables)) as ApolloResponse;
 

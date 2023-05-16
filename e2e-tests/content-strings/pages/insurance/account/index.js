@@ -18,7 +18,7 @@ const ACCOUNT = {
           YOU_CAN: 'You can',
           LINK: {
             TEXT: 'request a new link,',
-            HREF: INSURANCE_ROUTES.ACCOUNT.CREATE.CONFIRM_EMAIL_RESENT,
+            HREF: INSURANCE_ROUTES.ACCOUNT.CREATE.RESEND_CONFIRM_EMAIL,
           },
           IF_NOT_RECEIVED: 'if you do not receive anything after 5 minutes.',
         },

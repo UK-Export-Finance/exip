@@ -14,7 +14,7 @@ export const PAGE_CONTENT_STRINGS = {
 
 /**
  * get
- * Call API to send "confirm email" email and render the Confirm email resent page
+ * Call API to get an account's email and render the "confirm email resent" page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} Confirm email resent page
@@ -27,17 +27,13 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const urlOrigin = req.headers.origin;
+    const accountResponse = await api.keystone.account.get(id);
 
-    const account = await api.keystone.account.sendEmailConfirmEmailAddress(urlOrigin, id);
-
-    if (!account.success) {
-      console.error("Error sending new email verification for account creation and rendering 'new link sent' page");
-
+    if (!accountResponse || !accountResponse.email) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const accountEmail = account.emailRecipient;
+    const accountEmail = accountResponse.email;
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -49,7 +45,7 @@ export const get = async (req: Request, res: Response) => {
       accountId: id,
     });
   } catch (err) {
-    console.error("Error sending new email verification for account creation and rendering 'new link sent' page", { err });
+    console.error("Error getting account and rendering 'confirm email resent' page", { err });
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }

@@ -1830,10 +1830,10 @@ type Mutation {
   verifyAccountEmailAddress(token: String!): VerifyAccountEmailAddressResponse
 
   """ send confirm email address email """
-  sendEmailConfirmEmailAddress(accountId: String!): EmailResponse
+  sendEmailConfirmEmailAddress(urlOrigin: String!, accountId: String!): EmailResponse
 
   """ validate credentials, generate and email a OTP security code """
-  accountSignIn(email: String!, password: String!): AccountSignInResponse
+  accountSignIn(urlOrigin: String!, email: String!, password: String!): AccountSignInResponse
 
   """ generate and email a new OTP security code """
   accountSignInSendNewCode(accountId: String!): AccountSignInResponse

@@ -231,6 +231,7 @@ interface AccountSendEmailPasswordResetLinkVariables {
 }
 
 interface AccountSignInVariables {
+  urlOrigin: string;
   email: string;
   password: string;
 }
