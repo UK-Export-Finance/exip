@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const createInsuranceFeedbackMutation = gql`
-  mutation CreateFeedbackAndEmail(
+  mutation CreateFeedbackAndSendEmail(
     $satisfaction: String!
     $improvement: String!
     $otherComments: String!
@@ -9,7 +9,7 @@ const createInsuranceFeedbackMutation = gql`
     $product: String!
     $service: String!
   ) {
-    createFeedbackAndEmail(
+    createFeedbackAndSendEmail(
       satisfaction: $satisfaction
       improvement: $improvement
       otherComments: $otherComments

@@ -7,7 +7,7 @@ import mockCisCountries from './mock-cis-countries';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
 import mockCompany from './mock-company';
-import mockApplication from './mock-application';
+import mockApplication, { mockBusiness } from './mock-application';
 import mockApplications from './mock-applications';
 import mockUrlOrigin from './mock-url-origin';
 import mockPhoneNumbers from './mock-phone-numbers';
@@ -71,6 +71,7 @@ export {
   mockApplication,
   mockApplications,
   mockBroker,
+  mockBusiness,
   mockBuyer,
   mockCisCountries,
   mockCountries,

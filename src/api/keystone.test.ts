@@ -22,7 +22,7 @@ describe('Create an Application', () => {
     application = (await context.query.Application.createOne({
       data: {},
       query:
-        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status previousStatus eligibility { id } policyAndExport { id } owner { id } company { id } business { id } broker { id } buyer { id } sectionReview { id } declaration { id }',
+        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status previousStatus eligibility { id } policyAndExport { id } owner { id } company { id } business { id businessContactDetail { id } } broker { id } buyer { id } sectionReview { id } declaration { id }',
     })) as Application;
   });
 
@@ -97,6 +97,11 @@ describe('Create an Application', () => {
   test('it should have a business id', () => {
     expect(application.business).toBeDefined();
     expect(typeof application.business.id).toEqual('string');
+  });
+
+  test('it should have a business id', () => {
+    expect(application.business.businessContactDetail.id).toBeDefined();
+    expect(typeof application.business.businessContactDetail.id).toEqual('string');
   });
 
   test('it should have a broker id', () => {

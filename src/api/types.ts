@@ -8,6 +8,10 @@ interface ApplicationRelationship {
   id: string;
 }
 
+interface Business extends ApplicationRelationship {
+  businessContactDetail: ApplicationRelationship;
+}
+
 interface Country extends ApplicationRelationship {
   name: string;
   isoCode: string;
@@ -125,7 +129,7 @@ interface Application {
   company: ApplicationCompany;
   companySicCodes: Array<ApplicationCompanySicCode>;
   companyAddress: ApplicationCompanyAddress;
-  business: ApplicationRelationship;
+  business: Business;
   broker: ApplicationRelationship;
   buyer: ApplicationBuyer;
   sectionReview: ApplicationRelationship;
@@ -278,6 +282,7 @@ interface VerifyAccountSignInCodeResponse extends SuccessResponse {
   accountId?: string;
   firstName?: string;
   lastName?: string;
+  email?: string;
   token?: string;
   expires?: string;
   sessionIdentifier?: string;
@@ -319,7 +324,7 @@ interface UpdateCompanyAndCompanyAddressVariables {
   data: UpdateCompanyAndCompanyAddressVariablesData;
 }
 
-interface Feedback {
+interface Feedback extends SuccessResponse {
   id: string;
   service: string;
   satisfaction: string;
@@ -328,7 +333,6 @@ interface Feedback {
   referralUrl: string;
   product: string;
   createdAt: string;
-  success: boolean;
 }
 
 interface IndustrySector {

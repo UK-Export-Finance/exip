@@ -43,6 +43,7 @@ interface RequestQuery {
 interface RequestSessionUser {
   firstName: string;
   lastName: string;
+  email: string;
   id: string;
   token?: string;
   expires: string;

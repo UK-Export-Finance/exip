@@ -8,6 +8,7 @@ import getApplicationQuery from '../../../graphql/queries/application';
 import updateApplicationPolicyAndExportMutation from '../../../graphql/mutations/update-application/policy-and-export';
 import updateApplicationCompanyMutation from '../../../graphql/mutations/update-application/company';
 import updateBusinessMutation from '../../../graphql/mutations/update-application/business';
+import updateBusinessContactMutation from '../../../graphql/mutations/update-application/business-contact';
 import updateBrokerMutation from '../../../graphql/mutations/update-application/broker';
 import updateBuyerMutation from '../../../graphql/mutations/update-application/buyer';
 import submitApplicationMutation from '../../../graphql/mutations/submit-application';
@@ -191,6 +192,36 @@ const application = {
 
         if (response?.data?.updateBusiness) {
           return response.data.updateBusiness;
+        }
+
+        console.error(response);
+        throw new Error('Updating application business');
+      } catch (err) {
+        console.error(err);
+        throw new Error('Updating application business');
+      }
+    },
+    businessContact: async (id: string, update: object) => {
+      try {
+        console.info('Updating application business contact details');
+
+        const variables = {
+          where: { id },
+          data: update,
+        };
+
+        const response = (await apollo('POST', updateBusinessContactMutation, variables)) as ApolloResponse;
+
+        if (response.errors) {
+          console.error('GraphQL error updating application business ', response.errors);
+        }
+
+        if (response?.networkError?.result?.errors) {
+          console.error('GraphQL network error updating application business ', response.networkError.result.errors);
+        }
+
+        if (response?.data?.updateBusinessContactDetail) {
+          return response.data.updateBusinessContactDetail;
         }
 
         console.error(response);

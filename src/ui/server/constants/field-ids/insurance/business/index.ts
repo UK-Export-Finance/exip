@@ -1,4 +1,5 @@
 const EXPORTER_BUSINESS = {
+  BUSINESS: 'business',
   COMPANY_HOUSE: {
     SEARCH: 'companiesHouseSearch',
     INPUT: 'companiesHouseNumber',
@@ -23,6 +24,7 @@ const EXPORTER_BUSINESS = {
     },
   },
   CONTACT: {
+    BUSINESS_CONTACT_DETAIL: 'businessContactDetail',
     COMPANY_NAME: 'companyName',
     POSITION: 'position',
   },

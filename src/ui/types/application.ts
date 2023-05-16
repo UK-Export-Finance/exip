@@ -70,12 +70,21 @@ interface ApplicationCompany {
   sicCodes: Array<ApplicationExporterSicCodes>;
 }
 
+interface BusinessContactDetail {
+  id: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  position?: string;
+}
+
 interface ApplicationBusiness {
   id: string;
   goodsOrServices?: string;
   totalYearsExporting?: string;
   totalEmployeesUK?: string;
   totalEmployeesInternational?: string;
+  businessContactDetail: BusinessContactDetail;
 }
 
 interface ApplicationBroker {

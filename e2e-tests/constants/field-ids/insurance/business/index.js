@@ -12,6 +12,7 @@ export const EXPORTER_BUSINESS = {
     SUMMARY_LIST: 'summaryList',
   },
   CONTACT: {
+    BUSINESS_CONTACT_DETAIL: 'businessContactDetail',
     COMPANY_NAME: 'companyName',
     POSITION: 'position',
   },

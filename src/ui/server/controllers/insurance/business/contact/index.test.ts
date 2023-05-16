@@ -10,8 +10,11 @@ import generateValidationErrors from './validation';
 import { FIELDS, ACCOUNT_FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import mapAndSave from '../map-and-save';
+import getFromSessionOrApplication from '../../../../helpers/get-from-session-or-application';
 
-const { COMPANY_NAME, POSITION } = FIELD_IDS.CONTACT;
+const { BUSINESS } = FIELD_IDS;
+const { COMPANY_NAME, POSITION, BUSINESS_CONTACT_DETAIL } = FIELD_IDS.CONTACT;
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
 const { CONTACT } = PAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -92,6 +95,7 @@ describe('controllers/insurance/business/contact', () => {
           }),
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplication),
+          applicationAnswers: getFromSessionOrApplication(mockApplication, BUSINESS, BUSINESS_CONTACT_DETAIL, req.session.user),
           ...pageVariables(mockApplication.referenceNumber),
         });
       });
@@ -111,6 +115,8 @@ describe('controllers/insurance/business/contact', () => {
   });
 
   describe('post', () => {
+    mapAndSave.contact = jest.fn(() => Promise.resolve(true));
+
     describe('when there are validation errors', () => {
       it('should render template with validation errors', async () => {
         req.body = {};
@@ -138,18 +144,30 @@ describe('controllers/insurance/business/contact', () => {
     });
 
     describe('when there are no validation errors', () => {
+      const body = {
+        [FIRST_NAME]: 'firstName',
+        [LAST_NAME]: 'lastName',
+        [EMAIL]: 'test@test.com',
+        [POSITION]: 'CEO',
+      };
+
       it('should redirect to next page', async () => {
-        req.body = {
-          [FIRST_NAME]: 'test',
-          [LAST_NAME]: 'test',
-          [EMAIL]: 'test@test.com',
-          [POSITION]: 'test',
-        };
+        req.body = body;
 
         await post(req, res);
 
         const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      it('should call mapAndSave.contact once with the contents of body', async () => {
+        req.body = body;
+
+        await post(req, res);
+
+        expect(mapAndSave.contact).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.contact).toHaveBeenCalledWith(req.body, mockApplication);
       });
     });
 
