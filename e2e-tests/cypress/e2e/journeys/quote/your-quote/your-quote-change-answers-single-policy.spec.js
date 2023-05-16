@@ -203,7 +203,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      cy.keyboardInput(buyerCountryPage.searchInput(), 'Bahrain');
+      cy.keyboardInput(buyerCountryPage.input(), 'Bahrain');
       const results = buyerCountryPage.results();
       results.first().click();
 
@@ -213,7 +213,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it('renders the new answer in the quote', () => {
-      cy.keyboardInput(buyerCountryPage.searchInput(), 'Bahrain');
+      cy.keyboardInput(buyerCountryPage.input(), 'Bahrain');
       const results = buyerCountryPage.results();
       results.first().click();
 

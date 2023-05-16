@@ -8,6 +8,7 @@ import {
   checkValidationErrors,
   checkFocusOnInputWhenClickingSummaryErrorMessage,
 } from '../../../../../support/check-buyer-country-form';
+import { COUNTRY_SUPPORTED_ONLINE } from '../../../../../fixtures/countries';
 
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
@@ -88,7 +89,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
 
     describe('when submitting with a supported country', () => {
       beforeEach(() => {
-        cy.keyboardInput(buyerCountryPage.searchInput(), 'Algeria');
+        cy.keyboardInput(buyerCountryPage.input(), COUNTRY_SUPPORTED_ONLINE.name);
 
         const results = buyerCountryPage.results();
         results.first().click();
@@ -100,14 +101,14 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
         cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
       });
 
-      describe('when going back to the page', () => {
-        it('should have the originally submitted answer selected', () => {
-          cy.clickBackLink();
+      it('should prepopulate the field when going back to the page via back link', () => {
+        cy.clickBackLink();
 
-          const expectedValue = 'Algeria';
+        const expectedValue = COUNTRY_SUPPORTED_ONLINE.name;
 
-          cy.checkText(buyerCountryPage.results(), expectedValue);
-        });
+        cy.checkValue(buyerCountryPage, expectedValue);
+
+        cy.checkText(buyerCountryPage.results(), expectedValue);
       });
     });
   });

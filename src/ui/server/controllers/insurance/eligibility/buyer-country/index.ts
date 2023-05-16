@@ -8,6 +8,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import { validation as generateValidationErrors } from '../../../../shared-validation/buyer-country';
 import getCountryByName from '../../../../helpers/get-country-by-name';
 import { canApplyOnline, canApplyOffline, cannotApply } from '../../../../helpers/country-support';
+import mapSubmittedEligibilityCountry from '../../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
 
@@ -97,14 +98,10 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
     }
 
-    if (canApplyOnline(country)) {
-      const populatedData = {
-        [FIELD_IDS.BUYER_COUNTRY]: {
-          name: country.name,
-          isoCode: country.isoCode,
-          riskCategory: country.riskCategory,
-        },
-      };
+    const applyOnline = canApplyOnline(country);
+
+    if (applyOnline) {
+      const populatedData = mapSubmittedEligibilityCountry(country, applyOnline);
 
       req.session.submittedData = {
         ...req.session.submittedData,
@@ -115,10 +112,24 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (canApplyOffline(country)) {
+      const populatedData = mapSubmittedEligibilityCountry(country, applyOnline);
+
+      req.session.submittedData = {
+        ...req.session.submittedData,
+        insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
+      };
+
       return res.redirect(ROUTES.INSURANCE.APPLY_OFFLINE);
     }
 
     if (cannotApply(country)) {
+      const populatedData = mapSubmittedEligibilityCountry(country, applyOnline);
+
+      req.session.submittedData = {
+        ...req.session.submittedData,
+        insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
+      };
+
       const { CANNOT_APPLY } = PAGES;
       const { REASON } = CANNOT_APPLY;
 

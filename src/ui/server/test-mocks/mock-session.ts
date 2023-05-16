@@ -14,14 +14,20 @@ const mockSession = {
   submittedData: {
     quoteEligibility: {
       ...mockAnswers,
-      [BUYER_COUNTRY]: mockCountry,
+      [BUYER_COUNTRY]: {
+        ...mockCountry,
+        canApplyOnline: true,
+      },
       [CURRENCY]: {
         name: 'UK Sterling',
         isoCode: GBP_CURRENCY_CODE,
       },
     },
     insuranceEligibility: {
-      [BUYER_COUNTRY]: mockCountry,
+      [BUYER_COUNTRY]: {
+        ...mockCountry,
+        canApplyOnline: true,
+      },
       [VALID_EXPORTER_LOCATION]: true,
       [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
       [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT]: false,

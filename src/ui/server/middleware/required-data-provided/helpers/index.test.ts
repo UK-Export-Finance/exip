@@ -1,7 +1,7 @@
 import { getRoutesAsArray, routeIsKnown, hasRequiredData } from '.';
-import { ROUTES } from '../../../constants';
+import { FIELD_IDS, ROUTES } from '../../../constants';
 import { generateRequiredData } from '../insurance/eligibility';
-import { mockSession } from '../../../test-mocks';
+import { mockSession, mockCountries } from '../../../test-mocks';
 
 const { INSURANCE } = ROUTES;
 
@@ -59,6 +59,36 @@ describe('middleware/required-data-provided/helpers', () => {
     describe('when total amount of submitted fields does NOT match the total of required fields', () => {
       it('should return false', () => {
         const result = hasRequiredData(INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, mockRequiredDataState, {});
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe(`when ${FIELD_IDS.BUYER_COUNTRY} submitted data with true canApplyOnline flag`, () => {
+      it('should return true', () => {
+        const mockSubmittedData = {
+          [FIELD_IDS.BUYER_COUNTRY]: {
+            ...mockCountries[0],
+            canApplyOnline: true,
+          },
+        };
+
+        const result = hasRequiredData(INSURANCE.ELIGIBILITY.EXPORTER_LOCATION, mockRequiredDataState, mockSubmittedData);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe(`when ${FIELD_IDS.BUYER_COUNTRY} submitted data with false canApplyOnline flag`, () => {
+      it('should return false', () => {
+        const mockSubmittedData = {
+          [FIELD_IDS.BUYER_COUNTRY]: {
+            ...mockCountries[0],
+            canApplyOnline: false,
+          },
+        };
+
+        const result = hasRequiredData(INSURANCE.ELIGIBILITY.EXPORTER_LOCATION, mockRequiredDataState, mockSubmittedData);
 
         expect(result).toEqual(false);
       });

@@ -6,11 +6,12 @@ import getUserNameFromSession from '../../../helpers/get-user-name-from-session'
 import { validation as generateValidationErrors } from '../../../shared-validation/buyer-country';
 import isChangeRoute from '../../../helpers/is-change-route';
 import getCountryByName from '../../../helpers/get-country-by-name';
+import mapSubmittedEligibilityCountry from '../../../helpers/mappings/map-submitted-eligibility-country';
 import api from '../../../api';
 import { mapCisCountries } from '../../../helpers/mappings/map-cis-countries';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
-import { Request, Response } from '../../../../types';
 import { mockReq, mockRes, mockAnswers, mockSession, mockCisCountries } from '../../../test-mocks';
+import { Country, Request, Response } from '../../../../types';
 
 describe('controllers/quote/buyer-country', () => {
   let req: Request;
@@ -210,6 +211,7 @@ describe('controllers/quote/buyer-country', () => {
 
   describe('post', () => {
     let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+    const mappedCountries = mapCisCountries(mockCountriesResponse);
 
     beforeEach(() => {
       api.external.getCountries = getCountriesSpy;
@@ -232,6 +234,18 @@ describe('controllers/quote/buyer-country', () => {
     describe('when the submitted country can only get a quote via email', () => {
       beforeEach(() => {
         req.body[FIELD_IDS.BUYER_COUNTRY] = countrySupportedViaEmailOnly.marketName;
+      });
+
+      it('should update the session with submitted data, popluated with country object', async () => {
+        await post(req, res);
+
+        const selectedCountry = getCountryByName(mappedCountries, countrySupportedViaEmailOnly.marketName) as Country;
+
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, false);
+
+        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
+
+        expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });
 
       it('should add previousRoute, exitReason and exitDescription to req.flash', async () => {
@@ -272,6 +286,18 @@ describe('controllers/quote/buyer-country', () => {
         req.body[FIELD_IDS.BUYER_COUNTRY] = countryUnsupported.marketName;
       });
 
+      it('should update the session with submitted data, popluated with country object', async () => {
+        await post(req, res);
+
+        const selectedCountry = getCountryByName(mappedCountries, countryUnsupported.marketName) as Country;
+
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, false);
+
+        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
+
+        expect(req.session.submittedData.quoteEligibility).toEqual(expected);
+      });
+
       it('should add previousRoute and exitReason to req.flash', async () => {
         await post(req, res);
 
@@ -296,9 +322,8 @@ describe('controllers/quote/buyer-country', () => {
 
     describe('when the country is supported for an online quote and there are no validation errors', () => {
       const selectedCountryName = mockAnswers[FIELD_IDS.BUYER_COUNTRY];
-      const mappedCountries = mapCisCountries(mockCountriesResponse);
 
-      const selectedCountry = getCountryByName(mappedCountries, selectedCountryName);
+      const selectedCountry = getCountryByName(mappedCountries, selectedCountryName) as Country;
 
       const validBody = {
         [FIELD_IDS.BUYER_COUNTRY]: selectedCountryName,
@@ -311,13 +336,7 @@ describe('controllers/quote/buyer-country', () => {
       it('should update the session with submitted data, popluated with country object', async () => {
         await post(req, res);
 
-        const expectedPopulatedData = {
-          [FIELD_IDS.BUYER_COUNTRY]: {
-            name: selectedCountry?.name,
-            isoCode: selectedCountry?.isoCode,
-            riskCategory: selectedCountry?.riskCategory,
-          },
-        };
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, true);
 
         const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
 

@@ -22,13 +22,13 @@ const checkInputHint = () => {
 
 const checkAutocompleteInput = {
   hasWorkingClientSideJS: () => {
-    buyerCountryPage.searchInput().should('have.class', 'autocomplete__input');
+    buyerCountryPage.input().should('have.class', 'autocomplete__input');
   },
   rendersInput: () => {
-    buyerCountryPage.searchInput().should('exist');
+    buyerCountryPage.input().should('exist');
   },
   rendersNoResultsMessage: () => {
-    cy.keyboardInput(buyerCountryPage.searchInput(), 'test');
+    cy.keyboardInput(buyerCountryPage.input(), 'test');
 
     const noResults = buyerCountryPage.noResults();
     noResults.should('exist');
@@ -38,7 +38,7 @@ const checkAutocompleteInput = {
   },
   rendersSingleResult: () => {
     // start searching for Algeria
-    cy.keyboardInput(buyerCountryPage.searchInput(), 'Alg');
+    cy.keyboardInput(buyerCountryPage.input(), 'Alg');
 
     const noResults = buyerCountryPage.noResults();
     noResults.should('not.exist');
@@ -48,7 +48,7 @@ const checkAutocompleteInput = {
     results.should('have.length', 1);
   },
   rendersMultipleResults: () => {
-    cy.keyboardInput(buyerCountryPage.searchInput(), 'Be');
+    cy.keyboardInput(buyerCountryPage.input(), 'Be');
 
     const noResults = buyerCountryPage.noResults();
     noResults.should('not.exist');
@@ -58,17 +58,17 @@ const checkAutocompleteInput = {
     results.should('have.length.greaterThan', 1);
   },
   allowsUserToRemoveCountryAndSearchAgain: () => {
-    cy.keyboardInput(buyerCountryPage.searchInput(), 'Algeria');
+    cy.keyboardInput(buyerCountryPage.input(), 'Algeria');
     const results = buyerCountryPage.results();
 
     // select the first result (Algeria)
     results.first().click();
 
     // clear the input
-    buyerCountryPage.searchInput().clear();
+    buyerCountryPage.input().clear();
 
     // search for a different country, submit with enter key
-    cy.keyboardInput(buyerCountryPage.searchInput(), 'Brazil{enter}');
+    cy.keyboardInput(buyerCountryPage.input(), 'Brazil{enter}');
 
     // check hidden input value
     const expectedValue = 'Brazil';
@@ -102,7 +102,7 @@ const checkFocusOnInputWhenClickingSummaryErrorMessage = () => {
 
   partials.errorSummaryListItemLinks().eq(0).click();
 
-  buyerCountryPage.searchInput().should('have.class', 'autocomplete__input--focused');
+  buyerCountryPage.input().should('have.class', 'autocomplete__input--focused');
 };
 
 export {
