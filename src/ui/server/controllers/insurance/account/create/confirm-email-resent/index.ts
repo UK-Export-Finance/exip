@@ -14,7 +14,7 @@ export const PAGE_CONTENT_STRINGS = {
 
 /**
  * get
- * Render the "confirm email resent" page
+ * Call API to get an account's email and render the "confirm email resent" page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} Confirm email resent page
