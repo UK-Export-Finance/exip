@@ -65,7 +65,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
         cy.navigateToUrl(url);
         row.changeLink().click();
 
-        cy.keyboardInput(buyerCountryPage.searchInput(), 'Brazil');
+        cy.keyboardInput(buyerCountryPage.input(), 'Brazil');
         const results = buyerCountryPage.results();
         results.first().click();
 

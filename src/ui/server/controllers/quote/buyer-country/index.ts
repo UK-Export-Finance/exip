@@ -9,6 +9,7 @@ import { validation as generateValidationErrors } from '../../../shared-validati
 import isChangeRoute from '../../../helpers/is-change-route';
 import getCountryByName from '../../../helpers/get-country-by-name';
 import { canGetAQuoteOnline, canGetAQuoteByEmail, cannotGetAQuote } from '../../../helpers/country-support';
+import mapSubmittedEligibilityCountry from '../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
 
@@ -123,15 +124,10 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
     }
 
-    if (canGetAQuoteOnline(country)) {
-      const populatedData = {
-        ...req.body,
-        [FIELD_IDS.BUYER_COUNTRY]: {
-          name: country.name,
-          isoCode: country.isoCode,
-          riskCategory: country.riskCategory,
-        },
-      };
+    const canApplyOnline = canGetAQuoteOnline(country);
+
+    if (canApplyOnline) {
+      const populatedData = mapSubmittedEligibilityCountry(country, canApplyOnline);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
@@ -143,6 +139,10 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (canGetAQuoteByEmail(country)) {
+      const populatedData = mapSubmittedEligibilityCountry(country, canApplyOnline);
+
+      req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
+
       req.flash('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
 
       const { GET_A_QUOTE_BY_EMAIL } = PAGES.QUOTE;
@@ -155,6 +155,10 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (cannotGetAQuote(country)) {
+      const populatedData = mapSubmittedEligibilityCountry(country, canApplyOnline);
+
+      req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
+
       req.flash('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
 
       const { CANNOT_APPLY } = PAGES;

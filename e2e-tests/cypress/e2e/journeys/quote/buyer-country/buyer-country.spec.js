@@ -7,6 +7,7 @@ import {
   checkValidationErrors,
   checkFocusOnInputWhenClickingSummaryErrorMessage,
 } from '../../../../support/check-buyer-country-form';
+import { COUNTRY_SUPPORTED_ONLINE } from '../../../../fixtures/countries';
 
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
@@ -84,15 +85,27 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     });
 
     describe('when submitting with a supported country', () => {
-      it(`should redirect to ${ROUTES.QUOTE.BUYER_BODY}`, () => {
-        cy.keyboardInput(buyerCountryPage.searchInput(), 'Algeria');
+      beforeEach(() => {
+        cy.keyboardInput(buyerCountryPage.input(), COUNTRY_SUPPORTED_ONLINE.name);
 
         const results = buyerCountryPage.results();
         results.first().click();
 
         submitButton().click();
+      });
 
+      it(`should redirect to ${ROUTES.QUOTE.BUYER_BODY}`, () => {
         cy.url().should('include', ROUTES.QUOTE.BUYER_BODY);
+      });
+
+      it('should prepopulate the field when going back to the page via back link', () => {
+        cy.clickBackLink();
+
+        const expectedValue = COUNTRY_SUPPORTED_ONLINE.name;
+
+        cy.checkValue(buyerCountryPage, expectedValue);
+
+        cy.checkText(buyerCountryPage.results(), expectedValue);
       });
     });
   });

@@ -7,9 +7,10 @@ import { validation as generateValidationErrors } from '../../../../shared-valid
 import api from '../../../../api';
 import { mapCisCountries } from '../../../../helpers/mappings/map-cis-countries';
 import getCountryByName from '../../../../helpers/get-country-by-name';
+import mapSubmittedEligibilityCountry from '../../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { mockReq, mockRes, mockAnswers, mockSession, mockCisCountries } from '../../../../test-mocks';
-import { Request, Response } from '../../../../../types';
+import { Country, Request, Response } from '../../../../../types';
 
 describe('controllers/insurance/eligibility/buyer-country', () => {
   let req: Request;
@@ -163,6 +164,8 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
   describe('post', () => {
     let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
+    const mappedCountries = mapCisCountries(mockCountriesResponse);
+
     beforeEach(() => {
       api.external.getCountries = getCountriesSpy;
     });
@@ -195,8 +198,6 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
     describe('when the country can apply for an application online', () => {
       const selectedCountryName = mockAnswers[FIELD_IDS.BUYER_COUNTRY];
-      const mappedCountries = mapCisCountries(mockCountriesResponse);
-      const selectedCountry = getCountryByName(mappedCountries, selectedCountryName);
 
       const validBody = {
         [FIELD_IDS.BUYER_COUNTRY]: countrySupported.marketName,
@@ -206,16 +207,12 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         req.body = validBody;
       });
 
-      it('should update the session with submitted data, popluated with country object', async () => {
+      it('should update the session with popluated with country object', async () => {
         await post(req, res);
 
-        const expectedPopulatedData = {
-          [FIELD_IDS.BUYER_COUNTRY]: {
-            name: selectedCountry?.name,
-            isoCode: selectedCountry?.isoCode,
-            riskCategory: selectedCountry?.riskCategory,
-          },
-        };
+        const selectedCountry = getCountryByName(mappedCountries, selectedCountryName) as Country;
+
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, true);
 
         const expected = {
           ...req.session.submittedData,
@@ -236,6 +233,21 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         req.body[FIELD_IDS.BUYER_COUNTRY] = countrySupportedViaOfflineOnly.marketName;
       });
 
+      it('should update the session with popluated with country object', async () => {
+        await post(req, res);
+
+        const selectedCountry = getCountryByName(mappedCountries, countrySupportedViaOfflineOnly.marketName) as Country;
+
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, false);
+
+        const expected = {
+          ...req.session.submittedData,
+          insuranceEligibility: updateSubmittedData(expectedPopulatedData, req.session.submittedData.insuranceEligibility),
+        };
+
+        expect(req.session.submittedData).toEqual(expected);
+      });
+
       it(`should redirect to ${ROUTES.INSURANCE.APPLY_OFFLINE}`, async () => {
         await post(req, res);
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.APPLY_OFFLINE);
@@ -245,6 +257,21 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
     describe('when the submitted country cannot apply for an application', () => {
       beforeEach(() => {
         req.body[FIELD_IDS.BUYER_COUNTRY] = countryUnsupported.marketName;
+      });
+
+      it('should update the session with popluated with country object', async () => {
+        await post(req, res);
+
+        const selectedCountry = getCountryByName(mappedCountries, countryUnsupported.marketName) as Country;
+
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, false);
+
+        const expected = {
+          ...req.session.submittedData,
+          insuranceEligibility: updateSubmittedData(expectedPopulatedData, req.session.submittedData.insuranceEligibility),
+        };
+
+        expect(req.session.submittedData).toEqual(expected);
       });
 
       it('should add exitReason to req.flash', async () => {

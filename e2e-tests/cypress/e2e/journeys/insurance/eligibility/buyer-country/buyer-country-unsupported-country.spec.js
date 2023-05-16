@@ -3,11 +3,10 @@ import {
 } from '../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
+import { COUNTRY_UNSUPPORTRED } from '../../../../../fixtures/countries';
 
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 const { REASON } = CONTENT_STRINGS;
-
-const COUNTRY_NAME_UNSUPPORTED = 'France';
 
 context('Insurance - Buyer country page - as an exporter, I want to check if UKEF offer export insurance policy for where my buyer is based - submit unsupported country', () => {
   const url = ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY;
@@ -17,7 +16,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
 
     cy.navigateToUrl(url);
 
-    cy.keyboardInput(buyerCountryPage.searchInput(), COUNTRY_NAME_UNSUPPORTED);
+    cy.keyboardInput(buyerCountryPage.input(), COUNTRY_UNSUPPORTRED.name);
 
     const results = buyerCountryPage.results();
     results.first().click();
@@ -32,7 +31,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
   it('renders a reason', () => {
     cannotApplyPage.reason().should('exist');
 
-    const expected = `${REASON.INTRO} ${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${COUNTRY_NAME_UNSUPPORTED}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
+    const expected = `${REASON.INTRO} ${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${COUNTRY_UNSUPPORTRED.name}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
     cy.checkText(cannotApplyPage.reason(), expected);
   });
 
@@ -44,9 +43,13 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
     backLink().should('have.attr', 'href', expected);
   });
 
-  it('should NOT have the originally submitted answer selected when going back to the page', () => {
+  it('should prepopulate the field when going back to the page via back link', () => {
     cy.clickBackLink();
 
-    buyerCountryPage.results().should('have.length', 0);
+    const expectedValue = COUNTRY_UNSUPPORTRED.name;
+
+    cy.checkValue(buyerCountryPage, expectedValue);
+
+    cy.checkText(buyerCountryPage.results(), expectedValue);
   });
 });

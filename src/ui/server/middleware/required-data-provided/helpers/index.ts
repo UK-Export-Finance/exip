@@ -1,3 +1,4 @@
+import { FIELD_IDS } from '../../../constants';
 import {
   RequiredDataStateQuoteEligibility,
   RequiredDataStateInsuranceEligibility,
@@ -44,7 +45,15 @@ export const hasRequiredData = (
   let suppliedDataCount = 0;
 
   requiredData.forEach((fieldId: string) => {
-    if (submittedData[fieldId] || submittedData[fieldId] === false) {
+    if (fieldId === FIELD_IDS.BUYER_COUNTRY) {
+      /**
+       * If the field is "buyer country"
+       * We need to make sure that the country has support to apply or get a quote online
+       */
+      if (submittedData[fieldId] && submittedData[fieldId].canApplyOnline) {
+        suppliedDataCount += 1;
+      }
+    } else if (submittedData[fieldId] || submittedData[fieldId] === false) {
       suppliedDataCount += 1;
     }
   });

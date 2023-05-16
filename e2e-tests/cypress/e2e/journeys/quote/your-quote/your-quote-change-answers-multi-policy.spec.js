@@ -142,7 +142,7 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      cy.keyboardInput(buyerCountryPage.searchInput(), 'Brazil');
+      cy.keyboardInput(buyerCountryPage.input(), 'Brazil');
       const results = buyerCountryPage.results();
       results.first().click();
 
@@ -152,7 +152,7 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it('renders the new answers in the quote', () => {
-      cy.keyboardInput(buyerCountryPage.searchInput(), 'Brazil');
+      cy.keyboardInput(buyerCountryPage.input(), 'Brazil');
       const results = buyerCountryPage.results();
       results.first().click();
 

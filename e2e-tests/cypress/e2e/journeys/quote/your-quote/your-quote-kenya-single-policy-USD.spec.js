@@ -24,7 +24,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
   before(() => {
     cy.login();
 
-    cy.keyboardInput(buyerCountryPage.searchInput(), 'Kenya');
+    cy.keyboardInput(buyerCountryPage.input(), 'Kenya');
     const results = buyerCountryPage.results();
     results.first().click();
     submitButton().click();
