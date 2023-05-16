@@ -8,7 +8,7 @@ import confirmEmailAddressEmail from '../../helpers/send-email-confirm-email-add
 import generate from '../../helpers/generate-otp';
 import getFullNameString from '../../helpers/get-full-name-string';
 import sendEmail from '../../emails';
-import { mockAccount, mockOTP, mockSendEmailResponse } from '../../test-mocks';
+import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../test-mocks';
 import { Account, AccountSignInResponse } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -35,8 +35,9 @@ describe('custom-resolvers/account-sign-in', () => {
   const mockPassword = String(process.env.MOCK_ACCOUNT_PASSWORD);
 
   const variables = {
-    firstName: 'a',
-    lastName: 'b',
+    // firstName: 'a',
+    // lastName: 'b',
+    urlOrigin: mockUrlOrigin,
     email: mockAccount.email,
     password: mockPassword,
   };
@@ -146,7 +147,7 @@ describe('custom-resolvers/account-sign-in', () => {
 
     test('it should call confirmEmailAddressEmail.send', async () => {
       expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledTimes(1);
-      expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledWith(context, account.id);
+      expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledWith(context, variables.urlOrigin, account.id);
     });
 
     test('it should return success=false, accountId and resentVerificationEmail=true', async () => {

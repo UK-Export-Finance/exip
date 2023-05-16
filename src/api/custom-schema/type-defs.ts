@@ -158,6 +158,7 @@ const typeDefs = `
 
     """ validate credentials, generate and email a OTP security code """
     accountSignIn(
+      urlOrigin: String!
       email: String!
       password: String!
     ): AccountSignInResponse

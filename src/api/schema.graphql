@@ -1758,7 +1758,7 @@ type Mutation {
   sendEmailConfirmEmailAddress(accountId: String!): EmailResponse
 
   """ validate credentials, generate and email a OTP security code """
-  accountSignIn(email: String!, password: String!): AccountSignInResponse
+  accountSignIn(urlOrigin: String!, email: String!, password: String!): AccountSignInResponse
 
   """ generate and email a new OTP security code """
   accountSignInSendNewCode(accountId: String!): AccountSignInResponse

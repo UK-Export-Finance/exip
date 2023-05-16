@@ -1,5 +1,6 @@
-import { yourDetailsPage } from '../../../../../pages/insurance/account/create';
+import { yourDetailsPage, confirmEmailPage } from '../../../../../pages/insurance/account/create';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
+import { PAGES } from '../../../../../../../content-strings';
 import api from '../../../../../../support/api';
 
 const {
@@ -10,7 +11,11 @@ const {
   },
 } = ROUTES;
 
-context.skip('Insurance - Account - Sign in - Validation - unverified account', () => {
+const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.CONFIRM_EMAIL_RESENT;
+
+const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+
+context('Insurance - Account - Sign in - Validation - unverified account', () => {
   let account;
 
   before(() => {
@@ -39,10 +44,9 @@ context.skip('Insurance - Account - Sign in - Validation - unverified account', 
   describe('when valid credentials are submitted, but the account is not verifed', () => {
     beforeEach(() => {
       /**
-     * Get the account ID directly from the API,
-     * so that we can assert that the URL has the correct ID.
-     */
-      const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+       * Get the account ID directly from the API,
+       * so that we can assert that the URL has the correct ID.
+       */
 
       api.getAccountByEmail(accountEmail).then((response) => {
         const { data } = response.body;
@@ -54,10 +58,20 @@ context.skip('Insurance - Account - Sign in - Validation - unverified account', 
       });
     });
 
-    it(`should redirect to ${CONFIRM_EMAIL_RESENT} with account ID in the URL params `, () => {
+    it(`should redirect to ${CONFIRM_EMAIL_RESENT} with account ID in the URL params and render submitted email copy`, () => {
       const expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL_RESENT}?id=${account.id}`;
 
       cy.assertUrl(expectedUrl);
+
+      const expected = `${CONTENT_STRINGS.WE_SENT_LINK_TO} ${accountEmail}`;
+
+      cy.checkText(confirmEmailPage.weSentLinkTo(), expected);
     });
+
+    // it('should render `check your inbox` copy with the submitted email', () => {
+    //   const expected = `${CHECK_YOUR_INBOX.CHECK_YOUR_INBOX} ${accountEmail}`;
+
+    //   cy.checkText(confirmEmailPage.checkInbox(), expected);
+    // });
   });
 });

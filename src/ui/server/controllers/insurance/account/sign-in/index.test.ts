@@ -200,7 +200,7 @@ describe('controllers/insurance/account/sign-in', () => {
 
         const sanitisedData = sanitiseData(req.body);
 
-        expect(accountSignInSpy).toHaveBeenCalledWith(sanitisedData[EMAIL], sanitisedData[PASSWORD]);
+        expect(accountSignInSpy).toHaveBeenCalledWith(req.headers.origin, sanitisedData[EMAIL], sanitisedData[PASSWORD]);
       });
 
       it(`should redirect to ${ENTER_CODE}`, async () => {

@@ -1240,6 +1240,7 @@ var typeDefs = `
 
     """ validate credentials, generate and email a OTP security code """
     accountSignIn(
+      urlOrigin: String!
       email: String!
       password: String!
     ): AccountSignInResponse
@@ -1865,7 +1866,7 @@ var { EMAIL: EMAIL2 } = ACCOUNT2;
 var accountSignIn = async (root, variables, context) => {
   try {
     console.info("Signing in account");
-    const { email, password: password2 } = variables;
+    const { urlOrigin, email, password: password2 } = variables;
     const accountData = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
     if (!accountData) {
       console.info("Unable to validate account - no account found");
@@ -1887,7 +1888,7 @@ var accountSignIn = async (root, variables, context) => {
             data: accountUpdate
           });
           console.info("Account has an unexpired verification token - sending verification email");
-          const emailResponse2 = await send_email_confirm_email_address_default.send(context, account.id);
+          const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, account.id);
           if (emailResponse2.success) {
             return {
               success: false,
