@@ -1,4 +1,4 @@
-const yourDetailsPage = {
+const confirmEmailPage = {
   weSentLinkTo: () => cy.get('[data-cy="we-sent-link-to"]'),
   checkYourEmail: () => cy.get('[data-cy="check-your-email"]'),
   havingProblems: {
@@ -15,4 +15,4 @@ const yourDetailsPage = {
   },
 };
 
-export default yourDetailsPage;
+export default confirmEmailPage;

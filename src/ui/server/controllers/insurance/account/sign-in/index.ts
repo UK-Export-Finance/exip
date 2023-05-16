@@ -108,7 +108,9 @@ export const post = async (req: Request, res: Response) => {
     const email = sanitisedData[EMAIL];
     const password = sanitisedData[PASSWORD];
 
-    const response = await api.keystone.account.signIn(email, password);
+    const urlOrigin = req.headers.origin;
+
+    const response = await api.keystone.account.signIn(urlOrigin, email, password);
 
     if (response.success) {
       req.session.accountId = response.accountId;

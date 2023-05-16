@@ -2,6 +2,7 @@ import express from 'express';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { get as yourDetailsGet, post as yourDetailsPost } from '../../../controllers/insurance/account/create/your-details';
 import { get as confirmEmailGet } from '../../../controllers/insurance/account/create/confirm-email';
+import { get as resendConfirmEmailGet } from '../../../controllers/insurance/account/create/resend-confirm-email';
 import { get as confirmEmailResentGet } from '../../../controllers/insurance/account/create/confirm-email-resent';
 import { get as verifyEmailGet } from '../../../controllers/insurance/account/create/verify-email';
 import { get as verifyEmailLinkExpiredGet } from '../../../controllers/insurance/account/create/verify-email-link-expired';
@@ -24,6 +25,7 @@ insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.CREATE.YOUR_DETAILS, yourDet
 insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.CREATE.YOUR_DETAILS, yourDetailsPost);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.CREATE.CONFIRM_EMAIL, confirmEmailGet);
+insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.CREATE.RESEND_CONFIRM_EMAIL, resendConfirmEmailGet);
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.CREATE.CONFIRM_EMAIL_RESENT, confirmEmailResentGet);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL, verifyEmailGet);

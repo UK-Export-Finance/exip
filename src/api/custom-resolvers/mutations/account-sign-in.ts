@@ -25,7 +25,7 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
   try {
     console.info('Signing in account');
 
-    const { email, password } = variables;
+    const { urlOrigin, email, password } = variables;
 
     // Get the account the email is associated with.
     const accountData = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
@@ -81,7 +81,7 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
 
           console.info('Account has an unexpired verification token - sending verification email');
 
-          const emailResponse = await confirmEmailAddressEmail.send(context, account.id);
+          const emailResponse = await confirmEmailAddressEmail.send(context, urlOrigin, account.id);
 
           if (emailResponse.success) {
             return {
