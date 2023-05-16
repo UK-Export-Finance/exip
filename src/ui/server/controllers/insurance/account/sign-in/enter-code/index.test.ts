@@ -205,6 +205,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
           id: verifyAccountSignInCodeResponse.accountId,
           firstName: verifyAccountSignInCodeResponse.firstName,
           lastName: verifyAccountSignInCodeResponse.lastName,
+          email: verifyAccountSignInCodeResponse.email,
           token: verifyAccountSignInCodeResponse.token,
           expires: verifyAccountSignInCodeResponse.expires,
         };
