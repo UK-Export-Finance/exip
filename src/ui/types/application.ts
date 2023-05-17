@@ -70,7 +70,7 @@ interface ApplicationCompany {
   sicCodes: Array<ApplicationExporterSicCodes>;
 }
 
-interface BusinessContactDetail {
+interface ApplicationBusinessContactDetail {
   id: string;
   firstName?: string;
   lastName?: string;
@@ -84,7 +84,7 @@ interface ApplicationBusiness {
   totalYearsExporting?: string;
   totalEmployeesUK?: string;
   totalEmployeesInternational?: string;
-  businessContactDetail: BusinessContactDetail;
+  businessContactDetail: ApplicationBusinessContactDetail;
 }
 
 interface ApplicationBroker {
@@ -163,6 +163,7 @@ export {
   ApplicationExporterSicCodes,
   ApplicationExporterindustrySectorNames,
   ApplicationBusiness,
+  ApplicationBusinessContactDetail,
   ApplicationBroker,
   ApplicationBuyer,
   ApplicationSectionReview,

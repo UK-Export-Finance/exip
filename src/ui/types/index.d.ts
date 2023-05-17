@@ -8,6 +8,7 @@ import {
   ApplicationExporterSicCodes,
   ApplicationExporterindustrySectorNames,
   ApplicationBusiness,
+  ApplicationBusinessContactDetail,
   ApplicationBroker,
   ApplicationBuyer,
 } from './application';
@@ -63,6 +64,7 @@ export {
   ApplicationExporterSicCodes,
   ApplicationExporterindustrySectorNames,
   ApplicationBusiness,
+  ApplicationBusinessContactDetail,
   ApplicationBroker,
   ApplicationBuyer,
   ApolloResponse,

@@ -83,8 +83,21 @@ export const EXPORTER_BUSINESS_FIELDS = {
       LABEL: 'Your company name',
       HINT: 'This information comes from Companies House',
     },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.NAME]: {
+      SUMMARY: {
+        TITLE: 'Contact name',
+      },
+    },
+    [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
+      SUMMARY: {
+        TITLE: 'Contact email',
+      },
+    },
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.POSITION]: {
       LABEL: 'Position at company',
+      SUMMARY: {
+        TITLE: 'Position at company',
+      },
     },
   },
   NATURE_OF_YOUR_BUSINESS: {
