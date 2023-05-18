@@ -8,8 +8,9 @@ const { POSITION } = FIELD_IDS.CONTACT;
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
 const mockBusinessContact = {
-  [FIRST_NAME]: 'firstName',
-  [LAST_NAME]: 'lastName',
+  id: '123',
+  [FIRST_NAME]: 'Bob',
+  [LAST_NAME]: 'Smith',
   [EMAIL]: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
   [POSITION]: 'CEO',
 };

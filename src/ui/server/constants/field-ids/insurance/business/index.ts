@@ -27,6 +27,7 @@ const EXPORTER_BUSINESS = {
     BUSINESS_CONTACT_DETAIL: 'businessContactDetail',
     COMPANY_NAME: 'companyName',
     POSITION: 'position',
+    NAME: 'name',
   },
   YOUR_COMPANY: {
     YOUR_BUSINESS: 'yourBusiness',
