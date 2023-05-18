@@ -27,7 +27,7 @@ const task = taskList.prepareApplication.tasks.business;
 
 const { summaryList } = checkYourAnswers;
 
-context('Insurance - Your business - Change your answers -Contact- As an exporter, I want to change my answers to the contact section', () => {
+context('Insurance - Your business - Change your answers - Contact- As an exporter, I want to change my answers to the contact section', () => {
   let referenceNumber;
   let url;
 

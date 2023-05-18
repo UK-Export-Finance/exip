@@ -16,6 +16,7 @@ export const LINKS = {
     BEFORE_YOU_START: 'https://www.gov.uk/guidance/get-a-quote-for-ukef-export-insurance',
     PRIVACY: 'https://www.gov.uk/government/publications/ukef-privacy-notice',
     FEEDBACK: 'https://forms.office.com/r/TacytrRCgJ',
+    RESEARCH: 'https://forms.office.com/pages/responsepage.aspx?id=jhOEgACUnkCm2ka1KB4LCkj8OKxLpCpDmTbrMyQ3j2JUOUFHNUc0QUhUOFdLNkJXWkRUS0wyMUZFNiQlQCN0PWcu',
     EXPORT_FINANCE_MANAGERS: 'https://www.gov.uk/government/publications/find-an-export-finance-manager',
     APPROVED_BROKER_LIST: 'https://www.gov.uk/government/publications/uk-export-finance-insurance-list-of-approved-brokers/export-insurance-approved-brokers',
     PROPOSAL_FORM:
