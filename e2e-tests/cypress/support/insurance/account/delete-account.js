@@ -17,7 +17,7 @@ const deleteAccount = (email = accountEmail) => {
       const [firstAccount] = data.accounts;
       const account = firstAccount;
 
-      return api.deleteAccountsById(account.id).then((id) => id);
+      return api.deleteAnAccount(email).then((id) => id);
     });
   } catch (err) {
     console.error(err);

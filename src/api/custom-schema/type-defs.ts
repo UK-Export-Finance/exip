@@ -153,6 +153,11 @@ const typeDefs = `
       password: String!
     ): CreateAnAccountResponse
 
+    """ delete an account """
+    deleteAnAccount(
+      email: String!
+    ): SuccessResponse
+
     """ verify an account's email address """
     verifyAccountEmailAddress(
       token: String!

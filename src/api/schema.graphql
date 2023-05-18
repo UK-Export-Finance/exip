@@ -1992,6 +1992,9 @@ type Mutation {
   """ create an account """
   createAnAccount(urlOrigin: String!, firstName: String!, lastName: String!, email: String!, password: String!): CreateAnAccountResponse
 
+  """ delete an account """
+  deleteAnAccount(email: String!): SuccessResponse
+
   """ verify an account's email address """
   verifyAccountEmailAddress(token: String!): VerifyAccountEmailAddressResponse
 

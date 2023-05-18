@@ -225,6 +225,10 @@ interface AccountCreationVariables {
   password: string;
 }
 
+interface AccountDeletionVariables {
+  email: string;
+}
+
 interface AccountSendEmailPasswordResetLinkVariables {
   urlOrigin: string;
   email: string;
@@ -350,6 +354,7 @@ interface IndustrySector {
 export {
   Account,
   AccountCreationVariables,
+  AccountDeletionVariables,
   ApplicationCompanyAddress,
   AccountInput,
   AccountSendEmailPasswordResetLinkVariables,

@@ -1298,6 +1298,11 @@ var typeDefs = `
       password: String!
     ): CreateAnAccountResponse
 
+    """ delete an account """
+    deleteAnAccount(
+      email: String!
+    ): SuccessResponse
+
     """ verify an account's email address """
     verifyAccountEmailAddress(
       token: String!
@@ -1741,6 +1746,48 @@ var createAnAccount = async (root, variables, context) => {
   }
 };
 var create_an_account_default = createAnAccount;
+
+// custom-resolvers/mutations/delete-an-account.ts
+var deleteAnAccount = async (root, variables, context) => {
+  console.info("Deleting account ", variables.email);
+  try {
+    const { email } = variables;
+    const account = await get_account_by_field_default(context, "email", email);
+    if (!account) {
+      console.info(`Unable to delete account - account already exists`);
+      return { success: false };
+    }
+    const { id: accountId } = account;
+    const retries = await context.db.AuthenticationRetry.findMany({
+      where: {
+        account: {
+          every: {
+            id: { equals: accountId }
+          }
+        }
+      }
+    });
+    const retriesArray = retries.map((retry) => ({
+      id: retry.id
+    }));
+    if (retries.length) {
+      await context.db.AuthenticationRetry.deleteMany({
+        where: retriesArray
+      });
+    }
+    await context.db.Account.deleteOne({
+      where: {
+        id: accountId
+      }
+    });
+    return {
+      success: true
+    };
+  } catch (err) {
+    throw new Error(`Deleting account ${err}`);
+  }
+};
+var delete_an_account_default = deleteAnAccount;
 
 // custom-resolvers/mutations/verify-account-email-address.ts
 var import_date_fns3 = require("date-fns");
@@ -3652,6 +3699,7 @@ var verify_account_password_reset_token_default = verifyAccountPasswordResetToke
 var customResolvers = {
   Mutation: {
     createAnAccount: create_an_account_default,
+    deleteAnAccount: delete_an_account_default,
     accountSignIn: account_sign_in_default,
     accountSignInSendNewCode: account_sign_in_new_code_default,
     verifyAccountEmailAddress: verify_account_email_address_default,
