@@ -65,7 +65,7 @@ export const PRE_CREDIT_PERIOD = {
 };
 
 export const COMPANIES_HOUSE_NUMBER = {
-  PAGE_TITLE: 'Do you have a UK Companies House registration number?',
+  PAGE_TITLE: 'Do you have a UK Companies House registration number and is your company actively trading?',
 };
 
 export const ELIGIBLE_TO_APPLY_ONLINE = {

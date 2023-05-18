@@ -1,5 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { CUSTOMER_SERVICE_CONTACT_DETAILS } from '../../../contact';
+import { LINKS } from '../../../links';
 
 const ACCOUNT = {
   CREATE: {
@@ -7,6 +8,15 @@ const ACCOUNT = {
       PAGE_TITLE: 'Create an account',
       INTRO: "Enter your details and then we'll send you a link to confirm your email address.",
       ALREADY_GOT_AN_ACCOUNT: "Sign in if you've already got an account",
+      PRIVACY: {
+        HEADING: 'Privacy notice',
+        MAIN_TEXT:
+          'UKEF is committed to protecting the privacy and security of the personal information it processes. UKEF complies with all applicable laws relating to the processing of such information. For details on this, and personal rights in this regard, please see',
+        LINK: {
+          TEXT: "UKEF's privacy notice.",
+          HREF: LINKS.EXTERNAL.PRIVACY,
+        },
+      },
     },
     CONFIRM_EMAIL: {
       PAGE_TITLE: 'Confirm your email address',
