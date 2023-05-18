@@ -2,12 +2,12 @@ import { Context } from '.keystone/types'; // eslint-disable-line
 import { isWithinInterval } from 'date-fns';
 import { ACCOUNT } from '../../constants';
 
-const { MAX_PASSWORD_RESET_TRIES } = ACCOUNT;
+const { MAX_PASSWORD_RESET_TRIES, MAX_PASSWORD_RESET_TRIES_TIMEFRAME } = ACCOUNT;
 
 /**
  * shouldBlockAccount
  * Check an accounts authentication retries
- * If there are total of MAX_PASSWORD_RESET_TRIES in less than 24 hours,
+ * If there are total of MAX_PASSWORD_RESET_TRIES in less than MAX_PASSWORD_RESET_TRIES_TIMEFRAME,
  * Return a flag indicating that the account should be blocked.
  * @param {Object} KeystoneJS context API
  * @param {String} Account ID
@@ -28,24 +28,22 @@ const shouldBlockAccount = async (context: Context, accountId: string): Promise<
 
   const now = Date.now();
 
-  const yesterday = new Date(new Date().getTime() - 24 * 60 * 60 * 1000);
-
-  const retriesInLast24Hours = [] as Array<string>;
+  const retriesInTimeframe = [] as Array<string>;
 
   retries.forEach((retry) => {
     const retryDate = new Date(retry.createdAt);
 
     const isWithinLast24Hours = isWithinInterval(retryDate, {
-      start: yesterday,
+      start: MAX_PASSWORD_RESET_TRIES_TIMEFRAME,
       end: now,
     });
 
     if (isWithinLast24Hours) {
-      retriesInLast24Hours.push(retry.id);
+      retriesInTimeframe.push(retry.id);
     }
   });
 
-  if (retriesInLast24Hours.length >= MAX_PASSWORD_RESET_TRIES) {
+  if (retriesInTimeframe.length >= MAX_PASSWORD_RESET_TRIES) {
     console.info(`Account ${accountId} password reset retries exceeds the threshold`);
 
     return true;

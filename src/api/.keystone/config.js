@@ -346,7 +346,13 @@ var ACCOUNT2 = {
       return future;
     }
   },
-  MAX_PASSWORD_RESET_TRIES: 6
+  MAX_PASSWORD_RESET_TRIES: 6,
+  /**
+   * MAX_PASSWORD_RESET_TRIES_TIMEFRAME
+   * Generate a date that is 24 hours ago from now
+   * To be safe, we use time rather than subtracting a day.
+   */
+  MAX_PASSWORD_RESET_TRIES_TIMEFRAME: new Date((/* @__PURE__ */ new Date()).getTime() - 24 * 60 * 60 * 1e3)
 };
 var EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
@@ -2199,7 +2205,7 @@ var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
 
 // helpers/should-block-account/index.ts
 var import_date_fns6 = require("date-fns");
-var { MAX_PASSWORD_RESET_TRIES } = ACCOUNT2;
+var { MAX_PASSWORD_RESET_TRIES, MAX_PASSWORD_RESET_TRIES_TIMEFRAME } = ACCOUNT2;
 var shouldBlockAccount = async (context, accountId) => {
   console.info(`Checking account ${accountId} for password reset retries`);
   const retries = await context.db.AuthenticationRetry.findMany({
@@ -2212,19 +2218,18 @@ var shouldBlockAccount = async (context, accountId) => {
     }
   });
   const now = Date.now();
-  const yesterday = new Date((/* @__PURE__ */ new Date()).getTime() - 24 * 60 * 60 * 1e3);
-  const retriesInLast24Hours = [];
+  const retriesInTimeframe = [];
   retries.forEach((retry) => {
     const retryDate = new Date(retry.createdAt);
     const isWithinLast24Hours = (0, import_date_fns6.isWithinInterval)(retryDate, {
-      start: yesterday,
+      start: MAX_PASSWORD_RESET_TRIES_TIMEFRAME,
       end: now
     });
     if (isWithinLast24Hours) {
-      retriesInLast24Hours.push(retry.id);
+      retriesInTimeframe.push(retry.id);
     }
   });
-  if (retriesInLast24Hours.length >= MAX_PASSWORD_RESET_TRIES) {
+  if (retriesInTimeframe.length >= MAX_PASSWORD_RESET_TRIES) {
     console.info(`Account ${accountId} password reset retries exceeds the threshold`);
     return true;
   }

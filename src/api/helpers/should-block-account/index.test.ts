@@ -16,7 +16,7 @@ dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
 
-const { MAX_PASSWORD_RESET_TRIES } = ACCOUNT;
+const { MAX_PASSWORD_RESET_TRIES, MAX_PASSWORD_RESET_TRIES_TIMEFRAME } = ACCOUNT;
 
 describe('helpers/should-block-account', () => {
   let account: Account;
@@ -69,6 +69,29 @@ describe('helpers/should-block-account', () => {
       await context.query.AuthenticationRetry.deleteOne({
         where: {
           id: lastRetry.id,
+        },
+      });
+    });
+
+    it('should return false', async () => {
+      const result = await shouldBlockAccount(context, account.id);
+
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe(`when the account has ${MAX_PASSWORD_RESET_TRIES} entries in the AuthenticationRetry table, but one of them is outside of the timeframe`, () => {
+    beforeEach(async () => {
+      const currentMinutes = new Date(MAX_PASSWORD_RESET_TRIES_TIMEFRAME).getMinutes();
+
+      const dateOutsideOfTimeFrame = new Date(MAX_PASSWORD_RESET_TRIES_TIMEFRAME.setHours(currentMinutes - 1));
+
+      await context.query.AuthenticationRetry.updateOne({
+        where: {
+          id: retries[0].id,
+        },
+        data: {
+          createdAt: dateOutsideOfTimeFrame,
         },
       });
     });
