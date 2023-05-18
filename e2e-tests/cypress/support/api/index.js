@@ -207,13 +207,8 @@ const deleteAnAccount = async (email) => {
     const responseBody = await apollo.query({
       query: queryStrings.deleteAnAccount(),
       variables: { email },
-    }).then((response) => {
-      console.log('-------- response ', response);
+    }).then((response) => response.data.deleteAnAccount);
 
-      return response.data.deleteAnAccount;
-    });
-
-    console.log('-------- responseBody ', responseBody);
     return responseBody.success;
   } catch (err) {
     console.error(err);
