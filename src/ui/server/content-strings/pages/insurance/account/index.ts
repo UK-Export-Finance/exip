@@ -139,6 +139,9 @@ const ACCOUNT = {
   SIGNED_OUT: {
     PAGE_TITLE: 'For your security, we signed you out',
   },
+  SUSPENDED: {
+    PAGE_TITLE: 'This account has been temporarily suspended',
+  },
 };
 
 export default ACCOUNT;

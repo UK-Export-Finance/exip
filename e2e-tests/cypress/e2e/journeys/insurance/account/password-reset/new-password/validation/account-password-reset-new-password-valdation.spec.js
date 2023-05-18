@@ -45,7 +45,7 @@ context('Insurance - Account - Password reset - new password page - form validat
     // navigate to password reset page
     cy.navigateToUrl(PASSWORD_RESET_ROOT);
 
-    cy.completeAndSubmitPasswordResetForm();
+    cy.completeAndSubmitPasswordResetForm({});
 
     url = `${Cypress.config('baseUrl')}${LINK_SENT}`;
 

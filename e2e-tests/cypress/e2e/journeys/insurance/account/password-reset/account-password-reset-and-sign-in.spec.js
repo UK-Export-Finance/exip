@@ -33,7 +33,7 @@ context('Insurance - Account - Password reset and sign in - As an Exporter, I wa
     // navigate to password reset page
     cy.navigateToUrl(PASSWORD_RESET_ROOT);
 
-    cy.completeAndSubmitPasswordResetForm();
+    cy.completeAndSubmitPasswordResetForm({});
   });
 
   beforeEach(() => {

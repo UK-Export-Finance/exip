@@ -273,6 +273,11 @@ interface AccountSignInResponse extends SuccessResponse {
   resentVerificationEmail?: boolean;
 }
 
+interface AccountSendEmailPasswordResetLinkResponse extends SuccessResponse {
+  accountId?: string;
+  isBlocked?: boolean;
+}
+
 interface VerifyAccountSignInCodeVariables {
   accountId: string;
   securityCode: string;
@@ -348,6 +353,7 @@ export {
   ApplicationCompanyAddress,
   AccountInput,
   AccountSendEmailPasswordResetLinkVariables,
+  AccountSendEmailPasswordResetLinkResponse,
   AccountSignInVariables,
   AccountSignInSendNewCodeVariables,
   AccountSignInResponse,

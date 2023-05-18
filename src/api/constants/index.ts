@@ -95,6 +95,7 @@ export const ACCOUNT = {
       return future;
     },
   },
+  MAX_PASSWORD_RESET_TRIES: 6,
 };
 
 export const EMAIL_TEMPLATE_IDS = {

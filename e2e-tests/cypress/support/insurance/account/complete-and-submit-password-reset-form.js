@@ -16,12 +16,14 @@ const {
 
 const linkSentUrl = `${Cypress.config('baseUrl')}${LINK_SENT}`;
 
-const completeAndSubmitPasswordResetForm = () => {
+const completeAndSubmitPasswordResetForm = ({ assertRedirectUrl = true }) => {
   cy.keyboardInput(accountFormFields[EMAIL].input(), mockAccount[EMAIL]);
 
   submitButton().click();
 
-  cy.url().should('eq', linkSentUrl);
+  if (assertRedirectUrl) {
+    cy.url().should('eq', linkSentUrl);
+  }
 };
 
 export default completeAndSubmitPasswordResetForm;

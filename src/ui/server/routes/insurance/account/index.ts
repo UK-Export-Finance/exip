@@ -17,6 +17,7 @@ import { get as passwordResetSuccessGet } from '../../../controllers/insurance/a
 import { get as manageGet } from '../../../controllers/insurance/account/manage';
 import { get as signOutGet } from '../../../controllers/insurance/account/sign-out';
 import { get as signedOutGet } from '../../../controllers/insurance/account/signed-out';
+import { get as suspendedGet } from '../../../controllers/insurance/account/suspended';
 
 // @ts-ignore
 const insuranceAccountRouter = express.Router();
@@ -58,5 +59,7 @@ insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.MANAGE, manageGet);
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SIGN_OUT, signOutGet);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SIGNED_OUT, signedOutGet);
+
+insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.ROOT, suspendedGet);
 
 export default insuranceAccountRouter;

@@ -345,7 +345,8 @@ var ACCOUNT2 = {
       const future = new Date(now.getTime() + hours * seconds);
       return future;
     }
-  }
+  },
+  MAX_PASSWORD_RESET_TRIES: 6
 };
 var EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
@@ -708,8 +709,14 @@ var lists = {
       email: (0, import_fields.text)({ validation: { isRequired: true } }),
       salt: (0, import_fields.text)({ validation: { isRequired: true } }),
       hash: (0, import_fields.text)({ validation: { isRequired: true } }),
-      // isVerified flag will only be true if the exporter has verified their email address.
+      // isVerified flag will only be true if the account has verified their email address.
       isVerified: (0, import_fields.checkbox)({ defaultValue: false }),
+      /**
+       * isBlocked flag will only be true if the account has:
+       * - repeatedly attempted sign in
+       * - repeatedly attempted password reset request
+       */
+      isBlocked: (0, import_fields.checkbox)({ defaultValue: false }),
       verificationHash: (0, import_fields.text)(),
       verificationExpiry: (0, import_fields.timestamp)(),
       otpSalt: (0, import_fields.text)(),
@@ -721,10 +728,38 @@ var lists = {
       sessionIdentifier: (0, import_fields.text)(),
       passwordResetHash: (0, import_fields.text)({ validation: { isRequired: false } }),
       passwordResetExpiry: (0, import_fields.timestamp)({ validation: { isRequired: false } }),
+      authentication: (0, import_fields.relationship)({
+        ref: "Authentication"
+      }),
+      authenticationRetry: (0, import_fields.relationship)({
+        ref: "AuthenticationRetry"
+      }),
       applications: (0, import_fields.relationship)({
         ref: "Application",
         many: true
       })
+    },
+    access: import_access.allowAll
+  }),
+  AuthenticationRetry: (0, import_core.list)({
+    fields: {
+      account: (0, import_fields.relationship)({
+        ref: "Account",
+        many: true
+      }),
+      createdAt: (0, import_fields.timestamp)()
+    },
+    access: import_access.allowAll
+  }),
+  Authentication: (0, import_core.list)({
+    fields: {
+      account: (0, import_fields.relationship)({
+        ref: "Account",
+        many: true
+      }),
+      createdAt: (0, import_fields.timestamp)(),
+      salt: (0, import_fields.text)({ validation: { isRequired: true } }),
+      hash: (0, import_fields.text)({ validation: { isRequired: true } })
     },
     access: import_access.allowAll
   }),
@@ -749,6 +784,16 @@ var lists = {
           await update_application_default.timestamp(context, item.applicationId);
         }
       }
+    },
+    access: import_access.allowAll
+  }),
+  BusinessContactDetail: (0, import_core.list)({
+    fields: {
+      business: (0, import_fields.relationship)({ ref: "Business.businessContactDetail" }),
+      firstName: (0, import_fields.text)(),
+      lastName: (0, import_fields.text)(),
+      email: (0, import_fields.text)(),
+      position: (0, import_fields.text)()
     },
     access: import_access.allowAll
   }),
@@ -878,16 +923,6 @@ var lists = {
           await update_application_default.timestamp(context, item.applicationId);
         }
       }
-    },
-    access: import_access.allowAll
-  }),
-  BusinessContactDetail: (0, import_core.list)({
-    fields: {
-      business: (0, import_fields.relationship)({ ref: "Business.businessContactDetail" }),
-      firstName: (0, import_fields.text)(),
-      lastName: (0, import_fields.text)(),
-      email: (0, import_fields.text)(),
-      position: (0, import_fields.text)()
     },
     access: import_access.allowAll
   }),
@@ -1230,6 +1265,12 @@ var typeDefs = `
     securityCode: String!
   }
 
+  type AccountSendEmailPasswordResetLinkResponse {
+    success: Boolean!
+    isBlocked: Boolean
+    accountId: String
+  }
+
   type AccountPasswordResetTokenResponse {
     success: Boolean!
     token: String
@@ -1289,13 +1330,13 @@ var typeDefs = `
     sendEmailPasswordResetLink(
       urlOrigin: String!
       email: String!
-    ): SuccessResponse
+    ): AccountSendEmailPasswordResetLinkResponse
 
     """ reset account password """
     accountPasswordReset(
       token: String!
       password: String!
-    ): SuccessResponse
+    ): AccountSendEmailPasswordResetLinkResponse
 
     """ update company and company address """
     updateCompanyAndCompanyAddress(
@@ -2125,6 +2166,38 @@ var add_and_get_OTP_default = addAndGetOTP;
 
 // custom-resolvers/mutations/send-email-password-reset-link.ts
 var import_crypto7 = __toESM(require("crypto"));
+
+// helpers/create-authentication-retry-entry/index.ts
+var createAuthenticationRetryEntry = async (context, accountId) => {
+  try {
+    console.info("Creating account authentication retry entry");
+    const now = /* @__PURE__ */ new Date();
+    const response = await context.db.AuthenticationRetry.createOne({
+      data: {
+        account: {
+          connect: {
+            id: accountId
+          }
+        },
+        createdAt: now
+      }
+    });
+    if (response.id) {
+      return {
+        success: true
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error(`Creating account authentication retry entry ${err}`);
+    throw new Error(`${err}`);
+  }
+};
+var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
+
+// custom-resolvers/mutations/send-email-password-reset-link.ts
 var {
   ENCRYPTION: {
     STRING_TYPE: STRING_TYPE7,
@@ -2132,35 +2205,67 @@ var {
     PASSWORD: {
       PBKDF2: { KEY_LENGTH: KEY_LENGTH6 }
     }
-  }
+  },
+  MAX_PASSWORD_RESET_TRIES
 } = ACCOUNT2;
 var sendEmailPasswordResetLink = async (root, variables, context) => {
   try {
-    console.info("Sending password reset email");
+    console.info("Received a password reset request - checking account");
     const { urlOrigin, email } = variables;
     const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
     if (!account) {
-      console.info("Unable to send password reset email - no account found");
+      console.info("Unable to check account and send password reset email - no account found");
       return { success: false };
     }
-    const passwordResetHash = import_crypto7.default.pbkdf2Sync(email, account.salt, ITERATIONS6, KEY_LENGTH6, DIGEST_ALGORITHM6).toString(STRING_TYPE7);
-    const accountUpdate = {
-      passwordResetHash,
-      passwordResetExpiry: ACCOUNT2.PASSWORD_RESET_EXPIRY()
-    };
-    await context.db.Account.updateOne({
-      where: { id: account.id },
-      data: accountUpdate
+    const { id: accountId } = account;
+    const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
+    console.info(`Checking account ${accountId} for password reset retries`);
+    const retries = await context.db.AuthenticationRetry.findMany({
+      where: {
+        account: {
+          every: {
+            id: { equals: accountId }
+          }
+        }
+      }
     });
-    const name = get_full_name_string_default(account);
-    const emailResponse = await emails_default.passwordResetLink(urlOrigin, email, name, passwordResetHash);
-    if (emailResponse.success) {
-      return emailResponse;
+    const shouldBlockAccount = retries.length >= MAX_PASSWORD_RESET_TRIES;
+    if (shouldBlockAccount) {
+      console.info(`Account ${accountId} password reset retries exceeds the threshold - blocking account`);
+      await context.db.Account.updateOne({
+        where: { id: accountId },
+        data: { isBlocked: true }
+      });
+      return {
+        success: false,
+        isBlocked: true,
+        accountId
+      };
+    }
+    if (newRetriesEntry.success) {
+      console.info("Generating password reset hash");
+      const passwordResetHash = import_crypto7.default.pbkdf2Sync(email, account.salt, ITERATIONS6, KEY_LENGTH6, DIGEST_ALGORITHM6).toString(STRING_TYPE7);
+      const accountUpdate = {
+        passwordResetHash,
+        passwordResetExpiry: ACCOUNT2.PASSWORD_RESET_EXPIRY()
+      };
+      console.info("Updating account for password reset");
+      await context.db.Account.updateOne({
+        where: { id: accountId },
+        data: accountUpdate
+      });
+      console.info("Sending password reset email");
+      const name = get_full_name_string_default(account);
+      const emailResponse = await emails_default.passwordResetLink(urlOrigin, email, name, passwordResetHash);
+      if (emailResponse.success) {
+        return emailResponse;
+      }
+      return { success: false };
     }
     return { success: false };
   } catch (err) {
     console.error(err);
-    throw new Error(`Sending password reset email (sendEmailPasswordResetLink mutation) ${err}`);
+    throw new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${err}`);
   }
 };
 var send_email_password_reset_link_default = sendEmailPasswordResetLink;

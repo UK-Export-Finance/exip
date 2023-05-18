@@ -126,6 +126,12 @@ const typeDefs = `
     securityCode: String!
   }
 
+  type AccountSendEmailPasswordResetLinkResponse {
+    success: Boolean!
+    isBlocked: Boolean
+    accountId: String
+  }
+
   type AccountPasswordResetTokenResponse {
     success: Boolean!
     token: String
@@ -185,13 +191,13 @@ const typeDefs = `
     sendEmailPasswordResetLink(
       urlOrigin: String!
       email: String!
-    ): SuccessResponse
+    ): AccountSendEmailPasswordResetLinkResponse
 
     """ reset account password """
     accountPasswordReset(
       token: String!
       password: String!
-    ): SuccessResponse
+    ): AccountSendEmailPasswordResetLinkResponse
 
     """ update company and company address """
     updateCompanyAndCompanyAddress(

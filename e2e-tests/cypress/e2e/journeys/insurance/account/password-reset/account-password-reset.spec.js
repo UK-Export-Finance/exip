@@ -1,5 +1,5 @@
 import partials from '../../../../partials';
-import { backLink, submitButton } from '../../../../pages/shared';
+import { backLink } from '../../../../pages/shared';
 import { signInPage } from '../../../../pages/insurance/account/sign-in';
 import { yourDetailsPage } from '../../../../pages/insurance/account/create';
 import accountFormFields from '../../../../partials/insurance/accountFormFields';
@@ -7,7 +7,6 @@ import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { ACCOUNT_FIELDS } from '../../../../../../content-strings/fields/insurance/account';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
-import mockAccount from '../../../../../fixtures/account';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.ROOT;
 
@@ -87,9 +86,7 @@ context('Insurance - Account - Password reset page - As an Exporter, I want to r
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(accountFormFields[EMAIL].input(), mockAccount[EMAIL]);
-
-      submitButton().click();
+      cy.completeAndSubmitPasswordResetForm({});
     });
 
     it(`should redirect to ${LINK_SENT}`, () => {

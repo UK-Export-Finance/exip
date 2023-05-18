@@ -16,6 +16,7 @@ const {
   INSURANCE: {
     ACCOUNT: {
       PASSWORD_RESET: { LINK_SENT },
+      SUSPENDED: { ROOT: SUSPENDED_ROOT },
     },
   },
 } = ROUTES;
@@ -80,6 +81,10 @@ export const post = async (req: Request, res: Response) => {
     const email = String(sanitiseValue(FIELD_ID, req.body[FIELD_ID]));
 
     const response = await api.keystone.account.sendEmailPasswordResetLink(urlOrigin, email);
+
+    if (response.isBlocked) {
+      return res.redirect(SUSPENDED_ROOT);
+    }
 
     if (response.success) {
       // store the email address in local session, for consumption in the next part of the flow.
