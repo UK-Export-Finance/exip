@@ -126,7 +126,7 @@ model Account {
 model AuthenticationRetry {
   id                               String    @id @default(cuid())
   account                          Account[] @relation("AuthenticationRetry_account")
-  createdAt                        DateTime?
+  createdAt                        DateTime
   from_Account_authenticationRetry Account[] @relation("Account_authenticationRetry")
 }
 

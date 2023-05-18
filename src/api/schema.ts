@@ -407,7 +407,7 @@ export const lists = {
         ref: 'Account',
         many: true,
       }),
-      createdAt: timestamp(),
+      createdAt: timestamp({ validation: { isRequired: true } }),
     },
     access: allowAll,
   }),
