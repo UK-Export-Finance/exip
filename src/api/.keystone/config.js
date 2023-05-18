@@ -380,7 +380,14 @@ var FEEDBACK = {
   SATISFIED: "satisfied",
   NEITHER: "neither",
   DISSATISFIED: "dissatisfied",
-  VERY_DISSATISIFED: "veryDissatisfied"
+  VERY_DISSATISIFED: "veryDissatisfied",
+  EMAIL_TEXT: {
+    verySatisfied: "Very satisfied",
+    satisfied: "Satisfied",
+    neither: "Neither satisfied or dissatisfied",
+    dissatisfied: "Dissatisfied",
+    veryDissatisfied: "Very dissatisfied"
+  }
 };
 var ACCEPTED_FILE_TYPES = [".csv"];
 
@@ -1051,15 +1058,16 @@ var lists = {
           { label: FEEDBACK.SATISFIED, value: FEEDBACK.SATISFIED },
           { label: FEEDBACK.NEITHER, value: FEEDBACK.NEITHER },
           { label: FEEDBACK.DISSATISFIED, value: FEEDBACK.DISSATISFIED },
-          { label: FEEDBACK.VERY_DISSATISIFED, value: FEEDBACK.VERY_DISSATISIFED }
+          { label: FEEDBACK.VERY_DISSATISIFED, value: FEEDBACK.VERY_DISSATISIFED },
+          { label: "", value: "" }
         ],
         db: { isNullable: true }
       }),
       improvement: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1000)" }
+        db: { nativeType: "VarChar(1200)" }
       }),
       otherComments: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1000)" }
+        db: { nativeType: "VarChar(1200)" }
       }),
       referralUrl: (0, import_fields.text)({
         db: { nativeType: "VarChar(500)" }
@@ -1503,6 +1511,10 @@ var import_date_fns2 = require("date-fns");
 var formatDate = (timestamp3, dateFormat = "d MMMM yyyy") => (0, import_date_fns2.format)(new Date(timestamp3), dateFormat);
 var format_date_default = formatDate;
 
+// helpers/map-feedback-satisfaction/index.ts
+var mapFeedbackSatisfaction = (satisfaction) => FEEDBACK.EMAIL_TEXT[satisfaction];
+var map_feedback_satisfaction_default = mapFeedbackSatisfaction;
+
 // emails/index.ts
 import_dotenv3.default.config();
 var callNotify = async (templateId, emailAddress, variables, file, fileIsCsv) => {
@@ -1626,6 +1638,9 @@ var insuranceFeedbackEmail = async (variables) => {
     if (variables.createdAt) {
       emailVariables.date = format_date_default(variables.createdAt);
       emailVariables.time = format_date_default(variables.createdAt, "HH:mm:ss");
+    }
+    if (variables.satisfaction) {
+      emailVariables.satisfaction = map_feedback_satisfaction_default(variables.satisfaction);
     }
     const response = await callNotify(templateId, emailAddress, emailVariables);
     return response;

@@ -6,6 +6,7 @@ import getFullNameString from '../helpers/get-full-name-string';
 import { EMAIL_TEMPLATE_IDS } from '../constants';
 import { mockAccount, mockApplication, mockCompany, mockBuyer, mockUrlOrigin, mockSendEmailResponse, mockInsuranceFeedback } from '../test-mocks';
 import formatDate from '../helpers/format-date';
+import mapFeedbackSatisfaction from '../helpers/map-feedback-satisfaction';
 
 dotenv.config();
 
@@ -295,11 +296,38 @@ describe('emails', () => {
   describe('feedbackEmail', () => {
     const templateId = EMAIL_TEMPLATE_IDS.FEEDBACK.INSURANCE;
 
-    test('it should call notify.sendEmail and return the response', async () => {
+    test('it should call notify.sendEmail and return the response with all variables provided', async () => {
       notify.sendEmail = sendEmailSpy;
 
       const emailVariables = {
         ...mockInsuranceFeedback,
+        createdAt: new Date(),
+      };
+
+      const result = await sendEmail.insuranceFeedbackEmail(emailVariables);
+
+      const resultVariables = {
+        ...emailVariables,
+        date: formatDate(new Date()),
+        time: formatDate(new Date(), 'HH:mm:ss'),
+        satisfaction: mapFeedbackSatisfaction(mockInsuranceFeedback.satisfaction),
+      };
+
+      expect(sendEmailSpy).toHaveBeenCalledTimes(1);
+      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, resultVariables);
+
+      const expected = mockSendEmailResponse;
+
+      expect(result).toEqual(expected);
+    });
+
+    test('it should call notify.sendEmail and return the response with no satisfaction provided', async () => {
+      notify.sendEmail = sendEmailSpy;
+
+      const { satisfaction, ...mockInsuranceFeedbackNoSatisfaction } = mockInsuranceFeedback;
+
+      const emailVariables = {
+        ...mockInsuranceFeedbackNoSatisfaction,
         createdAt: new Date(),
       };
 
