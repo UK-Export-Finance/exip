@@ -1,5 +1,5 @@
 import applicationSubmittedPage from '../../../pages/insurance/applicationSubmitted';
-import { PAGES } from '../../../../../content-strings';
+import { PAGES, LINKS } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.APPLICATION_SUBMITTED;
@@ -9,6 +9,7 @@ const {
   ELIGIBILITY: { BUYER_COUNTRY },
   DECLARATIONS: { HOW_YOUR_DATA_WILL_BE_USED },
   APPLICATION_SUBMITTED,
+  FEEDBACK,
 } = INSURANCE_ROUTES;
 
 context('Insurance - application submitted page', () => {
@@ -137,7 +138,7 @@ context('Insurance - application submitted page', () => {
         it('renders a link', () => {
           cy.checkLink(
             selector(),
-            '#',
+            FEEDBACK,
             CONTENT_STRINGS.ACTIONS.GIVE_FEEDBACK.TEXT,
           );
         });
@@ -156,7 +157,7 @@ context('Insurance - application submitted page', () => {
       it('renders a link to take part', () => {
         cy.checkLink(
           research.takePartLink(),
-          '#',
+          LINKS.EXTERNAL.RESEARCH,
           CONTENT_STRINGS.RESEARCH.TAKE_PART.TEXT,
         );
       });
