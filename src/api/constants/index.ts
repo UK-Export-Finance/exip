@@ -139,5 +139,12 @@ export const FEEDBACK = {
   NEITHER: 'neither',
   DISSATISFIED: 'dissatisfied',
   VERY_DISSATISIFED: 'veryDissatisfied',
+  EMAIL_TEXT: {
+    verySatisfied: 'Very satisfied',
+    satisfied: 'Satisfied',
+    neither: 'Neither satisfied or dissatisfied',
+    dissatisfied: 'Dissatisfied',
+    veryDissatisfied: 'Very dissatisfied',
+  },
 };
 export const ACCEPTED_FILE_TYPES = ['.csv'];

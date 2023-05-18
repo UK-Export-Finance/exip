@@ -32,7 +32,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
 
     describe('when submitting a valid feedback form', () => {
       it(`should redirect to ${FEEDBACK_SENT}`, () => {
-        cy.url().should('eq', feedbackConfirmationUrl);
+        cy.assertUrl(feedbackConfirmationUrl);
       });
     });
 
@@ -40,7 +40,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
       it(`should redirect to ${startUrl}`, () => {
         submitButton().click();
 
-        cy.url().should('eq', startUrl);
+        cy.assertUrl(startUrl);
       });
     });
   });
@@ -60,7 +60,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
 
     describe('when submitting a valid feedback form', () => {
       it(`should redirect to ${FEEDBACK_SENT}`, () => {
-        cy.url().should('eq', feedbackConfirmationUrl);
+        cy.assertUrl(feedbackConfirmationUrl);
       });
     });
 
@@ -68,7 +68,63 @@ context('Insurance - Feedback - Submit feedback form', () => {
       it(`should redirect to ${startUrl}`, () => {
         submitButton().click();
 
-        cy.url().should('eq', startUrl);
+        cy.assertUrl(startUrl);
+      });
+    });
+  });
+
+  describe(`when submitting a populated form with maximum characters for ${IMPROVEMENT} and ${OTHER_COMMENTS}`, () => {
+    const longString = 'a'.repeat(1200);
+
+    beforeEach(() => {
+      cy.saveSession();
+
+      cy.navigateToUrl(startUrl);
+      partials.phaseBanner.feedbackLink().click();
+
+      feedbackPage.field(SATISFIED).input().click();
+      cy.keyboardInput(feedbackPage.field(IMPROVEMENT).input(), longString);
+      cy.keyboardInput(feedbackPage.field(OTHER_COMMENTS).input(), longString);
+      submitButton().click();
+    });
+
+    describe('when submitting a valid feedback form', () => {
+      it(`should redirect to ${FEEDBACK_SENT}`, () => {
+        cy.assertUrl(feedbackConfirmationUrl);
+      });
+    });
+
+    describe('when clicking the "back to service button"', () => {
+      it(`should redirect to ${startUrl}`, () => {
+        submitButton().click();
+
+        cy.assertUrl(startUrl);
+      });
+    });
+  });
+
+  describe('when submitting a populated form without satisfaction completed', () => {
+    beforeEach(() => {
+      cy.saveSession();
+
+      cy.navigateToUrl(startUrl);
+      partials.phaseBanner.feedbackLink().click();
+
+      cy.keyboardInput(feedbackPage.field(IMPROVEMENT).input(), 'test');
+      submitButton().click();
+    });
+
+    describe('when submitting a valid feedback form', () => {
+      it(`should redirect to ${FEEDBACK_SENT}`, () => {
+        cy.assertUrl(feedbackConfirmationUrl);
+      });
+    });
+
+    describe('when clicking the "back to service button"', () => {
+      it(`should redirect to ${startUrl}`, () => {
+        submitButton().click();
+
+        cy.assertUrl(startUrl);
       });
     });
   });

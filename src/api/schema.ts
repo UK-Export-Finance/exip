@@ -747,14 +747,15 @@ export const lists = {
           { label: FEEDBACK.NEITHER, value: FEEDBACK.NEITHER },
           { label: FEEDBACK.DISSATISFIED, value: FEEDBACK.DISSATISFIED },
           { label: FEEDBACK.VERY_DISSATISIFED, value: FEEDBACK.VERY_DISSATISIFED },
+          { label: '', value: '' },
         ],
         db: { isNullable: true },
       }),
       improvement: text({
-        db: { nativeType: 'VarChar(1000)' },
+        db: { nativeType: 'VarChar(1200)' },
       }),
       otherComments: text({
-        db: { nativeType: 'VarChar(1000)' },
+        db: { nativeType: 'VarChar(1200)' },
       }),
       referralUrl: text({
         db: { nativeType: 'VarChar(500)' },
