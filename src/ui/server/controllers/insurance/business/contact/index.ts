@@ -10,6 +10,8 @@ import getValuesFromUserSessionOrApplication from '../../../../helpers/get-value
 import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 import mapAndSave from '../map-and-save';
+import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 
 const { BUSINESS } = FIELD_IDS;
 const { COMPANY_NAME, POSITION, BUSINESS_CONTACT_DETAIL } = FIELD_IDS.CONTACT;
@@ -23,10 +25,10 @@ export const TEMPLATE = CONTACT_TEMPLATE;
 const {
   INSURANCE_ROOT,
   EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES,
-  // CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
 } = ROUTES.INSURANCE;
 
-const { CONTACT_ROOT_SAVE_AND_BACK, NATURE_OF_BUSINESS_ROOT } = EXPORTER_BUSINESS_ROUTES;
+const { CONTACT_SAVE_AND_BACK, NATURE_OF_BUSINESS_ROOT, CHECK_YOUR_ANSWERS } = EXPORTER_BUSINESS_ROUTES;
 
 const { CONTACT: CONTACT_FIELDS } = FIELDS;
 
@@ -53,7 +55,7 @@ const pageVariables = (referenceNumber: number) => ({
       ...CONTACT_FIELDS[POSITION],
     },
   },
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CONTACT_ROOT_SAVE_AND_BACK}`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CONTACT_SAVE_AND_BACK}`,
 });
 
 /**
@@ -130,13 +132,13 @@ const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    // if (isCheckAndChangeRoute(req.originalUrl)) {
-    //   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
-    // }
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+    }
 
-    // if (isChangeRoute(req.originalUrl)) {
-    //   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
-    // }
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`);
   } catch (err) {

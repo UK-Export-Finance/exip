@@ -27,7 +27,7 @@ const APPLICATION_SUBMITTED = {
     },
     GIVE_FEEDBACK: {
       TEXT: LINKS.GIVE_FEEDBACK,
-      HREF: '#',
+      HREF: ROUTES.INSURANCE.FEEDBACK,
     },
   },
   RESEARCH: {
@@ -35,7 +35,7 @@ const APPLICATION_SUBMITTED = {
     CARRY_OUT: 'We regularly carry out research to improve our services. You can',
     TAKE_PART: {
       TEXT: 'take part',
-      HREF: '#',
+      HREF: LINKS.EXTERNAL.RESEARCH,
     },
     IF_YOU_LIKE: "if you'd like to be involved.",
   },

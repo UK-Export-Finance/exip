@@ -3,19 +3,24 @@ import { objectHasProperty } from '../object';
 /**
  * getFieldById
  * Get a field from an object by the field ID
- * @param {Object} Fields
- * @param {String} Field ID
+ * if field has optional prefix, then add to the id
+ * @param {Object} fields
+ * @param {String} fieldId ID
+ * @param {String} fieldIdPrefix optional fieldId prefix
  * @returns {Object} Field or an object with the provided field ID.
  */
-const getFieldById = (fields: object, fieldId: string) => {
+const getFieldById = (fields: object, fieldId: string, fieldIdPrefix?: string) => {
+  // if prefix, then add prefix before fieldId, else set id as fieldId
+  const id = fieldIdPrefix ? `${fieldIdPrefix}-${fieldId}` : fieldId;
+
   if (objectHasProperty(fields, fieldId)) {
     return {
-      id: fieldId,
+      id,
       ...fields[fieldId],
     };
   }
 
-  return { id: fieldId };
+  return { id };
 };
 
 export default getFieldById;

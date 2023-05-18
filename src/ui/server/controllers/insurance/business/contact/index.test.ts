@@ -20,9 +20,13 @@ const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 const { CONTACT } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { CONTACT: CONTACT_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
-const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
+const {
+  INSURANCE_ROOT,
+  EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES,
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
+} = ROUTES.INSURANCE;
 
-const { CONTACT_ROOT_SAVE_AND_BACK, NATURE_OF_BUSINESS_ROOT } = EXPORTER_BUSINESS_ROUTES;
+const { CONTACT_SAVE_AND_BACK, NATURE_OF_BUSINESS_ROOT, CONTACT_CHANGE, CONTACT_CHECK_AND_CHANGE, CHECK_YOUR_ANSWERS } = EXPORTER_BUSINESS_ROUTES;
 
 const { CONTACT: CONTACT_FIELDS } = FIELDS;
 
@@ -74,7 +78,7 @@ describe('controllers/insurance/business/contact', () => {
             ...CONTACT_FIELDS[POSITION],
           },
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CONTACT_ROOT_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CONTACT_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -161,6 +165,33 @@ describe('controllers/insurance/business/contact', () => {
         expect(mapAndSave.contact).toHaveBeenCalledTimes(1);
 
         expect(mapAndSave.contact).toHaveBeenCalledWith(req.body, mockApplication);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.body = mockBusinessContact;
+
+          req.originalUrl = CONTACT_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.body = mockBusinessContact;
+
+          req.originalUrl = CONTACT_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 

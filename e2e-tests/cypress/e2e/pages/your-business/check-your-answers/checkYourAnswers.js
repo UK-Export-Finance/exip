@@ -2,6 +2,9 @@ import { FIELD_IDS } from '../../../../../constants';
 
 const {
   INSURANCE: {
+    ACCOUNT: {
+      EMAIL: ACCOUNT_EMAIL,
+    },
     EXPORTER_BUSINESS: {
       COMPANY_HOUSE: {
         COMPANY_NAME,
@@ -16,6 +19,10 @@ const {
         TRADING_NAME,
         WEBSITE,
         PHONE_NUMBER,
+      },
+      CONTACT: {
+        NAME: CONTACT_NAME,
+        POSITION,
       },
       NATURE_OF_YOUR_BUSINESS: {
         YEARS_EXPORTING,
@@ -88,6 +95,21 @@ const checkYourAnswers = {
       key: () => cy.get(`.${PHONE_NUMBER}-key`),
       value: () => cy.get(`.${PHONE_NUMBER}-value`),
       changeLink: () => cy.get(`[data-cy="${PHONE_NUMBER}-change-link"]`),
+    },
+    [`contact-${CONTACT_NAME}`]: {
+      key: () => cy.get(`.contact-${CONTACT_NAME}-key`),
+      value: () => cy.get(`.contact-${CONTACT_NAME}-value`),
+      changeLink: () => cy.get(`[data-cy="contact-${CONTACT_NAME}-change-link"]`),
+    },
+    [`contact-${ACCOUNT_EMAIL}`]: {
+      key: () => cy.get(`.contact-${ACCOUNT_EMAIL}-key`),
+      value: () => cy.get(`.contact-${ACCOUNT_EMAIL}-value`),
+      changeLink: () => cy.get(`[data-cy="contact-${ACCOUNT_EMAIL}-change-link"]`),
+    },
+    [POSITION]: {
+      key: () => cy.get(`.${POSITION}-key`),
+      value: () => cy.get(`.${POSITION}-value`),
+      changeLink: () => cy.get(`[data-cy="${POSITION}-change-link"]`),
     },
     [GOODS_OR_SERVICES]: {
       key: () => cy.get(`.${GOODS_OR_SERVICES}-key`),

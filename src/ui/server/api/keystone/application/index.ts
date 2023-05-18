@@ -213,11 +213,11 @@ const application = {
         const response = (await apollo('POST', updateBusinessContactMutation, variables)) as ApolloResponse;
 
         if (response.errors) {
-          console.error('GraphQL error updating application business ', response.errors);
+          console.error('GraphQL error updating application business contact ', response.errors);
         }
 
         if (response?.networkError?.result?.errors) {
-          console.error('GraphQL network error updating application business ', response.networkError.result.errors);
+          console.error('GraphQL network error updating application business contact ', response.networkError.result.errors);
         }
 
         if (response?.data?.updateBusinessContactDetail) {
