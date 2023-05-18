@@ -1,5 +1,5 @@
 import { ACCOUNT } from '../../../../constants/account';
-import completeAndSubmitPasswordResetForm from './complete-and-submit-new-password-account-form';
+import completeAndSubmitPasswordResetForm from './complete-and-submit-password-reset-form';
 import { backLink } from '../../../e2e/pages/shared';
 
 const attemptsToMake = [...Array(ACCOUNT.MAX_PASSWORD_RESET_TRIES)];

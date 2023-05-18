@@ -141,6 +141,7 @@ const ACCOUNT = {
   },
   SUSPENDED: {
     PAGE_TITLE: 'This account has been temporarily suspended',
+    BODY: 'This can happen if there are too many failed attempts to login or reset a password.',
   },
 };
 
