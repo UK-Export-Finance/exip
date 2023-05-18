@@ -72,6 +72,34 @@ CREATE TABLE `Application` (
 
 
 
+# Dump of table Authentication
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `Authentication`;
+
+CREATE TABLE `Authentication` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `salt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `hash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `createdAt` datetime(3) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table AuthenticationRetry
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `AuthenticationRetry`;
+
+CREATE TABLE `AuthenticationRetry` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdAt` datetime(3) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
 # Dump of table Buyer
 # ------------------------------------------------------------
 
@@ -526,7 +554,16 @@ CREATE TABLE `Account` (
   `sessionIdentifier` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `passwordResetHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `passwordResetExpiry` datetime(3) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+	`authentication` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `authenticationRetry` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `isBlocked` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+	UNIQUE KEY `Account_authentication_key` (`authentication`),
+  UNIQUE KEY `Account_authenticationRetry_key` (`authenticationRetry`),
+  KEY `Account_authentication_idx` (`authentication`),
+  KEY `Account_authenticationRetry_idx` (`authenticationRetry`),
+  CONSTRAINT `Account_authentication_fkey` FOREIGN KEY (`authentication`) REFERENCES `Authentication` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Account_authenticationRetry_fkey` FOREIGN KEY (`authenticationRetry`) REFERENCES `AuthenticationRetry` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
