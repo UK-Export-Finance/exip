@@ -26,7 +26,7 @@ const completeAndSubmitPasswordResetForm = ({ assertRedirectUrl = true }) => {
   submitButton().click();
 
   if (assertRedirectUrl) {
-    cy.url().should('eq', linkSentUrl);
+    cy.assertUrl(linkSentUrl);
   }
 };
 
