@@ -113,6 +113,23 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
       });
     });
 
+    describe('privacy notice', () => {
+      const { privacyNotice } = yourDetailsPage;
+      const privacyNoticeContentStrings = CONTENT_STRINGS.PRIVACY;
+
+      it('renders a privacy notice heading', () => {
+        cy.checkText(privacyNotice.heading(), privacyNoticeContentStrings.HEADING);
+      });
+
+      it('renders the privacy notice text', () => {
+        cy.checkText(privacyNotice.text(), `${privacyNoticeContentStrings.MAIN_TEXT} ${privacyNoticeContentStrings.LINK.TEXT}`);
+      });
+
+      it(`renders the privacy notice link and href to ${privacyNoticeContentStrings.LINK.HREF}`, () => {
+        cy.checkLink(privacyNotice.link(), privacyNoticeContentStrings.LINK.HREF, privacyNoticeContentStrings.LINK.TEXT);
+      });
+    });
+
     it('renders a `already got an account` copy and button link', () => {
       cy.checkText(yourDetailsPage.alreadyGotAnAccountHeading(), CONTENT_STRINGS.ALREADY_GOT_AN_ACCOUNT);
 

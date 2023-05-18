@@ -11,6 +11,11 @@ const yourDetailsPage = {
   intro: () => cy.get('[data-cy="intro"]'),
   alreadyGotAnAccountHeading: () => cy.get('[data-cy="already-got-an-account"]'),
   signInButtonLink: () => cy.get('[data-cy="sign-in"]'),
+  privacyNotice: {
+    heading: () => cy.get('[data-cy="privacy-notice-heading"]'),
+    text: () => cy.get('[data-cy="privacy-notice-text"]'),
+    link: () => cy.get('[data-cy="privacy-notice-link"]'),
+  },
   [FIRST_NAME]: {
     label: () => cy.get(`[data-cy="${FIRST_NAME}-label"]`),
     input: () => cy.get(`[data-cy="${FIRST_NAME}-input"]`),
