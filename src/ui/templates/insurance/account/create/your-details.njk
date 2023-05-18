@@ -155,7 +155,15 @@
       }
     }) }}
 
-    <div class="govuk-button-group">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <h2 class="govuk-heading-m" data-cy="privacy-notice-heading">{{ CONTENT_STRINGS.PRIVACY.HEADING }}</h1>
+
+        <p class="govuk-body" data-cy="privacy-notice-text">{{ CONTENT_STRINGS.PRIVACY.MAIN_TEXT }} <a class="govuk-link" data-cy="privacy-notice-link" href="{{ CONTENT_STRINGS.PRIVACY.LINK.HREF }}">{{ CONTENT_STRINGS.PRIVACY.LINK.TEXT }}</a></p>
+      </div>
+    </div>
+
+    <div class="govuk-button-group govuk-!-margin-top-5">
       {{ govukButton({
         text: CONTENT_STRINGS.BUTTONS.CONTINUE,
         attributes: {
