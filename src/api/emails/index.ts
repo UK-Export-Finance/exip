@@ -4,6 +4,7 @@ import notify from '../integrations/notify';
 import { EmailResponse, ApplicationSubmissionEmailVariables, InsuranceFeedbackVariables } from '../types';
 import dotenv from 'dotenv';
 import formatDate from '../helpers/format-date';
+import mapFeedbackSatisfaction from '../helpers/map-feedback-satisfaction';
 
 dotenv.config();
 
@@ -227,6 +228,11 @@ const insuranceFeedbackEmail = async (variables: InsuranceFeedbackVariables): Pr
     if (variables.createdAt) {
       emailVariables.date = formatDate(variables.createdAt);
       emailVariables.time = formatDate(variables.createdAt, 'HH:mm:ss');
+    }
+
+    // if satisfaction variable exists, then map to formatted email field
+    if (variables.satisfaction) {
+      emailVariables.satisfaction = mapFeedbackSatisfaction(variables.satisfaction);
     }
 
     const response = await callNotify(templateId, emailAddress, emailVariables);
