@@ -24,6 +24,90 @@ SET NAMES utf8mb4;
 SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS;
 SET FOREIGN_KEY_CHECKS = 0;
 
+
+DROP TABLE IF EXISTS `_Account_applications`;
+
+CREATE TABLE `_Account_applications` (
+  `A` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `B` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  UNIQUE KEY `_Account_applications_AB_unique` (`A`,`B`),
+  KEY `_Account_applications_B_index` (`B`),
+  CONSTRAINT `_Account_applications_A_fkey` FOREIGN KEY (`A`) REFERENCES `Account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `_Account_applications_B_fkey` FOREIGN KEY (`B`) REFERENCES `Application` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table _Authentication_account
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `_Authentication_account`;
+
+CREATE TABLE `_Authentication_account` (
+  `A` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `B` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  UNIQUE KEY `_Authentication_account_AB_unique` (`A`,`B`),
+  KEY `_Authentication_account_B_index` (`B`),
+  CONSTRAINT `_Authentication_account_A_fkey` FOREIGN KEY (`A`) REFERENCES `Account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `_Authentication_account_B_fkey` FOREIGN KEY (`B`) REFERENCES `Authentication` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table _AuthenticationRetry_account
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `_AuthenticationRetry_account`;
+
+CREATE TABLE `_AuthenticationRetry_account` (
+  `A` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `B` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  UNIQUE KEY `_AuthenticationRetry_account_AB_unique` (`A`,`B`),
+  KEY `_AuthenticationRetry_account_B_index` (`B`),
+  CONSTRAINT `_AuthenticationRetry_account_A_fkey` FOREIGN KEY (`A`) REFERENCES `Account` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `_AuthenticationRetry_account_B_fkey` FOREIGN KEY (`B`) REFERENCES `AuthenticationRetry` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table Account
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `Account`;
+
+CREATE TABLE `Account` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `createdAt` datetime(3) DEFAULT NULL,
+  `updatedAt` datetime(3) DEFAULT NULL,
+  `firstName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `lastName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `salt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `hash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `isVerified` tinyint(1) NOT NULL DEFAULT '0',
+  `verificationHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `verificationExpiry` datetime(3) DEFAULT NULL,
+  `otpSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `otpHash` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `otpExpiry` datetime(3) DEFAULT NULL,
+  `sessionExpiry` datetime(3) DEFAULT NULL,
+  `sessionIdentifier` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `passwordResetHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `passwordResetExpiry` datetime(3) DEFAULT NULL,
+  `authentication` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `authenticationRetry` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `isBlocked` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `Account_authentication_key` (`authentication`),
+  UNIQUE KEY `Account_authenticationRetry_key` (`authenticationRetry`),
+  KEY `Account_authentication_idx` (`authentication`),
+  KEY `Account_authenticationRetry_idx` (`authenticationRetry`),
+  CONSTRAINT `Account_authentication_fkey` FOREIGN KEY (`authentication`) REFERENCES `Authentication` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Account_authenticationRetry_fkey` FOREIGN KEY (`authenticationRetry`) REFERENCES `AuthenticationRetry` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
 # Dump of table Application
 # ------------------------------------------------------------
 
@@ -529,42 +613,6 @@ CREATE TABLE IF NOT EXISTS `Eligibility` (
   CONSTRAINT `Eligibility_buyerCountry_fkey` FOREIGN KEY (`buyerCountry`) REFERENCES `Country` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
-# Dump of table Account
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `Account`;
-
-CREATE TABLE `Account` (
-  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `createdAt` datetime(3) DEFAULT NULL,
-  `updatedAt` datetime(3) DEFAULT NULL,
-  `firstName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `lastName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `salt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `hash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `isVerified` tinyint(1) NOT NULL DEFAULT '0',
-  `verificationHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `verificationExpiry` datetime(3) DEFAULT NULL,
-  `otpSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `otpHash` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `otpExpiry` datetime(3) DEFAULT NULL,
-  `sessionExpiry` datetime(3) DEFAULT NULL,
-  `sessionIdentifier` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `passwordResetHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `passwordResetExpiry` datetime(3) DEFAULT NULL,
-	`authentication` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `authenticationRetry` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `isBlocked` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-	UNIQUE KEY `Account_authentication_key` (`authentication`),
-  UNIQUE KEY `Account_authenticationRetry_key` (`authenticationRetry`),
-  KEY `Account_authentication_idx` (`authentication`),
-  KEY `Account_authenticationRetry_idx` (`authenticationRetry`),
-  CONSTRAINT `Account_authentication_fkey` FOREIGN KEY (`authentication`) REFERENCES `Authentication` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Account_authenticationRetry_fkey` FOREIGN KEY (`authenticationRetry`) REFERENCES `AuthenticationRetry` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 
