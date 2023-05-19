@@ -24,7 +24,7 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
 
-const YOUR_CONTACT_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
+const YOUR_CONTACT_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS.CONTACT;
 
 describe('Insurance - Your business - Contact page - form validation', () => {
   let referenceNumber;

@@ -7,7 +7,7 @@ import emailValidation from '../../../../../../shared-validation/email';
 const { EMAIL: FIELD_ID } = FIELD_IDS;
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
-const ERROR_MESSAGE = EXPORTER_BUSINESS[FIELD_ID];
+const ERROR_MESSAGE = EXPORTER_BUSINESS.CONTACT[FIELD_ID];
 
 const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
 

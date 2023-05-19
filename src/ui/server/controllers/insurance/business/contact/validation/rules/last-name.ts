@@ -6,8 +6,8 @@ import nameValidation from '../../../../../../shared-validation/name';
 const { LAST_NAME: FIELD_ID } = FIELD_IDS;
 
 const {
-  EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGE },
-} = ERROR_MESSAGES.INSURANCE;
+  CONTACT: { [FIELD_ID]: ERROR_MESSAGE },
+} = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
 /**
  * validates last name field
