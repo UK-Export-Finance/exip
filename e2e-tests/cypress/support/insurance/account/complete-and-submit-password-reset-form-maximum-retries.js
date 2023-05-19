@@ -7,7 +7,7 @@ const attemptsToMake = [...Array(ACCOUNT.MAX_PASSWORD_RESET_TRIES)];
 /**
  * completeAndSubmitPasswordResetFormMaximumRetries
  * Complete and submit the password reset form multiple times,
- * Mathcing the maximum retries allowed before an account becomes blocked.
+ * Matching the maximum retries allowed before an account becomes blocked.
  */
 const completeAndSubmitPasswordResetFormMaximumRetries = () => {
   attemptsToMake.forEach((item, index) => {
