@@ -3,6 +3,7 @@ import { isAfter } from 'date-fns';
 import { FIELD_IDS } from '../../constants';
 import getAccountByField from '../../helpers/get-account-by-field';
 import encryptPassword from '../../helpers/encrypt-password';
+import isValidAccountPassword from '../../helpers/is-valid-account-password';
 import { Account, AccountPasswordResetVariables } from '../../types';
 
 const accountPasswordReset = async (root: any, variables: AccountPasswordResetVariables, context: Context) => {
@@ -11,7 +12,10 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
   try {
     const { token, password: newPassword } = variables;
 
-    // get the account the token is associated with.
+    /**
+     * Get the account the token is associated with.
+     * If an account does not exist, return success=false
+     */
     const account = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD_RESET_HASH, token);
 
     if (!account) {
@@ -22,13 +26,20 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
 
     const { id: accountId, passwordResetHash, passwordResetExpiry } = account as Account;
 
+    /**
+     * Check that the account has a reset hash and expiry.
+     * If not, return success=false
+     */
     if (!passwordResetHash || !passwordResetExpiry) {
       console.info('Unable to reset account password - reset hash or expiry does not exist');
 
       return { success: false };
     }
 
-    // check that the verification period has not expired.
+    /**
+     * Check that the verification period has not expired.
+     * If expired, return success=false
+     */
     const now = new Date();
 
     const hasExpired = isAfter(now, passwordResetExpiry);
@@ -42,10 +53,31 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
       };
     }
 
-    // generate encrypted password
+    // TODO
+    // check that the provided password has not been used before.
+
+    console.log('-----passwordResetHash ', passwordResetHash);
+
+    
+
+
+    /**
+     * Account is OK to proceed with password reset.
+     * Encrypt the password and update the account
+     */
+
+    /**
+     * Account is OK to proceed with password reset.
+     * Encrypt the password and update the account
+     */
     const { salt, hash } = encryptPassword(newPassword);
 
-    // update the account
+
+    const bla = isValidAccountPassword(newPassword, salt, hash);
+    console.log('-----blaaa ', bla);
+
+    console.log('-----hash ', hash);
+
     const accountUpdate = {
       salt,
       hash,
