@@ -39,7 +39,10 @@ const sendEmailPasswordResetLink = async (
 
     const { urlOrigin, email } = variables;
 
-    // Get the account the email is associated with.
+    /**
+     * Get the account the email is associated with.
+     * If the account does not exist, return success=false
+     */
     const account = (await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email)) as Account;
 
     if (!account) {
@@ -50,12 +53,20 @@ const sendEmailPasswordResetLink = async (
 
     const { id: accountId } = account;
 
+    /**
+     * Create a new retry entry for the account
+     * If this fails, return success=false
+     */
     const newRetriesEntry = await createAuthenticationRetryEntry(context, accountId);
 
     if (!newRetriesEntry.success) {
       return { success: false };
     }
 
+    /**
+     * Check if the account should be blocked.
+     * If so, update the account and return isBlocked=true
+     */
     const blockAccount = await shouldBlockAccount(context, accountId);
 
     if (blockAccount) {
@@ -73,6 +84,11 @@ const sendEmailPasswordResetLink = async (
       };
     }
 
+
+    /**
+     * Account is OK to proceed with password reset.
+     * Generate a password reset link and send to the email address.
+     */
     console.info('Generating password reset hash');
 
     const passwordResetHash = crypto.pbkdf2Sync(email, account.salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);

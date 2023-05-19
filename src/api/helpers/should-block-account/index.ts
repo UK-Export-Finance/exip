@@ -14,8 +14,11 @@ const { MAX_PASSWORD_RESET_TRIES, MAX_PASSWORD_RESET_TRIES_TIMEFRAME } = ACCOUNT
  * @returns {Boolean}
  */
 const shouldBlockAccount = async (context: Context, accountId: string): Promise<boolean> => {
-  console.info(`Checking account ${accountId} for password reset retries`);
+  console.info(`Checking account ${accountId} password reset retries`);
 
+  /**
+   * Get retries associated with the providied account ID
+   */
   const retries = await context.db.AuthenticationRetry.findMany({
     where: {
       account: {
@@ -28,6 +31,10 @@ const shouldBlockAccount = async (context: Context, accountId: string): Promise<
 
   const now = Date.now();
 
+  /**
+   * Check if the retries breach the threshold:
+   * - total of MAX_PASSWORD_RESET_TRIES in less than MAX_PASSWORD_RESET_TRIES_TIMEFRAME
+   */
   const retriesInTimeframe = [] as Array<string>;
 
   retries.forEach((retry) => {

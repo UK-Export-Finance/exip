@@ -2269,7 +2269,7 @@ var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
 var import_date_fns6 = require("date-fns");
 var { MAX_PASSWORD_RESET_TRIES, MAX_PASSWORD_RESET_TRIES_TIMEFRAME } = ACCOUNT2;
 var shouldBlockAccount = async (context, accountId) => {
-  console.info(`Checking account ${accountId} for password reset retries`);
+  console.info(`Checking account ${accountId} password reset retries`);
   const retries = await context.db.AuthenticationRetry.findMany({
     where: {
       account: {
