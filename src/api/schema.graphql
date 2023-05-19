@@ -446,6 +446,7 @@ type Account {
   salt: String
   hash: String
   isVerified: Boolean
+  isBlocked: Boolean
   verificationHash: String
   verificationExpiry: DateTime
   otpSalt: String
@@ -455,6 +456,8 @@ type Account {
   sessionIdentifier: String
   passwordResetHash: String
   passwordResetExpiry: DateTime
+  authentication: Authentication
+  authenticationRetry: AuthenticationRetry
   applications(where: ApplicationWhereInput! = {}, orderBy: [ApplicationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ApplicationWhereUniqueInput): [Application!]
   applicationsCount(where: ApplicationWhereInput! = {}): Int
 }
@@ -476,6 +479,7 @@ input AccountWhereInput {
   salt: StringFilter
   hash: StringFilter
   isVerified: BooleanFilter
+  isBlocked: BooleanFilter
   verificationHash: StringFilter
   verificationExpiry: DateTimeNullableFilter
   otpSalt: StringFilter
@@ -485,6 +489,8 @@ input AccountWhereInput {
   sessionIdentifier: StringFilter
   passwordResetHash: StringFilter
   passwordResetExpiry: DateTimeNullableFilter
+  authentication: AuthenticationWhereInput
+  authenticationRetry: AuthenticationRetryWhereInput
   applications: ApplicationManyRelationFilter
 }
 
@@ -509,6 +515,7 @@ input AccountOrderByInput {
   salt: OrderDirection
   hash: OrderDirection
   isVerified: OrderDirection
+  isBlocked: OrderDirection
   verificationHash: OrderDirection
   verificationExpiry: OrderDirection
   otpSalt: OrderDirection
@@ -529,6 +536,7 @@ input AccountUpdateInput {
   salt: String
   hash: String
   isVerified: Boolean
+  isBlocked: Boolean
   verificationHash: String
   verificationExpiry: DateTime
   otpSalt: String
@@ -538,7 +546,21 @@ input AccountUpdateInput {
   sessionIdentifier: String
   passwordResetHash: String
   passwordResetExpiry: DateTime
+  authentication: AuthenticationRelateToOneForUpdateInput
+  authenticationRetry: AuthenticationRetryRelateToOneForUpdateInput
   applications: ApplicationRelateToManyForUpdateInput
+}
+
+input AuthenticationRelateToOneForUpdateInput {
+  create: AuthenticationCreateInput
+  connect: AuthenticationWhereUniqueInput
+  disconnect: Boolean
+}
+
+input AuthenticationRetryRelateToOneForUpdateInput {
+  create: AuthenticationRetryCreateInput
+  connect: AuthenticationRetryWhereUniqueInput
+  disconnect: Boolean
 }
 
 input ApplicationRelateToManyForUpdateInput {
@@ -562,6 +584,7 @@ input AccountCreateInput {
   salt: String
   hash: String
   isVerified: Boolean
+  isBlocked: Boolean
   verificationHash: String
   verificationExpiry: DateTime
   otpSalt: String
@@ -571,12 +594,143 @@ input AccountCreateInput {
   sessionIdentifier: String
   passwordResetHash: String
   passwordResetExpiry: DateTime
+  authentication: AuthenticationRelateToOneForCreateInput
+  authenticationRetry: AuthenticationRetryRelateToOneForCreateInput
   applications: ApplicationRelateToManyForCreateInput
+}
+
+input AuthenticationRelateToOneForCreateInput {
+  create: AuthenticationCreateInput
+  connect: AuthenticationWhereUniqueInput
+}
+
+input AuthenticationRetryRelateToOneForCreateInput {
+  create: AuthenticationRetryCreateInput
+  connect: AuthenticationRetryWhereUniqueInput
 }
 
 input ApplicationRelateToManyForCreateInput {
   create: [ApplicationCreateInput!]
   connect: [ApplicationWhereUniqueInput!]
+}
+
+type AuthenticationRetry {
+  id: ID!
+  account(where: AccountWhereInput! = {}, orderBy: [AccountOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AccountWhereUniqueInput): [Account!]
+  accountCount(where: AccountWhereInput! = {}): Int
+  createdAt: DateTime
+}
+
+input AuthenticationRetryWhereUniqueInput {
+  id: ID
+}
+
+input AuthenticationRetryWhereInput {
+  AND: [AuthenticationRetryWhereInput!]
+  OR: [AuthenticationRetryWhereInput!]
+  NOT: [AuthenticationRetryWhereInput!]
+  id: IDFilter
+  account: AccountManyRelationFilter
+  createdAt: DateTimeFilter
+}
+
+input AccountManyRelationFilter {
+  every: AccountWhereInput
+  some: AccountWhereInput
+  none: AccountWhereInput
+}
+
+input DateTimeFilter {
+  equals: DateTime
+  in: [DateTime!]
+  notIn: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  gt: DateTime
+  gte: DateTime
+  not: DateTimeFilter
+}
+
+input AuthenticationRetryOrderByInput {
+  id: OrderDirection
+  createdAt: OrderDirection
+}
+
+input AuthenticationRetryUpdateInput {
+  account: AccountRelateToManyForUpdateInput
+  createdAt: DateTime
+}
+
+input AccountRelateToManyForUpdateInput {
+  disconnect: [AccountWhereUniqueInput!]
+  set: [AccountWhereUniqueInput!]
+  create: [AccountCreateInput!]
+  connect: [AccountWhereUniqueInput!]
+}
+
+input AuthenticationRetryUpdateArgs {
+  where: AuthenticationRetryWhereUniqueInput!
+  data: AuthenticationRetryUpdateInput!
+}
+
+input AuthenticationRetryCreateInput {
+  account: AccountRelateToManyForCreateInput
+  createdAt: DateTime
+}
+
+input AccountRelateToManyForCreateInput {
+  create: [AccountCreateInput!]
+  connect: [AccountWhereUniqueInput!]
+}
+
+type Authentication {
+  id: ID!
+  account(where: AccountWhereInput! = {}, orderBy: [AccountOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AccountWhereUniqueInput): [Account!]
+  accountCount(where: AccountWhereInput! = {}): Int
+  createdAt: DateTime
+  salt: String
+  hash: String
+}
+
+input AuthenticationWhereUniqueInput {
+  id: ID
+}
+
+input AuthenticationWhereInput {
+  AND: [AuthenticationWhereInput!]
+  OR: [AuthenticationWhereInput!]
+  NOT: [AuthenticationWhereInput!]
+  id: IDFilter
+  account: AccountManyRelationFilter
+  createdAt: DateTimeNullableFilter
+  salt: StringFilter
+  hash: StringFilter
+}
+
+input AuthenticationOrderByInput {
+  id: OrderDirection
+  createdAt: OrderDirection
+  salt: OrderDirection
+  hash: OrderDirection
+}
+
+input AuthenticationUpdateInput {
+  account: AccountRelateToManyForUpdateInput
+  createdAt: DateTime
+  salt: String
+  hash: String
+}
+
+input AuthenticationUpdateArgs {
+  where: AuthenticationWhereUniqueInput!
+  data: AuthenticationUpdateInput!
+}
+
+input AuthenticationCreateInput {
+  account: AccountRelateToManyForCreateInput
+  createdAt: DateTime
+  salt: String
+  hash: String
 }
 
 type Business {
@@ -656,6 +810,60 @@ input BusinessCreateInput {
 input BusinessContactDetailRelateToOneForCreateInput {
   create: BusinessContactDetailCreateInput
   connect: BusinessContactDetailWhereUniqueInput
+}
+
+type BusinessContactDetail {
+  id: ID!
+  business: Business
+  firstName: String
+  lastName: String
+  email: String
+  position: String
+}
+
+input BusinessContactDetailWhereUniqueInput {
+  id: ID
+}
+
+input BusinessContactDetailWhereInput {
+  AND: [BusinessContactDetailWhereInput!]
+  OR: [BusinessContactDetailWhereInput!]
+  NOT: [BusinessContactDetailWhereInput!]
+  id: IDFilter
+  business: BusinessWhereInput
+  firstName: StringFilter
+  lastName: StringFilter
+  email: StringFilter
+  position: StringFilter
+}
+
+input BusinessContactDetailOrderByInput {
+  id: OrderDirection
+  firstName: OrderDirection
+  lastName: OrderDirection
+  email: OrderDirection
+  position: OrderDirection
+}
+
+input BusinessContactDetailUpdateInput {
+  business: BusinessRelateToOneForUpdateInput
+  firstName: String
+  lastName: String
+  email: String
+  position: String
+}
+
+input BusinessContactDetailUpdateArgs {
+  where: BusinessContactDetailWhereUniqueInput!
+  data: BusinessContactDetailUpdateInput!
+}
+
+input BusinessContactDetailCreateInput {
+  business: BusinessRelateToOneForCreateInput
+  firstName: String
+  lastName: String
+  email: String
+  position: String
 }
 
 type Broker {
@@ -1064,60 +1272,6 @@ input BuyerCreateInput {
 input CountryRelateToOneForCreateInput {
   create: CountryCreateInput
   connect: CountryWhereUniqueInput
-}
-
-type BusinessContactDetail {
-  id: ID!
-  business: Business
-  firstName: String
-  lastName: String
-  email: String
-  position: String
-}
-
-input BusinessContactDetailWhereUniqueInput {
-  id: ID
-}
-
-input BusinessContactDetailWhereInput {
-  AND: [BusinessContactDetailWhereInput!]
-  OR: [BusinessContactDetailWhereInput!]
-  NOT: [BusinessContactDetailWhereInput!]
-  id: IDFilter
-  business: BusinessWhereInput
-  firstName: StringFilter
-  lastName: StringFilter
-  email: StringFilter
-  position: StringFilter
-}
-
-input BusinessContactDetailOrderByInput {
-  id: OrderDirection
-  firstName: OrderDirection
-  lastName: OrderDirection
-  email: OrderDirection
-  position: OrderDirection
-}
-
-input BusinessContactDetailUpdateInput {
-  business: BusinessRelateToOneForUpdateInput
-  firstName: String
-  lastName: String
-  email: String
-  position: String
-}
-
-input BusinessContactDetailUpdateArgs {
-  where: BusinessContactDetailWhereUniqueInput!
-  data: BusinessContactDetailUpdateInput!
-}
-
-input BusinessContactDetailCreateInput {
-  business: BusinessRelateToOneForCreateInput
-  firstName: String
-  lastName: String
-  email: String
-  position: String
 }
 
 type Country {
@@ -1717,12 +1871,30 @@ type Mutation {
   updateAccounts(data: [AccountUpdateArgs!]!): [Account]
   deleteAccount(where: AccountWhereUniqueInput!): Account
   deleteAccounts(where: [AccountWhereUniqueInput!]!): [Account]
+  createAuthenticationRetry(data: AuthenticationRetryCreateInput!): AuthenticationRetry
+  createAuthenticationRetries(data: [AuthenticationRetryCreateInput!]!): [AuthenticationRetry]
+  updateAuthenticationRetry(where: AuthenticationRetryWhereUniqueInput!, data: AuthenticationRetryUpdateInput!): AuthenticationRetry
+  updateAuthenticationRetries(data: [AuthenticationRetryUpdateArgs!]!): [AuthenticationRetry]
+  deleteAuthenticationRetry(where: AuthenticationRetryWhereUniqueInput!): AuthenticationRetry
+  deleteAuthenticationRetries(where: [AuthenticationRetryWhereUniqueInput!]!): [AuthenticationRetry]
+  createAuthentication(data: AuthenticationCreateInput!): Authentication
+  createAuthentications(data: [AuthenticationCreateInput!]!): [Authentication]
+  updateAuthentication(where: AuthenticationWhereUniqueInput!, data: AuthenticationUpdateInput!): Authentication
+  updateAuthentications(data: [AuthenticationUpdateArgs!]!): [Authentication]
+  deleteAuthentication(where: AuthenticationWhereUniqueInput!): Authentication
+  deleteAuthentications(where: [AuthenticationWhereUniqueInput!]!): [Authentication]
   createBusiness(data: BusinessCreateInput!): Business
   createBusinesses(data: [BusinessCreateInput!]!): [Business]
   updateBusiness(where: BusinessWhereUniqueInput!, data: BusinessUpdateInput!): Business
   updateBusinesses(data: [BusinessUpdateArgs!]!): [Business]
   deleteBusiness(where: BusinessWhereUniqueInput!): Business
   deleteBusinesses(where: [BusinessWhereUniqueInput!]!): [Business]
+  createBusinessContactDetail(data: BusinessContactDetailCreateInput!): BusinessContactDetail
+  createBusinessContactDetails(data: [BusinessContactDetailCreateInput!]!): [BusinessContactDetail]
+  updateBusinessContactDetail(where: BusinessContactDetailWhereUniqueInput!, data: BusinessContactDetailUpdateInput!): BusinessContactDetail
+  updateBusinessContactDetails(data: [BusinessContactDetailUpdateArgs!]!): [BusinessContactDetail]
+  deleteBusinessContactDetail(where: BusinessContactDetailWhereUniqueInput!): BusinessContactDetail
+  deleteBusinessContactDetails(where: [BusinessContactDetailWhereUniqueInput!]!): [BusinessContactDetail]
   createBroker(data: BrokerCreateInput!): Broker
   createBrokers(data: [BrokerCreateInput!]!): [Broker]
   updateBroker(where: BrokerWhereUniqueInput!, data: BrokerUpdateInput!): Broker
@@ -1753,12 +1925,6 @@ type Mutation {
   updateBuyers(data: [BuyerUpdateArgs!]!): [Buyer]
   deleteBuyer(where: BuyerWhereUniqueInput!): Buyer
   deleteBuyers(where: [BuyerWhereUniqueInput!]!): [Buyer]
-  createBusinessContactDetail(data: BusinessContactDetailCreateInput!): BusinessContactDetail
-  createBusinessContactDetails(data: [BusinessContactDetailCreateInput!]!): [BusinessContactDetail]
-  updateBusinessContactDetail(where: BusinessContactDetailWhereUniqueInput!, data: BusinessContactDetailUpdateInput!): BusinessContactDetail
-  updateBusinessContactDetails(data: [BusinessContactDetailUpdateArgs!]!): [BusinessContactDetail]
-  deleteBusinessContactDetail(where: BusinessContactDetailWhereUniqueInput!): BusinessContactDetail
-  deleteBusinessContactDetails(where: [BusinessContactDetailWhereUniqueInput!]!): [BusinessContactDetail]
   createCountry(data: CountryCreateInput!): Country
   createCountries(data: [CountryCreateInput!]!): [Country]
   updateCountry(where: CountryWhereUniqueInput!, data: CountryUpdateInput!): Country
@@ -1826,6 +1992,9 @@ type Mutation {
   """ create an account """
   createAnAccount(urlOrigin: String!, firstName: String!, lastName: String!, email: String!, password: String!): CreateAnAccountResponse
 
+  """ delete an account """
+  deleteAnAccount(email: String!): SuccessResponse
+
   """ verify an account's email address """
   verifyAccountEmailAddress(token: String!): VerifyAccountEmailAddressResponse
 
@@ -1845,10 +2014,10 @@ type Mutation {
   addAndGetOTP(email: String!): AddAndGetOtpResponse
 
   """ send email with password reset link """
-  sendEmailPasswordResetLink(urlOrigin: String!, email: String!): SuccessResponse
+  sendEmailPasswordResetLink(urlOrigin: String!, email: String!): AccountSendEmailPasswordResetLinkResponse
 
   """ reset account password """
-  accountPasswordReset(token: String!, password: String!): SuccessResponse
+  accountPasswordReset(token: String!, password: String!): AccountSendEmailPasswordResetLinkResponse
 
   """ update company and company address """
   updateCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: CompanyAndCompanyAddressInput!): CompanyAndCompanyAddress
@@ -1893,9 +2062,18 @@ type Query {
   accounts(where: AccountWhereInput! = {}, orderBy: [AccountOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AccountWhereUniqueInput): [Account!]
   account(where: AccountWhereUniqueInput!): Account
   accountsCount(where: AccountWhereInput! = {}): Int
+  authenticationRetries(where: AuthenticationRetryWhereInput! = {}, orderBy: [AuthenticationRetryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthenticationRetryWhereUniqueInput): [AuthenticationRetry!]
+  authenticationRetry(where: AuthenticationRetryWhereUniqueInput!): AuthenticationRetry
+  authenticationRetriesCount(where: AuthenticationRetryWhereInput! = {}): Int
+  authentications(where: AuthenticationWhereInput! = {}, orderBy: [AuthenticationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthenticationWhereUniqueInput): [Authentication!]
+  authentication(where: AuthenticationWhereUniqueInput!): Authentication
+  authenticationsCount(where: AuthenticationWhereInput! = {}): Int
   businesses(where: BusinessWhereInput! = {}, orderBy: [BusinessOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BusinessWhereUniqueInput): [Business!]
   business(where: BusinessWhereUniqueInput!): Business
   businessesCount(where: BusinessWhereInput! = {}): Int
+  businessContactDetails(where: BusinessContactDetailWhereInput! = {}, orderBy: [BusinessContactDetailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BusinessContactDetailWhereUniqueInput): [BusinessContactDetail!]
+  businessContactDetail(where: BusinessContactDetailWhereUniqueInput!): BusinessContactDetail
+  businessContactDetailsCount(where: BusinessContactDetailWhereInput! = {}): Int
   brokers(where: BrokerWhereInput! = {}, orderBy: [BrokerOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BrokerWhereUniqueInput): [Broker!]
   broker(where: BrokerWhereUniqueInput!): Broker
   brokersCount(where: BrokerWhereInput! = {}): Int
@@ -1911,9 +2089,6 @@ type Query {
   buyers(where: BuyerWhereInput! = {}, orderBy: [BuyerOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BuyerWhereUniqueInput): [Buyer!]
   buyer(where: BuyerWhereUniqueInput!): Buyer
   buyersCount(where: BuyerWhereInput! = {}): Int
-  businessContactDetails(where: BusinessContactDetailWhereInput! = {}, orderBy: [BusinessContactDetailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BusinessContactDetailWhereUniqueInput): [BusinessContactDetail!]
-  businessContactDetail(where: BusinessContactDetailWhereUniqueInput!): BusinessContactDetail
-  businessContactDetailsCount(where: BusinessContactDetailWhereInput! = {}): Int
   countries(where: CountryWhereInput! = {}, orderBy: [CountryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CountryWhereUniqueInput): [Country!]
   country(where: CountryWhereUniqueInput!): Country
   countriesCount(where: CountryWhereInput! = {}): Int
@@ -2182,6 +2357,12 @@ type AccountSignInResponse {
 type AddAndGetOtpResponse {
   success: Boolean!
   securityCode: String!
+}
+
+type AccountSendEmailPasswordResetLinkResponse {
+  success: Boolean!
+  isBlocked: Boolean
+  accountId: String
 }
 
 type AccountPasswordResetTokenResponse {

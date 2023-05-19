@@ -126,6 +126,12 @@ const typeDefs = `
     securityCode: String!
   }
 
+  type AccountSendEmailPasswordResetLinkResponse {
+    success: Boolean!
+    isBlocked: Boolean
+    accountId: String
+  }
+
   type AccountPasswordResetTokenResponse {
     success: Boolean!
     token: String
@@ -146,6 +152,11 @@ const typeDefs = `
       email: String!
       password: String!
     ): CreateAnAccountResponse
+
+    """ delete an account """
+    deleteAnAccount(
+      email: String!
+    ): SuccessResponse
 
     """ verify an account's email address """
     verifyAccountEmailAddress(
@@ -185,13 +196,13 @@ const typeDefs = `
     sendEmailPasswordResetLink(
       urlOrigin: String!
       email: String!
-    ): SuccessResponse
+    ): AccountSendEmailPasswordResetLinkResponse
 
     """ reset account password """
     accountPasswordReset(
       token: String!
       password: String!
-    ): SuccessResponse
+    ): AccountSendEmailPasswordResetLinkResponse
 
     """ update company and company address """
     updateCompanyAndCompanyAddress(

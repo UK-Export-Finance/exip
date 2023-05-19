@@ -18,8 +18,10 @@ const {
   INSURANCE: {
     ACCOUNT: {
       PASSWORD_RESET: { LINK_SENT },
+      SUSPENDED: { ROOT: SUSPENDED_ROOT },
     },
   },
+  PROBLEM_WITH_SERVICE,
 } = ROUTES;
 
 describe('controllers/insurance/account/password-reset', () => {
@@ -127,7 +129,7 @@ describe('controllers/insurance/account/password-reset', () => {
         expect(res.redirect).toHaveBeenCalledWith(LINK_SENT);
       });
 
-      describe('when the api.keystone.account.sendEmailPasswordResetLink does not return success=true', () => {
+      describe('when the api.keystone.account.sendEmailPasswordResetLink returns success=false', () => {
         beforeEach(() => {
           sendEmailPasswordResetLinkSpy = jest.fn(() => Promise.resolve({ success: false }));
 
@@ -149,6 +151,20 @@ describe('controllers/insurance/account/password-reset', () => {
         });
       });
 
+      describe('when the api.keystone.account.sendEmailPasswordResetLink returns isBlocked=true', () => {
+        beforeEach(() => {
+          sendEmailPasswordResetLinkSpy = jest.fn(() => Promise.resolve({ success: false, isBlocked: true }));
+
+          api.keystone.account.sendEmailPasswordResetLink = sendEmailPasswordResetLinkSpy;
+        });
+
+        it(`should redirect to ${SUSPENDED_ROOT}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(SUSPENDED_ROOT);
+        });
+      });
+
       describe('api error handling', () => {
         describe('when the send email password reset link API call fails', () => {
           beforeEach(() => {
@@ -158,10 +174,10 @@ describe('controllers/insurance/account/password-reset', () => {
             api.keystone.account.sendEmailPasswordResetLink = sendEmailPasswordResetLinkSpy;
           });
 
-          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
             await post(req, res);
 
-            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
           });
         });
       });

@@ -22,7 +22,7 @@ context('Insurance - Account - Password reset - success page - I want to reset m
     // navigate to password reset page
     cy.navigateToUrl(PASSWORD_RESET_ROOT);
 
-    cy.completeAndSubmitPasswordResetForm();
+    cy.completeAndSubmitPasswordResetForm({});
   });
 
   beforeEach(() => {

@@ -91,26 +91,52 @@ model PolicyAndExport {
 }
 
 model Account {
-  id                     String        @id @default(cuid())
-  createdAt              DateTime?
-  updatedAt              DateTime?
-  firstName              String        @default("")
-  lastName               String        @default("")
-  email                  String        @default("")
-  salt                   String        @default("")
-  hash                   String        @default("")
-  isVerified             Boolean       @default(false)
-  verificationHash       String        @default("")
-  verificationExpiry     DateTime?
-  otpSalt                String        @default("")
-  otpHash                String        @default("") @mysql.VarChar(256)
-  otpExpiry              DateTime?
-  sessionExpiry          DateTime?
-  sessionIdentifier      String        @default("")
-  passwordResetHash      String        @default("")
-  passwordResetExpiry    DateTime?
-  applications           Application[] @relation("Account_applications")
-  from_Application_owner Application[] @relation("Application_owner")
+  id                               String                @id @default(cuid())
+  createdAt                        DateTime?
+  updatedAt                        DateTime?
+  firstName                        String                @default("")
+  lastName                         String                @default("")
+  email                            String                @default("")
+  salt                             String                @default("")
+  hash                             String                @default("")
+  isVerified                       Boolean               @default(false)
+  isBlocked                        Boolean               @default(false)
+  verificationHash                 String                @default("")
+  verificationExpiry               DateTime?
+  otpSalt                          String                @default("")
+  otpHash                          String                @default("") @mysql.VarChar(256)
+  otpExpiry                        DateTime?
+  sessionExpiry                    DateTime?
+  sessionIdentifier                String                @default("")
+  passwordResetHash                String                @default("")
+  passwordResetExpiry              DateTime?
+  authentication                   Authentication?       @relation("Account_authentication", fields: [authenticationId], references: [id])
+  authenticationId                 String?               @map("authentication")
+  authenticationRetry              AuthenticationRetry?  @relation("Account_authenticationRetry", fields: [authenticationRetryId], references: [id])
+  authenticationRetryId            String?               @map("authenticationRetry")
+  applications                     Application[]         @relation("Account_applications")
+  from_Application_owner           Application[]         @relation("Application_owner")
+  from_AuthenticationRetry_account AuthenticationRetry[] @relation("AuthenticationRetry_account")
+  from_Authentication_account      Authentication[]      @relation("Authentication_account")
+
+  @@index([authenticationId])
+  @@index([authenticationRetryId])
+}
+
+model AuthenticationRetry {
+  id                               String    @id @default(cuid())
+  account                          Account[] @relation("AuthenticationRetry_account")
+  createdAt                        DateTime
+  from_Account_authenticationRetry Account[] @relation("Account_authenticationRetry")
+}
+
+model Authentication {
+  id                          String    @id @default(cuid())
+  account                     Account[] @relation("Authentication_account")
+  createdAt                   DateTime?
+  salt                        String    @default("")
+  hash                        String    @default("")
+  from_Account_authentication Account[] @relation("Account_authentication")
 }
 
 model Business {
@@ -128,6 +154,15 @@ model Business {
   from_Application_business   Application[]          @relation("Application_business")
 
   @@index([applicationId])
+}
+
+model BusinessContactDetail {
+  id        String    @id @default(cuid())
+  business  Business? @relation("Business_businessContactDetail")
+  firstName String    @default("")
+  lastName  String    @default("")
+  email     String    @default("")
+  position  String    @default("")
 }
 
 model Broker {
@@ -211,15 +246,6 @@ model Buyer {
 
   @@index([applicationId])
   @@index([countryId])
-}
-
-model BusinessContactDetail {
-  id        String    @id @default(cuid())
-  business  Business? @relation("Business_businessContactDetail")
-  firstName String    @default("")
-  lastName  String    @default("")
-  email     String    @default("")
-  position  String    @default("")
 }
 
 model Country {

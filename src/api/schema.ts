@@ -369,8 +369,14 @@ export const lists = {
       email: text({ validation: { isRequired: true } }),
       salt: text({ validation: { isRequired: true } }),
       hash: text({ validation: { isRequired: true } }),
-      // isVerified flag will only be true if the exporter has verified their email address.
+      // isVerified flag will only be true if the account has verified their email address.
       isVerified: checkbox({ defaultValue: false }),
+      /**
+       * isBlocked flag will only be true if the account has:
+       * - repeatedly attempted sign in
+       * - repeatedly attempted password reset request
+       */
+      isBlocked: checkbox({ defaultValue: false }),
       verificationHash: text(),
       verificationExpiry: timestamp(),
       otpSalt: text(),
@@ -382,10 +388,38 @@ export const lists = {
       sessionIdentifier: text(),
       passwordResetHash: text({ validation: { isRequired: false } }),
       passwordResetExpiry: timestamp({ validation: { isRequired: false } }),
+      authentication: relationship({
+        ref: 'Authentication',
+      }),
+      authenticationRetry: relationship({
+        ref: 'AuthenticationRetry',
+      }),
       applications: relationship({
         ref: 'Application',
         many: true,
       }),
+    },
+    access: allowAll,
+  }),
+  AuthenticationRetry: list({
+    fields: {
+      account: relationship({
+        ref: 'Account',
+        many: true,
+      }),
+      createdAt: timestamp({ validation: { isRequired: true } }),
+    },
+    access: allowAll,
+  }),
+  Authentication: list({
+    fields: {
+      account: relationship({
+        ref: 'Account',
+        many: true,
+      }),
+      createdAt: timestamp(),
+      salt: text({ validation: { isRequired: true } }),
+      hash: text({ validation: { isRequired: true } }),
     },
     access: allowAll,
   }),
@@ -410,6 +444,16 @@ export const lists = {
           await updateApplication.timestamp(context, item.applicationId);
         }
       },
+    },
+    access: allowAll,
+  }),
+  BusinessContactDetail: list({
+    fields: {
+      business: relationship({ ref: 'Business.businessContactDetail' }),
+      firstName: text(),
+      lastName: text(),
+      email: text(),
+      position: text(),
     },
     access: allowAll,
   }),
@@ -539,16 +583,6 @@ export const lists = {
           await updateApplication.timestamp(context, item.applicationId);
         }
       },
-    },
-    access: allowAll,
-  }),
-  BusinessContactDetail: list({
-    fields: {
-      business: relationship({ ref: 'Business.businessContactDetail' }),
-      firstName: text(),
-      lastName: text(),
-      email: text(),
-      position: text(),
     },
     access: allowAll,
   }),

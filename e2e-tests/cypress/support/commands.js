@@ -52,6 +52,7 @@ Cypress.Commands.add('completeAndSubmitSignInAccountForm', require('./insurance/
 Cypress.Commands.add('completeAndSubmitEnterCodeAccountForm', require('./insurance/account/complete-and-submit-enter-code-account-form'));
 
 Cypress.Commands.add('completeAndSubmitPasswordResetForm', require('./insurance/account/complete-and-submit-password-reset-form'));
+Cypress.Commands.add('completeAndSubmitPasswordResetFormMaximumRetries', require('./insurance/account/complete-and-submit-password-reset-form-maximum-retries'));
 Cypress.Commands.add('completeAndSubmitNewPasswordAccountForm', require('./insurance/account/complete-and-submit-new-password-account-form'));
 
 Cypress.Commands.add('getAccountByEmail', require('./insurance/account/get-account-by-email'));

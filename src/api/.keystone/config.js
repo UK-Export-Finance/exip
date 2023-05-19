@@ -345,7 +345,14 @@ var ACCOUNT2 = {
       const future = new Date(now.getTime() + hours * seconds);
       return future;
     }
-  }
+  },
+  MAX_PASSWORD_RESET_TRIES: 6,
+  /**
+   * MAX_PASSWORD_RESET_TRIES_TIMEFRAME
+   * Generate a date that is 24 hours ago from now
+   * To be safe, we use time rather than subtracting a day.
+   */
+  MAX_PASSWORD_RESET_TRIES_TIMEFRAME: new Date((/* @__PURE__ */ new Date()).getTime() - 24 * 60 * 60 * 1e3)
 };
 var EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
@@ -715,8 +722,14 @@ var lists = {
       email: (0, import_fields.text)({ validation: { isRequired: true } }),
       salt: (0, import_fields.text)({ validation: { isRequired: true } }),
       hash: (0, import_fields.text)({ validation: { isRequired: true } }),
-      // isVerified flag will only be true if the exporter has verified their email address.
+      // isVerified flag will only be true if the account has verified their email address.
       isVerified: (0, import_fields.checkbox)({ defaultValue: false }),
+      /**
+       * isBlocked flag will only be true if the account has:
+       * - repeatedly attempted sign in
+       * - repeatedly attempted password reset request
+       */
+      isBlocked: (0, import_fields.checkbox)({ defaultValue: false }),
       verificationHash: (0, import_fields.text)(),
       verificationExpiry: (0, import_fields.timestamp)(),
       otpSalt: (0, import_fields.text)(),
@@ -728,10 +741,38 @@ var lists = {
       sessionIdentifier: (0, import_fields.text)(),
       passwordResetHash: (0, import_fields.text)({ validation: { isRequired: false } }),
       passwordResetExpiry: (0, import_fields.timestamp)({ validation: { isRequired: false } }),
+      authentication: (0, import_fields.relationship)({
+        ref: "Authentication"
+      }),
+      authenticationRetry: (0, import_fields.relationship)({
+        ref: "AuthenticationRetry"
+      }),
       applications: (0, import_fields.relationship)({
         ref: "Application",
         many: true
       })
+    },
+    access: import_access.allowAll
+  }),
+  AuthenticationRetry: (0, import_core.list)({
+    fields: {
+      account: (0, import_fields.relationship)({
+        ref: "Account",
+        many: true
+      }),
+      createdAt: (0, import_fields.timestamp)({ validation: { isRequired: true } })
+    },
+    access: import_access.allowAll
+  }),
+  Authentication: (0, import_core.list)({
+    fields: {
+      account: (0, import_fields.relationship)({
+        ref: "Account",
+        many: true
+      }),
+      createdAt: (0, import_fields.timestamp)(),
+      salt: (0, import_fields.text)({ validation: { isRequired: true } }),
+      hash: (0, import_fields.text)({ validation: { isRequired: true } })
     },
     access: import_access.allowAll
   }),
@@ -756,6 +797,16 @@ var lists = {
           await update_application_default.timestamp(context, item.applicationId);
         }
       }
+    },
+    access: import_access.allowAll
+  }),
+  BusinessContactDetail: (0, import_core.list)({
+    fields: {
+      business: (0, import_fields.relationship)({ ref: "Business.businessContactDetail" }),
+      firstName: (0, import_fields.text)(),
+      lastName: (0, import_fields.text)(),
+      email: (0, import_fields.text)(),
+      position: (0, import_fields.text)()
     },
     access: import_access.allowAll
   }),
@@ -885,16 +936,6 @@ var lists = {
           await update_application_default.timestamp(context, item.applicationId);
         }
       }
-    },
-    access: import_access.allowAll
-  }),
-  BusinessContactDetail: (0, import_core.list)({
-    fields: {
-      business: (0, import_fields.relationship)({ ref: "Business.businessContactDetail" }),
-      firstName: (0, import_fields.text)(),
-      lastName: (0, import_fields.text)(),
-      email: (0, import_fields.text)(),
-      position: (0, import_fields.text)()
     },
     access: import_access.allowAll
   }),
@@ -1238,6 +1279,12 @@ var typeDefs = `
     securityCode: String!
   }
 
+  type AccountSendEmailPasswordResetLinkResponse {
+    success: Boolean!
+    isBlocked: Boolean
+    accountId: String
+  }
+
   type AccountPasswordResetTokenResponse {
     success: Boolean!
     token: String
@@ -1258,6 +1305,11 @@ var typeDefs = `
       email: String!
       password: String!
     ): CreateAnAccountResponse
+
+    """ delete an account """
+    deleteAnAccount(
+      email: String!
+    ): SuccessResponse
 
     """ verify an account's email address """
     verifyAccountEmailAddress(
@@ -1297,13 +1349,13 @@ var typeDefs = `
     sendEmailPasswordResetLink(
       urlOrigin: String!
       email: String!
-    ): SuccessResponse
+    ): AccountSendEmailPasswordResetLinkResponse
 
     """ reset account password """
     accountPasswordReset(
       token: String!
       password: String!
-    ): SuccessResponse
+    ): AccountSendEmailPasswordResetLinkResponse
 
     """ update company and company address """
     updateCompanyAndCompanyAddress(
@@ -1709,6 +1761,48 @@ var createAnAccount = async (root, variables, context) => {
   }
 };
 var create_an_account_default = createAnAccount;
+
+// custom-resolvers/mutations/delete-an-account.ts
+var deleteAnAccount = async (root, variables, context) => {
+  console.info("Deleting account ", variables.email);
+  try {
+    const { email } = variables;
+    const account = await get_account_by_field_default(context, "email", email);
+    if (!account) {
+      console.info(`Unable to delete account - account already exists`);
+      return { success: false };
+    }
+    const { id: accountId } = account;
+    const retries = await context.db.AuthenticationRetry.findMany({
+      where: {
+        account: {
+          every: {
+            id: { equals: accountId }
+          }
+        }
+      }
+    });
+    const retriesArray = retries.map((retry) => ({
+      id: retry.id
+    }));
+    if (retries.length) {
+      await context.db.AuthenticationRetry.deleteMany({
+        where: retriesArray
+      });
+    }
+    await context.db.Account.deleteOne({
+      where: {
+        id: accountId
+      }
+    });
+    return {
+      success: true
+    };
+  } catch (err) {
+    throw new Error(`Deleting account ${err}`);
+  }
+};
+var delete_an_account_default = deleteAnAccount;
 
 // custom-resolvers/mutations/verify-account-email-address.ts
 var import_date_fns3 = require("date-fns");
@@ -2140,6 +2234,72 @@ var add_and_get_OTP_default = addAndGetOTP;
 
 // custom-resolvers/mutations/send-email-password-reset-link.ts
 var import_crypto7 = __toESM(require("crypto"));
+
+// helpers/create-authentication-retry-entry/index.ts
+var createAuthenticationRetryEntry = async (context, accountId) => {
+  try {
+    console.info("Creating account authentication retry entry");
+    const now = /* @__PURE__ */ new Date();
+    const response = await context.db.AuthenticationRetry.createOne({
+      data: {
+        account: {
+          connect: {
+            id: accountId
+          }
+        },
+        createdAt: now
+      }
+    });
+    if (response.id) {
+      return {
+        success: true
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error(`Creating account authentication retry entry ${err}`);
+    throw new Error(`${err}`);
+  }
+};
+var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
+
+// helpers/should-block-account/index.ts
+var import_date_fns6 = require("date-fns");
+var { MAX_PASSWORD_RESET_TRIES, MAX_PASSWORD_RESET_TRIES_TIMEFRAME } = ACCOUNT2;
+var shouldBlockAccount = async (context, accountId) => {
+  console.info(`Checking account ${accountId} password reset retries`);
+  const retries = await context.db.AuthenticationRetry.findMany({
+    where: {
+      account: {
+        every: {
+          id: { equals: accountId }
+        }
+      }
+    }
+  });
+  const now = Date.now();
+  const retriesInTimeframe = [];
+  retries.forEach((retry) => {
+    const retryDate = new Date(retry.createdAt);
+    const isWithinLast24Hours = (0, import_date_fns6.isWithinInterval)(retryDate, {
+      start: MAX_PASSWORD_RESET_TRIES_TIMEFRAME,
+      end: now
+    });
+    if (isWithinLast24Hours) {
+      retriesInTimeframe.push(retry.id);
+    }
+  });
+  if (retriesInTimeframe.length >= MAX_PASSWORD_RESET_TRIES) {
+    console.info(`Account ${accountId} password reset retries exceeds the threshold`);
+    return true;
+  }
+  return false;
+};
+var should_block_account_default = shouldBlockAccount;
+
+// custom-resolvers/mutations/send-email-password-reset-link.ts
 var {
   ENCRYPTION: {
     STRING_TYPE: STRING_TYPE7,
@@ -2151,22 +2311,43 @@ var {
 } = ACCOUNT2;
 var sendEmailPasswordResetLink = async (root, variables, context) => {
   try {
-    console.info("Sending password reset email");
+    console.info("Received a password reset request - checking account");
     const { urlOrigin, email } = variables;
     const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
     if (!account) {
-      console.info("Unable to send password reset email - no account found");
+      console.info("Unable to check account and send password reset email - no account found");
       return { success: false };
     }
+    const { id: accountId } = account;
+    const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
+    if (!newRetriesEntry.success) {
+      return { success: false };
+    }
+    const blockAccount = await should_block_account_default(context, accountId);
+    if (blockAccount) {
+      console.info(`Blocking account ${accountId}`);
+      await context.db.Account.updateOne({
+        where: { id: accountId },
+        data: { isBlocked: true }
+      });
+      return {
+        success: false,
+        isBlocked: true,
+        accountId
+      };
+    }
+    console.info("Generating password reset hash");
     const passwordResetHash = import_crypto7.default.pbkdf2Sync(email, account.salt, ITERATIONS6, KEY_LENGTH6, DIGEST_ALGORITHM6).toString(STRING_TYPE7);
     const accountUpdate = {
       passwordResetHash,
       passwordResetExpiry: ACCOUNT2.PASSWORD_RESET_EXPIRY()
     };
+    console.info("Updating account for password reset");
     await context.db.Account.updateOne({
-      where: { id: account.id },
+      where: { id: accountId },
       data: accountUpdate
     });
+    console.info("Sending password reset email");
     const name = get_full_name_string_default(account);
     const emailResponse = await emails_default.passwordResetLink(urlOrigin, email, name, passwordResetHash);
     if (emailResponse.success) {
@@ -2175,13 +2356,13 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
     return { success: false };
   } catch (err) {
     console.error(err);
-    throw new Error(`Sending password reset email (sendEmailPasswordResetLink mutation) ${err}`);
+    throw new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${err}`);
   }
 };
 var send_email_password_reset_link_default = sendEmailPasswordResetLink;
 
 // custom-resolvers/mutations/account-password-reset.ts
-var import_date_fns6 = require("date-fns");
+var import_date_fns7 = require("date-fns");
 var accountPasswordReset = async (root, variables, context) => {
   console.info("Resetting account password");
   try {
@@ -2197,7 +2378,7 @@ var accountPasswordReset = async (root, variables, context) => {
       return { success: false };
     }
     const now = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns6.isAfter)(now, passwordResetExpiry);
+    const hasExpired = (0, import_date_fns7.isAfter)(now, passwordResetExpiry);
     if (hasExpired) {
       console.info("Unable to reset account password - verification period has expired");
       return {
@@ -2320,7 +2501,7 @@ var updateCompanyAndCompanyAddress = async (root, variables, context) => {
 var update_company_and_company_address_default = updateCompanyAndCompanyAddress;
 
 // custom-resolvers/mutations/submit-application.ts
-var import_date_fns7 = require("date-fns");
+var import_date_fns8 = require("date-fns");
 
 // helpers/get-country-by-field/index.ts
 var getCountryByField = async (context, field, value) => {
@@ -3281,7 +3462,7 @@ var submitApplication = async (root, variables, context) => {
     if (application) {
       const hasDraftStatus = application.status === APPLICATION.STATUS.DRAFT;
       const now = /* @__PURE__ */ new Date();
-      const validSubmissionDate = (0, import_date_fns7.isAfter)(new Date(application.submissionDeadline), now);
+      const validSubmissionDate = (0, import_date_fns8.isAfter)(new Date(application.submissionDeadline), now);
       const canSubmit = hasDraftStatus && validSubmissionDate;
       if (canSubmit) {
         const update = {
@@ -3500,7 +3681,7 @@ var getAccountPasswordResetToken = async (root, variables, context) => {
 var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
 // custom-resolvers/queries/verify-account-password-reset-token.ts
-var import_date_fns8 = require("date-fns");
+var import_date_fns9 = require("date-fns");
 var {
   ACCOUNT: { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY }
 } = FIELD_IDS.INSURANCE;
@@ -3514,7 +3695,7 @@ var verifyAccountPasswordResetToken = async (root, variables, context) => {
       return { success: false };
     }
     const now = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns8.isAfter)(now, account[PASSWORD_RESET_EXPIRY]);
+    const hasExpired = (0, import_date_fns9.isAfter)(now, account[PASSWORD_RESET_EXPIRY]);
     if (hasExpired) {
       console.info("Account password reset token has expired");
       return {
@@ -3533,6 +3714,7 @@ var verify_account_password_reset_token_default = verifyAccountPasswordResetToke
 var customResolvers = {
   Mutation: {
     createAnAccount: create_an_account_default,
+    deleteAnAccount: delete_an_account_default,
     accountSignIn: account_sign_in_default,
     accountSignInSendNewCode: account_sign_in_new_code_default,
     verifyAccountEmailAddress: verify_account_email_address_default,

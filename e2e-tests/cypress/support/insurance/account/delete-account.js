@@ -10,15 +10,9 @@ const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
  */
 const deleteAccount = (email = accountEmail) => {
   try {
-    // get the account.
-    api.getAccountByEmail(email).then((response) => {
-      const { data } = response.body;
+    const deleteResponse = api.deleteAnAccount(email).then((id) => id);
 
-      const [firstAccount] = data.accounts;
-      const account = firstAccount;
-
-      return api.deleteAccountsById(account.id).then((id) => id);
-    });
+    return deleteResponse;
   } catch (err) {
     console.error(err);
 

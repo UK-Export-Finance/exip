@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import baseConfig from '../../keystone';
 import sendEmailPasswordResetLink from './send-email-password-reset-link';
+import createAuthenticationRetryEntry from '../../helpers/create-authentication-retry-entry';
 import getFullNameString from '../../helpers/get-full-name-string';
 import sendEmail from '../../emails';
 import { ACCOUNT } from '../../constants';
@@ -17,13 +18,14 @@ dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
 
-const { ENCRYPTION } = ACCOUNT;
-
 const {
-  PASSWORD: {
-    PBKDF2: { KEY_LENGTH },
+  ENCRYPTION: {
+    PASSWORD: {
+      PBKDF2: { KEY_LENGTH },
+    },
   },
-} = ENCRYPTION;
+  MAX_PASSWORD_RESET_TRIES,
+} = ACCOUNT;
 
 describe('custom-resolvers/send-email-password-reset-link', () => {
   let account: Account;
@@ -43,11 +45,18 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
   });
 
   beforeEach(async () => {
-    // wipe the table so we have a clean slate.
+    // wipe the accounts table so we have a clean slate.
     const accounts = await context.query.Account.findMany();
 
     await context.query.Account.deleteMany({
       where: accounts,
+    });
+
+    // wipe the AuthenticationRetry table so we have a clean slate.
+    const retries = await context.query.AuthenticationRetry.findMany();
+
+    await context.query.AuthenticationRetry.deleteMany({
+      where: retries,
     });
 
     // create an account
@@ -67,8 +76,10 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     // get the latest account
     account = (await context.query.Account.findOne({
       where: { id: account.id },
-      query: 'id email firstName lastName passwordResetHash passwordResetExpiry',
+      query: 'id email firstName lastName passwordResetHash passwordResetExpiry isBlocked',
     })) as Account;
+
+    expect(account.isBlocked).toEqual(false);
   });
 
   it('should return the email response', () => {
@@ -116,6 +127,42 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     expect(passwordResetLinkSpy).toHaveBeenCalledWith(mockUrlOrigin, email, name, passwordResetHash);
   });
 
+  it('should create a new entry in the AuthenticationRetry table', async () => {
+    // wipe the AuthenticationRetry table so we have a clean slate.
+    let retries = await context.query.AuthenticationRetry.findMany();
+
+    await context.query.AuthenticationRetry.deleteMany({
+      where: retries,
+    });
+
+    retries = await context.query.AuthenticationRetry.findMany();
+
+    expect(retries.length).toEqual(0);
+
+    await sendEmailPasswordResetLink({}, variables, context);
+
+    retries = await context.query.AuthenticationRetry.findMany();
+
+    expect(retries.length).toEqual(1);
+  });
+
+  describe('when AuthenticationRetry table entry fails', () => {
+    test('it should return success=false', async () => {
+      // delete the account so the relationship creation will fail
+      await context.query.Account.deleteOne({
+        where: {
+          id: account.id,
+        },
+      });
+
+      result = await sendEmailPasswordResetLink({}, variables, context);
+
+      const expected = { success: false };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
       // wipe the table so we have a clean slate.
@@ -133,6 +180,44 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     });
   });
 
+  describe(`when the account has ${MAX_PASSWORD_RESET_TRIES} entries in the AuthenticationRetry table`, () => {
+    beforeEach(async () => {
+      // wipe the AuthenticationRetry table so we have a clean slate.
+      const retries = await context.query.AuthenticationRetry.findMany();
+
+      await context.query.AuthenticationRetry.deleteMany({
+        where: retries,
+      });
+
+      // generate an array of promises to create retry entries
+      const entriesToCreate = [...Array(MAX_PASSWORD_RESET_TRIES)].map(async () => createAuthenticationRetryEntry(context, account.id));
+
+      await Promise.all(entriesToCreate);
+
+      result = await sendEmailPasswordResetLink({}, variables, context);
+    });
+
+    it('should return success=false, isBlocked=true and accountId', async () => {
+      const expected = {
+        success: false,
+        isBlocked: true,
+        accountId: account.id,
+      };
+
+      expect(result).toEqual(expected);
+    });
+
+    it('should mark the account as isBlocked=true', async () => {
+      // get the latest account
+      account = (await context.query.Account.findOne({
+        where: { id: account.id },
+        query: 'id isBlocked',
+      })) as Account;
+
+      expect(account.isBlocked).toEqual(true);
+    });
+  });
+
   describe('error handling', () => {
     beforeEach(() => {
       sendEmail.passwordResetLink = jest.fn(() => Promise.reject(mockSendEmailResponse));
@@ -144,7 +229,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
       } catch (err) {
         expect(passwordResetLinkSpy).toHaveBeenCalledTimes(1);
 
-        const expected = new Error(`Sending password reset email (sendEmailPasswordResetLink mutation) ${mockSendEmailResponse}`);
+        const expected = new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${mockSendEmailResponse}`);
         expect(err).toEqual(expected);
       }
     });

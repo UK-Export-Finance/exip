@@ -95,6 +95,13 @@ export const ACCOUNT = {
       return future;
     },
   },
+  MAX_PASSWORD_RESET_TRIES: 6,
+  /**
+   * MAX_PASSWORD_RESET_TRIES_TIMEFRAME
+   * Generate a date that is 24 hours ago from now
+   * To be safe, we use time rather than subtracting a day.
+   */
+  MAX_PASSWORD_RESET_TRIES_TIMEFRAME: new Date(new Date().getTime() - 24 * 60 * 60 * 1000),
 };
 
 export const EMAIL_TEMPLATE_IDS = {

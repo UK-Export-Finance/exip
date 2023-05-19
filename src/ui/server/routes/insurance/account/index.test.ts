@@ -17,6 +17,7 @@ import { get as passwordSuccessGet } from '../../../controllers/insurance/accoun
 import { get as manageGet } from '../../../controllers/insurance/account/manage';
 import { get as signOutGet } from '../../../controllers/insurance/account/sign-out';
 import { get as signedOutGet } from '../../../controllers/insurance/account/signed-out';
+import { get as suspendedGet } from '../../../controllers/insurance/account/suspended';
 
 describe('routes/insurance/account', () => {
   beforeEach(() => {
@@ -28,7 +29,7 @@ describe('routes/insurance/account', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(17);
+    expect(get).toHaveBeenCalledTimes(18);
     expect(post).toHaveBeenCalledTimes(6);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.YOUR_DETAILS, yourDetailsGet);
@@ -67,5 +68,7 @@ describe('routes/insurance/account', () => {
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SIGN_OUT, signOutGet);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SIGNED_OUT, signedOutGet);
+
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.ROOT, suspendedGet);
   });
 });

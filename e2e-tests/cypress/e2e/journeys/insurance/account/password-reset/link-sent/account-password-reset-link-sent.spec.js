@@ -30,9 +30,9 @@ const passwordResetUrl = `${Cypress.config('baseUrl')}${PASSWORD_RESET_ROOT}`;
 const goToPasswordResetLinkSentPage = () => {
   cy.navigateToUrl(passwordResetUrl);
 
-  cy.url().should('eq', passwordResetUrl);
+  cy.assertUrl(passwordResetUrl);
 
-  cy.completeAndSubmitPasswordResetForm();
+  cy.completeAndSubmitPasswordResetForm({});
 };
 
 context('Insurance - Account - Password reset - link sent page - As an Exporter, I want to reset the password on my UKEF digital service account, So that I can securely access my UKEF digital service account', () => {
@@ -69,34 +69,30 @@ context('Insurance - Account - Password reset - link sent page - As an Exporter,
   });
 
   describe('page tests', () => {
-    beforeEach(() => {
+    before(() => {
+      cy.saveSession();
+
       goToPasswordResetLinkSentPage();
     });
 
-    it('should render a header with href to insurance start', () => {
+    it('should render a header with href to insurance start and `check your inbox` copy with the submitted email', () => {
       partials.header.serviceName().should('have.attr', 'href', START);
-    });
 
-    it('should render `check your inbox` copy with the submitted email', () => {
       const expected = `${CHECK_YOUR_INBOX} ${mockAccount[EMAIL]}`;
 
       cy.checkText(linkSentPage.checkInbox(), expected);
-    });
 
-    it('should render `follow the link` copy', () => {
       cy.checkText(linkSentPage.followTheLink(), FOLLOW_THE_LINK);
     });
 
     describe('`not received anything` section', () => {
-      beforeEach(() => {
+      before(() => {
         goToPasswordResetLinkSentPage();
       });
 
-      it('should render a heading', () => {
+      it('should render a heading and `get a new password reset link` copy and link', () => {
         cy.checkText(linkSentPage.notReceivedAnything.heading(), NOT_RECEIVED_ANYTHING.HEADING);
-      });
 
-      it('should render `get a new password reset link` copy and link', () => {
         cy.checkText(linkSentPage.notReceivedAnything.youCan(), NOT_RECEIVED_ANYTHING.YOU_CAN);
 
         cy.checkLink(linkSentPage.notReceivedAnything.link(), PASSWORD_RESET_ROOT, NOT_RECEIVED_ANYTHING.LINK.TEXT);
@@ -104,15 +100,13 @@ context('Insurance - Account - Password reset - link sent page - As an Exporter,
     });
 
     describe('`not your email address` section', () => {
-      beforeEach(() => {
+      before(() => {
         goToPasswordResetLinkSentPage();
       });
 
-      it('should render a heading', () => {
+      it('should render a heading and `create account again` copy and link', () => {
         cy.checkText(linkSentPage.notYourEmailAddress.heading(), NOT_YOUR_EMAIL_ADDRESS.HEADING);
-      });
 
-      it('should render `create account again` copy and link', () => {
         cy.checkText(linkSentPage.notYourEmailAddress.needTo(), NOT_YOUR_EMAIL_ADDRESS.NEED_TO);
 
         cy.checkLink(linkSentPage.notYourEmailAddress.link(), PASSWORD_RESET_ROOT, NOT_YOUR_EMAIL_ADDRESS.LINK.TEXT);

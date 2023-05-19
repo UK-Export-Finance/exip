@@ -1,4 +1,5 @@
 import createAnAccount from './create-an-account';
+import deleteAnAccount from './delete-an-account';
 import verifyAccountEmailAddress from './verify-account-email-address';
 import sendEmailConfirmEmailAddress from './send-email-confirm-email-address';
 import accountSignIn from './account-sign-in';
@@ -14,6 +15,7 @@ import createFeedbackAndSendEmail from './create-feedback';
 
 export {
   createAnAccount,
+  deleteAnAccount,
   verifyAccountEmailAddress,
   sendEmailConfirmEmailAddress,
   accountSignIn,

@@ -225,6 +225,10 @@ interface AccountCreationVariables {
   password: string;
 }
 
+interface AccountDeletionVariables {
+  email: string;
+}
+
 interface AccountSendEmailPasswordResetLinkVariables {
   urlOrigin: string;
   email: string;
@@ -271,6 +275,11 @@ interface InsuranceFeedbackVariables {
 interface AccountSignInResponse extends SuccessResponse {
   accountId?: string;
   resentVerificationEmail?: boolean;
+}
+
+interface AccountSendEmailPasswordResetLinkResponse extends SuccessResponse {
+  accountId?: string;
+  isBlocked?: boolean;
 }
 
 interface VerifyAccountSignInCodeVariables {
@@ -345,9 +354,11 @@ interface IndustrySector {
 export {
   Account,
   AccountCreationVariables,
+  AccountDeletionVariables,
   ApplicationCompanyAddress,
   AccountInput,
   AccountSendEmailPasswordResetLinkVariables,
+  AccountSendEmailPasswordResetLinkResponse,
   AccountSignInVariables,
   AccountSignInSendNewCodeVariables,
   AccountSignInResponse,

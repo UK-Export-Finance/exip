@@ -19,4 +19,5 @@ export const ACCOUNT_TEMPLATES = {
   },
   MANAGE: 'insurance/account/manage.njk',
   SIGNED_OUT: 'insurance/account/signed-out.njk',
+  SUSPENDED: 'insurance/account/suspended.njk',
 };

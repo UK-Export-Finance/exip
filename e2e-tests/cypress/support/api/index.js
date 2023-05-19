@@ -14,6 +14,13 @@ const queryStrings = {
       }
     }
   `,
+  deleteAnAccount: () => gql`
+    mutation DeleteAnAccount($email: String!)  {
+      deleteAnAccount(email: $email) {
+        success
+      }
+    }
+  `,
   getAccountByEmail: (email) => `
     {
       accounts (
@@ -30,13 +37,6 @@ const queryStrings = {
       updateAccount(where: $where, data: $data) {
         id
         verificationHash
-      }
-    }
-  `,
-  deleteAccountsById: () => gql`
-    mutation DeleteAccounts($where: [AccountWhereUniqueInput!]!)  {
-      deleteAccounts(where: $where) {
-        id
       }
     }
   `,
@@ -197,23 +197,23 @@ const updateAccount = async (id, updateObj) => {
 };
 
 /**
- * deleteAccountsById
- * Delete accounts by ID
- * @param {String} Account ID
- * @returns {String} Account ID
+ * deleteAnAccount
+ * Delete an account by email address
+ * @param {String} Account email address
+ * @returns {Boolean} Success flag
  */
-const deleteAccountsById = async (id) => {
+const deleteAnAccount = async (email) => {
   try {
     const responseBody = await apollo.query({
-      query: queryStrings.deleteAccountsById(),
-      variables: { where: { id } },
-    }).then((response) => response.data.deleteAccounts);
+      query: queryStrings.deleteAnAccount(),
+      variables: { email },
+    }).then((response) => response.data.deleteAnAccount);
 
-    return responseBody.id;
+    return responseBody.success;
   } catch (err) {
     console.error(err);
 
-    throw new Error('Deleting accounts by ID ', { err });
+    throw new Error('Deleting account by email ', { err });
   }
 };
 
@@ -408,7 +408,7 @@ const api = {
   createAnAccount,
   getAccountByEmail,
   updateAccount,
-  deleteAccountsById,
+  deleteAnAccount,
   addAndGetOTP,
   getAccountPasswordResetToken,
   getApplicationByReferenceNumber,

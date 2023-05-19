@@ -2,6 +2,7 @@ const INSURANCE_ROOT = '/insurance';
 const CREATE_ROOT = '/create-account';
 const SIGN_IN_ROOT = '/sign-in';
 const PASSWORD_RESET_ROOT = '/password-reset';
+const SUSPENDED_ROOT = '/account-suspended';
 
 const CREATE = {
   ROOT: CREATE_ROOT,
@@ -33,6 +34,10 @@ const SIGN_OUT = `${INSURANCE_ROOT}/sign-out`;
 
 const SIGNED_OUT = `${INSURANCE_ROOT}/signed-out`;
 
+const SUSPENDED = {
+  ROOT: SUSPENDED_ROOT,
+};
+
 export const ACCOUNT = {
   CREATE,
   SIGN_IN,
@@ -40,4 +45,5 @@ export const ACCOUNT = {
   PASSWORD_RESET,
   SIGN_OUT,
   SIGNED_OUT,
+  SUSPENDED,
 };
