@@ -287,7 +287,7 @@ export const ERROR_MESSAGES = {
           ACCOUNT_DOES_NOT_EXIST: 'Enter the email address used when creating your account',
         },
         [FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD]: {
-          CANNOT_USE_NEW_PASSWORD: 'You cannot enter any of your previous passwords - enter a new password',
+          CANNOT_USE_PREVIOUS_PASSWORD: 'You cannot enter any of your previous passwords - enter a new password',
         },
       },
     },

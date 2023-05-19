@@ -25,7 +25,7 @@ const {
     ACCOUNT: {
       CREATE: { YOUR_DETAILS: YOUR_DETAILS_ERROR_MESSAGES },
       PASSWORD_RESET: {
-        [PASSWORD]: { CANNOT_USE_NEW_PASSWORD },
+        [PASSWORD]: { CANNOT_USE_PREVIOUS_PASSWORD },
       },
     },
   },
@@ -159,7 +159,7 @@ context('Insurance - Account - Password reset - new password page - form validat
           errorSummaryLength,
         } = fieldErrorAssertions(submittedValue);
 
-        cy.submitAndAssertFieldErrors(field, value, fieldIndex, errorSummaryLength, CANNOT_USE_NEW_PASSWORD);
+        cy.submitAndAssertFieldErrors(field, value, fieldIndex, errorSummaryLength, CANNOT_USE_PREVIOUS_PASSWORD);
       });
     });
   });
