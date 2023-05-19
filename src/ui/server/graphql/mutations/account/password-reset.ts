@@ -4,6 +4,7 @@ const accountPasswordResetMutation = gql`
   mutation AccountPasswordReset($token: String!, $password: String!) {
     accountPasswordReset(token: $token, password: $password) {
       success
+      hasBeenUsedBefore
     }
   }
 `;

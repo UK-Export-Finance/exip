@@ -5,6 +5,7 @@ import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import generateValidationErrors from './validation';
 import api from '../../../../../api';
+import cannotUseNewPasswordValidation from './validation/cannot-use-new-password';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
 
@@ -205,6 +206,28 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
           await post(req, res);
 
           expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the api.keystone.account.passwordReset returns hasBeenUsedBefore=false', () => {
+        beforeEach(() => {
+          passwordResetSpy = jest.fn(() => Promise.resolve({ success: false, hasBeenUsedBefore: true }));
+
+          api.keystone.account.passwordReset = passwordResetSpy;
+        });
+
+        it('should render template with validation errors and submitted values', async () => {
+          await post(req, res);
+
+          expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+            ...insuranceCorePageVariables({
+              PAGE_CONTENT_STRINGS,
+              BACK_LINK: req.headers.referer,
+            }),
+            ...PAGE_VARIABLES,
+            submittedValues: req.body,
+            validationErrors: cannotUseNewPasswordValidation(),
+          });
         });
       });
 

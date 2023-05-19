@@ -2,6 +2,7 @@ import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import accountPasswordReset from './account-password-reset';
+import createAuthenticationEntry from '../../helpers/create-authentication-entry';
 import baseConfig from '../../keystone';
 import { ACCOUNT } from '../../constants';
 import { mockAccount } from '../../test-mocks';
@@ -26,22 +27,27 @@ const {
 
 describe('custom-resolvers/account-password-reset', () => {
   let account: Account;
-
-  afterAll(() => {
-    jest.resetAllMocks();
-  });
-
   let result: SuccessResponse;
-
   let variables: AccountPasswordResetVariables;
 
   beforeEach(async () => {
-    // wipe the table so we have a clean slate.
+    // wipe the accounts table so we have a clean slate.
     const accounts = await context.query.Account.findMany();
 
     await context.query.Account.deleteMany({
       where: accounts,
     });
+
+    // wipe the entries table so we have a clean slate.
+    let entries = await context.query.Authentication.findMany();
+
+    await context.query.Authentication.deleteMany({
+      where: entries,
+    });
+
+    entries = await context.query.Authentication.findMany();
+
+    expect(entries.length).toEqual(0);
 
     // create an account
     account = (await context.query.Account.createOne({
@@ -51,7 +57,7 @@ describe('custom-resolvers/account-password-reset', () => {
 
     variables = {
       token: String(mockAccount.passwordResetHash),
-      password: String(process.env.MOCK_ACCOUNT_PASSWORD),
+      password: `${process.env.MOCK_ACCOUNT_PASSWORD}-modified`,
     };
 
     result = await accountPasswordReset({}, variables, context);
@@ -62,12 +68,28 @@ describe('custom-resolvers/account-password-reset', () => {
     })) as Account;
   });
 
+  afterAll(async () => {
+    jest.resetAllMocks();
+
+    const entries = await context.query.Authentication.findMany();
+
+    await context.query.Authentication.deleteMany({
+      where: entries,
+    });
+  });
+
   test('it should return success=true', () => {
     const expected = {
       success: true,
     };
 
     expect(result).toEqual(expected);
+  });
+
+  test('it should add an authentication entry', async () => {
+    const entries = await context.query.Authentication.findMany();
+
+    expect(entries.length).toEqual(1);
   });
 
   test("it should update the account's salt and hash", async () => {
@@ -152,6 +174,63 @@ describe('custom-resolvers/account-password-reset', () => {
       const expected = {
         success: false,
         expired: true,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when the provided password matches the existing account password', () => {
+    test('it should return success=false and hasBeenUsedBefore=true', async () => {
+      // update the account to have default test password (MOCK_ACCOUNT_PASSWORD)
+
+      await context.query.Account.updateOne({
+        where: { id: account.id },
+        data: mockAccount,
+      });
+
+      // change the variables to have the same password
+      variables.password = String(process.env.MOCK_ACCOUNT_PASSWORD);
+
+      result = await accountPasswordReset({}, variables, context);
+
+      const expected = {
+        success: false,
+        hasBeenUsedBefore: true,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when the provided password has been used before', () => {
+    test('it should return success=false and hasBeenUsedBefore=true', async () => {
+      // create an account
+      account = (await context.query.Account.createOne({
+        data: mockAccount,
+        query: 'id',
+      })) as Account;
+
+      const authEntry = {
+        account: {
+          connect: {
+            id: account.id,
+          },
+        },
+        salt: mockAccount.salt,
+        hash: mockAccount.hash,
+      };
+
+      await createAuthenticationEntry(context, authEntry);
+
+      // change the variables to have the same password
+      variables.password = String(process.env.MOCK_ACCOUNT_PASSWORD);
+
+      result = await accountPasswordReset({}, variables, context);
+
+      const expected = {
+        success: false,
+        hasBeenUsedBefore: true,
       };
 
       expect(result).toEqual(expected);

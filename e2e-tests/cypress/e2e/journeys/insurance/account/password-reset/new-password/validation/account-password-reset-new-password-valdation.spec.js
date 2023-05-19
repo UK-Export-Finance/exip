@@ -4,6 +4,7 @@ import { INVALID_PASSWORDS } from '../../../../../../../../constants/examples';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../../constants/routes/insurance';
 import api from '../../../../../../../support/api';
+import mockAccount from '../../../../../../../fixtures/account';
 
 const {
   ACCOUNT: {
@@ -23,6 +24,9 @@ const {
   INSURANCE: {
     ACCOUNT: {
       CREATE: { YOUR_DETAILS: YOUR_DETAILS_ERROR_MESSAGES },
+      PASSWORD_RESET: {
+        [PASSWORD]: { CANNOT_USE_NEW_PASSWORD },
+      },
     },
   },
 } = ERROR_MESSAGES;
@@ -143,6 +147,19 @@ context('Insurance - Account - Password reset - new password page - form validat
         } = fieldErrorAssertions(submittedValue);
 
         cy.submitAndAssertFieldErrors(field, value, fieldIndex, errorSummaryLength, errorMessage);
+      });
+
+      it('should render a validation error when password has been used before', () => {
+        const submittedValue = mockAccount[PASSWORD];
+
+        const {
+          field,
+          value,
+          fieldIndex,
+          errorSummaryLength,
+        } = fieldErrorAssertions(submittedValue);
+
+        cy.submitAndAssertFieldErrors(field, value, fieldIndex, errorSummaryLength, CANNOT_USE_NEW_PASSWORD);
       });
     });
   });

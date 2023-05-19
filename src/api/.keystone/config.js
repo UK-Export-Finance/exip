@@ -1279,6 +1279,11 @@ var typeDefs = `
     securityCode: String!
   }
 
+  type AccountPasswordResetResponse {
+    success: Boolean!
+    hasBeenUsedBefore: Boolean
+  }
+
   type AccountSendEmailPasswordResetLinkResponse {
     success: Boolean!
     isBlocked: Boolean
@@ -1355,7 +1360,8 @@ var typeDefs = `
     accountPasswordReset(
       token: String!
       password: String!
-    ): AccountSendEmailPasswordResetLinkResponse
+      hasBeenUsedBefore: Boolean
+    ): AccountPasswordResetResponse
 
     """ update company and company address """
     updateCompanyAndCompanyAddress(
@@ -1910,7 +1916,7 @@ var send_email_confirm_email_address_default2 = sendEmailConfirmEmailAddressMuta
 // custom-resolvers/mutations/account-sign-in.ts
 var import_date_fns4 = require("date-fns");
 
-// helpers/is-valid-account-password/index.ts
+// helpers/get-password-hash/index.ts
 var import_crypto3 = __toESM(require("crypto"));
 var { ENCRYPTION: ENCRYPTION3 } = ACCOUNT2;
 var {
@@ -1920,9 +1926,16 @@ var {
     PBKDF2: { KEY_LENGTH: KEY_LENGTH3 }
   }
 } = ENCRYPTION3;
+var getPasswordHash = (password2, salt) => {
+  const hash = import_crypto3.default.pbkdf2Sync(password2, salt, ITERATIONS3, KEY_LENGTH3, DIGEST_ALGORITHM3).toString(STRING_TYPE3);
+  return hash;
+};
+var get_password_hash_default = getPasswordHash;
+
+// helpers/is-valid-account-password/index.ts
 var isValidAccountPassword = (password2, salt, hash) => {
   console.info("Validating account password");
-  const hashVerify = import_crypto3.default.pbkdf2Sync(password2, salt, ITERATIONS3, KEY_LENGTH3, DIGEST_ALGORITHM3).toString(STRING_TYPE3);
+  const hashVerify = get_password_hash_default(password2, salt);
   if (hash === hashVerify) {
     console.info("Valid account password");
     return true;
@@ -2363,6 +2376,53 @@ var send_email_password_reset_link_default = sendEmailPasswordResetLink;
 
 // custom-resolvers/mutations/account-password-reset.ts
 var import_date_fns7 = require("date-fns");
+
+// helpers/account-has-used-password-before/index.ts
+var hasAccountUsedPasswordBefore = async (context, accountId, newPassword) => {
+  console.info("Checking if an account has used a password before");
+  try {
+    let usedBefore = false;
+    const previousHashes = await context.db.Authentication.findMany({
+      where: {
+        account: {
+          every: {
+            id: { equals: accountId }
+          }
+        }
+      }
+    });
+    if (previousHashes.length) {
+      previousHashes.forEach((previous) => {
+        const newHashPreviousSalt = get_password_hash_default(newPassword, previous.salt);
+        if (newHashPreviousSalt === previous.hash) {
+          usedBefore = true;
+        }
+      });
+    }
+    return usedBefore;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Checking if an account has used a password before ${err}`);
+  }
+};
+var account_has_used_password_before_default = hasAccountUsedPasswordBefore;
+
+// helpers/create-authentication-entry/index.ts
+var createAuthenticationEntry = async (context, entry) => {
+  console.info("Creating authentication entry");
+  try {
+    const result = await context.db.Authentication.createOne({
+      data: entry
+    });
+    return result;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Creating authentication entry ${err}`);
+  }
+};
+var create_authentication_entry_default = createAuthenticationEntry;
+
+// custom-resolvers/mutations/account-password-reset.ts
 var accountPasswordReset = async (root, variables, context) => {
   console.info("Resetting account password");
   try {
@@ -2372,7 +2432,7 @@ var accountPasswordReset = async (root, variables, context) => {
       console.info("Unable to reset account password - account does not exist");
       return { success: false };
     }
-    const { id: accountId, passwordResetHash, passwordResetExpiry } = account;
+    const { id: accountId, passwordResetHash, passwordResetExpiry, salt: currentSalt, hash: currentHash } = account;
     if (!passwordResetHash || !passwordResetExpiry) {
       console.info("Unable to reset account password - reset hash or expiry does not exist");
       return { success: false };
@@ -2386,10 +2446,37 @@ var accountPasswordReset = async (root, variables, context) => {
         expired: true
       };
     }
-    const { salt, hash } = encrypt_password_default(newPassword);
+    const newHashCurrentSalt = get_password_hash_default(newPassword, currentSalt);
+    const passwordIsTheSame = newHashCurrentSalt === currentHash;
+    if (passwordIsTheSame) {
+      console.info("Unable to reset account password - provided password is the same");
+      return {
+        success: false,
+        hasBeenUsedBefore: true
+      };
+    }
+    const usedPasswordBefore = await account_has_used_password_before_default(context, accountId, newPassword);
+    if (usedPasswordBefore) {
+      console.info("Unable to reset account password - provided password has been used before");
+      return {
+        success: false,
+        hasBeenUsedBefore: true
+      };
+    }
+    const authEntry = {
+      account: {
+        connect: {
+          id: accountId
+        }
+      },
+      salt: currentSalt,
+      hash: currentHash
+    };
+    await create_authentication_entry_default(context, authEntry);
+    const { salt: newSalt, hash: newHash } = encrypt_password_default(newPassword);
     const accountUpdate = {
-      salt,
-      hash,
+      salt: newSalt,
+      hash: newHash,
       passwordResetHash: "",
       passwordResetExpiry: null
     };
@@ -2403,6 +2490,7 @@ var accountPasswordReset = async (root, variables, context) => {
       success: true
     };
   } catch (err) {
+    console.error(err);
     throw new Error(`Resetting account password ${err}`);
   }
 };

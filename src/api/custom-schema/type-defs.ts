@@ -126,6 +126,11 @@ const typeDefs = `
     securityCode: String!
   }
 
+  type AccountPasswordResetResponse {
+    success: Boolean!
+    hasBeenUsedBefore: Boolean
+  }
+
   type AccountSendEmailPasswordResetLinkResponse {
     success: Boolean!
     isBlocked: Boolean
@@ -202,7 +207,8 @@ const typeDefs = `
     accountPasswordReset(
       token: String!
       password: String!
-    ): AccountSendEmailPasswordResetLinkResponse
+      hasBeenUsedBefore: Boolean
+    ): AccountPasswordResetResponse
 
     """ update company and company address """
     updateCompanyAndCompanyAddress(

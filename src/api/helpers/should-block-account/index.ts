@@ -40,6 +40,10 @@ const shouldBlockAccount = async (context: Context, accountId: string): Promise<
   retries.forEach((retry) => {
     const retryDate = new Date(retry.createdAt);
 
+    // console.log('----retryDate ', retryDate);
+    // console.log('----MAX_PASSWORD_RESET_TRIES_TIMEFRAME ', MAX_PASSWORD_RESET_TRIES_TIMEFRAME);
+    // console.log('----now ', now);
+
     const isWithinLast24Hours = isWithinInterval(retryDate, {
       start: MAX_PASSWORD_RESET_TRIES_TIMEFRAME,
       end: now,

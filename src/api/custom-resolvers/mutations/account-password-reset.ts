@@ -3,7 +3,9 @@ import { isAfter } from 'date-fns';
 import { FIELD_IDS } from '../../constants';
 import getAccountByField from '../../helpers/get-account-by-field';
 import encryptPassword from '../../helpers/encrypt-password';
-import isValidAccountPassword from '../../helpers/is-valid-account-password';
+import hasAccountUsedPasswordBefore from '../../helpers/account-has-used-password-before';
+import getPasswordHash from '../../helpers/get-password-hash';
+import createAuthenticationEntry from '../../helpers/create-authentication-entry';
 import { Account, AccountPasswordResetVariables } from '../../types';
 
 const accountPasswordReset = async (root: any, variables: AccountPasswordResetVariables, context: Context) => {
@@ -14,7 +16,7 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
 
     /**
      * Get the account the token is associated with.
-     * If an account does not exist, return success=false
+     * If no account is found, return success=false
      */
     const account = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD_RESET_HASH, token);
 
@@ -24,7 +26,11 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
       return { success: false };
     }
 
-    const { id: accountId, passwordResetHash, passwordResetExpiry } = account as Account;
+    /**
+     * Check if the account has a reset hash and expiry.
+     * If not, return success=false
+     */
+    const { id: accountId, passwordResetHash, passwordResetExpiry, salt: currentSalt, hash: currentHash } = account as Account;
 
     /**
      * Check that the account has a reset hash and expiry.
@@ -37,8 +43,8 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
     }
 
     /**
-     * Check that the verification period has not expired.
-     * If expired, return success=false
+     * Check that the current time has not surpassed the reset expiry period.
+     * If it has, return expired=true
      */
     const now = new Date();
 
@@ -53,34 +59,63 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
       };
     }
 
-    // TODO
-    // check that the provided password has not been used before.
+    /**
+     * Check that the provided password is not the same as the current password.
+     * If it has been used before, return hasBeenUsedBefore=false
+     */
+    const newHashCurrentSalt = getPasswordHash(newPassword, currentSalt);
 
-    console.log('-----passwordResetHash ', passwordResetHash);
+    const passwordIsTheSame = newHashCurrentSalt === currentHash;
 
-    
+    if (passwordIsTheSame) {
+      console.info('Unable to reset account password - provided password is the same');
 
+      return {
+        success: false,
+        hasBeenUsedBefore: true,
+      };
+    }
+
+    /**
+     * Check that the provided password is not the same as any previous passwords.
+     * If it has been used before, return hasBeenUsedBefore=false
+     */
+    const usedPasswordBefore = await hasAccountUsedPasswordBefore(context, accountId, newPassword);
+
+    if (usedPasswordBefore) {
+      console.info('Unable to reset account password - provided password has been used before');
+
+      return {
+        success: false,
+        hasBeenUsedBefore: true,
+      };
+    }
 
     /**
      * Account is OK to proceed with password reset.
-     * Encrypt the password and update the account
+     * 1) Add a new entry to the Authentication table
      */
+    const authEntry = {
+      account: {
+        connect: {
+          id: accountId,
+        },
+      },
+      salt: currentSalt,
+      hash: currentHash,
+    };
+
+    await createAuthenticationEntry(context, authEntry);
 
     /**
-     * Account is OK to proceed with password reset.
-     * Encrypt the password and update the account
+     * 2) Encrypt the provided password.
+     * 3) Update the account.
      */
-    const { salt, hash } = encryptPassword(newPassword);
-
-
-    const bla = isValidAccountPassword(newPassword, salt, hash);
-    console.log('-----blaaa ', bla);
-
-    console.log('-----hash ', hash);
+    const { salt: newSalt, hash: newHash } = encryptPassword(newPassword);
 
     const accountUpdate = {
-      salt,
-      hash,
+      salt: newSalt,
+      hash: newHash,
       passwordResetHash: '',
       passwordResetExpiry: null,
     };
@@ -96,6 +131,8 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
       success: true,
     };
   } catch (err) {
+    console.error(err);
+
     throw new Error(`Resetting account password ${err}`);
   }
 };
