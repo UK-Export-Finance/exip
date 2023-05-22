@@ -5,6 +5,7 @@ import insuranceCorePageVariables from '../../../../../helpers/page-variables/co
 import generateValidationErrors from './validation';
 import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import api from '../../../../../api';
+import cannotUseNewPasswordValidation from './validation/cannot-use-new-password';
 import { Request, Response } from '../../../../../../types';
 
 const {
@@ -107,6 +108,18 @@ export const post = async (req: Request, res: Response) => {
       req.session.passwordResetSuccess = true;
 
       return res.redirect(SUCCESS);
+    }
+
+    if (response.hasBeenUsedBefore) {
+      return res.render(TEMPLATE, {
+        ...insuranceCorePageVariables({
+          PAGE_CONTENT_STRINGS,
+          BACK_LINK: req.headers.referer,
+        }),
+        ...PAGE_VARIABLES,
+        submittedValues: req.body,
+        validationErrors: cannotUseNewPasswordValidation(),
+      });
     }
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

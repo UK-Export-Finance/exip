@@ -41,7 +41,7 @@ const sendEmailPasswordResetLink = async (
 
     /**
      * Get the account the email is associated with.
-     * If the account does not exist, return success=false
+     * If an account does not exist, return success=false
      */
     const account = (await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email)) as Account;
 

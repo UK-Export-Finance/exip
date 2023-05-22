@@ -84,7 +84,7 @@ describe('helpers/should-block-account', () => {
     beforeEach(async () => {
       const currentMinutes = new Date(MAX_PASSWORD_RESET_TRIES_TIMEFRAME).getMinutes();
 
-      const dateOutsideOfTimeFrame = new Date(MAX_PASSWORD_RESET_TRIES_TIMEFRAME.setHours(currentMinutes - 1));
+      const dateOutsideOfTimeFrame = new Date(new Date(MAX_PASSWORD_RESET_TRIES_TIMEFRAME).setHours(currentMinutes - 1));
 
       await context.query.AuthenticationRetry.updateOne({
         where: {

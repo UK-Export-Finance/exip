@@ -277,6 +277,10 @@ interface AccountSignInResponse extends SuccessResponse {
   resentVerificationEmail?: boolean;
 }
 
+interface AccountPasswordResetResponse extends SuccessResponse {
+  hasBeenUsedBefore?: boolean;
+}
+
 interface AccountSendEmailPasswordResetLinkResponse extends SuccessResponse {
   accountId?: string;
   isBlocked?: boolean;
@@ -357,6 +361,7 @@ export {
   AccountDeletionVariables,
   ApplicationCompanyAddress,
   AccountInput,
+  AccountPasswordResetResponse,
   AccountSendEmailPasswordResetLinkVariables,
   AccountSendEmailPasswordResetLinkResponse,
   AccountSignInVariables,

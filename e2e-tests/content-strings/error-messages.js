@@ -283,6 +283,9 @@ export const ERROR_MESSAGES = {
           INCORRECT_FORMAT: 'Enter an email address in the correct format, like name@example.com',
           ACCOUNT_DOES_NOT_EXIST: 'Enter the email address used when creating your account',
         },
+        [FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD]: {
+          CANNOT_USE_PREVIOUS_PASSWORD: 'You cannot enter any of your previous passwords - enter a new password',
+        },
       },
     },
     DECLARATIONS: {

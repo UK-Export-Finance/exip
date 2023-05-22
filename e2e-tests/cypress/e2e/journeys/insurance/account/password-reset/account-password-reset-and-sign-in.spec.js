@@ -4,6 +4,7 @@ import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/i
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { submitButton } from '../../../../pages/shared';
 import api from '../../../../../support/api';
+import account from '../../../../../fixtures/account';
 
 const {
   ACCOUNT: {
@@ -14,7 +15,7 @@ const {
 } = ROUTES;
 
 const {
-  ACCOUNT: { SECURITY_CODE },
+  ACCOUNT: { SECURITY_CODE, PASSWORD },
 } = INSURANCE_FIELD_IDS;
 
 context('Insurance - Account - Password reset and sign in - As an Exporter, I want to login to my UKEF digital service account after my password reset, So that I can securely access my digital service account with UKEF', () => {
@@ -56,7 +57,9 @@ context('Insurance - Account - Password reset and sign in - As an Exporter, I wa
       beforeEach(() => {
         cy.navigateToUrl(newPasswordUrl);
 
-        cy.completeAndSubmitNewPasswordAccountForm();
+        const newPassword = `${account[PASSWORD]}-modified`;
+
+        cy.completeAndSubmitNewPasswordAccountForm({ password: newPassword });
 
         cy.url().should('eq', successUrl);
 
@@ -64,7 +67,7 @@ context('Insurance - Account - Password reset and sign in - As an Exporter, I wa
 
         cy.url().should('eq', signInUrl);
 
-        cy.completeAndSubmitSignInAccountForm({});
+        cy.completeAndSubmitSignInAccountForm({ password: newPassword });
       });
 
       it(`should redirect to ${enterCodeUrl}`, () => {

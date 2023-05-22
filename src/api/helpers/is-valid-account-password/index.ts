@@ -1,15 +1,4 @@
-import crypto from 'crypto';
-import { ACCOUNT } from '../../constants';
-
-const { ENCRYPTION } = ACCOUNT;
-
-const {
-  STRING_TYPE,
-  PBKDF2: { ITERATIONS, DIGEST_ALGORITHM },
-  PASSWORD: {
-    PBKDF2: { KEY_LENGTH },
-  },
-} = ENCRYPTION;
+import getPasswordHash from '../get-password-hash';
 
 /**
  * isValidAccountPassword
@@ -22,7 +11,7 @@ const {
 const isValidAccountPassword = (password: string, salt: string, hash: string) => {
   console.info('Validating account password');
 
-  const hashVerify = crypto.pbkdf2Sync(password, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+  const hashVerify = getPasswordHash(password, salt);
 
   if (hash === hashVerify) {
     console.info('Valid account password');

@@ -2017,7 +2017,7 @@ type Mutation {
   sendEmailPasswordResetLink(urlOrigin: String!, email: String!): AccountSendEmailPasswordResetLinkResponse
 
   """ reset account password """
-  accountPasswordReset(token: String!, password: String!): AccountSendEmailPasswordResetLinkResponse
+  accountPasswordReset(token: String!, password: String!, hasBeenUsedBefore: Boolean): AccountPasswordResetResponse
 
   """ update company and company address """
   updateCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: CompanyAndCompanyAddressInput!): CompanyAndCompanyAddress
@@ -2357,6 +2357,11 @@ type AccountSignInResponse {
 type AddAndGetOtpResponse {
   success: Boolean!
   securityCode: String!
+}
+
+type AccountPasswordResetResponse {
+  success: Boolean!
+  hasBeenUsedBefore: Boolean
 }
 
 type AccountSendEmailPasswordResetLinkResponse {
