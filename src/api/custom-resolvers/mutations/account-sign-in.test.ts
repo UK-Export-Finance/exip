@@ -9,7 +9,7 @@ import generate from '../../helpers/generate-otp';
 import getFullNameString from '../../helpers/get-full-name-string';
 import sendEmail from '../../emails';
 import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../test-mocks';
-import { Account, AccountSignInResponse } from '../../types';
+import { Account, AccountSignInResponse, ApplicationRelationship } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -23,6 +23,7 @@ const { EMAIL } = ACCOUNT;
 
 describe('custom-resolvers/account-sign-in', () => {
   let account: Account;
+  let retries: Array<ApplicationRelationship>;
 
   jest.mock('../../emails');
   jest.mock('../../helpers/generate-otp');
@@ -47,11 +48,18 @@ describe('custom-resolvers/account-sign-in', () => {
   let result: AccountSignInResponse;
 
   beforeAll(async () => {
-    // wipe the table so we have a clean slate.
+    // wipe the account table so we have a clean slate.
     const accounts = await context.query.Account.findMany();
 
     await context.query.Account.deleteMany({
       where: accounts,
+    });
+
+    // wipe the AuthenticationRetry table so we have a clean slate.
+    retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+
+    await context.query.AuthenticationRetry.deleteMany({
+      where: retries,
     });
 
     // create an account
@@ -74,6 +82,13 @@ describe('custom-resolvers/account-sign-in', () => {
   });
 
   describe('when the provided password is valid', () => {
+    test(`it should wipe the account's retry entires`, async () => {
+      // get the latest retries
+      retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+
+      expect(retries.length).toEqual(0);
+    });
+
     test('it should generate an OTP and save to the account', () => {
       expect(account.otpSalt).toEqual(mockOTP.salt);
       expect(account.otpHash).toEqual(mockOTP.hash);
@@ -200,6 +215,22 @@ describe('custom-resolvers/account-sign-in', () => {
       const expected = { success: false };
 
       expect(result).toEqual(expected);
+    });
+
+    test('it should retain the added authentication retry entry', async () => {
+      // wipe the AuthenticationRetry table so we have a clean slate.
+      retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+
+      await context.query.AuthenticationRetry.deleteMany({
+        where: retries,
+      });
+
+      await accountSignIn({}, variables, context);
+
+      // get the latest retries
+      retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+
+      expect(retries.length).toEqual(1);
     });
   });
 

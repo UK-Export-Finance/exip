@@ -6,6 +6,8 @@ import confirmEmailAddressEmail from '../../helpers/send-email-confirm-email-add
 import isValidAccountPassword from '../../helpers/is-valid-account-password';
 import generateOTPAndUpdateAccount from '../../helpers/generate-otp-and-update-account';
 import getFullNameString from '../../helpers/get-full-name-string';
+import createAuthenticationRetryEntry from '../../helpers/create-authentication-retry-entry';
+import deleteAuthenticationRetries from '../../helpers/delete-authentication-retries';
 import sendEmail from '../../emails';
 import { Account, AccountSignInVariables, AccountSignInResponse } from '../../types';
 
@@ -39,11 +41,21 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
     const account = accountData as Account;
 
     /**
+     * Create a new retry entry for the account
+     * If this fails, return success=false
+     */
+    const newRetriesEntry = await createAuthenticationRetryEntry(context, account.id);
+
+    if (!newRetriesEntry.success) {
+      return { success: false };
+    }
+
+    /**
      * Account is found and verified. We can therefore:
      * 1) Check if the password is matches what is encrypted in the database.
      * 2) If the password is valid:
      *   - If the account is unverified, but has a valid has/token, send verification email.
-     *   - If the account is verified, generate an OTP/security code and send via email.
+     *   - If the account is verified, wipe the retry entries generate an OTP/security code and send via email.
      * 3) Otherwise, we return a rejection because either:
      *   - The password is invalid.
      *   - The email was not sent.
@@ -100,11 +112,13 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
         return { success: false };
       }
 
+      // delete authentication retries for the account
+      await deleteAuthenticationRetries(context, account.id);
+
       // generate OTP and update the account
       const { securityCode } = await generateOTPAndUpdateAccount(context, account.id);
 
       // send "security code" email.
-
       const name = getFullNameString(account);
 
       const emailResponse = await sendEmail.securityCodeEmail(email, name, securityCode);

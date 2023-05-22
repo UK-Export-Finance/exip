@@ -1,5 +1,6 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import getAccountByField from '../../helpers/get-account-by-field';
+import getAuthenticationRetriesByAccountId from '../../helpers/get-authentication-retries-by-account-id';
 import { Account, AccountDeletionVariables } from '../../types';
 
 const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, context: Context) => {
@@ -20,15 +21,7 @@ const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, c
     const { id: accountId } = account;
 
     // delete authentication retry entries
-    const retries = await context.db.AuthenticationRetry.findMany({
-      where: {
-        account: {
-          every: {
-            id: { equals: accountId },
-          },
-        },
-      },
-    });
+    const retries = await getAuthenticationRetriesByAccountId(context, accountId);
 
     const retriesArray = retries.map((retry) => ({
       id: retry.id,
