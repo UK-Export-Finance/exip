@@ -27,15 +27,23 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
     }
 
     /**
+     * Check if the account is blocked
+     * If so, return success=false
+     */
+    const { isBlocked } = account as Account;
+
+    if (isBlocked) {
+      console.info('Unable to reset account password - account is blocked');
+
+      return { success: false };
+    }
+
+    /**
      * Check if the account has a reset hash and expiry.
      * If not, return success=false
      */
     const { id: accountId, passwordResetHash, passwordResetExpiry, salt: currentSalt, hash: currentHash } = account as Account;
 
-    /**
-     * Check that the account has a reset hash and expiry.
-     * If not, return success=false
-     */
     if (!passwordResetHash || !passwordResetExpiry) {
       console.info('Unable to reset account password - reset hash or expiry does not exist');
 
