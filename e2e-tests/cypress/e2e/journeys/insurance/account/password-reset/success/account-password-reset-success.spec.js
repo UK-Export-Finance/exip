@@ -1,7 +1,9 @@
 import { successPage } from '../../../../../pages/insurance/account/password-reset';
 import { BUTTONS, PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import api from '../../../../../../support/api';
+import account from '../../../../../../fixtures/account';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.SUCCESS;
 
@@ -11,6 +13,10 @@ const {
     SIGN_IN: { ROOT: SIGN_IN_ROOT },
   },
 } = ROUTES;
+
+const {
+  ACCOUNT: { PASSWORD },
+} = INSURANCE_FIELD_IDS;
 
 context('Insurance - Account - Password reset - success page - I want to reset my password, So that I can securely access my digital service account with UKEF', () => {
   const successUrl = `${Cypress.config('baseUrl')}${SUCCESS}`;
@@ -45,7 +51,9 @@ context('Insurance - Account - Password reset - success page - I want to reset m
       beforeEach(() => {
         cy.navigateToUrl(newPasswordUrl);
 
-        cy.completeAndSubmitNewPasswordAccountForm();
+        const newPassword = `${account[PASSWORD]}-modified`;
+
+        cy.completeAndSubmitNewPasswordAccountForm({ password: newPassword });
 
         cy.url().should('eq', successUrl);
       });

@@ -4,6 +4,7 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/in
 import { ACCOUNT_FIELDS } from '../../../../../../../content-strings/fields/insurance/account';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import api from '../../../../../../support/api';
+import account from '../../../../../../fixtures/account';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD;
 
@@ -98,7 +99,9 @@ context('Insurance - Account - Password reset - new password page - As an Export
       });
 
       it(`should redirect to ${SUCCESS}`, () => {
-        cy.completeAndSubmitNewPasswordAccountForm();
+        const newPassword = `${account[PASSWORD]}-modified`;
+
+        cy.completeAndSubmitNewPasswordAccountForm({ password: newPassword });
 
         const expected = `${Cypress.config('baseUrl')}${SUCCESS}`;
         cy.url().should('eq', expected);
