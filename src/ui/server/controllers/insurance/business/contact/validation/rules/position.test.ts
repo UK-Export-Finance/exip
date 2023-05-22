@@ -9,7 +9,7 @@ const {
 } = FIELD_IDS;
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
-const ERROR_MESSAGE = EXPORTER_BUSINESS[FIELD_ID];
+const ERROR_MESSAGE = EXPORTER_BUSINESS.CONTACT[FIELD_ID];
 
 describe('controllers/insurance/business/contact/validation/rules/position', () => {
   const mockErrors = {

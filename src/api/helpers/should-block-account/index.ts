@@ -17,7 +17,7 @@ const shouldBlockAccount = async (context: Context, accountId: string): Promise<
   console.info(`Checking account ${accountId} password reset retries`);
 
   /**
-   * Get retries associated with the providied account ID
+   * Get retries associated with the provided account ID
    */
   const retries = await context.db.AuthenticationRetry.findMany({
     where: {
@@ -29,7 +29,7 @@ const shouldBlockAccount = async (context: Context, accountId: string): Promise<
     },
   });
 
-  const now = Date.now();
+  const now = new Date();
 
   /**
    * Check if the retries breach the threshold:

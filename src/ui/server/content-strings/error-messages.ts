@@ -76,6 +76,20 @@ export const ERROR_MESSAGES = {
       },
     },
     EXPORTER_BUSINESS: {
+      CONTACT: {
+        [FIELD_IDS.INSURANCE.ACCOUNT.FIRST_NAME]: {
+          IS_EMPTY: 'Enter the first name of the exporter contact',
+        },
+        [FIELD_IDS.INSURANCE.ACCOUNT.LAST_NAME]: {
+          IS_EMPTY: 'Enter the last name of the exporter contact',
+        },
+        [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
+          INCORRECT_FORMAT: 'Enter the email address for the exporter contact in the correct format, like name@example.com',
+        },
+        [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.POSITION]: {
+          IS_EMPTY: 'Enter the position at company of the exporter contact',
+        },
+      },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT]: {
         INCORRECT_FORMAT: 'Enter your Companies House registration number in the correct format, like 8989898 or SC907816',
         NOT_FOUND: 'The number you entered does not match any company in Companies House - try again',
@@ -92,18 +106,6 @@ export const ERROR_MESSAGES = {
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.PHONE_NUMBER]: {
         INCORRECT_FORMAT: 'Enter a UK telephone number',
-      },
-      [FIELD_IDS.INSURANCE.ACCOUNT.FIRST_NAME]: {
-        IS_EMPTY: 'Enter the first name of the exporter contact',
-      },
-      [FIELD_IDS.INSURANCE.ACCOUNT.LAST_NAME]: {
-        IS_EMPTY: 'Enter the last name of the exporter contact',
-      },
-      [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
-        INCORRECT_FORMAT: 'Enter the email address for the exporter contact in the correct format, like name@example.com',
-      },
-      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.POSITION]: {
-        IS_EMPTY: 'Enter the position at company of the exporter contact',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {
         IS_EMPTY: 'Enter the goods or services that your company supplies',
@@ -285,6 +287,9 @@ export const ERROR_MESSAGES = {
         [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
           INCORRECT_FORMAT: 'Enter an email address in the correct format, like name@example.com',
           ACCOUNT_DOES_NOT_EXIST: 'Enter the email address used when creating your account',
+        },
+        [FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD]: {
+          CANNOT_USE_PREVIOUS_PASSWORD: 'You cannot enter any of your previous passwords - enter a new password',
         },
       },
     },
