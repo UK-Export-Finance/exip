@@ -352,7 +352,7 @@ var ACCOUNT2 = {
    * Generate a date that is 24 hours ago from now
    * To be safe, we use time rather than subtracting a day.
    */
-  MAX_PASSWORD_RESET_TRIES_TIMEFRAME: new Date((/* @__PURE__ */ new Date()).getTime() - 24 * 60 * 60 * 1e3)
+  MAX_PASSWORD_RESET_TRIES_TIMEFRAME: (/* @__PURE__ */ new Date()).setDate((/* @__PURE__ */ new Date()).getDate() - 1)
 };
 var EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
@@ -2292,7 +2292,7 @@ var shouldBlockAccount = async (context, accountId) => {
       }
     }
   });
-  const now = Date.now();
+  const now = /* @__PURE__ */ new Date();
   const retriesInTimeframe = [];
   retries.forEach((retry) => {
     const retryDate = new Date(retry.createdAt);
@@ -2412,7 +2412,10 @@ var createAuthenticationEntry = async (context, entry) => {
   console.info("Creating authentication entry");
   try {
     const result = await context.db.Authentication.createOne({
-      data: entry
+      data: {
+        ...entry,
+        createdAt: /* @__PURE__ */ new Date()
+      }
     });
     return result;
   } catch (err) {
