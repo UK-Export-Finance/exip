@@ -7,6 +7,8 @@ import isValidAccountPassword from '../../helpers/is-valid-account-password';
 import generateOTPAndUpdateAccount from '../../helpers/generate-otp-and-update-account';
 import getFullNameString from '../../helpers/get-full-name-string';
 import createAuthenticationRetryEntry from '../../helpers/create-authentication-retry-entry';
+import shouldBlockAccount from '../../helpers/should-block-account';
+import blockAccount from '../../helpers/block-account';
 import deleteAuthenticationRetries from '../../helpers/delete-authentication-retries';
 import sendEmail from '../../emails';
 import { Account, AccountSignInVariables, AccountSignInResponse } from '../../types';
@@ -40,13 +42,35 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
 
     const account = accountData as Account;
 
+    const { id: accountId } = account;
+
     /**
      * Create a new retry entry for the account
      * If this fails, return success=false
      */
-    const newRetriesEntry = await createAuthenticationRetryEntry(context, account.id);
+    const newRetriesEntry = await createAuthenticationRetryEntry(context, accountId);
 
     if (!newRetriesEntry.success) {
+      return { success: false };
+    }
+
+    /**
+     * Check if the account should be blocked.
+     * If so, update the account and return isBlocked=true
+     */
+    const needToBlockAccount = await shouldBlockAccount(context, accountId);
+
+    if (needToBlockAccount) {
+      const blocked = await blockAccount(context, accountId);
+
+      if (blocked) {
+        return {
+          success: false,
+          isBlocked: true,
+          accountId,
+        };
+      }
+
       return { success: false };
     }
 
@@ -87,19 +111,19 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
           };
 
           (await context.db.Account.updateOne({
-            where: { id: account.id },
+            where: { id: accountId },
             data: accountUpdate,
           })) as Account;
 
           console.info('Account has an unexpired verification token - sending verification email');
 
-          const emailResponse = await confirmEmailAddressEmail.send(context, urlOrigin, account.id);
+          const emailResponse = await confirmEmailAddressEmail.send(context, urlOrigin, accountId);
 
           if (emailResponse.success) {
             return {
               success: false,
               resentVerificationEmail: true,
-              accountId: account.id,
+              accountId,
             };
           }
 
@@ -113,10 +137,10 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
       }
 
       // delete authentication retries for the account
-      await deleteAuthenticationRetries(context, account.id);
+      await deleteAuthenticationRetries(context, accountId);
 
       // generate OTP and update the account
-      const { securityCode } = await generateOTPAndUpdateAccount(context, account.id);
+      const { securityCode } = await generateOTPAndUpdateAccount(context, accountId);
 
       // send "security code" email.
       const name = getFullNameString(account);
@@ -126,7 +150,7 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
       if (emailResponse.success) {
         return {
           ...emailResponse,
-          accountId: account.id,
+          accountId,
         };
       }
 
