@@ -7,7 +7,7 @@ import deleteApplication from './delete-application';
  */
 const deleteAccountAndApplication = (referenceNumber) => {
   try {
-    // delete the exporter.
+    // delete the account.
     deleteAccount();
 
     // delete the application

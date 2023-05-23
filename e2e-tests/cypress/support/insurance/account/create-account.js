@@ -34,7 +34,15 @@ const createAccount = ({
     .then((createdAccount) => {
       const { verificationHash } = createdAccount;
 
-      const url = `${urlOrigin}${VERIFY_EMAIL}?token=${verificationHash}`;
+      let url;
+
+      if (!verificationHash) {
+        url = `${urlOrigin}${VERIFY_EMAIL}?temp-debugging=${createdAccount.email}-${createdAccount}`;
+
+        return url;
+      }
+
+      url = `${urlOrigin}${VERIFY_EMAIL}?token=${verificationHash}`;
 
       return url;
     });
