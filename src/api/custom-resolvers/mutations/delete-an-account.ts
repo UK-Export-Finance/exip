@@ -12,7 +12,7 @@ const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, c
     const account = (await getAccountByField(context, 'email', email)) as Account;
 
     if (!account) {
-      console.info(`Unable to delete account - account already exists`);
+      console.info(`Unable to delete account - account not found`);
 
       return { success: false };
     }
@@ -30,11 +30,11 @@ const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, c
       },
     });
 
-    const retriesArray = retries.map((retry) => ({
-      id: retry.id,
-    }));
-
     if (retries.length) {
+      const retriesArray = retries.map((retry) => ({
+        id: retry.id,
+      }));
+
       await context.db.AuthenticationRetry.deleteMany({
         where: retriesArray,
       });
@@ -50,6 +50,8 @@ const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, c
       success: true,
     };
   } catch (err) {
+    console.error(err);
+
     throw new Error(`Deleting account ${err}`);
   }
 };
