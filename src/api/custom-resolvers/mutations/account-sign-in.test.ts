@@ -83,13 +83,6 @@ describe('custom-resolvers/account-sign-in', () => {
   });
 
   describe('when the provided password is valid', () => {
-    test(`it should wipe the account's retry entires`, async () => {
-      // get the latest retries
-      retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
-
-      expect(retries.length).toEqual(0);
-    });
-
     test('it should generate an OTP and save to the account', () => {
       expect(account.otpSalt).toEqual(mockOTP.salt);
       expect(account.otpHash).toEqual(mockOTP.hash);

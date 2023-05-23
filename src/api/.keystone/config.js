@@ -1272,6 +1272,7 @@ var typeDefs = `
     expires: DateTime
     success: Boolean!
     resentVerificationEmail: Boolean
+    isBlocked: Boolean
   }
 
   type AddAndGetOtpResponse {
@@ -2100,25 +2101,6 @@ var blockAccount = async (context, accountId) => {
 };
 var block_account_default = blockAccount;
 
-// helpers/delete-authentication-retries/index.ts
-var deleteAuthenticationRetries = async (context, accountId) => {
-  console.info(`Deleting authentication retries for account ${accountId}`);
-  try {
-    const retries = await get_authentication_retries_by_account_id_default(context, accountId);
-    const retryIds = retries.map((obj) => ({
-      id: obj.id
-    }));
-    const result = await context.db.AuthenticationRetry.deleteMany({
-      where: retryIds
-    });
-    return result;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Deleting authentication retries ${err}`);
-  }
-};
-var delete_authentication_retries_default = deleteAuthenticationRetries;
-
 // custom-resolvers/mutations/account-sign-in.ts
 var { EMAIL: EMAIL2 } = ACCOUNT2;
 var accountSignIn = async (root, variables, context) => {
@@ -2173,10 +2155,9 @@ var accountSignIn = async (root, variables, context) => {
           }
           return { success: false };
         }
-        console.info("Unable to sign in account - account has not been verification has expired");
+        console.info("Unable to sign in account - account has not been verified");
         return { success: false };
       }
-      await delete_authentication_retries_default(context, accountId);
       const { securityCode } = await generate_otp_and_update_account_default(context, accountId);
       const name = get_full_name_string_default(account);
       const emailResponse = await emails_default.securityCodeEmail(email, name, securityCode);
@@ -2256,6 +2237,25 @@ var isValidOTP = (securityCode, otpSalt, otpHash) => {
 };
 var is_valid_otp_default = isValidOTP;
 
+// helpers/delete-authentication-retries/index.ts
+var deleteAuthenticationRetries = async (context, accountId) => {
+  console.info(`Deleting authentication retries for account ${accountId}`);
+  try {
+    const retries = await get_authentication_retries_by_account_id_default(context, accountId);
+    const retryIds = retries.map((obj) => ({
+      id: obj.id
+    }));
+    const result = await context.db.AuthenticationRetry.deleteMany({
+      where: retryIds
+    });
+    return result;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Deleting authentication retries ${err}`);
+  }
+};
+var delete_authentication_retries_default = deleteAuthenticationRetries;
+
 // helpers/create-jwt/index.ts
 var import_crypto6 = __toESM(require("crypto"));
 var import_jsonwebtoken = __toESM(require("jsonwebtoken"));
@@ -2320,6 +2320,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
     }
     const isValid = otpSalt && otpHash && is_valid_otp_default(securityCode, otpSalt, otpHash);
     if (isValid) {
+      await delete_authentication_retries_default(context, accountId);
       const jwt = create_jwt_default.JWT(accountId);
       const { sessionIdentifier } = jwt;
       const accountUpdate = {

@@ -9,7 +9,7 @@ import getFullNameString from '../../helpers/get-full-name-string';
 import createAuthenticationRetryEntry from '../../helpers/create-authentication-retry-entry';
 import shouldBlockAccount from '../../helpers/should-block-account';
 import blockAccount from '../../helpers/block-account';
-import deleteAuthenticationRetries from '../../helpers/delete-authentication-retries';
+// import deleteAuthenticationRetries from '../../helpers/delete-authentication-retries';
 import sendEmail from '../../emails';
 import { Account, AccountSignInVariables, AccountSignInResponse } from '../../types';
 
@@ -131,13 +131,10 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
         }
 
         // reject
-        console.info('Unable to sign in account - account has not been verification has expired');
+        console.info('Unable to sign in account - account has not been verified');
 
         return { success: false };
       }
-
-      // delete authentication retries for the account
-      await deleteAuthenticationRetries(context, accountId);
 
       // generate OTP and update the account
       const { securityCode } = await generateOTPAndUpdateAccount(context, accountId);

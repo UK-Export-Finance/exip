@@ -119,6 +119,7 @@ const typeDefs = `
     expires: DateTime
     success: Boolean!
     resentVerificationEmail: Boolean
+    isBlocked: Boolean
   }
 
   type AddAndGetOtpResponse {
