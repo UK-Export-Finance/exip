@@ -169,6 +169,7 @@ jobs:
           project: ./e2e-tests
           config: video=false
         env:
+          TZ: Europe/London
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
