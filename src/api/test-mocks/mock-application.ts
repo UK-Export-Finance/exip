@@ -150,7 +150,7 @@ const mockApplication = {
     ...mockBusiness,
     businessContactDetail: {
       id: 'clcyyopna0158m8noaglyy9ab',
-      ...mockBusinessContactDetail
+      ...mockBusinessContactDetail,
     },
   },
   broker: mockBroker,

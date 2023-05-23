@@ -7,7 +7,7 @@ import getPopulatedApplication, { generateErrorMessage } from '.';
 import { createFullApplication } from '../../test-helpers';
 import mockCountries from '../../test-mocks/mock-countries';
 import { Application } from '../../types';
-import mockApplication, { mockBusiness } from '../../test-mocks/mock-application';
+import mockApplication from '../../test-mocks/mock-application';
 
 const dbUrl = String(process.env.DATABASE_URL);
 const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
