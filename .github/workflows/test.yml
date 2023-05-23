@@ -164,6 +164,7 @@ jobs:
           headed: false
           record: true
           # parallel: true
+          parallel: false
           browser: chrome
           group: 'EXIP'
           project: ./e2e-tests
