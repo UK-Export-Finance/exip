@@ -1758,6 +1758,7 @@ var createAnAccount = async (root, variables, context) => {
     if (emailResponse.success) {
       return {
         ...creationResponse,
+        verificationHash,
         success: true
       };
     }
