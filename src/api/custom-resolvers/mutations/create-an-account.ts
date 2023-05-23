@@ -29,7 +29,7 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
     if (account) {
       console.info(`Unable to create a new account for ${variables.email} - account already exists`);
 
-      return { success: false };
+      return { success: false, alreadyExists: true };
     }
 
     // generate encrypted password

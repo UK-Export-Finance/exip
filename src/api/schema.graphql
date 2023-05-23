@@ -2266,6 +2266,7 @@ type CreateAnAccountResponse {
   lastName: String
   email: String
   verificationHash: String
+  alreadyExists: Boolean
 }
 
 type CompaniesHouseExporterCompanyAddress {

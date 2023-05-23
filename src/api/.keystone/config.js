@@ -1174,6 +1174,7 @@ var typeDefs = `
     lastName: String
     email: String
     verificationHash: String
+    alreadyExists: Boolean
   }
 
   # fields from registered_office_address object
@@ -1733,7 +1734,7 @@ var createAnAccount = async (root, variables, context) => {
     const account = await get_account_by_field_default(context, "email", email);
     if (account) {
       console.info(`Unable to create a new account for ${variables.email} - account already exists`);
-      return { success: false };
+      return { success: false, alreadyExists: true };
     }
     const { salt, hash } = encrypt_password_default(password2);
     const verificationHash = import_crypto2.default.pbkdf2Sync(password2, salt, ITERATIONS2, KEY_LENGTH2, DIGEST_ALGORITHM2).toString(STRING_TYPE2);

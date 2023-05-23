@@ -37,7 +37,7 @@ const createAccount = ({
       let url;
 
       if (!verificationHash) {
-        url = `${urlOrigin}${VERIFY_EMAIL}?temp-debugging=${createdAccount.email}-${createdAccount}`;
+        url = `${urlOrigin}${VERIFY_EMAIL}?exists=${createdAccount.alreadyExists}-success=${createdAccount.success}-id=${createdAccount.id}`;
 
         return url;
       }
