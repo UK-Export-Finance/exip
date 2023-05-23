@@ -163,7 +163,7 @@ jobs:
         with:
           headed: false
           record: true
-          parallel: true
+          # parallel: true
           browser: chrome
           group: 'EXIP'
           project: ./e2e-tests
