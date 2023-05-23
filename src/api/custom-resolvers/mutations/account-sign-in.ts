@@ -9,14 +9,19 @@ import getFullNameString from '../../helpers/get-full-name-string';
 import createAuthenticationRetryEntry from '../../helpers/create-authentication-retry-entry';
 import shouldBlockAccount from '../../helpers/should-block-account';
 import blockAccount from '../../helpers/block-account';
-// import deleteAuthenticationRetries from '../../helpers/delete-authentication-retries';
 import sendEmail from '../../emails';
 import { Account, AccountSignInVariables, AccountSignInResponse } from '../../types';
 
 const { EMAIL } = ACCOUNT;
 
+// TODO update documentation
+a
+
 /**
  * accountSignIn
+ * - Check if the account exists
+ * - Check if the account is already blocked
+ * - Check if the account needs to be blocked
  * - Get and validate email and password
  * - Generate an OTP, save in the database
  * - Send the user an email with security code
