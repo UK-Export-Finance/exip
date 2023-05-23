@@ -22,6 +22,7 @@ const typeDefs = `
     email: String
     verificationHash: String
     alreadyExists: Boolean
+    isVerified: Boolean
   }
 
   # fields from registered_office_address object

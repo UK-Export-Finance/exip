@@ -3,7 +3,7 @@ import apollo from './apollo';
 
 const queryStrings = {
   createAnAccount: () => gql`
-    mutation CreateAccount($urlOrigin: String!, $firstName: String!, $lastName: String!, $email: String!, $password: String!) {
+    mutation CreateAnAccount($urlOrigin: String!, $firstName: String!, $lastName: String!, $email: String!, $password: String!) {
       createAnAccount(urlOrigin: $urlOrigin, firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
         success
         id
@@ -12,6 +12,7 @@ const queryStrings = {
         email
         verificationHash
         alreadyExists
+        isVerified
       }
     }
   `,
