@@ -194,7 +194,7 @@ describe('emails', () => {
       test('it should call notify.sendEmail and return the response', async () => {
         notify.sendEmail = sendEmailSpy;
 
-        const result = await sendEmail.applicationSubmitted.account(variables);
+        const result = await sendEmail.applicationSubmitted.applicationSubmittedEmail(variables);
 
         expect(sendEmailSpy).toHaveBeenCalledTimes(1);
         expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, variables);
@@ -211,9 +211,9 @@ describe('emails', () => {
 
         test('should throw an error', async () => {
           try {
-            await sendEmail.applicationSubmitted.account(variables);
+            await sendEmail.applicationSubmitted.applicationSubmittedEmail(variables);
           } catch (err) {
-            const expected = new Error(`Sending application submitted email to account Error: Sending email ${mockErrorMessage}`);
+            const expected = new Error(`Sending application submitted email to to business owner or provided contact Error: Sending email ${mockErrorMessage}`);
 
             expect(err).toEqual(expected);
           }

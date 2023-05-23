@@ -119,14 +119,14 @@ const passwordResetLink = async (urlOrigin: string, emailAddress: string, name: 
 
 const applicationSubmitted = {
   /**
-   * applicationSubmitted.account
+   * applicationSubmitted.applicationSubmittedEmail
    * Send "application submitted" email to an account
    * @param {Object} ApplicationSubmissionEmailVariables
    * @returns {Object} callNotify response
    */
-  account: async (variables: ApplicationSubmissionEmailVariables): Promise<EmailResponse> => {
+  applicationSubmittedEmail: async (variables: ApplicationSubmissionEmailVariables): Promise<EmailResponse> => {
     try {
-      console.info('Sending application submitted email to account');
+      console.info('Sending application submitted email to business owner or provided contact');
 
       const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
 
@@ -138,7 +138,7 @@ const applicationSubmitted = {
     } catch (err) {
       console.error(err);
 
-      throw new Error(`Sending application submitted email to account ${err}`);
+      throw new Error(`Sending application submitted email to to business owner or provided contact ${err}`);
     }
   },
   /**

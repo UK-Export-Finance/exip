@@ -79,14 +79,20 @@ export const mockCompany = {
   __typename: 'Company',
 };
 
+export const mockBusinessContactDetail = {
+  firstName: 'Bob',
+  lastName: 'Smith',
+  email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
+  position: 'CEO',
+};
+
 export const mockBusiness = {
-  id: 'clcyyopna0158m8noaglyy9gg',
   goodsOrServicesSupplied: 'ABC',
-  totalYearsExporting: '20',
-  totalEmployeesInternational: '1000',
-  totalEmployeesUK: '400',
-  estimatedAnnualTurnover: '155220',
-  exportsTurnoverPercentage: '20',
+  totalYearsExporting: 20,
+  totalEmployeesInternational: 1000,
+  totalEmployeesUK: 400,
+  estimatedAnnualTurnover: 155220,
+  exportsTurnoverPercentage: 20,
 };
 
 export const mockBroker = {
@@ -138,7 +144,15 @@ const mockApplication = {
   company: mockCompany,
   companySicCodes: [mockCompanySicCode, mockCompanySicCode],
   companyAddress: mockCompany.registeredOfficeAddress,
-  business: mockBusiness,
+  business: {
+    id: 'clcyyopna0158m8noaglyy9gg',
+    businessContactDetailId: mockBusinessContactDetail.id,
+    ...mockBusiness,
+    businessContactDetail: {
+      id: 'clcyyopna0158m8noaglyy9ab',
+      ...mockBusinessContactDetail
+    },
+  },
   broker: mockBroker,
   buyer: mockApplicationBuyer,
   sectionReview: mockSectionReview,

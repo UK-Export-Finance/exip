@@ -1630,21 +1630,21 @@ var passwordResetLink = async (urlOrigin, emailAddress, name, passwordResetHash)
 };
 var applicationSubmitted = {
   /**
-   * applicationSubmitted.account
+   * applicationSubmitted.applicationSubmittedEmail
    * Send "application submitted" email to an account
    * @param {Object} ApplicationSubmissionEmailVariables
    * @returns {Object} callNotify response
    */
-  account: async (variables) => {
+  applicationSubmittedEmail: async (variables) => {
     try {
-      console.info("Sending application submitted email to account");
+      console.info("Sending application submitted email to business owner or provided contact");
       const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
       const { emailAddress } = variables;
       const response = await callNotify(templateId, emailAddress, variables);
       return response;
     } catch (err) {
       console.error(err);
-      throw new Error(`Sending application submitted email to account ${err}`);
+      throw new Error(`Sending application submitted email to to business owner or provided contact ${err}`);
     }
   },
   /**
@@ -2672,6 +2672,13 @@ var getPopulatedApplication = async (context, application) => {
   if (!business) {
     throw new Error(generateErrorMessage("business", application.id));
   }
+  const businessContactDetail = await context.db.BusinessContactDetail.findOne({
+    where: { id: business?.businessContactDetailId }
+  });
+  const populatedBusiness = {
+    ...business,
+    businessContactDetail
+  };
   const broker = await context.db.Broker.findOne({
     where: { id: brokerId }
   });
@@ -2710,7 +2717,7 @@ var getPopulatedApplication = async (context, application) => {
     owner: account,
     company: populatedCompany,
     companySicCodes,
-    business,
+    business: populatedBusiness,
     broker,
     buyer: populatedBuyer,
     declaration
@@ -2760,23 +2767,45 @@ var getApplicationSubmittedEmailTemplateIds = (application) => {
 };
 var get_application_submitted_email_template_ids_default = getApplicationSubmittedEmailTemplateIds;
 
+// helpers/is-owner-same-as-contact/index.ts
+var isOwnerSameAsContact = (ownerEmail, contactEmail) => ownerEmail === contactEmail;
+var is_owner_same_as_contact_default = isOwnerSameAsContact;
+
 // emails/send-application-submitted-emails/index.ts
 var send2 = async (application, csvPath) => {
   try {
-    const { referenceNumber, owner, company, buyer, policyAndExport } = application;
+    const { referenceNumber, owner, company, buyer, policyAndExport, business } = application;
+    const { businessContactDetail } = business;
     const { email } = owner;
-    const sendEmailVars = {
-      emailAddress: email,
-      name: get_full_name_string_default(owner),
+    const sharedEmailVars = {
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
       buyerLocation: buyer.country?.name,
       companyName: company.companyName,
       requestedStartDate: format_date_default(policyAndExport.requestedStartDate)
     };
-    const accountSubmittedResponse = await emails_default.applicationSubmitted.account(sendEmailVars);
+    const sendEmailVars = {
+      ...sharedEmailVars,
+      name: get_full_name_string_default(owner),
+      emailAddress: email
+    };
+    const sendContactEmailVars = {
+      ...sharedEmailVars,
+      name: get_full_name_string_default(businessContactDetail),
+      emailAddress: businessContactDetail.email
+    };
+    const isOwnerSameAsBusinessContact = is_owner_same_as_contact_default(email, businessContactDetail.email);
+    console.info("Sending application submitted email to business account owner: ", sendEmailVars.emailAddress);
+    const accountSubmittedResponse = await emails_default.applicationSubmitted.applicationSubmittedEmail(sendEmailVars);
     if (!accountSubmittedResponse.success) {
       throw new Error("Sending application submitted email to owner/account");
+    }
+    if (!isOwnerSameAsBusinessContact) {
+      console.info("Sending application submitted email to business contact email: ", sendContactEmailVars.emailAddress);
+      const contactSubmittedResponse = await emails_default.applicationSubmitted.applicationSubmittedEmail(sendContactEmailVars);
+      if (!contactSubmittedResponse.success) {
+        throw new Error("Sending application submitted email to contact");
+      }
     }
     const templateIds = get_application_submitted_email_template_ids_default(application);
     const underwritingTeamSubmittedResponse = await emails_default.applicationSubmitted.underwritingTeam(sendEmailVars, csvPath, templateIds.underwritingTeam);
@@ -2784,9 +2813,17 @@ var send2 = async (application, csvPath) => {
       throw new Error("Sending application submitted email to underwriting team");
     }
     if (templateIds.account) {
+      console.info("Sending documents email to business account owner: ", sendEmailVars.emailAddress);
       const documentsResponse = await emails_default.documentsEmail(sendEmailVars, templateIds.account);
       if (!documentsResponse.success) {
-        throw new Error(`Sending application submitted emails ${documentsResponse}`);
+        throw new Error(`Sending application documents emails ${documentsResponse}`);
+      }
+      if (!isOwnerSameAsBusinessContact) {
+        console.info("Sending documents email to business contact: ", sendContactEmailVars.emailAddress);
+        const contactDocumentsResponse = await emails_default.documentsEmail(sendContactEmailVars, templateIds.account);
+        if (!contactDocumentsResponse.success) {
+          throw new Error(`Sending application documents emails to contact ${documentsResponse}`);
+        }
       }
     }
     return {

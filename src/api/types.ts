@@ -8,8 +8,22 @@ interface ApplicationRelationship {
   id: string;
 }
 
+interface ApplicationBusinessContactDetail extends ApplicationRelationship {
+  firstName: string;
+  lastName: string;
+  email: string;
+  position: string;
+}
+
 interface ApplicationBusiness extends ApplicationRelationship {
-  businessContactDetail: ApplicationRelationship;
+  businessContactDetail: ApplicationBusinessContactDetail;
+  goodsOrServicesSupplied: string;
+  totalYearsExporting: string;
+  totalEmployeesInternational: string;
+  totalEmployeesUK: string;
+  estimatedAnnualTurnover: string;
+  exportsTurnoverPercentage: string;
+  businessContactDetailId: string;
 }
 
 interface Country extends ApplicationRelationship {
@@ -372,6 +386,8 @@ export {
   AddAndGetOtpResponse,
   Application,
   ApplicationBuyer,
+  ApplicationBusiness,
+  ApplicationBusinessContactDetail,
   ApplicationDeclaration,
   ApplicationEligibility,
   ApplicationCompany,
