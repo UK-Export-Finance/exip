@@ -64,5 +64,12 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    'prefer-destructuring': [
+      'error',
+      {
+        array: true,
+        object: true,
+      },
+    ],
   },
 };
