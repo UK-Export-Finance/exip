@@ -2816,7 +2816,7 @@ var send2 = async (application2, csvPath) => {
       throw new Error("Sending application submitted email to underwriting team");
     }
     if (templateIds.account) {
-      console.info("Sending documents email to business account owner: ", sendEmailVars.emailAddress);
+      console.info("Sending documents email to application owner: ", sendEmailVars.emailAddress);
       const documentsResponse = await emails_default.documentsEmail(sendEmailVars, templateIds.account);
       if (!documentsResponse.success) {
         throw new Error(`Sending application documents emails ${documentsResponse}`);

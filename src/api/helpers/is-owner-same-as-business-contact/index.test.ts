@@ -3,7 +3,7 @@ import isOwnerSameAsContact from '.';
 
 dotenv.config();
 
-describe('api/helpers/is-owner-same-as-contact', () => {
+describe('api/helpers/is-owner-same-as-business-contact', () => {
   describe('when both emails are the same', () => {
     it('should return true', () => {
       const businessEmail = process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1 as string;

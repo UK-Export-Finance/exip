@@ -44,11 +44,11 @@ const send = async (application: Application, csvPath: string): Promise<SuccessR
       emailAddress: businessContactDetail.email,
     } as ApplicationSubmissionEmailVariables;
 
-    // checks if application owner email on application is the same as contact email provided
+    // checks if application owner email on application is the same as tghe business contact email provided
     const isOwnerSameAsContact = isOwnerSameAsBusinessContact(email, businessContactDetail.email);
 
     console.info('Sending application submitted email to application account owner: ', sendEmailVars.emailAddress);
-    // send "application submitted" email receipt to the applcation owner applicant
+    // send "application submitted" email receipt to the application owner
     const accountSubmittedResponse = await sendEmail.application.submittedEmail(sendEmailVars);
 
     if (!accountSubmittedResponse.success) {
@@ -56,7 +56,7 @@ const send = async (application: Application, csvPath: string): Promise<SuccessR
     }
 
     /**
-     * if the contact email address is different to the application owner applicant
+     * if the contact email address is different to the application owner
      * then it sends the same "application submitted" email receipt to the contact email address
      */
     if (!isOwnerSameAsContact) {
@@ -80,7 +80,7 @@ const send = async (application: Application, csvPath: string): Promise<SuccessR
 
     // send "documents" email to the applicant depending on submitted answers
     if (templateIds.account) {
-      console.info('Sending documents email to business account owner: ', sendEmailVars.emailAddress);
+      console.info('Sending documents email to application owner: ', sendEmailVars.emailAddress);
       const documentsResponse = await sendEmail.documentsEmail(sendEmailVars, templateIds.account);
 
       if (!documentsResponse.success) {
