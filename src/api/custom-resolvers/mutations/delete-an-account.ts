@@ -19,6 +19,8 @@ const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, c
 
     const { id: accountId } = account;
 
+    console.info('Checking authentication retry entries');
+
     // delete authentication retry entries
     const retries = await context.db.AuthenticationRetry.findMany({
       where: {
@@ -31,6 +33,8 @@ const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, c
     });
 
     if (retries.length) {
+      console.info('Deleting authentication retry entries');
+
       const retriesArray = retries.map((retry) => ({
         id: retry.id,
       }));
@@ -39,6 +43,8 @@ const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, c
         where: retriesArray,
       });
     }
+
+    console.info(`Deleting account ${accountId}`);
 
     await context.db.Account.deleteOne({
       where: {

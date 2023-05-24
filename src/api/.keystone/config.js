@@ -1782,6 +1782,7 @@ var deleteAnAccount = async (root, variables, context) => {
       return { success: false };
     }
     const { id: accountId } = account;
+    console.info("Checking authentication retry entries");
     const retries = await context.db.AuthenticationRetry.findMany({
       where: {
         account: {
@@ -1792,6 +1793,7 @@ var deleteAnAccount = async (root, variables, context) => {
       }
     });
     if (retries.length) {
+      console.info("Deleting authentication retry entries");
       const retriesArray = retries.map((retry) => ({
         id: retry.id
       }));
@@ -1799,6 +1801,7 @@ var deleteAnAccount = async (root, variables, context) => {
         where: retriesArray
       });
     }
+    console.info(`Deleting account ${accountId}`);
     await context.db.Account.deleteOne({
       where: {
         id: accountId
