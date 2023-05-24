@@ -286,9 +286,9 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         });
 
         it('should render the new answer', () => {
-          const { name: expected } = currencies[3];
+          const { 3: name } = currencies;
 
-          cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
+          cy.assertSummaryListRowValueNew(summaryList, fieldId, name);
         });
       });
     });

@@ -2,7 +2,7 @@ import mapSelectOption from './map-select-option';
 import { mockCurrencies } from '../../test-mocks';
 
 describe('server/helpers/mappings/map-select-option', () => {
-  const mockOption = mockCurrencies[0];
+  const [mockOption] = mockCurrencies;
 
   it('should return an object with text and value properties', () => {
     const result = mapSelectOption(mockOption.name, mockOption.isoCode, false);

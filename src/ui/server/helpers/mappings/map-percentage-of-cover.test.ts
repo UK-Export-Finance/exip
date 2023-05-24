@@ -37,7 +37,7 @@ describe('server/helpers/mappings/map-percentage-of-cover', () => {
 
     describe('when a selectedValue is passed', () => {
       it('should return an array of mapped objects with selected option and no default option', () => {
-        const mockSelectedValue = mockPercentages[1];
+        const { 1: mockSelectedValue } = mockPercentages;
 
         const result = mapPercentageOfCover(mockPercentages, mockSelectedValue);
 

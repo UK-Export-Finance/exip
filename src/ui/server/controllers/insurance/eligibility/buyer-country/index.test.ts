@@ -18,10 +18,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
   const mockCountriesResponse = mockCisCountries;
 
-  const countryUnsupported = mockCountriesResponse[0];
-  const countrySupported = mockCountriesResponse[1];
-  const countrySupportedViaOfflineOnly = mockCountriesResponse[3];
-
+  const [countryUnsupported, countrySupported, countrySupportedViaOfflineOnly] = mockCountriesResponse;
   const mockFlash = jest.fn();
 
   beforeEach(() => {

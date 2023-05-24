@@ -30,8 +30,7 @@ describe('server/helpers/task-list/submit-application', () => {
 
     const groupsAndTasks = generateGroupsAndTasks(referenceNumber, policyType, isUsingBroker, hasAntiBriberyCodeOfConduct);
 
-    const initialChecksGroup = groupsAndTasks[0];
-    const prepareApplicationGroup = groupsAndTasks[1];
+    const [initialChecksGroup, prepareApplicationGroup] = groupsAndTasks;
 
     const previousGroups = [initialChecksGroup, prepareApplicationGroup];
 

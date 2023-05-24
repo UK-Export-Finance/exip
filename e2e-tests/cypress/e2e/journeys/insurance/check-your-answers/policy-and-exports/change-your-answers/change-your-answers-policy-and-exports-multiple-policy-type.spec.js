@@ -313,7 +313,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
         });
 
         it('should render the new answer', () => {
-          const { name } = currencies[3];
+          const { 3: name } = currencies;
 
           fieldVariables.newValue = name;
           checkChangeAnswerRendered(fieldVariables);

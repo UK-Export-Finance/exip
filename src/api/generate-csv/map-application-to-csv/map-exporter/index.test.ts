@@ -32,8 +32,7 @@ describe('api/generate-csv/map-application-to-csv/map-exporter', () => {
 
       const result = mapSicCodes(sicCodes);
 
-      const first = sicCodes[0];
-      const last = sicCodes[1];
+      const [first, last] = sicCodes;
 
       const expectedFirst = `${first.sicCode} - ${first.industrySectorName}${NEW_LINE}`;
 

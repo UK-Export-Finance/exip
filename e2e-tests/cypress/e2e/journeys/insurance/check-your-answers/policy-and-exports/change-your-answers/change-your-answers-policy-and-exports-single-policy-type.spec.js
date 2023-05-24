@@ -284,7 +284,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
         });
 
         it('should render the new answer and retain a `completed` status tag', () => {
-          const { name } = currencies[3];
+          const { 3: name } = currencies;
 
           fieldVariables.newValue = name;
           checkChangeAnswerRendered(fieldVariables);

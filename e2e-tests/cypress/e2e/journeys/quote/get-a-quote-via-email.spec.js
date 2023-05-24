@@ -51,7 +51,7 @@ context('Get a quote via email exit page', () => {
   });
 
   it('renders `action` content', () => {
-    const actionStrings = CONTENT_STRINGS.ACTION[0];
+    const [actionStrings] = CONTENT_STRINGS.ACTION;
     const expectedText = `${actionStrings[0].text}${actionStrings[1].text}${actionStrings[2].text} ${actionStrings[3].text}`;
     cy.checkText(getAQuoteByEmailPage.action.text(), expectedText);
 

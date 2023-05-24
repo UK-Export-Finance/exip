@@ -115,7 +115,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
 
         const field = FIELDS[POLICY_TYPE];
 
-        const insetText = field.OPTIONS.MULTIPLE.INSET[0];
+        const [insetText] = field.OPTIONS.MULTIPLE.INSET;
 
         multiPolicyType.inset.text().invoke('text').then((text) => {
           expect(text.trim()).includes(insetText[0].text);

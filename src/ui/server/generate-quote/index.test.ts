@@ -174,7 +174,7 @@ describe('server/generate-quote/index', () => {
 
       expected[QUOTE.PREMIUM_RATE_PERCENTAGE] = expectedPremiumRate;
 
-      const contractValueAmount = Object.values(getContractValue(mockSubmittedData.quoteEligibility))[0];
+      const [contractValueAmount] = Object.values(getContractValue(mockSubmittedData.quoteEligibility));
 
       expected[QUOTE.ESTIMATED_COST] = calculateEstimatedCost(expectedPremiumRate, contractValueAmount);
 

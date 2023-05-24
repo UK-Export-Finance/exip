@@ -15,7 +15,7 @@ dotenv.config();
 const context = getContext(config, PrismaModule) as Context;
 
 describe('helpers/get-country-by-field', () => {
-  const mockCountry = mockCountries[0];
+  const [mockCountry] = mockCountries;
 
   let country: Country;
 
