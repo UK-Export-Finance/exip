@@ -194,7 +194,7 @@ describe('emails', () => {
       test('it should call notify.sendEmail and return the response', async () => {
         notify.sendEmail = sendEmailSpy;
 
-        const result = await sendEmail.applicationSubmitted.account(variables);
+        const result = await sendEmail.application.submittedEmail(variables);
 
         expect(sendEmailSpy).toHaveBeenCalledTimes(1);
         expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, variables);
@@ -211,9 +211,11 @@ describe('emails', () => {
 
         test('should throw an error', async () => {
           try {
-            await sendEmail.applicationSubmitted.account(variables);
+            await sendEmail.application.submittedEmail(variables);
           } catch (err) {
-            const expected = new Error(`Sending application submitted email to account Error: Sending email ${mockErrorMessage}`);
+            const expected = new Error(
+              `Sending application submitted email to to application owner or provided business contact Error: Sending email ${mockErrorMessage}`,
+            );
 
             expect(err).toEqual(expected);
           }
@@ -227,7 +229,7 @@ describe('emails', () => {
       test('it should call notify.sendEmail and return the response', async () => {
         notify.sendEmail = sendEmailSpy;
 
-        const result = await sendEmail.applicationSubmitted.underwritingTeam(variables, mockCsvPath, templateId);
+        const result = await sendEmail.application.underwritingTeam(variables, mockCsvPath, templateId);
 
         expect(sendEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -249,7 +251,7 @@ describe('emails', () => {
 
         test('should throw an error', async () => {
           try {
-            await sendEmail.applicationSubmitted.underwritingTeam(variables, mockCsvPath, templateId);
+            await sendEmail.application.underwritingTeam(variables, mockCsvPath, templateId);
           } catch (err) {
             const expected = new Error(`Sending application submitted email to underwriting team Error: Sending email ${mockErrorMessage}`);
 
