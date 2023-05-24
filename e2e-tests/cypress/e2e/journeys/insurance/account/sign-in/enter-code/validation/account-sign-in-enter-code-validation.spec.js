@@ -28,6 +28,8 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
   const url = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
 
   before(() => {
+    cy.deleteAccount();
+
     cy.navigateToUrl(START);
 
     cy.submitEligibilityAndStartAccountCreation();
@@ -52,7 +54,7 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
     dashboardPage.table.body.lastRow.referenceNumberLink().click();
 
     cy.getReferenceNumber().then((referenceNumber) => {
-      cy.deleteAccountAndApplication(referenceNumber);
+      cy.deleteApplication(referenceNumber);
     });
   });
 

@@ -29,6 +29,8 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
   let url;
 
   before(() => {
+    cy.deleteAccount();
+
     cy.navigateToUrl(START);
 
     cy.submitEligibilityAndStartAccountCreation();
@@ -40,10 +42,6 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
 
   beforeEach(() => {
     cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteAccount();
   });
 
   it('renders core page elements', () => {
