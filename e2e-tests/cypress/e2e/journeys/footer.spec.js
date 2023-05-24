@@ -17,6 +17,10 @@ context('Footer', () => {
       cy.checkLink(footer.supportLinks.accessibilityStatement(), FOOTER.ACCESSIBILITY_STATEMENT.HREF, FOOTER.ACCESSIBILITY_STATEMENT.TEXT);
     });
 
+    it(`renders a ${FOOTER.PRIVACY.TEXT} link with the correct URL`, () => {
+      cy.checkLink(footer.supportLinks.privacy(), FOOTER.PRIVACY.HREF, FOOTER.PRIVACY.TEXT);
+    });
+
     it(`renders a ${FOOTER.COOKIES.TEXT} link with the correct URL`, () => {
       cy.checkLink(footer.supportLinks.cookies(), FOOTER.COOKIES.HREF, FOOTER.COOKIES.TEXT);
     });
