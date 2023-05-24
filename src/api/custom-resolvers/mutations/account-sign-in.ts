@@ -14,9 +14,6 @@ import { Account, AccountSignInVariables, AccountSignInResponse } from '../../ty
 
 const { EMAIL } = ACCOUNT;
 
-// TODO update documentation
-a
-
 /**
  * accountSignIn
  * - Check if the account exists
