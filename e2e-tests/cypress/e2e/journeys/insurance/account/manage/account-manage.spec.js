@@ -36,6 +36,8 @@ context('Insurance - Account - Manage - As an Exporter, I want the service to ha
   const manageAccountUrl = `${baseUrl}${MANAGE}`;
 
   before(() => {
+    cy.deleteAccount();
+
     cy.navigateToUrl(createYourDetailsUrl);
 
     cy.completeAndSubmitCreateAccountForm();
@@ -49,10 +51,6 @@ context('Insurance - Account - Manage - As an Exporter, I want the service to ha
 
   beforeEach(() => {
     cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteAccount();
   });
 
   describe('after signing in with a valid security code and navigating to the `manage account` page', () => {

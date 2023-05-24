@@ -12,6 +12,8 @@ const {
 
 context('Insurance - Account - Create - Resend confirm email page - As an Exporter I want to request a new link to confirm my email address, So that I can readily use my email address to set up an account that I can use for UKEF digital service such as EXIP digital service', () => {
   before(() => {
+    cy.deleteAccount();
+
     cy.navigateToUrl(START);
 
     cy.submitEligibilityAndStartAccountCreation();
@@ -24,14 +26,10 @@ context('Insurance - Account - Create - Resend confirm email page - As an Export
     cy.saveSession();
   });
 
-  after(() => {
-    cy.deleteAccount();
-  });
-
-  let account;
-  let url;
-
   describe('core page elements and content', () => {
+    let account;
+    let url;
+
     before(() => {
       /**
        * Get the account ID directly from the API,
