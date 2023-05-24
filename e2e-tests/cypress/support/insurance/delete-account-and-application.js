@@ -1,4 +1,3 @@
-import deleteAccount from './account/delete-account';
 import deleteApplication from './delete-application';
 
 /**
@@ -7,9 +6,6 @@ import deleteApplication from './delete-application';
  */
 const deleteAccountAndApplication = (referenceNumber) => {
   try {
-    // delete the account.
-    deleteAccount();
-
     // delete the application
     deleteApplication(referenceNumber);
   } catch (err) {
