@@ -27,6 +27,8 @@ context('Insurance - Account - Password reset and sign in - As an Exporter, I wa
   let newPasswordUrl;
 
   before(() => {
+    cy.deleteAccount();
+
     cy.completeAndSubmitCreateAccountForm({ navigateToAccountCreationPage: true });
 
     cy.verifyAccountEmail();
@@ -39,10 +41,6 @@ context('Insurance - Account - Password reset and sign in - As an Exporter, I wa
 
   beforeEach(() => {
     cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteAccount();
   });
 
   describe(`when visiting ${NEW_PASSWORD} with a token query param`, () => {

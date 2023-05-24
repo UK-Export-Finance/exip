@@ -56,7 +56,7 @@ describe('Insurance - Your business - Contact page - form validation', () => {
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe(FIRST_NAME, () => {

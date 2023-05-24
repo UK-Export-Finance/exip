@@ -56,7 +56,7 @@ context('Insurance - Your business - Contact page - Save and go back', () => {
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('when no fields are entered', () => {

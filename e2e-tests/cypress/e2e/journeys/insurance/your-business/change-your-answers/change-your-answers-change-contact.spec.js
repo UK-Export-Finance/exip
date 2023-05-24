@@ -52,7 +52,7 @@ context('Insurance - Your business - Change your answers - Contact- As an export
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe(NAME, () => {

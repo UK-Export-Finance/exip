@@ -37,7 +37,7 @@ context('Insurance - Check your answers - Need to start new application - start 
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('after completing eligibility for the new application', () => {

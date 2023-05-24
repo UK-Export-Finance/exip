@@ -49,7 +49,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('when no fields are provided', () => {

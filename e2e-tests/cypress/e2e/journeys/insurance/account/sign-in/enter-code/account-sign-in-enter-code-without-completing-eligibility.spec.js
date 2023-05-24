@@ -12,6 +12,8 @@ context('Insurance - Account - Sign in - Enter code - without completing eligibi
   const enterCodeUrl = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
 
   before(() => {
+    cy.deleteAccount();
+
     cy.navigateToUrl(YOUR_DETAILS);
 
     cy.completeAndSubmitCreateAccountForm();
@@ -25,10 +27,6 @@ context('Insurance - Account - Sign in - Enter code - without completing eligibi
     cy.saveSession();
 
     cy.navigateToUrl(enterCodeUrl);
-  });
-
-  after(() => {
-    cy.deleteAccount();
   });
 
   describe('when submitting a valid security code', () => {

@@ -305,6 +305,7 @@ jobs:
           --settings \
           #TODO: Set to `1` once SSL is enabled
           HTTPS=0 \
+          TZ=Europe/London \
           WEBSITE_DNS_SERVER='${{ vars.WEBSITE_DNS_SERVER }}' \
           WEBSITE_VNET_ROUTE_ALL=1 \
           SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
@@ -323,6 +324,7 @@ jobs:
           az webapp config appsettings set \
           --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
           --settings \
+          TZ=Europe/London \
           WEBSITE_DNS_SERVER=${{ vars.WEBSITE_DNS_SERVER }} \
           WEBSITE_VNET_ROUTE_ALL=1 \
           DATABASE_URL='${{ secrets.DATABASE_URL }}' \

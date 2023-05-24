@@ -45,7 +45,7 @@ context('Insurance - Check your answers - Your business page - Save and back', (
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it(`should redirect to ${ALL_SECTIONS}`, () => {

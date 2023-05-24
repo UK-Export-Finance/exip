@@ -52,7 +52,7 @@ context('Insurance - Dashboard - populated application', () => {
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('when completing the `your buyer - company or organisation` form', () => {

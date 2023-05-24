@@ -35,7 +35,7 @@ context('Insurance - Declaration - cannot skip to any Declarations page without 
   });
 
   after(() => {
-    cy.deleteAccountAndApplication();
+    cy.deleteApplication();
   });
 
   it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Declarations - Confidentiality page directly`, () => {

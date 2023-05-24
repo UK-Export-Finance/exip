@@ -62,8 +62,6 @@ Cypress.Commands.add('verifyAccountEmail', require('./insurance/account/verify-a
 Cypress.Commands.add('deleteAccount', require('./insurance/account/delete-account'));
 Cypress.Commands.add('deleteApplication', require('./insurance/delete-application'));
 
-Cypress.Commands.add('deleteAccountAndApplication', require('./insurance/delete-account-and-application'));
-
 Cypress.Commands.add('createAccount', require('./insurance/account/create-account'));
 
 Cypress.Commands.add('accountAddAndGetOTP', require('./insurance/account/add-and-get-OTP'));

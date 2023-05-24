@@ -33,7 +33,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('should render a validation error when day is not provided', () => {

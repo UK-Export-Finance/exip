@@ -29,7 +29,7 @@ context('Insurance - Dashboard - no applications', () => {
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('should render `no applications` copy', () => {

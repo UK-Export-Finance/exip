@@ -51,7 +51,7 @@ context('Insurance - Policy and exports - Check your answers - Summary list - si
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it(`should render a ${POLICY_TYPE} summary list row`, () => {

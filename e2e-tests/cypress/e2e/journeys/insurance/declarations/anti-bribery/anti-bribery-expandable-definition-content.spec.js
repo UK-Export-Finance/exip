@@ -52,7 +52,7 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('renders summary text', () => {

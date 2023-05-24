@@ -49,7 +49,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   // for error assertion - common fields

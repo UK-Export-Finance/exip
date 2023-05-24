@@ -24,7 +24,7 @@ context('Insurance - application submitted page - visit directly without a compl
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it(`should redirect to ${ALL_SECTIONS}`, () => {

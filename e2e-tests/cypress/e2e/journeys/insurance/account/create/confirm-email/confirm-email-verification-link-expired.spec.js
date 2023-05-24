@@ -15,6 +15,8 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
   let account;
 
   before(() => {
+    cy.deleteAccount();
+
     cy.navigateToUrl(START);
 
     cy.submitEligibilityAndStartAccountCreation();
@@ -27,10 +29,6 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
 
   beforeEach(() => {
     cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteAccount();
   });
 
   describe(`When a verification token has expired and exporter navigates to ${VERIFY_EMAIL} with the expired token`, () => {
