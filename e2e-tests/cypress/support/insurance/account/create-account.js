@@ -36,15 +36,7 @@ const createAccount = ({
       .then((createdAccount) => {
         const { verificationHash } = createdAccount;
 
-        let url;
-
-        if (!verificationHash) {
-          url = `${urlOrigin}${VERIFY_EMAIL}?alreadyExists=${createdAccount.alreadyExists}-success=${createdAccount.success}-id=${createdAccount.id}-email=${createdAccount.email}-isVerified=${createdAccount.isVerified}`;
-
-          return url;
-        }
-
-        url = `${urlOrigin}${VERIFY_EMAIL}?token=${verificationHash}`;
+        const url = `${urlOrigin}${VERIFY_EMAIL}?token=${verificationHash}`;
 
         return url;
       }));

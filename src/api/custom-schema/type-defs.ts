@@ -21,8 +21,6 @@ const typeDefs = `
     lastName: String
     email: String
     verificationHash: String
-    alreadyExists: Boolean
-    isVerified: Boolean
   }
 
   # fields from registered_office_address object
