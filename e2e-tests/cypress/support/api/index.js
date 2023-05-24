@@ -11,8 +11,6 @@ const queryStrings = {
         lastName
         email
         verificationHash
-        alreadyExists
-        isVerified
       }
     }
   `,
