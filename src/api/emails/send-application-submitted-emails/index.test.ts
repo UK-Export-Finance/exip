@@ -43,8 +43,8 @@ describe('emails/send-email-application-submitted', () => {
     underwritingTeamEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
     documentsEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
-    sendEmail.applicationSubmitted.applicationSubmittedEmail = applicationSubmittedEmailSpy;
-    sendEmail.applicationSubmitted.underwritingTeam = underwritingTeamEmailSpy;
+    sendEmail.application.submittedEmail = applicationSubmittedEmailSpy;
+    sendEmail.application.underwritingTeam = underwritingTeamEmailSpy;
 
     sendEmail.documentsEmail = documentsEmailSpy;
   });
@@ -81,15 +81,15 @@ describe('emails/send-email-application-submitted', () => {
       } as ApplicationSubmissionEmailVariables;
     });
 
-    describe('when business owner email and contact email are the same', () => {
-      test('it should call sendEmail.applicationSubmitted.applicationSubmittedEmail once', async () => {
+    describe('when application owner and business contact emails are the same', () => {
+      test('it should call sendEmail.application.applicationSubmittedEmail once', async () => {
         await sendApplicationSubmittedEmails.send(application, mockCsvPath);
 
         expect(applicationSubmittedEmailSpy).toHaveBeenCalledTimes(1);
         expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars);
       });
 
-      test('it should call sendEmail.applicationSubmitted.applicationSubmittedEmail with the correct template ID', async () => {
+      test('it should call sendEmail.application.applicationSubmittedEmail with the correct template ID', async () => {
         await sendApplicationSubmittedEmails.send(application, mockCsvPath);
 
         expect(underwritingTeamEmailSpy).toHaveBeenCalledTimes(1);
@@ -110,8 +110,8 @@ describe('emails/send-email-application-submitted', () => {
       });
     });
 
-    describe('when business owner email and contact email are the different', () => {
-      test('it should call sendEmail.applicationSubmitted.applicationSubmittedEmail twice', async () => {
+    describe('when application owner and business contact emails are the different', () => {
+      test('it should call sendEmail.application.submittedEmail twice', async () => {
         application.business.businessContactDetail.email = 'test@test.com';
         expectedContactSendEmailVars.emailAddress = application.business.businessContactDetail.email;
 
@@ -122,7 +122,7 @@ describe('emails/send-email-application-submitted', () => {
         expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedContactSendEmailVars);
       });
 
-      test('it should call sendEmail.applicationSubmitted.applicationSubmittedEmail with the correct template ID', async () => {
+      test('it should call sendEmail.application.submittedEmail with the correct template ID', async () => {
         application.business.businessContactDetail.email = 'test@test.com';
 
         await sendApplicationSubmittedEmails.send(application, mockCsvPath);
@@ -228,7 +228,7 @@ describe('emails/send-email-application-submitted', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.applicationSubmitted.applicationSubmittedEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
+      sendEmail.application.submittedEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
     });
 
     test('should throw an error', async () => {

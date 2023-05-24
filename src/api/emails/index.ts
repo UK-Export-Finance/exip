@@ -117,16 +117,16 @@ const passwordResetLink = async (urlOrigin: string, emailAddress: string, name: 
   }
 };
 
-const applicationSubmitted = {
+const application = {
   /**
-   * applicationSubmitted.applicationSubmittedEmail
+   * application.submittedEmail
    * Send "application submitted" email to an account
    * @param {Object} ApplicationSubmissionEmailVariables
    * @returns {Object} callNotify response
    */
-  applicationSubmittedEmail: async (variables: ApplicationSubmissionEmailVariables): Promise<EmailResponse> => {
+  submittedEmail: async (variables: ApplicationSubmissionEmailVariables): Promise<EmailResponse> => {
     try {
-      console.info('Sending application submitted email to business owner or provided contact');
+      console.info('Sending application submitted email to application owner or provided contact');
 
       const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
 
@@ -138,11 +138,11 @@ const applicationSubmitted = {
     } catch (err) {
       console.error(err);
 
-      throw new Error(`Sending application submitted email to to business owner or provided contact ${err}`);
+      throw new Error(`Sending application submitted email to to application owner or provided contact ${err}`);
     }
   },
   /**
-   * applicationSubmitted.underwritingTeam
+   * application.underwritingTeam
    * Read CSV file, generate a file buffer
    * Send "application submitted" email to the underwriting team with a link to CSV
    * We send a file buffer to Notify and Notify generates a unique URL that is then rendered in the email.
@@ -249,7 +249,7 @@ const sendEmail = {
   confirmEmailAddress,
   securityCodeEmail,
   passwordResetLink,
-  applicationSubmitted,
+  application,
   documentsEmail,
   insuranceFeedbackEmail,
 };

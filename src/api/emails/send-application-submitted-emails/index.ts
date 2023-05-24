@@ -1,7 +1,7 @@
 import sendEmail from '../index';
 import getFullNameString from '../../helpers/get-full-name-string';
 import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-application-submitted-email-template-ids';
-import isOwnerSameAsContact from '../../helpers/is-owner-same-as-contact';
+import isOwnerSameAsBusinessContact from '../../helpers/is-owner-same-as-business-contact';
 import formatDate from '../../helpers/format-date';
 import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } from '../../types';
 
@@ -30,38 +30,38 @@ const send = async (application: Application, csvPath: string): Promise<SuccessR
       requestedStartDate: formatDate(policyAndExport.requestedStartDate),
     };
 
-    // email variables for sending email to business owner of application
+    // email variables for sending email to application owner of application
     const sendEmailVars = {
       ...sharedEmailVars,
       name: getFullNameString(owner),
       emailAddress: email,
     } as ApplicationSubmissionEmailVariables;
 
-    // email variables for sending email to contact named on application
+    // email variables for sending email to business contact named on application
     const sendContactEmailVars = {
       ...sharedEmailVars,
       name: getFullNameString(businessContactDetail),
       emailAddress: businessContactDetail.email,
     } as ApplicationSubmissionEmailVariables;
 
-    // checks if business owner email on application is the same as contact email provided
-    const isOwnerSameAsBusinessContact = isOwnerSameAsContact(email, businessContactDetail.email);
+    // checks if application owner email on application is the same as contact email provided
+    const isOwnerSameAsContact = isOwnerSameAsBusinessContact(email, businessContactDetail.email);
 
-    console.info('Sending application submitted email to business account owner: ', sendEmailVars.emailAddress);
-    // send "application submitted" email receipt to the business owner applicant
-    const accountSubmittedResponse = await sendEmail.applicationSubmitted.applicationSubmittedEmail(sendEmailVars);
+    console.info('Sending application submitted email to application account owner: ', sendEmailVars.emailAddress);
+    // send "application submitted" email receipt to the applcation owner applicant
+    const accountSubmittedResponse = await sendEmail.application.submittedEmail(sendEmailVars);
 
     if (!accountSubmittedResponse.success) {
       throw new Error('Sending application submitted email to owner/account');
     }
 
     /**
-     * if the contact email address is different to the business owner applicant
+     * if the contact email address is different to the application owner applicant
      * then it sends the same "application submitted" email receipt to the contact email address
      */
-    if (!isOwnerSameAsBusinessContact) {
+    if (!isOwnerSameAsContact) {
       console.info('Sending application submitted email to business contact email: ', sendContactEmailVars.emailAddress);
-      const contactSubmittedResponse = await sendEmail.applicationSubmitted.applicationSubmittedEmail(sendContactEmailVars);
+      const contactSubmittedResponse = await sendEmail.application.submittedEmail(sendContactEmailVars);
 
       if (!contactSubmittedResponse.success) {
         throw new Error('Sending application submitted email to contact');
@@ -72,7 +72,7 @@ const send = async (application: Application, csvPath: string): Promise<SuccessR
     const templateIds = getApplicationSubmittedEmailTemplateIds(application);
 
     // send "application submitted" email to the underwriting team
-    const underwritingTeamSubmittedResponse = await sendEmail.applicationSubmitted.underwritingTeam(sendEmailVars, csvPath, templateIds.underwritingTeam);
+    const underwritingTeamSubmittedResponse = await sendEmail.application.underwritingTeam(sendEmailVars, csvPath, templateIds.underwritingTeam);
 
     if (!underwritingTeamSubmittedResponse.success) {
       throw new Error('Sending application submitted email to underwriting team');
@@ -88,10 +88,10 @@ const send = async (application: Application, csvPath: string): Promise<SuccessR
       }
 
       /**
-       * if the contact email address is different to the business owner applicant
+       * if the contact email address is different to the application owner
        * then it sends the same "application submitted" email receipt to the contact email address
        */
-      if (!isOwnerSameAsBusinessContact) {
+      if (!isOwnerSameAsContact) {
         console.info('Sending documents email to business contact: ', sendContactEmailVars.emailAddress);
         const contactDocumentsResponse = await sendEmail.documentsEmail(sendContactEmailVars, templateIds.account);
 

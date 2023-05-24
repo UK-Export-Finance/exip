@@ -65,10 +65,12 @@ describe('api/helpers/get-populated-application', () => {
 
     const expectedBusinessContactDetail = mockApplication.business.businessContactDetail;
 
-    expect(result.business.businessContactDetail.firstName).toEqual(expectedBusinessContactDetail.firstName);
-    expect(result.business.businessContactDetail.lastName).toEqual(expectedBusinessContactDetail.lastName);
-    expect(result.business.businessContactDetail.email).toEqual(expectedBusinessContactDetail.email);
-    expect(result.business.businessContactDetail.position).toEqual(expectedBusinessContactDetail.position);
+    const { firstName, lastName, email, position } = result.business.businessContactDetail;
+
+    expect(firstName).toEqual(expectedBusinessContactDetail.firstName);
+    expect(lastName).toEqual(expectedBusinessContactDetail.lastName);
+    expect(email).toEqual(expectedBusinessContactDetail.email);
+    expect(position).toEqual(expectedBusinessContactDetail.position);
   });
 
   it('should throw an error when eligibility does not exist', async () => {

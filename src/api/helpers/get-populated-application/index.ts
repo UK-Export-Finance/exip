@@ -88,6 +88,10 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     where: { id: business?.businessContactDetailId },
   });
 
+  if (!businessContactDetail) {
+    throw new Error(generateErrorMessage('businessContactDetail', application.id));
+  }
+
   const populatedBusiness = {
     ...business,
     businessContactDetail,
