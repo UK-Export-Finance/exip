@@ -41,6 +41,7 @@ services:
       - ./.api/src/.keystone:/app/src/.keystone:ro
     environment:
       NODE_ENV:
+      TZ: Europe/London
       PORT: ${API_PORT}
       DATABASE_URL:
       SESSION_SECRET:
@@ -77,6 +78,7 @@ services:
       - ./src/ui/templates:/app/templates:ro
     environment:
       NODE_ENV:
+      TZ: Europe/London
       PORT: ${UI_PORT}
       API_URL:
       SESSION_SECRET:
