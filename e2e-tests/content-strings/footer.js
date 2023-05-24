@@ -1,4 +1,5 @@
 import { ROUTES } from '../constants';
+import { LINKS } from './links';
 
 export const FOOTER = {
   SUPPORT_LINKS_HEADING: 'Support Links',
@@ -8,7 +9,7 @@ export const FOOTER = {
   },
   PRIVACY: {
     TEXT: 'Privacy',
-    HREF: 'https://www.gov.uk/government/publications/ukef-privacy-notice',
+    HREF: LINKS.EXTERNAL.PRIVACY,
   },
   COOKIES: {
     TEXT: 'Cookies',

@@ -52,7 +52,7 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

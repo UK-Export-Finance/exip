@@ -6,6 +6,7 @@ const accountSignInMutation = gql`
       accountId
       success
       resentVerificationEmail
+      isBlocked
     }
   }
 `;

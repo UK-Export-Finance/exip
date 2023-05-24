@@ -4,6 +4,7 @@ import { ACCOUNT, FIELD_IDS } from '../../constants';
 import getAccountByField from '../../helpers/get-account-by-field';
 import createAuthenticationRetryEntry from '../../helpers/create-authentication-retry-entry';
 import shouldBlockAccount from '../../helpers/should-block-account';
+import blockAccount from '../../helpers/block-account';
 import getFullNameString from '../../helpers/get-full-name-string';
 import sendEmail from '../../emails';
 import { AccountSendEmailPasswordResetLinkVariables, Account, AccountSendEmailPasswordResetLinkResponse } from '../../types';
@@ -67,21 +68,22 @@ const sendEmailPasswordResetLink = async (
      * Check if the account should be blocked.
      * If so, update the account and return isBlocked=true
      */
-    const blockAccount = await shouldBlockAccount(context, accountId);
+    const needToBlockAccount = await shouldBlockAccount(context, accountId);
 
-    if (blockAccount) {
-      console.info(`Blocking account ${accountId}`);
+    if (needToBlockAccount) {
+      try {
+        const blocked = await blockAccount(context, accountId);
 
-      (await context.db.Account.updateOne({
-        where: { id: accountId },
-        data: { isBlocked: true },
-      })) as Account;
-
-      return {
-        success: false,
-        isBlocked: true,
-        accountId,
-      };
+        if (blocked) {
+          return {
+            success: false,
+            isBlocked: true,
+            accountId,
+          };
+        }
+      } catch (err) {
+        return { success: false };
+      }
     }
 
     /**
@@ -117,6 +119,7 @@ const sendEmailPasswordResetLink = async (
     return { success: false };
   } catch (err) {
     console.error(err);
+
     throw new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${err}`);
   }
 };

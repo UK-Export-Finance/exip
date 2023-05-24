@@ -84,7 +84,7 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it(`should render a ${COMPANY_NUMBER} summary list row`, () => {

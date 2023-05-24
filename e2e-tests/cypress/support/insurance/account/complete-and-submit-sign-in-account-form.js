@@ -28,14 +28,14 @@ const {
 const completeAndSubmitSignInAccountForm = ({
   emailAddress = account[EMAIL],
   password = account[PASSWORD],
-  assertSuccessUrl = true,
+  assertRedirectUrl = true,
 }) => {
   cy.keyboardInput(accountFormFields[EMAIL].input(), emailAddress);
   cy.keyboardInput(accountFormFields[PASSWORD].input(), password);
 
   submitButton().click();
 
-  if (assertSuccessUrl) {
+  if (assertRedirectUrl) {
     // assert we are on the 'enter code' page'
     const expectedUrl = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
     cy.url().should('eq', expectedUrl);

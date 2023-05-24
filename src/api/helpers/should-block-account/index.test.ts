@@ -82,9 +82,11 @@ describe('helpers/should-block-account', () => {
 
   describe(`when the account has ${MAX_PASSWORD_RESET_TRIES} entries in the AuthenticationRetry table, but one of them is outside of the timeframe`, () => {
     beforeEach(async () => {
-      const currentMinutes = new Date(MAX_PASSWORD_RESET_TRIES_TIMEFRAME).getMinutes();
+      const timeframe = new Date(MAX_PASSWORD_RESET_TRIES_TIMEFRAME);
 
-      const dateOutsideOfTimeFrame = new Date(new Date(MAX_PASSWORD_RESET_TRIES_TIMEFRAME).setHours(currentMinutes - 1));
+      const currentMinutes = timeframe.getMinutes();
+
+      const dateOutsideOfTimeFrame = new Date(timeframe.setHours(currentMinutes - 1));
 
       await context.query.AuthenticationRetry.updateOne({
         where: {

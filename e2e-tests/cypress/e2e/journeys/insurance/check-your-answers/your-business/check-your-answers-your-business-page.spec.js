@@ -57,7 +57,7 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

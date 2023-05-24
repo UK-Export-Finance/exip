@@ -1,6 +1,7 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { isWithinInterval } from 'date-fns';
 import { ACCOUNT } from '../../constants';
+import getAuthenticationRetriesByAccountId from '../get-authentication-retries-by-account-id';
 
 const { MAX_PASSWORD_RESET_TRIES, MAX_PASSWORD_RESET_TRIES_TIMEFRAME } = ACCOUNT;
 
@@ -14,49 +15,47 @@ const { MAX_PASSWORD_RESET_TRIES, MAX_PASSWORD_RESET_TRIES_TIMEFRAME } = ACCOUNT
  * @returns {Boolean}
  */
 const shouldBlockAccount = async (context: Context, accountId: string): Promise<boolean> => {
-  console.info(`Checking account ${accountId} password reset retries`);
+  console.info(`Checking account ${accountId} authentication retries`);
 
-  /**
-   * Get retries associated with the provided account ID
-   */
-  const retries = await context.db.AuthenticationRetry.findMany({
-    where: {
-      account: {
-        every: {
-          id: { equals: accountId },
-        },
-      },
-    },
-  });
+  try {
+    /**
+     * Get retries associated with the provided account ID
+     */
+    const retries = await getAuthenticationRetriesByAccountId(context, accountId);
 
-  const now = new Date();
+    const now = new Date();
 
-  /**
-   * Check if the retries breach the threshold:
-   * - total of MAX_PASSWORD_RESET_TRIES in less than MAX_PASSWORD_RESET_TRIES_TIMEFRAME
-   */
-  const retriesInTimeframe = [] as Array<string>;
+    /**
+     * Check if the retries breach the threshold:
+     * - total of MAX_PASSWORD_RESET_TRIES in less than MAX_PASSWORD_RESET_TRIES_TIMEFRAME
+     */
+    const retriesInTimeframe = [] as Array<string>;
 
-  retries.forEach((retry) => {
-    const retryDate = new Date(retry.createdAt);
+    retries.forEach((retry) => {
+      const retryDate = new Date(retry.createdAt);
 
-    const isWithinLast24Hours = isWithinInterval(retryDate, {
-      start: MAX_PASSWORD_RESET_TRIES_TIMEFRAME,
-      end: now,
+      const isWithinLast24Hours = isWithinInterval(retryDate, {
+        start: MAX_PASSWORD_RESET_TRIES_TIMEFRAME,
+        end: now,
+      });
+
+      if (isWithinLast24Hours) {
+        retriesInTimeframe.push(retry.id);
+      }
     });
 
-    if (isWithinLast24Hours) {
-      retriesInTimeframe.push(retry.id);
+    if (retriesInTimeframe.length >= MAX_PASSWORD_RESET_TRIES) {
+      console.info(`Account ${accountId} authentication retries exceeds the threshold`);
+
+      return true;
     }
-  });
 
-  if (retriesInTimeframe.length >= MAX_PASSWORD_RESET_TRIES) {
-    console.info(`Account ${accountId} password reset retries exceeds the threshold`);
+    return false;
+  } catch (err) {
+    console.error(err);
 
-    return true;
+    throw new Error(`Checking account authentication retries  ${err}`);
   }
-
-  return false;
 };
 
 export default shouldBlockAccount;

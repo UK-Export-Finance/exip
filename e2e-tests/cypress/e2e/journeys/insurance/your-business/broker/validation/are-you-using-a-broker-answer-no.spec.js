@@ -50,7 +50,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('when the no radio is selected', () => {

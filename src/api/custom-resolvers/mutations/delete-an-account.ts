@@ -1,5 +1,6 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import getAccountByField from '../../helpers/get-account-by-field';
+import getAuthenticationRetriesByAccountId from '../../helpers/get-authentication-retries-by-account-id';
 import { Account, AccountDeletionVariables } from '../../types';
 
 const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, context: Context) => {
@@ -12,33 +13,31 @@ const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, c
     const account = (await getAccountByField(context, 'email', email)) as Account;
 
     if (!account) {
-      console.info(`Unable to delete account - account already exists`);
+      console.info(`Unable to delete account - account not found`);
 
       return { success: false };
     }
 
     const { id: accountId } = account;
 
-    // delete authentication retry entries
-    const retries = await context.db.AuthenticationRetry.findMany({
-      where: {
-        account: {
-          every: {
-            id: { equals: accountId },
-          },
-        },
-      },
-    });
+    console.info('Checking authentication retry entries');
 
-    const retriesArray = retries.map((retry) => ({
-      id: retry.id,
-    }));
+    // delete authentication retry entries
+    const retries = await getAuthenticationRetriesByAccountId(context, accountId);
 
     if (retries.length) {
+      console.info('Deleting authentication retry entries');
+
+      const retriesArray = retries.map((retry) => ({
+        id: retry.id,
+      }));
+
       await context.db.AuthenticationRetry.deleteMany({
         where: retriesArray,
       });
     }
+
+    console.info(`Deleting account ${accountId}`);
 
     await context.db.Account.deleteOne({
       where: {
@@ -50,6 +49,8 @@ const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, c
       success: true,
     };
   } catch (err) {
+    console.error(err);
+
     throw new Error(`Deleting account ${err}`);
   }
 };

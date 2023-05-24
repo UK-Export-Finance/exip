@@ -28,7 +28,7 @@ context('Insurance - no access to application page - signed out', () => {
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('when trying to access an application', () => {

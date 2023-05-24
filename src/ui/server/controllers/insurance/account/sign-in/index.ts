@@ -17,6 +17,7 @@ const {
     ACCOUNT: {
       SIGN_IN: { ENTER_CODE },
       CREATE: { CONFIRM_EMAIL_RESENT },
+      SUSPENDED: { ROOT: SUSPENDED_ROOT },
     },
     DASHBOARD,
   },
@@ -120,6 +121,10 @@ export const post = async (req: Request, res: Response) => {
 
     if (response.resentVerificationEmail) {
       return res.redirect(`${CONFIRM_EMAIL_RESENT}?id=${response.accountId}`);
+    }
+
+    if (response.isBlocked) {
+      return res.redirect(SUSPENDED_ROOT);
     }
 
     // invalid credentials - force validation errors by mimicking empty form submission

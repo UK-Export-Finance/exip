@@ -108,9 +108,28 @@ describe('custom-resolvers/account-password-reset', () => {
     expect(account.hash).not.toEqual(mockAccount.hash);
   });
 
-  test("it nullify the account's password reset hash and expiry", async () => {
+  test("it should nullify the account's password reset hash and expiry", async () => {
     expect(account.passwordResetHash).toEqual('');
     expect(account.passwordResetExpiry).toEqual(null);
+  });
+
+  describe('when the account is blocked', () => {
+    test('it should return success=false', async () => {
+      account = (await context.query.Account.updateOne({
+        where: { id: account.id },
+        data: {
+          isBlocked: true,
+        },
+      })) as Account;
+
+      result = await accountPasswordReset({}, variables, context);
+
+      const expected = {
+        success: false,
+      };
+
+      expect(result).toEqual(expected);
+    });
   });
 
   describe('when the account does not have a password reset expiry', () => {
@@ -118,6 +137,7 @@ describe('custom-resolvers/account-password-reset', () => {
       account = (await context.query.Account.updateOne({
         where: { id: account.id },
         data: {
+          isBlocked: false,
           passwordResetHash: mockAccount.passwordResetHash,
           passwordResetExpiry: null,
         },

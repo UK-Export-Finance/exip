@@ -51,7 +51,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {

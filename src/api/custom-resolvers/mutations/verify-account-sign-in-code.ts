@@ -3,6 +3,7 @@ import { isAfter } from 'date-fns';
 import { ACCOUNT } from '../../constants';
 import getAccountById from '../../helpers/get-account-by-id';
 import isValidOTP from '../../helpers/is-valid-otp';
+import deleteAuthenticationRetries from '../../helpers/delete-authentication-retries';
 import create from '../../helpers/create-jwt';
 import { VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../../types';
 
@@ -63,6 +64,9 @@ const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignIn
     const isValid = otpSalt && otpHash && isValidOTP(securityCode, otpSalt, otpHash);
 
     if (isValid) {
+      // delete authentication retries for the account
+      await deleteAuthenticationRetries(context, accountId);
+
       // create JWT
       const jwt = create.JWT(accountId);
 

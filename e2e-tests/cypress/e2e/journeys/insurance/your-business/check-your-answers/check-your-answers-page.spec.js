@@ -59,7 +59,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

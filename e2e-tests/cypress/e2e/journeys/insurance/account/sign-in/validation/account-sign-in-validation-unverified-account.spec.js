@@ -19,6 +19,8 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
   let account;
 
   before(() => {
+    cy.deleteAccount();
+
     cy.navigateToUrl(START);
 
     // create an account but do not verify the account
@@ -37,10 +39,6 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
     cy.saveSession();
   });
 
-  after(() => {
-    cy.deleteAccount();
-  });
-
   describe('when valid credentials are submitted, but the account is not verifed', () => {
     beforeEach(() => {
       /**
@@ -54,7 +52,7 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
         const [firstAccount] = data.accounts;
         account = firstAccount;
 
-        cy.completeAndSubmitSignInAccountForm({ assertSuccessUrl: false });
+        cy.completeAndSubmitSignInAccountForm({ assertRedirectUrl: false });
       });
     });
 
