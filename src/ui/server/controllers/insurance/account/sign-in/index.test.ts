@@ -19,6 +19,7 @@ const {
     ACCOUNT: {
       SIGN_IN: { ENTER_CODE },
       CREATE: { CONFIRM_EMAIL_RESENT },
+      SUSPENDED: { ROOT: SUSPENDED_ROOT },
     },
     DASHBOARD,
   },
@@ -263,6 +264,26 @@ describe('controllers/insurance/account/sign-in', () => {
           const expected = `${CONFIRM_EMAIL_RESENT}?id=${accountSignInResponse.accountId}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe('when the api.keystone.account.signIn returns isBlocked=true', () => {
+        beforeEach(() => {
+          accountSignInSpy = jest.fn(() =>
+            Promise.resolve({
+              ...accountSignInResponse,
+              success: false,
+              isBlocked: true,
+            }),
+          );
+
+          api.keystone.account.signIn = accountSignInSpy;
+        });
+
+        it(`should redirect to ${SUSPENDED_ROOT}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(SUSPENDED_ROOT);
         });
       });
     });

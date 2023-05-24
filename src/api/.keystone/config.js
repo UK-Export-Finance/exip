@@ -1272,6 +1272,7 @@ var typeDefs = `
     expires: DateTime
     success: Boolean!
     resentVerificationEmail: Boolean
+    isBlocked: Boolean
   }
 
   type AddAndGetOtpResponse {
@@ -1769,6 +1770,27 @@ var createAnAccount = async (root, variables, context) => {
 };
 var create_an_account_default = createAnAccount;
 
+// helpers/get-authentication-retries-by-account-id/index.ts
+var getAuthenticationRetriesByAccountId = async (context, accountId) => {
+  console.info("Getting authentication retries by account ID");
+  try {
+    const retries = await context.db.AuthenticationRetry.findMany({
+      where: {
+        account: {
+          every: {
+            id: { equals: accountId }
+          }
+        }
+      }
+    });
+    return retries;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Getting authentication retries ${err}`);
+  }
+};
+var get_authentication_retries_by_account_id_default = getAuthenticationRetriesByAccountId;
+
 // custom-resolvers/mutations/delete-an-account.ts
 var deleteAnAccount = async (root, variables, context) => {
   console.info("Deleting account ", variables.email);
@@ -1781,15 +1803,7 @@ var deleteAnAccount = async (root, variables, context) => {
     }
     const { id: accountId } = account;
     console.info("Checking authentication retry entries");
-    const retries = await context.db.AuthenticationRetry.findMany({
-      where: {
-        account: {
-          every: {
-            id: { equals: accountId }
-          }
-        }
-      }
-    });
+    const retries = await get_authentication_retries_by_account_id_default(context, accountId);
     if (retries.length) {
       console.info("Deleting authentication retry entries");
       const retriesArray = retries.map((retry) => ({
@@ -1919,7 +1933,7 @@ var sendEmailConfirmEmailAddressMutation = async (root, variables, context) => {
 var send_email_confirm_email_address_default2 = sendEmailConfirmEmailAddressMutation;
 
 // custom-resolvers/mutations/account-sign-in.ts
-var import_date_fns4 = require("date-fns");
+var import_date_fns5 = require("date-fns");
 
 // helpers/get-password-hash/index.ts
 var import_crypto3 = __toESM(require("crypto"));
@@ -2012,6 +2026,86 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
 };
 var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
 
+// helpers/create-authentication-retry-entry/index.ts
+var createAuthenticationRetryEntry = async (context, accountId) => {
+  try {
+    console.info("Creating account authentication retry entry");
+    const now = /* @__PURE__ */ new Date();
+    const response = await context.db.AuthenticationRetry.createOne({
+      data: {
+        account: {
+          connect: {
+            id: accountId
+          }
+        },
+        createdAt: now
+      }
+    });
+    if (response.id) {
+      return {
+        success: true
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error(`Creating account authentication retry entry ${err}`);
+    throw new Error(`${err}`);
+  }
+};
+var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
+
+// helpers/should-block-account/index.ts
+var import_date_fns4 = require("date-fns");
+var { MAX_PASSWORD_RESET_TRIES, MAX_PASSWORD_RESET_TRIES_TIMEFRAME } = ACCOUNT2;
+var shouldBlockAccount = async (context, accountId) => {
+  console.info(`Checking account ${accountId} authentication retries`);
+  try {
+    const retries = await get_authentication_retries_by_account_id_default(context, accountId);
+    const now = /* @__PURE__ */ new Date();
+    const retriesInTimeframe = [];
+    retries.forEach((retry) => {
+      const retryDate = new Date(retry.createdAt);
+      const isWithinLast24Hours = (0, import_date_fns4.isWithinInterval)(retryDate, {
+        start: MAX_PASSWORD_RESET_TRIES_TIMEFRAME,
+        end: now
+      });
+      if (isWithinLast24Hours) {
+        retriesInTimeframe.push(retry.id);
+      }
+    });
+    if (retriesInTimeframe.length >= MAX_PASSWORD_RESET_TRIES) {
+      console.info(`Account ${accountId} authentication retries exceeds the threshold`);
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Checking account authentication retries  ${err}`);
+  }
+};
+var should_block_account_default = shouldBlockAccount;
+
+// helpers/block-account/index.ts
+var blockAccount = async (context, accountId) => {
+  console.info(`Blocking account ${accountId}`);
+  try {
+    const result = await context.db.Account.updateOne({
+      where: { id: accountId },
+      data: { isBlocked: true }
+    });
+    if (result.id) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Blocking account ${err}`);
+  }
+};
+var block_account_default = blockAccount;
+
 // custom-resolvers/mutations/account-sign-in.ts
 var { EMAIL: EMAIL2 } = ACCOUNT2;
 var accountSignIn = async (root, variables, context) => {
@@ -2024,41 +2118,58 @@ var accountSignIn = async (root, variables, context) => {
       return { success: false };
     }
     const account = accountData;
+    const { id: accountId } = account;
+    const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
+    if (!newRetriesEntry.success) {
+      return { success: false };
+    }
+    const needToBlockAccount = await should_block_account_default(context, accountId);
+    if (needToBlockAccount) {
+      const blocked = await block_account_default(context, accountId);
+      if (blocked) {
+        return {
+          success: false,
+          isBlocked: true,
+          accountId
+        };
+      }
+      return { success: false };
+    }
     if (is_valid_account_password_default(password2, account.salt, account.hash)) {
       if (!account.isVerified) {
         console.info("Unable to sign in account - account has not been verified yet");
         const now = /* @__PURE__ */ new Date();
-        const verificationHasExpired = (0, import_date_fns4.isAfter)(now, account.verificationExpiry);
+        const verificationHasExpired = (0, import_date_fns5.isAfter)(now, account.verificationExpiry);
         if (account.verificationHash && !verificationHasExpired) {
           console.info("Account has an unexpired verification token - resetting verification expiry");
           const accountUpdate = {
             verificationExpiry: EMAIL2.VERIFICATION_EXPIRY()
           };
           await context.db.Account.updateOne({
-            where: { id: account.id },
+            where: { id: accountId },
             data: accountUpdate
           });
           console.info("Account has an unexpired verification token - sending verification email");
-          const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, account.id);
+          const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
           if (emailResponse2.success) {
             return {
               success: false,
               resentVerificationEmail: true,
-              accountId: account.id
+              accountId
             };
           }
           return { success: false };
         }
-        console.info("Unable to sign in account - account has not been verification has expired");
+        console.info("Unable to sign in account - account has not been verified");
         return { success: false };
       }
-      const { securityCode } = await generate_otp_and_update_account_default(context, account.id);
+      const { securityCode } = await generate_otp_and_update_account_default(context, accountId);
       const name = get_full_name_string_default(account);
       const emailResponse = await emails_default.securityCodeEmail(email, name, securityCode);
       if (emailResponse.success) {
         return {
           ...emailResponse,
-          accountId: account.id
+          accountId
         };
       }
       return {
@@ -2104,7 +2215,7 @@ var accountSignInSendNewCode = async (root, variables, context) => {
 var account_sign_in_new_code_default = accountSignInSendNewCode;
 
 // custom-resolvers/mutations/verify-account-sign-in-code.ts
-var import_date_fns5 = require("date-fns");
+var import_date_fns6 = require("date-fns");
 
 // helpers/is-valid-otp/index.ts
 var import_crypto5 = __toESM(require("crypto"));
@@ -2130,6 +2241,25 @@ var isValidOTP = (securityCode, otpSalt, otpHash) => {
   }
 };
 var is_valid_otp_default = isValidOTP;
+
+// helpers/delete-authentication-retries/index.ts
+var deleteAuthenticationRetries = async (context, accountId) => {
+  console.info(`Deleting authentication retries for account ${accountId}`);
+  try {
+    const retries = await get_authentication_retries_by_account_id_default(context, accountId);
+    const retryIds = retries.map((obj) => ({
+      id: obj.id
+    }));
+    const result = await context.db.AuthenticationRetry.deleteMany({
+      where: retryIds
+    });
+    return result;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Deleting authentication retries ${err}`);
+  }
+};
+var delete_authentication_retries_default = deleteAuthenticationRetries;
 
 // helpers/create-jwt/index.ts
 var import_crypto6 = __toESM(require("crypto"));
@@ -2185,7 +2315,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
     }
     const { otpSalt, otpHash, otpExpiry } = account;
     const now = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns5.isAfter)(now, otpExpiry);
+    const hasExpired = (0, import_date_fns6.isAfter)(now, otpExpiry);
     if (hasExpired) {
       console.info("Unable to verify account sign in code - verification period has expired");
       return {
@@ -2195,6 +2325,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
     }
     const isValid = otpSalt && otpHash && is_valid_otp_default(securityCode, otpSalt, otpHash);
     if (isValid) {
+      await delete_authentication_retries_default(context, accountId);
       const jwt = create_jwt_default.JWT(accountId);
       const { sessionIdentifier } = jwt;
       const accountUpdate = {
@@ -2252,72 +2383,6 @@ var add_and_get_OTP_default = addAndGetOTP;
 
 // custom-resolvers/mutations/send-email-password-reset-link.ts
 var import_crypto7 = __toESM(require("crypto"));
-
-// helpers/create-authentication-retry-entry/index.ts
-var createAuthenticationRetryEntry = async (context, accountId) => {
-  try {
-    console.info("Creating account authentication retry entry");
-    const now = /* @__PURE__ */ new Date();
-    const response = await context.db.AuthenticationRetry.createOne({
-      data: {
-        account: {
-          connect: {
-            id: accountId
-          }
-        },
-        createdAt: now
-      }
-    });
-    if (response.id) {
-      return {
-        success: true
-      };
-    }
-    return {
-      success: false
-    };
-  } catch (err) {
-    console.error(`Creating account authentication retry entry ${err}`);
-    throw new Error(`${err}`);
-  }
-};
-var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
-
-// helpers/should-block-account/index.ts
-var import_date_fns6 = require("date-fns");
-var { MAX_PASSWORD_RESET_TRIES, MAX_PASSWORD_RESET_TRIES_TIMEFRAME } = ACCOUNT2;
-var shouldBlockAccount = async (context, accountId) => {
-  console.info(`Checking account ${accountId} password reset retries`);
-  const retries = await context.db.AuthenticationRetry.findMany({
-    where: {
-      account: {
-        every: {
-          id: { equals: accountId }
-        }
-      }
-    }
-  });
-  const now = /* @__PURE__ */ new Date();
-  const retriesInTimeframe = [];
-  retries.forEach((retry) => {
-    const retryDate = new Date(retry.createdAt);
-    const isWithinLast24Hours = (0, import_date_fns6.isWithinInterval)(retryDate, {
-      start: MAX_PASSWORD_RESET_TRIES_TIMEFRAME,
-      end: now
-    });
-    if (isWithinLast24Hours) {
-      retriesInTimeframe.push(retry.id);
-    }
-  });
-  if (retriesInTimeframe.length >= MAX_PASSWORD_RESET_TRIES) {
-    console.info(`Account ${accountId} password reset retries exceeds the threshold`);
-    return true;
-  }
-  return false;
-};
-var should_block_account_default = shouldBlockAccount;
-
-// custom-resolvers/mutations/send-email-password-reset-link.ts
 var {
   ENCRYPTION: {
     STRING_TYPE: STRING_TYPE7,
@@ -2341,18 +2406,20 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
     if (!newRetriesEntry.success) {
       return { success: false };
     }
-    const blockAccount = await should_block_account_default(context, accountId);
-    if (blockAccount) {
-      console.info(`Blocking account ${accountId}`);
-      await context.db.Account.updateOne({
-        where: { id: accountId },
-        data: { isBlocked: true }
-      });
-      return {
-        success: false,
-        isBlocked: true,
-        accountId
-      };
+    const needToBlockAccount = await should_block_account_default(context, accountId);
+    if (needToBlockAccount) {
+      try {
+        const blocked = await block_account_default(context, accountId);
+        if (blocked) {
+          return {
+            success: false,
+            isBlocked: true,
+            accountId
+          };
+        }
+      } catch (err) {
+        return { success: false };
+      }
     }
     console.info("Generating password reset hash");
     const passwordResetHash = import_crypto7.default.pbkdf2Sync(email, account.salt, ITERATIONS6, KEY_LENGTH6, DIGEST_ALGORITHM6).toString(STRING_TYPE7);
@@ -2438,6 +2505,11 @@ var accountPasswordReset = async (root, variables, context) => {
     const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD_RESET_HASH, token);
     if (!account) {
       console.info("Unable to reset account password - account does not exist");
+      return { success: false };
+    }
+    const { isBlocked } = account;
+    if (isBlocked) {
+      console.info("Unable to reset account password - account is blocked");
       return { success: false };
     }
     const { id: accountId, passwordResetHash, passwordResetExpiry, salt: currentSalt, hash: currentHash } = account;
