@@ -214,7 +214,7 @@ describe('emails', () => {
             await sendEmail.application.submittedEmail(variables);
           } catch (err) {
             const expected = new Error(
-              `Sending application submitted email to to application owner or provided contact Error: Sending email ${mockErrorMessage}`,
+              `Sending application submitted email to to application owner or provided business contact Error: Sending email ${mockErrorMessage}`,
             );
 
             expect(err).toEqual(expected);

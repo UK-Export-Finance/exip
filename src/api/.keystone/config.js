@@ -1637,14 +1637,14 @@ var application = {
    */
   submittedEmail: async (variables) => {
     try {
-      console.info("Sending application submitted email to application owner or provided contact");
+      console.info("Sending application submitted email to application owner or provided business contact");
       const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
       const { emailAddress } = variables;
       const response = await callNotify(templateId, emailAddress, variables);
       return response;
     } catch (err) {
       console.error(err);
-      throw new Error(`Sending application submitted email to to application owner or provided contact ${err}`);
+      throw new Error(`Sending application submitted email to to application owner or provided business contact ${err}`);
     }
   },
   /**
