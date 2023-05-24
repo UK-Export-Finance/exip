@@ -11,6 +11,8 @@ const {
 
 context('Insurance - Account - Create - Confirm email page - As an Exporter I want to create an account for UKEF digital service, So that I can readily use it for my Export Insurance Application with UKEF', () => {
   before(() => {
+    cy.deleteAccount();
+
     cy.navigateToUrl(START);
 
     cy.submitEligibilityAndStartAccountCreation();
@@ -27,10 +29,6 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
 
   let account;
   let expectedUrl;
-
-  after(() => {
-    cy.deleteAccount();
-  });
 
   describe('page URL and content', () => {
     beforeEach(() => {

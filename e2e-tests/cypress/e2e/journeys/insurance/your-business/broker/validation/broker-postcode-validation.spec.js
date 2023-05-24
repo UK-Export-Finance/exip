@@ -65,7 +65,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   context('invalid postcodes', () => {

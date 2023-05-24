@@ -52,7 +52,7 @@ context('Insurance - Your business - Company details page - company house search
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('when leaving companies house registration blank', () => {

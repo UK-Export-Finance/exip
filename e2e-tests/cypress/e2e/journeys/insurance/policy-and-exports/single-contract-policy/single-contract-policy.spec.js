@@ -77,7 +77,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

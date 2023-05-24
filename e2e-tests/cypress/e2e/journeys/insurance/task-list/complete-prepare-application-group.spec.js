@@ -22,7 +22,7 @@ context('Insurance - Task list - complete `prepare application` group', () => {
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('after completing all tasks in the `prepare application` group', () => {

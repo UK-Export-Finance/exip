@@ -55,7 +55,7 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('should display validation errors when the email field is left empty', () => {

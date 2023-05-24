@@ -19,7 +19,11 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 context('Insurance - Account - Sign in - I want to enter the new security code sent to my email by UK Export Finance, So that I can sign in into my UKEF digital service account', () => {
+  const baseUrl = Cypress.config('baseUrl');
+
   before(() => {
+    cy.deleteAccount();
+
     cy.navigateToUrl(START);
 
     cy.submitEligibilityAndStartAccountCreation();
@@ -27,22 +31,22 @@ context('Insurance - Account - Sign in - I want to enter the new security code s
 
     cy.verifyAccountEmail();
 
-    cy.url().should('eq', `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`);
+    cy.url().should('eq', `${baseUrl}${SIGN_IN_ROOT}`);
 
     cy.keyboardInput(accountFormFields[EMAIL].input(), account[EMAIL]);
     cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
 
     submitButton().click();
 
-    cy.url().should('eq', `${Cypress.config('baseUrl')}${ENTER_CODE}`);
+    cy.url().should('eq', `${baseUrl}${ENTER_CODE}`);
 
     enterCodePage.requestNewCodeLink().click();
 
-    cy.url().should('eq', `${Cypress.config('baseUrl')}${REQUEST_NEW_CODE}`);
+    cy.url().should('eq', `${baseUrl}${REQUEST_NEW_CODE}`);
 
     submitButton().click();
 
-    cy.url().should('eq', `${Cypress.config('baseUrl')}${ENTER_CODE}`);
+    cy.url().should('eq', `${baseUrl}${ENTER_CODE}`);
   });
 
   beforeEach(() => {
@@ -53,7 +57,7 @@ context('Insurance - Account - Sign in - I want to enter the new security code s
     dashboardPage.table.body.lastRow.referenceNumberLink().click();
 
     cy.getReferenceNumber().then((referenceNumber) => {
-      cy.deleteAccountAndApplication(referenceNumber);
+      cy.deleteApplication(referenceNumber);
     });
   });
 
@@ -72,7 +76,7 @@ context('Insurance - Account - Sign in - I want to enter the new security code s
 
       submitButton().click();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+      const expectedUrl = `${baseUrl}${DASHBOARD}`;
 
       cy.url().should('eq', expectedUrl);
     });

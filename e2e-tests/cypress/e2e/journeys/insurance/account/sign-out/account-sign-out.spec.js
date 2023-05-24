@@ -27,7 +27,7 @@ context('Insurance - Account - Sign out - As an Exporter, I want to be able to s
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe("when clicking the header's `sign out` link", () => {

@@ -90,7 +90,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe(COMPANY_NUMBER, () => {

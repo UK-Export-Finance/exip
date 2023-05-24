@@ -1758,6 +1758,7 @@ var createAnAccount = async (root, variables, context) => {
     if (emailResponse.success) {
       return {
         ...creationResponse,
+        verificationHash,
         success: true
       };
     }
@@ -1775,10 +1776,11 @@ var deleteAnAccount = async (root, variables, context) => {
     const { email } = variables;
     const account = await get_account_by_field_default(context, "email", email);
     if (!account) {
-      console.info(`Unable to delete account - account already exists`);
+      console.info(`Unable to delete account - account not found`);
       return { success: false };
     }
     const { id: accountId } = account;
+    console.info("Checking authentication retry entries");
     const retries = await context.db.AuthenticationRetry.findMany({
       where: {
         account: {
@@ -1788,14 +1790,16 @@ var deleteAnAccount = async (root, variables, context) => {
         }
       }
     });
-    const retriesArray = retries.map((retry) => ({
-      id: retry.id
-    }));
     if (retries.length) {
+      console.info("Deleting authentication retry entries");
+      const retriesArray = retries.map((retry) => ({
+        id: retry.id
+      }));
       await context.db.AuthenticationRetry.deleteMany({
         where: retriesArray
       });
     }
+    console.info(`Deleting account ${accountId}`);
     await context.db.Account.deleteOne({
       where: {
         id: accountId
@@ -1805,6 +1809,7 @@ var deleteAnAccount = async (root, variables, context) => {
       success: true
     };
   } catch (err) {
+    console.error(err);
     throw new Error(`Deleting account ${err}`);
   }
 };

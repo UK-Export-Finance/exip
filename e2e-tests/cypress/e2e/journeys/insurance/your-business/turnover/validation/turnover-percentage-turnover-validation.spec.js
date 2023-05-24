@@ -52,7 +52,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it(`should display validation errors when ${FIELD_ID} left empty`, () => {

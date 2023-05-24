@@ -58,7 +58,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

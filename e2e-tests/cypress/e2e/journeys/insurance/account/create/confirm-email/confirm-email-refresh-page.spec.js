@@ -8,6 +8,8 @@ const {
 
 context('Insurance - Account - Create - Confirm email page - refreshing the page', () => {
   before(() => {
+    cy.deleteAccount();
+
     cy.navigateToUrl(START);
 
     cy.submitEligibilityAndStartAccountCreation();
@@ -18,10 +20,6 @@ context('Insurance - Account - Create - Confirm email page - refreshing the page
     cy.url().should('eq', expected);
 
     cy.reload();
-  });
-
-  after(() => {
-    cy.deleteAccount();
   });
 
   it('should NOT render `sent a link to` with the submitted email, because it is no longer in the session', () => {

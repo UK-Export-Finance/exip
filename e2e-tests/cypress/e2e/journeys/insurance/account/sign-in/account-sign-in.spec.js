@@ -27,6 +27,8 @@ context('Insurance - Account - Sign in - As an Exporter, I want to sign in into 
   let url;
 
   before(() => {
+    cy.deleteAccount();
+
     cy.navigateToUrl(START);
 
     cy.submitEligibilityAndStartAccountCreation();
@@ -45,10 +47,6 @@ context('Insurance - Account - Sign in - As an Exporter, I want to sign in into 
 
   beforeEach(() => {
     cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteAccount();
   });
 
   it('renders core page elements', () => {

@@ -32,7 +32,7 @@ context('Insurance - submit an application - As an Exporter, I want to submit my
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it(`should redirect to ${APPLICATION_SUBMITTED}`, () => {

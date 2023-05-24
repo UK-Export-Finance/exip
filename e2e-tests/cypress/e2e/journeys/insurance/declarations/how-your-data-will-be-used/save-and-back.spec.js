@@ -48,7 +48,7 @@ context('Insurance - Declarations - How your data will be used page - Save and g
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {

@@ -8,12 +8,12 @@ const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
 /**
  * verifyAccountEmail
- * Get the exporter (with verification hash) directly from the API,
+ * Get the account (with verification hash) directly from the API,
  * Mimic "cliking email verification link" in an email inbox by manually navigating to the URL
  */
 const verifyAccountEmail = () => {
   try {
-    // get exporter
+    // get the account
     cy.getAccountByEmail(accountEmail).then((response) => {
       const { data } = response.body;
 

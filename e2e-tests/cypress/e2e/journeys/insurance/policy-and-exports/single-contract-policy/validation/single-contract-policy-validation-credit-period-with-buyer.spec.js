@@ -49,7 +49,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   const field = singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];

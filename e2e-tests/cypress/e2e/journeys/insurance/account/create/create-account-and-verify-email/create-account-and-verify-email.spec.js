@@ -11,6 +11,8 @@ const {
 
 context('Insurance - Account - Create - I want the system to generate account verification link for my email address, So that I can confirm that my email address exist and can be used to create my UKEF digital service account.', () => {
   before(() => {
+    cy.deleteAccount();
+
     cy.clearCookies();
     Cypress.session.clearAllSavedSessions();
 
@@ -26,10 +28,6 @@ context('Insurance - Account - Create - I want the system to generate account ve
 
   beforeEach(() => {
     cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteAccount();
   });
 
   describe(`when navigating to ${VERIFY_EMAIL} with a valid token query parameter`, () => {

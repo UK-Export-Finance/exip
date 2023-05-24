@@ -31,7 +31,7 @@ context('Insurance - no access to application when application is submitted', ()
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('when trying to access an application which has already been submitted', () => {

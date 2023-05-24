@@ -40,7 +40,7 @@ context('Insurance - Complete `prepare your application` tasks', () => {
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('`prepare application` tasks', () => {

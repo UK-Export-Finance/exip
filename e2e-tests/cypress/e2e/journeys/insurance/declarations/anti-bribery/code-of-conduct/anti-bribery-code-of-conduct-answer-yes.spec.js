@@ -46,7 +46,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it(`should redirect to ${EXPORTING_WITH_CODE_OF_CONDUCT}`, () => {
