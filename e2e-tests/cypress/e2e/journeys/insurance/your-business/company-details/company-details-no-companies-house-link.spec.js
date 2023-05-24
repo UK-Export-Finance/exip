@@ -44,7 +44,7 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it(`should redirect to ${APPLY_OFFLINE} page when pressing the no companies house number link`, () => {

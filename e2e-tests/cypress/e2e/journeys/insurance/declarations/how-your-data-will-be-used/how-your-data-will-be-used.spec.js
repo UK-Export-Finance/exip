@@ -62,7 +62,7 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

@@ -54,7 +54,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('should display validation errors when the yes radio is selected and no required fields are entered', () => {

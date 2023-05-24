@@ -69,7 +69,7 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('when clicking the `change` link', () => {

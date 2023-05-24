@@ -53,7 +53,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {

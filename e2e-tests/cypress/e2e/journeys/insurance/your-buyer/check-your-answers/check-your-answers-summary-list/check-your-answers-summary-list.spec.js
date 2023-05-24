@@ -56,7 +56,7 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it(`should render a ${NAME} summary list row`, () => {

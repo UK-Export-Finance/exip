@@ -47,7 +47,7 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

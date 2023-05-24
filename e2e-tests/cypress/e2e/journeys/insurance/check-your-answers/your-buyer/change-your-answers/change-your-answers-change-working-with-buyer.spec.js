@@ -77,7 +77,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe(CONNECTED_WITH_BUYER, () => {

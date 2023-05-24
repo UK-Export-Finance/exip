@@ -35,7 +35,7 @@ context('Insurance - Complete other sections page', () => {
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

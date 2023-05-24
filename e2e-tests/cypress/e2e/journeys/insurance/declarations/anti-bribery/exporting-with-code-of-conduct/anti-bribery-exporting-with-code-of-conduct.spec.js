@@ -56,7 +56,7 @@ context("Insurance - Declarations - Anti-bribery - Exporting with code of conduc
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

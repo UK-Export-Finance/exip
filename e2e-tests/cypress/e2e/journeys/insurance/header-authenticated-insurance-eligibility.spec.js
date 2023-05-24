@@ -21,7 +21,7 @@ context('Insurance - header - authenticated - complete insurance eligibility', (
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('should render an authenticated header in each insurance eligibility page', () => {

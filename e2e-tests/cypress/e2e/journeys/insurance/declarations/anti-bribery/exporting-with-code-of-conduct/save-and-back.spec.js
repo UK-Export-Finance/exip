@@ -64,7 +64,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {

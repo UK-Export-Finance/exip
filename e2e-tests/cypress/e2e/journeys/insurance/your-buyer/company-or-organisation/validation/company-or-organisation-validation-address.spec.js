@@ -54,7 +54,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('should render a validation error when address is above the maximum', () => {

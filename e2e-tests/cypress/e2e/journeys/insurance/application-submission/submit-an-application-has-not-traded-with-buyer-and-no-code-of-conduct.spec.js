@@ -24,7 +24,7 @@ context('Insurance - submit an application without `have traded with buyer befor
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it(`should successfully submit the application and redirect to ${APPLICATION_SUBMITTED}`, () => {

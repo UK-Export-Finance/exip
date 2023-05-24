@@ -52,7 +52,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe(CONNECTED_WITH_BUYER, () => {

@@ -42,7 +42,7 @@ context('Insurance - Check your answers - Policy and exports page - Save and bac
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it(`should redirect to ${ALL_SECTIONS}`, () => {

@@ -59,7 +59,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('when no fields are provided', () => {

@@ -20,7 +20,7 @@ context('Insurance - submit an application without `exporting with code of condu
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it(`should successfully submit the application and redirect to ${APPLICATION_SUBMITTED}`, () => {

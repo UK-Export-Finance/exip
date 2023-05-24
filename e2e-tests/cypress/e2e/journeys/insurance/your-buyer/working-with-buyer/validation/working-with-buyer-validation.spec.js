@@ -53,7 +53,7 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe(CONNECTED_WITH_BUYER, () => {

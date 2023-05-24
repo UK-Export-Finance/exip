@@ -55,7 +55,7 @@ context('Insurance - Check your answers - Eligibility page - I want to confirm m
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

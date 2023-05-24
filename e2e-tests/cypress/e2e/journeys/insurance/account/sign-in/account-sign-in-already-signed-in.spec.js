@@ -28,7 +28,7 @@ context('Insurance - Account - Sign in - Already signed in', () => {
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it(`should redirect to ${DASHBOARD} when visiting ${SIGN_IN_ROOT}`, () => {
