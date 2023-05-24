@@ -26,7 +26,7 @@ context('Insurance - Account - Create - Your details page - Already signed in', 
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it(`should redirect to ${DASHBOARD} when visiting ${YOUR_DETAILS}`, () => {

@@ -73,7 +73,7 @@ context('Insurance - Check your answers - Turnover - Your business - Summary lis
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe(ESTIMATED_ANNUAL_TURNOVER, () => {

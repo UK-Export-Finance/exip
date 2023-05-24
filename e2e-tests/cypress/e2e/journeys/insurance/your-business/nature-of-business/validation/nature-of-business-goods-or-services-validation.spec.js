@@ -45,7 +45,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   const fieldId = GOODS_OR_SERVICES;

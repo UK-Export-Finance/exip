@@ -30,7 +30,7 @@ context('Insurance - no access to application when application is submitted - ch
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('when trying to access a "check your answers" page in an application that is already sbumitted', () => {

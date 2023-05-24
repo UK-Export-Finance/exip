@@ -57,7 +57,7 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

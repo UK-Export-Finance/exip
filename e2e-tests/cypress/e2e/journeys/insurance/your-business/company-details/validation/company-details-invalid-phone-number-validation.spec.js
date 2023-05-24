@@ -43,7 +43,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe(`when ${PHONE_NUMBER} is incorrectly entered`, () => {

@@ -30,7 +30,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('when submitting an empty form via `save and go back` button', () => {

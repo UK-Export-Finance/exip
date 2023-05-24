@@ -62,7 +62,7 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

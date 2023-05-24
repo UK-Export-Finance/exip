@@ -48,7 +48,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it(`should display ${FINANCIAL_YEAR_END_DATE} section`, () => {
@@ -84,7 +84,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} does not ex
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it(`should not display ${FINANCIAL_YEAR_END_DATE} section`, () => {

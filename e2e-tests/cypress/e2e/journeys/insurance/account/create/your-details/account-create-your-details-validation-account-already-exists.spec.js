@@ -28,6 +28,8 @@ context('Insurance - Account - Create - Your details page - form validation - As
   let url;
 
   before(() => {
+    cy.deleteAccount();
+
     cy.navigateToUrl(START);
 
     // create and verify an account
@@ -50,10 +52,6 @@ context('Insurance - Account - Create - Your details page - form validation - As
     cy.navigateToUrl(url);
 
     cy.completeAndSubmitCreateAccountForm();
-  });
-
-  after(() => {
-    cy.deleteAccount();
   });
 
   it('should render a validation error when trying to create an account with an email that already has an account', () => {

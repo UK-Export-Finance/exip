@@ -61,7 +61,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   const field = multipleContractPolicyPage[TOTAL_SALES_TO_BUYER];

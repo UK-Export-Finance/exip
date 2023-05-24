@@ -67,7 +67,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

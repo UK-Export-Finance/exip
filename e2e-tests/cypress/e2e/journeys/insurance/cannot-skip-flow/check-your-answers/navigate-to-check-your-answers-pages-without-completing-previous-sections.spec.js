@@ -30,7 +30,7 @@ context('Insurance - Check your answers - cannot skip to any Check your answers 
   });
 
   after(() => {
-    cy.deleteAccountAndApplication();
+    cy.deleteApplication();
   });
 
   it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Check your answers - Eligibility page directly`, () => {

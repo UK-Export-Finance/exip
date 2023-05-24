@@ -1,5 +1,11 @@
 import completeInsuranceEligibilitySignInAndGoToDashboard from './complete-insurance-eligibility-sign-in-and-go-to-dashboard';
 import insurancePages from '../../../e2e/pages/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../constants/field-ids/insurance';
+import mockAccount from '../../../fixtures/account';
+
+const {
+  ACCOUNT: { EMAIL },
+} = INSURANCE_FIELD_IDS;
 
 /**
  * completeSignInAndGoToApplication
@@ -9,7 +15,7 @@ import insurancePages from '../../../e2e/pages/insurance';
  * @param {String} Account email address
  * @return {String} Application reference number
  */
-const completeSignInAndGoToApplication = (email) => {
+const completeSignInAndGoToApplication = (email = mockAccount[EMAIL]) => {
   // complete sign in and go to dashboad
   completeInsuranceEligibilitySignInAndGoToDashboard(email);
 

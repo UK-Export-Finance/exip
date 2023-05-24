@@ -10,14 +10,12 @@ const {
 context('Insurance - Account - Create - Resend confirm email page - Go back to confirm email page via back button', () => {
   const confirmEmailUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
 
-  after(() => {
-    cy.deleteAccount();
-  });
-
   let expectedUrl;
   let account;
 
   before(() => {
+    cy.deleteAccount();
+
     cy.saveSession();
 
     cy.navigateToUrl(START);

@@ -53,7 +53,7 @@ context('Insurance - Check your answers - Need to start new application page', (
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('renders core page elements', () => {

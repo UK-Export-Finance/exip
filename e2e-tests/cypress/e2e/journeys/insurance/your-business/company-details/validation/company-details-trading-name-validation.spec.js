@@ -43,7 +43,7 @@ describe("Insurance - Your business - Company details page- As an Exporter I wan
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   it('should display validation errors if trading name question is not answered', () => {

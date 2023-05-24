@@ -25,6 +25,8 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
   const url = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
 
   before(() => {
+    cy.deleteAccount();
+
     cy.navigateToUrl(START);
 
     cy.submitEligibilityAndStartAccountCreation();
@@ -33,10 +35,6 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
 
   beforeEach(() => {
     cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteAccount();
   });
 
   describe('when the account is verified', () => {

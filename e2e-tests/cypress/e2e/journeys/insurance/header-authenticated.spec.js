@@ -37,7 +37,7 @@ context('Insurance - header - authenticated - As an Exporter, I want the system 
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('`manage account` link', () => {

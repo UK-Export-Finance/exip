@@ -67,6 +67,7 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
     if (emailResponse.success) {
       return {
         ...creationResponse,
+        verificationHash,
         success: true,
       };
     }

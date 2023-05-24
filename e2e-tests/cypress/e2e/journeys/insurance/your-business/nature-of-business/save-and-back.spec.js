@@ -50,7 +50,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
   });
 
   after(() => {
-    cy.deleteAccountAndApplication(referenceNumber);
+    cy.deleteApplication(referenceNumber);
   });
 
   describe('when no fields are provided', () => {
