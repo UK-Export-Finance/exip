@@ -13,15 +13,13 @@ context('Insurance - Account - Sign in - Submitting the form with invalid creden
   const accountSuspendedUrl = `${baseUrl}${SUSPENDED_ROOT}`;
 
   before(() => {
+    cy.deleteAccount();
+
     cy.completeAndSubmitCreateAccountForm({ navigateToAccountCreationPage: true });
 
     cy.verifyAccountEmail();
 
     cy.assertUrl(signInUrl);
-  });
-
-  after(() => {
-    cy.deleteAccount();
   });
 
   describe('when attempting sign in multiple times and reaching the maximum retries threshold', () => {
