@@ -54,12 +54,6 @@ const getApplicationSubmittedEmailTemplateIds = (application: Application) => {
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY;
   }
 
-  console.info('------- temporary debugging dev environment - buyer data \n', buyer);
-  console.info('------- temporary debugging dev environment - declaration data \n', declaration);
-  console.info('------- temporary debugging dev environment - hasAntiBriberyCodeOfConduct? ', hasAntiBriberyCodeOfConduct);
-  console.info('------- temporary debugging dev environment - hasTradedWithBuyer? ', hasTradedWithBuyer);
-  console.info('------- temporary debugging dev environment - templateIds \n', templateIds);
-
   return templateIds;
 };
 
