@@ -18,7 +18,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
   const mockCountriesResponse = mockCisCountries;
 
-  const [countryUnsupported, countrySupported, countrySupportedViaOfflineOnly] = mockCountriesResponse;
+  const { 0: countryUnsupported, 1: countrySupported, 3: countrySupportedViaOfflineOnly } = mockCountriesResponse;
   const mockFlash = jest.fn();
 
   beforeEach(() => {
@@ -204,7 +204,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         req.body = validBody;
       });
 
-      it('should update the session with popluated with country object', async () => {
+      it('should update the session with populated with country object', async () => {
         await post(req, res);
 
         const selectedCountry = getCountryByName(mappedCountries, selectedCountryName) as Country;
@@ -230,7 +230,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         req.body[FIELD_IDS.BUYER_COUNTRY] = countrySupportedViaOfflineOnly.marketName;
       });
 
-      it('should update the session with popluated with country object', async () => {
+      it('should update the session with populated with country object', async () => {
         await post(req, res);
 
         const selectedCountry = getCountryByName(mappedCountries, countrySupportedViaOfflineOnly.marketName) as Country;
@@ -256,7 +256,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         req.body[FIELD_IDS.BUYER_COUNTRY] = countryUnsupported.marketName;
       });
 
-      it('should update the session with popluated with country object', async () => {
+      it('should update the session with populated with country object', async () => {
         await post(req, res);
 
         const selectedCountry = getCountryByName(mappedCountries, countryUnsupported.marketName) as Country;
