@@ -6,7 +6,7 @@ import createAuthenticationEntry from '../../helpers/create-authentication-entry
 import baseConfig from '../../keystone';
 import { ACCOUNT } from '../../constants';
 import { mockAccount } from '../../test-mocks';
-import { Account, AccountPasswordResetVariables, SuccessResponse } from '../../types';
+import { Account, AccountPasswordResetVariables, ApplicationRelationship, SuccessResponse } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -29,6 +29,7 @@ describe('custom-resolvers/account-password-reset', () => {
   let account: Account;
   let result: SuccessResponse;
   let variables: AccountPasswordResetVariables;
+  let authRetries;
 
   beforeEach(async () => {
     // wipe the accounts table so we have a clean slate.
@@ -38,16 +39,27 @@ describe('custom-resolvers/account-password-reset', () => {
       where: accounts,
     });
 
-    // wipe the entries table so we have a clean slate.
-    let entries = await context.query.Authentication.findMany();
+    // wipe the AuthenticationRetry table so we have a clean slate.
+    authRetries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
 
-    await context.query.Authentication.deleteMany({
-      where: entries,
+    await context.query.AuthenticationRetry.deleteMany({
+      where: authRetries,
     });
 
-    entries = await context.query.Authentication.findMany();
+    // create an AuthenticationRetry so we can assert it becomes wiped.
 
-    expect(entries.length).toEqual(0);
+    expect(authRetries.length).toEqual(0);
+
+    // wipe the Authentication table so we have a clean slate.
+    let authEntries = await context.query.Authentication.findMany();
+
+    await context.query.Authentication.deleteMany({
+      where: authEntries,
+    });
+
+    authEntries = await context.query.Authentication.findMany();
+
+    expect(authEntries.length).toEqual(0);
 
     // create an account
     account = (await context.query.Account.createOne({
@@ -84,6 +96,13 @@ describe('custom-resolvers/account-password-reset', () => {
     };
 
     expect(result).toEqual(expected);
+  });
+
+  test(`it should wipe the account's retry entires`, async () => {
+    // get the latest retries
+    authRetries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+
+    expect(authRetries.length).toEqual(0);
   });
 
   test('it should add an authentication entry', async () => {

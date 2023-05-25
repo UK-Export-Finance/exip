@@ -5,6 +5,7 @@ import getAccountByField from '../../helpers/get-account-by-field';
 import encryptPassword from '../../helpers/encrypt-password';
 import hasAccountUsedPasswordBefore from '../../helpers/account-has-used-password-before';
 import getPasswordHash from '../../helpers/get-password-hash';
+import deleteAuthenticationRetries from '../../helpers/delete-authentication-retries';
 import createAuthenticationEntry from '../../helpers/create-authentication-entry';
 import { Account, AccountPasswordResetVariables } from '../../types';
 
@@ -101,8 +102,11 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
 
     /**
      * Account is OK to proceed with password reset.
-     * 1) Add a new entry to the Authentication table
+     * 1) Wipe the retry entries
+     * 2) Add a new entry to the Authentication table
      */
+    await deleteAuthenticationRetries(context, accountId);
+
     const authEntry = {
       account: {
         connect: {
