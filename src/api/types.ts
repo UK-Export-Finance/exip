@@ -8,8 +8,22 @@ interface ApplicationRelationship {
   id: string;
 }
 
+interface ApplicationBusinessContactDetail extends ApplicationRelationship {
+  firstName: string;
+  lastName: string;
+  email: string;
+  position: string;
+}
+
 interface ApplicationBusiness extends ApplicationRelationship {
-  businessContactDetail: ApplicationRelationship;
+  businessContactDetail: ApplicationBusinessContactDetail;
+  goodsOrServicesSupplied: string;
+  totalYearsExporting: string;
+  totalEmployeesInternational: string;
+  totalEmployeesUK: string;
+  estimatedAnnualTurnover: string;
+  exportsTurnoverPercentage: string;
+  businessContactDetailId: string;
 }
 
 interface Country extends ApplicationRelationship {
@@ -275,6 +289,7 @@ interface InsuranceFeedbackVariables {
 interface AccountSignInResponse extends SuccessResponse {
   accountId?: string;
   resentVerificationEmail?: boolean;
+  isBlocked?: boolean;
 }
 
 interface AccountPasswordResetResponse extends SuccessResponse {
@@ -372,6 +387,8 @@ export {
   AddAndGetOtpResponse,
   Application,
   ApplicationBuyer,
+  ApplicationBusiness,
+  ApplicationBusinessContactDetail,
   ApplicationDeclaration,
   ApplicationEligibility,
   ApplicationCompany,

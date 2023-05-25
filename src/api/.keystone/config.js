@@ -396,6 +396,17 @@ var FEEDBACK = {
     veryDissatisfied: "Very dissatisfied"
   }
 };
+var XLSX_CONFIG = {
+  KEY: {
+    ID: "field",
+    COPY: "Field"
+  },
+  VALUE: {
+    ID: "answer",
+    COPY: "Answer"
+  },
+  COLUMN_WIDTH: 70
+};
 var ACCEPTED_FILE_TYPES = [".xlsx"];
 
 // helpers/update-application/index.ts
@@ -403,7 +414,7 @@ var timestamp = async (context, applicationId) => {
   try {
     console.info("Updating application updatedAt timestamp");
     const now = /* @__PURE__ */ new Date();
-    const application = await context.db.Application.updateOne({
+    const application2 = await context.db.Application.updateOne({
       where: {
         id: applicationId
       },
@@ -411,7 +422,7 @@ var timestamp = async (context, applicationId) => {
         updatedAt: now
       }
     });
-    return application;
+    return application2;
   } catch (err) {
     console.error(err);
     throw new Error(`Updating application updatedAt timestamp ${err}`);
@@ -1272,6 +1283,7 @@ var typeDefs = `
     expires: DateTime
     success: Boolean!
     resentVerificationEmail: Boolean
+    isBlocked: Boolean
   }
 
   type AddAndGetOtpResponse {
@@ -1627,27 +1639,27 @@ var passwordResetLink = async (urlOrigin, emailAddress, name, passwordResetHash)
     throw new Error(`Sending email for account password reset ${err}`);
   }
 };
-var applicationSubmitted = {
+var application = {
   /**
-   * applicationSubmitted.account
+   * application.submittedEmail
    * Send "application submitted" email to an account
    * @param {Object} ApplicationSubmissionEmailVariables
    * @returns {Object} callNotify response
    */
-  account: async (variables) => {
+  submittedEmail: async (variables) => {
     try {
-      console.info("Sending application submitted email to account");
+      console.info("Sending application submitted email to application owner or provided business contact");
       const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
       const { emailAddress } = variables;
       const response = await callNotify(templateId, emailAddress, variables);
       return response;
     } catch (err) {
       console.error(err);
-      throw new Error(`Sending application submitted email to account ${err}`);
+      throw new Error(`Sending application submitted email to to application owner or provided business contact ${err}`);
     }
   },
   /**
-   * applicationSubmitted.underwritingTeam
+   * application.underwritingTeam
    * Read XLSX file, generate a file buffer
    * Send "application submitted" email to the underwriting team with a link to XLSX
    * We send a file buffer to Notify and Notify generates a unique URL that is then rendered in the email.
@@ -1708,7 +1720,7 @@ var sendEmail = {
   confirmEmailAddress,
   securityCodeEmail,
   passwordResetLink,
-  applicationSubmitted,
+  application,
   documentsEmail,
   insuranceFeedbackEmail
 };
@@ -1766,6 +1778,27 @@ var createAnAccount = async (root, variables, context) => {
 };
 var create_an_account_default = createAnAccount;
 
+// helpers/get-authentication-retries-by-account-id/index.ts
+var getAuthenticationRetriesByAccountId = async (context, accountId) => {
+  console.info("Getting authentication retries by account ID");
+  try {
+    const retries = await context.db.AuthenticationRetry.findMany({
+      where: {
+        account: {
+          every: {
+            id: { equals: accountId }
+          }
+        }
+      }
+    });
+    return retries;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Getting authentication retries ${err}`);
+  }
+};
+var get_authentication_retries_by_account_id_default = getAuthenticationRetriesByAccountId;
+
 // custom-resolvers/mutations/delete-an-account.ts
 var deleteAnAccount = async (root, variables, context) => {
   console.info("Deleting account ", variables.email);
@@ -1778,15 +1811,7 @@ var deleteAnAccount = async (root, variables, context) => {
     }
     const { id: accountId } = account;
     console.info("Checking authentication retry entries");
-    const retries = await context.db.AuthenticationRetry.findMany({
-      where: {
-        account: {
-          every: {
-            id: { equals: accountId }
-          }
-        }
-      }
-    });
+    const retries = await get_authentication_retries_by_account_id_default(context, accountId);
     if (retries.length) {
       console.info("Deleting authentication retry entries");
       const retriesArray = retries.map((retry) => ({
@@ -1916,7 +1941,7 @@ var sendEmailConfirmEmailAddressMutation = async (root, variables, context) => {
 var send_email_confirm_email_address_default2 = sendEmailConfirmEmailAddressMutation;
 
 // custom-resolvers/mutations/account-sign-in.ts
-var import_date_fns4 = require("date-fns");
+var import_date_fns5 = require("date-fns");
 
 // helpers/get-password-hash/index.ts
 var import_crypto3 = __toESM(require("crypto"));
@@ -2009,6 +2034,86 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
 };
 var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
 
+// helpers/create-authentication-retry-entry/index.ts
+var createAuthenticationRetryEntry = async (context, accountId) => {
+  try {
+    console.info("Creating account authentication retry entry");
+    const now = /* @__PURE__ */ new Date();
+    const response = await context.db.AuthenticationRetry.createOne({
+      data: {
+        account: {
+          connect: {
+            id: accountId
+          }
+        },
+        createdAt: now
+      }
+    });
+    if (response.id) {
+      return {
+        success: true
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error(`Creating account authentication retry entry ${err}`);
+    throw new Error(`${err}`);
+  }
+};
+var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
+
+// helpers/should-block-account/index.ts
+var import_date_fns4 = require("date-fns");
+var { MAX_PASSWORD_RESET_TRIES, MAX_PASSWORD_RESET_TRIES_TIMEFRAME } = ACCOUNT2;
+var shouldBlockAccount = async (context, accountId) => {
+  console.info(`Checking account ${accountId} authentication retries`);
+  try {
+    const retries = await get_authentication_retries_by_account_id_default(context, accountId);
+    const now = /* @__PURE__ */ new Date();
+    const retriesInTimeframe = [];
+    retries.forEach((retry) => {
+      const retryDate = new Date(retry.createdAt);
+      const isWithinLast24Hours = (0, import_date_fns4.isWithinInterval)(retryDate, {
+        start: MAX_PASSWORD_RESET_TRIES_TIMEFRAME,
+        end: now
+      });
+      if (isWithinLast24Hours) {
+        retriesInTimeframe.push(retry.id);
+      }
+    });
+    if (retriesInTimeframe.length >= MAX_PASSWORD_RESET_TRIES) {
+      console.info(`Account ${accountId} authentication retries exceeds the threshold`);
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Checking account authentication retries  ${err}`);
+  }
+};
+var should_block_account_default = shouldBlockAccount;
+
+// helpers/block-account/index.ts
+var blockAccount = async (context, accountId) => {
+  console.info(`Blocking account ${accountId}`);
+  try {
+    const result = await context.db.Account.updateOne({
+      where: { id: accountId },
+      data: { isBlocked: true }
+    });
+    if (result.id) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Blocking account ${err}`);
+  }
+};
+var block_account_default = blockAccount;
+
 // custom-resolvers/mutations/account-sign-in.ts
 var { EMAIL: EMAIL2 } = ACCOUNT2;
 var accountSignIn = async (root, variables, context) => {
@@ -2021,41 +2126,58 @@ var accountSignIn = async (root, variables, context) => {
       return { success: false };
     }
     const account = accountData;
+    const { id: accountId } = account;
+    const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
+    if (!newRetriesEntry.success) {
+      return { success: false };
+    }
+    const needToBlockAccount = await should_block_account_default(context, accountId);
+    if (needToBlockAccount) {
+      const blocked = await block_account_default(context, accountId);
+      if (blocked) {
+        return {
+          success: false,
+          isBlocked: true,
+          accountId
+        };
+      }
+      return { success: false };
+    }
     if (is_valid_account_password_default(password2, account.salt, account.hash)) {
       if (!account.isVerified) {
         console.info("Unable to sign in account - account has not been verified yet");
         const now = /* @__PURE__ */ new Date();
-        const verificationHasExpired = (0, import_date_fns4.isAfter)(now, account.verificationExpiry);
+        const verificationHasExpired = (0, import_date_fns5.isAfter)(now, account.verificationExpiry);
         if (account.verificationHash && !verificationHasExpired) {
           console.info("Account has an unexpired verification token - resetting verification expiry");
           const accountUpdate = {
             verificationExpiry: EMAIL2.VERIFICATION_EXPIRY()
           };
           await context.db.Account.updateOne({
-            where: { id: account.id },
+            where: { id: accountId },
             data: accountUpdate
           });
           console.info("Account has an unexpired verification token - sending verification email");
-          const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, account.id);
+          const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
           if (emailResponse2.success) {
             return {
               success: false,
               resentVerificationEmail: true,
-              accountId: account.id
+              accountId
             };
           }
           return { success: false };
         }
-        console.info("Unable to sign in account - account has not been verification has expired");
+        console.info("Unable to sign in account - account has not been verified");
         return { success: false };
       }
-      const { securityCode } = await generate_otp_and_update_account_default(context, account.id);
+      const { securityCode } = await generate_otp_and_update_account_default(context, accountId);
       const name = get_full_name_string_default(account);
       const emailResponse = await emails_default.securityCodeEmail(email, name, securityCode);
       if (emailResponse.success) {
         return {
           ...emailResponse,
-          accountId: account.id
+          accountId
         };
       }
       return {
@@ -2101,7 +2223,7 @@ var accountSignInSendNewCode = async (root, variables, context) => {
 var account_sign_in_new_code_default = accountSignInSendNewCode;
 
 // custom-resolvers/mutations/verify-account-sign-in-code.ts
-var import_date_fns5 = require("date-fns");
+var import_date_fns6 = require("date-fns");
 
 // helpers/is-valid-otp/index.ts
 var import_crypto5 = __toESM(require("crypto"));
@@ -2127,6 +2249,25 @@ var isValidOTP = (securityCode, otpSalt, otpHash) => {
   }
 };
 var is_valid_otp_default = isValidOTP;
+
+// helpers/delete-authentication-retries/index.ts
+var deleteAuthenticationRetries = async (context, accountId) => {
+  console.info(`Deleting authentication retries for account ${accountId}`);
+  try {
+    const retries = await get_authentication_retries_by_account_id_default(context, accountId);
+    const retryIds = retries.map((obj) => ({
+      id: obj.id
+    }));
+    const result = await context.db.AuthenticationRetry.deleteMany({
+      where: retryIds
+    });
+    return result;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Deleting authentication retries ${err}`);
+  }
+};
+var delete_authentication_retries_default = deleteAuthenticationRetries;
 
 // helpers/create-jwt/index.ts
 var import_crypto6 = __toESM(require("crypto"));
@@ -2182,7 +2323,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
     }
     const { otpSalt, otpHash, otpExpiry } = account;
     const now = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns5.isAfter)(now, otpExpiry);
+    const hasExpired = (0, import_date_fns6.isAfter)(now, otpExpiry);
     if (hasExpired) {
       console.info("Unable to verify account sign in code - verification period has expired");
       return {
@@ -2192,6 +2333,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
     }
     const isValid = otpSalt && otpHash && is_valid_otp_default(securityCode, otpSalt, otpHash);
     if (isValid) {
+      await delete_authentication_retries_default(context, accountId);
       const jwt = create_jwt_default.JWT(accountId);
       const { sessionIdentifier } = jwt;
       const accountUpdate = {
@@ -2249,72 +2391,6 @@ var add_and_get_OTP_default = addAndGetOTP;
 
 // custom-resolvers/mutations/send-email-password-reset-link.ts
 var import_crypto7 = __toESM(require("crypto"));
-
-// helpers/create-authentication-retry-entry/index.ts
-var createAuthenticationRetryEntry = async (context, accountId) => {
-  try {
-    console.info("Creating account authentication retry entry");
-    const now = /* @__PURE__ */ new Date();
-    const response = await context.db.AuthenticationRetry.createOne({
-      data: {
-        account: {
-          connect: {
-            id: accountId
-          }
-        },
-        createdAt: now
-      }
-    });
-    if (response.id) {
-      return {
-        success: true
-      };
-    }
-    return {
-      success: false
-    };
-  } catch (err) {
-    console.error(`Creating account authentication retry entry ${err}`);
-    throw new Error(`${err}`);
-  }
-};
-var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
-
-// helpers/should-block-account/index.ts
-var import_date_fns6 = require("date-fns");
-var { MAX_PASSWORD_RESET_TRIES, MAX_PASSWORD_RESET_TRIES_TIMEFRAME } = ACCOUNT2;
-var shouldBlockAccount = async (context, accountId) => {
-  console.info(`Checking account ${accountId} password reset retries`);
-  const retries = await context.db.AuthenticationRetry.findMany({
-    where: {
-      account: {
-        every: {
-          id: { equals: accountId }
-        }
-      }
-    }
-  });
-  const now = /* @__PURE__ */ new Date();
-  const retriesInTimeframe = [];
-  retries.forEach((retry) => {
-    const retryDate = new Date(retry.createdAt);
-    const isWithinLast24Hours = (0, import_date_fns6.isWithinInterval)(retryDate, {
-      start: MAX_PASSWORD_RESET_TRIES_TIMEFRAME,
-      end: now
-    });
-    if (isWithinLast24Hours) {
-      retriesInTimeframe.push(retry.id);
-    }
-  });
-  if (retriesInTimeframe.length >= MAX_PASSWORD_RESET_TRIES) {
-    console.info(`Account ${accountId} password reset retries exceeds the threshold`);
-    return true;
-  }
-  return false;
-};
-var should_block_account_default = shouldBlockAccount;
-
-// custom-resolvers/mutations/send-email-password-reset-link.ts
 var {
   ENCRYPTION: {
     STRING_TYPE: STRING_TYPE7,
@@ -2338,18 +2414,20 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
     if (!newRetriesEntry.success) {
       return { success: false };
     }
-    const blockAccount = await should_block_account_default(context, accountId);
-    if (blockAccount) {
-      console.info(`Blocking account ${accountId}`);
-      await context.db.Account.updateOne({
-        where: { id: accountId },
-        data: { isBlocked: true }
-      });
-      return {
-        success: false,
-        isBlocked: true,
-        accountId
-      };
+    const needToBlockAccount = await should_block_account_default(context, accountId);
+    if (needToBlockAccount) {
+      try {
+        const blocked = await block_account_default(context, accountId);
+        if (blocked) {
+          return {
+            success: false,
+            isBlocked: true,
+            accountId
+          };
+        }
+      } catch (err) {
+        return { success: false };
+      }
     }
     console.info("Generating password reset hash");
     const passwordResetHash = import_crypto7.default.pbkdf2Sync(email, account.salt, ITERATIONS6, KEY_LENGTH6, DIGEST_ALGORITHM6).toString(STRING_TYPE7);
@@ -2437,6 +2515,11 @@ var accountPasswordReset = async (root, variables, context) => {
       console.info("Unable to reset account password - account does not exist");
       return { success: false };
     }
+    const { isBlocked } = account;
+    if (isBlocked) {
+      console.info("Unable to reset account password - account is blocked");
+      return { success: false };
+    }
     const { id: accountId, passwordResetHash, passwordResetExpiry, salt: currentSalt, hash: currentHash } = account;
     if (!passwordResetHash || !passwordResetExpiry) {
       console.info("Unable to reset account password - reset hash or expiry does not exist");
@@ -2506,12 +2589,12 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
   try {
     console.info("Deleting application by reference number");
     const { referenceNumber } = variables;
-    const application = await context.db.Application.findMany({
+    const application2 = await context.db.Application.findMany({
       where: {
         referenceNumber: { equals: referenceNumber }
       }
     });
-    const { id } = application[0];
+    const { id } = application2[0];
     const deleteResponse = await context.db.Application.deleteOne({
       where: {
         id
@@ -2621,24 +2704,24 @@ var get_country_by_field_default = getCountryByField;
 
 // helpers/get-populated-application/index.ts
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
-var getPopulatedApplication = async (context, application) => {
+var getPopulatedApplication = async (context, application2) => {
   console.info("Getting populated application");
-  const { eligibilityId, ownerId, policyAndExportId, companyId, businessId, brokerId, buyerId, declarationId } = application;
+  const { eligibilityId, ownerId, policyAndExportId, companyId, businessId, brokerId, buyerId, declarationId } = application2;
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId }
   });
   if (!eligibility) {
-    throw new Error(generateErrorMessage("eligibility", application.id));
+    throw new Error(generateErrorMessage("eligibility", application2.id));
   }
   const account = await get_account_by_id_default(context, ownerId);
   if (!account) {
-    throw new Error(generateErrorMessage("account", application.id));
+    throw new Error(generateErrorMessage("account", application2.id));
   }
   const policyAndExport = await context.db.PolicyAndExport.findOne({
     where: { id: policyAndExportId }
   });
   if (!policyAndExport) {
-    throw new Error(generateErrorMessage("policyAndExport", application.id));
+    throw new Error(generateErrorMessage("policyAndExport", application2.id));
   }
   const finalDestinationCountry = await get_country_by_field_default(context, "isoCode", policyAndExport.finalDestinationCountryCode);
   const populatedPolicyAndExport = {
@@ -2649,7 +2732,7 @@ var getPopulatedApplication = async (context, application) => {
     where: { id: companyId }
   });
   if (!company) {
-    throw new Error(generateErrorMessage("company", application.id));
+    throw new Error(generateErrorMessage("company", application2.id));
   }
   const companySicCodes = await context.db.CompanySicCode.findMany({
     where: {
@@ -2659,7 +2742,7 @@ var getPopulatedApplication = async (context, application) => {
     }
   });
   if (!company) {
-    throw new Error(generateErrorMessage("companySicCode", application.id));
+    throw new Error(generateErrorMessage("companySicCode", application2.id));
   }
   const companyAddress = await context.db.CompanyAddress.findOne({
     where: { id: company.registeredOfficeAddressId }
@@ -2672,25 +2755,35 @@ var getPopulatedApplication = async (context, application) => {
     where: { id: businessId }
   });
   if (!business) {
-    throw new Error(generateErrorMessage("business", application.id));
+    throw new Error(generateErrorMessage("business", application2.id));
   }
+  const businessContactDetail = await context.db.BusinessContactDetail.findOne({
+    where: { id: business?.businessContactDetailId }
+  });
+  if (!businessContactDetail) {
+    throw new Error(generateErrorMessage("businessContactDetail", application2.id));
+  }
+  const populatedBusiness = {
+    ...business,
+    businessContactDetail
+  };
   const broker = await context.db.Broker.findOne({
     where: { id: brokerId }
   });
   if (!broker) {
-    throw new Error(generateErrorMessage("broker", application.id));
+    throw new Error(generateErrorMessage("broker", application2.id));
   }
   const buyer = await context.db.Buyer.findOne({
     where: { id: buyerId }
   });
   if (!buyer) {
-    throw new Error(generateErrorMessage("buyer", application.id));
+    throw new Error(generateErrorMessage("buyer", application2.id));
   }
   const buyerCountry = await context.db.Country.findOne({
     where: { id: buyer.countryId }
   });
   if (!buyerCountry) {
-    throw new Error(generateErrorMessage("populated buyer", application.id));
+    throw new Error(generateErrorMessage("populated buyer", application2.id));
   }
   const populatedBuyer = {
     ...buyer,
@@ -2700,10 +2793,10 @@ var getPopulatedApplication = async (context, application) => {
     where: { id: declarationId }
   });
   if (!declaration) {
-    throw new Error(generateErrorMessage("declaration", application.id));
+    throw new Error(generateErrorMessage("declaration", application2.id));
   }
   const populatedApplication = {
-    ...application,
+    ...application2,
     eligibility: {
       ...eligibility,
       buyerCountry
@@ -2712,7 +2805,7 @@ var getPopulatedApplication = async (context, application) => {
     owner: account,
     company: populatedCompany,
     companySicCodes,
-    business,
+    business: populatedBusiness,
     broker,
     buyer: populatedBuyer,
     declaration
@@ -2727,8 +2820,8 @@ var {
     SUBMISSION: { EXPORTER, UNDERWRITING_TEAM }
   }
 } = EMAIL_TEMPLATE_IDS;
-var getApplicationSubmittedEmailTemplateIds = (application) => {
-  const { buyer, declaration } = application;
+var getApplicationSubmittedEmailTemplateIds = (application2) => {
+  const { buyer, declaration } = application2;
   const templateIds = {
     underwritingTeam: "",
     account: ""
@@ -2762,33 +2855,63 @@ var getApplicationSubmittedEmailTemplateIds = (application) => {
 };
 var get_application_submitted_email_template_ids_default = getApplicationSubmittedEmailTemplateIds;
 
+// helpers/is-owner-same-as-business-contact/index.ts
+var isOwnerSameAsBusinessContact = (ownerEmail, contactEmail) => ownerEmail === contactEmail;
+var is_owner_same_as_business_contact_default = isOwnerSameAsBusinessContact;
+
 // emails/send-application-submitted-emails/index.ts
-var send2 = async (application, xlsxPath) => {
+var send2 = async (application2, xlsxPath) => {
   try {
-    const { referenceNumber, owner, company, buyer, policyAndExport } = application;
+    const { referenceNumber, owner, company, buyer, policyAndExport, business } = application2;
+    const { businessContactDetail } = business;
     const { email } = owner;
-    const sendEmailVars = {
-      emailAddress: email,
-      name: get_full_name_string_default(owner),
+    const sharedEmailVars = {
       referenceNumber,
       buyerName: buyer.companyOrOrganisationName,
       buyerLocation: buyer.country?.name,
       companyName: company.companyName,
       requestedStartDate: format_date_default(policyAndExport.requestedStartDate)
     };
-    const accountSubmittedResponse = await emails_default.applicationSubmitted.account(sendEmailVars);
+    const sendEmailVars = {
+      ...sharedEmailVars,
+      name: get_full_name_string_default(owner),
+      emailAddress: email
+    };
+    const sendContactEmailVars = {
+      ...sharedEmailVars,
+      name: get_full_name_string_default(businessContactDetail),
+      emailAddress: businessContactDetail.email
+    };
+    const isOwnerSameAsContact = is_owner_same_as_business_contact_default(email, businessContactDetail.email);
+    console.info("Sending application submitted email to application account owner: ", sendEmailVars.emailAddress);
+    const accountSubmittedResponse = await emails_default.application.submittedEmail(sendEmailVars);
     if (!accountSubmittedResponse.success) {
       throw new Error("Sending application submitted email to owner/account");
     }
-    const templateIds = get_application_submitted_email_template_ids_default(application);
-    const underwritingTeamSubmittedResponse = await emails_default.applicationSubmitted.underwritingTeam(sendEmailVars, xlsxPath, templateIds.underwritingTeam);
+    if (!isOwnerSameAsContact) {
+      console.info("Sending application submitted email to business contact email: ", sendContactEmailVars.emailAddress);
+      const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars);
+      if (!contactSubmittedResponse.success) {
+        throw new Error("Sending application submitted email to contact");
+      }
+    }
+    const templateIds = get_application_submitted_email_template_ids_default(application2);
+    const underwritingTeamSubmittedResponse = await emails_default.application.underwritingTeam(sendEmailVars, xlsxPath, templateIds.underwritingTeam);
     if (!underwritingTeamSubmittedResponse.success) {
       throw new Error("Sending application submitted email to underwriting team");
     }
     if (templateIds.account) {
+      console.info("Sending documents email to application owner: ", sendEmailVars.emailAddress);
       const documentsResponse = await emails_default.documentsEmail(sendEmailVars, templateIds.account);
       if (!documentsResponse.success) {
-        throw new Error(`Sending application submitted emails ${documentsResponse}`);
+        throw new Error(`Sending application documents emails ${documentsResponse}`);
+      }
+      if (!isOwnerSameAsContact) {
+        console.info("Sending documents email to business contact: ", sendContactEmailVars.emailAddress);
+        const contactDocumentsResponse = await emails_default.documentsEmail(sendContactEmailVars, templateIds.account);
+        if (!contactDocumentsResponse.success) {
+          throw new Error(`Sending application documents emails to contact ${documentsResponse}`);
+        }
       }
     }
     return {
@@ -2808,11 +2931,12 @@ var send_application_submitted_emails_default = applicationSubmittedEmails;
 var import_exceljs = __toESM(require("exceljs"));
 
 // generate-xlsx/map-application-to-XLSX/helpers/xlsx-row/index.ts
+var { KEY, VALUE } = XLSX_CONFIG;
 var xlsxRow = (fieldName, answer) => {
   const value = answer || answer === 0 ? answer : "";
   const row = {
-    field: fieldName,
-    answer: String(value)
+    [KEY.ID]: fieldName,
+    [VALUE.ID]: String(value)
   };
   return row;
 };
@@ -3220,14 +3344,14 @@ var format_time_of_day_default = formatTimeOfDay;
 // generate-xlsx/map-application-to-XLSX/map-key-information/index.ts
 var { FIELDS: FIELDS2 } = XLSX;
 var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL5 } = account_default;
-var mapKeyInformation = (application) => {
+var mapKeyInformation = (application2) => {
   const mapped = [
-    xlsx_row_default(REFERENCE_NUMBER.SUMMARY.TITLE, application.referenceNumber),
-    xlsx_row_default(DATE_SUBMITTED.SUMMARY.TITLE, format_date_default(application.submissionDate, "dd-MM-yyyy")),
-    xlsx_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application.submissionDate)),
-    xlsx_row_default(FIELDS2[FIRST_NAME2], application.owner[FIRST_NAME2]),
-    xlsx_row_default(FIELDS2[LAST_NAME2], application.owner[LAST_NAME2]),
-    xlsx_row_default(FIELDS2[EMAIL5], application.owner[EMAIL5])
+    xlsx_row_default(REFERENCE_NUMBER.SUMMARY.TITLE, application2.referenceNumber),
+    xlsx_row_default(DATE_SUBMITTED.SUMMARY.TITLE, format_date_default(application2.submissionDate, "dd-MM-yyyy")),
+    xlsx_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application2.submissionDate)),
+    xlsx_row_default(FIELDS2[FIRST_NAME2], application2.owner[FIRST_NAME2]),
+    xlsx_row_default(FIELDS2[LAST_NAME2], application2.owner[LAST_NAME2]),
+    xlsx_row_default(FIELDS2[EMAIL5], application2.owner[EMAIL5])
   ];
   return mapped;
 };
@@ -3252,13 +3376,13 @@ var {
     TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 }
   }
 } = insurance_default;
-var mapSecondaryKeyInformation = (application) => {
-  const { policyAndExport } = application;
+var mapSecondaryKeyInformation = (application2) => {
+  const { policyAndExport } = application2;
   const mapped = [
     xlsx_row_default(KEY_INFORMATION),
-    xlsx_row_default(FIELDS3[EXPORTER_COMPANY_NAME2], application.company[EXPORTER_COMPANY_NAME2]),
-    xlsx_row_default(FIELDS3[COUNTRY2], application.buyer[COUNTRY2].name),
-    xlsx_row_default(FIELDS3[BUYER_COMPANY_NAME2], application.buyer[BUYER_COMPANY_NAME2]),
+    xlsx_row_default(FIELDS3[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
+    xlsx_row_default(FIELDS3[COUNTRY2], application2.buyer[COUNTRY2].name),
+    xlsx_row_default(FIELDS3[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
     xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE2].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE2])
   ];
   return mapped;
@@ -3301,8 +3425,8 @@ var {
   },
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION }
 } = insurance_default.POLICY_AND_EXPORTS;
-var mapPolicyAndExportIntro = (application) => {
-  const { policyAndExport } = application;
+var mapPolicyAndExportIntro = (application2) => {
+  const { policyAndExport } = application2;
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.POLICY_AND_EXPORT, ""),
     xlsx_row_default(String(CONTENT_STRINGS2[POLICY_TYPE3].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE3]),
@@ -3310,15 +3434,15 @@ var mapPolicyAndExportIntro = (application) => {
   ];
   return mapped;
 };
-var mapSinglePolicyFields = (application) => {
-  const { policyAndExport } = application;
+var mapSinglePolicyFields = (application2) => {
+  const { policyAndExport } = application2;
   return [
     xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[CONTRACT_COMPLETION_DATE2].SUMMARY?.TITLE), format_date_default(policyAndExport[CONTRACT_COMPLETION_DATE2], "dd-MMM-yy")),
     xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE))
   ];
 };
-var mapMultiplePolicyFields = (application) => {
-  const { policyAndExport } = application;
+var mapMultiplePolicyFields = (application2) => {
+  const { policyAndExport } = application2;
   return [
     xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), map_month_string_default(policyAndExport[TOTAL_MONTHS_OF_COVER])),
     xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
@@ -3328,8 +3452,8 @@ var mapMultiplePolicyFields = (application) => {
     )
   ];
 };
-var mapPolicyAndExportOutro = (application) => {
-  const { policyAndExport } = application;
+var mapPolicyAndExportOutro = (application2) => {
+  const { policyAndExport } = application2;
   const mapped = [
     xlsx_row_default(String(CONTENT_STRINGS2[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policyAndExport[CREDIT_PERIOD_WITH_BUYER]),
     xlsx_row_default(String(CONTENT_STRINGS2[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policyAndExport[POLICY_CURRENCY_CODE]),
@@ -3338,16 +3462,16 @@ var mapPolicyAndExportOutro = (application) => {
   ];
   return mapped;
 };
-var mapPolicyAndExport = (application) => {
-  let mapped = mapPolicyAndExportIntro(application);
-  const policyType = application.policyAndExport[POLICY_TYPE3];
+var mapPolicyAndExport = (application2) => {
+  let mapped = mapPolicyAndExportIntro(application2);
+  const policyType = application2.policyAndExport[POLICY_TYPE3];
   if (isSinglePolicyType(policyType)) {
-    mapped = [...mapped, ...mapSinglePolicyFields(application)];
+    mapped = [...mapped, ...mapSinglePolicyFields(application2)];
   }
   if (isMultiPolicyType(policyType)) {
-    mapped = [...mapped, ...mapMultiplePolicyFields(application)];
+    mapped = [...mapped, ...mapMultiplePolicyFields(application2)];
   }
-  mapped = [...mapped, ...mapPolicyAndExportOutro(application)];
+  mapped = [...mapped, ...mapPolicyAndExportOutro(application2)];
   return mapped;
 };
 var map_policy_and_export_default = mapPolicyAndExport;
@@ -3390,8 +3514,8 @@ var mapSicCodes2 = (sicCodes) => {
   });
   return mapped;
 };
-var mapBroker = (application) => {
-  const { broker } = application;
+var mapBroker = (application2) => {
+  const { broker } = application2;
   let mapped = [xlsx_row_default(XLSX.FIELDS[USING_BROKER3], broker[USING_BROKER3])];
   if (broker[USING_BROKER3] === ANSWERS.YES) {
     mapped = [
@@ -3406,8 +3530,8 @@ var mapBroker = (application) => {
   }
   return mapped;
 };
-var mapExporter = (application) => {
-  const { company, companySicCodes, business } = application;
+var mapExporter = (application2) => {
+  const { company, companySicCodes, business } = application2;
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.EXPORTER_BUSINESS, ""),
     // company fields
@@ -3429,7 +3553,7 @@ var mapExporter = (application) => {
     xlsx_row_default(XLSX.FIELDS[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
     xlsx_row_default(CONTENT_STRINGS3[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
     // broker fields
-    ...mapBroker(application)
+    ...mapBroker(application2)
   ];
   return mapped;
 };
@@ -3444,8 +3568,8 @@ var {
   COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, REGISTRATION_NUMBER, WEBSITE: WEBSITE4, FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, POSITION, EMAIL: EMAIL7, CAN_CONTACT_BUYER },
   WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER }
 } = your_buyer_default;
-var mapBuyer = (application) => {
-  const { buyer } = application;
+var mapBuyer = (application2) => {
+  const { buyer } = application2;
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.BUYER, ""),
     xlsx_row_default(XLSX.FIELDS[NAME2], buyer[NAME2]),
@@ -3485,8 +3609,8 @@ var {
   PRE_CREDIT_PERIOD: PRE_CREDIT_PERIOD2,
   COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2
 } = insurance_default.ELIGIBILITY;
-var mapEligibility = (application) => {
-  const { eligibility } = application;
+var mapEligibility = (application2) => {
+  const { eligibility } = application2;
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.ELIGIBILITY, ""),
     xlsx_row_default(FIELDS_ELIGIBILITY[BUYER_COUNTRY2].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY2].name),
@@ -3504,21 +3628,21 @@ var mapEligibility = (application) => {
 var map_eligibility_default = mapEligibility;
 
 // generate-xlsx/map-application-to-XLSX/index.ts
-var mapApplicationToXLSX = (application) => {
+var mapApplicationToXLSX = (application2) => {
   try {
     const mapped = [
       xlsx_row_seperator_default,
-      ...map_key_information_default(application),
+      ...map_key_information_default(application2),
       xlsx_row_seperator_default,
-      ...map_secondary_key_information_default(application),
+      ...map_secondary_key_information_default(application2),
       xlsx_row_seperator_default,
-      ...map_policy_and_export_default(application),
+      ...map_policy_and_export_default(application2),
       xlsx_row_seperator_default,
-      ...map_exporter_default(application),
+      ...map_exporter_default(application2),
       xlsx_row_seperator_default,
-      ...map_buyer_default(application),
+      ...map_buyer_default(application2),
       xlsx_row_seperator_default,
-      ...map_eligibility_default(application)
+      ...map_eligibility_default(application2)
     ];
     return mapped;
   } catch (err) {
@@ -3528,23 +3652,28 @@ var mapApplicationToXLSX = (application) => {
 };
 var map_application_to_XLSX_default = mapApplicationToXLSX;
 
+// generate-xlsx/header-columns/index.ts
+var { KEY: KEY2, VALUE: VALUE2, COLUMN_WIDTH } = XLSX_CONFIG;
+var XLSX_HEADER_COLUMNS = [
+  { key: KEY2.ID, header: KEY2.COPY, width: COLUMN_WIDTH },
+  { key: VALUE2.ID, header: VALUE2.COPY, width: COLUMN_WIDTH }
+];
+var header_columns_default = XLSX_HEADER_COLUMNS;
+
 // generate-xlsx/index.ts
-var XLSX2 = (application) => {
+var XLSX2 = (application2) => {
   try {
     console.info("Generating XLSX file");
-    const { referenceNumber } = application;
+    const { referenceNumber } = application2;
     const refNumber = String(referenceNumber);
     return new Promise((resolve) => {
       const filePath = `XLSX/${refNumber}.xlsx`;
-      const xlsxData = map_application_to_XLSX_default(application);
+      const xlsxData = map_application_to_XLSX_default(application2);
       console.info("Generating XLSX file - creating a new workbook");
       const workbook = new import_exceljs.default.Workbook();
       console.info("Generating XLSX file - adding worksheet to workbook");
       const worksheet = workbook.addWorksheet(refNumber);
-      worksheet.columns = [
-        { header: "Field", key: "field", width: 70 },
-        { header: "Answer", key: "answer", width: 70 }
-      ];
+      worksheet.columns = header_columns_default;
       console.info("Generating XLSX file - adding rows to worksheet");
       xlsxData.forEach((row) => {
         worksheet.addRow(row);
@@ -3565,13 +3694,13 @@ var generate_xlsx_default = generate2;
 var submitApplication = async (root, variables, context) => {
   try {
     console.info("Submitting application");
-    const application = await context.db.Application.findOne({
+    const application2 = await context.db.Application.findOne({
       where: { id: variables.applicationId }
     });
-    if (application) {
-      const hasDraftStatus = application.status === APPLICATION.STATUS.DRAFT;
+    if (application2) {
+      const hasDraftStatus = application2.status === APPLICATION.STATUS.DRAFT;
       const now = /* @__PURE__ */ new Date();
-      const validSubmissionDate = (0, import_date_fns8.isAfter)(new Date(application.submissionDeadline), now);
+      const validSubmissionDate = (0, import_date_fns8.isAfter)(new Date(application2.submissionDeadline), now);
       const canSubmit = hasDraftStatus && validSubmissionDate;
       if (canSubmit) {
         const update = {
@@ -3580,7 +3709,7 @@ var submitApplication = async (root, variables, context) => {
           submissionDate: now
         };
         const updatedApplication = await context.db.Application.updateOne({
-          where: { id: application.id },
+          where: { id: application2.id },
           data: update
         });
         const populatedApplication = await get_populated_application_default(context, updatedApplication);

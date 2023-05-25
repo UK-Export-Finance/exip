@@ -52,7 +52,7 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
         const [firstAccount] = data.accounts;
         account = firstAccount;
 
-        cy.completeAndSubmitSignInAccountForm({ assertSuccessUrl: false });
+        cy.completeAndSubmitSignInAccountForm({ assertRedirectUrl: false });
       });
     });
 

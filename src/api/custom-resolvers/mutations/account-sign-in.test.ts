@@ -4,12 +4,13 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import { ACCOUNT } from '../../constants';
 import accountSignIn from './account-sign-in';
 import baseConfig from '../../keystone';
+import createAuthenticationRetryEntry from '../../helpers/create-authentication-retry-entry';
 import confirmEmailAddressEmail from '../../helpers/send-email-confirm-email-address';
 import generate from '../../helpers/generate-otp';
 import getFullNameString from '../../helpers/get-full-name-string';
 import sendEmail from '../../emails';
 import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../test-mocks';
-import { Account, AccountSignInResponse } from '../../types';
+import { Account, AccountSignInResponse, ApplicationRelationship } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -19,10 +20,11 @@ dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
 
-const { EMAIL } = ACCOUNT;
+const { EMAIL, MAX_PASSWORD_RESET_TRIES } = ACCOUNT;
 
 describe('custom-resolvers/account-sign-in', () => {
   let account: Account;
+  let retries: Array<ApplicationRelationship>;
 
   jest.mock('../../emails');
   jest.mock('../../helpers/generate-otp');
@@ -47,11 +49,18 @@ describe('custom-resolvers/account-sign-in', () => {
   let result: AccountSignInResponse;
 
   beforeAll(async () => {
-    // wipe the table so we have a clean slate.
+    // wipe the account table so we have a clean slate.
     const accounts = await context.query.Account.findMany();
 
     await context.query.Account.deleteMany({
       where: accounts,
+    });
+
+    // wipe the AuthenticationRetry table so we have a clean slate.
+    retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+
+    await context.query.AuthenticationRetry.deleteMany({
+      where: retries,
     });
 
     // create an account
@@ -162,6 +171,13 @@ describe('custom-resolvers/account-sign-in', () => {
       beforeEach(async () => {
         jest.resetAllMocks();
 
+        // wipe the AuthenticationRetry table so we have a clean slate.
+        retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+
+        await context.query.AuthenticationRetry.deleteMany({
+          where: retries,
+        });
+
         const now = new Date();
 
         const milliseconds = 300000;
@@ -200,6 +216,60 @@ describe('custom-resolvers/account-sign-in', () => {
       const expected = { success: false };
 
       expect(result).toEqual(expected);
+    });
+
+    test('it should retain the added authentication retry entry', async () => {
+      // wipe the AuthenticationRetry table so we have a clean slate.
+      retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+
+      await context.query.AuthenticationRetry.deleteMany({
+        where: retries,
+      });
+
+      await accountSignIn({}, variables, context);
+
+      // get the latest retries
+      retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+
+      expect(retries.length).toEqual(1);
+    });
+  });
+
+  describe(`when the account has ${MAX_PASSWORD_RESET_TRIES} entries in the AuthenticationRetry table`, () => {
+    beforeEach(async () => {
+      // wipe the AuthenticationRetry table so we have a clean slate.
+      retries = await context.query.AuthenticationRetry.findMany();
+
+      await context.query.AuthenticationRetry.deleteMany({
+        where: retries,
+      });
+
+      // generate an array of promises to create retry entries
+      const entriesToCreate = [...Array(MAX_PASSWORD_RESET_TRIES)].map(async () => createAuthenticationRetryEntry(context, account.id));
+
+      await Promise.all(entriesToCreate);
+
+      result = await accountSignIn({}, variables, context);
+    });
+
+    it('should return success=false, isBlocked=true and accountId', async () => {
+      const expected = {
+        success: false,
+        isBlocked: true,
+        accountId: account.id,
+      };
+
+      expect(result).toEqual(expected);
+    });
+
+    it('should mark the account as isBlocked=true', async () => {
+      // get the latest account
+      account = (await context.query.Account.findOne({
+        where: { id: account.id },
+        query: 'id isBlocked',
+      })) as Account;
+
+      expect(account.isBlocked).toEqual(true);
     });
   });
 

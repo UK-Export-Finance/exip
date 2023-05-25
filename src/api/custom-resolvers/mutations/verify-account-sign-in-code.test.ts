@@ -10,7 +10,7 @@ import generateOTPAndUpdateAccount from '../../helpers/generate-otp-and-update-a
 import baseConfig from '../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import { mockAccount } from '../../test-mocks';
-import { Account, VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../../types';
+import { Account, ApplicationRelationship, VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -29,6 +29,7 @@ const {
 describe('custom-resolvers/verify-account-sign-in-code', () => {
   let account: Account;
   let updatedAccount: Account;
+  let retries: Array<ApplicationRelationship>;
   let variables: VerifyAccountSignInCodeVariables;
   let result: VerifyAccountSignInCodeResponse;
 
@@ -48,6 +49,13 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
       data: mockAccount,
       query: 'id firstName lastName email salt hash verificationHash sessionExpiry',
     })) as Account;
+
+    // wipe the AuthenticationRetry table so we have a clean slate.
+    retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+
+    await context.query.AuthenticationRetry.deleteMany({
+      where: retries,
+    });
 
     // generate OTP and update the account
     const { securityCode } = await generateOTPAndUpdateAccount(context, account.id);
@@ -81,6 +89,13 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
   test('it should return JWT', async () => {
     expect(result.token).toEqual(mockJWT.token);
     expect(result.sessionIdentifier).toEqual(mockJWT.sessionIdentifier);
+  });
+
+  test(`it should wipe the account's retry entires`, async () => {
+    // get the latest retries
+    retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+
+    expect(retries.length).toEqual(0);
   });
 
   it('should save a session identifier', () => {

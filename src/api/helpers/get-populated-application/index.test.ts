@@ -7,6 +7,7 @@ import getPopulatedApplication, { generateErrorMessage } from '.';
 import { createFullApplication } from '../../test-helpers';
 import mockCountries from '../../test-mocks/mock-countries';
 import { Application } from '../../types';
+import mockApplication from '../../test-mocks/mock-application';
 
 const dbUrl = String(process.env.DATABASE_URL);
 const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
@@ -57,6 +58,19 @@ describe('api/helpers/get-populated-application', () => {
 
     expect(result.buyer.country?.name).toEqual(expectedCountry.name);
     expect(result.buyer.country?.isoCode).toEqual(expectedCountry.isoCode);
+  });
+
+  it('should return an application with populated businessContactDetail object in business', async () => {
+    const result = await getPopulatedApplication(context, applicationIds);
+
+    const expectedBusinessContactDetail = mockApplication.business.businessContactDetail;
+
+    const { firstName, lastName, email, position } = result.business.businessContactDetail;
+
+    expect(firstName).toEqual(expectedBusinessContactDetail.firstName);
+    expect(lastName).toEqual(expectedBusinessContactDetail.lastName);
+    expect(email).toEqual(expectedBusinessContactDetail.email);
+    expect(position).toEqual(expectedBusinessContactDetail.position);
   });
 
   it('should throw an error when eligibility does not exist', async () => {

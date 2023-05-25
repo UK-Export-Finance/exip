@@ -1,8 +1,16 @@
 import { Context, Application } from '.keystone/types'; // eslint-disable-line
-import { mockApplicationEligibility, mockSinglePolicyAndExport } from '../test-mocks/mock-application';
+import { mockApplicationEligibility, mockSinglePolicyAndExport, mockBusiness, mockBusinessContactDetail } from '../test-mocks/mock-application';
 import { mockAccount, mockBuyer, mockCompany, mockCompanySicCode, mockApplicationDeclaration } from '../test-mocks';
 import mockCountries from '../test-mocks/mock-countries';
-import { Account, ApplicationBuyer, ApplicationCompany, ApplicationCompanySicCode, ApplicationDeclaration } from '../types';
+import {
+  Account,
+  ApplicationBuyer,
+  ApplicationCompany,
+  ApplicationCompanySicCode,
+  ApplicationDeclaration,
+  ApplicationBusiness,
+  ApplicationBusinessContactDetail,
+} from '../types';
 
 /**
  * updateBuyer
@@ -119,6 +127,26 @@ export const createFullApplication = async (context: Context) => {
     query: 'id',
   })) as ApplicationCompanySicCode;
 
+  const businessContactDetail = (await context.query.BusinessContactDetail.createOne({
+    data: {
+      ...mockBusinessContactDetail,
+      business: {
+        connect: {
+          id: application.business.id,
+        },
+      },
+    },
+    query: 'id firstName lastName email',
+  })) as ApplicationBusinessContactDetail;
+
+  const business = (await context.query.Business.updateOne({
+    where: {
+      id: application.business.id,
+    },
+    data: mockBusiness,
+    query: 'id businessContactDetail { id firstName lastName email }',
+  })) as ApplicationBusiness;
+
   // update the declaration so we have a full data set.
   const declaration = (await context.query.Declaration.updateOne({
     where: {
@@ -135,6 +163,8 @@ export const createFullApplication = async (context: Context) => {
     company,
     buyer,
     declaration,
+    business,
+    businessContactDetail,
   };
 };
 
