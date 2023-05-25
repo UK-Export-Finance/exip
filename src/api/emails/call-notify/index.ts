@@ -1,4 +1,4 @@
-import notify from '../../integrations/notify'
+import notify from '../../integrations/notify';
 import { EmailResponse } from '../../types';
 
 /**

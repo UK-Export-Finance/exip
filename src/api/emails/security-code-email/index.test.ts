@@ -10,7 +10,7 @@ describe('emails/security-code-email', () => {
   const { email } = mockAccount;
 
   const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.SECURITY_CODE;
-  
+
   const mockSecurityCode = '123456';
 
   const fullName = getFullNameString(mockAccount);

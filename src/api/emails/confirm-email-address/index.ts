@@ -1,5 +1,6 @@
 import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import { callNotify } from '../call-notify';
+import { EmailResponse } from '../../types';
 
 /**
  * confirmEmailAddress
