@@ -3350,8 +3350,8 @@ var TIME_SUBMITTED = {
 // generate-xlsx/map-application-to-XLSX/helpers/format-time-of-day/index.ts
 var formatTimeOfDay = (date) => {
   const fullDate = new Date(date);
-  const utcHour = fullDate.getUTCHours();
-  return `${utcHour}:${fullDate.getMinutes()}`;
+  const hour = fullDate.getHours();
+  return `${hour}:${fullDate.getMinutes()}`;
 };
 var format_time_of_day_default = formatTimeOfDay;
 

@@ -6,9 +6,9 @@ describe('api/generate-xlsx/map-application-to-xlsx/helpers/format-time-of-day',
   it('should return a formatted timme', () => {
     const result = formatTimeOfDay(mockTimestamp);
 
-    const utcHour = mockTimestamp.getUTCHours();
+    const hour = mockTimestamp.getHours();
 
-    const expected = `${utcHour}:${mockTimestamp.getMinutes()}`;
+    const expected = `${hour}:${mockTimestamp.getMinutes()}`;
 
     expect(result).toEqual(expected);
   });
