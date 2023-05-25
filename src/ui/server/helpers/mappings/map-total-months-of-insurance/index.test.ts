@@ -38,7 +38,7 @@ describe('server/helpers/mappings/map-total-months-of-insurance', () => {
     it('should return an array of mapped objects with selected option and no default option', () => {
       const mockSimpleMonthOptions = [0, 1, 2];
 
-      const mockSelectedValue = mockSimpleMonthOptions[2];
+      const { 2: mockSelectedValue } = mockSimpleMonthOptions;
 
       const result = mapTotalMonthsOfCover(mockSimpleMonthOptions, mockSelectedValue);
 

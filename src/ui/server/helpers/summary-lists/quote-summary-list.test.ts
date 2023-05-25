@@ -59,7 +59,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
 
         const result = generateFields(mockQuoteContent);
 
-        const expectedField = result[0];
+        const [expectedField] = result;
 
         const expected = {
           id: FIELD_IDS.CONTRACT_VALUE,
@@ -81,7 +81,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
 
         const result = generateFields(mockQuoteContent);
 
-        const expectedField = result[2];
+        const { 2: expectedField } = result;
 
         const expected = {
           id: FIELD_IDS.QUOTE.INSURED_FOR,
@@ -125,7 +125,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
 
         const result = generateFields(mockQuoteContent);
 
-        const expectedField = result[0];
+        const [expectedField] = result;
 
         const expected = {
           id: FIELD_IDS.MAX_AMOUNT_OWED,
@@ -150,7 +150,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
 
         const result = generateFields(mockQuoteContent);
 
-        const expectedField = result[2];
+        const { 2: expectedField } = result;
 
         const expected = {
           id: FIELD_IDS.QUOTE.INSURED_FOR,

@@ -17,8 +17,6 @@ const mockCountries = [
   },
 ];
 
-export const COUNTRY_SUPPORTED_ONLINE = mockCountries[1];
-export const COUNTRY_SUPPORTRED_BY_EMAIL = mockCountries[2];
-export const COUNTRY_UNSUPPORTRED = mockCountries[3];
+export const { 1: COUNTRY_SUPPORTED_ONLINE, 2: COUNTRY_SUPPORTRED_BY_EMAIL, 3: COUNTRY_UNSUPPORTRED } = mockCountries;
 
 export default mockCountries;

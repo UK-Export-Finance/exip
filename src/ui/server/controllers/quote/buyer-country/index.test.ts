@@ -19,9 +19,8 @@ describe('controllers/quote/buyer-country', () => {
 
   const mockCountriesResponse = mockCisCountries;
 
-  const countryUnsupported = mockCountriesResponse[0];
-  const countrySupportedViaEmailOnly = mockCountriesResponse[2];
-
+  // eslint-disable-next-line no-unused-vars
+  const [countryUnsupported, countrySupported, countrySupportedViaEmailOnly] = mockCountriesResponse;
   const mockFlash = jest.fn();
 
   beforeEach(() => {

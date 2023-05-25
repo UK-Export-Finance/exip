@@ -25,7 +25,7 @@ describe('server/helpers/task-helpers', () => {
 
       const result = getGroupById(mockGroups, mockGroupId);
 
-      const expected = mockGroups[1];
+      const { 1: expected } = mockGroups;
 
       expect(result).toEqual(expected);
     });
@@ -37,7 +37,7 @@ describe('server/helpers/task-helpers', () => {
 
       const result = getTaskById(mockGroupTasks, mockTaskId);
 
-      const expected = mockGroupTasks[1];
+      const { 1: expected } = mockGroupTasks;
 
       expect(result).toEqual(expected);
     });

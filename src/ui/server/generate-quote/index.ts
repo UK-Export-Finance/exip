@@ -112,7 +112,7 @@ const generateQuote = (submittedData: SubmittedData): Quote => {
 
   const premiumRate = getPremiumRate(mapped[POLICY_TYPE], mapped[BUYER_COUNTRY].riskCategory, totalMonths, mapped[PERCENTAGE_OF_COVER]);
 
-  const contractValueAmount = Object.values(contractValue)[0];
+  const [contractValueAmount] = Object.values(contractValue);
 
   const quote = {
     ...mapped,

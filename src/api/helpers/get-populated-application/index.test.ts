@@ -54,7 +54,7 @@ describe('api/helpers/get-populated-application', () => {
   it('should return an application with populated buyer country', async () => {
     const result = await getPopulatedApplication(context, applicationIds);
 
-    const expectedCountry = mockCountries[0];
+    const [expectedCountry] = mockCountries;
 
     expect(result.buyer.country?.name).toEqual(expectedCountry.name);
     expect(result.buyer.country?.isoCode).toEqual(expectedCountry.isoCode);

@@ -69,7 +69,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[0];
+        const [expectedField] = result.POLICY_DETAILS;
 
         const expected = fieldGroupItem({
           field: getFieldById(FIELDS, SINGLE_POLICY_TYPE),
@@ -91,7 +91,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
 
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[1];
+        const { 1: expectedField } = result.POLICY_DETAILS;
 
         const expected = fieldGroupItem({
           field: getFieldById(FIELDS, SINGLE_POLICY_LENGTH),
@@ -171,7 +171,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
       it(`should add a ${MULTIPLE_POLICY_TYPE} object to POLICY_DETAILS`, () => {
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[0];
+        const [expectedField] = result.POLICY_DETAILS;
 
         const expected = fieldGroupItem({
           field: getFieldById(FIELDS, MULTIPLE_POLICY_TYPE),
@@ -186,7 +186,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
       it(`should add a ${MULTIPLE_POLICY_LENGTH} object to POLICY_DETAILS with single policy length field values`, () => {
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[1];
+        const { 1: expectedField } = result.POLICY_DETAILS;
 
         const expected = fieldGroupItem({
           field: getFieldById(FIELDS, MULTIPLE_POLICY_LENGTH),
@@ -199,7 +199,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
       it(`should add ${MAX_AMOUNT_OWED} object to POLICY_DETAILS`, () => {
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[2];
+        const { 2: expectedField } = result.POLICY_DETAILS;
 
         const expected = fieldGroupItem({
           field: getFieldById(FIELDS, MAX_AMOUNT_OWED),
@@ -214,7 +214,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
       it(`should add ${PERCENTAGE_OF_COVER} object to POLICY_DETAILS`, () => {
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[3];
+        const { 3: expectedField } = result.POLICY_DETAILS;
 
         const expected = fieldGroupItem({
           field: getFieldById(FIELDS, PERCENTAGE_OF_COVER),
@@ -229,7 +229,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
       it(`should add ${CREDIT_PERIOD} object to POLICY_DETAILS`, () => {
         const result = generateFieldGroups(mockAnswersContent);
 
-        const expectedField = result.POLICY_DETAILS[4];
+        const { 4: expectedField } = result.POLICY_DETAILS;
 
         const expected = fieldGroupItem({
           field: getFieldById(FIELDS, CREDIT_PERIOD),

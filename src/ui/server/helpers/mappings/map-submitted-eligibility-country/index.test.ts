@@ -9,7 +9,7 @@ describe('server/helpers/mappings/map-submitted-eligibility-country', () => {
   it('should return an object with BUYER_COUNTRY object', () => {
     const mappedCountries = mapCisCountries(mockCisCountries);
 
-    const mappedCountry = mappedCountries[0];
+    const [mappedCountry] = mappedCountries;
 
     const mockCanApplyOnline = false;
 

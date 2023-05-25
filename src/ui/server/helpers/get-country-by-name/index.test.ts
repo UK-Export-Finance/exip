@@ -7,7 +7,7 @@ describe('server/helpers/get-country-by-name', () => {
 
     const result = getCountryByName(mockCountries, mockName);
 
-    const expected = mockCountries[1];
+    const { 1: expected } = mockCountries;
 
     expect(result).toEqual(expected);
   });
