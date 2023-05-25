@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import baseConfig from '../../keystone';
 import submitApplication from './submit-application';
-import generate from '../../generate-csv';
+import generate from '../../generate-xlsx';
 import applicationSubmittedEmails from '../../emails/send-application-submitted-emails';
 import { APPLICATION } from '../../constants';
 import getPopulatedApplication from '../../helpers/get-populated-application';
@@ -24,13 +24,13 @@ describe('custom-resolvers/submit-application', () => {
   let variables: SubmitApplicationVariables;
   let result: SuccessResponse;
 
-  jest.mock('../../generate-csv');
+  jest.mock('../../generate-xlsx');
   jest.mock('../../emails/send-application-submitted-emails');
 
-  let generateCsvSpy = jest.fn();
+  let generateXLSXSpy = jest.fn();
   let applicationSubmittedEmailsSpy = jest.fn();
 
-  const mockGenerateCsvResponse = '/mock-path-to-csv';
+  const mockGenerateXLSXResponse = '/mock-path-to-xlsx';
   const now = new Date();
 
   beforeEach(async () => {
@@ -40,9 +40,9 @@ describe('custom-resolvers/submit-application', () => {
 
     applicationSubmittedEmails.send = applicationSubmittedEmailsSpy;
 
-    generateCsvSpy = jest.fn(() => Promise.resolve(mockGenerateCsvResponse));
+    generateXLSXSpy = jest.fn(() => Promise.resolve(mockGenerateXLSXResponse));
 
-    generate.csv = generateCsvSpy;
+    generate.XLSX = generateXLSXSpy;
 
     const application = await createFullApplication(context);
 
@@ -83,7 +83,7 @@ describe('custom-resolvers/submit-application', () => {
     expect(submissionDateDay).toEqual(expectedDay);
   });
 
-  describe('CSV generation and emails', () => {
+  describe('XLSX generation and emails', () => {
     let populatedApplication: Application;
     let fullSubmittedApplication;
 
@@ -95,16 +95,16 @@ describe('custom-resolvers/submit-application', () => {
       populatedApplication = await getPopulatedApplication(context, fullSubmittedApplication);
     });
 
-    test('it should call generate.csv', async () => {
-      expect(generateCsvSpy).toHaveBeenCalledTimes(1);
+    test('it should call generate.XLSX', async () => {
+      expect(generateXLSXSpy).toHaveBeenCalledTimes(1);
 
-      expect(generateCsvSpy).toHaveBeenCalledWith(populatedApplication);
+      expect(generateXLSXSpy).toHaveBeenCalledWith(populatedApplication);
     });
 
     test('it should call applicationSubmittedEmails.send', async () => {
       expect(applicationSubmittedEmailsSpy).toHaveBeenCalledTimes(1);
 
-      expect(applicationSubmittedEmailsSpy).toHaveBeenCalledWith(populatedApplication, mockGenerateCsvResponse);
+      expect(applicationSubmittedEmailsSpy).toHaveBeenCalledWith(populatedApplication, mockGenerateXLSXResponse);
     });
   });
 

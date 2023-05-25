@@ -1,2 +1,2 @@
 export * from './default';
-export * from './csv';
+export * from './XLSX';

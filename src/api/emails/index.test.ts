@@ -16,9 +16,9 @@ describe('emails', () => {
 
   const sendEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
-  const mockCsvFile = JSON.stringify({ mock: true });
+  const mockFile = JSON.stringify({ mock: true });
 
-  const mockFileSystemResponse = Buffer.from(mockCsvFile);
+  const mockFileSystemResponse = Buffer.from(mockFile);
 
   const writeFileSpy = jest.fn(() => Promise.resolve(mockFileSystemResponse));
   const unlinkSpy = jest.fn(() => Promise.resolve(true));
@@ -28,9 +28,7 @@ describe('emails', () => {
   const { companyName } = mockCompany;
   const { companyOrOrganisationName } = mockBuyer;
 
-  const mockCsvPath = '/path-to-csv';
-
-  const fileIsCsv = true;
+  const mockXlsxPath = '/path-to-xlsx';
 
   const fullName = getFullNameString(mockAccount);
 
@@ -59,10 +57,10 @@ describe('emails', () => {
       const templateId = 'mockTemplateId';
       const mockVariables = { test: true };
 
-      const result = await callNotify(templateId, email, mockVariables, mockFileSystemResponse, fileIsCsv);
+      const result = await callNotify(templateId, email, mockVariables, mockFileSystemResponse);
 
       expect(sendEmailSpy).toHaveBeenCalledTimes(1);
-      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, mockVariables, mockFileSystemResponse, fileIsCsv);
+      expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, mockVariables, mockFileSystemResponse);
 
       const expected = mockSendEmailResponse;
 
@@ -227,7 +225,7 @@ describe('emails', () => {
       test('it should call notify.sendEmail and return the response', async () => {
         notify.sendEmail = sendEmailSpy;
 
-        const result = await sendEmail.applicationSubmitted.underwritingTeam(variables, mockCsvPath, templateId);
+        const result = await sendEmail.applicationSubmitted.underwritingTeam(variables, mockXlsxPath, templateId);
 
         expect(sendEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -235,7 +233,7 @@ describe('emails', () => {
 
         const expectedFileBuffer = Buffer.from(mockFileSystemResponse);
 
-        expect(sendEmailSpy).toHaveBeenCalledWith(templateId, emailAddress, variables, expectedFileBuffer, fileIsCsv);
+        expect(sendEmailSpy).toHaveBeenCalledWith(templateId, emailAddress, variables, expectedFileBuffer);
 
         const expected = mockSendEmailResponse;
 
@@ -249,7 +247,7 @@ describe('emails', () => {
 
         test('should throw an error', async () => {
           try {
-            await sendEmail.applicationSubmitted.underwritingTeam(variables, mockCsvPath, templateId);
+            await sendEmail.applicationSubmitted.underwritingTeam(variables, mockXlsxPath, templateId);
           } catch (err) {
             const expected = new Error(`Sending application submitted email to underwriting team Error: Sending email ${mockErrorMessage}`);
 
