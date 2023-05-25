@@ -1482,6 +1482,109 @@ var getFullNameString = (account) => {
 };
 var get_full_name_string_default = getFullNameString;
 
+// emails/index.ts
+var import_dotenv4 = __toESM(require("dotenv"));
+
+// integrations/notify/index.ts
+var import_dotenv2 = __toESM(require("dotenv"));
+var import_notifications_node_client = require("notifications-node-client");
+import_dotenv2.default.config();
+var notifyKey = process.env.GOV_NOTIFY_API_KEY;
+var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
+var notify = {
+  /**
+   * sendEmail
+   * Send an email via Notify API
+   * @param {String} Template ID
+   * @param {String} Email address
+   * @param {Object} Custom variables for the email template
+   * @param {Buffer} File buffer
+   * @returns {Object} Success flag and email recipient
+   */
+  sendEmail: async (templateId, sendToEmailAddress, variables, file) => {
+    try {
+      console.info("Calling Notify API. templateId: ", templateId);
+      const personalisation = variables;
+      if (file) {
+        personalisation.linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true });
+      }
+      await notifyClient.sendEmail(templateId, sendToEmailAddress, {
+        personalisation,
+        reference: null
+      });
+      return {
+        success: true,
+        emailRecipient: sendToEmailAddress
+      };
+    } catch (err) {
+      console.error(err);
+      throw new Error(`Calling Notify API. Unable to send email ${err}`);
+    }
+  }
+};
+var notify_default = notify;
+
+// emails/call-notify/index.ts
+var callNotify = async (templateId, emailAddress, variables, file) => {
+  try {
+    let emailResponse;
+    if (file) {
+      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables, file);
+    } else {
+      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables);
+    }
+    if (emailResponse.success) {
+      return emailResponse;
+    }
+    throw new Error(`Sending email ${emailResponse}`);
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending email ${err}`);
+  }
+};
+
+// emails/confirm-email-address/index.ts
+var confirmEmailAddress = async (emailAddress, urlOrigin, name, verificationHash) => {
+  try {
+    console.info("Sending confirm email address email");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
+    const variables = { urlOrigin, name, confirmToken: verificationHash };
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending confirm email address email ${err}`);
+  }
+};
+
+// emails/security-code-email/index.ts
+var securityCodeEmail = async (emailAddress, name, securityCode) => {
+  try {
+    console.info("Sending security code email for account sign in");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.SECURITY_CODE;
+    const variables = { name, securityCode };
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending security code email for account sign in ${err}`);
+  }
+};
+
+// emails/password-reset-link/index.ts
+var passwordResetLink = async (urlOrigin, emailAddress, name, passwordResetHash) => {
+  try {
+    console.info("Sending email for account password reset");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
+    const variables = { urlOrigin, name, passwordResetToken: passwordResetHash };
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending email for account password reset ${err}`);
+  }
+};
+
 // file-system/index.ts
 var import_fs = require("fs");
 var import_path = __toESM(require("path"));
@@ -1533,112 +1636,7 @@ var fileSystem = {
 };
 var file_system_default = fileSystem;
 
-// integrations/notify/index.ts
-var import_dotenv2 = __toESM(require("dotenv"));
-var import_notifications_node_client = require("notifications-node-client");
-import_dotenv2.default.config();
-var notifyKey = process.env.GOV_NOTIFY_API_KEY;
-var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
-var notify = {
-  /**
-   * sendEmail
-   * Send an email via Notify API
-   * @param {String} Template ID
-   * @param {String} Email address
-   * @param {Object} Custom variables for the email template
-   * @param {Buffer} File buffer
-   * @returns {Object} Success flag and email recipient
-   */
-  sendEmail: async (templateId, sendToEmailAddress, variables, file) => {
-    try {
-      console.info("Calling Notify API. templateId: ", templateId);
-      const personalisation = variables;
-      if (file) {
-        personalisation.linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true });
-      }
-      await notifyClient.sendEmail(templateId, sendToEmailAddress, {
-        personalisation,
-        reference: null
-      });
-      return {
-        success: true,
-        emailRecipient: sendToEmailAddress
-      };
-    } catch (err) {
-      console.error(err);
-      throw new Error(`Calling Notify API. Unable to send email ${err}`);
-    }
-  }
-};
-var notify_default = notify;
-
-// emails/index.ts
-var import_dotenv3 = __toESM(require("dotenv"));
-
-// helpers/format-date/index.ts
-var import_date_fns2 = require("date-fns");
-var formatDate = (timestamp3, dateFormat = "d MMMM yyyy") => (0, import_date_fns2.format)(new Date(timestamp3), dateFormat);
-var format_date_default = formatDate;
-
-// helpers/map-feedback-satisfaction/index.ts
-var mapFeedbackSatisfaction = (satisfaction) => FEEDBACK.EMAIL_TEXT[satisfaction];
-var map_feedback_satisfaction_default = mapFeedbackSatisfaction;
-
-// emails/index.ts
-import_dotenv3.default.config();
-var callNotify = async (templateId, emailAddress, variables, file) => {
-  try {
-    let emailResponse;
-    if (file) {
-      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables, file);
-    } else {
-      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables);
-    }
-    if (emailResponse.success) {
-      return emailResponse;
-    }
-    throw new Error(`Sending email ${emailResponse}`);
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Sending email ${err}`);
-  }
-};
-var confirmEmailAddress = async (emailAddress, urlOrigin, name, verificationHash) => {
-  try {
-    console.info("Sending confirm email address email");
-    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
-    const variables = { urlOrigin, name, confirmToken: verificationHash };
-    const response = await callNotify(templateId, emailAddress, variables);
-    return response;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Sending confirm email address email ${err}`);
-  }
-};
-var securityCodeEmail = async (emailAddress, name, securityCode) => {
-  try {
-    console.info("Sending security code email for account sign in");
-    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.SECURITY_CODE;
-    const variables = { name, securityCode };
-    const response = await callNotify(templateId, emailAddress, variables);
-    return response;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Sending security code email for account sign in ${err}`);
-  }
-};
-var passwordResetLink = async (urlOrigin, emailAddress, name, passwordResetHash) => {
-  try {
-    console.info("Sending email for account password reset");
-    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
-    const variables = { urlOrigin, name, passwordResetToken: passwordResetHash };
-    const response = await callNotify(templateId, emailAddress, variables);
-    return response;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Sending email for account password reset ${err}`);
-  }
-};
+// emails/application/index.ts
 var application = {
   /**
    * application.submittedEmail
@@ -1660,20 +1658,21 @@ var application = {
   },
   /**
    * application.underwritingTeam
-   * Read XLSX file, generate a file buffer
-   * Send "application submitted" email to the underwriting team with a link to XLSX
+   * Read CSV file, generate a file buffer
+   * Send "application submitted" email to the underwriting team with a link to CSV
    * We send a file buffer to Notify and Notify generates a unique URL that is then rendered in the email.
    * @param {Object} ApplicationSubmissionEmailVariables
    * @returns {Object} callNotify response
    */
-  underwritingTeam: async (variables, xlsxPath, templateId) => {
+  underwritingTeam: async (variables, filePath, templateId) => {
     try {
       console.info("Sending application submitted email to underwriting team");
       const emailAddress = String(process.env.UNDERWRITING_TEAM_EMAIL);
-      const file = await file_system_default.readFile(xlsxPath);
+      const file = await file_system_default.readFile(filePath);
       if (file) {
         const fileBuffer = Buffer.from(file);
         const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
+        await file_system_default.unlink(filePath);
         return response;
       }
       throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
@@ -1683,6 +1682,8 @@ var application = {
     }
   }
 };
+
+// emails/documents/index.ts
 var documentsEmail = async (variables, templateId) => {
   try {
     console.info("Sending documents email");
@@ -1694,6 +1695,21 @@ var documentsEmail = async (variables, templateId) => {
     throw new Error(`Sending documents email ${err}`);
   }
 };
+
+// emails/insurance-feedback-email/index.ts
+var import_dotenv3 = __toESM(require("dotenv"));
+
+// helpers/format-date/index.ts
+var import_date_fns2 = require("date-fns");
+var formatDate = (timestamp3, dateFormat = "d MMMM yyyy") => (0, import_date_fns2.format)(new Date(timestamp3), dateFormat);
+var format_date_default = formatDate;
+
+// helpers/map-feedback-satisfaction/index.ts
+var mapFeedbackSatisfaction = (satisfaction) => FEEDBACK.EMAIL_TEXT[satisfaction];
+var map_feedback_satisfaction_default = mapFeedbackSatisfaction;
+
+// emails/insurance-feedback-email/index.ts
+import_dotenv3.default.config();
 var insuranceFeedbackEmail = async (variables) => {
   try {
     console.info("Sending insurance feedback email");
@@ -1716,6 +1732,9 @@ var insuranceFeedbackEmail = async (variables) => {
     throw new Error(`Sending insurance feedback email ${err}`);
   }
 };
+
+// emails/index.ts
+import_dotenv4.default.config();
 var sendEmail = {
   confirmEmailAddress,
   securityCodeEmail,
@@ -3332,8 +3351,8 @@ var TIME_SUBMITTED = {
 // generate-xlsx/map-application-to-XLSX/helpers/format-time-of-day/index.ts
 var formatTimeOfDay = (date) => {
   const fullDate = new Date(date);
-  const utcHour = fullDate.getUTCHours();
-  return `${utcHour}:${fullDate.getMinutes()}`;
+  const hour = fullDate.getHours();
+  return `${hour}:${fullDate.getMinutes()}`;
 };
 var format_time_of_day_default = formatTimeOfDay;
 
@@ -3659,7 +3678,7 @@ var header_columns_default = XLSX_HEADER_COLUMNS;
 // generate-xlsx/index.ts
 var XLSX2 = (application2) => {
   try {
-    console.info("Generating XLSX file");
+    console.info(`Generating XLSX file for application ${application2.id}`);
     const { referenceNumber } = application2;
     const refNumber = String(referenceNumber);
     return new Promise((resolve) => {
@@ -3689,7 +3708,7 @@ var generate_xlsx_default = generate2;
 // custom-resolvers/mutations/submit-application.ts
 var submitApplication = async (root, variables, context) => {
   try {
-    console.info("Submitting application");
+    console.info(`Submitting application ${variables.applicationId}`);
     const application2 = await context.db.Application.findOne({
       where: { id: variables.applicationId }
     });
@@ -3755,7 +3774,7 @@ var create_feedback_default = createFeedback;
 
 // custom-resolvers/queries/get-companies-house-information.ts
 var import_axios2 = __toESM(require("axios"));
-var import_dotenv5 = __toESM(require("dotenv"));
+var import_dotenv6 = __toESM(require("dotenv"));
 
 // helpers/create-full-timestamp-from-day-month/index.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
@@ -3808,8 +3827,8 @@ var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => {
 
 // integrations/industry-sector/index.ts
 var import_axios = __toESM(require("axios"));
-var import_dotenv4 = __toESM(require("dotenv"));
-import_dotenv4.default.config();
+var import_dotenv5 = __toESM(require("dotenv"));
+import_dotenv5.default.config();
 var { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
 var headers = {
   "Content-Type": "application/json",
@@ -3847,7 +3866,7 @@ var getIndustrySectorNames = async () => {
 var industry_sector_default = getIndustrySectorNames;
 
 // custom-resolvers/queries/get-companies-house-information.ts
-import_dotenv5.default.config();
+import_dotenv6.default.config();
 var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
 var getCompaniesHouseInformation = async (root, variables) => {

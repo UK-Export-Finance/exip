@@ -11,7 +11,7 @@ import { Application } from '../types';
  */
 const XLSX = (application: Application): Promise<string> => {
   try {
-    console.info('Generating XLSX file');
+    console.info(`Generating XLSX file for application ${application.id}`);
 
     const { referenceNumber } = application;
 

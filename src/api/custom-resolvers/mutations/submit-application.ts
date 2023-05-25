@@ -19,7 +19,7 @@ import { SubmitApplicationVariables, SuccessResponse } from '../../types';
  */
 const submitApplication = async (root: any, variables: SubmitApplicationVariables, context: Context): Promise<SuccessResponse> => {
   try {
-    console.info('Submitting application');
+    console.info(`Submitting application ${variables.applicationId}`);
 
     // get the application
     const application = (await context.db.Application.findOne({

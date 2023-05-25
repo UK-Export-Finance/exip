@@ -1,4 +1,4 @@
-import mapApplicationToCsv from '.';
+import mapApplicationToXLSX from '.';
 import ROW_SEPERATOR from './helpers/xlsx-row-seperator';
 import mapKeyInformation from './map-key-information';
 import mapSecondaryKeyInformation from './map-secondary-key-information';
@@ -10,7 +10,7 @@ import { mockApplication } from '../../test-mocks';
 
 describe('api/generate-xlsx/map-application-to-xlsx/index', () => {
   it('should return an array of mappings and section breaks', () => {
-    const result = mapApplicationToCsv(mockApplication);
+    const result = mapApplicationToXLSX(mockApplication);
 
     const expected = [
       ROW_SEPERATOR,
