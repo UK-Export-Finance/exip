@@ -11,8 +11,6 @@ describe('emails/call-notify', () => {
 
   const mockFileSystemResponse = Buffer.from(mockFile);
 
-  const fileIsCsv = true;
-
   beforeAll(async () => {
     notify.sendEmail = sendEmailSpy;
   });
@@ -21,10 +19,10 @@ describe('emails/call-notify', () => {
     const templateId = 'mockTemplateId';
     const mockVariables = { test: true };
 
-    const result = await callNotify(templateId, email, mockVariables, mockFileSystemResponse, fileIsCsv);
+    const result = await callNotify(templateId, email, mockVariables, mockFileSystemResponse);
 
     expect(sendEmailSpy).toHaveBeenCalledTimes(1);
-    expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, mockVariables, mockFileSystemResponse, fileIsCsv);
+    expect(sendEmailSpy).toHaveBeenCalledWith(templateId, email, mockVariables, mockFileSystemResponse);
 
     const expected = mockSendEmailResponse;
 

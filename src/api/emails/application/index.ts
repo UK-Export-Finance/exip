@@ -40,13 +40,10 @@ export const application = {
       console.info('Sending application submitted email to underwriting team');
 
       const emailAddress = String(process.env.UNDERWRITING_TEAM_EMAIL);
-      console.log('--------- file path ', filePath);
 
       // NOTE: no need to handle any file system errors here.
       // if something errors, it will fall into the catch handler below.
       const file = await fileSystem.readFile(filePath);
-
-      console.log('--------- file ', file);
 
       if (file) {
         const fileBuffer = Buffer.from(file);

@@ -1525,11 +1525,11 @@ var notify = {
 var notify_default = notify;
 
 // emails/call-notify/index.ts
-var callNotify = async (templateId, emailAddress, variables, file, fileIsCsv) => {
+var callNotify = async (templateId, emailAddress, variables, file) => {
   try {
     let emailResponse;
-    if (file && fileIsCsv) {
-      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables, file, fileIsCsv);
+    if (file) {
+      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables, file);
     } else {
       emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables);
     }
@@ -1668,9 +1668,7 @@ var application = {
     try {
       console.info("Sending application submitted email to underwriting team");
       const emailAddress = String(process.env.UNDERWRITING_TEAM_EMAIL);
-      console.log("--------- file path ", filePath);
       const file = await file_system_default.readFile(filePath);
-      console.log("--------- file ", file);
       if (file) {
         const fileBuffer = Buffer.from(file);
         const response = await callNotify(templateId, emailAddress, variables, fileBuffer);

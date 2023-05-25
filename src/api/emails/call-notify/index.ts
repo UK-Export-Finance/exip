@@ -1,4 +1,5 @@
-import notify from '../../integrations/notify';
+import notify from '../../integrations/notify'
+import { EmailResponse } from '../../types';
 
 /**
  * callNotify
@@ -9,12 +10,12 @@ import notify from '../../integrations/notify';
  * @param {Object} Email variables
  * @returns {Object} Object with success flag and emailRecipient
  */
-export const callNotify = async (templateId: string, emailAddress: string, variables: object, file?: Buffer, fileIsCsv?: boolean): Promise<EmailResponse> => {
+export const callNotify = async (templateId: string, emailAddress: string, variables: object, file?: Buffer): Promise<EmailResponse> => {
   try {
     let emailResponse;
 
-    if (file && fileIsCsv) {
-      emailResponse = await notify.sendEmail(templateId, emailAddress, variables, file, fileIsCsv);
+    if (file) {
+      emailResponse = await notify.sendEmail(templateId, emailAddress, variables, file);
     } else {
       emailResponse = await notify.sendEmail(templateId, emailAddress, variables);
     }
