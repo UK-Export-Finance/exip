@@ -38,8 +38,8 @@ COPY --chown=node:node ./constants ./constants
 COPY --chown=node:node ./content-strings ./content-strings
 COPY --chown=node:node ./custom-schema ./custom-schema
 COPY --chown=node:node ./file-system ./file-system
-COPY --chown=node:node ./generate-csv ./generate-csv
-COPY --chown=node:node ./csv ./csv
+COPY --chown=node:node ./generate-xlsx ./generate-xlsx
+COPY --chown=node:node ./XLSX ./XLSX
 
 
 # Build with all dependencies
@@ -71,8 +71,8 @@ COPY --chown=node:node --from=build /app/helpers ./helpers
 COPY --chown=node:node --from=build /app/emails ./emails
 COPY --chown=node:node --from=build /app/custom-resolvers ./custom-resolvers
 COPY --chown=node:node --from=build /app/file-system ./file-system
-COPY --chown=node:node --from=build /app/generate-csv ./generate-csv
-COPY --chown=node:node --from=build /app/csv ./csv
+COPY --chown=node:node --from=build /app/generate-xlsx ./generate-xlsx
+COPY --chown=node:node --from=build /app/XLSX ./XLSX
 
 # Container healthcheck
 HEALTHCHECK \
