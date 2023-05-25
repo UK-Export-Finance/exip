@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import accountPasswordReset from './account-password-reset';
 import createAuthenticationEntry from '../../helpers/create-authentication-entry';
+import createAuthenticationRetryEntry from '../../helpers/create-authentication-retry-entry';
 import baseConfig from '../../keystone';
 import { ACCOUNT } from '../../constants';
 import { mockAccount } from '../../test-mocks';
@@ -46,10 +47,6 @@ describe('custom-resolvers/account-password-reset', () => {
       where: authRetries,
     });
 
-    // create an AuthenticationRetry so we can assert it becomes wiped.
-
-    expect(authRetries.length).toEqual(0);
-
     // wipe the Authentication table so we have a clean slate.
     let authEntries = await context.query.Authentication.findMany();
 
@@ -66,6 +63,14 @@ describe('custom-resolvers/account-password-reset', () => {
       data: mockAccount,
       query: 'id',
     })) as Account;
+
+    // create an AuthenticationRetry so we can assert it becomes wiped.
+    await createAuthenticationRetryEntry(context, account.id);
+
+    // get the latest AuthenticationRetry entries
+    authRetries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+
+    expect(authRetries.length).toEqual(1);
 
     variables = {
       token: String(mockAccount.passwordResetHash),
