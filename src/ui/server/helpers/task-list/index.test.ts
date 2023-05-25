@@ -26,15 +26,18 @@ describe('server/helpers/task-list', () => {
 
       const expectedTasks = {
         initialChecks: () => {
-          const [tasks] = mockTaskListData;
+          const { 0: tasksListData } = mockTaskListData;
+          const { tasks } = tasksListData;
           return tasks.map((task) => mapTask(task, mockApplicationFlat));
         },
         prepareApplication: () => {
-          const { 1: tasks } = mockTaskListData;
+          const { 1: tasksListData } = mockTaskListData;
+          const { tasks } = tasksListData;
           return tasks.map((task) => mapTask(task, mockApplicationFlat));
         },
         submitApplication: () => {
-          const { 2: tasks } = mockTaskListData;
+          const { 2: tasksListData } = mockTaskListData;
+          const { tasks } = tasksListData;
           return tasks.map((task) => mapTask(task, mockApplicationFlat));
         },
       };
