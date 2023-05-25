@@ -1794,7 +1794,7 @@ var getAuthenticationRetriesByAccountId = async (context, accountId) => {
     return retries;
   } catch (err) {
     console.error(err);
-    throw new Error(`Getting authentication retries ${err}`);
+    throw new Error(`Getting authentication retries by account ID ${err}`);
   }
 };
 var get_authentication_retries_by_account_id_default = getAuthenticationRetriesByAccountId;
@@ -2551,6 +2551,7 @@ var accountPasswordReset = async (root, variables, context) => {
         hasBeenUsedBefore: true
       };
     }
+    await delete_authentication_retries_default(context, accountId);
     const authEntry = {
       account: {
         connect: {
