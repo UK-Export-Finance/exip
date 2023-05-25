@@ -286,7 +286,8 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
         });
 
         it('should render the new answer', () => {
-          const { 3: name } = currencies;
+          const { 3: expected } = currencies;
+          const { name } = expected;
 
           cy.assertSummaryListRowValueNew(summaryList, fieldId, name);
         });
