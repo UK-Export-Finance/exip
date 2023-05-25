@@ -22,7 +22,7 @@ const context = getContext(config, PrismaModule) as Context;
 
 describe('emails/send-email-application-submitted', () => {
   let application: Application;
-  const mockCsvPath = '/path-to-csv';
+  const mockXlsxPath = '/path-to-xlsx';
 
   jest.mock('./index');
 
@@ -43,57 +43,110 @@ describe('emails/send-email-application-submitted', () => {
     underwritingTeamEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
     documentsEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
-    sendEmail.applicationSubmitted.account = applicationSubmittedEmailSpy;
-    sendEmail.applicationSubmitted.underwritingTeam = underwritingTeamEmailSpy;
+    sendEmail.application.submittedEmail = applicationSubmittedEmailSpy;
+    sendEmail.application.underwritingTeam = underwritingTeamEmailSpy;
 
     sendEmail.documentsEmail = documentsEmailSpy;
   });
 
   describe('emails', () => {
     let expectedSendEmailVars: ApplicationSubmissionEmailVariables;
+    let expectedContactSendEmailVars: ApplicationSubmissionEmailVariables;
 
     beforeEach(() => {
-      const { referenceNumber, owner, company, buyer, policyAndExport } = application;
+      const { referenceNumber, owner, company, buyer, policyAndExport, business } = application;
       const { email } = owner;
       const { companyName } = company;
       const { companyOrOrganisationName } = buyer;
+      const { businessContactDetail } = business;
 
-      expectedSendEmailVars = {
-        emailAddress: email,
-        name: getFullNameString(owner),
+      const sharedEmailVars = {
         referenceNumber,
         buyerName: companyOrOrganisationName,
         buyerLocation: buyer.country?.name,
         companyName,
         requestedStartDate: formatDate(policyAndExport.requestedStartDate),
+      };
+
+      expectedSendEmailVars = {
+        emailAddress: email,
+        name: getFullNameString(owner),
+        ...sharedEmailVars,
+      } as ApplicationSubmissionEmailVariables;
+
+      expectedContactSendEmailVars = {
+        emailAddress: businessContactDetail.email,
+        name: getFullNameString(businessContactDetail),
+        ...sharedEmailVars,
       } as ApplicationSubmissionEmailVariables;
     });
 
-    test('it should call sendEmail.applicationSubmitted.account', async () => {
-      await sendApplicationSubmittedEmails.send(application, mockCsvPath);
+    describe('when application owner and business contact emails are the same', () => {
+      test('it should call sendEmail.application.applicationSubmittedEmail once', async () => {
+        await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
-      expect(applicationSubmittedEmailSpy).toHaveBeenCalledTimes(1);
-      expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars);
+        expect(applicationSubmittedEmailSpy).toHaveBeenCalledTimes(1);
+        expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars);
+      });
+
+      test('it should call sendEmail.application.applicationSubmittedEmail with the correct template ID', async () => {
+        await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
+
+        expect(underwritingTeamEmailSpy).toHaveBeenCalledTimes(1);
+
+        const templateId = getApplicationSubmittedEmailTemplateIds(application).underwritingTeam;
+
+        expect(underwritingTeamEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, mockXlsxPath, templateId);
+      });
+
+      test('it should call sendEmail.documentsEmail with the correct template ID', async () => {
+        await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
+
+        expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
+
+        const templateId = getApplicationSubmittedEmailTemplateIds(application).account;
+
+        expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateId);
+      });
     });
 
-    test('it should call sendEmail.applicationSubmitted.account with the correct template ID', async () => {
-      await sendApplicationSubmittedEmails.send(application, mockCsvPath);
+    describe('when application owner and business contact emails are the different', () => {
+      test('it should call sendEmail.application.submittedEmail twice', async () => {
+        application.business.businessContactDetail.email = 'test@test.com';
+        expectedContactSendEmailVars.emailAddress = application.business.businessContactDetail.email;
 
-      expect(underwritingTeamEmailSpy).toHaveBeenCalledTimes(1);
+        await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
-      const templateId = getApplicationSubmittedEmailTemplateIds(application).underwritingTeam;
+        expect(applicationSubmittedEmailSpy).toHaveBeenCalledTimes(2);
+        expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars);
+        expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedContactSendEmailVars);
+      });
 
-      expect(underwritingTeamEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, mockCsvPath, templateId);
-    });
+      test('it should call sendEmail.application.submittedEmail with the correct template ID', async () => {
+        application.business.businessContactDetail.email = 'test@test.com';
 
-    test('it should call sendEmail.documentsEmail with the correct template ID', async () => {
-      await sendApplicationSubmittedEmails.send(application, mockCsvPath);
+        await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
-      expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
+        expect(underwritingTeamEmailSpy).toHaveBeenCalledTimes(1);
 
-      const templateId = getApplicationSubmittedEmailTemplateIds(application).account;
+        const templateId = getApplicationSubmittedEmailTemplateIds(application).underwritingTeam;
 
-      expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateId);
+        expect(underwritingTeamEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, mockXlsxPath, templateId);
+      });
+
+      test('it should call sendEmail.documentsEmail with the correct template ID twice', async () => {
+        application.business.businessContactDetail.email = 'test@test.com';
+        expectedContactSendEmailVars.emailAddress = application.business.businessContactDetail.email;
+
+        await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
+
+        expect(documentsEmailSpy).toHaveBeenCalledTimes(2);
+
+        const templateId = getApplicationSubmittedEmailTemplateIds(application).account;
+
+        expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateId);
+        expect(documentsEmailSpy).toHaveBeenCalledWith(expectedContactSendEmailVars, templateId);
+      });
     });
 
     describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct and buyer has exporterHasTradedWithBuyer answer of `Yes`', () => {
@@ -110,7 +163,7 @@ describe('emails/send-email-application-submitted', () => {
       });
 
       test('it should call sendEmail.documentsEmail with the correct template ID', async () => {
-        await sendApplicationSubmittedEmails.send(application, mockCsvPath);
+        await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -134,7 +187,7 @@ describe('emails/send-email-application-submitted', () => {
       });
 
       test('it should NOT call sendEmail.documentsEmail', async () => {
-        await sendApplicationSubmittedEmails.send(application, mockCsvPath);
+        await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(0);
       });
@@ -154,7 +207,7 @@ describe('emails/send-email-application-submitted', () => {
       });
 
       test('it should NOT call sendEmail.documentsEmail', async () => {
-        await sendApplicationSubmittedEmails.send(application, mockCsvPath);
+        await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
         expect(documentsEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -166,7 +219,7 @@ describe('emails/send-email-application-submitted', () => {
   });
 
   it('should return success=true', async () => {
-    const result = await sendApplicationSubmittedEmails.send(application, mockCsvPath);
+    const result = await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
 
     const expected = { success: true };
 
@@ -175,12 +228,12 @@ describe('emails/send-email-application-submitted', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.applicationSubmitted.account = jest.fn(() => Promise.reject(mockSendEmailResponse));
+      sendEmail.application.submittedEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
     });
 
     test('should throw an error', async () => {
       try {
-        await sendApplicationSubmittedEmails.send(application, mockCsvPath);
+        await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
       } catch (err) {
         const expected = new Error(`Sending application submitted emails ${mockSendEmailResponse}`);
 

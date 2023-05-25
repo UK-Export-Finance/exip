@@ -81,7 +81,7 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
      * 1) Check if the password is matches what is encrypted in the database.
      * 2) If the password is valid:
      *   - If the account is unverified, but has a valid has/token, send verification email.
-     *   - If the account is verified, wipe the retry entries generate an OTP/security code and send via email.
+     *   - If the account is verified, generate an OTP/security code and send via email.
      * 3) Otherwise, we return a rejection because either:
      *   - The password is invalid.
      *   - The email was not sent.

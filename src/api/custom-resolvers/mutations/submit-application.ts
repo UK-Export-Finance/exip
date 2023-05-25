@@ -3,14 +3,14 @@ import { isAfter } from 'date-fns';
 import { APPLICATION } from '../../constants';
 import getPopulatedApplication from '../../helpers/get-populated-application';
 import applicationSubmittedEmails from '../../emails/send-application-submitted-emails';
-import generate from '../../generate-csv';
+import generate from '../../generate-xlsx';
 import { SubmitApplicationVariables, SuccessResponse } from '../../types';
 
 /**
  * submitApplication
  * Submit an application
  * 1) Change application status, add submission date
- * 2) Generate a CSV for the UKEF underwriting team
+ * 2) Generate a XLSX for the UKEF underwriting team
  * 3) Sends emails to the UKEF underwriting team and the account that created the application
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the SubmitApplication mutation
@@ -19,7 +19,7 @@ import { SubmitApplicationVariables, SuccessResponse } from '../../types';
  */
 const submitApplication = async (root: any, variables: SubmitApplicationVariables, context: Context): Promise<SuccessResponse> => {
   try {
-    console.info('Submitting application');
+    console.info(`Submitting application ${variables.applicationId}`);
 
     // get the application
     const application = (await context.db.Application.findOne({
@@ -49,14 +49,14 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
           data: update,
         });
 
-        // get a fully populated application for CSV generation
+        // get a fully populated application for XLSX generation
         const populatedApplication = await getPopulatedApplication(context, updatedApplication);
 
-        // generate a CSV for UKEF underwriting team email
-        const csvPath = await generate.csv(populatedApplication);
+        // generate a XLSX for UKEF underwriting team email
+        const xlsxPath = await generate.XLSX(populatedApplication);
 
         // send all "application submitted" emails
-        await applicationSubmittedEmails.send(populatedApplication, csvPath);
+        await applicationSubmittedEmails.send(populatedApplication, xlsxPath);
 
         return {
           success: true,

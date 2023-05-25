@@ -80,7 +80,7 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Enter the last name of the exporter contact',
         },
         [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
-          INCORRECT_FORMAT: 'Enter the email address for the exporter contact in the correct format, like name@example.com',
+          INCORRECT_FORMAT: 'Enter an email address in the correct format, like name@example.com',
         },
         [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.POSITION]: {
           IS_EMPTY: 'Enter the position at company of the exporter contact',

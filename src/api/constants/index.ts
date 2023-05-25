@@ -147,4 +147,17 @@ export const FEEDBACK = {
     veryDissatisfied: 'Very dissatisfied',
   },
 };
-export const ACCEPTED_FILE_TYPES = ['.csv'];
+
+export const XLSX_CONFIG = {
+  KEY: {
+    ID: 'field',
+    COPY: 'Field',
+  },
+  VALUE: {
+    ID: 'answer',
+    COPY: 'Answer',
+  },
+  COLUMN_WIDTH: 70,
+};
+
+export const ACCEPTED_FILE_TYPES = ['.xlsx'];
