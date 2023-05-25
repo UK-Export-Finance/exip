@@ -12,6 +12,6 @@ describe('api/generate-xlsx/index', () => {
 
     // delete the file so we don't create a file during unit tests.
 
-    fileSystem.unlink(expected);
+    await fileSystem.unlink(expected);
   });
 });

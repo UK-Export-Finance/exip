@@ -3397,8 +3397,8 @@ var isMultiPolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.
 var formatCurrency = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
   style: "currency",
   currency: currencyCode,
-  minimumFractionDigits: decimalPoints || 0,
-  maximumFractionDigits: decimalPoints || 0
+  minimumFractionDigits: decimalPoints ?? 0,
+  maximumFractionDigits: decimalPoints ?? 0
 });
 var format_currency_default = formatCurrency;
 

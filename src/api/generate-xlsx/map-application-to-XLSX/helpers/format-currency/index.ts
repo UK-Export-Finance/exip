@@ -10,8 +10,8 @@ const formatCurrency = (number: number, currencyCode: string, decimalPoints?: nu
   number.toLocaleString('en', {
     style: 'currency',
     currency: currencyCode,
-    minimumFractionDigits: decimalPoints || 0,
-    maximumFractionDigits: decimalPoints || 0,
+    minimumFractionDigits: decimalPoints ?? 0,
+    maximumFractionDigits: decimalPoints ?? 0,
   });
 
 export default formatCurrency;
