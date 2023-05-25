@@ -396,7 +396,18 @@ var FEEDBACK = {
     veryDissatisfied: "Very dissatisfied"
   }
 };
-var ACCEPTED_FILE_TYPES = [".csv"];
+var XLSX_CONFIG = {
+  KEY: {
+    ID: "field",
+    COPY: "Field"
+  },
+  VALUE: {
+    ID: "answer",
+    COPY: "Answer"
+  },
+  COLUMN_WIDTH: 70
+};
+var ACCEPTED_FILE_TYPES = [".xlsx"];
 
 // helpers/update-application/index.ts
 var timestamp = async (context, applicationId) => {
@@ -1536,15 +1547,14 @@ var notify = {
    * @param {String} Email address
    * @param {Object} Custom variables for the email template
    * @param {Buffer} File buffer
-   * @param {Boolean} Flag for if the file is CSV
-   * @returns {Array} Array of objects for CSV generation
+   * @returns {Object} Success flag and email recipient
    */
-  sendEmail: async (templateId, sendToEmailAddress, variables, file, fileIsCsv) => {
+  sendEmail: async (templateId, sendToEmailAddress, variables, file) => {
     try {
       console.info("Calling Notify API. templateId: ", templateId);
       const personalisation = variables;
       if (file) {
-        personalisation.linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true, isCsv: fileIsCsv });
+        personalisation.linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true });
       }
       await notifyClient.sendEmail(templateId, sendToEmailAddress, {
         personalisation,
@@ -1576,11 +1586,11 @@ var map_feedback_satisfaction_default = mapFeedbackSatisfaction;
 
 // emails/index.ts
 import_dotenv3.default.config();
-var callNotify = async (templateId, emailAddress, variables, file, fileIsCsv) => {
+var callNotify = async (templateId, emailAddress, variables, file) => {
   try {
     let emailResponse;
-    if (file && fileIsCsv) {
-      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables, file, fileIsCsv);
+    if (file) {
+      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables, file);
     } else {
       emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables);
     }
@@ -1650,22 +1660,20 @@ var application = {
   },
   /**
    * application.underwritingTeam
-   * Read CSV file, generate a file buffer
-   * Send "application submitted" email to the underwriting team with a link to CSV
+   * Read XLSX file, generate a file buffer
+   * Send "application submitted" email to the underwriting team with a link to XLSX
    * We send a file buffer to Notify and Notify generates a unique URL that is then rendered in the email.
    * @param {Object} ApplicationSubmissionEmailVariables
    * @returns {Object} callNotify response
    */
-  underwritingTeam: async (variables, csvPath, templateId) => {
+  underwritingTeam: async (variables, xlsxPath, templateId) => {
     try {
       console.info("Sending application submitted email to underwriting team");
       const emailAddress = String(process.env.UNDERWRITING_TEAM_EMAIL);
-      const file = await file_system_default.readFile(csvPath);
+      const file = await file_system_default.readFile(xlsxPath);
       if (file) {
-        const fileIsCsv = true;
         const fileBuffer = Buffer.from(file);
-        const response = await callNotify(templateId, emailAddress, variables, fileBuffer, fileIsCsv);
-        await file_system_default.unlink(csvPath);
+        const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
         return response;
       }
       throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
@@ -2838,11 +2846,6 @@ var getApplicationSubmittedEmailTemplateIds = (application2) => {
     templateIds.account = EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY;
   }
-  console.info("------- temporary debugging dev environment - buyer data \n", buyer);
-  console.info("------- temporary debugging dev environment - declaration data \n", declaration);
-  console.info("------- temporary debugging dev environment - hasAntiBriberyCodeOfConduct? ", hasAntiBriberyCodeOfConduct);
-  console.info("------- temporary debugging dev environment - hasTradedWithBuyer? ", hasTradedWithBuyer);
-  console.info("------- temporary debugging dev environment - templateIds \n", templateIds);
   return templateIds;
 };
 var get_application_submitted_email_template_ids_default = getApplicationSubmittedEmailTemplateIds;
@@ -2852,7 +2855,7 @@ var isOwnerSameAsBusinessContact = (ownerEmail, contactEmail) => ownerEmail === 
 var is_owner_same_as_business_contact_default = isOwnerSameAsBusinessContact;
 
 // emails/send-application-submitted-emails/index.ts
-var send2 = async (application2, csvPath) => {
+var send2 = async (application2, xlsxPath) => {
   try {
     const { referenceNumber, owner, company, buyer, policyAndExport, business } = application2;
     const { businessContactDetail } = business;
@@ -2888,7 +2891,7 @@ var send2 = async (application2, csvPath) => {
       }
     }
     const templateIds = get_application_submitted_email_template_ids_default(application2);
-    const underwritingTeamSubmittedResponse = await emails_default.application.underwritingTeam(sendEmailVars, csvPath, templateIds.underwritingTeam);
+    const underwritingTeamSubmittedResponse = await emails_default.application.underwritingTeam(sendEmailVars, xlsxPath, templateIds.underwritingTeam);
     if (!underwritingTeamSubmittedResponse.success) {
       throw new Error("Sending application submitted email to underwriting team");
     }
@@ -2919,27 +2922,27 @@ var applicationSubmittedEmails = {
 };
 var send_application_submitted_emails_default = applicationSubmittedEmails;
 
-// generate-csv/index.ts
-var import_fs2 = __toESM(require("fs"));
-var import_csv_stringify = require("csv-stringify");
+// generate-xlsx/index.ts
+var import_exceljs = __toESM(require("exceljs"));
 
-// generate-csv/map-application-to-csv/helpers/csv-row/index.ts
-var csvRow = (fieldName, answer) => {
+// generate-xlsx/map-application-to-XLSX/helpers/xlsx-row/index.ts
+var { KEY, VALUE } = XLSX_CONFIG;
+var xlsxRow = (fieldName, answer) => {
   const value = answer || answer === 0 ? answer : "";
   const row = {
-    Field: fieldName,
-    Answer: String(value)
+    [KEY.ID]: fieldName,
+    [VALUE.ID]: String(value)
   };
   return row;
 };
-var csv_row_default = csvRow;
+var xlsx_row_default = xlsxRow;
 
 // content-strings/default.ts
 var DEFAULT = {
   EMPTY: "-"
 };
 
-// content-strings/csv.ts
+// content-strings/XLSX.ts
 var { FIRST_NAME, LAST_NAME, EMAIL: EMAIL3 } = account_default;
 var {
   CONTRACT_POLICY: {
@@ -2956,7 +2959,7 @@ var {
 var {
   COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS }
 } = your_buyer_default;
-var CSV = {
+var XLSX = {
   SECTION_TITLES: {
     KEY_INFORMATION: "Key information",
     POLICY_AND_EXPORT: "Type of policy and exports",
@@ -2990,9 +2993,9 @@ var CSV = {
   }
 };
 
-// generate-csv/map-application-to-csv/helpers/csv-row-seperator/index.ts
-var ROW_SEPERATOR = csv_row_default(DEFAULT.EMPTY, DEFAULT.EMPTY);
-var csv_row_seperator_default = ROW_SEPERATOR;
+// generate-xlsx/map-application-to-XLSX/helpers/xlsx-row-seperator/index.ts
+var ROW_SEPERATOR = xlsx_row_default(DEFAULT.EMPTY, DEFAULT.EMPTY);
+var xlsx_row_seperator_default = ROW_SEPERATOR;
 
 // content-strings/fields/insurance/eligibility/index.ts
 var {
@@ -3325,7 +3328,7 @@ var TIME_SUBMITTED = {
   }
 };
 
-// generate-csv/map-application-to-csv/helpers/format-time-of-day/index.ts
+// generate-xlsx/map-application-to-XLSX/helpers/format-time-of-day/index.ts
 var formatTimeOfDay = (date) => {
   const fullDate = new Date(date);
   const utcHour = fullDate.getUTCHours();
@@ -3333,27 +3336,27 @@ var formatTimeOfDay = (date) => {
 };
 var format_time_of_day_default = formatTimeOfDay;
 
-// generate-csv/map-application-to-csv/map-key-information/index.ts
-var { FIELDS: FIELDS2 } = CSV;
+// generate-xlsx/map-application-to-XLSX/map-key-information/index.ts
+var { FIELDS: FIELDS2 } = XLSX;
 var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL5 } = account_default;
 var mapKeyInformation = (application2) => {
   const mapped = [
-    csv_row_default(REFERENCE_NUMBER.SUMMARY.TITLE, application2.referenceNumber),
-    csv_row_default(DATE_SUBMITTED.SUMMARY.TITLE, format_date_default(application2.submissionDate, "dd-MM-yyyy")),
-    csv_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application2.submissionDate)),
-    csv_row_default(FIELDS2[FIRST_NAME2], application2.owner[FIRST_NAME2]),
-    csv_row_default(FIELDS2[LAST_NAME2], application2.owner[LAST_NAME2]),
-    csv_row_default(FIELDS2[EMAIL5], application2.owner[EMAIL5])
+    xlsx_row_default(REFERENCE_NUMBER.SUMMARY.TITLE, application2.referenceNumber),
+    xlsx_row_default(DATE_SUBMITTED.SUMMARY.TITLE, format_date_default(application2.submissionDate, "dd-MM-yyyy")),
+    xlsx_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application2.submissionDate)),
+    xlsx_row_default(FIELDS2[FIRST_NAME2], application2.owner[FIRST_NAME2]),
+    xlsx_row_default(FIELDS2[LAST_NAME2], application2.owner[LAST_NAME2]),
+    xlsx_row_default(FIELDS2[EMAIL5], application2.owner[EMAIL5])
   ];
   return mapped;
 };
 var map_key_information_default = mapKeyInformation;
 
-// generate-csv/map-application-to-csv/map-secondary-key-information/index.ts
+// generate-xlsx/map-application-to-XLSX/map-secondary-key-information/index.ts
 var {
   SECTION_TITLES: { KEY_INFORMATION },
   FIELDS: FIELDS3
-} = CSV;
+} = XLSX;
 var CONTENT_STRINGS = {
   ...POLICY_AND_EXPORTS_FIELDS
 };
@@ -3371,34 +3374,34 @@ var {
 var mapSecondaryKeyInformation = (application2) => {
   const { policyAndExport } = application2;
   const mapped = [
-    csv_row_default(KEY_INFORMATION),
-    csv_row_default(FIELDS3[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
-    csv_row_default(FIELDS3[COUNTRY2], application2.buyer[COUNTRY2].name),
-    csv_row_default(FIELDS3[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
-    csv_row_default(String(CONTENT_STRINGS[POLICY_TYPE2].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE2])
+    xlsx_row_default(KEY_INFORMATION),
+    xlsx_row_default(FIELDS3[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
+    xlsx_row_default(FIELDS3[COUNTRY2], application2.buyer[COUNTRY2].name),
+    xlsx_row_default(FIELDS3[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
+    xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE2].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE2])
   ];
   return mapped;
 };
 var map_secondary_key_information_default = mapSecondaryKeyInformation;
 
-// generate-csv/map-application-to-csv/helpers/policy-type/index.ts
+// generate-xlsx/map-application-to-XLSX/helpers/policy-type/index.ts
 var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
 var isMultiPolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
-// generate-csv/map-application-to-csv/helpers/format-currency/index.ts
+// generate-xlsx/map-application-to-XLSX/helpers/format-currency/index.ts
 var formatCurrency = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
   style: "currency",
   currency: currencyCode,
-  minimumFractionDigits: decimalPoints || 0,
-  maximumFractionDigits: decimalPoints || 0
+  minimumFractionDigits: decimalPoints ?? 0,
+  maximumFractionDigits: decimalPoints ?? 0
 });
 var format_currency_default = formatCurrency;
 
-// generate-csv/map-application-to-csv/helpers/map-month-string/index.ts
+// generate-xlsx/map-application-to-XLSX/helpers/map-month-string/index.ts
 var mapMonthString = (answer) => answer === 1 ? `${answer} month` : `${answer} months`;
 var map_month_string_default = mapMonthString;
 
-// generate-csv/map-application-to-csv/map-policy-and-export/index.ts
+// generate-xlsx/map-application-to-XLSX/map-policy-and-export/index.ts
 var CONTENT_STRINGS2 = {
   ...POLICY_AND_EXPORTS_FIELDS,
   ...POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY,
@@ -3420,34 +3423,37 @@ var {
 var mapPolicyAndExportIntro = (application2) => {
   const { policyAndExport } = application2;
   const mapped = [
-    csv_row_default(CSV.SECTION_TITLES.POLICY_AND_EXPORT, ""),
-    csv_row_default(String(CONTENT_STRINGS2[POLICY_TYPE3].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE3]),
-    csv_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[REQUESTED_START_DATE], "dd-MMM-yy"))
+    xlsx_row_default(XLSX.SECTION_TITLES.POLICY_AND_EXPORT, ""),
+    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_TYPE3].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE3]),
+    xlsx_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[REQUESTED_START_DATE], "dd-MMM-yy"))
   ];
   return mapped;
 };
 var mapSinglePolicyFields = (application2) => {
   const { policyAndExport } = application2;
   return [
-    csv_row_default(String(CONTENT_STRINGS2.SINGLE[CONTRACT_COMPLETION_DATE2].SUMMARY?.TITLE), format_date_default(policyAndExport[CONTRACT_COMPLETION_DATE2], "dd-MMM-yy")),
-    csv_row_default(String(CONTENT_STRINGS2.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE))
+    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[CONTRACT_COMPLETION_DATE2].SUMMARY?.TITLE), format_date_default(policyAndExport[CONTRACT_COMPLETION_DATE2], "dd-MMM-yy")),
+    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE))
   ];
 };
 var mapMultiplePolicyFields = (application2) => {
   const { policyAndExport } = application2;
   return [
-    csv_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), map_month_string_default(policyAndExport[TOTAL_MONTHS_OF_COVER])),
-    csv_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
-    csv_row_default(String(CONTENT_STRINGS2.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default(policyAndExport[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
+    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), map_month_string_default(policyAndExport[TOTAL_MONTHS_OF_COVER])),
+    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
+    xlsx_row_default(
+      String(CONTENT_STRINGS2.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE),
+      format_currency_default(policyAndExport[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE)
+    )
   ];
 };
 var mapPolicyAndExportOutro = (application2) => {
   const { policyAndExport } = application2;
   const mapped = [
-    csv_row_default(String(CONTENT_STRINGS2[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policyAndExport[CREDIT_PERIOD_WITH_BUYER]),
-    csv_row_default(String(CONTENT_STRINGS2[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policyAndExport[POLICY_CURRENCY_CODE]),
-    csv_row_default(String(CONTENT_STRINGS2[DESCRIPTION].SUMMARY?.TITLE), policyAndExport[DESCRIPTION]),
-    csv_row_default(String(CONTENT_STRINGS2[FINAL_DESTINATION].SUMMARY?.TITLE), policyAndExport[FINAL_DESTINATION].name)
+    xlsx_row_default(String(CONTENT_STRINGS2[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policyAndExport[CREDIT_PERIOD_WITH_BUYER]),
+    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policyAndExport[POLICY_CURRENCY_CODE]),
+    xlsx_row_default(String(CONTENT_STRINGS2[DESCRIPTION].SUMMARY?.TITLE), policyAndExport[DESCRIPTION]),
+    xlsx_row_default(String(CONTENT_STRINGS2[FINAL_DESTINATION].SUMMARY?.TITLE), policyAndExport[FINAL_DESTINATION].name)
   ];
   return mapped;
 };
@@ -3465,23 +3471,23 @@ var mapPolicyAndExport = (application2) => {
 };
 var map_policy_and_export_default = mapPolicyAndExport;
 
-// generate-csv/map-application-to-csv/helpers/csv-new-line/index.ts
+// generate-xlsx/map-application-to-XLSX/helpers/xlsx-new-line/index.ts
 var NEW_LINE = "\r\n";
-var csv_new_line_default = NEW_LINE;
+var xlsx_new_line_default = NEW_LINE;
 
-// generate-csv/map-application-to-csv/map-exporter/map-address/index.ts
+// generate-xlsx/map-application-to-XLSX/map-exporter/map-address/index.ts
 var mapExporterAddress = (address) => {
   let addressString = "";
   Object.keys(address).forEach((field) => {
     if (address[field] && field !== "id" && field !== "__typename") {
-      addressString += `${address[field]}${csv_new_line_default}`;
+      addressString += `${address[field]}${xlsx_new_line_default}`;
     }
   });
   return addressString;
 };
 var map_address_default = mapExporterAddress;
 
-// generate-csv/map-application-to-csv/map-exporter/index.ts
+// generate-xlsx/map-application-to-XLSX/map-exporter/index.ts
 var CONTENT_STRINGS3 = {
   ...FIELDS.COMPANY_DETAILS,
   ...FIELDS.NATURE_OF_YOUR_BUSINESS,
@@ -3499,19 +3505,22 @@ var mapSicCodes2 = (sicCodes) => {
   let mapped = "";
   sicCodes.forEach((sicCodeObj) => {
     const { sicCode, industrySectorName } = sicCodeObj;
-    mapped += `${sicCode} - ${industrySectorName}${csv_new_line_default}`;
+    mapped += `${sicCode} - ${industrySectorName}${xlsx_new_line_default}`;
   });
   return mapped;
 };
 var mapBroker = (application2) => {
   const { broker } = application2;
-  let mapped = [csv_row_default(CSV.FIELDS[USING_BROKER3], broker[USING_BROKER3])];
+  let mapped = [xlsx_row_default(XLSX.FIELDS[USING_BROKER3], broker[USING_BROKER3])];
   if (broker[USING_BROKER3] === ANSWERS.YES) {
     mapped = [
       ...mapped,
-      csv_row_default(CSV.FIELDS[BROKER_NAME2], broker[BROKER_NAME2]),
-      csv_row_default(CSV.FIELDS[ADDRESS_LINE_12], `${broker[ADDRESS_LINE_12]} ${csv_new_line_default} ${broker[TOWN]} ${csv_new_line_default} ${broker[COUNTY]} ${csv_new_line_default} ${broker[POSTCODE]}`),
-      csv_row_default(CSV.FIELDS[EMAIL6], broker[EMAIL6])
+      xlsx_row_default(XLSX.FIELDS[BROKER_NAME2], broker[BROKER_NAME2]),
+      xlsx_row_default(
+        XLSX.FIELDS[ADDRESS_LINE_12],
+        `${broker[ADDRESS_LINE_12]} ${xlsx_new_line_default} ${broker[TOWN]} ${xlsx_new_line_default} ${broker[COUNTY]} ${xlsx_new_line_default} ${broker[POSTCODE]}`
+      ),
+      xlsx_row_default(XLSX.FIELDS[EMAIL6], broker[EMAIL6])
     ];
   }
   return mapped;
@@ -3519,25 +3528,25 @@ var mapBroker = (application2) => {
 var mapExporter = (application2) => {
   const { company, companySicCodes, business } = application2;
   const mapped = [
-    csv_row_default(CSV.SECTION_TITLES.EXPORTER_BUSINESS, ""),
+    xlsx_row_default(XLSX.SECTION_TITLES.EXPORTER_BUSINESS, ""),
     // company fields
-    csv_row_default(CONTENT_STRINGS3[COMPANY_NUMBER2].SUMMARY?.TITLE, company[COMPANY_NUMBER2]),
-    csv_row_default(CSV.FIELDS[COMPANY_NAME2], company[COMPANY_NAME2]),
-    csv_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
-    csv_row_default(CSV.FIELDS[COMPANY_ADDRESS2], map_address_default(company[COMPANY_ADDRESS2])),
-    csv_row_default(CONTENT_STRINGS3[TRADING_NAME2].SUMMARY?.TITLE, company[TRADING_NAME2]),
-    csv_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, company[TRADING_ADDRESS2]),
-    csv_row_default(CSV.FIELDS[COMPANY_SIC2], mapSicCodes2(companySicCodes)),
-    csv_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM")),
-    csv_row_default(CSV.FIELDS[WEBSITE3], company[WEBSITE3]),
-    csv_row_default(CSV.FIELDS[PHONE_NUMBER3], company[PHONE_NUMBER3]),
+    xlsx_row_default(CONTENT_STRINGS3[COMPANY_NUMBER2].SUMMARY?.TITLE, company[COMPANY_NUMBER2]),
+    xlsx_row_default(XLSX.FIELDS[COMPANY_NAME2], company[COMPANY_NAME2]),
+    xlsx_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
+    xlsx_row_default(XLSX.FIELDS[COMPANY_ADDRESS2], map_address_default(company[COMPANY_ADDRESS2])),
+    xlsx_row_default(CONTENT_STRINGS3[TRADING_NAME2].SUMMARY?.TITLE, company[TRADING_NAME2]),
+    xlsx_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, company[TRADING_ADDRESS2]),
+    xlsx_row_default(XLSX.FIELDS[COMPANY_SIC2], mapSicCodes2(companySicCodes)),
+    xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM")),
+    xlsx_row_default(XLSX.FIELDS[WEBSITE3], company[WEBSITE3]),
+    xlsx_row_default(XLSX.FIELDS[PHONE_NUMBER3], company[PHONE_NUMBER3]),
     // business fields
-    csv_row_default(CSV.FIELDS[GOODS_OR_SERVICES3], business[GOODS_OR_SERVICES3]),
-    csv_row_default(CSV.FIELDS[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
-    csv_row_default(CSV.FIELDS[EMPLOYEES_UK3], business[EMPLOYEES_UK3]),
-    csv_row_default(CSV.FIELDS[EMPLOYEES_INTERNATIONAL3], business[EMPLOYEES_INTERNATIONAL3]),
-    csv_row_default(CSV.FIELDS[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
-    csv_row_default(CONTENT_STRINGS3[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
+    xlsx_row_default(XLSX.FIELDS[GOODS_OR_SERVICES3], business[GOODS_OR_SERVICES3]),
+    xlsx_row_default(XLSX.FIELDS[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
+    xlsx_row_default(XLSX.FIELDS[EMPLOYEES_UK3], business[EMPLOYEES_UK3]),
+    xlsx_row_default(XLSX.FIELDS[EMPLOYEES_INTERNATIONAL3], business[EMPLOYEES_INTERNATIONAL3]),
+    xlsx_row_default(XLSX.FIELDS[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
+    xlsx_row_default(CONTENT_STRINGS3[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
     // broker fields
     ...mapBroker(application2)
   ];
@@ -3545,7 +3554,7 @@ var mapExporter = (application2) => {
 };
 var map_exporter_default = mapExporter;
 
-// generate-csv/map-application-to-csv/map-buyer/index.ts
+// generate-xlsx/map-application-to-XLSX/map-buyer/index.ts
 var CONTENT_STRINGS4 = {
   ...YOUR_BUYER_FIELDS.COMPANY_OR_ORGANISATION,
   ...YOUR_BUYER_FIELDS.WORKING_WITH_BUYER
@@ -3557,21 +3566,21 @@ var {
 var mapBuyer = (application2) => {
   const { buyer } = application2;
   const mapped = [
-    csv_row_default(CSV.SECTION_TITLES.BUYER, ""),
-    csv_row_default(CSV.FIELDS[NAME2], buyer[NAME2]),
-    csv_row_default(String(CONTENT_STRINGS4[ADDRESS].SUMMARY?.TITLE), buyer[ADDRESS]),
-    csv_row_default(CSV.FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
-    csv_row_default(String(CONTENT_STRINGS4[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
-    csv_row_default(CSV.FIELDS[FIRST_NAME3], `${buyer[FIRST_NAME3]} ${buyer[LAST_NAME3]} ${csv_new_line_default} ${buyer[POSITION]} ${csv_new_line_default} ${buyer[EMAIL7]}`),
-    csv_row_default(String(CONTENT_STRINGS4[CAN_CONTACT_BUYER].SUMMARY?.TITLE), buyer[CAN_CONTACT_BUYER]),
-    csv_row_default(String(CONTENT_STRINGS4[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), buyer[CONNECTED_WITH_BUYER]),
-    csv_row_default(String(CONTENT_STRINGS4[TRADED_WITH_BUYER].SUMMARY?.TITLE), buyer[TRADED_WITH_BUYER])
+    xlsx_row_default(XLSX.SECTION_TITLES.BUYER, ""),
+    xlsx_row_default(XLSX.FIELDS[NAME2], buyer[NAME2]),
+    xlsx_row_default(String(CONTENT_STRINGS4[ADDRESS].SUMMARY?.TITLE), buyer[ADDRESS]),
+    xlsx_row_default(XLSX.FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
+    xlsx_row_default(String(CONTENT_STRINGS4[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
+    xlsx_row_default(XLSX.FIELDS[FIRST_NAME3], `${buyer[FIRST_NAME3]} ${buyer[LAST_NAME3]} ${xlsx_new_line_default} ${buyer[POSITION]} ${xlsx_new_line_default} ${buyer[EMAIL7]}`),
+    xlsx_row_default(String(CONTENT_STRINGS4[CAN_CONTACT_BUYER].SUMMARY?.TITLE), buyer[CAN_CONTACT_BUYER]),
+    xlsx_row_default(String(CONTENT_STRINGS4[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), buyer[CONNECTED_WITH_BUYER]),
+    xlsx_row_default(String(CONTENT_STRINGS4[TRADED_WITH_BUYER].SUMMARY?.TITLE), buyer[TRADED_WITH_BUYER])
   ];
   return mapped;
 };
 var map_buyer_default = mapBuyer;
 
-// generate-csv/map-application-to-csv/helpers/map-yes-no-field/index.ts
+// generate-xlsx/map-application-to-XLSX/helpers/map-yes-no-field/index.ts
 var mapYesNoField = (answer) => {
   if (answer === false) {
     return "No";
@@ -3583,7 +3592,7 @@ var mapYesNoField = (answer) => {
 };
 var map_yes_no_field_default = mapYesNoField;
 
-// generate-csv/map-application-to-csv/map-eligibility/index.ts
+// generate-xlsx/map-application-to-XLSX/map-eligibility/index.ts
 var {
   BUYER_COUNTRY: BUYER_COUNTRY2,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2,
@@ -3598,67 +3607,83 @@ var {
 var mapEligibility = (application2) => {
   const { eligibility } = application2;
   const mapped = [
-    csv_row_default(CSV.SECTION_TITLES.ELIGIBILITY, ""),
-    csv_row_default(FIELDS_ELIGIBILITY[BUYER_COUNTRY2].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY2].name),
-    csv_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[VALID_EXPORTER_LOCATION2])),
-    csv_row_default(FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES2])),
-    csv_row_default(FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_AMOUNT2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[WANT_COVER_OVER_MAX_AMOUNT2])),
-    csv_row_default(FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_PERIOD2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[WANT_COVER_OVER_MAX_PERIOD2])),
-    csv_row_default(FIELDS_ELIGIBILITY[OTHER_PARTIES_INVOLVED2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[OTHER_PARTIES_INVOLVED2])),
-    csv_row_default(FIELDS_ELIGIBILITY[LETTER_OF_CREDIT2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[LETTER_OF_CREDIT2])),
-    csv_row_default(FIELDS_ELIGIBILITY[PRE_CREDIT_PERIOD2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[PRE_CREDIT_PERIOD2])),
-    csv_row_default(FIELDS_ELIGIBILITY[COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[COMPANIES_HOUSE_NUMBER2]))
+    xlsx_row_default(XLSX.SECTION_TITLES.ELIGIBILITY, ""),
+    xlsx_row_default(FIELDS_ELIGIBILITY[BUYER_COUNTRY2].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY2].name),
+    xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[VALID_EXPORTER_LOCATION2])),
+    xlsx_row_default(FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES2])),
+    xlsx_row_default(FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_AMOUNT2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[WANT_COVER_OVER_MAX_AMOUNT2])),
+    xlsx_row_default(FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_PERIOD2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[WANT_COVER_OVER_MAX_PERIOD2])),
+    xlsx_row_default(FIELDS_ELIGIBILITY[OTHER_PARTIES_INVOLVED2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[OTHER_PARTIES_INVOLVED2])),
+    xlsx_row_default(FIELDS_ELIGIBILITY[LETTER_OF_CREDIT2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[LETTER_OF_CREDIT2])),
+    xlsx_row_default(FIELDS_ELIGIBILITY[PRE_CREDIT_PERIOD2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[PRE_CREDIT_PERIOD2])),
+    xlsx_row_default(FIELDS_ELIGIBILITY[COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[COMPANIES_HOUSE_NUMBER2]))
   ];
   return mapped;
 };
 var map_eligibility_default = mapEligibility;
 
-// generate-csv/map-application-to-csv/index.ts
-var mapApplicationToCsv = (application2) => {
+// generate-xlsx/map-application-to-XLSX/index.ts
+var mapApplicationToXLSX = (application2) => {
   try {
     const mapped = [
-      csv_row_seperator_default,
+      xlsx_row_seperator_default,
       ...map_key_information_default(application2),
-      csv_row_seperator_default,
+      xlsx_row_seperator_default,
       ...map_secondary_key_information_default(application2),
-      csv_row_seperator_default,
+      xlsx_row_seperator_default,
       ...map_policy_and_export_default(application2),
-      csv_row_seperator_default,
+      xlsx_row_seperator_default,
       ...map_exporter_default(application2),
-      csv_row_seperator_default,
+      xlsx_row_seperator_default,
       ...map_buyer_default(application2),
-      csv_row_seperator_default,
+      xlsx_row_seperator_default,
       ...map_eligibility_default(application2)
     ];
     return mapped;
   } catch (err) {
     console.error(err);
-    throw new Error(`Mapping application to CSV ${err}`);
+    throw new Error(`Mapping application to XLSX ${err}`);
   }
 };
-var map_application_to_csv_default = mapApplicationToCsv;
+var map_application_to_XLSX_default = mapApplicationToXLSX;
 
-// generate-csv/index.ts
-var csv = (application2) => {
+// generate-xlsx/header-columns/index.ts
+var { KEY: KEY2, VALUE: VALUE2, COLUMN_WIDTH } = XLSX_CONFIG;
+var XLSX_HEADER_COLUMNS = [
+  { key: KEY2.ID, header: KEY2.COPY, width: COLUMN_WIDTH },
+  { key: VALUE2.ID, header: VALUE2.COPY, width: COLUMN_WIDTH }
+];
+var header_columns_default = XLSX_HEADER_COLUMNS;
+
+// generate-xlsx/index.ts
+var XLSX2 = (application2) => {
   try {
-    console.info("Generating CSV file");
+    console.info("Generating XLSX file");
     const { referenceNumber } = application2;
+    const refNumber = String(referenceNumber);
     return new Promise((resolve) => {
-      const filePath = `csv/${referenceNumber}.csv`;
-      const csvData = map_application_to_csv_default(application2);
-      (0, import_csv_stringify.stringify)(csvData, { header: true }, (err, output) => {
-        import_fs2.default.writeFile(filePath, output, () => resolve(String(filePath)));
+      const filePath = `XLSX/${refNumber}.xlsx`;
+      const xlsxData = map_application_to_XLSX_default(application2);
+      console.info("Generating XLSX file - creating a new workbook");
+      const workbook = new import_exceljs.default.Workbook();
+      console.info("Generating XLSX file - adding worksheet to workbook");
+      const worksheet = workbook.addWorksheet(refNumber);
+      worksheet.columns = header_columns_default;
+      console.info("Generating XLSX file - adding rows to worksheet");
+      xlsxData.forEach((row) => {
+        worksheet.addRow(row);
       });
+      workbook.xlsx.writeFile(filePath).then(() => resolve(filePath));
     });
   } catch (err) {
     console.error(err);
-    throw new Error(`Generating CSV file ${err}`);
+    throw new Error(`Generating XLSX file ${err}`);
   }
 };
 var generate2 = {
-  csv
+  XLSX: XLSX2
 };
-var generate_csv_default = generate2;
+var generate_xlsx_default = generate2;
 
 // custom-resolvers/mutations/submit-application.ts
 var submitApplication = async (root, variables, context) => {
@@ -3683,8 +3708,8 @@ var submitApplication = async (root, variables, context) => {
           data: update
         });
         const populatedApplication = await get_populated_application_default(context, updatedApplication);
-        const csvPath = await generate_csv_default.csv(populatedApplication);
-        await send_application_submitted_emails_default.send(populatedApplication, csvPath);
+        const xlsxPath = await generate_xlsx_default.XLSX(populatedApplication);
+        await send_application_submitted_emails_default.send(populatedApplication, xlsxPath);
         return {
           success: true
         };

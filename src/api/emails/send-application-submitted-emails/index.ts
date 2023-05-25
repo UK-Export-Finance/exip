@@ -9,10 +9,10 @@ import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } fro
  * applicationSubmittedEmails.send
  * Send "application submitted" emails
  * @param {Object} Application
- * @param {String} Path to CSV file for underwriting team email
+ * @param {String} Path to XLSX file for underwriting team email
  * @returns {Object} Object with success flag and emailRecipient
  */
-const send = async (application: Application, csvPath: string): Promise<SuccessResponse> => {
+const send = async (application: Application, xlsxPath: string): Promise<SuccessResponse> => {
   try {
     const { referenceNumber, owner, company, buyer, policyAndExport, business } = application as Application;
 
@@ -72,7 +72,7 @@ const send = async (application: Application, csvPath: string): Promise<SuccessR
     const templateIds = getApplicationSubmittedEmailTemplateIds(application);
 
     // send "application submitted" email to the underwriting team
-    const underwritingTeamSubmittedResponse = await sendEmail.application.underwritingTeam(sendEmailVars, csvPath, templateIds.underwritingTeam);
+    const underwritingTeamSubmittedResponse = await sendEmail.application.underwritingTeam(sendEmailVars, xlsxPath, templateIds.underwritingTeam);
 
     if (!underwritingTeamSubmittedResponse.success) {
       throw new Error('Sending application submitted email to underwriting team');

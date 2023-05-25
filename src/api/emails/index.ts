@@ -17,12 +17,12 @@ dotenv.config();
  * @param {Object} Email variables
  * @returns {Object} Object with success flag and emailRecipient
  */
-export const callNotify = async (templateId: string, emailAddress: string, variables: object, file?: Buffer, fileIsCsv?: boolean): Promise<EmailResponse> => {
+export const callNotify = async (templateId: string, emailAddress: string, variables: object, file?: Buffer): Promise<EmailResponse> => {
   try {
     let emailResponse;
 
-    if (file && fileIsCsv) {
-      emailResponse = await notify.sendEmail(templateId, emailAddress, variables, file, fileIsCsv);
+    if (file) {
+      emailResponse = await notify.sendEmail(templateId, emailAddress, variables, file);
     } else {
       emailResponse = await notify.sendEmail(templateId, emailAddress, variables);
     }
@@ -143,13 +143,13 @@ const application = {
   },
   /**
    * application.underwritingTeam
-   * Read CSV file, generate a file buffer
-   * Send "application submitted" email to the underwriting team with a link to CSV
+   * Read XLSX file, generate a file buffer
+   * Send "application submitted" email to the underwriting team with a link to XLSX
    * We send a file buffer to Notify and Notify generates a unique URL that is then rendered in the email.
    * @param {Object} ApplicationSubmissionEmailVariables
    * @returns {Object} callNotify response
    */
-  underwritingTeam: async (variables: ApplicationSubmissionEmailVariables, csvPath: string, templateId: string): Promise<EmailResponse> => {
+  underwritingTeam: async (variables: ApplicationSubmissionEmailVariables, xlsxPath: string, templateId: string): Promise<EmailResponse> => {
     try {
       console.info('Sending application submitted email to underwriting team');
 
@@ -157,18 +157,16 @@ const application = {
 
       // NOTE: no need to handle any file system errors here.
       // if something errors, it will fall into the catch handler below.
-      const file = await fileSystem.readFile(csvPath);
+      const file = await fileSystem.readFile(xlsxPath);
 
       if (file) {
-        const fileIsCsv = true;
-
         const fileBuffer = Buffer.from(file);
 
-        const response = await callNotify(templateId, emailAddress, variables, fileBuffer, fileIsCsv);
+        const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
 
         // NOTE: no need to handle an error from fs.unlink here,
         // if it errors, it will go into the catch handler below.
-        await fileSystem.unlink(csvPath);
+        // await fileSystem.unlink(xlsxPath);
 
         return response;
       }
