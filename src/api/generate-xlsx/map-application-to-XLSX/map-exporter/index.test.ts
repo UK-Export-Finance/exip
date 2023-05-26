@@ -52,13 +52,15 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter', () => {
 
         const { broker } = mockApplication;
 
+        const expectedAddressAnswer = {
+          lineOneAndTwo: `${broker[ADDRESS_LINE_1]} ${NEW_LINE}${broker[ADDRESS_LINE_2]}`,
+          other: `${NEW_LINE}${broker[TOWN]} ${NEW_LINE}${broker[COUNTY]} ${NEW_LINE}${broker[POSTCODE]}`,
+        };
+
         const expected = [
           xlsxRow(XLSX.FIELDS[USING_BROKER], broker[USING_BROKER]),
           xlsxRow(XLSX.FIELDS[BROKER_NAME], broker[BROKER_NAME]),
-          xlsxRow(
-            XLSX.FIELDS[ADDRESS_LINE_1],
-            `${broker[ADDRESS_LINE_1]} ${NEW_LINE}${broker[ADDRESS_LINE_2]} ${NEW_LINE}${broker[TOWN]} ${NEW_LINE}${broker[COUNTY]} ${NEW_LINE}${broker[POSTCODE]}`,
-          ),
+          xlsxRow(XLSX.FIELDS[ADDRESS_LINE_1], `${expectedAddressAnswer.lineOneAndTwo}${expectedAddressAnswer.other}`),
           xlsxRow(XLSX.FIELDS[EMAIL], broker[EMAIL]),
         ];
 

@@ -54,13 +54,15 @@ export const mapBroker = (application: Application) => {
   let mapped = [xlsxRow(XLSX.FIELDS[USING_BROKER], broker[USING_BROKER])];
 
   if (broker[USING_BROKER] === ANSWERS.YES) {
+    const addressAnswer = {
+      lineOneAndTwo: `${broker[ADDRESS_LINE_1]} ${NEW_LINE}${broker[ADDRESS_LINE_2]}`,
+      other: `${NEW_LINE}${broker[TOWN]} ${NEW_LINE}${broker[COUNTY]} ${NEW_LINE}${broker[POSTCODE]}`,
+    };
+
     mapped = [
       ...mapped,
       xlsxRow(XLSX.FIELDS[BROKER_NAME], broker[BROKER_NAME]),
-      xlsxRow(
-        XLSX.FIELDS[ADDRESS_LINE_1],
-        `${broker[ADDRESS_LINE_1]} ${NEW_LINE}${broker[ADDRESS_LINE_2]} ${NEW_LINE}${broker[TOWN]} ${NEW_LINE}${broker[COUNTY]} ${NEW_LINE}${broker[POSTCODE]}`,
-      ),
+      xlsxRow(XLSX.FIELDS[ADDRESS_LINE_1], `${addressAnswer.lineOneAndTwo}${addressAnswer.other}`),
       xlsxRow(XLSX.FIELDS[EMAIL], broker[EMAIL]),
     ];
   }

@@ -3541,13 +3541,14 @@ var mapBroker = (application2) => {
   const { broker } = application2;
   let mapped = [xlsx_row_default(XLSX.FIELDS[USING_BROKER3], broker[USING_BROKER3])];
   if (broker[USING_BROKER3] === ANSWERS.YES) {
+    const addressAnswer = {
+      lineOneAndTwo: `${broker[ADDRESS_LINE_12]} ${xlsx_new_line_default}${broker[ADDRESS_LINE_2]}`,
+      other: `${xlsx_new_line_default}${broker[TOWN]} ${xlsx_new_line_default}${broker[COUNTY]} ${xlsx_new_line_default}${broker[POSTCODE]}`
+    };
     mapped = [
       ...mapped,
       xlsx_row_default(XLSX.FIELDS[BROKER_NAME2], broker[BROKER_NAME2]),
-      xlsx_row_default(
-        XLSX.FIELDS[ADDRESS_LINE_12],
-        `${broker[ADDRESS_LINE_12]} ${xlsx_new_line_default}${broker[ADDRESS_LINE_2]} ${xlsx_new_line_default}${broker[TOWN]} ${xlsx_new_line_default}${broker[COUNTY]} ${xlsx_new_line_default}${broker[POSTCODE]}`
-      ),
+      xlsx_row_default(XLSX.FIELDS[ADDRESS_LINE_12], `${addressAnswer.lineOneAndTwo}${addressAnswer.other}`),
       xlsx_row_default(XLSX.FIELDS[EMAIL5], broker[EMAIL5])
     ];
   }
