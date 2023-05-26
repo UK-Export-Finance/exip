@@ -24,7 +24,7 @@ context('Cookies consent - initial/default', () => {
       it('should render a heading when on an root page', () => {
         cy.navigateToUrl(ROUTES.COOKIES);
 
-        cy.checkText(partials.cookieBanner.heading(), `${COOKIES_CONSENT.HEADING_INTRO} ${PRODUCT.DESCRIPTION.GENERIC}`);
+        cy.checkText(partials.cookieBanner.heading(), `${COOKIES_CONSENT.HEADING_INTRO} ${PRODUCT.DESCRIPTION.QUOTE}`);
 
         cy.login();
       });
