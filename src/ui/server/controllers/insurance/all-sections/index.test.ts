@@ -10,6 +10,8 @@ import mapApplicationToFormFields from '../../../helpers/mappings/map-applicatio
 import { Request, Response } from '../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../test-mocks';
 
+const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
+
 describe('controllers/insurance/all-sections', () => {
   let req: Request;
   let res: Response;
@@ -59,10 +61,10 @@ describe('controllers/insurance/all-sections', () => {
         res.locals = { csrfToken: '1234' };
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
         get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

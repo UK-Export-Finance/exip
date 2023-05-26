@@ -18,6 +18,7 @@ const {
     INSURANCE_ROOT,
     POLICY_AND_EXPORTS: { SINGLE_CONTRACT_POLICY_SAVE_AND_BACK, ABOUT_GOODS_OR_SERVICES, CHECK_YOUR_ANSWERS },
     CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
+    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 
@@ -171,10 +172,10 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
         res.locals = { csrfToken: '1234' };
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
@@ -185,10 +186,10 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
           api.external.getCurrencies = getCurrenciesSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
 
@@ -198,10 +199,10 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
           api.external.getCurrencies = getCurrenciesSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
     });
@@ -338,10 +339,10 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
         res.locals = { csrfToken: '1234' };
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
@@ -353,10 +354,10 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
             api.external.getCurrencies = getCurrenciesSpy;
           });
 
-          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
             await post(req, res);
 
-            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
           });
         });
 
@@ -366,10 +367,10 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
             api.external.getCurrencies = getCurrenciesSpy;
           });
 
-          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
             await post(req, res);
 
-            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
           });
         });
       });
@@ -386,10 +387,10 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
             mapAndSave.policyAndExport = savePolicyAndExportDataSpy;
           });
 
-          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
             await post(req, res);
 
-            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
           });
         });
 
@@ -400,10 +401,10 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
             mapAndSave.policyAndExport = savePolicyAndExportDataSpy;
           });
 
-          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
             await post(req, res);
 
-            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
           });
         });
       });

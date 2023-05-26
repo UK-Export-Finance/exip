@@ -8,45 +8,91 @@ const CONTENT_STRINGS = PAGES.CONTACT_US_PAGE;
 const { GENERAL_ENQUIRIES, APPLICATION_ENQUIRES } = CONTENT_STRINGS;
 
 context('Contact us page', () => {
-  const url = ROUTES.CONTACT_US;
+  describe('quote', () => {
+    const url = ROUTES.CONTACT_US;
 
-  beforeEach(() => {
-    cy.login();
+    beforeEach(() => {
+      cy.login();
 
-    // click on contact link in footer
-    footer.supportLinks.contact().click();
+      // click on contact link in footer
+      footer.supportLinks.contact().click();
 
-    cy.url().should('include', url);
+      cy.url().should('include', url);
 
-    cy.saveSession();
-  });
+      cy.saveSession();
+    });
 
-  it('renders core page elements', () => {
-    cy.clearCookies();
+    it('renders core page elements', () => {
+      cy.clearCookies();
 
-    cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.CONTACT_US,
-      backLink: ROUTES.QUOTE.BUYER_COUNTRY,
-      assertSubmitButton: false,
-      assertAuthenticatedHeader: false,
-      isInsurancePage: false,
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: ROUTES.CONTACT_US,
+        backLink: ROUTES.QUOTE.BUYER_COUNTRY,
+        assertSubmitButton: false,
+        assertAuthenticatedHeader: false,
+        isInsurancePage: false,
+      });
+    });
+
+    it('renders an intro/description', () => {
+      cy.checkText(contactUsPage.whoToContactText(), CONTENT_STRINGS.WHO_TO_CONTACT);
+    });
+
+    it('renders a `general enquiries` section', () => {
+      cy.assertCustomerServiceContactDetailsContent(GENERAL_ENQUIRIES.HEADING);
+    });
+
+    it('renders an application enquiries section', () => {
+      const { applicationEnquires } = contactUsPage;
+
+      cy.checkText(applicationEnquires.heading(), APPLICATION_ENQUIRES.HEADING);
+      cy.checkText(applicationEnquires.email(), `${APPLICATION_ENQUIRES.EMAIL.PREFIX} ${APPLICATION_ENQUIRES.EMAIL.VALUE}`);
+      cy.checkText(applicationEnquires.quoteReferenceNumber(), APPLICATION_ENQUIRES.QUOTE);
     });
   });
 
-  it('renders an intro/description', () => {
-    cy.checkText(contactUsPage.whoToContactText(), CONTENT_STRINGS.WHO_TO_CONTACT);
-  });
+  describe('insurance', () => {
+    const url = ROUTES.INSURANCE.CONTACT_US;
 
-  it('renders a `general enquiries` section', () => {
-    cy.assertCustomerServiceContactDetailsContent(GENERAL_ENQUIRIES.HEADING);
-  });
+    beforeEach(() => {
+      cy.navigateToUrl(ROUTES.INSURANCE.START);
 
-  it('renders an application enquiries section', () => {
-    const { applicationEnquires } = contactUsPage;
+      // click on contact link in footer
+      footer.supportLinks.contact().click();
 
-    cy.checkText(applicationEnquires.heading(), APPLICATION_ENQUIRES.HEADING);
-    cy.checkText(applicationEnquires.email(), `${APPLICATION_ENQUIRES.EMAIL.PREFIX} ${APPLICATION_ENQUIRES.EMAIL.VALUE}`);
-    cy.checkText(applicationEnquires.quoteReferenceNumber(), APPLICATION_ENQUIRES.QUOTE);
+      cy.url().should('include', url);
+
+      cy.saveSession();
+    });
+
+    it('renders core page elements', () => {
+      cy.clearCookies();
+
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: ROUTES.INSURANCE.CONTACT_US,
+        backLink: ROUTES.INSURANCE.START,
+        assertSubmitButton: false,
+        assertAuthenticatedHeader: false,
+        isInsurancePage: true,
+      });
+    });
+
+    it('renders an intro/description', () => {
+      cy.checkText(contactUsPage.whoToContactText(), CONTENT_STRINGS.WHO_TO_CONTACT);
+    });
+
+    it('renders a `general enquiries` section', () => {
+      cy.assertCustomerServiceContactDetailsContent(GENERAL_ENQUIRIES.HEADING);
+    });
+
+    it('renders an application enquiries section', () => {
+      const { applicationEnquires } = contactUsPage;
+
+      cy.checkText(applicationEnquires.heading(), APPLICATION_ENQUIRES.HEADING);
+      cy.checkText(applicationEnquires.email(), `${APPLICATION_ENQUIRES.EMAIL.PREFIX} ${APPLICATION_ENQUIRES.EMAIL.VALUE}`);
+      cy.checkText(applicationEnquires.quoteReferenceNumber(), APPLICATION_ENQUIRES.QUOTE);
+    });
   });
 });

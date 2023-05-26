@@ -18,8 +18,8 @@ const {
     ACCOUNT: {
       PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, SUCCESS, LINK_EXPIRED },
     },
+    PROBLEM_WITH_SERVICE,
   },
-  PROBLEM_WITH_SERVICE,
 } = ROUTES;
 
 describe('controllers/insurance/account/password-reset/new-password', () => {
@@ -127,10 +127,10 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
           api.keystone.account.verifyPasswordResetToken = verifyAccountPasswordResetTokenSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
     });
@@ -238,10 +238,10 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
             api.keystone.account.passwordReset = passwordResetSpy;
           });
 
-          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
             await post(req, res);
 
-            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
           });
         });
       });

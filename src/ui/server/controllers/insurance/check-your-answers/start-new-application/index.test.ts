@@ -8,11 +8,11 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
 const {
-  PROBLEM_WITH_SERVICE,
   INSURANCE: {
     INSURANCE_ROOT,
     ALL_SECTIONS,
     ELIGIBILITY: { BUYER_COUNTRY },
+    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 

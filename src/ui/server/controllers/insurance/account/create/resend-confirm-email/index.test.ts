@@ -11,11 +11,11 @@ const https = Boolean(process.env.HTTPS || 0);
 const protocol = https ? 'https://' : 'http://';
 
 const {
-  PROBLEM_WITH_SERVICE,
   INSURANCE: {
     ACCOUNT: {
       CREATE: { CONFIRM_EMAIL_RESENT },
     },
+    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 

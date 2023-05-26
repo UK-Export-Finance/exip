@@ -5,7 +5,7 @@ import generateValidationErrors from '../validation';
 import callMapAndSave from '../../call-map-and-save';
 
 const {
-  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
+  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
 } = ROUTES;
 
 /**
@@ -20,7 +20,7 @@ export const post = async (req: Request, res: Response) => {
     const { application } = res.locals;
 
     if (!application) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const { referenceNumber } = req.params;
@@ -29,7 +29,7 @@ export const post = async (req: Request, res: Response) => {
       const saveResponse = await callMapAndSave(req.body, application, generateValidationErrors(req.body));
 
       if (!saveResponse) {
-        return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+        return res.redirect(PROBLEM_WITH_SERVICE);
       }
     }
 
@@ -37,6 +37,6 @@ export const post = async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Error updating application - policy and exports - about goods or services (save and back)', { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

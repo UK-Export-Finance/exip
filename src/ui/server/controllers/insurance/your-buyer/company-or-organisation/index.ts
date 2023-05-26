@@ -21,6 +21,7 @@ const {
   INSURANCE_ROOT,
   YOUR_BUYER: YOUR_BUYER_ROUTES,
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
+  PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
 const { WORKING_WITH_BUYER, COMPANY_OR_ORGANISATION_SAVE_AND_BACK, CHECK_YOUR_ANSWERS } = YOUR_BUYER_ROUTES;
@@ -80,13 +81,13 @@ export const get = async (req: Request, res: Response) => {
     const { application } = res.locals;
 
     if (!application) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const countries = await api.keystone.countries.getAll();
 
     if (!isPopulatedArray(countries)) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const mappedCountries = mapCountries(countries, application.buyer[COUNTRY]?.isoCode);
@@ -104,7 +105,7 @@ export const get = async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Error getting insurance - your buyer - buyers company or organisation ', { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 
@@ -113,7 +114,7 @@ export const post = async (req: Request, res: Response) => {
     const { application } = res.locals;
 
     if (!application) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const { referenceNumber } = req.params;
@@ -125,7 +126,7 @@ export const post = async (req: Request, res: Response) => {
       const countries = await api.keystone.countries.getAll();
 
       if (!isPopulatedArray(countries)) {
-        return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+        return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
       const mappedCountries = mapCountries(countries, body[COUNTRY]);
@@ -147,7 +148,7 @@ export const post = async (req: Request, res: Response) => {
     const saveResponse = await mapAndSave.yourBuyer(body, application);
 
     if (!saveResponse) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     if (isChangeRoute(req.originalUrl)) {
@@ -162,6 +163,6 @@ export const post = async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Error posting insurance - your buyer - buyers company or organisation ', { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

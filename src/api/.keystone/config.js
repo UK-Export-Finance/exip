@@ -2627,7 +2627,7 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
         referenceNumber: { equals: referenceNumber }
       }
     });
-    const { id } = application2[0];
+    const [{ id }] = application2;
     const deleteResponse = await context.db.Application.deleteOne({
       where: {
         id

@@ -7,7 +7,7 @@ const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 export const TEMPLATE = BROKER_TEMPLATE;
 
-const { INSURANCE_ROOT, ALL_SECTIONS } = ROUTES.INSURANCE;
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 /**
  * saves and goes back to all sections from broker page unless there are database errors
@@ -22,7 +22,7 @@ const post = async (req: Request, res: Response) => {
     const { referenceNumber } = req.params;
 
     if (!application) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const { body } = req;
@@ -33,7 +33,7 @@ const post = async (req: Request, res: Response) => {
     const saveResponse = await mapAndSave.broker(body, application, validationErrors);
 
     if (!saveResponse) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     // redirect to all sections page
@@ -41,7 +41,7 @@ const post = async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Error updating application - your business - broker (save and back)', { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 

@@ -10,7 +10,7 @@ import mapAndSave from '../map-and-save';
 import { Request, Response } from '../../../../../types';
 
 const {
-  INSURANCE: { INSURANCE_ROOT },
+  INSURANCE: { INSURANCE_ROOT, PROBLEM_WITH_SERVICE },
 } = ROUTES;
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 const { INSURANCE } = ROUTES;
@@ -35,7 +35,7 @@ export const get = (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
   const { referenceNumber } = req.params;
@@ -63,7 +63,7 @@ export const post = async (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
   const { referenceNumber } = req.params;
@@ -89,7 +89,7 @@ export const post = async (req: Request, res: Response) => {
     const saveResponse = await mapAndSave.policyAndExport(req.body, application);
 
     if (!saveResponse) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     if (isSinglePolicyType(req.body[FIELD_ID])) {
@@ -100,10 +100,10 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`);
     }
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
     console.error('Error updating application - policy and exports - type of policy', { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

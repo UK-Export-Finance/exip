@@ -57,7 +57,7 @@ describe('controllers/quote/check-your-answers', () => {
       const expectedSummaryList = answersSummaryList(answers);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.CHECK_YOUR_ANSWERS, {
-        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.CHECK_YOUR_ANSWERS, BACK_LINK: req.headers.referer }),
+        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.CHECK_YOUR_ANSWERS, BACK_LINK: req.headers.referer, originalUrl: req.originalUrl }),
         userName: getUserNameFromSession(req.session.user),
         SUMMARY_LIST: expectedSummaryList,
       });

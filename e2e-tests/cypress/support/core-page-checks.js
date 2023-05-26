@@ -76,6 +76,7 @@ const corePageChecks = ({
   submitButtonCopy = BUTTONS.CONTINUE,
   assertBackLink = true,
   assertAuthenticatedHeader = true,
+  assertCookies = true,
   isInsurancePage = true,
   // lightHouseThresholds,
 }) => {
@@ -87,9 +88,13 @@ const corePageChecks = ({
     checkBackLink(currentHref, backLink);
   }
 
+  if (assertCookies) {
   // check analytics cookie banner
-  cy.checkAnalyticsCookiesConsentAndAccept();
-  cy.rejectAnalyticsCookies();
+    cy.checkAnalyticsCookiesConsentAndAccept();
+    cy.rejectAnalyticsCookies();
+  }
+
+  cy.checkHeaderServiceNameAndHref(isInsurancePage);
 
   if (assertAuthenticatedHeader) {
     // check authenticated header
@@ -98,6 +103,8 @@ const corePageChecks = ({
 
   // check phase banner
   cy.checkPhaseBanner(isInsurancePage);
+
+  cy.checkFooterLinks(isInsurancePage);
 
   // check page title and heading
   checkPageTitleAndHeading(pageTitle);

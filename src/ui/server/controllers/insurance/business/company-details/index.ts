@@ -30,6 +30,7 @@ const {
   INSURANCE_ROOT,
   EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES,
   CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
+  PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
 const {
@@ -76,7 +77,7 @@ const get = (req: Request, res: Response) => {
     const { application } = res.locals;
 
     if (!application) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const { company } = application;
@@ -103,7 +104,7 @@ const get = (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error('Error getting company details', { err });
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 
@@ -134,7 +135,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
     const { application } = res.locals;
 
     if (!application) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const { referenceNumber } = application;
@@ -188,10 +189,10 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
       });
     }
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
     console.error('Error posting companise house search - your business - company details', { err });
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 
@@ -206,7 +207,7 @@ const post = async (req: Request, res: Response) => {
   try {
     const { application } = res.locals;
     if (!application) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const { referenceNumber } = application;
@@ -260,7 +261,7 @@ const post = async (req: Request, res: Response) => {
     const saveResponse = await mapAndSave.companyDetails(updateBody, application);
 
     if (!saveResponse) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     if (isChangeRoute(req.originalUrl)) {
@@ -274,7 +275,7 @@ const post = async (req: Request, res: Response) => {
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CONTACT_ROOT}`);
   } catch (err) {
     console.error('Error updating application - your business - company details', { err });
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 

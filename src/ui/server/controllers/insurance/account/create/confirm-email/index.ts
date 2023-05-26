@@ -9,6 +9,8 @@ export const TEMPLATE = TEMPLATES.INSURANCE.ACCOUNT.CREATE.CONFIRM_EMAIL;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.CONFIRM_EMAIL;
 
+const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
+
 /**
  * get
  * Render the Confirm email page
@@ -24,7 +26,7 @@ export const get = async (req: Request, res: Response) => {
     const accountId = accountIdToConfirm || id;
 
     if (!accountId) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     delete req.session.accountIdToConfirm;
@@ -49,6 +51,6 @@ export const get = async (req: Request, res: Response) => {
   } catch (err) {
     console.error("Error getting exporter by email and rendering 'confirm email' page", { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

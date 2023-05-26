@@ -7,6 +7,8 @@ import { Request, Response } from '../../../../../../types';
 import api from '../../../../../api';
 import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
 
+const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
+
 describe('controllers/insurance/account/create/confirm-email', () => {
   let req: Request;
   let res: Response;
@@ -83,13 +85,13 @@ describe('controllers/insurance/account/create/confirm-email', () => {
     });
 
     describe('when there is no accountIdToConfirm in the session and no ID query param', () => {
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         delete req.session.accountIdToConfirm;
         req.query = {};
 
         await get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
@@ -100,10 +102,10 @@ describe('controllers/insurance/account/create/confirm-email', () => {
           api.keystone.account.get = getAccountSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
     });

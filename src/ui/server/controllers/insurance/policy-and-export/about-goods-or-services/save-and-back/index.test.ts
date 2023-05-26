@@ -6,7 +6,7 @@ import generateValidationErrors from '../validation';
 import { mockApplication, mockReq, mockRes } from '../../../../../test-mocks';
 
 const {
-  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
+  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
 } = ROUTES;
 
 describe('controllers/insurance/policy-and-export/about-goods-or-services/save-and-back', () => {
@@ -71,10 +71,10 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services/save-a
       res.locals = { csrfToken: '1234' };
     });
 
-    it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
     });
   });
 
@@ -85,10 +85,10 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services/save-a
         mapAndSave.policyAndExport = mockMapAndSave;
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
@@ -98,10 +98,10 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services/save-a
         mapAndSave.policyAndExport = mockMapAndSave;
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

@@ -8,7 +8,7 @@ const {
   COMPANY_OR_ORGANISATION: { NAME },
 } = FIELD_IDS.INSURANCE.YOUR_BUYER;
 
-const { INSURANCE_ROOT, ALL_SECTIONS } = ROUTES.INSURANCE;
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back', () => {
   let req: Request;
@@ -78,10 +78,10 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
         res.locals = { csrfToken: '1234' };
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
@@ -92,10 +92,10 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
         mapAndSave.yourBuyer = updateMapAndSave;
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
@@ -106,10 +106,10 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
         mapAndSave.yourBuyer = updateMapAndSave;
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

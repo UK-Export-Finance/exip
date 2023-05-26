@@ -7,6 +7,8 @@ import { Request, Response } from '../../../../../../types';
 import api from '../../../../../api';
 import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
 
+const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
+
 describe('controllers/insurance/account/create/confirm-email-resent', () => {
   let req: Request;
   let res: Response;
@@ -68,20 +70,20 @@ describe('controllers/insurance/account/create/confirm-email-resent', () => {
     });
 
     describe('when req.query.id is NOT provided', () => {
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         req.query = {};
         await get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
     describe('when req.query.id is empty', () => {
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         req.query = { id: '' };
         await get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
@@ -92,10 +94,10 @@ describe('controllers/insurance/account/create/confirm-email-resent', () => {
         api.keystone.account.get = jest.fn(() => Promise.resolve());
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
@@ -113,10 +115,10 @@ describe('controllers/insurance/account/create/confirm-email-resent', () => {
         api.keystone.account.get = getAccountSpy;
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
@@ -129,10 +131,10 @@ describe('controllers/insurance/account/create/confirm-email-resent', () => {
           api.keystone.account.get = getAccountSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
     });

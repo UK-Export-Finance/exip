@@ -22,6 +22,7 @@ const {
   INSURANCE_ROOT,
   EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES,
   CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
+  PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
 const { BROKER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, BROKER_CHECK_AND_CHANGE } = EXPORTER_BUSINESS_ROUTES;
@@ -124,10 +125,10 @@ describe('controllers/insurance/business/broker', () => {
         res.locals = { csrfToken: '1234' };
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
         get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });
@@ -201,10 +202,10 @@ describe('controllers/insurance/business/broker', () => {
         res.locals = { csrfToken: '1234' };
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

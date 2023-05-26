@@ -14,7 +14,7 @@ export const get = async (req: Request, res: Response) => {
   const summaryList = answersSummaryList(answers);
 
   return res.render(TEMPLATE, {
-    ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.CHECK_YOUR_ANSWERS, BACK_LINK: req.headers.referer }),
+    ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.CHECK_YOUR_ANSWERS, BACK_LINK: req.headers.referer, originalUrl: req.originalUrl }),
     userName: getUserNameFromSession(req.session.user),
     SUMMARY_LIST: summaryList,
   });

@@ -63,7 +63,7 @@ describe('controllers/quote/policy-type', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
+        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer, originalUrl: req.originalUrl }),
         userName: getUserNameFromSession(req.session.user),
         ...PAGE_VARIABLES,
         submittedValues: req.session.submittedData.quoteEligibility,
@@ -77,7 +77,7 @@ describe('controllers/quote/policy-type', () => {
         post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-          ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
+          ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer, originalUrl: req.originalUrl }),
           userName: getUserNameFromSession(req.session.user),
           ...PAGE_VARIABLES,
           validationErrors: generateValidationErrors(req.body),
@@ -91,7 +91,7 @@ describe('controllers/quote/policy-type', () => {
           post(req, res);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-            ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer }),
+            ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer, originalUrl: req.originalUrl }),
             userName: getUserNameFromSession(req.session.user),
             ...PAGE_VARIABLES,
             validationErrors: generateValidationErrors(req.body),

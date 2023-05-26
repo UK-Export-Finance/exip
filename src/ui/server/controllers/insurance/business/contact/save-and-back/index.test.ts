@@ -6,7 +6,7 @@ import FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
 import mapAndSave from '../../map-and-save';
 import ACCOUNT_FIELD_IDS from '../../../../../constants/field-ids/insurance/account';
 
-const { INSURANCE_ROOT, ALL_SECTIONS } = ROUTES.INSURANCE;
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 const { POSITION } = FIELD_IDS.CONTACT;
@@ -89,10 +89,10 @@ describe('controllers/insurance/business/contact/save-and-back', () => {
         res.locals = { csrfToken: '1234' };
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
@@ -103,10 +103,10 @@ describe('controllers/insurance/business/contact/save-and-back', () => {
         mapAndSave.contact = updateMapAndSave;
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

@@ -15,10 +15,10 @@ export const TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 const FIELD_ID = FIELD_IDS.CHECK_YOUR_ANSWERS.ELIGIBILITY;
 
 const {
-  PROBLEM_WITH_SERVICE,
   INSURANCE: {
     INSURANCE_ROOT,
     CHECK_YOUR_ANSWERS: { START_NEW_APPLICATION, TYPE_OF_POLICY },
+    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 
@@ -71,7 +71,7 @@ export const get = (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error('Error getting check your answers - eligibility', { err });
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 
@@ -96,13 +96,13 @@ export const post = async (req: Request, res: Response) => {
     const saveResponse = await save.sectionReview(application, req.body);
 
     if (!saveResponse) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`);
   } catch (err) {
     console.error('Error updating check your answers - policy and exports', { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

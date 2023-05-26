@@ -41,7 +41,7 @@ describe('controllers/quote/your-quote', () => {
 
       const expectedVariables = {
         userName: getUserNameFromSession(req.session.user),
-        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.YOUR_QUOTE, BACK_LINK: req.headers.referer }),
+        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.YOUR_QUOTE, BACK_LINK: req.headers.referer, originalUrl: req.originalUrl }),
         SUMMARY_LIST: expectedSummaryList,
       };
 

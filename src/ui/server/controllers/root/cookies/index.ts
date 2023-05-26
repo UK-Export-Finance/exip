@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES, FIELDS, PAGES, PRODUCT } from '../../../content-strings';
+import { ERROR_MESSAGES, FIELDS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES, SECURE_OPTION_COOKIE } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
@@ -7,12 +7,9 @@ import { Request, Response } from '../../../../types';
 
 const FIELD_ID = FIELD_IDS.OPTIONAL_COOKIES;
 
-const startRoute = ROUTES.QUOTE.START;
-
 export const PAGE_VARIABLES = {
   FIELD_ID,
   PAGE_CONTENT_STRINGS: PAGES.COOKIES_PAGE,
-  PRODUCT: { DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC },
 };
 
 export const TEMPLATE = TEMPLATES.COOKIES;
@@ -23,7 +20,7 @@ export const get = (req: Request, res: Response) => {
 
   return res.render(TEMPLATE, {
     userName: getUserNameFromSession(req.session.user),
-    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
+    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, originalUrl: req.originalUrl }),
     FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
     submittedValue: req.cookies.optionalCookies || req.cookies[SECURE_OPTION_COOKIE],
   });
@@ -37,7 +34,7 @@ export const post = (req: Request, res: Response) => {
   if (validationErrors) {
     return res.render(TEMPLATE, {
       userName: getUserNameFromSession(req.session.user),
-      ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, START_ROUTE: startRoute }),
+      ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, originalUrl: req.originalUrl }),
       FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
       BACK_LINK: req.headers.referer,
       validationErrors,
@@ -54,7 +51,7 @@ export const post = (req: Request, res: Response) => {
 
   return res.render(TEMPLATE, {
     userName: getUserNameFromSession(req.session.user),
-    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: backLink, START_ROUTE: startRoute }),
+    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: backLink, originalUrl: req.originalUrl }),
     FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
     submittedValue: req.cookies.optionalCookies || req.cookies[SECURE_OPTION_COOKIE],
     showSuccessMessage: true,

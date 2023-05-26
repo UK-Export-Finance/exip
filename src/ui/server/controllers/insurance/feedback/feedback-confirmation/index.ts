@@ -26,7 +26,7 @@ const get = (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error('Error getting insurance feedback page', { err });
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(ROUTES.INSURANCE.PROBLEM_WITH_SERVICE);
   }
 };
 

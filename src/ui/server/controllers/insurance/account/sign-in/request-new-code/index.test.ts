@@ -12,6 +12,7 @@ const {
     ACCOUNT: {
       SIGN_IN: { ROOT: SIGN_IN_ROOT, ENTER_CODE },
     },
+    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 
@@ -115,10 +116,10 @@ describe('controllers/insurance/account/sign-in/request-new-code', () => {
           api.keystone.account.signInSendNewCode = signInSendNewCodeSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
     });

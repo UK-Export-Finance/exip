@@ -7,11 +7,11 @@ import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
 
 const {
-  PROBLEM_WITH_SERVICE,
   INSURANCE: {
     INSURANCE_ROOT,
     ALL_SECTIONS,
     ELIGIBILITY: { ACCOUNT_TO_APPLY_ONLINE },
+    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 

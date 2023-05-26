@@ -44,7 +44,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES, {
         userName: getUserNameFromSession(req.session.user),
-        ...singleInputPageVariables(PAGE_VARIABLES),
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, originalUrl: req.originalUrl }),
         BACK_LINK: req.headers.referer,
         submittedValues: req.session.submittedData.quoteEligibility,
       });

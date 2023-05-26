@@ -3,7 +3,7 @@ import { ROUTES, TEMPLATES } from '../../../../../constants';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import { Request, Response } from '../../../../../../types';
 
-const { PROBLEM_WITH_SERVICE } = ROUTES;
+const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 export const TEMPLATE = TEMPLATES.INSURANCE.ACCOUNT.PASSWORD_RESET.LINK_SENT;
 

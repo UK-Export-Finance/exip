@@ -10,7 +10,7 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const { INSURANCE } = ROUTES;
-const { INSURANCE_ROOT } = INSURANCE;
+const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = INSURANCE;
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 
 const FIELD_ID = POLICY_AND_EXPORTS.POLICY_TYPE;
@@ -79,10 +79,10 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         res.locals = { csrfToken: '1234' };
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });
@@ -151,10 +151,10 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         res.locals = { csrfToken: '1234' };
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
@@ -165,10 +165,10 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         };
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
@@ -187,10 +187,10 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
             mapAndSave.policyAndExport = savePolicyAndExportDataSpy;
           });
 
-          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
             await post(req, res);
 
-            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
           });
         });
 
@@ -201,10 +201,10 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
             mapAndSave.policyAndExport = savePolicyAndExportDataSpy;
           });
 
-          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
             await post(req, res);
 
-            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
           });
         });
       });

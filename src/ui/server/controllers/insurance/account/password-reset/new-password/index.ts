@@ -17,6 +17,7 @@ const {
     ACCOUNT: {
       PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, SUCCESS, LINK_EXPIRED },
     },
+    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 
@@ -66,7 +67,7 @@ export const get = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error('Error verifying account password reset token', { err });
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 
@@ -122,9 +123,9 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
     console.error('Error verifying account sign in code', { err });
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

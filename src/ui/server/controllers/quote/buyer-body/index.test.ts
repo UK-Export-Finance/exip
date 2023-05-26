@@ -91,7 +91,7 @@ describe('controllers/quote/buyer-body', () => {
       await get(req, res);
 
       const expectedVariables = {
-        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, originalUrl: req.originalUrl }),
         userName: getUserNameFromSession(req.session.user),
         submittedValues: {
           ...req.session.submittedData.quoteEligibility,
@@ -109,7 +109,7 @@ describe('controllers/quote/buyer-body', () => {
         await post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, originalUrl: req.originalUrl }),
           userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID]),
         });

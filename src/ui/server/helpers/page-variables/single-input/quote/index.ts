@@ -1,9 +1,6 @@
 import singleInputPageVariables from '..';
-import { PRODUCT, LINKS } from '../../../../content-strings';
-import { ROUTES } from '../../../../constants';
+import { LINKS } from '../../../../content-strings';
 import { SingleInputPageVariablesInitialInput } from '../../../../../types';
-
-const { START: quoteStart } = ROUTES.QUOTE;
 
 /**
  * quoteSingleInputPageVariables
@@ -11,19 +8,16 @@ const { START: quoteStart } = ROUTES.QUOTE;
  * @param {String} Field/input ID
  * @param {Object} Page content strings bespoke to the page
  * @param {String} Link to the previous page
+ * @param {String} originalUrl for the page user is on
  * @returns {Object} Common page content strings combined with field specifics
  */
-const quoteSingleInputPageVariables = ({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK }: SingleInputPageVariablesInitialInput) =>
+const quoteSingleInputPageVariables = ({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK, originalUrl }: SingleInputPageVariablesInitialInput) =>
   singleInputPageVariables({
     PAGE_CONTENT_STRINGS,
-    PRODUCT: {
-      ...PRODUCT,
-      DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
-    },
     BACK_LINK,
     FIELD_ID,
-    START_ROUTE: quoteStart,
     FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
+    originalUrl,
   });
 
 export default quoteSingleInputPageVariables;

@@ -19,6 +19,7 @@ const {
       SIGN_IN,
     },
     DASHBOARD,
+    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 
@@ -106,7 +107,7 @@ export const post = async (req: Request, res: Response) => {
     const saveResponse = await saveData.account(urlOrigin, req.body);
 
     if (!saveResponse) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     if (!saveResponse.success) {
@@ -133,6 +134,6 @@ export const post = async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Error creating account', { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

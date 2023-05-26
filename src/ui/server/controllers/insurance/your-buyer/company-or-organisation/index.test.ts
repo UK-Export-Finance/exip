@@ -20,6 +20,7 @@ const {
   INSURANCE_ROOT,
   YOUR_BUYER: YOUR_BUYER_ROUTES,
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
+  PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
 const {
@@ -141,10 +142,10 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
 
@@ -154,10 +155,10 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
 
@@ -166,10 +167,10 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
           res.locals = { csrfToken: '1234' };
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
           get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
     });
@@ -271,10 +272,10 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
 
@@ -284,10 +285,10 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
 
@@ -296,10 +297,10 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
           res.locals = { csrfToken: '1234' };
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
           post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
     });

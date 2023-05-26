@@ -14,11 +14,11 @@ const https = Boolean(process.env.HTTPS || 0);
 const protocol = https ? 'https://' : 'http://';
 
 const {
-  PROBLEM_WITH_SERVICE,
   INSURANCE: {
     ACCOUNT: {
       CREATE: { CONFIRM_EMAIL_RESENT },
     },
+    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 
@@ -45,10 +45,10 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(`${CONFIRM_EMAIL_RESENT}?id=${id}`);
     }
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
     console.error("Error sending 'confirm email address' email", { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

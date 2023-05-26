@@ -22,7 +22,7 @@ import configureNunjucks from './nunjucks-configuration';
 
 import { rootRoute, quoteRoutes, insuranceRoutes } from './routes';
 import { ROUTES } from './constants';
-import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT, PHASE_BANNER } from './content-strings';
+import { COOKIES_CONSENT, QUOTE_FOOTER, LINKS, PAGES, PRODUCT, PHASE_BANNER } from './content-strings';
 import { requiredQuoteEligibilityDataProvided } from './middleware/required-data-provided/quote';
 import { requiredInsuranceEligibilityDataProvided } from './middleware/required-data-provided/insurance/eligibility';
 import applicationAccess from './middleware/insurance/application-access';
@@ -148,7 +148,7 @@ app.get('*', (req: Request, res: Response) =>
   res.render('page-not-found.njk', {
     CONTENT_STRINGS: {
       COOKIES_CONSENT,
-      FOOTER,
+      FOOTER: QUOTE_FOOTER,
       LINKS,
       PHASE_BANNER,
       PRODUCT: {

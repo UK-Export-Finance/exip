@@ -13,8 +13,8 @@ const {
     INSURANCE_ROOT,
     ALL_SECTIONS,
     ACCOUNT: { SIGN_IN },
+    PROBLEM_WITH_SERVICE,
   },
-  PROBLEM_WITH_SERVICE,
 } = ROUTES;
 
 describe('controllers/insurance/dashboard', () => {

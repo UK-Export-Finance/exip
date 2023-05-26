@@ -13,7 +13,7 @@ const {
 const { FEEDBACK_PAGE } = PAGES;
 const { FEEDBACK: FEEDBACK_TEMPLATE } = TEMPLATES.INSURANCE;
 
-const { FEEDBACK_SENT } = ROUTES.INSURANCE;
+const { FEEDBACK_SENT, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 export const TEMPLATE = FEEDBACK_TEMPLATE;
 
@@ -61,7 +61,7 @@ const get = (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error('Error getting insurance feedback page', { err });
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 
@@ -114,14 +114,14 @@ const post = async (req: Request, res: Response) => {
       const saveResponse = await api.keystone.feedback.create(feedbackVariables);
 
       if (!saveResponse || !saveResponse.success) {
-        return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+        return res.redirect(PROBLEM_WITH_SERVICE);
       }
     }
 
     return res.redirect(FEEDBACK_SENT);
   } catch (err) {
     console.error('Error posting insurance feedback page', { err });
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 

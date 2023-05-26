@@ -5,7 +5,7 @@ import insuranceCorePageVariables from '../../../../../helpers/page-variables/co
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
 
-const { PROBLEM_WITH_SERVICE } = ROUTES;
+const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 describe('controllers/insurance/account/password-reset/link-sent', () => {
   let req: Request;

@@ -1,9 +1,6 @@
 import quoteCorePageVariables from '.';
 import corePageVariables from '..';
-import { PRODUCT, LINKS } from '../../../../content-strings';
-import { ROUTES } from '../../../../constants';
-
-const { START: quoteStart } = ROUTES.QUOTE;
+import { LINKS } from '../../../../content-strings';
 
 describe('server/helpers/page-variables/core/insurance', () => {
   const mock = {
@@ -12,7 +9,6 @@ describe('server/helpers/page-variables/core/insurance', () => {
       HEADING: 'Testing',
     },
     BACK_LINK: '/mock',
-    START_ROUTE: quoteStart,
   };
 
   it('should return corePageVariables with BACK_LINK and insurance/application product description and START_ROUTE to start route', () => {
@@ -20,12 +16,7 @@ describe('server/helpers/page-variables/core/insurance', () => {
 
     const expected = corePageVariables({
       PAGE_CONTENT_STRINGS: mock.PAGE_CONTENT_STRINGS,
-      PRODUCT: {
-        ...PRODUCT,
-        DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
-      },
       BACK_LINK: mock.BACK_LINK,
-      START_ROUTE: quoteStart,
       FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
     });
 

@@ -15,6 +15,7 @@ export * from './templates';
 export * from './ukef-contact-details';
 
 export const INSURANCE = 'Insurance';
+export const INSURANCE_LOWERCASE = 'insurance';
 export const QUOTE = 'Quote';
 export const SERVICE_NAME = 'EXIP';
 export const SECURE_OPTION_COOKIE = '__Secure-optionalCookies';

@@ -11,7 +11,7 @@ export const get = (req: Request, res: Response) => {
   const previousRoute = req.flash('previousRoute');
 
   return res.render(TEMPLATE, {
-    ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY, BACK_LINK: previousRoute }),
+    ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.CANNOT_APPLY, BACK_LINK: previousRoute, originalUrl: req.originalUrl }),
     userName: getUserNameFromSession(req.session.user),
     EXIT_REASON,
   });

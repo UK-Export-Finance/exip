@@ -14,6 +14,7 @@ const {
   INSURANCE: {
     POLICY_AND_EXPORTS: { CHECK_YOUR_ANSWERS_SAVE_AND_BACK },
     EXPORTER_BUSINESS: { COMPANY_DETAILS_ROOT },
+    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 
@@ -35,7 +36,7 @@ export const get = async (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
   const { referenceNumber } = req.params;
@@ -46,7 +47,7 @@ export const get = async (req: Request, res: Response) => {
     const currencies = await api.external.getCurrencies();
 
     if (!isPopulatedArray(countries) || !isPopulatedArray(currencies)) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const summaryList = policyAndExportSummaryList(application.policyAndExport, refNumber, countries, currencies);
@@ -64,7 +65,7 @@ export const get = async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Error getting countries or currencies', { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 

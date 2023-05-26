@@ -17,20 +17,26 @@ describe('routes/index', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(5);
-    expect(post).toHaveBeenCalledTimes(2);
+    expect(get).toHaveBeenCalledTimes(9);
+    expect(post).toHaveBeenCalledTimes(4);
 
     expect(get).toHaveBeenCalledWith(ROUTES.ROOT, rootGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.ACCESSIBILITY_STATEMENT, accessibilityStatementGet);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ACCESSIBILITY_STATEMENT, accessibilityStatementGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.COOKIES, cookiesGet);
     expect(post).toHaveBeenCalledWith(ROUTES.COOKIES, cookiesPost);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.COOKIES, cookiesGet);
+    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.COOKIES, cookiesPost);
 
     expect(get).toHaveBeenCalledWith(ROUTES.CONTACT_US, contactUsGet);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.CONTACT_US, contactUsGet);
 
     expect(post).toHaveBeenCalledWith(ROUTES.COOKIES_CONSENT, cookiesConsentPost);
+    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.COOKIES_CONSENT, cookiesConsentPost);
 
     expect(get).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE, problemWithServiceGet);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.PROBLEM_WITH_SERVICE, problemWithServiceGet);
   });
 });
