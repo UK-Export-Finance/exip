@@ -510,6 +510,7 @@ var lists = {
       sectionReview: (0, import_fields.relationship)({ ref: "SectionReview" }),
       declaration: (0, import_fields.relationship)({ ref: "Declaration" }),
       version: (0, import_fields.text)({
+        defaultValue: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
         validation: { isRequired: true }
       })
     },
@@ -519,7 +520,6 @@ var lists = {
           try {
             console.info("Creating new application - adding default data to a new application");
             const modifiedData = resolvedData;
-            modifiedData.version = APPLICATION.LATEST_VERSION.VERSION_NUMBER;
             const { id: newReferenceNumber } = await context.db.ReferenceNumber.createOne({
               data: {}
             });

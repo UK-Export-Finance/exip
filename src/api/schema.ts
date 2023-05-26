@@ -47,6 +47,7 @@ export const lists = {
       sectionReview: relationship({ ref: 'SectionReview' }),
       declaration: relationship({ ref: 'Declaration' }),
       version: text({
+        defaultValue: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
         validation: { isRequired: true },
       }),
     },
@@ -57,9 +58,6 @@ export const lists = {
             console.info('Creating new application - adding default data to a new application');
 
             const modifiedData = resolvedData;
-
-            // attach the latest application version number
-            modifiedData.version = APPLICATION.LATEST_VERSION.VERSION_NUMBER;
 
             // generate and attach a new unique reference number
             const { id: newReferenceNumber } = await context.db.ReferenceNumber.createOne({
