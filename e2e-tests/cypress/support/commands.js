@@ -119,6 +119,8 @@ Cypress.Commands.add('assertConfirmEmailPageContent', require('./insurance/accou
 
 Cypress.Commands.add('assertSubmitAndSaveButtons', require('./insurance/assert-submit-and-save-buttons'));
 
+Cypress.Commands.add('assertUncheckedYesNoRadios', require('./assert-unchecked-yes-no-radios'));
+
 Cypress.Commands.add('assertCustomerServiceContactDetailsContent', require('./assert-customer-service-contact-details-content'));
 
 Cypress.Commands.add('checkText', require('./check-text'));

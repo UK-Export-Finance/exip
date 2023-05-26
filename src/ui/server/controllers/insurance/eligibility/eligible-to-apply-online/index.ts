@@ -38,6 +38,8 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
+      req.session.submittedData.insuranceEligibility = {};
+
       const applicationUrl = `${INSURANCE_ROOT}/${application.referenceNumber}${ALL_SECTIONS}`;
 
       return res.redirect(applicationUrl);

@@ -4,7 +4,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
-import { sanitiseValue } from '../../../../../helpers/sanitise-data';
+import { sanitiseData, sanitiseValue } from '../../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import securityCodeValidationErrors from './validation/rules/security-code';
 import api from '../../../../../api';
@@ -231,11 +231,19 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
         });
 
         it('should call api.keystone.application.create', async () => {
+          const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
+
           await post(req, res);
 
           expect(createApplicationSpy).toHaveBeenCalledTimes(1);
 
-          expect(createApplicationSpy).toHaveBeenCalledWith(req.session.submittedData.insuranceEligibility, verifyAccountSignInCodeResponse.accountId);
+          expect(createApplicationSpy).toHaveBeenCalledWith(eligibilityAnswers, verifyAccountSignInCodeResponse.accountId);
+        });
+
+        it('should wipe req.session.submittedData.insuranceEligibility', async () => {
+          await post(req, res);
+
+          expect(req.session.submittedData.insuranceEligibility).toEqual({});
         });
 
         it(`should redirect to ${DASHBOARD}`, async () => {

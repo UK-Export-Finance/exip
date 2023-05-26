@@ -3,7 +3,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
-import { sanitiseValue } from '../../../../../helpers/sanitise-data';
+import { sanitiseData, sanitiseValue } from '../../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import securityCodeValidationErrors from './validation/rules/security-code';
 import { objectHasKeysAndValues } from '../../../../../helpers/object';
@@ -111,9 +111,9 @@ export const post = async (req: Request, res: Response) => {
         expires,
       };
 
-      // if there is eligibility in the session, create application.
+      // if there is eligibility in the session, create application and wipe eligibility answers
       if (req.session.submittedData && objectHasKeysAndValues(req.session.submittedData.insuranceEligibility)) {
-        const eligibilityAnswers = req.session.submittedData.insuranceEligibility;
+        const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
 
         const application = await api.keystone.application.create(eligibilityAnswers, accountId);
 
@@ -121,6 +121,8 @@ export const post = async (req: Request, res: Response) => {
           console.error('Error creating application');
           return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
         }
+
+        req.session.submittedData.insuranceEligibility = {};
       }
 
       // otherwise, redirect to the next part of the flow - dashboard
