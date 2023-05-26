@@ -119,6 +119,7 @@ describe('custom-resolvers/account-sign-in', () => {
         where: { id: account.id },
         data: {
           isVerified: false,
+          isBlocked: false,
           verificationHash: mockAccount.verificationHash,
         },
       });
@@ -235,8 +236,38 @@ describe('custom-resolvers/account-sign-in', () => {
     });
   });
 
+  describe('when the account is blocked', () => {
+    beforeEach(async () => {
+      account = (await context.query.Account.updateOne({
+        where: { id: account.id },
+        data: {
+          isBlocked: true,
+        },
+      })) as Account;
+
+      result = await accountSignIn({}, variables, context);
+    });
+
+    it('should return success=false and isBlocked=true', async () => {
+      const expected = {
+        success: false,
+        isBlocked: true,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe(`when the account has ${MAX_PASSWORD_RESET_TRIES} entries in the AuthenticationRetry table`, () => {
     beforeEach(async () => {
+      // revert the previous account block so we have a clean slate.
+      account = (await context.query.Account.updateOne({
+        where: { id: account.id },
+        data: {
+          isBlocked: false,
+        },
+      })) as Account;
+
       // wipe the AuthenticationRetry table so we have a clean slate.
       retries = await context.query.AuthenticationRetry.findMany();
 
