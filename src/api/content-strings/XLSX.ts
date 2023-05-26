@@ -3,7 +3,7 @@ import POLICY_AND_EXPORTS from '../constants/field-ids/insurance/policy-and-expo
 import EXPORTER_BUSINESS from '../constants/field-ids/insurance/business';
 import YOUR_BUYER from '../constants/field-ids/insurance/your-buyer';
 
-const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT;
+const { FIRST_NAME, LAST_NAME } = ACCOUNT;
 
 const {
   CONTRACT_POLICY: {

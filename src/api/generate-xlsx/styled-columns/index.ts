@@ -15,6 +15,7 @@ export const worksheetRowHeights = (worksheet: Worksheet) => {
   modifiedWorksheet.getRow(COLUMN_INDEXES.COMPANY_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
   modifiedWorksheet.getRow(COLUMN_INDEXES.COMPANY_SIC_CODES).height = ADDITIONAL_COLUMN_HEIGHT;
   modifiedWorksheet.getRow(COLUMN_INDEXES.BROKER_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
+  modifiedWorksheet.getRow(COLUMN_INDEXES.BUYER_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
   modifiedWorksheet.getRow(COLUMN_INDEXES.BUYER_CONTACT_DETAILS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
 
   return modifiedWorksheet;

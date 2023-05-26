@@ -52,8 +52,11 @@ describe('api/generate-xlsx/styled-columns/index', () => {
       const row3 = result.getRow(COLUMN_INDEXES.BROKER_ADDRESS);
       expect(row3.height).toEqual(ADDITIONAL_COLUMN_HEIGHT * 2);
 
-      const row4 = result.getRow(COLUMN_INDEXES.BUYER_CONTACT_DETAILS);
+      const row4 = result.getRow(COLUMN_INDEXES.BUYER_ADDRESS);
       expect(row4.height).toEqual(ADDITIONAL_COLUMN_HEIGHT * 2);
+
+      const row5 = result.getRow(COLUMN_INDEXES.BUYER_CONTACT_DETAILS);
+      expect(row5.height).toEqual(ADDITIONAL_COLUMN_HEIGHT * 2);
     });
   });
 });
