@@ -2158,6 +2158,11 @@ var accountSignIn = async (root, variables, context) => {
     if (!newRetriesEntry.success) {
       return { success: false };
     }
+    const { isBlocked } = account;
+    if (isBlocked) {
+      console.info("Unable to sign in account - account is already blocked");
+      return { success: false, isBlocked: true };
+    }
     const needToBlockAccount = await should_block_account_default(context, accountId);
     if (needToBlockAccount) {
       const blocked = await block_account_default(context, accountId);

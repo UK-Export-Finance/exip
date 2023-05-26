@@ -57,6 +57,18 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
     }
 
     /**
+     * Check if the account is blocked
+     * If so, return isBlocked=false
+     */
+    const { isBlocked } = account as Account;
+
+    if (isBlocked) {
+      console.info('Unable to sign in account - account is already blocked');
+
+      return { success: false, isBlocked: true };
+    }
+
+    /**
      * Check if the account should be blocked.
      * If so, update the account and return isBlocked=true
      */
