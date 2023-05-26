@@ -405,7 +405,14 @@ var XLSX_CONFIG = {
     ID: "answer",
     COPY: "Answer"
   },
-  COLUMN_WIDTH: 70
+  COLUMN_WIDTH: 70,
+  ADDITIONAL_COLUMN_HEIGHT: 50,
+  COLUMN_INDEXES: {
+    COMPANY_ADDRESS: 30,
+    COMPANY_SIC_CODES: 33,
+    BROKER_ADDRESS: 45,
+    BUYER_CONTACT_DETAILS: 53
+  }
 };
 var ACCEPTED_FILE_TYPES = [".xlsx"];
 
@@ -1672,7 +1679,6 @@ var application = {
       if (file) {
         const fileBuffer = Buffer.from(file);
         const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
-        await file_system_default.unlink(filePath);
         return response;
       }
       throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
@@ -3675,6 +3681,32 @@ var XLSX_HEADER_COLUMNS = [
 ];
 var header_columns_default = XLSX_HEADER_COLUMNS;
 
+// generate-xlsx/styled-columns/index.ts
+var { COLUMN_INDEXES, ADDITIONAL_COLUMN_HEIGHT } = XLSX_CONFIG;
+var worksheetRowHeights = (worksheet) => {
+  const modifiedWorksheet = worksheet;
+  modifiedWorksheet.getRow(COLUMN_INDEXES.COMPANY_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
+  modifiedWorksheet.getRow(COLUMN_INDEXES.COMPANY_SIC_CODES).height = ADDITIONAL_COLUMN_HEIGHT;
+  modifiedWorksheet.getRow(COLUMN_INDEXES.BROKER_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
+  modifiedWorksheet.getRow(COLUMN_INDEXES.BUYER_CONTACT_DETAILS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
+  return modifiedWorksheet;
+};
+var styledColumns = (worksheet) => {
+  let modifiedWorksheet = worksheet;
+  modifiedWorksheet.eachRow((row) => {
+    row.eachCell((cell, colNumber) => {
+      const modifiedRow = row;
+      modifiedRow.getCell(colNumber).alignment = {
+        vertical: "top",
+        wrapText: true
+      };
+    });
+  });
+  modifiedWorksheet = worksheetRowHeights(modifiedWorksheet);
+  return modifiedWorksheet;
+};
+var styled_columns_default = styledColumns;
+
 // generate-xlsx/index.ts
 var XLSX2 = (application2) => {
   try {
@@ -3687,12 +3719,14 @@ var XLSX2 = (application2) => {
       console.info("Generating XLSX file - creating a new workbook");
       const workbook = new import_exceljs.default.Workbook();
       console.info("Generating XLSX file - adding worksheet to workbook");
-      const worksheet = workbook.addWorksheet(refNumber);
+      let worksheet = workbook.addWorksheet(refNumber);
       worksheet.columns = header_columns_default;
       console.info("Generating XLSX file - adding rows to worksheet");
       xlsxData.forEach((row) => {
         worksheet.addRow(row);
       });
+      console.info("Generating XLSX file - adding custom styles to worksheet");
+      worksheet = styled_columns_default(worksheet);
       workbook.xlsx.writeFile(filePath).then(() => resolve(filePath));
     });
   } catch (err) {

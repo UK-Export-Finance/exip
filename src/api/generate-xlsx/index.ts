@@ -1,6 +1,7 @@
 import ExcelJS from 'exceljs';
 import mapApplicationToXLSX from './map-application-to-XLSX';
 import HEADER_COLUMNS from './header-columns';
+import styledColumns from './styled-columns';
 import { Application } from '../types';
 
 /**
@@ -34,7 +35,7 @@ const XLSX = (application: Application): Promise<string> => {
        */
       console.info('Generating XLSX file - adding worksheet to workbook');
 
-      const worksheet = workbook.addWorksheet(refNumber);
+      let worksheet = workbook.addWorksheet(refNumber);
 
       /**
        * Add header columns to the worksheet
@@ -49,6 +50,13 @@ const XLSX = (application: Application): Promise<string> => {
       xlsxData.forEach((row) => {
         worksheet.addRow(row);
       });
+
+      /**
+       * Add custom styles to each column in the worksheet
+       */
+      console.info('Generating XLSX file - adding custom styles to worksheet');
+
+      worksheet = styledColumns(worksheet);
 
       /**
        * Write the file and return the file path
