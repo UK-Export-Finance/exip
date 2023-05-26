@@ -21,7 +21,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-key-information', () => 
       xlsxRow(TIME_SUBMITTED.SUMMARY.TITLE, formatTimeOfDay(mockApplication.submissionDate)),
       xlsxRow(FIELDS[FIRST_NAME], mockApplication.owner[FIRST_NAME]),
       xlsxRow(FIELDS[LAST_NAME], mockApplication.owner[LAST_NAME]),
-      xlsxRow(FIELDS[EMAIL], mockApplication.owner[EMAIL]),
+      xlsxRow(FIELDS.APPLICANT_EMAIL_ADDRESS, mockApplication.owner[EMAIL]),
     ];
 
     expect(result).toEqual(expected);
