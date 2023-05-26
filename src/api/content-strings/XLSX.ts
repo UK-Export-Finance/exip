@@ -34,7 +34,7 @@ export const XLSX = {
   FIELDS: {
     [FIRST_NAME]: 'Applicant first name',
     [LAST_NAME]: 'Applicant last name',
-    [EMAIL]: 'Applicant email address',
+    APPLICANT_EMAIL_ADDRESS: 'Applicant email address',
     [CONTRACT_COMPLETION_DATE]: 'Date expected for contract to complete',
     [EXPORTER_COMPANY_NAME]: 'Exporter company name',
     [EXPORTER_COMPANY_ADDRESS]: 'Exporter registered office address',

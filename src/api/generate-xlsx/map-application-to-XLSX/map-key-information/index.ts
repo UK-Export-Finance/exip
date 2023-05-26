@@ -23,7 +23,7 @@ const mapKeyInformation = (application: Application) => {
     xlsxRow(TIME_SUBMITTED.SUMMARY.TITLE, formatTimeOfDay(application.submissionDate)),
     xlsxRow(FIELDS[FIRST_NAME], application.owner[FIRST_NAME]),
     xlsxRow(FIELDS[LAST_NAME], application.owner[LAST_NAME]),
-    xlsxRow(FIELDS[EMAIL], application.owner[EMAIL]),
+    xlsxRow(FIELDS.APPLICANT_EMAIL_ADDRESS, application.owner[EMAIL]),
   ];
 
   return mapped;
