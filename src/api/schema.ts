@@ -46,6 +46,9 @@ export const lists = {
       buyer: relationship({ ref: 'Buyer' }),
       sectionReview: relationship({ ref: 'SectionReview' }),
       declaration: relationship({ ref: 'Declaration' }),
+      version: text({
+        validation: { isRequired: true },
+      }),
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
@@ -54,6 +57,9 @@ export const lists = {
             console.info('Creating new application - adding default data to a new application');
 
             const modifiedData = resolvedData;
+
+            // attach the latest application version number
+            modifiedData.version = APPLICATION.LATEST_VERSION.VERSION_NUMBER;
 
             // generate and attach a new unique reference number
             const { id: newReferenceNumber } = await context.db.ReferenceNumber.createOne({

@@ -14,6 +14,7 @@ type ApplicationCore = {
   submissionType: string;
   submissionDate?: string;
   status: string;
+  version: string;
 };
 
 interface ApplicationEligibility extends InsuranceEligibilityCore {
