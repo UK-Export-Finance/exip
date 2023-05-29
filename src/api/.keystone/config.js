@@ -247,6 +247,7 @@ var getApplicationDefinition = (versionNumber) => {
   if (applicationDefinition) {
     return applicationDefinition;
   }
+  console.error("Unable to find latest application version");
   throw new Error("Unable to find latest application version");
 };
 var get_application_definition_default = getApplicationDefinition;
@@ -258,7 +259,6 @@ var latest_default = LATEST_VERSION_NUMBER;
 // constants/application/index.ts
 var LATEST_VERSION = get_application_definition_default(latest_default);
 var APPLICATION = {
-  VERSIONS: versions_default,
   LATEST_VERSION,
   SUBMISSION_TYPE: {
     MIA: "Manual Inclusion Application"

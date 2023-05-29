@@ -13,6 +13,8 @@ const getApplicationDefinition = (versionNumber: string): ApplicationVersion => 
     return applicationDefinition;
   }
 
+  console.error('Unable to find latest application version');
+
   throw new Error('Unable to find latest application version');
 };
 
