@@ -1,5 +1,4 @@
 import getApplicationDefinition from './get-application-definition';
-import VERSIONS from './versions';
 import LATEST_VERSION_NUMBER from './versions/latest';
 
 const LATEST_VERSION = getApplicationDefinition(LATEST_VERSION_NUMBER);
@@ -14,7 +13,6 @@ const LATEST_VERSION = getApplicationDefinition(LATEST_VERSION_NUMBER);
  * @returns {Object} Application constants
  */
 export const APPLICATION = {
-  VERSIONS,
   LATEST_VERSION,
   SUBMISSION_TYPE: {
     MIA: 'Manual Inclusion Application',

@@ -154,7 +154,15 @@ interface Application extends ApplicationCore {
 interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore, ApplicationOwner {
   buyerCountry: string;
 }
+
 type ApplicationFlat = ApplicationFlatCore & ApplicationPolicyAndExport & ApplicationCompany & ApplicationDeclaration;
+
+interface ApplicationVersion {
+  VERSION_NUMBER: string;
+  OVER_500K_SUPPORT: boolean;
+  MAXIMUM_BUYER_CAN_OWE: number;
+  TOTAL_VALUE_OF_CONTRACT: number;
+}
 
 export {
   Application,
@@ -169,4 +177,5 @@ export {
   ApplicationBuyer,
   ApplicationSectionReview,
   ApplicationDeclaration,
+  ApplicationVersion,
 };

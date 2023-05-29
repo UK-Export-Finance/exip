@@ -1,4 +1,7 @@
+import LATEST_VERSION_NUMBER from './versions/latest';
+
 export const APPLICATION = {
+  LATEST_VERSION: { LATEST_VERSION_NUMBER },
   SUBMISSION_TYPE: {
     MIA: 'Manual Inclusion Application',
   },

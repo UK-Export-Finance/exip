@@ -6,6 +6,7 @@ const applicationQuery = gql`
       id
       application {
         id
+        version
         createdAt
         updatedAt
         submissionDeadline
