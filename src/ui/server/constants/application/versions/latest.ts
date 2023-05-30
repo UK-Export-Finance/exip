@@ -2,8 +2,8 @@
  * LATEST_VERSION_NUMBER
  * Latest application version number.
  * This should be manually updated each time a phase of EXIP is started. For example:
- * - Version number 1: MVP, no support for applications under 500k.
- * - Version number 2: Support for applications under 500k.
+ * - aVersion number 1: MVP, no support for applications over 500k.
+ * - Version number 2: Support for applications over 500k.
  * - Version number 3: Payments integration
  * @returns {String} Latest application version number
  */
