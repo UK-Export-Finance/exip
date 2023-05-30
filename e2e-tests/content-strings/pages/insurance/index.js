@@ -1,6 +1,6 @@
 import { LINKS } from '../../links';
 import { BUTTONS } from '../../buttons';
-import { PRODUCT, ROUTES, CONTACT_DETAILS } from '../../../constants';
+import { ELIGIBILITY, ROUTES, CONTACT_DETAILS } from '../../../constants';
 import POLICY_AND_EXPORTS from './policy-and-exports';
 import * as ELIGIBILITY_PAGES from './eligibility';
 import * as ACCOUNT_PAGES from './account';
@@ -12,7 +12,7 @@ import COMPLETE_OTHER_SECTIONS from './complete-other-sections';
 import * as APPLICATION_SUBMITTED from './application-submitted';
 import formatCurrency from '../../../cypress/e2e/helpers/format-currency';
 
-export const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP);
+export const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP);
 
 const DASHBOARD = {
   PAGE_TITLE: 'Your applications',
@@ -70,7 +70,7 @@ const SPEAK_TO_UKEF_EFM = {
   PAGE_TITLE: 'You need to speak with a UKEF export finance manager',
   REASON: {
     INTRO: 'This is because',
-    WANT_COVER_OVER_MAX_PERIOD: `you want to be insured for longer than ${PRODUCT.MAX_COVER_PERIOD_YEARS} years.`,
+    WANT_COVER_OVER_MAX_PERIOD: `you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years.`,
   },
   ACTIONS: {
     FIND_EFM: [

@@ -12,7 +12,7 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import {
   FIELD_IDS,
   FIELD_VALUES,
-  PRODUCT,
+  ELIGIBILITY,
   ROUTES,
 } from '../../../../../../../constants';
 
@@ -254,7 +254,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
     });
 
     it(`should render a validation error when the date is over the maximum years allowed after ${REQUESTED_START_DATE}`, () => {
-      const endDate = add(new Date(startDate), { years: PRODUCT.MAX_COVER_PERIOD_YEARS });
+      const endDate = add(new Date(startDate), { years: ELIGIBILITY.MAX_COVER_PERIOD_YEARS });
 
       cy.keyboardInput(field.dayInput(), '3');
       cy.keyboardInput(field.monthInput(), getMonth(endDate));

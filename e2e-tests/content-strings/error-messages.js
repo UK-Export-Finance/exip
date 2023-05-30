@@ -1,7 +1,7 @@
-import { FIELD_IDS, PRODUCT } from '../constants';
+import { FIELD_IDS, ELIGIBILITY } from '../constants';
 import formatCurrency from '../cypress/e2e/helpers/format-currency';
 
-export const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP);
+export const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP);
 
 export const ERROR_MESSAGES = {
   [FIELD_IDS.BUYER_COUNTRY]: 'Select where your buyer is based',
@@ -53,7 +53,7 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: `Select whether you want to be insured for ${MAX_COVER_AMOUNT} or more`,
       },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD]: {
-        IS_EMPTY: `Select whether you want to be insured for longer than ${PRODUCT.MAX_COVER_PERIOD_YEARS} years`,
+        IS_EMPTY: `Select whether you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years`,
       },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED]: {
         IS_EMPTY: 'Select whether there are any other parties involved, apart from you and the buyer',

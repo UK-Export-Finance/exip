@@ -1,7 +1,7 @@
-import { PRODUCT } from '../../../../constants';
+import { ELIGIBILITY } from '../../../../constants';
 import formatCurrency from '../../../../cypress/e2e/helpers/format-currency';
 
-export const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP);
+export const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP);
 
 export const CHECK_IF_ELIGIBLE = {
   PAGE_TITLE: 'Check you can apply for UKEF insurance for your export',
@@ -13,7 +13,7 @@ export const INSURED_AMOUNT = {
 };
 
 export const INSURED_PERIOD = {
-  PAGE_TITLE: `Do you want to be insured for longer than ${PRODUCT.MAX_COVER_PERIOD_YEARS} years?`,
+  PAGE_TITLE: `Do you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years?`,
 };
 
 export const OTHER_PARTIES_INVOLVED = {
