@@ -45,34 +45,34 @@ context('Tell us about the policy you need page - form validation', () => {
       // currency
       cy.checkText(
         partials.errorSummaryListItems().eq(0),
-        ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY,
+        ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CURRENCY].IS_EMPTY,
       );
 
       cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY}`,
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CURRENCY].IS_EMPTY}`,
       );
 
       // contract value
       cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].IS_EMPTY,
+        ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CONTRACT_VALUE].IS_EMPTY,
       );
 
       cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].IS_EMPTY}`,
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CONTRACT_VALUE].IS_EMPTY}`,
       );
 
       // percentage of cover
       cy.checkText(
         partials.errorSummaryListItems().eq(2),
-        ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY,
+        ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY,
       );
 
       cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY}`,
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY}`,
       );
     });
 
@@ -101,12 +101,12 @@ context('Tell us about the policy you need page - form validation', () => {
 
       cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_NUMBER,
+        ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CONTRACT_VALUE].NOT_A_NUMBER,
       );
 
       cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_NUMBER}`,
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CONTRACT_VALUE].NOT_A_NUMBER}`,
       );
     });
   });
@@ -121,12 +121,12 @@ context('Tell us about the policy you need page - form validation', () => {
 
       cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_WHOLE_NUMBER,
+        ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CONTRACT_VALUE].NOT_A_WHOLE_NUMBER,
       );
 
       cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_WHOLE_NUMBER}`,
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CONTRACT_VALUE].NOT_A_WHOLE_NUMBER}`,
       );
     });
   });
@@ -141,12 +141,12 @@ context('Tell us about the policy you need page - form validation', () => {
 
       cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].BELOW_MINIMUM,
+        ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CONTRACT_VALUE].BELOW_MINIMUM,
       );
 
       cy.checkText(
         tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].BELOW_MINIMUM}`,
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CONTRACT_VALUE].BELOW_MINIMUM}`,
       );
     });
   });
