@@ -35,5 +35,3 @@ export const APPLICATION = {
     SUBMITTED: 'Submitted to UKEF',
   },
 };
-
-// TODO create ticket for Abhi more VMs for GHA tests
