@@ -17,7 +17,7 @@ const checkPageTitleAndHeading = () => {
 };
 
 const checkInputHint = () => {
-  cy.checkText(buyerCountryPage.hint(), FIELDS[FIELD_IDS.BUYER_COUNTRY].HINT);
+  cy.checkText(buyerCountryPage.hint(), FIELDS[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY].HINT);
 };
 
 const checkAutocompleteInput = {
@@ -87,7 +87,7 @@ const checkValidationErrors = () => {
   partials.errorSummaryListItems().should('exist');
   partials.errorSummaryListItems().should('have.length', 1);
 
-  const expectedMessage = ERROR_MESSAGES[FIELD_IDS.BUYER_COUNTRY];
+  const expectedMessage = ERROR_MESSAGES[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
 
   cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 

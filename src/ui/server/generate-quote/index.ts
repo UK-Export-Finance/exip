@@ -4,7 +4,11 @@ import { getPremiumRate } from './get-premium-rate';
 import { getPercentageOfNumber } from '../helpers/number';
 import { Quote, SubmittedData, SubmittedDataQuoteEligibility } from '../../types';
 
-const { BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_TYPE, POLICY_LENGTH } = FIELD_IDS;
+const {
+  ELIGIBILITY: { BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
+  POLICY_TYPE,
+  POLICY_LENGTH,
+} = FIELD_IDS;
 
 /**
  * getContractValue

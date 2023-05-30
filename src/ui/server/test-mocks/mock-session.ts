@@ -2,7 +2,9 @@ import { API, FIELD_IDS, GBP_CURRENCY_CODE } from '../constants';
 import mockAnswers from './mock-answers';
 import { RequestSession } from '../../types';
 
-const { BUYER_COUNTRY, CURRENCY, VALID_EXPORTER_LOCATION, HAS_MINIMUM_UK_GOODS_OR_SERVICES } = FIELD_IDS;
+const {
+  ELIGIBILITY: { BUYER_COUNTRY, CURRENCY, VALID_EXPORTER_LOCATION, HAS_MINIMUM_UK_GOODS_OR_SERVICES },
+} = FIELD_IDS;
 
 const mockCountry = {
   name: mockAnswers[BUYER_COUNTRY],

@@ -14,7 +14,7 @@ import { updateSubmittedData } from '../../../helpers/update-submitted-data/quot
 import { Request, Response } from '../../../../types';
 
 export const PAGE_VARIABLES = {
-  FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
+  FIELD_ID: FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY,
   PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
 };
 
@@ -68,8 +68,8 @@ export const get = async (req: Request, res: Response) => {
 
     let countryValue;
 
-    if (req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY]) {
-      countryValue = req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY];
+    if (req.session.submittedData.quoteEligibility[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]) {
+      countryValue = req.session.submittedData.quoteEligibility[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
     }
 
     let mappedCountries;
@@ -116,7 +116,7 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
-    const submittedCountryName = req.body[FIELD_IDS.BUYER_COUNTRY];
+    const submittedCountryName = req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
 
     const country = getCountryByName(mappedCountries, submittedCountryName);
 

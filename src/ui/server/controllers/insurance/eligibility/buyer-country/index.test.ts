@@ -35,7 +35,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
+        FIELD_ID: FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY,
         PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
       };
 
@@ -53,7 +53,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
     let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
     beforeEach(() => {
-      delete req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY];
+      delete req.session.submittedData.quoteEligibility[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
       api.external.getCountries = getCountriesSpy;
     });
 
@@ -119,7 +119,10 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
         await get(req, res);
 
-        const expectedCountries = mapCisCountries(mockCountriesResponse, req.session.submittedData.insuranceEligibility[FIELD_IDS.BUYER_COUNTRY].isoCode);
+        const expectedCountries = mapCisCountries(
+          mockCountriesResponse,
+          req.session.submittedData.insuranceEligibility[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY].isoCode,
+        );
 
         const expectedVariables = {
           ...singleInputPageVariables(PAGE_VARIABLES),
@@ -183,7 +186,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
     describe('when the submitted country is not found', () => {
       beforeEach(() => {
-        req.body[FIELD_IDS.BUYER_COUNTRY] = 'Country not in the mock response';
+        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = 'Country not in the mock response';
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY}`, async () => {
@@ -194,10 +197,10 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
     });
 
     describe('when the country can apply for an application online', () => {
-      const selectedCountryName = mockAnswers[FIELD_IDS.BUYER_COUNTRY];
+      const selectedCountryName = mockAnswers[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
 
       const validBody = {
-        [FIELD_IDS.BUYER_COUNTRY]: countrySupported.marketName,
+        [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: countrySupported.marketName,
       };
 
       beforeEach(() => {
@@ -227,7 +230,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
     describe('when the submitted country can only apply for an application offline', () => {
       beforeEach(() => {
-        req.body[FIELD_IDS.BUYER_COUNTRY] = countrySupportedViaOfflineOnly.marketName;
+        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = countrySupportedViaOfflineOnly.marketName;
       });
 
       it('should update the session with populated with country object', async () => {
@@ -253,7 +256,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
     describe('when the submitted country cannot apply for an application', () => {
       beforeEach(() => {
-        req.body[FIELD_IDS.BUYER_COUNTRY] = countryUnsupported.marketName;
+        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = countryUnsupported.marketName;
       });
 
       it('should update the session with populated with country object', async () => {

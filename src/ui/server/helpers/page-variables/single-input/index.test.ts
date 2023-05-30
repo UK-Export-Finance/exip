@@ -32,7 +32,7 @@ describe('server/helpers/page-variables/single-input', () => {
 
   describe('when a FIELD_ID exists in content string fields', () => {
     it('should also return FIELD_HINT', () => {
-      mock.FIELD_ID = FIELD_IDS.BUYER_COUNTRY;
+      mock.FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
       const result = singleInputPageVariables(mock);
 
       const expected = FIELDS[mock.FIELD_ID].HINT;

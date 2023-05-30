@@ -4,7 +4,12 @@ import { getPremiumRate } from './get-premium-rate';
 import { getPercentageOfNumber } from '../helpers/number';
 import { mockSession } from '../test-mocks';
 
-const { BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_TYPE, POLICY_LENGTH, QUOTE } = FIELD_IDS;
+const {
+  ELIGIBILITY: { BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
+  QUOTE,
+  POLICY_TYPE,
+  POLICY_LENGTH,
+} = FIELD_IDS;
 
 describe('server/generate-quote/index', () => {
   describe('getContractValue', () => {

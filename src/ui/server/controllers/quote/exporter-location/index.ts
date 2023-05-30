@@ -7,7 +7,7 @@ import { updateSubmittedData } from '../../../helpers/update-submitted-data/quot
 import isChangeRoute from '../../../helpers/is-change-route';
 import { Request, Response } from '../../../../types';
 
-const FIELD_ID = FIELD_IDS.VALID_EXPORTER_LOCATION;
+const FIELD_ID = FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION;
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
@@ -27,7 +27,7 @@ export const get = (req: Request, res: Response) =>
   });
 
 export const post = (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID]);
+  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[FIELD_ID]);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
@@ -45,7 +45,7 @@ export const post = (req: Request, res: Response) => {
     insuranceEligibility: {},
   };
 
-  const answer = req.body[FIELD_IDS.VALID_EXPORTER_LOCATION];
+  const answer = req.body[FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION];
 
   if (answer === 'false') {
     req.flash('previousRoute', ROUTES.QUOTE.EXPORTER_LOCATION);

@@ -3,21 +3,23 @@ import { FIELD_IDS, GBP_CURRENCY_CODE } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
 
+const { CURRENCY } = FIELD_IDS.ELIGIBILITY;
+
 describe('controllers/quote/tell-us-about-your-policy/validation/rules/currency', () => {
   const mockErrors = {
     summary: [],
     errorList: {},
   };
 
-  describe(`when ${FIELD_IDS.CURRENCY} is not provided`, () => {
+  describe(`when ${CURRENCY} is not provided`, () => {
     it('should return validation error', () => {
       const mockSubmittedData = {
-        [FIELD_IDS.CURRENCY]: '',
+        [CURRENCY]: '',
       };
 
       const result = rule(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_IDS.CURRENCY, ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY, mockErrors);
+      const expected = generateValidationErrors(CURRENCY, ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -26,7 +28,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/currency'
   describe('when there are no validation errors', () => {
     it('should return the already provided errors', () => {
       const mockSubmittedData = {
-        [FIELD_IDS.CURRENCY]: GBP_CURRENCY_CODE,
+        [CURRENCY]: GBP_CURRENCY_CODE,
       };
 
       const result = rule(mockSubmittedData, mockErrors);

@@ -3,8 +3,10 @@ import { isSinglePolicyType, isMultiPolicyType } from '../policy-type';
 import formatCurrency from '../format-currency';
 import { SubmittedDataQuoteEligibility, SubmittedDataInsuranceEligibility } from '../../../types';
 
-const { CONTRACT_VALUE, CURRENCY, POLICY_TYPE, MAX_AMOUNT_OWED } = FIELD_IDS;
-
+const {
+  ELIGIBILITY: { CONTRACT_VALUE, CURRENCY, MAX_AMOUNT_OWED },
+  POLICY_TYPE,
+} = FIELD_IDS;
 /**
  * mapCost
  * Map cost answer into an object for GOV summary list structure

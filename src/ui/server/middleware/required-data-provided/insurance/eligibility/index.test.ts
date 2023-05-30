@@ -22,6 +22,10 @@ const {
   ELIGIBLE_TO_APPLY_ONLINE,
 } = ELIGIBILITY;
 
+const {
+  ELIGIBILITY: { VALID_EXPORTER_LOCATION, HAS_MINIMUM_UK_GOODS_OR_SERVICES },
+} = FIELD_IDS;
+
 describe('middleware/required-data-provided/insurance/eligibility', () => {
   let req: Request;
   let res: Response;
@@ -34,11 +38,11 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
 
       expected[BUYER_COUNTRY] = [];
 
-      expected[EXPORTER_LOCATION] = [FIELD_IDS.BUYER_COUNTRY];
+      expected[EXPORTER_LOCATION] = [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
 
-      expected[UK_GOODS_OR_SERVICES] = [...expected[EXPORTER_LOCATION], FIELD_IDS.VALID_EXPORTER_LOCATION];
+      expected[UK_GOODS_OR_SERVICES] = [...expected[EXPORTER_LOCATION], VALID_EXPORTER_LOCATION];
 
-      expected[INSURED_AMOUNT] = [...expected[UK_GOODS_OR_SERVICES], FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+      expected[INSURED_AMOUNT] = [...expected[UK_GOODS_OR_SERVICES], HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
       expected[INSURED_PERIOD] = [...expected[INSURED_AMOUNT], FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT];
 
@@ -181,7 +185,7 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
         req.session = {
           submittedData: {
             insuranceEligibility: {
-              [FIELD_IDS.VALID_EXPORTER_LOCATION]: true,
+              [VALID_EXPORTER_LOCATION]: true,
             },
             quoteEligibility: {},
           },

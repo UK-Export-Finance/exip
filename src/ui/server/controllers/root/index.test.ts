@@ -3,6 +3,10 @@ import { mockReq, mockRes } from '../../test-mocks';
 import { FIELD_IDS, ROUTES } from '../../constants';
 import { Request, Response } from '../../../types';
 
+const {
+  ELIGIBILITY: { CREDIT_PERIOD },
+} = FIELD_IDS;
+
 describe('controllers/root', () => {
   let req: Request;
   let res: Response;
@@ -17,7 +21,7 @@ describe('controllers/root', () => {
       req.session = {
         submittedData: {
           quoteEligibility: {
-            [FIELD_IDS.CREDIT_PERIOD]: 1,
+            [CREDIT_PERIOD]: 1,
           },
           insuranceEligibility: {
             [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: true,

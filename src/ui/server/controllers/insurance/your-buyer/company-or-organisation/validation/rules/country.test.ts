@@ -9,7 +9,9 @@ const {
   },
 } = FIELD_IDS.INSURANCE;
 
-const { [FIELD_ID]: ERROR_MESSAGE } = ERROR_MESSAGES;
+const {
+  ELIGIBILITY: { [FIELD_ID]: ERROR_MESSAGE },
+} = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/validation/country', () => {
   const mockErrors = {

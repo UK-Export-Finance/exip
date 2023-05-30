@@ -13,7 +13,10 @@ import isChangeRoute from '../../../helpers/is-change-route';
 import { isSinglePolicyType, isMultiPolicyType } from '../../../helpers/policy-type';
 import { Request, Response, SelectOption, TellUsAboutPolicyPageVariables } from '../../../../types';
 
-const { AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_TYPE } = FIELD_IDS;
+const {
+  ELIGIBILITY: { AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
+  POLICY_TYPE,
+} = FIELD_IDS;
 
 const { START: quoteStart } = ROUTES.QUOTE;
 
@@ -106,8 +109,8 @@ const get = async (req: Request, res: Response) => {
     }
 
     let mappedCurrencies;
-    if (submittedData && submittedData.quoteEligibility && submittedData.quoteEligibility[FIELD_IDS.CURRENCY]) {
-      mappedCurrencies = mapCurrencies(currencies, submittedData.quoteEligibility[FIELD_IDS.CURRENCY].isoCode);
+    if (submittedData && submittedData.quoteEligibility && submittedData.quoteEligibility[CURRENCY]) {
+      mappedCurrencies = mapCurrencies(currencies, submittedData.quoteEligibility[CURRENCY].isoCode);
     } else {
       mappedCurrencies = mapCurrencies(currencies);
     }
@@ -120,7 +123,7 @@ const get = async (req: Request, res: Response) => {
       mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER);
     }
 
-    const creditPeriodOptions = FIELDS[FIELD_IDS.CREDIT_PERIOD].OPTIONS as Array<SelectOption>;
+    const creditPeriodOptions = FIELDS[CREDIT_PERIOD].OPTIONS as Array<SelectOption>;
     let mappedCreditPeriod;
 
     if (submittedData && submittedData.quoteEligibility && submittedData.quoteEligibility[CREDIT_PERIOD]) {
@@ -164,7 +167,7 @@ const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const submittedCurrencyCode = req.body[FIELD_IDS.CURRENCY];
+    const submittedCurrencyCode = req.body[CURRENCY];
 
     if (validationErrors) {
       // map currencies drop down options
@@ -190,7 +193,7 @@ const post = async (req: Request, res: Response) => {
       let mappedCreditPeriod = [];
       const submittedCreditPeriod = req.body[CREDIT_PERIOD];
 
-      const creditPeriodOptions = FIELDS[FIELD_IDS.CREDIT_PERIOD].OPTIONS as Array<SelectOption>;
+      const creditPeriodOptions = FIELDS[CREDIT_PERIOD].OPTIONS as Array<SelectOption>;
 
       if (submittedCreditPeriod) {
         mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions, submittedCreditPeriod);
@@ -216,7 +219,7 @@ const post = async (req: Request, res: Response) => {
 
     const populatedData = {
       ...req.body,
-      [FIELD_IDS.CURRENCY]: getCurrencyByCode(currencies, submittedCurrencyCode),
+      [CURRENCY]: getCurrencyByCode(currencies, submittedCurrencyCode),
     };
 
     req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);

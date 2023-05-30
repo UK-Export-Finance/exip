@@ -21,16 +21,20 @@ const {
   ACCOUNT_TO_APPLY_ONLINE,
 } = ELIGIBILITY;
 
+const {
+  ELIGIBILITY: { VALID_EXPORTER_LOCATION, HAS_MINIMUM_UK_GOODS_OR_SERVICES },
+} = FIELD_IDS;
+
 export const generateRequiredData = (): RequiredDataStateInsuranceEligibility => {
   const requiredData = {} as RequiredDataStateInsuranceEligibility;
 
   requiredData[BUYER_COUNTRY] = [];
 
-  requiredData[EXPORTER_LOCATION] = [FIELD_IDS.BUYER_COUNTRY];
+  requiredData[EXPORTER_LOCATION] = [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
 
-  requiredData[UK_GOODS_OR_SERVICES] = [...requiredData[EXPORTER_LOCATION], FIELD_IDS.VALID_EXPORTER_LOCATION];
+  requiredData[UK_GOODS_OR_SERVICES] = [...requiredData[EXPORTER_LOCATION], VALID_EXPORTER_LOCATION];
 
-  requiredData[INSURED_AMOUNT] = [...requiredData[UK_GOODS_OR_SERVICES], FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+  requiredData[INSURED_AMOUNT] = [...requiredData[UK_GOODS_OR_SERVICES], HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
   requiredData[INSURED_PERIOD] = [...requiredData[INSURED_AMOUNT], FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT];
 

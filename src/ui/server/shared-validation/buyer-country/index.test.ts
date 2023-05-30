@@ -13,11 +13,11 @@ describe('shared-validation/buyer-country', () => {
       });
     });
 
-    describe(`when ${FIELD_IDS.BUYER_COUNTRY} is provided`, () => {
-      describe(`when ${FIELD_IDS.BUYER_COUNTRY} does NOT have a value`, () => {
+    describe(`when ${FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY} is provided`, () => {
+      describe(`when ${FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY} does NOT have a value`, () => {
         it('should return true', () => {
           const mockBody = {
-            [FIELD_IDS.BUYER_COUNTRY]: '',
+            [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: '',
           };
 
           const result = hasErrors(mockBody);
@@ -29,7 +29,7 @@ describe('shared-validation/buyer-country', () => {
 
     it('should return false', () => {
       const mockBody = {
-        [FIELD_IDS.BUYER_COUNTRY]: 'Australia',
+        [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: 'Australia',
       };
 
       const result = hasErrors(mockBody);
@@ -43,17 +43,17 @@ describe('shared-validation/buyer-country', () => {
       it('should return validation errors', () => {
         const result = validation({});
 
-        const expected = generateValidationErrors(FIELD_IDS.BUYER_COUNTRY, CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.BUYER_COUNTRY]);
+        const expected = generateValidationErrors(FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY, CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]);
 
         expect(result).toEqual(expected);
       });
     });
 
-    describe(`when ${FIELD_IDS.BUYER_COUNTRY} is not provided`, () => {
+    describe(`when ${FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY} is not provided`, () => {
       it('should return validation errors', () => {
         const result = validation({});
 
-        const expected = generateValidationErrors(FIELD_IDS.BUYER_COUNTRY, CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.BUYER_COUNTRY]);
+        const expected = generateValidationErrors(FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY, CONTENT_STRINGS.ERROR_MESSAGES[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]);
 
         expect(result).toEqual(expected);
       });
@@ -61,7 +61,7 @@ describe('shared-validation/buyer-country', () => {
 
     describe('when there are no errors', () => {
       it('should return null', () => {
-        const result = validation({ [FIELD_IDS.BUYER_COUNTRY]: true });
+        const result = validation({ [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: true });
 
         expect(result).toEqual(null);
       });

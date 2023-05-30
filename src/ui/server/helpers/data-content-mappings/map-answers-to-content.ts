@@ -8,14 +8,10 @@ import mapPolicyLength from './map-policy-length';
 import { SubmittedDataInsuranceEligibility, SubmittedDataQuoteEligibility } from '../../../types';
 
 const {
-  BUYER_COUNTRY,
-  CREDIT_PERIOD,
+  ELIGIBILITY: { BUYER_COUNTRY, CREDIT_PERIOD, PERCENTAGE_OF_COVER, HAS_MINIMUM_UK_GOODS_OR_SERVICES, VALID_EXPORTER_LOCATION },
   MULTIPLE_POLICY_TYPE,
-  PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
-  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-  VALID_EXPORTER_LOCATION,
 } = FIELD_IDS;
 
 /**
