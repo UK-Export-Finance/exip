@@ -22,7 +22,7 @@ describe('Create an Application', () => {
     application = (await context.query.Application.createOne({
       data: {},
       query:
-        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status previousStatus eligibility { id } policyAndExport { id } owner { id } company { id } business { id businessContactDetail { id } } broker { id } buyer { id } sectionReview { id } declaration { id }',
+        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status previousStatus version eligibility { id } policyAndExport { id } owner { id } company { id } business { id businessContactDetail { id } } broker { id } buyer { id } sectionReview { id } declaration { id }',
     })) as Application;
   });
 
@@ -51,6 +51,12 @@ describe('Create an Application', () => {
     expect(updatedAtDay).toEqual(expectedDay);
     expect(updatedAtMonth).toEqual(expectedMonth);
     expect(updatedAtYear).toEqual(expectedYear);
+  });
+
+  test('it should have the latest version number', () => {
+    const expected = APPLICATION.LATEST_VERSION.VERSION_NUMBER;
+
+    expect(application.version).toEqual(expected);
   });
 
   test('it should have a submission deadline date', () => {

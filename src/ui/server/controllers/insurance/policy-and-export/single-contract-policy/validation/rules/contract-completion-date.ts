@@ -1,5 +1,5 @@
 import { add, isAfter, isBefore, isPast, isSameDay, isValid } from 'date-fns';
-import { FIELD_IDS, PRODUCT } from '../../../../../../constants';
+import { FIELD_IDS, ELIGIBILITY } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { objectHasProperty } from '../../../../../../helpers/object';
@@ -107,7 +107,7 @@ const contractCompletionDateRules = (formBody: RequestBody, errors: object) => {
     }
 
     // check that the end date is not past the maximum years of cover.
-    const maximum = add(requestedStartDate, { years: PRODUCT.MAX_COVER_PERIOD_YEARS });
+    const maximum = add(requestedStartDate, { years: ELIGIBILITY.MAX_COVER_PERIOD_YEARS });
 
     if (isAfter(submittedDate, maximum)) {
       return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.AFTER_LATEST, errors);

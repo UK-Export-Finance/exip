@@ -46,6 +46,10 @@ export const lists = {
       buyer: relationship({ ref: 'Buyer' }),
       sectionReview: relationship({ ref: 'SectionReview' }),
       declaration: relationship({ ref: 'Declaration' }),
+      version: text({
+        defaultValue: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
+        validation: { isRequired: true },
+      }),
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {

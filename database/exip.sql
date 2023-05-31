@@ -132,6 +132,7 @@ CREATE TABLE `Application` (
 	`declaration` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`sectionReview` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`owner` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+	`version` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `Application_eligibility_idx` (`eligibility`),
   KEY `Application_referenceNumber_idx` (`referenceNumber`),
