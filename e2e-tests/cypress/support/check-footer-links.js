@@ -1,6 +1,5 @@
 import footer from '../e2e/partials/footer';
 import { FOOTER } from '../../content-strings';
-import { ROUTES } from '../../constants';
 
 const {
   PRIVACY, REPORT_VULNERABILITY, ACCESSIBILITY_STATEMENT, COOKIES, CONTACT,
