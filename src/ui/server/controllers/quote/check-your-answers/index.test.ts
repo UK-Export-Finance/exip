@@ -8,7 +8,10 @@ import getUserNameFromSession from '../../../helpers/get-user-name-from-session'
 import { Request, Response } from '../../../../types';
 import { mockAnswers, mockReq, mockRes } from '../../../test-mocks';
 
-const { BUYER_COUNTRY, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, POLICY_TYPE, HAS_MINIMUM_UK_GOODS_OR_SERVICES, VALID_EXPORTER_LOCATION } = FIELD_IDS;
+const {
+  ELIGIBILITY: { BUYER_COUNTRY, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, HAS_MINIMUM_UK_GOODS_OR_SERVICES, VALID_EXPORTER_LOCATION },
+  POLICY_TYPE,
+} = FIELD_IDS;
 
 describe('controllers/quote/check-your-answers', () => {
   let req: Request;

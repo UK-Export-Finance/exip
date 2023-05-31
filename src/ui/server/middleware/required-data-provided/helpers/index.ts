@@ -45,7 +45,7 @@ export const hasRequiredData = (
   let suppliedDataCount = 0;
 
   requiredData.forEach((fieldId: string) => {
-    if (fieldId === FIELD_IDS.BUYER_COUNTRY) {
+    if (fieldId === FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY) {
       /**
        * If the field is "buyer country"
        * We need to make sure that the country has support to apply or get a quote online

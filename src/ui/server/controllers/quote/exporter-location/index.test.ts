@@ -20,7 +20,7 @@ describe('controllers/quote/exporter-location', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.VALID_EXPORTER_LOCATION,
+        FIELD_ID: FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION,
         PAGE_CONTENT_STRINGS: PAGES.EXPORTER_LOCATION,
       };
 
@@ -56,7 +56,7 @@ describe('controllers/quote/exporter-location', () => {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, ORIGINAL_URL: req.originalUrl }),
           userName: getUserNameFromSession(req.session.user),
           BACK_LINK: req.headers.referer,
-          validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID]),
+          validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID]),
         });
       });
     });
@@ -64,7 +64,7 @@ describe('controllers/quote/exporter-location', () => {
     describe('when submitted answer is false', () => {
       beforeEach(() => {
         req.body = {
-          [FIELD_IDS.VALID_EXPORTER_LOCATION]: 'false',
+          [FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION]: 'false',
         };
       });
 
@@ -86,7 +86,7 @@ describe('controllers/quote/exporter-location', () => {
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.VALID_EXPORTER_LOCATION]: 'true',
+        [FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION]: 'true',
       };
 
       beforeEach(() => {

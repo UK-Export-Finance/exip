@@ -12,7 +12,13 @@ const {
   },
 } = FIELD_IDS;
 
-const { [FIELD_ID]: ERROR_MESSAGE } = ERROR_MESSAGES;
+const {
+  INSURANCE: {
+    YOUR_BUYER: {
+      COMPANY_OR_ORGANISATION: { [FIELD_ID]: ERROR_MESSAGE },
+    },
+  },
+} = ERROR_MESSAGES;
 
 /**
  * countryRules.

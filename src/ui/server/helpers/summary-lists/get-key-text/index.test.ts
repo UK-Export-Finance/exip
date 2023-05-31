@@ -2,7 +2,9 @@ import getKeyText from '.';
 import { FIELD_IDS } from '../../../constants';
 import { FIELDS } from '../../../content-strings';
 
-const { AMOUNT_CURRENCY, VALID_EXPORTER_LOCATION } = FIELD_IDS;
+const {
+  ELIGIBILITY: { AMOUNT_CURRENCY, VALID_EXPORTER_LOCATION },
+} = FIELD_IDS;
 
 describe('server/helpers/summary-lists/get-key-text', () => {
   describe('getKeyText', () => {

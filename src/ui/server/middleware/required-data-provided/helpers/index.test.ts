@@ -64,10 +64,10 @@ describe('middleware/required-data-provided/helpers', () => {
       });
     });
 
-    describe(`when ${FIELD_IDS.BUYER_COUNTRY} submitted data with true canApplyOnline flag`, () => {
+    describe(`when ${FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY} submitted data with true canApplyOnline flag`, () => {
       it('should return true', () => {
         const mockSubmittedData = {
-          [FIELD_IDS.BUYER_COUNTRY]: {
+          [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: {
             ...mockCountries[0],
             canApplyOnline: true,
           },
@@ -79,10 +79,10 @@ describe('middleware/required-data-provided/helpers', () => {
       });
     });
 
-    describe(`when ${FIELD_IDS.BUYER_COUNTRY} submitted data with false canApplyOnline flag`, () => {
+    describe(`when ${FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY} submitted data with false canApplyOnline flag`, () => {
       it('should return false', () => {
         const mockSubmittedData = {
-          [FIELD_IDS.BUYER_COUNTRY]: {
+          [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: {
             ...mockCountries[0],
             canApplyOnline: false,
           },

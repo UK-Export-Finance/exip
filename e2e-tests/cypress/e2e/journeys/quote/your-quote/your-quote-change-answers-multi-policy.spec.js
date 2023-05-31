@@ -3,8 +3,10 @@ import { tellUsAboutYourPolicyPage, yourQuotePage } from '../../../pages/quote';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 
 const {
-  MAX_AMOUNT_OWED,
-  PERCENTAGE_OF_COVER,
+  ELIGIBILITY: {
+    MAX_AMOUNT_OWED,
+    PERCENTAGE_OF_COVER,
+  },
   QUOTE,
 } = FIELD_IDS;
 

@@ -20,7 +20,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+        FIELD_ID: FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
         PAGE_CONTENT_STRINGS: {
           ...PAGES.UK_GOODS_OR_SERVICES,
           ...PAGES.QUOTE.UK_GOODS_OR_SERVICES,
@@ -60,14 +60,14 @@ describe('controllers/quote/uk-goods-or-services', () => {
           userName: getUserNameFromSession(req.session.user),
           ...singleInputPageVariables(PAGE_VARIABLES),
           BACK_LINK: req.headers.referer,
-          validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
+          validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
         });
       });
     });
 
     describe('when the submitted answer is `false`', () => {
       beforeEach(() => {
-        req.body[FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES] = 'false';
+        req.body[FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES] = 'false';
       });
 
       it(`should redirect to ${ROUTES.QUOTE.CANNOT_APPLY}`, () => {
@@ -88,7 +88,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: 'true',
+        [FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: 'true',
       };
 
       beforeEach(() => {

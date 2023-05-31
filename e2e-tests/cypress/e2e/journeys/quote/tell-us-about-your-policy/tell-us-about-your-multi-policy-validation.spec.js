@@ -12,6 +12,15 @@ import { ERROR_MESSAGES } from '../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { GBP_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
+const {
+  ELIGIBILITY: {
+    CURRENCY,
+    MAX_AMOUNT_OWED,
+    PERCENTAGE_OF_COVER,
+    CREDIT_PERIOD,
+  },
+} = FIELD_IDS;
+
 context('Tell us about the multiple policy you need - form validation', () => {
   const url = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
@@ -45,64 +54,64 @@ context('Tell us about the multiple policy you need - form validation', () => {
       // currency
       cy.checkText(
         partials.errorSummaryListItems().eq(0),
-        ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY,
+        ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY,
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY}`,
+        tellUsAboutYourPolicyPage[CURRENCY].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY}`,
       );
 
       // max amount owed
       cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].IS_EMPTY,
+        ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].IS_EMPTY,
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].IS_EMPTY}`,
+        tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].IS_EMPTY}`,
       );
 
       // percentage of cover
       cy.checkText(
         partials.errorSummaryListItems().eq(2),
-        ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY,
+        ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY,
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY}`,
+        tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY}`,
       );
 
       // credit period
       cy.checkText(
         partials.errorSummaryListItems().eq(3),
-        ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY,
+        ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY,
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY}`,
+        tellUsAboutYourPolicyPage[CREDIT_PERIOD].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY}`,
       );
     });
 
     it('should focus on inputs when clicking summary error message', () => {
       // currency
       partials.errorSummaryListItemLinks().eq(0).click();
-      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().should('have.focus');
+      tellUsAboutYourPolicyPage[CURRENCY].input().should('have.focus');
 
       // max amount owed
       partials.errorSummaryListItemLinks().eq(1).click();
-      tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().should('have.focus');
+      tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().should('have.focus');
 
       // perecentage of cover
       partials.errorSummaryListItemLinks().eq(2).click();
-      tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().should('have.focus');
+      tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().should('have.focus');
 
       // credit period
       partials.errorSummaryListItemLinks().eq(3).click();
-      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().should('have.focus');
+      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().should('have.focus');
     });
   });
 
@@ -110,17 +119,17 @@ context('Tell us about the multiple policy you need - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input(), 'a');
+      cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), 'a');
       submitButton().click();
 
       cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_NUMBER,
+        ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_NUMBER,
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_NUMBER}`,
+        tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_NUMBER}`,
       );
     });
   });
@@ -129,17 +138,17 @@ context('Tell us about the multiple policy you need - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input(), '1234.56');
+      cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '1234.56');
       submitButton().click();
 
       cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER,
+        ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER,
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER}`,
+        tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER}`,
       );
     });
   });
@@ -148,17 +157,17 @@ context('Tell us about the multiple policy you need - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input(), '0');
+      cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '0');
       submitButton().click();
 
       cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].BELOW_MINIMUM,
+        ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].BELOW_MINIMUM,
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].BELOW_MINIMUM}`,
+        tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].BELOW_MINIMUM}`,
       );
     });
   });
@@ -171,12 +180,12 @@ context('Tell us about the multiple policy you need - form validation', () => {
 
       cy.checkText(
         partials.errorSummaryListItems().eq(3),
-        ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY,
+        ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY,
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.CREDIT_PERIOD].IS_EMPTY}`,
+        tellUsAboutYourPolicyPage[CREDIT_PERIOD].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY}`,
       );
     });
   });
@@ -185,14 +194,14 @@ context('Tell us about the multiple policy you need - form validation', () => {
     it('should render submitted values', () => {
       cy.navigateToUrl(url);
 
-      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select(GBP_CURRENCY_CODE);
-      cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input(), '10');
+      tellUsAboutYourPolicyPage[CURRENCY].input().select(GBP_CURRENCY_CODE);
+      cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '10');
 
       submitButton().click();
 
-      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].inputOptionSelected().contains(GBP_CURRENCY_CODE);
+      tellUsAboutYourPolicyPage[CURRENCY].inputOptionSelected().contains(GBP_CURRENCY_CODE);
 
-      tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input()
+      tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input()
         .should('have.attr', 'value', '10');
     });
   });

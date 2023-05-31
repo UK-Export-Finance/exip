@@ -52,7 +52,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.VALID_EXPORTER_LOCATION];
+        const expectedMessage = ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION];
 
         cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 

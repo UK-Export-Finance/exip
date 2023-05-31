@@ -18,6 +18,16 @@ import { GBP_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
+const {
+  ELIGIBILITY: {
+    AMOUNT_CURRENCY,
+    CURRENCY,
+    MAX_AMOUNT_OWED,
+    PERCENTAGE_OF_COVER,
+    CREDIT_PERIOD,
+  },
+} = FIELD_IDS;
+
 const startRoute = ROUTES.QUOTE.START;
 
 context('Tell us about your multiple policy page - as an exporter, I want to provide my Export insurance policy details', () => {
@@ -65,7 +75,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     });
 
     it('renders `currency and amount` legend', () => {
-      const fieldId = FIELD_IDS.AMOUNT_CURRENCY;
+      const fieldId = AMOUNT_CURRENCY;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
 
@@ -74,7 +84,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     });
 
     it('renders `currency` legend, label and input', () => {
-      const fieldId = FIELD_IDS.CURRENCY;
+      const fieldId = CURRENCY;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
 
@@ -85,7 +95,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     });
 
     it('renders only supported currencies in alphabetical order', () => {
-      const fieldId = FIELD_IDS.CURRENCY;
+      const fieldId = CURRENCY;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
 
@@ -95,7 +105,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     });
 
     it('renders `max amount owed` label and input', () => {
-      const fieldId = FIELD_IDS.MAX_AMOUNT_OWED;
+      const fieldId = MAX_AMOUNT_OWED;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
 
@@ -106,7 +116,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     });
 
     it('renders `percentage of cover` label, hint and input', () => {
-      const fieldId = FIELD_IDS.PERCENTAGE_OF_COVER;
+      const fieldId = PERCENTAGE_OF_COVER;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
 
@@ -120,7 +130,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     });
 
     it('renders `percentage of cover` label, hint and input with correct options', () => {
-      const fieldId = FIELD_IDS.PERCENTAGE_OF_COVER;
+      const fieldId = PERCENTAGE_OF_COVER;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
 
@@ -141,7 +151,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     });
 
     it('renders `credit period` label, hint and input with correct options', () => {
-      const fieldId = FIELD_IDS.CREDIT_PERIOD;
+      const fieldId = CREDIT_PERIOD;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
 
@@ -172,10 +182,10 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     it(`should redirect to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input(), '100');
-      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select(GBP_CURRENCY_CODE);
-      tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('90');
-      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().select('1');
+      cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '100');
+      tellUsAboutYourPolicyPage[CURRENCY].input().select(GBP_CURRENCY_CODE);
+      tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
+      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
 
       submitButton().click();
 

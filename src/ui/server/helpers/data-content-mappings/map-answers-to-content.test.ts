@@ -8,14 +8,10 @@ import { SUMMARY_ANSWERS } from '../../content-strings';
 import { mockAnswers } from '../../test-mocks';
 
 const {
-  BUYER_COUNTRY,
-  CREDIT_PERIOD,
+  ELIGIBILITY: { BUYER_COUNTRY, CREDIT_PERIOD, PERCENTAGE_OF_COVER, HAS_MINIMUM_UK_GOODS_OR_SERVICES, VALID_EXPORTER_LOCATION },
   MULTIPLE_POLICY_TYPE,
-  PERCENTAGE_OF_COVER,
   POLICY_TYPE,
   SINGLE_POLICY_TYPE,
-  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-  VALID_EXPORTER_LOCATION,
 } = FIELD_IDS;
 
 describe('server/helpers/map-answers-to-content', () => {

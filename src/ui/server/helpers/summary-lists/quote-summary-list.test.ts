@@ -5,7 +5,13 @@ import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../constants';
 import generateSummaryListRows from './generate-summary-list-rows';
 import { mockQuote } from '../../test-mocks';
 
-const { BUYER_COUNTRY, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTIPLE_POLICY_LENGTH, PERCENTAGE_OF_COVER, POLICY_LENGTH, QUOTE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
+const {
+  ELIGIBILITY: { BUYER_COUNTRY, CONTRACT_VALUE, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
+  MULTIPLE_POLICY_LENGTH,
+  POLICY_LENGTH,
+  QUOTE,
+  SINGLE_POLICY_LENGTH,
+} = FIELD_IDS;
 
 const { INSURED_FOR, PREMIUM_RATE_PERCENTAGE, ESTIMATED_COST, BUYER_LOCATION } = QUOTE;
 
@@ -62,7 +68,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
         const [expectedField] = result;
 
         const expected = {
-          id: FIELD_IDS.CONTRACT_VALUE,
+          id: CONTRACT_VALUE,
           title: QUOTE_TITLES[CONTRACT_VALUE],
           value: mockQuoteContent[CONTRACT_VALUE],
           renderChangeLink: true,
@@ -128,7 +134,7 @@ describe('server/helpers/summary-lists/quote-summary-list', () => {
         const [expectedField] = result;
 
         const expected = {
-          id: FIELD_IDS.MAX_AMOUNT_OWED,
+          id: MAX_AMOUNT_OWED,
           title: QUOTE_TITLES[MAX_AMOUNT_OWED],
           value: mockQuoteContent[MAX_AMOUNT_OWED],
           renderChangeLink: true,

@@ -3,7 +3,10 @@ import formatCurrency from '../format-currency';
 import { FIELD_IDS, FIELD_VALUES, GBP_CURRENCY_CODE } from '../../constants';
 import { SubmittedDataQuoteEligibility } from '../../../types';
 
-const { CONTRACT_VALUE, CURRENCY, MAX_AMOUNT_OWED, POLICY_TYPE } = FIELD_IDS;
+const {
+  ELIGIBILITY: { CONTRACT_VALUE, CURRENCY, MAX_AMOUNT_OWED },
+  POLICY_TYPE,
+} = FIELD_IDS;
 
 describe('server/helpers/data-content-mappings/map-cost', () => {
   describe('when policy type is single', () => {

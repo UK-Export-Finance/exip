@@ -6,7 +6,7 @@ import generateValidationErrors from '../../../../shared-validation/yes-no-radio
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
 
-const FIELD_ID = FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES;
+const FIELD_ID = FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES;
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
@@ -27,7 +27,7 @@ export const get = (req: Request, res: Response) =>
   });
 
 export const post = (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID].IS_EMPTY);
+  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
@@ -40,7 +40,7 @@ export const post = (req: Request, res: Response) => {
     });
   }
 
-  const answer = req.body[FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+  const answer = req.body[FIELD_ID];
 
   if (answer === 'false') {
     const { CANNOT_APPLY } = PAGES;

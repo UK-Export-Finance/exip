@@ -16,24 +16,24 @@ export const FIELDS = {
       },
     },
   },
-  [FIELD_IDS.BUYER_COUNTRY]: {
+  [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: {
     HINT: 'Cover is based on the country your buyer is located in, not the destination of your goods or services.',
     SUMMARY: {
       TITLE: 'Buyer is based in',
     },
   },
-  [FIELD_IDS.VALID_EXPORTER_LOCATION]: {
+  [FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION]: {
     SUMMARY: {
       TITLE: 'Your company',
     },
   },
-  [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
+  [FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
     HINT: 'You can include your profit margin as part of the contract value.',
     SUMMARY: {
       TITLE: 'UK goods or services',
     },
   },
-  [FIELD_IDS.AMOUNT_CURRENCY]: {
+  [FIELD_IDS.ELIGIBILITY.AMOUNT_CURRENCY]: {
     SINGLE_POLICY: {
       LEGEND: "What's the total value of the contract you want to insure?",
     },
@@ -41,25 +41,25 @@ export const FIELDS = {
       LEGEND: "What's the maximum amount your buyer will owe you at any single point during the policy?",
     },
   },
-  [FIELD_IDS.CURRENCY]: {
+  [FIELD_IDS.ELIGIBILITY.CURRENCY]: {
     LABEL:
       'Select a currency (pounds sterling, euros or US dollars). You can send out your invoices in most currencies but UKEF only issues policies in these 3 currencies.',
   },
-  [FIELD_IDS.CONTRACT_VALUE]: {
+  [FIELD_IDS.ELIGIBILITY.CONTRACT_VALUE]: {
     LABEL: 'Contract value',
     HINT: 'Enter a whole number - do not enter decimals.',
     SUMMARY: {
       TITLE: 'Total value of contract',
     },
   },
-  [FIELD_IDS.MAX_AMOUNT_OWED]: {
+  [FIELD_IDS.ELIGIBILITY.MAX_AMOUNT_OWED]: {
     LABEL: 'Maximum amount owed at any single point',
     HINT: 'Enter a whole number - do not enter decimals.',
     SUMMARY: {
       TITLE: 'Maximum buyer will owe at any single point',
     },
   },
-  [FIELD_IDS.CREDIT_PERIOD]: {
+  [FIELD_IDS.ELIGIBILITY.CREDIT_PERIOD]: {
     LABEL: 'What credit period do you have with your buyer?',
     HINT: [
       {
@@ -87,7 +87,7 @@ export const FIELDS = {
       TITLE: 'Credit period',
     },
   },
-  [FIELD_IDS.PERCENTAGE_OF_COVER]: {
+  [FIELD_IDS.ELIGIBILITY.PERCENTAGE_OF_COVER]: {
     SINGLE_POLICY: {
       LABEL: 'What percentage of your export contract value do you want to cover?',
     },

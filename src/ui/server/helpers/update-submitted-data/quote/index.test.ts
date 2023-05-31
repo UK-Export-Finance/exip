@@ -3,7 +3,12 @@ import { FIELD_IDS, FIELD_VALUES } from '../../../constants';
 import { sanitiseData } from '../../sanitise-data';
 import { RequestBody, SubmittedDataQuoteEligibility } from '../../../../types';
 
-const { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTIPLE_POLICY_LENGTH, POLICY_LENGTH, POLICY_TYPE } = FIELD_IDS;
+const {
+  ELIGIBILITY: { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED },
+  MULTIPLE_POLICY_LENGTH,
+  POLICY_LENGTH,
+  POLICY_TYPE,
+} = FIELD_IDS;
 
 describe('server/helpers/update-submitted-data/quote', () => {
   describe('mapSubmittedData', () => {

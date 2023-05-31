@@ -1,7 +1,9 @@
 import { FIELD_IDS } from '../../../constants';
 import { Country } from '../../../../types';
 
-const { BUYER_COUNTRY } = FIELD_IDS;
+const {
+  ELIGIBILITY: { BUYER_COUNTRY },
+} = FIELD_IDS;
 
 /**
  * mapSubmittedEligibilityCountry

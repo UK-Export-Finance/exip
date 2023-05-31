@@ -73,7 +73,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
     cy.checkText(
       partials.errorSummaryListItems().eq(2),
-      ERROR_MESSAGES[COUNTRY].IS_EMPTY,
+      COMPANY_OR_ORG_ERROR_MESSAGES[COUNTRY].IS_EMPTY,
     );
 
     cy.checkText(

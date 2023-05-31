@@ -1,8 +1,10 @@
 import { FIELD_IDS } from '../../../../constants';
 
+const FIELD_ID = FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION;
+
 const exporterLocationPage = {
-  [FIELD_IDS.VALID_EXPORTER_LOCATION]: {
-    errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.VALID_EXPORTER_LOCATION}-error-message"]`),
+  [FIELD_ID]: {
+    errorMessage: () => cy.get(`[data-cy="${FIELD_ID}-error-message"]`),
   },
 };
 

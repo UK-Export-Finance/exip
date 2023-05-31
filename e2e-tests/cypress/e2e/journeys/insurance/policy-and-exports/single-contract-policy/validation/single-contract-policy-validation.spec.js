@@ -37,6 +37,8 @@ context('Insurance - Policy and exports - Single contract policy page - form val
   let url;
 
   before(() => {
+    cy.deleteAccount();
+
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 

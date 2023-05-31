@@ -13,7 +13,7 @@ import {
 } from '../../../../support/quote/forms';
 
 const {
-  CREDIT_PERIOD,
+  ELIGIBILITY: { CREDIT_PERIOD },
   POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;

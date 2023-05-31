@@ -20,7 +20,7 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+        FIELD_ID: FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
         PAGE_CONTENT_STRINGS: {
           ...PAGES.UK_GOODS_OR_SERVICES,
           UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION,
@@ -58,7 +58,7 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
           userName: getUserNameFromSession(req.session.user),
-          validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
+          validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
         });
       });
     });
@@ -66,7 +66,7 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
     describe('when submitted answer is false', () => {
       beforeEach(() => {
         req.body = {
-          [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: 'false',
+          [FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: 'false',
         };
       });
 
@@ -86,7 +86,7 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: 'true',
+        [FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: 'true',
       };
 
       beforeEach(() => {

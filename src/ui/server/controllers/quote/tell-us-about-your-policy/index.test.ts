@@ -13,7 +13,11 @@ import { isSinglePolicyType, isMultiPolicyType } from '../../../helpers/policy-t
 import { mockReq, mockRes, mockAnswers, mockCurrencies, mockSession } from '../../../test-mocks';
 import { Request, Response, SelectOption, TellUsAboutPolicyPageVariables } from '../../../../types';
 
-const { AMOUNT_CURRENCY, BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_TYPE, POLICY_LENGTH } = FIELD_IDS;
+const {
+  ELIGIBILITY: { BUYER_COUNTRY, AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
+  POLICY_TYPE,
+  POLICY_LENGTH,
+} = FIELD_IDS;
 
 const { START: quoteStart } = ROUTES.QUOTE;
 
@@ -22,7 +26,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
   let res: Response;
 
   let mappedPercentageOfCover: Array<object>;
-  const creditPeriodOptions = FIELDS[FIELD_IDS.CREDIT_PERIOD].OPTIONS as Array<SelectOption>;
+  const creditPeriodOptions = FIELDS[CREDIT_PERIOD].OPTIONS as Array<SelectOption>;
   let mappedCreditPeriod: Array<SelectOption>;
 
   const previousFlowSubmittedData = {

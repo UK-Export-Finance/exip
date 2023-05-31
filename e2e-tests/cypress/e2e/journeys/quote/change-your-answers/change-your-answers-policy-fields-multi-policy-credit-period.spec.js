@@ -5,7 +5,7 @@ import {
 } from '../../../pages/quote';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 
-const { CREDIT_PERIOD } = FIELD_IDS;
+const { ELIGIBILITY: { CREDIT_PERIOD } } = FIELD_IDS;
 
 context('Change your answers (policy credit period field) - as an exporter, I want to change the details before submitting the proposal', () => {
   const url = ROUTES.QUOTE.CHECK_YOUR_ANSWERS;

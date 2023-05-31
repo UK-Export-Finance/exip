@@ -9,7 +9,7 @@ const hasErrors = (formBody: RequestBody) => {
     return true;
   }
 
-  if (!objectHasProperty(formBody, FIELD_IDS.BUYER_COUNTRY)) {
+  if (!objectHasProperty(formBody, FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY)) {
     return true;
   }
 
@@ -20,7 +20,7 @@ const validation = (formBody: RequestBody) => {
   let errors;
 
   if (hasErrors(formBody)) {
-    errors = generateValidationErrors(FIELD_IDS.BUYER_COUNTRY, ERROR_MESSAGES[FIELD_IDS.BUYER_COUNTRY]);
+    errors = generateValidationErrors(FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY, ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]);
 
     return errors;
   }

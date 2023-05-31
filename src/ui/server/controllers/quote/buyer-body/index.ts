@@ -6,7 +6,7 @@ import generateValidationErrors from '../../../shared-validation/yes-no-radios-f
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
 
-const FIELD_ID = FIELD_IDS.VALID_BUYER_BODY;
+const FIELD_ID = FIELD_IDS.ELIGIBILITY.VALID_BUYER_BODY;
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
@@ -65,7 +65,7 @@ export const get = (req: Request, res: Response) => {
 };
 
 export const post = (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID]);
+  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[FIELD_ID]);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {

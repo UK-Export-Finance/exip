@@ -8,6 +8,10 @@ import { updateSubmittedData } from '../../../helpers/update-submitted-data/quot
 import { mockReq, mockRes, mockAnswers } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
+const {
+  ELIGIBILITY: { CURRENCY },
+} = FIELD_IDS;
+
 describe('controllers/quote/policy-type', () => {
   let req: Request;
   let res: Response;
@@ -87,7 +91,7 @@ describe('controllers/quote/policy-type', () => {
 
       describe('when a currency code has been submitted', () => {
         it('should render template with mapped submitted currency', () => {
-          req.body[FIELD_IDS.CURRENCY] = mockAnswers[FIELD_IDS.CURRENCY];
+          req.body[CURRENCY] = mockAnswers[CURRENCY];
           post(req, res);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATE, {

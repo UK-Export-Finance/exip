@@ -23,6 +23,19 @@ const {
   YOUR_QUOTE,
 } = ROUTES.QUOTE;
 
+const {
+  ELIGIBILITY: {
+    VALID_BUYER_BODY,
+    VALID_EXPORTER_LOCATION,
+    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+    CURRENCY,
+    PERCENTAGE_OF_COVER,
+    CONTRACT_VALUE,
+    CREDIT_PERIOD,
+    MAX_AMOUNT_OWED,
+  },
+} = FIELD_IDS;
+
 /**
  * allRequiredData
  * For each route that requires data submitted from a previous route in the user flow,
@@ -35,13 +48,13 @@ export const allRequiredData = (submittedData: SubmittedDataQuoteEligibility): R
 
   requiredDataState[BUYER_COUNTRY] = [];
 
-  requiredDataState[BUYER_BODY] = [FIELD_IDS.BUYER_COUNTRY];
+  requiredDataState[BUYER_BODY] = [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
 
-  requiredDataState[EXPORTER_LOCATION] = [...requiredDataState[BUYER_BODY], FIELD_IDS.VALID_BUYER_BODY];
+  requiredDataState[EXPORTER_LOCATION] = [...requiredDataState[BUYER_BODY], VALID_BUYER_BODY];
 
-  requiredDataState[UK_GOODS_OR_SERVICES] = [...requiredDataState[EXPORTER_LOCATION], FIELD_IDS.VALID_EXPORTER_LOCATION];
+  requiredDataState[UK_GOODS_OR_SERVICES] = [...requiredDataState[EXPORTER_LOCATION], VALID_EXPORTER_LOCATION];
 
-  requiredDataState[POLICY_TYPE] = [...requiredDataState[UK_GOODS_OR_SERVICES], FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+  requiredDataState[POLICY_TYPE] = [...requiredDataState[UK_GOODS_OR_SERVICES], HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
   requiredDataState[TELL_US_ABOUT_YOUR_POLICY] = [...requiredDataState[POLICY_TYPE], FIELD_IDS.POLICY_TYPE];
 
@@ -49,14 +62,14 @@ export const allRequiredData = (submittedData: SubmittedDataQuoteEligibility): R
     requiredDataState[TELL_US_ABOUT_YOUR_POLICY] = [...requiredDataState[TELL_US_ABOUT_YOUR_POLICY], FIELD_IDS.POLICY_LENGTH];
   }
 
-  requiredDataState[CHECK_YOUR_ANSWERS] = [...requiredDataState[TELL_US_ABOUT_YOUR_POLICY], FIELD_IDS.CURRENCY, FIELD_IDS.PERCENTAGE_OF_COVER];
+  requiredDataState[CHECK_YOUR_ANSWERS] = [...requiredDataState[TELL_US_ABOUT_YOUR_POLICY], CURRENCY, PERCENTAGE_OF_COVER];
 
   if (isSinglePolicyType(submittedData[FIELD_IDS.POLICY_TYPE])) {
-    requiredDataState[CHECK_YOUR_ANSWERS] = [...requiredDataState[CHECK_YOUR_ANSWERS], FIELD_IDS.CONTRACT_VALUE];
+    requiredDataState[CHECK_YOUR_ANSWERS] = [...requiredDataState[CHECK_YOUR_ANSWERS], CONTRACT_VALUE];
   }
 
   if (isMultiPolicyType(submittedData[FIELD_IDS.POLICY_TYPE])) {
-    requiredDataState[CHECK_YOUR_ANSWERS] = [...requiredDataState[CHECK_YOUR_ANSWERS], FIELD_IDS.CREDIT_PERIOD, FIELD_IDS.MAX_AMOUNT_OWED];
+    requiredDataState[CHECK_YOUR_ANSWERS] = [...requiredDataState[CHECK_YOUR_ANSWERS], CREDIT_PERIOD, MAX_AMOUNT_OWED];
   }
 
   requiredDataState[YOUR_QUOTE] = [...requiredDataState[CHECK_YOUR_ANSWERS]];

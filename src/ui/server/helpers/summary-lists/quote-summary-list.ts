@@ -4,7 +4,13 @@ import fieldGroupItem from './generate-field-group-item';
 import generateSummaryListRows from './generate-summary-list-rows';
 import { SummaryListItemData, QuoteContent } from '../../../types';
 
-const { BUYER_COUNTRY, CONTRACT_VALUE, MAX_AMOUNT_OWED, MULTIPLE_POLICY_LENGTH, PERCENTAGE_OF_COVER, POLICY_LENGTH, QUOTE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
+const {
+  ELIGIBILITY: { BUYER_COUNTRY, CONTRACT_VALUE, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
+  MULTIPLE_POLICY_LENGTH,
+  POLICY_LENGTH,
+  QUOTE,
+  SINGLE_POLICY_LENGTH,
+} = FIELD_IDS;
 
 const { BUYER_LOCATION, ESTIMATED_COST, INSURED_FOR, PREMIUM_RATE_PERCENTAGE } = QUOTE;
 

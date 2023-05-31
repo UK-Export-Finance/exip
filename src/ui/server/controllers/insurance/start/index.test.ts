@@ -6,6 +6,10 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import { Request, Response } from '../../../../types';
 import { mockReq, mockRes } from '../../../test-mocks';
 
+const {
+  ELIGIBILITY: { CREDIT_PERIOD },
+} = FIELD_IDS;
+
 describe('controllers/insurance/start', () => {
   let req: Request;
   let res: Response;
@@ -26,7 +30,7 @@ describe('controllers/insurance/start', () => {
       req.session = {
         submittedData: {
           quoteEligibility: {
-            [FIELD_IDS.CREDIT_PERIOD]: 1,
+            [CREDIT_PERIOD]: 1,
           },
           insuranceEligibility: {
             [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: true,
@@ -38,7 +42,7 @@ describe('controllers/insurance/start', () => {
 
       expect(req.session.submittedData).toEqual({
         quoteEligibility: {
-          [FIELD_IDS.CREDIT_PERIOD]: 1,
+          [CREDIT_PERIOD]: 1,
         },
         insuranceEligibility: {},
       });

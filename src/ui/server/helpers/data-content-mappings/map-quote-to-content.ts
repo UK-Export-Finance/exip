@@ -6,7 +6,10 @@ import { Quote, QuoteContent } from '../../../types';
 import mapCost from './map-cost';
 import mapPercentage from '../map-percentage';
 
-const { BUYER_COUNTRY, CURRENCY, PERCENTAGE_OF_COVER, QUOTE } = FIELD_IDS;
+const {
+  ELIGIBILITY: { BUYER_COUNTRY, CURRENCY, PERCENTAGE_OF_COVER },
+  QUOTE,
+} = FIELD_IDS;
 
 const { ESTIMATED_COST, INSURED_FOR, PREMIUM_RATE_PERCENTAGE } = QUOTE;
 
