@@ -1,14 +1,6 @@
 import replaceCharacterCodesWithCharacters from '.';
 
 describe('api/helpers/replace-character-codes-with-characters', () => {
-  it('should replace ampersand character codes', () => {
-    const result = replaceCharacterCodesWithCharacters('&amp;test&amp;');
-
-    const expected = '&test&';
-
-    expect(result).toEqual(expected);
-  });
-
   it('should replace `lower than` character codes', () => {
     const result = replaceCharacterCodesWithCharacters('&lt;test&lt;');
 
@@ -53,6 +45,14 @@ describe('api/helpers/replace-character-codes-with-characters', () => {
     const result = replaceCharacterCodesWithCharacters('&#42;&#42;');
 
     const expected = '**';
+
+    expect(result).toEqual(expected);
+  });
+
+  it('should replace ampersand character codes', () => {
+    const result = replaceCharacterCodesWithCharacters('&amp;test&amp;');
+
+    const expected = '&test&';
 
     expect(result).toEqual(expected);
   });
