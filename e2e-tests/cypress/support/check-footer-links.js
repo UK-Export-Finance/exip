@@ -2,9 +2,8 @@ import footer from '../e2e/partials/footer';
 import { FOOTER } from '../../content-strings';
 import { ROUTES } from '../../constants';
 
-const { ACCESSIBILITY_STATEMENT, COOKIES, CONTACT_US } = ROUTES.INSURANCE;
 const {
-  PRIVACY, REPORT_VULNERABILITY, ACCESSIBILITY_STATEMENT: ACCESSIBILITY_STATEMENT_FOOTER, COOKIES: COOKIES_FOOTER, CONTACT,
+  PRIVACY, REPORT_VULNERABILITY, ACCESSIBILITY_STATEMENT, COOKIES, CONTACT,
 } = FOOTER;
 
 /**
@@ -16,12 +15,12 @@ export default (isInsuranceRoute) => {
   cy.checkLink(footer.supportLinks.reportVulnerability(), REPORT_VULNERABILITY.HREF, REPORT_VULNERABILITY.TEXT);
 
   if (isInsuranceRoute) {
-    cy.checkLink(footer.supportLinks.accessibilityStatement(), ACCESSIBILITY_STATEMENT, ACCESSIBILITY_STATEMENT_FOOTER.TEXT);
-    cy.checkLink(footer.supportLinks.cookies(), COOKIES, COOKIES_FOOTER.TEXT);
-    cy.checkLink(footer.supportLinks.contact(), CONTACT_US, CONTACT.TEXT);
+    cy.checkLink(footer.supportLinks.accessibilityStatement(), ACCESSIBILITY_STATEMENT.INSURANCE_HREF, ACCESSIBILITY_STATEMENT.TEXT);
+    cy.checkLink(footer.supportLinks.cookies(), COOKIES.INSURANCE_HREF, COOKIES.TEXT);
+    cy.checkLink(footer.supportLinks.contact(), CONTACT.INSURANCE_HREF, CONTACT.TEXT);
   } else {
-    cy.checkLink(footer.supportLinks.accessibilityStatement(), ACCESSIBILITY_STATEMENT_FOOTER.HREF, ACCESSIBILITY_STATEMENT_FOOTER.TEXT);
-    cy.checkLink(footer.supportLinks.cookies(), COOKIES_FOOTER.HREF, COOKIES_FOOTER.TEXT);
+    cy.checkLink(footer.supportLinks.accessibilityStatement(), ACCESSIBILITY_STATEMENT.HREF, ACCESSIBILITY_STATEMENT.TEXT);
+    cy.checkLink(footer.supportLinks.cookies(), COOKIES.HREF, COOKIES.TEXT);
     cy.checkLink(footer.supportLinks.contact(), CONTACT.HREF, CONTACT.TEXT);
   }
 };

@@ -5,7 +5,7 @@ import { INSURANCE } from '../../constants';
  * checks if route has ORIGINAL_URL or if the url contains insurance
  * if empty or contains insurance, then is an insurance route so returns true
  * if does not contain insurance, then returns false
- * @param {String} ORIGINAL_URL of the page the user was on
+ * @param {String} ORIGINAL_URL of the page the user is on
  * @returns {Boolean}
  */
 const isInsuranceRoute = (ORIGINAL_URL?: string) => {
