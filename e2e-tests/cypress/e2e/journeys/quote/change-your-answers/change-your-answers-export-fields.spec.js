@@ -5,9 +5,11 @@ import { checkYourAnswersPage } from '../../../pages/quote';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 
 const {
-  BUYER_COUNTRY,
-  VALID_EXPORTER_LOCATION,
-  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+  ELIGIBILITY: {
+    BUYER_COUNTRY,
+    VALID_EXPORTER_LOCATION,
+    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+  },
 } = FIELD_IDS;
 
 const submissionData = {

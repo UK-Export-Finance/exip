@@ -8,6 +8,10 @@ import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.BUYER_BODY;
 
+const {
+  ELIGIBILITY: { VALID_BUYER_BODY },
+} = FIELD_IDS;
+
 const startRoute = ROUTES.QUOTE.START;
 
 context('Buyer body page - as an exporter, I want to check if I can get an EXIP online quote for my buyers country', () => {
@@ -50,7 +54,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.VALID_BUYER_BODY];
+        const expectedMessage = ERROR_MESSAGES.ELIGIBILITY[VALID_BUYER_BODY];
 
         cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 

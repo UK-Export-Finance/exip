@@ -20,7 +20,7 @@ const validation = (formBody: RequestBody) => {
   let errors;
 
   if (hasErrors(formBody)) {
-    errors = generateValidationErrors(FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY, ERROR_MESSAGES[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]);
+    errors = generateValidationErrors(FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY, ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]);
 
     return errors;
   }

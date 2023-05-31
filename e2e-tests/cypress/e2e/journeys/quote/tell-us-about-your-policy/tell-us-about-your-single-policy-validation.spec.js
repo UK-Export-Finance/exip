@@ -12,6 +12,14 @@ import { ERROR_MESSAGES } from '../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { GBP_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
+const {
+  ELIGIBILITY: {
+    CURRENCY,
+    CONTRACT_VALUE,
+    PERCENTAGE_OF_COVER,
+  },
+} = FIELD_IDS;
+
 context('Tell us about the policy you need page - form validation', () => {
   const url = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
@@ -45,49 +53,49 @@ context('Tell us about the policy you need page - form validation', () => {
       // currency
       cy.checkText(
         partials.errorSummaryListItems().eq(0),
-        ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CURRENCY].IS_EMPTY,
+        ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY,
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].errorMessage(),
-        `Error: ${ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CURRENCY].IS_EMPTY}`,
+        tellUsAboutYourPolicyPage[CURRENCY].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY}`,
       );
 
       // contract value
       cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CONTRACT_VALUE].IS_EMPTY,
+        ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].IS_EMPTY,
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].errorMessage(),
-        `Error: ${ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CONTRACT_VALUE].IS_EMPTY}`,
+        tellUsAboutYourPolicyPage[CONTRACT_VALUE].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].IS_EMPTY}`,
       );
 
       // percentage of cover
       cy.checkText(
         partials.errorSummaryListItems().eq(2),
-        ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY,
+        ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY,
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].errorMessage(),
-        `Error: ${ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY}`,
+        tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY}`,
       );
     });
 
     it('should focus on inputs when clicking summary error message', () => {
       // currency
       partials.errorSummaryListItemLinks().eq(0).click();
-      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().should('have.focus');
+      tellUsAboutYourPolicyPage[CURRENCY].input().should('have.focus');
 
       // contract value
       partials.errorSummaryListItemLinks().eq(1).click();
-      tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().should('have.focus');
+      tellUsAboutYourPolicyPage[CONTRACT_VALUE].input().should('have.focus');
 
       // perecentage of cover
       partials.errorSummaryListItemLinks().eq(2).click();
-      tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().should('have.focus');
+      tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().should('have.focus');
     });
   });
 
@@ -95,18 +103,18 @@ context('Tell us about the policy you need page - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input(), 'a');
+      cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), 'a');
 
       submitButton().click();
 
       cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CONTRACT_VALUE].NOT_A_NUMBER,
+        ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_NUMBER,
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].errorMessage(),
-        `Error: ${ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CONTRACT_VALUE].NOT_A_NUMBER}`,
+        tellUsAboutYourPolicyPage[CONTRACT_VALUE].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_NUMBER}`,
       );
     });
   });
@@ -115,18 +123,18 @@ context('Tell us about the policy you need page - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input(), '1234.56');
+      cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '1234.56');
 
       submitButton().click();
 
       cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CONTRACT_VALUE].NOT_A_WHOLE_NUMBER,
+        ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_WHOLE_NUMBER,
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].errorMessage(),
-        `Error: ${ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CONTRACT_VALUE].NOT_A_WHOLE_NUMBER}`,
+        tellUsAboutYourPolicyPage[CONTRACT_VALUE].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_WHOLE_NUMBER}`,
       );
     });
   });
@@ -135,18 +143,18 @@ context('Tell us about the policy you need page - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input(), '0');
+      cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '0');
 
       submitButton().click();
 
       cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CONTRACT_VALUE].BELOW_MINIMUM,
+        ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].BELOW_MINIMUM,
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].errorMessage(),
-        `Error: ${ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.CONTRACT_VALUE].BELOW_MINIMUM}`,
+        tellUsAboutYourPolicyPage[CONTRACT_VALUE].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].BELOW_MINIMUM}`,
       );
     });
   });
@@ -155,15 +163,15 @@ context('Tell us about the policy you need page - form validation', () => {
     it('should render submitted values', () => {
       cy.navigateToUrl(url);
 
-      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select(GBP_CURRENCY_CODE);
+      tellUsAboutYourPolicyPage[CURRENCY].input().select(GBP_CURRENCY_CODE);
 
-      cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input(), '10');
+      cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '10');
 
       submitButton().click();
 
-      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].inputOptionSelected().contains(GBP_CURRENCY_CODE);
+      tellUsAboutYourPolicyPage[CURRENCY].inputOptionSelected().contains(GBP_CURRENCY_CODE);
 
-      tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input()
+      tellUsAboutYourPolicyPage[CONTRACT_VALUE].input()
         .should('have.attr', 'value', '10');
     });
   });

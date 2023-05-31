@@ -9,8 +9,10 @@ import { ROUTES, FIELD_IDS } from '../../../../../constants';
 import { EUR_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
 const {
-  CONTRACT_VALUE,
-  CURRENCY,
+  ELIGIBILITY: {
+    CONTRACT_VALUE,
+    CURRENCY,
+  },
   QUOTE,
 } = FIELD_IDS;
 

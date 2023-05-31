@@ -13,6 +13,10 @@ const CONTENT_STRINGS = {
   ...PAGES.QUOTE.UK_GOODS_OR_SERVICES,
 };
 
+const {
+  ELIGIBILITY: { HAS_MINIMUM_UK_GOODS_OR_SERVICES },
+} = FIELD_IDS;
+
 const startRoute = ROUTES.QUOTE.START;
 
 context('UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
@@ -94,7 +98,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES].IS_EMPTY;
+        const expectedMessage = ERROR_MESSAGES.ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES].IS_EMPTY;
 
         cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 

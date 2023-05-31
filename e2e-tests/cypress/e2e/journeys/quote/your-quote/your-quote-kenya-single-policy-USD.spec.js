@@ -14,7 +14,11 @@ import { ROUTES, FIELD_IDS } from '../../../../../constants';
 import { USD_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
 const {
-  CONTRACT_VALUE,
+  ELIGIBILITY: {
+    CONTRACT_VALUE,
+    CURRENCY,
+    PERCENTAGE_OF_COVER,
+  },
   POLICY_TYPE,
   QUOTE,
   SINGLE_POLICY_LENGTH,
@@ -44,9 +48,9 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
   });
 
   it('should get a quote with a large contract value and render in the correct format', () => {
-    cy.keyboardInput(tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input(), '100,000');
-    tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select(USD_CURRENCY_CODE);
-    tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('80');
+    cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '100,000');
+    tellUsAboutYourPolicyPage[CURRENCY].input().select(USD_CURRENCY_CODE);
+    tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('80');
 
     submitButton().click();
 

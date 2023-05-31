@@ -23,6 +23,10 @@ import {
 
 const CONTENT_STRINGS = PAGES.UK_GOODS_OR_SERVICES;
 
+const {
+  ELIGIBILITY: { HAS_MINIMUM_UK_GOODS_OR_SERVICES },
+} = FIELD_IDS;
+
 const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
@@ -66,7 +70,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     it('renders radio button hint', () => {
       yesNoRadioHint().should('exist');
 
-      cy.checkText(yesNoRadioHint(), FIELDS[FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES].HINT);
+      cy.checkText(yesNoRadioHint(), FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES].HINT);
     });
 
     it('renders `yes` radio button', () => {
@@ -125,7 +129,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
       partials.errorSummaryListItems().should('exist');
       partials.errorSummaryListItems().should('have.length', 1);
 
-      const expectedMessage = ERROR_MESSAGES[FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES].IS_EMPTY;
+      const expectedMessage = ERROR_MESSAGES.ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES].IS_EMPTY;
 
       cy.checkText(partials.errorSummaryListItems(), expectedMessage);
 
