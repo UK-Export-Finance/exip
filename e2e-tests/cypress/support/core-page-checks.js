@@ -107,9 +107,9 @@ const corePageChecks = ({
   }
 
   // check phase banner
-  cy.checkPhaseBanner(isInsurancePage);
+  cy.checkPhaseBanner({ isInsurancePage });
 
-  cy.checkFooterLinks(isInsurancePage);
+  cy.checkFooterLinks({ isInsurancePage });
 
   // check page title and heading
   checkPageTitleAndHeading(pageTitle);

@@ -8,12 +8,13 @@ const {
 /**
  * checks footer links based on isInsuranceRoute is true or false
  * If true, then links should point to insurance routes
+ * @param {Boolean} isInsurancePage - If page is an insurance page or otherwise
  */
-export default (isInsuranceRoute) => {
+const checkFooterLinks = ({ isInsurancePage }) => {
   cy.checkLink(footer.supportLinks.privacy(), PRIVACY.HREF, PRIVACY.TEXT);
   cy.checkLink(footer.supportLinks.reportVulnerability(), REPORT_VULNERABILITY.HREF, REPORT_VULNERABILITY.TEXT);
 
-  if (isInsuranceRoute) {
+  if (isInsurancePage) {
     cy.checkLink(footer.supportLinks.accessibilityStatement(), ACCESSIBILITY_STATEMENT.INSURANCE_HREF, ACCESSIBILITY_STATEMENT.TEXT);
     cy.checkLink(footer.supportLinks.cookies(), COOKIES.INSURANCE_HREF, COOKIES.TEXT);
     cy.checkLink(footer.supportLinks.contact(), CONTACT.INSURANCE_HREF, CONTACT.TEXT);
@@ -23,3 +24,5 @@ export default (isInsuranceRoute) => {
     cy.checkLink(footer.supportLinks.contact(), CONTACT.HREF, CONTACT.TEXT);
   }
 };
+
+export default checkFooterLinks;
