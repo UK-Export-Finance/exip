@@ -1,4 +1,5 @@
 import { LINKS } from '../links';
+import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
 
 const BUYER_BODY = {
   PAGE_TITLE: 'Is your buyer a government or public sector body?',
@@ -67,66 +68,35 @@ const YOUR_QUOTE = {
   NOTICE_3: 'Your price may be higher if our underwriters find additional risks with your export or buyer.',
   WHAT_HAPPENS_NEXT: {
     HEADING: 'What happens next?',
-    INTRO: [
-      [
-        {
-          text: 'You can now submit a',
-        },
-        {
-          text: 'full application',
-          href: LINKS.EXTERNAL.FULL_APPLICATION,
-        },
-        {
-          text: '. ',
-        },
-        {
-          text: 'It takes about 2 weeks to get a decision from UKEF.',
-        },
-      ],
-      [
-        {
-          text: 'You can get help with the application process from export finance managers or brokers.',
-        },
-      ],
-    ],
+    INTRO: {
+      CAN_NOW_SUBMIT: 'You can now submit a',
+      FULL_APPLICATION: {
+        TEXT: 'full application',
+        HREF: INSURANCE_ROUTES.START,
+      },
+      TIMEFRAME: 'It takes about 2 weeks to get a decision from UKEF.',
+      CAN_GET_HELP: 'You can get help with the application process from export finance managers or brokers.',
+    },
     EXPORT_FINANCE_MANAGERS: {
       HEADING: 'Export finance managers',
-      ITEMS: [
-        [
-          {
-            text: 'They work for UKEF and are available in every region. They can give you free guidance when making a full application. Find your',
-          },
-          {
-            text: 'nearest export finance manager',
-            href: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
-          },
-          {
-            text: '.',
-          },
-        ],
-      ],
+      AVAILABLE: 'They work for UKEF and are available in every region. They can give you free guidance when making a full application. Find your',
+      NEAREST_EFM: {
+        TEXT: 'nearest export finance manager',
+        HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
+      },
     },
     BROKERS: {
       HEADING: 'Brokers',
-      ITEMS: [
-        [
-          {
-            text: 'They act as an agent between you and UKEF. They can also help you with the application process.',
-          },
-        ],
-        [
-          {
-            text: 'They receive a 15% fee for providing any successful policies at no extra cost to you. UKEF will pay their fee out of the policy premium you pay.',
-          },
-          {
-            text: 'Use our approved broker list',
-            href: LINKS.EXTERNAL.APPROVED_BROKER_LIST,
-          },
-          {
-            text: ' to find a broker to help you.',
-          },
-        ],
-      ],
+      ACT_AS: 'They act as an agent between you and UKEF. They can also help you with the application process.',
+      THEY_RECEIVE: {
+        INTRO:
+          'They receive a 15% fee for providing any successful policies at no extra cost to you. UKEF will pay their fee out of the policy premium you pay.',
+        LINK: {
+          TEXT: 'Use our approved broker list',
+          HREF: LINKS.EXTERNAL.APPROVED_BROKER_LIST,
+        },
+        OUTRO: 'to find a broker to help you.',
+      },
     },
   },
 };

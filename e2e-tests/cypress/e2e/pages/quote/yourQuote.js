@@ -72,17 +72,26 @@ const yourQuotePage = {
     item3: () => cy.get('[data-cy="notice-list-item-3"]'),
   },
   whatHappensNext: {
+    heading: () => cy.get('[data-cy="what-happens-next-heading"]'),
     intro: {
-      heading: () => cy.get('[data-cy="what-happens-next-heading"]'),
-      listItems: () => cy.get('[data-cy="what-happens-next-intro"] li'),
+      youCan: () => cy.get('[data-cy="what-happens-next-intro-you-can"]'),
+      fullApplicationLink: () => cy.get('[data-cy="what-happens-next-full-application-link"]'),
+      timeframe: () => cy.get('[data-cy="what-happens-next-intro-timeframe"]'),
+      canGetHelp: () => cy.get('[data-cy="what-happens-next-intro-can-get-help"]'),
     },
     financeManagers: {
       heading: () => cy.get('[data-cy="what-happens-next-finance-managers-heading"]'),
-      listItems: () => cy.get('[data-cy="what-happens-next-finance-managers"] li'),
+      available: () => cy.get('[data-cy="what-happens-next-finance-managers-available"]'),
+      link: () => cy.get('[data-cy="what-happens-next-finance-managers-link"]'),
     },
     brokers: {
       heading: () => cy.get('[data-cy="what-happens-next-brokers-heading"]'),
-      listItems: () => cy.get('[data-cy="what-happens-next-brokers"] li'),
+      actAs: () => cy.get('[data-cy="what-happens-next-brokers-act-as"]'),
+      theyReceive: {
+        intro: () => cy.get('[data-cy="what-happens-next-brokers-they-receive-intro"]'),
+        link: () => cy.get('[data-cy="what-happens-next-brokers-link"]'),
+        outro: () => cy.get('[data-cy="what-happens-next-brokers-outro"]'),
+      },
     },
   },
   links: {
