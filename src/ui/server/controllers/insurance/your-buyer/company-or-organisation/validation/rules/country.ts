@@ -13,7 +13,11 @@ const {
 } = FIELD_IDS;
 
 const {
-  ELIGIBILITY: { [FIELD_ID]: ERROR_MESSAGE },
+  INSURANCE: {
+    YOUR_BUYER: {
+      COMPANY_OR_ORGANISATION: { [FIELD_ID]: ERROR_MESSAGE },
+    },
+  },
 } = ERROR_MESSAGES;
 
 /**
