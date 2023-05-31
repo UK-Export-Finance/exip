@@ -55,5 +55,7 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
     expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}?id=${account.id}`;
 
     cy.url().should('eq', expectedUrl);
+
+    cy.assertConfirmEmailPageContent(account.id);
   });
 });
