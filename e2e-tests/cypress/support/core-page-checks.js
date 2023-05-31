@@ -98,7 +98,7 @@ const corePageChecks = ({
   }
 
   if (assertServiceHeading) {
-    cy.checkHeaderServiceNameAndHref(isInsurancePage);
+    cy.checkHeaderServiceNameAndHref({ isInsurancePage });
   }
 
   if (assertAuthenticatedHeader) {

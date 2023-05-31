@@ -10,7 +10,7 @@ const get = (req: Request, res: Response) =>
     ...corePageVariables({
       PAGE_CONTENT_STRINGS: PAGES.PROBLEM_WITH_SERVICE_PAGE,
       BACK_LINK: req.headers.referer,
-      originalUrl: req.originalUrl,
+      ORIGINAL_URL: req.originalUrl,
     }),
   });
 

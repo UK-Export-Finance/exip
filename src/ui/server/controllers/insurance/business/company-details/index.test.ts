@@ -58,9 +58,9 @@ describe('controllers/insurance/business/companies-details', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const originalUrl = COMPANY_DETAILS_ROUTE;
+      const ORIGINAL_URL = COMPANY_DETAILS_ROUTE;
 
-      const result = pageVariables(mockApplication.referenceNumber, originalUrl);
+      const result = pageVariables(mockApplication.referenceNumber, ORIGINAL_URL);
 
       const expected = {
         POST_ROUTES: {
@@ -77,14 +77,14 @@ describe('controllers/insurance/business/companies-details', () => {
 
     describe("when the url's last substring is `change`", () => {
       it('should have correct properties', () => {
-        const originalUrl = COMPANY_DETAILS_CHANGE;
+        const ORIGINAL_URL = COMPANY_DETAILS_CHANGE;
 
-        const result = pageVariables(mockApplication.referenceNumber, originalUrl);
+        const result = pageVariables(mockApplication.referenceNumber, ORIGINAL_URL);
 
         const expected = {
           POST_ROUTES: {
             COMPANIES_HOUSE: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_HOUSE_SEARCH}`,
-            COMPANY_DETAILS: originalUrl,
+            COMPANY_DETAILS: ORIGINAL_URL,
             NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
             SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
           },
@@ -97,14 +97,14 @@ describe('controllers/insurance/business/companies-details', () => {
 
     describe("when the url's last substring is `check-and-change`", () => {
       it('should have correct properties', () => {
-        const originalUrl = COMPANY_DETAILS_CHECK_AND_CHANGE;
+        const ORIGINAL_URL = COMPANY_DETAILS_CHECK_AND_CHANGE;
 
-        const result = pageVariables(mockApplication.referenceNumber, originalUrl);
+        const result = pageVariables(mockApplication.referenceNumber, ORIGINAL_URL);
 
         const expected = {
           POST_ROUTES: {
             COMPANIES_HOUSE: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_HOUSE_SEARCH}`,
-            COMPANY_DETAILS: originalUrl,
+            COMPANY_DETAILS: ORIGINAL_URL,
             NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
             SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
           },

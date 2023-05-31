@@ -55,7 +55,7 @@ export const get = (req: Request, res: Response) => {
   const mappedAnswer = mapSubmittedAnswer(req.session.submittedData.quoteEligibility[FIELD_ID]);
 
   return res.render(TEMPLATE, {
-    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, originalUrl: req.originalUrl }),
+    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
     userName: getUserNameFromSession(req.session.user),
     submittedValues: {
       ...req.session.submittedData.quoteEligibility,
@@ -69,7 +69,7 @@ export const post = (req: Request, res: Response) => {
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
-      ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, originalUrl: req.originalUrl }),
+      ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
       userName: getUserNameFromSession(req.session.user),
       validationErrors,
     });

@@ -23,11 +23,11 @@ describe('server/helpers/page-variables/core', () => {
     BACK_LINK: '/mock',
   };
 
-  describe('when originalUrl is undefined', () => {
+  describe('when ORIGINAL_URL is undefined', () => {
     it('should return an object with provided data and additional content strings, footer, startRoute and product for insurance', () => {
       const insuranceMock = {
         ...mock,
-        originalUrl: undefined,
+        ORIGINAL_URL: undefined,
       };
 
       const result = corePageVariables(insuranceMock);
@@ -52,11 +52,11 @@ describe('server/helpers/page-variables/core', () => {
     });
   });
 
-  describe('when originalUrl contains "insurance"', () => {
+  describe('when ORIGINAL_URL contains "insurance"', () => {
     it('should return an object with provided data and additional content strings, footer, startRoute and product for insurance', () => {
       const insuranceMock = {
         ...mock,
-        originalUrl: ROUTES.INSURANCE.APPLY_OFFLINE,
+        ORIGINAL_URL: ROUTES.INSURANCE.APPLY_OFFLINE,
       };
 
       const result = corePageVariables(insuranceMock);
@@ -81,11 +81,11 @@ describe('server/helpers/page-variables/core', () => {
     });
   });
 
-  describe('when originalUrl ddoes not contain "insurance"', () => {
+  describe('when ORIGINAL_URL ddoes not contain "insurance"', () => {
     it('should return an object with provided data and additional content strings, footer, startRoute and product for quote', () => {
       const quoteMock = {
         ...mock,
-        originalUrl: ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL,
+        ORIGINAL_URL: ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL,
       };
 
       const result = corePageVariables(quoteMock);

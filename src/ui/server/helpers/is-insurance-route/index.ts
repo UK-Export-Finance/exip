@@ -1,23 +1,23 @@
-import { INSURANCE_LOWERCASE } from '../../constants';
+import { INSURANCE } from '../../constants';
 
 /**
  * isInsuranceRoute
- * checks if route has originalUrl or if the url contains insurance
+ * checks if route has ORIGINAL_URL or if the url contains insurance
  * if empty or contains insurance, then is an insurance route so returns true
  * if does not contain insurance, then returns false
- * @param {String} originalUrl of the page the user was on
+ * @param {String} ORIGINAL_URL of the page the user was on
  * @returns {Boolean}
  */
-const isInsuranceRoute = (originalUrl?: string) => {
-  if (!originalUrl) {
+const isInsuranceRoute = (ORIGINAL_URL?: string) => {
+  if (!ORIGINAL_URL) {
     return true;
   }
 
   // splits on / in url
-  const originalUrlSplit = originalUrl.split('/');
+  const originalUrlSplit = ORIGINAL_URL.split('/');
 
-  // checks that originalUrlSplit[1] exists
-  if (originalUrlSplit.length > 1 && originalUrlSplit[1] === INSURANCE_LOWERCASE) {
+  // checks that ORIGINAL_URLSplit[1] exists
+  if (originalUrlSplit.length > 1 && originalUrlSplit[1] === INSURANCE.toLowerCase()) {
     return true;
   }
 

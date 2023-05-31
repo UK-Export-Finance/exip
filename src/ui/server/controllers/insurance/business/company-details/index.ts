@@ -43,12 +43,12 @@ const {
   CHECK_YOUR_ANSWERS,
 } = EXPORTER_BUSINESS_ROUTES;
 
-const pageVariables = (referenceNumber: number, originalUrl: string) => {
+const pageVariables = (referenceNumber: number, ORIGINAL_URL: string) => {
   let companyDetailsPostRoute = `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROUTE}`;
 
   // if change route, then should use change url to go back to check your answers
-  if (isChangeRoute(originalUrl) || isCheckAndChangeRoute(originalUrl)) {
-    companyDetailsPostRoute = originalUrl;
+  if (isChangeRoute(ORIGINAL_URL) || isCheckAndChangeRoute(ORIGINAL_URL)) {
+    companyDetailsPostRoute = ORIGINAL_URL;
   }
 
   return {

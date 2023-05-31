@@ -1,7 +1,7 @@
 import { ROUTES } from '../constants';
 import { LINKS } from './links';
 
-const sharedFooter = {
+const SHARED_FOOTER = {
   SUPPORT_LINKS_HEADING: 'Support Links',
   PRIVACY: {
     TEXT: 'Privacy',
@@ -21,36 +21,45 @@ const sharedFooter = {
     TEXT: 'Crown copyright',
     HREF: 'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',
   },
-};
-
-export const QUOTE_FOOTER = {
-  ...sharedFooter,
   ACCESSIBILITY_STATEMENT: {
     TEXT: 'Accessibility statement',
-    HREF: ROUTES.ACCESSIBILITY_STATEMENT,
   },
   COOKIES: {
     TEXT: 'Cookies',
-    HREF: ROUTES.COOKIES,
   },
   CONTACT: {
     TEXT: 'Contact',
+  },
+};
+
+export const QUOTE_FOOTER = {
+  ...SHARED_FOOTER,
+  ACCESSIBILITY_STATEMENT: {
+    ...SHARED_FOOTER.ACCESSIBILITY_STATEMENT,
+    HREF: ROUTES.ACCESSIBILITY_STATEMENT,
+  },
+  COOKIES: {
+    ...SHARED_FOOTER.COOKIES,
+    HREF: ROUTES.COOKIES,
+  },
+  CONTACT: {
+    ...SHARED_FOOTER.CONTACT,
     HREF: ROUTES.CONTACT_US,
   },
 };
 
 export const INSURANCE_FOOTER = {
-  ...sharedFooter,
+  ...SHARED_FOOTER,
   ACCESSIBILITY_STATEMENT: {
-    TEXT: 'Accessibility statement',
+    ...SHARED_FOOTER.ACCESSIBILITY_STATEMENT,
     HREF: ROUTES.INSURANCE.ACCESSIBILITY_STATEMENT,
   },
   COOKIES: {
-    TEXT: 'Cookies',
+    ...SHARED_FOOTER.COOKIES,
     HREF: ROUTES.INSURANCE.COOKIES,
   },
   CONTACT: {
-    TEXT: 'Contact',
+    ...SHARED_FOOTER.CONTACT,
     HREF: ROUTES.INSURANCE.CONTACT_US,
   },
 };

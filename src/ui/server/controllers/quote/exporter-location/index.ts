@@ -21,7 +21,7 @@ export const get = (req: Request, res: Response) =>
     ...singleInputPageVariables({
       ...PAGE_VARIABLES,
       BACK_LINK: req.headers.referer,
-      originalUrl: req.originalUrl,
+      ORIGINAL_URL: req.originalUrl,
     }),
     userName: getUserNameFromSession(req.session.user),
     submittedValues: req.session.submittedData.quoteEligibility,
@@ -35,7 +35,7 @@ export const post = (req: Request, res: Response) => {
       ...singleInputPageVariables({
         ...PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,
-        originalUrl: req.originalUrl,
+        ORIGINAL_URL: req.originalUrl,
       }),
       userName: getUserNameFromSession(req.session.user),
       validationErrors,

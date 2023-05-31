@@ -33,7 +33,7 @@ describe('controllers/root/contact-us', () => {
         ...corePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.CONTACT_US_PAGE,
           BACK_LINK: req.headers.referer,
-          originalUrl: req.originalUrl,
+          ORIGINAL_URL: req.originalUrl,
         }),
         userName: getUserNameFromSession(req.session.user),
       });

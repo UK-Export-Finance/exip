@@ -17,14 +17,14 @@ const singleInputPageVariables = ({
   PAGE_CONTENT_STRINGS,
   BACK_LINK,
   FEEDBACK_ROUTE = LINKS.EXTERNAL.FEEDBACK,
-  originalUrl,
+  ORIGINAL_URL,
 }: SingleInputPageVariablesInput) => {
   const pageVariables: SingleInputPageVariables = {
     ...corePageVariables({
       PAGE_CONTENT_STRINGS,
       BACK_LINK,
       FEEDBACK_ROUTE,
-      originalUrl,
+      ORIGINAL_URL,
     }),
     FIELD_ID,
   };

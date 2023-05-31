@@ -8,16 +8,16 @@ import { SingleInputPageVariablesInitialInput } from '../../../../../types';
  * @param {String} Field/input ID
  * @param {Object} Page content strings bespoke to the page
  * @param {String} Link to the previous page
- * @param {String} originalUrl for the page user is on
+ * @param {String} ORIGINAL_URL for the page user is on
  * @returns {Object} Common page content strings combined with field specifics
  */
-const quoteSingleInputPageVariables = ({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK, originalUrl }: SingleInputPageVariablesInitialInput) =>
+const quoteSingleInputPageVariables = ({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL }: SingleInputPageVariablesInitialInput) =>
   singleInputPageVariables({
     PAGE_CONTENT_STRINGS,
     BACK_LINK,
     FIELD_ID,
     FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
-    originalUrl,
+    ORIGINAL_URL,
   });
 
 export default quoteSingleInputPageVariables;

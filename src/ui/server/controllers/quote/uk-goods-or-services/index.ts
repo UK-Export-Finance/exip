@@ -25,7 +25,7 @@ export const get = (req: Request, res: Response) =>
     userName: getUserNameFromSession(req.session.user),
     ...singleInputPageVariables({
       ...PAGE_VARIABLES,
-      originalUrl: req.originalUrl,
+      ORIGINAL_URL: req.originalUrl,
     }),
     BACK_LINK: req.headers.referer,
     submittedValues: req.session.submittedData.quoteEligibility,

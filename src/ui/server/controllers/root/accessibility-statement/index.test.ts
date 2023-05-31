@@ -23,7 +23,7 @@ describe('controllers/root/accessibility-statement', () => {
         corePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.ACCESSIBILITY_STATEMENT_PAGE,
           BACK_LINK: req.headers.referer,
-          originalUrl: req.originalUrl,
+          ORIGINAL_URL: req.originalUrl,
         }),
       );
     });

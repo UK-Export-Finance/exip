@@ -17,7 +17,7 @@ const { AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWE
 
 const { START: quoteStart } = ROUTES.QUOTE;
 
-const generatePageVariables = (policyType: string, originalUrl: string) => {
+const generatePageVariables = (policyType: string, ORIGINAL_URL: string) => {
   const pageVariables: TellUsAboutPolicyPageVariables = {
     CONTENT_STRINGS: {
       BUTTONS,
@@ -44,7 +44,7 @@ const generatePageVariables = (policyType: string, originalUrl: string) => {
     },
     START_ROUTE: quoteStart,
     FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
-    originalUrl,
+    ORIGINAL_URL,
   };
 
   const { TELL_US_ABOUT_YOUR_POLICY } = PAGES.QUOTE;

@@ -79,7 +79,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           },
           START_ROUTE: quoteStart,
           FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
-          originalUrl: '/',
+          ORIGINAL_URL: '/',
         } as TellUsAboutPolicyPageVariables;
 
         expected.FIELDS.AMOUNT_CURRENCY = {
@@ -134,7 +134,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           },
           START_ROUTE: quoteStart,
           FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
-          originalUrl: '/',
+          ORIGINAL_URL: '/',
         } as TellUsAboutPolicyPageVariables;
 
         expected.FIELDS.AMOUNT_CURRENCY = {
@@ -191,7 +191,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           },
           START_ROUTE: quoteStart,
           FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
-          originalUrl: '/',
+          ORIGINAL_URL: '/',
         };
 
         expect(result).toEqual(expected);

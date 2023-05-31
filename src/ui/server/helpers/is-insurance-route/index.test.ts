@@ -1,4 +1,5 @@
 import isInsuranceRoute from '.';
+import { INSURANCE_ROOT } from '../../constants/routes/insurance';
 
 describe('helpers/is-insurance-route', () => {
   it('should return true if url is undefined', () => {
@@ -8,7 +9,7 @@ describe('helpers/is-insurance-route', () => {
   });
 
   it('should return true if contains insurance', () => {
-    const url = 'url/insurance/test';
+    const url = `url${INSURANCE_ROOT}/test`;
 
     const response = isInsuranceRoute(url);
 
@@ -16,7 +17,7 @@ describe('helpers/is-insurance-route', () => {
   });
 
   it('should return false if does not contain insurance', () => {
-    const url = 'url/quote/test';
+    const url = 'url/test';
 
     const response = isInsuranceRoute(url);
 

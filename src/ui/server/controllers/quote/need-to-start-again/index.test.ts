@@ -24,7 +24,7 @@ describe('controllers/quote/need-to-start-again', () => {
       await get(req, res);
 
       const expectedVariables = {
-        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.NEED_TO_START_AGAIN_PAGE, BACK_LINK: req.headers.referer, originalUrl: req.originalUrl }),
+        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.NEED_TO_START_AGAIN_PAGE, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
         userName: getUserNameFromSession(req.session.user),
       };
 
