@@ -1,7 +1,7 @@
 import { Request, Response } from '../../../../../../types';
 import { post } from '.';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
-import { mockReq, mockRes, mockApplication, mockExporterNatureOfBusiness } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockBusinessNatureOfBusiness } from '../../../../../test-mocks';
 import mapAndSave from '../../map-and-save';
 
 const {
@@ -34,7 +34,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
     describe('when there are no validation errors', () => {
       it('should redirect to all sections page', async () => {
         req.body = {
-          ...mockExporterNatureOfBusiness,
+          ...mockBusinessNatureOfBusiness,
         };
 
         await post(req, res);
@@ -44,7 +44,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
 
       it('should call mapAndSave.natureOfBusiness once', async () => {
         req.body = {
-          ...mockExporterNatureOfBusiness,
+          ...mockBusinessNatureOfBusiness,
         };
 
         await post(req, res);

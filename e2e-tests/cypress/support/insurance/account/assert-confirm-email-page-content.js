@@ -26,10 +26,11 @@ const havingProblemsSection = {
   requestNewLink: (accountId) => {
     cy.checkText(confirmEmailPage.havingProblems.requestNew.youCan(), YOU_CAN);
 
-    cy.checkText(confirmEmailPage.havingProblems.requestNew.link(), LINK.TEXT);
-
-    const expected = `${LINK.HREF}?id=${accountId}`;
-    confirmEmailPage.havingProblems.requestNew.link().should('have.attr', 'href', expected);
+    cy.checkLink(
+      confirmEmailPage.havingProblems.requestNew.link(),
+      `${LINK.HREF}?id=${accountId}`,
+      LINK.TEXT,
+    );
 
     cy.checkText(confirmEmailPage.havingProblems.requestNew.ifNotReceived(), IF_NOT_RECEIVED);
   },
