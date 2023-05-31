@@ -37,6 +37,8 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
   let url;
 
   before(() => {
+    cy.deleteAccount();
+
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
