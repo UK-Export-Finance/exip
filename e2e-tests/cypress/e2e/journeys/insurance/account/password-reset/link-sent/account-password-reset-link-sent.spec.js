@@ -37,6 +37,8 @@ const goToPasswordResetLinkSentPage = () => {
 
 context('Insurance - Account - Password reset - link sent page - As an Exporter, I want to reset the password on my UKEF digital service account, So that I can securely access my UKEF digital service account', () => {
   before(() => {
+    cy.deleteAccount();
+
     cy.navigateToUrl(START);
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
@@ -44,10 +46,6 @@ context('Insurance - Account - Password reset - link sent page - As an Exporter,
 
   beforeEach(() => {
     cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteAccount();
   });
 
   describe('when visiting the page', () => {
