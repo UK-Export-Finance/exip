@@ -158,6 +158,13 @@ interface ApplicationSubmissionEmailVariables {
   buyerLocation: string;
 }
 
+interface ApplicationVersion {
+  VERSION_NUMBER: string;
+  OVER_500K_SUPPORT: boolean;
+  MAXIMUM_BUYER_CAN_OWE: number;
+  TOTAL_VALUE_OF_CONTRACT: number;
+}
+
 type BufferEncoding = 'hex' | 'base64' | 'ascii';
 
 interface CompanyResponse {
@@ -396,6 +403,7 @@ export {
   ApplicationOwner,
   ApplicationRelationship,
   ApplicationSubmissionEmailVariables,
+  ApplicationVersion,
   BufferEncoding,
   CompanyHouseResponse,
   CompanyResponse,

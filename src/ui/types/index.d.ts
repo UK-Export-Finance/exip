@@ -11,6 +11,7 @@ import {
   ApplicationBusinessContactDetail,
   ApplicationBroker,
   ApplicationBuyer,
+  ApplicationVersion,
 } from './application';
 import { ApolloResponse } from './apollo';
 import { CisCountry } from './cis-country';
@@ -67,6 +68,7 @@ export {
   ApplicationBusinessContactDetail,
   ApplicationBroker,
   ApplicationBuyer,
+  ApplicationVersion,
   ApolloResponse,
   CisCountry,
   CompanyDetails,

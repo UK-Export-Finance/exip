@@ -1,7 +1,7 @@
-import { GBP_CURRENCY_CODE, PRODUCT } from '../../../../constants';
+import { GBP_CURRENCY_CODE, ELIGIBILITY } from '../../../../constants';
 import formatCurrency from '../../../../helpers/format-currency';
 
-const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP, GBP_CURRENCY_CODE, 0);
+const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP, GBP_CURRENCY_CODE, 0);
 
 const CHECK_IF_ELIGIBLE = {
   PAGE_TITLE: 'Check you can apply for UKEF insurance for your export',
@@ -13,7 +13,7 @@ const INSURED_AMOUNT = {
 };
 
 const INSURED_PERIOD = {
-  PAGE_TITLE: `Do you want to be insured for longer than ${PRODUCT.MAX_COVER_PERIOD_YEARS} years?`,
+  PAGE_TITLE: `Do you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years?`,
 };
 
 const OTHER_PARTIES_INVOLVED = {

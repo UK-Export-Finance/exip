@@ -1,6 +1,6 @@
 import { add, getDate, getMonth, getYear } from 'date-fns';
 import contractCompletionDateRules from './contract-completion-date';
-import { FIELD_IDS, PRODUCT } from '../../../../../../constants';
+import { FIELD_IDS, ELIGIBILITY } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
 
@@ -164,7 +164,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
       const day = nextYear.getDate();
 
       let nextYear1week = new Date(nextYear);
-      nextYear1week = new Date(nextYear1week.setDate(day + 1));
+      nextYear1week = new Date(nextYear1week.setDate(day + 1 * 7));
 
       it('should return validation error', () => {
         const mockSubmittedData = {
@@ -185,7 +185,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
     });
 
     describe(`when the date is over the maximum years allowed after ${REQUESTED_START_DATE}`, () => {
-      const completionDate = add(futureDate, { years: PRODUCT.MAX_COVER_PERIOD_YEARS, days: 1 });
+      const completionDate = add(futureDate, { years: ELIGIBILITY.MAX_COVER_PERIOD_YEARS, days: 1 });
 
       it('should return validation error', () => {
         const mockSubmittedData = {

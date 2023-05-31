@@ -1,4 +1,4 @@
-import { PRODUCT } from '../../product';
+import { ELIGIBILITY } from '../../eligibility';
 import { ACCOUNT } from './account';
 import { POLICY_AND_EXPORTS } from './policy-and-export';
 import { EXPORTER_BUSINESS } from './business';
@@ -20,7 +20,7 @@ export const INSURANCE_ROUTES = {
     EXPORTER_LOCATION: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/exporter-location`,
     UK_GOODS_OR_SERVICES: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/uk-goods-services`,
     INSURED_AMOUNT: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/insured-amount`,
-    INSURED_PERIOD: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/insured-over-${PRODUCT.MAX_COVER_PERIOD_YEARS}-years`,
+    INSURED_PERIOD: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/insured-over-${ELIGIBILITY.MAX_COVER_PERIOD_YEARS}-years`,
     OTHER_PARTIES_INVOLVED: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/other-parties`,
     LETTER_OF_CREDIT: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/letter-of-credit`,
     PRE_CREDIT_PERIOD: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/pre-credit-period`,

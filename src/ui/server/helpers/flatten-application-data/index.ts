@@ -12,6 +12,7 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
 
   const flattened = {
     ...application.eligibility,
+    version: application.version,
     referenceNumber: application.referenceNumber,
     createdAt: application.createdAt,
     updatedAt: application.updatedAt,
