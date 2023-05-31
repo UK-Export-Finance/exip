@@ -17,6 +17,7 @@ const {
     INSURANCE_ROOT,
     POLICY_AND_EXPORTS: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
     CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
+    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 
@@ -59,7 +60,7 @@ export const get = async (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
   const { referenceNumber } = req.params;
@@ -69,7 +70,7 @@ export const get = async (req: Request, res: Response) => {
     const countries = await api.keystone.countries.getAll();
 
     if (!isPopulatedArray(countries)) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     let mappedCountries;
@@ -93,7 +94,7 @@ export const get = async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Error getting countries ', { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 
@@ -108,7 +109,7 @@ export const post = async (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
   const { referenceNumber } = req.params;
@@ -121,7 +122,7 @@ export const post = async (req: Request, res: Response) => {
       const countries = await api.keystone.countries.getAll();
 
       if (!isPopulatedArray(countries)) {
-        return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+        return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
       let mappedCountries;
@@ -147,7 +148,7 @@ export const post = async (req: Request, res: Response) => {
     } catch (err) {
       console.error('Error getting countries ', { err });
 
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
   }
 
@@ -156,7 +157,7 @@ export const post = async (req: Request, res: Response) => {
     const saveResponse = await mapAndSave.policyAndExport(req.body, application);
 
     if (!saveResponse) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     if (isCheckAndChangeRoute(req.originalUrl)) {
@@ -167,6 +168,6 @@ export const post = async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Error updating application - policy and exports - about goods or services', { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

@@ -11,7 +11,7 @@ const { CHECK_YOUR_ANSWERS: CHECK_YOUR_ANSWERS_TEMPLATE } = TEMPLATES.INSURANCE.
 
 export const TEMPLATE = CHECK_YOUR_ANSWERS_TEMPLATE;
 
-const { INSURANCE_ROOT, ALL_SECTIONS } = ROUTES.INSURANCE;
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 /**
  * gets the template for check your answers page
@@ -26,7 +26,7 @@ const get = (req: Request, res: Response) => {
     const refNumber = Number(referenceNumber);
 
     if (!application) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const summaryList = yourBuyerSummaryList(application.buyer, refNumber);
@@ -42,7 +42,7 @@ const get = (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error('Error getting check your answers', { err });
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 

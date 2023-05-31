@@ -16,5 +16,6 @@ export const get = (req: Request, res: Response) =>
     corePageVariables({
       PAGE_CONTENT_STRINGS: PAGES.ACCESSIBILITY_STATEMENT_PAGE,
       BACK_LINK: req.headers.referer,
+      ORIGINAL_URL: req.originalUrl,
     }),
   );

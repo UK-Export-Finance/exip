@@ -21,6 +21,8 @@ export const PAGE_VARIABLES = {
 
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.BUYER_COUNTRY;
 
+const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
+
 export const get = async (req: Request, res: Response) => {
   try {
     if (!req.session.submittedData || !req.session.submittedData.insuranceEligibility) {
@@ -33,7 +35,7 @@ export const get = async (req: Request, res: Response) => {
     const countries = await api.external.getCountries();
 
     if (!isPopulatedArray(countries)) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     let countryValue;
@@ -62,7 +64,7 @@ export const get = async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Error getting insurance - eligibility - buyer-country ', { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 
@@ -73,7 +75,7 @@ export const post = async (req: Request, res: Response) => {
     const countries = await api.external.getCountries();
 
     if (!isPopulatedArray(countries)) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const mappedCountries = mapCisCountries(countries);
@@ -142,6 +144,6 @@ export const post = async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Error posting insurance - eligibility - buyer-country ', { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

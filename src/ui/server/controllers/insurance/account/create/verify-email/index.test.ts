@@ -7,8 +7,8 @@ import { mockAccount, mockReq, mockRes } from '../../../../../test-mocks';
 const {
   INSURANCE: {
     ACCOUNT: { CREATE, SIGN_IN },
+    PROBLEM_WITH_SERVICE,
   },
-  PROBLEM_WITH_SERVICE,
 } = ROUTES;
 
 describe('controllers/insurance/account/create/verify-email', () => {

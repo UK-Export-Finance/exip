@@ -34,6 +34,7 @@ const {
     COMPANY_DETAILS_CHECK_AND_CHANGE,
   },
   CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
+  PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
 jest.mock('../map-and-save');
@@ -154,16 +155,16 @@ describe('controllers/insurance/business/companies-details', () => {
         res.locals = { csrfToken: '1234' };
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
     describe('api error handling', () => {
       describe('when mapAndSave.companyDetails returns an error', () => {
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           req.body = {
             [INPUT]: '8989898',
             [TRADING_NAME]: 'true',
@@ -176,7 +177,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
           await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
 
@@ -198,13 +199,13 @@ describe('controllers/insurance/business/companies-details', () => {
       });
 
       describe('when mapAndSave.companyDetails resolves false', () => {
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
           res.locals = { csrfToken: '1234' };
           mapAndSave.companyDetails = jest.fn(() => Promise.resolve(false));
 
           post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
     });

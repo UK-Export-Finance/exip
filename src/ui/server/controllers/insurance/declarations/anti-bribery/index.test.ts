@@ -13,14 +13,13 @@ import { mockReq, mockRes, mockApplication, mockDeclarations } from '../../../..
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_ANTI_BRIBERY;
 
-const { INSURANCE, PROBLEM_WITH_SERVICE } = ROUTES;
-
 const {
   INSURANCE_ROOT,
   DECLARATIONS: {
     ANTI_BRIBERY: { ROOT_SAVE_AND_BACK: ANTI_BRIBERY_SAVE_AND_BACK, CODE_OF_CONDUCT },
   },
-} = INSURANCE;
+  PROBLEM_WITH_SERVICE,
+} = ROUTES.INSURANCE;
 
 describe('controllers/insurance/declarations/anti-bribery', () => {
   jest.mock('../save-data');

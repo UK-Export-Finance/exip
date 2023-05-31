@@ -23,7 +23,10 @@ export const TEMPLATE = TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES;
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
     userName: getUserNameFromSession(req.session.user),
-    ...singleInputPageVariables(PAGE_VARIABLES),
+    ...singleInputPageVariables({
+      ...PAGE_VARIABLES,
+      ORIGINAL_URL: req.originalUrl,
+    }),
     BACK_LINK: req.headers.referer,
     submittedValues: req.session.submittedData.quoteEligibility,
   });

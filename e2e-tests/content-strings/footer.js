@@ -1,11 +1,14 @@
 import { ROUTES } from '../constants';
 import { LINKS } from './links';
 
+const { INSURANCE } = ROUTES;
+
 export const FOOTER = {
   SUPPORT_LINKS_HEADING: 'Support Links',
   ACCESSIBILITY_STATEMENT: {
     TEXT: 'Accessibility statement',
     HREF: ROUTES.ACCESSIBILITY_STATEMENT,
+    INSURANCE_HREF: INSURANCE.ACCESSIBILITY_STATEMENT,
   },
   PRIVACY: {
     TEXT: 'Privacy',
@@ -14,6 +17,7 @@ export const FOOTER = {
   COOKIES: {
     TEXT: 'Cookies',
     HREF: ROUTES.COOKIES,
+    INSURANCE_HREF: INSURANCE.COOKIES,
   },
   REPORT_VULNERABILITY: {
     TEXT: 'Report a vulnerability',
@@ -22,6 +26,7 @@ export const FOOTER = {
   CONTACT: {
     TEXT: 'Contact',
     HREF: ROUTES.CONTACT_US,
+    INSURANCE_HREF: INSURANCE.CONTACT_US,
   },
   OGL_LICENCE: {
     INTRO: 'All content is available under the',

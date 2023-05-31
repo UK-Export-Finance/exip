@@ -11,14 +11,13 @@ import { Request, Response } from '../../../../../types';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_ANTI_BRIBERY;
 
-const { INSURANCE, PROBLEM_WITH_SERVICE } = ROUTES;
-
 const {
   INSURANCE_ROOT,
   DECLARATIONS: {
     ANTI_BRIBERY: { ROOT_SAVE_AND_BACK: ANTI_BRIBERY_SAVE_AND_BACK, CODE_OF_CONDUCT },
   },
-} = INSURANCE;
+  PROBLEM_WITH_SERVICE,
+} = ROUTES.INSURANCE;
 
 /**
  * pageVariables
@@ -120,13 +119,13 @@ export const post = async (req: Request, res: Response) => {
     const saveResponse = await save.declaration(application, req.body);
 
     if (!saveResponse) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`);
   } catch (err) {
     console.error('Error updating application - declarations - anti-bribery ', { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

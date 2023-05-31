@@ -5,7 +5,7 @@ import companyDetailsValidation from '../validation/company-details';
 import mapAndSave from '../../map-and-save';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
-const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES, ALL_SECTIONS } = ROUTES.INSURANCE;
+const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE, NO_COMPANIES_HOUSE_NUMBER, COMPANY_DETAILS_SAVE_AND_BACK } = EXPORTER_BUSINESS_ROUTES;
 
@@ -32,7 +32,7 @@ const post = async (req: Request, res: Response) => {
     const { referenceNumber } = req.params;
 
     if (!application) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const { body } = req;
@@ -54,7 +54,7 @@ const post = async (req: Request, res: Response) => {
     const saveResponse = await mapAndSave.companyDetails(updateBody, application, validationErrors);
 
     if (!saveResponse) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     // redirect to all sections page
@@ -62,7 +62,7 @@ const post = async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Error updating application - your business - company details (save and back)', { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 

@@ -13,13 +13,12 @@ import { mockReq, mockRes, mockApplication, mockDeclarations } from '../../../..
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_HOW_YOUR_DATA_WILL_BE_USED;
 
-const { INSURANCE, PROBLEM_WITH_SERVICE } = ROUTES;
-
 const {
   INSURANCE_ROOT,
   APPLICATION_SUBMITTED,
   DECLARATIONS: { HOW_YOUR_DATA_WILL_BE_USED_SAVE_AND_BACK },
-} = INSURANCE;
+  PROBLEM_WITH_SERVICE,
+} = ROUTES.INSURANCE;
 
 describe('controllers/insurance/declarations/how-your-data-will-be-used', () => {
   jest.mock('../save-data');

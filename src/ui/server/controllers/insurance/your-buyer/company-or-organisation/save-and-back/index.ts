@@ -3,7 +3,7 @@ import { ROUTES } from '../../../../../constants';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save';
 
-const { INSURANCE_ROOT, ALL_SECTIONS } = ROUTES.INSURANCE;
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 /**
  * saves and goes back to all sections from company or organisation page unless there are database errors
@@ -18,7 +18,7 @@ const post = async (req: Request, res: Response) => {
     const { referenceNumber } = req.params;
 
     if (!application) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const { body } = req;
@@ -29,7 +29,7 @@ const post = async (req: Request, res: Response) => {
     const saveResponse = await mapAndSave.yourBuyer(body, application, validationErrors);
 
     if (!saveResponse) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     // redirect to all sections page
@@ -37,7 +37,7 @@ const post = async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Error updating application - your buyer - company or organisation (save and back)', { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 

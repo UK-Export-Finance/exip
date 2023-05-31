@@ -14,6 +14,7 @@ const {
   INSURANCE: {
     POLICY_AND_EXPORTS: { CHECK_YOUR_ANSWERS_SAVE_AND_BACK },
     EXPORTER_BUSINESS: { COMPANY_DETAILS_ROOT },
+    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 
@@ -97,10 +98,10 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
         res.locals = { csrfToken: '1234' };
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
@@ -111,10 +112,10 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
 
@@ -124,10 +125,10 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
 
@@ -137,10 +138,10 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
           api.external.getCurrencies = getCurrenciesSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
 
@@ -150,10 +151,10 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
           api.external.getCurrencies = getCurrenciesSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
     });

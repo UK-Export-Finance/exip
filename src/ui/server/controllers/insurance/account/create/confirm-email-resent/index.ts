@@ -12,6 +12,8 @@ export const PAGE_CONTENT_STRINGS = {
   ...PAGES.INSURANCE.ACCOUNT.CREATE.CONFIRM_EMAIL_RESENT,
 };
 
+const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
+
 /**
  * get
  * Call API to get an account's email and render the "confirm email resent" page
@@ -24,7 +26,7 @@ export const get = async (req: Request, res: Response) => {
     const { id } = req.query;
 
     if (!id) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const accountResponse = await api.keystone.account.get(id);
@@ -43,10 +45,10 @@ export const get = async (req: Request, res: Response) => {
       });
     }
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
     console.error("Error getting account and rendering 'confirm email resent' page", { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

@@ -12,7 +12,7 @@ import { mockCompany, mockBusiness, mockBroker } from '../../../../test-mocks/mo
 const { CHECK_YOUR_ANSWERS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { CHECK_YOUR_ANSWERS: CHECK_YOUR_ANSWERS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
-const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES, YOUR_BUYER: YOUR_BUYER_ROUTES } = ROUTES.INSURANCE;
+const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES, YOUR_BUYER: YOUR_BUYER_ROUTES, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 const { CHECK_YOUR_ANSWERS_SAVE_AND_BACK: CHECK_YOUR_ANSWERS_ROUTE } = EXPORTER_BUSINESS_ROUTES;
 
@@ -62,10 +62,10 @@ describe('controllers/insurance/business/check-your-answers', () => {
         res.locals = { csrfToken: '1234' };
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

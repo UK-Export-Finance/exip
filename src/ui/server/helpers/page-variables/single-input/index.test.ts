@@ -1,9 +1,9 @@
 import singleInputPageVariables from '.';
 import corePageVariables from '../core';
-import { FIELDS, PRODUCT } from '../../../content-strings';
+import { FIELDS } from '../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../constants';
 
-const { START: insuranceStart, FEEDBACK: feedbackRoute } = ROUTES.INSURANCE;
+const { FEEDBACK: feedbackRoute } = ROUTES.INSURANCE;
 
 describe('server/helpers/page-variables/single-input', () => {
   const mock = {
@@ -11,11 +11,7 @@ describe('server/helpers/page-variables/single-input', () => {
     PAGE_CONTENT_STRINGS: {
       PAGE_TITLE: 'Testing',
     },
-    PRODUCT: {
-      DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
-    },
     BACK_LINK: '/mock',
-    START_ROUTE: insuranceStart,
     FEEDBACK_ROUTE: feedbackRoute,
   };
 

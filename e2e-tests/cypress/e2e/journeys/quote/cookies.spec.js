@@ -1,14 +1,14 @@
-import { inlineErrorMessage, submitButton } from '../pages/shared';
-import { cookiesPage } from '../pages';
-import partials from '../partials';
+import { inlineErrorMessage, submitButton } from '../../pages/shared';
+import { cookiesPage } from '../../pages';
+import partials from '../../partials';
 import {
   BUTTONS, ERROR_MESSAGES, FIELDS, PAGES,
-} from '../../../content-strings';
-import { FIELD_IDS, ROUTES } from '../../../constants';
+} from '../../../../content-strings';
+import { FIELD_IDS, ROUTES } from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.COOKIES_PAGE;
 
-context('Cookies page', () => {
+context('Cookies page - Quote', () => {
   const url = ROUTES.COOKIES;
 
   beforeEach(() => {
@@ -16,7 +16,7 @@ context('Cookies page', () => {
 
     partials.footer.supportLinks.cookies().click();
 
-    cy.url().should('include', url);
+    cy.assertUrl(`${Cypress.config('baseUrl')}${url}`);
 
     cy.saveSession();
   });
@@ -193,7 +193,7 @@ context('Cookies page', () => {
         });
 
         it(`should redirect to ${ROUTES.COOKIES}`, () => {
-          cy.url().should('include', ROUTES.COOKIES);
+          cy.assertUrl(`${Cypress.config('baseUrl')}${ROUTES.COOKIES}`);
         });
 
         it('should render a success message with correct content and `go back` link', () => {
@@ -230,7 +230,7 @@ context('Cookies page', () => {
         });
 
         it(`should redirect to ${ROUTES.COOKIES}`, () => {
-          cy.url().should('include', ROUTES.COOKIES);
+          cy.assertUrl(`${Cypress.config('baseUrl')}${ROUTES.COOKIES}`);
         });
 
         it('should render a success message with correct content and `go back` link', () => {

@@ -14,7 +14,7 @@ const {
 const { FEEDBACK_PAGE } = PAGES;
 const { FEEDBACK: FEEDBACK_TEMPLATE } = TEMPLATES.INSURANCE;
 
-const { FEEDBACK_SENT } = ROUTES.INSURANCE;
+const { FEEDBACK_SENT, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 describe('controllers/insurance/feedback/feedback-confirmation', () => {
   let req: Request;
@@ -189,7 +189,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
 
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

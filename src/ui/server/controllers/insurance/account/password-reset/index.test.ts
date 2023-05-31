@@ -20,8 +20,8 @@ const {
       PASSWORD_RESET: { LINK_SENT },
       SUSPENDED: { ROOT: SUSPENDED_ROOT },
     },
+    PROBLEM_WITH_SERVICE,
   },
-  PROBLEM_WITH_SERVICE,
 } = ROUTES;
 
 describe('controllers/insurance/account/password-reset', () => {

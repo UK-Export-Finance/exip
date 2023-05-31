@@ -1,7 +1,7 @@
-import { accessibilityStatementPage } from '../pages';
-import partials from '../partials';
-import { PAGES } from '../../../content-strings';
-import { ROUTES } from '../../../constants';
+import { accessibilityStatementPage } from '../../pages';
+import partials from '../../partials';
+import { PAGES } from '../../../../content-strings';
+import { ROUTES } from '../../../../constants';
 
 const {
   usingOurService,
@@ -30,12 +30,12 @@ const {
 
 const startRoute = ROUTES.QUOTE.START;
 
-context('Accessibility statement page', () => {
+context('Accessibility statement page - Quote', () => {
   beforeEach(() => {
     cy.login();
 
     partials.footer.supportLinks.accessibilityStatement().click();
-    cy.url().should('include', ROUTES.ACCESSIBILITY_STATEMENT);
+    cy.assertUrl(`${Cypress.config('baseUrl')}${ROUTES.ACCESSIBILITY_STATEMENT}`);
 
     cy.saveSession();
   });

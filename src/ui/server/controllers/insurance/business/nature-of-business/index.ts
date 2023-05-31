@@ -22,6 +22,7 @@ const {
   INSURANCE_ROOT,
   EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES,
   CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
+  PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
 const { NATURE_OF_BUSINESS_ROOT, NATURE_OF_BUSINESS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, TURNOVER_ROOT } = EXPORTER_BUSINESS_ROUTES;
@@ -67,7 +68,7 @@ const get = (req: Request, res: Response) => {
     const { application } = res.locals;
 
     if (!application) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     return res.render(TEMPLATE, {
@@ -81,7 +82,7 @@ const get = (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error('Error getting nature of business', { err });
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 
@@ -97,7 +98,7 @@ const post = async (req: Request, res: Response) => {
     const { application } = res.locals;
 
     if (!application) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const { referenceNumber } = req.params;
@@ -134,7 +135,7 @@ const post = async (req: Request, res: Response) => {
     const saveResponse = await mapAndSave.natureOfBusiness(body, application);
 
     if (!saveResponse) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     if (isChangeRoute(req.originalUrl)) {
@@ -148,7 +149,7 @@ const post = async (req: Request, res: Response) => {
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`);
   } catch (err) {
     console.error('Error updating application - your business - nature of business', { err });
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 

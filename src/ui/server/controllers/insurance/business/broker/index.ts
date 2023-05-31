@@ -21,6 +21,7 @@ const {
   INSURANCE_ROOT,
   EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES,
   CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
+  PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
 const { BROKER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS } = EXPORTER_BUSINESS_ROUTES;
@@ -82,7 +83,7 @@ const get = (req: Request, res: Response) => {
     const { application } = res.locals;
 
     if (!application) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     return res.render(TEMPLATE, {
@@ -96,7 +97,7 @@ const get = (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error('Error getting broker', { err });
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 
@@ -112,7 +113,7 @@ const post = async (req: Request, res: Response) => {
     const { application } = res.locals;
 
     if (!application) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const { referenceNumber } = req.params;
@@ -141,7 +142,7 @@ const post = async (req: Request, res: Response) => {
     const saveResponse = await mapAndSave.broker(body, application);
 
     if (!saveResponse) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     if (isCheckAndChangeRoute(req.originalUrl)) {
@@ -151,7 +152,7 @@ const post = async (req: Request, res: Response) => {
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (err) {
     console.error('Error updating application - your business - broker', { err });
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 

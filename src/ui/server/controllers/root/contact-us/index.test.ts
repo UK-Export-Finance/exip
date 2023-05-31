@@ -1,12 +1,10 @@
 import { TEMPLATE, get } from '.';
-import { PAGES, PRODUCT } from '../../../content-strings';
-import { ROUTES, TEMPLATES } from '../../../constants';
+import { PAGES } from '../../../content-strings';
+import { TEMPLATES } from '../../../constants';
 import { Request, Response } from '../../../../types';
 import { mockReq, mockRes } from '../../../test-mocks';
 import corePageVariables from '../../../helpers/page-variables/core';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
-
-const startRoute = ROUTES.QUOTE.START;
 
 describe('controllers/root/contact-us', () => {
   let req: Request;
@@ -35,8 +33,7 @@ describe('controllers/root/contact-us', () => {
         ...corePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.CONTACT_US_PAGE,
           BACK_LINK: req.headers.referer,
-          PRODUCT: { DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC },
-          START_ROUTE: startRoute,
+          ORIGINAL_URL: req.originalUrl,
         }),
         userName: getUserNameFromSession(req.session.user),
       });

@@ -18,10 +18,10 @@ const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 const FIELD_ID = FIELD_IDS.CHECK_YOUR_ANSWERS.POLICY_AND_EXPORT;
 
 const {
-  PROBLEM_WITH_SERVICE,
   INSURANCE: {
     INSURANCE_ROOT,
     CHECK_YOUR_ANSWERS: { YOUR_BUSINESS, TYPE_OF_POLICY_SAVE_AND_BACK },
+    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 
@@ -119,10 +119,10 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
 
@@ -132,10 +132,10 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
 
@@ -145,10 +145,10 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
           api.external.getCurrencies = getCurrenciesSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
 
@@ -158,10 +158,10 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
           api.external.getCurrencies = getCurrenciesSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
     });

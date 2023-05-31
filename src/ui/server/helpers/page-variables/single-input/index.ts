@@ -15,18 +15,16 @@ import { SingleInputPageVariablesInput, SingleInputPageVariables } from '../../.
 const singleInputPageVariables = ({
   FIELD_ID,
   PAGE_CONTENT_STRINGS,
-  PRODUCT,
   BACK_LINK,
-  START_ROUTE,
   FEEDBACK_ROUTE = LINKS.EXTERNAL.FEEDBACK,
+  ORIGINAL_URL,
 }: SingleInputPageVariablesInput) => {
   const pageVariables: SingleInputPageVariables = {
     ...corePageVariables({
       PAGE_CONTENT_STRINGS,
       BACK_LINK,
-      PRODUCT,
-      START_ROUTE,
       FEEDBACK_ROUTE,
+      ORIGINAL_URL,
     }),
     FIELD_ID,
   };

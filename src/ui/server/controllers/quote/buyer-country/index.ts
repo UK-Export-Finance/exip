@@ -81,7 +81,7 @@ export const get = async (req: Request, res: Response) => {
     }
 
     return res.render(TEMPLATE, {
-      ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
+      ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer), ORIGINAL_URL: req.originalUrl }),
       userName: getUserNameFromSession(req.session.user),
       countries: mappedCountries,
       submittedValues: req.session.submittedData?.quoteEligibility,
@@ -108,7 +108,7 @@ export const post = async (req: Request, res: Response) => {
 
     if (validationErrors) {
       return res.render(TEMPLATE, {
-        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer), ORIGINAL_URL: req.originalUrl }),
         userName: getUserNameFromSession(req.session.user),
         countries: mappedCountries,
         validationErrors,

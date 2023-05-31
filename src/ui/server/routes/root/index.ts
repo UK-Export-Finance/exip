@@ -10,19 +10,24 @@ import problemWithServiceGet from '../../controllers/root/problem-with-service';
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 const rootRouter = express.Router();
-/* eslint-enable @typescript-eslint/ban-ts-comment */
 
 rootRouter.get(ROUTES.ROOT, rootGet);
 
 rootRouter.get(ROUTES.ACCESSIBILITY_STATEMENT, accessibilityStatementGet);
+rootRouter.get(ROUTES.INSURANCE.ACCESSIBILITY_STATEMENT, accessibilityStatementGet);
 
 rootRouter.get(ROUTES.COOKIES, cookiesGet);
 rootRouter.post(ROUTES.COOKIES, cookiesPost);
+rootRouter.get(ROUTES.INSURANCE.COOKIES, cookiesGet);
+rootRouter.post(ROUTES.INSURANCE.COOKIES, cookiesPost);
 
 rootRouter.get(ROUTES.CONTACT_US, contactUsGet);
+rootRouter.get(ROUTES.INSURANCE.CONTACT_US, contactUsGet);
 
 rootRouter.post(ROUTES.COOKIES_CONSENT, cookiesConsentPost);
+rootRouter.post(ROUTES.INSURANCE.COOKIES_CONSENT, cookiesConsentPost);
 
 rootRouter.get(ROUTES.PROBLEM_WITH_SERVICE, problemWithServiceGet);
+rootRouter.get(ROUTES.INSURANCE.PROBLEM_WITH_SERVICE, problemWithServiceGet);
 
 export default rootRouter;

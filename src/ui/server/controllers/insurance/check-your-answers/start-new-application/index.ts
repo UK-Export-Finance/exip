@@ -8,11 +8,11 @@ import { Request, Response } from '../../../../../types';
 export const TEMPLATE = TEMPLATES.INSURANCE.NEED_TO_START_NEW_APPLICATION;
 
 const {
-  PROBLEM_WITH_SERVICE,
   INSURANCE: {
     INSURANCE_ROOT,
     ALL_SECTIONS,
     ELIGIBILITY: { BUYER_COUNTRY },
+    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 
@@ -57,6 +57,6 @@ export const get = (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error('Error getting check your answers - start new applcation', { err });
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

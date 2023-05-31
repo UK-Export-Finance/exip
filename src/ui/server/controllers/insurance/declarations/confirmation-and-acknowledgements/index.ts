@@ -11,12 +11,11 @@ import { Request, Response } from '../../../../../types';
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIRMATION_ACKNOWLEDGEMENTS;
 
-const { INSURANCE, PROBLEM_WITH_SERVICE } = ROUTES;
-
 const {
   INSURANCE_ROOT,
   DECLARATIONS: { CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK, HOW_YOUR_DATA_WILL_BE_USED },
-} = INSURANCE;
+  PROBLEM_WITH_SERVICE,
+} = ROUTES.INSURANCE;
 
 /**
  * pageVariables
@@ -117,13 +116,13 @@ export const post = async (req: Request, res: Response) => {
     const saveResponse = await save.declaration(application, req.body);
 
     if (!saveResponse) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`);
   } catch (err) {
     console.error('Error updating application - declarations - confirmation and acknowledgements ', { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

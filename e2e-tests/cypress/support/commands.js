@@ -35,6 +35,9 @@ Cypress.Commands.add('checkCookiesConsentBannerIsNotVisible', analytics.checkCoo
 Cypress.Commands.add('checkCookiesConsentBannerIsVisible', analytics.checkCookiesConsentBannerIsVisible);
 Cypress.Commands.add('checkCookiesConsentBannerDoesNotExist', analytics.checkCookiesConsentBannerDoesNotExist);
 
+Cypress.Commands.add('checkHeaderServiceNameAndHref', require('./check-header-service-name-href'));
+Cypress.Commands.add('checkFooterLinks', require('./check-footer-links'));
+
 Cypress.Commands.add('rejectAnalyticsCookies', analytics.rejectAnalyticsCookies);
 
 Cypress.Commands.add('checkAuthenticatedHeader', require('./check-authenticated-header'));

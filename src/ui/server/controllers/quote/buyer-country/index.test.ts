@@ -114,7 +114,7 @@ describe('controllers/quote/buyer-country', () => {
       await get(req, res);
 
       const expectedVariables = {
-        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer), ORIGINAL_URL: req.originalUrl }),
         userName: getUserNameFromSession(req.session.user),
         countries: mapCisCountries(mockCountriesResponse),
         submittedValues: req.session.submittedData.quoteEligibility,
@@ -169,7 +169,7 @@ describe('controllers/quote/buyer-country', () => {
         const expectedCountries = mapCisCountries(mockCountriesResponse, req.session.submittedData.quoteEligibility[FIELD_IDS.BUYER_COUNTRY].isoCode);
 
         const expectedVariables = {
-          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer), ORIGINAL_URL: req.originalUrl }),
           userName: getUserNameFromSession(req.session.user),
           countries: expectedCountries,
           submittedValues: req.session.submittedData.quoteEligibility,
@@ -221,7 +221,7 @@ describe('controllers/quote/buyer-country', () => {
         await post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
-          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer) }),
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer), ORIGINAL_URL: req.originalUrl }),
           userName: getUserNameFromSession(req.session.user),
           countries: mapCisCountries(mockCountriesResponse),
           validationErrors: generateValidationErrors(req.body),

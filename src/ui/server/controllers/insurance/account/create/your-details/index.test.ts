@@ -21,6 +21,7 @@ const {
       SIGN_IN,
     },
     DASHBOARD,
+    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 
@@ -175,10 +176,10 @@ describe('controllers/insurance/account/create/your-details', () => {
             saveData.account = saveDataSpy;
           });
 
-          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
             await post(req, res);
 
-            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
           });
         });
 
@@ -212,10 +213,10 @@ describe('controllers/insurance/account/create/your-details', () => {
             saveData.account = saveDataSpy;
           });
 
-          it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
             await post(req, res);
 
-            expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
           });
         });
       });

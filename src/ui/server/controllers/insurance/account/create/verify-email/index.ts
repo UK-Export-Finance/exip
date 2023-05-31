@@ -5,8 +5,8 @@ import { Request, Response } from '../../../../../../types';
 const {
   INSURANCE: {
     ACCOUNT: { CREATE, SIGN_IN },
+    PROBLEM_WITH_SERVICE,
   },
-  PROBLEM_WITH_SERVICE,
 } = ROUTES;
 
 /**

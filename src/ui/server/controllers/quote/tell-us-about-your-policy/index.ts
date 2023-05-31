@@ -1,4 +1,4 @@
-import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, FIELDS, QUOTE_FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { isPopulatedArray } from '../../../helpers/array';
@@ -17,14 +17,14 @@ const { AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWE
 
 const { START: quoteStart } = ROUTES.QUOTE;
 
-const generatePageVariables = (policyType: string) => {
+const generatePageVariables = (policyType: string, ORIGINAL_URL: string) => {
   const pageVariables: TellUsAboutPolicyPageVariables = {
     CONTENT_STRINGS: {
       BUTTONS,
       COOKIES_CONSENT,
       LINKS,
       PHASE_BANNER,
-      FOOTER,
+      FOOTER: QUOTE_FOOTER,
       PRODUCT: {
         DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
       },
@@ -44,6 +44,7 @@ const generatePageVariables = (policyType: string) => {
     },
     START_ROUTE: quoteStart,
     FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
+    ORIGINAL_URL,
   };
 
   const { TELL_US_ABOUT_YOUR_POLICY } = PAGES.QUOTE;
@@ -129,7 +130,7 @@ const get = async (req: Request, res: Response) => {
       mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions);
     }
 
-    const PAGE_VARIABLES = generatePageVariables(submittedData.quoteEligibility[POLICY_TYPE]);
+    const PAGE_VARIABLES = generatePageVariables(submittedData.quoteEligibility[POLICY_TYPE], req.originalUrl);
 
     return res.render(TEMPLATE, {
       userName: getUserNameFromSession(req.session.user),
@@ -198,7 +199,7 @@ const post = async (req: Request, res: Response) => {
         mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions);
       }
 
-      const PAGE_VARIABLES = generatePageVariables(submittedData.quoteEligibility[POLICY_TYPE]);
+      const PAGE_VARIABLES = generatePageVariables(submittedData.quoteEligibility[POLICY_TYPE], req.originalUrl);
 
       return res.render(TEMPLATE, {
         userName: getUserNameFromSession(req.session.user),

@@ -20,6 +20,7 @@ const {
       SIGN_IN: { ROOT: SIGN_IN_ROOT },
     },
     DASHBOARD,
+    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 
@@ -119,7 +120,7 @@ export const post = async (req: Request, res: Response) => {
 
         if (!application) {
           console.error('Error creating application');
-          return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+          return res.redirect(PROBLEM_WITH_SERVICE);
         }
 
         req.session.submittedData.insuranceEligibility = {};
@@ -144,6 +145,6 @@ export const post = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error('Error verifying account sign in code', { err });
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

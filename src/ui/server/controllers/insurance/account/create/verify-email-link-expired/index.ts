@@ -13,8 +13,8 @@ const {
     ACCOUNT: {
       CREATE: { CONFIRM_EMAIL },
     },
+    PROBLEM_WITH_SERVICE,
   },
-  PROBLEM_WITH_SERVICE,
 } = ROUTES;
 
 /**

@@ -15,10 +15,10 @@ export const TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 const FIELD_ID = FIELD_IDS.CHECK_YOUR_ANSWERS.EXPORTER_BUSINESS;
 
 const {
-  PROBLEM_WITH_SERVICE,
   INSURANCE: {
     INSURANCE_ROOT,
     CHECK_YOUR_ANSWERS: { YOUR_BUYER, YOUR_BUSINESS_SAVE_AND_BACK },
+    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 
@@ -73,7 +73,7 @@ export const get = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error('Error getting check your answers - policy and exports', { err });
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 
@@ -98,13 +98,13 @@ export const post = async (req: Request, res: Response) => {
     const saveResponse = await save.sectionReview(application, req.body);
 
     if (!saveResponse) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`);
   } catch (err) {
     console.error('Error updating check your answers - your business', { err });
 
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

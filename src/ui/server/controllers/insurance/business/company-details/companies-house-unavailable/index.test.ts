@@ -10,7 +10,7 @@ const { COMPANIES_HOUSE_UNAVAILABLE } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 
 const { COMPANIES_HOUSE_UNAVAILABLE: COMPANIES_HOUSE_UNAVAILABLE_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
-const { INSURANCE_ROOT, ALL_SECTIONS, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES } = ROUTES.INSURANCE;
+const { INSURANCE_ROOT, ALL_SECTIONS, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 const { COMPANY_DETAILS: COMPANY_DETAILS_ROUTE } = EXPORTER_BUSINESS_ROUTES;
 
@@ -56,10 +56,10 @@ describe('controllers/insurance/business/companies-details/companies-house-unava
       res.locals = { csrfToken: '1234' };
     });
 
-    it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, () => {
+    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
       get(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
     });
   });
 });

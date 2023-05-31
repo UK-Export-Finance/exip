@@ -22,6 +22,7 @@ const {
       SUSPENDED: { ROOT: SUSPENDED_ROOT },
     },
     DASHBOARD,
+    PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 
@@ -297,10 +298,10 @@ describe('controllers/insurance/account/sign-in', () => {
           api.keystone.account.signIn = accountSignInSpy;
         });
 
-        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
     });

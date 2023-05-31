@@ -11,7 +11,7 @@ const { CHECK_YOUR_ANSWERS: CHECK_YOUR_ANSWERS_TEMPLATE } = TEMPLATES.INSURANCE.
 
 export const TEMPLATE = CHECK_YOUR_ANSWERS_TEMPLATE;
 
-const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES, YOUR_BUYER: YOUR_BUYER_ROUTES } = ROUTES.INSURANCE;
+const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES, YOUR_BUYER: YOUR_BUYER_ROUTES, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 const { CHECK_YOUR_ANSWERS_SAVE_AND_BACK } = EXPORTER_BUSINESS_ROUTES;
 
@@ -30,7 +30,7 @@ const get = (req: Request, res: Response) => {
     const refNumber = Number(referenceNumber);
 
     if (!application) {
-      return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const summaryList = yourBusinessSummaryList(application.company, application.business, application.broker, refNumber);
@@ -47,7 +47,7 @@ const get = (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error('Error getting check your answers', { err });
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 

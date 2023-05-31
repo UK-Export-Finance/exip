@@ -13,19 +13,16 @@ interface PageVariablesContentStrings {
   PRODUCT: object;
 }
 
-interface PageVariablesProduct {
-  DESCRIPTION: string;
-}
-
 interface CorePageVariablesInitialInput {
   PAGE_CONTENT_STRINGS: PageContentStrings;
   BACK_LINK?: string;
   START_ROUTE?: string;
   FEEDBACK_ROUTE?: string;
+  ORIGINAL_URL?: string;
 }
 
 interface CorePageVariablesInput extends CorePageVariablesInitialInput {
-  PRODUCT: PageVariablesProduct;
+  ORIGINAL_URL?: string;
 }
 
 interface CorePageVariables {
@@ -39,12 +36,11 @@ interface SingleInputPageVariablesInitialInput {
   PAGE_CONTENT_STRINGS: PageContentStrings;
   BACK_LINK?: string;
   FIELD_ID: string;
+  ORIGINAL_URL?: string;
 }
 
 interface SingleInputPageVariablesInput extends SingleInputPageVariablesInitialInput {
   FIELD_ID: string;
-  PRODUCT: PageVariablesProduct;
-  START_ROUTE: string;
   FEEDBACK_ROUTE?: string;
 }
 

@@ -66,6 +66,8 @@ const checkPageTitleAndHeading = (pageTitle) => {
  * @param {Boolean} assertSubmitButton - Should check submit button (some pages don't have a submit button)
  * @param {String} submitButtonCopy - Expected submit button copy
  * @param {Boolean} assertBackLink - Should check "back" link (some pages don't have a back link)
+ * @param {Boolean} isInsurancePage - If page is an insurance page or otherwise
+ * @param {Boolean} assertServiceHeading - Should check service heading is for insurance or quote
  * @param {Object} lightHouseThresholds - Custom expected lighthouse thresholds
  */
 const corePageChecks = ({
@@ -76,7 +78,9 @@ const corePageChecks = ({
   submitButtonCopy = BUTTONS.CONTINUE,
   assertBackLink = true,
   assertAuthenticatedHeader = true,
+  assertCookies = true,
   isInsurancePage = true,
+  assertServiceHeading = true,
   // lightHouseThresholds,
 }) => {
   // run lighthouse audit
@@ -87,9 +91,15 @@ const corePageChecks = ({
     checkBackLink(currentHref, backLink);
   }
 
+  if (assertCookies) {
   // check analytics cookie banner
-  cy.checkAnalyticsCookiesConsentAndAccept();
-  cy.rejectAnalyticsCookies();
+    cy.checkAnalyticsCookiesConsentAndAccept();
+    cy.rejectAnalyticsCookies();
+  }
+
+  if (assertServiceHeading) {
+    cy.checkHeaderServiceNameAndHref({ isInsurancePage });
+  }
 
   if (assertAuthenticatedHeader) {
     // check authenticated header
@@ -97,7 +107,9 @@ const corePageChecks = ({
   }
 
   // check phase banner
-  cy.checkPhaseBanner(isInsurancePage);
+  cy.checkPhaseBanner({ isInsurancePage });
+
+  cy.checkFooterLinks({ isInsurancePage });
 
   // check page title and heading
   checkPageTitleAndHeading(pageTitle);

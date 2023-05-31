@@ -21,7 +21,7 @@ export const get = (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
-    return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
+    return res.redirect(ROUTES.INSURANCE.PROBLEM_WITH_SERVICE);
   }
 
   const { referenceNumber } = req.params;

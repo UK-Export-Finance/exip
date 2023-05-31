@@ -12,6 +12,8 @@ import { updateSubmittedData } from '../../../../helpers/update-submitted-data/i
 import { mockReq, mockRes, mockAnswers, mockSession, mockCisCountries } from '../../../../test-mocks';
 import { Country, Request, Response } from '../../../../../types';
 
+const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
+
 describe('controllers/insurance/eligibility/buyer-country', () => {
   let req: Request;
   let res: Response;
@@ -139,9 +141,9 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         api.external.getCountries = getCountriesSpy;
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await get(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
@@ -151,9 +153,9 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         api.external.getCountries = getCountriesSpy;
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await get(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });
@@ -297,9 +299,9 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         api.external.getCountries = getCountriesSpy;
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await post(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
@@ -309,9 +311,9 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         api.external.getCountries = getCountriesSpy;
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await post(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

@@ -5,7 +5,7 @@ import save from '../save-data';
 import { mockApplication, mockReq, mockRes } from '../../../../test-mocks';
 
 const {
-  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
+  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
 } = ROUTES;
 
 describe('controllers/insurance/declarations/confidentiality/save-and-back', () => {
@@ -68,10 +68,10 @@ describe('controllers/insurance/declarations/confidentiality/save-and-back', () 
       res.locals = { csrfToken: '1234' };
     });
 
-    it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
     });
   });
 
@@ -82,10 +82,10 @@ describe('controllers/insurance/declarations/confidentiality/save-and-back', () 
         save.declaration = mockSaveData;
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
@@ -95,10 +95,10 @@ describe('controllers/insurance/declarations/confidentiality/save-and-back', () 
         save.declaration = mockSaveData;
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

@@ -39,7 +39,7 @@ describe('controllers/quote/exporter-location', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION, {
-        ...singleInputPageVariables(PAGE_VARIABLES),
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, ORIGINAL_URL: req.originalUrl }),
         userName: getUserNameFromSession(req.session.user),
         BACK_LINK: req.headers.referer,
         submittedValues: req.session.submittedData.quoteEligibility,
@@ -53,7 +53,7 @@ describe('controllers/quote/exporter-location', () => {
         post(req, res);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION, {
-          ...singleInputPageVariables(PAGE_VARIABLES),
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, ORIGINAL_URL: req.originalUrl }),
           userName: getUserNameFromSession(req.session.user),
           BACK_LINK: req.headers.referer,
           validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID]),

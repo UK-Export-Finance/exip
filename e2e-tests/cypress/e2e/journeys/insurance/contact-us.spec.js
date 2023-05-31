@@ -1,22 +1,22 @@
-import { contactUsPage } from '../pages';
-import footer from '../partials/footer';
-import { PAGES } from '../../../content-strings';
-import { ROUTES } from '../../../constants';
+import { contactUsPage } from '../../pages';
+import footer from '../../partials/footer';
+import { PAGES } from '../../../../content-strings';
+import { ROUTES } from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.CONTACT_US_PAGE;
 
 const { GENERAL_ENQUIRIES, APPLICATION_ENQUIRES } = CONTENT_STRINGS;
 
-context('Contact us page', () => {
-  const url = ROUTES.CONTACT_US;
+context('Contact us page - Insurance', () => {
+  const url = ROUTES.INSURANCE.CONTACT_US;
 
   beforeEach(() => {
-    cy.login();
+    cy.navigateToUrl(ROUTES.INSURANCE.START);
 
     // click on contact link in footer
     footer.supportLinks.contact().click();
 
-    cy.url().should('include', url);
+    cy.assertUrl(`${Cypress.config('baseUrl')}${url}`);
 
     cy.saveSession();
   });
@@ -26,11 +26,11 @@ context('Contact us page', () => {
 
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.CONTACT_US,
-      backLink: ROUTES.QUOTE.BUYER_COUNTRY,
+      currentHref: ROUTES.INSURANCE.CONTACT_US,
+      backLink: ROUTES.INSURANCE.START,
       assertSubmitButton: false,
       assertAuthenticatedHeader: false,
-      isInsurancePage: false,
+      isInsurancePage: true,
     });
   });
 

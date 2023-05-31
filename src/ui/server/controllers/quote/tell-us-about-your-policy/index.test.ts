@@ -1,5 +1,5 @@
 import { generatePageVariables, TEMPLATE, get, post } from '.';
-import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, FIELDS, QUOTE_FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT } from '../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
@@ -50,13 +50,13 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       it('should return page variables with single policy strings', () => {
         const mockPolicyType = FIELD_VALUES.POLICY_TYPE.SINGLE;
 
-        const result = generatePageVariables(mockPolicyType);
+        const result = generatePageVariables(mockPolicyType, '/');
 
         const expected = {
           CONTENT_STRINGS: {
             BUTTONS,
             COOKIES_CONSENT,
-            FOOTER,
+            FOOTER: QUOTE_FOOTER,
             LINKS,
             PHASE_BANNER,
             PAGE_TITLE: PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY.SINGLE_POLICY_PAGE_TITLE,
@@ -79,6 +79,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           },
           START_ROUTE: quoteStart,
           FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
+          ORIGINAL_URL: '/',
         } as TellUsAboutPolicyPageVariables;
 
         expected.FIELDS.AMOUNT_CURRENCY = {
@@ -104,13 +105,13 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       it('should return page variables with multiple policy strings', () => {
         const mockPolicyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
-        const result = generatePageVariables(mockPolicyType);
+        const result = generatePageVariables(mockPolicyType, '/');
 
         const expected = {
           CONTENT_STRINGS: {
             BUTTONS,
             COOKIES_CONSENT,
-            FOOTER,
+            FOOTER: QUOTE_FOOTER,
             LINKS,
             PHASE_BANNER,
             PAGE_TITLE: PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY.MULTIPLE_POLICY_PAGE_TITLE,
@@ -133,6 +134,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           },
           START_ROUTE: quoteStart,
           FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
+          ORIGINAL_URL: '/',
         } as TellUsAboutPolicyPageVariables;
 
         expected.FIELDS.AMOUNT_CURRENCY = {
@@ -161,14 +163,14 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
     describe('when policy type is not recognised', () => {
       it('should return base page variables', () => {
-        const result = generatePageVariables('');
+        const result = generatePageVariables('', '/');
 
         const expected = {
           CONTENT_STRINGS: {
             PRODUCT: {
               DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
             },
-            FOOTER,
+            FOOTER: QUOTE_FOOTER,
             LINKS,
             PHASE_BANNER,
             BUTTONS,
@@ -189,6 +191,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           },
           START_ROUTE: quoteStart,
           FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
+          ORIGINAL_URL: '/',
         };
 
         expect(result).toEqual(expected);
@@ -230,7 +233,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
         userName: getUserNameFromSession(req.session.user),
-        ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+        ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE], req.originalUrl),
         BACK_LINK: req.headers.referer,
         isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
         isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -255,7 +258,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
           userName: getUserNameFromSession(req.session.user),
-          ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+          ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE], req.originalUrl),
           BACK_LINK: req.headers.referer,
           isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -283,7 +286,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
           userName: getUserNameFromSession(req.session.user),
-          ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+          ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE], req.originalUrl),
           BACK_LINK: req.headers.referer,
           isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -313,7 +316,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
           userName: getUserNameFromSession(req.session.user),
-          ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+          ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE], req.originalUrl),
           BACK_LINK: req.headers.referer,
           isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -382,7 +385,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
           userName: getUserNameFromSession(req.session.user),
-          ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+          ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE], req.originalUrl),
           BACK_LINK: req.headers.referer,
           isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
           isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -411,7 +414,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
             userName: getUserNameFromSession(req.session.user),
-            ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+            ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE], req.originalUrl),
             BACK_LINK: req.headers.referer,
             isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -439,7 +442,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
             userName: getUserNameFromSession(req.session.user),
-            ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+            ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE], req.originalUrl),
             BACK_LINK: req.headers.referer,
             isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
@@ -467,7 +470,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
             userName: getUserNameFromSession(req.session.user),
-            ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+            ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE], req.originalUrl),
             BACK_LINK: req.headers.referer,
             isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
