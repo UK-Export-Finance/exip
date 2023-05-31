@@ -81,6 +81,7 @@ type Application {
   buyer: Buyer
   sectionReview: SectionReview
   declaration: Declaration
+  version: String
 }
 
 scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
@@ -111,6 +112,7 @@ input ApplicationWhereInput {
   buyer: BuyerWhereInput
   sectionReview: SectionReviewWhereInput
   declaration: DeclarationWhereInput
+  version: StringFilter
 }
 
 input DateTimeNullableFilter {
@@ -201,6 +203,7 @@ input ApplicationOrderByInput {
   submissionType: OrderDirection
   status: OrderDirection
   previousStatus: OrderDirection
+  version: OrderDirection
 }
 
 input ApplicationUpdateInput {
@@ -221,6 +224,7 @@ input ApplicationUpdateInput {
   buyer: BuyerRelateToOneForUpdateInput
   sectionReview: SectionReviewRelateToOneForUpdateInput
   declaration: DeclarationRelateToOneForUpdateInput
+  version: String
 }
 
 input EligibilityRelateToOneForUpdateInput {
@@ -300,6 +304,7 @@ input ApplicationCreateInput {
   buyer: BuyerRelateToOneForCreateInput
   sectionReview: SectionReviewRelateToOneForCreateInput
   declaration: DeclarationRelateToOneForCreateInput
+  version: String
 }
 
 input EligibilityRelateToOneForCreateInput {

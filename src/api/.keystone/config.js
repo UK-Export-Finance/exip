@@ -230,8 +230,36 @@ var FIELD_IDS = {
   INSURANCE: insurance_default
 };
 
-// constants/application.ts
+// constants/application/versions/index.ts
+var VERSIONS = [
+  {
+    VERSION_NUMBER: "1",
+    OVER_500K_SUPPORT: false,
+    MAXIMUM_BUYER_CAN_OWE: 499999,
+    TOTAL_VALUE_OF_CONTRACT: 499999
+  }
+];
+var versions_default = VERSIONS;
+
+// constants/application/get-application-definition/index.ts
+var getApplicationDefinition = (versionNumber) => {
+  const applicationDefinition = versions_default.find((VERSION) => VERSION.VERSION_NUMBER === versionNumber);
+  if (applicationDefinition) {
+    return applicationDefinition;
+  }
+  console.error("Unable to find latest application version");
+  throw new Error("Unable to find latest application version");
+};
+var get_application_definition_default = getApplicationDefinition;
+
+// constants/application/versions/latest.ts
+var LATEST_VERSION_NUMBER = "1";
+var latest_default = LATEST_VERSION_NUMBER;
+
+// constants/application/index.ts
+var LATEST_VERSION = get_application_definition_default(latest_default);
 var APPLICATION = {
+  LATEST_VERSION,
   SUBMISSION_TYPE: {
     MIA: "Manual Inclusion Application"
   },
@@ -243,10 +271,10 @@ var APPLICATION = {
   POLICY_AND_EXPORT: {
     TOTAL_VALUE_OF_CONTRACT: {
       MINIMUM: 1,
-      MAXIMUM: 499999
+      MAXIMUM: LATEST_VERSION.TOTAL_VALUE_OF_CONTRACT
     },
     TOTAL_MONTHS_OF_COVER: 12,
-    MAXIMUM_BUYER_CAN_OWE: 499999
+    MAXIMUM_BUYER_CAN_OWE: LATEST_VERSION.MAXIMUM_BUYER_CAN_OWE
   },
   STATUS: {
     DRAFT: "Draft",
@@ -480,7 +508,11 @@ var lists = {
       broker: (0, import_fields.relationship)({ ref: "Broker" }),
       buyer: (0, import_fields.relationship)({ ref: "Buyer" }),
       sectionReview: (0, import_fields.relationship)({ ref: "SectionReview" }),
-      declaration: (0, import_fields.relationship)({ ref: "Declaration" })
+      declaration: (0, import_fields.relationship)({ ref: "Declaration" }),
+      version: (0, import_fields.text)({
+        defaultValue: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
+        validation: { isRequired: true }
+      })
     },
     hooks: {
       resolveInput: async ({ operation, resolvedData, context }) => {
@@ -2627,7 +2659,7 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
         referenceNumber: { equals: referenceNumber }
       }
     });
-    const { id } = application2[0];
+    const [{ id }] = application2;
     const deleteResponse = await context.db.Application.deleteOne({
       where: {
         id

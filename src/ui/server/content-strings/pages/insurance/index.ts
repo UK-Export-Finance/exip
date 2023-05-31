@@ -1,7 +1,7 @@
-import { GBP_CURRENCY_CODE, PRODUCT, ROUTES, CONTACT_DETAILS } from '../../../constants';
+import { GBP_CURRENCY_CODE, ELIGIBILITY, ROUTES, CONTACT_DETAILS } from '../../../constants';
 import { LINKS } from '../../links';
 import { BUTTONS } from '../../buttons';
-import ELIGIBILITY from './eligibility';
+import ELIGIBILITY_CONTENT_STRINGS from './eligibility';
 import ACCOUNT from './account';
 import POLICY_AND_EXPORTS from './policy-and-exports';
 import EXPORTER_BUSINESS from './your-business';
@@ -12,7 +12,7 @@ import COMPLETE_OTHER_SECTIONS from './complete-other-sections';
 import APPLICATION_SUBMITTED from './application-submitted';
 import formatCurrency from '../../../helpers/format-currency';
 
-const MAX_COVER_AMOUNT = formatCurrency(PRODUCT.MAX_COVER_AMOUNT_IN_GBP, GBP_CURRENCY_CODE, 0);
+const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP, GBP_CURRENCY_CODE, 0);
 
 const DASHBOARD = {
   PAGE_TITLE: 'Your applications',
@@ -69,7 +69,7 @@ const SPEAK_TO_UKEF_EFM = {
   PAGE_TITLE: 'You need to speak with a UKEF export finance manager',
   REASON: {
     INTRO: 'This is because',
-    WANT_COVER_OVER_MAX_PERIOD: `you want to be insured for longer than ${PRODUCT.MAX_COVER_PERIOD_YEARS} years.`,
+    WANT_COVER_OVER_MAX_PERIOD: `you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years.`,
   },
   ACTIONS: {
     FIND_EFM: [
@@ -128,7 +128,7 @@ export default {
   ALL_SECTIONS,
   APPLY_OFFLINE,
   EXPORTER_BUSINESS,
-  ELIGIBILITY,
+  ELIGIBILITY: ELIGIBILITY_CONTENT_STRINGS,
   NO_ACCESS_TO_APPLICATION_PAGE,
   POLICY_AND_EXPORTS,
   SPEAK_TO_UKEF_EFM,

@@ -10,6 +10,7 @@ describe('server/helpers/flatten-application-data', () => {
 
     const expected = {
       ...mockApplication.eligibility,
+      version: mockApplication.version,
       referenceNumber: mockApplication.referenceNumber,
       createdAt: mockApplication.createdAt,
       updatedAt: mockApplication.updatedAt,
