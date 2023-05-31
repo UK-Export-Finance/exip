@@ -164,7 +164,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
       const day = nextYear.getDate();
 
       let nextYear1week = new Date(nextYear);
-      nextYear1week = new Date(nextYear1week.setDate(day + 1));
+      nextYear1week = new Date(nextYear1week.setDate(day + 1 * 7));
 
       it('should return validation error', () => {
         const mockSubmittedData = {
