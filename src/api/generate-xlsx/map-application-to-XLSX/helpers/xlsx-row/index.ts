@@ -1,4 +1,5 @@
 import { XLSX_CONFIG } from '../../../../constants';
+import replaceCharacterCodesWithCharacters from '../../../../helpers/replace-character-codes-with-characters';
 
 const { KEY, VALUE } = XLSX_CONFIG;
 
@@ -10,9 +11,11 @@ const { KEY, VALUE } = XLSX_CONFIG;
 const xlsxRow = (fieldName: string, answer?: string | number) => {
   const value = answer || answer === 0 ? answer : '';
 
+  const cleanValue = replaceCharacterCodesWithCharacters(String(value));
+
   const row = {
     [KEY.ID]: fieldName,
-    [VALUE.ID]: String(value),
+    [VALUE.ID]: cleanValue,
   };
 
   return row;

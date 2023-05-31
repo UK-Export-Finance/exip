@@ -3003,13 +3003,18 @@ var send_application_submitted_emails_default = applicationSubmittedEmails;
 // generate-xlsx/index.ts
 var import_exceljs = __toESM(require("exceljs"));
 
+// helpers/replace-character-codes-with-characters/index.ts
+var replaceCharacterCodesWithCharacters = (str) => str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&#x2F;/g, "/").replace(/&#42;/g, "*");
+var replace_character_codes_with_characters_default = replaceCharacterCodesWithCharacters;
+
 // generate-xlsx/map-application-to-XLSX/helpers/xlsx-row/index.ts
 var { KEY, VALUE } = XLSX_CONFIG;
 var xlsxRow = (fieldName, answer) => {
   const value = answer || answer === 0 ? answer : "";
+  const cleanValue = replace_character_codes_with_characters_default(String(value));
   const row = {
     [KEY.ID]: fieldName,
-    [VALUE.ID]: String(value)
+    [VALUE.ID]: cleanValue
   };
   return row;
 };
