@@ -49,6 +49,8 @@ const XLSX = (application: Application): Promise<string> => {
       worksheet = styledColumns(worksheet);
 
       // Write the file and return the file path
+      console.info('Generating XLSX file - writing file');
+
       workbook.xlsx.writeFile(filePath).then(() => resolve(filePath));
     });
   } catch (err) {
