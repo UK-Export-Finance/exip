@@ -35,7 +35,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
 
   before(() => {
     cy.deleteAccount();
-    
+
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
