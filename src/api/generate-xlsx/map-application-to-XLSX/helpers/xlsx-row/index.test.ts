@@ -1,5 +1,6 @@
 import xlsxRow from '.';
 import { XLSX_CONFIG } from '../../../../constants';
+import replaceCharacterCodesWithCharacters from '../../../../helpers/replace-character-codes-with-characters';
 
 const { KEY, VALUE } = XLSX_CONFIG;
 
@@ -12,7 +13,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/helpers/xlsx-row', () => {
 
     const expected = {
       [KEY.ID]: mockFieldName,
-      [VALUE.ID]: mockFieldAnswer,
+      [VALUE.ID]: replaceCharacterCodesWithCharacters(mockFieldAnswer),
     };
 
     expect(result).toEqual(expected);
@@ -24,7 +25,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/helpers/xlsx-row', () => {
 
       const expected = {
         [KEY.ID]: mockFieldName,
-        [VALUE.ID]: '0',
+        [VALUE.ID]: replaceCharacterCodesWithCharacters(String(0)),
       };
 
       expect(result).toEqual(expected);
@@ -37,7 +38,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/helpers/xlsx-row', () => {
 
       const expected = {
         [KEY.ID]: mockFieldName,
-        [VALUE.ID]: '',
+        [VALUE.ID]: replaceCharacterCodesWithCharacters(''),
       };
 
       expect(result).toEqual(expected);
