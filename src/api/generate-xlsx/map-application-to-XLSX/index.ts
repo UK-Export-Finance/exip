@@ -16,8 +16,6 @@ import { Application } from '../../types';
 const mapApplicationToXLSX = (application: Application) => {
   try {
     const mapped = [
-      ROW_SEPERATOR,
-
       ...mapKeyInformation(application),
 
       ROW_SEPERATOR,
@@ -40,6 +38,7 @@ const mapApplicationToXLSX = (application: Application) => {
 
       ...mapEligibility(application),
     ];
+
     return mapped;
   } catch (err) {
     console.error(err);

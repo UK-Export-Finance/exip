@@ -433,14 +433,27 @@ var XLSX_CONFIG = {
     ID: "answer",
     COPY: "Answer"
   },
-  COLUMN_WIDTH: 70,
+  COLUMN_WIDTH: 85,
+  ADDITIONAL_TITLE_COLUMN_HEIGHT: 25,
   ADDITIONAL_COLUMN_HEIGHT: 50,
-  COLUMN_INDEXES: {
+  FONT_SIZE: {
+    DEFAULT: 11,
+    TITLE: 14
+  },
+  ROW_INDEXES: {
     COMPANY_ADDRESS: 30,
     COMPANY_SIC_CODES: 33,
     BROKER_ADDRESS: 45,
     BUYER_ADDRESS: 50,
     BUYER_CONTACT_DETAILS: 53
+  },
+  TITLE_ROW_INDEXES: {
+    HEADER: 1,
+    KEY_INFORMATION: 9,
+    POLICY_AND_EXPORT: 15,
+    EXPORTER_BUSINESS: 25,
+    BUYER: 47,
+    ELIGIBILITY: 57
   }
 };
 var ACCEPTED_FILE_TYPES = [".xlsx"];
@@ -3002,64 +3015,8 @@ var xlsxRow = (fieldName, answer) => {
 };
 var xlsx_row_default = xlsxRow;
 
-// content-strings/default.ts
-var DEFAULT = {
-  EMPTY: "-"
-};
-
-// content-strings/XLSX.ts
-var { FIRST_NAME, LAST_NAME } = account_default;
-var {
-  CONTRACT_POLICY: {
-    SINGLE: { CONTRACT_COMPLETION_DATE }
-  }
-} = policy_and_exports_default;
-var {
-  COMPANY_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
-  YOUR_COMPANY: { WEBSITE, PHONE_NUMBER },
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
-  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER },
-  BROKER: { USING_BROKER, NAME: BROKER_NAME, ADDRESS_LINE_1: BROKER_ADDRESS, EMAIL: BROKER_EMAIL }
-} = business_default;
-var {
-  COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS }
-} = your_buyer_default;
-var XLSX = {
-  SECTION_TITLES: {
-    KEY_INFORMATION: "Key information",
-    POLICY_AND_EXPORT: "Type of policy and exports",
-    EXPORTER_BUSINESS: "About your business",
-    BUYER: "Your buyer",
-    ELIGIBILITY: "Eligibility"
-  },
-  FIELDS: {
-    [FIRST_NAME]: "Applicant first name",
-    [LAST_NAME]: "Applicant last name",
-    APPLICANT_EMAIL_ADDRESS: "Applicant email address",
-    [CONTRACT_COMPLETION_DATE]: "Date expected for contract to complete",
-    [EXPORTER_COMPANY_NAME]: "Exporter company name",
-    [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
-    [EXPORTER_COMPANY_SIC]: "Exporter standard industry classification (SIC) codes and nature of business",
-    [WEBSITE]: "Exporter Company website (optional)",
-    [PHONE_NUMBER]: "Exporter telephone number (optional)",
-    [GOODS_OR_SERVICES]: "Goods or services the business supplies",
-    [YEARS_EXPORTING]: "Exporter years exporting",
-    [EMPLOYEES_UK]: "Exporter UK Employees",
-    [EMPLOYEES_INTERNATIONAL]: "Exporter worldwide employees including UK employees",
-    [ESTIMATED_ANNUAL_TURNOVER]: "Exporter estimated turnover this current financial year",
-    [USING_BROKER]: "Using a broker for this insurance",
-    [BROKER_NAME]: "Name of broker or company",
-    [BROKER_ADDRESS]: "Broker address",
-    [BROKER_EMAIL]: "Broker email address",
-    [COUNTRY]: "Buyer location",
-    [BUYER_COMPANY_NAME]: "Buyer company name",
-    [BUYER_REGISTRATION_NUMBER]: "Buyer registration number (optional)",
-    [BUYER_CONTACT_DETAILS]: "Buyer contact details"
-  }
-};
-
 // generate-xlsx/map-application-to-XLSX/helpers/xlsx-row-seperator/index.ts
-var ROW_SEPERATOR = xlsx_row_default(DEFAULT.EMPTY, DEFAULT.EMPTY);
+var ROW_SEPERATOR = xlsx_row_default("", "");
 var xlsx_row_seperator_default = ROW_SEPERATOR;
 
 // content-strings/fields/insurance/eligibility/index.ts
@@ -3197,10 +3154,10 @@ var POLICY_AND_EXPORTS_FIELDS = {
 var { EXPORTER_BUSINESS: EXPORTER_BUSINESS2 } = insurance_default;
 var {
   COMPANY_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS },
-  YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER: PHONE_NUMBER2, WEBSITE: WEBSITE2 },
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL2 },
-  TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2, PERCENTAGE_TURNOVER },
-  BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL3 }
+  YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
+  TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+  BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, EMAIL: EMAIL3 }
 } = EXPORTER_BUSINESS2;
 var FIELDS = {
   COMPANY_DETAILS: {
@@ -3244,41 +3201,41 @@ var FIELDS = {
         TITLE: "Different trading address?"
       }
     },
-    [WEBSITE2]: {
+    [WEBSITE]: {
       SUMMARY: {
         TITLE: "Company website (optional)"
       }
     },
-    [PHONE_NUMBER2]: {
+    [PHONE_NUMBER]: {
       SUMMARY: {
         TITLE: "UK telephone number (optional)"
       }
     }
   },
   NATURE_OF_YOUR_BUSINESS: {
-    [GOODS_OR_SERVICES2]: {
+    [GOODS_OR_SERVICES]: {
       SUMMARY: {
         TITLE: "Goods or services your business supplies"
       }
     },
-    [YEARS_EXPORTING2]: {
+    [YEARS_EXPORTING]: {
       SUMMARY: {
         TITLE: "Years exporting"
       }
     },
-    [EMPLOYEES_UK2]: {
+    [EMPLOYEES_UK]: {
       SUMMARY: {
         TITLE: "UK employees"
       }
     },
-    [EMPLOYEES_INTERNATIONAL2]: {
+    [EMPLOYEES_INTERNATIONAL]: {
       SUMMARY: {
         TITLE: "Worldwide employees including UK employees"
       }
     }
   },
   TURNOVER: {
-    [ESTIMATED_ANNUAL_TURNOVER2]: {
+    [ESTIMATED_ANNUAL_TURNOVER]: {
       SUMMARY: {
         TITLE: "Estimated turnover this current financial year"
       }
@@ -3290,7 +3247,7 @@ var FIELDS = {
     }
   },
   BROKER: {
-    [USING_BROKER2]: {
+    [USING_BROKER]: {
       SUMMARY: {
         TITLE: "Using a broker for this insurance?"
       }
@@ -3390,6 +3347,62 @@ var DATE_SUBMITTED = {
 var TIME_SUBMITTED = {
   SUMMARY: {
     TITLE: "Time submitted"
+  }
+};
+
+// content-strings/default.ts
+var DEFAULT = {
+  EMPTY: "-"
+};
+
+// content-strings/XLSX.ts
+var { FIRST_NAME, LAST_NAME } = account_default;
+var {
+  CONTRACT_POLICY: {
+    SINGLE: { CONTRACT_COMPLETION_DATE }
+  }
+} = policy_and_exports_default;
+var {
+  COMPANY_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
+  YOUR_COMPANY: { WEBSITE: WEBSITE2, PHONE_NUMBER: PHONE_NUMBER2 },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL2 },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 },
+  BROKER: { USING_BROKER: USING_BROKER2, NAME: BROKER_NAME, ADDRESS_LINE_1: BROKER_ADDRESS, EMAIL: BROKER_EMAIL }
+} = business_default;
+var {
+  COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS }
+} = your_buyer_default;
+var XLSX = {
+  SECTION_TITLES: {
+    KEY_INFORMATION: "Key information",
+    POLICY_AND_EXPORT: "Type of policy and exports",
+    EXPORTER_BUSINESS: "About your business",
+    BUYER: "Your buyer",
+    ELIGIBILITY: "Eligibility"
+  },
+  FIELDS: {
+    [FIRST_NAME]: "Applicant first name",
+    [LAST_NAME]: "Applicant last name",
+    APPLICANT_EMAIL_ADDRESS: "Applicant email address",
+    [CONTRACT_COMPLETION_DATE]: "Date expected for contract to complete",
+    [EXPORTER_COMPANY_NAME]: "Exporter company name",
+    [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
+    [EXPORTER_COMPANY_SIC]: "Exporter standard industry classification (SIC) codes and nature of business",
+    [WEBSITE2]: "Exporter Company website (optional)",
+    [PHONE_NUMBER2]: "Exporter telephone number (optional)",
+    [GOODS_OR_SERVICES2]: "Goods or services the business supplies",
+    [YEARS_EXPORTING2]: "Exporter years exporting",
+    [EMPLOYEES_UK2]: "Exporter UK Employees",
+    [EMPLOYEES_INTERNATIONAL2]: "Exporter worldwide employees including UK employees",
+    [ESTIMATED_ANNUAL_TURNOVER2]: "Exporter estimated turnover this current financial year",
+    [USING_BROKER2]: "Using a broker for this insurance",
+    [BROKER_NAME]: "Name of broker or company",
+    [BROKER_ADDRESS]: "Broker address",
+    [BROKER_EMAIL]: "Broker email address",
+    [COUNTRY]: "Buyer location",
+    [BUYER_COMPANY_NAME]: "Buyer company name",
+    [BUYER_REGISTRATION_NUMBER]: "Buyer registration number (optional)",
+    [BUYER_CONTACT_DETAILS]: "Buyer contact details"
   }
 };
 
@@ -3692,7 +3705,6 @@ var map_eligibility_default = mapEligibility;
 var mapApplicationToXLSX = (application2) => {
   try {
     const mapped = [
-      xlsx_row_seperator_default,
       ...map_key_information_default(application2),
       xlsx_row_seperator_default,
       ...map_secondary_key_information_default(application2),
@@ -3722,24 +3734,32 @@ var XLSX_HEADER_COLUMNS = [
 var header_columns_default = XLSX_HEADER_COLUMNS;
 
 // generate-xlsx/styled-columns/index.ts
-var { COLUMN_INDEXES, ADDITIONAL_COLUMN_HEIGHT } = XLSX_CONFIG;
+var { ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, ROW_INDEXES, TITLE_ROW_INDEXES, FONT_SIZE } = XLSX_CONFIG;
 var worksheetRowHeights = (worksheet) => {
   const modifiedWorksheet = worksheet;
-  modifiedWorksheet.getRow(COLUMN_INDEXES.COMPANY_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
-  modifiedWorksheet.getRow(COLUMN_INDEXES.COMPANY_SIC_CODES).height = ADDITIONAL_COLUMN_HEIGHT;
-  modifiedWorksheet.getRow(COLUMN_INDEXES.BROKER_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
-  modifiedWorksheet.getRow(COLUMN_INDEXES.BUYER_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
-  modifiedWorksheet.getRow(COLUMN_INDEXES.BUYER_CONTACT_DETAILS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
+  modifiedWorksheet.getRow(ROW_INDEXES.COMPANY_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
+  modifiedWorksheet.getRow(ROW_INDEXES.COMPANY_SIC_CODES).height = ADDITIONAL_COLUMN_HEIGHT;
+  modifiedWorksheet.getRow(ROW_INDEXES.BROKER_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
+  modifiedWorksheet.getRow(ROW_INDEXES.BUYER_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
+  modifiedWorksheet.getRow(ROW_INDEXES.BUYER_CONTACT_DETAILS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
+  Object.values(TITLE_ROW_INDEXES).forEach((rowIndex) => {
+    modifiedWorksheet.getRow(rowIndex).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+  });
   return modifiedWorksheet;
 };
 var styledColumns = (worksheet) => {
   let modifiedWorksheet = worksheet;
-  modifiedWorksheet.eachRow((row) => {
+  modifiedWorksheet.eachRow((row, rowNumber) => {
     row.eachCell((cell, colNumber) => {
       const modifiedRow = row;
       modifiedRow.getCell(colNumber).alignment = {
         vertical: "top",
         wrapText: true
+      };
+      const isTitleRow = Object.values(TITLE_ROW_INDEXES).includes(rowNumber);
+      modifiedRow.getCell(colNumber).font = {
+        bold: Boolean(isTitleRow),
+        size: isTitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT
       };
     });
   });
@@ -3768,6 +3788,7 @@ var XLSX2 = (application2) => {
       });
       console.info("Generating XLSX file - adding custom styles to worksheet");
       worksheet = styled_columns_default(worksheet);
+      console.info("Generating XLSX file - writing file");
       workbook.xlsx.writeFile(filePath).then(() => resolve(filePath));
     });
   } catch (err) {

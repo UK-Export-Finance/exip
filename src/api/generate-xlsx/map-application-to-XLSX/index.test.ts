@@ -13,8 +13,6 @@ describe('api/generate-xlsx/map-application-to-xlsx/index', () => {
     const result = mapApplicationToXLSX(mockApplication);
 
     const expected = [
-      ROW_SEPERATOR,
-
       ...mapKeyInformation(mockApplication),
 
       ROW_SEPERATOR,
