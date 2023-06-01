@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import { add, addMonths } from 'date-fns';
 import { APPLICATION, FIELD_VALUES } from '../constants';
+import mockEligibility from './mock-eligibility';
 import mockAccount from './mock-account';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
@@ -123,16 +124,8 @@ const mockApplication = {
   submissionType: 'Manual Inclusion Application',
   submissionDate: new Date().toISOString(),
   eligibility: {
+    ...mockEligibility,
     id: 'clav8by1g0000kgoq5a2afr1z',
-    buyerCountry: mockCountries[0],
-    hasMinimumUkGoodsOrServices: true,
-    validExporterLocation: true,
-    hasCompaniesHouseNumber: true,
-    otherPartiesInvolved: false,
-    paidByLetterOfCredit: false,
-    needPreCreditPeriodCover: false,
-    wantCoverOverMaxAmount: false,
-    wantCoverOverMaxPeriod: false,
   },
   status: APPLICATION.STATUS.DRAFT,
   owner: mockOwner,

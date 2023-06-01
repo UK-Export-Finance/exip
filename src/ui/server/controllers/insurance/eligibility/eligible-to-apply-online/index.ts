@@ -2,6 +2,7 @@ import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import canCreateAnApplication from '../../../../helpers/can-create-an-application';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
@@ -26,10 +27,14 @@ export const get = (req: Request, res: Response) =>
 
 export const post = async (req: Request, res: Response) => {
   try {
-    // if user is logged in, create application.
-    const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
+    /**
+     * If the user is signed in and there are eligibility answers in the session:
+     * 1) Create an application
+     * 2) Wipe the eligibility answers in the session.
+     */
+    if (req.session.user && canCreateAnApplication(req.session)) {
+      const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
 
-    if (req.session.user && eligibilityAnswers) {
       const application = await api.keystone.application.create(eligibilityAnswers, req.session.user.id);
 
       if (!application) {
