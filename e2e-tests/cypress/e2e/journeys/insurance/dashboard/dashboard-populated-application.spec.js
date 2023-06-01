@@ -70,7 +70,7 @@ context('Insurance - Dashboard - populated application', () => {
       task.link().click();
 
       // complete and submit the form
-      cy.completeAndSubmitCompanyOrOrganisationForm();
+      cy.completeAndSubmitCompanyOrOrganisationForm({});
     });
 
     beforeEach(() => {

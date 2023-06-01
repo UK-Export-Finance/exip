@@ -17,14 +17,14 @@ export default () => {
   submitButton().click();
 
   cy.completeAndSubmitCompanyDetails();
-  cy.completeAndSubmitYourContact();
+  cy.acompleteAndSubmitYourContact({});
   cy.completeAndSubmitNatureOfYourBusiness();
   cy.completeAndSubmitTurnoverForm();
   cy.completeAndSubmitBrokerForm();
 
   submitButton().click();
 
-  cy.completeAndSubmitCompanyOrOrganisationForm();
+  cy.completeAndSubmitCompanyOrOrganisationForm({});
   cy.completeAndSubmitWorkingWithBuyerForm({});
 
   submitButton().click();

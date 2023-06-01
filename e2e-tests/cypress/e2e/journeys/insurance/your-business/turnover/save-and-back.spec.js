@@ -35,7 +35,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
       task.link().click();
 
       cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitYourContact();
+      cy.acompleteAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
@@ -92,7 +92,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
       // submit company details form
       submitButton().click();
       // your contact page submit
-      cy.completeAndSubmitYourContact();
+      cy.acompleteAndSubmitYourContact({});
       // submit nature of business form
       submitButton().click();
 
@@ -126,7 +126,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
       // submit company details form
       submitButton().click();
       // your contact page submit
-      cy.completeAndSubmitYourContact();
+      cy.acompleteAndSubmitYourContact({});
       // submit nature of business form
       submitButton().click();
 

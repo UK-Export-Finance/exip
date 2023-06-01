@@ -156,7 +156,7 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
     it(`should redirect to ${NATURE_OF_BUSINESS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitYourContact();
+      cy.acompleteAndSubmitYourContact({});
 
       cy.url().should('eq', natureOfBusinessUrl);
     });

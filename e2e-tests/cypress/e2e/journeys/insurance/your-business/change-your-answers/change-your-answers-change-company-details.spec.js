@@ -53,7 +53,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       task.link().click();
 
       cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitYourContact();
+      cy.acompleteAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitBrokerForm();
