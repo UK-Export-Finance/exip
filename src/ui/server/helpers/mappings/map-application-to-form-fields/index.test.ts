@@ -1,5 +1,6 @@
 import mapApplicationToFormFields from '.';
 import { FIELD_IDS } from '../../../constants';
+import mapNameFields from '../map-name-fields';
 import formatDate from '../../date/format-date';
 import getDateFieldsFromTimestamp from '../../date/get-date-fields-from-timestamp';
 import { mockApplication } from '../../../test-mocks';
@@ -32,7 +33,9 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
 
     const result = mapApplicationToFormFields(simpleApplication);
 
-    expect(result).toEqual(simpleApplication);
+    const expected = mapNameFields(simpleApplication);
+
+    expect(result).toEqual(expected);
   });
 
   describe(`when an application has policyAndExport${REQUESTED_START_DATE} field`, () => {
@@ -41,14 +44,14 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
 
       const result = mapApplicationToFormFields(mockApplication);
 
-      const expected = {
+      const expected = mapNameFields({
         ...mockApplication,
         [SUBMISSION_DEADLINE]: formatDate(mockApplication[SUBMISSION_DEADLINE]),
         policyAndExport: {
           ...mockApplication.policyAndExport,
           ...getDateFieldsFromTimestamp(timestamp, REQUESTED_START_DATE),
         },
-      };
+      });
 
       expect(result).toEqual(expected);
     });
@@ -58,7 +61,7 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
     it('should return the relevant business fields', () => {
       const result = mapApplicationToFormFields(mockApplication);
 
-      const expected = {
+      const expected = mapNameFields({
         ...mockApplication,
         [SUBMISSION_DEADLINE]: formatDate(mockApplication[SUBMISSION_DEADLINE]),
         business: {
@@ -69,7 +72,7 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
           [PERCENTAGE_TURNOVER]: transformNumberToString(mockApplication.business[PERCENTAGE_TURNOVER]),
           [ESTIMATED_ANNUAL_TURNOVER]: transformNumberToString(mockApplication.business[ESTIMATED_ANNUAL_TURNOVER]),
         },
-      };
+      });
 
       expect(result).toEqual(expected);
     });
@@ -81,14 +84,14 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
 
       const result = mapApplicationToFormFields(mockApplication);
 
-      const expected = {
+      const expected = mapNameFields({
         ...mockApplication,
         [SUBMISSION_DEADLINE]: formatDate(mockApplication[SUBMISSION_DEADLINE]),
         policyAndExport: {
           ...mockApplication.policyAndExport,
           ...getDateFieldsFromTimestamp(timestamp, CONTRACT_COMPLETION_DATE),
         },
-      };
+      });
 
       expect(result).toEqual(expected);
     });
@@ -98,24 +101,15 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
     it('should return mapped date field', () => {
       const result = mapApplicationToFormFields(mockApplication);
 
-      const expected = {
+      const expected = mapNameFields({
         ...mockApplication,
         company: {
           ...mockApplication.company,
           [FINANCIAL_YEAR_END_DATE]: mapFinancialYearEndDate(mockApplication.company[FINANCIAL_YEAR_END_DATE]),
         },
-      };
+      });
 
       expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when an application is not passed', () => {
-    it('should return an empty object', () => {
-      // @ts-ignore
-      const result = mapApplicationToFormFields();
-
-      expect(result).toEqual({});
     });
   });
 
