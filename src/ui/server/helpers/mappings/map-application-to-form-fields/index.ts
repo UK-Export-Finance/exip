@@ -27,8 +27,8 @@ const {
  * @param {Object} Application
  * @returns {Object} Mapped application for UI form fields.
  */
-const mapApplicationToFormFields = (application: Application): object => {
-  if (objectHasKeysAndValues(application)) {
+const mapApplicationToFormFields = (application?: Application): object => {
+  if (application && objectHasKeysAndValues(application)) {
     const mapped = mapNameFields(application);
 
     if (mapped[SUBMISSION_DEADLINE]) {

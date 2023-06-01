@@ -4,6 +4,7 @@ import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save';
 import { Request, Response } from '../../../../../types';
@@ -68,7 +69,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         }),
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
-        application: res.locals.application,
+        application: mapApplicationToFormFields(res.locals.application),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
