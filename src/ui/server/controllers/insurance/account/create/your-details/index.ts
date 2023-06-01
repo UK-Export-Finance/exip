@@ -6,6 +6,9 @@ import getUserNameFromSession from '../../../../../helpers/get-user-name-from-se
 import generateValidationErrors from './validation';
 import generateAccountAlreadyExistsValidationErrors from './validation/account-already-exists';
 import saveData from './save-data';
+import canCreateAnApplication from '../../../../../helpers/can-create-an-application';
+import { sanitiseData } from '../../../../../helpers/sanitise-data';
+import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 
 const {
@@ -127,8 +130,28 @@ export const post = async (req: Request, res: Response) => {
       }
     }
 
+    const accountId = saveResponse.id;
+
     // store the account ID in local session, for consumption in the next part of the flow.
-    req.session.accountIdToConfirm = saveResponse.id;
+    req.session.accountIdToConfirm = accountId;
+
+    /**
+     * If there are eligibility answers in the session:
+     * 1) Create an application
+     * 2) Wipe the eligibility answers in the session.
+     */
+    if (canCreateAnApplication(req.session)) {
+      const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
+
+      const application = await api.keystone.application.create(eligibilityAnswers, accountId);
+
+      if (!application) {
+        console.error('Error creating application');
+        return res.redirect(PROBLEM_WITH_SERVICE);
+      }
+
+      req.session.submittedData.insuranceEligibility = {};
+    }
 
     return res.redirect(CONFIRM_EMAIL);
   } catch (err) {

@@ -7,8 +7,10 @@ import getUserNameFromSession from '../../../../../helpers/get-user-name-from-se
 import generateValidationErrors from './validation';
 import generateAccountAlreadyExistsValidationErrors from './validation/account-already-exists';
 import saveData from './save-data';
+import { sanitiseData } from '../../../../../helpers/sanitise-data';
+import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockAccount, mockApplication, mockSession } from '../../../../../test-mocks';
 
 const {
   ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD },
@@ -24,6 +26,8 @@ const {
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
+
+const { referenceNumber } = mockApplication;
 
 describe('controllers/insurance/account/create/your-details', () => {
   let req: Request;
@@ -120,6 +124,10 @@ describe('controllers/insurance/account/create/your-details', () => {
       [PASSWORD]: mockAccount.password,
     };
 
+    const mockCreateApplicationResponse = { referenceNumber };
+
+    let createApplicationSpy = jest.fn(() => Promise.resolve(mockCreateApplicationResponse));
+
     describe('when there are validation errors', () => {
       it('should render template with validation errors and submitted values', async () => {
         await post(req, res);
@@ -140,6 +148,7 @@ describe('controllers/insurance/account/create/your-details', () => {
     describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = validBody;
+        api.keystone.application.create = createApplicationSpy;
       });
 
       it('should call saveData.account with req.body and req.headers.origin', async () => {
@@ -160,6 +169,65 @@ describe('controllers/insurance/account/create/your-details', () => {
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(CONFIRM_EMAIL);
+      });
+
+      describe('when there are eligibility answers in the session', () => {
+        beforeEach(() => {
+          req.session = {
+            ...req.session,
+            submittedData: {
+              ...req.session.submittedData,
+              insuranceEligibility: mockSession.submittedData.insuranceEligibility,
+            },
+          };
+        });
+
+        it('should call api.keystone.application.create', async () => {
+          const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
+
+          await post(req, res);
+
+          expect(createApplicationSpy).toHaveBeenCalledTimes(1);
+
+          expect(createApplicationSpy).toHaveBeenCalledWith(eligibilityAnswers, mockSaveDataResponse.id);
+        });
+
+        it('should wipe req.session.submittedData.insuranceEligibility', async () => {
+          await post(req, res);
+
+          expect(req.session.submittedData.insuranceEligibility).toEqual({});
+        });
+
+        it(`should redirect to ${CONFIRM_EMAIL}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(CONFIRM_EMAIL);
+        });
+
+        describe('when an application is not succesfully created', () => {
+          beforeEach(() => {
+            // @ts-ignore
+            createApplicationSpy = jest.fn(() => Promise.resolve());
+
+            api.keystone.application.create = createApplicationSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+      });
+
+      describe('when req.session.submittedData.insuranceEligibility is an empty object', () => {
+        it('should NOT call api.keystone.application.create', async () => {
+          req.session.submittedData.insuranceEligibility = {};
+
+          await post(req, res);
+
+          expect(createApplicationSpy).toHaveBeenCalledTimes(0);
+        });
       });
     });
 
@@ -211,6 +279,23 @@ describe('controllers/insurance/account/create/your-details', () => {
             const saveDataSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
 
             saveData.account = saveDataSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+      });
+
+      describe('api.keystone.application.create', () => {
+        describe('when the create application API call fails', () => {
+          beforeEach(() => {
+            req.body = validBody;
+
+            createApplicationSpy = jest.fn(() => Promise.reject());
+            api.keystone.application.create = createApplicationSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
