@@ -1,6 +1,7 @@
 import mapApplications, { mapApplication } from '.';
 import { DEFAULT } from '../../../content-strings';
 import formatDate from '../../date/format-date';
+import replaceCharacterCodesWithCharacters from '../../replace-character-codes-with-characters';
 import mapInsuredFor from './map-insured-for';
 import { mockApplication, mockApplications } from '../../../test-mocks';
 
@@ -16,7 +17,7 @@ describe('server/helpers/mappings/map-applications', () => {
         lastUpdated: formatDate(new Date(updatedAt)),
         referenceNumber,
         buyerLocation: buyer?.country?.name || DEFAULT.EMPTY,
-        buyerName: buyer.companyOrOrganisationName || DEFAULT.EMPTY,
+        buyerName: replaceCharacterCodesWithCharacters(buyer.companyOrOrganisationName),
         insuredFor: mapInsuredFor(mockApplication),
       };
 

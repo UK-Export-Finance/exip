@@ -1,12 +1,13 @@
-import { FIELD_IDS, ROUTES } from '../../../../constants';
-import { enterCodePage } from '../../pages/insurance/account/sign-in';
-import { yourContactPage } from '../../pages/your-business';
-import { companyOrOrganisationPage } from '../../pages/insurance/your-buyer';
-import { submitButton, backLink } from '../../pages/shared';
-import dashboardPage from '../../pages/insurance/dashboard';
-import partials from '../../partials';
-import mockAccount from '../../../fixtures/account';
-import mockApplication from '../../../fixtures/application';
+import { FIELD_IDS, ROUTES } from '../../../../../constants';
+import { enterCodePage } from '../../../pages/insurance/account/sign-in';
+import { yourContactPage } from '../../../pages/your-business';
+import { companyOrOrganisationPage } from '../../../pages/insurance/your-buyer';
+import { submitButton, backLink } from '../../../pages/shared';
+import dashboardPage from '../../../pages/insurance/dashboard';
+import partials from '../../../partials';
+import mockAccount from '../../../../fixtures/account';
+import mockApplication from '../../../../fixtures/application';
+import mockNameWithSpecialCharacters from '../../../../fixtures/name-with-special-characters';
 
 const {
   INSURANCE: {
@@ -27,17 +28,13 @@ const {
   },
 } = partials.insurancePartials;
 
-const specialCharacters = '<>"\'/*&';
-
-const mockNameWithSpecialCharacters = (name) => `${name}${specialCharacters}`;
-
 const mockAccountSpecialCharacters = {
   ...mockAccount,
   [FIRST_NAME]: mockNameWithSpecialCharacters(mockAccount[FIRST_NAME]),
   [LAST_NAME]: mockNameWithSpecialCharacters(mockAccount[LAST_NAME]),
 };
 
-context('Insurance - Name fields - should render special characters after submission', () => {
+context('Insurance - Name fields - Header and page fields should render special characters without character codes after submission', () => {
   const baseUrl = Cypress.config('baseUrl');
   let referenceNumber;
   let allSectionsUrl;
@@ -45,6 +42,8 @@ context('Insurance - Name fields - should render special characters after submis
   const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
   before(() => {
+    cy.deleteAccount();
+
     cy.createAccount({
       ...mockAccountSpecialCharacters,
       nameFirst: mockAccountSpecialCharacters[FIRST_NAME],
