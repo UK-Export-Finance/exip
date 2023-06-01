@@ -2,8 +2,8 @@ import { headingCaption, saveAndBackButton, submitButton } from '../../../../pag
 import partials from '../../../../partials';
 import { companyOrOrganisationPage } from '../../../../pages/insurance/your-buyer';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
-import { ROUTES } from '../../../../../../constants';
-import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
+import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import application from '../../../../../fixtures/application';
@@ -23,7 +23,9 @@ const {
     EMAIL,
     CAN_CONTACT_BUYER,
   },
-} = FIELD_IDS;
+} = YOUR_BUYER_FIELD_IDS;
+
+const { ELIGIBILITY: { BUYER_COUNTRY } } = FIELD_IDS;
 
 const {
   START,
@@ -82,6 +84,14 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
+    it('renders a buyer country section', () => {
+      const fieldId = COUNTRY;
+      const field = companyOrOrganisationPage[fieldId];
+
+      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+      cy.checkText(field.value(), application.ELIGIBILITY[BUYER_COUNTRY]);
+    });
+
     it(`renders an ${NAME} label, and input`, () => {
       const fieldId = NAME;
       const field = companyOrOrganisationPage[fieldId];
@@ -97,16 +107,6 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
       field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
-      field.input().should('exist');
-    });
-
-    it(`renders ${COUNTRY} label and input`, () => {
-      const fieldId = COUNTRY;
-      const field = companyOrOrganisationPage[fieldId];
-
-      field.label().should('exist');
-      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
-
       field.input().should('exist');
     });
 

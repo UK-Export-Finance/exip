@@ -29,11 +29,7 @@ const companyOrOrganisation = {
   },
   [COUNTRY]: {
     label: () => cy.get(`[data-cy="${COUNTRY}-label"]`),
-    input: () => cy.get(`[data-cy="${COUNTRY}-input"]`),
-    inputOption: () => cy.get(`[data-cy="${COUNTRY}-input"]`).find('option'),
-    inputFirstOption: () => cy.get(`[data-cy="${COUNTRY}-input"]`).find('option').eq(0),
-    inputOptionSelected: () => cy.get(`[data-cy="${COUNTRY}-input"]`).find(':selected'),
-    errorMessage: () => cy.get(`[data-cy="${COUNTRY}-error-message"]`),
+    value: () => cy.get(`[data-cy="${COUNTRY}"]`),
   },
   [REGISTRATION_NUMBER]: {
     label: () => cy.get(`[data-cy="${REGISTRATION_NUMBER}-label"]`),

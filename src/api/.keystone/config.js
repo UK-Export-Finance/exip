@@ -968,7 +968,6 @@ var lists = {
       address: (0, import_fields.text)({
         db: { nativeType: "VarChar(1000)" }
       }),
-      country: (0, import_fields.relationship)({ ref: "Country" }),
       registrationNumber: (0, import_fields.text)(),
       website: (0, import_fields.text)(),
       contactFirstName: (0, import_fields.text)(),
@@ -3004,7 +3003,7 @@ var send_application_submitted_emails_default = applicationSubmittedEmails;
 var import_exceljs = __toESM(require("exceljs"));
 
 // helpers/replace-character-codes-with-characters/index.ts
-var replaceCharacterCodesWithCharacters = (str) => str.replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&#x2F;/g, "/").replace(/&#42;/g, "*");
+var replaceCharacterCodesWithCharacters = (str) => str.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&#x2F;/g, "/").replace(/&#42;/g, "*").replace(/&amp;/g, "&");
 var replace_character_codes_with_characters_default = replaceCharacterCodesWithCharacters;
 
 // generate-xlsx/map-application-to-XLSX/helpers/xlsx-row/index.ts

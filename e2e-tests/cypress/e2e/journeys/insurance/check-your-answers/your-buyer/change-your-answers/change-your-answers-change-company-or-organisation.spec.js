@@ -27,7 +27,6 @@ const {
   COMPANY_OR_ORGANISATION: {
     NAME,
     ADDRESS,
-    COUNTRY,
     REGISTRATION_NUMBER,
     WEBSITE,
     FIRST_NAME,
@@ -174,7 +173,6 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
 
         // as html, cannot use checkText so checking contains following fields
         row.value().contains(fieldVariables.newValueInput);
-        row.value().contains(application.BUYER[COUNTRY]);
 
         cy.checkTaskStatusCompleted(status());
       });

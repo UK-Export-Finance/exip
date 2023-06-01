@@ -18,14 +18,14 @@ const {
 } = ROUTES;
 
 const {
-  COMPANY_OR_ORGANISATION: { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER },
+  COMPANY_OR_ORGANISATION: { NAME, ADDRESS, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER },
 } = FIELD_IDS;
 
 const checkAndChange = false;
 
 describe('server/helpers/summary-lists/your-buyer/company-or-organisation-fields', () => {
   describe('generateAddressObject', () => {
-    describe(`when ${ADDRESS} and ${COUNTRY} are provided`, () => {
+    describe(`when ${ADDRESS} is provided`, () => {
       it('should return a fully populated object', () => {
         const response = generateAddressObject(mockApplicationBuyer);
 
@@ -33,24 +33,6 @@ describe('server/helpers/summary-lists/your-buyer/company-or-organisation-fields
 
         const expected = {
           address,
-          country: mockApplicationBuyer[COUNTRY].name,
-        };
-
-        expect(response).toEqual(expected);
-      });
-    });
-
-    describe(`when ${ADDRESS} is provided but ${COUNTRY} is null`, () => {
-      it('should return a populated object', () => {
-        mockApplicationBuyer[COUNTRY] = null;
-
-        const response = generateAddressObject(mockApplicationBuyer);
-
-        const address = replaceNewLineWithLineBreak(mockApplicationBuyer[ADDRESS]);
-
-        const expected = {
-          address,
-          country: undefined,
         };
 
         expect(response).toEqual(expected);
@@ -77,10 +59,6 @@ describe('server/helpers/summary-lists/your-buyer/company-or-organisation-fields
 
   describe('generateCompanyOrOrganisationFields', () => {
     const mockAnswers = mockApplicationBuyer;
-    mockAnswers.country = {
-      isoCode: 'GBR',
-      name: 'United Kingdom',
-    };
 
     const { referenceNumber } = mockApplication;
 
@@ -163,11 +141,6 @@ describe('server/helpers/summary-lists/your-buyer/company-or-organisation-fields
     ];
 
     it('should return fields and values from the submitted data/answers', () => {
-      mockAnswers.country = {
-        isoCode: 'GBR',
-        name: 'United Kingdom',
-      };
-
       const result = generateCompanyOrOrganisationFields(mockAnswers, referenceNumber, checkAndChange);
 
       expect(result).toEqual(expectedBase);

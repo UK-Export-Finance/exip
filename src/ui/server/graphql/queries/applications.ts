@@ -7,9 +7,6 @@ const applicationsQuery = gql`
       updatedAt
       referenceNumber
       buyer {
-        country {
-          name
-        }
         companyOrOrganisationName
       }
       policyAndExport {

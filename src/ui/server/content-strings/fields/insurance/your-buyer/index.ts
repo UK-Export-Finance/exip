@@ -20,7 +20,7 @@ export const YOUR_BUYER_FIELDS = {
       },
     },
     [COMPANY_OR_ORGANISATION.COUNTRY]: {
-      LABEL: 'Country',
+      LABEL: 'Buyer country',
     },
     [COMPANY_OR_ORGANISATION.REGISTRATION_NUMBER]: {
       LABEL: 'Registration number (optional)',

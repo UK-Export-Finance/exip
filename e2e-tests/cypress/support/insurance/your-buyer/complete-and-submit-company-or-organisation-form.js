@@ -2,13 +2,11 @@ import { FIELD_IDS } from '../../../../constants';
 import { companyOrOrganisationPage } from '../../../e2e/pages/insurance/your-buyer';
 import { submitButton } from '../../../e2e/pages/shared';
 import application from '../../../fixtures/application';
-import mockCountries from '../../../fixtures/countries';
 
 const {
   COMPANY_OR_ORGANISATION: {
     NAME,
     ADDRESS,
-    COUNTRY,
     REGISTRATION_NUMBER,
     WEBSITE,
     FIRST_NAME,
@@ -20,7 +18,6 @@ const {
 } = FIELD_IDS.INSURANCE.YOUR_BUYER;
 
 const { BUYER } = application;
-const countryToSelect = mockCountries[0].isoCode;
 
 export default () => {
   cy.keyboardInput(companyOrOrganisationPage[NAME].input(), BUYER[NAME]);
@@ -32,7 +29,6 @@ export default () => {
   cy.keyboardInput(companyOrOrganisationPage[POSITION].input(), BUYER[POSITION]);
   cy.keyboardInput(companyOrOrganisationPage[EMAIL].input(), BUYER[EMAIL]);
   companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().click();
-  companyOrOrganisationPage[COUNTRY].input().select(countryToSelect);
 
   // when running all the E2E tests, we seem to be temporarily blocked from companies house as it is called alot of times.
   cy.wait(10000); // eslint-disable-line cypress/no-unnecessary-waiting

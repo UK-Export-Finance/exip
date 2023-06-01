@@ -19,9 +19,9 @@ const checkFooterLinks = ({ isInsurancePage }) => {
     cy.checkLink(footer.supportLinks.cookies(), COOKIES.INSURANCE_HREF, COOKIES.TEXT);
     cy.checkLink(footer.supportLinks.contact(), CONTACT.INSURANCE_HREF, CONTACT.TEXT);
   } else {
-    cy.checkLink(footer.supportLinks.accessibilityStatement(), ACCESSIBILITY_STATEMENT.HREF, ACCESSIBILITY_STATEMENT.TEXT);
-    cy.checkLink(footer.supportLinks.cookies(), COOKIES.HREF, COOKIES.TEXT);
-    cy.checkLink(footer.supportLinks.contact(), CONTACT.HREF, CONTACT.TEXT);
+    cy.checkLink(footer.supportLinks.accessibilityStatement(), ACCESSIBILITY_STATEMENT.QUOTE_HREF, ACCESSIBILITY_STATEMENT.TEXT);
+    cy.checkLink(footer.supportLinks.cookies(), COOKIES.QUOTE_HREF, COOKIES.TEXT);
+    cy.checkLink(footer.supportLinks.contact(), CONTACT.QUOTE_HREF, CONTACT.TEXT);
   }
 };
 

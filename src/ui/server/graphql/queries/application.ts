@@ -103,10 +103,6 @@ const applicationQuery = gql`
           id
           companyOrOrganisationName
           address
-          country {
-            isoCode
-            name
-          }
           registrationNumber
           website
           contactFirstName
