@@ -1,6 +1,7 @@
 import generateSummaryListRows, { generateItemText } from '.';
 import getKeyText from '../get-key-text';
 import { LINKS } from '../../../content-strings';
+import replaceCharacterCodesWithCharacters from '../../replace-character-codes-with-characters';
 import { generateFields } from '../quote-summary-list';
 import mapQuoteToContent from '../../data-content-mappings/map-quote-to-content';
 import { mockQuote } from '../../../test-mocks';
@@ -60,7 +61,7 @@ describe('server/helpers/summary-lists/generate-summary-list-rows', () => {
         const mapped = {
           ...initObj,
           value: {
-            text: field.value,
+            text: replaceCharacterCodesWithCharacters(field.value),
             html: field.value,
             classes: `${field.id}-value`,
           },
