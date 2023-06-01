@@ -16,7 +16,7 @@ const {
  * @return {String} Application reference number
  */
 const completeSignInAndGoToApplication = (email = mockAccount[EMAIL]) => {
-  // complete sign in and go to dashboad
+  // complete sign in and go to dashboard
   completeInsuranceEligibilitySignInAndGoToDashboard(email);
 
   // go to the newly created application

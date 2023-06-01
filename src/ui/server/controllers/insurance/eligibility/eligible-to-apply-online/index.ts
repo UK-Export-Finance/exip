@@ -2,6 +2,7 @@ import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import { objectHasKeysAndValues } from '../../../../helpers/object';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
@@ -27,9 +28,9 @@ export const get = (req: Request, res: Response) =>
 export const post = async (req: Request, res: Response) => {
   try {
     // if user is logged in, create application.
-    const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
+    if (req.session.user && req.session.submittedData && objectHasKeysAndValues(req.session.submittedData.insuranceEligibility)) {
+      const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
 
-    if (req.session.user && eligibilityAnswers) {
       const application = await api.keystone.application.create(eligibilityAnswers, req.session.user.id);
 
       if (!application) {
