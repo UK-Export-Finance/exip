@@ -1,13 +1,8 @@
-import dashboardPage from '../../../pages/insurance/dashboard';
-import header from '../../../partials/header';
 import { APPLICATION } from '../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
-const { table } = dashboardPage;
-
 const {
   ROOT: INSURANCE_ROOT,
-  DASHBOARD,
   APPLICATION_SUBMITTED,
 } = INSURANCE_ROUTES;
 
@@ -15,11 +10,9 @@ context('Insurance - submit an application multiple policy type - As an Exporter
   let referenceNumber;
   let url;
 
-  const dashboardUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
-
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
-      policyType: APPLICATION.POLICY_TYPE.MULTIPLE
+      policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
     }).then((refNumber) => {
       referenceNumber = refNumber;
 
