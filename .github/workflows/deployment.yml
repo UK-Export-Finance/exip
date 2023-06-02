@@ -82,7 +82,7 @@ jobs:
           inlineScript: |
             # Basic
             az configure --defaults location=${{ vars.REGION }}
-            az configure --defaults group=rg-${{ env.PRODUCT }}-${{ github.ref_name }}-${{ vars.VERSION }}
+            az configure --defaults group=rg-${{ env.PRODUCT }}-staging-${{ vars.VERSION }}
 
     #TODO: EMS-1176: MS SQL DB setup
 
@@ -110,7 +110,7 @@ jobs:
           inlineScript: |
             # Basic
             az configure --defaults location=${{ vars.REGION }}
-            az configure --defaults group=rg-${{ env.PRODUCT }}-${{ github.ref_name }}-${{ vars.VERSION }}
+            az configure --defaults group=rg-${{ env.PRODUCT }}-staging-${{ vars.VERSION }}
 
       - name: CLI 📝
         run: |
