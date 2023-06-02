@@ -35,7 +35,7 @@ on:
       - '.github/workflows/deployment.yml'
 
 env:
-  PRODUCT: apim
+  PRODUCT: exip
   ENVIRONMENT: ${{ github.ref_name }}
   TIMEZONE: 'Europe/London'
   # Base artifact
@@ -45,7 +45,7 @@ jobs:
   # 1. Setup deployment variables
   setup:
     name: Setup 🔧
-    runs-on: [self-hosted, APIM, deployment]
+    runs-on: [self-hosted, EXIP, deployment]
     outputs:
       product: ${{ env.PRODUCT }}
       environment: ${{ env.ENVIRONMENT }}
@@ -116,7 +116,7 @@ jobs:
         run: |
           echo ACR=$(az acr show -n $(az resource list --resource-type 'Microsoft.ContainerRegistry/registries' --query '[0].name' -o tsv) --query loginServer -o tsv) >> $GITHUB_ENV
           echo ACR_USER=$(az acr show -n $(az resource list --resource-type 'Microsoft.ContainerRegistry/registries' --query '[0].name' -o tsv) --query name -o tsv) >> $GITHUB_ENV
-          echo WEBAPP=$(az acr show -n $(az resource list --resource-type 'Microsoft.ContainerRegistry/webapp' --query '[0].name' -o tsv) --query name -o tsv) >> $GITHUB_ENV
+          echo WEBAPP=$(az resource list --resource-type 'Microsoft.Web/sites' --query '[?contains(name, `${{ env.NAME }}`)].name' -o tsv) >> $GITHUB_ENV
 
       - name: ACR 🔐
         uses: azure/docker-login@v1
@@ -137,12 +137,27 @@ jobs:
         uses: azure/cli@v1.0.7
         with:
           inlineScript: |
-            az webapp deployment slot create --name ${{ env.WEBAPP }} --slot ${{ github.sha }} --configuration-source ${{ env.WEBAPP }}
-            az webapp deployment slot swap --name ${{ env.WEBAPP }} --slot ${{ github.sha }} --action swap
-            az webapp deployment slot delete --name ${{ env.WEBAPP }} --slot ${{ github.sha }}
+
+            # Create new temporary slot
+            az webapp deployment slot create \
+            --slot ${{ github.sha }} \
+            --name ${{ env.WEBAPP }} \
+            --configuration-source ${{ env.WEBAPP }}
+
+            # Swap slot
+            az webapp deployment slot swap \
+            --slot ${{ github.sha }} \
+            --name ${{ env.WEBAPP }} \
+            --action swap
+
+            # Delete temporary slot
+            az webapp deployment slot delete \
+            --slot ${{ github.sha }} \
+            --name ${{ env.WEBAPP }}
 
       - name: Reboot ♻️
         uses: azure/cli@v1.0.7
         with:
           inlineScript: |
-            az webapp restart --name ${{ env.WEBAPP }}
+            az webapp restart \
+            --name ${{ env.WEBAPP }}
