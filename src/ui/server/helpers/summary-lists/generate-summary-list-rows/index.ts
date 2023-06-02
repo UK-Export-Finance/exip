@@ -1,4 +1,5 @@
 import { LINKS } from '../../../content-strings';
+import replaceCharacterCodesWithCharacters from '../../replace-character-codes-with-characters';
 import { SummaryListItemData, SummaryListItem } from '../../../../types';
 
 /**
@@ -39,7 +40,7 @@ const generateSummaryListRows = (fields: Array<SummaryListItemData>, whiteText?:
         classes: `${field.id}-key govuk-!-width-one-half`,
       },
       value: {
-        text: field.value,
+        text: replaceCharacterCodesWithCharacters(field.value),
         html: field.value,
         classes: `${field.id}-value`,
       },

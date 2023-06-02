@@ -4,6 +4,7 @@ import { DECLARATIONS_FIELDS } from '../../../../../content-strings/fields/insur
 import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../../../constants';
 import singleInputPageVariables from '../../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
 import save from '../../save-data';
 import { Request, Response } from '../../../../../../types';
@@ -69,7 +70,7 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
         ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
         ...pageVariables(mockApplication.referenceNumber),
         userName: getUserNameFromSession(req.session.user),
-        application: res.locals.application,
+        application: mapApplicationToFormFields(res.locals.application),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

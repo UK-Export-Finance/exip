@@ -5,6 +5,7 @@ import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/field
 import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
@@ -84,7 +85,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
         userName: getUserNameFromSession(req.session.user),
         documentContent: mockDeclarations.howDataWillBeUsed.content.document,
         documentConfig: keystoneDocumentRendererConfig(),
-        application: res.locals.application,
+        application: mapApplicationToFormFields(res.locals.application),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

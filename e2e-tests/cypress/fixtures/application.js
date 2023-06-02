@@ -173,7 +173,7 @@ const application = {
       [ACCOUNT_FIRST_NAME]: 'Bob',
       [ACCOUNT_LAST_NAME]: 'Smith',
       [ACCOUNT_EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
-      [CONTACT_POSITION]: 'EO',
+      [CONTACT_POSITION]: 'CEO',
     },
   },
   EXPORTER_BROKER: {

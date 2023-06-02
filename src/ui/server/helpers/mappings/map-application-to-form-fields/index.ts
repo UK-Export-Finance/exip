@@ -1,5 +1,7 @@
 import { Application } from '../../../../types';
 import { FIELD_IDS } from '../../../constants';
+import { objectHasKeysAndValues } from '../../object';
+import mapNameFields from '../map-name-fields';
 import formatDate from '../../date/format-date';
 import getDateFieldsFromTimestamp from '../../date/get-date-fields-from-timestamp';
 import mapFinancialYearEndDate from '../map-financial-year-end-date';
@@ -25,9 +27,9 @@ const {
  * @param {Object} Application
  * @returns {Object} Mapped application for UI form fields.
  */
-const mapApplicationToFormFields = (application: Application): object => {
-  if (application && Object.keys(application)) {
-    const mapped = application;
+const mapApplicationToFormFields = (application?: Application): object => {
+  if (application && objectHasKeysAndValues(application)) {
+    const mapped = mapNameFields(application);
 
     if (mapped[SUBMISSION_DEADLINE]) {
       mapped[SUBMISSION_DEADLINE] = formatDate(application[SUBMISSION_DEADLINE]);

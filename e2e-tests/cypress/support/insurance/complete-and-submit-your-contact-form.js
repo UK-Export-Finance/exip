@@ -20,11 +20,16 @@ const {
 
 const businessContactDetails = application.EXPORTER_BUSINESS[BUSINESS_CONTACT_DETAIL];
 
-export default () => {
-  cy.keyboardInput(yourContactPage.field(FIRST_NAME).input(), businessContactDetails[FIRST_NAME]);
-  cy.keyboardInput(yourContactPage.field(LAST_NAME).input(), businessContactDetails[LAST_NAME]);
+const completeAndSubmitYourContact = ({
+  firstName = businessContactDetails[FIRST_NAME],
+  lastName = businessContactDetails[LAST_NAME],
+}) => {
+  cy.keyboardInput(yourContactPage.field(FIRST_NAME).input(), firstName);
+  cy.keyboardInput(yourContactPage.field(LAST_NAME).input(), lastName);
   cy.keyboardInput(yourContactPage.field(EMAIL).input(), businessContactDetails[EMAIL]);
   cy.keyboardInput(yourContactPage.field(POSITION).input(), businessContactDetails[POSITION]);
 
   submitButton().click();
 };
+
+export default completeAndSubmitYourContact;

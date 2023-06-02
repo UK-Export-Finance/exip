@@ -23,6 +23,7 @@ const dashboardPage = {
       }),
       firstRow: {
         referenceNumberLink: () => cy.get('table tbody tr').first().find('td a'),
+        buyerName: () => cy.get('table tbody tr').first().find('td').eq(4),
       },
       lastRow: {
         referenceNumberLink: () => cy.get('table tbody tr').last().find('td a'),
