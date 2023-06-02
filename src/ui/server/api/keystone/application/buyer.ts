@@ -5,7 +5,7 @@ import { ApolloResponse } from '../../../../types';
 const buyer = {
   update: async (id: string, update: object) => {
     try {
-      console.info('Updating application buyer country');
+      console.info('Updating application buyer');
 
       const variables = {
         where: {
@@ -29,10 +29,10 @@ const buyer = {
       }
 
       console.error(response);
-      throw new Error('Updating application buyer country');
+      throw new Error('Updating application buyer');
     } catch (err) {
       console.error(err);
-      throw new Error('Updating application buyer country');
+      throw new Error('Updating application buyer');
     }
   },
 };

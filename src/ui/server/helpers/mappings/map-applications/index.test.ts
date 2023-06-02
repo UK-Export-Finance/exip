@@ -16,11 +16,30 @@ describe('server/helpers/mappings/map-applications', () => {
         status,
         lastUpdated: formatDate(new Date(updatedAt)),
         referenceNumber,
+        buyerLocation: buyer?.country?.name || DEFAULT.EMPTY,
         buyerName: replaceCharacterCodesWithCharacters(buyer.companyOrOrganisationName),
         insuredFor: mapInsuredFor(mockApplication),
       };
 
       expect(result).toEqual(expected);
+    });
+
+    describe('when application.buyer.country.name does not exist', () => {
+      it('should return buyerLocation as default empty string', () => {
+        const result = mapApplication({
+          ...mockApplication,
+          buyer: {
+            ...mockApplication.buyer,
+            country: {
+              name: '',
+            },
+          },
+        });
+
+        const expected = DEFAULT.EMPTY;
+
+        expect(result.buyerLocation).toEqual(expected);
+      });
     });
 
     describe('when application.buyer.companyOrOrganisationName does not exist', () => {

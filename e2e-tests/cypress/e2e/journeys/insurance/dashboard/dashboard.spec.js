@@ -2,7 +2,9 @@ import dashboardPage from '../../../pages/insurance/dashboard';
 import header from '../../../partials/header';
 import { DEFAULT, PAGES, BUTTONS } from '../../../../../content-strings';
 import { APPLICATION, ROUTES } from '../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insurance';
 import { formatDate } from '../../../helpers/date';
+import application from '../../../../fixtures/application';
 
 const { table } = dashboardPage;
 
@@ -12,6 +14,14 @@ const {
   ALL_SECTIONS,
   ELIGIBILITY,
 } = ROUTES.INSURANCE;
+
+const {
+  YOUR_BUYER: {
+    COMPANY_OR_ORGANISATION: {
+      COUNTRY,
+    },
+  },
+} = INSURANCE_FIELD_IDS;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.DASHBOARD;
 
@@ -149,7 +159,8 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
       it(`should render empty ${TABLE_HEADERS.BUYER_LOCATION} cell`, () => {
         const cell = table.body.row(referenceNumber).buyerLocation();
 
-        cy.checkText(cell, DEFAULT.EMPTY);
+        const expected = application.BUYER[COUNTRY];
+        cy.checkText(cell, expected);
       });
 
       it(`should render empty ${TABLE_HEADERS.BUYER_NAME} cell`, () => {
