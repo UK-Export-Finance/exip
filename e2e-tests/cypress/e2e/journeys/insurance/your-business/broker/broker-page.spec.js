@@ -181,7 +181,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
       describe('when submitting a fully filled form', () => {
         describe(`when selecting yes for ${USING_BROKER}`, () => {
           it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
-            cy.completeAndSubmitBrokerForm();
+            cy.completeAndSubmitBrokerForm({});
 
             cy.url().should('eq', checkYourAnswersUrl);
           });

@@ -39,7 +39,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
       cy.completeAndSubmitYourContact();
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
-      cy.completeAndSubmitBrokerForm();
+      cy.completeAndSubmitBrokerForm({});
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });

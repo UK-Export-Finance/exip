@@ -20,7 +20,7 @@ export default () => {
   cy.completeAndSubmitYourContact();
   cy.completeAndSubmitNatureOfYourBusiness();
   cy.completeAndSubmitTurnoverForm();
-  cy.completeAndSubmitBrokerForm();
+  cy.completeAndSubmitBrokerForm({});
 
   submitButton().click();
 
