@@ -44,6 +44,10 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters-from-desktop">
 
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-cy="{{FIELDS.COUNTRY.ID}}-heading">{{ FIELDS.COUNTRY.LABEL }}</h2>
+
+        <p class="govuk-body-l" data-cy="{{FIELDS.COUNTRY.ID}}">{{ application.eligibility.buyerCountry.name }}</p>
+
         {{ govukInput({
           label: {
             text:  FIELDS.NAME.LABEL,
@@ -90,30 +94,6 @@
             attributes: {
               id: FIELDS.ADDRESS.ID + '-label',
               'data-cy': FIELDS.ADDRESS.ID + '-label'
-            }
-          }
-        }) }}
-
-        {{ govukSelect({
-          id: FIELDS.COUNTRY.ID,
-          name: FIELDS.COUNTRY.ID,
-          label: {
-            text: FIELDS.COUNTRY.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
-            attributes: {
-              'data-cy': FIELDS.COUNTRY.ID + '-label'
-            }
-          },
-          classes: "govuk-!-width-one-half",
-          items: countries,
-          value: submittedValues[FIELDS.COUNTRY.ID] or application.buyer[FIELDS.COUNTRY.ID],
-          attributes: {
-            "data-cy": FIELDS.COUNTRY.ID  + "-input"
-          },
-          errorMessage: validationErrors.errorList[FIELDS.COUNTRY.ID] and {
-            text: validationErrors.errorList[FIELDS.COUNTRY.ID].text,
-            attributes: {
-              "data-cy": FIELDS.COUNTRY.ID + "-error-message"
             }
           }
         }) }}

@@ -16,7 +16,6 @@ const {
       COMPANY_OR_ORGANISATION: {
         NAME,
         ADDRESS,
-        COUNTRY,
         REGISTRATION_NUMBER,
         WEBSITE,
         FIRST_NAME,
@@ -146,7 +145,6 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         // as html, cannot use checkText so checking contains following fields
         row.value().contains(newAnswer);
-        row.value().contains(application.BUYER[COUNTRY]);
       });
     });
   });

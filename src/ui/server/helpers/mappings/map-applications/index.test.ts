@@ -1,4 +1,4 @@
-import mapApplications, { mapApplication } from '.';
+import { mapApplication, mapApplications } from '.';
 import { DEFAULT } from '../../../content-strings';
 import formatDate from '../../date/format-date';
 import replaceCharacterCodesWithCharacters from '../../replace-character-codes-with-characters';

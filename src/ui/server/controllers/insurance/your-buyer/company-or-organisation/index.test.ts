@@ -2,15 +2,13 @@ import { get, post, pageVariables, TEMPLATE } from '.';
 import { PAGES } from '../../../../content-strings';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
-import api from '../../../../api';
-import mapCountries from '../../../../helpers/mappings/map-countries';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import yourBuyerDetailsValidation from './validation';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCountries, mockBuyer } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockBuyer } from '../../../../test-mocks';
 
 const {
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
@@ -36,7 +34,6 @@ const { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_N
 describe('controllers/insurance/your-buyer/company-or-organisation', () => {
   let req: Request;
   let res: Response;
-  let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
 
   beforeEach(() => {
     req = mockReq();
@@ -44,7 +41,6 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
 
     res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
-    api.keystone.countries.getAll = getCountriesSpy;
   });
 
   afterAll(() => {
@@ -110,16 +106,8 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
   });
 
   describe('get', () => {
-    it('should call api.keystone.countries.getAll', async () => {
-      await get(req, res);
-
-      expect(getCountriesSpy).toHaveBeenCalledTimes(1);
-    });
-
     it('should render template', async () => {
       await get(req, res);
-
-      const expectedCountries = mapCountries(mockCountries, mockApplication.buyer[COUNTRY]);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
@@ -129,39 +117,12 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
         application: mapApplicationToFormFields(mockApplication),
         userName: getUserNameFromSession(req.session.user),
         ...pageVariables(mockApplication.referenceNumber),
-        countries: expectedCountries,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
 
     describe('api error handling', () => {
-      describe('when the get countries API call fails', () => {
-        beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.reject());
-          api.keystone.countries.getAll = getCountriesSpy;
-        });
-
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
-      });
-
-      describe('when the get countries response does not return a populated array', () => {
-        beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.resolve([]));
-          api.keystone.countries.getAll = getCountriesSpy;
-        });
-
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
-      });
-
       describe('when there is no application', () => {
         beforeEach(() => {
           res.locals = { csrfToken: '1234' };
@@ -178,8 +139,6 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
 
   describe('post', () => {
     beforeEach(() => {
-      getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
-      api.keystone.countries.getAll = getCountriesSpy;
       mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(true));
     });
 
@@ -238,16 +197,8 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
     });
 
     describe('when there are validation errors', () => {
-      it('should call api.keystone.countries', async () => {
-        await get(req, res);
-
-        expect(getCountriesSpy).toHaveBeenCalledTimes(1);
-      });
-
       it('should render template with validation errors', async () => {
         await post(req, res);
-
-        const expectedCountries = mapCountries(mockCountries, req.body[COUNTRY]);
         const validationErrors = yourBuyerDetailsValidation(req.body);
 
         const expectedVariables = {
@@ -258,7 +209,6 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber),
           submittedValues: req.body,
-          countries: expectedCountries,
           validationErrors,
         };
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -266,32 +216,6 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
     });
 
     describe('api error handling', () => {
-      describe('when the get countries API call fails', () => {
-        beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.reject());
-          api.keystone.countries.getAll = getCountriesSpy;
-        });
-
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await post(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
-      });
-
-      describe('when the get countries response does not return a populated array', () => {
-        beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.resolve([]));
-          api.keystone.countries.getAll = getCountriesSpy;
-        });
-
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await post(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
-      });
-
       describe('when application does not exist', () => {
         beforeEach(() => {
           res.locals = { csrfToken: '1234' };

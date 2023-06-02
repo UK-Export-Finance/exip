@@ -56,8 +56,8 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
   const ERROR_ASSERTIONS = {
     field: companyOrOrganisationPage[FIELD_ID],
-    numberOfExpectedErrors: 8,
-    errorIndex: 7,
+    numberOfExpectedErrors: 7,
+    errorIndex: 6,
   };
 
   it(`should display validation errors when ${FIELD_ID} radio buttons are not selected`, () => {
@@ -72,7 +72,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
     submitButton().click();
 
-    partials.errorSummaryListItems().should('have.length', 7);
+    partials.errorSummaryListItems().should('have.length', 6);
   });
 
   it('should NOT display validation errors when no radio is selected', () => {
@@ -80,6 +80,6 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
     submitButton().click();
 
-    partials.errorSummaryListItems().should('have.length', 7);
+    partials.errorSummaryListItems().should('have.length', 6);
   });
 });

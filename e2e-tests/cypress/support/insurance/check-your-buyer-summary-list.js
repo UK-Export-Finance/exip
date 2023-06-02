@@ -11,7 +11,6 @@ const {
       COMPANY_OR_ORGANISATION: {
         NAME,
         ADDRESS,
-        COUNTRY,
         REGISTRATION_NUMBER,
         WEBSITE,
         FIRST_NAME,
@@ -98,7 +97,6 @@ const checkYourBusinessSummaryList = ({
 
     // as html, cannot use checkText so checking contains following fields
     row.value().contains(application.BUYER[fieldId]);
-    row.value().contains(application.BUYER[COUNTRY]);
 
     row.changeLink().should('exist');
   },

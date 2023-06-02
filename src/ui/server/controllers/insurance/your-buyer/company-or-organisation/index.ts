@@ -1,9 +1,6 @@
 import { PAGES } from '../../../../content-strings';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
-import api from '../../../../api';
-import { isPopulatedArray } from '../../../../helpers/array';
-import mapCountries from '../../../../helpers/mappings/map-countries';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
@@ -84,14 +81,6 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const countries = await api.keystone.countries.getAll();
-
-    if (!isPopulatedArray(countries)) {
-      return res.redirect(PROBLEM_WITH_SERVICE);
-    }
-
-    const mappedCountries = mapCountries(countries, application.buyer[COUNTRY]?.isoCode);
-
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION,
@@ -100,7 +89,6 @@ export const get = async (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       ...pageVariables(application.referenceNumber),
       application: mapApplicationToFormFields(application),
-      countries: mappedCountries,
     });
   } catch (err) {
     console.error('Error getting insurance - your buyer - buyers company or organisation ', { err });
@@ -123,14 +111,6 @@ export const post = async (req: Request, res: Response) => {
     const validationErrors = generateValidationErrors(body);
 
     if (validationErrors) {
-      const countries = await api.keystone.countries.getAll();
-
-      if (!isPopulatedArray(countries)) {
-        return res.redirect(PROBLEM_WITH_SERVICE);
-      }
-
-      const mappedCountries = mapCountries(countries, body[COUNTRY]);
-
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION,
@@ -139,7 +119,6 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         ...pageVariables(application.referenceNumber),
         submittedValues: body,
-        countries: mappedCountries,
         validationErrors,
       });
     }

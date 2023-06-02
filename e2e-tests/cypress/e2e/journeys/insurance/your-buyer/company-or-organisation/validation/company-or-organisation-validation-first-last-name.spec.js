@@ -60,8 +60,8 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
     const ERROR_ASSERTIONS = {
       field: companyOrOrganisationPage[FIRST_NAME_FIELD_ID],
-      numberOfExpectedErrors: 8,
-      errorIndex: 3,
+      numberOfExpectedErrors: 7,
+      errorIndex: 2,
     };
 
     it(`should display validation errors when ${FIRST_NAME_FIELD_ID} is not entered`, () => {
@@ -77,7 +77,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
       submitButton().click();
 
-      partials.errorSummaryListItems().should('have.length', 7);
+      partials.errorSummaryListItems().should('have.length', 6);
     });
   });
 
@@ -90,8 +90,8 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
     const ERROR_ASSERTIONS = {
       field: companyOrOrganisationPage[LAST_NAME_FIELD_ID],
-      numberOfExpectedErrors: 7,
-      errorIndex: 3,
+      numberOfExpectedErrors: 6,
+      errorIndex: 2,
     };
 
     it(`should display validation errors when ${LAST_NAME_FIELD_ID} is not entered`, () => {
@@ -106,7 +106,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
       submitButton().click();
 
-      partials.errorSummaryListItems().should('have.length', 6);
+      partials.errorSummaryListItems().should('have.length', 5);
     });
   });
 });

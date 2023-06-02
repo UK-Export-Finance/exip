@@ -104,7 +104,6 @@ interface ApplicationBuyerCountry {
   isoCode?: string;
   name?: string;
 }
-
 interface ApplicationBuyer {
   id: string;
   companyOrOrganisationName?: string;

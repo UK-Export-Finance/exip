@@ -55,8 +55,8 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   // for error assertion - common fields
   const ERROR_ASSERTIONS = {
     field: companyOrOrganisationPage[FIELD_ID],
-    numberOfExpectedErrors: 9,
-    errorIndex: 3,
+    numberOfExpectedErrors: 8,
+    errorIndex: 2,
   };
 
   it(`should display validation errors if when ${FIELD_ID} is the incorrect format`, () => {
@@ -83,7 +83,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
       submitButton().click();
 
-      partials.errorSummaryListItems().should('have.length', 8);
+      partials.errorSummaryListItems().should('have.length', 7);
     });
   });
 });
