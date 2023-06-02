@@ -368,6 +368,7 @@ var XLSX_CONFIG = (application2) => ({
   COLUMN_WIDTH: 85,
   ADDITIONAL_TITLE_COLUMN_HEIGHT: 25,
   ADDITIONAL_COLUMN_HEIGHT: 50,
+  LARGE_ADDITIONAL_COLUMN_HEIGHT: 50 * 2,
   FONT_SIZE: {
     DEFAULT: 11,
     TITLE: 14
@@ -3778,14 +3779,14 @@ var XLSX_HEADER_COLUMNS = [
 var header_columns_default = XLSX_HEADER_COLUMNS;
 
 // generate-xlsx/styled-columns/index.ts
-var { ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, ROW_INDEXES, FONT_SIZE } = XLSX_CONFIG();
+var { ADDITIONAL_COLUMN_HEIGHT, LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, ROW_INDEXES, FONT_SIZE } = XLSX_CONFIG();
 var worksheetRowHeights = (titleRowIndexes, worksheet) => {
   const modifiedWorksheet = worksheet;
-  modifiedWorksheet.getRow(ROW_INDEXES.COMPANY_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
+  modifiedWorksheet.getRow(ROW_INDEXES.COMPANY_ADDRESS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
   modifiedWorksheet.getRow(ROW_INDEXES.COMPANY_SIC_CODES).height = ADDITIONAL_COLUMN_HEIGHT;
-  modifiedWorksheet.getRow(ROW_INDEXES.BROKER_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
-  modifiedWorksheet.getRow(ROW_INDEXES.BUYER_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
-  modifiedWorksheet.getRow(ROW_INDEXES.BUYER_CONTACT_DETAILS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
+  modifiedWorksheet.getRow(ROW_INDEXES.BROKER_ADDRESS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
+  modifiedWorksheet.getRow(ROW_INDEXES.BUYER_ADDRESS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
+  modifiedWorksheet.getRow(ROW_INDEXES.BUYER_CONTACT_DETAILS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
   Object.values(titleRowIndexes).forEach((rowIndex) => {
     modifiedWorksheet.getRow(rowIndex).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
   });

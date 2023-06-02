@@ -5,7 +5,7 @@ import mapApplicationToXLSX from '../map-application-to-XLSX';
 import { XLSX_CONFIG } from '../../constants';
 import { mockApplication } from '../../test-mocks';
 
-const { ROW_INDEXES, ADDITIONAL_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG();
+const { ROW_INDEXES, ADDITIONAL_COLUMN_HEIGHT, LARGE_ADDITIONAL_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG();
 
 describe('api/generate-xlsx/styled-columns/index', () => {
   const workbook = new ExcelJS.Workbook();
@@ -81,19 +81,19 @@ describe('api/generate-xlsx/styled-columns/index', () => {
       const result = worksheetRowHeights(TITLE_INDEXES, worksheet);
 
       const row1 = result.getRow(ROW_INDEXES.COMPANY_ADDRESS);
-      expect(row1.height).toEqual(ADDITIONAL_COLUMN_HEIGHT * 2);
+      expect(row1.height).toEqual(LARGE_ADDITIONAL_COLUMN_HEIGHT);
 
       const row2 = result.getRow(ROW_INDEXES.COMPANY_SIC_CODES);
       expect(row2.height).toEqual(ADDITIONAL_COLUMN_HEIGHT);
 
       const row3 = result.getRow(ROW_INDEXES.BROKER_ADDRESS);
-      expect(row3.height).toEqual(ADDITIONAL_COLUMN_HEIGHT * 2);
+      expect(row3.height).toEqual(LARGE_ADDITIONAL_COLUMN_HEIGHT);
 
       const row4 = result.getRow(ROW_INDEXES.BUYER_ADDRESS);
-      expect(row4.height).toEqual(ADDITIONAL_COLUMN_HEIGHT * 2);
+      expect(row4.height).toEqual(LARGE_ADDITIONAL_COLUMN_HEIGHT);
 
       const row5 = result.getRow(ROW_INDEXES.BUYER_CONTACT_DETAILS);
-      expect(row5.height).toEqual(ADDITIONAL_COLUMN_HEIGHT * 2);
+      expect(row5.height).toEqual(LARGE_ADDITIONAL_COLUMN_HEIGHT);
     });
   });
 });

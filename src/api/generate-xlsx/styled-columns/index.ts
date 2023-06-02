@@ -2,7 +2,7 @@ import { Row, Worksheet } from 'exceljs';
 import { XLSX_CONFIG } from '../../constants';
 import { Application } from '../../types';
 
-const { ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, ROW_INDEXES, FONT_SIZE } = XLSX_CONFIG();
+const { ADDITIONAL_COLUMN_HEIGHT, LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, ROW_INDEXES, FONT_SIZE } = XLSX_CONFIG();
 
 /**
  * worksheetRowHeights
@@ -14,11 +14,11 @@ const { ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, ROW_INDEXES, F
 export const worksheetRowHeights = (titleRowIndexes: Array<number>, worksheet: Worksheet) => {
   const modifiedWorksheet = worksheet;
 
-  modifiedWorksheet.getRow(ROW_INDEXES.COMPANY_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
+  modifiedWorksheet.getRow(ROW_INDEXES.COMPANY_ADDRESS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
   modifiedWorksheet.getRow(ROW_INDEXES.COMPANY_SIC_CODES).height = ADDITIONAL_COLUMN_HEIGHT;
-  modifiedWorksheet.getRow(ROW_INDEXES.BROKER_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
-  modifiedWorksheet.getRow(ROW_INDEXES.BUYER_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
-  modifiedWorksheet.getRow(ROW_INDEXES.BUYER_CONTACT_DETAILS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
+  modifiedWorksheet.getRow(ROW_INDEXES.BROKER_ADDRESS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
+  modifiedWorksheet.getRow(ROW_INDEXES.BUYER_ADDRESS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
+  modifiedWorksheet.getRow(ROW_INDEXES.BUYER_CONTACT_DETAILS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
 
   Object.values(titleRowIndexes).forEach((rowIndex) => {
     modifiedWorksheet.getRow(rowIndex).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
