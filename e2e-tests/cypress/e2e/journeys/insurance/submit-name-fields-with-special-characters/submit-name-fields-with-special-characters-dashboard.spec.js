@@ -41,7 +41,7 @@ context('Insurance - Name fields - Dashboard fields should render special charac
     cy.deleteApplication(referenceNumber);
   });
 
-  it('should alkds kasl', () => {
+  it("should render special characters in the dashboard's buyer name field", () => {
     cy.checkText(
       dashboardPage.table.body.firstRow.buyerName(),
       nameWithSpecialCharacters,
