@@ -232,6 +232,8 @@ model Buyer {
   applicationId                String?       @map("application")
   companyOrOrganisationName    String        @default("")
   address                      String        @default("") @mysql.VarChar(1000)
+  country                      Country?      @relation("Buyer_country", fields: [countryId], references: [id])
+  countryId                    String?       @map("country")
   registrationNumber           String        @default("")
   website                      String        @default("")
   contactFirstName             String        @default("")
@@ -244,12 +246,14 @@ model Buyer {
   from_Application_buyer       Application[] @relation("Application_buyer")
 
   @@index([applicationId])
+  @@index([countryId])
 }
 
 model Country {
   id                            String        @id @default(cuid())
   isoCode                       String        @default("")
   name                          String        @default("")
+  from_Buyer_country            Buyer[]       @relation("Buyer_country")
   from_Eligibility_buyerCountry Eligibility[] @relation("Eligibility_buyerCountry")
 }
 

@@ -62,6 +62,7 @@ interface ApplicationCompanySicCode {
 interface ApplicationBuyer extends ApplicationRelationship {
   companyOrOrganisationName?: string;
   address?: string;
+  country?: Country;
   registrationNumber?: string;
   website?: string;
   contactFirstName?: string;

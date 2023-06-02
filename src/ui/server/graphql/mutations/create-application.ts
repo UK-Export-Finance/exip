@@ -8,6 +8,9 @@ const createApplicationMutation = gql`
       eligibility {
         id
       }
+      buyer {
+        id
+      }
     }
   }
 `;

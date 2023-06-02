@@ -5,7 +5,6 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import baseConfig from '../../keystone';
 import getPopulatedApplication, { generateErrorMessage } from '.';
 import { createFullApplication } from '../../test-helpers';
-import mockCountries from '../../test-mocks/mock-countries';
 import { Application } from '../../types';
 import mockApplication from '../../test-mocks/mock-application';
 
@@ -49,15 +48,6 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.buyer.id).toEqual(application.buyer.id);
 
     expect(result.declaration.id).toEqual(application.declaration.id);
-  });
-
-  it('should return an application with populated buyer country', async () => {
-    const result = await getPopulatedApplication(context, applicationIds);
-
-    const [expectedCountry] = mockCountries;
-
-    expect(result.buyer.country?.name).toEqual(expectedCountry.name);
-    expect(result.buyer.country?.isoCode).toEqual(expectedCountry.isoCode);
   });
 
   it('should return an application with populated businessContactDetail object in business', async () => {

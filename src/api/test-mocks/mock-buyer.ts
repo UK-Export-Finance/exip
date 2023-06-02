@@ -6,6 +6,11 @@ dotenv.config();
 const mockBuyer = {
   companyOrOrganisationName: 'Test name',
   address: 'Test address',
+  country: {
+    id: 'clav8by1g0000kgoq5a2afr1a',
+    isoCode: 'GBR',
+    name: 'United Kingdom',
+  },
   registrationNumber: '1234',
   website: 'www.google.com',
   contactFirstName: 'Bob',
