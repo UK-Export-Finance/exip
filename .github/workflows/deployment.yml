@@ -127,6 +127,10 @@ jobs:
 
       - name: Artifacts 🗃️
         working-directory: src/${{ env.NAME }}
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+          GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
         run: |
           docker build . \
           -t ${{ env.ACR }}/${{ env.NAME }}:${{ github.sha }} \
