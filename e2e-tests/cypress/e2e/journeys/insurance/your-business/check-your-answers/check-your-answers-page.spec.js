@@ -43,7 +43,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
       task.link().click();
 
       cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitYourContact();
+      cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitBrokerForm({});

@@ -36,7 +36,7 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
 
       task.link().click();
 
-      cy.completeAndSubmitCompanyOrOrganisationForm();
+      cy.completeAndSubmitCompanyOrOrganisationForm({});
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
       checkYourAnswersUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;

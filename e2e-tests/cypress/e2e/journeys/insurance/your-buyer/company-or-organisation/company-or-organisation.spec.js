@@ -210,7 +210,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitCompanyOrOrganisationForm();
+        cy.completeAndSubmitCompanyOrOrganisationForm({});
 
         cy.url().should('eq', workingWithBuyerUrl);
       });

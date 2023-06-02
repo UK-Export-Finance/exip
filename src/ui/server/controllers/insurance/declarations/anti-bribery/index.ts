@@ -4,6 +4,7 @@ import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/field
 import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
@@ -64,7 +65,7 @@ export const get = async (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       documentContent: antiBriberyContent.content.document,
       documentConfig: keystoneDocumentRendererConfig(),
-      application,
+      application: mapApplicationToFormFields(res.locals.application),
     });
   } catch (err) {
     console.error("Error getting declarations - anti-bribery and rendering 'anti-bribery' page ", { err });
