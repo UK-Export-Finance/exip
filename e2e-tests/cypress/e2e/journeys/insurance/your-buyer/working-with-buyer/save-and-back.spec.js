@@ -35,7 +35,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
 
       task.link().click();
 
-      cy.completeAndSubmitCompanyOrOrganisationForm();
+      cy.completeAndSubmitCompanyOrOrganisationForm({});
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
 

@@ -30,7 +30,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       task.link().click();
 
       cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitYourContact();
+      cy.completeAndSubmitYourContact({});
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
 

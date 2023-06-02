@@ -22,14 +22,14 @@ export default ({ exporterHasTradedWithBuyer }) => {
   submitButton().click();
 
   cy.completeAndSubmitCompanyDetails();
-  cy.completeAndSubmitYourContact();
+  cy.completeAndSubmitYourContact({});
   cy.completeAndSubmitNatureOfYourBusiness();
   cy.completeAndSubmitTurnoverForm();
   cy.completeAndSubmitBrokerForm();
 
   submitButton().click();
 
-  cy.completeAndSubmitCompanyOrOrganisationForm();
+  cy.completeAndSubmitCompanyOrOrganisationForm({});
   cy.completeAndSubmitWorkingWithBuyerForm({ exporterHasTradedWithBuyer });
 
   submitButton().click();

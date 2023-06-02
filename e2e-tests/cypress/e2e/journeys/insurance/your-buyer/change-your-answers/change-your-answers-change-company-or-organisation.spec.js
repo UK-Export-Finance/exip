@@ -52,7 +52,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
       task.link().click();
 
-      cy.completeAndSubmitCompanyOrOrganisationForm();
+      cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitWorkingWithBuyerForm({});
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;

@@ -1,4 +1,5 @@
 import ACCOUNT_FIELD_IDS from '../../constants/field-ids/insurance/account';
+import replaceCharacterCodesWithCharacters from '../replace-character-codes-with-characters';
 import { RequestSessionUser } from '../../../types';
 
 const { FIRST_NAME, LAST_NAME } = ACCOUNT_FIELD_IDS;
@@ -11,7 +12,10 @@ const { FIRST_NAME, LAST_NAME } = ACCOUNT_FIELD_IDS;
  */
 const getUserNameFromSession = (userSession?: RequestSessionUser) => {
   if (userSession) {
-    return `${userSession[FIRST_NAME]} ${userSession[LAST_NAME]}`;
+    const firstName = replaceCharacterCodesWithCharacters(userSession[FIRST_NAME]);
+    const lastName = replaceCharacterCodesWithCharacters(userSession[LAST_NAME]);
+
+    return `${firstName} ${lastName}`;
   }
 
   return null;

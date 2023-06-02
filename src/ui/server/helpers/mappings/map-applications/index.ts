@@ -1,5 +1,6 @@
 import { DEFAULT } from '../../../content-strings';
 import formatDate from '../../date/format-date';
+import replaceCharacterCodesWithCharacters from '../../replace-character-codes-with-characters';
 import mapInsuredFor from './map-insured-for';
 import { Application } from '../../../../types';
 
@@ -16,7 +17,7 @@ export const mapApplication = (application: Application) => {
     status,
     lastUpdated: formatDate(new Date(updatedAt)),
     referenceNumber,
-    buyerName: buyer.companyOrOrganisationName || DEFAULT.EMPTY,
+    buyerName: replaceCharacterCodesWithCharacters(buyer.companyOrOrganisationName) || DEFAULT.EMPTY,
     insuredFor: mapInsuredFor(application),
   };
 
