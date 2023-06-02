@@ -124,7 +124,7 @@ const queryStrings = {
 /**
  * createAnAccount
  * Create an account
- * @param {String} First name
+ * @param {String} Name
  * @param {String} Last name
  * @param {String} Email address
  * @param {String} Password
