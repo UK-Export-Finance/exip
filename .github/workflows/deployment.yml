@@ -42,7 +42,7 @@ env:
   FROM: latest
 
 jobs:
-  # 1. Setup deployment variables
+
   setup:
     name: Setup 🔧
     runs-on: [self-hosted, EXIP, deployment]
@@ -57,7 +57,7 @@ jobs:
       - name: Timezone 🌐
         run: echo "Timezone set to ${{ env.TIMEZONE }}"
 
-  # 2. DB - Initialisation
+
   database:
     name: Database 📦️
     needs: setup
@@ -86,7 +86,6 @@ jobs:
 
     #TODO: EMS-1176: MS SQL DB setup
 
-  # 3. API - Deployment
   api:
     name: API 📦️
     needs: setup
@@ -136,6 +135,87 @@ jobs:
           --build-arg GITHUB_SHA=${{ github.sha }} \
           --build-arg SESSION_SECRET=${{ secrets.SESSION_SECRET }} \
           --build-arg GOV_NOTIFY_API_KEY=${{ secrets.GOV_NOTIFY_API_KEY }}
+
+          # Push images
+          docker push ${{ env.ACR }}/${{ env.NAME }}:${{ github.sha }}
+          docker push ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }}
+
+      - name: Slot 🔀
+        uses: azure/cli@v1.0.7
+        with:
+          inlineScript: |
+
+            # Create new temporary slot
+            az webapp deployment slot create \
+            --slot ${{ github.sha }} \
+            --name ${{ env.WEBAPP }} \
+            --configuration-source ${{ env.WEBAPP }}
+
+            # Swap slot
+            az webapp deployment slot swap \
+            --slot ${{ github.sha }} \
+            --name ${{ env.WEBAPP }} \
+            --action swap
+
+            # Delete temporary slot
+            az webapp deployment slot delete \
+            --slot ${{ github.sha }} \
+            --name ${{ env.WEBAPP }}
+
+      - name: Reboot ♻️
+        uses: azure/cli@v1.0.7
+        with:
+          inlineScript: |
+            az webapp restart \
+            --name ${{ env.WEBAPP }}
+
+  ui:
+    name: UI 📦️
+    needs: setup
+    environment: ${{ needs.setup.outputs.environment }}
+    env:
+      NAME: ui
+      ENVIRONMENT: ${{ needs.setup.outputs.environment }}
+    runs-on: [self-hosted, EXIP, deployment]
+    steps:
+      - name: Repository 🗃️
+        uses: actions/checkout@v3
+
+      - name: Azure 🔐
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Defaults ✨
+        uses: Azure/cli@v1.0.7
+        with:
+          inlineScript: |
+            # Basic
+            az configure --defaults location=${{ vars.REGION }}
+            az configure --defaults group=rg-${{ env.PRODUCT }}-staging-${{ vars.VERSION }}
+
+      - name: CLI 📝
+        run: |
+          echo ACR=$(az acr show -n $(az resource list --resource-type 'Microsoft.ContainerRegistry/registries' --query '[0].name' -o tsv) --query loginServer -o tsv) >> $GITHUB_ENV
+          echo ACR_USER=$(az acr show -n $(az resource list --resource-type 'Microsoft.ContainerRegistry/registries' --query '[0].name' -o tsv) --query name -o tsv) >> $GITHUB_ENV
+          echo WEBAPP=$(az resource list --resource-type 'Microsoft.Web/sites' --query '[?contains(name, `${{ env.NAME }}`)].name' -o tsv) >> $GITHUB_ENV
+
+      - name: ACR 🔐
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ env.ACR }}
+          username: ${{ env.ACR_USER }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Artifacts 🗃️
+        working-directory: src/${{ env.NAME }}
+        run: |
+
+          # Build images
+          docker build . \
+          -t ${{ env.ACR }}/${{ env.NAME }}:${{ github.sha }} \
+          -t ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }} \
+          --build-arg GITHUB_SHA=${{ github.sha }}
 
           # Push images
           docker push ${{ env.ACR }}/${{ env.NAME }}:${{ github.sha }}
