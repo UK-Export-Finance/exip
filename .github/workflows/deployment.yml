@@ -126,6 +126,7 @@ jobs:
           password: ${{ secrets.ACR_PASSWORD }}
 
       - name: Artifacts 🗃️
+        working-directory: src/${{ env.NAME }}
         run: |
           docker build . \
           -t ${{ env.ACR }}/${{ env.NAME }}:${{ github.sha }} \
