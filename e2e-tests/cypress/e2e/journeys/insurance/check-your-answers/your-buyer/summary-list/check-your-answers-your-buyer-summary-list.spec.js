@@ -29,7 +29,7 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-context('Insurance - Check your answers - Your buyer page- Summary list', () => {
+context('Insurance - Check your answers - Your buyer page - Summary list', () => {
   let referenceNumber;
   let url;
 

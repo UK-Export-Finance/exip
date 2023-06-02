@@ -28,7 +28,7 @@ const companyOrOrganisation = {
     errorMessage: () => cy.get(`[data-cy="${ADDRESS}-error-message"]`),
   },
   [COUNTRY]: {
-    label: () => cy.get(`[data-cy="${COUNTRY}-label"]`),
+    heading: () => cy.get(`[data-cy="${COUNTRY}-heading"]`),
     value: () => cy.get(`[data-cy="${COUNTRY}"]`),
   },
   [REGISTRATION_NUMBER]: {

@@ -88,7 +88,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       const fieldId = COUNTRY;
       const field = companyOrOrganisationPage[fieldId];
 
-      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+      cy.checkText(field.heading(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
       cy.checkText(field.value(), application.ELIGIBILITY[BUYER_COUNTRY]);
     });
 
