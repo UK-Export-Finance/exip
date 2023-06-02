@@ -1,59 +1,61 @@
+import { submitButton } from '../../../pages/shared';
 import {
   policyTypePage,
   tellUsAboutYourPolicyPage,
 } from '../../../pages/quote';
-import partials from '../../../partials';
-import CONSTANTS from '../../../../../constants';
+import { FIELD_IDS, ROUTES } from '../../../../../constants';
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import {
-  completeAndSubmitBuyerCountryForm,
   completeAndSubmitBuyerBodyForm,
-  completeAndSubmitCompanyForm,
+  completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../support/quote/forms';
 
 const {
-  FIELD_IDS,
-  ROUTES,
-} = CONSTANTS;
-
-const {
-  CREDIT_PERIOD,
+  ELIGIBILITY: { CREDIT_PERIOD },
   POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
 context('Change your answers (policy type) - multiple times via back button - as an exporter, I want to change the details before submitting the proposal', () => {
-  before(() => {
+  const url = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
+
+  const completePreviousForms = () => {
     cy.login();
 
     completeAndSubmitBuyerCountryForm();
     completeAndSubmitBuyerBodyForm();
-    completeAndSubmitCompanyForm();
+    completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();
     completeAndSubmitPolicyTypeSingleForm();
 
-    cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
-  });
+    cy.url().should('include', url);
+
+    cy.clickBackLink();
+  };
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+
+    completePreviousForms();
   });
 
-  it(`clicking the back button redirects to ${ROUTES.QUOTE.POLICY_TYPE}`, () => {
-    partials.backLink().click();
+  it(`should redirect to ${ROUTES.QUOTE.POLICY_TYPE}`, () => {
     cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
   });
 
   it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
-    policyTypePage[POLICY_TYPE].multi.input().click();
-    policyTypePage.submitButton().click();
+    policyTypePage[POLICY_TYPE].multiple.input().click();
+    submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
   });
 
   it('renders credit period field in the `tell us about your policy` page', () => {
+    policyTypePage[POLICY_TYPE].multiple.input().click();
+    submitButton().click();
+
     const field = tellUsAboutYourPolicyPage[CREDIT_PERIOD];
 
     field.label().should('exist');
@@ -61,14 +63,20 @@ context('Change your answers (policy type) - multiple times via back button - as
     field.input().should('exist');
   });
 
-  context('change for a second time - policy type from multi to single', () => {
+  context('change for a second time - policy type from multiple to single', () => {
     before(() => {
-      partials.backLink().click();
+      completePreviousForms();
+
+      policyTypePage[POLICY_TYPE].multiple.input().click();
+      submitButton().click();
+
+      cy.clickBackLink();
       cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
 
       policyTypePage[POLICY_TYPE].single.input().click();
-      policyTypePage[SINGLE_POLICY_LENGTH].input().clear().type('2');
-      policyTypePage.submitButton().click();
+      cy.keyboardInput(policyTypePage[SINGLE_POLICY_LENGTH].input(), '2');
+
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
@@ -83,12 +91,30 @@ context('Change your answers (policy type) - multiple times via back button - as
   });
 
   context('change for a third time - policy type from single to multi', () => {
-    before(() => {
-      partials.backLink().click();
+    beforeEach(() => {
+      completePreviousForms();
+
+      // 1st time - change from single to multiple
+      policyTypePage[POLICY_TYPE].multiple.input().click();
+      submitButton().click();
+
+      // 2nd time - change from multiple to single
+      cy.clickBackLink();
       cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
 
-      policyTypePage[POLICY_TYPE].multi.input().click();
-      policyTypePage.submitButton().click();
+      policyTypePage[POLICY_TYPE].single.input().click();
+      cy.keyboardInput(policyTypePage[SINGLE_POLICY_LENGTH].input(), '2');
+
+      submitButton().click();
+
+      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+
+      // 3rd time - change from single to multiple
+      cy.clickBackLink();
+      cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
+
+      policyTypePage[POLICY_TYPE].multiple.input().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });

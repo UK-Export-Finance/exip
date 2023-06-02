@@ -4,7 +4,7 @@ import { mockSession } from '../../test-mocks';
 
 describe('server/helpers/map-country', () => {
   it('should return country name', () => {
-    const country = mockSession.submittedData[FIELD_IDS.BUYER_COUNTRY];
+    const country = mockSession.submittedData.quoteEligibility[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
 
     const result = mapCountry(country);
 

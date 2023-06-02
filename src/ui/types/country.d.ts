@@ -1,10 +1,11 @@
 interface Country {
+  id?: string;
   name: string;
   isoCode: string;
   riskCategory: string;
   selected?: boolean;
   value: string;
-  shortTermCoverAvailable: boolean;
+  shortTermCover: string;
   nbiIssueAvailable: boolean;
 }
 

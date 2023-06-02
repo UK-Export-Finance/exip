@@ -9,6 +9,7 @@ export const API = {
     },
     SHORT_TERM_COVER_AVAILABLE: {
       YES: 'Yes',
+      NO: 'No',
       ILC: 'ILC Only',
       CILC: 'CILC Only',
       REFER: 'Refer',
@@ -25,5 +26,13 @@ export const API = {
       HIGH: 'High',
       STANDARD: 'Standard',
     },
+  },
+};
+
+export const EXTERNAL_API_ENDPOINTS = {
+  MULESOFT_MDM_EA: {
+    CURRENCY: '/currencies',
+    INDUSTRY_SECTORS: '/sector-industries',
+    MARKETS: '/markets',
   },
 };

@@ -1,50 +1,56 @@
 import {
-  buyerCountryPage,
-  cannotObtainCoverPage,
-} from '../../../pages/quote';
-import partials from '../../../partials';
+  backLink, buyerCountryPage, cannotApplyPage, submitButton,
+} from '../../../pages/shared';
 import { PAGES } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { ROUTES } from '../../../../../constants';
+import { COUNTRY_UNSUPPORTRED } from '../../../../fixtures/countries';
 
-const CONTENT_STRINGS = PAGES.CANNOT_OBTAIN_COVER_PAGE;
-const { ROUTES } = CONSTANTS;
-
-const COUNTRY_NAME_UNSUPPORTED = 'France';
+const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 
 context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based - submit unsupported country', () => {
-  before(() => {
-    cy.visit(ROUTES.QUOTE.BUYER_COUNTRY, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
-    cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+  const url = ROUTES.QUOTE.BUYER_COUNTRY;
 
-    buyerCountryPage.searchInput().type(COUNTRY_NAME_UNSUPPORTED);
+  before(() => {
+    cy.navigateToUrl(url);
+    cy.url().should('include', url);
+  });
+
+  beforeEach(() => {
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
+
+    cy.keyboardInput(buyerCountryPage.input(), COUNTRY_UNSUPPORTRED.name);
 
     const results = buyerCountryPage.results();
     results.first().click();
 
-    buyerCountryPage.submitButton().click();
+    submitButton().click();
   });
 
   it('redirects to `cannot obtain cover` exit page', () => {
-    cy.url().should('include', ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+    cy.url().should('include', ROUTES.QUOTE.CANNOT_APPLY);
   });
 
   it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
+    backLink().should('exist');
 
-    partials.backLink().should('have.attr', 'href', ROUTES.QUOTE.BUYER_COUNTRY);
+    backLink().should('have.attr', 'href', url);
   });
 
   it('renders a specific reason', () => {
-    cannotObtainCoverPage.reason().invoke('text').then((text) => {
-      const { REASON } = CONTENT_STRINGS;
-      const expected = `${REASON.INTRO} ${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${COUNTRY_NAME_UNSUPPORTED}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
+    const { REASON } = CONTENT_STRINGS;
+    const expected = `${REASON.INTRO} ${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${COUNTRY_UNSUPPORTRED.name}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
+    cy.checkText(cannotApplyPage.reason(), expected);
+  });
 
-      expect(text.trim()).equal(expected);
-    });
+  it('should prepopulate the field when going back to the page via back link', () => {
+    cy.clickBackLink();
+
+    const expectedValue = COUNTRY_UNSUPPORTRED.name;
+
+    cy.checkValue(buyerCountryPage, expectedValue);
+
+    cy.checkText(buyerCountryPage.results(), expectedValue);
   });
 });

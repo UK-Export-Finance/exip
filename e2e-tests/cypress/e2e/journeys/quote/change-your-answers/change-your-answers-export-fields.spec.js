@@ -1,21 +1,15 @@
 import {
-  buyerCountryPage,
-  companyBasedPage,
-  ukGoodsOrServicesPage,
-  checkYourAnswersPage,
-} from '../../../pages/quote';
-import partials from '../../../partials';
-import CONSTANTS from '../../../../../constants';
+  backLink, buyerCountryPage, yesRadioInput, submitButton,
+} from '../../../pages/shared';
+import { checkYourAnswersPage } from '../../../pages/quote';
+import { FIELD_IDS, ROUTES } from '../../../../../constants';
 
 const {
-  FIELD_IDS,
-  ROUTES,
-} = CONSTANTS;
-
-const {
-  BUYER_COUNTRY,
-  VALID_COMPANY_BASE,
-  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+  ELIGIBILITY: {
+    BUYER_COUNTRY,
+    VALID_EXPORTER_LOCATION,
+    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+  },
 } = FIELD_IDS;
 
 const submissionData = {
@@ -24,40 +18,43 @@ const submissionData = {
 };
 
 context('Change your answers (export fields) - as an exporter, I want to change the details before submitting the proposal', () => {
+  const url = ROUTES.QUOTE.CHECK_YOUR_ANSWERS;
+
   before(() => {
     cy.login();
-    cy.submitAnswersHappyPathSinglePolicy();
-    cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+    cy.submitQuoteAnswersHappyPathSinglePolicy();
+    cy.url().should('include', url);
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   describe('change `Buyer based`', () => {
     let row = checkYourAnswersPage.summaryLists.export[BUYER_COUNTRY];
 
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}`, () => {
-      row.changeLink().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
+      row.changeLink().click();
+    });
+
+    it(`clicking 'change' redirects to ${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}`, () => {
       const expectedUrl = ROUTES.QUOTE.BUYER_COUNTRY_CHANGE;
       cy.url().should('include', expectedUrl);
     });
 
     it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
+      backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-      partials.backLink().should('have.attr', 'href', expected);
+      backLink().should('have.attr', 'href', expected);
     });
 
     it('has originally submitted answer selected', () => {
       const expectedValue = submissionData[BUYER_COUNTRY];
 
-      buyerCountryPage.results().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedValue);
-      });
+      cy.checkText(buyerCountryPage.results(), expectedValue);
     });
 
     it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
@@ -65,54 +62,63 @@ context('Change your answers (export fields) - as an exporter, I want to change 
       cy.url().should('include', expected);
     });
 
-    it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when resubmitting a new answer`, () => {
-      buyerCountryPage.searchInput().type('Brazil');
-      const results = buyerCountryPage.results();
-      results.first().click();
-      buyerCountryPage.submitButton().click();
+    describe('when submitting a new answer', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+        row.changeLink().click();
 
-      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
-    });
+        cy.keyboardInput(buyerCountryPage.input(), 'Brazil');
+        const results = buyerCountryPage.results();
+        results.first().click();
 
-    it('renders the new answer in `Check your answers` page', () => {
-      row = checkYourAnswersPage.summaryLists.export[BUYER_COUNTRY];
+        submitButton().click();
+      });
 
-      row.value().invoke('text').then((text) => {
+      it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`, () => {
+        cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      });
+
+      it('renders the new answer in `Check your answers` page', () => {
+        row = checkYourAnswersPage.summaryLists.export[BUYER_COUNTRY];
+
         const expected = 'Brazil';
-
-        expect(text.trim()).equal(expected);
+        cy.checkText(row.value(), expected);
       });
     });
   });
 
   describe('change `Company`', () => {
-    const row = checkYourAnswersPage.summaryLists.export[VALID_COMPANY_BASE];
+    const row = checkYourAnswersPage.summaryLists.export[VALID_EXPORTER_LOCATION];
 
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.COMPANY_BASED_CHANGE}`, () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
       row.changeLink().click();
+    });
 
-      const expectedUrl = ROUTES.QUOTE.COMPANY_BASED_CHANGE;
+    it(`clicking 'change' redirects to ${ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE}`, () => {
+      const expectedUrl = ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE;
       cy.url().should('include', expectedUrl);
     });
 
     it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.QUOTE.COMPANY_BASED_CHANGE}#heading`;
+      const expected = `${ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE}#heading`;
       cy.url().should('include', expected);
     });
 
     it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
+      backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-      partials.backLink().should('have.attr', 'href', expected);
+      backLink().should('have.attr', 'href', expected);
     });
 
     it('has originally submitted answer selected', () => {
-      companyBasedPage[VALID_COMPANY_BASE].yesInput().should('be.checked');
+      yesRadioInput().should('be.checked');
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
-      companyBasedPage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
@@ -121,31 +127,35 @@ context('Change your answers (export fields) - as an exporter, I want to change 
   describe('change `UK goods`', () => {
     const row = checkYourAnswersPage.summaryLists.export[HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}`, () => {
-      row.changeLink().click();
+    beforeEach(() => {
+      cy.navigateToUrl(url);
 
-      const expectedUrl = ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE;
+      row.changeLink().click();
+    });
+
+    it(`clicking 'change' redirects to ${ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE}`, () => {
+      const expectedUrl = ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE;
       cy.url().should('include', expectedUrl);
     });
 
     it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`;
+      const expected = `${ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE}#heading`;
       cy.url().should('include', expected);
     });
 
     it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
+      backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-      partials.backLink().should('have.attr', 'href', expected);
+      backLink().should('have.attr', 'href', expected);
     });
 
     it('has originally submitted answer', () => {
-      ukGoodsOrServicesPage.yesInput().should('be.checked');
+      yesRadioInput().should('be.checked');
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
-      ukGoodsOrServicesPage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });

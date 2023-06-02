@@ -1,9 +1,10 @@
-import { PAGE_VARIABLES, mapAnswer, get, post } from '.';
-import { PAGES } from '../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
-import singleInputPageVariables from '../../../helpers/single-input-page-variables';
-import generateValidationErrors from './validation';
-import { updateSubmittedData } from '../../../helpers/update-submitted-data';
+import { PAGE_VARIABLES, TEMPLATE, mapAnswer, mapSubmittedAnswer, get, post } from '.';
+import { ERROR_MESSAGES, PAGES } from '../../../content-strings';
+import { ROUTES, TEMPLATES } from '../../../constants';
+import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
+import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
@@ -27,11 +28,17 @@ describe('controllers/quote/buyer-body', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.VALID_BUYER_BODY,
-        PAGE_CONTENT_STRINGS: PAGES.BUYER_BODY_PAGE,
+        FIELD_ID: PAGE_VARIABLES.FIELD_ID,
+        PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_BODY,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
+    });
+  });
+
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.QUOTE.BUYER_BODY);
     });
   });
 
@@ -53,17 +60,46 @@ describe('controllers/quote/buyer-body', () => {
     });
   });
 
+  describe('mapSubmittedAnswer', () => {
+    describe('when the submitted answer is false', () => {
+      it('should return true', () => {
+        const result = mapSubmittedAnswer(false);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe('when the submitted answer is true', () => {
+      it('should return false', () => {
+        const result = mapSubmittedAnswer(true);
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when is no submitted answer', () => {
+      it('should return null', () => {
+        const result = mapSubmittedAnswer();
+
+        expect(result).toEqual(null);
+      });
+    });
+  });
+
   describe('get', () => {
     it('should render template', async () => {
       await get(req, res);
 
       const expectedVariables = {
-        ...singleInputPageVariables(PAGE_VARIABLES),
-        BACK_LINK: req.headers.referer,
-        submittedValues: req.session.submittedData,
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
+        userName: getUserNameFromSession(req.session.user),
+        submittedValues: {
+          ...req.session.submittedData.quoteEligibility,
+          [PAGE_VARIABLES.FIELD_ID]: mapSubmittedAnswer(req.session.submittedData.quoteEligibility[PAGE_VARIABLES.FIELD_ID]),
+        },
       };
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.BUYER_BODY, expectedVariables);
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
   });
 
@@ -72,17 +108,17 @@ describe('controllers/quote/buyer-body', () => {
       it('should render template with validation errors', async () => {
         await post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.BUYER_BODY, {
-          ...singleInputPageVariables(PAGE_VARIABLES),
-          BACK_LINK: req.headers.referer,
-          validationErrors: generateValidationErrors(req.body),
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
+          userName: getUserNameFromSession(req.session.user),
+          validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID]),
         });
       });
     });
 
     describe('when the submitted answer is `yes`', () => {
       beforeEach(() => {
-        req.body[FIELD_IDS.VALID_BUYER_BODY] = 'true';
+        req.body[PAGE_VARIABLES.FIELD_ID] = 'true';
       });
 
       it('should add previousRoute, exitReason and exitDescription to req.flash', async () => {
@@ -92,8 +128,8 @@ describe('controllers/quote/buyer-body', () => {
 
         expect(mockFlash.mock.calls[0]).toEqual(['previousRoute', ROUTES.QUOTE.BUYER_BODY]);
 
-        const { GET_A_QUOTE_BY_EMAIL_PAGE } = PAGES;
-        const { REASON } = GET_A_QUOTE_BY_EMAIL_PAGE;
+        const { GET_A_QUOTE_BY_EMAIL } = PAGES.QUOTE;
+        const { REASON } = GET_A_QUOTE_BY_EMAIL;
 
         expect(mockFlash.mock.calls[1]).toEqual(['exitReason', REASON.BUYER_BODY]);
         expect(mockFlash.mock.calls[2]).toEqual(['exitDescription', REASON.BUYER_BODY_DESCRIPTION]);
@@ -108,7 +144,7 @@ describe('controllers/quote/buyer-body', () => {
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.VALID_BUYER_BODY]: 'false',
+        [PAGE_VARIABLES.FIELD_ID]: 'false',
       };
 
       beforeEach(() => {
@@ -118,17 +154,17 @@ describe('controllers/quote/buyer-body', () => {
       it('should update the session with submitted data, popluated with mapped buyer body answer', async () => {
         await post(req, res);
 
-        const expectedMappedAnswer = mapAnswer(req.body[FIELD_IDS.VALID_BUYER_BODY]);
+        const expectedMappedAnswer = mapAnswer(req.body[PAGE_VARIABLES.FIELD_ID]);
 
-        const expected = updateSubmittedData({ [FIELD_IDS.VALID_BUYER_BODY]: expectedMappedAnswer }, req.session.submittedData);
+        const expected = updateSubmittedData({ [PAGE_VARIABLES.FIELD_ID]: expectedMappedAnswer }, req.session.submittedData.quoteEligibility);
 
-        expect(req.session.submittedData).toEqual(expected);
+        expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.COMPANY_BASED}`, async () => {
+      it(`should redirect to ${ROUTES.QUOTE.EXPORTER_LOCATION}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.COMPANY_BASED);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.EXPORTER_LOCATION);
       });
     });
   });

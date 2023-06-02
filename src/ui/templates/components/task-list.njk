@@ -1,0 +1,23 @@
+{% import '../components/task-list-row.njk' as taskListRow %}
+
+{% macro render(params) %}
+
+  {% set groups = params.groups %}
+
+  {% for group in groups %}
+    <h2 class="govuk-heading-m" data-cy="task-list-group-heading-{{ group.title }}">{{ loop.index }}. {{ group.title }}</h2>
+
+    <dl class="govuk-summary-list ukef-task-list">
+      {% for task in group.tasks %}
+
+        {{ taskListRow.render({
+          task: task,
+          groupTitle: group.title
+        }) }}
+
+      {% endfor %}
+    </dl>
+
+  {% endfor %}
+
+{% endmacro %}

@@ -1,0 +1,65 @@
+{% import '../components/status-tag.njk' as statusTag %}
+
+{% macro render(params) %}
+
+  {% set tableHeaders = params.tableHeaders%}
+  {% set applications = params.applications %}
+  {% set insuranceRoute = params.insuranceRoute %}
+  {% set allSectionsRoute = params.allSectionsRoute %}
+  {% set submittedStatus = params.submittedStatus %}
+
+  <table class="govuk-table">
+    <thead>
+        <tr>
+          <th class="govuk-table__header" data-cy="header-status">{{ tableHeaders.STATUS }}</th>
+          <th class="govuk-table__header" data-cy="header-lastUpdated">{{ tableHeaders.LAST_UPDATED }}</th>
+          <th class="govuk-table__header" data-cy="header-referenceNumebr">{{ tableHeaders.REFERENCE_NUMBER }}</th>
+          <th class="govuk-table__header" data-cy="header-buyerLocation">{{ tableHeaders.BUYER_LOCATION }}</th>
+          <th class="govuk-table__header" data-cy="header-buyerName">{{ tableHeaders.BUYER_NAME }}</th>
+          <th class="govuk-table__header" data-cy="header-insuredFor">{{ tableHeaders.INSURED_FOR }}</th>
+        </tr>
+    </thead>
+
+    <tbody>
+      {% for application in applications %}
+
+      {% set refString = 'ref-' %}
+
+      {% set refNumber = application.referenceNumber %}
+
+        <tr class="govuk-table__row" data-cy="{{ refString + refNumber + '-row'}}">
+          <td class="govuk-table__cell">
+            {{ statusTag.render({
+              status: application.status,
+              dataCy: refString + refNumber + "-status"
+            }) }}
+          </td>
+
+          <td class="govuk-table__cell" data-cy="{{ refString + refNumber + '-lastUpdated' }}">{{ application.lastUpdated }} </td>
+
+          <td class="govuk-table__cell">
+            {% if application.status == submittedStatus %}
+              <p
+                class="govuk-body"
+                data-cy="{{ refString + refNumber + '-referenceNumber' }}"
+              >{{ application.referenceNumber }}
+              </p>
+            {% else %}
+              <a
+                class="govuk-link"
+                href="{{ insuranceRoute }}/{{ application.referenceNumber }}{{ allSectionsRoute }}"
+                data-cy="{{ refString + refNumber + '-referenceNumber-link' }}"
+              >{{ application.referenceNumber }}
+              </a>
+            {% endif %}
+          </td>
+
+          <td class="govuk-table__cell" data-cy="{{ refString + refNumber + '-buyerLocation' }}">{{ application.buyerLocation }} </td>
+          <td class="govuk-table__cell" data-cy="{{ refString + refNumber + '-buyerName' }}">{{ application.buyerName }} </td>
+          <td class="govuk-table__cell" data-cy="{{ refString + refNumber + '-insuredFor' }}">{{ application.insuredFor }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endmacro %}

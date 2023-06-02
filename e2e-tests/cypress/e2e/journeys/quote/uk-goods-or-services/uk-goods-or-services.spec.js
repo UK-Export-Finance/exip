@@ -1,279 +1,124 @@
 import {
-  companyBasedPage,
-  ukGoodsOrServicesPage,
-} from '../../../pages/quote';
+  yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton,
+} from '../../../pages/shared';
 import partials from '../../../partials';
-import {
-  ORGANISATION,
-  BUTTONS,
-  LINKS,
-  PAGES,
-  ERROR_MESSAGES,
-} from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm, completeAndSubmitBuyerBodyForm, completeAndSubmitCompanyForm } from '../../../../support/quote/forms';
+import { PAGES, ERROR_MESSAGES } from '../../../../../content-strings';
+import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
+import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../../support/quote/forms';
+import { checkDescriptionSummaryText, checkDescriptionSummaryClickRevealsContent, checkDescriptionContent } from '../../../../support/check-uk-goods-and-services-description';
 
-const CONTENT_STRINGS = PAGES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE;
-const { ROUTES, FIELD_IDS } = CONSTANTS;
+const CONTENT_STRINGS = {
+  ...PAGES.UK_GOODS_OR_SERVICES,
+  ...PAGES.QUOTE.UK_GOODS_OR_SERVICES,
+};
+
+const {
+  ELIGIBILITY: { HAS_MINIMUM_UK_GOODS_OR_SERVICES },
+} = FIELD_IDS;
+
+const startRoute = ROUTES.QUOTE.START;
 
 context('UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
+  const url = ROUTES.QUOTE.UK_GOODS_OR_SERVICES;
+
   before(() => {
     cy.login();
     completeAndSubmitBuyerCountryForm();
     completeAndSubmitBuyerBodyForm();
-    completeAndSubmitCompanyForm();
+    completeAndSubmitExporterLocationForm();
 
-    cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    cy.url().should('include', url);
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
-  });
- 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 60,
-    });
+    cy.saveSession();
   });
 
-  it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
-    partials.backLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(LINKS.BACK);
-    });
-
-    partials.backLink().click();
-
-    cy.url().should('include', ROUTES.QUOTE.COMPANY_BASED);
-
-    // go back to page
-    cy.visit(ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: ROUTES.QUOTE.UK_GOODS_OR_SERVICES,
+      backLink: ROUTES.QUOTE.EXPORTER_LOCATION,
+      assertAuthenticatedHeader: false,
+      isInsurancePage: false,
     });
   });
 
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  it('renders a page title and heading', () => {
-    const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
-    cy.title().should('eq', expectedPageTitle);
-
-    ukGoodsOrServicesPage.heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
-    });
-  });
-
-  it('renders `yes` radio button', () => {
-    const yesRadio = ukGoodsOrServicesPage.yes();
-    yesRadio.should('exist');
-
-    yesRadio.invoke('text').then((text) => {
-      expect(text.trim()).equal('Yes');
-    });
-  });
-
-  it('renders `no` radio button', () => {
-    const noRadio = ukGoodsOrServicesPage.no();
-    noRadio.should('exist');
-
-    noRadio.invoke('text').then((text) => {
-      expect(text.trim()).equal('No');
-    });
-  });
-
-  it('renders a submit button', () => {
-    const button = ukGoodsOrServicesPage.submitButton();
-    button.should('exist');
-
-    button.invoke('text').then((text) => {
-      expect(text.trim()).equal(BUTTONS.CONTINUE);
-    });
-  });
-
-  describe('expandable details', () => {
-    const { details } = ukGoodsOrServicesPage;
-    const { DETAILS } = CONTENT_STRINGS;
-
-    it('renders a summary', () => {
-      details.summary().should('exist');
-
-      details.summary().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.DETAILS.INTRO);
-      });
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
     });
 
-    it('clicking summary reveals details', () => {
-      details.summary().click();
-
-      details.includes.intro().should('be.visible');
+    it('should render a header with href to quote start', () => {
+      partials.header.serviceName().should('have.attr', 'href', startRoute);
     });
 
-    describe('`includes` section', () => {
-      it('renders intro', () => {
-        details.includes.intro().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.INCLUDES.INTRO);
-        });
-      });
+    it('renders `yes` radio button', () => {
+      yesRadio().should('exist');
 
-      it('renders list items', () => {
-        details.includes.listItem1().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.INCLUDES.PRODUCTS);
-        });
-
-        details.includes.listItem2().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.INCLUDES.MANUFACTURED);
-        });
-
-        details.includes.listItem3().invoke('text').then((text) => {
-          const expected = `${DETAILS.INCLUDES.STAFFING_COSTS.LINK.TEXT} ${DETAILS.INCLUDES.STAFFING_COSTS.TEXT}`;
-          expect(text.trim()).equal(expected);
-        });
-
-        details.includes.listItem3Link().should('have.attr', 'href', DETAILS.INCLUDES.STAFFING_COSTS.LINK.HREF);
-
-        details.includes.listItem4().invoke('text').then((text) => {
-          const expected = `${DETAILS.INCLUDES.NON_PHYSICAL_ASSETS.LINK.TEXT} ${DETAILS.INCLUDES.NON_PHYSICAL_ASSETS.TEXT}`;
-          expect(text.trim()).equal(expected);
-        });
-
-        details.includes.listItem4Link().should('have.attr', 'href', DETAILS.INCLUDES.NON_PHYSICAL_ASSETS.LINK.HREF);
-      });
-
-      it('renders `also count as` copy', () => {
-        details.includes.canCountAs().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.INCLUDES.CAN_COUNT_AS);
-        });
-      });
+      cy.checkText(yesRadio(), FIELD_VALUES.YES);
     });
 
-    describe('`does not count` section', () => {
-      it('renders a heading', () => {
-        details.doesNotCount.heading().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.DOES_NOT_COUNT.HEADING);
-        });
-      });
+    it('renders `no` radio button', () => {
+      noRadio().should('exist');
 
-      it('renders copy', () => {
-        details.doesNotCount.copy().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.DOES_NOT_COUNT.TEXT);
-        });
-      });
+      cy.checkText(noRadio(), FIELD_VALUES.NO);
     });
 
-    describe('`staffing costs` section', () => {
-      it('renders a heading', () => {
-        details.staffingCosts.heading().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.STAFFING_COSTS.HEADING);
-        });
+    describe('expandable details', () => {
+      it('renders summary text', () => {
+        checkDescriptionSummaryText();
       });
 
-      it('renders copy', () => {
-        details.staffingCosts.copy().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.STAFFING_COSTS.TEXT);
-        });
+      it('clicking summary text reveals details', () => {
+        checkDescriptionSummaryClickRevealsContent();
       });
 
-      it('renders list items', () => {
-        details.staffingCosts.listItem1().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.STAFFING_COSTS.LIST[0].TEXT);
-        });
-
-        details.staffingCosts.listItem2().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.STAFFING_COSTS.LIST[1].TEXT);
-        });
-
-        details.staffingCosts.listItem3().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.STAFFING_COSTS.LIST[2].TEXT);
-        });
-      });
-    });
-
-    describe('`non physical assets` section', () => {
-      it('renders a heading', () => {
-        details.nonPhysicalAssets.heading().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.NON_PHYSICAL_ASSETS.HEADING);
-        });
+      it('renders expanded content', () => {
+        checkDescriptionContent();
       });
 
-      it('renders copy', () => {
-        details.nonPhysicalAssets.copy().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.NON_PHYSICAL_ASSETS.TEXT);
-        });
-      });
-    });
-
-    describe('`not sure` section', () => {
-      it('renders a heading', () => {
-        details.notSure.heading().invoke('text').then((text) => {
-          expect(text.trim()).equal(DETAILS.NOT_SURE.HEADING);
-        });
-      });
-
-      it('renders copy', () => {
-        details.notSure.details().invoke('text').then((text) => {
-          const expected = `${DETAILS.NOT_SURE.BODY_1} ${DETAILS.NOT_SURE.LINK.TEXT} ${DETAILS.NOT_SURE.BODY_2}`;
-
-          expect(text.trim()).equal(expected);
-        });
-
-        details.notSure.detailsLast().invoke('text').then((text) => {
-          const expected = DETAILS.NOT_SURE.BODY_3;
-          expect(text.trim()).equal(expected);
-        });
-
-        details.notSure.detailsLink().should('have.attr', 'href', DETAILS.NOT_SURE.LINK.HREF);
+      it('renders `will calculate thoroughly` copy ', () => {
+        const expected = CONTENT_STRINGS.WILL_CALCULATE_THOROUGHLY;
+        cy.checkText(partials.ukGoodsOrServicesDescription.calculateThoroughly(), expected);
       });
     });
   });
 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
       it('should render validation errors', () => {
-        ukGoodsOrServicesPage.submitButton().click();
+        submitButton().click();
 
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES[FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES].IS_EMPTY;
+        const expectedMessage = ERROR_MESSAGES.ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES].IS_EMPTY;
 
-        partials.errorSummaryListItems().first().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedMessage);
-        });
+        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 
-        ukGoodsOrServicesPage.errorMessage().invoke('text').then((text) => {
-          expect(text.trim()).includes(expectedMessage);
-        });
+        cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
       });
 
       it('should focus on input when clicking summary error message', () => {
-        ukGoodsOrServicesPage.submitButton().click();
+        submitButton().click();
 
         partials.errorSummaryListItemLinks().eq(0).click();
-        ukGoodsOrServicesPage.yesInput().should('have.focus');
+        yesRadioInput().should('have.focus');
       });
     });
 
     describe('when submitting the answer as `yes`', () => {
       it(`should redirect to ${ROUTES.QUOTE.POLICY_TYPE}`, () => {
-        ukGoodsOrServicesPage.yes().click();
-        ukGoodsOrServicesPage.submitButton().click();
+        cy.navigateToUrl(url);
+
+        yesRadio().click();
+        submitButton().click();
 
         cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
       });

@@ -1,0 +1,9 @@
+export const BUSINESS_TEMPLATES = {
+  COMPANY_DETAILS: 'insurance/your-business/company-details.njk',
+  COMPANIES_HOUSE_UNAVAILABLE: 'insurance/your-business/companies-house-error.njk',
+  CONTACT: 'insurance/your-business/contact.njk',
+  NATURE_OF_YOUR_BUSINESS: 'insurance/your-business/nature-of-your-business.njk',
+  TURNOVER: 'insurance/your-business/turnover.njk',
+  BROKER: 'insurance/your-business/broker.njk',
+  CHECK_YOUR_ANSWERS: 'insurance/your-business/check-your-answers.njk',
+};

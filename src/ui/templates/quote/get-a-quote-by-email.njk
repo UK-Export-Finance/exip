@@ -16,9 +16,9 @@
     }
   }) }}
 
-  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
+  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
-  {% if EXIT_REASON %}
+  {% if EXIT_REASON.length %}
     <p class="govuk-body" data-cy="reason">{{ CONTENT_STRINGS.REASON.INTRO }} {{ EXIT_REASON }}</p>
   {% endif %}
 

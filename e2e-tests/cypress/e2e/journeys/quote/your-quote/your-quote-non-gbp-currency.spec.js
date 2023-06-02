@@ -1,19 +1,18 @@
+import { submitButton } from '../../../pages/shared';
 import {
   checkYourAnswersPage,
   tellUsAboutYourPolicyPage,
   yourQuotePage,
 } from '../../../pages/quote';
-import {
-  LINKS,
-  QUOTE_TITLES,
-} from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
-
-const { ROUTES, FIELD_IDS } = CONSTANTS;
+import { QUOTE_TITLES } from '../../../../../content-strings';
+import { ROUTES, FIELD_IDS } from '../../../../../constants';
+import { EUR_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
 const {
-  CONTRACT_VALUE,
-  CURRENCY,
+  ELIGIBILITY: {
+    CONTRACT_VALUE,
+    CURRENCY,
+  },
   QUOTE,
 } = FIELD_IDS;
 
@@ -23,42 +22,44 @@ const {
 } = QUOTE;
 
 context('Get a quote/your quote page (non GBP currency) - as an exporter, I want to get an Export insurance quote', () => {
+  const url = ROUTES.QUOTE.YOUR_QUOTE;
+
   before(() => {
     cy.login();
 
-    cy.submitAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy();
 
     // change currency to non-GBP
     checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE].changeLink().click();
 
-    tellUsAboutYourPolicyPage[CURRENCY].input().select('EUR');
-    tellUsAboutYourPolicyPage.submitButton().click();
+    tellUsAboutYourPolicyPage[CURRENCY].input().select(EUR_CURRENCY_CODE);
+    submitButton().click();
 
-    checkYourAnswersPage.submitButton().click();
+    submitButton().click();
 
-    cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
+    cy.url().should('include', url);
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
+    cy.saveSession();
   });
 
   context('panel/quote', () => {
     context('summary list', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
       const { summaryList } = yourQuotePage.panel;
 
       it('renders `insured for` key and value with decimal points (no change link)', () => {
         const row = summaryList[INSURED_FOR];
         const expectedKeyText = QUOTE_TITLES[`${INSURED_FOR}_SINGLE_POLICY`];
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
+        cy.checkText(row.key(), expectedKeyText);
 
-        row.value().invoke('text').then((text) => {
-          const expected = '€135,000.00';
-          expect(text.trim()).includes(expected);
-        });
+        const expected = '€135,000.00';
+        cy.checkText(row.value(), expected);
 
         row.changeLink().should('not.exist');
       });
@@ -67,15 +68,10 @@ context('Get a quote/your quote page (non GBP currency) - as an exporter, I want
         const row = summaryList[ESTIMATED_COST];
         const expectedKeyText = QUOTE_TITLES[ESTIMATED_COST];
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
+        cy.checkText(row.key(), expectedKeyText);
 
-        row.value().invoke('text').then((text) => {
-          const expected = '€1,770.00';
-
-          expect(text.trim()).equal(expected);
-        });
+        const expected = '€1,770.00';
+        cy.checkText(row.value(), expected);
 
         row.changeLink().should('not.exist');
       });

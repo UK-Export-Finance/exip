@@ -1,115 +1,104 @@
+import { submitButton } from '../../../pages/shared';
 import { policyTypePage } from '../../../pages/quote';
 import partials from '../../../partials';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
-import checkText from '../../../helpers/check-text';
-import { completeAndSubmitBuyerCountryForm, completeAndSubmitBuyerBodyForm, completeAndSubmitCompanyForm, completeAndSubmitUkContentForm } from '../../../../support/quote/forms';
+import { ROUTES, FIELD_IDS } from '../../../../../constants';
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
+import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm, completeAndSubmitUkContentForm } from '../../../../support/quote/forms';
 
-const { ROUTES, FIELD_IDS } = CONSTANTS;
+const { POLICY_TYPE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
 
-context('Policy type page - policy type & length validation', () => {
+context('Policy type page - policy type & length validation - single policy type', () => {
+  const url = ROUTES.QUOTE.POLICY_TYPE;
+
   before(() => {
     cy.login();
     completeAndSubmitBuyerCountryForm();
     completeAndSubmitBuyerBodyForm();
-    completeAndSubmitCompanyForm();
+    completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();
 
-    cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
+    cy.url().should('include', url);
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+
+    cy.navigateToUrl(url);
+    policyTypePage[POLICY_TYPE].single.input().click();
   });
 
-  context('with single policy type selected', () => {
-    describe('when `single policy length` is not provided', () => {
-      beforeEach(() => {
-        policyTypePage[FIELD_IDS.POLICY_TYPE].single.input().click();
-      });
+  it('should render a validation error when `single policy length` is not provided', () => {
+    submitButton().click();
 
-      it('should render a validation error', () => {
-        policyTypePage.submitButton().click();
+    cy.checkText(
+      partials.errorSummaryListItems().eq(0),
+      ERROR_MESSAGES.ELIGIBILITY[SINGLE_POLICY_LENGTH].IS_EMPTY,
+    );
 
-        checkText(
-          partials.errorSummaryListItems().eq(0),
-          ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].IS_EMPTY,
-        );
+    cy.checkText(
+      policyTypePage[SINGLE_POLICY_LENGTH].errorMessage(),
+      `Error: ${ERROR_MESSAGES.ELIGIBILITY[SINGLE_POLICY_LENGTH].IS_EMPTY}`,
+    );
+  });
 
-        checkText(
-          policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
-          `Error: ${ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].IS_EMPTY}`,
-        );
-      });
+  it('should render a validation error when `single policy length` has a non-numeric value', () => {
+    cy.keyboardInput(policyTypePage[SINGLE_POLICY_LENGTH].input(), 'a');
+    submitButton().click();
 
-      describe('when `single policy length` has a non-numeric value', () => {
-        it('should render a validation error', () => {
-          policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('a');
-          policyTypePage.submitButton().click();
+    cy.checkText(
+      partials.errorSummaryListItems().eq(0),
+      ERROR_MESSAGES.ELIGIBILITY[SINGLE_POLICY_LENGTH].NOT_A_NUMBER,
+    );
 
-          checkText(
-            partials.errorSummaryListItems().eq(0),
-            ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_NUMBER,
-          );
+    cy.checkText(
+      policyTypePage[SINGLE_POLICY_LENGTH].errorMessage(),
+      `Error: ${ERROR_MESSAGES.ELIGIBILITY[SINGLE_POLICY_LENGTH].NOT_A_NUMBER}`,
+    );
+  });
 
-          checkText(
-            policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
-            `Error: ${ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_NUMBER}`,
-          );
-        });
-      });
+  it('should render a validation error when `single policy length` contains a decimal', () => {
+    cy.keyboardInput(policyTypePage[SINGLE_POLICY_LENGTH].input(), '1.2');
+    submitButton().click();
 
-      describe('when `single policy length` contains a decimal', () => {
-        it('should render a validation error', () => {
-          policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('1.2');
-          policyTypePage.submitButton().click();
+    cy.checkText(
+      partials.errorSummaryListItems().eq(0),
+      ERROR_MESSAGES.ELIGIBILITY[SINGLE_POLICY_LENGTH].NOT_A_WHOLE_NUMBER,
+    );
 
-          checkText(
-            partials.errorSummaryListItems().eq(0),
-            ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_WHOLE_NUMBER,
-          );
+    cy.checkText(
+      policyTypePage[SINGLE_POLICY_LENGTH].errorMessage(),
+      `Error: ${ERROR_MESSAGES.ELIGIBILITY[SINGLE_POLICY_LENGTH].NOT_A_WHOLE_NUMBER}`,
+    );
+  });
 
-          checkText(
-            policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
-            `Error: ${ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].NOT_A_WHOLE_NUMBER}`,
-          );
-        });
-      });
+  it('should render a validation error when `single policy length` is less than the minimum', () => {
+    cy.keyboardInput(policyTypePage[SINGLE_POLICY_LENGTH].input(), '0');
+    submitButton().click();
 
-      describe('when `single policy length` is less than the minimum', () => {
-        it('should render a validation error', () => {
-          policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('0');
-          policyTypePage.submitButton().click();
+    cy.checkText(
+      partials.errorSummaryListItems().eq(0),
+      ERROR_MESSAGES.ELIGIBILITY[SINGLE_POLICY_LENGTH].BELOW_MINIMUM,
+    );
 
-          checkText(
-            partials.errorSummaryListItems().eq(0),
-            ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].BELOW_MINIMUM,
-          );
+    cy.checkText(
+      policyTypePage[SINGLE_POLICY_LENGTH].errorMessage(),
+      `Error: ${ERROR_MESSAGES.ELIGIBILITY[SINGLE_POLICY_LENGTH].BELOW_MINIMUM}`,
+    );
+  });
 
-          checkText(
-            policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
-            `Error: ${ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].BELOW_MINIMUM}`,
-          );
-        });
-      });
+  it('should render a validation error when `single policy length` is greater than the maximum', () => {
+    cy.keyboardInput(policyTypePage[SINGLE_POLICY_LENGTH].input(), '23');
+    submitButton().click();
 
-      describe('when `single policy length` is greater than the maximum', () => {
-        it('should render a validation error', () => {
-          policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input().clear().type('23');
-          policyTypePage.submitButton().click();
+    cy.checkText(
+      partials.errorSummaryListItems().eq(0),
+      ERROR_MESSAGES.ELIGIBILITY[SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM,
+    );
 
-          checkText(
-            partials.errorSummaryListItems().eq(0),
-            ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM,
-          );
-
-          checkText(
-            policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].errorMessage(),
-            `Error: ${ERROR_MESSAGES[FIELD_IDS.SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM}`,
-          );
-        });
-      });
-    });
+    cy.checkText(
+      policyTypePage[SINGLE_POLICY_LENGTH].errorMessage(),
+      `Error: ${ERROR_MESSAGES.ELIGIBILITY[SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM}`,
+    );
   });
 });

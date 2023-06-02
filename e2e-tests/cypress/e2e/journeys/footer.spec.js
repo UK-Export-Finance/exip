@@ -5,68 +5,32 @@ context('Footer', () => {
   beforeEach(() => {
     cy.login();
 
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
-  });
-
-  it('renders a heading', () => {
-    footer.heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(FOOTER.HEADING);
-    });
-  });
-
-  it('renders an email address', () => {
-    footer.email().invoke('text').then((text) => {
-      const expected = `${FOOTER.EMAIL.HEADING}: ${FOOTER.EMAIL.VALUE}`;
-      expect(text.trim()).equal(expected);
-    });
-  });
-
-  it('renders a phone number', () => {
-    footer.phone().invoke('text').then((text) => {
-      const expected = `${FOOTER.PHONE.HEADING}: ${FOOTER.PHONE.VALUE}`;
-      expect(text.trim()).equal(expected);
-    });
-  });
-
-  it('renders opening times', () => {
-    footer.openingTimes().invoke('text').then((text) => {
-      const expected = `${FOOTER.OPENING_TIMES.HEADING}: ${FOOTER.OPENING_TIMES.VALUE}`;
-      expect(text.trim()).equal(expected);
-    });
+    cy.saveSession();
   });
 
   describe('support links', () => {
     it('renders a heading', () => {
-      footer.supportLinks.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(FOOTER.SUPPORT_LINKS_HEADING);
-      });
+      cy.checkText(footer.supportLinks.heading(), FOOTER.SUPPORT_LINKS_HEADING);
     });
 
     it(`renders a ${FOOTER.ACCESSIBILITY_STATEMENT.TEXT} link with the correct URL`, () => {
-      footer.supportLinks.accessibilityStatement().invoke('text').then((text) => {
-        expect(text.trim()).equal(FOOTER.ACCESSIBILITY_STATEMENT.TEXT);
-      });
+      cy.checkLink(footer.supportLinks.accessibilityStatement(), FOOTER.ACCESSIBILITY_STATEMENT.QUOTE_HREF, FOOTER.ACCESSIBILITY_STATEMENT.TEXT);
+    });
 
-      footer.supportLinks.accessibilityStatement().click();
-      cy.url().should('include', FOOTER.ACCESSIBILITY_STATEMENT.HREF);
+    it(`renders a ${FOOTER.PRIVACY.TEXT} link with the correct URL`, () => {
+      cy.checkLink(footer.supportLinks.privacy(), FOOTER.PRIVACY.HREF, FOOTER.PRIVACY.TEXT);
     });
 
     it(`renders a ${FOOTER.COOKIES.TEXT} link with the correct URL`, () => {
-      footer.supportLinks.cookies().invoke('text').then((text) => {
-        expect(text.trim()).equal(FOOTER.COOKIES.TEXT);
-      });
-
-      footer.supportLinks.cookies().click();
-      cy.url().should('include', FOOTER.COOKIES.HREF);
+      cy.checkLink(footer.supportLinks.cookies(), FOOTER.COOKIES.QUOTE_HREF, FOOTER.COOKIES.TEXT);
     });
 
-    it(`renders a ${FOOTER.REPORT_VULNERABILITY.TEXT} link with the correct URL`, () => {
-      footer.supportLinks.reportVulnerability().invoke('text').then((text) => {
-        expect(text.trim()).equal(FOOTER.REPORT_VULNERABILITY.TEXT);
-      });
+    it(`renders a link to ${FOOTER.REPORT_VULNERABILITY.TEXT} with the correct URL`, () => {
+      cy.checkLink(footer.supportLinks.reportVulnerability(), FOOTER.REPORT_VULNERABILITY.HREF, FOOTER.REPORT_VULNERABILITY.TEXT);
+    });
 
-      footer.supportLinks.reportVulnerability().should('have.attr', 'href', FOOTER.REPORT_VULNERABILITY.HREF);
+    it(`renders a link to ${FOOTER.CONTACT.TEXT} and redirects to the correct URL`, () => {
+      cy.checkLink(footer.supportLinks.contact(), FOOTER.CONTACT.QUOTE_HREF, FOOTER.CONTACT.TEXT);
     });
 
     it(`renders a ${FOOTER.OGL_LICENCE.LICENCE} link with the correct URL`, () => {
@@ -76,16 +40,13 @@ context('Footer', () => {
         expect(text.trim()).includes(FOOTER.OGL_LICENCE.DISCLAIMER);
       });
 
-      footer.supportLinks.licenseLink().should('have.attr', 'href', FOOTER.OGL_LICENCE.HREF);
+      cy.checkLink(footer.supportLinks.licenseLink(), FOOTER.OGL_LICENCE.HREF, FOOTER.OGL_LICENCE.LICENCE);
     });
 
-    it(`renders a ${FOOTER.CROWN_COPYRIGHT.TEXT} link with the correct URL`, () => {
-      footer.supportLinks.copyright().invoke('text').then((text) => {
-        const expected = `© ${FOOTER.CROWN_COPYRIGHT.TEXT}`;
-        expect(text.trim()).equal(expected);
-      });
+    it(`renders a link to ${FOOTER.CROWN_COPYRIGHT.TEXT} with the correct URL`, () => {
+      const expectedText = `© ${FOOTER.CROWN_COPYRIGHT.TEXT}`;
 
-      footer.supportLinks.copyright().should('have.attr', 'href', FOOTER.CROWN_COPYRIGHT.HREF);
+      cy.checkLink(footer.supportLinks.copyright(), FOOTER.CROWN_COPYRIGHT.HREF, expectedText);
     });
   });
 });

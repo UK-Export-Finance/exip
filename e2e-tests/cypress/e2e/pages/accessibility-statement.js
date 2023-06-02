@@ -1,4 +1,4 @@
-const accessibilityStatementPage = {
+export const accessibilityStatementPage = {
   heading: () => cy.get('[data-cy="heading"]'),
   serviceLink: () => cy.get('[data-cy="service-link"]'),
   usingOurService: {
@@ -51,5 +51,3 @@ const accessibilityStatementPage = {
     listItem2: () => cy.get('[data-cy="preperation-of-statement-list-item-2"]'),
   },
 };
-
-export default accessibilityStatementPage;

@@ -1,25 +1,24 @@
-import {
-  yourQuotePage,
-  buyerCountryPage,
-  tellUsAboutYourPolicyPage,
-} from '../../../pages/quote';
+import { buyerCountryPage, submitButton } from '../../../pages/shared';
+import { yourQuotePage } from '../../../pages/quote';
+import partials from '../../../partials';
 import {
   LINKS,
   PAGES,
   QUOTE_TITLES,
 } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
+import { GBP_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
-const CONTENT_STRINGS = PAGES.YOUR_QUOTE_PAGE;
-const { ROUTES, FIELD_IDS, FIELD_VALUES } = CONSTANTS;
+const CONTENT_STRINGS = PAGES.QUOTE.YOUR_QUOTE;
 
 const {
-  BUYER_COUNTRY,
-  CONTRACT_VALUE,
-  CURRENCY,
-  CREDIT_PERIOD,
-  MAX_AMOUNT_OWED,
-  PERCENTAGE_OF_COVER,
+  ELIGIBILITY: {
+    BUYER_COUNTRY,
+    CONTRACT_VALUE,
+    CURRENCY,
+    CREDIT_PERIOD,
+    PERCENTAGE_OF_COVER,
+  },
   POLICY_LENGTH,
   SINGLE_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
@@ -38,274 +37,283 @@ const submissionData = {
   [BUYER_COUNTRY]: 'Algeria',
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
   [CONTRACT_VALUE]: '150000',
-  [CURRENCY]: 'GBP',
+  [CURRENCY]: GBP_CURRENCY_CODE,
   [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
   [SINGLE_POLICY_LENGTH]: '3',
   [CREDIT_PERIOD]: '1',
 };
 
+const startRoute = ROUTES.QUOTE.START;
+
 context('Get a quote/your quote page (single policy) - as an exporter, I want to get an Export insurance quote', () => {
+  const url = ROUTES.QUOTE.YOUR_QUOTE;
+
   before(() => {
     cy.login();
 
-    cy.submitAnswersHappyPathSinglePolicy();
-    tellUsAboutYourPolicyPage.submitButton().click();
+    cy.submitQuoteAnswersHappyPathSinglePolicy();
+    submitButton().click();
 
-    cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
+    cy.url().should('include', url);
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 60,
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: url,
+      assertSubmitButton: false,
+      assertBackLink: false,
+      assertAuthenticatedHeader: false,
+      isInsurancePage: false,
     });
   });
 
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
-  context('panel/quote', () => {
-    it('renders `you can apply` heading', () => {
-      yourQuotePage.panel.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.QUOTE.HEADING);
-      });
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
     });
 
-    it('renders `your quote` heading', () => {
-      yourQuotePage.panel.subHeading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.QUOTE.SUB_HEADING);
-      });
+    it('should render a header with href to quote start', () => {
+      cy.navigateToUrl(url);
+
+      partials.header.serviceName().should('have.attr', 'href', startRoute);
     });
 
-    context('summary list', () => {
-      const { summaryList } = yourQuotePage.panel;
+    context('panel/quote', () => {
+      it('renders `your quote` heading', () => {
+        cy.navigateToUrl(url);
 
-      it('renders `contract value` key, value with no decimal points and change link', () => {
-        const row = summaryList[CONTRACT_VALUE];
-        const expectedKeyText = QUOTE_TITLES[CONTRACT_VALUE];
-
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
-
-        row.value().invoke('text').then((text) => {
-          const expected = '£150,000';
-
-          expect(text.trim()).equal(expected);
-        });
-
-        row.changeLink().invoke('text').then((text) => {
-          const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-          expect(text.trim()).equal(expected);
-        });
-
-        const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
-        row.changeLink().should('have.attr', 'href', expectedHref);
+        cy.checkText(yourQuotePage.panel.subHeading(), CONTENT_STRINGS.QUOTE.SUB_HEADING);
       });
 
-      it('renders `percentage of cover` key, value and change link', () => {
-        const row = summaryList[PERCENTAGE_OF_COVER];
-        const expectedKeyText = QUOTE_TITLES[PERCENTAGE_OF_COVER];
-
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
+      context('summary list', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
         });
 
-        row.value().invoke('text').then((text) => {
-          const expected = '90%';
+        const { summaryList } = yourQuotePage.panel;
 
-          expect(text.trim()).equal(expected);
+        it('renders `contract value` key, value with no decimal points and change link', () => {
+          const row = summaryList[CONTRACT_VALUE];
+          const expectedKeyText = QUOTE_TITLES[CONTRACT_VALUE];
+
+          cy.checkText(row.key(), expectedKeyText);
+
+          const expectedValue = '£150,000';
+          cy.checkText(row.value(), expectedValue);
+
+          const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+          cy.checkText(row.changeLink(), expectedChangeLink);
+
+          const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
+          row.changeLink().should('have.attr', 'href', expectedHref);
         });
 
-        row.changeLink().invoke('text').then((text) => {
-          const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-          expect(text.trim()).equal(expected);
+        it('renders `percentage of cover` key, value and change link', () => {
+          const row = summaryList[PERCENTAGE_OF_COVER];
+          const expectedKeyText = QUOTE_TITLES[PERCENTAGE_OF_COVER];
+
+          cy.checkText(row.key(), expectedKeyText);
+
+          const expectedValue = '90%';
+          cy.checkText(row.value(), expectedValue);
+
+          const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+          cy.checkText(row.changeLink(), expectedChangeLink);
+
+          const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
+          row.changeLink().should('have.attr', 'href', expectedHref);
         });
 
-        const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
-        row.changeLink().should('have.attr', 'href', expectedHref);
-      });
+        it('renders `insured for` key and value with decimal points (no change link)', () => {
+          const row = summaryList[INSURED_FOR];
+          const expectedKeyText = QUOTE_TITLES[`${INSURED_FOR}_SINGLE_POLICY`];
 
-      it('renders `insured for` key and value with decimal points (no change link)', () => {
-        const row = summaryList[INSURED_FOR];
-        const expectedKeyText = QUOTE_TITLES[`${INSURED_FOR}_SINGLE_POLICY`];
+          cy.checkText(row.key(), expectedKeyText);
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
+          const expectedValue = '£135,000.00';
+          cy.checkText(row.value(), expectedValue);
+
+          row.changeLink().should('not.exist');
         });
 
-        row.value().invoke('text').then((text) => {
-          const expected = '£135,000.00';
+        it('renders `premium rate` key and value (no change link)', () => {
+          const row = summaryList[PREMIUM_RATE_PERCENTAGE];
+          const expectedKeyText = QUOTE_TITLES[PREMIUM_RATE_PERCENTAGE];
 
-          expect(text.trim()).equal(expected);
-        });
+          cy.checkText(row.key(), expectedKeyText);
 
-        row.changeLink().should('not.exist');
-      });
-
-      it('renders `premium rate` key and value (no change link)', () => {
-        const row = summaryList[PREMIUM_RATE_PERCENTAGE];
-        const expectedKeyText = QUOTE_TITLES[PREMIUM_RATE_PERCENTAGE];
-
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
-
-        row.value().invoke('text').then((text) => {
           const expected = '1.18%';
+          cy.checkText(row.value(), expected);
 
-          expect(text.trim()).equal(expected);
+          row.changeLink().should('not.exist');
         });
 
-        row.changeLink().should('not.exist');
-      });
+        it('renders `estimated cost` key and value (no change link)', () => {
+          const row = summaryList[ESTIMATED_COST];
+          const expectedKeyText = QUOTE_TITLES[ESTIMATED_COST];
 
-      it('renders `estimated cost` key and value (no change link)', () => {
-        const row = summaryList[ESTIMATED_COST];
-        const expectedKeyText = QUOTE_TITLES[ESTIMATED_COST];
+          cy.checkText(row.key(), expectedKeyText);
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
-
-        row.value().invoke('text').then((text) => {
           const expected = '£1,770.00';
+          cy.checkText(row.value(), expected);
 
-          expect(text.trim()).equal(expected);
+          row.changeLink().should('not.exist');
         });
 
-        row.changeLink().should('not.exist');
-      });
+        it('renders `policy length` key, value and change link', () => {
+          const row = summaryList[SINGLE_POLICY_LENGTH];
+          const expectedKeyText = QUOTE_TITLES[POLICY_LENGTH];
 
-      it('renders `policy length` key, value and change link', () => {
-        const row = summaryList[SINGLE_POLICY_LENGTH];
-        const expectedKeyText = QUOTE_TITLES[POLICY_LENGTH];
+          cy.checkText(row.key(), expectedKeyText);
 
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
+          const expectedValue = `${submissionData[SINGLE_POLICY_LENGTH]} months`;
+          cy.checkText(row.value(), expectedValue);
+
+          const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+          cy.checkText(row.changeLink(), expectedChangeLink);
+
+          const expectedHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
+          row.changeLink().should('have.attr', 'href', expectedHref);
         });
 
-        row.value().invoke('text').then((text) => {
-          const expected = `${submissionData[SINGLE_POLICY_LENGTH]} months`;
+        it('renders `buyer location` key, value and change link', () => {
+          const row = summaryList[BUYER_LOCATION];
+          const expectedKeyText = QUOTE_TITLES[BUYER_LOCATION];
 
-          expect(text.trim()).equal(expected);
+          cy.checkText(row.key(), expectedKeyText);
+
+          const expectedValue = submissionData[BUYER_COUNTRY];
+          cy.checkText(row.value(), expectedValue);
+
+          const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+          cy.checkText(row.changeLink(), expectedChangeLink);
+
+          const expectedHref = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
+          row.changeLink().should('have.attr', 'href', expectedHref);
         });
-
-        row.changeLink().invoke('text').then((text) => {
-          const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-          expect(text.trim()).equal(expected);
-        });
-
-        const expectedHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
-        row.changeLink().should('have.attr', 'href', expectedHref);
-      });
-
-      it('renders `buyer location` key, value and change link', () => {
-        const row = summaryList[BUYER_LOCATION];
-        const expectedKeyText = QUOTE_TITLES[BUYER_LOCATION];
-
-        row.key().invoke('text').then((text) => {
-          expect(text.trim()).equal(expectedKeyText);
-        });
-
-        row.value().invoke('text').then((text) => {
-          const expected = submissionData[BUYER_COUNTRY];
-
-          expect(text.trim()).equal(expected);
-        });
-
-        row.changeLink().invoke('text').then((text) => {
-          const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-          expect(text.trim()).equal(expected);
-        });
-
-        const expectedHref = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
-        row.changeLink().should('have.attr', 'href', expectedHref);
       });
     });
-  });
 
-  context('notice', () => {
     it('renders notice list items', () => {
-      yourQuotePage.noticeList.item1().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.NOTICE_1);
-      });
+      cy.checkText(yourQuotePage.noticeList.item1(), CONTENT_STRINGS.NOTICE_1);
 
-      yourQuotePage.noticeList.item2().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.NOTICE_2);
-      });
+      cy.checkText(yourQuotePage.noticeList.item2(), CONTENT_STRINGS.NOTICE_2);
 
-      yourQuotePage.noticeList.item3().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.NOTICE_3);
-      });
-    });
-  });
-
-  // TODO
-  // describe('what happens next', () => {
-  //   it('renders intro heading and copy', () => {
-
-  //   });
-  //   it('renders finance managers heading and copy', () => {
-
-  //   });
-
-  //   it('renders brokers heading and copy', () => {
-
-  //   });
-  // });
-
-  describe('links', () => {
-    describe('feedback', () => {
-      it('renders', () => {
-        yourQuotePage.links.feedback().should('exist');
-
-        yourQuotePage.links.feedback().invoke('text').then((text) => {
-          expect(text.trim()).equal(LINKS.GIVE_FEEDBACK);
-        });
-
-        yourQuotePage.links.feedback().should('have.attr', 'href', LINKS.EXTERNAL.FEEDBACK);
-      });
+      cy.checkText(yourQuotePage.noticeList.item3(), CONTENT_STRINGS.NOTICE_3);
     });
 
-    describe('start again', () => {
-      it('renders', () => {
-        yourQuotePage.links.startAgain().should('exist');
-
-        yourQuotePage.links.startAgain().invoke('text').then((text) => {
-          expect(text.trim()).equal(LINKS.START_AGAIN.TEXT);
-        });
-
-        yourQuotePage.links.startAgain().should('have.attr', 'href', ROUTES.ROOT);
+    describe('what happens next', () => {
+      it('renders intro heading and copy', () => {
+        cy.checkText(yourQuotePage.whatHappensNext.heading(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.HEADING);
       });
 
-      context('clicking `start again`', () => {
-        it('redirects to the first page of the flow', () => {
-          yourQuotePage.links.startAgain().click();
-          cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
-        });
+      it('renders `can start a new application` copy and link', () => {
+        cy.checkText(
+          yourQuotePage.whatHappensNext.intro.youCan(),
+          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO.CAN_NOW_SUBMIT,
+        );
 
-        it('clears the session', () => {
-          // buyer country auto complete stores the selected value in the first list item of the 'results' list.
-          // Therefore, if it's not defined, nothing has been selected/submitted.
-          buyerCountryPage.results().should('not.exist');
-        });
+        cy.checkLink(
+          yourQuotePage.whatHappensNext.intro.fullApplicationLink(),
+          ROUTES.INSURANCE.START,
+          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO.FULL_APPLICATION.TEXT,
+        );
+      });
+
+      it('renders `timeframe` and `can get help` copy', () => {
+        cy.checkText(
+          yourQuotePage.whatHappensNext.intro.timeframe(),
+          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO.TIMEFRAME,
+        );
+
+        cy.checkText(
+          yourQuotePage.whatHappensNext.intro.canGetHelp(),
+          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO.CAN_GET_HELP,
+        );
+      });
+
+      it('renders `finance managers` heading and copy', () => {
+        cy.checkText(
+          yourQuotePage.whatHappensNext.financeManagers.heading(),
+          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.EXPORT_FINANCE_MANAGERS.HEADING,
+        );
+      });
+
+      it('renders `finance managers available` copy and link', () => {
+        cy.checkText(
+          yourQuotePage.whatHappensNext.financeManagers.available(),
+          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.EXPORT_FINANCE_MANAGERS.AVAILABLE,
+        );
+
+        cy.checkLink(
+          yourQuotePage.whatHappensNext.financeManagers.link(),
+          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.EXPORT_FINANCE_MANAGERS.NEAREST_EFM.HREF,
+          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.EXPORT_FINANCE_MANAGERS.NEAREST_EFM.TEXT,
+        );
+      });
+
+      it('renders `brokers` heading and `act as` copy', () => {
+        cy.checkText(
+          yourQuotePage.whatHappensNext.brokers.heading(),
+          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.HEADING,
+        );
+
+        cy.checkText(
+          yourQuotePage.whatHappensNext.brokers.actAs(),
+          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.ACT_AS,
+        );
+      });
+
+      it('renders `brokers - they receive` copy and link', () => {
+        cy.checkText(
+          yourQuotePage.whatHappensNext.brokers.theyReceive.intro(),
+          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.THEY_RECEIVE.INTRO,
+        );
+
+        cy.checkLink(
+          yourQuotePage.whatHappensNext.brokers.theyReceive.link(),
+          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.THEY_RECEIVE.LINK.HREF,
+          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.THEY_RECEIVE.LINK.TEXT,
+        );
+
+        cy.checkText(
+          yourQuotePage.whatHappensNext.brokers.theyReceive.outro(),
+          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.THEY_RECEIVE.OUTRO,
+        );
+      });
+    });
+
+    it('renders a `feedback` link', () => {
+      yourQuotePage.links.feedback().should('exist');
+
+      cy.checkText(yourQuotePage.links.feedback(), LINKS.GIVE_FEEDBACK);
+
+      yourQuotePage.links.feedback().should('have.attr', 'href', LINKS.EXTERNAL.FEEDBACK);
+    });
+
+    it('renders `start again` link', () => {
+      yourQuotePage.links.startAgain().should('exist');
+
+      cy.checkText(yourQuotePage.links.startAgain(), LINKS.START_AGAIN.TEXT);
+
+      yourQuotePage.links.startAgain().should('have.attr', 'href', ROUTES.ROOT);
+    });
+
+    context('clicking `start again`', () => {
+      it('redirects to the first page of the flow', () => {
+        yourQuotePage.links.startAgain().click();
+        cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+      });
+
+      it('clears the session', () => {
+        // buyer country auto complete stores the selected value in the first list item of the 'results' list.
+        // Therefore, if it's not defined, nothing has been selected/submitted.
+        buyerCountryPage.results().should('not.exist');
       });
     });
   });

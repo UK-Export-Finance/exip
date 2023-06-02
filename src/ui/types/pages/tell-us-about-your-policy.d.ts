@@ -2,8 +2,8 @@ type TellUsAboutPolicyPageVariablesContentStrings = {
   BUTTONS: object;
   COOKIES_CONSENT: object;
   FOOTER: object;
-  HEADING?: string;
   LINKS: object;
+  PHASE_BANNER: object;
   PAGE_TITLE?: string;
   PRODUCT: object;
 };
@@ -20,6 +20,9 @@ type TellUsAboutPolicyPageVariablesFields = {
 interface TellUsAboutPolicyPageVariables {
   CONTENT_STRINGS: TellUsAboutPolicyPageVariablesContentStrings;
   FIELDS: TellUsAboutPolicyPageVariablesFields;
+  START_ROUTE: string;
+  FEEDBACK_ROUTE: string;
+  ORIGINAL_URL?: string;
 }
 
 export { TellUsAboutPolicyPageVariablesContentStrings, TellUsAboutPolicyPageVariablesFields, TellUsAboutPolicyPageVariables };

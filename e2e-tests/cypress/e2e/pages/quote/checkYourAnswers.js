@@ -1,24 +1,23 @@
 import { FIELD_IDS } from '../../../../constants';
 
 const {
-  BUYER_COUNTRY,
-  CONTRACT_VALUE,
-  CREDIT_PERIOD,
-  CURRENCY,
-  MAX_AMOUNT_OWED,
-  MULTI_POLICY_LENGTH,
-  MULTI_POLICY_TYPE,
+  ELIGIBILITY: {
+    BUYER_COUNTRY,
+    CONTRACT_VALUE,
+    CREDIT_PERIOD,
+    CURRENCY,
+    MAX_AMOUNT_OWED,
+    PERCENTAGE_OF_COVER,
+    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+    VALID_EXPORTER_LOCATION,
+  },
+  MULTIPLE_POLICY_LENGTH,
+  MULTIPLE_POLICY_TYPE,
   SINGLE_POLICY_LENGTH,
   SINGLE_POLICY_TYPE,
-  PERCENTAGE_OF_COVER,
-  HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-  VALID_COMPANY_BASE,
 } = FIELD_IDS;
 
 const checkYourAnswersPage = {
-  heading: () => cy.get('[data-cy="heading"]'),
-  submitButton: () => cy.get('[data-cy="submit-button"]'),
-
   summaryLists: {
     export: {
       heading: () => cy.get('[data-cy="summaryList-heading-export"]'),
@@ -27,10 +26,10 @@ const checkYourAnswersPage = {
         value: () => cy.get(`.${BUYER_COUNTRY}-value`),
         changeLink: () => cy.get(`[data-cy="${BUYER_COUNTRY}-change-link"]`),
       },
-      [VALID_COMPANY_BASE]: {
-        key: () => cy.get(`.${VALID_COMPANY_BASE}-key`),
-        value: () => cy.get(`.${VALID_COMPANY_BASE}-value`),
-        changeLink: () => cy.get(`[data-cy="${VALID_COMPANY_BASE}-change-link"]`),
+      [VALID_EXPORTER_LOCATION]: {
+        key: () => cy.get(`.${VALID_EXPORTER_LOCATION}-key`),
+        value: () => cy.get(`.${VALID_EXPORTER_LOCATION}-value`),
+        changeLink: () => cy.get(`[data-cy="${VALID_EXPORTER_LOCATION}-change-link"]`),
       },
       [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
         key: () => cy.get(`.${HAS_MINIMUM_UK_GOODS_OR_SERVICES}-key`),
@@ -60,20 +59,20 @@ const checkYourAnswersPage = {
         value: () => cy.get(`.${SINGLE_POLICY_TYPE}-value`),
         changeLink: () => cy.get(`[data-cy="${SINGLE_POLICY_TYPE}-change-link"]`),
       },
-      [MULTI_POLICY_TYPE]: {
-        key: () => cy.get(`.${MULTI_POLICY_TYPE}-key`),
-        value: () => cy.get(`.${MULTI_POLICY_TYPE}-value`),
-        changeLink: () => cy.get(`[data-cy="${MULTI_POLICY_TYPE}-change-link"]`),
+      [MULTIPLE_POLICY_TYPE]: {
+        key: () => cy.get(`.${MULTIPLE_POLICY_TYPE}-key`),
+        value: () => cy.get(`.${MULTIPLE_POLICY_TYPE}-value`),
+        changeLink: () => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE}-change-link"]`),
       },
       [SINGLE_POLICY_LENGTH]: {
         key: () => cy.get(`.${SINGLE_POLICY_LENGTH}-key`),
         value: () => cy.get(`.${SINGLE_POLICY_LENGTH}-value`),
         changeLink: () => cy.get(`[data-cy="${SINGLE_POLICY_LENGTH}-change-link"]`),
       },
-      [MULTI_POLICY_LENGTH]: {
-        key: () => cy.get(`.${MULTI_POLICY_LENGTH}-key`),
-        value: () => cy.get(`.${MULTI_POLICY_LENGTH}-value`),
-        changeLink: () => cy.get(`[data-cy="${MULTI_POLICY_LENGTH}-change-link"]`),
+      [MULTIPLE_POLICY_LENGTH]: {
+        key: () => cy.get(`.${MULTIPLE_POLICY_LENGTH}-key`),
+        value: () => cy.get(`.${MULTIPLE_POLICY_LENGTH}-value`),
+        changeLink: () => cy.get(`[data-cy="${MULTIPLE_POLICY_LENGTH}-change-link"]`),
       },
       [PERCENTAGE_OF_COVER]: {
         key: () => cy.get(`.${PERCENTAGE_OF_COVER}-key`),

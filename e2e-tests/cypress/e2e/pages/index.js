@@ -1,11 +1,10 @@
-const accessibilityStatementPage = require('./accessibility-statement');
-const cookiesPage = require('./cookies');
-const pageNotFoundPage = require('./pageNotFound');
-const quotePages = require('./quote');
+import quotePages from './quote';
+import insurancePages from './insurance';
 
-module.exports = {
-  accessibilityStatementPage,
-  cookiesPage,
-  pageNotFoundPage,
-  quote: quotePages,
-};
+export * from './accessibility-statement';
+export * from './cookies';
+export * from './contact-us';
+export * from './pageNotFound';
+
+export const insurance = insurancePages;
+export const quote = quotePages;

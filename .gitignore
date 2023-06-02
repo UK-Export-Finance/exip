@@ -4,6 +4,8 @@
 .api
 .database
 node_modules
-src/.api/.keystone
+src/api/.keystone/admin
 e2e-tests/cypress/screenshots/*
 e2e-tests/cypress/videos/*
+e2e-tests/cypress/downloads/*
+generated_reports/*
