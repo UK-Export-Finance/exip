@@ -17,7 +17,7 @@ const {
  * Generate title row indexes for XLSX.
  * Depending on the submitted application data, the rows can be different:
  * - If the policy type is multiple - the XLSX's Ppolicy and exports” section has 1 additional row.
- * - If "using a broker" is true - The XLSX's “About your business“ section has 3 additional rows.
+ * - If "using a broker" is true - the XLSX's “About your business“ section has 3 additional rows.
  * @returns {Object}
  */
 export const TITLE_ROW_INDEXES = (application?: Application): object => {
