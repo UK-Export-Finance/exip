@@ -18,7 +18,7 @@ export const mapApplication = (application: Application) => {
     lastUpdated: formatDate(new Date(updatedAt)),
     referenceNumber,
     buyerLocation: buyer?.country?.name || DEFAULT.EMPTY,
-    buyerName: buyer.companyOrOrganisationName ? replaceCharacterCodesWithCharacters(buyer.companyOrOrganisationName) : DEFAULT.EMPTY,
+    buyerName: replaceCharacterCodesWithCharacters(buyer.companyOrOrganisationName) || DEFAULT.EMPTY,
     insuredFor: mapInsuredFor(application),
   };
 
