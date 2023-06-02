@@ -5,7 +5,7 @@ import mapApplicationToXLSX from '../map-application-to-XLSX';
 import { XLSX_CONFIG } from '../../constants';
 import { mockApplication } from '../../test-mocks';
 
-const { ROW_INDEXES, ADDITIONAL_COLUMN_HEIGHT, TITLE_ROW_INDEXES, FONT_SIZE } = XLSX_CONFIG;
+const { ROW_INDEXES, ADDITIONAL_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG();
 
 describe('api/generate-xlsx/styled-columns/index', () => {
   const workbook = new ExcelJS.Workbook();
@@ -14,9 +14,11 @@ describe('api/generate-xlsx/styled-columns/index', () => {
 
   worksheet.columns = HEADER_COLUMNS;
 
+  const TITLE_INDEXES = Object.values(XLSX_CONFIG(mockApplication).TITLE_ROW_INDEXES);
+
   describe('styledColumns', () => {
     it('should add custom `alignment` and font size properties to each column', () => {
-      const result = styledColumns(worksheet);
+      const result = styledColumns(mockApplication, worksheet);
 
       result.eachRow((row, rowNumber) => {
         row.eachCell((cell, colNumber) => {
@@ -29,7 +31,7 @@ describe('api/generate-xlsx/styled-columns/index', () => {
 
           expect(cellData.alignment).toEqual(expectedAlignment);
 
-          const isTitleRow = Object.values(TITLE_ROW_INDEXES).includes(rowNumber);
+          const isTitleRow = TITLE_INDEXES.includes(rowNumber);
 
           if (!isTitleRow) {
             expect(cellData.font.size).toEqual(FONT_SIZE.DEFAULT);
@@ -39,9 +41,9 @@ describe('api/generate-xlsx/styled-columns/index', () => {
     });
 
     it('should add bold font style and different font size to title rows', () => {
-      const result = styledColumns(worksheet);
+      const result = styledColumns(mockApplication, worksheet);
 
-      const expectedRows = Object.values(TITLE_ROW_INDEXES);
+      const expectedRows = TITLE_INDEXES;
 
       expectedRows.forEach((rowIndex) => {
         const row = result.getRow(rowIndex);
@@ -76,7 +78,7 @@ describe('api/generate-xlsx/styled-columns/index', () => {
         worksheet.addRow(row);
       });
 
-      const result = worksheetRowHeights(worksheet);
+      const result = worksheetRowHeights(TITLE_INDEXES, worksheet);
 
       const row1 = result.getRow(ROW_INDEXES.COMPANY_ADDRESS);
       expect(row1.height).toEqual(ADDITIONAL_COLUMN_HEIGHT * 2);

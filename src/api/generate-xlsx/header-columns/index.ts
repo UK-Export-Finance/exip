@@ -1,6 +1,6 @@
 import { XLSX_CONFIG } from '../../constants';
 
-const { KEY, VALUE, COLUMN_WIDTH } = XLSX_CONFIG;
+const { KEY, VALUE, COLUMN_WIDTH } = XLSX_CONFIG();
 
 /**
  * XLSX_HEADER_COLUMNS
