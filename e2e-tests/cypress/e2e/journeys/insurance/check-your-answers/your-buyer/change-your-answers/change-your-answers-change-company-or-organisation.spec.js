@@ -27,7 +27,6 @@ const {
   COMPANY_OR_ORGANISATION: {
     NAME,
     ADDRESS,
-    COUNTRY,
     REGISTRATION_NUMBER,
     WEBSITE,
     FIRST_NAME,
@@ -54,7 +53,7 @@ const getFieldVariables = (fieldId, referenceNumber) => ({
   changeLink: summaryList.field(fieldId).changeLink,
 });
 
-context('Insurance - Check your answers - Company or organisation - Your buyer page- Summary list', () => {
+context('Insurance - Check your answers - Company or organisation - Your buyer page - Summary list', () => {
   let referenceNumber;
   let url;
 
@@ -174,7 +173,6 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
 
         // as html, cannot use checkText so checking contains following fields
         row.value().contains(fieldVariables.newValueInput);
-        row.value().contains(application.BUYER[COUNTRY]);
 
         cy.checkTaskStatusCompleted(status());
       });

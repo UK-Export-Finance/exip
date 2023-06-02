@@ -6,13 +6,11 @@ import { ROUTES } from '../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../fixtures/application';
-import countries from '../../../../../fixtures/countries';
 
 const {
   COMPANY_OR_ORGANISATION: {
     NAME,
     ADDRESS,
-    COUNTRY,
     REGISTRATION_NUMBER,
     WEBSITE,
     FIRST_NAME,
@@ -36,7 +34,6 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.buyer;
 
 const { BUYER } = application;
-const countryToSelect = countries[0].isoCode;
 
 context('Insurance - Your buyer - Company or organisation - Save and back', () => {
   let referenceNumber;
@@ -127,7 +124,6 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
       cy.keyboardInput(companyOrOrganisationPage[POSITION].input(), BUYER[POSITION]);
       cy.keyboardInput(companyOrOrganisationPage[EMAIL].input(), BUYER[EMAIL]);
       companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().click();
-      companyOrOrganisationPage[COUNTRY].input().select(countryToSelect);
 
       saveAndBackButton().click();
     });

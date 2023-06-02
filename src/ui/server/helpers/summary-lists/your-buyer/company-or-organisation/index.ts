@@ -17,7 +17,7 @@ const {
 } = ROUTES;
 
 const {
-  COMPANY_OR_ORGANISATION: { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER },
+  COMPANY_OR_ORGANISATION: { NAME, ADDRESS, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER },
 } = FIELD_IDS;
 
 /**
@@ -32,7 +32,6 @@ export const generateAddressObject = (answers: ApplicationBuyer) => {
 
   return {
     address,
-    country: answers[COUNTRY]?.name,
   };
 };
 

@@ -14,7 +14,7 @@ context('Footer', () => {
     });
 
     it(`renders a ${FOOTER.ACCESSIBILITY_STATEMENT.TEXT} link with the correct URL`, () => {
-      cy.checkLink(footer.supportLinks.accessibilityStatement(), FOOTER.ACCESSIBILITY_STATEMENT.HREF, FOOTER.ACCESSIBILITY_STATEMENT.TEXT);
+      cy.checkLink(footer.supportLinks.accessibilityStatement(), FOOTER.ACCESSIBILITY_STATEMENT.QUOTE_HREF, FOOTER.ACCESSIBILITY_STATEMENT.TEXT);
     });
 
     it(`renders a ${FOOTER.PRIVACY.TEXT} link with the correct URL`, () => {
@@ -22,7 +22,7 @@ context('Footer', () => {
     });
 
     it(`renders a ${FOOTER.COOKIES.TEXT} link with the correct URL`, () => {
-      cy.checkLink(footer.supportLinks.cookies(), FOOTER.COOKIES.HREF, FOOTER.COOKIES.TEXT);
+      cy.checkLink(footer.supportLinks.cookies(), FOOTER.COOKIES.QUOTE_HREF, FOOTER.COOKIES.TEXT);
     });
 
     it(`renders a link to ${FOOTER.REPORT_VULNERABILITY.TEXT} with the correct URL`, () => {
@@ -30,7 +30,7 @@ context('Footer', () => {
     });
 
     it(`renders a link to ${FOOTER.CONTACT.TEXT} and redirects to the correct URL`, () => {
-      cy.checkLink(footer.supportLinks.contact(), FOOTER.CONTACT.HREF, FOOTER.CONTACT.TEXT);
+      cy.checkLink(footer.supportLinks.contact(), FOOTER.CONTACT.QUOTE_HREF, FOOTER.CONTACT.TEXT);
     });
 
     it(`renders a ${FOOTER.OGL_LICENCE.LICENCE} link with the correct URL`, () => {

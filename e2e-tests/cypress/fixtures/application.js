@@ -189,7 +189,7 @@ const application = {
   BUYER: {
     [COMPANY_OR_ORGANISATION_NAME]: 'Test name',
     [ADDRESS]: 'Test address',
-    [COUNTRY]: mockCountries[0].name,
+    [COUNTRY]: mockCountries[1].name,
     [REGISTRATION_NUMBER]: '12345',
     [WEBSITE]: WEBSITE_EXAMPLES.VALID,
     [FIRST_NAME]: 'Bob',

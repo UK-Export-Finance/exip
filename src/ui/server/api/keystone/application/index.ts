@@ -2,6 +2,7 @@ import { ApolloResponse, InsuranceSubmittedBuyer, SubmittedDataInsuranceEligibil
 import apollo from '../../../graphql/apollo';
 import countries from '../countries';
 import eligibility from './eligibility';
+import buyer from './buyer';
 import declarations from './declarations';
 import createApplicationMutation from '../../../graphql/mutations/create-application';
 import getApplicationQuery from '../../../graphql/queries/application';
@@ -63,12 +64,20 @@ const application = {
         const newApplication = await createInitialApplication(accountId);
 
         const { id: eligibilityId } = newApplication.eligibility;
+        const { id: buyerId } = newApplication.buyer;
 
         const buyerCountry = await countries.get(buyerCountryIsoCode);
 
         await eligibility.update(eligibilityId, {
           ...eligibilityAnswers,
           buyerCountry: {
+            connect: { id: buyerCountry.id },
+          },
+        });
+
+        // update the buyer country on application creation using the eligiblity country
+        await buyer.update(buyerId, {
+          country: {
             connect: { id: buyerCountry.id },
           },
         });

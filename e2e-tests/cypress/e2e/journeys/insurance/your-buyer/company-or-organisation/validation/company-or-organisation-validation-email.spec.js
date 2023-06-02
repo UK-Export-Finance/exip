@@ -55,8 +55,8 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
   const ERROR_ASSERTIONS = {
     field: companyOrOrganisationPage[FIELD_ID],
-    numberOfExpectedErrors: 8,
-    errorIndex: 6,
+    numberOfExpectedErrors: 7,
+    errorIndex: 5,
   };
 
   const errorMessage = ERROR_MESSAGE.IS_EMPTY;
@@ -103,6 +103,6 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
     submitButton().click();
 
-    partials.errorSummaryListItems().should('have.length', 7);
+    partials.errorSummaryListItems().should('have.length', 6);
   });
 });
