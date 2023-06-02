@@ -127,14 +127,17 @@ jobs:
 
       - name: Artifacts 🗃️
         working-directory: src/${{ env.NAME }}
-        env:
-          GITHUB_SHA: ${{ github.sha }}
-          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-          GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
         run: |
+
+          # Build images
           docker build . \
           -t ${{ env.ACR }}/${{ env.NAME }}:${{ github.sha }} \
-          -t ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }}
+          -t ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }} \
+          --build-arg GITHUB_SHA=${{ github.sha }} \
+          --build-arg SESSION_SECRET=${{ secrets.SESSION_SECRET }} \
+          --build-arg GOV_NOTIFY_API_KEY=${{ secrets.GOV_NOTIFY_API_KEY }}
+
+          # Push images
           docker push ${{ env.ACR }}/${{ env.NAME }}:${{ github.sha }}
           docker push ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }}
 
