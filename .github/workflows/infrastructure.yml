@@ -74,7 +74,7 @@ on:
 env:
   PRODUCT: exip
   ENVIRONMENT: infrastructure
-  TIMEZONE: "Europe/London"
+  TIMEZONE: 'Europe/London'
   # Deployment environment target i.e., `development`, `staging`, `production`
   TARGET: ${{ vars.ENVIRONMENT }}
 
@@ -296,6 +296,8 @@ jobs:
           --min-tls-version '${{ vars.TLS_VERSION }}'
 
       - name: Setting 🧱
+        env:
+          API_URL: $(az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv)
         run: |
           # Set a web app's settings
 
@@ -315,7 +317,7 @@ jobs:
           GOV_NOTIFY_API_KEY='${{ secrets.GOV_NOTIFY_API_KEY }}' \
           COMPANIES_HOUSE_API_URL='${{ secrets.COMPANIES_HOUSE_API_URL }}' \
           COMPANIES_HOUSE_API_KEY='${{ secrets.COMPANIES_HOUSE_API_KEY }}' \
-          API_URL='https://$(az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv)/api/graphql' \
+          API_URL='https://${{ env.API_URL }}/api/graphql' \
           APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
           APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
           APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}'
