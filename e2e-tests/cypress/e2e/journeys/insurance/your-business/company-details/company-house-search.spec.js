@@ -2,11 +2,13 @@ import { companyDetails } from '../../../../pages/your-business';
 import { ERROR_MESSAGES, DEFAULT } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import partials from '../../../../partials';
-import { saveAndBackButton } from '../../../../pages/shared';
+import { saveAndBackButton, submitButton, backLink } from '../../../../pages/shared';
 import {
   ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER, COMPANIES_HOUSE_NUMBER_NO_SIC_CODE, COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES,
 } from '../../../../../../constants';
 import application from '../../../../../fixtures/application';
+
+const { ROOT } = ROUTES.INSURANCE;
 
 const {
   EXPORTER_BUSINESS: {
@@ -224,6 +226,21 @@ context('Insurance - Your business - Company details page - company house search
       cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].key(), SUMMARY_LIST_FIELDS.COMPANY_SIC.text);
 
       cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].value(), DEFAULT.EMPTY);
+    });
+  });
+
+  describe('when going back to company details page after searching for company house and pressing continue', () => {
+    it('should take ytou back to company details page', () => {
+      cy.navigateToUrl(url);
+
+      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
+      companyDetails.companiesHouseSearchButton().click();
+
+      submitButton().click();
+
+      backLink().click();
+
+      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH}`);
     });
   });
 });
