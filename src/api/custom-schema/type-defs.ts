@@ -110,7 +110,7 @@ const typeDefs = `
   }
 
   type AccountSignInResponse {
-    accountId: String
+    accountId: String!
     firstName: String
     lastName: String
     email: String
@@ -147,6 +147,12 @@ const typeDefs = `
   type VerifyAccountEmailAddressResponse {
     success: Boolean!
     accountId: String
+  }
+
+  type AccountSendEmailReactivateAccountLinkResponse {
+    success: Boolean!
+    accountId: String!
+    email: String
   }
 
   type Mutation {
@@ -203,6 +209,12 @@ const typeDefs = `
       urlOrigin: String!
       email: String!
     ): AccountSendEmailPasswordResetLinkResponse
+
+    """ send email with reactivate account link """
+    sendEmailReactivateAccountLink(
+      urlOrigin: String!
+      accountId: String!
+    ): AccountSendEmailReactivateAccountLinkResponse
 
     """ reset account password """
     accountPasswordReset(

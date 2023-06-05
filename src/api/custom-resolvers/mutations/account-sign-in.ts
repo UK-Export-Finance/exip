@@ -65,7 +65,7 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
     if (isBlocked) {
       console.info('Unable to sign in account - account is already blocked');
 
-      return { success: false, isBlocked: true };
+      return { success: false, isBlocked: true, accountId };
     }
 
     /**
@@ -141,7 +141,7 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
             };
           }
 
-          return { success: false };
+          return { success: false, accountId };
         }
 
         // reject

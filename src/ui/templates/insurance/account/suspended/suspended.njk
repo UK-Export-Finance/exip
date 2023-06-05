@@ -1,0 +1,29 @@
+{% extends 'index.njk' %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <p class="govuk-body" data-cy="body">{{ CONTENT_STRINGS.BODY }} </p>
+
+  <form method="POST" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-button-group">
+      {{ govukButton({
+        text: CONTENT_STRINGS.BUTTONS.REACTIVATE_ACCOUNT,
+        attributes: {
+          'data-cy': 'submit-button'
+        }
+      }) }}
+    </div>
+
+  </form>
+      
+{% endblock %}

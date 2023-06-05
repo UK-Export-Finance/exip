@@ -36,7 +36,12 @@ const SIGNED_OUT = `${INSURANCE_ROOT}/signed-out`;
 
 const SUSPENDED = {
   ROOT: SUSPENDED_ROOT,
+  EMAIL_SENT: `${SUSPENDED_ROOT}/email-sent`,
+  VERIFY_EMAIL: `${SUSPENDED_ROOT}/verify-email`,
+  VERIFY_EMAIL_LINK_EXPIRED: `${SUSPENDED_ROOT}/link-expired`,
 };
+
+const REACTIVATED = `${INSURANCE_ROOT}/account-reactivated`;
 
 export const ACCOUNT = {
   CREATE,
@@ -46,4 +51,5 @@ export const ACCOUNT = {
   SIGN_OUT,
   SIGNED_OUT,
   SUSPENDED,
+  REACTIVATED,
 };

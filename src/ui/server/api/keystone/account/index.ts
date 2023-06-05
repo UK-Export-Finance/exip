@@ -10,6 +10,7 @@ import verifyAccountSignInCodeMutation from '../../../graphql/mutations/account/
 import sendEmailPasswordResetLinkMutation from '../../../graphql/mutations/account/send-email-password-reset-link';
 import verifyAccountSessionMutation from '../../../graphql/mutations/account/verify-session';
 import accountPasswordResetMutation from '../../../graphql/mutations/account/password-reset';
+import sendEmailReactivateAccountLinkMutation from '../../../graphql/mutations/account/reactivate-account-link';
 import verifyAccountPasswordResetTokenQuery from '../../../graphql/queries/account/verify-account-password-reset-token';
 
 const account = {
@@ -257,6 +258,33 @@ const account = {
     } catch (err) {
       console.error(err);
       throw new Error('Sending email for account password reset');
+    }
+  },
+  sendEmailReactivateAccountLink: async (urlOrigin: string, accountId: string) => {
+    try {
+      console.info('Sending email for account reactivation');
+
+      const variables = { urlOrigin, accountId };
+
+      const response = (await apollo('POST', sendEmailReactivateAccountLinkMutation, variables)) as ApolloResponse;
+
+      if (response.errors) {
+        console.error('GraphQL error sending email for account reactivation ', response.errors);
+      }
+
+      if (response?.networkError?.result?.errors) {
+        console.error('GraphQL network error sending email for account reactivation ', response.networkError.result.errors);
+      }
+
+      if (response?.data?.sendEmailReactivateAccountLink) {
+        return response.data.sendEmailReactivateAccountLink;
+      }
+
+      console.error(response);
+      throw new Error('Sending email for account reactivation');
+    } catch (err) {
+      console.error(err);
+      throw new Error('Sending email for account reactivation');
     }
   },
   verifyPasswordResetToken: async (token: string) => {

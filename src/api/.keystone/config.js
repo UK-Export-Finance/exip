@@ -322,14 +322,15 @@ var DATE_5_MINUTES_FROM_NOW = () => {
   const future = new Date(now.setMilliseconds(milliseconds));
   return future;
 };
+var DATE_24_HOURS_FROM_NOW = () => {
+  const now = /* @__PURE__ */ new Date();
+  const milliseconds = 3e5;
+  const future = new Date(now.setMilliseconds(milliseconds));
+  return future;
+};
 var ACCOUNT2 = {
   EMAIL: {
-    VERIFICATION_EXPIRY: () => {
-      const now = /* @__PURE__ */ new Date();
-      const day = now.getDate();
-      const tomorrow = new Date(now.setDate(day + 1));
-      return tomorrow;
-    }
+    VERIFICATION_EXPIRY: DATE_24_HOURS_FROM_NOW
   },
   ENCRYPTION: {
     RANDOM_BYTES_SIZE: 32,
@@ -355,6 +356,7 @@ var ACCOUNT2 = {
     DIGITS: 6,
     VERIFICATION_EXPIRY: DATE_5_MINUTES_FROM_NOW
   },
+  REACTIVATION_EXPIRY: DATE_24_HOURS_FROM_NOW,
   // JSON web token
   JWT: {
     KEY: {
@@ -386,7 +388,8 @@ var EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
     CONFIRM_EMAIL: "24022e94-171c-4044-b0ee-d22418116575",
     SECURITY_CODE: "b92650d1-9187-4510-ace2-5eec7ca7e626",
-    PASSWORD_RESET: "86d5f582-e1d3-4b55-b103-50141401fd13"
+    PASSWORD_RESET: "86d5f582-e1d3-4b55-b103-50141401fd13",
+    REACTIVATE_ACCOUNT_CONFIRM_EMAIL: "2abf173a-52fc-4ec8-b28c-d7a862b8cf37"
   },
   APPLICATION: {
     SUBMISSION: {
@@ -811,6 +814,8 @@ var lists = {
       authenticationRetry: (0, import_fields.relationship)({
         ref: "AuthenticationRetry"
       }),
+      reactivationHash: (0, import_fields.text)({ validation: { isRequired: false } }),
+      reactivationExpiry: (0, import_fields.timestamp)({ validation: { isRequired: false } }),
       applications: (0, import_fields.relationship)({
         ref: "Application",
         many: true
@@ -1327,7 +1332,7 @@ var typeDefs = `
   }
 
   type AccountSignInResponse {
-    accountId: String
+    accountId: String!
     firstName: String
     lastName: String
     email: String
@@ -1364,6 +1369,12 @@ var typeDefs = `
   type VerifyAccountEmailAddressResponse {
     success: Boolean!
     accountId: String
+  }
+
+  type AccountSendEmailReactivateAccountLinkResponse {
+    success: Boolean!
+    accountId: String!
+    email: String
   }
 
   type Mutation {
@@ -1420,6 +1431,12 @@ var typeDefs = `
       urlOrigin: String!
       email: String!
     ): AccountSendEmailPasswordResetLinkResponse
+
+    """ send email with reactivate account link """
+    sendEmailReactivateAccountLink(
+      urlOrigin: String!
+      accountId: String!
+    ): AccountSendEmailReactivateAccountLinkResponse
 
     """ reset account password """
     accountPasswordReset(
@@ -1638,6 +1655,20 @@ var passwordResetLink = async (urlOrigin, emailAddress, name, passwordResetHash)
   }
 };
 
+// emails/reactivate-account-link/index.ts
+var reactivateAccountLink = async (urlOrigin, emailAddress, name, reactivationHash) => {
+  try {
+    console.info("Sending email for account reactivation");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.REACTIVATE_ACCOUNT_CONFIRM_EMAIL;
+    const variables = { urlOrigin, name, reactivationToken: reactivationHash };
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Sending email for account reactivation ${err}`);
+  }
+};
+
 // file-system/index.ts
 var import_fs = require("fs");
 var import_path = __toESM(require("path"));
@@ -1792,6 +1823,7 @@ var sendEmail = {
   confirmEmailAddress,
   securityCodeEmail,
   passwordResetLink,
+  reactivateAccountLink,
   application,
   documentsEmail,
   insuranceFeedbackEmail
@@ -2206,7 +2238,7 @@ var accountSignIn = async (root, variables, context) => {
     const { isBlocked } = account;
     if (isBlocked) {
       console.info("Unable to sign in account - account is already blocked");
-      return { success: false, isBlocked: true };
+      return { success: false, isBlocked: true, accountId };
     }
     const needToBlockAccount = await should_block_account_default(context, accountId);
     if (needToBlockAccount) {
@@ -2243,7 +2275,7 @@ var accountSignIn = async (root, variables, context) => {
               accountId
             };
           }
-          return { success: false };
+          return { success: false, accountId };
         }
         console.info("Unable to sign in account - account has not been verified");
         return { success: false };
@@ -2661,6 +2693,56 @@ var accountPasswordReset = async (root, variables, context) => {
   }
 };
 var account_password_reset_default = accountPasswordReset;
+
+// custom-resolvers/mutations/send-email-reactivate-account-link.ts
+var import_crypto8 = __toESM(require("crypto"));
+var {
+  ENCRYPTION: {
+    STRING_TYPE: STRING_TYPE8,
+    PBKDF2: { ITERATIONS: ITERATIONS7, DIGEST_ALGORITHM: DIGEST_ALGORITHM7 },
+    PASSWORD: {
+      PBKDF2: { KEY_LENGTH: KEY_LENGTH7 }
+    }
+  }
+} = ACCOUNT2;
+var sendEmailReactivateAccountLink = async (root, variables, context) => {
+  try {
+    console.info("Received a reactivate account request - checking account");
+    const { urlOrigin, accountId } = variables;
+    const account = await get_account_by_id_default(context, accountId);
+    if (!account) {
+      console.info("Unable to check account and send reactivate account email - no account found");
+      return { success: false };
+    }
+    const { email } = account;
+    console.info("Generating hash for account reactivation");
+    const reactivationHash = import_crypto8.default.pbkdf2Sync(email, account.salt, ITERATIONS7, KEY_LENGTH7, DIGEST_ALGORITHM7).toString(STRING_TYPE8);
+    const accountUpdate = {
+      reactivationHash,
+      reactivationExpiry: ACCOUNT2.REACTIVATION_EXPIRY()
+    };
+    console.info("Updating account for reactivation");
+    await context.db.Account.updateOne({
+      where: { id: accountId },
+      data: accountUpdate
+    });
+    console.info("Sending reactivate account email");
+    const name = get_full_name_string_default(account);
+    const emailResponse = await emails_default.reactivateAccountLink(urlOrigin, email, name, reactivationHash);
+    if (emailResponse.success) {
+      return {
+        ...emailResponse,
+        email,
+        accountId
+      };
+    }
+    return { accountId, email, success: false };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Checking account and sending reactivate account email (sendEmailReactivateAccountLink mutation) ${err}`);
+  }
+};
+var send_email_reactivate_account_link_default = sendEmailReactivateAccountLink;
 
 // custom-resolvers/mutations/delete-application-by-refrence-number.ts
 var deleteApplicationByReferenceNumber = async (root, variables, context) => {
@@ -4077,6 +4159,7 @@ var customResolvers = {
     addAndGetOTP: add_and_get_OTP_default,
     accountPasswordReset: account_password_reset_default,
     sendEmailPasswordResetLink: send_email_password_reset_link_default,
+    sendEmailReactivateAccountLink: send_email_reactivate_account_link_default,
     deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
     updateCompanyAndCompanyAddress: update_company_and_company_address_default,
     submitApplication: submit_application_default,

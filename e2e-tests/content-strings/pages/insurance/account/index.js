@@ -150,8 +150,14 @@ const ACCOUNT = {
     PAGE_TITLE: 'For your security, we signed you out',
   },
   SUSPENDED: {
-    PAGE_TITLE: 'This account has been temporarily suspended',
-    BODY: 'This can happen if there are too many failed attempts to login or reset a password.',
+    ROOT: {
+      PAGE_TITLE: 'This account has been temporarily suspended',
+      BODY: 'This can happen if there are too many failed attempts to login or reset a password.',
+    },
+    EMAIL_SENT: {
+      PAGE_TITLE: "Check your email",
+      WE_SENT_LINK_TO: "We've sent you a link to",
+    },
   },
 };
 

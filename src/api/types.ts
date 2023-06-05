@@ -110,6 +110,8 @@ interface Account extends AccountUpdateInput {
   passwordResetHash?: string;
   passwordResetExpiry?: Date;
   isVerified: boolean;
+  reactivationHash?: string;
+  reactivationExpiry?: Date;
 }
 
 interface ApplicationCompanyAddress extends ApplicationRelationship {
@@ -255,6 +257,11 @@ interface AccountSendEmailPasswordResetLinkVariables {
   email: string;
 }
 
+interface AccountSendEmailReactivateLinkVariables {
+  urlOrigin: string;
+  accountId: string;
+}
+
 interface AccountSignInVariables {
   urlOrigin: string;
   email: string;
@@ -306,6 +313,11 @@ interface AccountPasswordResetResponse extends SuccessResponse {
 interface AccountSendEmailPasswordResetLinkResponse extends SuccessResponse {
   accountId?: string;
   isBlocked?: boolean;
+}
+
+interface AccountSendEmailReactivateLinkResponse extends SuccessResponse {
+  accountId?: string;
+  email?: string;
 }
 
 interface VerifyAccountSignInCodeVariables {
@@ -386,6 +398,8 @@ export {
   AccountPasswordResetResponse,
   AccountSendEmailPasswordResetLinkVariables,
   AccountSendEmailPasswordResetLinkResponse,
+  AccountSendEmailReactivateLinkVariables,
+  AccountSendEmailReactivateLinkResponse,
   AccountSignInVariables,
   AccountSignInSendNewCodeVariables,
   AccountSignInResponse,

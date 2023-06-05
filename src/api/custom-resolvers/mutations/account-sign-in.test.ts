@@ -248,10 +248,11 @@ describe('custom-resolvers/account-sign-in', () => {
       result = await accountSignIn({}, variables, context);
     });
 
-    it('should return success=false and isBlocked=true', async () => {
+    it('should return success=false, isBlocked=true and accountId', async () => {
       const expected = {
         success: false,
         isBlocked: true,
+        accountId: account.id,
       };
 
       expect(result).toEqual(expected);
