@@ -1,31 +1,117 @@
-# Bash
-A bash script is a text file that contains a series of commands that are executed by the Bash shell. Bash scripts can be used to automate tasks.
-Bash scripts can be a powerful tool for automating tasks.
+# Git Hub Actions (GHA) 🚀
+GitHub Actions has been widely used to define custom workflows (using YAML syntax) to build, test, lint and deploy out code directly from our public GitHub repositories.
+## Script
+### CICD 📝
+
+This Bash script represents a Continuous Integration and Continuous Deployment (CICD) process.
+
+### Color Variables
+
+- `RED` 🟥: Represents the color code for red.
+- `GREEN` 🟩: Represents the color code for green.
+- `BLUE` 🔵: Represents the color code for blue.
+- `YELLOW` 🟨: Represents the color code for yellow.
+- `NC` ⬛: Represents the color code for no color (default).
+
+### User Input
+
+The script prompts the user to select an option from the following:
+
+- `${YELLOW}0. Infrastructure 🔧${NC}`
+- `${BLUE}1. Deployment 🧪${NC}`
+- `${RED}2. ACR Purge 🗑️${NC}`
+
+### Option Handling
+
+Based on the user's selection, the script performs the following actions:
+
+### Infrastructure 🔧
+
+- Sets the `destination` variable to "infrastructure".
+- Sets the `branch` variable to "main".
+
+### Deployment 🧪
+
+- Prompts the user to enter a value for the `destination` variable.
+- Sets the `branch` variable to "main".
+
+### ACR Purge 🗑️
+
+- Clears the values of the `destination` and `branch` variables.
+- Runs an Azure CLI command to purge specific resources in an Azure Container Registry (ACR).
+
+## Infrastructure 🔨
+
+This is a GitHub Actions workflow for setting up the base infrastructure for the "EXIP" (name of the product) project.
+The workflow consists of several steps:
+
+### Setup 🔧
+This step sets up the environment variables for the workflow, including the environment name and timezone.
+
+### Base Infrastructure Creation 🧱
+This step creates the base infrastructure components using Azure CLI commands. It includes the creation of a resource group, an app service plan, a log analytics workspace, a container registry, a virtual network, VNET peering with an Azure Managed Instance (AMI) SQL DB, and two web apps (UI and API).
+
+### WebApp Configuration 🔧
+This step configures the created web apps. It enables continuous deployment via containers, sets various configuration settings, such as enabling HTTPS, setting DNS server and VNET routing, configuring app settings, and configuring logging options.
+The workflow uses Azure CLI and Azure Login actions to interact with the Azure resources. It also uses environment variables and secrets to provide configuration values for the Azure commands.
+Please note that this is a workflow written in YAML syntax for GitHub Actions, and it is meant to be executed within a GitHub repository with the appropriate Azure credentials and configurations.
+
+Standard Azure naming convention has been followed, however a minor modification to the standard naming convention has been made to not include the region.
+
+Following Azure services are consumed: 📦
+
+* Azure resource group - az group create
+* Azure app service plan - Azure App Service Plan
+* Azure container registry - az acr create
+* Azure virtual network - Azure Virtual Network
+* Azure virtual network peer - az network vnet peering
+* Azure web app - Azure Web App
+
+### Execution 🔀
+The workflow is only invoked when the following conditions are satisfied:
+
+* Push to the infrastructure branch only.
+* Exact file path matches .github/workflows/infrastructure.yml.
+
+### Flow 🌊
+* **setup**: This job sets up the environment and timezone variables and outputs them for other jobs to use.
+* **base**: This job creates the base infrastructure using Azure CLI commands. It creates a resource group, an app service plan, a log analytics workspace, a container registry, a virtual network, establishes VNET peering, and creates web apps for the UI and API.
+* **webapp**: This job configures the web app settings, such as continuous deployment via containers, configuration settings, environment variables, and logging.
+
+Each job consists of multiple steps that are executed in sequence.
+
+### Note 📌
+Azure CLI will merely ignore the new resource creation if already exist with the same name.
+It's important to note that this YAML code is specific to an EXIP project and relies on Azure CLI and Azure resources.
+It assumes the presence of certain secrets and environment variables, which should be configured accordingly for the workflow to work properly.
 
 ## Deployment 🚀
 
- ### CICD
-* 🔧 0. Infrastructure
-* 🧪 1. Deployment
-* 🗑️ 2. ACR Purge
+The workflow is triggered on pushes to the `dev`, `staging`, and `production` branches when changes are made to specific paths related to source code, the database, and the deployment workflow itself.
 
-Prompt the user to input a selection.
-If the selection is not empty, the script checks the value and executes the corresponding section:
+### Environment Variables
 
-* 🔧 INFRASTRUCTURE: Sets the destination variable to "infrastructure" and the branch variable to "main".
-* 🧪 DEPLOYMENT: Sets the destination variable to "deployment" and the branch variable to "main".
-* 🗑️ ACR PURGE: Sets the destination and branch variables to empty strings. Executes the az acr run command to purge ACR (Azure Container Registry) based on specific filters and age.
+- `PRODUCT`: The name of the product (EXIP).
+- `ENVIRONMENT`: The environment (derived from `github.ref_name`).
+- `TIMEZONE`: The timezone set to 'Europe/London'.
+- `FROM`: Base artifact version (latest).
 
-If both destination and branch are not empty, the script performs the following steps:
+### Jobs
+#### Job: Setup 🔧
 
-* Checks out the specified branch and pulls the latest changes from the remote repository.
-* Displays the latest commit of the branch.
-* Creates a new branch based on the destination.
-* Forces a push to the remote repository, setting the upstream branch.
+This job sets up the environment variables and outputs them for other jobs to use.
 
-# Git Hub Actions
-GitHub Actions is a continuous integration (CI) and continuous delivery (CD) platform that runs in GitHub repositories. GitHub Actions lets you automate your workflows by creating custom jobs that run on different events, such as pushes to a branch or releases.
+#### Job: Database 📦️
 
+This job performs actions related to the database. It checks out the repository, logs in to Azure, and configures Azure defaults. TODO: MS SQL DB setup.
+
+#### Job: API 📦️
+
+This job deploys the API. It checks out the repository, logs in to Azure, configures Azure defaults, and sets up Azure Container Registry (ACR) variables. It builds and pushes Docker images, creates a temporary deployment slot, swaps the slot, and restarts the web app.
+
+#### Job: UI 📦️
+
+This job deploys the UI. It checks out the repository, logs in to Azure, configures Azure defaults, and sets up Azure Container Registry (ACR) variables. It builds and pushes Docker images, creates a temporary deployment slot, swaps the slot, and restarts the web app.
 ## Source Code Analysis 🚨
 
 This workflow will run a source code analysis (SCA) on your code whenever a pull request is submitted. The SCA will use the Codacy and Fossa tools to check for any potential security vulnerabilities and licensing issues in your code. If any vulnerabilities or issues are found.
@@ -97,33 +183,3 @@ This workflow automates the release process by:
 * 📑 Update `package.json`, `README.md`, and `CHANGELOG.md`
 * 🚀 Create a new release
 * 📂 Upload the release assets
-
-## Infrastructure 🔨
-
-This is a GitHub workflow that builds and deploys infrastructure for EXIP.
-
-## On
-
-  * Push to the `infrastructure` branch 🚀
-
-## Jobs
-
-  * **Setup:**
-    * Sets up environment variables and timezone 🌍
-  * **Base:**
-    * Creates a resource group, app service plan, log analytics workspace, container registry, virtual network, and VNET peering 🗼
-    * Creates a web app for the UI and API 🌐
-  * **WebApp:**
-    * Configures continuous deployment for the UI and API 🔀
-    * Sets configuration and settings for the UI and API ⚙️
-
-## Outputs
-
-  * **Environment:** The name of the environment, e.g. `development` or `production`.
-  * **Timezone:** The timezone, e.g. `Europe/London`.
-
-## Details
-
-The `Setup` job sets up environment variables and timezone. This is useful for setting things like the Azure subscription ID, resource group name, and location. The `Base` job creates a resource group, app service plan, log analytics workspace, container registry, virtual network, and VNET peering. This is the foundation for all of the other infrastructure that will be created. The `WebApp` job creates a web app for the UI and API. This is the front-end for the EXIP application. The `WebApp` job also configures continuous deployment for the UI and API. This means that changes to the code will be automatically deployed to the production environment. The `WebApp` job also sets configuration and settings for the UI and API. This includes things like the application name, port, and environment variables.
-
-This GitHub workflow provides a comprehensive and easy-to-use way to build and deploy infrastructure for EXIP.
