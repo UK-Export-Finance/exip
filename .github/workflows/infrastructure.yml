@@ -175,7 +175,7 @@ jobs:
         with:
           inlineScript: |
             az network vnet create \
-            --name vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --address-prefix ${{ secrets.VNET_ADDRESS_PREFIX }} \
             --subnet-name snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --subnet-prefixes ${{ secrets.VNET_SUBNET_PREFIX }} \
@@ -189,24 +189,24 @@ jobs:
 
             # Local VNET peer
             az network vnet peering create \
-            --name vnet-peer-ami-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-            --vnet-name vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --name vnet-peer-ami-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --remote-vnet $(az network vnet show --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_AMI }} --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_AMI }} --name ${{ secrets.REMOTE_VNET_NAME_AMI }} --query 'id' -o tsv) \
             --allow-vnet-access 1
 
             # Remote VNET peer
             az network vnet peering create \
-            --name vnet-peer-ami-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --name vnet-peer-ami-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --vnet-name  ${{ secrets.REMOTE_VNET_NAME_AMI }} \
-            --remote-vnet $(az network vnet show --name vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} --query 'id' -o tsv) \
+            --remote-vnet $(az network vnet show --name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query 'id' -o tsv) \
             --allow-vnet-access 1 \
             --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_AMI }} \
             --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_AMI }}
 
             # Fetch peering state
             echo "Peering state: $(az network vnet peering show \
-            --vnet-name vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-            --name vnet-peer-ami-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --name vnet-peer-ami-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --query peeringState)"
 
       - name: Web app - UI 🌐
@@ -217,7 +217,7 @@ jobs:
             --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
             --plan appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/ui:${{ env.TARGET }} \
-            --vnet vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --subnet snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --tags ${{ env.TAGS }}
 
@@ -229,7 +229,7 @@ jobs:
             --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
             --plan appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/api:${{ env.TARGET }} \
-            --vnet vnet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --subnet snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --tags ${{ env.TAGS }}
 
@@ -300,10 +300,10 @@ jobs:
           # Set a web app's settings
 
           # UI
+          # TODO: `HTTPS=1` post container SSL
           az webapp config appsettings set \
           --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
           --settings \
-          #TODO: Set to `1` once SSL is enabled
           HTTPS=0 \
           TZ=Europe/London \
           WEBSITE_DNS_SERVER='${{ vars.WEBSITE_DNS_SERVER }}' \
