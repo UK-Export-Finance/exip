@@ -47,7 +47,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
   });
 
   it('should not display validation errors when the yes radio is selected and all required fields are entered', () => {
-    cy.completeAndSubmitBrokerForm();
+    cy.completeAndSubmitBrokerForm({});
 
     partials.errorSummaryListItems().should('have.length', 0);
 

@@ -2,15 +2,12 @@ import dotenv from 'dotenv';
 import { Algorithm } from 'jsonwebtoken';
 import { BufferEncoding } from '../types';
 export * from './field-ids';
+export * from './answers';
 export * from './application';
 export * from './field-values';
+export * from './XLSX-CONFIG';
 
 dotenv.config();
-
-export const ANSWERS = {
-  YES: 'Yes',
-  NO: 'No',
-};
 
 export const GBP_CURRENCY_CODE = 'GBP';
 
@@ -153,39 +150,6 @@ export const FEEDBACK = {
     neither: 'Neither satisfied or dissatisfied',
     dissatisfied: 'Dissatisfied',
     veryDissatisfied: 'Very dissatisfied',
-  },
-};
-
-export const XLSX_CONFIG = {
-  KEY: {
-    ID: 'field',
-    COPY: 'Field',
-  },
-  VALUE: {
-    ID: 'answer',
-    COPY: 'Answer',
-  },
-  COLUMN_WIDTH: 85,
-  ADDITIONAL_TITLE_COLUMN_HEIGHT: 25,
-  ADDITIONAL_COLUMN_HEIGHT: 50,
-  FONT_SIZE: {
-    DEFAULT: 11,
-    TITLE: 14,
-  },
-  ROW_INDEXES: {
-    COMPANY_ADDRESS: 30,
-    COMPANY_SIC_CODES: 33,
-    BROKER_ADDRESS: 45,
-    BUYER_ADDRESS: 50,
-    BUYER_CONTACT_DETAILS: 53,
-  },
-  TITLE_ROW_INDEXES: {
-    HEADER: 1,
-    KEY_INFORMATION: 9,
-    POLICY_AND_EXPORT: 15,
-    EXPORTER_BUSINESS: 25,
-    BUYER: 47,
-    ELIGIBILITY: 57,
   },
 };
 

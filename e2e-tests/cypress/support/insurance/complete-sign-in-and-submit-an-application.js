@@ -1,3 +1,4 @@
+import { APPLICATION } from '../../../constants';
 import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-to-application';
 
 /**
@@ -13,13 +14,18 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * @return {String} Application reference number
  */
 const completeSignInAndSubmitAnApplication = ({
+  policyType = APPLICATION.POLICY_TYPE.SINGLE,
   exporterHasTradedWithBuyer,
   hasAntiBriberyCodeOfConduct,
   exportingWithCodeOfConduct,
 }) => {
   completeSignInAndGoToApplication();
 
-  cy.completePrepareApplicationSinglePolicyType({ exporterHasTradedWithBuyer });
+  if (policyType === APPLICATION.POLICY_TYPE.MULTIPLE) {
+    cy.completePrepareApplicationMultiplePolicyType({ exporterHasTradedWithBuyer });
+  } else {
+    cy.completePrepareApplicationSinglePolicyType({ exporterHasTradedWithBuyer });
+  }
 
   cy.completeAndSubmitCheckYourAnswers();
 

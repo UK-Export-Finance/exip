@@ -46,7 +46,7 @@ const XLSX = (application: Application): Promise<string> => {
       // Add custom styles to each column in the worksheet
       console.info('Generating XLSX file - adding custom styles to worksheet');
 
-      worksheet = styledColumns(worksheet);
+      worksheet = styledColumns(application, worksheet);
 
       // Write the file and return the file path
       console.info('Generating XLSX file - writing file');

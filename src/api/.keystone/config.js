@@ -230,6 +230,12 @@ var FIELD_IDS = {
   INSURANCE: insurance_default
 };
 
+// constants/answers/index.ts
+var ANSWERS = {
+  YES: "Yes",
+  NO: "No"
+};
+
 // constants/application/versions/index.ts
 var VERSIONS = [
   {
@@ -302,12 +308,83 @@ var FIELD_VALUES = {
   NO: "No"
 };
 
+// helpers/policy-type/index.ts
+var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
+var isMultiPolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+
+// constants/XLSX-CONFIG/index.ts
+var {
+  POLICY_AND_EXPORTS: {
+    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 }
+  },
+  EXPORTER_BUSINESS: {
+    BROKER: { USING_BROKER }
+  }
+} = insurance_default;
+var TITLE_ROW_INDEXES = (application2) => {
+  if (!application2) {
+    return {};
+  }
+  const { policyAndExport, broker } = application2;
+  const policyType = policyAndExport[POLICY_TYPE2];
+  let isMultiplePolicy = false;
+  let isUsingBroker = false;
+  if (isMultiPolicyType(policyType)) {
+    isMultiplePolicy = true;
+  }
+  if (broker[USING_BROKER] === ANSWERS.YES) {
+    isUsingBroker = true;
+  }
+  let EXPORTER_BUSINESS3 = 25;
+  let BUYER = 44;
+  let ELIGIBILITY = 54;
+  if (isMultiplePolicy) {
+    EXPORTER_BUSINESS3 += 1;
+    BUYER += 1;
+    ELIGIBILITY += 1;
+  }
+  if (isUsingBroker) {
+    BUYER += 3;
+    ELIGIBILITY += 3;
+  }
+  return {
+    HEADER: 1,
+    KEY_INFORMATION: 9,
+    POLICY_AND_EXPORT: 15,
+    EXPORTER_BUSINESS: EXPORTER_BUSINESS3,
+    BUYER,
+    ELIGIBILITY
+  };
+};
+var XLSX_CONFIG = (application2) => ({
+  KEY: {
+    ID: "field",
+    COPY: "Field"
+  },
+  VALUE: {
+    ID: "answer",
+    COPY: "Answer"
+  },
+  COLUMN_WIDTH: 85,
+  ADDITIONAL_TITLE_COLUMN_HEIGHT: 25,
+  ADDITIONAL_COLUMN_HEIGHT: 50,
+  LARGE_ADDITIONAL_COLUMN_HEIGHT: 50 * 2,
+  FONT_SIZE: {
+    DEFAULT: 11,
+    TITLE: 14
+  },
+  ROW_INDEXES: {
+    COMPANY_ADDRESS: 30,
+    COMPANY_SIC_CODES: 33,
+    BROKER_ADDRESS: 45,
+    BUYER_ADDRESS: 50,
+    BUYER_CONTACT_DETAILS: 53
+  },
+  TITLE_ROW_INDEXES: TITLE_ROW_INDEXES(application2)
+});
+
 // constants/index.ts
 import_dotenv.default.config();
-var ANSWERS = {
-  YES: "Yes",
-  NO: "No"
-};
 var GBP_CURRENCY_CODE = "GBP";
 var EXTERNAL_API_ENDPOINTS = {
   MULESOFT_MDM_EA: {
@@ -425,38 +502,6 @@ var FEEDBACK = {
     neither: "Neither satisfied or dissatisfied",
     dissatisfied: "Dissatisfied",
     veryDissatisfied: "Very dissatisfied"
-  }
-};
-var XLSX_CONFIG = {
-  KEY: {
-    ID: "field",
-    COPY: "Field"
-  },
-  VALUE: {
-    ID: "answer",
-    COPY: "Answer"
-  },
-  COLUMN_WIDTH: 85,
-  ADDITIONAL_TITLE_COLUMN_HEIGHT: 25,
-  ADDITIONAL_COLUMN_HEIGHT: 50,
-  FONT_SIZE: {
-    DEFAULT: 11,
-    TITLE: 14
-  },
-  ROW_INDEXES: {
-    COMPANY_ADDRESS: 30,
-    COMPANY_SIC_CODES: 33,
-    BROKER_ADDRESS: 45,
-    BUYER_ADDRESS: 50,
-    BUYER_CONTACT_DETAILS: 53
-  },
-  TITLE_ROW_INDEXES: {
-    HEADER: 1,
-    KEY_INFORMATION: 9,
-    POLICY_AND_EXPORT: 15,
-    EXPORTER_BUSINESS: 25,
-    BUYER: 47,
-    ELIGIBILITY: 57
   }
 };
 var ACCEPTED_FILE_TYPES = [".xlsx"];
@@ -2814,16 +2859,21 @@ var updateCompanyAndCompanyAddress = async (root, variables, context) => {
       data: address
     });
     const mappedSicCodes = mapSicCodes(updatedCompany, sicCodes, industrySectorNames);
+    console.log("mappedSicCodes", mappedSicCodes);
+    console.log("deleting old sic codes - ", oldSicCodes);
     if (company && oldSicCodes && oldSicCodes.length) {
-      await context.db.CompanySicCode.deleteMany({
+      const deleted = await context.db.CompanySicCode.deleteMany({
         where: oldSicCodes
       });
+      console.log("deleted sic codes", deleted);
     }
     if (mappedSicCodes && mappedSicCodes.length) {
       mappedSicCodes.forEach(async (sicCodeObj) => {
-        await context.db.CompanySicCode.createOne({
+        console.log("reinserting each sic code", sicCodeObj);
+        const companySicReinserted = await context.db.CompanySicCode.createOne({
           data: sicCodeObj
         });
+        console.log("finished re-insert each sic", companySicReinserted);
       });
     }
     return {
@@ -3090,7 +3140,7 @@ var replaceCharacterCodesWithCharacters = (str) => str.replace(/&lt;/g, "<").rep
 var replace_character_codes_with_characters_default = replaceCharacterCodesWithCharacters;
 
 // generate-xlsx/map-application-to-XLSX/helpers/xlsx-row/index.ts
-var { KEY, VALUE } = XLSX_CONFIG;
+var { KEY, VALUE } = XLSX_CONFIG();
 var xlsxRow = (fieldName, answer) => {
   const value = answer || answer === 0 ? answer : "";
   const cleanValue = replace_character_codes_with_characters_default(String(value));
@@ -3244,7 +3294,7 @@ var {
   YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
   TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-  BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, EMAIL: EMAIL3 }
+  BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL3 }
 } = EXPORTER_BUSINESS2;
 var FIELDS = {
   COMPANY_DETAILS: {
@@ -3334,7 +3384,7 @@ var FIELDS = {
     }
   },
   BROKER: {
-    [USING_BROKER]: {
+    [USING_BROKER2]: {
       SUMMARY: {
         TITLE: "Using a broker for this insurance?"
       }
@@ -3454,7 +3504,7 @@ var {
   YOUR_COMPANY: { WEBSITE: WEBSITE2, PHONE_NUMBER: PHONE_NUMBER2 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL2 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 },
-  BROKER: { USING_BROKER: USING_BROKER2, NAME: BROKER_NAME, ADDRESS_LINE_1: BROKER_ADDRESS, EMAIL: BROKER_EMAIL }
+  BROKER: { USING_BROKER: USING_BROKER3, NAME: BROKER_NAME, ADDRESS_LINE_1: BROKER_ADDRESS, EMAIL: BROKER_EMAIL }
 } = business_default;
 var {
   COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS }
@@ -3482,7 +3532,7 @@ var XLSX = {
     [EMPLOYEES_UK2]: "Exporter UK Employees",
     [EMPLOYEES_INTERNATIONAL2]: "Exporter worldwide employees including UK employees",
     [ESTIMATED_ANNUAL_TURNOVER2]: "Exporter estimated turnover this current financial year",
-    [USING_BROKER2]: "Using a broker for this insurance",
+    [USING_BROKER3]: "Using a broker for this insurance",
     [BROKER_NAME]: "Name of broker or company",
     [BROKER_ADDRESS]: "Broker address",
     [BROKER_EMAIL]: "Broker email address",
@@ -3533,7 +3583,7 @@ var {
     COMPANY_OR_ORGANISATION: { COUNTRY: COUNTRY2, NAME: BUYER_COMPANY_NAME2 }
   },
   POLICY_AND_EXPORTS: {
-    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 }
+    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE3 }
   }
 } = insurance_default;
 var mapSecondaryKeyInformation = (application2) => {
@@ -3543,15 +3593,11 @@ var mapSecondaryKeyInformation = (application2) => {
     xlsx_row_default(FIELDS3[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
     xlsx_row_default(FIELDS3[COUNTRY2], application2.buyer[COUNTRY2].name),
     xlsx_row_default(FIELDS3[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
-    xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE2].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE2])
+    xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE3].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE3])
   ];
   return mapped;
 };
 var map_secondary_key_information_default = mapSecondaryKeyInformation;
-
-// generate-xlsx/map-application-to-XLSX/helpers/policy-type/index.ts
-var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
-var isMultiPolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 // generate-xlsx/map-application-to-XLSX/helpers/format-currency/index.ts
 var formatCurrency = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
@@ -3575,7 +3621,7 @@ var CONTENT_STRINGS2 = {
   MULTIPLE: POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY.MULTIPLE
 };
 var {
-  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE3 },
+  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE4 },
   CONTRACT_POLICY: {
     REQUESTED_START_DATE,
     SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2, TOTAL_CONTRACT_VALUE },
@@ -3589,7 +3635,7 @@ var mapPolicyAndExportIntro = (application2) => {
   const { policyAndExport } = application2;
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.POLICY_AND_EXPORT, ""),
-    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_TYPE3].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE3]),
+    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_TYPE4].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE4]),
     xlsx_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[REQUESTED_START_DATE], "dd-MMM-yy"))
   ];
   return mapped;
@@ -3624,7 +3670,7 @@ var mapPolicyAndExportOutro = (application2) => {
 };
 var mapPolicyAndExport = (application2) => {
   let mapped = mapPolicyAndExportIntro(application2);
-  const policyType = application2.policyAndExport[POLICY_TYPE3];
+  const policyType = application2.policyAndExport[POLICY_TYPE4];
   if (isSinglePolicyType(policyType)) {
     mapped = [...mapped, ...mapSinglePolicyFields(application2)];
   }
@@ -3664,7 +3710,7 @@ var {
   YOUR_COMPANY: { TRADING_NAME: TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE3, PHONE_NUMBER: PHONE_NUMBER3 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL3 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
-  BROKER: { USING_BROKER: USING_BROKER3, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL5 }
+  BROKER: { USING_BROKER: USING_BROKER4, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL5 }
 } = business_default;
 var mapSicCodes2 = (sicCodes) => {
   let mapped = "";
@@ -3676,8 +3722,8 @@ var mapSicCodes2 = (sicCodes) => {
 };
 var mapBroker = (application2) => {
   const { broker } = application2;
-  let mapped = [xlsx_row_default(XLSX.FIELDS[USING_BROKER3], broker[USING_BROKER3])];
-  if (broker[USING_BROKER3] === ANSWERS.YES) {
+  let mapped = [xlsx_row_default(XLSX.FIELDS[USING_BROKER4], broker[USING_BROKER4])];
+  if (broker[USING_BROKER4] === ANSWERS.YES) {
     const addressAnswer = {
       lineOneAndTwo: `${broker[ADDRESS_LINE_12]} ${xlsx_new_line_default}${broker[ADDRESS_LINE_2]}`,
       other: `${xlsx_new_line_default}${broker[TOWN]} ${xlsx_new_line_default}${broker[COUNTY]} ${xlsx_new_line_default}${broker[POSTCODE]}`
@@ -3813,7 +3859,7 @@ var mapApplicationToXLSX = (application2) => {
 var map_application_to_XLSX_default = mapApplicationToXLSX;
 
 // generate-xlsx/header-columns/index.ts
-var { KEY: KEY2, VALUE: VALUE2, COLUMN_WIDTH } = XLSX_CONFIG;
+var { KEY: KEY2, VALUE: VALUE2, COLUMN_WIDTH } = XLSX_CONFIG();
 var XLSX_HEADER_COLUMNS = [
   { key: KEY2.ID, header: KEY2.COPY, width: COLUMN_WIDTH },
   { key: VALUE2.ID, header: VALUE2.COPY, width: COLUMN_WIDTH }
@@ -3821,21 +3867,22 @@ var XLSX_HEADER_COLUMNS = [
 var header_columns_default = XLSX_HEADER_COLUMNS;
 
 // generate-xlsx/styled-columns/index.ts
-var { ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, ROW_INDEXES, TITLE_ROW_INDEXES, FONT_SIZE } = XLSX_CONFIG;
-var worksheetRowHeights = (worksheet) => {
+var { ADDITIONAL_COLUMN_HEIGHT, LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, ROW_INDEXES, FONT_SIZE } = XLSX_CONFIG();
+var worksheetRowHeights = (titleRowIndexes, worksheet) => {
   const modifiedWorksheet = worksheet;
-  modifiedWorksheet.getRow(ROW_INDEXES.COMPANY_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
+  modifiedWorksheet.getRow(ROW_INDEXES.COMPANY_ADDRESS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
   modifiedWorksheet.getRow(ROW_INDEXES.COMPANY_SIC_CODES).height = ADDITIONAL_COLUMN_HEIGHT;
-  modifiedWorksheet.getRow(ROW_INDEXES.BROKER_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
-  modifiedWorksheet.getRow(ROW_INDEXES.BUYER_ADDRESS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
-  modifiedWorksheet.getRow(ROW_INDEXES.BUYER_CONTACT_DETAILS).height = ADDITIONAL_COLUMN_HEIGHT * 2;
-  Object.values(TITLE_ROW_INDEXES).forEach((rowIndex) => {
+  modifiedWorksheet.getRow(ROW_INDEXES.BROKER_ADDRESS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
+  modifiedWorksheet.getRow(ROW_INDEXES.BUYER_ADDRESS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
+  modifiedWorksheet.getRow(ROW_INDEXES.BUYER_CONTACT_DETAILS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
+  Object.values(titleRowIndexes).forEach((rowIndex) => {
     modifiedWorksheet.getRow(rowIndex).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
   });
   return modifiedWorksheet;
 };
-var styledColumns = (worksheet) => {
+var styledColumns = (application2, worksheet) => {
   let modifiedWorksheet = worksheet;
+  const TITLE_INDEXES = Object.values(XLSX_CONFIG(application2).TITLE_ROW_INDEXES);
   modifiedWorksheet.eachRow((row, rowNumber) => {
     row.eachCell((cell, colNumber) => {
       const modifiedRow = row;
@@ -3843,14 +3890,14 @@ var styledColumns = (worksheet) => {
         vertical: "top",
         wrapText: true
       };
-      const isTitleRow = Object.values(TITLE_ROW_INDEXES).includes(rowNumber);
+      const isTitleRow = TITLE_INDEXES.includes(rowNumber);
       modifiedRow.getCell(colNumber).font = {
         bold: Boolean(isTitleRow),
         size: isTitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT
       };
     });
   });
-  modifiedWorksheet = worksheetRowHeights(modifiedWorksheet);
+  modifiedWorksheet = worksheetRowHeights(TITLE_INDEXES, modifiedWorksheet);
   return modifiedWorksheet;
 };
 var styled_columns_default = styledColumns;
@@ -3874,7 +3921,7 @@ var XLSX2 = (application2) => {
         worksheet.addRow(row);
       });
       console.info("Generating XLSX file - adding custom styles to worksheet");
-      worksheet = styled_columns_default(worksheet);
+      worksheet = styled_columns_default(application2, worksheet);
       console.info("Generating XLSX file - writing file");
       workbook.xlsx.writeFile(filePath).then(() => resolve(filePath));
     });

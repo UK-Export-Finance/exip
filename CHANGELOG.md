@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.15.2](https://github.com/UK-Export-Finance/exip/compare/v1.15.1...v1.15.2) (2023-05-09)
+
+
+### Bug Fixes
+
+* **CVE-2023-30533:** updated node-xlsx to 0.4.0 ([7ef9ccd](https://github.com/UK-Export-Finance/exip/commit/7ef9ccdda4e2bc2707d192c3d5979db480eb3a11))
+
 ## [1.15.1](https://github.com/UK-Export-Finance/exip/compare/v1.15.0...v1.15.1) (2023-02-20)
 
 
