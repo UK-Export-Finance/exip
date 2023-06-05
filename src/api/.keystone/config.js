@@ -2777,16 +2777,21 @@ var updateCompanyAndCompanyAddress = async (root, variables, context) => {
       data: address
     });
     const mappedSicCodes = mapSicCodes(updatedCompany, sicCodes, industrySectorNames);
+    console.log("mappedSicCodes", mappedSicCodes);
+    console.log("deleting old sic codes - ", oldSicCodes);
     if (company && oldSicCodes && oldSicCodes.length) {
-      await context.db.CompanySicCode.deleteMany({
+      const deleted = await context.db.CompanySicCode.deleteMany({
         where: oldSicCodes
       });
+      console.log("deleted sic codes", deleted);
     }
     if (mappedSicCodes && mappedSicCodes.length) {
       mappedSicCodes.forEach(async (sicCodeObj) => {
-        await context.db.CompanySicCode.createOne({
+        console.log("reinserting each sic code", sicCodeObj);
+        const companySicReinserted = await context.db.CompanySicCode.createOne({
           data: sicCodeObj
         });
+        console.log("finished re-insert each sic", companySicReinserted);
       });
     }
     return {
