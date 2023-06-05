@@ -82,9 +82,7 @@ context('Insurance - Your business - Company details page - company house search
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(companyDetails.companiesHouseSearch(), '1234');
-
-      companyDetails.companiesHouseSearchButton().click();
+      cy.completeAndSubmitCompaniesHouseSearchForm('1234');
     });
 
     it('should display an error in the error summary', () => {
@@ -105,9 +103,7 @@ context('Insurance - Your business - Company details page - company house search
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(companyDetails.companiesHouseSearch(), '123456!');
-
-      companyDetails.companiesHouseSearchButton().click();
+      cy.completeAndSubmitCompaniesHouseSearchForm('123456!');
     });
 
     it('should display an error in the error summary', () => {
@@ -128,9 +124,7 @@ context('Insurance - Your business - Company details page - company house search
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(companyDetails.companiesHouseSearch(), '123456 ');
-
-      companyDetails.companiesHouseSearchButton().click();
+      cy.completeAndSubmitCompaniesHouseSearchForm('123456 ');
     });
 
     it('should display an error in the error summary', () => {
@@ -150,18 +144,16 @@ context('Insurance - Your business - Company details page - company house search
   describe('when the companies house number is correctly entered', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
+
+      cy.completeAndSubmitCompaniesHouseSearchForm(COMPANIES_HOUSE_NUMBER);
     });
 
     it('should not display errors', () => {
-      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-      companyDetails.companiesHouseSearchButton().click();
       partials.errorSummaryListItems().should('not.exist');
       companyDetails.companiesHouseSearchError().should('not.exist');
     });
 
     it('should display your business summary list', () => {
-      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-      companyDetails.companiesHouseSearchButton().click();
       partials.errorSummaryListItems().should('not.exist');
       companyDetails.companiesHouseSearchError().should('not.exist');
 
@@ -229,12 +221,11 @@ context('Insurance - Your business - Company details page - company house search
     });
   });
 
-  describe('when going back to company details page after searching for company house and pressing continue', () => {
-    it('should take ytou back to company details page', () => {
+  describe('when going back to company details page after searching for company and pressing continue', () => {
+    it('should take you back to company details page', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-      companyDetails.companiesHouseSearchButton().click();
+      cy.completeAndSubmitCompaniesHouseSearchForm(COMPANIES_HOUSE_NUMBER);
 
       submitButton().click();
 

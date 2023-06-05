@@ -48,10 +48,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-        companyDetails.tradingNameYesRadioInput().click();
-        companyDetails.tradingAddressYesRadioInput().click();
-        cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.INVALID);
+        cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER, null, WEBSITE_EXAMPLES.INVALID);
 
         submitButton().click();
       });
@@ -76,10 +73,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-        companyDetails.tradingNameYesRadioInput().click();
-        companyDetails.tradingAddressYesRadioInput().click();
-        cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH);
+        cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER, null, WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH);
 
         submitButton().click();
       });
@@ -100,10 +94,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-      companyDetails.tradingNameYesRadioInput().click();
-      companyDetails.tradingAddressYesRadioInput().click();
+      cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER);
+
       companyDetails.companyWebsite().clear();
+
       submitButton().click();
     });
 
@@ -120,10 +114,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-      companyDetails.tradingNameYesRadioInput().click();
-      companyDetails.tradingAddressYesRadioInput().click();
-      cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
+      cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER, null, WEBSITE_EXAMPLES.VALID);
 
       submitButton().click();
     });

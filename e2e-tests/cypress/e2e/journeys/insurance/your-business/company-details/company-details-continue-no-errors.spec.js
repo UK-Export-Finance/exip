@@ -1,4 +1,3 @@
-import { companyDetails } from '../../../../pages/your-business';
 import { submitButton } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import {
@@ -49,10 +48,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-
-        companyDetails.tradingNameYesRadioInput().click();
-        companyDetails.tradingAddressYesRadioInput().click();
+        cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER);
 
         submitButton().click();
       });
@@ -66,13 +62,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-
-        companyDetails.tradingNameYesRadioInput().click();
-        companyDetails.tradingAddressYesRadioInput().click();
-
-        cy.keyboardInput(companyDetails.phoneNumber(), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
-        cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
+        cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS.LANDLINE.NORMAL, WEBSITE_EXAMPLES.VALID);
 
         submitButton().click();
       });
@@ -90,14 +80,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       // navigate back to company details page from nature of business
       cy.clickBackLink();
 
-      // resubmit form
-      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-
-      companyDetails.tradingNameYesRadioInput().click();
-      companyDetails.tradingAddressYesRadioInput().click();
-
-      cy.keyboardInput(companyDetails.phoneNumber(), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
-      cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
+      cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS.LANDLINE.NORMAL, WEBSITE_EXAMPLES.VALID);
 
       submitButton().click();
       // return to company details page after redirect to nature of business

@@ -17,11 +17,8 @@ let url;
 let yourContactUrl;
 
 const completeAllFields = (phoneNumber) => {
-  cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-  companyDetails.tradingNameYesRadioInput().click();
-  companyDetails.tradingAddressYesRadioInput().click();
-  cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
-  cy.keyboardInput(companyDetails.phoneNumber(), phoneNumber);
+  cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER, phoneNumber, WEBSITE_EXAMPLES.VALID);
+
   submitButton().click();
 };
 
@@ -54,10 +51,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-      companyDetails.tradingNameYesRadioInput().click();
-      companyDetails.tradingAddressYesRadioInput().click();
-      cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
+      cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER, null, WEBSITE_EXAMPLES.VALID);
+
       companyDetails.phoneNumber().clear();
       submitButton().click();
     });
