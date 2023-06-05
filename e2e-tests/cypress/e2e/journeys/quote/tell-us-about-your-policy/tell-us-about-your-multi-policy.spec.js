@@ -1,109 +1,101 @@
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import {
-  completeAndSubmitBuyerCountryForm,
   completeAndSubmitBuyerBodyForm,
-  completeAndSubmitCompanyForm,
+  completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeMultiForm,
 } from '../../../../support/quote/forms';
+import { submitButton } from '../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import {
-  ORGANISATION,
-  BUTTONS,
   LINKS,
   FIELDS,
   PAGES,
 } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { ROUTES, FIELD_IDS, SUPPORTED_CURRENCIES } from '../../../../../constants';
+import { GBP_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
-const CONTENT_STRINGS = PAGES.TELL_US_ABOUT_YOUR_POLICY_PAGE;
+const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
+
 const {
-  ROUTES,
-  FIELD_IDS,
-  SUPPORTED_CURRENCIES,
-} = CONSTANTS;
+  ELIGIBILITY: {
+    AMOUNT_CURRENCY,
+    CURRENCY,
+    MAX_AMOUNT_OWED,
+    PERCENTAGE_OF_COVER,
+    CREDIT_PERIOD,
+  },
+} = FIELD_IDS;
 
-context('Tell us about your multi policy page - as an exporter, I want to provide my Export insurance policy details', () => {
-  describe('rendering', () => {
-    before(() => {
-      cy.login();
+const startRoute = ROUTES.QUOTE.START;
 
-      completeAndSubmitBuyerCountryForm();
-      completeAndSubmitBuyerBodyForm();
-      completeAndSubmitCompanyForm();
-      completeAndSubmitUkContentForm();
-      completeAndSubmitPolicyTypeMultiForm();
+context('Tell us about your multiple policy page - as an exporter, I want to provide my Export insurance policy details', () => {
+  const url = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
-      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
-    });
+  before(() => {
+    cy.login();
 
-    beforeEach(() => {
-      Cypress.Cookies.preserveOnce('_csrf');
-      Cypress.Cookies.preserveOnce('exip-session');
-    });
+    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerBodyForm();
+    completeAndSubmitExporterLocationForm();
+    completeAndSubmitUkContentForm();
+    completeAndSubmitPolicyTypeMultiForm();
 
-    it('passes the audits', () => {
-      cy.lighthouse({
+    cy.url().should('include', url);
+  });
+
+  beforeEach(() => {
+    cy.saveSession();
+  });
+
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.MULTIPLE_POLICY_PAGE_TITLE,
+      currentHref: ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
+      backLink: ROUTES.QUOTE.POLICY_TYPE,
+      assertAuthenticatedHeader: false,
+      isInsurancePage: false,
+      lightHouseThresholds: {
         // accessibility threshold is reduced here because
         // the radio component from design system has an invalid aria attribute.
         // this is out of our control
         accessibility: 92,
-        performance: 76,
-        'best-practices': 100,
-        seo: 60,
-      });
+      },
+    });
+  });
+
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
     });
 
-    it('renders a phase banner', () => {
-      cy.checkPhaseBanner();
-    });
-
-    it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
-      partials.backLink().invoke('text').then((text) => {
-        expect(text.trim()).equal(LINKS.BACK);
-      });
-
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.POLICY_TYPE}`;
-
-      partials.backLink().should('have.attr', 'href', expected);
-    });
-
-    it('renders a page title and heading', () => {
-      const expectedPageTitle = `${CONTENT_STRINGS.MULTI_POLICY_PAGE_TITLE} - ${ORGANISATION}`;
-      cy.title().should('eq', expectedPageTitle);
-
-      tellUsAboutYourPolicyPage.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.MULTI_POLICY_HEADING);
-      });
+    it('should render a header with href to quote start', () => {
+      partials.header.serviceName().should('have.attr', 'href', startRoute);
     });
 
     it('renders `currency and amount` legend', () => {
-      const fieldId = FIELD_IDS.AMOUNT_CURRENCY;
+      const fieldId = AMOUNT_CURRENCY;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.legend().should('exist');
-      field.legend().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.LEGEND);
-      });
+      cy.checkText(field.legend(), FIELDS[fieldId].MULTIPLE_POLICY.LEGEND);
     });
 
     it('renders `currency` legend, label and input', () => {
-      const fieldId = FIELD_IDS.CURRENCY;
+      const fieldId = CURRENCY;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
-      field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].LABEL);
-      });
+      cy.checkText(field.label(), FIELDS[fieldId].LABEL);
 
       field.input().should('exist');
     });
 
     it('renders only supported currencies in alphabetical order', () => {
-      const fieldId = FIELD_IDS.CURRENCY;
+      const fieldId = CURRENCY;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
 
@@ -113,50 +105,40 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
     });
 
     it('renders `max amount owed` label and input', () => {
-      const fieldId = FIELD_IDS.MAX_AMOUNT_OWED;
+      const fieldId = MAX_AMOUNT_OWED;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
-      field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].LABEL);
-      });
+      cy.checkText(field.label(), FIELDS[fieldId].LABEL);
 
       field.input().should('exist');
     });
 
     it('renders `percentage of cover` label, hint and input', () => {
-      const fieldId = FIELD_IDS.PERCENTAGE_OF_COVER;
+      const fieldId = PERCENTAGE_OF_COVER;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
-      field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.LABEL);
-      });
+      cy.checkText(field.label(), FIELDS[fieldId].MULTIPLE_POLICY.LABEL);
 
       field.hint().should('exist');
-      field.hint().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.HINT);
-      });
+      cy.checkText(field.hint(), FIELDS[fieldId].MULTIPLE_POLICY.HINT);
 
       field.input().should('exist');
     });
 
     it('renders `percentage of cover` label, hint and input with correct options', () => {
-      const fieldId = FIELD_IDS.PERCENTAGE_OF_COVER;
+      const fieldId = PERCENTAGE_OF_COVER;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
-      field.label().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.LABEL);
-      });
+      cy.checkText(field.label(), FIELDS[fieldId].MULTIPLE_POLICY.LABEL);
 
       field.hint().should('exist');
-      field.hint().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].MULTI_POLICY.HINT);
-      });
+      cy.checkText(field.hint(), FIELDS[fieldId].MULTIPLE_POLICY.HINT);
 
       field.input().should('exist');
 
@@ -169,28 +151,21 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
     });
 
     it('renders `credit period` label, hint and input with correct options', () => {
-      const fieldId = FIELD_IDS.CREDIT_PERIOD;
+      const fieldId = CREDIT_PERIOD;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
-      field.labelText().invoke('text').then((text) => {
-        expect(text.trim()).equal(FIELDS[fieldId].LABEL);
-      });
+      cy.checkText(field.labelText(), FIELDS[fieldId].LABEL);
 
       field.hint().should('exist');
 
       const { HINT } = FIELDS[fieldId];
 
-      field.hint().invoke('text').then((text) => {
-        const expectedHintText = `${HINT[0].text} ${HINT[1].text} ${HINT[2].text}`;
+      const expectedHintText = `${HINT[0].text} ${HINT[1].text} ${HINT[2].text}`;
+      cy.checkText(field.hint(), expectedHintText);
 
-        expect(text.trim()).equal(expectedHintText);
-      });
-
-      const expectedHintHref = HINT[1].href;
-
-      field.hintLink().should('have.attr', 'href', expectedHintHref);
+      field.hintLink().should('have.attr', 'href', LINKS.EXTERNAL.NBI_FORM);
 
       field.input().should('exist');
 
@@ -201,25 +176,18 @@ context('Tell us about your multi policy page - as an exporter, I want to provid
         expect(actual).to.deep.eq(expected);
       });
     });
-
-    it('renders a submit button', () => {
-      const button = tellUsAboutYourPolicyPage.submitButton();
-      button.should('exist');
-
-      button.invoke('text').then((text) => {
-        expect(text.trim()).equal(BUTTONS.CONTINUE);
-      });
-    });
   });
 
   describe('when form is valid', () => {
     it(`should redirect to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`, () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().type('100');
-      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
-      tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('90');
-      tellUsAboutYourPolicyPage[FIELD_IDS.CREDIT_PERIOD].input().select('1');
+      cy.navigateToUrl(url);
 
-      tellUsAboutYourPolicyPage.submitButton().click();
+      cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '100');
+      tellUsAboutYourPolicyPage[CURRENCY].input().select(GBP_CURRENCY_CODE);
+      tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
+      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
+
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });

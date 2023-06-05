@@ -1,4 +1,4 @@
-import { isNumber, numberHasDecimal, getPercentageOfNumber } from '.';
+import { isNumber, numberHasDecimal, getPercentageOfNumber, isNumberBelowMinimum, isNumberAboveMaximum } from '.';
 
 describe('server/helpers/number', () => {
   describe('isNumber', () => {
@@ -47,6 +47,64 @@ describe('server/helpers/number', () => {
       const expected = '200.00';
 
       expect(result).toEqual(expected);
+    });
+  });
+
+  describe('isNumberBelowMinimum', () => {
+    it('should return false if value is above minimum', () => {
+      const mockValue = 10;
+      const mockMinimum = 0;
+
+      const result = isNumberBelowMinimum(mockValue, mockMinimum);
+
+      expect(result).toEqual(false);
+    });
+
+    it('should return false if value is the same as minimum', () => {
+      const mockValue = 0;
+      const mockMinimum = 0;
+
+      const result = isNumberBelowMinimum(mockValue, mockMinimum);
+
+      expect(result).toEqual(false);
+    });
+
+    it('should return false if value is the below minimum', () => {
+      const mockValue = -1;
+      const mockMinimum = 0;
+
+      const result = isNumberBelowMinimum(mockValue, mockMinimum);
+
+      expect(result).toEqual(true);
+    });
+  });
+
+  describe('isNumberAboveMaximum', () => {
+    it('should return true if value is above maximum', () => {
+      const mockValue = 101;
+      const mockMaximum = 100;
+
+      const result = isNumberAboveMaximum(mockValue, mockMaximum);
+
+      expect(result).toEqual(true);
+    });
+
+    it('should return false if value is the same as maximum', () => {
+      const mockValue = 100;
+      const mockMaximum = 100;
+
+      const result = isNumberAboveMaximum(mockValue, mockMaximum);
+
+      expect(result).toEqual(false);
+    });
+
+    it('should return false if value is the below maximum', () => {
+      const mockValue = 50;
+      const mockMaximum = 100;
+
+      const result = isNumberAboveMaximum(mockValue, mockMaximum);
+
+      expect(result).toEqual(false);
     });
   });
 });

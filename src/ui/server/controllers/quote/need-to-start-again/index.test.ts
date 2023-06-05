@@ -1,8 +1,10 @@
 import { get, post } from '.';
-import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
-import { mockReq, mockRes } from '../../../test-mocks';
+import corePageVariables from '../../../helpers/page-variables/core/quote';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
+import { mockReq, mockRes } from '../../../test-mocks';
 
 describe('controllers/quote/need-to-start-again', () => {
   let req: Request;
@@ -22,16 +24,11 @@ describe('controllers/quote/need-to-start-again', () => {
       await get(req, res);
 
       const expectedVariables = {
-        CONTENT_STRINGS: {
-          COOKIES_CONSENT,
-          FOOTER,
-          LINKS,
-          PRODUCT,
-          ...PAGES.NEED_TO_START_AGAIN,
-        },
+        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.NEED_TO_START_AGAIN_PAGE, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
+        userName: getUserNameFromSession(req.session.user),
       };
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.NEED_TO_START_AGAIN, expectedVariables);
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.NEED_TO_START_AGAIN, expectedVariables);
     });
   });
 

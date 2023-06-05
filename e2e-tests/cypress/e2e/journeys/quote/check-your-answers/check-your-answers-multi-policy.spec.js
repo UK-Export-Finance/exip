@@ -1,73 +1,78 @@
+import { submitButton } from '../../../pages/shared';
 import { checkYourAnswersPage } from '../../../pages/quote';
+import partials from '../../../partials';
 import {
   FIELDS,
   LINKS,
   PAGES,
   SUMMARY_ANSWERS,
 } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../constants';
 
-const CONTENT_STRINGS = PAGES.CHECK_YOUR_ANSWERS_PAGE;
-const { FIELD_IDS, FIELD_VALUES, ROUTES } = CONSTANTS;
+const CONTENT_STRINGS = PAGES.QUOTE.CHECK_YOUR_ANSWERS;
 
-context('Check your answers page (multi policy) - as an exporter, I want to review the details before submitting the proposal', () => {
-  const {
+const startRoute = ROUTES.QUOTE.START;
+
+const {
+  ELIGIBILITY: {
     BUYER_COUNTRY,
     CREDIT_PERIOD,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-    MAX_AMOUNT_OWED,
-    MULTI_POLICY_LENGTH,
-    MULTI_POLICY_TYPE,
     PERCENTAGE_OF_COVER,
-    VALID_COMPANY_BASE,
-  } = FIELD_IDS;
+    VALID_EXPORTER_LOCATION,
+    MAX_AMOUNT_OWED,
+  },
+  MULTIPLE_POLICY_LENGTH,
+  MULTIPLE_POLICY_TYPE,
+} = FIELD_IDS;
 
-  const submissionData = {
-    [BUYER_COUNTRY]: 'Algeria',
-    [CREDIT_PERIOD]: '1',
-    [PERCENTAGE_OF_COVER]: '90',
-    [MULTI_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
-  };
+const submissionData = {
+  [BUYER_COUNTRY]: 'Algeria',
+  [CREDIT_PERIOD]: '1',
+  [PERCENTAGE_OF_COVER]: '90',
+  [MULTIPLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+  [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
+};
+
+context('Check your answers page (multiple policy) - as an exporter, I want to review the details before submitting the proposal', () => {
+  const url = ROUTES.QUOTE.CHECK_YOUR_ANSWERS;
 
   before(() => {
     cy.login();
-    cy.submitAnswersHappyPathMultiPolicy();
-    cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+    cy.submitQuoteAnswersHappyPathMultiplePolicy();
+    cy.url().should('include', url);
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   context('export summary list', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
     const list = checkYourAnswersPage.summaryLists.export;
 
     it('renders a heading', () => {
-      list.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.GROUP_HEADING_EXPORT);
-      });
+      cy.checkText(list.heading(), CONTENT_STRINGS.GROUP_HEADING_EXPORT);
+    });
+
+    it('should render a header with href to quote start', () => {
+      partials.header.serviceName().should('have.attr', 'href', startRoute);
     });
 
     it('renders `Buyer based` key, value and change link', () => {
       const row = list[BUYER_COUNTRY];
       const expectedKeyText = FIELDS[BUYER_COUNTRY].SUMMARY.TITLE;
 
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
+      cy.checkText(row.key(), expectedKeyText);
 
-      row.value().invoke('text').then((text) => {
-        const expected = submissionData[BUYER_COUNTRY];
+      const expectedValue = submissionData[BUYER_COUNTRY];
+      cy.checkText(row.value(), expectedValue);
 
-        expect(text.trim()).equal(expected);
-      });
-
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
+      const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+      cy.checkText(row.changeLink(), expectedChangeLink);
 
       const expectedHref = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
 
@@ -75,23 +80,17 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
     });
 
     it('renders `Company` key, value and change link', () => {
-      const row = list[VALID_COMPANY_BASE];
-      const expectedKeyText = FIELDS[VALID_COMPANY_BASE].SUMMARY.TITLE;
+      const row = list[VALID_EXPORTER_LOCATION];
+      const expectedKeyText = FIELDS[VALID_EXPORTER_LOCATION].SUMMARY.TITLE;
 
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
+      cy.checkText(row.key(), expectedKeyText);
 
-      row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY_ANSWERS[VALID_COMPANY_BASE]);
-      });
+      cy.checkText(row.value(), SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION]);
 
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
+      const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+      cy.checkText(row.changeLink(), expected);
 
-      const expectedHref = `${ROUTES.QUOTE.COMPANY_BASED_CHANGE}#heading`;
+      const expectedHref = `${ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE}#heading`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
@@ -99,67 +98,52 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
       const row = list[HAS_MINIMUM_UK_GOODS_OR_SERVICES];
       const expectedKeyText = FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES].SUMMARY.TITLE;
 
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
+      cy.checkText(row.key(), expectedKeyText);
 
-      row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES]);
-      });
+      cy.checkText(row.value(), SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES]);
 
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
+      const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+      cy.checkText(row.changeLink(), expected);
 
-      const expectedHref = `${ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES_CHANGE}#heading`;
+      const expectedHref = `${ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE}#heading`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
   });
 
   context('policy summary list', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
     const list = checkYourAnswersPage.summaryLists.policy;
 
     it('renders a heading', () => {
-      list.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(CONTENT_STRINGS.GROUP_HEADING_POLICY);
-      });
+      cy.checkText(list.heading(), CONTENT_STRINGS.GROUP_HEADING_POLICY);
     });
 
     it('renders `Policy type` key, value and change link', () => {
-      const row = list[MULTI_POLICY_TYPE];
-      const expectedKeyText = FIELDS[MULTI_POLICY_TYPE].SUMMARY.TITLE;
+      const row = list[MULTIPLE_POLICY_TYPE];
+      const expectedKeyText = FIELDS[MULTIPLE_POLICY_TYPE].SUMMARY.TITLE;
 
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
+      cy.checkText(row.key(), expectedKeyText);
 
-      row.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(submissionData[MULTI_POLICY_TYPE]);
-      });
+      cy.checkText(row.value(), submissionData[MULTIPLE_POLICY_TYPE]);
 
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
+      const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
+      cy.checkText(row.changeLink(), expected);
 
       const expectedHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`;
       row.changeLink().should('have.attr', 'href', expectedHref);
     });
 
     it('renders `Policy length` key and value (no change link)', () => {
-      const row = list[MULTI_POLICY_LENGTH];
-      const expectedKeyText = FIELDS[MULTI_POLICY_LENGTH].SUMMARY.TITLE;
+      const row = list[MULTIPLE_POLICY_LENGTH];
+      const expectedKeyText = FIELDS[MULTIPLE_POLICY_LENGTH].SUMMARY.TITLE;
 
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
+      cy.checkText(row.key(), expectedKeyText);
 
-      row.value().invoke('text').then((text) => {
-        const expected = `${FIELD_VALUES.POLICY_LENGTH.MULTI} months`;
-
-        expect(text.trim()).equal(expected);
-      });
+      const expected = `${FIELD_VALUES.POLICY_LENGTH.MULTIPLE} months`;
+      cy.checkText(row.value(), expected);
 
       row.changeLink().should('not.exist');
     });
@@ -168,20 +152,13 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
       const row = list[MAX_AMOUNT_OWED];
       const expectedKeyText = FIELDS[MAX_AMOUNT_OWED].SUMMARY.TITLE;
 
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
+      cy.checkText(row.key(), expectedKeyText);
 
-      row.value().invoke('text').then((text) => {
-        const expected = '£150,000';
+      const expectedValue = '£150,000';
+      cy.checkText(row.value(), expectedValue);
 
-        expect(text.trim()).equal(expected);
-      });
-
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
+      const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+      cy.checkText(row.changeLink(), expectedChangeLink);
 
       const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`;
       row.changeLink().should('have.attr', 'href', expectedHref);
@@ -191,20 +168,13 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
       const row = list[CREDIT_PERIOD];
       const expectedKeyText = FIELDS[CREDIT_PERIOD].SUMMARY.TITLE;
 
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
+      cy.checkText(row.key(), expectedKeyText);
 
-      row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[CREDIT_PERIOD]} month`;
+      const expectedValue = `${submissionData[CREDIT_PERIOD]} month`;
+      cy.checkText(row.value(), expectedValue);
 
-        expect(text.trim()).equal(expected);
-      });
-
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
+      const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+      cy.checkText(row.changeLink(), expectedChangeLink);
 
       const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`;
       row.changeLink().should('have.attr', 'href', expectedHref);
@@ -214,20 +184,13 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
       const row = list[PERCENTAGE_OF_COVER];
       const expectedKeyText = FIELDS[PERCENTAGE_OF_COVER].SUMMARY.TITLE;
 
-      row.key().invoke('text').then((text) => {
-        expect(text.trim()).equal(expectedKeyText);
-      });
+      cy.checkText(row.key(), expectedKeyText);
 
-      row.value().invoke('text').then((text) => {
-        const expected = `${submissionData[PERCENTAGE_OF_COVER]}%`;
+      const expectedValue = `${submissionData[PERCENTAGE_OF_COVER]}%`;
+      cy.checkText(row.value(), expectedValue);
 
-        expect(text.trim()).equal(expected);
-      });
-
-      row.changeLink().invoke('text').then((text) => {
-        const expected = `${LINKS.CHANGE} ${expectedKeyText}`;
-        expect(text.trim()).equal(expected);
-      });
+      const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
+      cy.checkText(row.changeLink(), expectedChangeLink);
 
       const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
       row.changeLink().should('have.attr', 'href', expectedHref);
@@ -236,7 +199,9 @@ context('Check your answers page (multi policy) - as an exporter, I want to revi
 
   context('form submission', () => {
     it(`should redirect to ${ROUTES.QUOTE.YOUR_QUOTE}`, () => {
-      checkYourAnswersPage.submitButton().click();
+      cy.navigateToUrl(url);
+
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
     });

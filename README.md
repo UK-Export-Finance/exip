@@ -15,22 +15,22 @@ This repo is based on [template-typescript-package](https://github.com/UK-Export
 - Node version 16 or highr with a corresponding `npm`.
 - Make sure you have an `.env` Use `.env.sample` as a base. Some sensitive variables need to be shared from the team.
 - Run `npm install` in the root directory
-- Run `npm install` in the `src/ui`
+- Run `npm install --legacy-peer-deps` in the `src/ui`
 
 ## Tech stack
 
 - Node, NPM
 - Typescript
-- Keystone (GraphQL API, database)
-- Cypress (E2E tests)
-- GovUK design systems
-- Nunjucks (UI templates)
-- Webpack
-- Jest
-- ESlint, Prettier
-- Husky, commitlint, lint-staged
-- release-please-action
-- Github actions
+- [Keystone (GraphQL API, database)](keystonejs.com)
+- [Cypress (E2E tests)](https://www.cypress.io)
+- [GovUK design systems](design-system.service.gov.uk)
+- [Nunjucks (UI templates)](https://mozilla.github.io/nunjucks/templating.html)
+- [Webpack](https://webpack.js.org)
+- [Jest](https://jestjs.io/)
+- [ESlint](https://eslint.org), [Prettier](https://prettier.io)
+- [Husky](https://typicode.github.io/husky), [commitlint](https://commitlint.js.org), [lint-staged](https://github.com/okonet/lint-staged)
+- [release-please-action](https://github.com/google-github-actions/release-please-action)
+- [Github actions](https://github.com/features/actions)
 
 ## Running locally
 
@@ -52,6 +52,8 @@ In another terminal:
 3. Or for hot reloading: `npm run dev`
 
 Note that we use [express-basic-auth](https://www.npmjs.com/package/express-basic-auth) in every environment except for production. This is because we do not want anyone to see work in progress before it is live. For example, some real-world users may obtain the password in a dev/test environment for user testing. We do not want this to then be shared.
+
+To run the full application flow without docker, you'll need to spin up a MySQL database and update the `DATABASE_URL`, `MYSQL_DATABASE` and `MYSQL_ROOT_PASSWORD` environment variables. Once the database exists, [import the MySQL dump](https://github.com/UK-Export-Finance/exip/blob/main-application/database/exip.sql) to get everything working. Otherwise, the database will not have any tables or countries and therefore CRUD operations will fail.
 
 ## Testing
 
@@ -131,6 +133,100 @@ npm run lint
 ```shell
 npm run lint:fix
 ```
+
+## What is Keystone?
+
+Keystone is a very powerful headless CMS. After a very simple installation/configuration, Keystone allows you to define a [schema](https://github.com/UK-Export-Finance/exip/blob/main-application/src/api/schema.ts). The schema then automatically generates a graphQL schema, a graphQL resolver, and updates the database with the fields that have been defined in the schema. For example, if the schema has this `Currencies` definition:
+
+```js
+export const lists = {
+  Currencies: {
+    fields: {
+      name: text(),
+      isoCode: text(),
+    },
+  },
+};
+```
+
+Keystone will automatically generate the following graphQL resolvers in the background:
+
+### Mutations
+
+- `createCurrency`
+- `createCurrencies`
+- `updateCurrency`
+- `updateCurrencies`
+- `deleteCurrency`
+- `deleteCurrencies`
+
+### Queries
+
+- `currencies`
+- `currency`
+- `currenciesCount`
+
+Keystone will also automatically create a currencies table in the database with any fields listed in the keystone schema as columns in the said table.
+
+### Keystone hooks
+
+Keystone also has some functionality called hooks. Hooks allow you to perform "before and after" or side effects. For example, `resolveInput` allows you to modify or add some data before it is saved in the database, `afterOperation` allows you to trigger something after data is saved. 
+
+You can learn more about hooks in the [official documentation](https://keystonejs.com/docs/guides/hooks)
+
+We do not use hooks very extensively, we currently only use hooks when an application is created.
+
+### Customising the schema / automatically generated GraphQL API
+
+Whilst the automatically generated graphQL API and database is fantastic, there are use cases where we want to create our own graphQL resolver that has no interest in the database. For example, 3rd party API calls to companies house.
+
+This can be easily achieved by creating a [custom schema](https://github.com/UK-Export-Finance/exip/blob/main-application/src/api/custom-schema.ts). We then import this in the [keystone config](https://github.com/UK-Export-Finance/exip/blob/main-application/src/api/keystone.ts#L19) and it magically merges our custom schema with the automatically generated schema.
+
+## Why we use Keystone
+
+We decided to use Keystone because it provides us with so much functionality out of the box. We do not want to setup and build another CRUD API from scratch. Whilst building an API manually gives us more control, there is overhead for building specific features and maintaining the API.
+
+With Keystone, we get all of this (including things like pagination), by writing few lines of code in the Keystone schema.
+
+Keystone also provides us with an admin UI for the database. Whilst we don't really use this, there are some potential opportunities for this to be used by non-technical people.
+
+### Requirements for submitting a form
+
+In the majority of pages, we have two submit buttons with different requirements.
+
+#### "Save and continue"
+
+- These primary buttons trigger a check for validation errors and if there are errors, reload the same page with validation errors.
+- If there are no validation errors, we trigger a redirect to the next page of the user flow.
+
+#### "Save and go back"
+
+- These secondary buttons check for validation errors and if there are errors, we strip out the invalid fields and save only valid fields.
+- Regardless of validation errors, a user is taken to the "main home page" of an application.
+
+## How and when the UI calls the API
+
+### When an application page is loaded
+
+We have some middleware that fetches the application from the API. This middleware calls the API via [this file](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/middleware/insurance/get-application/index.ts#L63). We use apollo to run the GraphQL query.
+
+The API automatically handles the request (thanks to Keystone) and returns the application.
+
+The middleware assigns the application to `res.locals` so that it can be consumed by the proceeding controller.
+
+### When a user submits a form in the application flow
+
+The following happens:
+
+1. The UI's POST contoller checks for validation errors.
+
+2. If all is OK, call a ["map and save" function](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/controllers/insurance/policy-and-export/type-of-policy/index.ts#L83).
+
+3. The map and save function maps the submitted form data into a better data structure (e.g day/month/year fields transform into a timestamp) and sends this data to the [save function](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/controllers/insurance/policy-and-export/map-and-save/index.ts).
+
+4. The save data function then filters out any invalid fields (if an error list is provided), sanitises all other fields and finally calls the API. The actual call is made [here](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/api/keystone/application/index.ts#L91). We use apollo to run a GraphQL mutation.
+
+5. The API automatically handles the request (thanks to Keystone) and updates the database columns provided in the GraphQL mutation, for the specified application.
 
 ## Core principles
 
@@ -286,19 +382,11 @@ Github actions will then run a build and push of container images to Azure, whic
 
 E2E tests for GHA have been setup to run in parallel. When these run you will see duplicates of each job with a number denoting the instance.
 
-## Deployment
-
-Currently, there is only a single staging environment.
-
-A docker image needs to be built, tagged and pushed to docker hub. Then the azure app can be restarted to pick up the latest.
-
-Contact the team for more information.
-
-## Product definitions for eligibility
+## Eligibility
 
 The EXIP product has a series of rules/questions that determine if an exporter can apply for cover.
 
-These questions are asked in the eligibility sections of the user flow. The product has 2 eligibility sections:
+These questions are asked in the eligibility sections of the user flow. The product has 2 eligibility areas:
 
 - In the "Get a quote" flow: `/quote/*`
 - In the beginning of the application flow, before an application can be created: `/insurance/eligibility/*`
@@ -306,19 +394,46 @@ These questions are asked in the eligibility sections of the user flow. The prod
 Key points and differences:
 
 - An Exporter must pass eligibility before they can obtain a quote or begin to create an application to apply for cover.
-- The application eligibility is a lot more comprehensive than the quote eligibility. Both eligibility flows share a few questions.
+- The application/insurance eligibility is a lot more comprehensive than the quote eligibility. Both eligibility flows share a few questions.
 - The majority of the eligibility questions are "yes or no" answers.
 
 ### "Maximum" definitions
 
-The application eligibility has two questions asking if the exporter's desired cover period and cover amount is over X.
+The application/insurance eligibility has two questions asking if the exporter's desired cover period and cover amount is over X.
 
 If an exporter would like a cover period or cover amount that exceeds the maximum, they cannot apply online and must either apply offline or speak to UKEF.
 
-These maximum definitions could change in the future. Therefore, they are stored and rendered in the UI dynamically. These can be found in the [product constants](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/constants/product.ts).
+These maximum definitions could change in the future. Therefore, they are stored and rendered in the UI dynamically. These can be found in the [eligibility constants](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/constants/eligibility.ts).
 
-If these definitions need to change, only the product constants need to be updated.
+If these definitions need to change, only the eligibility constants need to be updated.
 
 Note that the cover period URL references the maximum cover period. The route is created dynamically by referencing the cover period definition.
 
 Also note that the field IDs that we use for the answers to these questions are generic and do not refer to the actual maximum. I.e, `wantCoverOverMaxPeriod` instead of `wantCoverOver2Years`.
+
+## Application versioning
+
+As the EXIP product/service grows and is iterated upon, the support that UKEF can offer will change and become less restrictive, especially post MVP release.
+
+Therefore, the application could have more, or less fields required for a user to complete and submit. Other parameters could also change, for example maximum cover period or amount.
+
+We have application versioning in place so that moving forwards, when viewing new or old applications, we can easily determine what support the product has or had at the time of creation, or submission. This helps us and other systems to:
+
+- Easily show or hide particular parts of an application when viewing historically or during creation.
+- Post submission, easily show or hide submitted answers and determine what support was available at the time of submission.
+- Avoid having to add complex logic in the codebase, or other internal systems (i.e reporting) to check if XYZ data is available.
+
+:warning: When the EXIP service enters a new phase and the application will be changed, we need to add a new application version number.
+
+This is achieved by updating the versions constants:
+
+- [versions list](https://github.com/UK-Export-Finance/exip/blob/main-application/src/api/constants/application/versions/index.ts).
+- [latest version definition](https://github.com/UK-Export-Finance/exip/blob/main-application/src/api/constants/application/versions/latest.ts).
+
+All newly created application's automatically use the latest version number.
+
+An example of possible versions:
+
+- Version number 1: MVP, no support for applications over £100.
+- Version number 2: Support for applications over £100.
+- Version number 3: Payments integration

@@ -1,7 +1,24 @@
 import { Request, Response } from '../../types';
+import mockAccount from './mock-account';
 import mockAnswers from './mock-answers';
 import mockSession from './mock-session';
 import mockQuote from './mock-quote';
+import mockCisCountries from './mock-cis-countries';
+import mockCountries from './mock-countries';
+import mockCurrencies from './mock-currencies';
+import mockCompany from './mock-company';
+import mockApplication, { mockBusiness } from './mock-application';
+import mockApplications from './mock-applications';
+import mockUrlOrigin from './mock-url-origin';
+import mockPhoneNumbers from './mock-phone-numbers';
+import mockSicCodes from './mock-sic-codes';
+import mockBusinessNatureOfBusiness from './mock-business-nature-of-business';
+import mockBusinessTurnover from './mock-business-turnover';
+import mockBroker from './mock-broker';
+import mockBuyer from './mock-buyer';
+import mockDeclarations from './mock-declarations';
+import { mockInsuranceFeedback } from './mock-feedback';
+import mockBusinessContact from './mock-business-contact';
 
 const mockReq = () => {
   let req = {} as Request;
@@ -13,12 +30,22 @@ const mockReq = () => {
     flash: jest.fn(),
     headers: {
       referer: '/mock',
+      origin: 'https://mock-origin.com',
+      host: 'mock-host.com',
     },
     method: 'GET',
-    originalUrl: 'mock',
+    originalUrl: 'mock?mockQueryParam',
+    baseUrl: 'mock',
+    params: {
+      referenceNumber: mockApplication.referenceNumber.toString(),
+    },
+    query: {},
     redirect: jest.fn(),
     session: {
-      submittedData: {},
+      submittedData: {
+        quoteEligibility: {},
+        insuranceEligibility: {},
+      },
     },
   };
 
@@ -40,4 +67,29 @@ const mockRes = () => {
 
 const mockNext = jest.fn();
 
-export { mockAnswers, mockNext, mockSession, mockQuote, mockReq, mockRes };
+export {
+  mockAccount,
+  mockAnswers,
+  mockApplication,
+  mockApplications,
+  mockBroker,
+  mockBusiness,
+  mockBusinessContact,
+  mockBuyer,
+  mockCisCountries,
+  mockCountries,
+  mockCompany,
+  mockCurrencies,
+  mockDeclarations,
+  mockBusinessNatureOfBusiness,
+  mockBusinessTurnover,
+  mockInsuranceFeedback,
+  mockNext,
+  mockUrlOrigin,
+  mockSession,
+  mockSicCodes,
+  mockQuote,
+  mockPhoneNumbers,
+  mockReq,
+  mockRes,
+};

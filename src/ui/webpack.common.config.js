@@ -7,6 +7,7 @@ module.exports = {
     main: './scripts/main.js',
     jsEnabled: './scripts/js-enabled.js',
     govukFrontend: './scripts/govuk-frontend.js',
+    mojFrontend: './scripts/moj-frontend.js',
     accessibleAutocomplete: './scripts/accessible-autocomplete.js',
     cookies: './scripts/cookies.js',
   },

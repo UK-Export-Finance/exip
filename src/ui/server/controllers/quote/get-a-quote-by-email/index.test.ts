@@ -1,8 +1,10 @@
-import get from '.';
-import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { TEMPLATE, get } from '.';
+import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
-import { mockReq, mockRes } from '../../../test-mocks';
+import corePageVariables from '../../../helpers/page-variables/core/quote';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
+import { mockReq, mockRes } from '../../../test-mocks';
 
 describe('controllers/quote/get-a-quote-by-email', () => {
   let req: Request;
@@ -25,19 +27,21 @@ describe('controllers/quote/get-a-quote-by-email', () => {
     res = mockRes();
   });
 
-  it('should render template', () => {
-    get(req, res);
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.QUOTE.GET_A_QUOTE_BY_EMAIL);
+    });
+  });
 
-    expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.GET_A_QUOTE_BY_EMAIL, {
-      CONTENT_STRINGS: {
-        COOKIES_CONSENT,
-        FOOTER,
-        LINKS,
-        PRODUCT,
-        ...PAGES.GET_A_QUOTE_BY_EMAIL_PAGE,
-      },
-      BACK_LINK: mockPreviousRoute,
-      EXIT_REASON: mockExitReason,
+  describe('get', () => {
+    it('should render template', () => {
+      get(req, res);
+
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.GET_A_QUOTE_BY_EMAIL, {
+        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL, BACK_LINK: mockPreviousRoute, ORIGINAL_URL: req.originalUrl }),
+        userName: getUserNameFromSession(req.session.user),
+        EXIT_REASON: mockExitReason,
+      });
     });
   });
 });

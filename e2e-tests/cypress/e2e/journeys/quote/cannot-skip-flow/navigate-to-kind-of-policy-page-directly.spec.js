@@ -1,14 +1,8 @@
-import CONSTANTS from '../../../../../constants';
-const { ROUTES } = CONSTANTS;
+import { ROUTES } from '../../../../../constants';
 
 context('Manually going to the `Policy type` page via URL without completing the previous forms', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.QUOTE.POLICY_TYPE, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.QUOTE.POLICY_TYPE);
   });
 
   it('should redirect to the `need to start again` exit page', () => {
@@ -18,12 +12,7 @@ context('Manually going to the `Policy type` page via URL without completing the
 
 context('Manually going to the `Change Policy type` page via URL without completing the previous forms', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.QUOTE.POLICY_TYPE_CHANGE, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.QUOTE.POLICY_TYPE_CHANGE);
   });
 
   it('should redirect to the `need to start again` exit page', () => {

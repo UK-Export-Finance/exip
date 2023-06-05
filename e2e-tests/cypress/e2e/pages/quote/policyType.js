@@ -3,33 +3,33 @@ import {
   FIELD_VALUES,
 } from '../../../../constants';
 
+const { POLICY_TYPE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
+
 const policyTypePage = {
-  heading: () => cy.get('[data-cy="heading"]'),
-  [FIELD_IDS.POLICY_TYPE]: {
+  [POLICY_TYPE]: {
     single: {
-      label: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.SINGLE}-label"]`),
-      hint: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.SINGLE}-hint"]`),
-      input: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.SINGLE}-input"]`),
+      label: () => cy.get(`[data-cy="${POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.SINGLE}-label"]`),
+      hint: () => cy.get(`[data-cy="${POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.SINGLE}-hint"]`),
+      input: () => cy.get(`[data-cy="${POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.SINGLE}-input"]`),
     },
-    multi: {
-      label: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.MULTI}-label"]`),
-      hint: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.MULTI}-hint"]`),
-      input: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.MULTI}-input"]`),
+    multiple: {
+      label: () => cy.get(`[data-cy="${POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.MULTIPLE}-label"]`),
+      hint: () => cy.get(`[data-cy="${POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.MULTIPLE}-hint"]`),
+      input: () => cy.get(`[data-cy="${POLICY_TYPE}-${FIELD_VALUES.POLICY_TYPE.MULTIPLE}-input"]`),
       inset: {
-        text: () => cy.get('[data-cy="multi-policy-inset"] [data-cy="details-1"]'),
-        link: () => cy.get('[data-cy="multi-policy-inset"] [data-cy="details-1"] a').eq(0),
+        text: () => cy.get('[data-cy="multiple-policy-inset"] [data-cy="details-1"]'),
+        link: () => cy.get('[data-cy="multiple-policy-inset"] [data-cy="details-1"] a').eq(0),
       },
     },
-    errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-error-message"]`),
+    errorMessage: () => cy.get(`[data-cy="${POLICY_TYPE}-error-message"]`),
   },
-  [FIELD_IDS.SINGLE_POLICY_LENGTH]: {
-    label: () => cy.get(`[data-cy="${FIELD_IDS.SINGLE_POLICY_LENGTH}-label"]`),
-    hint: () => cy.get(`[data-cy="${FIELD_IDS.SINGLE_POLICY_LENGTH}-hint"]`),
-    hintLink: () => cy.get(`[data-cy="${FIELD_IDS.SINGLE_POLICY_LENGTH}-hint"] a`),
-    input: () => cy.get(`[data-cy="${FIELD_IDS.SINGLE_POLICY_LENGTH}-input"]`),
-    errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.SINGLE_POLICY_LENGTH}-error-message"]`),
+  [SINGLE_POLICY_LENGTH]: {
+    label: () => cy.get(`[data-cy="${SINGLE_POLICY_LENGTH}-label"]`),
+    hint: () => cy.get(`[data-cy="${SINGLE_POLICY_LENGTH}-hint"]`),
+    hintLink: () => cy.get(`[data-cy="${SINGLE_POLICY_LENGTH}-hint"] a`),
+    input: () => cy.get(`[data-cy="${SINGLE_POLICY_LENGTH}-input"]`),
+    errorMessage: () => cy.get(`[data-cy="${SINGLE_POLICY_LENGTH}-error-message"]`),
   },
-  submitButton: () => cy.get('[data-cy="submit-button"]'),
 };
 
 export default policyTypePage;

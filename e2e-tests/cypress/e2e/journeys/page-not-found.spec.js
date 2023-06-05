@@ -1,43 +1,47 @@
 import { pageNotFoundPage } from '../pages';
-import { PAGES } from '../../../content-strings';
+import partials from '../partials';
+import { PAGES, PRODUCT } from '../../../content-strings';
 
 const CONTENT_STRINGS = PAGES.PAGE_NOT_FOUND_PAGE;
 
 context('404 Page not found', () => {
-  before(() => {
-    cy.visit('/test', {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
+  const invalidUrl = '/test';
+
+  beforeEach(() => {
+    cy.saveSession();
+
+    cy.navigateToUrl(invalidUrl);
+  });
+
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: '/test',
+      assertSubmitButton: false,
+      assertBackLink: false,
+      assertAuthenticatedHeader: false,
+      isInsurancePage: false,
+      assertServiceHeading: false,
     });
   });
 
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
+  describe('header', () => {
+    it('renders a GOV home link', () => {
+      partials.header.govHomeLink().should('exist');
 
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
+      partials.header.govHomeLink().should('have.attr', 'href', 'https://www.gov.uk');
+    });
 
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
+    it('renders service name link', () => {
+      cy.checkText(partials.header.serviceName(), PRODUCT.DESCRIPTION.GENERIC);
 
-  it('renders a heading', () => {
-    pageNotFoundPage.heading().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.HEADING);
+      partials.header.serviceName().should('have.attr', 'href', '/');
     });
   });
 
-  it('renders body text', () => {
-    pageNotFoundPage.body1().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.BODY_1);
-    });
+  it('renders `typed` and `pasted` text', () => {
+    cy.checkText(pageNotFoundPage.typedAddress(), CONTENT_STRINGS.TYPED_ADDRESS);
 
-    pageNotFoundPage.body2().invoke('text').then((text) => {
-      expect(text.trim()).equal(CONTENT_STRINGS.BODY_2);
-    });
+    cy.checkText(pageNotFoundPage.pastedAddress(), CONTENT_STRINGS.PASTED_ADDRESS);
   });
 });

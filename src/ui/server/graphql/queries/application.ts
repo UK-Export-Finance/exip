@@ -1,0 +1,141 @@
+import gql from 'graphql-tag';
+
+const applicationQuery = gql`
+  query ($referenceNumber: ID!) {
+    referenceNumber(where: { id: $referenceNumber }) {
+      id
+      application {
+        id
+        version
+        createdAt
+        updatedAt
+        submissionDeadline
+        submissionType
+        submissionDate
+        status
+        eligibility {
+          id
+          buyerCountry {
+            isoCode
+            name
+          }
+          hasMinimumUkGoodsOrServices
+          validExporterLocation
+          hasCompaniesHouseNumber
+          otherPartiesInvolved
+          paidByLetterOfCredit
+          needPreCreditPeriodCover
+          wantCoverOverMaxAmount
+          wantCoverOverMaxPeriod
+        }
+        policyAndExport {
+          id
+          policyType
+          requestedStartDate
+          contractCompletionDate
+          totalValueOfContract
+          creditPeriodWithBuyer
+          policyCurrencyCode
+          totalMonthsOfCover
+          totalSalesToBuyer
+          maximumBuyerWillOwe
+          goodsOrServicesDescription
+          finalDestinationCountryCode
+        }
+        owner {
+          id
+        }
+        company {
+          id
+          companyName
+          companyNumber
+          companyWebsite
+          hasTradingName
+          hasTradingAddress
+          dateOfCreation
+          phoneNumber
+          financialYearEndDate
+          sicCodes {
+            id
+            sicCode
+            industrySectorName
+          }
+          registeredOfficeAddress {
+            id
+            addressLine1
+            addressLine2
+            careOf
+            locality
+            region
+            postalCode
+            country
+            premises
+          }
+        }
+        business {
+          id
+          goodsOrServicesSupplied
+          totalYearsExporting
+          totalEmployeesUK
+          totalEmployeesInternational
+          estimatedAnnualTurnover
+          exportsTurnoverPercentage
+          businessContactDetail {
+            id
+            firstName
+            lastName
+            email
+            position
+          }
+        }
+        broker {
+          id
+          isUsingBroker
+          name
+          addressLine1
+          addressLine2
+          town
+          county
+          postcode
+          email
+        }
+        buyer {
+          id
+          companyOrOrganisationName
+          address
+          country {
+            isoCode
+            name
+          }
+          registrationNumber
+          website
+          contactFirstName
+          contactLastName
+          contactPosition
+          contactEmail
+          canContactBuyer
+          exporterIsConnectedWithBuyer
+          exporterHasTradedWithBuyer
+        }
+        sectionReview {
+          id
+          eligibility
+          policyAndExport
+          business
+          buyer
+        }
+        declaration {
+          id
+          agreeToConfidentiality
+          agreeToAntiBribery
+          hasAntiBriberyCodeOfConduct
+          willExportWithAntiBriberyCodeOfConduct
+          agreeToConfirmationAndAcknowledgements
+          agreeHowDataWillBeUsed
+        }
+      }
+    }
+  }
+`;
+
+export default applicationQuery;

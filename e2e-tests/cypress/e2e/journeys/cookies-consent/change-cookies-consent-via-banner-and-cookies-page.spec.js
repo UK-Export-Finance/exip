@@ -1,19 +1,29 @@
 import partials from '../../partials';
+import { submitButton } from '../../pages/shared';
 import { cookiesPage } from '../../pages';
 import { FIELD_IDS, ROUTES } from '../../../../constants';
 
 context('Cookies consent - change via banner and cookies page', () => {
+  const cookiesPageUrl = ROUTES.COOKIES;
+
   beforeEach(() => {
+    cy.clearCookies();
+    Cypress.session.clearAllSavedSessions();
+
     cy.login();
+
+    cy.saveSession();
   });
 
   context('User submits cookie consent in the banner as `accept` and navigates to the cookies page', () => {
     beforeEach(() => {
+      cy.navigateToUrl(cookiesPageUrl);
+
       partials.cookieBanner.question.acceptButton().click();
       partials.cookieBanner.hideButton().click();
 
       partials.footer.supportLinks.cookies().click();
-      cy.url().should('include', ROUTES.COOKIES);
+      cy.url().should('include', cookiesPageUrl);
 
       cy.checkAnalyticsScriptsAreRendered();
       cy.checkAnalyticsCookieIsTrue();
@@ -33,38 +43,38 @@ context('Cookies consent - change via banner and cookies page', () => {
 
     it('should allow user to immediately change their answer to `reject` and have scripts & cookies changed via the cookies page', () => {
       cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput().click();
-      cookiesPage.optionalCookies.submitButton().click();
+      submitButton().click();
 
       cy.checkAnalyticsScriptsAreNotRendered();
       cy.checkAnalyticsCookieIsFalse();
     });
 
     it('should NOT render the cookie consent banner when going to another page', () => {
-      cy.visit(ROUTES.QUOTE.BUYER_COUNTRY, {
-        auth: {
-          username: Cypress.config('basicAuthKey'),
-          password: Cypress.config('basicAuthSecret'),
-        },
-      });
+      cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput().click();
+      submitButton().click();
 
-      partials.cookieBanner.heading().should('not.be.visible');
+      cy.navigateToUrl(ROUTES.QUOTE.BUYER_COUNTRY);
+
+      partials.cookieBanner.heading().should('not.exist');
       partials.cookieBanner.hideButton().should('not.exist');
-      partials.cookieBanner.cookiesLink().should('not.be.visible');
+      partials.cookieBanner.cookiesLink().should('not.exist');
 
-      partials.cookieBanner.question.copy1().should('not.be.visible');
-      partials.cookieBanner.question.copy2().should('not.be.visible');
-      partials.cookieBanner.question.acceptButton().should('not.be.visible');
-      partials.cookieBanner.question.rejectButton().should('not.be.visible');
+      partials.cookieBanner.question.copy1().should('not.exist');
+      partials.cookieBanner.question.copy2().should('not.exist');
+      partials.cookieBanner.question.acceptButton().should('not.exist');
+      partials.cookieBanner.question.rejectButton().should('not.exist');
     });
   });
 
   context('User submits cookie consent in the banner as `reject` and navigates to the cookies page', () => {
     beforeEach(() => {
+      cy.navigateToUrl(cookiesPageUrl);
+
       partials.cookieBanner.question.rejectButton().click();
       partials.cookieBanner.hideButton().click();
 
       partials.footer.supportLinks.cookies().click();
-      cy.url().should('include', ROUTES.COOKIES);
+      cy.url().should('include', cookiesPageUrl);
 
       cy.checkAnalyticsScriptsAreNotRendered();
       cy.checkAnalyticsCookieIsFalse();
@@ -84,28 +94,23 @@ context('Cookies consent - change via banner and cookies page', () => {
 
     it('should allow user to immediately change their answer to `approve` and have scripts & cookies changed via the cookies page', () => {
       cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
-      cookiesPage.optionalCookies.submitButton().click();
+      submitButton().click();
 
       cy.checkAnalyticsScriptsAreRendered();
       cy.checkAnalyticsCookieIsTrue();
     });
 
     it('should NOT render the cookie consent banner when going to another page', () => {
-      cy.visit(ROUTES.QUOTE.BUYER_COUNTRY, {
-        auth: {
-          username: Cypress.config('basicAuthKey'),
-          password: Cypress.config('basicAuthSecret'),
-        },
-      });
+      cy.navigateToUrl(ROUTES.QUOTE.BUYER_COUNTRY);
 
-      partials.cookieBanner.heading().should('not.be.visible');
+      partials.cookieBanner.heading().should('not.exist');
       partials.cookieBanner.hideButton().should('not.exist');
-      partials.cookieBanner.cookiesLink().should('not.be.visible');
+      partials.cookieBanner.cookiesLink().should('not.exist');
 
-      partials.cookieBanner.question.copy1().should('not.be.visible');
-      partials.cookieBanner.question.copy2().should('not.be.visible');
-      partials.cookieBanner.question.acceptButton().should('not.be.visible');
-      partials.cookieBanner.question.rejectButton().should('not.be.visible');
+      partials.cookieBanner.question.copy1().should('not.exist');
+      partials.cookieBanner.question.copy2().should('not.exist');
+      partials.cookieBanner.question.acceptButton().should('not.exist');
+      partials.cookieBanner.question.rejectButton().should('not.exist');
     });
   });
 });

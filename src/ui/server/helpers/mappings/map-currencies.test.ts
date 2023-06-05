@@ -1,56 +1,27 @@
 import { getSupportedCurrencies, mapCurrencies } from './map-currencies';
 import sortArrayAlphabetically from '../sort-array-alphabetically';
+import mapSelectOption from './map-select-option';
+import { mockCurrencies } from '../../test-mocks';
 
 describe('server/helpers/mappings/map-currencies', () => {
-  const mockCurrencies = [
-    {
-      name: 'Euros',
-      isoCode: 'EUR',
-    },
-    {
-      name: 'US Dollars',
-      isoCode: 'USD',
-    },
-    {
-      name: 'UK Sterling',
-      isoCode: 'GBP',
-    },
-    {
-      name: 'Hong Kong Dollars',
-      isoCode: 'HKD',
-    },
-  ];
-
   describe('getSupportedCurrencies', () => {
     it('should only return supported currencies (GBP, EUR, USD)', () => {
       const result = getSupportedCurrencies(mockCurrencies);
 
-      const expected = [mockCurrencies[0], mockCurrencies[1], mockCurrencies[2]];
+      const expected = [mockCurrencies[0], mockCurrencies[2], mockCurrencies[3]];
 
       expect(result).toEqual(expected);
     });
   });
 
   describe('mapCurrencies', () => {
-    it('should return an array of mapped objects with a default option', () => {
-      const supportedCurrencies = getSupportedCurrencies(mockCurrencies);
+    const supportedCurrencies = getSupportedCurrencies(mockCurrencies);
+
+    it('should return an array of mapped objects from mapSelectOption and with a default option', () => {
       const result = mapCurrencies(supportedCurrencies);
 
       const expectedSorted = sortArrayAlphabetically(
-        [
-          {
-            text: `${mockCurrencies[0].isoCode} - ${mockCurrencies[0].name}`,
-            value: mockCurrencies[0].isoCode,
-          },
-          {
-            text: `${mockCurrencies[1].isoCode} - ${mockCurrencies[1].name}`,
-            value: mockCurrencies[1].isoCode,
-          },
-          {
-            text: `${mockCurrencies[2].isoCode} - ${mockCurrencies[2].name}`,
-            value: mockCurrencies[2].isoCode,
-          },
-        ],
+        supportedCurrencies.map(({ name, isoCode }) => mapSelectOption(name, isoCode, true)),
         'text',
       );
 
@@ -67,27 +38,13 @@ describe('server/helpers/mappings/map-currencies', () => {
     });
 
     describe('when a selectedValue is passed', () => {
-      it('should return an array of mapped objects with selected option and no default option', () => {
+      it('should return an array of mapped objects from mapSelectOption and no default option', () => {
         const mockSelectedValue = mockCurrencies[1].isoCode;
 
         const result = mapCurrencies(mockCurrencies, mockSelectedValue);
 
         const expected = sortArrayAlphabetically(
-          [
-            {
-              text: `${mockCurrencies[0].isoCode} - ${mockCurrencies[0].name}`,
-              value: mockCurrencies[0].isoCode,
-            },
-            {
-              text: `${mockCurrencies[1].isoCode} - ${mockCurrencies[1].name}`,
-              value: mockCurrencies[1].isoCode,
-              selected: true,
-            },
-            {
-              text: `${mockCurrencies[2].isoCode} - ${mockCurrencies[2].name}`,
-              value: mockCurrencies[2].isoCode,
-            },
-          ],
+          supportedCurrencies.map(({ name, isoCode }) => mapSelectOption(name, isoCode, true, mockSelectedValue)),
           'text',
         );
 

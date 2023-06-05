@@ -48,7 +48,7 @@
     </div>
   {% endif %}
 
-  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
+  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
   <p class="govuk-body" data-cy="body-1">{{ CONTENT_STRINGS.BODY_1 }}</p>
   <p class="govuk-body" data-cy="body-2">{{ CONTENT_STRINGS.BODY_2 }}</p>
@@ -177,7 +177,7 @@
       errorMessage: validationErrors.errorList[FIELD_ID]and {
         text: validationErrors.errorList[FIELD_ID].text,
         attributes: {
-          "data-cy": FIELD_ID + "-error-message"
+          "data-cy": "inline-error-message"
         }
       }
     }) }}

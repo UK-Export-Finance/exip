@@ -1,0 +1,105 @@
+{% from 'govuk/components/radios/macro.njk' import govukRadios %}
+
+{% macro render(params) %}
+
+  {% set fieldId = params.fieldId %}
+  {% set heading = params.heading %}
+  {% set hintText = params.hintText %}
+  {% set hintHtml = params.hintHtml %}
+  {% set submittedAnswer = params.submittedAnswer %}
+  {% set errorMessage = params.errorMessage %}
+  {% set yesNoValueString = params.yesNoValueString %}
+  {% set conditionalYesHtml = params.conditionalYesHtml %}
+  {% set conditionalNoHtml = params.conditionalNoHtml %}
+
+  {% if params.headerClass %}
+    {% set headerClass = params.headerClass %}
+  {% else %}
+    {% set headerClass = 'govuk-heading-l' %}
+  {% endif %}
+
+  {% if params.dataCyHeading %}
+    {% set dataCyHeading = params.dataCyHeading %}
+  {% else %}
+    {% set dataCyHeading = 'heading' %}
+  {% endif %}
+
+  {% if params.dataCyHint %}
+    {% set dataCyHint = params.dataCyHint %}
+  {% else %}
+    {% set dataCyHint = 'yes-no-input-hint' %}
+  {% endif %}
+
+  {% set yesValue = true %}
+  {% set noValue = false %}
+
+  {% if yesNoValueString %}
+    {% set yesValue = 'Yes' %}
+    {% set noValue = 'No' %}
+  {% endif %}
+
+  {% if not params.horizontalRadios %}
+    {% set radioClass = 'govuk-radios--inline' %}
+  {% endif %}
+
+  {{ govukRadios({
+    classes: radioClass,
+    idPrefix: fieldId,
+    name: fieldId,
+    fieldset: {
+      legend: {
+        html: "<h1 class=" + headerClass + " id='heading' data-cy='" + dataCyHeading + "'>" + heading + "</h1>"
+      }
+    },
+    hint: {
+      text: hintText,
+      html: hintHtml,
+      attributes: {
+        'data-cy': dataCyHint
+      }
+    },
+    items: [
+      {
+        value: yesValue,
+        text: "Yes",
+        label: {
+          attributes: {
+            "data-cy": "yes"
+          }
+        },
+        conditional: {
+          html: conditionalYesHtml
+        },
+        attributes: {
+          "data-cy": "yes-input",
+          'aria-label': heading + ' yes radio'
+        },
+        checked: submittedAnswer === yesValue
+      },
+      {
+        value: noValue,
+        text: "No",
+        label: {
+          attributes: {
+            "data-cy": "no"
+          }
+        },
+        conditional: {
+          html: conditionalNoHtml
+        },
+        attributes: {
+          "data-cy": "no-input",
+          'aria-label': heading + ' no radio'
+        },
+        checked: submittedAnswer === noValue
+      }
+    ],
+    errorMessage: errorMessage and {
+      text: errorMessage.text,
+      attributes: {
+        "data-cy": "inline-error-message"
+      }
+    }
+  }) }}
+
+{% endmacro %}

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import express from 'express';
 import compression from 'compression';
+import rateLimit from 'express-rate-limit';
 import morgan from 'morgan';
 import crypto from 'crypto';
 import session from 'express-session';
@@ -9,7 +10,7 @@ import csrf from 'csurf';
 import path from 'path';
 import flash from 'connect-flash';
 import basicAuth from 'express-basic-auth';
-
+// TODO: Replace `csurf` package https://ukef-dtfs.atlassian.net/browse/EMS-1011
 import { csrf as csrfToken, cookiesConsent, security, seo } from './middleware';
 import { Request, Response } from '../types';
 
@@ -19,9 +20,15 @@ dotenv.config();
 
 import configureNunjucks from './nunjucks-configuration';
 
-import { rootRoute, quoteRoutes, applicationRoutes } from './routes';
-import { COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from './content-strings';
-import { requiredDataProvided } from './middleware/required-data-provided';
+import { rootRoute, quoteRoutes, insuranceRoutes } from './routes';
+import { ROUTES } from './constants';
+import { COOKIES_CONSENT, QUOTE_FOOTER, LINKS, PAGES, PRODUCT, PHASE_BANNER } from './content-strings';
+import { requiredQuoteEligibilityDataProvided } from './middleware/required-data-provided/quote';
+import { requiredInsuranceEligibilityDataProvided } from './middleware/required-data-provided/insurance/eligibility';
+import applicationAccess from './middleware/insurance/application-access';
+import applicationStatus from './middleware/insurance/application-status';
+import getApplication from './middleware/insurance/get-application';
+import userSession from './middleware/insurance/user-session';
 
 // @ts-ignore
 const app = express();
@@ -32,6 +39,17 @@ const secureCookieName = https ? '__Host-exip-session' : 'exip-session';
 app.use(seo);
 app.use(security);
 app.use(compression());
+
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 1000, // 1K requests / 1 window
+  standardHeaders: false,
+  legacyHeaders: false,
+});
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(limiter);
+}
 
 const cookie = {
   path: '/',
@@ -97,11 +115,16 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
-app.use(requiredDataProvided);
+app.use('/quote', requiredQuoteEligibilityDataProvided);
+app.use('/insurance/eligibility', requiredInsuranceEligibilityDataProvided);
+app.use('/insurance/:referenceNumber/*', getApplication);
+app.use('/insurance/:referenceNumber/*', applicationAccess);
+app.use('/insurance/:referenceNumber/*', applicationStatus);
+app.use('/', userSession);
 
 app.use('/', rootRoute);
 app.use('/', quoteRoutes);
-app.use('/', applicationRoutes);
+app.use('/', insuranceRoutes);
 
 app.use(
   '/assets',
@@ -114,7 +137,8 @@ app.use(
 /* eslint-disable no-unused-vars, prettier/prettier */
 // @ts-ignore
 const errorHandler: express.ErrorRequestHandler = (err, req, res, next) => {
-  res.redirect('/problem-with-service');
+  console.error('Error with EXIP UI app', err);
+  res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
 };
 /* eslint-enable no-unused-vars, prettier/prettier */
 
@@ -124,11 +148,17 @@ app.get('*', (req: Request, res: Response) =>
   res.render('page-not-found.njk', {
     CONTENT_STRINGS: {
       COOKIES_CONSENT,
-      FOOTER,
+      FOOTER: QUOTE_FOOTER,
       LINKS,
-      PRODUCT,
+      PHASE_BANNER,
+      PRODUCT: {
+        ...PRODUCT,
+        DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC,
+      },
       ...PAGES.PAGE_NOT_FOUND_PAGE,
     },
+    START_ROUTE: ROUTES.QUOTE.START,
+    FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
   }),
 );
 

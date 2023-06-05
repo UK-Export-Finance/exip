@@ -1,7 +1,7 @@
+import { completeAndSubmitBuyerCountryForm } from '../forms';
 import {
-  completeAndSubmitBuyerCountryForm,
   completeAndSubmitBuyerBodyForm,
-  completeAndSubmitCompanyForm,
+  completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
   completeAndSubmitTellUsAboutYourSinglePolicyForm,
@@ -10,7 +10,7 @@ import {
 export default () => {
   completeAndSubmitBuyerCountryForm();
   completeAndSubmitBuyerBodyForm();
-  completeAndSubmitCompanyForm();
+  completeAndSubmitExporterLocationForm();
   completeAndSubmitUkContentForm();
   completeAndSubmitPolicyTypeSingleForm();
   completeAndSubmitTellUsAboutYourSinglePolicyForm();

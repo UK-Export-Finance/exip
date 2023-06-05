@@ -1,0 +1,127 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
+{% import '../../components/personal-details-input.njk' as personalDetailsInput %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: validationErrors.summary,
+      attributes: {
+        'data-cy': 'error-summary'
+      }
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <form method="POST" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <span class="govuk-caption-xl" data-cy="heading-caption">
+          {{CONTENT_STRINGS.HEADING_CAPTION}}
+        </span>
+        <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-cy="{{FIELDS.COMPANY_NAME.ID}}-label">{{ FIELDS.COMPANY_NAME.LABEL }}</h2>
+
+        {{ govukHint({
+          text: FIELDS.COMPANY_NAME.HINT,
+          attributes: {
+          "data-cy": FIELDS.COMPANY_NAME.ID + "-hint"
+          }
+        }) }}
+
+        <p class="govuk-body" data-cy="{{FIELDS.COMPANY_NAME.ID}}">{{ application.company[FIELDS.COMPANY_NAME.ID] }}</p>
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop govuk-!-margin-top-5">
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-cy="contact-details-heading">{{ CONTENT_STRINGS.CONTACT_DETAILS.LABEL }}</h2>
+
+        {{ govukHint({
+          text: CONTENT_STRINGS.CONTACT_DETAILS.HINT,
+          attributes: {
+          "data-cy": "contact-details-hint"
+          }
+        }) }}
+
+        {{ personalDetailsInput.render({
+          class: "govuk-input--width-11",
+          fieldId: FIELDS.FIRST_NAME.ID,
+          label: FIELDS.FIRST_NAME.LABEL,
+          labelClass: "govuk-label--s",
+          validationErrors: validationErrors,
+          submittedValues: submittedValues
+        }) }}
+
+        {{ personalDetailsInput.render({
+          class: "govuk-input--width-11",
+          fieldId: FIELDS.LAST_NAME.ID,
+          label: FIELDS.LAST_NAME.LABEL,
+          labelClass: "govuk-label--s",
+          validationErrors: validationErrors,
+          submittedValues: submittedValues
+        }) }}
+
+        {{ personalDetailsInput.render({
+          class: "govuk-input--width-11",
+          fieldId: FIELDS.EMAIL_ADDRESS.ID,
+          label: FIELDS.EMAIL_ADDRESS.LABEL,
+          labelClass: "govuk-label--s",
+          validationErrors: validationErrors,
+          submittedValues: submittedValues
+        }) }}
+
+        {{ personalDetailsInput.render({
+          class: "govuk-input--width-11",
+          fieldId: FIELDS.POSITION.ID,
+          label: FIELDS.POSITION.LABEL,
+          labelClass: "govuk-label--s",
+          validationErrors: validationErrors,
+          submittedValues: submittedValues
+        }) }}
+
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop govuk-!-margin-top-5">
+        <div class="govuk-button-group">
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE,
+            attributes: {
+              'data-cy': 'submit-button'
+            }
+          }) }}
+
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button',
+              'formaction': SAVE_AND_BACK_URL
+            }
+          }) }}
+        </div>
+      </div>
+    </form>
+  </div>
+
+{% endblock %}

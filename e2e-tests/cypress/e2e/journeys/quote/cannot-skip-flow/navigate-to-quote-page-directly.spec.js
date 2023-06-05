@@ -1,14 +1,8 @@
-import CONSTANTS from '../../../../../constants';
-const { ROUTES } = CONSTANTS;
+import { ROUTES } from '../../../../../constants';
 
 context('Manually going to the `Your quote` page via URL without completing the previous forms', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.QUOTE.YOUR_QUOTE, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.QUOTE.YOUR_QUOTE);
   });
 
   it('should redirect to the `need to start again` exit page', () => {

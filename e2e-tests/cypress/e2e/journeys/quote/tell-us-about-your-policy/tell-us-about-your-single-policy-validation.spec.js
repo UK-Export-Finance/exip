@@ -1,22 +1,30 @@
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import {
-  completeAndSubmitBuyerCountryForm,
   completeAndSubmitBuyerBodyForm,
-  completeAndSubmitCompanyForm,
+  completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../support/quote/forms';
+import { submitButton } from '../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import partials from '../../../partials';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
-import checkText from '../../../helpers/check-text';
+import { FIELD_IDS, ROUTES } from '../../../../../constants';
+import { GBP_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
-const { FIELD_IDS } = CONSTANTS;
+const {
+  ELIGIBILITY: {
+    CURRENCY,
+    CONTRACT_VALUE,
+    PERCENTAGE_OF_COVER,
+  },
+} = FIELD_IDS;
 
 context('Tell us about the policy you need page - form validation', () => {
+  const url = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
+
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
   });
 
   describe('when submitting an empty form', () => {
@@ -25,13 +33,15 @@ context('Tell us about the policy you need page - form validation', () => {
 
       completeAndSubmitBuyerCountryForm();
       completeAndSubmitBuyerBodyForm();
-      completeAndSubmitCompanyForm();
+      completeAndSubmitExporterLocationForm();
       completeAndSubmitUkContentForm();
       completeAndSubmitPolicyTypeSingleForm();
     });
 
     beforeEach(() => {
-      tellUsAboutYourPolicyPage.submitButton().click();
+      cy.navigateToUrl(url);
+
+      submitButton().click();
     });
 
     it('should render validation errors for all required fields', () => {
@@ -41,115 +51,127 @@ context('Tell us about the policy you need page - form validation', () => {
       partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
       // currency
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(0),
-        ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY,
+        ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY,
       );
 
-      checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY}`,
+      cy.checkText(
+        tellUsAboutYourPolicyPage[CURRENCY].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY}`,
       );
 
       // contract value
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].IS_EMPTY,
+        ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].IS_EMPTY,
       );
 
-      checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].IS_EMPTY}`,
+      cy.checkText(
+        tellUsAboutYourPolicyPage[CONTRACT_VALUE].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].IS_EMPTY}`,
       );
 
       // percentage of cover
-      checkText(
+      cy.checkText(
         partials.errorSummaryListItems().eq(2),
-        ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY,
+        ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY,
       );
 
-      checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY}`,
+      cy.checkText(
+        tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY}`,
       );
     });
 
     it('should focus on inputs when clicking summary error message', () => {
       // currency
       partials.errorSummaryListItemLinks().eq(0).click();
-      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().should('have.focus');
+      tellUsAboutYourPolicyPage[CURRENCY].input().should('have.focus');
 
       // contract value
       partials.errorSummaryListItemLinks().eq(1).click();
-      tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().should('have.focus');
+      tellUsAboutYourPolicyPage[CONTRACT_VALUE].input().should('have.focus');
 
       // perecentage of cover
       partials.errorSummaryListItemLinks().eq(2).click();
-      tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().should('have.focus');
+      tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().should('have.focus');
     });
   });
 
   describe('when `contract value` has a non-numeric value', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear().type('a');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      cy.navigateToUrl(url);
 
-      checkText(
+      cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), 'a');
+
+      submitButton().click();
+
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_NUMBER,
+        ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_NUMBER,
       );
 
-      checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_NUMBER}`,
+      cy.checkText(
+        tellUsAboutYourPolicyPage[CONTRACT_VALUE].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_NUMBER}`,
       );
     });
   });
 
   describe('when `contract value` is not a whole number', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear().type('1234.56');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      cy.navigateToUrl(url);
 
-      checkText(
+      cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '1234.56');
+
+      submitButton().click();
+
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_WHOLE_NUMBER,
+        ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_WHOLE_NUMBER,
       );
 
-      checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_WHOLE_NUMBER}`,
+      cy.checkText(
+        tellUsAboutYourPolicyPage[CONTRACT_VALUE].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_WHOLE_NUMBER}`,
       );
     });
   });
 
   describe('when `contract value` has a value less than the minimum', () => {
     it('should render a validation error', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear().type('0');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      cy.navigateToUrl(url);
 
-      checkText(
+      cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '0');
+
+      submitButton().click();
+
+      cy.checkText(
         partials.errorSummaryListItems().eq(1),
-        ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].BELOW_MINIMUM,
+        ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].BELOW_MINIMUM,
       );
 
-      checkText(
-        tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].errorMessage(),
-        `Error: ${ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].BELOW_MINIMUM}`,
+      cy.checkText(
+        tellUsAboutYourPolicyPage[CONTRACT_VALUE].errorMessage(),
+        `Error: ${ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].BELOW_MINIMUM}`,
       );
     });
   });
 
   describe('with any validation error', () => {
     it('should render submitted values', () => {
-      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
-      tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear().type('10');
+      cy.navigateToUrl(url);
 
-      tellUsAboutYourPolicyPage.submitButton().click();
+      tellUsAboutYourPolicyPage[CURRENCY].input().select(GBP_CURRENCY_CODE);
 
-      tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].inputOptionSelected().contains('GBP');
+      cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '10');
 
-      tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input()
+      submitButton().click();
+
+      tellUsAboutYourPolicyPage[CURRENCY].inputOptionSelected().contains(GBP_CURRENCY_CODE);
+
+      tellUsAboutYourPolicyPage[CONTRACT_VALUE].input()
         .should('have.attr', 'value', '10');
     });
   });

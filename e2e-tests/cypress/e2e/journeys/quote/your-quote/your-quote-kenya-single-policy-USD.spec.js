@@ -1,23 +1,24 @@
 import {
-  completeAndSubmitBuyerCountryForm,
   completeAndSubmitBuyerBodyForm,
-  completeAndSubmitCompanyForm,
+  completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
-  completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../support/quote/forms';
+import { buyerCountryPage, submitButton } from '../../../pages/shared';
 import {
-  buyerCountryPage,
   checkYourAnswersPage,
   policyTypePage,
   tellUsAboutYourPolicyPage,
   yourQuotePage,
 } from '../../../pages/quote';
-import CONSTANTS from '../../../../../constants';
-
-const { ROUTES, FIELD_IDS } = CONSTANTS;
+import { ROUTES, FIELD_IDS } from '../../../../../constants';
+import { USD_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
 const {
-  CONTRACT_VALUE,
+  ELIGIBILITY: {
+    CONTRACT_VALUE,
+    CURRENCY,
+    PERCENTAGE_OF_COVER,
+  },
   POLICY_TYPE,
   QUOTE,
   SINGLE_POLICY_LENGTH,
@@ -27,57 +28,48 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
   before(() => {
     cy.login();
 
-    buyerCountryPage.searchInput().type('Kenya');
+    cy.keyboardInput(buyerCountryPage.input(), 'Kenya');
     const results = buyerCountryPage.results();
     results.first().click();
-    buyerCountryPage.submitButton().click();
+    submitButton().click();
 
     completeAndSubmitBuyerBodyForm();
-    completeAndSubmitCompanyForm();
+    completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();
 
     policyTypePage[POLICY_TYPE].single.input().click();
-    policyTypePage[SINGLE_POLICY_LENGTH].input().type('18');
+    cy.keyboardInput(policyTypePage[SINGLE_POLICY_LENGTH].input(), '18');
 
-    policyTypePage.submitButton().click();
+    submitButton().click();
   });
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
+    cy.saveSession();
   });
 
   it('should get a quote with a large contract value and render in the correct format', () => {
-    tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().type('100,000');
-    tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('USD');
-    tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('80');
+    cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '100,000');
+    tellUsAboutYourPolicyPage[CURRENCY].input().select(USD_CURRENCY_CODE);
+    tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('80');
 
-    tellUsAboutYourPolicyPage.submitButton().click();
+    submitButton().click();
 
     cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
 
     // Check contract value formatting in the answers page
     const answersAmount = checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE].value();
 
-    answersAmount.invoke('text').then((text) => {
-      const expected = '$100,000';
+    const expectedAmount = '$100,000';
+    cy.checkText(answersAmount, expectedAmount);
 
-      expect(text.trim()).equal(expected);
-    });
-
-    checkYourAnswersPage.submitButton().click();
+    submitButton().click();
 
     // Check contract value formatting in the quote
-    yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR].value().invoke('text').then((text) => {
-      const expected = '$80,000.00';
-
-      expect(text.trim()).equal(expected);
-    });
+    const expectedValue = '$80,000.00';
+    cy.checkText(yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR].value(), expectedValue);
 
     // Check estimated cost in the quote
-    yourQuotePage.panel.summaryList[QUOTE.ESTIMATED_COST].value().invoke('text').then((text) => {
-      const expected = '$5,330.00';
-
-      expect(text.trim()).equal(expected);
-    });
+    const expectedCost = '$5,330.00';
+    cy.checkText(yourQuotePage.panel.summaryList[QUOTE.ESTIMATED_COST].value(), expectedCost);
   });
 });

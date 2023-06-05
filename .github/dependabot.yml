@@ -1,0 +1,67 @@
+# EXIP Git Hub Actions
+#####################################
+# Automatic daily dependencies updates
+# for the following services:
+# 1. NPM
+# 2. Docker
+# 3. GHA
+
+version: 2
+updates:
+  # Root package-*.json files
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    labels:
+      - 'chore'
+
+  # `API` package-*.json files
+  - package-ecosystem: 'npm'
+    directory: '/src/api'
+    schedule:
+      interval: 'daily'
+    labels:
+      - 'chore'
+
+  # `UI` package-*.json files
+  - package-ecosystem: 'npm'
+    directory: '/src/ui'
+    schedule:
+      interval: 'daily'
+    labels:
+      - 'chore'
+
+  # `generate-exip-pricing-grid` package-*.json files
+  - package-ecosystem: 'npm'
+    directory: '/generate-exip-pricing-grid'
+    schedule:
+      interval: 'daily'
+    labels:
+      - 'chore'
+
+  # `API` Dockerfile
+  - package-ecosystem: 'docker'
+    directory: '/src/api'
+    schedule:
+      interval: 'daily'
+    labels:
+      - 'chore'
+
+  # `UI` Dockerfile
+  - package-ecosystem: 'docker'
+    directory: '/src/ui'
+    schedule:
+      interval: 'daily'
+    labels:
+      - 'chore'
+
+  # Git Hub Actions
+  #  Set the directory to `/` for
+  # .github/workflows GHA files
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    labels:
+      - 'chore'

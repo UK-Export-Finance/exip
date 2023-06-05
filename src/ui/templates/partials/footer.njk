@@ -2,13 +2,6 @@
   <div class="govuk-width-container ">
     <div class="govuk-footer__meta">
       <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
-        <h2 data-cy="footer-heading">{{ CONTENT_STRINGS.FOOTER.HEADING }}</h2>
-        <p class="email-wrap">
-          <span data-cy="email">{{ CONTENT_STRINGS.FOOTER.EMAIL.HEADING }}: {{ CONTENT_STRINGS.FOOTER.EMAIL.VALUE }}</span><br/>
-          <span data-cy="phone">{{ CONTENT_STRINGS.FOOTER.PHONE.HEADING }}: {{ CONTENT_STRINGS.FOOTER.PHONE.VALUE }}</span><br/>
-          <span data-cy="opening-times">{{ CONTENT_STRINGS.FOOTER.OPENING_TIMES.HEADING }}: {{ CONTENT_STRINGS.FOOTER.OPENING_TIMES.VALUE }}</span>
-        </p>
-
         <h2 class="govuk-visually-hidden" data-cy="support-links-heading">{{ CONTENT_STRINGS.FOOTER.SUPPORT_LINKS_HEADING }}</h2>
 
         <ul class="govuk-footer__inline-list">
@@ -31,8 +24,14 @@
           </li>
 
           <li class="govuk-footer__inline-list-item">
-            <a class="govuk-footer__link" target="_blank" rel="noreferrer noopener nofollow" href="{{ CONTENT_STRINGS.FOOTER.REPORT_VULNERABILITY.HREF }}"  data-cy="report-vulnerability">
+            <a class="govuk-footer__link" href="{{ CONTENT_STRINGS.FOOTER.REPORT_VULNERABILITY.HREF }}"  data-cy="report-vulnerability">
               {{ CONTENT_STRINGS.FOOTER.REPORT_VULNERABILITY.TEXT }}
+            </a>
+          </li>
+
+          <li class="govuk-footer__inline-list-item">
+            <a class="govuk-footer__link" href="{{ CONTENT_STRINGS.FOOTER.CONTACT.HREF }}" data-cy="contact">
+              {{ CONTENT_STRINGS.FOOTER.CONTACT.TEXT }}
             </a>
           </li>
         </ul>

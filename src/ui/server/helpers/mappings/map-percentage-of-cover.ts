@@ -1,3 +1,5 @@
+import mapPercentage from '../map-percentage';
+
 /**
  * mapPercentageOfCover
  * Map all percentages of cover and mark if it's selected
@@ -9,14 +11,14 @@ const mapPercentageOfCover = (percentages: Array<number>, selectedValue?: number
   const mapped = percentages.map((percentage) => {
     if (selectedValue && selectedValue === percentage) {
       return {
-        text: `${percentage}%`,
+        text: mapPercentage(percentage),
         value: percentage,
         selected: true,
       };
     }
 
     return {
-      text: `${percentage}%`,
+      text: mapPercentage(percentage),
       value: percentage,
     };
   });

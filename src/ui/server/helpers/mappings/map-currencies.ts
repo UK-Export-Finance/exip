@@ -1,4 +1,5 @@
 import { SUPPORTED_CURRENCIES } from '../../constants';
+import mapSelectOption from './map-select-option';
 import sortArrayAlphabetically from '../sort-array-alphabetically';
 import { Currency } from '../../../types';
 
@@ -16,28 +17,15 @@ const getSupportedCurrencies = (currencies: Array<Currency>) => {
 
 /**
  * mapCurrencies
- * Map all currencies and mark if it's selected
+ * Map all currencies into the required structure for GOV select component.
  * @param {Array} Array of currency objects
- * @returns {String} Selected credit period value
+ * @param {String} Selected currency
  * @returns {Array} Array of mapped currencies
  */
 const mapCurrencies = (currencies: Array<Currency>, selectedValue?: string) => {
   const supportedCurrencies = getSupportedCurrencies(currencies);
 
-  const mapped = supportedCurrencies.map(({ name, isoCode }) => {
-    if (selectedValue && selectedValue === isoCode) {
-      return {
-        text: `${isoCode} - ${name}`,
-        value: isoCode,
-        selected: true,
-      };
-    }
-
-    return {
-      text: `${isoCode} - ${name}`,
-      value: isoCode,
-    };
-  });
+  const mapped = supportedCurrencies.map(({ name, isoCode }) => mapSelectOption(name, isoCode, true, selectedValue));
 
   const sorted = sortArrayAlphabetically(mapped, 'text');
 

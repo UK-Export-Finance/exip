@@ -1,29 +1,20 @@
-import { buyerCountryPage } from '../../../pages/quote';
-import partials from '../../../partials';
-import { PAGES } from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
+import { backLink, buyerCountryPage, submitButton } from '../../../pages/shared';
+import { ROUTES } from '../../../../../constants';
+import { COUNTRY_SUPPORTRED_BY_EMAIL } from '../../../../fixtures/countries';
 
-const CONTENT_STRINGS = PAGES.CANNOT_OBTAIN_COVER_PAGE;
-const { ROUTES } = CONSTANTS;
+context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based - submit country that can only get a quote offline/via email', () => {
+  const url = ROUTES.QUOTE.BUYER_COUNTRY;
 
-const COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY = 'Egypt';
+  beforeEach(() => {
+    cy.navigateToUrl(url);
+    cy.url().should('include', url);
 
-context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based - submit country that can only get an email offline/via email', () => {
-  before(() => {
-    cy.visit(ROUTES.QUOTE.BUYER_COUNTRY, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
-    cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
-
-    buyerCountryPage.searchInput().type(COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY);
+    cy.keyboardInput(buyerCountryPage.input(), COUNTRY_SUPPORTRED_BY_EMAIL.name);
 
     const results = buyerCountryPage.results();
     results.first().click();
 
-    buyerCountryPage.submitButton().click();
+    submitButton().click();
   });
 
   it('redirects to `get a quote via email` exit page', () => {
@@ -31,10 +22,20 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
   });
 
   it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
+    backLink().should('exist');
 
     const expected = ROUTES.QUOTE.BUYER_COUNTRY;
 
-    partials.backLink().should('have.attr', 'href', expected);
+    backLink().should('have.attr', 'href', expected);
+  });
+
+  it('should prepopulate the field when going back to the page via back link', () => {
+    cy.clickBackLink();
+
+    const expectedValue = COUNTRY_SUPPORTRED_BY_EMAIL.name;
+
+    cy.checkValue(buyerCountryPage, expectedValue);
+
+    cy.checkText(buyerCountryPage.results(), expectedValue);
   });
 });

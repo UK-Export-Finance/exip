@@ -1,0 +1,20 @@
+{% macro render(params) %}
+
+  {% set content = params.content %}
+  {% set index = params.index %}
+
+  <p class="govuk-body">
+    {% for child in params.content %}
+
+      {% if child.type and child.type === 'link' %}
+        <a class="govuk-link" href={{ child.href }} data-cy="paragraph-{{ index }}-link">{{ child.children[0].text}}</a>
+      {% endif %}
+
+      {% if child.text %}
+        <span data-cy="paragraph-{{ index }}">{{ child.text }}</span>
+      {% endif %}
+
+    {% endfor %}
+  </p>
+
+{% endmacro %}

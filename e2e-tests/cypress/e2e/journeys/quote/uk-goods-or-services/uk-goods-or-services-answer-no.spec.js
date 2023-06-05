@@ -1,45 +1,38 @@
 import {
-  ukGoodsOrServicesPage,
-  cannotObtainCoverPage,
-} from '../../../pages/quote';
-import partials from '../../../partials';
-import {
-  PAGES,
-} from '../../../../../content-strings';
-import CONSTANTS from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm, completeAndSubmitBuyerBodyForm, completeAndSubmitCompanyForm } from '../../../../support/quote/forms';
+  backLink, cannotApplyPage, noRadio, submitButton,
+} from '../../../pages/shared';
+import { PAGES } from '../../../../../content-strings';
+import { ROUTES } from '../../../../../constants';
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
+import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../../support/quote/forms';
 
-const CONTENT_STRINGS = PAGES.CANNOT_OBTAIN_COVER_PAGE;
-const { ROUTES } = CONSTANTS;
+const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 
 context('UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover - submit `no - UK goods/services is below the minimum`', () => {
   beforeEach(() => {
     cy.login();
     completeAndSubmitBuyerCountryForm();
     completeAndSubmitBuyerBodyForm();
-    completeAndSubmitCompanyForm();
+    completeAndSubmitExporterLocationForm();
 
-    cy.url().should('include', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    cy.url().should('include', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
 
-    ukGoodsOrServicesPage.no().click();
-    ukGoodsOrServicesPage.submitButton().click();
+    noRadio().click();
+    submitButton().click();
   });
 
   it('redirects to exit page', () => {
-    cy.url().should('include', ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+    cy.url().should('include', ROUTES.QUOTE.CANNOT_APPLY);
   });
 
   it('renders a back link with correct url', () => {
-    partials.backLink().should('exist');
+    backLink().should('exist');
 
-    partials.backLink().should('have.attr', 'href', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    backLink().should('have.attr', 'href', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
   });
 
   it('renders a specific reason', () => {
-    cannotObtainCoverPage.reason().invoke('text').then((text) => {
-      const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NOT_ENOUGH_HAS_MINIMUM_UK_GOODS_OR_SERVICES}`;
-
-      expect(text.trim()).equal(expected);
-    });
+    const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES}`;
+    cy.checkText(cannotApplyPage.reason(), expected);
   });
 });

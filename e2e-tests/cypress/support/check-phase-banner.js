@@ -1,18 +1,26 @@
 import partials from '../e2e/partials';
-import { LINKS } from '../../content-strings';
+import { LINKS, PHASE_BANNER } from '../../content-strings';
+import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
 
-export default () => {
-  partials.phaseBanner.tag().invoke('text').then((text) => {
-    expect(text.trim()).equal('alpha');
-  });
+const { PREFIX, LINK_TEXT, SUFFIX } = PHASE_BANNER;
 
-  partials.phaseBanner.text().invoke('text').then((text) => {
-    expect(text.trim()).equal('This is a new service - your feedback will help us to improve it.');
-  });
+/**
+ * checkPhaseBanner
+ * checks phasebanner text, link based on if insurancePage or not
+ * @param {Boolean} isInsurancePage - If page is an insurance page or otherwise
+ */
+const checkPhaseBanner = ({ isInsurancePage }) => {
+  cy.checkText(partials.phaseBanner.tag(), 'alpha');
 
-  partials.phaseBanner.feedbackLink().invoke('text').then((text) => {
-    expect(text.trim()).equal('feedback');
-  });
+  cy.checkText(partials.phaseBanner.text(), `${PREFIX} ${LINK_TEXT} ${SUFFIX}`);
 
-  partials.phaseBanner.feedbackLink().should('have.attr', 'href', LINKS.EXTERNAL.FEEDBACK);
+  let route = LINKS.EXTERNAL.FEEDBACK;
+
+  if (isInsurancePage) {
+    route = INSURANCE_ROUTES.FEEDBACK;
+  }
+
+  cy.checkLink(partials.phaseBanner.feedbackLink(), route, LINK_TEXT);
 };
+
+export default checkPhaseBanner;

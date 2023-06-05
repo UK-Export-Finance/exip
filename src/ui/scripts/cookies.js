@@ -3,6 +3,9 @@ var cookieBanner = document.querySelector('.govuk-cookie-banner');
 var acceptButton = document.querySelector('.js-cookies-button-accept');
 var rejectButton = document.querySelector('.js-cookies-button-reject');
 var changeCookiesSubmitButton = document.querySelector('.change-cookies-submit-button');
+var https = window.location.protocol == 'https:';
+// `__Secure` prefix will only work with Secure flag i.e. HTTPS
+var cookieName = https ? '__Secure-optionalCookies' : 'optionalCookies';
 
 var expiryDate = function () {
   const date = new Date();
@@ -20,11 +23,11 @@ const domain = function () {
 };
 
 var createRejectCookie = function () {
-  document.cookie = 'optionalCookies=false; path=/; SameSite=Strict; secure; ' + expiryDate() + domain();
+  document.cookie = cookieName + '=false; path=/; SameSite=Strict; secure; ' + expiryDate() + domain();
 };
 
 var createAcceptCookie = function () {
-  document.cookie = 'optionalCookies=true; path=/; SameSite=Strict; secure; ' + expiryDate() + domain();
+  document.cookie = cookieName + '=true; path=/; SameSite=Strict; secure; ' + expiryDate() + domain();
 };
 
 if (rejectButton) {
@@ -39,7 +42,7 @@ if (acceptButton) {
   });
 }
 
-if (!document.cookie.includes('optionalCookies')) {
+if (!document.cookie.includes(cookieName)) {
   cookieBanner.removeAttribute('hidden');
 
   // Shift focus to the banner

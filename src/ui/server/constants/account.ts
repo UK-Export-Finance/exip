@@ -1,0 +1,9 @@
+export const ACCOUNT = {
+  PASSWORD: {
+    MIN_LENGTH: 14,
+    MIN_LOWERCASE: 1,
+    MIN_UPPERCASE: 1,
+    MIN_NUMERIC: 1,
+    MIN_SPECIAL_CHARACTERS: 1,
+  },
+};

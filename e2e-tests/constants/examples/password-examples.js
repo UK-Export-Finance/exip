@@ -1,0 +1,7 @@
+export const INVALID_PASSWORDS = {
+  NOT_MINIMUM_CHARACTERS: 'Mock1!',
+  NO_UPPERCASE_LETTER: 'mockpassword1!',
+  NO_LOWERCASE_LETTER: 'MOCKPASSWORD1!',
+  NO_NUMBER: 'Mockpassword!',
+  NO_SPECIAL_CHARACTER: 'Mockpassword1',
+};

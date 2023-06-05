@@ -1,14 +1,8 @@
-import CONSTANTS from '../../../../../constants';
-const { ROUTES } = CONSTANTS;
+import { ROUTES } from '../../../../../constants';
 
 context('Manually going to the `Tell us about your policy` page via URL without completing previous forms', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
   });
 
   it('should redirect to the `need to start again` exit page', () => {
@@ -18,12 +12,7 @@ context('Manually going to the `Tell us about your policy` page via URL without 
 
 context('Manually going to the `Change Tell us about your policy` page via URL without completing previous forms', () => {
   beforeEach(() => {
-    cy.visit(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE, {
-      auth: {
-        username: Cypress.config('basicAuthKey'),
-        password: Cypress.config('basicAuthSecret'),
-      },
-    });
+    cy.navigateToUrl(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE);
   });
 
   it('should redirect to the `need to start again` exit page', () => {

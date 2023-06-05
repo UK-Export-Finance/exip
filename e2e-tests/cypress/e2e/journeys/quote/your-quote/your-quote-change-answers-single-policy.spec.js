@@ -1,53 +1,48 @@
+import { backLink, buyerCountryPage, submitButton } from '../../../pages/shared';
 import {
-  buyerCountryPage,
   policyTypePage,
   tellUsAboutYourPolicyPage,
-  checkYourAnswersPage,
   yourQuotePage,
 } from '../../../pages/quote';
-import partials from '../../../partials';
-import CONSTANTS from '../../../../../constants';
+import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 
 const {
-  ROUTES,
-  FIELD_IDS,
-  FIELD_VALUES,
-} = CONSTANTS;
-
-const {
-  CONTRACT_VALUE,
-  CREDIT_PERIOD,
-  MAX_AMOUNT_OWED,
-  MULTI_POLICY_LENGTH,
-  PERCENTAGE_OF_COVER,
+  ELIGIBILITY: {
+    CONTRACT_VALUE,
+    CREDIT_PERIOD,
+    MAX_AMOUNT_OWED,
+    PERCENTAGE_OF_COVER,
+  },
+  MULTIPLE_POLICY_LENGTH,
   POLICY_TYPE,
   QUOTE,
   SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
-context('Your quote page - change answers (single policy type to multi policy type) - as an exporter, I want to get an Export insurance quote', () => {
-  before(() => {
-    cy.login();
-
-    cy.submitAnswersHappyPathSinglePolicy();
-    checkYourAnswersPage.submitButton().click();
-
-    cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
-  });
+context('Your quote page - change answers (single policy type to multiple policy type) - as an exporter, I want to get an Export insurance quote', () => {
+  const url = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
 
   beforeEach(() => {
-    Cypress.Cookies.preserveOnce('_csrf');
-    Cypress.Cookies.preserveOnce('exip-session');
+    cy.saveSession();
+
+    cy.login();
+
+    cy.submitQuoteAnswersHappyPathSinglePolicy();
+    submitButton().click();
+
+    cy.url().should('include', url);
   });
 
   describe('change `contract value`', () => {
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
-      const row = yourQuotePage.panel.summaryList[CONTRACT_VALUE];
+    const row = yourQuotePage.panel.summaryList[CONTRACT_VALUE];
 
+    beforeEach(() => {
       row.changeLink().click();
+    });
 
-      const expectedUrl = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE;
-      cy.url().should('include', expectedUrl);
+    it(`clicking 'change' redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
+      const expected = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
+      cy.url().should('include', expected);
     });
 
     it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
@@ -56,38 +51,41 @@ context('Your quote page - change answers (single policy type to multi policy ty
     });
 
     it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
+      backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
-      partials.backLink().should('have.attr', 'href', expected);
+      backLink().should('have.attr', 'href', expected);
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      tellUsAboutYourPolicyPage[CONTRACT_VALUE].input().clear().type('1000');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '1000');
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
 
     it('renders the new answer in the quote', () => {
-      checkYourAnswersPage.submitButton().click();
+      cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '1000');
 
-      const row = yourQuotePage.panel.summaryList[CONTRACT_VALUE];
+      // form submit
+      submitButton().click();
 
-      row.value().invoke('text').then((text) => {
-        const expected = '£1,000';
+      // submit check your answers
+      submitButton().click();
 
-        expect(text.trim()).equal(expected);
-      });
+      const expected = '£1,000';
+      cy.checkText(row.value(), expected);
     });
   });
 
   describe('change `percentage of cover`', () => {
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
-      const row = yourQuotePage.panel.summaryList[PERCENTAGE_OF_COVER];
+    const row = yourQuotePage.panel.summaryList[PERCENTAGE_OF_COVER];
 
+    beforeEach(() => {
       row.changeLink().click();
+    });
 
+    it(`clicking 'change' redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
       const expectedUrl = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}`;
       cy.url().should('include', expectedUrl);
     });
@@ -98,38 +96,41 @@ context('Your quote page - change answers (single policy type to multi policy ty
     });
 
     it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
+      backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
-      partials.backLink().should('have.attr', 'href', expected);
+      backLink().should('have.attr', 'href', expected);
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('85');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
 
     it('renders the new answer in the quote', () => {
-      checkYourAnswersPage.submitButton().click();
+      tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('85');
 
-      const row = yourQuotePage.panel.summaryList[PERCENTAGE_OF_COVER];
+      // form submit
+      submitButton().click();
 
-      row.value().invoke('text').then((text) => {
-        const expected = '85%';
+      // submit check your answers
+      submitButton().click();
 
-        expect(text.trim()).equal(expected);
-      });
+      const expected = '85%';
+      cy.checkText(row.value(), expected);
     });
   });
 
   describe('change policy type to multi', () => {
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.POLICY_TYPE_CHANGE}`, () => {
-      const row = yourQuotePage.panel.summaryList[SINGLE_POLICY_LENGTH];
+    const row = yourQuotePage.panel.summaryList[SINGLE_POLICY_LENGTH];
 
+    beforeEach(() => {
       row.changeLink().click();
+    });
 
+    it(`clicking 'change' redirects to ${ROUTES.QUOTE.POLICY_TYPE_CHANGE}`, () => {
       const expectedUrl = ROUTES.QUOTE.POLICY_TYPE_CHANGE;
       cy.url().should('include', expectedUrl);
     });
@@ -140,48 +141,53 @@ context('Your quote page - change answers (single policy type to multi policy ty
     });
 
     it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
+      backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
-      partials.backLink().should('have.attr', 'href', expected);
+      backLink().should('have.attr', 'href', expected);
     });
 
     it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting a new answer`, () => {
-      policyTypePage[POLICY_TYPE].multi.input().click();
-      policyTypePage.submitButton().click();
+      policyTypePage[POLICY_TYPE].multiple.input().click();
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
 
     it('renders the new answers in the quote', () => {
-      // max amount owed and credit period fields are now required because it's a multi policy
-      tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().type('120000');
-      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
-      tellUsAboutYourPolicyPage.submitButton().click();
+      policyTypePage[POLICY_TYPE].multiple.input().click();
+      submitButton().click();
 
-      checkYourAnswersPage.submitButton().click();
+      // max amount owed and credit period fields are now required because it's a multiple policy
+      cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '120000');
+      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
+
+      // form submit
+      submitButton().click();
+
+      // submit check your answers
+      submitButton().click();
+
       cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
 
       const insuredFor = yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR];
 
-      insuredFor.value().invoke('text').then((text) => {
-        expect(text.trim()).equal('£102,000.00');
-      });
+      cy.checkText(insuredFor.value(), '£108,000.00');
 
-      const policyLength = yourQuotePage.panel.summaryList[MULTI_POLICY_LENGTH];
+      const policyLength = yourQuotePage.panel.summaryList[MULTIPLE_POLICY_LENGTH];
 
-      policyLength.value().invoke('text').then((text) => {
-        expect(text.trim()).equal(`${FIELD_VALUES.POLICY_LENGTH.MULTI} months`);
-      });
+      cy.checkText(policyLength.value(), `${FIELD_VALUES.POLICY_LENGTH.MULTIPLE} months`);
     });
   });
 
   describe('change `buyer location`', () => {
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}`, () => {
-      const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
+    const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
 
+    beforeEach(() => {
       row.changeLink().click();
+    });
 
+    it(`clicking 'change' redirects to ${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}`, () => {
       const expectedUrl = ROUTES.QUOTE.BUYER_COUNTRY_CHANGE;
       cy.url().should('include', expectedUrl);
     });
@@ -192,74 +198,35 @@ context('Your quote page - change answers (single policy type to multi policy ty
     });
 
     it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
+      backLink().should('exist');
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
-      partials.backLink().should('have.attr', 'href', expected);
+      backLink().should('have.attr', 'href', expected);
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      buyerCountryPage.searchInput().type('Bahrain');
+      cy.keyboardInput(buyerCountryPage.input(), 'Bahrain');
       const results = buyerCountryPage.results();
       results.first().click();
-      buyerCountryPage.submitButton().click();
+
+      submitButton().click();
 
       cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
 
     it('renders the new answer in the quote', () => {
-      checkYourAnswersPage.submitButton().click();
-
-      const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
-
-      row.value().invoke('text').then((text) => {
-        const expected = 'Bahrain';
-
-        expect(text.trim()).equal(expected);
-      });
-    });
-  });
-
-  describe('change `buyer location`', () => {
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}`, () => {
-      const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
-
-      row.changeLink().click();
-
-      const expectedUrl = ROUTES.QUOTE.BUYER_COUNTRY_CHANGE;
-      cy.url().should('include', expectedUrl);
-    });
-
-    it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
-      cy.url().should('include', expected);
-    });
-
-    it('renders a back link with correct url', () => {
-      partials.backLink().should('exist');
-
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
-      partials.backLink().should('have.attr', 'href', expected);
-    });
-
-    it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      buyerCountryPage.searchInput().type('Brazil');
+      cy.keyboardInput(buyerCountryPage.input(), 'Bahrain');
       const results = buyerCountryPage.results();
       results.first().click();
-      buyerCountryPage.submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
-    });
+      // form submit
+      submitButton().click();
 
-    it('renders the new answers in the quote', () => {
-      checkYourAnswersPage.submitButton().click();
-      cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
+      // submit check your answers
+      submitButton().click();
 
-      const buyerLocation = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
-
-      buyerLocation.value().invoke('text').then((text) => {
-        expect(text.trim()).equal('Brazil');
-      });
+      const expected = 'Bahrain';
+      cy.checkText(row.value(), expected);
     });
   });
 });

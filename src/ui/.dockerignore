@@ -1,8 +1,10 @@
-node_modules
-Dockerfile
-generated_reports
-*.md
 .env
-.prettierrc.json
 .env.sample
+.gitignore
+.prettierignore
 .eslintignore
+README.md
+Dockerfile
+node_modules
+public
+generated_reports

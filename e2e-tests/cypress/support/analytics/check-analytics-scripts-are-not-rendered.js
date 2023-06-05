@@ -2,7 +2,7 @@ const checkAnalyticsScriptsAreNotRendered = () => {
   cy.document().then((document) => {
     const domElements = document.querySelectorAll('script');
 
-    const srcs = [...domElements].map(script => script.getAttribute('src'))
+    const srcs = [...domElements].map((script) => script.getAttribute('src'));
 
     const scripts = srcs.filter((s) => s);
 

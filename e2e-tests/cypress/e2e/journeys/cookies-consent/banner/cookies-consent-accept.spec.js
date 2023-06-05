@@ -1,18 +1,23 @@
 import partials from '../../../partials';
-import { buyerBodyPage } from '../../../pages/quote';
-import { COOKIES_CONSENT, PAGES } from '../../../../../content-strings';
+import { COOKIES_CONSENT } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
-import { completeAndSubmitBuyerCountryForm } from '../../../../support/quote/forms';
+import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
 context('Cookies consent - accept', () => {
+  const url = ROUTES.QUOTE.BUYER_COUNTRY;
+
   beforeEach(() => {
     cy.login();
 
-    cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+    cy.url().should('include', url);
   });
 
   describe('when clicking `accept cookies` button', () => {
     beforeEach(() => {
+      cy.clearCookies();
+
+      cy.navigateToUrl(url);
+
       partials.cookieBanner.question.acceptButton().click();
     });
 
@@ -31,24 +36,19 @@ context('Cookies consent - accept', () => {
       partials.cookieBanner.heading().should('exist');
 
       partials.cookieBanner.accepted.copy().should('exist');
-      partials.cookieBanner.accepted.copy().invoke('text').then((text) => {
 
-        const { ACCEPTED } = COOKIES_CONSENT;
-        const expected = `${ACCEPTED.COPY_1} ${COOKIES_CONSENT.COOKIES_LINK} ${ACCEPTED.COPY_2}`;
+      const { ACCEPTED } = COOKIES_CONSENT;
+      const expected = `${ACCEPTED.COPY_1} ${COOKIES_CONSENT.COOKIES_LINK} ${ACCEPTED.COPY_2}`;
 
-        expect(text.trim()).equal(expected);
-      });
+      cy.checkText(partials.cookieBanner.accepted.copy(), expected);
 
       partials.cookieBanner.cookiesLink().should('exist');
-      partials.cookieBanner.cookiesLink().invoke('text').then((text) => {
-        expect(text.trim()).equal(COOKIES_CONSENT.COOKIES_LINK);
-      });
+      cy.checkText(partials.cookieBanner.cookiesLink(), COOKIES_CONSENT.COOKIES_LINK);
+
       partials.cookieBanner.cookiesLink().should('have.attr', 'href', ROUTES.COOKIES);
 
       partials.cookieBanner.hideButton().should('exist');
-      partials.cookieBanner.hideButton().invoke('text').then((text) => {
-        expect(text.trim()).equal(COOKIES_CONSENT.HIDE_BUTTON);
-      });
+      cy.checkText(partials.cookieBanner.hideButton(), COOKIES_CONSENT.HIDE_BUTTON);
     });
 
     it('should render a google tag manager script and data layer script', () => {
@@ -62,6 +62,10 @@ context('Cookies consent - accept', () => {
 
   describe('when clicking `hide this message` button', () => {
     beforeEach(() => {
+      cy.clearCookies();
+
+      cy.navigateToUrl(url);
+
       partials.cookieBanner.question.acceptButton().click();
       partials.cookieBanner.hideButton().click();
     });
@@ -82,6 +86,10 @@ context('Cookies consent - accept', () => {
 
   describe('after accepting cookies and navigating to another page', () => {
     beforeEach(() => {
+      cy.clearCookies();
+
+      cy.navigateToUrl(url);
+
       partials.cookieBanner.question.acceptButton().click();
       partials.cookieBanner.hideButton().click();
       completeAndSubmitBuyerCountryForm();
