@@ -31,19 +31,34 @@ const updateCompanyAndCompanyAddress = async (
 
     const mappedSicCodes = mapSicCodes(updatedCompany, sicCodes, industrySectorNames);
 
+    // TODO: EMS-1080 Delete console logs
+    // eslint-disable-next-line no-console
+    console.log('mappedSicCodes', mappedSicCodes);
+
+    // eslint-disable-next-line no-console
+    console.log('deleting old sic codes - ', oldSicCodes);
     // if the update contains company and there are oldSicCodes in the db, delete them
     if (company && oldSicCodes && oldSicCodes.length) {
       // delete already existing sic codes from oldSicCodes
-      await context.db.CompanySicCode.deleteMany({
+      const deleted = await context.db.CompanySicCode.deleteMany({
         where: oldSicCodes,
       });
+
+      // eslint-disable-next-line no-console
+      console.log('deleted sic codes', deleted);
     }
 
     if (mappedSicCodes && mappedSicCodes.length) {
       mappedSicCodes.forEach(async (sicCodeObj: SicCode) => {
-        await context.db.CompanySicCode.createOne({
+        // eslint-disable-next-line no-console
+        console.log('reinserting each sic code', sicCodeObj);
+
+        const companySicReinserted = await context.db.CompanySicCode.createOne({
           data: sicCodeObj,
         });
+
+        // eslint-disable-next-line no-console
+        console.log('finished re-insert each sic', companySicReinserted);
       });
     }
 
