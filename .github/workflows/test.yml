@@ -9,20 +9,19 @@ run-name: Executing test QA on ${{ github.repository }} 🚀
 
 on:
   pull_request:
-    branches: [ main-application ]
+    branches: [main-application]
     paths:
-    - '.github/workflows/test.yml'
-    - 'src/**'
-    - 'e2e-tests/**'
-    - 'generate-exip-pricing-grid/**'
+      - '.github/workflows/test.yml'
+      - 'src/**'
+      - 'e2e-tests/**'
+      - 'generate-exip-pricing-grid/**'
 
 env:
   environment: 'qa'
   timezone: 'Europe/London'
 
 jobs:
-
-# 1. Setup test infrastructure
+  # 1. Setup test infrastructure
   setup:
     name: Infrastructure setup 🔧
     runs-on: ubuntu-latest
@@ -30,13 +29,13 @@ jobs:
       environment: ${{ env.environment }}
       timezone: ${{ env.timezone }}
     steps:
-    - name: Environment 🧪
-      run: echo "Environment set to ${{ env.environment }}"
+      - name: Environment 🧪
+        run: echo "Environment set to ${{ env.environment }}"
 
-    - name: Timezone 🌐
-      run: echo "Timezone set to ${{ env.timezone }}"
+      - name: Timezone 🌐
+        run: echo "Timezone set to ${{ env.timezone }}"
 
-# 2. UI - Unit test cases
+  # 2. UI - Unit test cases
   unit-tests:
     name: Unit 👷
     needs: setup
@@ -101,8 +100,7 @@ jobs:
           npm ci --legacy-peer-deps --prefix ./src/api
           npm run test --prefix ./src/api
 
-
-# 3. E2E - E2E Journey test cases
+  # 3. E2E - E2E Journey test cases
   e2e-tests:
     name: E2E 👷
     needs: setup
@@ -112,7 +110,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        machines: [ 1, 2, 3, 4 ]
+        machines: [1, 2, 3, 4]
 
     steps:
       - uses: actions/checkout@v3
@@ -175,4 +173,3 @@ jobs:
           GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
           GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
-
