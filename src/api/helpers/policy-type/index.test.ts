@@ -1,5 +1,5 @@
 import { isSinglePolicyType, isMultiPolicyType } from '.';
-import { FIELD_VALUES } from '../../../../constants';
+import { FIELD_VALUES } from '../../constants';
 
 describe('api/generate-xlsx/map-application-to-xlsx/helpers/policy-type', () => {
   describe('isSinglePolicyType', () => {
