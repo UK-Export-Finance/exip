@@ -2,7 +2,7 @@ const INSURANCE_ROOT = '/insurance';
 const CREATE_ROOT = '/create-account';
 const SIGN_IN_ROOT = '/sign-in';
 const PASSWORD_RESET_ROOT = '/password-reset';
-const SUSPENDED_ROOT = '/account-suspended';
+const SUSPENDED_ROOT = `${INSURANCE_ROOT}/account-suspended`;
 
 const CREATE = {
   ROOT: CREATE_ROOT,
