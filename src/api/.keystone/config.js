@@ -1384,7 +1384,7 @@ var typeDefs = `
   }
 
   type AccountSignInResponse {
-    accountId: String!
+    accountId: String
     firstName: String
     lastName: String
     email: String
