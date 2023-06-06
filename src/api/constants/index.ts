@@ -47,6 +47,21 @@ const DATE_24_HOURS_FROM_NOW = () => {
   return future;
 };
 
+/**
+ * DATE_30_MINUTES_FROM_NOW
+ * Generate a date that is 30 minutes from now
+ * @returns {Date}
+ */
+const DATE_30_MINUTES_FROM_NOW = () => {
+  const now = new Date();
+
+  const minutes = 30;
+
+  const future = new Date(now.getTime() + minutes * 60000);
+
+  return future;
+};
+
 export const ACCOUNT = {
   EMAIL: {
     VERIFICATION_EXPIRY: DATE_24_HOURS_FROM_NOW,
@@ -73,7 +88,7 @@ export const ACCOUNT = {
   // One time password
   OTP: {
     DIGITS: 6,
-    VERIFICATION_EXPIRY: DATE_5_MINUTES_FROM_NOW,
+    VERIFICATION_EXPIRY: DATE_30_MINUTES_FROM_NOW,
   },
   REACTIVATION_EXPIRY: DATE_24_HOURS_FROM_NOW,
   // JSON web token

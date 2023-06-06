@@ -17,12 +17,16 @@ const {
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 const errorMessage = COMPANY_DETAILS_ERRORS[PHONE_NUMBER].INCORRECT_FORMAT;
 
+const companyDetailsFormVariables = {
+  companiesHouseNumber: COMPANIES_HOUSE_NUMBER,
+  website: WEBSITE_EXAMPLES.VALID,
+};
+
 const completeAllFields = (phoneNumber) => {
-  cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-  companyDetails.tradingNameYesRadioInput().click();
-  companyDetails.tradingAddressYesRadioInput().click();
-  cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
-  cy.keyboardInput(companyDetails.phoneNumber(), phoneNumber);
+  companyDetailsFormVariables.phoneNumber = phoneNumber;
+
+  cy.completeCompanyDetailsForm(companyDetailsFormVariables);
+
   submitButton().click();
 };
 

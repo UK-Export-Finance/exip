@@ -16,12 +16,16 @@ const {
 let url;
 let yourContactUrl;
 
+const companyDetailsFormVariables = {
+  companiesHouseNumber: COMPANIES_HOUSE_NUMBER,
+  website: WEBSITE_EXAMPLES.VALID,
+};
+
 const completeAllFields = (phoneNumber) => {
-  cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-  companyDetails.tradingNameYesRadioInput().click();
-  companyDetails.tradingAddressYesRadioInput().click();
-  cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
-  cy.keyboardInput(companyDetails.phoneNumber(), phoneNumber);
+  companyDetailsFormVariables.phoneNumber = phoneNumber;
+
+  cy.completeCompanyDetailsForm(companyDetailsFormVariables);
+
   submitButton().click();
 };
 
@@ -54,10 +58,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-      companyDetails.tradingNameYesRadioInput().click();
-      companyDetails.tradingAddressYesRadioInput().click();
-      cy.keyboardInput(companyDetails.companyWebsite(), WEBSITE_EXAMPLES.VALID);
+      companyDetailsFormVariables.phoneNumber = null;
+
+      cy.completeCompanyDetailsForm(companyDetailsFormVariables);
+
       companyDetails.phoneNumber().clear();
       submitButton().click();
     });
