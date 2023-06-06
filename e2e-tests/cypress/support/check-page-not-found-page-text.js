@@ -3,6 +3,12 @@ import { PAGES } from '../../content-strings';
 
 const CONTENT_STRINGS = PAGES.PAGE_NOT_FOUND_PAGE;
 
+/**
+ * checkPageNotFoundPageText
+ * checks the text and links on page not found page
+ * if insurance page, checks that href points to insurance contact us
+ * @param {Object} params isInsurancePage
+ */
 const checkPageNotFoundPageText = ({ isInsurancePage = true }) => {
   cy.checkText(pageNotFoundPage.typedAddress(), CONTENT_STRINGS.TYPED_ADDRESS);
 
