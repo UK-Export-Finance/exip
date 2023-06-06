@@ -2,13 +2,12 @@ import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import baseConfig from '../../keystone';
-import sendEmailReactivateAccountLink from './send-email-password-reset-link';
-import createAuthenticationRetryEntry from '../../helpers/create-authentication-retry-entry';
+import sendEmailReactivateAccountLink from './send-email-reactivate-account-link';
 import getFullNameString from '../../helpers/get-full-name-string';
 import sendEmail from '../../emails';
 import { ACCOUNT } from '../../constants';
 import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../test-mocks';
-import { Account, SuccessResponse } from '../../types';
+import { Account, SuccessResponse, AccountSendEmailReactivateLinkVariables } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -24,10 +23,9 @@ const {
       PBKDF2: { KEY_LENGTH },
     },
   },
-  MAX_PASSWORD_RESET_TRIES,
 } = ACCOUNT;
 
-describe('custom-resolvers/send-email-password-reset-link', () => {
+describe('custom-resolvers/send-email-reactivate-account-link', () => {
   let account: Account;
   let result: SuccessResponse;
 
@@ -37,7 +35,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
 
   const variables = {
     urlOrigin: mockUrlOrigin,
-  };
+  } as AccountSendEmailReactivateLinkVariables;
 
   afterAll(() => {
     jest.resetAllMocks();
@@ -51,15 +49,11 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
       where: accounts,
     });
 
-    await context.query.AuthenticationRetry.deleteMany({
-      where: retries,
-    });
-
     // create an account
     account = (await context.query.Account.createOne({
       data: {
         ...mockAccount,
-        isBlocked: true
+        isBlocked: true,
       },
       query: 'id',
     })) as Account;
@@ -70,6 +64,8 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
 
     sendEmail.reactivateAccountLink = reactivateAccountLinkSpy;
 
+    variables.accountId = account.id;
+
     result = await sendEmailReactivateAccountLink({}, variables, context);
 
     // get the latest account
@@ -77,18 +73,15 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
       where: { id: account.id },
       query: 'id email firstName lastName reactivationHash reactivationExpiry',
     })) as Account;
-
-    variables.accountId = account.id;
-
-    expect(account.isBlocked).toEqual(false);
   });
 
   it('should return the email response, email and accountId', () => {
-    const mockSendEmailResponse = {
-      ...mockSendEmailResponse
+    const expected = {
+      ...mockSendEmailResponse,
       email: account.email,
       accountId: account.id,
     };
+
     expect(result).toEqual(expected);
   });
 
@@ -96,8 +89,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     expect(account.reactivationHash.length).toEqual(KEY_LENGTH * 2);
   });
 
-  it('should generate a reactivationExpiry and add to the account', async () => {
-
+  it('should generate and add a reactivationExpiry to the account', async () => {
     const now = new Date();
 
     const tomorrowDay = new Date(now).getDay() + 1;
@@ -146,7 +138,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
       } catch (err) {
         expect(reactivateAccountLinkSpy).toHaveBeenCalledTimes(1);
 
-        const expected = new Error(`Checking account and sending reactivate email (sendEmailReactivateAccountLink mutation) ${mockSendEmailResponse}`);
+        const expected = new Error(`Checking account and sending reactivate account email (sendEmailReactivateAccountLink mutation) ${mockSendEmailResponse}`);
         expect(err).toEqual(expected);
       }
     });
