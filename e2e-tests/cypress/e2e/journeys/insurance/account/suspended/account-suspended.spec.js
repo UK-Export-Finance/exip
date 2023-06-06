@@ -12,7 +12,7 @@ const {
   },
 } = ROUTES;
 
-context('Insurance - Account - Suspended page', () => {
+context('Insurance - Account - Suspended page - As an Exporter, I want to reactivate my suspended digital service account, So that I can securely access my account and applications with UKEF', () => {
   const baseUrl = Cypress.config('baseUrl');
   const signInUrl = `${baseUrl}${SIGN_IN_ROOT}`;
   const accountSuspendedUrl = `${baseUrl}${SUSPENDED_ROOT}`;

@@ -17,7 +17,7 @@ const {
 
 const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
-context('Insurance - Account - Suspended - Email sent page', () => {
+context('Insurance - Account - Suspended - Email sent page - As an Exporter, I want to reactivate my suspended digital service account , So that I can securely access my account and applications with UKEF', () => {
   const baseUrl = Cypress.config('baseUrl');
   const accountSuspendedUrl = `${baseUrl}${SUSPENDED_ROOT}`;
   const accountSuspendedEmailSentUrl = `${baseUrl}${EMAIL_SENT}`;
