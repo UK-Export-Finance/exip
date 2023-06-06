@@ -2786,13 +2786,11 @@ var updateCompanyAndCompanyAddress = async (root, variables, context) => {
       console.log("deleted sic codes", deleted);
     }
     if (mappedSicCodes && mappedSicCodes.length) {
-      mappedSicCodes.forEach(async (sicCodeObj) => {
-        console.log("reinserting each sic code", sicCodeObj);
-        const companySicReinserted = await context.db.CompanySicCode.createOne({
-          data: sicCodeObj
-        });
-        console.log("finished re-insert each sic", companySicReinserted);
+      console.log("reinserting sic codes", mappedSicCodes);
+      const companySicReinserted = await context.db.CompanySicCode.createMany({
+        data: mappedSicCodes
       });
+      console.log("finished re-insert each sic", companySicReinserted);
     }
     return {
       id: variables.companyId

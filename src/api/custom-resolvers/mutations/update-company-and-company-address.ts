@@ -1,6 +1,6 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { mapSicCodes } from '../../helpers/map-sic-codes';
-import { UpdateCompanyAndCompanyAddressVariables, ApplicationRelationship, SicCode } from '../../types';
+import { UpdateCompanyAndCompanyAddressVariables, ApplicationRelationship } from '../../types';
 
 /**
  * updateCompanyAndCompanyAddress
@@ -48,18 +48,17 @@ const updateCompanyAndCompanyAddress = async (
       console.log('deleted sic codes', deleted);
     }
 
+    // if there are sic codes to be added
     if (mappedSicCodes && mappedSicCodes.length) {
-      mappedSicCodes.forEach(async (sicCodeObj: SicCode) => {
-        // eslint-disable-next-line no-console
-        console.log('reinserting each sic code', sicCodeObj);
+      // eslint-disable-next-line no-console
+      console.log('reinserting sic codes', mappedSicCodes);
 
-        const companySicReinserted = await context.db.CompanySicCode.createOne({
-          data: sicCodeObj,
-        });
-
-        // eslint-disable-next-line no-console
-        console.log('finished re-insert each sic', companySicReinserted);
+      const companySicReinserted = await context.db.CompanySicCode.createMany({
+        data: mappedSicCodes,
       });
+
+      // eslint-disable-next-line no-console
+      console.log('finished re-insert each sic', companySicReinserted);
     }
 
     return {

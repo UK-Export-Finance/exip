@@ -34,7 +34,7 @@ const {
     COMPANY_NUMBER,
     COMPANY_INCORPORATED,
     FINANCIAL_YEAR_END_DATE,
-    // COMPANY_SIC,
+    COMPANY_SIC,
   },
   YOUR_COMPANY: {
     TRADING_ADDRESS,
@@ -136,7 +136,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         cy.checkText(summaryList.field(COMPANY_INCORPORATED).value(), COMPANY_EXAMPLE.COMPANY_INCORPORATED);
 
         // TODO: EMS-1080 - disabled due to bug that has been troublesome to replicate.
-        // cy.checkText(summaryList.field(COMPANY_SIC).value(), `${COMPANY_EXAMPLE.COMPANY_SIC} - Dormant Company`);
+        cy.checkText(summaryList.field(COMPANY_SIC).value(), `${COMPANY_EXAMPLE.COMPANY_SIC}  ${COMPANY_EXAMPLE.COMPANY_SIC_DESCRIPTION}`);
 
         cy.checkText(summaryList.field(FINANCIAL_YEAR_END_DATE).value(), COMPANY_EXAMPLE.FINANCIAL_YEAR_END_DATE);
 
