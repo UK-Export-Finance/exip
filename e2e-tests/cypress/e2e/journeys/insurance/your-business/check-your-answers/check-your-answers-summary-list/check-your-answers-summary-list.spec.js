@@ -71,7 +71,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
       cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
-      cy.completeAndSubmitBrokerForm();
+      cy.completeAndSubmitBrokerForm({ usingBroker: true });
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
