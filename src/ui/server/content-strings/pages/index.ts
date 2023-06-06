@@ -1,7 +1,7 @@
 import INSURANCE_PAGES from './insurance';
 import QUOTE_PAGES from './quote';
 import { LINKS } from '../links';
-import { CONTACT_DETAILS } from '../../constants';
+import { CONTACT_DETAILS, ROUTES } from '../../constants';
 import { CUSTOMER_SERVICE_CONTACT_DETAILS } from '../contact';
 
 const BUYER_COUNTRY = {
@@ -183,7 +183,8 @@ const PAGE_NOT_FOUND_PAGE = {
     TEXT: 'If the web address is correct or you selected a link or button, you can',
     LINK: {
       TEXT: 'contact us',
-      HREF: '#',
+      QUOTE_HREF: ROUTES.CONTACT_US,
+      INSURANCE_HREF: ROUTES.INSURANCE.CONTACT_US,
     },
     OUTRO: 'if you still need help.',
   },
