@@ -1,6 +1,5 @@
 import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
-import { subMinutes } from 'date-fns';
 import verifyAccountSignInCode from './verify-account-sign-in-code';
 import create from '../../helpers/create-jwt';
 import { ACCOUNT } from '../../constants';
@@ -184,15 +183,17 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
       })) as Account;
     });
 
+    const otp = generate.otp();
     test('it should return success=false and expired=true', async () => {
-      const otp = generate.otp();
-
       // add OTP to the account
       const { salt, hash } = otp;
 
-      const today = new Date();
+      const now = new Date();
 
-      const previousTime = subMinutes(today, 6);
+      // update the OTP expiry to be outside of the expiration time
+      const minutes = 31;
+
+      const previousTime = new Date(now.getTime() - minutes * 60000);
 
       // update the account
       const updateResponse = await context.db.Account.updateOne({
