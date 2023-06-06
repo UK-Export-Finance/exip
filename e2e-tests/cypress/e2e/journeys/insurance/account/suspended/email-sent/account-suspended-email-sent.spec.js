@@ -48,7 +48,7 @@ context('Insurance - Account - Suspended - Email sent page - As an Exporter, I w
         const [firstAccount] = data.accounts;
         account = firstAccount;
 
-        cy.completeAndSubmitSignInAccountFormMaximumRetries();
+        cy.completeAndSubmitSignInAccountFormMaximumRetries({});
 
         submitButton().click();
 

@@ -1,4 +1,5 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
+import api from '../../../../../../support/api';
 
 const {
   ACCOUNT: {
@@ -12,6 +13,8 @@ context('Insurance - Account - Sign in - Submitting the form when already blocke
   const signInUrl = `${baseUrl}${SIGN_IN_ROOT}`;
   const accountSuspendedUrl = `${baseUrl}${SUSPENDED_ROOT}`;
 
+  let account;
+
   before(() => {
     cy.deleteAccount();
 
@@ -20,9 +23,6 @@ context('Insurance - Account - Sign in - Submitting the form when already blocke
     cy.verifyAccountEmail();
 
     cy.assertUrl(signInUrl);
-
-    // force the account to be blocked
-    cy.completeAndSubmitSignInAccountFormMaximumRetries();
   });
 
   beforeEach(() => {
@@ -30,10 +30,32 @@ context('Insurance - Account - Sign in - Submitting the form when already blocke
 
     cy.navigateToUrl(signInUrl);
 
-    cy.completeAndSubmitSignInAccountForm({ assertRedirectUrl: false });
+    // force the account to be blocked
+    cy.completeAndSubmitSignInAccountFormMaximumRetries({});
+
+    cy.navigateToUrl(signInUrl);
+
+    cy.completeAndSubmitSignInAccountForm({
+      assertRedirectUrl: false,
+    });
   });
 
-  it(`should redirect to ${SUSPENDED_ROOT}`, () => {
-    cy.assertUrl(accountSuspendedUrl);
+  it(`should redirect to ${SUSPENDED_ROOT} with ID query param`, () => {
+    /**
+     * Get the account ID directly from the API,
+     * so that we can assert that the URL has the correct account ID.
+     */
+    const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+
+    api.getAccountByEmail(accountEmail).then((response) => {
+      const { data } = response.body;
+
+      const [firstAccount] = data.accounts;
+      account = firstAccount;
+
+      const expectedUrl = `${accountSuspendedUrl}?id=${account.id}`;
+
+      cy.assertUrl(expectedUrl);
+    });
   });
 });

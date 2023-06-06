@@ -37,7 +37,7 @@ context('Insurance - Account - Suspended page - As an Exporter, I want to reacti
     beforeEach(() => {
       /**
        * Get the account ID directly from the API,
-       * so that we can assert that `request a new link` has the correct ID.
+       * so that we can assert that the URL has the correct account ID.
        */
       const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
@@ -47,7 +47,7 @@ context('Insurance - Account - Suspended page - As an Exporter, I want to reacti
         const [firstAccount] = data.accounts;
         account = firstAccount;
 
-        cy.completeAndSubmitSignInAccountFormMaximumRetries();
+        cy.completeAndSubmitSignInAccountFormMaximumRetries({});
 
         const expectedUrl = `${accountSuspendedUrl}?id=${account.id}`;
 

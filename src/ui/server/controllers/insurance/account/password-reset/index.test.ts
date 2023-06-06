@@ -158,7 +158,7 @@ describe('controllers/insurance/account/password-reset', () => {
           api.keystone.account.sendEmailPasswordResetLink = sendEmailPasswordResetLinkSpy;
         });
 
-        it(`should redirect to ${SUSPENDED_ROOT} with ID param`, async () => {
+        it(`should redirect to ${SUSPENDED_ROOT} with ID query param`, async () => {
           await post(req, res);
 
           expect(res.redirect).toHaveBeenCalledWith(`${SUSPENDED_ROOT}?id=${sendEmailPasswordResetLinkResponse.accountId}`);
