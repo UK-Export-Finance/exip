@@ -401,9 +401,9 @@ var DATE_5_MINUTES_FROM_NOW = () => {
 };
 var DATE_24_HOURS_FROM_NOW = () => {
   const now = /* @__PURE__ */ new Date();
-  const milliseconds = 3e5;
-  const future = new Date(now.setMilliseconds(milliseconds));
-  return future;
+  const day = now.getDate();
+  const tomorrow = new Date(now.setDate(day + 1));
+  return tomorrow;
 };
 var DATE_30_MINUTES_FROM_NOW = () => {
   const now = /* @__PURE__ */ new Date();

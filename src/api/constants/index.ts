@@ -40,14 +40,12 @@ const DATE_5_MINUTES_FROM_NOW = () => {
  */
 const DATE_24_HOURS_FROM_NOW = () => {
   const now = new Date();
+  const day = now.getDate();
 
-  // 5 minutes as milliseconds
-  const milliseconds = 300000;
+  // add 1 day to the current time.
+  const tomorrow = new Date(now.setDate(day + 1));
 
-  // add 5 minutes of milliseconds to the current time.
-  const future = new Date(now.setMilliseconds(milliseconds));
-
-  return future;
+  return tomorrow;
 };
 
 /**
