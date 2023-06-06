@@ -281,10 +281,10 @@ describe('controllers/insurance/account/sign-in', () => {
           api.keystone.account.signIn = accountSignInSpy;
         });
 
-        it(`should redirect to ${SUSPENDED_ROOT}`, async () => {
+        it(`should redirect to ${SUSPENDED_ROOT} with ID query param`, async () => {
           await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(SUSPENDED_ROOT);
+          expect(res.redirect).toHaveBeenCalledWith(`${SUSPENDED_ROOT}?id=${accountSignInResponse.accountId}`);
         });
       });
     });

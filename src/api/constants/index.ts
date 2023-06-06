@@ -34,6 +34,21 @@ const DATE_5_MINUTES_FROM_NOW = () => {
 };
 
 /**
+ * DATE_24_HOURS_FROM_NOW
+ * Generate a date that is 24 hours from now
+ * @returns {Date}
+ */
+const DATE_24_HOURS_FROM_NOW = () => {
+  const now = new Date();
+  const day = now.getDate();
+
+  // add 1 day to the current time.
+  const tomorrow = new Date(now.setDate(day + 1));
+
+  return tomorrow;
+};
+
+/**
  * DATE_30_MINUTES_FROM_NOW
  * Generate a date that is 30 minutes from now
  * @returns {Date}
@@ -43,22 +58,18 @@ const DATE_30_MINUTES_FROM_NOW = () => {
 
   const minutes = 30;
 
-  const future = new Date(now.getTime() + minutes * 60000);
+  // milliseconds in a minute
+  const milliseconds = 60000;
+
+  // add 30 minutes of milliseconds to the current time.
+  const future = new Date(now.getTime() + minutes * milliseconds);
 
   return future;
 };
 
 export const ACCOUNT = {
   EMAIL: {
-    VERIFICATION_EXPIRY: () => {
-      // 24 hours from now
-      const now = new Date();
-      const day = now.getDate();
-
-      const tomorrow = new Date(now.setDate(day + 1));
-
-      return tomorrow;
-    },
+    VERIFICATION_EXPIRY: DATE_24_HOURS_FROM_NOW,
   },
   ENCRYPTION: {
     RANDOM_BYTES_SIZE: 32,
@@ -84,6 +95,7 @@ export const ACCOUNT = {
     DIGITS: 6,
     VERIFICATION_EXPIRY: DATE_30_MINUTES_FROM_NOW,
   },
+  REACTIVATION_EXPIRY: DATE_24_HOURS_FROM_NOW,
   // JSON web token
   JWT: {
     KEY: {
@@ -121,6 +133,7 @@ export const EMAIL_TEMPLATE_IDS = {
     CONFIRM_EMAIL: '24022e94-171c-4044-b0ee-d22418116575',
     SECURITY_CODE: 'b92650d1-9187-4510-ace2-5eec7ca7e626',
     PASSWORD_RESET: '86d5f582-e1d3-4b55-b103-50141401fd13',
+    REACTIVATE_ACCOUNT_CONFIRM_EMAIL: '2abf173a-52fc-4ec8-b28c-d7a862b8cf37',
   },
   APPLICATION: {
     SUBMISSION: {

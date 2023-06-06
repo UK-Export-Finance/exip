@@ -74,7 +74,7 @@ describe('controllers/insurance/account/password-reset', () => {
   });
 
   describe('post', () => {
-    const sendEmailPasswordResetLinkResponse = { success: true };
+    const sendEmailPasswordResetLinkResponse = { success: true, accountId: mockAccount.id };
 
     let sendEmailPasswordResetLinkSpy = jest.fn(() => Promise.resolve(sendEmailPasswordResetLinkResponse));
 
@@ -131,7 +131,7 @@ describe('controllers/insurance/account/password-reset', () => {
 
       describe('when the api.keystone.account.sendEmailPasswordResetLink returns success=false', () => {
         beforeEach(() => {
-          sendEmailPasswordResetLinkSpy = jest.fn(() => Promise.resolve({ success: false }));
+          sendEmailPasswordResetLinkSpy = jest.fn(() => Promise.resolve({ success: false, accountId: mockAccount.id }));
 
           api.keystone.account.sendEmailPasswordResetLink = sendEmailPasswordResetLinkSpy;
         });
@@ -153,15 +153,15 @@ describe('controllers/insurance/account/password-reset', () => {
 
       describe('when the api.keystone.account.sendEmailPasswordResetLink returns isBlocked=true', () => {
         beforeEach(() => {
-          sendEmailPasswordResetLinkSpy = jest.fn(() => Promise.resolve({ success: false, isBlocked: true }));
+          sendEmailPasswordResetLinkSpy = jest.fn(() => Promise.resolve({ success: false, isBlocked: true, accountId: mockAccount.id }));
 
           api.keystone.account.sendEmailPasswordResetLink = sendEmailPasswordResetLinkSpy;
         });
 
-        it(`should redirect to ${SUSPENDED_ROOT}`, async () => {
+        it(`should redirect to ${SUSPENDED_ROOT} with ID query param`, async () => {
           await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(SUSPENDED_ROOT);
+          expect(res.redirect).toHaveBeenCalledWith(`${SUSPENDED_ROOT}?id=${sendEmailPasswordResetLinkResponse.accountId}`);
         });
       });
 

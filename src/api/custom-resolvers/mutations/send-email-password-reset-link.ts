@@ -88,7 +88,7 @@ const sendEmailPasswordResetLink = async (
 
     /**
      * Account is OK to proceed with password reset.
-     * Generate a password reset link and send to the email address.
+     * Generate a password reset link and send to the account's email address.
      */
     console.info('Generating password reset hash');
 

@@ -113,18 +113,20 @@ export const post = async (req: Request, res: Response) => {
 
     const response = await api.keystone.account.signIn(urlOrigin, email, password);
 
+    const { accountId } = response;
+
     if (response.success) {
-      req.session.accountId = response.accountId;
+      req.session.accountId = accountId;
 
       return res.redirect(ENTER_CODE);
     }
 
     if (response.resentVerificationEmail) {
-      return res.redirect(`${CONFIRM_EMAIL_RESENT}?id=${response.accountId}`);
+      return res.redirect(`${CONFIRM_EMAIL_RESENT}?id=${accountId}`);
     }
 
     if (response.isBlocked) {
-      return res.redirect(SUSPENDED_ROOT);
+      return res.redirect(`${SUSPENDED_ROOT}?id=${accountId}`);
     }
 
     // invalid credentials - force validation errors by mimicking empty form submission

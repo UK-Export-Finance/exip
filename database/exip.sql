@@ -97,6 +97,8 @@ CREATE TABLE `Account` (
   `authentication` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `authenticationRetry` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `isBlocked` tinyint(1) NOT NULL DEFAULT '0',
+	`reactivationExpiry` datetime(3) DEFAULT NULL,
+  `reactivationHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `Account_authentication_key` (`authentication`),
   UNIQUE KEY `Account_authenticationRetry_key` (`authenticationRetry`),

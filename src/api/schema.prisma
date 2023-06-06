@@ -115,6 +115,8 @@ model Account {
   authenticationId                 String?               @map("authentication")
   authenticationRetry              AuthenticationRetry?  @relation("Account_authenticationRetry", fields: [authenticationRetryId], references: [id])
   authenticationRetryId            String?               @map("authenticationRetry")
+  reactivationHash                 String                @default("")
+  reactivationExpiry               DateTime?
   applications                     Application[]         @relation("Account_applications")
   from_Application_owner           Application[]         @relation("Application_owner")
   from_AuthenticationRetry_account AuthenticationRetry[] @relation("AuthenticationRetry_account")

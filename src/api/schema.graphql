@@ -449,6 +449,8 @@ type Account {
   passwordResetExpiry: DateTime
   authentication: Authentication
   authenticationRetry: AuthenticationRetry
+  reactivationHash: String
+  reactivationExpiry: DateTime
   applications(where: ApplicationWhereInput! = {}, orderBy: [ApplicationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ApplicationWhereUniqueInput): [Application!]
   applicationsCount(where: ApplicationWhereInput! = {}): Int
 }
@@ -482,6 +484,8 @@ input AccountWhereInput {
   passwordResetExpiry: DateTimeNullableFilter
   authentication: AuthenticationWhereInput
   authenticationRetry: AuthenticationRetryWhereInput
+  reactivationHash: StringFilter
+  reactivationExpiry: DateTimeNullableFilter
   applications: ApplicationManyRelationFilter
 }
 
@@ -516,6 +520,8 @@ input AccountOrderByInput {
   sessionIdentifier: OrderDirection
   passwordResetHash: OrderDirection
   passwordResetExpiry: OrderDirection
+  reactivationHash: OrderDirection
+  reactivationExpiry: OrderDirection
 }
 
 input AccountUpdateInput {
@@ -539,6 +545,8 @@ input AccountUpdateInput {
   passwordResetExpiry: DateTime
   authentication: AuthenticationRelateToOneForUpdateInput
   authenticationRetry: AuthenticationRetryRelateToOneForUpdateInput
+  reactivationHash: String
+  reactivationExpiry: DateTime
   applications: ApplicationRelateToManyForUpdateInput
 }
 
@@ -587,6 +595,8 @@ input AccountCreateInput {
   passwordResetExpiry: DateTime
   authentication: AuthenticationRelateToOneForCreateInput
   authenticationRetry: AuthenticationRetryRelateToOneForCreateInput
+  reactivationHash: String
+  reactivationExpiry: DateTime
   applications: ApplicationRelateToManyForCreateInput
 }
 
@@ -2007,6 +2017,9 @@ type Mutation {
   """ send email with password reset link """
   sendEmailPasswordResetLink(urlOrigin: String!, email: String!): AccountSendEmailPasswordResetLinkResponse
 
+  """ send email with reactivate account link """
+  sendEmailReactivateAccountLink(urlOrigin: String!, accountId: String!): AccountSendEmailReactivateAccountLinkResponse
+
   """ reset account password """
   accountPasswordReset(token: String!, password: String!, hasBeenUsedBefore: Boolean): AccountPasswordResetResponse
 
@@ -2371,4 +2384,10 @@ type AccountPasswordResetTokenResponse {
 type VerifyAccountEmailAddressResponse {
   success: Boolean!
   accountId: String
+}
+
+type AccountSendEmailReactivateAccountLinkResponse {
+  success: Boolean!
+  accountId: String!
+  email: String
 }

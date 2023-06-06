@@ -90,7 +90,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     expect(account.passwordResetHash.length).toEqual(KEY_LENGTH * 2);
   });
 
-  it('should generate a passwordResetExpiry and add to the account', async () => {
+  it('should generate and add a passwordResetExpiry to the account', async () => {
     const now = new Date();
 
     const nowDay = now.getDay();

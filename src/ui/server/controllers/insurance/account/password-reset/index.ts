@@ -62,6 +62,8 @@ export const get = (req: Request, res: Response) =>
  */
 export const post = async (req: Request, res: Response) => {
   try {
+    console.info('Posting account password reset form');
+
     let validationErrors = generateValidationErrors(req.body);
 
     if (validationErrors) {
@@ -83,7 +85,7 @@ export const post = async (req: Request, res: Response) => {
     const response = await api.keystone.account.sendEmailPasswordResetLink(urlOrigin, email);
 
     if (response.isBlocked) {
-      return res.redirect(SUSPENDED_ROOT);
+      return res.redirect(`${SUSPENDED_ROOT}?id=${response.accountId}`);
     }
 
     if (response.success) {

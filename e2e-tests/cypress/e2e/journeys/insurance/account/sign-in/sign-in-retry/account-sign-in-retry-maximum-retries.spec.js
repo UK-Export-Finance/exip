@@ -1,4 +1,5 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
+import api from '../../../../../../support/api';
 
 const {
   ACCOUNT: {
@@ -12,6 +13,8 @@ context('Insurance - Account - Sign in - Submitting the form with invalid creden
   const signInUrl = `${baseUrl}${SIGN_IN_ROOT}`;
   const accountSuspendedUrl = `${baseUrl}${SUSPENDED_ROOT}`;
 
+  let account;
+
   before(() => {
     cy.deleteAccount();
 
@@ -22,17 +25,36 @@ context('Insurance - Account - Sign in - Submitting the form with invalid creden
     cy.assertUrl(signInUrl);
   });
 
+  // after(() => {
+  //   cy.deleteAccount();
+  // });
+
   describe('when attempting sign in multiple times and reaching the maximum retries threshold', () => {
     beforeEach(() => {
       cy.saveSession();
 
       cy.navigateToUrl(signInUrl);
 
-      cy.completeAndSubmitSignInAccountFormMaximumRetries();
+      cy.completeAndSubmitSignInAccountFormMaximumRetries({});
     });
 
-    it(`should redirect to ${SUSPENDED_ROOT}`, () => {
-      cy.assertUrl(accountSuspendedUrl);
+    it(`should redirect to ${SUSPENDED_ROOT} with ID query param`, () => {
+      /**
+       * Get the account ID directly from the API,
+       * so that we can assert that the URL has the correct account ID.
+       */
+      const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+
+      api.getAccountByEmail(accountEmail).then((response) => {
+        const { data } = response.body;
+
+        const [firstAccount] = data.accounts;
+        account = firstAccount;
+
+        const expectedUrl = `${accountSuspendedUrl}?id=${account.id}`;
+
+        cy.assertUrl(expectedUrl);
+      });
     });
   });
 
@@ -45,8 +67,10 @@ context('Insurance - Account - Sign in - Submitting the form with invalid creden
       cy.completeAndSubmitSignInAccountForm({ assertRedirectUrl: false });
     });
 
-    it(`should redirect to ${SUSPENDED_ROOT}`, () => {
-      cy.assertUrl(accountSuspendedUrl);
+    it(`should redirect to ${SUSPENDED_ROOT} with ID query param`, () => {
+      const expectedUrl = `${accountSuspendedUrl}?id=${account.id}`;
+
+      cy.assertUrl(expectedUrl);
     });
   });
 });

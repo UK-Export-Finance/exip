@@ -6,7 +6,7 @@ import { EmailResponse } from '../../types';
  * securityCodeEmail
  * Send the security code email to an account
  * @param {String} Email address
- * @param {String} First name
+ * @param {String} Name
  * @param {String} Security code
  * @returns {Object} callNotify response
  */

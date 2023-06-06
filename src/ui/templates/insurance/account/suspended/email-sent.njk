@@ -1,0 +1,31 @@
+{% extends 'index.njk' %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% import '../../../components/customer-service-helpline.njk' as customerServiceHelpline %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+      <div class="govuk-!-margin-bottom-9">
+        <p data-cy="we-sent-link-to">{{ CONTENT_STRINGS.WE_SENT_LINK_TO }} {{ accountEmail }}</p>
+
+        <p data-cy="check-your-email">{{ CONTENT_STRINGS.CHECK_YOUR_EMAIL }}</p>
+      </div>
+
+      <h2 class="govuk-heading-s" data-cy="having-problems-heading">{{ CONTENT_STRINGS.HAVING_PROBLEMS }}</h2>
+
+      {{ customerServiceHelpline.render({
+        content: CUSTOMER_SERVICE_CONTACT_DETAILS
+      }) }}
+
+    </div>
+  </div>
+
+{% endblock %}

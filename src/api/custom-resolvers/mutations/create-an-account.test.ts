@@ -77,11 +77,11 @@ describe('custom-resolvers/create-an-account', () => {
   it('should generate and return verification expiry date', () => {
     const now = new Date();
 
-    const tomorrowDay = new Date(now).getDay() + 1;
+    const tomorrowDay = new Date(now).getDate() + 1;
 
     const expiry = new Date(account.verificationExpiry);
 
-    const expiryDay = expiry.getDay();
+    const expiryDay = expiry.getDate();
 
     expect(expiryDay).toEqual(tomorrowDay);
   });

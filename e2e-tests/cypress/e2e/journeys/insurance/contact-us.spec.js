@@ -39,10 +39,15 @@ context('Contact us page - Insurance', () => {
   });
 
   it('renders a `general enquiries` section', () => {
-    cy.assertCustomerServiceContactDetailsContent(GENERAL_ENQUIRIES.HEADING);
+    cy.checkText(
+      contactUsPage.customerServiceHeading(),
+      GENERAL_ENQUIRIES.HEADING,
+    );
+
+    cy.assertCustomerServiceContactDetailsContent();
   });
 
-  it('renders an application enquiries section', () => {
+  it('renders an `application enquiries` section', () => {
     const { applicationEnquires } = contactUsPage;
 
     cy.checkText(applicationEnquires.heading(), APPLICATION_ENQUIRES.HEADING);

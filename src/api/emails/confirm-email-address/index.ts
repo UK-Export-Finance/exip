@@ -6,7 +6,7 @@ import { EmailResponse } from '../../types';
  * confirmEmailAddress
  * Send "confirm your email address" email to an account
  * @param {String} Email address
- * @param {String} First name
+ * @param {String} Name
  * @param {String} Verification hash
  * @returns {Object} callNotify response
  */

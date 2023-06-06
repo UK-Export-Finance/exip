@@ -6,7 +6,7 @@ import { EmailResponse } from '../../types';
  * Call Notify API
  * @param {String} Notify template ID
  * @param {String} Email address
- * @param {String} First name
+ * @param {String} Name
  * @param {Object} Email variables
  * @returns {Object} Object with success flag and emailRecipient
  */

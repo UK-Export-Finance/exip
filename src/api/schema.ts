@@ -398,6 +398,8 @@ export const lists = {
       authenticationRetry: relationship({
         ref: 'AuthenticationRetry',
       }),
+      reactivationHash: text({ validation: { isRequired: false } }),
+      reactivationExpiry: timestamp({ validation: { isRequired: false } }),
       applications: relationship({
         ref: 'Application',
         many: true,
