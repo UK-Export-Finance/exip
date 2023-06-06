@@ -41,7 +41,10 @@ const DATE_5_MINUTES_FROM_NOW = () => {
 const DATE_24_HOURS_FROM_NOW = () => {
   const now = new Date();
 
+  // 5 minutes as milliseconds
   const milliseconds = 300000;
+
+  // add 5 minutes of milliseconds to the current time.
   const future = new Date(now.setMilliseconds(milliseconds));
 
   return future;
@@ -57,7 +60,11 @@ const DATE_30_MINUTES_FROM_NOW = () => {
 
   const minutes = 30;
 
-  const future = new Date(now.getTime() + minutes * 60000);
+  // milliseconds in a minute
+  const milliseconds = 60000;
+
+  // add 30 minutes of milliseconds to the current time.
+  const future = new Date(now.getTime() + minutes * milliseconds);
 
   return future;
 };

@@ -408,7 +408,8 @@ var DATE_24_HOURS_FROM_NOW = () => {
 var DATE_30_MINUTES_FROM_NOW = () => {
   const now = /* @__PURE__ */ new Date();
   const minutes = 30;
-  const future = new Date(now.getTime() + minutes * 6e4);
+  const milliseconds = 6e4;
+  const future = new Date(now.getTime() + minutes * milliseconds);
   return future;
 };
 var ACCOUNT2 = {
