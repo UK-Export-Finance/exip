@@ -71,7 +71,9 @@ var ACCOUNT = {
   SECURITY_CODE: "securityCode",
   VERIFICATION_HASH: "verificationHash",
   PASSWORD_RESET_HASH: "passwordResetHash",
-  PASSWORD_RESET_EXPIRY: "passwordResetExpiry"
+  PASSWORD_RESET_EXPIRY: "passwordResetExpiry",
+  REACTIVATION_HASH: "reactivationHash",
+  REACTIVATION_EXPIRY: "reactivationExpiry"
 };
 var account_default = ACCOUNT;
 
@@ -401,9 +403,9 @@ var DATE_5_MINUTES_FROM_NOW = () => {
 };
 var DATE_24_HOURS_FROM_NOW = () => {
   const now = /* @__PURE__ */ new Date();
-  const milliseconds = 3e5;
-  const future = new Date(now.setMilliseconds(milliseconds));
-  return future;
+  const day = now.getDate();
+  const tomorrow = new Date(now.setDate(day + 1));
+  return tomorrow;
 };
 var DATE_30_MINUTES_FROM_NOW = () => {
   const now = /* @__PURE__ */ new Date();
@@ -1423,6 +1425,11 @@ var typeDefs = `
     accountId: String
   }
 
+  type VerifyAccountReactivationTokenResponse {
+    success: Boolean!
+    expired: Boolean
+  }
+
   type AccountSendEmailReactivateAccountLinkResponse {
     success: Boolean!
     accountId: String!
@@ -1448,6 +1455,11 @@ var typeDefs = `
     verifyAccountEmailAddress(
       token: String!
     ): VerifyAccountEmailAddressResponse
+
+    """ verify an account's reactivation tokeen """
+    verifyAccountReactivationToken(
+      token: String!
+    ): VerifyAccountReactivationTokenResponse
 
     """ send confirm email address email """
     sendEmailConfirmEmailAddress(
@@ -2759,11 +2771,11 @@ var {
 } = ACCOUNT2;
 var sendEmailReactivateAccountLink = async (root, variables, context) => {
   try {
-    console.info("Received a reactivate account request - checking account");
+    console.info("Received a request to send reactivate account email/link - checking account");
     const { urlOrigin, accountId } = variables;
     const account = await get_account_by_id_default(context, accountId);
     if (!account) {
-      console.info("Unable to check account and send reactivate account email - no account found");
+      console.info("Unable to check account and send reactivate account email/link - no account found");
       return { success: false };
     }
     const { email } = account;
@@ -2778,7 +2790,7 @@ var sendEmailReactivateAccountLink = async (root, variables, context) => {
       where: { id: accountId },
       data: accountUpdate
     });
-    console.info("Sending reactivate account email");
+    console.info("Sending reactivate account email/link");
     const name = get_full_name_string_default(account);
     const emailResponse = await emails_default.reactivateAccountLink(urlOrigin, email, name, reactivationHash);
     if (emailResponse.success) {
@@ -2791,7 +2803,7 @@ var sendEmailReactivateAccountLink = async (root, variables, context) => {
     return { accountId, email, success: false };
   } catch (err) {
     console.error(err);
-    throw new Error(`Checking account and sending reactivate account email (sendEmailReactivateAccountLink mutation) ${err}`);
+    throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) ${err}`);
   }
 };
 var send_email_reactivate_account_link_default = sendEmailReactivateAccountLink;
@@ -4009,6 +4021,51 @@ var createFeedback = async (root, variables, context) => {
 };
 var create_feedback_default = createFeedback;
 
+// custom-resolvers/mutations/verify-account-reactivation-token.ts
+var import_date_fns9 = require("date-fns");
+var {
+  INSURANCE: {
+    ACCOUNT: { REACTIVATION_HASH, REACTIVATION_EXPIRY }
+  }
+} = FIELD_IDS;
+var verifyAccountReactivationToken = async (root, variables, context) => {
+  try {
+    console.info("Received a request to reactivate account - checking account");
+    const account = await get_account_by_field_default(context, REACTIVATION_HASH, variables.token);
+    if (account) {
+      const now = /* @__PURE__ */ new Date();
+      const canReactivateAccount = (0, import_date_fns9.isBefore)(now, account[REACTIVATION_EXPIRY]);
+      if (!canReactivateAccount) {
+        console.info("Unable to reactivate account - reactivation period has expired");
+        return {
+          expired: true,
+          success: false
+        };
+      }
+      await context.db.Account.updateOne({
+        where: { id: account.id },
+        data: {
+          isBlocked: false,
+          isVerified: true,
+          reactivationHash: "",
+          reactivationExpiry: null
+        }
+      });
+      return {
+        success: true
+      };
+    }
+    console.info("Unable to reactivate account - no account found");
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Checking account and reactivating account(verifyAccountReactivationToken mutation) ${err}`);
+  }
+};
+var verify_account_reactivation_token_default = verifyAccountReactivationToken;
+
 // custom-resolvers/queries/get-companies-house-information.ts
 var import_axios2 = __toESM(require("axios"));
 var import_dotenv6 = __toESM(require("dotenv"));
@@ -4171,7 +4228,7 @@ var getAccountPasswordResetToken = async (root, variables, context) => {
 var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
 // custom-resolvers/queries/verify-account-password-reset-token.ts
-var import_date_fns9 = require("date-fns");
+var import_date_fns10 = require("date-fns");
 var {
   ACCOUNT: { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY }
 } = FIELD_IDS.INSURANCE;
@@ -4185,7 +4242,7 @@ var verifyAccountPasswordResetToken = async (root, variables, context) => {
       return { success: false };
     }
     const now = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns9.isAfter)(now, account[PASSWORD_RESET_EXPIRY]);
+    const hasExpired = (0, import_date_fns10.isAfter)(now, account[PASSWORD_RESET_EXPIRY]);
     if (hasExpired) {
       console.info("Account password reset token has expired");
       return {
@@ -4217,7 +4274,8 @@ var customResolvers = {
     deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
     updateCompanyAndCompanyAddress: update_company_and_company_address_default,
     submitApplication: submit_application_default,
-    createFeedbackAndSendEmail: create_feedback_default
+    createFeedbackAndSendEmail: create_feedback_default,
+    verifyAccountReactivationToken: verify_account_reactivation_token_default
   },
   Query: {
     getCompaniesHouseInformation: get_companies_house_information_default,
