@@ -7,7 +7,7 @@ import createAuthenticationRetryEntry from '../../helpers/create-authentication-
 import getFullNameString from '../../helpers/get-full-name-string';
 import sendEmail from '../../emails';
 import { ACCOUNT } from '../../constants';
-import { mockAccount, mockUrlOrigin, mockSendEmailResponse, mockSendEmailResponse } from '../../test-mocks';
+import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../test-mocks';
 import { Account, SuccessResponse } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
