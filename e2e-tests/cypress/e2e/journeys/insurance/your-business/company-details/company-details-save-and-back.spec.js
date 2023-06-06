@@ -31,6 +31,10 @@ describe('Insurance - Your business - Company details page - Save and go back', 
   let referenceNumber;
   let url;
 
+  const companyDetailsFormVariables = {
+    companiesHouseNumber: COMPANIES_HOUSE_NUMBER,
+  };
+
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
@@ -75,7 +79,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should not display validation errors and redirect to task list', () => {
       cy.navigateToUrl(url);
 
-      cy.completeCompanyDetailsForm('**/*');
+      cy.completeCompanyDetailsForm({ companiesHouseNumber: '**/*' });
 
       saveAndBackButton().click();
 
@@ -96,7 +100,9 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should not display validation errors and redirect to task list', () => {
       cy.navigateToUrl(url);
 
-      cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER, INVALID_PHONE_NUMBERS.LANDLINE.SPECIAL_CHAR);
+      companyDetailsFormVariables.phoneNumber = INVALID_PHONE_NUMBERS.LANDLINE.SPECIAL_CHAR;
+
+      cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
       saveAndBackButton().click();
 
@@ -118,7 +124,10 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should not display validation errors and redirect to task list', () => {
       cy.navigateToUrl(url);
 
-      cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS.LANDLINE.NORMAL, WEBSITE_EXAMPLES.INVALID);
+      companyDetailsFormVariables.phoneNumber = VALID_PHONE_NUMBERS.LANDLINE.NORMAL;
+      companyDetailsFormVariables.website = WEBSITE_EXAMPLES.INVALID;
+
+      cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
       saveAndBackButton().click();
 
@@ -141,7 +150,10 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should not display validation errors and redirect to task list if all fields are entered correctly', () => {
       cy.navigateToUrl(url);
 
-      cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS.LANDLINE.NORMAL, WEBSITE_EXAMPLES.VALID);
+      companyDetailsFormVariables.phoneNumber = VALID_PHONE_NUMBERS.LANDLINE.NORMAL;
+      companyDetailsFormVariables.website = WEBSITE_EXAMPLES.VALID;
+
+      cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
       saveAndBackButton().click();
 

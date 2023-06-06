@@ -43,12 +43,18 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     cy.deleteApplication(referenceNumber);
   });
 
+  const companyDetailsFormVariables = {
+    companiesHouseNumber: COMPANIES_HOUSE_NUMBER,
+    phoneNumber: VALID_PHONE_NUMBERS.LANDLINE.NORMAL,
+    website: WEBSITE_EXAMPLES.VALID,
+  };
+
   describe('continue to next page', () => {
     describe('when required fields entered correctly', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER);
+        cy.completeCompanyDetailsForm({ companiesHouseNumber: COMPANIES_HOUSE_NUMBER });
 
         submitButton().click();
       });
@@ -62,7 +68,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS.LANDLINE.NORMAL, WEBSITE_EXAMPLES.VALID);
+        cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
         submitButton().click();
       });
@@ -80,7 +86,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       // navigate back to company details page from nature of business
       cy.clickBackLink();
 
-      cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS.LANDLINE.NORMAL, WEBSITE_EXAMPLES.VALID);
+      cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
       submitButton().click();
       // return to company details page after redirect to nature of business

@@ -82,7 +82,7 @@ context('Insurance - Your business - Company details page - company house search
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitCompaniesHouseSearchForm('1234');
+      cy.completeAndSubmitCompaniesHouseSearchForm({ companiesHouseNumber: '1234' });
     });
 
     it('should display an error in the error summary', () => {
@@ -103,7 +103,7 @@ context('Insurance - Your business - Company details page - company house search
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitCompaniesHouseSearchForm('123456!');
+      cy.completeAndSubmitCompaniesHouseSearchForm({ companiesHouseNumber: '123456!' });
     });
 
     it('should display an error in the error summary', () => {
@@ -124,7 +124,7 @@ context('Insurance - Your business - Company details page - company house search
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitCompaniesHouseSearchForm('123456 ');
+      cy.completeAndSubmitCompaniesHouseSearchForm({ companiesHouseNumber: '123456 ' });
     });
 
     it('should display an error in the error summary', () => {
@@ -145,7 +145,7 @@ context('Insurance - Your business - Company details page - company house search
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitCompaniesHouseSearchForm(COMPANIES_HOUSE_NUMBER);
+      cy.completeAndSubmitCompaniesHouseSearchForm({ companiesHouseNumber: COMPANIES_HOUSE_NUMBER });
     });
 
     it('should not display errors', () => {
@@ -225,7 +225,7 @@ context('Insurance - Your business - Company details page - company house search
     it('should take you back to company details page', () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitCompaniesHouseSearchForm(COMPANIES_HOUSE_NUMBER);
+      cy.completeAndSubmitCompaniesHouseSearchForm({ companiesHouseNumber: COMPANIES_HOUSE_NUMBER });
 
       submitButton().click();
 

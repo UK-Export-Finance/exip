@@ -89,7 +89,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     it('should display companies house error and trading name, address errors when companies house incorrectly entered', () => {
-      cy.completeAndSubmitCompaniesHouseSearchForm('123456!');
+      cy.completeAndSubmitCompaniesHouseSearchForm({ companiesHouseNumber: '123456!' });
 
       submitButton().click();
 
@@ -101,7 +101,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     it('should display companies house error and trading name, address errors when companies house not found', () => {
-      cy.completeAndSubmitCompaniesHouseSearchForm('123456');
+      cy.completeAndSubmitCompaniesHouseSearchForm({ companiesHouseNumber: '123456' });
 
       submitButton().click();
 

@@ -1,6 +1,6 @@
 import { companyDetails } from '../../e2e/pages/your-business';
 
-const completeCompaniesDetailsForm = (companiesHouseNumber, phoneNumber, website) => {
+const completeCompaniesDetailsForm = ({ companiesHouseNumber, phoneNumber, website }) => {
   cy.keyboardInput(companyDetails.companiesHouseSearch(), companiesHouseNumber);
   companyDetails.tradingNameYesRadioInput().click();
   companyDetails.tradingAddressYesRadioInput().click();

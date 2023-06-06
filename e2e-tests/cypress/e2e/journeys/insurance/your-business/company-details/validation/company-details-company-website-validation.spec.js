@@ -22,6 +22,10 @@ let url;
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - company website validation", () => {
   let referenceNumber;
 
+  const companyDetailsFormVariables = {
+    companiesHouseNumber: COMPANIES_HOUSE_NUMBER,
+  };
+
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
@@ -48,7 +52,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER, null, WEBSITE_EXAMPLES.INVALID);
+        companyDetailsFormVariables.website = WEBSITE_EXAMPLES.INVALID;
+        cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
         submitButton().click();
       });
@@ -73,7 +78,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER, null, WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH);
+        companyDetailsFormVariables.website = WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH;
+        cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
         submitButton().click();
       });
@@ -94,7 +100,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER);
+      companyDetailsFormVariables.website = null;
+      cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
       companyDetails.companyWebsite().clear();
 
@@ -114,7 +121,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER, null, WEBSITE_EXAMPLES.VALID);
+      companyDetailsFormVariables.website = WEBSITE_EXAMPLES.VALID;
+      cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
       submitButton().click();
     });

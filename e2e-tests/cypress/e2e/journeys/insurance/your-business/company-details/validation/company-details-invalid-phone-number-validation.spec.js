@@ -17,8 +17,15 @@ const {
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 const errorMessage = COMPANY_DETAILS_ERRORS[PHONE_NUMBER].INCORRECT_FORMAT;
 
+const companyDetailsFormVariables = {
+  companiesHouseNumber: COMPANIES_HOUSE_NUMBER,
+  website: WEBSITE_EXAMPLES.VALID,
+};
+
 const completeAllFields = (phoneNumber) => {
-  cy.completeCompanyDetailsForm(COMPANIES_HOUSE_NUMBER, phoneNumber, WEBSITE_EXAMPLES.VALID);
+  companyDetailsFormVariables.phoneNumber = phoneNumber;
+
+  cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
   submitButton().click();
 };
