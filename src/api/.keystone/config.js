@@ -399,6 +399,12 @@ var DATE_5_MINUTES_FROM_NOW = () => {
   const future = new Date(now.setMilliseconds(milliseconds));
   return future;
 };
+var DATE_30_MINUTES_FROM_NOW = () => {
+  const now = /* @__PURE__ */ new Date();
+  const minutes = 30;
+  const future = new Date(now.getTime() + minutes * 6e4);
+  return future;
+};
 var ACCOUNT2 = {
   EMAIL: {
     VERIFICATION_EXPIRY: () => {
@@ -430,7 +436,7 @@ var ACCOUNT2 = {
   // One time password
   OTP: {
     DIGITS: 6,
-    VERIFICATION_EXPIRY: DATE_5_MINUTES_FROM_NOW
+    VERIFICATION_EXPIRY: DATE_30_MINUTES_FROM_NOW
   },
   // JSON web token
   JWT: {

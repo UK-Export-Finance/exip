@@ -53,8 +53,8 @@ describe('api/helpers/generate-otp', () => {
     // round up (slight millisecond difference in unit tests)
     const rounded = Math.ceil(secondsDifference);
 
-    // 5 minutes
-    const expectedSeconds = 60 * 5;
+    // 30 minutes
+    const expectedSeconds = 60 * 30;
 
     expect(rounded).toEqual(expectedSeconds);
   });
