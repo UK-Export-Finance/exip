@@ -155,8 +155,10 @@ const ACCOUNT = {
       BODY: 'This can happen if there are too many failed attempts to login or reset a password.',
     },
     EMAIL_SENT: {
-      PAGE_TITLE: "Check your email",
+      PAGE_TITLE: 'Check your email',
       WE_SENT_LINK_TO: "We've sent you a link to",
+      CHECK_YOUR_EMAIL: 'Check your email and follow the link to confirm your email address and reactivate your account.',
+      HAVING_PROBLEMS: 'Having problems?',
     },
   },
 };

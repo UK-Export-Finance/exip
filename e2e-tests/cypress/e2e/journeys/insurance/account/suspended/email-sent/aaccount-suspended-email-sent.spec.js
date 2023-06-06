@@ -1,6 +1,6 @@
-// import { suspendedPage } from '../../../../pages/insurance/account/suspended';
+import { emailSentPage } from '../../../../../pages/insurance/account/suspended';
 import { submitButton } from '../../../../../pages/shared';
-import { BUTTONS, PAGES } from '../../../../../../../content-strings';
+import { PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import api from '../../../../../../support/api';
 
@@ -15,8 +15,11 @@ const {
   },
 } = ROUTES;
 
+const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+
 context('Insurance - Account - Suspended - Email sent page', () => {
   const baseUrl = Cypress.config('baseUrl');
+  const accountSuspendedUrl = `${baseUrl}${SUSPENDED_ROOT}`;
   const accountSuspendedEmailSentUrl = `${baseUrl}${EMAIL_SENT}`;
 
   let account;
@@ -34,13 +37,11 @@ context('Insurance - Account - Suspended - Email sent page', () => {
   });
 
   describe('page URL and content', () => {
-    beforeEach(() => {
+    before(() => {
       /**
        * Get the account ID directly from the API,
        * so that we can assert that the URL has the correct ID.
        */
-      const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
-
       api.getAccountByEmail(accountEmail).then((response) => {
         const { data } = response.body;
 
@@ -55,13 +56,50 @@ context('Insurance - Account - Suspended - Email sent page', () => {
       });
     });
 
-    it('renders core page elements', () => {
-      cy.corePageChecks({
-        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-        currentHref: accountSuspendedEmailSentUrl,
-        assertBackLink: false,
-        assertAuthenticatedHeader: false,
-        assertSubmitButton: false,
+    describe('when visiting the page', () => {
+      it('renders core page elements', () => {
+        cy.corePageChecks({
+          pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+          currentHref: accountSuspendedEmailSentUrl,
+          assertBackLink: false,
+          assertAuthenticatedHeader: false,
+          assertSubmitButton: false,
+        });
+      });
+    });
+
+    describe('page tests', () => {
+      beforeEach(() => {
+        cy.saveSession();
+
+        cy.navigateToUrl(`${accountSuspendedUrl}?id=${account.id}`);
+
+        submitButton().click();
+      });
+
+      it('should render `we sent link` copy', () => {
+        cy.checkText(
+          emailSentPage.weSentLinkTo(),
+          `${CONTENT_STRINGS.WE_SENT_LINK_TO} ${accountEmail}`,
+        );
+      });
+
+      it('should render `check your email` copy', () => {
+        cy.checkText(
+          emailSentPage.checkYourEmail(),
+          CONTENT_STRINGS.CHECK_YOUR_EMAIL,
+        );
+      });
+
+      it('should render `having problems` heading', () => {
+        cy.checkText(
+          emailSentPage.havingProblemsHeading(),
+          CONTENT_STRINGS.HAVING_PROBLEMS,
+        );
+      });
+
+      it('should render customer service contact details', () => {
+        cy.assertCustomerServiceContactDetailsContent();
       });
     });
   });

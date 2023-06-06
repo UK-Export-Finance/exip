@@ -11,10 +11,8 @@ const {
 /**
  * assertCustomerServiceContactDetailsContent
  * Check customer service contact details content
- * @param {String} Expected heading
  */
-const assertCustomerServiceContactDetailsContent = (heading) => {
-  cy.checkText(customerServiceContactDetails.heading(), heading);
+const assertCustomerServiceContactDetailsContent = () => {
   cy.checkText(customerServiceContactDetails.telephone(), `${TELEPHONE.PREFIX} ${TELEPHONE.VALUE}`);
   cy.checkText(customerServiceContactDetails.email(), `${EMAIL.PREFIX} ${EMAIL.VALUE}`);
   cy.checkText(customerServiceContactDetails.openingHours(), OPENING_TIMES);

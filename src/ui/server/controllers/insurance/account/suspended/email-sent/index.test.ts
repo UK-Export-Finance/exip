@@ -2,6 +2,7 @@ import { TEMPLATE, PAGE_CONTENT_STRINGS, get } from '.';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../../constants';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import { CUSTOMER_SERVICE_CONTACT_DETAILS } from '../../../../../content-strings/contact';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
 
@@ -40,6 +41,7 @@ describe('controllers/insurance/account/suspended/link-sent', () => {
         BACK_LINK: req.headers.referer,
       }),
       accountEmail: mockAccount.email,
+      CUSTOMER_SERVICE_CONTACT_DETAILS,
     });
   });
 

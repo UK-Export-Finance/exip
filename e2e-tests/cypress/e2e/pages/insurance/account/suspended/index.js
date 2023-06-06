@@ -1,3 +1,7 @@
-export const suspendedPage = {
-  body: () => cy.get('[data-cy="body"]'),
+import suspendedPage from './suspended';
+import emailSentPage from './emailSent';
+
+export {
+  suspendedPage,
+  emailSentPage,
 };

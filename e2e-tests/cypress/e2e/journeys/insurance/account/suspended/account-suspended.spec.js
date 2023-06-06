@@ -1,5 +1,4 @@
 import { suspendedPage } from '../../../../pages/insurance/account/suspended';
-import { submitButton } from '../../../../pages/shared';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
 import api from '../../../../../support/api';

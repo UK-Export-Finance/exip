@@ -1,13 +1,9 @@
 import { PAGES } from '../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { ROUTES, TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import { sanitiseValue } from '../../../../helpers/sanitise-data';
+import { replaceCharactersWithCharacterCode } from '../../../../helpers/sanitise-data';
 import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
-
-const {
-  ACCOUNT: { EMAIL: FIELD_ID },
-} = FIELD_IDS.INSURANCE;
 
 const {
   PROBLEM_WITH_SERVICE,
@@ -48,7 +44,9 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const response = await api.keystone.account.sendEmailReactivateAccountLink(urlOrigin, req.query.id);
+    const sanitisedId = replaceCharactersWithCharacterCode(req.query.id);
+
+    const response = await api.keystone.account.sendEmailReactivateAccountLink(urlOrigin, sanitisedId);
 
     if (response.success) {
       // store the email address in local session, for consumption in the next part of the flow.
@@ -56,6 +54,8 @@ export const post = async (req: Request, res: Response) => {
 
       return res.redirect(EMAIL_SENT);
     }
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
     console.error('Error posting account suspended form', { err });
     return res.redirect(PROBLEM_WITH_SERVICE);

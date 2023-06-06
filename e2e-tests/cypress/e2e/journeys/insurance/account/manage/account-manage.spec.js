@@ -104,7 +104,12 @@ context('Insurance - Account - Manage - As an Exporter, I want the service to ha
       });
 
       it('renders a `customer service contact details` section', () => {
-        cy.assertCustomerServiceContactDetailsContent(CUSTOMER_SERVICE.HEADING);
+        cy.checkText(
+          manageAccountPage.customerServiceHeading(),
+          CUSTOMER_SERVICE.HEADING,
+        );
+
+        cy.assertCustomerServiceContactDetailsContent();
       });
     });
   });
