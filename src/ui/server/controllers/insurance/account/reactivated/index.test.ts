@@ -10,7 +10,7 @@ const {
   ACCOUNT: { SIGN_IN },
 } = INSURANCE_ROUTES;
 
-describe('controllers/insurance/account/manage', () => {
+describe('controllers/insurance/account/reactivated', () => {
   let req: Request;
   let res: Response;
 
