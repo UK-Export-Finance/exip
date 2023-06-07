@@ -137,9 +137,9 @@ describe('custom-resolvers/send-email-reactivate-account-link', () => {
       } catch (err) {
         expect(reactivateAccountLinkSpy).toHaveBeenCalledTimes(1);
 
-        const expected = new Error(`
-          Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) ${mockSendEmailResponse}
-        `);
+        const errMessage = 'Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation)';
+
+        const expected = new Error(`${errMessage} ${mockSendEmailResponse}`);
         expect(err).toEqual(expected);
       }
     });
