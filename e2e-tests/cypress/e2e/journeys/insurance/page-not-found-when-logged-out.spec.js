@@ -3,7 +3,7 @@ import { ROUTES } from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.PAGE_NOT_FOUND_PAGE;
 
-context('Insurance - page not found', () => {
+context('Insurance - page not found - logged out', () => {
   const invalidUrl = `${ROUTES.INSURANCE.ROOT}/invalid-ref-number${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
   before(() => {
