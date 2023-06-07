@@ -25,11 +25,7 @@ context('Insurance - Account - Suspended - Email sent page - As an Exporter, I w
   let account;
 
   before(() => {
-    cy.deleteAccount();
-
-    cy.completeAndSubmitCreateAccountForm({ navigateToAccountCreationPage: true });
-
-    cy.verifyAccountEmail();
+    cy.createAnAccountAndBecomeBlocked({ startReactivationJourney: true });
   });
 
   after(() => {
@@ -47,12 +43,6 @@ context('Insurance - Account - Suspended - Email sent page - As an Exporter, I w
 
         const [firstAccount] = data.accounts;
         account = firstAccount;
-
-        cy.completeAndSubmitSignInAccountFormMaximumRetries({});
-
-        submitButton().click();
-
-        cy.assertUrl(accountSuspendedEmailSentUrl);
       });
     });
 

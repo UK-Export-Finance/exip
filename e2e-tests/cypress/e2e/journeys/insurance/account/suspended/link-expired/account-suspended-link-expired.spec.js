@@ -1,7 +1,6 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { PAGES } from '../../../../../../../content-strings';
-import { submitButton } from '../../../../../pages/shared';
 import api from '../../../../../../support/api';
 
 const {
@@ -25,15 +24,7 @@ context('Insurance - Account - Suspended - Verify email - Visit with an expired 
   const verifyEmailLinkExpiredUrl = `${baseUrl}${VERIFY_EMAIL_LINK_EXPIRED}`;
 
   before(() => {
-    cy.deleteAccount();
-
-    cy.completeAndSubmitCreateAccountForm({ navigateToAccountCreationPage: true });
-
-    cy.verifyAccountEmail();
-
-    cy.completeAndSubmitSignInAccountFormMaximumRetries({});
-
-    submitButton().click();
+    cy.createAnAccountAndBecomeBlocked({ startReactivationJourney: true });
   });
 
   after(() => {

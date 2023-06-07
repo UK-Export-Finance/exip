@@ -7,26 +7,18 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SUSPENDED.ROOT;
 
 const {
   ACCOUNT: {
-    SIGN_IN: { ROOT: SIGN_IN_ROOT },
     SUSPENDED: { ROOT: SUSPENDED_ROOT },
   },
 } = ROUTES;
 
 context('Insurance - Account - Suspended page - As an Exporter, I want to reactivate my suspended digital service account, So that I can securely access my account and applications with UKEF', () => {
   const baseUrl = Cypress.config('baseUrl');
-  const signInUrl = `${baseUrl}${SIGN_IN_ROOT}`;
   const accountSuspendedUrl = `${baseUrl}${SUSPENDED_ROOT}`;
 
   let account;
 
   before(() => {
-    cy.deleteAccount();
-
-    cy.completeAndSubmitCreateAccountForm({ navigateToAccountCreationPage: true });
-
-    cy.verifyAccountEmail();
-
-    cy.assertUrl(signInUrl);
+    cy.createAnAccountAndBecomeBlocked({});
   });
 
   after(() => {
