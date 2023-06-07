@@ -81,7 +81,7 @@ describe('server/helpers/page-variables/core', () => {
     });
   });
 
-  describe('when ORIGINAL_URL ddoes not contain "insurance"', () => {
+  describe('when ORIGINAL_URL does not contain "insurance"', () => {
     it('should return an object with provided data and additional content strings, footer, startRoute and product for quote', () => {
       const quoteMock = {
         ...mock,
@@ -100,6 +100,37 @@ describe('server/helpers/page-variables/core', () => {
           LINKS,
           PHASE_BANNER,
           PRODUCT: { DESCRIPTION: PRODUCT_CONTENT_STRING.DESCRIPTION.QUOTE },
+        },
+        BACK_LINK: mock.BACK_LINK,
+        START_ROUTE: quoteStart,
+        FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+
+  describe('when USE_GENERIC_HEADER is true', () => {
+    it('should return an object with provided data and product set to GENERIC', () => {
+      const quoteMock = {
+        ...mock,
+        ORIGINAL_URL: ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL,
+        USE_GENERIC_HEADER: true,
+      };
+
+      const result = corePageVariables(quoteMock);
+
+      const expected = {
+        CONTENT_STRINGS: {
+          ...mock.PAGE_CONTENT_STRINGS,
+          BUTTONS,
+          COOKIES_CONSENT,
+          HEADER,
+          FOOTER: QUOTE_FOOTER,
+          LINKS,
+          PHASE_BANNER,
+          PRODUCT: { DESCRIPTION: PRODUCT_CONTENT_STRING.DESCRIPTION.GENERIC },
         },
         BACK_LINK: mock.BACK_LINK,
         START_ROUTE: quoteStart,
