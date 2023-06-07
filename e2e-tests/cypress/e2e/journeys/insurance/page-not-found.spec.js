@@ -1,4 +1,3 @@
-import { pageNotFoundPage } from '../../pages';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
@@ -30,22 +29,8 @@ context('Insurance - page not found', () => {
       cy.navigateToUrl(invalidUrl);
     });
 
-    it('renders `typed` and `pasted` text', () => {
-      cy.checkText(pageNotFoundPage.typedAddress(), CONTENT_STRINGS.TYPED_ADDRESS);
-
-      cy.checkText(pageNotFoundPage.pastedAddress(), CONTENT_STRINGS.PASTED_ADDRESS);
-    });
-
-    it('renders contact text and link', () => {
-      cy.checkText(pageNotFoundPage.contact1(), CONTENT_STRINGS.CONTACT.TEXT);
-
-      cy.checkText(pageNotFoundPage.contact2(), CONTENT_STRINGS.CONTACT.LINK.TEXT);
-
-      cy.checkText(pageNotFoundPage.contact3(), CONTENT_STRINGS.CONTACT.OUTRO);
-
-      cy.checkText(pageNotFoundPage.contactLink(), CONTENT_STRINGS.CONTACT.LINK.TEXT);
-
-      pageNotFoundPage.contactLink().should('have.attr', 'href', CONTENT_STRINGS.CONTACT.LINK.HREF);
+    it('renders `typed` and `pasted` text and contact text and link for insurance contact us', () => {
+      cy.checkPageNotFoundPageText({});
     });
   });
 });

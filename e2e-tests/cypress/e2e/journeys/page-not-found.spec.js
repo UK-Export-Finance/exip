@@ -1,4 +1,3 @@
-import { pageNotFoundPage } from '../pages';
 import partials from '../partials';
 import { PAGES, PRODUCT } from '../../../content-strings';
 
@@ -39,9 +38,7 @@ context('404 Page not found', () => {
     });
   });
 
-  it('renders `typed` and `pasted` text', () => {
-    cy.checkText(pageNotFoundPage.typedAddress(), CONTENT_STRINGS.TYPED_ADDRESS);
-
-    cy.checkText(pageNotFoundPage.pastedAddress(), CONTENT_STRINGS.PASTED_ADDRESS);
+  it('renders `typed` and `pasted` text and contact text and link for quote contact us', () => {
+    cy.checkPageNotFoundPageText({ isInsurancePage: false });
   });
 });

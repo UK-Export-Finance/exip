@@ -6,7 +6,7 @@ import baseConfig from '../../keystone';
 import verifyAccountReactivationToken from './verify-account-reactivation-token';
 import createAuthenticationRetryEntry from '../../helpers/create-authentication-retry-entry';
 import { ACCOUNT, FIELD_IDS } from '../../constants';
-import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../test-mocks';
+import { mockAccount } from '../../test-mocks';
 import { Account, SuccessResponse, VerifyAccountReactivationTokenVariables } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -159,7 +159,7 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
       };
 
       expect(result).toEqual(expected);
-    }); 
+    });
   });
 
   describe('when no account is found', () => {

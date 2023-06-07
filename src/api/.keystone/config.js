@@ -2889,13 +2889,11 @@ var updateCompanyAndCompanyAddress = async (root, variables, context) => {
       console.log("deleted sic codes", deleted);
     }
     if (mappedSicCodes && mappedSicCodes.length) {
-      mappedSicCodes.forEach(async (sicCodeObj) => {
-        console.log("reinserting each sic code", sicCodeObj);
-        const companySicReinserted = await context.db.CompanySicCode.createOne({
-          data: sicCodeObj
-        });
-        console.log("finished re-insert each sic", companySicReinserted);
+      console.log("reinserting sic codes", mappedSicCodes);
+      const companySicReinserted = await context.db.CompanySicCode.createMany({
+        data: mappedSicCodes
       });
+      console.log("finished re-insert each sic", companySicReinserted);
     }
     return {
       id: variables.companyId
@@ -4038,9 +4036,6 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
       console.info(`Received a request to reactivate account - found account ${account.id}`);
       const now = /* @__PURE__ */ new Date();
       const canReactivateAccount = (0, import_date_fns9.isBefore)(now, account[REACTIVATION_EXPIRY]);
-      console.log("--------- now ", now);
-      console.log("--------- account[REACTIVATION_EXPIRY] ", account[REACTIVATION_EXPIRY]);
-      console.log("--------- canReactivateAccount ", canReactivateAccount);
       if (!canReactivateAccount) {
         console.info("Unable to reactivate account - reactivation period has expired");
         return {

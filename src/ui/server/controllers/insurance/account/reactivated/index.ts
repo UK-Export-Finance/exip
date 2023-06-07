@@ -18,10 +18,11 @@ const {
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} Account reactivated page
  */
-export const get = (req: Request, res: Response) => res.render(TEMPLATE, {
-  ...insuranceCorePageVariables({
-    PAGE_CONTENT_STRINGS,
-    BACK_LINK: req.headers.referer,
-  }),
-  SIGN_IN_LINK: SIGN_IN.ROOT,
-});
+export const get = (req: Request, res: Response) =>
+  res.render(TEMPLATE, {
+    ...insuranceCorePageVariables({
+      PAGE_CONTENT_STRINGS,
+      BACK_LINK: req.headers.referer,
+    }),
+    SIGN_IN_LINK: SIGN_IN.ROOT,
+  });

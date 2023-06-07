@@ -8,14 +8,18 @@ const attemptsToMake = [...Array(ACCOUNT.MAX_PASSWORD_RESET_TRIES)];
  * completeAndSubmitSignInAccountFormMaximumRetries
  * Complete and submit the sign in form multiple times,
  * Matching the maximum retries allowed before an account becomes blocked.
+ * @param {Object} Object with custom flags
+ * - clickBackLinkOnLastAttempt
  */
-const completeAndSubmitSignInAccountFormMaximumRetries = () => {
+const completeAndSubmitSignInAccountFormMaximumRetries = ({
+  clickBackLinkOnLastAttempt = true,
+}) => {
   attemptsToMake.forEach((item, index) => {
     completeAndSubmitSignInAccountForm({ assertRedirectUrl: false });
 
     const isLastAttempt = index + 1 === attemptsToMake.length;
 
-    if (!isLastAttempt) {
+    if (!isLastAttempt && clickBackLinkOnLastAttempt) {
       backLink().click();
     }
   });
