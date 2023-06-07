@@ -32,6 +32,7 @@ import userSession from './middleware/insurance/user-session';
 import isInsuranceRoute from './helpers/is-insurance-route';
 import getUserNameFromSession from './helpers/get-user-name-from-session';
 import corePageVariables from './helpers/page-variables/core';
+import isQuoteRoute from './helpers/is-quote-route';
 
 // @ts-ignore
 const app = express();
@@ -165,13 +166,15 @@ app.get('*', (req: Request, res: Response) => {
     });
   }
 
+  const setGenericHeader = isQuoteRoute(req.originalUrl) ? false : true;
+
   // all other non-insurance page not found should use generic page-not-found template
   return res.render(PAGE_NOT_FOUND_TEMPLATE, {
     ...corePageVariables({
       PAGE_CONTENT_STRINGS: PAGES.PAGE_NOT_FOUND_PAGE,
       ORIGINAL_URL: req.originalUrl,
       // generic header is used for non-insurance page not found
-      USE_GENERIC_HEADER: true,
+      USE_GENERIC_HEADER: setGenericHeader,
     }),
     userName: getUserNameFromSession(req.session.user),
   });
