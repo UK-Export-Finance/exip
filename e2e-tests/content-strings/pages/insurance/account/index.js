@@ -164,6 +164,10 @@ const ACCOUNT = {
       PAGE_TITLE: 'Your link has expired',
     },
   },
+  REACTIVATED: {
+    PAGE_TITLE: 'Your account has been reactivated',
+    THANK_YOU: 'Thank you for confirming your email address. Your account has been reactivated and you can now sign in.',
+  },
 };
 
 export default ACCOUNT;
