@@ -43,8 +43,8 @@ describe('controllers/insurance/account/suspended/verify-email', () => {
       delete req.query.token;
     });
 
-    it(`should redirect to ${SUSPENDED_ROOT}`, () => {
-      get(req, res);
+    it(`should redirect to ${SUSPENDED_ROOT}`, async () => {
+      await get(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(SUSPENDED_ROOT);
     });
