@@ -70,6 +70,8 @@ var ACCOUNT = {
   PASSWORD: "password",
   SECURITY_CODE: "securityCode",
   VERIFICATION_HASH: "verificationHash",
+  IS_VERIFIED: "isVerified",
+  IS_BLOCKED: "isBlocked",
   PASSWORD_RESET_HASH: "passwordResetHash",
   PASSWORD_RESET_EXPIRY: "passwordResetExpiry",
   REACTIVATION_HASH: "reactivationHash",
@@ -4033,8 +4035,12 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
     console.info("Received a request to reactivate account - checking account");
     const account = await get_account_by_field_default(context, REACTIVATION_HASH, variables.token);
     if (account) {
+      console.info(`Received a request to reactivate account - found account ${account.id}`);
       const now = /* @__PURE__ */ new Date();
       const canReactivateAccount = (0, import_date_fns9.isBefore)(now, account[REACTIVATION_EXPIRY]);
+      console.log("--------- now ", now);
+      console.log("--------- account[REACTIVATION_EXPIRY] ", account[REACTIVATION_EXPIRY]);
+      console.log("--------- canReactivateAccount ", canReactivateAccount);
       if (!canReactivateAccount) {
         console.info("Unable to reactivate account - reactivation period has expired");
         return {
@@ -4042,6 +4048,7 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
           success: false
         };
       }
+      console.info(`Reactivating account ${account.id}`);
       await context.db.Account.updateOne({
         where: { id: account.id },
         data: {
@@ -4051,6 +4058,7 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
           reactivationExpiry: null
         }
       });
+      await delete_authentication_retries_default(context, account.id);
       return {
         success: true
       };

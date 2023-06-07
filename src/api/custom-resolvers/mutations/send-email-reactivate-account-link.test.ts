@@ -2,12 +2,11 @@ import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import baseConfig from '../../keystone';
-import sendEmailReactivateAccountLink from './send-email-password-reset-link';
-import createAuthenticationRetryEntry from '../../helpers/create-authentication-retry-entry';
+import sendEmailReactivateAccountLink from './send-email-reactivate-account-link';
 import getFullNameString from '../../helpers/get-full-name-string';
 import sendEmail from '../../emails';
 import { ACCOUNT } from '../../constants';
-import { mockAccount, mockUrlOrigin, mockSendEmailResponse, mockSendEmailResponse } from '../../test-mocks';
+import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../test-mocks';
 import { Account, SuccessResponse } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -51,6 +50,8 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
       where: accounts,
     });
 
+    const retries = await context.query.AuthenticationRetry.findMany();
+
     await context.query.AuthenticationRetry.deleteMany({
       where: retries,
     });
@@ -84,8 +85,8 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
   });
 
   it('should return the email response, email and accountId', () => {
-    const mockSendEmailResponse = {
-      ...mockSendEmailResponse
+    const expected = {
+      ...mockSendEmailResponse,
       email: account.email,
       accountId: account.id,
     };

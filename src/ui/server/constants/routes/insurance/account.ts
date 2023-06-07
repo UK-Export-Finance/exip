@@ -3,6 +3,7 @@ const CREATE_ROOT = '/create-account';
 const SIGN_IN_ROOT = '/sign-in';
 const PASSWORD_RESET_ROOT = '/password-reset';
 const SUSPENDED_ROOT = `${INSURANCE_ROOT}/account-suspended`;
+const REACTIVATED_ROOT = `${INSURANCE_ROOT}/account-reactivated`;
 
 const CREATE = {
   ROOT: CREATE_ROOT,
@@ -41,8 +42,6 @@ const SUSPENDED = {
   VERIFY_EMAIL_LINK_EXPIRED: `${SUSPENDED_ROOT}/link-expired`,
 };
 
-const REACTIVATED = `${INSURANCE_ROOT}/account-reactivated`;
-
 export const ACCOUNT = {
   CREATE,
   SIGN_IN,
@@ -51,5 +50,5 @@ export const ACCOUNT = {
   SIGN_OUT,
   SIGNED_OUT,
   SUSPENDED,
-  REACTIVATED,
+  REACTIVATED_ROOT,
 };

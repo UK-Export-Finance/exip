@@ -23,4 +23,5 @@ export const ACCOUNT_TEMPLATES = {
     ROOT: 'insurance/account/suspended/suspended.njk',
     EMAIL_SENT: 'insurance/account/suspended/email-sent.njk',
   },
+  REACTIVATED: 'insurance/account/reactivated.njk',
 };

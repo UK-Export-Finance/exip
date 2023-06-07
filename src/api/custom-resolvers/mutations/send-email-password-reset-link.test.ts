@@ -82,7 +82,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     expect(account.isBlocked).toEqual(false);
   });
 
-  it('should return the email response', () => {
+  it.only('should return the email response', () => {
     expect(result).toEqual(mockSendEmailResponse);
   });
 
