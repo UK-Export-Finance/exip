@@ -19,6 +19,7 @@ import { get as signOutGet } from '../../../controllers/insurance/account/sign-o
 import { get as signedOutGet } from '../../../controllers/insurance/account/signed-out';
 import { get as suspendedGet, post as suspendedPost } from '../../../controllers/insurance/account/suspended';
 import { get as suspendedVerifyEmailGet } from '../../../controllers/insurance/account/suspended/verify-email';
+import { get as suspendedVerifyEmailLinkExpiredGet } from '../../../controllers/insurance/account/suspended/link-expired';
 import { get as reactivatedGet } from '../../../controllers/insurance/account/reactivated';
 
 describe('routes/insurance/account', () => {
@@ -31,7 +32,7 @@ describe('routes/insurance/account', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(21);
+    expect(get).toHaveBeenCalledTimes(22);
     expect(post).toHaveBeenCalledTimes(7);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.YOUR_DETAILS, yourDetailsGet);
@@ -75,6 +76,8 @@ describe('routes/insurance/account', () => {
     expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.ROOT, suspendedPost);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL, suspendedVerifyEmailGet);
+
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_EXPIRED, suspendedVerifyEmailLinkExpiredGet);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.REACTIVATED_ROOT, reactivatedGet);
   });

@@ -1,5 +1,5 @@
 import { suspendedPage } from '../../../../pages/insurance/account/suspended';
-import { BUTTONS, PAGES } from '../../../../../../content-strings';
+import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
 import api from '../../../../../support/api';
 
@@ -62,7 +62,6 @@ context('Insurance - Account - Suspended page - As an Exporter, I want to reacti
         assertBackLink: false,
         assertAuthenticatedHeader: false,
         assertSubmitButton: false,
-        submitButtonCopy: BUTTONS.REACTIVATE_ACCOUNT,
       });
 
       cy.checkText(suspendedPage.body(), CONTENT_STRINGS.BODY);

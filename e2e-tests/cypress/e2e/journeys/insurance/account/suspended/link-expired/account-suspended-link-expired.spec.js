@@ -1,5 +1,6 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { PAGES } from '../../../../../../../content-strings';
 import { submitButton } from '../../../../../pages/shared';
 import api from '../../../../../../support/api';
 
@@ -15,6 +16,8 @@ const {
 const {
   ACCOUNT: { REACTIVATION_EXPIRY, REACTIVATION_HASH },
 } = INSURANCE_FIELD_IDS;
+
+const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_EXPIRED;
 
 context('Insurance - Account - Suspended - Verify email - Visit with an expired token query param', () => {
   const baseUrl = Cypress.config('baseUrl');
@@ -70,10 +73,18 @@ context('Insurance - Account - Suspended - Verify email - Visit with an expired 
       updatedAccount = await api.updateAccount(account.id, updateObj);
     });
 
-    it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED}`, () => {
+    it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED} and render core page elements`, () => {
       cy.navigateToUrl(`${verifyEmailUrl}?token=${updatedAccount[REACTIVATION_HASH]}`);
 
       cy.assertUrl(verifyEmailLinkExpiredUrl);
+
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: verifyEmailUrl,
+        assertBackLink: false,
+        assertAuthenticatedHeader: false,
+        assertSubmitButton: false,
+      });
     });
   });
 });
