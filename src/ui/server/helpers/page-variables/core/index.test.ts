@@ -110,7 +110,6 @@ describe('server/helpers/page-variables/core', () => {
     });
   });
 
-
   describe('when USE_GENERIC_HEADER is true', () => {
     it('should return an object with provided data and product set to GENERIC', () => {
       const quoteMock = {
