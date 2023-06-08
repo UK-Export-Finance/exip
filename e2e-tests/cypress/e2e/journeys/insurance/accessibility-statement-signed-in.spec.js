@@ -6,6 +6,8 @@ const CONTENT_STRINGS = PAGES.ACCESSIBILITY_STATEMENT_PAGE;
 
 const { ROOT, ALL_SECTIONS, ACCESSIBILITY_STATEMENT } = ROUTES.INSURANCE;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Accessibility statement page - Insurance - Signed in', () => {
   let dashboardUrl;
 
@@ -16,7 +18,7 @@ context('Accessibility statement page - Insurance - Signed in', () => {
 
     partials.footer.supportLinks.accessibilityStatement().click();
 
-    cy.assertUrl(`${Cypress.config('baseUrl')}${ACCESSIBILITY_STATEMENT}`);
+    cy.assertUrl(`${baseUrl}${ACCESSIBILITY_STATEMENT}`);
 
     cy.saveSession();
   });

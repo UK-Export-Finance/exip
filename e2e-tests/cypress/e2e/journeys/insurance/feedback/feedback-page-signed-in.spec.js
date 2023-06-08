@@ -10,13 +10,15 @@ const {
   ROOT,
 } = ROUTES.INSURANCE;
 
-context('Insurance - Feedback - Feedback page signed in', () => {
+const baseUrl = Cypress.config('baseUrl');
+
+context('Insurance - Feedback Page - Signed in', () => {
   let dashboardUrl;
   const url = FEEDBACK;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
-      dashboardUrl = `${Cypress.config('baseUrl')}${ROOT}/${refNumber}${ALL_SECTIONS}`;
+      dashboardUrl = `${baseUrl}${ROOT}/${refNumber}${ALL_SECTIONS}`;
     });
     partials.phaseBanner.feedbackLink().click();
   });

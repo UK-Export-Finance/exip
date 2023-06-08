@@ -9,7 +9,7 @@ const {
   FEEDBACK_SENT,
 } = ROUTES.INSURANCE;
 
-context('Insurance - Feedback Confirmation page when signed in', () => {
+context('Insurance - Feedback confirmation page - Signed in', () => {
   const url = FEEDBACK_SENT;
 
   before(() => {
