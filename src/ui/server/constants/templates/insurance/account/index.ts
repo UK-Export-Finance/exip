@@ -22,5 +22,7 @@ export const ACCOUNT_TEMPLATES = {
   SUSPENDED: {
     ROOT: 'insurance/account/suspended/suspended.njk',
     EMAIL_SENT: 'insurance/account/suspended/email-sent.njk',
+    VERIFY_EMAIL_LINK_EXPIRED: 'insurance/account/suspended/link-expired.njk',
   },
+  REACTIVATED: 'insurance/account/reactivated.njk',
 };

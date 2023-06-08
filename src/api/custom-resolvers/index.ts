@@ -14,6 +14,7 @@ import {
   updateCompanyAndCompanyAddress,
   submitApplication,
   createFeedbackAndSendEmail,
+  verifyAccountReactivationToken,
 } from './mutations';
 import { getCompaniesHouseInformation, getAccountPasswordResetToken, verifyAccountPasswordResetToken } from './queries';
 
@@ -39,6 +40,7 @@ const customResolvers = {
     updateCompanyAndCompanyAddress,
     submitApplication,
     createFeedbackAndSendEmail,
+    verifyAccountReactivationToken,
   },
   Query: {
     getCompaniesHouseInformation,

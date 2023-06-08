@@ -7,6 +7,7 @@ context('Insurance - page not found', () => {
   const invalidUrl = `${ROUTES.INSURANCE.ROOT}/invalid-ref-number${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
   before(() => {
+    cy.completeSignInAndGoToApplication();
     cy.navigateToUrl(invalidUrl);
   });
 
@@ -20,7 +21,7 @@ context('Insurance - page not found', () => {
       currentHref: invalidUrl,
       assertSubmitButton: false,
       assertBackLink: false,
-      assertAuthenticatedHeader: false,
+      assertAuthenticatedHeader: true,
     });
   });
 

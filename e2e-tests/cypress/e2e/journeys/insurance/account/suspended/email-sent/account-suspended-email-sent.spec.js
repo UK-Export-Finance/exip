@@ -17,7 +17,7 @@ const {
 
 const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
-context('Insurance - Account - Suspended - Email sent page - As an Exporter, I want to reactivate my suspended digital service account , So that I can securely access my account and applications with UKEF', () => {
+context('Insurance - Account - Suspended - Email sent page - As an Exporter, I want to reactivate my suspended digital service account, So that I can securely access my account and applications with UKEF', () => {
   const baseUrl = Cypress.config('baseUrl');
   const accountSuspendedUrl = `${baseUrl}${SUSPENDED_ROOT}`;
   const accountSuspendedEmailSentUrl = `${baseUrl}${EMAIL_SENT}`;
@@ -27,11 +27,7 @@ context('Insurance - Account - Suspended - Email sent page - As an Exporter, I w
   let account;
 
   before(() => {
-    cy.deleteAccount();
-
-    cy.completeAndSubmitCreateAccountForm({ navigateToAccountCreationPage: true });
-
-    cy.verifyAccountEmail();
+    cy.createAnAccountAndBecomeBlocked({ startReactivationJourney: true });
   });
 
   after(() => {
@@ -51,10 +47,6 @@ context('Insurance - Account - Suspended - Email sent page - As an Exporter, I w
         account = firstAccount;
 
         accountSuspendedUrlWithIdParam = `${accountSuspendedUrl}?id=${account.id}`;
-
-        cy.completeAndSubmitSignInAccountFormMaximumRetries({});
-
-        submitButton().click();
 
         cy.assertUrl(accountSuspendedEmailSentUrl);
       });

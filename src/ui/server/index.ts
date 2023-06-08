@@ -22,13 +22,17 @@ import configureNunjucks from './nunjucks-configuration';
 
 import { rootRoute, quoteRoutes, insuranceRoutes } from './routes';
 import { ROUTES } from './constants';
-import { COOKIES_CONSENT, QUOTE_FOOTER, LINKS, PAGES, PRODUCT, PHASE_BANNER } from './content-strings';
+import { PAGES } from './content-strings';
 import { requiredQuoteEligibilityDataProvided } from './middleware/required-data-provided/quote';
 import { requiredInsuranceEligibilityDataProvided } from './middleware/required-data-provided/insurance/eligibility';
 import applicationAccess from './middleware/insurance/application-access';
 import applicationStatus from './middleware/insurance/application-status';
 import getApplication from './middleware/insurance/get-application';
 import userSession from './middleware/insurance/user-session';
+import isInsuranceRoute from './helpers/is-insurance-route';
+import getUserNameFromSession from './helpers/get-user-name-from-session';
+import corePageVariables from './helpers/page-variables/core';
+import isQuoteRoute from './helpers/is-quote-route';
 
 // @ts-ignore
 const app = express();
@@ -144,23 +148,37 @@ const errorHandler: express.ErrorRequestHandler = (err, req, res, next) => {
 
 app.use(errorHandler);
 
-app.get('*', (req: Request, res: Response) =>
-  res.render('page-not-found.njk', {
-    CONTENT_STRINGS: {
-      COOKIES_CONSENT,
-      FOOTER: QUOTE_FOOTER,
-      LINKS,
-      PHASE_BANNER,
-      PRODUCT: {
-        ...PRODUCT,
-        DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC,
-      },
-      ...PAGES.PAGE_NOT_FOUND_PAGE,
-    },
-    START_ROUTE: ROUTES.QUOTE.START,
-    FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
-  }),
-);
+const INSURANCE_PAGE_NOT_FOUND_TEMPLATE = 'insurance/page-not-found.njk';
+const PAGE_NOT_FOUND_TEMPLATE = 'page-not-found.njk';
+
+app.get('*', (req: Request, res: Response) => {
+  /**
+   * if route contains "insurance" eg /insurance/dashboard
+   * insurance page-not-found should be rendered
+   */
+  if (isInsuranceRoute(req.originalUrl)) {
+    return res.render(INSURANCE_PAGE_NOT_FOUND_TEMPLATE, {
+      ...corePageVariables({
+        PAGE_CONTENT_STRINGS: PAGES.PAGE_NOT_FOUND_PAGE,
+        ORIGINAL_URL: req.originalUrl,
+      }),
+      userName: getUserNameFromSession(req.session.user),
+    });
+  }
+
+  const setGenericHeader = isQuoteRoute(req.originalUrl) ? false : true;
+
+  // all other non-insurance page not found should use generic page-not-found template
+  return res.render(PAGE_NOT_FOUND_TEMPLATE, {
+    ...corePageVariables({
+      PAGE_CONTENT_STRINGS: PAGES.PAGE_NOT_FOUND_PAGE,
+      ORIGINAL_URL: req.originalUrl,
+      // generic header is used for non-insurance page not found
+      USE_GENERIC_HEADER: setGenericHeader,
+    }),
+    userName: getUserNameFromSession(req.session.user),
+  });
+});
 
 app.listen(PORT, () => console.info(`EXIP UI app listening on port ${PORT}!`));
 
