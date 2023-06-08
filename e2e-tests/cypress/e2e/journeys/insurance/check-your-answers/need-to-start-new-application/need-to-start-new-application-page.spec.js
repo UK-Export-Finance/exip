@@ -27,6 +27,8 @@ context('Insurance - Check your answers - Need to start new application page', (
   let allSectionsUrl;
 
   before(() => {
+    cy.deleteAccount();
+
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
