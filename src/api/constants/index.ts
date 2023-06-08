@@ -26,6 +26,7 @@ export const EXTERNAL_API_ENDPOINTS = {
  */
 const DATE_24_HOURS_FROM_NOW = () => {
   const now = new Date();
+
   const day = now.getDate();
 
   // add 1 day to the current time.

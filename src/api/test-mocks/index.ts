@@ -22,6 +22,7 @@ export const mockAccount = {
   updatedAt: new Date().toISOString(),
   [PASSWORD_RESET_HASH]: 'mockResetHash',
   passwordResetExpiry: ACCOUNT.PASSWORD_RESET_EXPIRY(),
+  isBlocked: false,
 } as Account;
 
 export const mockOTP = {

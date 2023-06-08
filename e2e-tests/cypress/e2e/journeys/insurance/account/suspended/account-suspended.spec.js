@@ -1,5 +1,5 @@
 import { suspendedPage } from '../../../../pages/insurance/account/suspended';
-import { BUTTONS, PAGES } from '../../../../../../content-strings';
+import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
 import api from '../../../../../support/api';
 
@@ -7,26 +7,18 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SUSPENDED.ROOT;
 
 const {
   ACCOUNT: {
-    SIGN_IN: { ROOT: SIGN_IN_ROOT },
     SUSPENDED: { ROOT: SUSPENDED_ROOT },
   },
 } = ROUTES;
 
 context('Insurance - Account - Suspended page - As an Exporter, I want to reactivate my suspended digital service account, So that I can securely access my account and applications with UKEF', () => {
   const baseUrl = Cypress.config('baseUrl');
-  const signInUrl = `${baseUrl}${SIGN_IN_ROOT}`;
   const accountSuspendedUrl = `${baseUrl}${SUSPENDED_ROOT}`;
 
   let account;
 
   before(() => {
-    cy.deleteAccount();
-
-    cy.completeAndSubmitCreateAccountForm({ navigateToAccountCreationPage: true });
-
-    cy.verifyAccountEmail();
-
-    cy.assertUrl(signInUrl);
+    cy.createAnAccountAndBecomeBlocked({});
   });
 
   after(() => {
@@ -47,8 +39,6 @@ context('Insurance - Account - Suspended page - As an Exporter, I want to reacti
         const [firstAccount] = data.accounts;
         account = firstAccount;
 
-        cy.completeAndSubmitSignInAccountFormMaximumRetries({});
-
         const expectedUrl = `${accountSuspendedUrl}?id=${account.id}`;
 
         cy.assertUrl(expectedUrl);
@@ -62,7 +52,6 @@ context('Insurance - Account - Suspended page - As an Exporter, I want to reacti
         assertBackLink: false,
         assertAuthenticatedHeader: false,
         assertSubmitButton: false,
-        submitButtonCopy: BUTTONS.REACTIVATE_ACCOUNT,
       });
 
       cy.checkText(suspendedPage.body(), CONTENT_STRINGS.BODY);

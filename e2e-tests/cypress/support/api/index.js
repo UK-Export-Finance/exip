@@ -30,6 +30,7 @@ const queryStrings = {
       ) {
         id
         verificationHash
+        reactivationHash
       }
     }`,
   updateAccount: () => gql`
@@ -37,6 +38,7 @@ const queryStrings = {
       updateAccount(where: $where, data: $data) {
         id
         verificationHash
+        reactivationHash
       }
     }
   `,

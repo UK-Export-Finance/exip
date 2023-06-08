@@ -149,6 +149,11 @@ const typeDefs = `
     accountId: String
   }
 
+  type VerifyAccountReactivationTokenResponse {
+    success: Boolean!
+    expired: Boolean
+  }
+
   type AccountSendEmailReactivateAccountLinkResponse {
     success: Boolean!
     accountId: String!
@@ -174,6 +179,11 @@ const typeDefs = `
     verifyAccountEmailAddress(
       token: String!
     ): VerifyAccountEmailAddressResponse
+
+    """ verify an account's reactivation tokeen """
+    verifyAccountReactivationToken(
+      token: String!
+    ): VerifyAccountReactivationTokenResponse
 
     """ send confirm email address email """
     sendEmailConfirmEmailAddress(

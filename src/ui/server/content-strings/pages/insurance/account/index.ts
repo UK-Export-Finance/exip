@@ -160,6 +160,13 @@ const ACCOUNT = {
       CHECK_YOUR_EMAIL: 'Check your email and follow the link to confirm your email address and reactivate your account.',
       HAVING_PROBLEMS: 'Having problems?',
     },
+    VERIFY_EMAIL_LINK_EXPIRED: {
+      PAGE_TITLE: 'Your link has expired',
+    },
+  },
+  REACTIVATED: {
+    PAGE_TITLE: 'Your account has been reactivated',
+    THANK_YOU: 'Thank you for confirming your email address. Your account has been reactivated and you can now sign in.',
   },
 };
 

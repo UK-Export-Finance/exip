@@ -19,6 +19,9 @@ import { get as signOutGet } from '../../../controllers/insurance/account/sign-o
 import { get as signedOutGet } from '../../../controllers/insurance/account/signed-out';
 import { get as suspendedGet, post as suspendedPost } from '../../../controllers/insurance/account/suspended';
 import { get as suspendedEmailSentGet } from '../../../controllers/insurance/account/suspended/email-sent';
+import { get as suspendedVerifyEmailGet } from '../../../controllers/insurance/account/suspended/verify-email';
+import { get as suspendedVerifyEmailLinkExpiredGet } from '../../../controllers/insurance/account/suspended/link-expired';
+import { get as reactivatedGet } from '../../../controllers/insurance/account/reactivated';
 
 // @ts-ignore
 const insuranceAccountRouter = express.Router();
@@ -65,5 +68,11 @@ insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.ROOT, suspendedGet
 insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.ROOT, suspendedPost);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.EMAIL_SENT, suspendedEmailSentGet);
+
+insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL, suspendedVerifyEmailGet);
+
+insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_EXPIRED, suspendedVerifyEmailLinkExpiredGet);
+
+insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.REACTIVATED_ROOT, reactivatedGet);
 
 export default insuranceAccountRouter;
