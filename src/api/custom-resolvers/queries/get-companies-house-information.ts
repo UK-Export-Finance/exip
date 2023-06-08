@@ -47,6 +47,7 @@ const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHo
 
     if (!industrySectorNames.success || industrySectorNames.apiError) {
       return {
+        apiError: true,
         success: false,
       };
     }

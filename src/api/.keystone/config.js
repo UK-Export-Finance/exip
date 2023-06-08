@@ -4126,6 +4126,7 @@ var getCompaniesHouseInformation = async (root, variables) => {
     const industrySectorNames = await industry_sector_default();
     if (!industrySectorNames.success || industrySectorNames.apiError) {
       return {
+        apiError: true,
         success: false
       };
     }
