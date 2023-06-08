@@ -393,12 +393,6 @@ var EXTERNAL_API_ENDPOINTS = {
     MARKETS: "/markets"
   }
 };
-var DATE_5_MINUTES_FROM_NOW = () => {
-  const now = /* @__PURE__ */ new Date();
-  const milliseconds = 3e5;
-  const future = new Date(now.setMilliseconds(milliseconds));
-  return future;
-};
 var DATE_24_HOURS_FROM_NOW = () => {
   const now = /* @__PURE__ */ new Date();
   const day = now.getDate();
@@ -434,7 +428,7 @@ var ACCOUNT2 = {
       }
     }
   },
-  PASSWORD_RESET_EXPIRY: DATE_5_MINUTES_FROM_NOW,
+  PASSWORD_RESET_EXPIRY: DATE_30_MINUTES_FROM_NOW,
   // One time password
   OTP: {
     DIGITS: 6,
