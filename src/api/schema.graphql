@@ -1999,6 +1999,9 @@ type Mutation {
   """ verify an account's email address """
   verifyAccountEmailAddress(token: String!): VerifyAccountEmailAddressResponse
 
+  """ verify an account's reactivation tokeen """
+  verifyAccountReactivationToken(token: String!): VerifyAccountReactivationTokenResponse
+
   """ send confirm email address email """
   sendEmailConfirmEmailAddress(urlOrigin: String!, accountId: String!): EmailResponse
 
@@ -2384,6 +2387,11 @@ type AccountPasswordResetTokenResponse {
 type VerifyAccountEmailAddressResponse {
   success: Boolean!
   accountId: String
+}
+
+type VerifyAccountReactivationTokenResponse {
+  success: Boolean!
+  expired: Boolean
 }
 
 type AccountSendEmailReactivateAccountLinkResponse {

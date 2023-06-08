@@ -10,6 +10,19 @@ context('Insurance - submit an application without `have traded with buyer befor
   let url;
 
   before(() => {
+    cy.createAccount({});
+  //   cy.completeSignInAndSubmitAnApplication({
+  //     exporterHasTradedWithBuyer: false,
+  //     hasAntiBriberyCodeOfConduct: false,
+  //     exportingWithCodeOfConduct: false,
+  //   }).then((refNumber) => {
+  //     referenceNumber = refNumber;
+  //   });
+  });
+
+  beforeEach(() => {
+    cy.saveSession();
+
     cy.completeSignInAndSubmitAnApplication({
       exporterHasTradedWithBuyer: false,
       hasAntiBriberyCodeOfConduct: false,
@@ -17,10 +30,6 @@ context('Insurance - submit an application without `have traded with buyer befor
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
   });
 
   after(() => {

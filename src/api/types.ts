@@ -348,6 +348,14 @@ interface AddAndGetOtpResponse extends SuccessResponse {
   securityCode?: string;
 }
 
+interface VerifyAccountReactivationTokenVariables {
+  token: string;
+}
+
+interface VerifyAccountReactivationTokenResponse extends SuccessResponse {
+  expired?: boolean;
+}
+
 interface SendExporterEmailVariables {
   urlOrigin: string;
   accountId: string;
@@ -443,4 +451,6 @@ export {
   VerifyAccountSignInCodeVariables,
   VerifyAccountSignInCodeResponse,
   VerifyAccountSesssionVariables,
+  VerifyAccountReactivationTokenVariables,
+  VerifyAccountReactivationTokenResponse,
 };

@@ -31,6 +31,7 @@ describe('middleware/insurance/application-access', () => {
         ...Object.values(ACCOUNT.SIGN_IN),
         ...Object.values(ACCOUNT.PASSWORD_RESET),
         ...Object.values(ACCOUNT.SUSPENDED),
+        ACCOUNT.REACTIVATED_ROOT,
         DASHBOARD,
         NO_ACCESS_TO_APPLICATION,
         NO_ACCESS_APPLICATION_SUBMITTED,

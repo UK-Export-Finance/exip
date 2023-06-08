@@ -69,6 +69,8 @@ Cypress.Commands.add('deleteApplication', require('./insurance/delete-applicatio
 
 Cypress.Commands.add('createAccount', require('./insurance/account/create-account'));
 
+Cypress.Commands.add('createAnAccountAndBecomeBlocked', require('./insurance/account/create-an-account-and-become-blocked'));
+
 Cypress.Commands.add('accountAddAndGetOTP', require('./insurance/account/add-and-get-OTP'));
 
 Cypress.Commands.add('completeInsuranceEligibilitySignInAndGoToDashboard', require('./insurance/account/complete-insurance-eligibility-sign-in-and-go-to-dashboard'));
