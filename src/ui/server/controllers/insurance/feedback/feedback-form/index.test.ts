@@ -2,6 +2,7 @@ import { TEMPLATE, pageVariables, MAXIMUM, get, post } from '.';
 import { PAGES, FIELDS } from '../../../../content-strings';
 import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { mockReq, mockRes, mockInsuranceFeedback } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 import api from '../../../../api';
@@ -72,6 +73,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(),
+        userName: getUserNameFromSession(req.session.user),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -173,6 +175,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
           ...pageVariables(),
           validationErrors,
           submittedValues: body,
+          userName: getUserNameFromSession(req.session.user),
         });
       });
     });

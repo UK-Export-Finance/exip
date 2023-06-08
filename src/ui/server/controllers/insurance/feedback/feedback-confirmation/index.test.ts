@@ -2,6 +2,7 @@ import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { mockReq, mockRes } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
@@ -43,6 +44,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
           BACK_LINK: req.headers.referer,
         }),
         BACK_TO_SERVICE_URL: startRoute,
+        userName: getUserNameFromSession(req.session.user),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

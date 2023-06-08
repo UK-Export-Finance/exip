@@ -2,6 +2,7 @@ import { PAGES, FIELDS } from '../../../../content-strings';
 import { TEMPLATES, ROUTES, FIELD_IDS, INSURANCE, SERVICE_NAME } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { objectHasKeysAndValues } from '../../../../helpers/object';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
 import { Request, Response, InsuranceFeedbackVariables } from '../../../../../types';
 import api from '../../../../api';
@@ -58,6 +59,7 @@ const get = (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...pageVariables(),
+      userName: getUserNameFromSession(req.session.user),
     });
   } catch (err) {
     console.error('Error getting insurance feedback page', { err });
@@ -90,6 +92,7 @@ const post = async (req: Request, res: Response) => {
         ...pageVariables(),
         validationErrors,
         submittedValues: body,
+        userName: getUserNameFromSession(req.session.user),
       });
     }
 

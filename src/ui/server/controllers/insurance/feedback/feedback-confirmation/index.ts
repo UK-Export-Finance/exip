@@ -1,6 +1,7 @@
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
 
 const { FEEDBACK_SENT_PAGE } = PAGES;
@@ -23,6 +24,7 @@ const get = (req: Request, res: Response) => {
       }),
       // flash from feedback-form controller to redirect back to service
       BACK_TO_SERVICE_URL: req.flash('serviceOriginUrl'),
+      userName: getUserNameFromSession(req.session.user),
     });
   } catch (err) {
     console.error('Error getting insurance feedback page', { err });
