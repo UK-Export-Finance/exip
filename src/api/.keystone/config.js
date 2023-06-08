@@ -2880,20 +2880,15 @@ var updateCompanyAndCompanyAddress = async (root, variables, context) => {
       data: address
     });
     const mappedSicCodes = mapSicCodes(updatedCompany, sicCodes, industrySectorNames);
-    console.log("mappedSicCodes", mappedSicCodes);
-    console.log("deleting old sic codes - ", oldSicCodes);
     if (company && oldSicCodes && oldSicCodes.length) {
-      const deleted = await context.db.CompanySicCode.deleteMany({
+      await context.db.CompanySicCode.deleteMany({
         where: oldSicCodes
       });
-      console.log("deleted sic codes", deleted);
     }
     if (mappedSicCodes && mappedSicCodes.length) {
-      console.log("reinserting sic codes", mappedSicCodes);
-      const companySicReinserted = await context.db.CompanySicCode.createMany({
+      await context.db.CompanySicCode.createMany({
         data: mappedSicCodes
       });
-      console.log("finished re-insert each sic", companySicReinserted);
     }
     return {
       id: variables.companyId
@@ -4188,6 +4183,7 @@ var getCompaniesHouseInformation = async (root, variables) => {
     const industrySectorNames = await industry_sector_default();
     if (!industrySectorNames.success || industrySectorNames.apiError) {
       return {
+        apiError: true,
         success: false
       };
     }
