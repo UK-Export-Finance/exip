@@ -23,7 +23,7 @@ context('Insurance - Account - Suspended - Email sent page - As an Exporter, I w
   const accountSuspendedEmailSentUrl = `${baseUrl}${EMAIL_SENT}`;
 
   let accountSuspendedUrlWithIdParam;
-  
+
   let account;
 
   before(() => {
