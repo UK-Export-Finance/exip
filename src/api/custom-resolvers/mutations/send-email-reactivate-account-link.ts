@@ -30,7 +30,7 @@ const sendEmailReactivateAccountLink = async (
   context: Context,
 ): Promise<AccountSendEmailReactivateLinkResponse> => {
   try {
-    console.info('Received a reactivate account request - checking account');
+    console.info('Received a request to send reactivate account email/link - checking account');
 
     const { urlOrigin, accountId } = variables;
 
@@ -41,7 +41,7 @@ const sendEmailReactivateAccountLink = async (
     const account = (await getAccountById(context, accountId)) as Account;
 
     if (!account) {
-      console.info('Unable to check account and send reactivate account email - no account found');
+      console.info('Unable to check account and send reactivate account email/link - no account found');
 
       return { success: false };
     }
@@ -68,7 +68,7 @@ const sendEmailReactivateAccountLink = async (
       data: accountUpdate,
     })) as Account;
 
-    console.info('Sending reactivate account email');
+    console.info('Sending reactivate account email/link');
 
     const name = getFullNameString(account);
 
@@ -86,7 +86,7 @@ const sendEmailReactivateAccountLink = async (
   } catch (err) {
     console.error(err);
 
-    throw new Error(`Checking account and sending reactivate account email (sendEmailReactivateAccountLink mutation) ${err}`);
+    throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) ${err}`);
   }
 };
 
