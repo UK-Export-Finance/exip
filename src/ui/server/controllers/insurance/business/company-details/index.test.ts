@@ -310,7 +310,7 @@ describe('controllers/insurance/business/companies-details', () => {
         });
       });
 
-      it('should redirect to companies house error page if error with companies house api', async () => {
+      it('should redirect to companies house error page if error with companies house api or APIM industry sectors', async () => {
         req.body = {
           companiesHouseNumber: '123456',
         };
