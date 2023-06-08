@@ -181,7 +181,7 @@ context('Insurance - All sections - new application', () => {
       insurance.allSectionsPage.submissionDeadline().should('exist');
       const timestamp = addMonths(new Date(), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
 
-      const expected = format(new Date(timestamp), DATE_FORMAT);
+      const expected = format(new Date(timestamp), DATE_FORMAT.DEFAULT);
       cy.checkText(insurance.allSectionsPage.submissionDeadline(), expected);
     });
   });

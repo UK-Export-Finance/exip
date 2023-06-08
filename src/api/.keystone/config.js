@@ -512,6 +512,10 @@ var FEEDBACK = {
   }
 };
 var ACCEPTED_FILE_TYPES = [".xlsx"];
+var DATE_FORMAT = {
+  DEFAULT: "d MMMM yyyy",
+  HOURS_AND_MINUTES: "HH:mm"
+};
 
 // helpers/update-application/index.ts
 var timestamp = async (context, applicationId) => {
@@ -1837,7 +1841,7 @@ var import_dotenv3 = __toESM(require("dotenv"));
 
 // helpers/format-date/index.ts
 var import_date_fns2 = require("date-fns");
-var formatDate = (timestamp3, dateFormat = "d MMMM yyyy") => (0, import_date_fns2.format)(new Date(timestamp3), dateFormat);
+var formatDate = (timestamp3, dateFormat = DATE_FORMAT.DEFAULT) => (0, import_date_fns2.format)(new Date(timestamp3), dateFormat);
 var format_date_default = formatDate;
 
 // helpers/map-feedback-satisfaction/index.ts
@@ -3549,11 +3553,7 @@ var XLSX = {
 };
 
 // generate-xlsx/map-application-to-XLSX/helpers/format-time-of-day/index.ts
-var formatTimeOfDay = (date) => {
-  const fullDate = new Date(date);
-  const hour = fullDate.getHours();
-  return `${hour}:${fullDate.getMinutes()}`;
-};
+var formatTimeOfDay = (date) => format_date_default(date, DATE_FORMAT.HOURS_AND_MINUTES);
 var format_time_of_day_default = formatTimeOfDay;
 
 // generate-xlsx/map-application-to-XLSX/map-key-information/index.ts
