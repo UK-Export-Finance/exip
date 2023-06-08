@@ -1,6 +1,8 @@
 export const QUOTE_ROUTES = {
   START: '/',
 
+  ROOT: '/quote',
+
   BUYER_BODY: '/quote/type-of-buyer',
 
   BUYER_COUNTRY: '/quote/buyer-country',

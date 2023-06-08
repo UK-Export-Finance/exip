@@ -3,11 +3,10 @@ import { ROUTES } from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.PAGE_NOT_FOUND_PAGE;
 
-context('Insurance - page not found', () => {
-  const invalidUrl = `${ROUTES.INSURANCE.ROOT}/invalid-ref-number${ROUTES.INSURANCE.ALL_SECTIONS}`;
+context('Quote - page not found', () => {
+  const invalidUrl = `${ROUTES.QUOTE.ROOT}/test`;
 
   before(() => {
-    cy.completeSignInAndGoToApplication();
     cy.navigateToUrl(invalidUrl);
   });
 
@@ -21,7 +20,8 @@ context('Insurance - page not found', () => {
       currentHref: invalidUrl,
       assertSubmitButton: false,
       assertBackLink: false,
-      assertAuthenticatedHeader: true,
+      assertAuthenticatedHeader: false,
+      isInsurancePage: false,
     });
   });
 
@@ -31,7 +31,7 @@ context('Insurance - page not found', () => {
     });
 
     it('renders `typed` and `pasted` text and contact text and link for insurance contact us', () => {
-      cy.checkPageNotFoundPageText({});
+      cy.checkPageNotFoundPageText({ isInsurancePage: false });
     });
   });
 });

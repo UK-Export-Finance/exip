@@ -23,6 +23,7 @@ interface CorePageVariablesInitialInput {
 
 interface CorePageVariablesInput extends CorePageVariablesInitialInput {
   ORIGINAL_URL?: string;
+  USE_GENERIC_HEADER?: boolean;
 }
 
 interface CorePageVariables {
