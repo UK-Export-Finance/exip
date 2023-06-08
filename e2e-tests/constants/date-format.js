@@ -1,1 +1,3 @@
-export const DATE_FORMAT = 'd MMMM yyyy';
+export const DATE_FORMAT = {
+  DEFAULT: 'd MMMM yyyy',
+};

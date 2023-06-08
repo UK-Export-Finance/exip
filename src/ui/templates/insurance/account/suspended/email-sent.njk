@@ -1,5 +1,5 @@
 {% extends 'index.njk' %}
-{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% import '../../../components/customer-service-helpline.njk' as customerServiceHelpline %}
 
 {% block pageTitle %}
@@ -7,6 +7,14 @@
 {% endblock %}
 
 {% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": "back-link"
+    }
+  }) }}
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">

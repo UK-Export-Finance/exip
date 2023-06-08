@@ -22,6 +22,8 @@ context('Insurance - Account - Suspended - Email sent page - As an Exporter, I w
   const accountSuspendedUrl = `${baseUrl}${SUSPENDED_ROOT}`;
   const accountSuspendedEmailSentUrl = `${baseUrl}${EMAIL_SENT}`;
 
+  let accountSuspendedUrlWithIdParam;
+
   let account;
 
   before(() => {
@@ -43,6 +45,10 @@ context('Insurance - Account - Suspended - Email sent page - As an Exporter, I w
 
         const [firstAccount] = data.accounts;
         account = firstAccount;
+
+        accountSuspendedUrlWithIdParam = `${accountSuspendedUrl}?id=${account.id}`;
+
+        cy.assertUrl(accountSuspendedEmailSentUrl);
       });
     });
 
@@ -50,8 +56,8 @@ context('Insurance - Account - Suspended - Email sent page - As an Exporter, I w
       it('renders core page elements', () => {
         cy.corePageChecks({
           pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-          currentHref: accountSuspendedEmailSentUrl,
-          assertBackLink: false,
+          currentHref: EMAIL_SENT,
+          backLink: `${SUSPENDED_ROOT}?id=${account.id}`,
           assertAuthenticatedHeader: false,
           assertSubmitButton: false,
         });
@@ -62,7 +68,7 @@ context('Insurance - Account - Suspended - Email sent page - As an Exporter, I w
       beforeEach(() => {
         cy.saveSession();
 
-        cy.navigateToUrl(`${accountSuspendedUrl}?id=${account.id}`);
+        cy.navigateToUrl(accountSuspendedUrlWithIdParam);
 
         submitButton().click();
       });
