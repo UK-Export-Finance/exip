@@ -39,8 +39,6 @@ context('Insurance - Account - Suspended page - As an Exporter, I want to reacti
         const [firstAccount] = data.accounts;
         account = firstAccount;
 
-        cy.completeAndSubmitSignInAccountFormMaximumRetries({});
-
         const expectedUrl = `${accountSuspendedUrl}?id=${account.id}`;
 
         cy.assertUrl(expectedUrl);
