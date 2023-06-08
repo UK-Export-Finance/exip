@@ -1,5 +1,13 @@
 import { QUOTE } from '../../constants';
 
+/**
+ * isQuoteRoute
+ * checks if url contains quote
+ * if it contains quote, then is a quote route and returns true
+ * if does not contain quote, then returns false
+ * @param {String} url of the page the user is on
+ * @returns {Boolean}
+ */
 const isQuoteRoute = (url: string) => {
   // splits on / in url
   const urlSplit = url.split('/');
