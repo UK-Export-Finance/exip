@@ -11,13 +11,6 @@ context('Insurance - submit an application without `have traded with buyer befor
 
   before(() => {
     cy.createAccount({});
-  //   cy.completeSignInAndSubmitAnApplication({
-  //     exporterHasTradedWithBuyer: false,
-  //     hasAntiBriberyCodeOfConduct: false,
-  //     exportingWithCodeOfConduct: false,
-  //   }).then((refNumber) => {
-  //     referenceNumber = refNumber;
-  //   });
   });
 
   beforeEach(() => {

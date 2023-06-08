@@ -161,3 +161,8 @@ export const FEEDBACK = {
 };
 
 export const ACCEPTED_FILE_TYPES = ['.xlsx'];
+
+export const DATE_FORMAT = {
+  DEFAULT: 'd MMMM yyyy',
+  HOURS_AND_MINUTES: 'HH:mm',
+};

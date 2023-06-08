@@ -108,7 +108,6 @@ context('Insurance - Your business - Change your answers - Company details - As 
         cy.assertSummaryListRowValue(summaryList, COMPANY_NAME, COMPANY_EXAMPLE.COMPANY_NAME);
         cy.assertSummaryListRowValue(summaryList, COMPANY_INCORPORATED, COMPANY_EXAMPLE.COMPANY_INCORPORATED);
 
-        // TODO: EMS-1080 - disabled due to bug that has been troublesome to replicate.
         cy.assertSummaryListRowValue(summaryList, COMPANY_SIC, `${COMPANY_EXAMPLE.COMPANY_SIC} ${COMPANY_EXAMPLE.COMPANY_SIC_DESCRIPTION}`);
 
         cy.assertSummaryListRowValue(summaryList, FINANCIAL_YEAR_END_DATE, COMPANY_EXAMPLE.FINANCIAL_YEAR_END_DATE);

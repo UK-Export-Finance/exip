@@ -8,7 +8,7 @@ describe('server/helpers/date/format-date', () => {
   it('should return a formatted date', () => {
     const result = formatDate(mockTimestamp);
 
-    const expected = format(new Date(mockTimestamp), DATE_FORMAT);
+    const expected = format(new Date(mockTimestamp), DATE_FORMAT.DEFAULT);
 
     expect(result).toEqual(expected);
   });

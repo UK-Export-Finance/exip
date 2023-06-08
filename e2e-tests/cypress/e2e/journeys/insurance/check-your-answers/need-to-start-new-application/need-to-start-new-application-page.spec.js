@@ -81,7 +81,7 @@ context('Insurance - Check your answers - Need to start new application page', (
 
       const timestamp = addMonths(new Date(), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
 
-      const expectedDeadline = format(new Date(timestamp), DATE_FORMAT);
+      const expectedDeadline = format(new Date(timestamp), DATE_FORMAT.DEFAULT);
 
       cy.checkText(inset.applicationDeadline(), expectedDeadline);
     });
