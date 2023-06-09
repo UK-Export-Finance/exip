@@ -166,7 +166,8 @@ app.get('*', (req: Request, res: Response) => {
     });
   }
 
-  const setGenericHeader = isQuoteRoute(req.originalUrl) ? false : true;
+  // generic header if not quote route
+  const setGenericHeader = !isQuoteRoute(req.originalUrl);
 
   // all other non-insurance page not found should use generic page-not-found template
   return res.render(PAGE_NOT_FOUND_TEMPLATE, {
