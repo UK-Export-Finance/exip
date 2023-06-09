@@ -104,8 +104,32 @@ const START = {
   },
   BODY_1: "Depending on your export contract, you may also need your buyer's annual report and accounts.",
   BODY_2: 'You do not need to complete all answers in one session.',
-  BODY_3: "You'll usually get a decision back from UKEF within 2 weeks. This is because underwriters need to carry out checks on risks around the buyer.",
-  BODY_4: 'If you need it more urgently, you can tell us before you submit your application.',
+  BODY_3: "You'll usually get a decision back within 7 working days, if we do not need to ask you any further questions.",
+  BODY_4: 'If we need to gather extra information, it may take around 2 to 3 weeks.',
+  SIGN_IN: {
+    YOU_CAN: 'You can',
+    LINK: {
+      TEXT: 'sign in to your account',
+      HREF: ROUTES.INSURANCE.ACCOUNT.SIGN_IN.ROOT,
+    },
+    TO_CONTINUE_APPLICATION: "to continue an application, if you've already started one.",
+  },
+  FIND_OUT_MORE: {
+    YOU_CAN: 'You can',
+    LINK: {
+      TEXT: 'find out more about UKEF export insurance',
+      HREF: LINKS.EXTERNAL.GUIDANCE,
+    },
+    TO_FIND_OUT_MORE: "if you want to know who's eligible and what's covered.",
+  },
+  QUOTE: {
+    YOU_CAN: 'You can also',
+    LINK: {
+      TEXT: 'get an instant quote',
+      HREF: ROUTES.QUOTE.START,
+    },
+    IF_YOU_NEED: 'if you need one',
+  },
 };
 
 const NO_ACCESS_TO_APPLICATION_PAGE = {
