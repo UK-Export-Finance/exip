@@ -8,6 +8,6 @@ import { DATE_FORMAT } from '../../../constants';
  * @param {String} dateFormat defaults to 'd MMMM yyyy' unless provided
  * @returns {String} Formatted date
  */
-const formatDate = (timestamp: Date, dateFormat = DATE_FORMAT): string => format(new Date(timestamp), dateFormat);
+const formatDate = (timestamp: Date, dateFormat = DATE_FORMAT.DEFAULT): string => format(new Date(timestamp), dateFormat);
 
 export default formatDate;

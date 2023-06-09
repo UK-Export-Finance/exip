@@ -1,5 +1,6 @@
 import { ACCOUNT } from '../../constants';
 import generate from '.';
+import { get30minutesFromNow } from '../date';
 
 const { OTP, ENCRYPTION } = ACCOUNT;
 
@@ -48,14 +49,10 @@ describe('api/helpers/generate-otp', () => {
     expect(expiryMonth).toEqual(nowMonth);
     expect(expiryYear).toEqual(nowYear);
 
-    const secondsDifference = (expiry.getTime() - now.getTime()) / 1000;
+    const expiryMinutes = expiry.getMinutes();
 
-    // round up (slight millisecond difference in unit tests)
-    const rounded = Math.ceil(secondsDifference);
+    const expectedMinutes = get30minutesFromNow();
 
-    // 30 minutes
-    const expectedSeconds = 60 * 30;
-
-    expect(rounded).toEqual(expectedSeconds);
+    expect(expiryMinutes).toEqual(expectedMinutes);
   });
 });

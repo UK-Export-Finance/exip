@@ -11,6 +11,7 @@ import sendEmailPasswordResetLinkMutation from '../../../graphql/mutations/accou
 import verifyAccountSessionMutation from '../../../graphql/mutations/account/verify-session';
 import accountPasswordResetMutation from '../../../graphql/mutations/account/password-reset';
 import sendEmailReactivateAccountLinkMutation from '../../../graphql/mutations/account/reactivate-account-link';
+import verifyAccountReactivationTokenMutation from '../../../graphql/mutations/account/verify-account-reactivation-token';
 import verifyAccountPasswordResetTokenQuery from '../../../graphql/queries/account/verify-account-password-reset-token';
 
 const account = {
@@ -285,6 +286,33 @@ const account = {
     } catch (err) {
       console.error(err);
       throw new Error('Sending email for account reactivation');
+    }
+  },
+  verifyAccountReactivationToken: async (token: string) => {
+    try {
+      console.info('Verifying account reactivation token');
+
+      const variables = { token };
+
+      const response = (await apollo('POST', verifyAccountReactivationTokenMutation, variables)) as ApolloResponse;
+
+      if (response.errors) {
+        console.error('GraphQL error verifying account reactivation token ', response.errors);
+      }
+
+      if (response?.networkError?.result?.errors) {
+        console.error('GraphQL network error verifying account reactivation token ', response.networkError.result.errors);
+      }
+
+      if (response?.data?.verifyAccountReactivationToken) {
+        return response.data.verifyAccountReactivationToken;
+      }
+
+      console.error(response);
+      throw new Error('Verifying account reactivation token');
+    } catch (err) {
+      console.error(err);
+      throw new Error('Verifying account reactivation token');
     }
   },
   verifyPasswordResetToken: async (token: string) => {

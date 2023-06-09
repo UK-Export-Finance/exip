@@ -13,6 +13,7 @@ import deleteApplicationByReferenceNumber from './delete-application-by-refrence
 import updateCompanyAndCompanyAddress from './update-company-and-company-address';
 import submitApplication from './submit-application';
 import createFeedbackAndSendEmail from './create-feedback';
+import verifyAccountReactivationToken from './verify-account-reactivation-token';
 
 export {
   createAnAccount,
@@ -30,4 +31,5 @@ export {
   updateCompanyAndCompanyAddress,
   submitApplication,
   createFeedbackAndSendEmail,
+  verifyAccountReactivationToken,
 };

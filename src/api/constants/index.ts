@@ -20,26 +20,13 @@ export const EXTERNAL_API_ENDPOINTS = {
 };
 
 /**
- * DATE_5_MINUTES_FROM_NOW
- * Generate a date that is 5 minutes from now
- * @returns {Date}
- */
-const DATE_5_MINUTES_FROM_NOW = () => {
-  const now = new Date();
-
-  const milliseconds = 300000;
-  const future = new Date(now.setMilliseconds(milliseconds));
-
-  return future;
-};
-
-/**
  * DATE_24_HOURS_FROM_NOW
  * Generate a date that is 24 hours from now
  * @returns {Date}
  */
 const DATE_24_HOURS_FROM_NOW = () => {
   const now = new Date();
+
   const day = now.getDate();
 
   // add 1 day to the current time.
@@ -89,7 +76,7 @@ export const ACCOUNT = {
       },
     },
   },
-  PASSWORD_RESET_EXPIRY: DATE_5_MINUTES_FROM_NOW,
+  PASSWORD_RESET_EXPIRY: DATE_30_MINUTES_FROM_NOW,
   // One time password
   OTP: {
     DIGITS: 6,
@@ -174,3 +161,8 @@ export const FEEDBACK = {
 };
 
 export const ACCEPTED_FILE_TYPES = ['.xlsx'];
+
+export const DATE_FORMAT = {
+  DEFAULT: 'd MMMM yyyy',
+  HOURS_AND_MINUTES: 'HH:mm',
+};

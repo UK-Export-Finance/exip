@@ -25,10 +25,6 @@ context('Insurance - Account - Sign in - Submitting the form with invalid creden
     cy.assertUrl(signInUrl);
   });
 
-  // after(() => {
-  //   cy.deleteAccount();
-  // });
-
   describe('when attempting sign in multiple times and reaching the maximum retries threshold', () => {
     beforeEach(() => {
       cy.saveSession();
