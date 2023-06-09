@@ -7,12 +7,12 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 /**
- * completePrepareYourApplicationSectionMultiple
+ * completePrepareApplicationMultiplePolicyType
  * Runs through the full prepare your application journey for multiple policy type
  * @param {Object} Object with flags on how to complete specific parts of the application
  * - useDifferentContactEmail: Should submit a different email address in the "exporter contact" details form.
  */
-const completePrepareYourApplicationSectionMultiple = ({ useDifferentContactEmail }) => {
+const completePrepareApplicationMultiplePolicyType = ({ useDifferentContactEmail }) => {
   task.link().click();
 
   cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
@@ -35,4 +35,4 @@ const completePrepareYourApplicationSectionMultiple = ({ useDifferentContactEmai
   submitButton().click();
 };
 
-export default completePrepareYourApplicationSectionMultiple;
+export default completePrepareApplicationMultiplePolicyType;
