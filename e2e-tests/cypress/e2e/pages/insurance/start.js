@@ -11,6 +11,18 @@ const startPage = {
   body2: () => cy.get('[data-cy="body-2"]'),
   body3: () => cy.get('[data-cy="body-3"]'),
   body4: () => cy.get('[data-cy="body-4"]'),
+  signIn: {
+    text: () => cy.get('[data-cy="sign-in"]'),
+    link: () => cy.get('[data-cy="sign-in-link"]'),
+  },
+  findOutMore: {
+    text: () => cy.get('[data-cy="find-out-more"]'),
+    link: () => cy.get('[data-cy="find-out-more-link"]'),
+  },
+  getAQuote: {
+    text: () => cy.get('[data-cy="get-a-quote"]'),
+    link: () => cy.get('[data-cy="get-a-quote-link"]'),
+  },
 };
 
 export default startPage;
