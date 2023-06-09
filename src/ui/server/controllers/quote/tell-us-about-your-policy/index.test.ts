@@ -1,5 +1,5 @@
 import { generatePageVariables, TEMPLATE, get, post } from '.';
-import { BUTTONS, COOKIES_CONSENT, FIELDS, QUOTE_FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, FIELDS, QUOTE_FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT, HEADER } from '../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
@@ -60,6 +60,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           CONTENT_STRINGS: {
             BUTTONS,
             COOKIES_CONSENT,
+            HEADER,
             FOOTER: QUOTE_FOOTER,
             LINKS,
             PHASE_BANNER,
@@ -115,6 +116,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           CONTENT_STRINGS: {
             BUTTONS,
             COOKIES_CONSENT,
+            HEADER,
             FOOTER: QUOTE_FOOTER,
             LINKS,
             PHASE_BANNER,
@@ -174,6 +176,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             PRODUCT: {
               DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
             },
+            HEADER,
             FOOTER: QUOTE_FOOTER,
             LINKS,
             PHASE_BANNER,

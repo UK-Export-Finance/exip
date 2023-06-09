@@ -6,6 +6,7 @@ type TellUsAboutPolicyPageVariablesContentStrings = {
   PHASE_BANNER: object;
   PAGE_TITLE?: string;
   PRODUCT: object;
+  HEADER: object;
 };
 
 type TellUsAboutPolicyPageVariablesFields = {
