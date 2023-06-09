@@ -287,6 +287,20 @@ describe('controllers/insurance/account/sign-in', () => {
           expect(res.redirect).toHaveBeenCalledWith(`${SUSPENDED_ROOT}?id=${accountSignInResponse.accountId}`);
         });
       });
+
+      describe('when password only contains numbers', () => {
+        it('should call api.keystone.account.signIn with password as a string', async () => {
+          req.body[PASSWORD] = 12345;
+
+          await post(req, res);
+
+          expect(accountSignInSpy).toHaveBeenCalledTimes(1);
+
+          const sanitisedData = sanitiseData(req.body);
+
+          expect(accountSignInSpy).toHaveBeenCalledWith(req.headers.origin, sanitisedData[EMAIL], String(sanitisedData[PASSWORD]));
+        });
+      });
     });
 
     describe('api error handling', () => {
