@@ -2,10 +2,10 @@ import ExcelJS from 'exceljs';
 import styledColumns, { worksheetRowHeights } from '.';
 import HEADER_COLUMNS from '../header-columns';
 import mapApplicationToXLSX from '../map-application-to-XLSX';
-import { XLSX_CONFIG } from '../../constants';
+import { XLSX_CONFIG, XLSX_ROW_INDEXES } from '../../constants';
 import { mockApplication } from '../../test-mocks';
 
-const { ROW_INDEXES, ADDITIONAL_COLUMN_HEIGHT, LARGE_ADDITIONAL_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG();
+const { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG;
 
 describe('api/generate-xlsx/styled-columns/index', () => {
   const workbook = new ExcelJS.Workbook();
@@ -14,7 +14,12 @@ describe('api/generate-xlsx/styled-columns/index', () => {
 
   worksheet.columns = HEADER_COLUMNS;
 
-  const TITLE_INDEXES = Object.values(XLSX_CONFIG(mockApplication).TITLE_ROW_INDEXES);
+  const INDEXES = XLSX_ROW_INDEXES(mockApplication);
+
+  const { TITLES, ...ROWS } = INDEXES;
+
+  const TITLE_INDEXES = Object.values(TITLES);
+  const ROW_INDEXES = Object.values(ROWS);
 
   describe('styledColumns', () => {
     it('should add custom `alignment` and font size properties to each column', () => {
@@ -78,22 +83,19 @@ describe('api/generate-xlsx/styled-columns/index', () => {
         worksheet.addRow(row);
       });
 
-      const result = worksheetRowHeights(TITLE_INDEXES, worksheet);
+      const result = worksheetRowHeights(TITLE_INDEXES, ROW_INDEXES, worksheet);
 
-      const row1 = result.getRow(ROW_INDEXES.COMPANY_ADDRESS);
-      expect(row1.height).toEqual(LARGE_ADDITIONAL_COLUMN_HEIGHT);
+      TITLE_INDEXES.forEach((rowIndex) => {
+        const row = result.getRow(rowIndex);
 
-      const row2 = result.getRow(ROW_INDEXES.COMPANY_SIC_CODES);
-      expect(row2.height).toEqual(ADDITIONAL_COLUMN_HEIGHT);
+        expect(row.height).toEqual(ADDITIONAL_TITLE_COLUMN_HEIGHT);
+      });
 
-      const row3 = result.getRow(ROW_INDEXES.BROKER_ADDRESS);
-      expect(row3.height).toEqual(LARGE_ADDITIONAL_COLUMN_HEIGHT);
+      ROW_INDEXES.forEach((rowIndex) => {
+        const row = result.getRow(rowIndex);
 
-      const row4 = result.getRow(ROW_INDEXES.BUYER_ADDRESS);
-      expect(row4.height).toEqual(LARGE_ADDITIONAL_COLUMN_HEIGHT);
-
-      const row5 = result.getRow(ROW_INDEXES.BUYER_CONTACT_DETAILS);
-      expect(row5.height).toEqual(LARGE_ADDITIONAL_COLUMN_HEIGHT);
+        expect(row.height).toEqual(LARGE_ADDITIONAL_COLUMN_HEIGHT);
+      });
     });
   });
 });

@@ -1,8 +1,8 @@
 import { Row, Worksheet } from 'exceljs';
-import { XLSX_CONFIG } from '../../constants';
+import { XLSX_CONFIG, XLSX_ROW_INDEXES } from '../../constants';
 import { Application } from '../../types';
 
-const { ADDITIONAL_COLUMN_HEIGHT, LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, ROW_INDEXES, FONT_SIZE } = XLSX_CONFIG();
+const { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG;
 
 /**
  * worksheetRowHeights
@@ -11,17 +11,15 @@ const { ADDITIONAL_COLUMN_HEIGHT, LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TIT
  * @param {ExcelJS.Worksheet} ExcelJS worksheet
  * @returns {ExcelJS.Worksheet} ExcelJS worksheet
  */
-export const worksheetRowHeights = (titleRowIndexes: Array<number>, worksheet: Worksheet) => {
+export const worksheetRowHeights = (titleRowIndexes: Array<number>, rowIndexes: Array<number>, worksheet: Worksheet) => {
   const modifiedWorksheet = worksheet;
 
-  modifiedWorksheet.getRow(ROW_INDEXES.COMPANY_ADDRESS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
-  modifiedWorksheet.getRow(ROW_INDEXES.COMPANY_SIC_CODES).height = ADDITIONAL_COLUMN_HEIGHT;
-  modifiedWorksheet.getRow(ROW_INDEXES.BROKER_ADDRESS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
-  modifiedWorksheet.getRow(ROW_INDEXES.BUYER_ADDRESS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
-  modifiedWorksheet.getRow(ROW_INDEXES.BUYER_CONTACT_DETAILS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
-
-  Object.values(titleRowIndexes).forEach((rowIndex) => {
+  titleRowIndexes.forEach((rowIndex) => {
     modifiedWorksheet.getRow(rowIndex).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+  });
+
+  rowIndexes.forEach((rowIndex) => {
+    modifiedWorksheet.getRow(rowIndex).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
   });
 
   return modifiedWorksheet;
@@ -37,7 +35,12 @@ export const worksheetRowHeights = (titleRowIndexes: Array<number>, worksheet: W
 const styledColumns = (application: Application, worksheet: Worksheet) => {
   let modifiedWorksheet = worksheet;
 
-  const TITLE_INDEXES = Object.values(XLSX_CONFIG(application).TITLE_ROW_INDEXES);
+  const INDEXES = XLSX_ROW_INDEXES(application);
+
+  const { TITLES, ...ROWS } = INDEXES;
+
+  const TITLE_INDEXES = Object.values(TITLES);
+  const ROW_INDEXES = Object.values(ROWS);
 
   modifiedWorksheet.eachRow((row: Row, rowNumber: number) => {
     row.eachCell((cell, colNumber) => {
@@ -57,7 +60,7 @@ const styledColumns = (application: Application, worksheet: Worksheet) => {
     });
   });
 
-  modifiedWorksheet = worksheetRowHeights(TITLE_INDEXES, modifiedWorksheet);
+  modifiedWorksheet = worksheetRowHeights(TITLE_INDEXES, ROW_INDEXES, modifiedWorksheet);
 
   return modifiedWorksheet;
 };

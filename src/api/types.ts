@@ -397,6 +397,25 @@ interface IndustrySector {
   ukefIndustryName: string;
 }
 
+interface XLSXTitleRowIndexes {
+  HEADER: number;
+  KEY_INFORMATION: number;
+  EXPORTER_CONTACT_DETAILS?: number;
+  POLICY_AND_EXPORT: number;
+  EXPORTER_BUSINESS: number;
+  BUYER: number;
+  ELIGIBILITY: number;
+}
+
+interface XLSXRowIndexes {
+  TITLES: XLSXTitleRowIndexes;
+  COMPANY_ADDRESS: number;
+  COMPANY_SIC_CODES: number;
+  BROKER_ADDRESS: number;
+  BUYER_ADDRESS: number;
+  BUYER_CONTACT_DETAILS: number;
+}
+
 export {
   Account,
   AccountCreationVariables,
@@ -445,6 +464,8 @@ export {
   SubmitApplicationVariables,
   SuccessResponse,
   UpdateCompanyAndCompanyAddressVariables,
+  XLSXTitleRowIndexes,
+  XLSXRowIndexes,
   VerifyEmailAddressVariables,
   VerifyEmailAddressResponse,
   VerifyAccountPasswordResetTokenVariables,

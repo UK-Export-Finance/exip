@@ -26,6 +26,7 @@ const {
 export const XLSX = {
   SECTION_TITLES: {
     KEY_INFORMATION: 'Key information',
+    EXPORTER_CONTACT_DETAILS: 'Exporter contact details',
     POLICY_AND_EXPORT: 'Type of policy and exports',
     EXPORTER_BUSINESS: 'About your business',
     BUYER: 'Your buyer',
@@ -35,6 +36,11 @@ export const XLSX = {
     [FIRST_NAME]: 'Applicant first name',
     [LAST_NAME]: 'Applicant last name',
     APPLICANT_EMAIL_ADDRESS: 'Applicant email address',
+    EXPORTER_CONTACT: {
+      [FIRST_NAME]: 'Exporter first name',
+      [LAST_NAME]: 'Exporter last name',
+      EXPORTER_CONTACT_EMAIL: 'Exporter email address',
+    },
     [CONTRACT_COMPLETION_DATE]: 'Date expected for contract to complete',
     [EXPORTER_COMPANY_NAME]: 'Exporter company name',
     [EXPORTER_COMPANY_ADDRESS]: 'Exporter registered office address',
