@@ -7,6 +7,7 @@ import createAuthenticationRetryEntry from '../../helpers/create-authentication-
 import getFullNameString from '../../helpers/get-full-name-string';
 import sendEmail from '../../emails';
 import { ACCOUNT } from '../../constants';
+import { get30minutesFromNow } from '../../helpers/date';
 import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../test-mocks';
 import { Account, SuccessResponse } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -93,13 +94,13 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
   it('should generate and add a passwordResetExpiry to the account', async () => {
     const now = new Date();
 
-    const nowDay = now.getDay();
+    const nowDay = now.getDate();
     const nowMonth = now.getMonth();
     const nowYear = now.getFullYear();
 
     const expiry = new Date(account.passwordResetExpiry);
 
-    const expiryDay = expiry.getDay();
+    const expiryDay = expiry.getDate();
     const expiryMonth = expiry.getMonth();
     const expiryYear = expiry.getFullYear();
 
@@ -107,15 +108,11 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     expect(expiryMonth).toEqual(nowMonth);
     expect(expiryYear).toEqual(nowYear);
 
-    const secondsDifference = (expiry.getTime() - now.getTime()) / 1000;
+    const expiryMinutes = expiry.getMinutes();
 
-    // round up (slight millisecond difference in unit tests)
-    const rounded = Math.ceil(secondsDifference);
+    const expectedMinutes = get30minutesFromNow();
 
-    // 5 minutes
-    const expectedSeconds = 60 * 5;
-
-    expect(rounded).toEqual(expectedSeconds);
+    expect(expiryMinutes).toEqual(expectedMinutes);
   });
 
   test('it should call sendEmail.passwordResetLink', () => {
