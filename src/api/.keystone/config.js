@@ -325,11 +325,25 @@ var {
     BROKER: { USING_BROKER }
   }
 } = insurance_default;
-var TITLE_ROW_INDEXES = (application2) => {
-  if (!application2) {
-    return {};
-  }
+var XLSX_ROW_INDEXES = (application2) => {
   const { policyAndExport, broker } = application2;
+  const TITLES = {
+    HEADER: 1,
+    EXPORTER_CONTACT_DETAILS: 9,
+    KEY_INFORMATION: 14,
+    POLICY_AND_EXPORT: 20,
+    EXPORTER_BUSINESS: 30,
+    BUYER: 49,
+    ELIGIBILITY: 59
+  };
+  const INDEXES = {
+    TITLES,
+    COMPANY_ADDRESS: 34,
+    COMPANY_SIC_CODES: 37,
+    BROKER_ADDRESS: 45,
+    BUYER_ADDRESS: 50,
+    BUYER_CONTACT_DETAILS: 53
+  };
   const policyType = policyAndExport[POLICY_TYPE2];
   let isMultiplePolicy = false;
   let isUsingBroker = false;
@@ -339,28 +353,23 @@ var TITLE_ROW_INDEXES = (application2) => {
   if (broker[USING_BROKER] === ANSWERS.YES) {
     isUsingBroker = true;
   }
-  let EXPORTER_BUSINESS3 = 25;
-  let BUYER = 44;
-  let ELIGIBILITY = 54;
   if (isMultiplePolicy) {
-    EXPORTER_BUSINESS3 += 1;
-    BUYER += 1;
-    ELIGIBILITY += 1;
+    TITLES.EXPORTER_BUSINESS += 1;
+    TITLES.BUYER += 1;
+    TITLES.ELIGIBILITY += 1;
+    INDEXES.COMPANY_ADDRESS += 1;
+    INDEXES.COMPANY_SIC_CODES += 1;
+    INDEXES.BROKER_ADDRESS += 1;
+    INDEXES.BUYER_ADDRESS += 1;
+    INDEXES.BUYER_CONTACT_DETAILS += 1;
   }
   if (isUsingBroker) {
-    BUYER += 3;
-    ELIGIBILITY += 3;
+    TITLES.BUYER += 3;
+    TITLES.ELIGIBILITY += 3;
   }
-  return {
-    HEADER: 1,
-    KEY_INFORMATION: 9,
-    POLICY_AND_EXPORT: 15,
-    EXPORTER_BUSINESS: EXPORTER_BUSINESS3,
-    BUYER,
-    ELIGIBILITY
-  };
+  return INDEXES;
 };
-var XLSX_CONFIG = (application2) => ({
+var XLSX_CONFIG = {
   KEY: {
     ID: "field",
     COPY: "Field"
@@ -376,16 +385,8 @@ var XLSX_CONFIG = (application2) => ({
   FONT_SIZE: {
     DEFAULT: 11,
     TITLE: 14
-  },
-  ROW_INDEXES: {
-    COMPANY_ADDRESS: 30,
-    COMPANY_SIC_CODES: 33,
-    BROKER_ADDRESS: 45,
-    BUYER_ADDRESS: 50,
-    BUYER_CONTACT_DETAILS: 53
-  },
-  TITLE_ROW_INDEXES: TITLE_ROW_INDEXES(application2)
-});
+  }
+};
 
 // constants/index.ts
 import_dotenv.default.config();
@@ -3152,7 +3153,7 @@ var replaceCharacterCodesWithCharacters = (str) => str.replace(/&lt;/g, "<").rep
 var replace_character_codes_with_characters_default = replaceCharacterCodesWithCharacters;
 
 // generate-xlsx/map-application-to-XLSX/helpers/xlsx-row/index.ts
-var { KEY, VALUE } = XLSX_CONFIG();
+var { KEY, VALUE } = XLSX_CONFIG;
 var xlsxRow = (fieldName, answer) => {
   const value = answer || answer === 0 ? answer : "";
   const cleanValue = replace_character_codes_with_characters_default(String(value));
@@ -3524,6 +3525,7 @@ var {
 var XLSX = {
   SECTION_TITLES: {
     KEY_INFORMATION: "Key information",
+    EXPORTER_CONTACT_DETAILS: "Exporter contact details",
     POLICY_AND_EXPORT: "Type of policy and exports",
     EXPORTER_BUSINESS: "About your business",
     BUYER: "Your buyer",
@@ -3533,6 +3535,11 @@ var XLSX = {
     [FIRST_NAME]: "Applicant first name",
     [LAST_NAME]: "Applicant last name",
     APPLICANT_EMAIL_ADDRESS: "Applicant email address",
+    EXPORTER_CONTACT: {
+      [FIRST_NAME]: "Exporter first name",
+      [LAST_NAME]: "Exporter last name",
+      EXPORTER_CONTACT_EMAIL: "Exporter email address"
+    },
     [CONTRACT_COMPLETION_DATE]: "Date expected for contract to complete",
     [EXPORTER_COMPANY_NAME]: "Exporter company name",
     [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
@@ -3575,10 +3582,32 @@ var mapKeyInformation = (application2) => {
 };
 var map_key_information_default = mapKeyInformation;
 
+// generate-xlsx/map-application-to-XLSX/map-exporter-contact-details/index.ts
+var {
+  ACCOUNT: { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL5 }
+} = insurance_default;
+var {
+  SECTION_TITLES: { EXPORTER_CONTACT_DETAILS },
+  FIELDS: FIELDS3
+} = XLSX;
+var mapExporterContactDetails = (application2) => {
+  const {
+    business: { businessContactDetail }
+  } = application2;
+  const mapped = [
+    xlsx_row_default(EXPORTER_CONTACT_DETAILS),
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT[FIRST_NAME3], businessContactDetail[FIRST_NAME3]),
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT[LAST_NAME3], businessContactDetail[LAST_NAME3]),
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, businessContactDetail[EMAIL5])
+  ];
+  return mapped;
+};
+var map_exporter_contact_details_default = mapExporterContactDetails;
+
 // generate-xlsx/map-application-to-XLSX/map-secondary-key-information/index.ts
 var {
   SECTION_TITLES: { KEY_INFORMATION },
-  FIELDS: FIELDS3
+  FIELDS: FIELDS4
 } = XLSX;
 var CONTENT_STRINGS = {
   ...POLICY_AND_EXPORTS_FIELDS
@@ -3598,9 +3627,9 @@ var mapSecondaryKeyInformation = (application2) => {
   const { policyAndExport } = application2;
   const mapped = [
     xlsx_row_default(KEY_INFORMATION),
-    xlsx_row_default(FIELDS3[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
-    xlsx_row_default(FIELDS3[COUNTRY2], application2.buyer[COUNTRY2].name),
-    xlsx_row_default(FIELDS3[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
+    xlsx_row_default(FIELDS4[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
+    xlsx_row_default(FIELDS4[COUNTRY2], application2.buyer[COUNTRY2].name),
+    xlsx_row_default(FIELDS4[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
     xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE3].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE3])
   ];
   return mapped;
@@ -3718,7 +3747,7 @@ var {
   YOUR_COMPANY: { TRADING_NAME: TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE3, PHONE_NUMBER: PHONE_NUMBER3 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL3 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
-  BROKER: { USING_BROKER: USING_BROKER4, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL5 }
+  BROKER: { USING_BROKER: USING_BROKER4, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL6 }
 } = business_default;
 var mapSicCodes2 = (sicCodes) => {
   let mapped = "";
@@ -3740,7 +3769,7 @@ var mapBroker = (application2) => {
       ...mapped,
       xlsx_row_default(XLSX.FIELDS[BROKER_NAME2], broker[BROKER_NAME2]),
       xlsx_row_default(XLSX.FIELDS[ADDRESS_LINE_12], `${addressAnswer.lineOneAndTwo}${addressAnswer.other}`),
-      xlsx_row_default(XLSX.FIELDS[EMAIL5], broker[EMAIL5])
+      xlsx_row_default(XLSX.FIELDS[EMAIL6], broker[EMAIL6])
     ];
   }
   return mapped;
@@ -3780,7 +3809,7 @@ var CONTENT_STRINGS4 = {
   ...YOUR_BUYER_FIELDS.WORKING_WITH_BUYER
 };
 var {
-  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4, FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, POSITION, EMAIL: EMAIL6, CAN_CONTACT_BUYER },
+  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4, FIRST_NAME: FIRST_NAME4, LAST_NAME: LAST_NAME4, POSITION, EMAIL: EMAIL7, CAN_CONTACT_BUYER },
   WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER }
 } = your_buyer_default;
 var mapBuyer = (application2) => {
@@ -3791,7 +3820,7 @@ var mapBuyer = (application2) => {
     xlsx_row_default(String(CONTENT_STRINGS4[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${xlsx_new_line_default}${buyer[COUNTRY3].name}`),
     xlsx_row_default(XLSX.FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
     xlsx_row_default(String(CONTENT_STRINGS4[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
-    xlsx_row_default(XLSX.FIELDS[FIRST_NAME3], `${buyer[FIRST_NAME3]} ${buyer[LAST_NAME3]} ${xlsx_new_line_default}${buyer[POSITION]} ${xlsx_new_line_default}${buyer[EMAIL6]}`),
+    xlsx_row_default(XLSX.FIELDS[FIRST_NAME4], `${buyer[FIRST_NAME4]} ${buyer[LAST_NAME4]} ${xlsx_new_line_default}${buyer[POSITION]} ${xlsx_new_line_default}${buyer[EMAIL7]}`),
     xlsx_row_default(String(CONTENT_STRINGS4[CAN_CONTACT_BUYER].SUMMARY?.TITLE), buyer[CAN_CONTACT_BUYER]),
     xlsx_row_default(String(CONTENT_STRINGS4[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), buyer[CONNECTED_WITH_BUYER]),
     xlsx_row_default(String(CONTENT_STRINGS4[TRADED_WITH_BUYER].SUMMARY?.TITLE), buyer[TRADED_WITH_BUYER])
@@ -3848,6 +3877,8 @@ var mapApplicationToXLSX = (application2) => {
     const mapped = [
       ...map_key_information_default(application2),
       xlsx_row_seperator_default,
+      ...map_exporter_contact_details_default(application2),
+      xlsx_row_seperator_default,
       ...map_secondary_key_information_default(application2),
       xlsx_row_seperator_default,
       ...map_policy_and_export_default(application2),
@@ -3867,7 +3898,7 @@ var mapApplicationToXLSX = (application2) => {
 var map_application_to_XLSX_default = mapApplicationToXLSX;
 
 // generate-xlsx/header-columns/index.ts
-var { KEY: KEY2, VALUE: VALUE2, COLUMN_WIDTH } = XLSX_CONFIG();
+var { KEY: KEY2, VALUE: VALUE2, COLUMN_WIDTH } = XLSX_CONFIG;
 var XLSX_HEADER_COLUMNS = [
   { key: KEY2.ID, header: KEY2.COPY, width: COLUMN_WIDTH },
   { key: VALUE2.ID, header: VALUE2.COPY, width: COLUMN_WIDTH }
@@ -3875,22 +3906,23 @@ var XLSX_HEADER_COLUMNS = [
 var header_columns_default = XLSX_HEADER_COLUMNS;
 
 // generate-xlsx/styled-columns/index.ts
-var { ADDITIONAL_COLUMN_HEIGHT, LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, ROW_INDEXES, FONT_SIZE } = XLSX_CONFIG();
-var worksheetRowHeights = (titleRowIndexes, worksheet) => {
+var { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG;
+var worksheetRowHeights = (titleRowIndexes, rowIndexes, worksheet) => {
   const modifiedWorksheet = worksheet;
-  modifiedWorksheet.getRow(ROW_INDEXES.COMPANY_ADDRESS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
-  modifiedWorksheet.getRow(ROW_INDEXES.COMPANY_SIC_CODES).height = ADDITIONAL_COLUMN_HEIGHT;
-  modifiedWorksheet.getRow(ROW_INDEXES.BROKER_ADDRESS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
-  modifiedWorksheet.getRow(ROW_INDEXES.BUYER_ADDRESS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
-  modifiedWorksheet.getRow(ROW_INDEXES.BUYER_CONTACT_DETAILS).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
-  Object.values(titleRowIndexes).forEach((rowIndex) => {
+  titleRowIndexes.forEach((rowIndex) => {
     modifiedWorksheet.getRow(rowIndex).height = ADDITIONAL_TITLE_COLUMN_HEIGHT;
+  });
+  rowIndexes.forEach((rowIndex) => {
+    modifiedWorksheet.getRow(rowIndex).height = LARGE_ADDITIONAL_COLUMN_HEIGHT;
   });
   return modifiedWorksheet;
 };
 var styledColumns = (application2, worksheet) => {
   let modifiedWorksheet = worksheet;
-  const TITLE_INDEXES = Object.values(XLSX_CONFIG(application2).TITLE_ROW_INDEXES);
+  const INDEXES = XLSX_ROW_INDEXES(application2);
+  const { TITLES, ...ROWS } = INDEXES;
+  const TITLE_INDEXES = Object.values(TITLES);
+  const ROW_INDEXES = Object.values(ROWS);
   modifiedWorksheet.eachRow((row, rowNumber) => {
     row.eachCell((cell, colNumber) => {
       const modifiedRow = row;
@@ -3905,7 +3937,7 @@ var styledColumns = (application2, worksheet) => {
       };
     });
   });
-  modifiedWorksheet = worksheetRowHeights(TITLE_INDEXES, modifiedWorksheet);
+  modifiedWorksheet = worksheetRowHeights(TITLE_INDEXES, ROW_INDEXES, modifiedWorksheet);
   return modifiedWorksheet;
 };
 var styled_columns_default = styledColumns;

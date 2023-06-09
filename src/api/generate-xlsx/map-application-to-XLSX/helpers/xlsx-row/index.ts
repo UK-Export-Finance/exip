@@ -1,7 +1,7 @@
 import { XLSX_CONFIG } from '../../../../constants';
 import replaceCharacterCodesWithCharacters from '../../../../helpers/replace-character-codes-with-characters';
 
-const { KEY, VALUE } = XLSX_CONFIG();
+const { KEY, VALUE } = XLSX_CONFIG;
 
 /**
  * xlsxRow

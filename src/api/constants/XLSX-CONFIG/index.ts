@@ -1,7 +1,7 @@
 import FIELD_IDS from '../field-ids/insurance';
 import { isMultiPolicyType } from '../../helpers/policy-type';
 import { ANSWERS } from '../answers';
-import { Application } from '../../types';
+import { Application, XLSXTitleRowIndexes, XLSXRowIndexes } from '../../types';
 
 const {
   POLICY_AND_EXPORTS: {
@@ -13,19 +13,35 @@ const {
 } = FIELD_IDS;
 
 /**
- * TITLE_ROW_INDEXES
- * Generate title row indexes for XLSX.
+ * XLSX_ROW_INDEXES
+ * Generate row indexes for XLSX.
  * Depending on the submitted application data, the rows can be different:
  * - If the policy type is multiple - the XLSX's "Policy and exports” section has 1 additional row.
  * - If "using a broker" is true - the XLSX's “About your business“ section has 3 additional rows.
  * @returns {Object}
  */
-export const TITLE_ROW_INDEXES = (application?: Application): object => {
-  if (!application) {
-    return {};
-  }
-
+export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   const { policyAndExport, broker } = application;
+
+  const TITLES = {
+    HEADER: 1,
+    EXPORTER_CONTACT_DETAILS: 9,
+    KEY_INFORMATION: 14,
+    POLICY_AND_EXPORT: 20,
+    EXPORTER_BUSINESS: 30,
+    BUYER: 49,
+    ELIGIBILITY: 59,
+  } as XLSXTitleRowIndexes;
+
+  const INDEXES = {
+    TITLES,
+    COMPANY_ADDRESS: 34,
+    COMPANY_SIC_CODES: 37,
+    BROKER_ADDRESS: 45,
+    BUYER_ADDRESS: 50,
+    BUYER_CONTACT_DETAILS: 53,
+  } as XLSXRowIndexes;
+
   const policyType = policyAndExport[POLICY_TYPE];
 
   let isMultiplePolicy = false;
@@ -39,29 +55,24 @@ export const TITLE_ROW_INDEXES = (application?: Application): object => {
     isUsingBroker = true;
   }
 
-  let EXPORTER_BUSINESS = 25;
-  let BUYER = 44;
-  let ELIGIBILITY = 54;
-
   if (isMultiplePolicy) {
-    EXPORTER_BUSINESS += 1;
-    BUYER += 1;
-    ELIGIBILITY += 1;
+    TITLES.EXPORTER_BUSINESS += 1;
+    TITLES.BUYER += 1;
+    TITLES.ELIGIBILITY += 1;
+
+    INDEXES.COMPANY_ADDRESS += 1;
+    INDEXES.COMPANY_SIC_CODES += 1;
+    INDEXES.BROKER_ADDRESS += 1;
+    INDEXES.BUYER_ADDRESS += 1;
+    INDEXES.BUYER_CONTACT_DETAILS += 1;
   }
 
   if (isUsingBroker) {
-    BUYER += 3;
-    ELIGIBILITY += 3;
+    TITLES.BUYER += 3;
+    TITLES.ELIGIBILITY += 3;
   }
 
-  return {
-    HEADER: 1,
-    KEY_INFORMATION: 9,
-    POLICY_AND_EXPORT: 15,
-    EXPORTER_BUSINESS,
-    BUYER,
-    ELIGIBILITY,
-  };
+  return INDEXES;
 };
 
 /**
@@ -69,7 +80,7 @@ export const TITLE_ROW_INDEXES = (application?: Application): object => {
  * Generate XLSX config.
  * @returns {Object}
  */
-export const XLSX_CONFIG = (application?: Application) => ({
+export const XLSX_CONFIG = {
   KEY: {
     ID: 'field',
     COPY: 'Field',
@@ -86,14 +97,6 @@ export const XLSX_CONFIG = (application?: Application) => ({
     DEFAULT: 11,
     TITLE: 14,
   },
-  ROW_INDEXES: {
-    COMPANY_ADDRESS: 30,
-    COMPANY_SIC_CODES: 33,
-    BROKER_ADDRESS: 45,
-    BUYER_ADDRESS: 50,
-    BUYER_CONTACT_DETAILS: 53,
-  },
-  TITLE_ROW_INDEXES: TITLE_ROW_INDEXES(application),
-});
+};
 
 export default XLSX_CONFIG;
