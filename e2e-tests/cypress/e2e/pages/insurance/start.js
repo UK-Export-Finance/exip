@@ -13,15 +13,21 @@ const startPage = {
   body4: () => cy.get('[data-cy="body-4"]'),
   signIn: {
     text: () => cy.get('[data-cy="sign-in"]'),
+    youCan: () => cy.get('[data-cy="sign-in-you-can"]'),
     link: () => cy.get('[data-cy="sign-in-link"]'),
+    toContinueApplication: () => cy.get('[data-cy="sign-in-to-continue-application"]'),
   },
   findOutMore: {
     text: () => cy.get('[data-cy="find-out-more"]'),
+    youCan: () => cy.get('[data-cy="find-out-more-you-can"]'),
     link: () => cy.get('[data-cy="find-out-more-link"]'),
+    toFindOutMore: () => cy.get('[data-cy="find-out-more-to-find-out-more"]'),
   },
   getAQuote: {
     text: () => cy.get('[data-cy="get-a-quote"]'),
+    youCan: () => cy.get('[data-cy="get-a-quote-you-can"]'),
     link: () => cy.get('[data-cy="get-a-quote-link"]'),
+    ifYouNeed: () => cy.get('[data-cy="get-a-quote-if-you-need"]'),
   },
 };
 

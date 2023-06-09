@@ -73,25 +73,31 @@ context('Insurance Eligibility - start page', () => {
     it('renders a "sign-in" body text', () => {
       const { SIGN_IN } = CONTENT_STRINGS;
 
-      cy.checkText(insurance.startPage.signIn.text(), `${SIGN_IN.BODY_1} ${SIGN_IN.LINK.TEXT} ${SIGN_IN.BODY_2}`);
+      cy.checkText(insurance.startPage.signIn.youCan(), SIGN_IN.YOU_CAN);
 
       cy.checkLink(insurance.startPage.signIn.link(), SIGN_IN.LINK.HREF, SIGN_IN.LINK.TEXT);
+
+      cy.checkText(insurance.startPage.signIn.toContinueApplication(), SIGN_IN.TO_CONTINUE_APPLICATION);
     });
 
     it('renders a "find out more" body text', () => {
       const { FIND_OUT_MORE } = CONTENT_STRINGS;
 
-      cy.checkText(insurance.startPage.findOutMore.text(), `${FIND_OUT_MORE.BODY_1} ${FIND_OUT_MORE.LINK.TEXT}${FIND_OUT_MORE.BODY_2}`);
+      cy.checkText(insurance.startPage.findOutMore.youCan(), FIND_OUT_MORE.YOU_CAN);
 
       cy.checkLink(insurance.startPage.findOutMore.link(), FIND_OUT_MORE.LINK.HREF, FIND_OUT_MORE.LINK.TEXT);
+
+      cy.checkText(insurance.startPage.findOutMore.toFindOutMore(), FIND_OUT_MORE.TO_FIND_OUT_MORE);
     });
 
     it('renders a "get a quote" body text', () => {
       const { QUOTE } = CONTENT_STRINGS;
 
-      cy.checkText(insurance.startPage.getAQuote.text(), `${QUOTE.BODY_1} ${QUOTE.LINK.TEXT}${QUOTE.BODY_2}`);
+      cy.checkText(insurance.startPage.getAQuote.youCan(), QUOTE.YOU_CAN);
 
       cy.checkLink(insurance.startPage.getAQuote.link(), QUOTE.LINK.HREF, QUOTE.LINK.TEXT);
+
+      cy.checkText(insurance.startPage.getAQuote.ifYouNeed(), QUOTE.IF_YOU_NEED);
     });
   });
 

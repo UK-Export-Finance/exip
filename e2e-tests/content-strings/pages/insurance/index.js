@@ -107,28 +107,28 @@ const START = {
   BODY_3: "You'll usually get a decision back within 7 working days, if we do not need to ask you any further questions.",
   BODY_4: 'If we need to gather extra information, it may take around 2 to 3 weeks.',
   SIGN_IN: {
-    BODY_1: 'You can',
+    YOU_CAN: 'You can',
     LINK: {
       TEXT: 'sign in to your account',
       HREF: ROUTES.INSURANCE.ACCOUNT.SIGN_IN.ROOT,
     },
-    BODY_2: "to continue an application, if you've already started one.",
+    TO_CONTINUE_APPLICATION: "to continue an application, if you've already started one.",
   },
   FIND_OUT_MORE: {
-    BODY_1: 'You can',
+    YOU_CAN: 'You can',
     LINK: {
       TEXT: 'find out more about UKEF export insurance',
       HREF: LINKS.EXTERNAL.GUIDANCE,
     },
-    BODY_2: ", if you want to know who's eligible and what's covered.",
+    TO_FIND_OUT_MORE: "if you want to know who's eligible and what's covered.",
   },
   QUOTE: {
-    BODY_1: 'You can also',
+    YOU_CAN: 'You can also',
     LINK: {
       TEXT: 'get an instant quote',
       HREF: ROUTES.QUOTE.START,
     },
-    BODY_2: ', if you need one',
+    IF_YOU_NEED: 'if you need one',
   },
 };
 
