@@ -15,7 +15,7 @@ context('Tell us about your multiple policy page - Signed in', () => {
 
   before(() => {
     cy.completeSignInAndGoToApplication();
-    cy.login()
+    cy.login();
 
     completeAndSubmitBuyerCountryForm();
     completeAndSubmitBuyerBodyForm();
