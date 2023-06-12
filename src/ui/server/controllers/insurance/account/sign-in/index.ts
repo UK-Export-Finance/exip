@@ -107,7 +107,7 @@ export const post = async (req: Request, res: Response) => {
     const sanitisedData = sanitiseData(req.body);
 
     const email = sanitisedData[EMAIL];
-    const password = sanitisedData[PASSWORD];
+    const password = String(sanitisedData[PASSWORD]);
 
     const urlOrigin = req.headers.origin;
 
