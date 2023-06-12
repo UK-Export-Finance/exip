@@ -4262,7 +4262,6 @@ var verifyAccountPasswordResetToken = async (root, variables, context) => {
   console.info("Verifying account password reset token");
   try {
     const { token } = variables;
-    console.info("Verifying account password reset token, variables ", variables);
     const account = await get_account_by_field_default(context, PASSWORD_RESET_HASH, token);
     if (!account) {
       console.info("Unable to verify account password reset token - account does not exist");
