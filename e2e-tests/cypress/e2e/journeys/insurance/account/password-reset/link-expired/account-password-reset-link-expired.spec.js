@@ -1,5 +1,7 @@
+import { backLink, submitButton } from '../../../../../pages/shared';
+import { yourDetailsPage } from '../../../../../pages/insurance/account/create';
+import { signInPage } from '../../../../../pages/insurance/account/sign-in';
 import { linkExpiredPage } from '../../../../../pages/insurance/account/password-reset';
-import { submitButton } from '../../../../../pages/shared';
 import { PAGES, BUTTONS } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -25,9 +27,22 @@ context('Insurance - Account - Password reset - link expired page', () => {
   const baseUrl = Cypress.config('baseUrl');
 
   before(() => {
+    cy.deleteAccount();
+
     cy.navigateToUrl(START);
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
+
+    // go back to create account page
+    backLink().click();
+
+    // navigate to sign in page
+    yourDetailsPage.signInButtonLink().click();
+
+    // navigate to password reset page
+    signInPage.resetPasswordLink().click();
+
+    cy.completeAndSubmitPasswordResetForm({});
   });
 
   beforeEach(() => {
@@ -74,7 +89,7 @@ context('Insurance - Account - Password reset - link expired page', () => {
     it(`should redirect to ${LINK_EXPIRED} and render core page elements and content`, () => {
       cy.navigateToUrl(`${baseUrl}${NEW_PASSWORD}?token=${updatedAccount[PASSWORD_RESET_HASH]}`);
 
-      const expectedUrl = `${baseUrl}${LINK_EXPIRED}`;
+      const expectedUrl = `${baseUrl}${LINK_EXPIRED}?id=${updatedAccount.id}`;
 
       cy.assertUrl(expectedUrl);
 

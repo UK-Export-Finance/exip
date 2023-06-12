@@ -24,6 +24,8 @@ context('Insurance - Account - Password reset - link expired page - send new lin
   const baseUrl = Cypress.config('baseUrl');
 
   before(() => {
+    cy.deleteAccount();
+
     cy.navigateToUrl(START);
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
