@@ -108,15 +108,21 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
 
     describe('when the api.keystone.account.verifyPasswordResetToken returns expired=false', () => {
       beforeEach(() => {
-        verifyAccountPasswordResetTokenSpy = jest.fn(() => Promise.resolve({ success: true, expired: true }));
+        verifyAccountPasswordResetTokenSpy = jest.fn(() =>
+          Promise.resolve({
+            success: true,
+            expired: true,
+            accountId: mockAccount.id,
+          }),
+        );
 
         api.keystone.account.verifyPasswordResetToken = verifyAccountPasswordResetTokenSpy;
       });
 
-      it(`should redirect to ${LINK_EXPIRED}`, async () => {
+      it(`should redirect to ${LINK_EXPIRED} with ID query param`, async () => {
         await get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(LINK_EXPIRED);
+        expect(res.redirect).toHaveBeenCalledWith(`${LINK_EXPIRED}?id=${mockAccount.id}`);
       });
     });
 

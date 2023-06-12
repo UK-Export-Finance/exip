@@ -31,7 +31,7 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
     cy.saveSession();
   });
 
-  describe(`When a verification token has expired and exporter navigates to ${VERIFY_EMAIL} with the expired token`, () => {
+  describe(`When a verification token has expired and the user navigates to ${VERIFY_EMAIL} with the expired token`, () => {
     let updatedAccount;
 
     beforeEach(async () => {

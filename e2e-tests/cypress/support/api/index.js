@@ -39,6 +39,7 @@ const queryStrings = {
         id
         verificationHash
         reactivationHash
+        passwordResetHash
       }
     }
   `,

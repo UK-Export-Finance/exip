@@ -26,6 +26,8 @@ const verifyAccountPasswordResetToken = async (
   try {
     const { token } = variables;
 
+    console.info('Verifying account password reset token, variables ', variables);
+
     // Get the account the token is associated with.
     const account = await getAccountByField(context, PASSWORD_RESET_HASH, token);
 
@@ -46,6 +48,7 @@ const verifyAccountPasswordResetToken = async (
       return {
         success: false,
         expired: true,
+        accountId: account.id,
       };
     }
 

@@ -1,17 +1,16 @@
-import { linkExpiredPage } from '../../../../../pages/insurance/account/password-reset';
-import { submitButton } from '../../../../../pages/shared';
-import { PAGES, BUTTONS } from '../../../../../../../content-strings';
+import { backLink, submitButton } from '../../../../../pages/shared';
+import { yourDetailsPage } from '../../../../../pages/insurance/account/create';
+import { signInPage } from '../../../../../pages/insurance/account/sign-in';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import api from '../../../../../../support/api';
-
-const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.LINK_EXPIRED;
 
 const {
   START,
   ACCOUNT: {
     PASSWORD_RESET: {
       NEW_PASSWORD,
+      LINK_SENT,
       LINK_EXPIRED,
     },
   },
@@ -21,13 +20,24 @@ const {
   ACCOUNT: { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY },
 } = INSURANCE_FIELD_IDS;
 
-context('Insurance - Account - Password reset - link expired page', () => {
+context('Insurance - Account - Password reset - link expired page - send new link', () => {
   const baseUrl = Cypress.config('baseUrl');
 
   before(() => {
     cy.navigateToUrl(START);
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
+
+    // go back to create account page
+    backLink().click();
+
+    // navigate to sign in page
+    yourDetailsPage.signInButtonLink().click();
+
+    // navigate to password reset page
+    signInPage.resetPasswordLink().click();
+
+    cy.completeAndSubmitPasswordResetForm({});
   });
 
   beforeEach(() => {
@@ -38,7 +48,7 @@ context('Insurance - Account - Password reset - link expired page', () => {
     cy.deleteAccount();
   });
 
-  describe(`when a password reset verfication token has expired and the user navigates to ${NEW_PASSWORD} with the expired token`, () => {
+  describe(`When a password reset verfication token has expired and the user navigates to ${NEW_PASSWORD} with the expired token and clicks the 'send new link' button/submits the form`, () => {
     let updatedAccount;
 
     beforeEach(async () => {
@@ -71,25 +81,18 @@ context('Insurance - Account - Password reset - link expired page', () => {
       updatedAccount = await api.updateAccount(account.id, updateObj);
     });
 
-    it(`should redirect to ${LINK_EXPIRED} and render core page elements and content`, () => {
+    it(`should redirect to ${LINK_SENT} with ID query param`, () => {
       cy.navigateToUrl(`${baseUrl}${NEW_PASSWORD}?token=${updatedAccount[PASSWORD_RESET_HASH]}`);
 
-      const expectedUrl = `${baseUrl}${LINK_EXPIRED}`;
+      let expectedUrl = `${baseUrl}${LINK_EXPIRED}?id=${updatedAccount.id}`;
 
       cy.assertUrl(expectedUrl);
 
-      cy.corePageChecks({
-        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-        currentHref: LINK_EXPIRED,
-        assertBackLink: false,
-        assertAuthenticatedHeader: false,
-        assertSubmitButton: false,
-      });
+      submitButton().click();
 
-      cy.checkText(linkExpiredPage.passwordNotReset(), CONTENT_STRINGS.PASSWORD_NOT_RESET);
-      cy.checkText(linkExpiredPage.ifYouWouldLike(), CONTENT_STRINGS.IF_YOU_WOULD_LIKE);
+      expectedUrl = `${baseUrl}${LINK_SENT}`;
 
-      cy.checkText(submitButton(), BUTTONS.SEND_NEW_LINK);
+      cy.assertUrl(expectedUrl);
     });
   });
 });

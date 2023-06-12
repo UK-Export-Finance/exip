@@ -288,6 +288,7 @@ interface VerifyAccountPasswordResetTokenVariables {
 interface AccountPasswordResetTokenResponse extends SuccessResponse {
   token?: string;
   expired?: boolean;
+  accountId?: string;
 }
 
 interface InsuranceFeedbackVariables {
