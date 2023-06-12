@@ -25,7 +25,7 @@ const {
       PBKDF2: { KEY_LENGTH },
     },
   },
-  MAX_PASSWORD_RESET_TRIES,
+  MAX_AUTH_RETRIES,
 } = ACCOUNT;
 
 describe('custom-resolvers/send-email-password-reset-link', () => {
@@ -177,7 +177,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     });
   });
 
-  describe(`when the account has ${MAX_PASSWORD_RESET_TRIES} entries in the AuthenticationRetry table`, () => {
+  describe(`when the account has ${MAX_AUTH_RETRIES} entries in the AuthenticationRetry table`, () => {
     beforeEach(async () => {
       // wipe the AuthenticationRetry table so we have a clean slate.
       const retries = await context.query.AuthenticationRetry.findMany();
@@ -187,7 +187,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
       });
 
       // generate an array of promises to create retry entries
-      const entriesToCreate = [...Array(MAX_PASSWORD_RESET_TRIES)].map(async () => createAuthenticationRetryEntry(context, account.id));
+      const entriesToCreate = [...Array(MAX_AUTH_RETRIES)].map(async () => createAuthenticationRetryEntry(context, account.id));
 
       await Promise.all(entriesToCreate);
 

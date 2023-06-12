@@ -1,14 +1,14 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
-import { isWithinInterval } from 'date-fns';
+import { isAfter, isBefore } from 'date-fns';
 import { ACCOUNT } from '../../constants';
 import getAuthenticationRetriesByAccountId from '../get-authentication-retries-by-account-id';
 
-const { MAX_PASSWORD_RESET_TRIES, MAX_PASSWORD_RESET_TRIES_TIMEFRAME } = ACCOUNT;
+const { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT;
 
 /**
  * shouldBlockAccount
  * Check an accounts authentication retries
- * If there are total of MAX_PASSWORD_RESET_TRIES in less than MAX_PASSWORD_RESET_TRIES_TIMEFRAME,
+ * If there are total of MAX_AUTH_RETRIES in less than MAX_AUTH_RETRIES_TIMEFRAME,
  * Return a flag indicating that the account should be blocked.
  * @param {Object} KeystoneJS context API
  * @param {String} Account ID
@@ -26,25 +26,27 @@ const shouldBlockAccount = async (context: Context, accountId: string): Promise<
     const now = new Date();
 
     /**
-     * Check if the retries breach the threshold:
-     * - total of MAX_PASSWORD_RESET_TRIES in less than MAX_PASSWORD_RESET_TRIES_TIMEFRAME
+     * Get retries that are within 24 hours:
+     * 1) Retry date is after 24 hours from now (MAX_AUTH_RETRIES_TIMEFRAME)
+     * 2) Retry date is before the current time
      */
     const retriesInTimeframe = [] as Array<string>;
 
     retries.forEach((retry) => {
-      const retryDate = new Date(retry.createdAt);
+      const retryDate = retry.createdAt;
 
-      const isWithinLast24Hours = isWithinInterval(retryDate, {
-        start: MAX_PASSWORD_RESET_TRIES_TIMEFRAME,
-        end: now,
-      });
+      const isWithinLast24Hours = isAfter(retryDate, MAX_AUTH_RETRIES_TIMEFRAME) && isBefore(retryDate, now);
 
       if (isWithinLast24Hours) {
         retriesInTimeframe.push(retry.id);
       }
     });
 
-    if (retriesInTimeframe.length >= MAX_PASSWORD_RESET_TRIES) {
+    /**
+     * Check if the retries breach the threshold:
+     * - total of MAX_AUTH_RETRIES in less than MAX_AUTH_RETRIES_TIMEFRAME
+     */
+    if (retriesInTimeframe.length >= MAX_AUTH_RETRIES) {
       console.info(`Account ${accountId} authentication retries exceeds the threshold`);
 
       return true;

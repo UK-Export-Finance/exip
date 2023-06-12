@@ -29,3 +29,16 @@ export const getTomorrowDay = (): number => {
 
   return result;
 };
+
+/**
+ * getYesterdayDay
+ * Get 1 day before now and return the day
+ * @returns {Integer} 1 day before toda
+ */
+export const getYesterdayDay = (): number => {
+  const now = new Date();
+
+  const result = new Date(now.setDate(now.getDate() - 1)).getDate();
+
+  return result;
+};

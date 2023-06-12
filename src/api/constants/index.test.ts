@@ -1,5 +1,5 @@
 import { ACCOUNT } from '.';
-import { get30minutesFromNow, getTomorrowDay } from '../helpers/date';
+import { get30minutesFromNow, getTomorrowDay, getYesterdayDay } from '../helpers/date';
 
 describe('constants/index', () => {
   describe('ACCOUNT', () => {
@@ -29,9 +29,11 @@ describe('constants/index', () => {
 
     describe('OTP', () => {
       describe('DIGITS', () => {
-        const result = ACCOUNT.OTP.DIGITS;
+        it('should have the correct value', () => {
+          const result = ACCOUNT.OTP.DIGITS;
 
-        expect(result).toEqual(6);
+          expect(result).toEqual(6);
+        });
       });
 
       describe('VERIFICATION_EXPIRY', () => {
@@ -54,6 +56,26 @@ describe('constants/index', () => {
         const resultDay = new Date(result).getDate();
 
         const expectedDay = getTomorrowDay();
+
+        expect(resultDay).toEqual(expectedDay);
+      });
+    });
+
+    describe('MAX_AUTH_RETRIES', () => {
+      it('should have the correct value', () => {
+        const result = ACCOUNT.MAX_AUTH_RETRIES;
+
+        expect(result).toEqual(6);
+      });
+    });
+
+    describe('MAX_AUTH_RETRIES_TIMEFRAME', () => {
+      it('should have a day of yesterday', () => {
+        const result = ACCOUNT.MAX_AUTH_RETRIES_TIMEFRAME;
+
+        const resultDay = new Date(result).getDate();
+
+        const expectedDay = getYesterdayDay();
 
         expect(resultDay).toEqual(expectedDay);
       });
