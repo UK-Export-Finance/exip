@@ -1,4 +1,4 @@
-import { get30minutesFromNow, getTomorrowDay } from '.';
+import { get30minutesFromNow, getTomorrowDay, getYesterdayDay } from '.';
 
 describe('api/helpers/date', () => {
   describe('get30minutesFromNow', () => {
@@ -26,6 +26,18 @@ describe('api/helpers/date', () => {
       const now = new Date();
 
       const expected = new Date(now.setDate(now.getDate() + 1)).getDate();
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('getYesterdayDay', () => {
+    it('should return the day of yesterday', () => {
+      const result = getYesterdayDay();
+
+      const now = new Date();
+
+      const expected = new Date(now.setDate(now.getDate() - 1)).getDate();
 
       expect(result).toEqual(expected);
     });

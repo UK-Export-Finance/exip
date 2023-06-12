@@ -404,6 +404,12 @@ var DATE_24_HOURS_FROM_NOW = () => {
   const tomorrow = new Date(now.setDate(day + 1));
   return tomorrow;
 };
+var DATE_24_HOURS_IN_THE_PAST = () => {
+  const now = /* @__PURE__ */ new Date();
+  const day = now.getDate();
+  const yesterday = new Date(now.setDate(day - 1));
+  return yesterday;
+};
 var DATE_30_MINUTES_FROM_NOW = () => {
   const now = /* @__PURE__ */ new Date();
   const minutes = 30;
@@ -465,7 +471,7 @@ var ACCOUNT2 = {
    * Generate a date that is 24 hours ago from now
    * To be safe, we use time rather than subtracting a day.
    */
-  MAX_PASSWORD_RESET_TRIES_TIMEFRAME: (/* @__PURE__ */ new Date()).setDate((/* @__PURE__ */ new Date()).getDate() - 1)
+  MAX_PASSWORD_RESET_TRIES_TIMEFRAME: DATE_24_HOURS_IN_THE_PAST()
 };
 var EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
@@ -2243,11 +2249,8 @@ var shouldBlockAccount = async (context, accountId) => {
     const now = /* @__PURE__ */ new Date();
     const retriesInTimeframe = [];
     retries.forEach((retry) => {
-      const retryDate = new Date(retry.createdAt);
-      const isWithinLast24Hours = (0, import_date_fns4.isWithinInterval)(retryDate, {
-        start: MAX_PASSWORD_RESET_TRIES_TIMEFRAME,
-        end: now
-      });
+      const retryDate = retry.createdAt;
+      const isWithinLast24Hours = (0, import_date_fns4.isAfter)(retryDate, MAX_PASSWORD_RESET_TRIES_TIMEFRAME) && (0, import_date_fns4.isBefore)(retryDate, now);
       if (isWithinLast24Hours) {
         retriesInTimeframe.push(retry.id);
       }

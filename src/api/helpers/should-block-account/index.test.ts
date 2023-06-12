@@ -37,7 +37,7 @@ describe('helpers/should-block-account', () => {
     })) as Account;
   });
 
-  describe(`when the account has ${MAX_PASSWORD_RESET_TRIES} entries in the AuthenticationRetry table`, () => {
+  describe(`when the account has ${MAX_PASSWORD_RESET_TRIES} entries in the AuthenticationRetry table that are within MAX_PASSWORD_RESET_TRIES_TIMEFRAME`, () => {
     beforeEach(async () => {
       // wipe the AuthenticationRetry table so we have a clean slate.
       retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
@@ -80,21 +80,30 @@ describe('helpers/should-block-account', () => {
     });
   });
 
-  describe(`when the account has ${MAX_PASSWORD_RESET_TRIES} entries in the AuthenticationRetry table, but one of them is outside of the timeframe`, () => {
+  describe(`when the account has ${MAX_PASSWORD_RESET_TRIES} entries in the AuthenticationRetry table that are outside of the timeframe`, () => {
     beforeEach(async () => {
+      // wipe the AuthenticationRetry table so we have a clean slate.
+      retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+
+      await context.query.AuthenticationRetry.deleteMany({
+        where: retries,
+      });
+
       const timeframe = new Date(MAX_PASSWORD_RESET_TRIES_TIMEFRAME);
 
-      const currentMinutes = timeframe.getMinutes();
+      const currentHours = timeframe.getHours();
 
-      const dateOutsideOfTimeFrame = new Date(timeframe.setHours(currentMinutes - 1));
+      const oneHourOutsideOfTimeframe = new Date(timeframe.setHours(currentHours - 1));
 
-      await context.query.AuthenticationRetry.updateOne({
-        where: {
-          id: retries[0].id,
-        },
-        data: {
-          createdAt: dateOutsideOfTimeFrame,
-        },
+      const currentDay = timeframe.getDate();
+      const oneDayOutsideOfTimeframe = new Date(oneHourOutsideOfTimeframe.setDate(currentDay - 1));
+
+      const retryEntries = Array(MAX_PASSWORD_RESET_TRIES).fill({
+        createdAt: oneDayOutsideOfTimeframe,
+      });
+
+      await context.query.AuthenticationRetry.createMany({
+        data: retryEntries,
       });
     });
 

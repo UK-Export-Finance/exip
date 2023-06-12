@@ -24,7 +24,7 @@ export const EXTERNAL_API_ENDPOINTS = {
  * Generate a date that is 24 hours from now
  * @returns {Date}
  */
-const DATE_24_HOURS_FROM_NOW = () => {
+export const DATE_24_HOURS_FROM_NOW = () => {
   const now = new Date();
 
   const day = now.getDate();
@@ -33,6 +33,22 @@ const DATE_24_HOURS_FROM_NOW = () => {
   const tomorrow = new Date(now.setDate(day + 1));
 
   return tomorrow;
+};
+
+/**
+ * DATE_24_HOURS_IN_THE_PAST
+ * Generate a date that is 24 hours in the past
+ * @returns {Date}
+ */
+export const DATE_24_HOURS_IN_THE_PAST = () => {
+  const now = new Date();
+
+  const day = now.getDate();
+
+  // subtract 1 day from the current day.
+  const yesterday = new Date(now.setDate(day - 1));
+
+  return yesterday;
 };
 
 /**
@@ -112,7 +128,7 @@ export const ACCOUNT = {
    * Generate a date that is 24 hours ago from now
    * To be safe, we use time rather than subtracting a day.
    */
-  MAX_PASSWORD_RESET_TRIES_TIMEFRAME: new Date().setDate(new Date().getDate() - 1),
+  MAX_PASSWORD_RESET_TRIES_TIMEFRAME: DATE_24_HOURS_IN_THE_PAST(),
 };
 
 export const EMAIL_TEMPLATE_IDS = {
