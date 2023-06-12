@@ -424,7 +424,9 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         it('should render template with mapped submitted percentage', async () => {
           await post(req, res);
 
-          const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.body[PERCENTAGE_OF_COVER]);
+          const submittedPercentageOfCover = Number(req.body[PERCENTAGE_OF_COVER]);
+
+          const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, submittedPercentageOfCover);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
             ...generatePageVariables(req.session.submittedData[POLICY_TYPE]),

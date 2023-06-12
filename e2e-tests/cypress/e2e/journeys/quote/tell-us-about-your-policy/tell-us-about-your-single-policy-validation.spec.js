@@ -140,8 +140,8 @@ context('Tell us about the policy you need page - form validation', () => {
     });
   });
 
-  describe('with any validation error', () => {
-    it('should render submitted values', () => {
+  describe('with `currency` and `contract value` fields have been submitted and `percentage of cover` is not provided', () => {
+    it('should render the submitted values for `currency` and `contract value` fields', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
       tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear().type('10');
 
@@ -151,6 +151,18 @@ context('Tell us about the policy you need page - form validation', () => {
 
       tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input()
         .should('have.attr', 'value', '10');
+    });
+  });
+
+  describe('with the `perecntage of cover` field has been submitted and other fields are not provided', () => {
+    it('should render the submitted values for the `percentage of cover` field', () => {
+      tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear();
+
+      tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('90');
+
+      tellUsAboutYourPolicyPage.submitButton().click();
+
+      tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].inputOptionSelected().contains('90');
     });
   });
 });

@@ -171,8 +171,8 @@ context('Tell us about the multi policy you need - form validation', () => {
     });
   });
 
-  describe('with any validation error', () => {
-    it('should render submitted values', () => {
+  describe('with `currency` and `max amount owed` fields have been submitted and `percentage of cover` is not provided', () => {
+    it('should render the submitted values for the `currency` and `max amount owed` fields', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.CURRENCY].input().select('GBP');
       tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().clear().type('10');
 
@@ -182,6 +182,18 @@ context('Tell us about the multi policy you need - form validation', () => {
 
       tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input()
         .should('have.attr', 'value', '10');
+    });
+  });
+
+  describe('with the `percentage of cover` field has been submitted and other fields are not provided', () => {
+    it('should render the submitted values for the `percentage of cover` field', () => {
+      tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().clear();
+
+      tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('85');
+
+      tellUsAboutYourPolicyPage.submitButton().click();
+
+      tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].inputOptionSelected().contains('85');
     });
   });
 });

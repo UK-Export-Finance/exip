@@ -29,6 +29,7 @@ const tellUsAboutYourPolicyPage = {
     hint: () => cy.get(`[data-cy="${FIELD_IDS.PERCENTAGE_OF_COVER}-hint"]`),
     input: () => cy.get(`[data-cy="${FIELD_IDS.PERCENTAGE_OF_COVER}-input"]`),
     inputOption: () => cy.get(`[data-cy="${FIELD_IDS.PERCENTAGE_OF_COVER}-input"] option`),
+    inputOptionSelected: () => cy.get(`[data-cy="${FIELD_IDS.PERCENTAGE_OF_COVER}-input"]`).find(':selected'),
     errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.PERCENTAGE_OF_COVER}-error-message"]`),
   },
   [FIELD_IDS.CREDIT_PERIOD]: {
