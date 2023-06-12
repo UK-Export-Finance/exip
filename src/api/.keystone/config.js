@@ -404,6 +404,12 @@ var DATE_24_HOURS_FROM_NOW = () => {
   const tomorrow = new Date(now.setDate(day + 1));
   return tomorrow;
 };
+var DATE_24_HOURS_IN_THE_PAST = () => {
+  const now = /* @__PURE__ */ new Date();
+  const day = now.getDate();
+  const yesterday = new Date(now.setDate(day - 1));
+  return yesterday;
+};
 var DATE_30_MINUTES_FROM_NOW = () => {
   const now = /* @__PURE__ */ new Date();
   const minutes = 30;
@@ -459,13 +465,13 @@ var ACCOUNT2 = {
       return future;
     }
   },
-  MAX_PASSWORD_RESET_TRIES: 6,
+  MAX_AUTH_RETRIES: 6,
   /**
-   * MAX_PASSWORD_RESET_TRIES_TIMEFRAME
+   * MAX_AUTH_RETRIES_TIMEFRAME
    * Generate a date that is 24 hours ago from now
    * To be safe, we use time rather than subtracting a day.
    */
-  MAX_PASSWORD_RESET_TRIES_TIMEFRAME: (/* @__PURE__ */ new Date()).setDate((/* @__PURE__ */ new Date()).getDate() - 1)
+  MAX_AUTH_RETRIES_TIMEFRAME: DATE_24_HOURS_IN_THE_PAST()
 };
 var EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
@@ -2235,7 +2241,7 @@ var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
 
 // helpers/should-block-account/index.ts
 var import_date_fns4 = require("date-fns");
-var { MAX_PASSWORD_RESET_TRIES, MAX_PASSWORD_RESET_TRIES_TIMEFRAME } = ACCOUNT2;
+var { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT2;
 var shouldBlockAccount = async (context, accountId) => {
   console.info(`Checking account ${accountId} authentication retries`);
   try {
@@ -2243,16 +2249,13 @@ var shouldBlockAccount = async (context, accountId) => {
     const now = /* @__PURE__ */ new Date();
     const retriesInTimeframe = [];
     retries.forEach((retry) => {
-      const retryDate = new Date(retry.createdAt);
-      const isWithinLast24Hours = (0, import_date_fns4.isWithinInterval)(retryDate, {
-        start: MAX_PASSWORD_RESET_TRIES_TIMEFRAME,
-        end: now
-      });
+      const retryDate = retry.createdAt;
+      const isWithinLast24Hours = (0, import_date_fns4.isAfter)(retryDate, MAX_AUTH_RETRIES_TIMEFRAME) && (0, import_date_fns4.isBefore)(retryDate, now);
       if (isWithinLast24Hours) {
         retriesInTimeframe.push(retry.id);
       }
     });
-    if (retriesInTimeframe.length >= MAX_PASSWORD_RESET_TRIES) {
+    if (retriesInTimeframe.length >= MAX_AUTH_RETRIES) {
       console.info(`Account ${accountId} authentication retries exceeds the threshold`);
       return true;
     }

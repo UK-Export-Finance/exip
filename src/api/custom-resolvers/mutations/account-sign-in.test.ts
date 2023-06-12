@@ -20,7 +20,7 @@ dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
 
-const { EMAIL, MAX_PASSWORD_RESET_TRIES } = ACCOUNT;
+const { EMAIL, MAX_AUTH_RETRIES } = ACCOUNT;
 
 describe('custom-resolvers/account-sign-in', () => {
   let account: Account;
@@ -259,7 +259,7 @@ describe('custom-resolvers/account-sign-in', () => {
     });
   });
 
-  describe(`when the account has ${MAX_PASSWORD_RESET_TRIES} entries in the AuthenticationRetry table`, () => {
+  describe(`when the account has ${MAX_AUTH_RETRIES} entries in the AuthenticationRetry table`, () => {
     beforeEach(async () => {
       // revert the previous account block so we have a clean slate.
       account = (await context.query.Account.updateOne({
@@ -277,7 +277,7 @@ describe('custom-resolvers/account-sign-in', () => {
       });
 
       // generate an array of promises to create retry entries
-      const entriesToCreate = [...Array(MAX_PASSWORD_RESET_TRIES)].map(async () => createAuthenticationRetryEntry(context, account.id));
+      const entriesToCreate = [...Array(MAX_AUTH_RETRIES)].map(async () => createAuthenticationRetryEntry(context, account.id));
 
       await Promise.all(entriesToCreate);
 

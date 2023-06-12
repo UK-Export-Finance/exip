@@ -2,7 +2,7 @@ import { ACCOUNT } from '../../../../constants/account';
 import completeAndSubmitPasswordResetForm from './complete-and-submit-password-reset-form';
 import { backLink } from '../../../e2e/pages/shared';
 
-const attemptsToMake = [...Array(ACCOUNT.MAX_PASSWORD_RESET_TRIES)];
+const attemptsToMake = [...Array(ACCOUNT.MAX_AUTH_RETRIES)];
 
 /**
  * completeAndSubmitPasswordResetFormMaximumRetries
