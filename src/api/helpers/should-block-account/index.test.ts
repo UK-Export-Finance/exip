@@ -16,7 +16,7 @@ dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
 
-const { MAX_PASSWORD_RESET_TRIES, MAX_PASSWORD_RESET_TRIES_TIMEFRAME } = ACCOUNT;
+const { MAX_PASSWORD_RESET_TRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT;
 
 describe('helpers/should-block-account', () => {
   let account: Account;
@@ -37,7 +37,7 @@ describe('helpers/should-block-account', () => {
     })) as Account;
   });
 
-  describe(`when the account has ${MAX_PASSWORD_RESET_TRIES} entries in the AuthenticationRetry table that are within MAX_PASSWORD_RESET_TRIES_TIMEFRAME`, () => {
+  describe(`when the account has ${MAX_PASSWORD_RESET_TRIES} entries in the AuthenticationRetry table that are within MAX_AUTH_RETRIES_TIMEFRAME`, () => {
     beforeEach(async () => {
       // wipe the AuthenticationRetry table so we have a clean slate.
       retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
@@ -89,7 +89,7 @@ describe('helpers/should-block-account', () => {
         where: retries,
       });
 
-      const timeframe = new Date(MAX_PASSWORD_RESET_TRIES_TIMEFRAME);
+      const timeframe = new Date(MAX_AUTH_RETRIES_TIMEFRAME);
 
       const currentHours = timeframe.getHours();
 

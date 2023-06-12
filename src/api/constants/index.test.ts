@@ -69,9 +69,9 @@ describe('constants/index', () => {
       });
     });
 
-    describe('MAX_PASSWORD_RESET_TRIES_TIMEFRAME', () => {
+    describe('MAX_AUTH_RETRIES_TIMEFRAME', () => {
       it('should have a day of yesterday', () => {
-        const result = ACCOUNT.MAX_PASSWORD_RESET_TRIES_TIMEFRAME;
+        const result = ACCOUNT.MAX_AUTH_RETRIES_TIMEFRAME;
 
         const resultDay = new Date(result).getDate();
 

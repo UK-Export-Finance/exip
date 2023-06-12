@@ -467,11 +467,11 @@ var ACCOUNT2 = {
   },
   MAX_PASSWORD_RESET_TRIES: 6,
   /**
-   * MAX_PASSWORD_RESET_TRIES_TIMEFRAME
+   * MAX_AUTH_RETRIES_TIMEFRAME
    * Generate a date that is 24 hours ago from now
    * To be safe, we use time rather than subtracting a day.
    */
-  MAX_PASSWORD_RESET_TRIES_TIMEFRAME: DATE_24_HOURS_IN_THE_PAST()
+  MAX_AUTH_RETRIES_TIMEFRAME: DATE_24_HOURS_IN_THE_PAST()
 };
 var EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
@@ -2241,7 +2241,7 @@ var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
 
 // helpers/should-block-account/index.ts
 var import_date_fns4 = require("date-fns");
-var { MAX_PASSWORD_RESET_TRIES, MAX_PASSWORD_RESET_TRIES_TIMEFRAME } = ACCOUNT2;
+var { MAX_PASSWORD_RESET_TRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT2;
 var shouldBlockAccount = async (context, accountId) => {
   console.info(`Checking account ${accountId} authentication retries`);
   try {
@@ -2250,7 +2250,7 @@ var shouldBlockAccount = async (context, accountId) => {
     const retriesInTimeframe = [];
     retries.forEach((retry) => {
       const retryDate = retry.createdAt;
-      const isWithinLast24Hours = (0, import_date_fns4.isAfter)(retryDate, MAX_PASSWORD_RESET_TRIES_TIMEFRAME) && (0, import_date_fns4.isBefore)(retryDate, now);
+      const isWithinLast24Hours = (0, import_date_fns4.isAfter)(retryDate, MAX_AUTH_RETRIES_TIMEFRAME) && (0, import_date_fns4.isBefore)(retryDate, now);
       if (isWithinLast24Hours) {
         retriesInTimeframe.push(retry.id);
       }
