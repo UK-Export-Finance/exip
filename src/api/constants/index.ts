@@ -122,7 +122,7 @@ export const ACCOUNT = {
       return future;
     },
   },
-  MAX_PASSWORD_RESET_TRIES: 6,
+  MAX_AUTH_RETRIES: 6,
   /**
    * MAX_AUTH_RETRIES_TIMEFRAME
    * Generate a date that is 24 hours ago from now

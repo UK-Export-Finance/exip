@@ -16,7 +16,7 @@ dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
 
-const { MAX_PASSWORD_RESET_TRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT;
+const { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT;
 
 describe('helpers/should-block-account', () => {
   let account: Account;
@@ -37,7 +37,7 @@ describe('helpers/should-block-account', () => {
     })) as Account;
   });
 
-  describe(`when the account has ${MAX_PASSWORD_RESET_TRIES} entries in the AuthenticationRetry table that are within MAX_AUTH_RETRIES_TIMEFRAME`, () => {
+  describe(`when the account has ${MAX_AUTH_RETRIES} entries in the AuthenticationRetry table that are within MAX_AUTH_RETRIES_TIMEFRAME`, () => {
     beforeEach(async () => {
       // wipe the AuthenticationRetry table so we have a clean slate.
       retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
@@ -47,7 +47,7 @@ describe('helpers/should-block-account', () => {
       });
 
       // generate an array of promises to create retry entries
-      const entriesToCreate = [...Array(MAX_PASSWORD_RESET_TRIES)].map(async () => createAuthenticationRetryEntry(context, account.id));
+      const entriesToCreate = [...Array(MAX_AUTH_RETRIES)].map(async () => createAuthenticationRetryEntry(context, account.id));
 
       await Promise.all(entriesToCreate);
 
@@ -61,7 +61,7 @@ describe('helpers/should-block-account', () => {
     });
   });
 
-  describe(`when the account does NOT have ${MAX_PASSWORD_RESET_TRIES} entries in the AuthenticationRetry table`, () => {
+  describe(`when the account does NOT have ${MAX_AUTH_RETRIES} entries in the AuthenticationRetry table`, () => {
     beforeEach(async () => {
       // delete the last retry entry
       const lastRetry = retries[retries.length - 1];
@@ -80,7 +80,7 @@ describe('helpers/should-block-account', () => {
     });
   });
 
-  describe(`when the account has ${MAX_PASSWORD_RESET_TRIES} entries in the AuthenticationRetry table that are outside of the timeframe`, () => {
+  describe(`when the account has ${MAX_AUTH_RETRIES} entries in the AuthenticationRetry table that are outside of the timeframe`, () => {
     beforeEach(async () => {
       // wipe the AuthenticationRetry table so we have a clean slate.
       retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
@@ -98,7 +98,7 @@ describe('helpers/should-block-account', () => {
       const currentDay = timeframe.getDate();
       const oneDayOutsideOfTimeframe = new Date(oneHourOutsideOfTimeframe.setDate(currentDay - 1));
 
-      const retryEntries = Array(MAX_PASSWORD_RESET_TRIES).fill({
+      const retryEntries = Array(MAX_AUTH_RETRIES).fill({
         createdAt: oneDayOutsideOfTimeframe,
       });
 

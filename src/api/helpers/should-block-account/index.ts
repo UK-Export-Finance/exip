@@ -3,12 +3,12 @@ import { isAfter, isBefore } from 'date-fns';
 import { ACCOUNT } from '../../constants';
 import getAuthenticationRetriesByAccountId from '../get-authentication-retries-by-account-id';
 
-const { MAX_PASSWORD_RESET_TRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT;
+const { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT;
 
 /**
  * shouldBlockAccount
  * Check an accounts authentication retries
- * If there are total of MAX_PASSWORD_RESET_TRIES in less than MAX_AUTH_RETRIES_TIMEFRAME,
+ * If there are total of MAX_AUTH_RETRIES in less than MAX_AUTH_RETRIES_TIMEFRAME,
  * Return a flag indicating that the account should be blocked.
  * @param {Object} KeystoneJS context API
  * @param {String} Account ID
@@ -44,9 +44,9 @@ const shouldBlockAccount = async (context: Context, accountId: string): Promise<
 
     /**
      * Check if the retries breach the threshold:
-     * - total of MAX_PASSWORD_RESET_TRIES in less than MAX_AUTH_RETRIES_TIMEFRAME
+     * - total of MAX_AUTH_RETRIES in less than MAX_AUTH_RETRIES_TIMEFRAME
      */
-    if (retriesInTimeframe.length >= MAX_PASSWORD_RESET_TRIES) {
+    if (retriesInTimeframe.length >= MAX_AUTH_RETRIES) {
       console.info(`Account ${accountId} authentication retries exceeds the threshold`);
 
       return true;

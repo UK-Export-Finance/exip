@@ -61,9 +61,9 @@ describe('constants/index', () => {
       });
     });
 
-    describe('MAX_PASSWORD_RESET_TRIES', () => {
+    describe('MAX_AUTH_RETRIES', () => {
       it('should have the correct value', () => {
-        const result = ACCOUNT.MAX_PASSWORD_RESET_TRIES;
+        const result = ACCOUNT.MAX_AUTH_RETRIES;
 
         expect(result).toEqual(6);
       });

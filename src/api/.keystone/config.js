@@ -465,7 +465,7 @@ var ACCOUNT2 = {
       return future;
     }
   },
-  MAX_PASSWORD_RESET_TRIES: 6,
+  MAX_AUTH_RETRIES: 6,
   /**
    * MAX_AUTH_RETRIES_TIMEFRAME
    * Generate a date that is 24 hours ago from now
@@ -2241,7 +2241,7 @@ var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
 
 // helpers/should-block-account/index.ts
 var import_date_fns4 = require("date-fns");
-var { MAX_PASSWORD_RESET_TRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT2;
+var { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT2;
 var shouldBlockAccount = async (context, accountId) => {
   console.info(`Checking account ${accountId} authentication retries`);
   try {
@@ -2255,7 +2255,7 @@ var shouldBlockAccount = async (context, accountId) => {
         retriesInTimeframe.push(retry.id);
       }
     });
-    if (retriesInTimeframe.length >= MAX_PASSWORD_RESET_TRIES) {
+    if (retriesInTimeframe.length >= MAX_AUTH_RETRIES) {
       console.info(`Account ${accountId} authentication retries exceeds the threshold`);
       return true;
     }

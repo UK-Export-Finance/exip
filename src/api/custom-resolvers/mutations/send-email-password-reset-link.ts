@@ -21,7 +21,7 @@ const {
 
 /**
  * sendEmailPasswordResetLink
- * If an account has not reached the MAX_PASSWORD_RESET_TRIES threshold,
+ * If an account has not reached the MAX_AUTH_RETRIES threshold,
  * Generate a password reset hash, update account and send a link to the account via email.
  * Otherwise, block the account
  * Or return success=false if the account is not found.
