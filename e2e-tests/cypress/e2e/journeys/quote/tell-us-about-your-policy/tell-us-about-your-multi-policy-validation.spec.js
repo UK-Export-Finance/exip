@@ -189,11 +189,13 @@ context('Tell us about the multi policy you need - form validation', () => {
     it('should render the submitted values for the `percentage of cover` field', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.MAX_AMOUNT_OWED].input().clear();
 
-      tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('85');
+      const field = tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER];
+
+      field.input().select('85');
 
       tellUsAboutYourPolicyPage.submitButton().click();
 
-      tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].inputOptionSelected().contains('85');
+      field.inputOptionSelected().contains('85');
     });
   });
 });

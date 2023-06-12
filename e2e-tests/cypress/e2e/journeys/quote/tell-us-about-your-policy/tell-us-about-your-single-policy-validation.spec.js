@@ -158,11 +158,13 @@ context('Tell us about the policy you need page - form validation', () => {
     it('should render the submitted values for the `percentage of cover` field', () => {
       tellUsAboutYourPolicyPage[FIELD_IDS.CONTRACT_VALUE].input().clear();
 
-      tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].input().select('90');
+      const field = tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER];
+
+      field.input().select('90');
 
       tellUsAboutYourPolicyPage.submitButton().click();
 
-      tellUsAboutYourPolicyPage[FIELD_IDS.PERCENTAGE_OF_COVER].inputOptionSelected().contains('90');
+      field.inputOptionSelected().contains('90');
     });
   });
 });
