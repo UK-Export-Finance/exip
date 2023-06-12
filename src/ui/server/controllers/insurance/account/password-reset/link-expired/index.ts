@@ -51,8 +51,6 @@ export const post = async (req: Request, res: Response) => {
 
     const account = await api.keystone.account.get(accountId);
 
-    console.info('Yoooo account ', account);
-
     const response = await api.keystone.account.sendEmailPasswordResetLink(urlOrigin, account.email);
 
     if (response.success) {
