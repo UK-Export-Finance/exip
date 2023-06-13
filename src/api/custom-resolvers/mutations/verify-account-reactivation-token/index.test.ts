@@ -46,7 +46,7 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
   });
 
   beforeEach(async () => {
-    await accounts.deleteAll();
+    await accounts.deleteAll(context);
 
     // wipe the AuthenticationRetry table so we have a clean slate.
     let retries = await context.query.AuthenticationRetry.findMany();
@@ -65,16 +65,15 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
 
     const reactivationExpiry = ACCOUNT.REACTIVATION_EXPIRY();
 
-    account = (await context.query.Account.createOne({
-      data: {
-        ...mockAccount,
-        [IS_VERIFIED]: false,
-        [IS_BLOCKED]: true,
-        reactivationHash,
-        reactivationExpiry,
-      },
-      query: 'id reactivationHash reactivationExpiry isVerified isBlocked',
-    })) as Account;
+    const unverifiedAndBlockedAccount = {
+      ...mockAccount,
+      [IS_VERIFIED]: false,
+      [IS_BLOCKED]: true,
+      reactivationHash,
+      reactivationExpiry,
+    };
+
+    account = await accounts.create(context, unverifiedAndBlockedAccount);
 
     expect(account.isVerified).toEqual(false);
     expect(account.isBlocked).toEqual(true);
@@ -138,14 +137,14 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
       const MS_PER_MINUTE = 60000;
       const oneMinuteAgo = new Date(now.getTime() - 1 * MS_PER_MINUTE);
 
-      account = (await context.query.Account.createOne({
-        data: {
-          ...mockAccount,
-          reactivationHash,
-          [REACTIVATION_EXPIRY]: oneMinuteAgo,
-          [IS_BLOCKED]: true,
-        },
-      })) as Account;
+      const accountBlockedAndReactivationExpired = {
+        ...mockAccount,
+        reactivationHash,
+        [IS_BLOCKED]: true,
+        [REACTIVATION_EXPIRY]: oneMinuteAgo,
+      };
+
+      account = await accounts.create(context, accountBlockedAndReactivationExpired);
 
       result = await verifyAccountReactivationToken({}, variables, context);
 
@@ -161,7 +160,7 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
       // wipe accounts so an account will not be found.
-      await accounts.deleteAll();
+      await accounts.deleteAll(context);
 
       result = await verifyAccountReactivationToken({}, variables, context);
 

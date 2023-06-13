@@ -30,13 +30,9 @@ describe('custom-resolvers/add-and-get-OTP', () => {
   let result: AddAndGetOtpResponse;
 
   beforeEach(async () => {
-    await accounts.deleteAll();
+    await accounts.deleteAll(context);
 
-    // create a new account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id email',
-    })) as Account;
+    account = await accounts.create(context);
 
     result = await addAndGetOTP({}, variables, context);
 

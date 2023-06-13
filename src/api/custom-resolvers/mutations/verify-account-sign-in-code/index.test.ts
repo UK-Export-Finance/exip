@@ -8,7 +8,7 @@ import generate from '../../../helpers/generate-otp';
 import generateOTPAndUpdateAccount from '../../../helpers/generate-otp-and-update-account';
 import baseConfig from '../../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import { mockAccount } from '../../../test-mocks';
+import accounts from '../../../test-helpers/accounts';
 import { Account, ApplicationRelationship, VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -43,11 +43,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
   create.JWT = () => mockJWT;
 
   beforeEach(async () => {
-    // create an account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id firstName lastName email salt hash verificationHash sessionExpiry',
-    })) as Account;
+    account = await accounts.create(context);
 
     // wipe the AuthenticationRetry table so we have a clean slate.
     retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
@@ -176,11 +172,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
 
   describe(`when the account's OTP has expired`, () => {
     beforeAll(async () => {
-      // create an account
-      account = (await context.query.Account.createOne({
-        data: mockAccount,
-        query: 'id firstName lastName email salt hash verificationHash otpExpiry',
-      })) as Account;
+      account = await accounts.create(context);
     });
 
     const otp = generate.otp();
@@ -229,11 +221,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
 
   describe('when the account does not have OTP salt, hash or expiry', () => {
     test('it should return success=false', async () => {
-      // create an account
-      account = (await context.query.Account.createOne({
-        data: mockAccount,
-        query: 'id firstName lastName email salt hash verificationHash',
-      })) as Account;
+      account = await accounts.create(context);
 
       result = await verifyAccountSignInCode({}, variables, context);
 

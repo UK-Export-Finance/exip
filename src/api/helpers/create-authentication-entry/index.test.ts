@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import createAuthenticationEntry from '.';
 import baseConfig from '../../keystone';
+import accounts from '../../test-helpers/accounts';
 import { mockAccount } from '../../test-mocks';
 import { Account } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -28,11 +29,7 @@ describe('helpers/create-authentication-entry', () => {
 
     expect(entries.length).toEqual(0);
 
-    // create a new account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id',
-    })) as Account;
+    account = await accounts.create(context);
 
     const authEntry = {
       account: {

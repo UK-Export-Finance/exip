@@ -4,6 +4,7 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import hasAccountUsedPasswordBefore from '.';
 import createAuthenticationEntry from '../create-authentication-entry';
 import baseConfig from '../../keystone';
+import accounts from '../../test-helpers/accounts';
 import { mockAccount } from '../../test-mocks';
 import { Account } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -22,11 +23,7 @@ describe('helpers/account-has-used-password-before', () => {
   let mockEntry: object;
 
   beforeAll(async () => {
-    // create a new account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id',
-    })) as Account;
+    account = await accounts.create(context);
 
     // wipe the Authentication table so we have a clean slate.
     const retries = await context.query.Authentication.findMany();

@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import blockAccount from '.';
 import baseConfig from '../../keystone';
+import accounts from '../../test-helpers/accounts';
 import { mockAccount } from '../../test-mocks';
 import { Account } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -19,14 +20,12 @@ describe('helpers/block-account', () => {
   let result: boolean;
 
   beforeAll(async () => {
-    // create a new account
-    account = (await context.query.Account.createOne({
-      data: {
-        ...mockAccount,
-        isBlocked: false,
-      },
-      query: 'id',
-    })) as Account;
+    const unblockedAccount = {
+      ...mockAccount,
+      isBlocked: false,
+    };
+
+    account = await accounts.create(context, unblockedAccount);
 
     result = await blockAccount(context, account.id);
   });
@@ -61,11 +60,7 @@ describe('helpers/block-account', () => {
 
   describe('when an account is NOT updated - account not found', () => {
     test('it should throw an error', async () => {
-      const accounts = await context.query.Account.findMany();
-
-      await context.query.Account.deleteMany({
-        where: accounts,
-      });
+      await accounts.deleteAll(context);
 
       try {
         await blockAccount(context, account.id);

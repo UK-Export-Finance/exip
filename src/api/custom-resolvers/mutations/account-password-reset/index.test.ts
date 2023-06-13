@@ -34,7 +34,7 @@ describe('custom-resolvers/account-password-reset', () => {
   let authRetries;
 
   beforeEach(async () => {
-    await accounts.deleteAll();
+    await accounts.deleteAll(context);
 
     // wipe the AuthenticationRetry table so we have a clean slate.
     authRetries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
@@ -54,11 +54,7 @@ describe('custom-resolvers/account-password-reset', () => {
 
     expect(authEntries.length).toEqual(0);
 
-    // create an account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id',
-    })) as Account;
+    account = await accounts.create(context);
 
     // create an AuthenticationRetry so we can assert it becomes wiped.
     await createAuthenticationRetryEntry(context, account.id);
@@ -246,10 +242,7 @@ describe('custom-resolvers/account-password-reset', () => {
   describe('when the provided password has been used before', () => {
     test('it should return success=false and hasBeenUsedBefore=true', async () => {
       // create an account
-      account = (await context.query.Account.createOne({
-        data: mockAccount,
-        query: 'id',
-      })) as Account;
+      account = await accounts.create(context);
 
       const authEntry = {
         account: {
@@ -280,7 +273,7 @@ describe('custom-resolvers/account-password-reset', () => {
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
       // wipe accounts so an account will not be found.
-      await accounts.deleteAll();
+      await accounts.deleteAll(context);
 
       result = await accountPasswordReset({}, variables, context);
 

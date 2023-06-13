@@ -7,7 +7,7 @@ import generate from '../../../helpers/generate-otp';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
 import accounts from '../../../test-helpers/accounts';
-import { mockAccount, mockOTP, mockSendEmailResponse } from '../../../test-mocks';
+import { mockOTP, mockSendEmailResponse } from '../../../test-mocks';
 import { Account, AccountSignInSendNewCodeVariables, AccountSignInResponse } from '../../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -37,13 +37,9 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
   let variables: AccountSignInSendNewCodeVariables;
 
   beforeEach(async () => {
-    await accounts.deleteAll();
+    await accounts.deleteAll(context);
 
-    // create an account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id',
-    })) as Account;
+    account = await accounts.create(context);
 
     jest.resetAllMocks();
 
@@ -92,7 +88,7 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
       // wipe accounts so an account will not be found.
-      await accounts.deleteAll();
+      await accounts.deleteAll(context);
 
       result = await accountSignInSendNewCode({}, variables, context);
 

@@ -5,7 +5,7 @@ import generateOTPAndUpdateAccount from '.';
 import baseConfig from '../../keystone';
 import generate from '../generate-otp';
 import accounts from '../../test-helpers/accounts';
-import { mockAccount, mockOTP } from '../../test-mocks';
+import { mockOTP } from '../../test-mocks';
 import { Account, AddAndGetOtpResponse } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -26,13 +26,9 @@ describe('helpers/generate-otp-and-update-account', () => {
   let result: AddAndGetOtpResponse;
 
   beforeEach(async () => {
-    await accounts.deleteAll();
+    await accounts.deleteAll(context);
 
-    // create a new account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id firstName lastName email salt hash verificationHash',
-    })) as Account;
+    account = await accounts.create(context);
 
     result = await generateOTPAndUpdateAccount(context, account.id);
 

@@ -55,7 +55,7 @@ describe('custom-resolvers/create-an-account', () => {
 
     sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
 
-    await accounts.deleteAll();
+    await accounts.deleteAll(context);
 
     // create an account
     account = (await createAnAccount({}, variables, context)) as Account;

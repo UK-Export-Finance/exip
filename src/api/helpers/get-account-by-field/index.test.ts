@@ -22,13 +22,9 @@ describe('helpers/get-account-by-field', () => {
   const value = mockAccount.firstName;
 
   beforeEach(async () => {
-    await accounts.deleteAll();
+    await accounts.deleteAll(context);
 
-    // create a new account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id firstName lastName',
-    })) as Account;
+    account = await accounts.create(context);
   });
 
   it('should return an account by ID', async () => {

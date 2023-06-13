@@ -25,12 +25,9 @@ describe('custom-resolvers/delete-an-account', () => {
   };
 
   beforeAll(async () => {
-    await accounts.deleteAll();
+    await accounts.deleteAll(context);
 
-    // create an account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-    })) as Account;
+    account = await accounts.create(context);
   });
 
   test('it should return success=true', async () => {
@@ -47,10 +44,7 @@ describe('custom-resolvers/delete-an-account', () => {
     let retries;
 
     beforeEach(async () => {
-      // create an account
-      account = (await context.query.Account.createOne({
-        data: mockAccount,
-      })) as Account;
+      account = await accounts.create(context);
 
       // wipe the table so we have a clean slate.
       retries = await context.query.AuthenticationRetry.findMany();

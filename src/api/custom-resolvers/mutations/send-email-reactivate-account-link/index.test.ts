@@ -43,16 +43,11 @@ describe('custom-resolvers/send-email-reactivate-account-link', () => {
   });
 
   beforeEach(async () => {
-    await accounts.deleteAll();
+    await accounts.deleteAll(context);
 
-    // create an account
-    account = (await context.query.Account.createOne({
-      data: {
-        ...mockAccount,
-        isBlocked: true,
-      },
-      query: 'id',
-    })) as Account;
+    const blockedAccount = { ...mockAccount, isBlocked: true };
+
+    account = await accounts.create(context, blockedAccount);
 
     jest.resetAllMocks();
 
@@ -108,7 +103,7 @@ describe('custom-resolvers/send-email-reactivate-account-link', () => {
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
       // wipe accounts so an account will not be found.
-      await accounts.deleteAll();
+      await accounts.deleteAll(context);
 
       result = await sendEmailReactivateAccountLink({}, variables, context);
 

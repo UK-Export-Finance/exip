@@ -30,13 +30,9 @@ describe('custom-resolvers/get-account-password-reset-token', () => {
   let result: AddAndGetOtpResponse;
 
   beforeEach(async () => {
-    await accounts.deleteAll();
+    await accounts.deleteAll(context);
 
-    // create a new account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id email',
-    })) as Account;
+    account = await accounts.create(context);
 
     result = await getAccountPasswordResetToken({}, variables, context);
   });
@@ -71,7 +67,7 @@ describe('custom-resolvers/get-account-password-reset-token', () => {
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
       // wipe accounts so an account will not be found.
-      await accounts.deleteAll();
+      await accounts.deleteAll(context);
 
       result = await getAccountPasswordResetToken({}, variables, context);
 

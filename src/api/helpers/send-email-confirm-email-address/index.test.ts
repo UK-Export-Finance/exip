@@ -5,6 +5,7 @@ import baseConfig from '../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import getFullNameString from '../get-full-name-string';
 import sendEmail from '../../emails';
+import accounts from '../../test-helpers/accounts';
 import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../test-mocks';
 import { Account } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -28,10 +29,7 @@ describe('helpers/send-email-confirm-email-address', () => {
   });
 
   beforeEach(async () => {
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id firstName lastName email salt hash verificationHash',
-    })) as Account;
+    account = await accounts.create(context);
 
     jest.resetAllMocks();
 
@@ -60,12 +58,7 @@ describe('helpers/send-email-confirm-email-address', () => {
 
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
-      // wipe the accounttable so we have a clean slate.
-      const accounts = await context.query.Account.findMany();
-
-      await context.query.Account.deleteMany({
-        where: accounts,
-      });
+      await accounts.deleteAll(context);
 
       const result = await confirmEmailAddressEmail.send(context, mockUrlOrigin, account.id);
 

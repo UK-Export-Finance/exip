@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import deleteAuthenticationRetries from '.';
 import baseConfig from '../../keystone';
-import { mockAccount } from '../../test-mocks';
+import accounts from '../../test-helpers/accounts';
 import { Account, ApplicationRelationship } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -30,12 +30,9 @@ describe('helpers/delete-authentication-retries', () => {
       where: retries,
     });
 
-    // create some entries
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id',
-    })) as Account;
+    account = await accounts.create(context);
 
+    // create some entries
     const mockEntry = {
       account: {
         connect: {

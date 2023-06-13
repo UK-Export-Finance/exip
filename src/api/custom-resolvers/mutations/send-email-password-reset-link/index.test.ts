@@ -47,7 +47,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
   });
 
   beforeEach(async () => {
-    await accounts.deleteAll();
+    await accounts.deleteAll(context);
 
     // wipe the AuthenticationRetry table so we have a clean slate.
     const retries = await context.query.AuthenticationRetry.findMany();
@@ -56,11 +56,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
       where: retries,
     });
 
-    // create an account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id',
-    })) as Account;
+    account = await accounts.create(context);
 
     jest.resetAllMocks();
 
@@ -159,7 +155,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
       // wipe accounts so an account will not be found.
-      await accounts.deleteAll();
+      await accounts.deleteAll(context);
 
       result = await sendEmailPasswordResetLink({}, variables, context);
 

@@ -7,7 +7,6 @@ import shouldBlockAccount from '.';
 import createAuthenticationRetryEntry from '../create-authentication-retry-entry';
 import { ACCOUNT } from '../../constants';
 import accounts from '../../test-helpers/accounts';
-import { mockAccount } from '../../test-mocks';
 import { Account, ApplicationRelationship } from '../../types';
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -24,13 +23,9 @@ describe('helpers/should-block-account', () => {
   let retries: Array<ApplicationRelationship>;
 
   beforeEach(async () => {
-    await accounts.deleteAll();
+    await accounts.deleteAll(context);
 
-    // create an account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id',
-    })) as Account;
+    account = await accounts.create(context);
   });
 
   describe(`when the account has ${MAX_AUTH_RETRIES} entries in the AuthenticationRetry table that are within MAX_AUTH_RETRIES_TIMEFRAME`, () => {

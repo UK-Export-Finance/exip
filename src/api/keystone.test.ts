@@ -5,7 +5,7 @@ import baseConfig from './keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import { APPLICATION } from './constants';
 import updateApplication from './helpers/update-application';
-import { mockAccount } from './test-mocks';
+import accounts from './test-helpers/accounts';
 import { Application, Account } from './types';
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -255,10 +255,7 @@ describe('Account', () => {
     const accountUpdate = { firstName: 'Updated' };
 
     beforeAll(async () => {
-      account = (await context.query.Account.createOne({
-        data: mockAccount,
-        query: 'id',
-      })) as Account;
+      account = await accounts.create(context);
 
       updatedExporter = (await context.query.Account.updateOne({
         where: { id: account.id },

@@ -1,9 +1,9 @@
 import { Context, Application } from '.keystone/types'; // eslint-disable-line
+import accounts from './accounts';
 import { mockApplicationEligibility, mockSinglePolicyAndExport, mockBusiness, mockBusinessContactDetail } from '../test-mocks/mock-application';
-import { mockAccount, mockBuyer, mockCompany, mockCompanySicCode, mockApplicationDeclaration } from '../test-mocks';
+import { mockBuyer, mockCompany, mockCompanySicCode, mockApplicationDeclaration } from '../test-mocks';
 import mockCountries from '../test-mocks/mock-countries';
 import {
-  Account,
   ApplicationBuyer,
   ApplicationCompany,
   ApplicationCompanySicCode,
@@ -55,11 +55,7 @@ export const createFullApplication = async (context: Context) => {
     throw new Error('No country found from mock country ISO code');
   }
 
-  // create a new account
-  const account = (await context.query.Account.createOne({
-    data: mockAccount,
-    query: 'id firstName lastName email',
-  })) as Account;
+  const account = await accounts.create(context);
 
   // create a new application
   const application = (await context.query.Application.createOne({

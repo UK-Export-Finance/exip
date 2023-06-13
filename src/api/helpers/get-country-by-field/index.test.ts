@@ -26,9 +26,11 @@ describe('helpers/get-country-by-field', () => {
     // wipe the table so we have a clean slate.
     const countries = await context.query.Country.findMany();
 
-    await context.query.Country.deleteMany({
-      where: countries,
-    });
+    if (countries.length) {
+      await context.query.Country.deleteMany({
+        where: countries,
+      });
+    }
 
     // create a new country
     country = (await context.query.Country.createOne({

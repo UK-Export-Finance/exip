@@ -1,32 +1,52 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import { Context } from '.keystone/types'; // eslint-disable-line
-import baseConfig from '../keystone';
+import { mockAccount } from '../test-mocks';
+import { Account } from '../types';
 
-dotenv.config();
+/**
+ * create account test helper
+ * Create an account with mock account data and any provied custom account data.
+ * @param {Object} Created account
+ */
+const create = async (context: Context, accountData?: Account) => {
+  try {
+    let accountInput = mockAccount;
 
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
+    if (accountData) {
+      accountInput = accountData;
+    }
 
-const context = getContext(config, PrismaModule) as Context;
+    const account = (await context.query.Account.createOne({
+      data: accountInput,
+      query: 'id email firstName lastName email salt hash verificationHash sessionExpiry otpExpiry reactivationHash reactivationExpiry isVerified isBlocked',
+    })) as Account;
+
+    return account;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Creating an account (test helpers) ${err}`);
+  }
+};
 
 /**
  * deleteAll test helper
  * Get all accounts and delete them.
  * @param {Array} Accounts that have been deleted
  */
-const deleteAll = async () => {
+const deleteAll = async (context: Context) => {
   try {
     console.info('Getting and deleting accounts (test helpers)');
 
     const accounts = await context.query.Account.findMany();
 
-    const response = await context.query.Account.deleteMany({
-      where: accounts,
-    });
+    if (accounts.length) {
+      const response = await context.query.Account.deleteMany({
+        where: accounts,
+      });
 
-    return response;
+      return response;
+    }
+
+    return [];
   } catch (err) {
     console.error(err);
     throw new Error(`Deleting accounts (test helpers) ${err}`);
@@ -34,6 +54,7 @@ const deleteAll = async () => {
 };
 
 const accounts = {
+  create,
   deleteAll,
 };
 
