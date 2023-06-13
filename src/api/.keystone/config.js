@@ -2869,7 +2869,7 @@ var mapSicCodes = (company, sicCodes, industrySectorNames) => {
   return mapped;
 };
 
-// custom-resolvers/mutations/update-company-and-company-address/inde.ts
+// custom-resolvers/mutations/update-company-and-company-address/index.ts
 var updateCompanyAndCompanyAddress = async (root, variables, context) => {
   try {
     console.info("Updating application company and company address for ", variables.companyId);
@@ -2901,7 +2901,7 @@ var updateCompanyAndCompanyAddress = async (root, variables, context) => {
     throw new Error(`Updating application - company and company address ${err}`);
   }
 };
-var inde_default = updateCompanyAndCompanyAddress;
+var update_company_and_company_address_default = updateCompanyAndCompanyAddress;
 
 // custom-resolvers/mutations/submit-application/index.ts
 var import_date_fns8 = require("date-fns");
@@ -4302,7 +4302,7 @@ var customResolvers = {
     sendEmailPasswordResetLink: send_email_password_reset_link_default,
     sendEmailReactivateAccountLink: send_email_reactivate_account_link_default,
     deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
-    updateCompanyAndCompanyAddress: inde_default,
+    updateCompanyAndCompanyAddress: update_company_and_company_address_default,
     submitApplication: submit_application_default,
     createFeedbackAndSendEmail: create_feedback_default,
     verifyAccountReactivationToken: verify_account_reactivation_token_default
