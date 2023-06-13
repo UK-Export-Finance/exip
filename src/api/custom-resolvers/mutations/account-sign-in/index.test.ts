@@ -3,6 +3,7 @@ import accountSignIn from '.';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
 import generate from '../../../helpers/generate-otp';
 import sendEmail from '../../../emails';
+import accountChecks from './account-checks';
 import accounts from '../../../test-helpers/accounts';
 import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../../test-mocks';
 import { Account, AccountSignInResponse, ApplicationRelationship } from '../../../types';
@@ -16,13 +17,9 @@ describe('custom-resolvers/account-sign-in', () => {
   let account: Account;
   let retries: Array<ApplicationRelationship>;
 
-  jest.mock('../../../emails');
-  jest.mock('../../../helpers/generate-otp');
-
   generate.otp = () => mockOTP;
 
-  let sendConfirmEmailAddressEmailSpy = jest.fn();
-  let securityCodeEmailSpy = jest.fn();
+  const securityCodeEmailSpy = jest.fn();
 
   const mockPassword = String(process.env.MOCK_ACCOUNT_PASSWORD);
 
@@ -50,20 +47,44 @@ describe('custom-resolvers/account-sign-in', () => {
 
     account = await accounts.create(context);
 
-    jest.resetAllMocks();
-
-    securityCodeEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
-    sendEmail.securityCodeEmail = securityCodeEmailSpy;
-
     result = await accountSignIn({}, variables, context);
 
     account = await accounts.get(context, account.id);
   });
 
-  describe('when the provided password is invalid', () => {
-    test('it should return success=false', async () => {
-      variables.password = `${mockPassword}-incorrect`;
+  describe('when the account is found and verified', () => {
+    beforeEach(async () => {
+      await accounts.deleteAll(context);
 
+      // wipe the AuthenticationRetry table so we have a clean slate.
+      retries = await context.query.AuthenticationRetry.findMany();
+
+      await context.query.AuthenticationRetry.deleteMany({
+        where: retries,
+      });
+    });
+
+    test('it should return the result of accountChecks', async () => {
+      const createdAccount = await accounts.create(context);
+
+      result = await accountSignIn({}, variables, context);
+
+      const expected = await accountChecks(context, createdAccount, mockUrlOrigin);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when the provided password is invalid', () => {
+    beforeEach(() => {
+      variables.password = `${mockPassword}-incorrect`;
+    });
+
+    afterAll(() => {
+      variables.password = mockPassword;
+    });
+
+    test('it should return success=false', async () => {
       result = await accountSignIn({}, variables, context);
 
       const expected = { success: false };
@@ -90,6 +111,10 @@ describe('custom-resolvers/account-sign-in', () => {
 
   describe('when the account is blocked', () => {
     beforeEach(async () => {
+      await accounts.deleteAll(context);
+
+      account = await accounts.create(context);
+
       account = (await context.query.Account.updateOne({
         where: { id: account.id },
         data: {

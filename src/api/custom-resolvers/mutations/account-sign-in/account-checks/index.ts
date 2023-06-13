@@ -31,66 +31,74 @@ const { EMAIL } = ACCOUNT;
  * @returns {Object} Object with success flag
  */
 const accountChecks = async (context: Context, account: Account, urlOrigin: string) => {
-  const { id: accountId, email } = account;
+  try {
+    console.info('Signing in account - checking account');
 
-  if (!account.isVerified) {
-    console.info('Unable to sign in account - account has not been verified yet');
+    const { id: accountId, email } = account;
 
-    const now = new Date();
+    if (!account.isVerified) {
+      console.info('Unable to sign in account - account has not been verified yet');
 
-    const verificationHasExpired = isAfter(now, account.verificationExpiry);
+      const now = new Date();
 
-    if (account.verificationHash && !verificationHasExpired) {
-      console.info('Account has an unexpired verification token - resetting verification expiry');
+      const verificationHasExpired = isAfter(now, account.verificationExpiry);
 
-      const accountUpdate = {
-        verificationExpiry: EMAIL.VERIFICATION_EXPIRY(),
-      };
+      if (account.verificationHash && !verificationHasExpired) {
+        console.info('Account has an unexpired verification token - resetting verification expiry');
 
-      (await context.db.Account.updateOne({
-        where: { id: accountId },
-        data: accountUpdate,
-      })) as Account;
-
-      console.info('Account has an unexpired verification token - sending verification email');
-
-      const emailResponse = await confirmEmailAddressEmail.send(context, urlOrigin, accountId);
-
-      if (emailResponse.success) {
-        return {
-          success: false,
-          resentVerificationEmail: true,
-          accountId,
+        const accountUpdate = {
+          verificationExpiry: EMAIL.VERIFICATION_EXPIRY(),
         };
+
+        (await context.db.Account.updateOne({
+          where: { id: accountId },
+          data: accountUpdate,
+        })) as Account;
+
+        console.info('Account has an unexpired verification token - sending verification email');
+
+        const emailResponse = await confirmEmailAddressEmail.send(context, urlOrigin, accountId);
+
+        if (emailResponse?.success) {
+          return {
+            success: false,
+            resentVerificationEmail: true,
+            accountId,
+          };
+        }
+
+        return { success: false, accountId };
       }
 
-      return { success: false, accountId };
+      // reject
+      console.info('Unable to sign in account - account has not been verified');
+
+      return { success: false };
     }
 
-    // reject
-    console.info('Unable to sign in account - account has not been verified');
+    // generate OTP and update the account
+    const { securityCode } = await generateOTPAndUpdateAccount(context, accountId);
 
-    return { success: false };
-  }
+    // send "security code" email.
+    const name = getFullNameString(account);
 
-  // generate OTP and update the account
-  const { securityCode } = await generateOTPAndUpdateAccount(context, accountId);
+    const emailResponse = await sendEmail.securityCodeEmail(email, name, securityCode);
 
-  // send "security code" email.
-  const name = getFullNameString(account);
+    if (emailResponse?.success) {
+      return {
+        ...emailResponse,
+        accountId,
+      };
+    }
 
-  const emailResponse = await sendEmail.securityCodeEmail(email, name, securityCode);
-
-  if (emailResponse.success) {
     return {
-      ...emailResponse,
-      accountId,
+      success: false,
     };
-  }
+  } catch (err) {
+    console.error(err);
 
-  return {
-    success: false,
-  };
+    throw new Error(`Validating password or sending email for account sign in (accountSignIn mutation - account checks) ${err}`);
+  }
 };
 
 export default accountChecks;

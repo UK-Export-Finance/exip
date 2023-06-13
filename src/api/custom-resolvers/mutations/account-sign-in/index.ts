@@ -100,7 +100,8 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
     return { success: false };
   } catch (err) {
     console.error(err);
-    throw new Error(`Validating password or sending email for account sign in (accountSignIn mutation) ${err}`);
+
+    throw new Error(`Signing in account (accountSignIn mutation) ${err}`);
   }
 };
 

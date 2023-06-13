@@ -8,6 +8,7 @@ import confirmEmailAddressEmail from '../../../../helpers/send-email-confirm-ema
 import generate from '../../../../helpers/generate-otp';
 import getFullNameString from '../../../../helpers/get-full-name-string';
 import sendEmail from '../../../../emails';
+import accounts from '../../../../test-helpers/accounts';
 import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../../../test-mocks';
 import { Account, AccountSignInResponse, ApplicationRelationship } from '../../../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -48,12 +49,7 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
   let result: AccountSignInResponse;
 
   beforeAll(async () => {
-    // wipe the account table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
-
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
+    await accounts.deleteAll(context);
 
     // wipe the AuthenticationRetry table so we have a clean slate.
     retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
@@ -63,10 +59,7 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
     });
 
     // create an account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id',
-    })) as Account;
+    account = await accounts.create(context);
 
     jest.resetAllMocks();
 
@@ -75,13 +68,10 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
 
     result = await accountChecks(context, account, mockUrlOrigin);
 
-    account = (await context.query.Account.findOne({
-      where: { id: account.id },
-      query: 'id firstName lastName email otpSalt otpHash otpExpiry verificationExpiry',
-    })) as Account;
+    account = await accounts.get(context, account.id);
   });
 
-  describe('when the provided password is valid', () => {
+  describe('when the account is verified', () => {
     test('it should generate an OTP and save to the account', () => {
       expect(account.otpSalt).toEqual(mockOTP.salt);
       expect(account.otpHash).toEqual(mockOTP.hash);
@@ -112,18 +102,20 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
       jest.resetAllMocks();
 
       sendConfirmEmailAddressEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+
       confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
 
-      await context.query.Account.updateOne({
+      const updatedAccount = await context.query.Account.updateOne({
         where: { id: account.id },
         data: {
           isVerified: false,
           isBlocked: false,
           verificationHash: mockAccount.verificationHash,
         },
+        query: 'id firstName lastName email verificationHash',
       });
 
-      result = await accountChecks(context, account, mockUrlOrigin);
+      result = await accountChecks(context, updatedAccount, mockUrlOrigin);
     });
 
     describe('verificationExpiry', () => {
@@ -131,10 +123,7 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
       let newExpiryDay: number;
 
       beforeEach(async () => {
-        updatedAccount = (await context.query.Account.findOne({
-          where: { id: account.id },
-          query: 'verificationExpiry',
-        })) as Account;
+        updatedAccount = await accounts.get(context, account.id);
 
         newExpiryDay = new Date(updatedAccount.verificationExpiry).getDate();
       });
@@ -189,7 +178,7 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
       });
 
       test('it should NOT call confirmEmailAddressEmail.send', async () => {
-        await accountChecks(context, account, mockUrlOrigin);
+        sendEmail.securityCodeEmail = securityCodeEmailSpy;
 
         expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledTimes(0);
       });
@@ -216,7 +205,7 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
         expect(securityCodeEmailSpy).toHaveBeenCalledTimes(1);
 
         const expected = new Error(
-          `Validating password or sending email for account sign in (accountChecks contexttaaccount) mockUrlOriginmockSendEmailResponse}`,
+          `Validating password or sending email for account sign in (accountSignIn mutation - account checks) ${mockSendEmailResponse}`,
         );
         expect(err).toEqual(expected);
       }
