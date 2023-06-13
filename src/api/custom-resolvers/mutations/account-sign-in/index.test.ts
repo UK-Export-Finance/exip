@@ -68,10 +68,7 @@ describe('custom-resolvers/account-sign-in', () => {
 
     result = await accountSignIn({}, variables, context);
 
-    account = (await context.query.Account.findOne({
-      where: { id: account.id },
-      query: 'id firstName lastName email otpSalt otpHash otpExpiry verificationExpiry',
-    })) as Account;
+    account = await accounts.get(context, account.id);
   });
 
   describe('when the provided password is valid', () => {
@@ -288,10 +285,7 @@ describe('custom-resolvers/account-sign-in', () => {
 
     it('should mark the account as isBlocked=true', async () => {
       // get the latest account
-      account = (await context.query.Account.findOne({
-        where: { id: account.id },
-        query: 'id isBlocked',
-      })) as Account;
+      account = await accounts.get(context, account.id);
 
       expect(account.isBlocked).toEqual(true);
     });

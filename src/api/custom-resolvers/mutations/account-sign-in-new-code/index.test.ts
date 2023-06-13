@@ -53,10 +53,7 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
 
     result = await accountSignInSendNewCode({}, variables, context);
 
-    account = (await context.query.Account.findOne({
-      where: { id: account.id },
-      query: 'id firstName lastName email otpSalt otpHash otpExpiry',
-    })) as Account;
+    account = await accounts.get(context, account.id);
   });
 
   describe('when the provided password is valid', () => {

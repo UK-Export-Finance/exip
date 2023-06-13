@@ -5,10 +5,14 @@ import { Account } from '../types';
 /**
  * create account test helper
  * Create an account with mock account data and any provied custom account data.
- * @param {Object} Created account
+ * @param {Object} KeystoneJS context API
+ * @param {Object} Account data
+ * @returns {Object} Created account
  */
 const create = async (context: Context, accountData?: Account) => {
   try {
+    console.info('Creating an account (test helpers)');
+
     let accountInput = mockAccount;
 
     if (accountData) {
@@ -30,7 +34,8 @@ const create = async (context: Context, accountData?: Account) => {
 /**
  * deleteAll test helper
  * Get all accounts and delete them.
- * @param {Array} Accounts that have been deleted
+ * @param {Object} KeystoneJS context API
+ * @returns {Array} Accounts that have been deleted
  */
 const deleteAll = async (context: Context) => {
   try {
@@ -49,13 +54,38 @@ const deleteAll = async (context: Context) => {
     return [];
   } catch (err) {
     console.error(err);
-    throw new Error(`Deleting accounts (test helpers) ${err}`);
+    throw new Error(`Getting and deleting accounts (test helpers) ${err}`);
+  }
+};
+
+/**
+ * get account test helper
+ * Get an account by ID
+ * @param {Object} KeystoneJS context API
+ * @param {String} Account ID
+ * @returns {Object} Account
+ */
+const get = async (context: Context, accountId: string) => {
+  try {
+    console.info('Getting an account by ID (test helpers)');
+
+    const account = (await context.query.Account.findOne({
+      where: { id: accountId },
+      query:
+        'id firstName lastName email otpSalt otpHash otpExpiry salt hash passwordResetHash passwordResetExpiry verificationExpiry isVerified isBlocked reactivationHash reactivationExpiry',
+    })) as Account;
+
+    return account;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Getting an account by ID (test helpers) ${err}`);
   }
 };
 
 const accounts = {
   create,
   deleteAll,
+  get,
 };
 
 export default accounts;

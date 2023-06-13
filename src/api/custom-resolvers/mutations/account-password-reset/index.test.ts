@@ -71,10 +71,7 @@ describe('custom-resolvers/account-password-reset', () => {
 
     result = await accountPasswordReset({}, variables, context);
 
-    account = (await context.query.Account.findOne({
-      where: { id: account.id },
-      query: 'id salt hash passwordResetHash passwordResetExpiry',
-    })) as Account;
+    account = await accounts.get(context, account.id);
   });
 
   afterAll(async () => {
@@ -110,10 +107,7 @@ describe('custom-resolvers/account-password-reset', () => {
 
   test("it should update the account's salt and hash", async () => {
     // get the latest account
-    account = (await context.query.Account.findOne({
-      where: { id: account.id },
-      query: 'id salt hash passwordResetHash passwordResetExpiry',
-    })) as Account;
+    account = await accounts.get(context, account.id);
 
     expect(account.salt).toBeDefined();
     expect(account.salt.length).toEqual(RANDOM_BYTES_SIZE * 2);

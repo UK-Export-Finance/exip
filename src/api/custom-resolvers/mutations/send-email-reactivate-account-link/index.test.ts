@@ -60,10 +60,7 @@ describe('custom-resolvers/send-email-reactivate-account-link', () => {
     result = await sendEmailReactivateAccountLink({}, variables, context);
 
     // get the latest account
-    account = (await context.query.Account.findOne({
-      where: { id: account.id },
-      query: 'id email firstName lastName reactivationHash reactivationExpiry',
-    })) as Account;
+    account = await accounts.get(context, account.id);
   });
 
   it('should return the email response, email and accountId', () => {

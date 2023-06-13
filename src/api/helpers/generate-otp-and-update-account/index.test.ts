@@ -34,10 +34,7 @@ describe('helpers/generate-otp-and-update-account', () => {
 
     jest.clearAllMocks();
 
-    account = (await context.query.Account.findOne({
-      where: { id: account.id },
-      query: 'otpSalt otpHash otpExpiry',
-    })) as Account;
+    account = await accounts.get(context, account.id);
   });
 
   test('it should generate an OTP and save to the account', async () => {

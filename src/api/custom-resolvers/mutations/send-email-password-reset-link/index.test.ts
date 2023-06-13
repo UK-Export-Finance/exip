@@ -67,10 +67,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     result = await sendEmailPasswordResetLink({}, variables, context);
 
     // get the latest account
-    account = (await context.query.Account.findOne({
-      where: { id: account.id },
-      query: 'id email firstName lastName passwordResetHash passwordResetExpiry isBlocked',
-    })) as Account;
+    account = await accounts.get(context, account.id);
 
     expect(account.isBlocked).toEqual(false);
   });
@@ -194,10 +191,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
 
     it('should mark the account as isBlocked=true', async () => {
       // get the latest account
-      account = (await context.query.Account.findOne({
-        where: { id: account.id },
-        query: 'id isBlocked',
-      })) as Account;
+      account = await accounts.get(context, account.id);
 
       expect(account.isBlocked).toEqual(true);
     });

@@ -31,12 +31,7 @@ describe('helpers/block-account', () => {
   });
 
   test('it should update an account to be blocked', async () => {
-    account = (await context.query.Account.findOne({
-      where: {
-        id: account.id,
-      },
-      query: 'id isBlocked',
-    })) as Account;
+    account = await accounts.get(context, account.id);
 
     expect(account.isBlocked).toEqual(true);
   });

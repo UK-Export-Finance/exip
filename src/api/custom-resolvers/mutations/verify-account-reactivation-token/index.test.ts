@@ -94,10 +94,7 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
     result = await verifyAccountReactivationToken({}, variables, context);
 
     // get the latest account
-    account = (await context.query.Account.findOne({
-      where: { id: account.id },
-      query: 'id reactivationHash reactivationExpiry isVerified isBlocked',
-    })) as Account;
+    account = await accounts.get(context, account.id);
   });
 
   test('should return success=true', () => {
