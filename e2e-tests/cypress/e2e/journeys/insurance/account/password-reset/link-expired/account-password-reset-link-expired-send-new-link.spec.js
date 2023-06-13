@@ -46,10 +46,6 @@ context('Insurance - Account - Password reset - link expired page - send new lin
     cy.saveSession();
   });
 
-  after(() => {
-    cy.deleteAccount();
-  });
-
   describe(`When a password reset verfication token has expired and the user navigates to ${NEW_PASSWORD} with the expired token and clicks the 'send new link' button/submits the form`, () => {
     let updatedAccount;
 
