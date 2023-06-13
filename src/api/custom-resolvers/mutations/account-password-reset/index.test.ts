@@ -4,18 +4,10 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import accountPasswordReset from '.';
 import createAuthenticationEntry from '../../../helpers/create-authentication-entry';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
-import baseConfig from '../../../keystone';
-import { ACCOUNT } from '../../../constants';
+import { ACCOUNT, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
 import { mockAccount } from '../../../test-mocks';
 import { Account, AccountPasswordResetVariables, ApplicationRelationship, SuccessResponse } from '../../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
-
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
 
 const { ENCRYPTION } = ACCOUNT;
 
@@ -198,16 +190,13 @@ describe('custom-resolvers/account-password-reset', () => {
 
   describe("when the account's password reset expiry is in the past", () => {
     beforeEach(async () => {
-      const now = new Date();
-
-      const milliseconds = 300000;
-      const oneMinuteAgo = new Date(now.setMilliseconds(-milliseconds)).toISOString();
+      const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
 
       account = (await context.query.Account.updateOne({
         where: { id: account.id },
         data: {
           passwordResetHash: mockAccount.passwordResetHash,
-          passwordResetExpiry: oneMinuteAgo,
+          passwordResetExpiry: oneMinuteInThePast,
         },
       })) as Account;
     });

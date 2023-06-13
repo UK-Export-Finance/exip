@@ -1,7 +1,7 @@
 import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import { ACCOUNT } from '../../../constants';
+import { ACCOUNT, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
 import accountSignIn from '.';
 import baseConfig from '../../../keystone';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
@@ -179,15 +179,12 @@ describe('custom-resolvers/account-sign-in', () => {
           where: retries,
         });
 
-        const now = new Date();
-
-        const milliseconds = 300000;
-        const oneMinuteAgo = new Date(now.setMilliseconds(-milliseconds)).toISOString();
+        const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
 
         await context.query.Account.updateOne({
           where: { id: account.id },
           data: {
-            verificationExpiry: oneMinuteAgo,
+            verificationExpiry: oneMinuteInThePast,
           },
         });
       });

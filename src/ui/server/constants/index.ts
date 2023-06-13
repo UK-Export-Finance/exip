@@ -3,6 +3,7 @@ export * from './account';
 export * from './application';
 export * from './currencies';
 export * from './date-format';
+export * from './dates';
 export * from './field-ids';
 export * from './field-values';
 export * from './percentages-of-cover';
