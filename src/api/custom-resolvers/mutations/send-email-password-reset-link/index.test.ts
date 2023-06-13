@@ -7,7 +7,6 @@ import accounts from '../../../test-helpers/accounts';
 import { get30minutesFromNow } from '../../../helpers/date';
 import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../../test-mocks';
 import { Account, SuccessResponse } from '../../../types';
-
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
 const context = getKeystoneContext();
