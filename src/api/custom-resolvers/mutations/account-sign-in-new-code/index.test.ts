@@ -1,22 +1,13 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import accountSignInSendNewCode from '.';
-import baseConfig from '../../../keystone';
 import generate from '../../../helpers/generate-otp';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
 import accounts from '../../../test-helpers/accounts';
 import { mockOTP, mockSendEmailResponse } from '../../../test-mocks';
 import { Account, AccountSignInSendNewCodeVariables, AccountSignInResponse } from '../../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
+const context = getKeystoneContext();
 
 describe('custom-resolvers/account-sign-in-new-code', () => {
   let account: Account;

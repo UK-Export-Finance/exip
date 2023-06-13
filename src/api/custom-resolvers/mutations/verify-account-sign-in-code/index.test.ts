@@ -1,23 +1,14 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
 import verifyAccountSignInCode from '.';
 import create from '../../../helpers/create-jwt';
 import { ACCOUNT } from '../../../constants';
 import getAccountById from '../../../helpers/get-account-by-id';
 import generate from '../../../helpers/generate-otp';
 import generateOTPAndUpdateAccount from '../../../helpers/generate-otp-and-update-account';
-import baseConfig from '../../../keystone';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import accounts from '../../../test-helpers/accounts';
 import { Account, ApplicationRelationship, VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
+const context = getKeystoneContext();
 
 const {
   JWT: {

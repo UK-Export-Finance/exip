@@ -1,7 +1,3 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import baseConfig from '../../../keystone';
 import sendEmailPasswordResetLink from '.';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
 import getFullNameString from '../../../helpers/get-full-name-string';
@@ -11,14 +7,10 @@ import accounts from '../../../test-helpers/accounts';
 import { get30minutesFromNow } from '../../../helpers/date';
 import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../../test-mocks';
 import { Account, SuccessResponse } from '../../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
 
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
+import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
+const context = getKeystoneContext();
 
 const {
   ENCRYPTION: {

@@ -1,20 +1,11 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import baseConfig from '../../../keystone';
 import addAndGetOTP from '.';
 import generate from '../../../helpers/generate-otp';
 import accounts from '../../../test-helpers/accounts';
 import { mockAccount, mockOTP } from '../../../test-mocks';
 import { Account, AddAndGetOtpResponse } from '../../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-dotenv.config();
-
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-const context = getContext(config, PrismaModule) as Context;
+const context = getKeystoneContext();
 
 describe('custom-resolvers/add-and-get-OTP', () => {
   let account: Account;
