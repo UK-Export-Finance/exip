@@ -1,8 +1,3 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import baseConfig from '../../../keystone';
 import submitApplication from '.';
 import generate from '../../../generate-xlsx';
 import applicationSubmittedEmails from '../../../emails/send-application-submitted-emails';
@@ -11,13 +6,9 @@ import getPopulatedApplication from '../../../helpers/get-populated-application'
 import { createFullApplication } from '../../../test-helpers';
 import { mockSendEmailResponse } from '../../../test-mocks';
 import { Application, SubmitApplicationVariables, SuccessResponse } from '../../../types';
+import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
+const context = getKeystoneContext();
 
 describe('custom-resolvers/submit-application', () => {
   let submittedApplication: Application;

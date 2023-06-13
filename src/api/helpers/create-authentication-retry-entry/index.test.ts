@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import createAuthenticationRetryEntry from '.';
 import baseConfig from '../../keystone';
-import { mockAccount } from '../../test-mocks';
+import accounts from '../../test-helpers/accounts';
 import { Account } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -18,11 +18,7 @@ describe('helpers/create-authentication-retry-entry', () => {
   let account: Account;
 
   beforeAll(async () => {
-    // create a new account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id',
-    })) as Account;
+    account = await accounts.create(context);
 
     // wipe the AuthenticationRetry table so we have a clean slate.
     const retries = await context.query.AuthenticationRetry.findMany();

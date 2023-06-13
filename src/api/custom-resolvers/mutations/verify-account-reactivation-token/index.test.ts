@@ -1,21 +1,13 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import crypto from 'crypto';
-import baseConfig from '../../../keystone';
 import verifyAccountReactivationToken from '.';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
 import { ACCOUNT, FIELD_IDS } from '../../../constants';
+import accounts from '../../../test-helpers/accounts';
 import { mockAccount } from '../../../test-mocks';
 import { Account, SuccessResponse, VerifyAccountReactivationTokenVariables } from '../../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
+const context = getKeystoneContext();
 
 const {
   ENCRYPTION: {
@@ -45,12 +37,7 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
   });
 
   beforeEach(async () => {
-    // wipe the accounts table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
-
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
+    await accounts.deleteAll(context);
 
     // wipe the AuthenticationRetry table so we have a clean slate.
     let retries = await context.query.AuthenticationRetry.findMany();
@@ -69,16 +56,15 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
 
     const reactivationExpiry = ACCOUNT.REACTIVATION_EXPIRY();
 
-    account = (await context.query.Account.createOne({
-      data: {
-        ...mockAccount,
-        [IS_VERIFIED]: false,
-        [IS_BLOCKED]: true,
-        reactivationHash,
-        reactivationExpiry,
-      },
-      query: 'id reactivationHash reactivationExpiry isVerified isBlocked',
-    })) as Account;
+    const unverifiedAndBlockedAccount = {
+      ...mockAccount,
+      [IS_VERIFIED]: false,
+      [IS_BLOCKED]: true,
+      reactivationHash,
+      reactivationExpiry,
+    };
+
+    account = await accounts.create(context, unverifiedAndBlockedAccount);
 
     expect(account.isVerified).toEqual(false);
     expect(account.isBlocked).toEqual(true);
@@ -99,10 +85,7 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
     result = await verifyAccountReactivationToken({}, variables, context);
 
     // get the latest account
-    account = (await context.query.Account.findOne({
-      where: { id: account.id },
-      query: 'id reactivationHash reactivationExpiry isVerified isBlocked',
-    })) as Account;
+    account = await accounts.get(context, account.id);
   });
 
   test('should return success=true', () => {
@@ -142,14 +125,14 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
       const MS_PER_MINUTE = 60000;
       const oneMinuteAgo = new Date(now.getTime() - 1 * MS_PER_MINUTE);
 
-      account = (await context.query.Account.createOne({
-        data: {
-          ...mockAccount,
-          reactivationHash,
-          [REACTIVATION_EXPIRY]: oneMinuteAgo,
-          [IS_BLOCKED]: true,
-        },
-      })) as Account;
+      const accountBlockedAndReactivationExpired = {
+        ...mockAccount,
+        reactivationHash,
+        [IS_BLOCKED]: true,
+        [REACTIVATION_EXPIRY]: oneMinuteAgo,
+      };
+
+      account = await accounts.create(context, accountBlockedAndReactivationExpired);
 
       result = await verifyAccountReactivationToken({}, variables, context);
 
@@ -164,12 +147,8 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
 
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
-      // wipe the table so we have a clean slate.
-      const accounts = await context.query.Account.findMany();
-
-      await context.query.Account.deleteMany({
-        where: accounts,
-      });
+      // wipe accounts so an account will not be found.
+      await accounts.deleteAll(context);
 
       result = await verifyAccountReactivationToken({}, variables, context);
 

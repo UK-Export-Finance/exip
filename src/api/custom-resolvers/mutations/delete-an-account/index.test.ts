@@ -1,19 +1,11 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import deleteAnAccount from '.';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
-import baseConfig from '../../../keystone';
+import accounts from '../../../test-helpers/accounts';
 import { mockAccount } from '../../../test-mocks';
 import { Account, SuccessResponse } from '../../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
+const context = getKeystoneContext();
 
 describe('custom-resolvers/delete-an-account', () => {
   let account: Account;
@@ -24,17 +16,9 @@ describe('custom-resolvers/delete-an-account', () => {
   };
 
   beforeAll(async () => {
-    // wipe the table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
+    await accounts.deleteAll(context);
 
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
-
-    // create an account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-    })) as Account;
+    account = await accounts.create(context);
   });
 
   test('it should return success=true', async () => {
@@ -51,10 +35,7 @@ describe('custom-resolvers/delete-an-account', () => {
     let retries;
 
     beforeEach(async () => {
-      // create an account
-      account = (await context.query.Account.createOne({
-        data: mockAccount,
-      })) as Account;
+      account = await accounts.create(context);
 
       // wipe the table so we have a clean slate.
       retries = await context.query.AuthenticationRetry.findMany();
