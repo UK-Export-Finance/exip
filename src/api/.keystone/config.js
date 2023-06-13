@@ -1425,6 +1425,7 @@ var typeDefs = `
     success: Boolean!
     token: String
     expired: Boolean
+    accountId: String
   }
 
   type VerifyAccountEmailAddressResponse {
@@ -4275,7 +4276,8 @@ var verifyAccountPasswordResetToken = async (root, variables, context) => {
       console.info("Account password reset token has expired");
       return {
         success: false,
-        expired: true
+        expired: true,
+        accountId: account.id
       };
     }
     return { success: true };
