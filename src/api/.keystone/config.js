@@ -1569,7 +1569,7 @@ var typeDefs = `
 `;
 var type_defs_default = typeDefs;
 
-// custom-resolvers/mutations/create-an-account.ts
+// custom-resolvers/mutations/create-an-account/index.ts
 var import_crypto2 = __toESM(require("crypto"));
 
 // helpers/get-account-by-field/index.ts
@@ -1902,7 +1902,7 @@ var sendEmail = {
 };
 var emails_default = sendEmail;
 
-// custom-resolvers/mutations/create-an-account.ts
+// custom-resolvers/mutations/create-an-account/index.ts
 var { EMAIL, ENCRYPTION: ENCRYPTION2 } = ACCOUNT2;
 var {
   STRING_TYPE: STRING_TYPE2,
@@ -1975,7 +1975,7 @@ var getAuthenticationRetriesByAccountId = async (context, accountId) => {
 };
 var get_authentication_retries_by_account_id_default = getAuthenticationRetriesByAccountId;
 
-// custom-resolvers/mutations/delete-an-account.ts
+// custom-resolvers/mutations/delete-an-account/index.ts
 var deleteAnAccount = async (root, variables, context) => {
   console.info("Deleting account ", variables.email);
   try {
@@ -2013,7 +2013,7 @@ var deleteAnAccount = async (root, variables, context) => {
 };
 var delete_an_account_default = deleteAnAccount;
 
-// custom-resolvers/mutations/verify-account-email-address.ts
+// custom-resolvers/mutations/verify-account-email-address/index.ts
 var import_date_fns3 = require("date-fns");
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
@@ -2101,7 +2101,7 @@ var confirmEmailAddressEmail = {
 };
 var send_email_confirm_email_address_default = confirmEmailAddressEmail;
 
-// custom-resolvers/mutations/send-email-confirm-email-address.ts
+// custom-resolvers/mutations/send-email-confirm-email-address/index.ts
 var sendEmailConfirmEmailAddressMutation = async (root, variables, context) => {
   try {
     const emailResponse = await send_email_confirm_email_address_default.send(context, variables.urlOrigin, variables.accountId);
@@ -2116,7 +2116,7 @@ var sendEmailConfirmEmailAddressMutation = async (root, variables, context) => {
 };
 var send_email_confirm_email_address_default2 = sendEmailConfirmEmailAddressMutation;
 
-// custom-resolvers/mutations/account-sign-in.ts
+// custom-resolvers/mutations/account-sign-in/index.ts
 var import_date_fns5 = require("date-fns");
 
 // helpers/get-password-hash/index.ts
@@ -2287,7 +2287,7 @@ var blockAccount = async (context, accountId) => {
 };
 var block_account_default = blockAccount;
 
-// custom-resolvers/mutations/account-sign-in.ts
+// custom-resolvers/mutations/account-sign-in/index.ts
 var { EMAIL: EMAIL2 } = ACCOUNT2;
 var accountSignIn = async (root, variables, context) => {
   try {
@@ -2370,7 +2370,7 @@ var accountSignIn = async (root, variables, context) => {
 };
 var account_sign_in_default = accountSignIn;
 
-// custom-resolvers/mutations/account-sign-in-new-code.ts
+// custom-resolvers/mutations/account-sign-in-new-code/index.ts
 var accountSignInSendNewCode = async (root, variables, context) => {
   try {
     console.info("Generating and sending new sign in code for account");
@@ -2400,7 +2400,7 @@ var accountSignInSendNewCode = async (root, variables, context) => {
 };
 var account_sign_in_new_code_default = accountSignInSendNewCode;
 
-// custom-resolvers/mutations/verify-account-sign-in-code.ts
+// custom-resolvers/mutations/verify-account-sign-in-code/index.ts
 var import_date_fns6 = require("date-fns");
 
 // helpers/is-valid-otp/index.ts
@@ -2478,7 +2478,7 @@ var create = {
 };
 var create_jwt_default = create;
 
-// custom-resolvers/mutations/verify-account-sign-in-code.ts
+// custom-resolvers/mutations/verify-account-sign-in-code/index.ts
 var {
   JWT: { SESSION_EXPIRY }
 } = ACCOUNT2;
@@ -2545,7 +2545,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
 };
 var verify_account_sign_in_code_default = verifyAccountSignInCode;
 
-// custom-resolvers/mutations/add-and-get-OTP.ts
+// custom-resolvers/mutations/add-and-get-OTP/index.ts
 var addAndGetOTP = async (root, variables, context) => {
   try {
     console.info("Adding OTP to an account");
@@ -2567,7 +2567,7 @@ var addAndGetOTP = async (root, variables, context) => {
 };
 var add_and_get_OTP_default = addAndGetOTP;
 
-// custom-resolvers/mutations/send-email-password-reset-link.ts
+// custom-resolvers/mutations/send-email-password-reset-link/index.ts
 var import_crypto7 = __toESM(require("crypto"));
 var {
   ENCRYPTION: {
@@ -2632,7 +2632,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
 };
 var send_email_password_reset_link_default = sendEmailPasswordResetLink;
 
-// custom-resolvers/mutations/account-password-reset.ts
+// custom-resolvers/mutations/account-password-reset/index.ts
 var import_date_fns7 = require("date-fns");
 
 // helpers/account-has-used-password-before/index.ts
@@ -2683,7 +2683,7 @@ var createAuthenticationEntry = async (context, entry) => {
 };
 var create_authentication_entry_default = createAuthenticationEntry;
 
-// custom-resolvers/mutations/account-password-reset.ts
+// custom-resolvers/mutations/account-password-reset/index.ts
 var accountPasswordReset = async (root, variables, context) => {
   console.info("Resetting account password");
   try {
@@ -2763,7 +2763,7 @@ var accountPasswordReset = async (root, variables, context) => {
 };
 var account_password_reset_default = accountPasswordReset;
 
-// custom-resolvers/mutations/send-email-reactivate-account-link.ts
+// custom-resolvers/mutations/send-email-reactivate-account-link/index.ts
 var import_crypto8 = __toESM(require("crypto"));
 var {
   ENCRYPTION: {
@@ -2813,7 +2813,7 @@ var sendEmailReactivateAccountLink = async (root, variables, context) => {
 };
 var send_email_reactivate_account_link_default = sendEmailReactivateAccountLink;
 
-// custom-resolvers/mutations/delete-application-by-refrence-number.ts
+// custom-resolvers/mutations/delete-application-by-refrence-number/index.ts
 var deleteApplicationByReferenceNumber = async (root, variables, context) => {
   try {
     console.info("Deleting application by reference number");
@@ -2869,7 +2869,7 @@ var mapSicCodes = (company, sicCodes, industrySectorNames) => {
   return mapped;
 };
 
-// custom-resolvers/mutations/update-company-and-company-address.ts
+// custom-resolvers/mutations/update-company-and-company-address/index.ts
 var updateCompanyAndCompanyAddress = async (root, variables, context) => {
   try {
     console.info("Updating application company and company address for ", variables.companyId);
@@ -2903,7 +2903,7 @@ var updateCompanyAndCompanyAddress = async (root, variables, context) => {
 };
 var update_company_and_company_address_default = updateCompanyAndCompanyAddress;
 
-// custom-resolvers/mutations/submit-application.ts
+// custom-resolvers/mutations/submit-application/index.ts
 var import_date_fns8 = require("date-fns");
 
 // helpers/get-country-by-field/index.ts
@@ -3979,7 +3979,7 @@ var generate2 = {
 };
 var generate_xlsx_default = generate2;
 
-// custom-resolvers/mutations/submit-application.ts
+// custom-resolvers/mutations/submit-application/index.ts
 var submitApplication = async (root, variables, context) => {
   try {
     console.info(`Submitting application ${variables.applicationId}`);
@@ -4021,7 +4021,7 @@ var submitApplication = async (root, variables, context) => {
 };
 var submit_application_default = submitApplication;
 
-// custom-resolvers/mutations/create-feedback.ts
+// custom-resolvers/mutations/create-feedback/index.ts
 var createFeedback = async (root, variables, context) => {
   console.info("Creating feedback");
   try {
@@ -4046,7 +4046,7 @@ var createFeedback = async (root, variables, context) => {
 };
 var create_feedback_default = createFeedback;
 
-// custom-resolvers/mutations/verify-account-reactivation-token.ts
+// custom-resolvers/mutations/verify-account-reactivation-token/index.ts
 var import_date_fns9 = require("date-fns");
 var {
   INSURANCE: {
@@ -4094,7 +4094,7 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
 };
 var verify_account_reactivation_token_default = verifyAccountReactivationToken;
 
-// custom-resolvers/queries/get-companies-house-information.ts
+// custom-resolvers/queries/get-companies-house-information/index.ts
 var import_axios2 = __toESM(require("axios"));
 var import_dotenv6 = __toESM(require("dotenv"));
 
@@ -4187,7 +4187,7 @@ var getIndustrySectorNames = async () => {
 };
 var industry_sector_default = getIndustrySectorNames;
 
-// custom-resolvers/queries/get-companies-house-information.ts
+// custom-resolvers/queries/get-companies-house-information/index.ts
 import_dotenv6.default.config();
 var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
@@ -4232,7 +4232,7 @@ var getCompaniesHouseInformation = async (root, variables) => {
 };
 var get_companies_house_information_default = getCompaniesHouseInformation;
 
-// custom-resolvers/queries/get-account-password-reset-token.ts
+// custom-resolvers/queries/get-account-password-reset-token/index.ts
 var getAccountPasswordResetToken = async (root, variables, context) => {
   console.info("Getting account password reset token");
   try {
@@ -4256,7 +4256,7 @@ var getAccountPasswordResetToken = async (root, variables, context) => {
 };
 var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
-// custom-resolvers/queries/verify-account-password-reset-token.ts
+// custom-resolvers/queries/verify-account-password-reset-token/index.ts
 var import_date_fns10 = require("date-fns");
 var {
   ACCOUNT: { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY }
