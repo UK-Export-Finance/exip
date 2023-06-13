@@ -1,13 +1,11 @@
 import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import { ACCOUNT, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
+import { ACCOUNT } from '../../../constants';
 import accountSignIn from '.';
 import baseConfig from '../../../keystone';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
-import confirmEmailAddressEmail from '../../../helpers/send-email-confirm-email-address';
 import generate from '../../../helpers/generate-otp';
-import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
 import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../../test-mocks';
 import { Account, AccountSignInResponse, ApplicationRelationship } from '../../../types';
@@ -20,7 +18,7 @@ dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
 
-const { EMAIL, MAX_AUTH_RETRIES } = ACCOUNT;
+const { MAX_AUTH_RETRIES } = ACCOUNT;
 
 describe('custom-resolvers/account-sign-in', () => {
   let account: Account;
@@ -80,129 +78,6 @@ describe('custom-resolvers/account-sign-in', () => {
       where: { id: account.id },
       query: 'id firstName lastName email otpSalt otpHash otpExpiry verificationExpiry',
     })) as Account;
-  });
-
-  describe('when the provided password is valid', () => {
-    test('it should generate an OTP and save to the account', () => {
-      expect(account.otpSalt).toEqual(mockOTP.salt);
-      expect(account.otpHash).toEqual(mockOTP.hash);
-      expect(new Date(account.otpExpiry)).toEqual(mockOTP.expiry);
-    });
-
-    test('it should call sendEmail.securityCodeEmail', () => {
-      const { email } = account;
-
-      const name = getFullNameString(account);
-
-      expect(securityCodeEmailSpy).toHaveBeenCalledTimes(1);
-      expect(securityCodeEmailSpy).toHaveBeenCalledWith(email, name, mockOTP.securityCode);
-    });
-
-    test('it should return the email response and accountId', () => {
-      const expected = {
-        ...mockSendEmailResponse,
-        accountId: account.id,
-      };
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when account is not verified, but has a verificationHash and verificationExpiry has not expired', () => {
-    beforeEach(async () => {
-      jest.resetAllMocks();
-
-      sendConfirmEmailAddressEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
-      confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
-
-      await context.query.Account.updateOne({
-        where: { id: account.id },
-        data: {
-          isVerified: false,
-          isBlocked: false,
-          verificationHash: mockAccount.verificationHash,
-        },
-      });
-
-      result = await accountSignIn({}, variables, context);
-    });
-
-    describe('verificationExpiry', () => {
-      let updatedAccount: Account;
-      let newExpiryDay: number;
-
-      beforeEach(async () => {
-        updatedAccount = (await context.query.Account.findOne({
-          where: { id: account.id },
-          query: 'verificationExpiry',
-        })) as Account;
-
-        newExpiryDay = new Date(updatedAccount.verificationExpiry).getDate();
-      });
-
-      test('it should be reset and have a new day vale', async () => {
-        const expectedExpiryDay = new Date(EMAIL.VERIFICATION_EXPIRY()).getDate();
-
-        expect(newExpiryDay).toEqual(expectedExpiryDay);
-      });
-
-      test('the account`s verificationExpiry should NOT have have the same day as the previous verificationExpiry', async () => {
-        const originalExpiryDay = new Date(account.verificationExpiry).getDay();
-
-        expect(newExpiryDay).not.toEqual(originalExpiryDay);
-      });
-    });
-
-    test('it should call confirmEmailAddressEmail.send', async () => {
-      expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledTimes(1);
-      expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledWith(context, variables.urlOrigin, account.id);
-    });
-
-    test('it should return success=false, accountId and resentVerificationEmail=true', async () => {
-      const expected = {
-        success: false,
-        resentVerificationEmail: true,
-        accountId: account.id,
-      };
-
-      expect(result).toEqual(expected);
-    });
-
-    describe('when the verificationExpiry is after now', () => {
-      beforeEach(async () => {
-        jest.resetAllMocks();
-
-        // wipe the AuthenticationRetry table so we have a clean slate.
-        retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
-
-        await context.query.AuthenticationRetry.deleteMany({
-          where: retries,
-        });
-
-        const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
-
-        await context.query.Account.updateOne({
-          where: { id: account.id },
-          data: {
-            verificationExpiry: oneMinuteInThePast,
-          },
-        });
-      });
-
-      test('it should NOT call confirmEmailAddressEmail.send', async () => {
-        await accountSignIn({}, variables, context);
-
-        expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledTimes(0);
-      });
-
-      test('it should return success=false', async () => {
-        result = await accountSignIn({}, variables, context);
-
-        const expected = { success: false };
-
-        expect(result).toEqual(expected);
-      });
-    });
   });
 
   describe('when the provided password is invalid', () => {

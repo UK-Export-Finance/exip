@@ -38,7 +38,7 @@ const sendEmailReactivateAccountLink = async (
      * Get the account
      * If an account does not exist, return success=false
      */
-    const account = (await getAccountById(context, accountId)) as Account;
+    const account = (await getAccountById(context, accountId));
 
     if (!account) {
       console.info('Unable to check account and send reactivate account email/link - no account found');
