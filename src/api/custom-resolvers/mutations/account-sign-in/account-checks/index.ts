@@ -19,12 +19,12 @@ const { EMAIL } = ACCOUNT;
  * If so, this means that the user has not verified their email address. We can therefore:
  * 1) Reset the account's verification expiry.
  * 2) Re-send the verification link email that was sent during account creation.
- * 
+ *
  * Otherwise, the account is verified. We can therefore:
  * 1) Generate an OTP
  * 2) Update the account
  * 3) Send an email with the OTP
- * 
+ *
  * @param {Object} KeystoneJS context API
  * @param {Object} Account
  * @param {String} URL origin

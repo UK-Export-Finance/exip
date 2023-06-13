@@ -19,7 +19,7 @@ dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
 
-const { EMAIL, MAX_AUTH_RETRIES } = ACCOUNT;
+const { EMAIL } = ACCOUNT;
 
 describe('custom-resolvers/account-sign-in/account-checks', () => {
   let account: Account;
@@ -215,7 +215,9 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
       } catch (err) {
         expect(securityCodeEmailSpy).toHaveBeenCalledTimes(1);
 
-        const expected = new Error(`Validating password or sending email for account sign in (accountChecks contexttaaccount) mockUrlOriginmockSendEmailResponse}`);
+        const expected = new Error(
+          `Validating password or sending email for account sign in (accountChecks contexttaaccount) mockUrlOriginmockSendEmailResponse}`,
+        );
         expect(err).toEqual(expected);
       }
     });

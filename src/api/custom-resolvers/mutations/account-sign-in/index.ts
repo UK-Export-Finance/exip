@@ -28,7 +28,7 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
     const { urlOrigin, email, password } = variables;
 
     // Get the account the email is associated with.
-    const accountData = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email) as Account;
+    const accountData = (await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email)) as Account;
 
     if (!accountData) {
       console.info('Unable to validate account - no account found');
