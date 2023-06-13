@@ -9,6 +9,7 @@ import confirmEmailAddressEmail from '../../../helpers/send-email-confirm-email-
 import generate from '../../../helpers/generate-otp';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
+import accounts from '../../../test-helpers/accounts';
 import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../../test-mocks';
 import { Account, AccountSignInResponse, ApplicationRelationship } from '../../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -49,12 +50,7 @@ describe('custom-resolvers/account-sign-in', () => {
   let result: AccountSignInResponse;
 
   beforeAll(async () => {
-    // wipe the account table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
-
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
+    await accounts.deleteAll();
 
     // wipe the AuthenticationRetry table so we have a clean slate.
     retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
@@ -307,12 +303,8 @@ describe('custom-resolvers/account-sign-in', () => {
 
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
-      // wipe the table so we have a clean slate.
-      const accounts = await context.query.Account.findMany();
-
-      await context.query.Account.deleteMany({
-        where: accounts,
-      });
+      // wipe accounts so an account will not be found.
+      await accounts.deleteAll();
 
       result = await accountSignIn({}, variables, context);
 

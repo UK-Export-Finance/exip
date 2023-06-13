@@ -6,6 +6,7 @@ import baseConfig from '../../keystone';
 import shouldBlockAccount from '.';
 import createAuthenticationRetryEntry from '../create-authentication-retry-entry';
 import { ACCOUNT } from '../../constants';
+import accounts from '../../test-helpers/accounts';
 import { mockAccount } from '../../test-mocks';
 import { Account, ApplicationRelationship } from '../../types';
 
@@ -23,12 +24,7 @@ describe('helpers/should-block-account', () => {
   let retries: Array<ApplicationRelationship>;
 
   beforeEach(async () => {
-    // wipe the accounts table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
-
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
+    await accounts.deleteAll();
 
     // create an account
     account = (await context.query.Account.createOne({

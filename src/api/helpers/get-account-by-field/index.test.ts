@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import getAccountByField from '.';
 import baseConfig from '../../keystone';
+import accounts from '../../test-helpers/accounts';
 import { mockAccount } from '../../test-mocks';
 import { Account } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -21,12 +22,7 @@ describe('helpers/get-account-by-field', () => {
   const value = mockAccount.firstName;
 
   beforeEach(async () => {
-    // wipe the table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
-
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
+    await accounts.deleteAll();
 
     // create a new account
     account = (await context.query.Account.createOne({

@@ -4,6 +4,7 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import accountPasswordReset from '.';
 import createAuthenticationEntry from '../../../helpers/create-authentication-entry';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
+import accounts from '../../../test-helpers/accounts';
 import baseConfig from '../../../keystone';
 import { ACCOUNT } from '../../../constants';
 import { mockAccount } from '../../../test-mocks';
@@ -33,12 +34,7 @@ describe('custom-resolvers/account-password-reset', () => {
   let authRetries;
 
   beforeEach(async () => {
-    // wipe the accounts table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
-
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
+    await accounts.deleteAll();
 
     // wipe the AuthenticationRetry table so we have a clean slate.
     authRetries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
@@ -283,12 +279,8 @@ describe('custom-resolvers/account-password-reset', () => {
 
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
-      // wipe the table so we have a clean slate.
-      const accounts = await context.query.Account.findMany();
-
-      await context.query.Account.deleteMany({
-        where: accounts,
-      });
+      // wipe accounts so an account will not be found.
+      await accounts.deleteAll();
 
       result = await accountPasswordReset({}, variables, context);
 

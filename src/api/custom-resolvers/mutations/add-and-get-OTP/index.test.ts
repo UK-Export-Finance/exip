@@ -4,6 +4,7 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import baseConfig from '../../../keystone';
 import addAndGetOTP from '.';
 import generate from '../../../helpers/generate-otp';
+import accounts from '../../../test-helpers/accounts';
 import { mockAccount, mockOTP } from '../../../test-mocks';
 import { Account, AddAndGetOtpResponse } from '../../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -29,12 +30,7 @@ describe('custom-resolvers/add-and-get-OTP', () => {
   let result: AddAndGetOtpResponse;
 
   beforeEach(async () => {
-    // wipe the table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
-
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
+    await accounts.deleteAll();
 
     // create a new account
     account = (await context.query.Account.createOne({

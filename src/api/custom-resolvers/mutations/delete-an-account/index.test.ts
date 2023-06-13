@@ -4,6 +4,7 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import deleteAnAccount from '.';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
 import baseConfig from '../../../keystone';
+import accounts from '../../../test-helpers/accounts';
 import { mockAccount } from '../../../test-mocks';
 import { Account, SuccessResponse } from '../../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -24,12 +25,7 @@ describe('custom-resolvers/delete-an-account', () => {
   };
 
   beforeAll(async () => {
-    // wipe the table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
-
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
+    await accounts.deleteAll();
 
     // create an account
     account = (await context.query.Account.createOne({

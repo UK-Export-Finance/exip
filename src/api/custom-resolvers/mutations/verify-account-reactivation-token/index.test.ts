@@ -6,6 +6,7 @@ import baseConfig from '../../../keystone';
 import verifyAccountReactivationToken from '.';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
 import { ACCOUNT, FIELD_IDS } from '../../../constants';
+import accounts from '../../../test-helpers/accounts';
 import { mockAccount } from '../../../test-mocks';
 import { Account, SuccessResponse, VerifyAccountReactivationTokenVariables } from '../../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -45,12 +46,7 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
   });
 
   beforeEach(async () => {
-    // wipe the accounts table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
-
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
+    await accounts.deleteAll();
 
     // wipe the AuthenticationRetry table so we have a clean slate.
     let retries = await context.query.AuthenticationRetry.findMany();
@@ -164,12 +160,8 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
 
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
-      // wipe the table so we have a clean slate.
-      const accounts = await context.query.Account.findMany();
-
-      await context.query.Account.deleteMany({
-        where: accounts,
-      });
+      // wipe accounts so an account will not be found.
+      await accounts.deleteAll();
 
       result = await verifyAccountReactivationToken({}, variables, context);
 

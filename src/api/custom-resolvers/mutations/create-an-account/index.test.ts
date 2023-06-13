@@ -6,6 +6,7 @@ import createAnAccount from '.';
 import { ACCOUNT } from '../../../constants';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
+import accounts from '../../../test-helpers/accounts';
 import { mockAccount, mockSendEmailResponse } from '../../../test-mocks';
 import { Account } from '../../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -54,12 +55,7 @@ describe('custom-resolvers/create-an-account', () => {
 
     sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
 
-    // wipe the table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
-
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
+    await accounts.deleteAll();
 
     // create an account
     account = (await createAnAccount({}, variables, context)) as Account;
@@ -112,10 +108,10 @@ describe('custom-resolvers/create-an-account', () => {
     });
 
     it('should not create the account', async () => {
-      const accounts = await context.query.Account.findMany();
+      const allAccounts = await context.query.Account.findMany();
 
       // should only have the first created account
-      expect(accounts.length).toEqual(1);
+      expect(allAccounts.length).toEqual(1);
     });
   });
 

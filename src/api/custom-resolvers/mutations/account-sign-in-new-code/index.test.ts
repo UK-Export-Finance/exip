@@ -6,6 +6,7 @@ import baseConfig from '../../../keystone';
 import generate from '../../../helpers/generate-otp';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
+import accounts from '../../../test-helpers/accounts';
 import { mockAccount, mockOTP, mockSendEmailResponse } from '../../../test-mocks';
 import { Account, AccountSignInSendNewCodeVariables, AccountSignInResponse } from '../../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -36,12 +37,7 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
   let variables: AccountSignInSendNewCodeVariables;
 
   beforeEach(async () => {
-    // wipe the table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
-
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
+    await accounts.deleteAll();
 
     // create an account
     account = (await context.query.Account.createOne({
@@ -95,12 +91,8 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
 
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
-      // wipe the table so we have a clean slate.
-      const accounts = await context.query.Account.findMany();
-
-      await context.query.Account.deleteMany({
-        where: accounts,
-      });
+      // wipe accounts so an account will not be found.
+      await accounts.deleteAll();
 
       result = await accountSignInSendNewCode({}, variables, context);
 

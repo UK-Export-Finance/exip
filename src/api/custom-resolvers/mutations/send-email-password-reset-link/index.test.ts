@@ -7,6 +7,7 @@ import createAuthenticationRetryEntry from '../../../helpers/create-authenticati
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
 import { ACCOUNT } from '../../../constants';
+import accounts from '../../../test-helpers/accounts';
 import { get30minutesFromNow } from '../../../helpers/date';
 import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../../test-mocks';
 import { Account, SuccessResponse } from '../../../types';
@@ -46,12 +47,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
   });
 
   beforeEach(async () => {
-    // wipe the accounts table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
-
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
+    await accounts.deleteAll();
 
     // wipe the AuthenticationRetry table so we have a clean slate.
     const retries = await context.query.AuthenticationRetry.findMany();
@@ -162,12 +158,8 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
 
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
-      // wipe the table so we have a clean slate.
-      const accounts = await context.query.Account.findMany();
-
-      await context.query.Account.deleteMany({
-        where: accounts,
-      });
+      // wipe accounts so an account will not be found.
+      await accounts.deleteAll();
 
       result = await sendEmailPasswordResetLink({}, variables, context);
 
