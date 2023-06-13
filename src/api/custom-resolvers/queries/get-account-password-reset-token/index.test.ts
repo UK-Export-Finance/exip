@@ -1,19 +1,11 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import baseConfig from '../../../keystone';
 import getAccountPasswordResetToken from '.';
 import { FIELD_IDS } from '../../../constants';
+import accounts from '../../../test-helpers/accounts';
 import { mockAccount } from '../../../test-mocks';
 import { Account, AddAndGetOtpResponse } from '../../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-dotenv.config();
-
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-const context = getContext(config, PrismaModule) as Context;
+const context = getKeystoneContext();
 
 const {
   ACCOUNT: { PASSWORD_RESET_HASH },
@@ -29,18 +21,9 @@ describe('custom-resolvers/get-account-password-reset-token', () => {
   let result: AddAndGetOtpResponse;
 
   beforeEach(async () => {
-    // wipe the table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
+    await accounts.deleteAll(context);
 
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
-
-    // create a new account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id email',
-    })) as Account;
+    account = await accounts.create(context);
 
     result = await getAccountPasswordResetToken({}, variables, context);
   });
@@ -74,12 +57,8 @@ describe('custom-resolvers/get-account-password-reset-token', () => {
 
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
-      // wipe the table so we have a clean slate.
-      const accounts = await context.query.Account.findMany();
-
-      await context.query.Account.deleteMany({
-        where: accounts,
-      });
+      // wipe accounts so an account will not be found.
+      await accounts.deleteAll(context);
 
       result = await getAccountPasswordResetToken({}, variables, context);
 

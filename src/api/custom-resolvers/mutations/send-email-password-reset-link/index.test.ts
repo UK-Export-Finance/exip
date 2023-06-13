@@ -1,23 +1,15 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import baseConfig from '../../../keystone';
 import sendEmailPasswordResetLink from '.';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
 import { ACCOUNT } from '../../../constants';
+import accounts from '../../../test-helpers/accounts';
 import { get30minutesFromNow } from '../../../helpers/date';
 import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../../test-mocks';
 import { Account, SuccessResponse } from '../../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
+const context = getKeystoneContext();
 
 const {
   ENCRYPTION: {
@@ -46,12 +38,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
   });
 
   beforeEach(async () => {
-    // wipe the accounts table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
-
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
+    await accounts.deleteAll(context);
 
     // wipe the AuthenticationRetry table so we have a clean slate.
     const retries = await context.query.AuthenticationRetry.findMany();
@@ -60,11 +47,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
       where: retries,
     });
 
-    // create an account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id',
-    })) as Account;
+    account = await accounts.create(context);
 
     jest.resetAllMocks();
 
@@ -75,10 +58,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     result = await sendEmailPasswordResetLink({}, variables, context);
 
     // get the latest account
-    account = (await context.query.Account.findOne({
-      where: { id: account.id },
-      query: 'id email firstName lastName passwordResetHash passwordResetExpiry isBlocked',
-    })) as Account;
+    account = await accounts.get(context, account.id);
 
     expect(account.isBlocked).toEqual(false);
   });
@@ -162,12 +142,8 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
 
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
-      // wipe the table so we have a clean slate.
-      const accounts = await context.query.Account.findMany();
-
-      await context.query.Account.deleteMany({
-        where: accounts,
-      });
+      // wipe accounts so an account will not be found.
+      await accounts.deleteAll(context);
 
       result = await sendEmailPasswordResetLink({}, variables, context);
 
@@ -206,10 +182,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
 
     it('should mark the account as isBlocked=true', async () => {
       // get the latest account
-      account = (await context.query.Account.findOne({
-        where: { id: account.id },
-        query: 'id isBlocked',
-      })) as Account;
+      account = await accounts.get(context, account.id);
 
       expect(account.isBlocked).toEqual(true);
     });

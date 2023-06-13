@@ -1,22 +1,14 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import { ACCOUNT } from '../../../constants';
 import accountSignIn from '.';
-import baseConfig from '../../../keystone';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
 import generate from '../../../helpers/generate-otp';
 import sendEmail from '../../../emails';
+import accounts from '../../../test-helpers/accounts';
 import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../../test-mocks';
 import { Account, AccountSignInResponse, ApplicationRelationship } from '../../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
+const context = getKeystoneContext();
 
 const { MAX_AUTH_RETRIES } = ACCOUNT;
 
@@ -47,12 +39,7 @@ describe('custom-resolvers/account-sign-in', () => {
   let result: AccountSignInResponse;
 
   beforeAll(async () => {
-    // wipe the account table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
-
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
+    await accounts.deleteAll(context);
 
     // wipe the AuthenticationRetry table so we have a clean slate.
     retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
@@ -61,11 +48,7 @@ describe('custom-resolvers/account-sign-in', () => {
       where: retries,
     });
 
-    // create an account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id',
-    })) as Account;
+    account = await accounts.create(context);
 
     jest.resetAllMocks();
 
@@ -74,10 +57,7 @@ describe('custom-resolvers/account-sign-in', () => {
 
     result = await accountSignIn({}, variables, context);
 
-    account = (await context.query.Account.findOne({
-      where: { id: account.id },
-      query: 'id firstName lastName email otpSalt otpHash otpExpiry verificationExpiry',
-    })) as Account;
+    account = await accounts.get(context, account.id);
   });
 
   describe('when the provided password is invalid', () => {
@@ -168,10 +148,7 @@ describe('custom-resolvers/account-sign-in', () => {
 
     it('should mark the account as isBlocked=true', async () => {
       // get the latest account
-      account = (await context.query.Account.findOne({
-        where: { id: account.id },
-        query: 'id isBlocked',
-      })) as Account;
+      account = await accounts.get(context, account.id);
 
       expect(account.isBlocked).toEqual(true);
     });
@@ -179,12 +156,8 @@ describe('custom-resolvers/account-sign-in', () => {
 
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
-      // wipe the table so we have a clean slate.
-      const accounts = await context.query.Account.findMany();
-
-      await context.query.Account.deleteMany({
-        where: accounts,
-      });
+      // wipe accounts so an account will not be found.
+      await accounts.deleteAll(context);
 
       result = await accountSignIn({}, variables, context);
 

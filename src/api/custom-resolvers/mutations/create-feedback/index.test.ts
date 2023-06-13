@@ -1,21 +1,11 @@
 import { format } from 'date-fns';
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
 import createInsuranceFeedbackAndEmail from '.';
 import sendEmail from '../../../emails';
 import { mockInsuranceFeedback, mockSendEmailResponse } from '../../../test-mocks';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import baseConfig from '../../../keystone';
-import { Context } from '.keystone/types'; // eslint-disable-line
 import { Feedback } from '../../../types';
+import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-dotenv.config();
-
-const dbUrl = String(process.env.DATABASE_URL);
-
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-const context = getContext(config, PrismaModule) as Context;
+const context = getKeystoneContext();
 
 describe('custom-resolvers/create-feedback', () => {
   const variables = mockInsuranceFeedback;

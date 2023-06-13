@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import getAccountById from '.';
 import baseConfig from '../../keystone';
-import { mockAccount } from '../../test-mocks';
+import accounts from '../../test-helpers/accounts';
 import { Account } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -18,11 +18,7 @@ describe('helpers/get-account-by-id', () => {
   let account: Account;
 
   beforeEach(async () => {
-    // create a new account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id firstName lastName',
-    })) as Account;
+    account = await accounts.create(context);
   });
 
   it('should return an account/account by ID', async () => {

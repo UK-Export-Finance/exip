@@ -1,21 +1,13 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import baseConfig from '../../../keystone';
 import sendEmailReactivateAccountLink from '.';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
 import { ACCOUNT } from '../../../constants';
+import accounts from '../../../test-helpers/accounts';
 import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../../test-mocks';
 import { Account, SuccessResponse, AccountSendEmailReactivateLinkVariables } from '../../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
+const context = getKeystoneContext();
 
 const {
   ENCRYPTION: {
@@ -42,21 +34,11 @@ describe('custom-resolvers/send-email-reactivate-account-link', () => {
   });
 
   beforeEach(async () => {
-    // wipe the accounts table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
+    await accounts.deleteAll(context);
 
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
+    const blockedAccount = { ...mockAccount, isBlocked: true };
 
-    // create an account
-    account = (await context.query.Account.createOne({
-      data: {
-        ...mockAccount,
-        isBlocked: true,
-      },
-      query: 'id',
-    })) as Account;
+    account = await accounts.create(context, blockedAccount);
 
     jest.resetAllMocks();
 
@@ -69,10 +51,7 @@ describe('custom-resolvers/send-email-reactivate-account-link', () => {
     result = await sendEmailReactivateAccountLink({}, variables, context);
 
     // get the latest account
-    account = (await context.query.Account.findOne({
-      where: { id: account.id },
-      query: 'id email firstName lastName reactivationHash reactivationExpiry',
-    })) as Account;
+    account = await accounts.get(context, account.id);
   });
 
   it('should return the email response, email and accountId', () => {
@@ -111,12 +90,8 @@ describe('custom-resolvers/send-email-reactivate-account-link', () => {
 
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
-      // wipe the table so we have a clean slate.
-      const accounts = await context.query.Account.findMany();
-
-      await context.query.Account.deleteMany({
-        where: accounts,
-      });
+      // wipe accounts so an account will not be found.
+      await accounts.deleteAll(context);
 
       result = await sendEmailReactivateAccountLink({}, variables, context);
 

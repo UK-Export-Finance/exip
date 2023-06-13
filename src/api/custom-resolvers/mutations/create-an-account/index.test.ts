@@ -1,21 +1,13 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import baseConfig from '../../../keystone';
 import createAnAccount from '.';
 import { ACCOUNT } from '../../../constants';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
+import accounts from '../../../test-helpers/accounts';
 import { mockAccount, mockSendEmailResponse } from '../../../test-mocks';
 import { Account } from '../../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
+const context = getKeystoneContext();
 
 const { ENCRYPTION } = ACCOUNT;
 
@@ -54,12 +46,7 @@ describe('custom-resolvers/create-an-account', () => {
 
     sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
 
-    // wipe the table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
-
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
+    await accounts.deleteAll(context);
 
     // create an account
     account = (await createAnAccount({}, variables, context)) as Account;
@@ -112,10 +99,10 @@ describe('custom-resolvers/create-an-account', () => {
     });
 
     it('should not create the account', async () => {
-      const accounts = await context.query.Account.findMany();
+      const allAccounts = await context.query.Account.findMany();
 
       // should only have the first created account
-      expect(accounts.length).toEqual(1);
+      expect(allAccounts.length).toEqual(1);
     });
   });
 

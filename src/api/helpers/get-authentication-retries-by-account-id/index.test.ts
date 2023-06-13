@@ -4,6 +4,7 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import getAuthenticationRetriesByAccountId from '.';
 import createAuthenticationRetryEntry from '../create-authentication-retry-entry';
 import baseConfig from '../../keystone';
+import accounts from '../../test-helpers/accounts';
 import { mockAccount } from '../../test-mocks';
 import { Account } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -26,14 +27,12 @@ describe('helpers/get-authentication-retries-by-account-id', () => {
       where: authRetries,
     });
 
-    // create a new account
-    account = (await context.query.Account.createOne({
-      data: {
-        ...mockAccount,
-        isBlocked: false,
-      },
-      query: 'id',
-    })) as Account;
+    const unblockedAccount = {
+      ...mockAccount,
+      isBlocked: false,
+    };
+
+    account = await accounts.create(context, unblockedAccount);
 
     // create some new entries
     await createAuthenticationRetryEntry(context, account.id);

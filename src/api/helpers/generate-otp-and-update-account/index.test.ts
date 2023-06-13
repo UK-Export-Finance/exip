@@ -4,7 +4,8 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import generateOTPAndUpdateAccount from '.';
 import baseConfig from '../../keystone';
 import generate from '../generate-otp';
-import { mockAccount, mockOTP } from '../../test-mocks';
+import accounts from '../../test-helpers/accounts';
+import { mockOTP } from '../../test-mocks';
 import { Account, AddAndGetOtpResponse } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -25,27 +26,15 @@ describe('helpers/generate-otp-and-update-account', () => {
   let result: AddAndGetOtpResponse;
 
   beforeEach(async () => {
-    // wipe the table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
+    await accounts.deleteAll(context);
 
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
-
-    // create a new account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id firstName lastName email salt hash verificationHash',
-    })) as Account;
+    account = await accounts.create(context);
 
     result = await generateOTPAndUpdateAccount(context, account.id);
 
     jest.clearAllMocks();
 
-    account = (await context.query.Account.findOne({
-      where: { id: account.id },
-      query: 'otpSalt otpHash otpExpiry',
-    })) as Account;
+    account = await accounts.get(context, account.id);
   });
 
   test('it should generate an OTP and save to the account', async () => {

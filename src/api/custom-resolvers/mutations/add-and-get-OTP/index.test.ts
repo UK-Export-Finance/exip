@@ -1,19 +1,11 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import baseConfig from '../../../keystone';
 import addAndGetOTP from '.';
 import generate from '../../../helpers/generate-otp';
+import accounts from '../../../test-helpers/accounts';
 import { mockAccount, mockOTP } from '../../../test-mocks';
 import { Account, AddAndGetOtpResponse } from '../../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-dotenv.config();
-
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-const context = getContext(config, PrismaModule) as Context;
+const context = getKeystoneContext();
 
 describe('custom-resolvers/add-and-get-OTP', () => {
   let account: Account;
@@ -29,25 +21,13 @@ describe('custom-resolvers/add-and-get-OTP', () => {
   let result: AddAndGetOtpResponse;
 
   beforeEach(async () => {
-    // wipe the table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
+    await accounts.deleteAll(context);
 
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
-
-    // create a new account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id email',
-    })) as Account;
+    account = await accounts.create(context);
 
     result = await addAndGetOTP({}, variables, context);
 
-    account = (await context.query.Account.findOne({
-      where: { id: account.id },
-      query: 'otpSalt otpHash otpExpiry',
-    })) as Account;
+    account = await accounts.get(context, account.id);
   });
 
   test('it should generate an OTP and save to the account', () => {

@@ -1,13 +1,13 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import accountPasswordReset from '.';
 import createAuthenticationEntry from '../../../helpers/create-authentication-entry';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
 import { ACCOUNT, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
+import accounts from '../../../test-helpers/accounts';
 import { mockAccount } from '../../../test-mocks';
 import { Account, AccountPasswordResetVariables, ApplicationRelationship, SuccessResponse } from '../../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import getKeystoneContext from '../../../test-helpers/get-keystone-context';
+
+const context = getKeystoneContext();
 
 const { ENCRYPTION } = ACCOUNT;
 
@@ -25,12 +25,7 @@ describe('custom-resolvers/account-password-reset', () => {
   let authRetries;
 
   beforeEach(async () => {
-    // wipe the accounts table so we have a clean slate.
-    const accounts = await context.query.Account.findMany();
-
-    await context.query.Account.deleteMany({
-      where: accounts,
-    });
+    await accounts.deleteAll(context);
 
     // wipe the AuthenticationRetry table so we have a clean slate.
     authRetries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
@@ -50,11 +45,7 @@ describe('custom-resolvers/account-password-reset', () => {
 
     expect(authEntries.length).toEqual(0);
 
-    // create an account
-    account = (await context.query.Account.createOne({
-      data: mockAccount,
-      query: 'id',
-    })) as Account;
+    account = await accounts.create(context);
 
     // create an AuthenticationRetry so we can assert it becomes wiped.
     await createAuthenticationRetryEntry(context, account.id);
@@ -71,10 +62,7 @@ describe('custom-resolvers/account-password-reset', () => {
 
     result = await accountPasswordReset({}, variables, context);
 
-    account = (await context.query.Account.findOne({
-      where: { id: account.id },
-      query: 'id salt hash passwordResetHash passwordResetExpiry',
-    })) as Account;
+    account = await accounts.get(context, account.id);
   });
 
   afterAll(async () => {
@@ -110,10 +98,7 @@ describe('custom-resolvers/account-password-reset', () => {
 
   test("it should update the account's salt and hash", async () => {
     // get the latest account
-    account = (await context.query.Account.findOne({
-      where: { id: account.id },
-      query: 'id salt hash passwordResetHash passwordResetExpiry',
-    })) as Account;
+    account = await accounts.get(context, account.id);
 
     expect(account.salt).toBeDefined();
     expect(account.salt.length).toEqual(RANDOM_BYTES_SIZE * 2);
@@ -239,10 +224,7 @@ describe('custom-resolvers/account-password-reset', () => {
   describe('when the provided password has been used before', () => {
     test('it should return success=false and hasBeenUsedBefore=true', async () => {
       // create an account
-      account = (await context.query.Account.createOne({
-        data: mockAccount,
-        query: 'id',
-      })) as Account;
+      account = await accounts.create(context);
 
       const authEntry = {
         account: {
@@ -272,12 +254,8 @@ describe('custom-resolvers/account-password-reset', () => {
 
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
-      // wipe the table so we have a clean slate.
-      const accounts = await context.query.Account.findMany();
-
-      await context.query.Account.deleteMany({
-        where: accounts,
-      });
+      // wipe accounts so an account will not be found.
+      await accounts.deleteAll(context);
 
       result = await accountPasswordReset({}, variables, context);
 
