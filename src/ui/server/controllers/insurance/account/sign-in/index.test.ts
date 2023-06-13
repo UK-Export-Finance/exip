@@ -290,7 +290,7 @@ describe('controllers/insurance/account/sign-in', () => {
 
       describe('when password only contains numbers', () => {
         it('should call api.keystone.account.signIn with password as a string', async () => {
-          req.body[PASSWORD] = 12345;
+          req.body[PASSWORD] = '12345';
 
           await post(req, res);
 

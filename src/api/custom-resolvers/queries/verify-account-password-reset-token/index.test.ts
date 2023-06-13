@@ -73,7 +73,7 @@ describe('custom-resolvers/verify-account-password-reset-token', () => {
   });
 
   describe(`when the account's ${PASSWORD_RESET_EXPIRY} has expired`, () => {
-    test('it should return success=false and expired=true', async () => {
+    test('it should return success=false and expired=true with account ID', async () => {
       const today = new Date();
 
       const previousTime = subMinutes(today, 6);
@@ -91,6 +91,7 @@ describe('custom-resolvers/verify-account-password-reset-token', () => {
       const expected = {
         expired: true,
         success: false,
+        accountId: account.id,
       };
 
       expect(result).toEqual(expected);

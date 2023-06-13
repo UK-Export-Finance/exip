@@ -54,7 +54,11 @@ export const get = async (req: Request, res: Response) => {
 
     const response = await api.keystone.account.verifyPasswordResetToken(token);
 
-    if (!response.success || response.expired) {
+    if (response.expired) {
+      return res.redirect(`${LINK_EXPIRED}?id=${response.accountId}`);
+    }
+
+    if (!response.success) {
       return res.redirect(LINK_EXPIRED);
     }
 

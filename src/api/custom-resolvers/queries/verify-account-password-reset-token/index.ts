@@ -46,6 +46,7 @@ const verifyAccountPasswordResetToken = async (
       return {
         success: false,
         expired: true,
+        accountId: account.id,
       };
     }
 

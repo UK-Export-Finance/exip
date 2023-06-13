@@ -95,4 +95,13 @@ context('Insurance - Account - Sign in - Validation', () => {
 
     assertAllFieldErrors();
   });
+
+  it('should render a validation error for both fields when password is a pure number', () => {
+    cy.keyboardInput(accountFormFields[EMAIL].input(), `incorrect-${account[EMAIL]}`);
+    cy.keyboardInput(accountFormFields[PASSWORD].input(), '12345');
+
+    submitButton().click();
+
+    assertAllFieldErrors();
+  });
 });
