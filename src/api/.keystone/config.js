@@ -2290,46 +2290,52 @@ var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
 // custom-resolvers/mutations/account-sign-in/account-checks/index.ts
 var { EMAIL: EMAIL2 } = ACCOUNT2;
 var accountChecks = async (context, account, urlOrigin) => {
-  const { id: accountId, email } = account;
-  if (!account.isVerified) {
-    console.info("Unable to sign in account - account has not been verified yet");
-    const now = /* @__PURE__ */ new Date();
-    const verificationHasExpired = (0, import_date_fns5.isAfter)(now, account.verificationExpiry);
-    if (account.verificationHash && !verificationHasExpired) {
-      console.info("Account has an unexpired verification token - resetting verification expiry");
-      const accountUpdate = {
-        verificationExpiry: EMAIL2.VERIFICATION_EXPIRY()
-      };
-      await context.db.Account.updateOne({
-        where: { id: accountId },
-        data: accountUpdate
-      });
-      console.info("Account has an unexpired verification token - sending verification email");
-      const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
-      if (emailResponse2.success) {
-        return {
-          success: false,
-          resentVerificationEmail: true,
-          accountId
+  try {
+    console.info("Signing in account - checking account");
+    const { id: accountId, email } = account;
+    if (!account.isVerified) {
+      console.info("Unable to sign in account - account has not been verified yet");
+      const now = /* @__PURE__ */ new Date();
+      const verificationHasExpired = (0, import_date_fns5.isAfter)(now, account.verificationExpiry);
+      if (account.verificationHash && !verificationHasExpired) {
+        console.info("Account has an unexpired verification token - resetting verification expiry");
+        const accountUpdate = {
+          verificationExpiry: EMAIL2.VERIFICATION_EXPIRY()
         };
+        await context.db.Account.updateOne({
+          where: { id: accountId },
+          data: accountUpdate
+        });
+        console.info("Account has an unexpired verification token - sending verification email");
+        const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
+        if (emailResponse2?.success) {
+          return {
+            success: false,
+            resentVerificationEmail: true,
+            accountId
+          };
+        }
+        return { success: false, accountId };
       }
-      return { success: false, accountId };
+      console.info("Unable to sign in account - account has not been verified");
+      return { success: false };
     }
-    console.info("Unable to sign in account - account has not been verified");
-    return { success: false };
-  }
-  const { securityCode } = await generate_otp_and_update_account_default(context, accountId);
-  const name = get_full_name_string_default(account);
-  const emailResponse = await emails_default.securityCodeEmail(email, name, securityCode);
-  if (emailResponse.success) {
+    const { securityCode } = await generate_otp_and_update_account_default(context, accountId);
+    const name = get_full_name_string_default(account);
+    const emailResponse = await emails_default.securityCodeEmail(email, name, securityCode);
+    if (emailResponse?.success) {
+      return {
+        ...emailResponse,
+        accountId
+      };
+    }
     return {
-      ...emailResponse,
-      accountId
+      success: false
     };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Validating password or sending email for account sign in (accountSignIn mutation - account checks) ${err}`);
   }
-  return {
-    success: false
-  };
 };
 var account_checks_default = accountChecks;
 
@@ -2345,14 +2351,19 @@ var accountSignIn = async (root, variables, context) => {
     }
     const account = accountData;
     const { id: accountId } = account;
-    const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
-    if (!newRetriesEntry.success) {
-      return { success: false };
-    }
     const { isBlocked } = account;
     if (isBlocked) {
       console.info("Unable to sign in account - account is already blocked");
       return { success: false, isBlocked: true, accountId };
+    }
+    if (is_valid_account_password_default(password2, account.salt, account.hash)) {
+      console.info("Signing in account - valid credentials provided");
+      return account_checks_default(context, account, urlOrigin);
+    }
+    console.info("Signing in account - invalid credentials provided");
+    const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
+    if (!newRetriesEntry.success) {
+      return { success: false };
     }
     const needToBlockAccount = await should_block_account_default(context, accountId);
     if (needToBlockAccount) {
@@ -2366,13 +2377,10 @@ var accountSignIn = async (root, variables, context) => {
       }
       return { success: false };
     }
-    if (is_valid_account_password_default(password2, account.salt, account.hash)) {
-      return account_checks_default(context, account, urlOrigin);
-    }
     return { success: false };
   } catch (err) {
     console.error(err);
-    throw new Error(`Validating password or sending email for account sign in (accountSignIn mutation) ${err}`);
+    throw new Error(`Signing in account (accountSignIn mutation) ${err}`);
   }
 };
 var account_sign_in_default = accountSignIn;
