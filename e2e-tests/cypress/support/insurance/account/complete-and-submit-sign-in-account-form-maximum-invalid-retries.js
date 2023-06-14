@@ -5,17 +5,19 @@ import { backLink } from '../../../e2e/pages/shared';
 const attemptsToMake = [...Array(ACCOUNT.MAX_AUTH_RETRIES)];
 
 /**
- * completeAndSubmitSignInAccountFormMaximumRetries
+ * completeAndSubmitSignInAccountFormMaximumInvalidRetries
  * Complete and submit the sign in form multiple times,
  * Matching the maximum retries allowed before an account becomes blocked.
  * @param {Object} Object with custom flags
  * - clickBackLinkOnLastAttempt
+ * - password
  */
-const completeAndSubmitSignInAccountFormMaximumRetries = ({
+const completeAndSubmitSignInAccountFormMaximumInvalidRetries = ({
   clickBackLinkOnLastAttempt = true,
+  password,
 }) => {
   attemptsToMake.forEach((item, index) => {
-    completeAndSubmitSignInAccountForm({ assertRedirectUrl: false });
+    completeAndSubmitSignInAccountForm({ assertRedirectUrl: false, password });
 
     const isLastAttempt = index + 1 === attemptsToMake.length;
 
@@ -25,4 +27,4 @@ const completeAndSubmitSignInAccountFormMaximumRetries = ({
   });
 };
 
-export default completeAndSubmitSignInAccountFormMaximumRetries;
+export default completeAndSubmitSignInAccountFormMaximumInvalidRetries;

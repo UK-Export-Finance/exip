@@ -1,4 +1,4 @@
-import { ACCOUNT } from '../../../constants';
+import { ACCOUNT, FIELD_IDS } from '../../../constants';
 import accountSignIn from '.';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
 import generate from '../../../helpers/generate-otp';
@@ -10,6 +10,8 @@ import { Account, AccountSignInResponse, ApplicationRelationship } from '../../.
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
 const context = getKeystoneContext();
+
+const { PASSWORD } = FIELD_IDS.INSURANCE.ACCOUNT;
 
 const { MAX_AUTH_RETRIES } = ACCOUNT;
 
@@ -44,15 +46,9 @@ describe('custom-resolvers/account-sign-in', () => {
     await context.query.AuthenticationRetry.deleteMany({
       where: retries,
     });
-
-    account = await accounts.create(context);
-
-    result = await accountSignIn({}, variables, context);
-
-    account = await accounts.get(context, account.id);
   });
 
-  describe('when the account is found and verified', () => {
+  describe('when the provided password is valid and the account is found and verified', () => {
     beforeEach(async () => {
       await accounts.deleteAll(context);
 
@@ -62,26 +58,54 @@ describe('custom-resolvers/account-sign-in', () => {
       await context.query.AuthenticationRetry.deleteMany({
         where: retries,
       });
+
+      account = await accounts.create(context);
+
+      result = await accountSignIn({}, variables, context);
     });
 
     test('it should return the result of accountChecks', async () => {
-      const createdAccount = await accounts.create(context);
+      account = await accounts.get(context, account.id);
 
-      result = await accountSignIn({}, variables, context);
-
-      const expected = await accountChecks(context, createdAccount, mockUrlOrigin);
+      const expected = await accountChecks(context, account, mockUrlOrigin);
 
       expect(result).toEqual(expected);
+    });
+
+    test('it should NOT add an authentication retry entry', async () => {
+      retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+
+      expect(retries.length).toEqual(0);
+    });
+
+    it('it should NOT mark the account as isBlocked=true', async () => {
+      // get the latest account
+      account = await accounts.get(context, account.id);
+
+      expect(account.isBlocked).toEqual(false);
     });
   });
 
   describe('when the provided password is invalid', () => {
-    beforeEach(() => {
-      variables.password = `${mockPassword}-incorrect`;
+    beforeEach(async () => {
+      await accounts.deleteAll(context);
+
+      // wipe the AuthenticationRetry table so we have a clean slate.
+      retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+
+      await context.query.AuthenticationRetry.deleteMany({
+        where: retries,
+      });
+
+      account = await accounts.create(context);
+
+      result = await accountSignIn({}, variables, context);
+
+      variables[PASSWORD] = `${mockPassword}-incorrect`;
     });
 
     afterAll(() => {
-      variables.password = mockPassword;
+      variables[PASSWORD] = mockPassword;
     });
 
     test('it should return success=false', async () => {
@@ -92,90 +116,81 @@ describe('custom-resolvers/account-sign-in', () => {
       expect(result).toEqual(expected);
     });
 
-    test('it should retain the added authentication retry entry', async () => {
-      // wipe the AuthenticationRetry table so we have a clean slate.
-      retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
-
-      await context.query.AuthenticationRetry.deleteMany({
-        where: retries,
-      });
-
-      await accountSignIn({}, variables, context);
-
+    test('it should add an authentication retry entry', async () => {
       // get the latest retries
       retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
 
       expect(retries.length).toEqual(1);
     });
-  });
 
-  describe('when the account is blocked', () => {
-    beforeEach(async () => {
-      await accounts.deleteAll(context);
+    describe(`when the account has ${MAX_AUTH_RETRIES} entries in the AuthenticationRetry table`, () => {
+      beforeEach(async () => {
+        await accounts.deleteAll(context);
 
-      account = await accounts.create(context);
-
-      account = (await context.query.Account.updateOne({
-        where: { id: account.id },
-        data: {
-          isBlocked: true,
-        },
-      })) as Account;
-
-      result = await accountSignIn({}, variables, context);
-    });
-
-    it('should return success=false, isBlocked=true and accountId', async () => {
-      const expected = {
-        success: false,
-        isBlocked: true,
-        accountId: account.id,
-      };
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe(`when the account has ${MAX_AUTH_RETRIES} entries in the AuthenticationRetry table`, () => {
-    beforeEach(async () => {
-      // revert the previous account block so we have a clean slate.
-      account = (await context.query.Account.updateOne({
-        where: { id: account.id },
-        data: {
+        // create a new account and ensure it is not blocked so that we have a clean slate.
+        account = await accounts.create(context, {
+          ...mockAccount,
           isBlocked: false,
-        },
-      })) as Account;
+        });
 
-      // wipe the AuthenticationRetry table so we have a clean slate.
-      retries = await context.query.AuthenticationRetry.findMany();
+        // wipe the AuthenticationRetry table so we have a clean slate.
+        retries = await context.query.AuthenticationRetry.findMany();
 
-      await context.query.AuthenticationRetry.deleteMany({
-        where: retries,
+        await context.query.AuthenticationRetry.deleteMany({
+          where: retries,
+        });
+
+        // generate an array of promises to create retry entries
+        const entriesToCreate = [...Array(MAX_AUTH_RETRIES)].map(async () => createAuthenticationRetryEntry(context, account.id));
+
+        await Promise.all(entriesToCreate);
+
+        result = await accountSignIn({}, variables, context);
       });
 
-      // generate an array of promises to create retry entries
-      const entriesToCreate = [...Array(MAX_AUTH_RETRIES)].map(async () => createAuthenticationRetryEntry(context, account.id));
+      test('it should return success=false, isBlocked=true and accountId', async () => {
+        const expected = {
+          success: false,
+          isBlocked: true,
+          accountId: account.id,
+        };
 
-      await Promise.all(entriesToCreate);
+        expect(result).toEqual(expected);
+      });
 
-      result = await accountSignIn({}, variables, context);
+      test('it should mark the account as isBlocked=true', async () => {
+        // get the latest account
+        account = await accounts.get(context, account.id);
+
+        expect(account.isBlocked).toEqual(true);
+      });
     });
 
-    it('should return success=false, isBlocked=true and accountId', async () => {
-      const expected = {
-        success: false,
-        isBlocked: true,
-        accountId: account.id,
-      };
+    describe('when the account is blocked', () => {
+      beforeEach(async () => {
+        await accounts.deleteAll(context);
 
-      expect(result).toEqual(expected);
-    });
+        account = await accounts.create(context);
 
-    it('should mark the account as isBlocked=true', async () => {
-      // get the latest account
-      account = await accounts.get(context, account.id);
+        account = (await context.query.Account.updateOne({
+          where: { id: account.id },
+          data: {
+            isBlocked: true,
+          },
+        })) as Account;
 
-      expect(account.isBlocked).toEqual(true);
+        result = await accountSignIn({}, variables, context);
+      });
+
+      test('it should return success=false, isBlocked=true and accountId', async () => {
+        const expected = {
+          success: false,
+          isBlocked: true,
+          accountId: account.id,
+        };
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 
