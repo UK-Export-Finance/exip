@@ -1,7 +1,7 @@
 import { Request, Response } from '../../../../../../types';
 import { TEMPLATES, ROUTES } from '../../../../../constants';
 import generateValidationErrors from '../validation';
-import mapAndSave from '../../map-and-save';
+import turnover from '../../map-and-save/turnover';
 
 const { TURNOVER: TURNOVER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
@@ -30,7 +30,7 @@ const post = async (req: Request, res: Response) => {
     const validationErrors = generateValidationErrors(body);
 
     // runs save and go back commmand
-    const saveResponse = await mapAndSave.turnover(body, application, validationErrors);
+    const saveResponse = await turnover.mapAndSave(body, application, validationErrors);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

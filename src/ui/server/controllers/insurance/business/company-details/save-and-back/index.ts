@@ -2,7 +2,7 @@ import { Request, Response } from '../../../../../../types';
 import { ROUTES, FIELD_IDS } from '../../../../../constants';
 import companiesHouseSearch from '../helpers/companies-house-search.helper';
 import companyDetailsValidation from '../validation/company-details';
-import mapAndSave from '../../map-and-save';
+import companyDetails from '../../map-and-save/company-details';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
@@ -51,7 +51,7 @@ const post = async (req: Request, res: Response) => {
     };
 
     // runs save and go back commmand
-    const saveResponse = await mapAndSave.companyDetails(updateBody, application, validationErrors);
+    const saveResponse = await companyDetails.mapAndSave(updateBody, application, validationErrors);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

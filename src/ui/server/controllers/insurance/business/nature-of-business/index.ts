@@ -4,7 +4,7 @@ import { FIELDS } from '../../../../content-strings/fields/insurance/your-busine
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
-import mapAndSave from '../map-and-save';
+import natureOfBusiness from '../map-and-save/nature-of-business';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
@@ -132,7 +132,7 @@ const post = async (req: Request, res: Response) => {
     }
 
     // if no errors, then runs save api call to db
-    const saveResponse = await mapAndSave.natureOfBusiness(body, application);
+    const saveResponse = await natureOfBusiness.mapAndSave(body, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

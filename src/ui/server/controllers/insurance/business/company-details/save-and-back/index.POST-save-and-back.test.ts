@@ -2,7 +2,7 @@ import { Request, Response } from '../../../../../../types';
 import { post } from '.';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { mockReq, mockRes, mockApplication, mockPhoneNumbers } from '../../../../../test-mocks';
-import mapAndSave from '../../map-and-save';
+import companyDetails from '../../map-and-save/company-details';
 
 const {
   EXPORTER_BUSINESS: {
@@ -26,7 +26,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
     res.locals.application = mockApplication;
 
-    mapAndSave.companyDetails = updateMapAndSave;
+    companyDetails.mapAndSave = updateMapAndSave;
   });
 
   afterAll(() => {
@@ -47,7 +47,7 @@ describe('controllers/insurance/business/companies-details', () => {
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call mapAndSave.companyDetails once', async () => {
+      it('should call companyDetails.mapAndSave once', async () => {
         req.body = {
           [TRADING_NAME]: 'true',
           [TRADING_ADDRESS]: 'false',
@@ -73,7 +73,7 @@ describe('controllers/insurance/business/companies-details', () => {
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call mapAndSave.companyDetails once', async () => {
+      it('should call companyDetails.mapAndSave once', async () => {
         req.body = {
           [TRADING_NAME]: 'true',
           [TRADING_ADDRESS]: 'false',
@@ -98,11 +98,11 @@ describe('controllers/insurance/business/companies-details', () => {
       });
     });
 
-    describe('when mapAndSave.companyDetails fails', () => {
+    describe('when companyDetails.mapAndSave fails', () => {
       beforeEach(() => {
         res.locals = { csrfToken: '1234' };
         updateMapAndSave = jest.fn(() => Promise.reject());
-        mapAndSave.companyDetails = updateMapAndSave;
+        companyDetails.mapAndSave = updateMapAndSave;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {

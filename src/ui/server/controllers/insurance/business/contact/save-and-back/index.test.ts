@@ -3,7 +3,7 @@ import { post } from '.';
 import { ROUTES } from '../../../../../constants';
 import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
-import mapAndSave from '../../map-and-save';
+import contact from '../../map-and-save/contact';
 import ACCOUNT_FIELD_IDS from '../../../../../constants/field-ids/insurance/account';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
@@ -23,7 +23,7 @@ describe('controllers/insurance/business/contact/save-and-back', () => {
 
     res.locals.application = mockApplication;
 
-    mapAndSave.contact = updateMapAndSave;
+    contact.mapAndSave = updateMapAndSave;
   });
 
   afterAll(() => {
@@ -47,7 +47,7 @@ describe('controllers/insurance/business/contact/save-and-back', () => {
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call mapAndSave.contact once', async () => {
+      it('should call contact.mapAndSave once', async () => {
         req.body = validBody;
 
         await post(req, res);
@@ -70,7 +70,7 @@ describe('controllers/insurance/business/contact/save-and-back', () => {
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call mapAndSave.contact once', async () => {
+      it('should call contact.mapAndSave once', async () => {
         req.body = {
           [FIRST_NAME]: 'firstName',
           [LAST_NAME]: 'lastName',
@@ -96,11 +96,11 @@ describe('controllers/insurance/business/contact/save-and-back', () => {
       });
     });
 
-    describe('when mapAndSave.contact fails', () => {
+    describe('when contact.mapAndSave fails', () => {
       beforeEach(() => {
         res.locals = { csrfToken: '1234' };
         updateMapAndSave = jest.fn(() => Promise.reject());
-        mapAndSave.contact = updateMapAndSave;
+        contact.mapAndSave = updateMapAndSave;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {

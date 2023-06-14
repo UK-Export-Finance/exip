@@ -9,7 +9,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import getValuesFromUserSessionOrApplication from '../../../../helpers/get-values-from-user-session-or-application';
 import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
-import mapAndSave from '../map-and-save';
+import contact from '../map-and-save/contact';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 
@@ -127,7 +127,7 @@ const post = async (req: Request, res: Response) => {
     }
 
     // // if no errors, then runs save api call to db
-    const saveResponse = await mapAndSave.contact(body, application);
+    const saveResponse = await contact.mapAndSave(body, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

@@ -10,7 +10,7 @@ import generateValidationErrors from './validation';
 import { FIELDS, ACCOUNT_FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockBusinessContact } from '../../../../test-mocks';
-import mapAndSave from '../map-and-save';
+import contact from '../map-and-save/contact';
 import getFromSessionOrApplication from '../../../../helpers/get-values-from-user-session-or-application';
 
 const { BUSINESS } = FIELD_IDS;
@@ -120,7 +120,7 @@ describe('controllers/insurance/business/contact', () => {
   });
 
   describe('post', () => {
-    mapAndSave.contact = jest.fn(() => Promise.resolve(true));
+    contact.mapAndSave = jest.fn(() => Promise.resolve(true));
 
     describe('when there are validation errors', () => {
       it('should render template with validation errors', async () => {
@@ -158,14 +158,14 @@ describe('controllers/insurance/business/contact', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call mapAndSave.contact once with the contents of body', async () => {
+      it('should call contact.mapAndSave once with the contents of body', async () => {
         req.body = mockBusinessContact;
 
         await post(req, res);
 
-        expect(mapAndSave.contact).toHaveBeenCalledTimes(1);
+        expect(contact.mapAndSave).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.contact).toHaveBeenCalledWith(req.body, mockApplication);
+        expect(contact.mapAndSave).toHaveBeenCalledWith(req.body, mockApplication);
       });
 
       describe("when the url's last substring is `change`", () => {

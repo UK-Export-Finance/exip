@@ -1,7 +1,7 @@
 import { Request, Response } from '../../../../../../types';
 import { TEMPLATES, ROUTES } from '../../../../../constants';
 import generateValidationErrors from '../validation';
-import mapAndSave from '../../map-and-save';
+import natureOfBusiness from '../../map-and-save/nature-of-business';
 
 const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
@@ -30,7 +30,7 @@ const post = async (req: Request, res: Response) => {
     const validationErrors = generateValidationErrors(body);
 
     // runs save and go back commmand
-    const saveResponse = await mapAndSave.natureOfBusiness(body, application, validationErrors);
+    const saveResponse = await natureOfBusiness.mapAndSave(body, application, validationErrors);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
