@@ -1,4 +1,5 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import mockAccount from '../../../../../../fixtures/account';
 import api from '../../../../../../support/api';
 
@@ -9,6 +10,8 @@ const {
   },
 } = ROUTES;
 
+const { ACCOUNT: { PASSWORD } } = INSURANCE_FIELD_IDS;
+
 context('Insurance - Account - Sign in - Submitting the form with valid credentials multiple times should suspend the account', () => {
   const baseUrl = Cypress.config('baseUrl');
   const signInUrl = `${baseUrl}${SIGN_IN_ROOT}`;
@@ -16,7 +19,7 @@ context('Insurance - Account - Sign in - Submitting the form with valid credenti
 
   let account;
 
-  const invalidPassword = `${mockAccount}-invalid`;
+  const invalidPassword = `${mockAccount[PASSWORD]}-invalid`;
 
   before(() => {
     cy.deleteAccount();

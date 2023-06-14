@@ -1,4 +1,5 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../constants/field-ids/insurance';
 import { submitButton } from '../../../e2e/pages/shared';
 import mockAccount from '../../../fixtures/account';
 
@@ -10,9 +11,11 @@ const {
   },
 } = ROUTES;
 
+const { ACCOUNT: { PASSWORD } } = INSURANCE_FIELD_IDS;
+
 const accountSuspendedEmailSentUrl = `${Cypress.config('baseUrl')}${EMAIL_SENT}`;
 
-const invalidPassword = `${mockAccount}-invalid`;
+const invalidPassword = `${mockAccount[PASSWORD]}-invalid`;
 
 /**
  * createAnAccountAndBecomeBlocked
