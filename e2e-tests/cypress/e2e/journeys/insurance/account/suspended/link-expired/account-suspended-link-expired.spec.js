@@ -1,5 +1,6 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { DATE_ONE_MINUTE_IN_THE_PAST } from '../../../../../../../constants/dates';
 import { PAGES } from '../../../../../../../content-strings';
 import api from '../../../../../../support/api';
 
@@ -52,13 +53,10 @@ context('Insurance - Account - Suspended - Verify email - Visit with an expired 
        * Update the account's reactivation expiry date via the API,
        * so that we can mimic missing the verification period.
        */
-      const now = new Date();
-
-      const MS_PER_MINUTE = 60000;
-      const oneMinuteAgo = new Date(now.getTime() - 1 * MS_PER_MINUTE);
+      const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
 
       const updateObj = {
-        [REACTIVATION_EXPIRY]: oneMinuteAgo,
+        [REACTIVATION_EXPIRY]: oneMinuteInThePast,
       };
 
       updatedAccount = await api.updateAccount(account.id, updateObj);

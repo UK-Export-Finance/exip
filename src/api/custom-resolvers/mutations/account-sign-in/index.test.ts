@@ -1,10 +1,9 @@
 import { ACCOUNT } from '../../../constants';
 import accountSignIn from '.';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
-import confirmEmailAddressEmail from '../../../helpers/send-email-confirm-email-address';
 import generate from '../../../helpers/generate-otp';
-import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
+import accountChecks from './account-checks';
 import accounts from '../../../test-helpers/accounts';
 import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../../test-mocks';
 import { Account, AccountSignInResponse, ApplicationRelationship } from '../../../types';
@@ -12,19 +11,15 @@ import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
 const context = getKeystoneContext();
 
-const { EMAIL, MAX_AUTH_RETRIES } = ACCOUNT;
+const { MAX_AUTH_RETRIES } = ACCOUNT;
 
 describe('custom-resolvers/account-sign-in', () => {
   let account: Account;
   let retries: Array<ApplicationRelationship>;
 
-  jest.mock('../../../emails');
-  jest.mock('../../../helpers/generate-otp');
-
   generate.otp = () => mockOTP;
 
-  let sendConfirmEmailAddressEmailSpy = jest.fn();
-  let securityCodeEmailSpy = jest.fn();
+  const securityCodeEmailSpy = jest.fn();
 
   const mockPassword = String(process.env.MOCK_ACCOUNT_PASSWORD);
 
@@ -52,146 +47,44 @@ describe('custom-resolvers/account-sign-in', () => {
 
     account = await accounts.create(context);
 
-    jest.resetAllMocks();
-
-    securityCodeEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
-    sendEmail.securityCodeEmail = securityCodeEmailSpy;
-
     result = await accountSignIn({}, variables, context);
 
     account = await accounts.get(context, account.id);
   });
 
-  describe('when the provided password is valid', () => {
-    test('it should generate an OTP and save to the account', () => {
-      expect(account.otpSalt).toEqual(mockOTP.salt);
-      expect(account.otpHash).toEqual(mockOTP.hash);
-      expect(new Date(account.otpExpiry)).toEqual(mockOTP.expiry);
-    });
-
-    test('it should call sendEmail.securityCodeEmail', () => {
-      const { email } = account;
-
-      const name = getFullNameString(account);
-
-      expect(securityCodeEmailSpy).toHaveBeenCalledTimes(1);
-      expect(securityCodeEmailSpy).toHaveBeenCalledWith(email, name, mockOTP.securityCode);
-    });
-
-    test('it should return the email response and accountId', () => {
-      const expected = {
-        ...mockSendEmailResponse,
-        accountId: account.id,
-      };
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when account is not verified, but has a verificationHash and verificationExpiry has not expired', () => {
+  describe('when the account is found and verified', () => {
     beforeEach(async () => {
-      jest.resetAllMocks();
+      await accounts.deleteAll(context);
 
-      sendConfirmEmailAddressEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
-      confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
+      // wipe the AuthenticationRetry table so we have a clean slate.
+      retries = await context.query.AuthenticationRetry.findMany();
 
-      await context.query.Account.updateOne({
-        where: { id: account.id },
-        data: {
-          isVerified: false,
-          isBlocked: false,
-          verificationHash: mockAccount.verificationHash,
-        },
+      await context.query.AuthenticationRetry.deleteMany({
+        where: retries,
       });
+    });
+
+    test('it should return the result of accountChecks', async () => {
+      const createdAccount = await accounts.create(context);
 
       result = await accountSignIn({}, variables, context);
-    });
 
-    describe('verificationExpiry', () => {
-      let updatedAccount: Account;
-      let newExpiryDay: number;
-
-      beforeEach(async () => {
-        updatedAccount = (await context.query.Account.findOne({
-          where: { id: account.id },
-          query: 'verificationExpiry',
-        })) as Account;
-
-        newExpiryDay = new Date(updatedAccount.verificationExpiry).getDate();
-      });
-
-      test('it should be reset and have a new day vale', async () => {
-        const expectedExpiryDay = new Date(EMAIL.VERIFICATION_EXPIRY()).getDate();
-
-        expect(newExpiryDay).toEqual(expectedExpiryDay);
-      });
-
-      test('the account`s verificationExpiry should NOT have have the same day as the previous verificationExpiry', async () => {
-        const originalExpiryDay = new Date(account.verificationExpiry).getDay();
-
-        expect(newExpiryDay).not.toEqual(originalExpiryDay);
-      });
-    });
-
-    test('it should call confirmEmailAddressEmail.send', async () => {
-      expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledTimes(1);
-      expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledWith(context, variables.urlOrigin, account.id);
-    });
-
-    test('it should return success=false, accountId and resentVerificationEmail=true', async () => {
-      const expected = {
-        success: false,
-        resentVerificationEmail: true,
-        accountId: account.id,
-      };
+      const expected = await accountChecks(context, createdAccount, mockUrlOrigin);
 
       expect(result).toEqual(expected);
-    });
-
-    describe('when the verificationExpiry is after now', () => {
-      beforeEach(async () => {
-        jest.resetAllMocks();
-
-        // wipe the AuthenticationRetry table so we have a clean slate.
-        retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
-
-        await context.query.AuthenticationRetry.deleteMany({
-          where: retries,
-        });
-
-        const now = new Date();
-
-        const milliseconds = 300000;
-        const oneMinuteAgo = new Date(now.setMilliseconds(-milliseconds)).toISOString();
-
-        await context.query.Account.updateOne({
-          where: { id: account.id },
-          data: {
-            verificationExpiry: oneMinuteAgo,
-          },
-        });
-      });
-
-      test('it should NOT call confirmEmailAddressEmail.send', async () => {
-        await accountSignIn({}, variables, context);
-
-        expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledTimes(0);
-      });
-
-      test('it should return success=false', async () => {
-        result = await accountSignIn({}, variables, context);
-
-        const expected = { success: false };
-
-        expect(result).toEqual(expected);
-      });
     });
   });
 
   describe('when the provided password is invalid', () => {
-    test('it should return success=false', async () => {
+    beforeEach(() => {
       variables.password = `${mockPassword}-incorrect`;
+    });
 
+    afterAll(() => {
+      variables.password = mockPassword;
+    });
+
+    test('it should return success=false', async () => {
       result = await accountSignIn({}, variables, context);
 
       const expected = { success: false };
@@ -218,6 +111,10 @@ describe('custom-resolvers/account-sign-in', () => {
 
   describe('when the account is blocked', () => {
     beforeEach(async () => {
+      await accounts.deleteAll(context);
+
+      account = await accounts.create(context);
+
       account = (await context.query.Account.updateOne({
         where: { id: account.id },
         data: {

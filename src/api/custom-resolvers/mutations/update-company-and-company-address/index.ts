@@ -40,7 +40,7 @@ const updateCompanyAndCompanyAddress = async (
     }
 
     // if there are sic codes to be added
-    if (mappedSicCodes && mappedSicCodes.length) {
+    if (mappedSicCodes?.length) {
       await context.db.CompanySicCode.createMany({
         data: mappedSicCodes,
       });

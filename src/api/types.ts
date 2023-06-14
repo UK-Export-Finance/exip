@@ -337,7 +337,7 @@ interface VerifyAccountSignInCodeResponse extends SuccessResponse {
   sessionIdentifier?: string;
 }
 
-interface VerifyAccountSesssionVariables {
+interface VerifyAccountSessionVariables {
   token: string;
 }
 
@@ -472,7 +472,7 @@ export {
   VerifyAccountPasswordResetTokenVariables,
   VerifyAccountSignInCodeVariables,
   VerifyAccountSignInCodeResponse,
-  VerifyAccountSesssionVariables,
+  VerifyAccountSessionVariables,
   VerifyAccountReactivationTokenVariables,
   VerifyAccountReactivationTokenResponse,
 };

@@ -1,8 +1,8 @@
 import accountPasswordReset from '.';
 import createAuthenticationEntry from '../../../helpers/create-authentication-entry';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
+import { ACCOUNT, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
 import accounts from '../../../test-helpers/accounts';
-import { ACCOUNT } from '../../../constants';
 import { mockAccount } from '../../../test-mocks';
 import { Account, AccountPasswordResetVariables, ApplicationRelationship, SuccessResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
@@ -175,16 +175,13 @@ describe('custom-resolvers/account-password-reset', () => {
 
   describe("when the account's password reset expiry is in the past", () => {
     beforeEach(async () => {
-      const now = new Date();
-
-      const milliseconds = 300000;
-      const oneMinuteAgo = new Date(now.setMilliseconds(-milliseconds)).toISOString();
+      const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
 
       account = (await context.query.Account.updateOne({
         where: { id: account.id },
         data: {
           passwordResetHash: mockAccount.passwordResetHash,
-          passwordResetExpiry: oneMinuteAgo,
+          passwordResetExpiry: oneMinuteInThePast,
         },
       })) as Account;
     });

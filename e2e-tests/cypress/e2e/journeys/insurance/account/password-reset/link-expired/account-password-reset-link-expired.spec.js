@@ -5,6 +5,7 @@ import { linkExpiredPage } from '../../../../../pages/insurance/account/password
 import { PAGES, BUTTONS } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { DATE_ONE_MINUTE_IN_THE_PAST } from '../../../../../../../constants/dates';
 import api from '../../../../../../support/api';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.LINK_EXPIRED;
@@ -74,13 +75,10 @@ context('Insurance - Account - Password reset - link expired page', () => {
        * Update the account's password reset expiry date via the API,
        * so that we can mimic missing the verification period.
        */
-      const now = new Date();
-
-      const milliseconds = 300000;
-      const oneMinuteAgo = new Date(now.setMilliseconds(-milliseconds)).toISOString();
+      const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
 
       const updateObj = {
-        [PASSWORD_RESET_EXPIRY]: oneMinuteAgo,
+        [PASSWORD_RESET_EXPIRY]: oneMinuteInThePast,
       };
 
       updatedAccount = await api.updateAccount(account.id, updateObj);
