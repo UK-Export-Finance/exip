@@ -12,7 +12,7 @@ const {
 
 const { ACCOUNT: { PASSWORD } } = INSURANCE_FIELD_IDS;
 
-context('Insurance - Account - Sign in - Submitting the form with valid credentials multiple times should suspend the account', () => {
+context('Insurance - Account - Sign in - Submitting the form with invalid credentials multiple times should suspend the account', () => {
   const baseUrl = Cypress.config('baseUrl');
   const signInUrl = `${baseUrl}${SIGN_IN_ROOT}`;
   const accountSuspendedUrl = `${baseUrl}${SUSPENDED_ROOT}`;
