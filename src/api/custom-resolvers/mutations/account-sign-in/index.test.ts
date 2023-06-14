@@ -60,10 +60,12 @@ describe('custom-resolvers/account-sign-in', () => {
       });
 
       account = await accounts.create(context);
+
+      result = await accountSignIn({}, variables, context);
     });
 
     test('it should return the result of accountChecks', async () => {
-      result = await accountSignIn({}, variables, context);
+      account = await accounts.get(context, account.id);
 
       const expected = await accountChecks(context, account, mockUrlOrigin);
 
@@ -163,32 +165,32 @@ describe('custom-resolvers/account-sign-in', () => {
         expect(account.isBlocked).toEqual(true);
       });
     });
-  });
 
-  describe('when the account is blocked', () => {
-    beforeEach(async () => {
-      await accounts.deleteAll(context);
+    describe('when the account is blocked', () => {
+      beforeEach(async () => {
+        await accounts.deleteAll(context);
 
-      account = await accounts.create(context);
+        account = await accounts.create(context);
 
-      account = (await context.query.Account.updateOne({
-        where: { id: account.id },
-        data: {
+        account = (await context.query.Account.updateOne({
+          where: { id: account.id },
+          data: {
+            isBlocked: true,
+          },
+        })) as Account;
+
+        result = await accountSignIn({}, variables, context);
+      });
+
+      test('it should return success=false, isBlocked=true and accountId', async () => {
+        const expected = {
+          success: false,
           isBlocked: true,
-        },
-      })) as Account;
+          accountId: account.id,
+        };
 
-      result = await accountSignIn({}, variables, context);
-    });
-
-    test('it should return success=false, isBlocked=true and accountId', async () => {
-      const expected = {
-        success: false,
-        isBlocked: true,
-        accountId: account.id,
-      };
-
-      expect(result).toEqual(expected);
+        expect(result).toEqual(expected);
+      });
     });
   });
 
