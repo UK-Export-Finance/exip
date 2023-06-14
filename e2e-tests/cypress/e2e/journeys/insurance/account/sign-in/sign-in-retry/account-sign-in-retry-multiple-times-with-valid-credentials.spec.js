@@ -29,7 +29,7 @@ context('Insurance - Account - Sign in - Submitting the form with valid credenti
 
       cy.navigateToUrl(signInUrl);
 
-      cy.completeAndSubmitSignInAccountFormMaximumRetries({});
+      cy.completeAndSubmitSignInAccountFormMaximumInvalidRetries({});
     });
 
     it(`should redirect to ${ENTER_CODE}`, () => {

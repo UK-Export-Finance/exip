@@ -31,7 +31,7 @@ const createAnAccountAndBecomeBlocked = ({ startReactivationJourney = false }) =
 
   cy.verifyAccountEmail();
 
-  cy.completeAndSubmitSignInAccountFormMaximumRetries({
+  cy.completeAndSubmitSignInAccountFormMaximumInvalidRetries({
     password: invalidPassword,
   });
 

@@ -34,7 +34,7 @@ context('Insurance - Account - Sign in - Submitting the form with valid credenti
 
       cy.navigateToUrl(signInUrl);
 
-      cy.completeAndSubmitSignInAccountFormMaximumRetries({
+      cy.completeAndSubmitSignInAccountFormMaximumInvalidRetries({
         password: invalidPassword,
       });
     });
