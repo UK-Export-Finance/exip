@@ -10,6 +10,11 @@ const FIELD_ID = FIELD_IDS.OPTIONAL_COOKIES;
 
 const { COOKIES_SAVED, INSURANCE } = ROUTES;
 
+/**
+ * PAGE_VARIABLES
+ * Page fields and content
+ * @returns {Object} Page variables
+ */
 export const PAGE_VARIABLES = {
   FIELD_ID,
   PAGE_CONTENT_STRINGS: PAGES.COOKIES_PAGE,
@@ -17,7 +22,20 @@ export const PAGE_VARIABLES = {
 
 export const TEMPLATE = TEMPLATES.COOKIES;
 
+/**
+ * get
+ * Render the Cookies page
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.render} Cookies page
+ */
 export const get = (req: Request, res: Response) => {
+  /**
+   * Add the previous URL to the session.
+   * This is required for consumption in the "cookies saved" page,
+   * so that we can render a button with the original URL the user was on,
+   * prior to visiting the cookies page and changing answers.
+   */
   if (req.headers.referer) {
     req.session.returnToServiceUrl = req.headers.referer;
   }
@@ -30,6 +48,13 @@ export const get = (req: Request, res: Response) => {
   });
 };
 
+/**
+ * post
+ * Check the cookies page for validation errors and if successful, redirect to the cookies saved page.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} Cookies page with validation errors or the Cookies saved page
+ */
 export const post = (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID]);
 
