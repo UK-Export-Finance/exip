@@ -2116,9 +2116,6 @@ var sendEmailConfirmEmailAddressMutation = async (root, variables, context) => {
 };
 var send_email_confirm_email_address_default2 = sendEmailConfirmEmailAddressMutation;
 
-// custom-resolvers/mutations/account-sign-in/index.ts
-var import_date_fns5 = require("date-fns");
-
 // helpers/get-password-hash/index.ts
 var import_crypto3 = __toESM(require("crypto"));
 var { ENCRYPTION: ENCRYPTION3 } = ACCOUNT2;
@@ -2147,68 +2144,6 @@ var isValidAccountPassword = (password2, salt, hash) => {
   return false;
 };
 var is_valid_account_password_default = isValidAccountPassword;
-
-// helpers/generate-otp/index.ts
-var import_crypto4 = __toESM(require("crypto"));
-var import_otplib = require("otplib");
-var { ENCRYPTION: ENCRYPTION4, OTP } = ACCOUNT2;
-var {
-  RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE2,
-  STRING_TYPE: STRING_TYPE4,
-  PBKDF2: { ITERATIONS: ITERATIONS4, DIGEST_ALGORITHM: DIGEST_ALGORITHM4 },
-  OTP: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH4 }
-  }
-} = ENCRYPTION4;
-var generateOtp = () => {
-  try {
-    console.info("Generating OTP");
-    const salt = import_crypto4.default.randomBytes(RANDOM_BYTES_SIZE2).toString(STRING_TYPE4);
-    import_otplib.authenticator.options = { digits: OTP.DIGITS };
-    const securityCode = import_otplib.authenticator.generate(salt);
-    const hash = import_crypto4.default.pbkdf2Sync(securityCode, salt, ITERATIONS4, KEY_LENGTH4, DIGEST_ALGORITHM4).toString(STRING_TYPE4);
-    const expiry = OTP.VERIFICATION_EXPIRY();
-    return {
-      securityCode,
-      salt,
-      hash,
-      expiry
-    };
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Error generating OTP ${err}`);
-  }
-};
-var generate = {
-  otp: generateOtp
-};
-var generate_otp_default = generate;
-
-// helpers/generate-otp-and-update-account/index.ts
-var generateOTPAndUpdateAccount = async (context, accountId) => {
-  try {
-    console.info("Adding OTP to an account");
-    const otp = generate_otp_default.otp();
-    const { securityCode, salt, hash, expiry } = otp;
-    const accountUpdate = {
-      otpSalt: salt,
-      otpHash: hash,
-      otpExpiry: expiry
-    };
-    await context.db.Account.updateOne({
-      where: { id: accountId },
-      data: accountUpdate
-    });
-    return {
-      success: true,
-      securityCode
-    };
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Adding OTP to an account ${err}`);
-  }
-};
-var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
 
 // helpers/create-authentication-retry-entry/index.ts
 var createAuthenticationRetryEntry = async (context, accountId) => {
@@ -2287,8 +2222,124 @@ var blockAccount = async (context, accountId) => {
 };
 var block_account_default = blockAccount;
 
-// custom-resolvers/mutations/account-sign-in/index.ts
+// custom-resolvers/mutations/account-sign-in/account-checks/index.ts
+var import_date_fns5 = require("date-fns");
+
+// helpers/generate-otp/index.ts
+var import_crypto4 = __toESM(require("crypto"));
+var import_otplib = require("otplib");
+var { ENCRYPTION: ENCRYPTION4, OTP } = ACCOUNT2;
+var {
+  RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE2,
+  STRING_TYPE: STRING_TYPE4,
+  PBKDF2: { ITERATIONS: ITERATIONS4, DIGEST_ALGORITHM: DIGEST_ALGORITHM4 },
+  OTP: {
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH4 }
+  }
+} = ENCRYPTION4;
+var generateOtp = () => {
+  try {
+    console.info("Generating OTP");
+    const salt = import_crypto4.default.randomBytes(RANDOM_BYTES_SIZE2).toString(STRING_TYPE4);
+    import_otplib.authenticator.options = { digits: OTP.DIGITS };
+    const securityCode = import_otplib.authenticator.generate(salt);
+    const hash = import_crypto4.default.pbkdf2Sync(securityCode, salt, ITERATIONS4, KEY_LENGTH4, DIGEST_ALGORITHM4).toString(STRING_TYPE4);
+    const expiry = OTP.VERIFICATION_EXPIRY();
+    return {
+      securityCode,
+      salt,
+      hash,
+      expiry
+    };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Error generating OTP ${err}`);
+  }
+};
+var generate = {
+  otp: generateOtp
+};
+var generate_otp_default = generate;
+
+// helpers/generate-otp-and-update-account/index.ts
+var generateOTPAndUpdateAccount = async (context, accountId) => {
+  try {
+    console.info("Adding OTP to an account");
+    const otp = generate_otp_default.otp();
+    const { securityCode, salt, hash, expiry } = otp;
+    const accountUpdate = {
+      otpSalt: salt,
+      otpHash: hash,
+      otpExpiry: expiry
+    };
+    await context.db.Account.updateOne({
+      where: { id: accountId },
+      data: accountUpdate
+    });
+    return {
+      success: true,
+      securityCode
+    };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Adding OTP to an account ${err}`);
+  }
+};
+var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
+
+// custom-resolvers/mutations/account-sign-in/account-checks/index.ts
 var { EMAIL: EMAIL2 } = ACCOUNT2;
+var accountChecks = async (context, account, urlOrigin) => {
+  try {
+    console.info("Signing in account - checking account");
+    const { id: accountId, email } = account;
+    if (!account.isVerified) {
+      console.info("Unable to sign in account - account has not been verified yet");
+      const now = /* @__PURE__ */ new Date();
+      const verificationHasExpired = (0, import_date_fns5.isAfter)(now, account.verificationExpiry);
+      if (account.verificationHash && !verificationHasExpired) {
+        console.info("Account has an unexpired verification token - resetting verification expiry");
+        const accountUpdate = {
+          verificationExpiry: EMAIL2.VERIFICATION_EXPIRY()
+        };
+        await context.db.Account.updateOne({
+          where: { id: accountId },
+          data: accountUpdate
+        });
+        console.info("Account has an unexpired verification token - sending verification email");
+        const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
+        if (emailResponse2?.success) {
+          return {
+            success: false,
+            resentVerificationEmail: true,
+            accountId
+          };
+        }
+        return { success: false, accountId };
+      }
+      console.info("Unable to sign in account - account has not been verified");
+      return { success: false };
+    }
+    const { securityCode } = await generate_otp_and_update_account_default(context, accountId);
+    const name = get_full_name_string_default(account);
+    const emailResponse = await emails_default.securityCodeEmail(email, name, securityCode);
+    if (emailResponse?.success) {
+      return {
+        ...emailResponse,
+        accountId
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Validating password or sending email for account sign in (accountSignIn mutation - account checks) ${err}`);
+  }
+};
+var account_checks_default = accountChecks;
+
+// custom-resolvers/mutations/account-sign-in/index.ts
 var accountSignIn = async (root, variables, context) => {
   try {
     console.info("Signing in account");
@@ -2300,14 +2351,19 @@ var accountSignIn = async (root, variables, context) => {
     }
     const account = accountData;
     const { id: accountId } = account;
-    const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
-    if (!newRetriesEntry.success) {
-      return { success: false };
-    }
     const { isBlocked } = account;
     if (isBlocked) {
       console.info("Unable to sign in account - account is already blocked");
       return { success: false, isBlocked: true, accountId };
+    }
+    if (is_valid_account_password_default(password2, account.salt, account.hash)) {
+      console.info("Signing in account - valid credentials provided");
+      return account_checks_default(context, account, urlOrigin);
+    }
+    console.info("Signing in account - invalid credentials provided");
+    const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
+    if (!newRetriesEntry.success) {
+      return { success: false };
     }
     const needToBlockAccount = await should_block_account_default(context, accountId);
     if (needToBlockAccount) {
@@ -2321,51 +2377,10 @@ var accountSignIn = async (root, variables, context) => {
       }
       return { success: false };
     }
-    if (is_valid_account_password_default(password2, account.salt, account.hash)) {
-      if (!account.isVerified) {
-        console.info("Unable to sign in account - account has not been verified yet");
-        const now = /* @__PURE__ */ new Date();
-        const verificationHasExpired = (0, import_date_fns5.isAfter)(now, account.verificationExpiry);
-        if (account.verificationHash && !verificationHasExpired) {
-          console.info("Account has an unexpired verification token - resetting verification expiry");
-          const accountUpdate = {
-            verificationExpiry: EMAIL2.VERIFICATION_EXPIRY()
-          };
-          await context.db.Account.updateOne({
-            where: { id: accountId },
-            data: accountUpdate
-          });
-          console.info("Account has an unexpired verification token - sending verification email");
-          const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
-          if (emailResponse2.success) {
-            return {
-              success: false,
-              resentVerificationEmail: true,
-              accountId
-            };
-          }
-          return { success: false, accountId };
-        }
-        console.info("Unable to sign in account - account has not been verified");
-        return { success: false };
-      }
-      const { securityCode } = await generate_otp_and_update_account_default(context, accountId);
-      const name = get_full_name_string_default(account);
-      const emailResponse = await emails_default.securityCodeEmail(email, name, securityCode);
-      if (emailResponse.success) {
-        return {
-          ...emailResponse,
-          accountId
-        };
-      }
-      return {
-        success: false
-      };
-    }
     return { success: false };
   } catch (err) {
     console.error(err);
-    throw new Error(`Validating password or sending email for account sign in (accountSignIn mutation) ${err}`);
+    throw new Error(`Signing in account (accountSignIn mutation) ${err}`);
   }
 };
 var account_sign_in_default = accountSignIn;
@@ -2888,7 +2903,7 @@ var updateCompanyAndCompanyAddress = async (root, variables, context) => {
         where: oldSicCodes
       });
     }
-    if (mappedSicCodes && mappedSicCodes.length) {
+    if (mappedSicCodes?.length) {
       await context.db.CompanySicCode.createMany({
         data: mappedSicCodes
       });

@@ -1,5 +1,6 @@
 import canSubmitApplication from '.';
 import { APPLICATION } from '../../constants';
+import { DATE_ONE_MINUTE_IN_THE_PAST } from '../../constants/dates';
 import { mockApplication } from '../../test-mocks';
 
 describe('server/helpers/can-submit-application', () => {
@@ -36,15 +37,11 @@ describe('server/helpers/can-submit-application', () => {
   });
 
   describe("when the date is NOT before the application's submission deadline", () => {
-    const now = new Date();
-
-    // 1 minute ago
-    const milliseconds = 300000;
-    const oneMinuteAgo = new Date(now.setMilliseconds(-milliseconds)).toISOString();
+    const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
 
     const mockApplicationDeadlinePassed = {
       ...mockApplication,
-      submissionDeadline: oneMinuteAgo,
+      submissionDeadline: String(oneMinuteInThePast),
     };
 
     it('should return false', () => {

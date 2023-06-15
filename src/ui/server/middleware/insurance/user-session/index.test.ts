@@ -1,5 +1,6 @@
 import userSessionMiddleware from '.';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
+import { DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants/dates';
 import { mockReq, mockRes, mockAccount } from '../../../test-mocks';
 import { Next, Request, Response } from '../../../../types';
 
@@ -36,11 +37,11 @@ describe('middleware/insurance/user-session', () => {
 
   describe('when the current time is past req.session.user.expires', () => {
     beforeEach(() => {
-      const oneMinuteAgo = new Date(Date.now() - 1000 * 60).toISOString();
+      const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
 
       req.session.user = {
         ...mockAccount,
-        expires: String(oneMinuteAgo),
+        expires: oneMinuteInThePast.toISOString(),
       };
 
       next = nextSpy;
