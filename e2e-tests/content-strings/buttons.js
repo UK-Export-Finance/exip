@@ -7,6 +7,7 @@ export const BUTTONS = {
   CONTINUE_TO_SIGN_IN: 'Continue to sign in',
   REACTIVATE_ACCOUNT: 'Reactivate account',
   RETURN_TO_EXISTING_APPLICATION: 'Return to my existing application',
+  RETURN_TO_SERVICE: 'Return to service',
   SAVE_CHANGES: 'Save changes',
   SAVE_AND_BACK: 'Save and back to all sections',
   SEARCH: 'Search',
