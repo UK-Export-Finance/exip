@@ -21,7 +21,7 @@ const {
 
 context('Cookies page - Insurance', () => {
   const baseUrl = Cypress.config('baseUrl');
-  const url = `${baseUrl}${COOKIES}`;
+  const url = COOKIES;
   const insuranceStartUrl = `${baseUrl}${START}`;
 
   beforeEach(() => {
