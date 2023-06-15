@@ -1,5 +1,5 @@
 import { inlineErrorMessage, submitButton } from '../../pages/shared';
-import { cookiesPage } from '../../pages';
+import { cookiesPage, cookiesSavedPage } from '../../pages';
 import partials from '../../partials';
 import {
   BUTTONS, ERROR_MESSAGES, FIELDS, PAGES,
@@ -8,15 +8,28 @@ import { FIELD_IDS, ROUTES } from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.COOKIES_PAGE;
 
+const {
+  INSURANCE: {
+    COOKIES,
+    COOKIES_SAVED,
+    START,
+    ACCOUNT: {
+      SIGN_IN: { ROOT: SIGN_IN_ROOT },
+    },
+  },
+} = ROUTES;
+
 context('Cookies page - Insurance', () => {
-  const url = ROUTES.INSURANCE.COOKIES;
+  const baseUrl = Cypress.config('baseUrl');
+  const url = `${baseUrl}${COOKIES}`;
+  const insuranceStartUrl = `${baseUrl}${START}`;
 
   beforeEach(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToUrl(START);
 
     partials.footer.supportLinks.cookies().click();
 
-    cy.assertUrl(`${Cypress.config('baseUrl')}${url}`);
+    cy.assertUrl(`${baseUrl}${url}`);
 
     cy.saveSession();
   });
@@ -26,8 +39,8 @@ context('Cookies page - Insurance', () => {
 
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: url,
-      backLink: ROUTES.INSURANCE.START,
+      currentHref: COOKIES,
+      backLink: START,
       submitButtonCopy: BUTTONS.SAVE_CHANGES,
       assertAuthenticatedHeader: false,
       isInsurancePage: true,
@@ -192,20 +205,22 @@ context('Cookies page - Insurance', () => {
           submitButton().click();
         });
 
-        it(`should redirect to ${url}`, () => {
-          cy.assertUrl(`${Cypress.config('baseUrl')}${url}`);
+        it(`should redirect to ${COOKIES_SAVED}`, () => {
+          cy.assertUrl(`${baseUrl}${COOKIES_SAVED}`);
         });
 
-        it('should render a success message with correct content and `go back` link', () => {
-          cy.checkText(cookiesPage.successBanner.heading(), CONTENT_STRINGS.SUCCESS_BANNER.HEADING);
+        it(`should redirect to ${COOKIES_SAVED}`, () => {
+          cy.assertUrl(`${baseUrl}${COOKIES_SAVED}`);
+        });
 
-          cy.checkText(cookiesPage.successBanner.body(), CONTENT_STRINGS.SUCCESS_BANNER.BODY);
+        it('should render a link button with the URL that was visited prior to submitting an answer in the cookies page', () => {
+          const expectedUrl = insuranceStartUrl;
 
-          cookiesPage.successBanner.goBackLink().should('exist');
-          cy.checkText(cookiesPage.successBanner.goBackLink(), CONTENT_STRINGS.SUCCESS_BANNER.GO_BACK);
-
-          const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.START}`;
-          cookiesPage.successBanner.goBackLink().should('have.attr', 'href', expectedUrl);
+          cy.checkLink(
+            cookiesSavedPage.returnToServiceLinkButton(),
+            expectedUrl,
+            BUTTONS.RETURN_TO_SERVICE,
+          );
         });
 
         it('should NOT render the cookie consent banner', () => {
@@ -229,20 +244,22 @@ context('Cookies page - Insurance', () => {
           submitButton().click();
         });
 
-        it(`should redirect to ${url}`, () => {
-          cy.assertUrl(`${Cypress.config('baseUrl')}${url}`);
+        it(`should redirect to ${COOKIES_SAVED}`, () => {
+          cy.assertUrl(`${baseUrl}${COOKIES_SAVED}`);
         });
 
-        it('should render a success message with correct content and `go back` link', () => {
-          cy.checkText(cookiesPage.successBanner.heading(), CONTENT_STRINGS.SUCCESS_BANNER.HEADING);
+        it(`should redirect to ${COOKIES_SAVED}`, () => {
+          cy.assertUrl(`${baseUrl}${COOKIES_SAVED}`);
+        });
 
-          cy.checkText(cookiesPage.successBanner.body(), CONTENT_STRINGS.SUCCESS_BANNER.BODY);
+        it('should render a link button with the URL that was visited prior to submitting an answer in the cookies page', () => {
+          const expectedUrl = insuranceStartUrl;
 
-          cookiesPage.successBanner.goBackLink().should('exist');
-          cy.checkText(cookiesPage.successBanner.goBackLink(), CONTENT_STRINGS.SUCCESS_BANNER.GO_BACK);
-
-          const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.START}`;
-          cookiesPage.successBanner.goBackLink().should('have.attr', 'href', expectedUrl);
+          cy.checkLink(
+            cookiesSavedPage.returnToServiceLinkButton(),
+            expectedUrl,
+            BUTTONS.RETURN_TO_SERVICE,
+          );
         });
 
         it('should NOT render the cookie consent banner', () => {
@@ -260,7 +277,7 @@ context('Cookies page - Insurance', () => {
 
       describe('when a user navigates to the cookies page directly via URL and optional cookies are submitted as `accept`', () => {
         beforeEach(() => {
-          cy.saveSession();
+          cy.clearCookie('exip-session');
 
           cy.navigateToUrl(url);
 
@@ -268,18 +285,20 @@ context('Cookies page - Insurance', () => {
           submitButton().click();
         });
 
-        it('should render a success message with correct content and no `go back` link', () => {
-          cy.checkText(cookiesPage.successBanner.heading(), CONTENT_STRINGS.SUCCESS_BANNER.HEADING);
+        it(`should render a link button with the URL to ${SIGN_IN_ROOT}`, () => {
+          const expectedUrl = SIGN_IN_ROOT;
 
-          cy.checkText(cookiesPage.successBanner.body(), CONTENT_STRINGS.SUCCESS_BANNER.BODY);
-
-          cookiesPage.successBanner.goBackLink().should('not.exist');
+          cy.checkLink(
+            cookiesSavedPage.returnToServiceLinkButton(),
+            expectedUrl,
+            BUTTONS.RETURN_TO_SERVICE,
+          );
         });
       });
 
       describe('when a user navigates to the cookies page directly via URL and optional cookies are submitted as `reject`', () => {
         beforeEach(() => {
-          cy.saveSession();
+          cy.clearCookie('exip-session');
 
           cy.navigateToUrl(url);
 
@@ -287,12 +306,14 @@ context('Cookies page - Insurance', () => {
           submitButton().click();
         });
 
-        it('should render a success message with correct content and no `go back` link', () => {
-          cy.checkText(cookiesPage.successBanner.heading(), CONTENT_STRINGS.SUCCESS_BANNER.HEADING);
+        it(`should render a link button with the URL to ${SIGN_IN_ROOT}`, () => {
+          const expectedUrl = SIGN_IN_ROOT;
 
-          cy.checkText(cookiesPage.successBanner.body(), CONTENT_STRINGS.SUCCESS_BANNER.BODY);
-
-          cookiesPage.successBanner.goBackLink().should('not.exist');
+          cy.checkLink(
+            cookiesSavedPage.returnToServiceLinkButton(),
+            expectedUrl,
+            BUTTONS.RETURN_TO_SERVICE,
+          );
         });
       });
     });

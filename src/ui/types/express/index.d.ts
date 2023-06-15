@@ -60,6 +60,7 @@ interface RequestSession {
   emailAddressForPasswordReset?: string;
   passwordResetSuccess?: boolean;
   emailAddressForAccountReactivation?: string;
+  returnToServiceUrl?: string;
 }
 
 interface Request {

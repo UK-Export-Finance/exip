@@ -1,7 +1,7 @@
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { Next, Request, Response } from '../../../../types';
 
-const { PAGE_NOT_FOUND, ELIGIBILITY, ACCOUNT, DASHBOARD, NO_ACCESS_TO_APPLICATION, NO_ACCESS_APPLICATION_SUBMITTED } = INSURANCE_ROUTES;
+const { PAGE_NOT_FOUND, ELIGIBILITY, ACCOUNT, DASHBOARD, NO_ACCESS_TO_APPLICATION, NO_ACCESS_APPLICATION_SUBMITTED, COOKIES, COOKIES_SAVED } = INSURANCE_ROUTES;
 
 export const IRRELEVANT_ROUTES = [
   PAGE_NOT_FOUND,
@@ -14,6 +14,8 @@ export const IRRELEVANT_ROUTES = [
   DASHBOARD,
   NO_ACCESS_TO_APPLICATION,
   NO_ACCESS_APPLICATION_SUBMITTED,
+  COOKIES,
+  COOKIES_SAVED,
 ];
 
 export const applicationAccessMiddleware = async (req: Request, res: Response, next: Next) => {
