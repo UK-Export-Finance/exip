@@ -48,7 +48,20 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SIGN_IN.ENTER_CODE;
  * @returns {Express.Response.render} Enter code page
  */
 export const get = (req: Request, res: Response) => {
+  if (req.session.user?.id) {
+    /**
+     * User is already signed in.
+     * Redirect to the dashboard.
+     */
+    return res.redirect(DASHBOARD);
+  }
+
   if (!req.session.accountId) {
+    /**
+     * No account ID is in the session.
+     * We cannot make an API call in the POST without this.
+     * Therfore, redirect to the sign in route.
+     */
     return res.redirect(SIGN_IN_ROOT);
   }
 

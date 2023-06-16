@@ -54,7 +54,10 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SIGN_IN.ROOT;
  */
 export const get = (req: Request, res: Response) => {
   if (req.session.user?.id) {
-    // user is already signed in
+    /**
+     * User is already signed in.
+     * Redirect to the dashboard.
+     */
     return res.redirect(DASHBOARD);
   }
 

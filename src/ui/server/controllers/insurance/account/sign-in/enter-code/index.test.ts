@@ -106,21 +106,22 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
       });
     });
 
-    describe('when there is no req.session.accountId', () => {
+    describe('when there is req.session.user.id', () => {
       beforeEach(() => {
-        delete req.session.accountId;
+        req.session.user = mockAccount;
       });
 
-      it(`should redirect to ${SIGN_IN_ROOT}`, () => {
+      it(`should redirect to ${DASHBOARD}`, () => {
         get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(SIGN_IN_ROOT);
+        expect(res.redirect).toHaveBeenCalledWith(DASHBOARD);
       });
     });
 
     describe('when there is no req.session.accountId', () => {
       beforeEach(() => {
         delete req.session.accountId;
+        delete req.session.user;
       });
 
       it(`should redirect to ${SIGN_IN_ROOT}`, () => {
