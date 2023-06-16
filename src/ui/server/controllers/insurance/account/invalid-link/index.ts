@@ -16,10 +16,10 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.LINK_INVALID;
 
 /**
  * get
- * Render the generic "Account - link invalid" page
+ * Render the generic "Account - invalid link" page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} Generic "Account - link invalid" page
+ * @returns {Express.Response.render} Generic "Account - invalid link" page
  */
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {

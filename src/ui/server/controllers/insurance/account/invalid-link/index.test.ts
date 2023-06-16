@@ -12,7 +12,7 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-describe('controllers/insurance/account/link-invalid', () => {
+describe('controllers/insurance/account/invalid-link', () => {
   let req: Request;
   let res: Response;
 

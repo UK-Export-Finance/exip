@@ -21,7 +21,7 @@ import { get as suspendedGet, post as suspendedPost } from '../../../controllers
 import { get as suspendedEmailSentGet } from '../../../controllers/insurance/account/suspended/email-sent';
 import { get as suspendedVerifyEmailGet } from '../../../controllers/insurance/account/suspended/verify-email';
 import { get as suspendedVerifyEmailLinkExpiredGet } from '../../../controllers/insurance/account/suspended/link-expired';
-import { get as suspendedVerifyEmailLinkInvalidGet } from '../../../controllers/insurance/account/link-invalid';
+import { get as suspendedVerifyEmailLinkInvalidGet } from '../../../controllers/insurance/account/invalid-link';
 import { get as reactivatedGet } from '../../../controllers/insurance/account/reactivated';
 
 // @ts-ignore

@@ -25,5 +25,5 @@ export const ACCOUNT_TEMPLATES = {
     VERIFY_EMAIL_LINK_EXPIRED: 'insurance/account/suspended/link-expired.njk',
   },
   REACTIVATED: 'insurance/account/reactivated.njk',
-  LINK_INVALID: 'insurance/account/link-invalid.njk',
+  LINK_INVALID: 'insurance/account/invalid-link.njk',
 };

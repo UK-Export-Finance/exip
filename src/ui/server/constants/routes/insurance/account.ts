@@ -40,7 +40,7 @@ const SUSPENDED = {
   EMAIL_SENT: `${SUSPENDED_ROOT}/email-sent`,
   VERIFY_EMAIL: `${SUSPENDED_ROOT}/verify-email`,
   VERIFY_EMAIL_LINK_EXPIRED: `${SUSPENDED_ROOT}/link-expired`,
-  VERIFY_EMAIL_LINK_INVALID: `${SUSPENDED_ROOT}/link-invalid`,
+  VERIFY_EMAIL_LINK_INVALID: `${SUSPENDED_ROOT}/invalid-link`,
 };
 
 export const ACCOUNT = {
