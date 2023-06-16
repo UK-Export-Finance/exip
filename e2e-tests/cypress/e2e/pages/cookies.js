@@ -43,9 +43,4 @@ export const cookiesPage = {
     errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.OPTIONAL_COOKIES}-error-message"]`),
     submitButton: () => cy.get('[data-cy="submit-button"]'),
   },
-  successBanner: {
-    heading: () => cy.get('[data-cy="success-message-heading"]'),
-    body: () => cy.get('[data-cy="success-message-body"]'),
-    goBackLink: () => cy.get('[data-cy="success-message-go-back-link"]'),
-  },
 };

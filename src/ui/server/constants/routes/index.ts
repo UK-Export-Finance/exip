@@ -6,6 +6,7 @@ export const ROUTES = {
   ACCESSIBILITY_STATEMENT: '/accessibility-statement',
   COOKIES: '/cookies',
   COOKIES_CONSENT: '/cookies-consent',
+  COOKIES_SAVED: '/cookies/saved',
   CONTACT_US: '/contact-us',
   PROBLEM_WITH_SERVICE: '/problem-with-service',
   QUOTE: QUOTE_ROUTES,

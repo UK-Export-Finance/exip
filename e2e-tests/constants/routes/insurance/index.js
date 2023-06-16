@@ -47,6 +47,7 @@ export const INSURANCE_ROUTES = {
   FEEDBACK_SENT: `${INSURANCE_ROOT}/feedback-sent`,
   ACCESSIBILITY_STATEMENT: `${INSURANCE_ROOT}/accessibility-statement`,
   COOKIES: `${INSURANCE_ROOT}/cookies`,
+  COOKIES_SAVED: `${INSURANCE_ROOT}/cookies/saved`,
   COOKIES_CONSENT: `${INSURANCE_ROOT}/cookies-consent`,
   CONTACT_US: `${INSURANCE_ROOT}/contact-us`,
   PROBLEM_WITH_SERVICE: `${INSURANCE_ROOT}/problem-with-service`,

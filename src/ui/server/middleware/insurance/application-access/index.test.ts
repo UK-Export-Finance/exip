@@ -1,11 +1,20 @@
 import applicationAccessMiddleware, { IRRELEVANT_ROUTES } from '.';
-import { ROUTES } from '../../../constants/routes';
+import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { mockReq, mockRes, mockApplication, mockAccount } from '../../../test-mocks';
 import { Next, Request, Response } from '../../../../types';
 
 const {
-  INSURANCE: { INSURANCE_ROOT, PAGE_NOT_FOUND, ELIGIBILITY, ACCOUNT, DASHBOARD, NO_ACCESS_TO_APPLICATION, ALL_SECTIONS, NO_ACCESS_APPLICATION_SUBMITTED },
-} = ROUTES;
+  INSURANCE_ROOT,
+  PAGE_NOT_FOUND,
+  ELIGIBILITY,
+  ACCOUNT,
+  DASHBOARD,
+  NO_ACCESS_TO_APPLICATION,
+  ALL_SECTIONS,
+  NO_ACCESS_APPLICATION_SUBMITTED,
+  COOKIES,
+  COOKIES_SAVED,
+} = INSURANCE_ROUTES;
 
 describe('middleware/insurance/application-access', () => {
   let req: Request;
@@ -35,6 +44,8 @@ describe('middleware/insurance/application-access', () => {
         DASHBOARD,
         NO_ACCESS_TO_APPLICATION,
         NO_ACCESS_APPLICATION_SUBMITTED,
+        COOKIES,
+        COOKIES_SAVED,
       ];
 
       expect(IRRELEVANT_ROUTES).toEqual(expected);
