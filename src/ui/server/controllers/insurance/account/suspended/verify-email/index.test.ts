@@ -2,7 +2,7 @@ import { get } from '.';
 import { ROUTES } from '../../../../../constants';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes } from '../../../../../test-mocks';
+import { mockAccount, mockReq, mockRes } from '../../../../../test-mocks';
 
 const {
   INSURANCE: {
@@ -50,9 +50,9 @@ describe('controllers/insurance/account/suspended/verify-email', () => {
     });
   });
 
-  describe('when api.keystone.account.verifyAccountReactivationToken returns expired=true', () => {
+  describe('when api.keystone.account.verifyAccountReactivationToken returns expired=true and an accountId', () => {
     beforeEach(() => {
-      verifyAccountReactivationTokenSpy = jest.fn(() => Promise.resolve({ success: true, expired: true }));
+      verifyAccountReactivationTokenSpy = jest.fn(() => Promise.resolve({ success: true, expired: true, accountId: mockAccount.id }));
 
       api.keystone.account.verifyAccountReactivationToken = verifyAccountReactivationTokenSpy;
     });
@@ -60,7 +60,9 @@ describe('controllers/insurance/account/suspended/verify-email', () => {
     it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED}`, async () => {
       await get(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_LINK_EXPIRED);
+      const expected = `${VERIFY_EMAIL_LINK_EXPIRED}?id=${mockAccount.id}`;
+
+      expect(res.redirect).toHaveBeenCalledWith(expected);
     });
   });
 

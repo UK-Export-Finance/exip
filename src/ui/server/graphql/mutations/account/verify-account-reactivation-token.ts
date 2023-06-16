@@ -6,6 +6,7 @@ const verifyAccountReactivationTokenMutation = gql`
       success
       invalid
       expired
+      accountId
     }
   }
 `;

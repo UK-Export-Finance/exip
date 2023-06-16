@@ -154,6 +154,7 @@ const typeDefs = `
     success: Boolean!
     expired: Boolean
     invalid: Boolean
+    accountId: String
   }
 
   type AccountSendEmailReactivateAccountLinkResponse {
