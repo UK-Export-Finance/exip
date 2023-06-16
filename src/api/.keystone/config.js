@@ -4098,9 +4098,10 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
         success: true
       };
     }
-    console.info("Unable to reactivate account - no account found");
+    console.info(`Unable to reactivate account - no account found from the provided ${REACTIVATION_HASH}`);
     return {
-      success: false
+      success: false,
+      invalid: true
     };
   } catch (err) {
     console.error(err);

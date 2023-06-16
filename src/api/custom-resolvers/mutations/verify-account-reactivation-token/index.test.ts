@@ -142,14 +142,29 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
     });
   });
 
+  describe(`when no account is found from the provided ${REACTIVATION_EXPIRY}`, () => {
+    test('it should return success=false and invalid=true', async () => {
+      variables.token = 'invalid';
+
+      result = await verifyAccountReactivationToken({}, variables, context);
+
+      const expected = { success: false, invalid: true };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('when no account is found', () => {
-    test('it should return success=false', async () => {
+    test('it should return success=false and invalid=true', async () => {
+      // ensure we have the valid token that was previously created
+      variables.token = reactivationHash;
+
       // wipe accounts so an account will not be found.
       await accounts.deleteAll(context);
 
       result = await verifyAccountReactivationToken({}, variables, context);
 
-      const expected = { success: false };
+      const expected = { success: false, invalid: true };
 
       expect(result).toEqual(expected);
     });

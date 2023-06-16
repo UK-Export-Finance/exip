@@ -355,6 +355,7 @@ interface VerifyAccountReactivationTokenVariables {
 
 interface VerifyAccountReactivationTokenResponse extends SuccessResponse {
   expired?: boolean;
+  invalid?: boolean;
 }
 
 interface SendExporterEmailVariables {

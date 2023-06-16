@@ -32,7 +32,7 @@ context('Insurance - Account - Suspended - Verify email - Visit with an expired 
     cy.deleteAccount();
   });
 
-  describe(`when a reactivation token has expired and the useer navigates to ${VERIFY_EMAIL} with the expired token`, () => {
+  describe(`when a reactivation token has expired and the user navigates to ${VERIFY_EMAIL} with the expired token`, () => {
     let updatedAccount;
 
     beforeEach(async () => {

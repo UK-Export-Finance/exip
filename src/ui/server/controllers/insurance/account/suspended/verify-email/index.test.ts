@@ -7,7 +7,7 @@ import { mockReq, mockRes } from '../../../../../test-mocks';
 const {
   INSURANCE: {
     ACCOUNT: {
-      SUSPENDED: { ROOT: SUSPENDED_ROOT, VERIFY_EMAIL_LINK_EXPIRED },
+      SUSPENDED: { ROOT: SUSPENDED_ROOT, VERIFY_EMAIL_LINK_EXPIRED, VERIFY_EMAIL_LINK_INVALID },
       REACTIVATED_ROOT,
     },
     PROBLEM_WITH_SERVICE,
@@ -50,20 +50,6 @@ describe('controllers/insurance/account/suspended/verify-email', () => {
     });
   });
 
-  describe('when api.keystone.account.verifyAccountReactivationToken does not return success=true', () => {
-    beforeEach(() => {
-      verifyAccountReactivationTokenSpy = jest.fn(() => Promise.resolve({ success: false }));
-
-      api.keystone.account.verifyAccountReactivationToken = verifyAccountReactivationTokenSpy;
-    });
-
-    it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED}`, async () => {
-      await get(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_LINK_EXPIRED);
-    });
-  });
-
   describe('when api.keystone.account.verifyAccountReactivationToken returns expired=true', () => {
     beforeEach(() => {
       verifyAccountReactivationTokenSpy = jest.fn(() => Promise.resolve({ success: true, expired: true }));
@@ -75,6 +61,34 @@ describe('controllers/insurance/account/suspended/verify-email', () => {
       await get(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_LINK_EXPIRED);
+    });
+  });
+
+  describe('when api.keystone.account.verifyAccountReactivationToken returns invalid=true', () => {
+    beforeEach(() => {
+      verifyAccountReactivationTokenSpy = jest.fn(() => Promise.resolve({ success: false, invalid: true }));
+
+      api.keystone.account.verifyAccountReactivationToken = verifyAccountReactivationTokenSpy;
+    });
+
+    it(`should redirect to ${VERIFY_EMAIL_LINK_INVALID}`, async () => {
+      await get(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_LINK_INVALID);
+    });
+  });
+
+  describe('when api.keystone.account.verifyAccountReactivationToken returns only success=false', () => {
+    beforeEach(() => {
+      verifyAccountReactivationTokenSpy = jest.fn(() => Promise.resolve({ success: false }));
+
+      api.keystone.account.verifyAccountReactivationToken = verifyAccountReactivationTokenSpy;
+    });
+
+    it(`should redirect to ${VERIFY_EMAIL_LINK_INVALID}`, async () => {
+      await get(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_LINK_INVALID);
     });
   });
 
