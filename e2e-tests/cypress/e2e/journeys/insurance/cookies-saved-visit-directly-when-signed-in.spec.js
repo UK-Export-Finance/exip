@@ -31,9 +31,23 @@ context('Cookies saved page - Insurance - visit the page directly as a signed in
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should redirect to the ${DASHBOARD} when clicking 'return to service' link button link`, () => {
-    cookiesSavedPage.returnToServiceLinkButton().click();
+  it('should render an authenticated header', () => {
+    cy.checkAuthenticatedHeader();
+  });
 
-    cy.assertUrl(dashboardUrl);
+  describe('when clicking `return to service` link button', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(COOKIES);
+
+      cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
+
+      submitButton().click();
+    });
+
+    it(`should redirect to the ${DASHBOARD}`, () => {
+      cookiesSavedPage.returnToServiceLinkButton().click();
+
+      cy.assertUrl(dashboardUrl);
+    });
   });
 });
