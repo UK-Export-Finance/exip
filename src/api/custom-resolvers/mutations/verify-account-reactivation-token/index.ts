@@ -44,6 +44,7 @@ const verifyAccountReactivationToken = async (
         return {
           expired: true,
           success: false,
+          accountId: account.id,
         };
       }
 

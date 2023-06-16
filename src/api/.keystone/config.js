@@ -1437,6 +1437,7 @@ var typeDefs = `
     success: Boolean!
     expired: Boolean
     invalid: Boolean
+    accountId: String
   }
 
   type AccountSendEmailReactivateAccountLinkResponse {
@@ -4081,7 +4082,8 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
         console.info("Unable to reactivate account - reactivation period has expired");
         return {
           expired: true,
-          success: false
+          success: false,
+          accountId: account.id
         };
       }
       console.info(`Reactivating account ${account.id}`);

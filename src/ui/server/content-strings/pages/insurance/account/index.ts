@@ -162,6 +162,7 @@ const ACCOUNT = {
     },
     VERIFY_EMAIL_LINK_EXPIRED: {
       PAGE_TITLE: 'Your link has expired',
+      BODY: "Your account has not been reactivated. You'll need to request another reactivation link.",
     },
   },
   REACTIVATED: {

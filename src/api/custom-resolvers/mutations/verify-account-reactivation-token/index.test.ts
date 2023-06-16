@@ -136,6 +136,7 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
       const expected = {
         success: false,
         expired: true,
+        accountId: account.id,
       };
 
       expect(result).toEqual(expected);
