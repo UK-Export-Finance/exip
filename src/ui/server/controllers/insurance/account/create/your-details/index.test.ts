@@ -192,6 +192,12 @@ describe('controllers/insurance/account/create/your-details', () => {
           expect(createApplicationSpy).toHaveBeenCalledWith(eligibilityAnswers, mockSaveDataResponse.id);
         });
 
+        it('should mark req.session.requestedApplicationCreation as false', async () => {
+          await post(req, res);
+
+          expect(req.session.requestedApplicationCreation).toEqual(false);
+        });
+
         it('should wipe req.session.submittedData.insuranceEligibility', async () => {
           await post(req, res);
 

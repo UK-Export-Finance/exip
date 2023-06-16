@@ -61,6 +61,7 @@ interface RequestSession {
   passwordResetSuccess?: boolean;
   emailAddressForAccountReactivation?: string;
   returnToServiceUrl?: string;
+  requestedApplicationCreation?: boolean;
 }
 
 interface Request {

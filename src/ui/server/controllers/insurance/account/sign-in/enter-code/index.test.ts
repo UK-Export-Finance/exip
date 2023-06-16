@@ -241,6 +241,12 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
           expect(createApplicationSpy).toHaveBeenCalledWith(eligibilityAnswers, verifyAccountSignInCodeResponse.accountId);
         });
 
+        it('should mark req.session.requestedApplicationCreation as false', async () => {
+          await post(req, res);
+
+          expect(req.session.requestedApplicationCreation).toEqual(false);
+        });
+
         it('should wipe req.session.submittedData.insuranceEligibility', async () => {
           await post(req, res);
 
