@@ -5,7 +5,7 @@ import { Request, Response } from '../../../../../../types';
 const {
   INSURANCE: {
     ACCOUNT: {
-      SUSPENDED: { ROOT: SUSPENDED_ROOT, VERIFY_EMAIL_LINK_EXPIRED },
+      SUSPENDED: { ROOT: SUSPENDED_ROOT, VERIFY_EMAIL_LINK_EXPIRED, VERIFY_EMAIL_LINK_INVALID },
       REACTIVATED_ROOT,
     },
     PROBLEM_WITH_SERVICE,
@@ -29,8 +29,12 @@ export const get = async (req: Request, res: Response) => {
 
     const response = await api.keystone.account.verifyAccountReactivationToken(token);
 
-    if (!response.success || response.expired) {
+    if (response.expired) {
       return res.redirect(VERIFY_EMAIL_LINK_EXPIRED);
+    }
+
+    if (response.invalid || !response.success) {
+      return res.redirect(VERIFY_EMAIL_LINK_INVALID);
     }
 
     return res.redirect(REACTIVATED_ROOT);

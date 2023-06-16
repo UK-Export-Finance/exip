@@ -21,6 +21,7 @@ import { get as suspendedGet, post as suspendedPost } from '../../../controllers
 import { get as suspendedEmailSentGet } from '../../../controllers/insurance/account/suspended/email-sent';
 import { get as suspendedVerifyEmailGet } from '../../../controllers/insurance/account/suspended/verify-email';
 import { get as suspendedVerifyEmailLinkExpiredGet } from '../../../controllers/insurance/account/suspended/link-expired';
+import { get as suspendedVerifyEmailLinkInvalidGet } from '../../../controllers/insurance/account/invalid-link';
 import { get as reactivatedGet } from '../../../controllers/insurance/account/reactivated';
 
 // @ts-ignore
@@ -73,6 +74,7 @@ insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.EMAIL_SENT, suspen
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL, suspendedVerifyEmailGet);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_EXPIRED, suspendedVerifyEmailLinkExpiredGet);
+insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_INVALID, suspendedVerifyEmailLinkInvalidGet);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.REACTIVATED_ROOT, reactivatedGet);
 
