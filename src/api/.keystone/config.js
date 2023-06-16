@@ -1436,6 +1436,7 @@ var typeDefs = `
   type VerifyAccountReactivationTokenResponse {
     success: Boolean!
     expired: Boolean
+    invalid: Boolean
   }
 
   type AccountSendEmailReactivateAccountLinkResponse {
