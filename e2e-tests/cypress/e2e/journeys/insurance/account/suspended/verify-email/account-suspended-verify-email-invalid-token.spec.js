@@ -4,7 +4,7 @@ const {
   ACCOUNT: {
     SUSPENDED: {
       VERIFY_EMAIL,
-      VERIFY_EMAIL_LINK_EXPIRED,
+      VERIFY_EMAIL_LINK_INVALID,
     },
   },
 } = ROUTES;
@@ -12,13 +12,13 @@ const {
 context('Insurance - Account - Suspended - verify email - Visit with an invalid token query param', () => {
   const baseUrl = Cypress.config('baseUrl');
   const verifyEmailUrl = `${baseUrl}${VERIFY_EMAIL}`;
-  const verifyEmailLinkExpiredUrl = `${baseUrl}${VERIFY_EMAIL_LINK_EXPIRED}`;
+  const verifyEmailLinkExpiredUrl = `${baseUrl}${VERIFY_EMAIL_LINK_INVALID}`;
 
   before(() => {
     cy.navigateToUrl(`${verifyEmailUrl}?token=invalid`);
   });
 
-  it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED}`, () => {
+  it(`should redirect to ${VERIFY_EMAIL_LINK_INVALID}`, () => {
     cy.url().should('eq', verifyEmailLinkExpiredUrl);
   });
 });
