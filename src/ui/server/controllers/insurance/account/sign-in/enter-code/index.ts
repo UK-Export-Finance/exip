@@ -114,13 +114,19 @@ export const post = async (req: Request, res: Response) => {
 
       /**
        * If there are eligibility answers in the session:
-       * 1) Create an application
-       * 2) Wipe the eligibility answers in the session.
+       * 1) Add requestedApplicationCreation to the session
+       * 2) Create an application
+       * 3) Remove requestedApplicationCreation from the session
+       * 4) Remove eligibility answers in the session.
        */
       if (canCreateAnApplication(req.session)) {
+        req.session.requestedApplicationCreation = true;
+
         const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
 
         const application = await api.keystone.application.create(eligibilityAnswers, accountId);
+
+        req.session.requestedApplicationCreation = false;
 
         if (!application) {
           console.error('Error creating application');

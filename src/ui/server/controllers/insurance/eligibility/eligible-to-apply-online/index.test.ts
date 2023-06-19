@@ -89,6 +89,12 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
         expect(createApplicationSpy).toHaveBeenCalledWith(sanitisedData, mockAccount.id);
       });
 
+      it('should mark req.session.requestedApplicationCreation as false', async () => {
+        await post(req, res);
+
+        expect(req.session.requestedApplicationCreation).toEqual(false);
+      });
+
       it('should wipe req.session.submittedData.insuranceEligibility', async () => {
         await post(req, res);
 
