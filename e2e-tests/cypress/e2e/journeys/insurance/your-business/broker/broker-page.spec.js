@@ -106,14 +106,9 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     });
 
     it(`should display ${USING_BROKER} section`, () => {
-      const fieldId = USING_BROKER;
-      const field = broker[fieldId];
+      cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
 
-      field.yesRadioInput().should('exist');
-      cy.checkAriaLabel(field.yesRadioInput(), `${CONTENT_STRINGS.PAGE_TITLE} yes radio`);
-
-      field.noRadioInput().should('exist');
-      cy.checkAriaLabel(field.noRadioInput(), `${CONTENT_STRINGS.PAGE_TITLE} no radio`);
+      cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
 
     it('should display additional broker section when yes radio is selected', () => {

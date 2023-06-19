@@ -96,23 +96,17 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     it('should display the trading name radios', () => {
       cy.checkText(companyDetails.tradingNameLabel(), FIELDS[TRADING_NAME].LABEL);
 
-      companyDetails.tradingNameYesRadioInput().should('exist');
+      cy.checkRadioInputYesAriaLabel(FIELDS[TRADING_NAME].LABEL);
 
-      cy.checkAriaLabel(companyDetails.tradingNameYesRadioInput(), `${FIELDS[TRADING_NAME].LABEL} yes radio`);
-
-      companyDetails.tradingNameNoRadioInput().should('exist');
-
-      cy.checkAriaLabel(companyDetails.tradingNameNoRadioInput(), `${FIELDS[TRADING_NAME].LABEL} no radio`);
+      cy.checkRadioInputNoAriaLabel(FIELDS[TRADING_NAME].LABEL);
     });
 
     it('should display the trading address radios', () => {
       cy.checkText(companyDetails.tradingAddressLabel(), FIELDS[TRADING_ADDRESS].LABEL);
 
-      companyDetails.tradingAddressYesRadioInput().should('exist');
-      cy.checkAriaLabel(companyDetails.tradingAddressYesRadioInput(), `${FIELDS[TRADING_ADDRESS].LABEL} yes radio`);
+      cy.checkAriaLabel(companyDetails.tradingAddressYesRadioInput(), `${FIELDS[TRADING_ADDRESS].LABEL} Yes`);
 
-      companyDetails.tradingAddressNoRadioInput().should('exist');
-      cy.checkAriaLabel(companyDetails.tradingAddressNoRadioInput(), `${FIELDS[TRADING_ADDRESS].LABEL} no radio`);
+      cy.checkAriaLabel(companyDetails.tradingAddressNoRadioInput(), `${FIELDS[TRADING_ADDRESS].LABEL} No`);
     });
 
     it('should display the company website text area', () => {

@@ -58,16 +58,18 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
       partials.header.serviceName().should('have.attr', 'href', START);
     });
 
-    it('renders yes and no radio buttons with a hint', () => {
-      yesRadio().should('exist');
-
+    it('renders a `yes` radio button with a hint', () => {
       cy.checkText(yesRadio(), FIELD_VALUES.YES);
 
-      noRadio().should('exist');
+      cy.checkText(yesNoRadioHint(), FIELDS[FIELD_ID].HINT);
 
+      cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
+    });
+
+    it('renders a `no` radio button', () => {
       cy.checkText(noRadio(), FIELD_VALUES.NO);
 
-      cy.checkText(yesNoRadioHint(), FIELDS[FIELD_ID].HINT);
+      cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
   });
 

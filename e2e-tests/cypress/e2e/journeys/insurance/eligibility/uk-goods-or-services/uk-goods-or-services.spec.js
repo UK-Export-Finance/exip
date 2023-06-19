@@ -67,22 +67,18 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
       partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
     });
 
-    it('renders radio button hint', () => {
-      yesNoRadioHint().should('exist');
+    it('renders `yes` radio button', () => {
+      cy.checkText(yesRadio(), FIELD_VALUES.YES);
 
       cy.checkText(yesNoRadioHint(), FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES].HINT);
-    });
 
-    it('renders `yes` radio button', () => {
-      yesRadio().should('exist');
-
-      cy.checkText(yesRadio(), FIELD_VALUES.YES);
+      cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
 
     it('renders `no` radio button', () => {
-      noRadio().should('exist');
-
       cy.checkText(noRadio(), FIELD_VALUES.NO);
+
+      cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
 
     describe('expandable details - how to calculate percentage', () => {

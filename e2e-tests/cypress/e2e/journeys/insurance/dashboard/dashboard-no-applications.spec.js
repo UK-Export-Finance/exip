@@ -13,19 +13,21 @@ const {
 const CONTENT_STRINGS = PAGES.INSURANCE.DASHBOARD;
 
 context('Insurance - Dashboard - no applications', () => {
+  const baseUrl = Cypress.config('baseUrl');
+  const dashboardUrl = `${baseUrl}${DASHBOARD}`;
+
   let referenceNumber;
-  const url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
   before(() => {
     cy.completeSignInAndGoToDashboard().then(() => {
-      cy.url().should('eq', url);
+      cy.assertUrl(dashboardUrl);
     });
   });
 
   beforeEach(() => {
     cy.saveSession();
 
-    cy.navigateToUrl(url);
+    cy.navigateToUrl(dashboardUrl);
   });
 
   after(() => {
@@ -42,11 +44,11 @@ context('Insurance - Dashboard - no applications', () => {
 
   describe('`start new application` button', () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      cy.navigateToUrl(dashboardUrl);
     });
 
     it('should render `start new application` link', () => {
-      const selector = dashboardPage.startNewApplication();
+      const selector = dashboardPage.startNewApplicationButton();
 
       const expected = {
         href: ELIGIBILITY.BUYER_COUNTRY,
@@ -57,18 +59,18 @@ context('Insurance - Dashboard - no applications', () => {
     });
 
     it(`should redirect to ${ELIGIBILITY.BUYER_COUNTRY}`, () => {
-      dashboardPage.startNewApplication().click();
+      dashboardPage.startNewApplicationButton().click();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${ELIGIBILITY.BUYER_COUNTRY}`;
+      const expectedUrl = `${baseUrl}${ELIGIBILITY.BUYER_COUNTRY}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
   });
 
   describe('when starting and completing insurance eligibility via the `start new` button ', () => {
     it('should create a new application and render in the dashboard', () => {
-      cy.navigateToUrl(url);
-      dashboardPage.startNewApplication().click();
+      cy.navigateToUrl(dashboardUrl);
+      dashboardPage.startNewApplicationButton().click();
 
       cy.submitInsuranceEligibilityAnswersHappyPath();
 
@@ -76,9 +78,9 @@ context('Insurance - Dashboard - no applications', () => {
       cy.getReferenceNumber().then((refNumber) => {
         referenceNumber = refNumber;
 
-        const allSectionsUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+        const allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-        cy.url().should('eq', allSectionsUrl);
+        cy.assertUrl(allSectionsUrl);
       });
 
       // go to the dashboard
