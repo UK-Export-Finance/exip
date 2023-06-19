@@ -7,6 +7,7 @@ const { table } = dashboardPage;
 const { ROOT, ALL_SECTIONS, DASHBOARD } = ROUTES.INSURANCE;
 
 context('Insurance - Dashboard - new application', () => {
+  const baseUrl = Cypress.config('baseUrl');
   let referenceNumber;
   let url;
 
@@ -14,11 +15,11 @@ context('Insurance - Dashboard - new application', () => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
-      url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+      url = `${baseUrl}${DASHBOARD}`;
 
       header.navigation.applications().click();
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
 
       table.body.rows().should('have.length', 1);
     });
@@ -36,7 +37,7 @@ context('Insurance - Dashboard - new application', () => {
     let secondReferenceNumber;
 
     before(() => {
-      dashboardPage.startNewApplication().click();
+      dashboardPage.startNewApplicationButton().click();
 
       cy.submitInsuranceEligibilityAnswersFromBuyerCountryHappyPath();
 
@@ -44,9 +45,9 @@ context('Insurance - Dashboard - new application', () => {
       cy.getReferenceNumber().then((refNumber) => {
         referenceNumber = refNumber;
 
-        const allSectionsUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+        const allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-        cy.url().should('eq', allSectionsUrl);
+        cy.assertUrl(allSectionsUrl);
       });
     });
 

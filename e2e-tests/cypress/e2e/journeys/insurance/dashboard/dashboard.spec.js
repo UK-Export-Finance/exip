@@ -9,11 +9,14 @@ import application from '../../../../fixtures/application';
 const { table } = dashboardPage;
 
 const {
-  ROOT,
-  DASHBOARD,
-  ALL_SECTIONS,
-  ELIGIBILITY,
-} = ROUTES.INSURANCE;
+  INSURANCE: {
+    ROOT,
+    DASHBOARD,
+    ALL_SECTIONS,
+    ELIGIBILITY,
+  },
+  QUOTE,
+} = ROUTES;
 
 const {
   YOUR_BUYER: {
@@ -28,18 +31,18 @@ const CONTENT_STRINGS = PAGES.INSURANCE.DASHBOARD;
 const { TABLE_HEADERS } = CONTENT_STRINGS;
 
 context('Insurance - Dashboard - new application - As an Exporter, I want to access my UKEF export insurance application from my dashboard, So that I can easily complete my application', () => {
+  const baseUrl = Cypress.config('baseUrl');
+
   let referenceNumber;
-  let url;
+  const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
-      url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
-
       header.navigation.applications().click();
 
-      cy.url().should('eq', url);
+      cy.assertUrl(dashboardUrl);
     });
   });
 
@@ -63,7 +66,7 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
   describe('page tests', () => {
     describe('table headers', () => {
       beforeEach(() => {
-        cy.navigateToUrl(url);
+        cy.navigateToUrl(dashboardUrl);
       });
 
       it(`should render ${TABLE_HEADERS.STATUS}`, () => {
@@ -105,7 +108,7 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
 
     describe('table body cells', () => {
       beforeEach(() => {
-        cy.navigateToUrl(url);
+        cy.navigateToUrl(dashboardUrl);
       });
 
       it(`should render 'status' cell with ${APPLICATION.STATUS.DRAFT}`, () => {
@@ -130,7 +133,7 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
         let expectedUrl;
 
         beforeEach(() => {
-          cy.navigateToUrl(url);
+          cy.navigateToUrl(dashboardUrl);
 
           expectedUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
         });
@@ -151,8 +154,9 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
 
           applicationLink.click();
 
-          const expected = `${Cypress.config('baseUrl')}${expectedUrl}`;
-          cy.url().should('eq', expected);
+          const expected = `${baseUrl}${expectedUrl}`;
+
+          cy.assertUrl(expected);
         });
       });
 
@@ -176,15 +180,15 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
       });
     });
 
-    describe('start new application button', () => {
+    describe('`start new application` button', () => {
       const expectedUrl = ELIGIBILITY.BUYER_COUNTRY;
 
       beforeEach(() => {
-        cy.navigateToUrl(url);
+        cy.navigateToUrl(dashboardUrl);
       });
 
       it('should render', () => {
-        const element = dashboardPage.startNewApplication();
+        const element = dashboardPage.startNewApplicationButton();
 
         const expected = {
           href: expectedUrl,
@@ -194,14 +198,43 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
         cy.checkLink(element, expected.href, expected.text);
       });
 
-      it(`should redirect to ${ROOT}${ELIGIBILITY.BUYER_COUNTRY}`, () => {
-        const element = dashboardPage.startNewApplication();
+      it(`should redirect to ${expectedUrl}`, () => {
+        const element = dashboardPage.startNewApplicationButton();
 
         element.click();
 
-        const expected = `${Cypress.config('baseUrl')}${expectedUrl}`;
+        const expected = `${baseUrl}${expectedUrl}`;
 
-        cy.url().should('eq', expected);
+        cy.assertUrl(expected);
+      });
+    });
+
+    describe('`get a quote` button', () => {
+      const expectedUrl = QUOTE.START;
+
+      beforeEach(() => {
+        cy.navigateToUrl(dashboardUrl);
+      });
+
+      it('should render', () => {
+        const element = dashboardPage.getAQuoteButton();
+
+        const expected = {
+          href: expectedUrl,
+          text: BUTTONS.GET_A_QUOTE_FOR_INSURANCE,
+        };
+
+        cy.checkLink(element, expected.href, expected.text);
+      });
+
+      it(`should redirect to ${QUOTE.BUYER_COUNTRY}`, () => {
+        const element = dashboardPage.getAQuoteButton();
+
+        element.click();
+
+        const expected = `${baseUrl}${QUOTE.BUYER_COUNTRY}`;
+
+        cy.assertUrl(expected);
       });
     });
   });

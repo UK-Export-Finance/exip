@@ -13,8 +13,9 @@ const secondAccountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_2');
 const accountEmails = [firstAccountEmail, secondAccountEmail];
 
 context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF export insurance application from my dashboard, So that I do not have access to another exporter's application", () => {
-  let referenceNumbers;
+  const baseUrl = Cypress.config('baseUrl');
 
+  let referenceNumbers;
   let firstReferenceNumber;
   let url;
 
@@ -24,11 +25,11 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF e
 
       firstReferenceNumber = refNumber;
 
-      url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+      url = `${baseUrl}${DASHBOARD}`;
 
       header.navigation.applications().click();
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

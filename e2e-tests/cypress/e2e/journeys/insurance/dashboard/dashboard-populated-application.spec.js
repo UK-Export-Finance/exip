@@ -32,6 +32,7 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 context('Insurance - Dashboard - populated application', () => {
+  const baseUrl = Cypress.config('baseUrl');
   let referenceNumber;
   let url;
 
@@ -39,11 +40,11 @@ context('Insurance - Dashboard - populated application', () => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
-      url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+      url = `${baseUrl}${DASHBOARD}`;
 
       partials.header.navigation.applications().click();
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
