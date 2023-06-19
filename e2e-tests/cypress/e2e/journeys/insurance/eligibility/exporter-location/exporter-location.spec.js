@@ -35,14 +35,16 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
     partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
   });
 
-  it('renders yes and no radio buttons', () => {
-    yesRadio().should('exist');
-
+  it('renders `yes` radio button', () => {
     cy.checkText(yesRadio(), FIELD_VALUES.YES);
 
-    noRadio().should('exist');
+    cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
+  });
 
+  it('renders `no` radio button', () => {
     cy.checkText(noRadio(), FIELD_VALUES.NO);
+
+    cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
   });
 
   describe('form submission', () => {

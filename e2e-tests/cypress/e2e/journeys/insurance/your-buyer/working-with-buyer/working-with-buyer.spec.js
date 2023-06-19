@@ -84,25 +84,31 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
       const fieldId = CONNECTED_WITH_BUYER;
       const field = workingWithBuyerPage[fieldId];
 
+      const labelCopy = FIELDS.WORKING_WITH_BUYER[fieldId].LABEL;
+
       field.label().should('exist');
-      cy.checkText(field.label(), FIELDS.WORKING_WITH_BUYER[fieldId].LABEL);
+      cy.checkText(field.label(), labelCopy);
 
       field.hint().should('exist');
       cy.checkText(field.hint(), FIELDS.WORKING_WITH_BUYER[fieldId].HINT);
 
-      field.yesRadioInput().should('exist');
-      field.noRadioInput().should('exist');
+      cy.checkAriaLabel(field.yesRadioInput(), `${labelCopy} Yes`);
+
+      cy.checkAriaLabel(field.noRadioInput(), `${labelCopy} No`);
     });
 
     it(`renders an ${TRADED_WITH_BUYER} label, radio buttons and details section`, () => {
       const fieldId = TRADED_WITH_BUYER;
       const field = workingWithBuyerPage[fieldId];
 
-      field.label().should('exist');
-      cy.checkText(field.label(), FIELDS.WORKING_WITH_BUYER[fieldId].LABEL);
+      const labelCopy = FIELDS.WORKING_WITH_BUYER[fieldId].LABEL;
 
-      field.yesRadioInput().should('exist');
-      field.noRadioInput().should('exist');
+      field.label().should('exist');
+      cy.checkText(field.label(), labelCopy);
+
+      cy.checkAriaLabel(field.yesRadioInput(), `${labelCopy} Yes`);
+
+      cy.checkAriaLabel(field.noRadioInput(), `${labelCopy} No`);
 
       field.details().should('exist');
       cy.checkText(field.details(), FIELDS.WORKING_WITH_BUYER[fieldId].DETAILS);
