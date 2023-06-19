@@ -72,7 +72,7 @@ const get = async (context: Context, accountId: string) => {
     const account = (await context.query.Account.findOne({
       where: { id: accountId },
       query:
-        'id firstName lastName email otpSalt otpHash otpExpiry salt hash passwordResetHash passwordResetExpiry verificationExpiry isVerified isBlocked reactivationHash reactivationExpiry',
+        'id firstName lastName email otpSalt otpHash otpExpiry salt hash passwordResetHash passwordResetExpiry verificationHash verificationExpiry isVerified isBlocked reactivationHash reactivationExpiry',
     })) as Account;
 
     return account;

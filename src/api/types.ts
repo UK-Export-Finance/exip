@@ -237,6 +237,7 @@ interface VerifyEmailAddressVariables {
 interface VerifyEmailAddressResponse extends SuccessResponse {
   accountId?: string;
   expired?: boolean;
+  invalid?: boolean;
   emailRecipient?: string;
 }
 
