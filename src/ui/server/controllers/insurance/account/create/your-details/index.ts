@@ -66,7 +66,10 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS;
  */
 export const get = (req: Request, res: Response) => {
   if (req.session.user?.id) {
-    // user is already signed in
+    /**
+     * User is already signed in.
+     * Redirect to the dashboard.
+     */
     return res.redirect(DASHBOARD);
   }
 
@@ -132,18 +135,28 @@ export const post = async (req: Request, res: Response) => {
 
     const accountId = saveResponse.id;
 
-    // store the account ID in local session, for consumption in the next part of the flow.
+    /**
+     * Store the account ID in local session,
+     * for consumption in the next part of the flow.
+     */
     req.session.accountIdToConfirm = accountId;
 
     /**
      * If there are eligibility answers in the session:
-     * 1) Create an application
-     * 2) Wipe the eligibility answers in the session.
+     * 1) Add requestedApplicationCreation to the session
+     * 2) Create an application
+     * 3) Remove requestedApplicationCreation from the session
+     * 4) Remove eligibility answers in the session.
+     * 5) Redirect to the next part of the flow - "confirm email"
      */
     if (canCreateAnApplication(req.session)) {
+      req.session.requestedApplicationCreation = true;
+
       const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
 
       const application = await api.keystone.application.create(eligibilityAnswers, accountId);
+
+      req.session.requestedApplicationCreation = false;
 
       if (!application) {
         console.error('Error creating application');

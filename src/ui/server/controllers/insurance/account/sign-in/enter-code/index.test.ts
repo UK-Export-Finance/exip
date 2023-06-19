@@ -106,21 +106,22 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
       });
     });
 
-    describe('when there is no req.session.accountId', () => {
+    describe('when there is req.session.user.id', () => {
       beforeEach(() => {
-        delete req.session.accountId;
+        req.session.user = mockAccount;
       });
 
-      it(`should redirect to ${SIGN_IN_ROOT}`, () => {
+      it(`should redirect to ${DASHBOARD}`, () => {
         get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(SIGN_IN_ROOT);
+        expect(res.redirect).toHaveBeenCalledWith(DASHBOARD);
       });
     });
 
     describe('when there is no req.session.accountId', () => {
       beforeEach(() => {
         delete req.session.accountId;
+        delete req.session.user;
       });
 
       it(`should redirect to ${SIGN_IN_ROOT}`, () => {
@@ -239,6 +240,12 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
           expect(createApplicationSpy).toHaveBeenCalledTimes(1);
 
           expect(createApplicationSpy).toHaveBeenCalledWith(eligibilityAnswers, verifyAccountSignInCodeResponse.accountId);
+        });
+
+        it('should mark req.session.requestedApplicationCreation as false', async () => {
+          await post(req, res);
+
+          expect(req.session.requestedApplicationCreation).toEqual(false);
         });
 
         it('should wipe req.session.submittedData.insuranceEligibility', async () => {

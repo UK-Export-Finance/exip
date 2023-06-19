@@ -49,7 +49,10 @@ export const post = async (req: Request, res: Response) => {
     const response = await api.keystone.account.sendEmailReactivateAccountLink(urlOrigin, sanitisedId);
 
     if (response.success) {
-      // store the email address in local session, for consumption in the next part of the flow.
+      /**
+       * Store the email address in local session,
+       * for consumption in the next part of the flow.
+       */
       req.session.emailAddressForAccountReactivation = response.email;
 
       return res.redirect(EMAIL_SENT);

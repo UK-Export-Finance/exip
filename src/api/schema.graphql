@@ -2394,6 +2394,7 @@ type VerifyAccountReactivationTokenResponse {
   success: Boolean!
   expired: Boolean
   invalid: Boolean
+  accountId: String
 }
 
 type AccountSendEmailReactivateAccountLinkResponse {
