@@ -12,7 +12,7 @@ context('Insurance - header - authenticated - complete insurance eligibility', (
       header.navigation.applications().click();
 
       // start a new application
-      dashboardPage.startNewApplication().click();
+      dashboardPage.startNewApplicationButton().click();
     });
   });
 

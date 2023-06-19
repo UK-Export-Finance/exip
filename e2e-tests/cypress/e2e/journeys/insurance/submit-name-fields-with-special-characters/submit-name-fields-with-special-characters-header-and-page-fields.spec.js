@@ -74,7 +74,7 @@ context('Insurance - Name fields - Header and page fields should render special 
 
     cy.navigateToUrl(dashboardUrl);
 
-    dashboardPage.startNewApplication().click();
+    dashboardPage.startNewApplicationButton().click();
 
     cy.submitInsuranceEligibilityAnswersFromBuyerCountryHappyPath();
 

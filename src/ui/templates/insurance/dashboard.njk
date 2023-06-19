@@ -28,14 +28,16 @@
       submittedStatus: SUBMITTED_STATUS
     }) }}
 
-    <a class="govuk-button govuk-button--secondary" href="{{ CONTENT_STRINGS.START_NEW_APPLICATION.HREF }}" data-cy="start-new-application">{{ CONTENT_STRINGS.START_NEW_APPLICATION.TEXT }}</a>
-
     {% else %}
 
     <p class="govuk-body" data-cy="no-applications">{{ CONTENT_STRINGS.NO_APPLICATIONS }}</p>
 
-    <a class="govuk-button" href="{{ CONTENT_STRINGS.START_NEW_APPLICATION.HREF }}" data-cy="start-new-application">{{ CONTENT_STRINGS.START_NEW_APPLICATION.TEXT }}</a>
-
   {% endif %}
+
+  <div class="govuk-button-group">
+    <a class="govuk-button govuk-button--secondary" href="{{ CONTENT_STRINGS.START_NEW_APPLICATION.HREF }}" data-cy="start-new-application-button">{{ CONTENT_STRINGS.START_NEW_APPLICATION.TEXT }}</a>
+
+    <a class="govuk-button govuk-button--secondary" href="{{ CONTENT_STRINGS.GET_A_QUOTE.HREF }}" data-cy="get-a-quote-button">{{ CONTENT_STRINGS.GET_A_QUOTE.TEXT }}</a>
+  </div>
 
 {% endblock %}
