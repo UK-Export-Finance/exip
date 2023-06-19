@@ -40,7 +40,7 @@ context('Insurance - Account - Suspended - Verify email - Visit with an expired 
     beforeEach(async () => {
       /**
        * Get the account so that we can use the ID
-       * to update the reactivation verification period.
+       * to update the reactivation verification period to be expired/in the past.
        */
       const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 

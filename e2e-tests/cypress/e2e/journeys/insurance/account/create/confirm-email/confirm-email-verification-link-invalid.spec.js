@@ -1,21 +1,59 @@
-import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
+import linkInvalidPage from '../../../../../pages/insurance/account/link-invalid';
+import { BUTTONS, PAGES } from '../../../../../../../content-strings';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
-const { ACCOUNT: { CREATE: { VERIFY_EMAIL, VERIFY_EMAIL_LINK_EXPIRED } } } = ROUTES;
+const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.LINK_INVALID;
 
-context('Insurance - Account - Create - Confirm email page - invalid token - As an Exporter I want to verify my email address, So that I can activate my email address and use it to create a digital service account with UKEF', () => {
-  describe(`When an account does not exist, verification token is invalid and the user navigates to ${VERIFY_EMAIL} with the invalid token`, () => {
-    before(() => {
-      cy.saveSession();
+const {
+  START,
+  ACCOUNT: {
+    CREATE: { VERIFY_EMAIL, VERIFY_EMAIL_LINK_INVALID },
+    SIGN_IN: { ROOT: SIGN_IN_ROOT },
+  },
+} = INSURANCE_ROUTES;
 
-      const invalidVerificationHash = 'INVALID-VERIFICAITON-TOKEN';
+context('Insurance - Account - Create - Confirm email page - link invalid - As an Exporter I want to verify my email address for account creation, So that I can activate my email address and use it to create a digital service account with UKEF', () => {
+  const baseUrl = Cypress.config('baseUrl');
+  const verifyEmailUrl = `${baseUrl}${VERIFY_EMAIL}`;
+  const verifyEmailLinkInvalidUrl = `${baseUrl}${VERIFY_EMAIL_LINK_INVALID}`;
 
-      cy.navigateToUrl(`${Cypress.config('baseUrl')}${VERIFY_EMAIL}?token=${invalidVerificationHash}`);
-    });
+  before(() => {
+    cy.deleteAccount();
 
-    it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED}`, () => {
-      const expectedUrl = `${Cypress.config('baseUrl')}${VERIFY_EMAIL_LINK_EXPIRED}?id=null`;
+    cy.navigateToUrl(START);
 
-      cy.url().should('eq', expectedUrl);
+    cy.submitEligibilityAndStartAccountCreation();
+    cy.completeAndSubmitCreateAccountForm();
+  });
+
+  beforeEach(() => {
+    cy.saveSession();
+  });
+
+  describe(`when navigating to ${VERIFY_EMAIL} with an invalid token query parameter`, () => {
+    it(`should redirect to ${VERIFY_EMAIL_LINK_INVALID} and renders page elements`, () => {
+      cy.navigateToUrl(`${verifyEmailUrl}?token=invalid`);
+
+      cy.assertUrl(verifyEmailLinkInvalidUrl);
+
+      cy.corePageChecks({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currentHref: verifyEmailUrl,
+        assertBackLink: false,
+        assertAuthenticatedHeader: false,
+        assertSubmitButton: false,
+      });
+
+      cy.checkText(
+        linkInvalidPage.body(),
+        CONTENT_STRINGS.BODY,
+      );
+
+      cy.checkLink(
+        linkInvalidPage.returnToSignInButton(),
+        SIGN_IN_ROOT,
+        BUTTONS.RETURN_TO_SIGN_IN,
+      );
     });
   });
 });

@@ -5,6 +5,8 @@ const verifyAccountEmailMutation = gql`
     verifyAccountEmailAddress(token: $token) {
       success
       accountId
+      expired
+      invalid
     }
   }
 `;

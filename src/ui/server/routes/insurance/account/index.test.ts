@@ -23,7 +23,7 @@ import {
   get as suspendedVerifyEmailLinkExpiredGet,
   post as suspendedVerifyEmailLinkExpiredPost,
 } from '../../../controllers/insurance/account/suspended/link-expired';
-import { get as suspendedVerifyEmailLinkInvalidGet } from '../../../controllers/insurance/account/invalid-link';
+import { get as invalidLinkGet } from '../../../controllers/insurance/account/invalid-link';
 import { get as reactivatedGet } from '../../../controllers/insurance/account/reactivated';
 
 describe('routes/insurance/account', () => {
@@ -36,7 +36,7 @@ describe('routes/insurance/account', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(23);
+    expect(get).toHaveBeenCalledTimes(24);
     expect(post).toHaveBeenCalledTimes(9);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.YOUR_DETAILS, yourDetailsGet);
@@ -48,7 +48,9 @@ describe('routes/insurance/account', () => {
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL, verifyEmailGet);
 
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL_LINK_INVALID, invalidLinkGet);
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL_LINK_EXPIRED, verifyEmailLinkExpiredGet);
+
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.ROOT, signInGet);
     expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.ROOT, signInPost);
 
@@ -85,7 +87,7 @@ describe('routes/insurance/account', () => {
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_EXPIRED, suspendedVerifyEmailLinkExpiredGet);
     expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_EXPIRED, suspendedVerifyEmailLinkExpiredPost);
 
-    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_INVALID, suspendedVerifyEmailLinkInvalidGet);
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_INVALID, invalidLinkGet);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.REACTIVATED_ROOT, reactivatedGet);
   });

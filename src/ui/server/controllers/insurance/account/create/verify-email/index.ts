@@ -4,7 +4,10 @@ import { Request, Response } from '../../../../../../types';
 
 const {
   INSURANCE: {
-    ACCOUNT: { CREATE, SIGN_IN },
+    ACCOUNT: {
+      CREATE: { VERIFY_EMAIL_LINK_INVALID, VERIFY_EMAIL_LINK_EXPIRED },
+      SIGN_IN,
+    },
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
@@ -23,18 +26,26 @@ export const get = async (req: Request, res: Response) => {
     if (token) {
       const response = await api.keystone.account.verifyEmailAddress(token);
 
+      if (response.expired && response.accountId) {
+        const url = `${VERIFY_EMAIL_LINK_EXPIRED}?id=${response.accountId}`;
+
+        return res.redirect(url);
+      }
+
+      if (response.invalid || !response.success) {
+        return res.redirect(VERIFY_EMAIL_LINK_INVALID);
+      }
+
       if (response.success) {
         req.flash('successBanner', 'newAccountVerified');
 
         return res.redirect(SIGN_IN.ROOT);
       }
 
-      const { accountId } = response;
-
-      return res.redirect(`${CREATE.VERIFY_EMAIL_LINK_EXPIRED}?id=${accountId}`);
+      return res.redirect(VERIFY_EMAIL_LINK_INVALID);
     }
 
-    return res.redirect(CREATE.VERIFY_EMAIL_LINK_EXPIRED);
+    return res.redirect(VERIFY_EMAIL_LINK_INVALID);
   } catch (err) {
     console.error('Error verifying account email address', { err });
 
