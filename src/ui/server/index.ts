@@ -10,7 +10,6 @@ import csrf from 'csurf';
 import path from 'path';
 import flash from 'connect-flash';
 import basicAuth from 'express-basic-auth';
-// TODO: Replace `csurf` package https://ukef-dtfs.atlassian.net/browse/EMS-1011
 import { csrf as csrfToken, cookiesConsent, security, seo } from './middleware';
 import { Request, Response } from '../types';
 

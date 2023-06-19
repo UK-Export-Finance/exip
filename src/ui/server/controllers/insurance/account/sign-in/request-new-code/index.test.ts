@@ -12,6 +12,7 @@ const {
     ACCOUNT: {
       SIGN_IN: { ROOT: SIGN_IN_ROOT, ENTER_CODE },
     },
+    DASHBOARD,
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
@@ -53,8 +54,21 @@ describe('controllers/insurance/account/sign-in/request-new-code', () => {
       });
     });
 
+    describe('when there is req.session.user.id', () => {
+      beforeEach(() => {
+        req.session.user = mockAccount;
+      });
+
+      it(`should redirect to ${DASHBOARD}`, () => {
+        get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(DASHBOARD);
+      });
+    });
+
     describe('when there is no req.session.accountId', () => {
       beforeEach(() => {
+        delete req.session.user;
         delete req.session.accountId;
       });
 

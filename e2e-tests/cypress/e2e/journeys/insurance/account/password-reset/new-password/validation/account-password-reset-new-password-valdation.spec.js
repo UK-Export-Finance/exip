@@ -44,6 +44,8 @@ context('Insurance - Account - Password reset - new password page - form validat
   let resetPasswordToken;
 
   before(() => {
+    cy.deleteAccount();
+
     cy.completeAndSubmitCreateAccountForm({ navigateToAccountCreationPage: true });
 
     // navigate to password reset page
