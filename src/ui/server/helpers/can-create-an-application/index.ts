@@ -9,7 +9,7 @@ import { RequestSession } from '../../../types';
  * @returns {Boolean}
  */
 const canCreateAnApplication = (session: RequestSession) => {
-  if (session.submittedData && objectHasKeysAndValues(session.submittedData.insuranceEligibility) && !session.requestedApplicationCreation) {
+  if (session.submittedData && objectHasKeysAndValues(session.submittedData.insuranceEligibility)) {
     return true;
   }
 
