@@ -16,6 +16,7 @@ context('Insurance - Account - Create - Confirm email page - link invalid - As a
   const baseUrl = Cypress.config('baseUrl');
   const verifyEmailUrl = `${baseUrl}${VERIFY_EMAIL}`;
   const verifyEmailLinkInvalidUrl = `${baseUrl}${VERIFY_EMAIL_LINK_INVALID}`;
+  const signInUrl = `${baseUrl}${SIGN_IN_ROOT}`;
 
   before(() => {
     cy.deleteAccount();
@@ -54,6 +55,14 @@ context('Insurance - Account - Create - Confirm email page - link invalid - As a
         SIGN_IN_ROOT,
         BUTTONS.RETURN_TO_SIGN_IN,
       );
+    });
+
+    it(`should redirect to ${SIGN_IN_ROOT} when clicking the 'return to sign in' button/link`, () => {
+      cy.navigateToUrl(verifyEmailLinkInvalidUrl);
+
+      linkInvalidPage.returnToSignInButton().click();
+
+      cy.assertUrl(signInUrl);
     });
   });
 });
