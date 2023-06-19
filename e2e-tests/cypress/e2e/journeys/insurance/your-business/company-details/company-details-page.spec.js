@@ -104,9 +104,9 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     it('should display the trading address radios', () => {
       cy.checkText(companyDetails.tradingAddressLabel(), FIELDS[TRADING_ADDRESS].LABEL);
 
-      cy.checkAriaLabel(companyDetails.tradingAddressYesRadioInput(), `${FIELDS[TRADING_ADDRESS].LABEL} yes`);
+      cy.checkAriaLabel(companyDetails.tradingAddressYesRadioInput(), `${FIELDS[TRADING_ADDRESS].LABEL} Yes`);
 
-      cy.checkAriaLabel(companyDetails.tradingAddressNoRadioInput(), `${FIELDS[TRADING_ADDRESS].LABEL} no`);
+      cy.checkAriaLabel(companyDetails.tradingAddressNoRadioInput(), `${FIELDS[TRADING_ADDRESS].LABEL} No`);
     });
 
     it('should display the company website text area', () => {
