@@ -135,6 +135,9 @@ Cypress.Commands.add('assertCustomerServiceContactDetailsContent', require('./as
 Cypress.Commands.add('checkText', require('./check-text'));
 Cypress.Commands.add('checkValue', require('./check-value'));
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));
+Cypress.Commands.add('checkRadioInputYesAriaLabel', require('./check-radio-input-yes-aria-label'));
+Cypress.Commands.add('checkRadioInputNoAriaLabel', require('./check-radio-input-no-aria-label'));
+
 Cypress.Commands.add('checkTaskStatus', require('./check-task-status'));
 Cypress.Commands.add('checkTaskStatusCompleted', require('./check-completed-task-status'));
 Cypress.Commands.add('checkLink', require('./check-link'));
