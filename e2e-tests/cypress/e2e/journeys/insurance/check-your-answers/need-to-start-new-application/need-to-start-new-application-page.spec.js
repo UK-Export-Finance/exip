@@ -87,7 +87,7 @@ context('Insurance - Check your answers - Need to start new application page', (
     });
 
     it('renders a `start new application` link button', () => {
-      cy.checkLink(linkButtons.startNewApplicationButton(), BUYER_COUNTRY, BUTTONS.START_A_NEW_APPLICATION);
+      cy.checkLink(linkButtons.startNewApplication(), BUYER_COUNTRY, BUTTONS.START_A_NEW_APPLICATION);
     });
 
     it('renders a `return to my existing application` link button', () => {

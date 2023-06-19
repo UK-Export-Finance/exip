@@ -28,7 +28,7 @@ context('Insurance - Check your answers - Need to start new application - start 
       checkYourAnswersEligibility.bannerLink().click();
 
       // click "start a new application"
-      linkButtons.startNewApplicationButton().click();
+      linkButtons.startNewApplication().click();
     });
   });
 
