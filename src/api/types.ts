@@ -289,6 +289,7 @@ interface VerifyAccountPasswordResetTokenVariables {
 interface AccountPasswordResetTokenResponse extends SuccessResponse {
   token?: string;
   expired?: boolean;
+  invalid?: boolean;
   accountId?: string;
 }
 
