@@ -36,7 +36,7 @@ describe('routes/insurance/account', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(24);
+    expect(get).toHaveBeenCalledTimes(25);
     expect(post).toHaveBeenCalledTimes(9);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.YOUR_DETAILS, yourDetailsGet);
@@ -67,6 +67,8 @@ describe('routes/insurance/account', () => {
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.LINK_EXPIRED, passwordResetLinkExpiredGet);
     expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.LINK_EXPIRED, passwordResetLinkExpiredPost);
+
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.LINK_INVALID, invalidLinkGet);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD, newPasswordGet);
     expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD, newPasswordPost);

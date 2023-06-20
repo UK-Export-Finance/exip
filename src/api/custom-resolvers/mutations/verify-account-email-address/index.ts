@@ -66,6 +66,7 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
     };
   } catch (err) {
     console.error(err);
+
     throw new Error(`Verifying account email address ${err}`);
   }
 };

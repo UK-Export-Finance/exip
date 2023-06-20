@@ -21,7 +21,8 @@ const create = async (context: Context, accountData?: Account) => {
 
     const account = (await context.query.Account.createOne({
       data: accountInput,
-      query: 'id email firstName lastName email salt hash verificationHash sessionExpiry otpExpiry reactivationHash reactivationExpiry isVerified isBlocked',
+      query:
+        'id email firstName lastName email salt hash verificationHash sessionExpiry otpExpiry reactivationHash reactivationExpiry isVerified isBlocked passwordResetHash passwordResetExpiry',
     })) as Account;
 
     return account;

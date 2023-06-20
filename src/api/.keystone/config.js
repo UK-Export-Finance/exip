@@ -4296,22 +4296,29 @@ var verifyAccountPasswordResetToken = async (root, variables, context) => {
   try {
     const { token } = variables;
     const account = await get_account_by_field_default(context, PASSWORD_RESET_HASH, token);
-    if (!account) {
-      console.info("Unable to verify account password reset token - account does not exist");
-      return { success: false };
-    }
-    const now = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns10.isAfter)(now, account[PASSWORD_RESET_EXPIRY]);
-    if (hasExpired) {
-      console.info("Account password reset token has expired");
+    if (account) {
+      const now = /* @__PURE__ */ new Date();
+      const hasExpired = (0, import_date_fns10.isAfter)(now, account[PASSWORD_RESET_EXPIRY]);
+      if (hasExpired) {
+        console.info("Unable to verify account password reset token - token has expired");
+        return {
+          success: false,
+          expired: true,
+          accountId: account.id
+        };
+      }
+      console.info("Successfully verified account password reset token");
       return {
-        success: false,
-        expired: true,
-        accountId: account.id
+        success: true
       };
     }
-    return { success: true };
+    console.info(`Unable to verify account password reset token - no account found from the provided ${PASSWORD_RESET_HASH}`);
+    return {
+      success: false,
+      invalid: true
+    };
   } catch (err) {
+    console.error(err);
     throw new Error(`Verifying account password reset token ${err}`);
   }
 };
