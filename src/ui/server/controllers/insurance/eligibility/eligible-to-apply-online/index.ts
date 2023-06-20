@@ -29,11 +29,16 @@ export const post = async (req: Request, res: Response) => {
   try {
     /**
      * If the user is signed in and there are eligibility answers in the session:
-     * 1) Create an application
-     * 2) Wipe the eligibility answers in the session.
+     * 1) Add requestedApplicationCreation to the session
+     * 2) Create an application
+     * 3) Remove requestedApplicationCreation from the session
+     * 4) Wipe the eligibility answers in the session.
+     * 5) Redirect to the application
      */
     if (req.session.user && canCreateAnApplication(req.session)) {
       const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
+
+      req.session.submittedData.insuranceEligibility = {};
 
       const application = await api.keystone.application.create(eligibilityAnswers, req.session.user.id);
 
@@ -42,8 +47,6 @@ export const post = async (req: Request, res: Response) => {
 
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
-
-      req.session.submittedData.insuranceEligibility = {};
 
       const applicationUrl = `${INSURANCE_ROOT}/${application.referenceNumber}${ALL_SECTIONS}`;
 

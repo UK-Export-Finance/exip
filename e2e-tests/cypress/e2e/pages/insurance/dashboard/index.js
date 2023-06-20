@@ -1,6 +1,7 @@
 const dashboardPage = {
   noApplications: () => cy.get('[data-cy="no-applications"]'),
-  startNewApplication: () => cy.get('[data-cy="start-new-application"]'),
+  startNewApplicationButton: () => cy.get('[data-cy="start-new-application-button"]'),
+  getAQuoteButton: () => cy.get('[data-cy="get-a-quote-button"]'),
   table: {
     headers: {
       status: () => cy.get('[data-cy="header-status"]'),

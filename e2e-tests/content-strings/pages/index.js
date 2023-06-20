@@ -169,6 +169,11 @@ const COOKIES_PAGE = {
   },
 };
 
+const COOKIES_SAVED_PAGE = {
+  PAGE_TITLE: 'Your cookie preferences have been saved',
+  BODY: 'You can change your preferences at any time.',
+};
+
 const NEED_TO_START_AGAIN_PAGE = {
   PAGE_TITLE: 'You need to start again',
   REASON: 'This is because you have not yet answered all the eligibility questions.',
@@ -226,6 +231,7 @@ const PAGES = {
   CANNOT_APPLY,
   ACCESSIBILITY_STATEMENT_PAGE,
   COOKIES_PAGE,
+  COOKIES_SAVED_PAGE,
   NEED_TO_START_AGAIN_PAGE,
   PAGE_NOT_FOUND_PAGE,
   PROBLEM_WITH_SERVICE_PAGE,

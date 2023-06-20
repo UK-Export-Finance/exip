@@ -70,6 +70,21 @@ const DATE_30_MINUTES_FROM_NOW = () => {
   return future;
 };
 
+/**
+ * DATE_ONE_MINUTE_IN_THE_PAST
+ * Generate a date that is 1 minute in the past.
+ * @returns {Date}
+ */
+export const DATE_ONE_MINUTE_IN_THE_PAST = () => {
+  const now = new Date();
+
+  const MS_PER_MINUTE = 60000;
+
+  const oneMinuteInThePast = new Date(now.getTime() - 1 * MS_PER_MINUTE);
+
+  return oneMinuteInThePast;
+};
+
 export const ACCOUNT = {
   EMAIL: {
     VERIFICATION_EXPIRY: DATE_24_HOURS_FROM_NOW,

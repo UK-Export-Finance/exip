@@ -163,11 +163,11 @@ const COOKIES_PAGE = {
       },
     ],
   },
-  SUCCESS_BANNER: {
-    HEADING: 'Your cookie settings were saved',
-    BODY: 'Government services may set additional cookies and, if so, will have their own cookie policy and banner.',
-    GO_BACK: 'Go back to the page you were looking at',
-  },
+};
+
+const COOKIES_SAVED_PAGE = {
+  PAGE_TITLE: 'Your cookie preferences have been saved',
+  BODY: 'You can change your preferences at any time.',
 };
 
 const NEED_TO_START_AGAIN_PAGE = {
@@ -226,6 +226,7 @@ export const PAGES = {
   UK_GOODS_OR_SERVICES,
   CANNOT_APPLY,
   COOKIES_PAGE,
+  COOKIES_SAVED_PAGE,
   ACCESSIBILITY_STATEMENT_PAGE,
   NEED_TO_START_AGAIN_PAGE,
   PAGE_NOT_FOUND_PAGE,

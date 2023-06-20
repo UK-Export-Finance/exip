@@ -142,17 +142,22 @@ const typeDefs = `
     success: Boolean!
     token: String
     expired: Boolean
+    invalid: Boolean
     accountId: String
   }
 
   type VerifyAccountEmailAddressResponse {
     success: Boolean!
+    expired: Boolean
+    invalid: Boolean
     accountId: String
   }
 
   type VerifyAccountReactivationTokenResponse {
     success: Boolean!
     expired: Boolean
+    invalid: Boolean
+    accountId: String
   }
 
   type AccountSendEmailReactivateAccountLinkResponse {

@@ -21,7 +21,8 @@ const create = async (context: Context, accountData?: Account) => {
 
     const account = (await context.query.Account.createOne({
       data: accountInput,
-      query: 'id email firstName lastName email salt hash verificationHash sessionExpiry otpExpiry reactivationHash reactivationExpiry isVerified isBlocked',
+      query:
+        'id email firstName lastName email salt hash verificationHash sessionExpiry otpExpiry reactivationHash reactivationExpiry isVerified isBlocked passwordResetHash passwordResetExpiry',
     })) as Account;
 
     return account;
@@ -72,7 +73,7 @@ const get = async (context: Context, accountId: string) => {
     const account = (await context.query.Account.findOne({
       where: { id: accountId },
       query:
-        'id firstName lastName email otpSalt otpHash otpExpiry salt hash passwordResetHash passwordResetExpiry verificationExpiry isVerified isBlocked reactivationHash reactivationExpiry',
+        'id firstName lastName email otpSalt otpHash otpExpiry salt hash passwordResetHash passwordResetExpiry verificationHash verificationExpiry isVerified isBlocked reactivationHash reactivationExpiry',
     })) as Account;
 
     return account;

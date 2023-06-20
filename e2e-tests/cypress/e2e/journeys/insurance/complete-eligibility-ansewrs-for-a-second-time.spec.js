@@ -31,7 +31,7 @@ context('Insurance - Eligibility - start and complete for a second time after cr
 
       partials.header.navigation.applications().click();
 
-      dashboardPage.startNewApplication().click();
+      dashboardPage.startNewApplicationButton().click();
 
       cy.assertUrl(buyerCountryUrl);
     });

@@ -1,7 +1,7 @@
 import submitApplication from '.';
 import generate from '../../../generate-xlsx';
 import applicationSubmittedEmails from '../../../emails/send-application-submitted-emails';
-import { APPLICATION } from '../../../constants';
+import { APPLICATION, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
 import getPopulatedApplication from '../../../helpers/get-populated-application';
 import { createFullApplication } from '../../../test-helpers';
 import { mockSendEmailResponse } from '../../../test-mocks';
@@ -140,9 +140,7 @@ describe('custom-resolvers/submit-application', () => {
     it('should return success=false', async () => {
       // create a new application so we can set submission deadline in the past
 
-      // 1 minute ago
-      const milliseconds = 300000;
-      const oneMinuteAgo = new Date(now.setMilliseconds(-milliseconds)).toISOString();
+      const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
 
       const newApplication = (await context.query.Application.createOne({
         query: 'id',
@@ -153,7 +151,7 @@ describe('custom-resolvers/submit-application', () => {
       await context.query.Application.updateOne({
         where: { id: newApplication.id },
         data: {
-          submissionDeadline: oneMinuteAgo,
+          submissionDeadline: oneMinuteInThePast,
         },
       });
 

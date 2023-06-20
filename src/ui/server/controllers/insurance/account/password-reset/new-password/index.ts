@@ -15,7 +15,7 @@ const {
 const {
   INSURANCE: {
     ACCOUNT: {
-      PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, SUCCESS, LINK_EXPIRED },
+      PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, SUCCESS, LINK_EXPIRED, LINK_INVALID },
     },
     PROBLEM_WITH_SERVICE,
   },
@@ -54,12 +54,12 @@ export const get = async (req: Request, res: Response) => {
 
     const response = await api.keystone.account.verifyPasswordResetToken(token);
 
-    if (response.expired) {
+    if (response.expired && response.accountId) {
       return res.redirect(`${LINK_EXPIRED}?id=${response.accountId}`);
     }
 
-    if (!response.success) {
-      return res.redirect(LINK_EXPIRED);
+    if (response.invalid || !response.success) {
+      return res.redirect(LINK_INVALID);
     }
 
     return res.render(TEMPLATE, {

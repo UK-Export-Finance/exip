@@ -16,7 +16,7 @@ const {
 const {
   INSURANCE: {
     ACCOUNT: {
-      PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, SUCCESS, LINK_EXPIRED },
+      PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, SUCCESS, LINK_EXPIRED, LINK_INVALID },
     },
     PROBLEM_WITH_SERVICE,
   },
@@ -99,10 +99,10 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
         api.keystone.account.verifyPasswordResetToken = verifyAccountPasswordResetTokenSpy;
       });
 
-      it(`should redirect to ${LINK_EXPIRED}`, async () => {
+      it(`should redirect to ${LINK_INVALID}`, async () => {
         await get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(LINK_EXPIRED);
+        expect(res.redirect).toHaveBeenCalledWith(LINK_INVALID);
       });
     });
 
@@ -123,6 +123,25 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
         await get(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(`${LINK_EXPIRED}?id=${mockAccount.id}`);
+      });
+    });
+
+    describe('when the api.keystone.account.verifyPasswordResetToken returns invalid=true', () => {
+      beforeEach(() => {
+        verifyAccountPasswordResetTokenSpy = jest.fn(() =>
+          Promise.resolve({
+            success: false,
+            invalid: true,
+          }),
+        );
+
+        api.keystone.account.verifyPasswordResetToken = verifyAccountPasswordResetTokenSpy;
+      });
+
+      it(`should redirect to ${LINK_INVALID}`, async () => {
+        await get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(LINK_INVALID);
       });
     });
 

@@ -6,17 +6,19 @@ const {
 } = ROUTES.INSURANCE;
 
 context('Insurance - Dashboard - not signed in', () => {
+  const baseUrl = Cypress.config('baseUrl');
+
   beforeEach(() => {
     cy.saveSession();
 
-    const url = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+    const url = `${baseUrl}${DASHBOARD}`;
 
     cy.navigateToUrl(url);
   });
 
   it(`should redirect to ${SIGN_IN.ROOT}`, () => {
-    const expected = `${Cypress.config('baseUrl')}${SIGN_IN.ROOT}`;
+    const expected = `${baseUrl}${SIGN_IN.ROOT}`;
 
-    cy.url().should('eq', expected);
+    cy.assertUrl(expected);
   });
 });

@@ -162,11 +162,16 @@ const ACCOUNT = {
     },
     VERIFY_EMAIL_LINK_EXPIRED: {
       PAGE_TITLE: 'Your link has expired',
+      BODY: "Your account has not been reactivated. You'll need to request another reactivation link.",
     },
   },
   REACTIVATED: {
     PAGE_TITLE: 'Your account has been reactivated',
     THANK_YOU: 'Thank you for confirming your email address. Your account has been reactivated and you can now sign in.',
+  },
+  LINK_INVALID: {
+    PAGE_TITLE: 'Your link is not recognised',
+    BODY: 'Please make sure you have copied the link correctly from the email we sent you.',
   },
 };
 

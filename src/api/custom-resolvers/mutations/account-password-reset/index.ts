@@ -19,7 +19,7 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
      * Get the account the token is associated with.
      * If no account is found, return success=false
      */
-    const account = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD_RESET_HASH, token);
+    const account = (await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD_RESET_HASH, token)) as Account;
 
     if (!account) {
       console.info('Unable to reset account password - account does not exist');
@@ -31,7 +31,7 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
      * Check if the account is blocked
      * If so, return success=false
      */
-    const { isBlocked } = account as Account;
+    const { isBlocked } = account;
 
     if (isBlocked) {
       console.info('Unable to reset account password - account is blocked');

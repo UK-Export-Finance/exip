@@ -65,12 +65,16 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
       yesRadio().should('exist');
 
       cy.checkText(yesRadio(), FIELD_VALUES.YES);
+
+      cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
 
     it('renders `no` radio button', () => {
       noRadio().should('exist');
 
       cy.checkText(noRadio(), FIELD_VALUES.NO);
+
+      cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
   });
 

@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import verifyAccountReactivationToken from '.';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
-import { ACCOUNT, FIELD_IDS } from '../../../constants';
+import { ACCOUNT, FIELD_IDS, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
 import accounts from '../../../test-helpers/accounts';
 import { mockAccount } from '../../../test-mocks';
 import { Account, SuccessResponse, VerifyAccountReactivationTokenVariables } from '../../../types';
@@ -120,16 +120,13 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
 
   describe(`when the ${REACTIVATION_EXPIRY} has expired`, () => {
     test('it should return success=false and expired=true', async () => {
-      const now = new Date();
-
-      const MS_PER_MINUTE = 60000;
-      const oneMinuteAgo = new Date(now.getTime() - 1 * MS_PER_MINUTE);
+      const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
 
       const accountBlockedAndReactivationExpired = {
         ...mockAccount,
         reactivationHash,
         [IS_BLOCKED]: true,
-        [REACTIVATION_EXPIRY]: oneMinuteAgo,
+        [REACTIVATION_EXPIRY]: oneMinuteInThePast,
       };
 
       account = await accounts.create(context, accountBlockedAndReactivationExpired);
@@ -139,20 +136,36 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
       const expected = {
         success: false,
         expired: true,
+        accountId: account.id,
       };
 
       expect(result).toEqual(expected);
     });
   });
 
+  describe(`when no account is found from the provided ${REACTIVATION_HASH}`, () => {
+    test('it should return success=false and invalid=true', async () => {
+      variables.token = 'invalid';
+
+      result = await verifyAccountReactivationToken({}, variables, context);
+
+      const expected = { success: false, invalid: true };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('when no account is found', () => {
-    test('it should return success=false', async () => {
+    test('it should return success=false and invalid=true', async () => {
+      // ensure we have the valid token that was previously created
+      variables.token = reactivationHash;
+
       // wipe accounts so an account will not be found.
       await accounts.deleteAll(context);
 
       result = await verifyAccountReactivationToken({}, variables, context);
 
-      const expected = { success: false };
+      const expected = { success: false, invalid: true };
 
       expect(result).toEqual(expected);
     });

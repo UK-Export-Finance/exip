@@ -2,12 +2,12 @@ import { get } from '.';
 import { ROUTES } from '../../../../../constants';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes } from '../../../../../test-mocks';
+import { mockAccount, mockReq, mockRes } from '../../../../../test-mocks';
 
 const {
   INSURANCE: {
     ACCOUNT: {
-      SUSPENDED: { ROOT: SUSPENDED_ROOT, VERIFY_EMAIL_LINK_EXPIRED },
+      SUSPENDED: { ROOT: SUSPENDED_ROOT, VERIFY_EMAIL_LINK_EXPIRED, VERIFY_EMAIL_LINK_INVALID },
       REACTIVATED_ROOT,
     },
     PROBLEM_WITH_SERVICE,
@@ -50,31 +50,47 @@ describe('controllers/insurance/account/suspended/verify-email', () => {
     });
   });
 
-  describe('when api.keystone.account.verifyAccountReactivationToken does not return success=true', () => {
+  describe('when api.keystone.account.verifyAccountReactivationToken returns expired=true and an accountId', () => {
+    beforeEach(() => {
+      verifyAccountReactivationTokenSpy = jest.fn(() => Promise.resolve({ success: true, expired: true, accountId: mockAccount.id }));
+
+      api.keystone.account.verifyAccountReactivationToken = verifyAccountReactivationTokenSpy;
+    });
+
+    it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED} with query param`, async () => {
+      await get(req, res);
+
+      const expected = `${VERIFY_EMAIL_LINK_EXPIRED}?id=${mockAccount.id}`;
+
+      expect(res.redirect).toHaveBeenCalledWith(expected);
+    });
+  });
+
+  describe('when api.keystone.account.verifyAccountReactivationToken returns invalid=true', () => {
+    beforeEach(() => {
+      verifyAccountReactivationTokenSpy = jest.fn(() => Promise.resolve({ success: false, invalid: true }));
+
+      api.keystone.account.verifyAccountReactivationToken = verifyAccountReactivationTokenSpy;
+    });
+
+    it(`should redirect to ${VERIFY_EMAIL_LINK_INVALID}`, async () => {
+      await get(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_LINK_INVALID);
+    });
+  });
+
+  describe('when api.keystone.account.verifyAccountReactivationToken returns only success=false', () => {
     beforeEach(() => {
       verifyAccountReactivationTokenSpy = jest.fn(() => Promise.resolve({ success: false }));
 
       api.keystone.account.verifyAccountReactivationToken = verifyAccountReactivationTokenSpy;
     });
 
-    it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED}`, async () => {
+    it(`should redirect to ${VERIFY_EMAIL_LINK_INVALID}`, async () => {
       await get(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_LINK_EXPIRED);
-    });
-  });
-
-  describe('when api.keystone.account.verifyAccountReactivationToken returns expired=true', () => {
-    beforeEach(() => {
-      verifyAccountReactivationTokenSpy = jest.fn(() => Promise.resolve({ success: true, expired: true }));
-
-      api.keystone.account.verifyAccountReactivationToken = verifyAccountReactivationTokenSpy;
-    });
-
-    it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED}`, async () => {
-      await get(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_LINK_EXPIRED);
+      expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_LINK_INVALID);
     });
   });
 

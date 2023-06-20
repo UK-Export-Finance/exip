@@ -54,7 +54,7 @@ Cypress.Commands.add('submitEligibilityAndStartAccountSignIn', require('./insura
 
 Cypress.Commands.add('completeAndSubmitCreateAccountForm', require('./insurance/account/complete-and-submit-create-account-form'));
 Cypress.Commands.add('completeAndSubmitSignInAccountForm', require('./insurance/account/complete-and-submit-sign-in-account-form'));
-Cypress.Commands.add('completeAndSubmitSignInAccountFormMaximumRetries', require('./insurance/account/complete-and-submit-sign-in-account-form-maximum-retries'));
+Cypress.Commands.add('completeAndSubmitSignInAccountFormMaximumInvalidRetries', require('./insurance/account/complete-and-submit-sign-in-account-form-maximum-invalid-retries'));
 Cypress.Commands.add('completeAndSubmitEnterCodeAccountForm', require('./insurance/account/complete-and-submit-enter-code-account-form'));
 
 Cypress.Commands.add('completeAndSubmitPasswordResetForm', require('./insurance/account/complete-and-submit-password-reset-form'));
@@ -135,6 +135,9 @@ Cypress.Commands.add('assertCustomerServiceContactDetailsContent', require('./as
 Cypress.Commands.add('checkText', require('./check-text'));
 Cypress.Commands.add('checkValue', require('./check-value'));
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));
+Cypress.Commands.add('checkRadioInputYesAriaLabel', require('./check-radio-input-yes-aria-label'));
+Cypress.Commands.add('checkRadioInputNoAriaLabel', require('./check-radio-input-no-aria-label'));
+
 Cypress.Commands.add('checkTaskStatus', require('./check-task-status'));
 Cypress.Commands.add('checkTaskStatusCompleted', require('./check-completed-task-status'));
 Cypress.Commands.add('checkLink', require('./check-link'));

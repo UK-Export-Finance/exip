@@ -14,9 +14,9 @@ const deleteAccount = (email = accountEmail) => {
 
     return deleteResponse;
   } catch (err) {
-    console.error(err);
+    console.error('Deleting account', err);
 
-    throw new Error('Deleting account');
+    return err;
   }
 };
 

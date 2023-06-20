@@ -2,7 +2,7 @@ import canCreateAnApplication from '.';
 import mockEligibility from '../../test-mocks/mock-eligibility';
 
 describe('server/helpers/can-create-an-application', () => {
-  describe('when session.submittedData.insuranceEligibility has answers', () => {
+  describe('when session.submittedData.insuranceEligibility has answers and session.requestedApplicationCreation is false', () => {
     it('should return true', () => {
       const mockSession = {
         submittedData: {

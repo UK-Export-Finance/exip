@@ -31,7 +31,7 @@ context('Insurance - Account - Sign in - Submitting the form when already blocke
     cy.navigateToUrl(signInUrl);
 
     // force the account to be blocked
-    cy.completeAndSubmitSignInAccountFormMaximumRetries({});
+    cy.completeAndSubmitSignInAccountFormMaximumInvalidRetries({});
 
     cy.navigateToUrl(signInUrl);
 

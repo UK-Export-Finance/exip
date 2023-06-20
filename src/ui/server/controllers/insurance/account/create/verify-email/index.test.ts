@@ -6,7 +6,10 @@ import { mockAccount, mockReq, mockRes } from '../../../../../test-mocks';
 
 const {
   INSURANCE: {
-    ACCOUNT: { CREATE, SIGN_IN },
+    ACCOUNT: {
+      CREATE: { VERIFY_EMAIL_LINK_INVALID, VERIFY_EMAIL_LINK_EXPIRED },
+      SIGN_IN,
+    },
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
@@ -17,9 +20,8 @@ describe('controllers/insurance/account/create/verify-email', () => {
 
   let verifyEmailAddressSpy;
 
-  let mockVerifyEmailAddressResponse = {
+  const mockVerifyEmailAddressResponse = {
     success: true,
-    accountId: mockAccount.id,
   };
 
   const mockToken = 'mockToken';
@@ -52,30 +54,57 @@ describe('controllers/insurance/account/create/verify-email', () => {
         });
       });
 
-      describe('when api.keystone.account.verifyEmailAddress does NOT return success=true', () => {
+      describe('when api.keystone.account.verifyEmailAddress returns expired=true and an accountId', () => {
         beforeEach(() => {
-          mockVerifyEmailAddressResponse = {
-            success: false,
-            accountId: mockAccount.id,
-          };
-
           req.query.token = mockToken;
-
-          verifyEmailAddressSpy = jest.fn(() => Promise.resolve(mockVerifyEmailAddressResponse));
+          verifyEmailAddressSpy = jest.fn(() => Promise.resolve({ success: true, expired: true, accountId: mockAccount.id }));
 
           api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
         });
 
-        it(`should redirect to ${CREATE.VERIFY_EMAIL_LINK_EXPIRED} with ID param`, async () => {
+        it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED} with ID param`, async () => {
           await get(req, res);
 
-          const expected = `${CREATE.VERIFY_EMAIL_LINK_EXPIRED}?id=${mockVerifyEmailAddressResponse.accountId}`;
+          const expected = `${VERIFY_EMAIL_LINK_EXPIRED}?id=${mockAccount.id}`;
           expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe('when api.keystone.account.verifyEmailAddress returns invalid=true', () => {
+        beforeEach(() => {
+          req.query.token = mockToken;
+          verifyEmailAddressSpy = jest.fn(() => Promise.resolve({ success: false, invalid: true }));
+
+          api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
+        });
+
+        it(`should redirect to ${VERIFY_EMAIL_LINK_INVALID}`, async () => {
+          await get(req, res);
+
+          const expected = `${VERIFY_EMAIL_LINK_INVALID}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe('when api.keystone.account.verifyEmailAddress returns only success=false', () => {
+        beforeEach(() => {
+          req.query.token = mockToken;
+
+          verifyEmailAddressSpy = jest.fn(() => Promise.resolve({ success: false }));
+
+          api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
+        });
+
+        it(`should redirect to ${VERIFY_EMAIL_LINK_INVALID}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_LINK_INVALID);
         });
       });
     });
 
-    describe('when req.query.token does NOT exist', () => {
+    describe('when there is no req.query.token', () => {
       beforeEach(() => {
         req.query = {};
         verifyEmailAddressSpy = jest.fn(() => Promise.resolve({}));
@@ -83,10 +112,10 @@ describe('controllers/insurance/account/create/verify-email', () => {
         api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
       });
 
-      it(`should redirect to ${CREATE.VERIFY_EMAIL_LINK_EXPIRED}`, async () => {
+      it(`should redirect to ${VERIFY_EMAIL_LINK_INVALID}`, async () => {
         await get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(CREATE.VERIFY_EMAIL_LINK_EXPIRED);
+        expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_LINK_INVALID);
       });
     });
 

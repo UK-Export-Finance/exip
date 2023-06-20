@@ -1,4 +1,6 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import mockAccount from '../../../../../../fixtures/account';
 import api from '../../../../../../support/api';
 
 const {
@@ -8,12 +10,16 @@ const {
   },
 } = ROUTES;
 
-context('Insurance - Account - Sign in - Submitting the form with invalid credentials over the maximum threshold in the allowed time period should block the account', () => {
+const { ACCOUNT: { PASSWORD } } = INSURANCE_FIELD_IDS;
+
+context('Insurance - Account - Sign in - Submitting the form with invalid credentials multiple times should suspend the account', () => {
   const baseUrl = Cypress.config('baseUrl');
   const signInUrl = `${baseUrl}${SIGN_IN_ROOT}`;
   const accountSuspendedUrl = `${baseUrl}${SUSPENDED_ROOT}`;
 
   let account;
+
+  const invalidPassword = `${mockAccount[PASSWORD]}-invalid`;
 
   before(() => {
     cy.deleteAccount();
@@ -25,13 +31,15 @@ context('Insurance - Account - Sign in - Submitting the form with invalid creden
     cy.assertUrl(signInUrl);
   });
 
-  describe('when attempting sign in multiple times and reaching the maximum retries threshold', () => {
+  describe('when attempting sign in with invalid credentials multiple times and reaching the maximum retries threshold', () => {
     beforeEach(() => {
       cy.saveSession();
 
       cy.navigateToUrl(signInUrl);
 
-      cy.completeAndSubmitSignInAccountFormMaximumRetries({});
+      cy.completeAndSubmitSignInAccountFormMaximumInvalidRetries({
+        password: invalidPassword,
+      });
     });
 
     it(`should redirect to ${SUSPENDED_ROOT} with ID query param`, () => {

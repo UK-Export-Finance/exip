@@ -4,6 +4,12 @@ import { FIELD_IDS } from '../../../constants';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import { VerifyEmailAddressVariables, VerifyEmailAddressResponse } from '../../../types';
 
+const {
+  INSURANCE: {
+    ACCOUNT: { EMAIL, VERIFICATION_HASH, VERIFICATION_EXPIRY },
+  },
+} = FIELD_IDS;
+
 /**
  * verifyAccountEmailAddress
  * @param {Object} GraphQL root variables
@@ -16,14 +22,14 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
     console.info('Verifying account email address');
 
     // get the account the token is associated with.
-    const account = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.VERIFICATION_HASH, variables.token);
+    const account = await getAccountByField(context, VERIFICATION_HASH, variables.token);
 
     if (account) {
       const { id } = account;
 
       // check that the verification period has not expired.
       const now = new Date();
-      const canActivateAccount = isBefore(now, account.verificationExpiry);
+      const canActivateAccount = isBefore(now, account[VERIFICATION_EXPIRY]);
 
       if (!canActivateAccount) {
         console.info('Unable to verify account email - verification period has expired');
@@ -48,17 +54,19 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
       return {
         success: true,
         accountId: id,
-        emailRecipient: account.email,
+        emailRecipient: account[EMAIL],
       };
     }
 
-    console.info('Unable to verify account email - no account found');
+    console.info(`Unable to verify account email - no account found from the provided ${VERIFICATION_HASH}`);
 
     return {
       success: false,
+      invalid: true,
     };
   } catch (err) {
     console.error(err);
+
     throw new Error(`Verifying account email address ${err}`);
   }
 };

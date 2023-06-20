@@ -48,7 +48,20 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SIGN_IN.ENTER_CODE;
  * @returns {Express.Response.render} Enter code page
  */
 export const get = (req: Request, res: Response) => {
+  if (req.session.user?.id) {
+    /**
+     * User is already signed in.
+     * Redirect to the dashboard.
+     */
+    return res.redirect(DASHBOARD);
+  }
+
   if (!req.session.accountId) {
+    /**
+     * No account ID is in the session.
+     * We cannot make an API call in the POST without this.
+     * Therfore, redirect to the sign in route.
+     */
     return res.redirect(SIGN_IN_ROOT);
   }
 
@@ -114,11 +127,15 @@ export const post = async (req: Request, res: Response) => {
 
       /**
        * If there are eligibility answers in the session:
-       * 1) Create an application
-       * 2) Wipe the eligibility answers in the session.
+       * 1) Add requestedApplicationCreation to the session
+       * 2) Create an application
+       * 3) Remove requestedApplicationCreation from the session
+       * 4) Remove eligibility answers in the session.
        */
       if (canCreateAnApplication(req.session)) {
         const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
+
+        req.session.submittedData.insuranceEligibility = {};
 
         const application = await api.keystone.application.create(eligibilityAnswers, accountId);
 

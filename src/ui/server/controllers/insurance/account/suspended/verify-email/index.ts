@@ -1,16 +1,14 @@
-import { ROUTES } from '../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 
 const {
-  INSURANCE: {
-    ACCOUNT: {
-      SUSPENDED: { ROOT: SUSPENDED_ROOT, VERIFY_EMAIL_LINK_EXPIRED },
-      REACTIVATED_ROOT,
-    },
-    PROBLEM_WITH_SERVICE,
+  ACCOUNT: {
+    SUSPENDED: { ROOT: SUSPENDED_ROOT, VERIFY_EMAIL_LINK_EXPIRED, VERIFY_EMAIL_LINK_INVALID },
+    REACTIVATED_ROOT,
   },
-} = ROUTES;
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 /**
  * get
@@ -29,8 +27,14 @@ export const get = async (req: Request, res: Response) => {
 
     const response = await api.keystone.account.verifyAccountReactivationToken(token);
 
-    if (!response.success || response.expired) {
-      return res.redirect(VERIFY_EMAIL_LINK_EXPIRED);
+    if (response.expired && response.accountId) {
+      const url = `${VERIFY_EMAIL_LINK_EXPIRED}?id=${response.accountId}`;
+
+      return res.redirect(url);
+    }
+
+    if (response.invalid || !response.success) {
+      return res.redirect(VERIFY_EMAIL_LINK_INVALID);
     }
 
     return res.redirect(REACTIVATED_ROOT);

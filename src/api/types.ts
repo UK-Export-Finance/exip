@@ -237,6 +237,7 @@ interface VerifyEmailAddressVariables {
 interface VerifyEmailAddressResponse extends SuccessResponse {
   accountId?: string;
   expired?: boolean;
+  invalid?: boolean;
   emailRecipient?: string;
 }
 
@@ -288,6 +289,7 @@ interface VerifyAccountPasswordResetTokenVariables {
 interface AccountPasswordResetTokenResponse extends SuccessResponse {
   token?: string;
   expired?: boolean;
+  invalid?: boolean;
   accountId?: string;
 }
 
@@ -337,7 +339,7 @@ interface VerifyAccountSignInCodeResponse extends SuccessResponse {
   sessionIdentifier?: string;
 }
 
-interface VerifyAccountSesssionVariables {
+interface VerifyAccountSessionVariables {
   token: string;
 }
 
@@ -355,6 +357,8 @@ interface VerifyAccountReactivationTokenVariables {
 
 interface VerifyAccountReactivationTokenResponse extends SuccessResponse {
   expired?: boolean;
+  invalid?: boolean;
+  accountId?: string;
 }
 
 interface SendExporterEmailVariables {
@@ -472,7 +476,7 @@ export {
   VerifyAccountPasswordResetTokenVariables,
   VerifyAccountSignInCodeVariables,
   VerifyAccountSignInCodeResponse,
-  VerifyAccountSesssionVariables,
+  VerifyAccountSessionVariables,
   VerifyAccountReactivationTokenVariables,
   VerifyAccountReactivationTokenResponse,
 };

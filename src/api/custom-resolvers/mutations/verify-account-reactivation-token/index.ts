@@ -44,6 +44,7 @@ const verifyAccountReactivationToken = async (
         return {
           expired: true,
           success: false,
+          accountId: account.id,
         };
       }
 
@@ -78,10 +79,11 @@ const verifyAccountReactivationToken = async (
       };
     }
 
-    console.info('Unable to reactivate account - no account found');
+    console.info(`Unable to reactivate account - no account found from the provided ${REACTIVATION_HASH}`);
 
     return {
       success: false,
+      invalid: true,
     };
   } catch (err) {
     console.error(err);
