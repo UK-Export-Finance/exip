@@ -4,6 +4,7 @@ export const ACCOUNT = {
   EMAIL: 'email',
   PASSWORD: 'password',
   SECURITY_CODE: 'securityCode',
+  VERIFICATION_EXPIRY: 'verificationExpiry',
   VERIFICATION_HASH: 'verificationHash',
   IS_VERIFIED: 'isVerified',
   IS_BLOCKED: 'isBlocked',

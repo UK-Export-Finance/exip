@@ -1,15 +1,17 @@
 import { signInPage } from '../../../../../pages/insurance/account/sign-in';
 import { PAGES } from '../../../../../../../content-strings';
-import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SIGN_IN.ROOT;
 
 const {
   START,
   ACCOUNT: { CREATE: { CONFIRM_EMAIL, VERIFY_EMAIL }, SIGN_IN },
-} = ROUTES;
+} = INSURANCE_ROUTES;
 
 context('Insurance - Account - Create - I want the system to generate account verification link for my email address, So that I can confirm that my email address exist and can be used to create my UKEF digital service account.', () => {
+  const baseUrl = Cypress.config('baseUrl');
+
   before(() => {
     cy.deleteAccount();
 
@@ -21,9 +23,9 @@ context('Insurance - Account - Create - I want the system to generate account ve
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
 
-    const expected = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
+    const expected = `${baseUrl}${CONFIRM_EMAIL}`;
 
-    cy.url().should('eq', expected);
+    cy.assertUrl(expected);
   });
 
   beforeEach(() => {

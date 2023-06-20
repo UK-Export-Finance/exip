@@ -68,14 +68,17 @@ var ACCOUNT = {
   LAST_NAME: "lastName",
   EMAIL: "email",
   PASSWORD: "password",
+  SALT: "salt",
+  HASH: "hash",
   SECURITY_CODE: "securityCode",
-  VERIFICATION_HASH: "verificationHash",
   IS_VERIFIED: "isVerified",
   IS_BLOCKED: "isBlocked",
   PASSWORD_RESET_HASH: "passwordResetHash",
   PASSWORD_RESET_EXPIRY: "passwordResetExpiry",
   REACTIVATION_HASH: "reactivationHash",
-  REACTIVATION_EXPIRY: "reactivationExpiry"
+  REACTIVATION_EXPIRY: "reactivationExpiry",
+  VERIFICATION_HASH: "verificationHash",
+  VERIFICATION_EXPIRY: "verificationExpiry"
 };
 var account_default = ACCOUNT;
 
@@ -1430,6 +1433,8 @@ var typeDefs = `
 
   type VerifyAccountEmailAddressResponse {
     success: Boolean!
+    expired: Boolean
+    invalid: Boolean
     accountId: String
   }
 
@@ -2017,14 +2022,19 @@ var delete_an_account_default = deleteAnAccount;
 
 // custom-resolvers/mutations/verify-account-email-address/index.ts
 var import_date_fns3 = require("date-fns");
+var {
+  INSURANCE: {
+    ACCOUNT: { EMAIL: EMAIL2, VERIFICATION_HASH, VERIFICATION_EXPIRY }
+  }
+} = FIELD_IDS;
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
     console.info("Verifying account email address");
-    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.VERIFICATION_HASH, variables.token);
+    const account = await get_account_by_field_default(context, VERIFICATION_HASH, variables.token);
     if (account) {
       const { id } = account;
       const now = /* @__PURE__ */ new Date();
-      const canActivateAccount = (0, import_date_fns3.isBefore)(now, account.verificationExpiry);
+      const canActivateAccount = (0, import_date_fns3.isBefore)(now, account[VERIFICATION_EXPIRY]);
       if (!canActivateAccount) {
         console.info("Unable to verify account email - verification period has expired");
         return {
@@ -2044,12 +2054,13 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
       return {
         success: true,
         accountId: id,
-        emailRecipient: account.email
+        emailRecipient: account[EMAIL2]
       };
     }
-    console.info("Unable to verify account email - no account found");
+    console.info(`Unable to verify account email - no account found from the provided ${VERIFICATION_HASH}`);
     return {
-      success: false
+      success: false,
+      invalid: true
     };
   } catch (err) {
     console.error(err);
@@ -2290,7 +2301,7 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
 var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
 
 // custom-resolvers/mutations/account-sign-in/account-checks/index.ts
-var { EMAIL: EMAIL2 } = ACCOUNT2;
+var { EMAIL: EMAIL3 } = ACCOUNT2;
 var accountChecks = async (context, account, urlOrigin) => {
   try {
     console.info("Signing in account - checking account");
@@ -2302,7 +2313,7 @@ var accountChecks = async (context, account, urlOrigin) => {
       if (account.verificationHash && !verificationHasExpired) {
         console.info("Account has an unexpired verification token - resetting verification expiry");
         const accountUpdate = {
-          verificationExpiry: EMAIL2.VERIFICATION_EXPIRY()
+          verificationExpiry: EMAIL3.VERIFICATION_EXPIRY()
         };
         await context.db.Account.updateOne({
           where: { id: accountId },
@@ -3328,7 +3339,7 @@ var {
   YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
   TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-  BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL3 }
+  BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL4 }
 } = EXPORTER_BUSINESS2;
 var FIELDS = {
   COMPANY_DETAILS: {
@@ -3433,7 +3444,7 @@ var FIELDS = {
         TITLE: "Broker's address"
       }
     },
-    [EMAIL3]: {
+    [EMAIL4]: {
       SUMMARY: {
         TITLE: "Broker's email"
       }
@@ -3589,7 +3600,7 @@ var format_time_of_day_default = formatTimeOfDay;
 
 // generate-xlsx/map-application-to-XLSX/map-key-information/index.ts
 var { FIELDS: FIELDS2 } = XLSX;
-var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL4 } = account_default;
+var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL5 } = account_default;
 var mapKeyInformation = (application2) => {
   const mapped = [
     xlsx_row_default(REFERENCE_NUMBER.SUMMARY.TITLE, application2.referenceNumber),
@@ -3597,7 +3608,7 @@ var mapKeyInformation = (application2) => {
     xlsx_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application2.submissionDate)),
     xlsx_row_default(FIELDS2[FIRST_NAME2], application2.owner[FIRST_NAME2]),
     xlsx_row_default(FIELDS2[LAST_NAME2], application2.owner[LAST_NAME2]),
-    xlsx_row_default(FIELDS2.APPLICANT_EMAIL_ADDRESS, application2.owner[EMAIL4])
+    xlsx_row_default(FIELDS2.APPLICANT_EMAIL_ADDRESS, application2.owner[EMAIL5])
   ];
   return mapped;
 };
@@ -3605,7 +3616,7 @@ var map_key_information_default = mapKeyInformation;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-contact-details/index.ts
 var {
-  ACCOUNT: { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL5 }
+  ACCOUNT: { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL6 }
 } = insurance_default;
 var {
   SECTION_TITLES: { EXPORTER_CONTACT_DETAILS },
@@ -3619,7 +3630,7 @@ var mapExporterContactDetails = (application2) => {
     xlsx_row_default(EXPORTER_CONTACT_DETAILS),
     xlsx_row_default(FIELDS3.EXPORTER_CONTACT[FIRST_NAME3], businessContactDetail[FIRST_NAME3]),
     xlsx_row_default(FIELDS3.EXPORTER_CONTACT[LAST_NAME3], businessContactDetail[LAST_NAME3]),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, businessContactDetail[EMAIL5])
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, businessContactDetail[EMAIL6])
   ];
   return mapped;
 };
@@ -3768,7 +3779,7 @@ var {
   YOUR_COMPANY: { TRADING_NAME: TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE3, PHONE_NUMBER: PHONE_NUMBER3 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL3 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
-  BROKER: { USING_BROKER: USING_BROKER4, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL6 }
+  BROKER: { USING_BROKER: USING_BROKER4, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL7 }
 } = business_default;
 var mapSicCodes2 = (sicCodes) => {
   let mapped = "";
@@ -3790,7 +3801,7 @@ var mapBroker = (application2) => {
       ...mapped,
       xlsx_row_default(XLSX.FIELDS[BROKER_NAME2], broker[BROKER_NAME2]),
       xlsx_row_default(XLSX.FIELDS[ADDRESS_LINE_12], `${addressAnswer.lineOneAndTwo}${addressAnswer.other}`),
-      xlsx_row_default(XLSX.FIELDS[EMAIL6], broker[EMAIL6])
+      xlsx_row_default(XLSX.FIELDS[EMAIL7], broker[EMAIL7])
     ];
   }
   return mapped;
@@ -3830,7 +3841,7 @@ var CONTENT_STRINGS4 = {
   ...YOUR_BUYER_FIELDS.WORKING_WITH_BUYER
 };
 var {
-  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4, FIRST_NAME: FIRST_NAME4, LAST_NAME: LAST_NAME4, POSITION, EMAIL: EMAIL7, CAN_CONTACT_BUYER },
+  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4, FIRST_NAME: FIRST_NAME4, LAST_NAME: LAST_NAME4, POSITION, EMAIL: EMAIL8, CAN_CONTACT_BUYER },
   WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER }
 } = your_buyer_default;
 var mapBuyer = (application2) => {
@@ -3841,7 +3852,7 @@ var mapBuyer = (application2) => {
     xlsx_row_default(String(CONTENT_STRINGS4[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${xlsx_new_line_default}${buyer[COUNTRY3].name}`),
     xlsx_row_default(XLSX.FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
     xlsx_row_default(String(CONTENT_STRINGS4[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
-    xlsx_row_default(XLSX.FIELDS[FIRST_NAME4], `${buyer[FIRST_NAME4]} ${buyer[LAST_NAME4]} ${xlsx_new_line_default}${buyer[POSITION]} ${xlsx_new_line_default}${buyer[EMAIL7]}`),
+    xlsx_row_default(XLSX.FIELDS[FIRST_NAME4], `${buyer[FIRST_NAME4]} ${buyer[LAST_NAME4]} ${xlsx_new_line_default}${buyer[POSITION]} ${xlsx_new_line_default}${buyer[EMAIL8]}`),
     xlsx_row_default(String(CONTENT_STRINGS4[CAN_CONTACT_BUYER].SUMMARY?.TITLE), buyer[CAN_CONTACT_BUYER]),
     xlsx_row_default(String(CONTENT_STRINGS4[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), buyer[CONNECTED_WITH_BUYER]),
     xlsx_row_default(String(CONTENT_STRINGS4[TRADED_WITH_BUYER].SUMMARY?.TITLE), buyer[TRADED_WITH_BUYER])
