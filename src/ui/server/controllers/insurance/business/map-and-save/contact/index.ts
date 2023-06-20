@@ -1,6 +1,6 @@
 import hasFormData from '../../../../../helpers/has-form-data';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
-import contact from '../../save-data/contact';
+import save from '../../save-data/contact';
 
 /**
  * maps contact request and calls save function
@@ -10,16 +10,16 @@ import contact from '../../save-data/contact';
  * @param {Object} validationErrors
  * @returns {Boolean}
  */
-const mapAndSave = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
+const contact = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
       // maps through formBody and puts fields in correct format
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await contact.save(application, formBody, validationErrors.errorList);
+        saveResponse = await save.contact(application, formBody, validationErrors.errorList);
       } else {
-        saveResponse = await contact.save(application, formBody);
+        saveResponse = await save.contact(application, formBody);
       }
 
       if (!saveResponse) {
@@ -31,9 +31,9 @@ const mapAndSave = async (formBody: RequestBody, application: Application, valid
 
     return true;
   } catch (err) {
-    console.error('Error mapping and saving business section of application', { err });
+    console.error('Error mapping and saving business - contact section of application', { err });
     return false;
   }
 };
 
-export default { mapAndSave };
+export default { contact };

@@ -2,7 +2,7 @@ import { Request, Response } from '../../../../../../types';
 import { post } from '.';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { mockReq, mockRes, mockApplication, mockBusinessTurnover } from '../../../../../test-mocks';
-import turnover from '../../map-and-save/turnover';
+import mapAndSave from '../../map-and-save/turnover';
 
 const {
   EXPORTER_BUSINESS: {
@@ -23,7 +23,7 @@ describe('controllers/insurance/business/turnover/save-and-back', () => {
 
     res.locals.application = mockApplication;
 
-    turnover.mapAndSave = updateMapAndSave;
+    mapAndSave.turnover = updateMapAndSave;
   });
 
   afterAll(() => {
@@ -42,7 +42,7 @@ describe('controllers/insurance/business/turnover/save-and-back', () => {
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call turnover.mapAndSave once', async () => {
+      it('should call mapAndSave.turnover once', async () => {
         req.body = validBody;
 
         await post(req, res);
@@ -63,7 +63,7 @@ describe('controllers/insurance/business/turnover/save-and-back', () => {
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call turnover.mapAndSave once', async () => {
+      it('should call mapAndSave.turnover once', async () => {
         req.body = {
           [ESTIMATED_ANNUAL_TURNOVER]: '5O',
           [PERCENTAGE_TURNOVER]: '101',
@@ -87,11 +87,11 @@ describe('controllers/insurance/business/turnover/save-and-back', () => {
       });
     });
 
-    describe('when turnover.mapAndSave fails', () => {
+    describe('when mapAndSave.turnover fails', () => {
       beforeEach(() => {
         res.locals = { csrfToken: '1234' };
         updateMapAndSave = jest.fn(() => Promise.reject());
-        turnover.mapAndSave = updateMapAndSave;
+        mapAndSave.turnover = updateMapAndSave;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {

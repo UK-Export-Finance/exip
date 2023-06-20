@@ -1,5 +1,5 @@
-import contact from '.';
-import contactSave from '../../save-data/contact';
+import mapAndSave from '.';
+import save from '../../save-data/contact';
 import { mockApplication, mockBusiness } from '../../../../../test-mocks';
 
 describe('controllers/insurance/business/map-and-save/contact - API error', () => {
@@ -13,15 +13,15 @@ describe('controllers/insurance/business/map-and-save/contact - API error', () =
   };
 
   const mockSaveContact = jest.fn(() => Promise.resolve({}));
-  contactSave.save = mockSaveContact;
+  save.contact = mockSaveContact;
 
   describe('when save application contact call does not return anything', () => {
     beforeEach(() => {
-      contactSave.save = jest.fn(() => Promise.resolve());
+      save.contact = jest.fn(() => Promise.resolve());
     });
 
     it('should return false', async () => {
-      const result = await contact.mapAndSave(mockFormBody, mockApplication);
+      const result = await mapAndSave.contact(mockFormBody, mockApplication);
 
       expect(result).toEqual(false);
     });
@@ -29,11 +29,11 @@ describe('controllers/insurance/business/map-and-save/contact - API error', () =
 
   describe('when save application contact call fails', () => {
     beforeEach(() => {
-      contactSave.save = jest.fn(() => Promise.reject(new Error('Mock error')));
+      save.contact = jest.fn(() => Promise.reject(new Error('Mock error')));
     });
 
     it('should return false', async () => {
-      const result = await contact.mapAndSave(mockFormBody, mockApplication);
+      const result = await mapAndSave.contact(mockFormBody, mockApplication);
 
       expect(result).toEqual(false);
     });

@@ -8,7 +8,7 @@ import companiesHouseValidation from './validation/companies-house';
 import companyDetailsValidation from './validation/company-details';
 import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from '../../../../test-mocks';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
-import companyDetails from '../map-and-save/company-details';
+import mapAndSave from '../map-and-save/company-details';
 import api from '../../../../api';
 
 const {
@@ -46,7 +46,7 @@ describe('controllers/insurance/business/companies-details', () => {
   const getCompaniesHouseResponse = jest.fn(() => Promise.resolve(mockCompany));
   api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
 
-  companyDetails.mapAndSave = jest.fn(() => Promise.resolve(true));
+  mapAndSave.companyDetails = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -108,18 +108,18 @@ describe('controllers/insurance/business/companies-details', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call companyDetails.mapAndSave once with updateBody and application', async () => {
+      it('should call mapAndSave.companyDetails once with updateBody and application', async () => {
         req.body = body;
 
         await post(req, res);
 
-        expect(companyDetails.mapAndSave).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.companyDetails).toHaveBeenCalledTimes(1);
 
         const updateBody = {
           ...req.body,
           ...mockCompany,
         };
-        expect(companyDetails.mapAndSave).toHaveBeenCalledWith(updateBody, mockApplication);
+        expect(mapAndSave.companyDetails).toHaveBeenCalledWith(updateBody, mockApplication);
       });
 
       describe("when the url's last substring is `change`", () => {
@@ -163,7 +163,7 @@ describe('controllers/insurance/business/companies-details', () => {
     });
 
     describe('api error handling', () => {
-      describe('when companyDetails.mapAndSave returns an error', () => {
+      describe('when mapAndSave.companyDetails returns an error', () => {
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           req.body = {
             [INPUT]: '8989898',
@@ -173,7 +173,7 @@ describe('controllers/insurance/business/companies-details', () => {
           };
 
           api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
-          companyDetails.mapAndSave = jest.fn(() => Promise.reject());
+          mapAndSave.companyDetails = jest.fn(() => Promise.reject());
 
           await post(req, res);
 
@@ -198,10 +198,10 @@ describe('controllers/insurance/business/companies-details', () => {
         });
       });
 
-      describe('when companyDetails.mapAndSave resolves false', () => {
+      describe('when mapAndSave.companyDetails resolves false', () => {
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
           res.locals = { csrfToken: '1234' };
-          companyDetails.mapAndSave = jest.fn(() => Promise.resolve(false));
+          mapAndSave.companyDetails = jest.fn(() => Promise.resolve(false));
 
           post(req, res);
 

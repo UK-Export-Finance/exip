@@ -1,5 +1,5 @@
-import turnover from '.';
-import businessSave from '../../save-data/business';
+import mapAndSave from '.';
+import save from '../../save-data/business';
 import mapTurnoverSubmittedData from '../../turnover/map-submitted-data';
 import { mockApplication } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
@@ -21,21 +21,21 @@ describe('controllers/insurance/business/map-and-save/turnover', () => {
   };
 
   const mockSaveBusiness = jest.fn(() => Promise.resolve({}));
-  businessSave.save = mockSaveBusiness;
+  save.business = mockSaveBusiness;
 
   const mockValidationErrors = generateValidationErrors(PERCENTAGE_TURNOVER, 'error', {});
 
   describe('when the form has data', () => {
     describe('when the form has validation errors ', () => {
-      it('should call businessSave.save with application, populated submitted data and validationErrors.errorList', async () => {
-        await turnover.mapAndSave(mockFormBody, mockApplication, mockValidationErrors);
+      it('should call save.business with application, populated submitted data and validationErrors.errorList', async () => {
+        await mapAndSave.turnover(mockFormBody, mockApplication, mockValidationErrors);
 
-        expect(businessSave.save).toHaveBeenCalledTimes(1);
-        expect(businessSave.save).toHaveBeenCalledWith(mockApplication, mapTurnoverSubmittedData(mockFormBody), mockValidationErrors?.errorList);
+        expect(save.business).toHaveBeenCalledTimes(1);
+        expect(save.business).toHaveBeenCalledWith(mockApplication, mapTurnoverSubmittedData(mockFormBody), mockValidationErrors?.errorList);
       });
 
       it('should return true', async () => {
-        const result = await turnover.mapAndSave(mockFormBody, mockApplication, mockValidationErrors);
+        const result = await mapAndSave.turnover(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
@@ -48,15 +48,15 @@ describe('controllers/insurance/business/map-and-save/turnover', () => {
         [ESTIMATED_ANNUAL_TURNOVER]: '35000',
       };
 
-      it('should call businessSave.save with application and populated submitted data', async () => {
-        await turnover.mapAndSave(mockFormBody, mockApplication);
+      it('should call save.business with application and populated submitted data', async () => {
+        await mapAndSave.turnover(mockFormBody, mockApplication);
 
-        expect(businessSave.save).toHaveBeenCalledTimes(1);
-        expect(businessSave.save).toHaveBeenCalledWith(mockApplication, mapTurnoverSubmittedData(mockFormBody));
+        expect(save.business).toHaveBeenCalledTimes(1);
+        expect(save.business).toHaveBeenCalledWith(mockApplication, mapTurnoverSubmittedData(mockFormBody));
       });
 
       it('should return true', async () => {
-        const result = await turnover.mapAndSave(mockFormBody, mockApplication, mockValidationErrors);
+        const result = await mapAndSave.turnover(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
@@ -67,7 +67,7 @@ describe('controllers/insurance/business/map-and-save/turnover', () => {
     it('should return true', async () => {
       mockFormBody = { _csrf: '1234' };
 
-      const result = await turnover.mapAndSave(mockFormBody, mockApplication, mockValidationErrors);
+      const result = await mapAndSave.turnover(mockFormBody, mockApplication, mockValidationErrors);
 
       expect(result).toEqual(true);
     });

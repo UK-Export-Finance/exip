@@ -1,7 +1,7 @@
 import hasFormData from '../../../../../helpers/has-form-data';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
 import mapTurnoverSubmittedData from '../../turnover/map-submitted-data';
-import business from '../../save-data/business';
+import save from '../../save-data/business';
 
 /**
  * maps turnover request and calls save function
@@ -11,7 +11,7 @@ import business from '../../save-data/business';
  * @param {Object} validationErrors
  * @returns {Boolean}
  */
-const mapAndSave = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
+const turnover = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
       // maps through formBody and puts fields in correct format
@@ -19,9 +19,9 @@ const mapAndSave = async (formBody: RequestBody, application: Application, valid
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await business.save(application, dataToSave, validationErrors.errorList);
+        saveResponse = await save.business(application, dataToSave, validationErrors.errorList);
       } else {
-        saveResponse = await business.save(application, dataToSave);
+        saveResponse = await save.business(application, dataToSave);
       }
 
       if (!saveResponse) {
@@ -38,4 +38,4 @@ const mapAndSave = async (formBody: RequestBody, application: Application, valid
   }
 };
 
-export default { mapAndSave };
+export default { turnover };

@@ -1,4 +1,4 @@
-import contact from '.';
+import save from '.';
 import api from '../../../../../api';
 import { mockApplication, mockBusiness } from '../../../../../test-mocks';
 
@@ -22,7 +22,7 @@ describe('controllers/insurance/business/save-data/contact - API error', () => {
 
     it('should throw an error', async () => {
       try {
-        await contact.save(mockApplication, mockFormBody);
+        await save.contact(mockApplication, mockFormBody);
       } catch (err) {
         const expected = new Error('Updating business contact');
         expect(err).toEqual(expected);

@@ -1,4 +1,4 @@
-import broker from '.';
+import save from '.';
 import api from '../../../../../api';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
@@ -26,7 +26,7 @@ describe('controllers/insurance/business/save-data/broker', () => {
     const mockValidationErrors = generateValidationErrors(ADDRESS_LINE_1, 'error', {});
 
     it(`should call api.keystone.application.update.broker with all fields but not ${ADDRESS_LINE_1}`, async () => {
-      await broker.save(mockApplication, mockFormBody, mockValidationErrors.errorList);
+      await save.broker(mockApplication, mockFormBody, mockValidationErrors.errorList);
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
@@ -36,7 +36,7 @@ describe('controllers/insurance/business/save-data/broker', () => {
     });
 
     it('should return the API response', async () => {
-      const result = await broker.save(mockApplication, mockFormBody);
+      const result = await save.broker(mockApplication, mockFormBody);
 
       expect(result).toEqual(mockUpdateApplicationResponse);
     });
@@ -44,7 +44,7 @@ describe('controllers/insurance/business/save-data/broker', () => {
 
   describe('when errorList is NOT provided', () => {
     it('should call api.keystone.application.update.broker with all fields', async () => {
-      await broker.save(mockApplication, mockFormBody);
+      await save.broker(mockApplication, mockFormBody);
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
@@ -54,7 +54,7 @@ describe('controllers/insurance/business/save-data/broker', () => {
     });
 
     it('should return the API response', async () => {
-      const result = await broker.save(mockApplication, mockFormBody);
+      const result = await save.broker(mockApplication, mockFormBody);
 
       expect(result).toEqual(mockUpdateApplicationResponse);
     });

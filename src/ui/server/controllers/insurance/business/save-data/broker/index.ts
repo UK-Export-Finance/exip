@@ -6,13 +6,13 @@ import { Application, RequestBody } from '../../../../../../types';
 
 /**
  * gets fields to add to the database and sanitises them
- * saves to broker tables in database via api call
+ * saves to broker table in database via api call
  * @param {Application} application
  * @param {RequestBody} formBody
  * @param {Object} errorList
  * @returns {Object} saveResponse from api
  */
-const save = async (application: Application, formBody: RequestBody, errorList?: object) => {
+const broker = async (application: Application, formBody: RequestBody, errorList?: object) => {
   // determines which fields to save
   const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList));
 
@@ -30,4 +30,4 @@ const save = async (application: Application, formBody: RequestBody, errorList?:
   }
 };
 
-export default { save };
+export default { broker };

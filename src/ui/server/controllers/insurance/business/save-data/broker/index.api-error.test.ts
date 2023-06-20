@@ -1,4 +1,4 @@
-import broker from '.';
+import save from '.';
 import api from '../../../../../api';
 import { mockApplication, mockBroker } from '../../../../../test-mocks';
 
@@ -19,7 +19,7 @@ describe('controllers/insurance/business/save-data/broker - API error', () => {
 
     it('should throw an error', async () => {
       try {
-        await broker.save(mockApplication, mockFormBody);
+        await save.broker(mockApplication, mockFormBody);
       } catch (err) {
         const expected = new Error("Updating application's broker");
         expect(err).toEqual(expected);

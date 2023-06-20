@@ -5,7 +5,7 @@ import { FIELDS } from '../../../../content-strings/fields/insurance/your-busine
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
-import natureOfBusiness from '../map-and-save/nature-of-business';
+import mapAndSave from '../map-and-save/nature-of-business';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
@@ -126,7 +126,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
   });
 
   describe('post', () => {
-    natureOfBusiness.mapAndSave = jest.fn(() => Promise.resolve(true));
+    mapAndSave.natureOfBusiness = jest.fn(() => Promise.resolve(true));
 
     describe('when there are validation errors', () => {
       it('should render template with validation errors', async () => {
@@ -171,14 +171,14 @@ describe('controllers/insurance/business/nature-of-business', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call natureOfBusiness.mapAndSave once with natureOfBusiness and application', async () => {
+      it('should call mapAndSave.natureOfBusiness once with natureOfBusiness and application', async () => {
         req.body = body;
 
         await post(req, res);
 
-        expect(natureOfBusiness.mapAndSave).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.natureOfBusiness).toHaveBeenCalledTimes(1);
 
-        expect(natureOfBusiness.mapAndSave).toHaveBeenCalledWith(req.body, mockApplication);
+        expect(mapAndSave.natureOfBusiness).toHaveBeenCalledWith(req.body, mockApplication);
       });
 
       describe("when the url's last substring is `change`", () => {

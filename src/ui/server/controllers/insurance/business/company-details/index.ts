@@ -6,7 +6,7 @@ import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import companiesHouseSearch from './helpers/companies-house-search.helper';
 import companyDetailsValidation from './validation/company-details';
 import { isPopulatedArray } from '../../../../helpers/array';
-import companyDetails from '../map-and-save/company-details';
+import mapAndSave from '../map-and-save/company-details';
 import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-house-summary-list';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
@@ -258,7 +258,7 @@ const post = async (req: Request, res: Response) => {
     };
 
     // if no errors, then runs save api call to db
-    const saveResponse = await companyDetails.mapAndSave(updateBody, application);
+    const saveResponse = await mapAndSave.companyDetails(updateBody, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

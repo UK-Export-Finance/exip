@@ -6,7 +6,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
-import turnover from '../map-and-save/turnover';
+import mapAndSave from '../map-and-save/turnover';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -109,7 +109,7 @@ describe('controllers/insurance/business/turnover', () => {
   });
 
   describe('post', () => {
-    turnover.mapAndSave = jest.fn(() => Promise.resolve(true));
+    mapAndSave.turnover = jest.fn(() => Promise.resolve(true));
 
     describe('when there are validation errors', () => {
       it('should render template with validation errors', async () => {
@@ -153,14 +153,14 @@ describe('controllers/insurance/business/turnover', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call turnover.mapAndSave once with turnover and application', async () => {
+      it('should call mapAndSave.turnover once with turnover and application', async () => {
         req.body = body;
 
         await post(req, res);
 
-        expect(turnover.mapAndSave).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.turnover).toHaveBeenCalledTimes(1);
 
-        expect(turnover.mapAndSave).toHaveBeenCalledWith(req.body, mockApplication);
+        expect(mapAndSave.turnover).toHaveBeenCalledWith(req.body, mockApplication);
       });
 
       describe("when the url's last substring is `change`", () => {

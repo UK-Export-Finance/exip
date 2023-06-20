@@ -1,4 +1,4 @@
-import contact from '.';
+import save from '.';
 import api from '../../../../../api';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
@@ -29,7 +29,7 @@ describe('controllers/insurance/business/save-data/contact', () => {
     const mockValidationErrors = generateValidationErrors(POSITION, 'error', {});
 
     it(`should call api.keystone.application.update.businessContact with all fields but not ${POSITION}`, async () => {
-      await contact.save(mockApplication, mockFormBody, mockValidationErrors.errorList);
+      await save.contact(mockApplication, mockFormBody, mockValidationErrors.errorList);
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
@@ -39,7 +39,7 @@ describe('controllers/insurance/business/save-data/contact', () => {
     });
 
     it('should return the API response', async () => {
-      const result = await contact.save(mockApplication, mockFormBody);
+      const result = await save.contact(mockApplication, mockFormBody);
 
       expect(result).toEqual(mockUpdateApplicationResponse);
     });
@@ -47,7 +47,7 @@ describe('controllers/insurance/business/save-data/contact', () => {
 
   describe('when errorList is NOT provided', () => {
     it('should call api.keystone.application.update.businessContact with all fields', async () => {
-      await contact.save(mockApplication, mockFormBody);
+      await save.contact(mockApplication, mockFormBody);
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
@@ -57,7 +57,7 @@ describe('controllers/insurance/business/save-data/contact', () => {
     });
 
     it('should return the API response', async () => {
-      const result = await contact.save(mockApplication, mockFormBody);
+      const result = await save.contact(mockApplication, mockFormBody);
 
       expect(result).toEqual(mockUpdateApplicationResponse);
     });

@@ -7,7 +7,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
-import broker from '../map-and-save/broker';
+import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockBroker } from '../../../../test-mocks';
 
@@ -134,7 +134,7 @@ describe('controllers/insurance/business/broker', () => {
   });
 
   describe('post', () => {
-    broker.mapAndSave = jest.fn(() => Promise.resolve(true));
+    mapAndSave.broker = jest.fn(() => Promise.resolve(true));
 
     describe('when there are validation errors', () => {
       it('should render template with validation errors', async () => {
@@ -172,14 +172,14 @@ describe('controllers/insurance/business/broker', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call broker.mapAndSave once with broker and application', async () => {
+      it('should call mapAndSave.broker once with broker and application', async () => {
         req.body = mockBroker;
 
         await post(req, res);
 
-        expect(broker.mapAndSave).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
 
-        expect(broker.mapAndSave).toHaveBeenCalledWith(req.body, mockApplication);
+        expect(mapAndSave.broker).toHaveBeenCalledWith(req.body, mockApplication);
       });
 
       describe("when the url's last substring is `check-and-change`", () => {

@@ -2,7 +2,7 @@ import { Request, Response } from '../../../../../../types';
 import { post } from '.';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { mockReq, mockRes, mockApplication, mockBroker } from '../../../../../test-mocks';
-import broker from '../../map-and-save/broker';
+import mapAndSave from '../../map-and-save/broker';
 
 const {
   EXPORTER_BUSINESS: {
@@ -24,7 +24,7 @@ describe('controllers/insurance/business/broker/save-and-back', () => {
 
     res.locals.application = mockApplication;
 
-    broker.mapAndSave = updateMapAndSave;
+    mapAndSave.broker = updateMapAndSave;
   });
 
   afterAll(() => {
@@ -64,7 +64,7 @@ describe('controllers/insurance/business/broker/save-and-back', () => {
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call broker.mapAndSave once', async () => {
+      it('should call mapAndSave.broker once', async () => {
         req.body = {
           [NAME]: 'Test',
           [POSTCODE]: 'SW1',
@@ -88,11 +88,11 @@ describe('controllers/insurance/business/broker/save-and-back', () => {
       });
     });
 
-    describe('when broker.mapAndSave fails', () => {
+    describe('when mapAndSave.broker fails', () => {
       beforeEach(() => {
         res.locals = { csrfToken: '1234' };
         updateMapAndSave = jest.fn(() => Promise.reject());
-        broker.mapAndSave = updateMapAndSave;
+        mapAndSave.broker = updateMapAndSave;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {

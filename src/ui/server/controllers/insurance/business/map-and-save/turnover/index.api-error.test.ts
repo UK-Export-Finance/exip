@@ -1,5 +1,5 @@
-import turnover from '.';
-import businessSave from '../../save-data/business';
+import mapAndSave from '.';
+import save from '../../save-data/business';
 import { mockApplication } from '../../../../../test-mocks';
 import { FIELD_IDS } from '../../../../../constants';
 
@@ -19,15 +19,15 @@ describe('controllers/insurance/business/map-and-save/turnover - API error', () 
   };
 
   const mockSaveBusiness = jest.fn(() => Promise.resolve({}));
-  businessSave.save = mockSaveBusiness;
+  save.business = mockSaveBusiness;
 
   describe('when save application business call does not return anything', () => {
     beforeEach(() => {
-      businessSave.save = jest.fn(() => Promise.resolve());
+      save.business = jest.fn(() => Promise.resolve());
     });
 
     it('should return false', async () => {
-      const result = await turnover.mapAndSave(mockFormBody, mockApplication);
+      const result = await mapAndSave.turnover(mockFormBody, mockApplication);
 
       expect(result).toEqual(false);
     });
@@ -35,11 +35,11 @@ describe('controllers/insurance/business/map-and-save/turnover - API error', () 
 
   describe('when save application business call fails', () => {
     beforeEach(() => {
-      businessSave.save = jest.fn(() => Promise.reject(new Error('Mock error')));
+      save.business = jest.fn(() => Promise.reject(new Error('Mock error')));
     });
 
     it('should return false', async () => {
-      const result = await turnover.mapAndSave(mockFormBody, mockApplication);
+      const result = await mapAndSave.turnover(mockFormBody, mockApplication);
 
       expect(result).toEqual(false);
     });

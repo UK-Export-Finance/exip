@@ -1,5 +1,5 @@
-import contact from '.';
-import contactSave from '../../save-data/contact';
+import mapAndSave from '.';
+import save from '../../save-data/contact';
 import { mockApplication, mockBusiness } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { FIELD_IDS } from '../../../../../constants';
@@ -21,36 +21,36 @@ describe('controllers/insurance/business/map-and-save/contact', () => {
   };
 
   const mockSaveContact = jest.fn(() => Promise.resolve({}));
-  contactSave.save = mockSaveContact;
+  save.contact = mockSaveContact;
 
   const mockValidationErrors = generateValidationErrors(POSITION, 'error', {});
 
   describe('when the form has data', () => {
     describe('when the form has validation errors ', () => {
-      it('should call contactSave.save with application, populated submitted data and validationErrors.errorList', async () => {
-        await contact.mapAndSave(mockFormBody, mockApplication, mockValidationErrors);
+      it('should call save.contact with application, populated submitted data and validationErrors.errorList', async () => {
+        await mapAndSave.contact(mockFormBody, mockApplication, mockValidationErrors);
 
-        expect(contactSave.save).toHaveBeenCalledTimes(1);
-        expect(contactSave.save).toHaveBeenCalledWith(mockApplication, mockFormBody, mockValidationErrors?.errorList);
+        expect(save.contact).toHaveBeenCalledTimes(1);
+        expect(save.contact).toHaveBeenCalledWith(mockApplication, mockFormBody, mockValidationErrors?.errorList);
       });
 
       it('should return true', async () => {
-        const result = await contact.mapAndSave(mockFormBody, mockApplication, mockValidationErrors);
+        const result = await mapAndSave.contact(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
     });
 
     describe('when the form does NOT have validation errors ', () => {
-      it('should call contactSave.save with application and populated submitted data', async () => {
-        await contact.mapAndSave(mockFormBody, mockApplication);
+      it('should call save.contact with application and populated submitted data', async () => {
+        await mapAndSave.contact(mockFormBody, mockApplication);
 
-        expect(contactSave.save).toHaveBeenCalledTimes(1);
-        expect(contactSave.save).toHaveBeenCalledWith(mockApplication, mockFormBody);
+        expect(save.contact).toHaveBeenCalledTimes(1);
+        expect(save.contact).toHaveBeenCalledWith(mockApplication, mockFormBody);
       });
 
       it('should return true', async () => {
-        const result = await contact.mapAndSave(mockFormBody, mockApplication, mockValidationErrors);
+        const result = await mapAndSave.contact(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
@@ -61,7 +61,7 @@ describe('controllers/insurance/business/map-and-save/contact', () => {
     it('should return true', async () => {
       const emptyMockFormBody = { _csrf: '1234' };
 
-      const result = await contact.mapAndSave(emptyMockFormBody, mockApplication, mockValidationErrors);
+      const result = await mapAndSave.contact(emptyMockFormBody, mockApplication, mockValidationErrors);
 
       expect(result).toEqual(true);
     });

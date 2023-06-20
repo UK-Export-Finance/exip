@@ -12,7 +12,7 @@ import { Application, RequestBody } from '../../../../../../types';
  * @param {Object} errorList
  * @returns {Object} saveResponse from api
  */
-const save = async (application: Application, formBody: RequestBody, errorList?: object) => {
+const companyDetails = async (application: Application, formBody: RequestBody, errorList?: object) => {
   // determines which fields to save
   const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList));
 
@@ -31,4 +31,4 @@ const save = async (application: Application, formBody: RequestBody, errorList?:
   }
 };
 
-export default { save };
+export default { companyDetails };

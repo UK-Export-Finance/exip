@@ -1,4 +1,4 @@
-import companyDetails from '.';
+import save from '.';
 import api from '../../../../../api';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
@@ -31,7 +31,7 @@ describe('controllers/insurance/business/save-data/company-details', () => {
     const mockValidationErrors = generateValidationErrors(PHONE_NUMBER, 'error', {});
 
     it(`should call api.keystone.application.update.company with ${TRADING_ADDRESS}, ${TRADING_NAME} but not ${PHONE_NUMBER}`, async () => {
-      await companyDetails.save(mockApplication, mockFormBody, mockValidationErrors.errorList);
+      await save.companyDetails(mockApplication, mockFormBody, mockValidationErrors.errorList);
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
@@ -41,7 +41,7 @@ describe('controllers/insurance/business/save-data/company-details', () => {
     });
 
     it('should return the API response', async () => {
-      const result = await companyDetails.save(mockApplication, mockFormBody);
+      const result = await save.companyDetails(mockApplication, mockFormBody);
 
       expect(result).toEqual(mockUpdateApplicationResponse);
     });
@@ -49,7 +49,7 @@ describe('controllers/insurance/business/save-data/company-details', () => {
 
   describe('when errorList is NOT provided', () => {
     it(`should call api.keystone.application.update.company with ${TRADING_ADDRESS}, ${TRADING_NAME} and ${PHONE_NUMBER}`, async () => {
-      await companyDetails.save(mockApplication, mockFormBody);
+      await save.companyDetails(mockApplication, mockFormBody);
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
@@ -59,7 +59,7 @@ describe('controllers/insurance/business/save-data/company-details', () => {
     });
 
     it('should return the API response', async () => {
-      const result = await companyDetails.save(mockApplication, mockFormBody);
+      const result = await save.companyDetails(mockApplication, mockFormBody);
 
       expect(result).toEqual(mockUpdateApplicationResponse);
     });

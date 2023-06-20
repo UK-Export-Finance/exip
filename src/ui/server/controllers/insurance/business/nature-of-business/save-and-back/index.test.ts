@@ -2,7 +2,7 @@ import { Request, Response } from '../../../../../../types';
 import { post } from '.';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { mockReq, mockRes, mockApplication, mockBusinessNatureOfBusiness } from '../../../../../test-mocks';
-import natureOfBusiness from '../../map-and-save/nature-of-business';
+import mapAndSave from '../../map-and-save/nature-of-business';
 
 const {
   EXPORTER_BUSINESS: {
@@ -23,7 +23,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
 
     res.locals.application = mockApplication;
 
-    natureOfBusiness.mapAndSave = updateMapAndSave;
+    mapAndSave.natureOfBusiness = updateMapAndSave;
   });
 
   afterAll(() => {
@@ -42,7 +42,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call natureOfBusiness.mapAndSave once', async () => {
+      it('should call mapAndSave.natureOfBusiness once', async () => {
         req.body = {
           ...mockBusinessNatureOfBusiness,
         };
@@ -65,7 +65,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call natureOfBusiness.mapAndSave once', async () => {
+      it('should call mapAndSave.natureOfBusiness once', async () => {
         req.body = {
           [YEARS_EXPORTING]: '5O',
           [EMPLOYEES_UK]: '2000',
@@ -89,11 +89,11 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
       });
     });
 
-    describe('when natureOfBusiness.mapAndSave fails', () => {
+    describe('when mapAndSave.natureOfBusiness fails', () => {
       beforeEach(() => {
         res.locals = { csrfToken: '1234' };
         updateMapAndSave = jest.fn(() => Promise.reject());
-        natureOfBusiness.mapAndSave = updateMapAndSave;
+        mapAndSave.natureOfBusiness = updateMapAndSave;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {

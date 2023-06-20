@@ -1,7 +1,7 @@
 import { Request, Response } from '../../../../../../types';
 import { ROUTES } from '../../../../../constants';
 import generateValidationErrors from '../validation';
-import contact from '../../map-and-save/contact';
+import mapAndSave from '../../map-and-save/contact';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -26,7 +26,7 @@ const post = async (req: Request, res: Response) => {
     const validationErrors = generateValidationErrors(body);
 
     // runs save and go back commmand
-    const saveResponse = await contact.mapAndSave(body, application, validationErrors);
+    const saveResponse = await mapAndSave.contact(body, application, validationErrors);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

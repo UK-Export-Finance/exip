@@ -1,4 +1,4 @@
-import business from '.';
+import save from '.';
 import api from '../../../../../api';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
@@ -32,7 +32,7 @@ describe('controllers/insurance/business/save-data/business', () => {
     const mockValidationErrors = generateValidationErrors(EMPLOYEES_UK, 'error', {});
 
     it(`should call api.keystone.application.update.business with ${GOODS_OR_SERVICES}, ${YEARS_EXPORTING}, ${EMPLOYEES_INTERNATIONAL} but not ${EMPLOYEES_UK}`, async () => {
-      await business.save(mockApplication, mockFormBody, mockValidationErrors.errorList);
+      await save.business(mockApplication, mockFormBody, mockValidationErrors.errorList);
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
@@ -42,7 +42,7 @@ describe('controllers/insurance/business/save-data/business', () => {
     });
 
     it('should return the API response', async () => {
-      const result = await business.save(mockApplication, mockFormBody);
+      const result = await save.business(mockApplication, mockFormBody);
 
       expect(result).toEqual(mockUpdateApplicationResponse);
     });
@@ -50,7 +50,7 @@ describe('controllers/insurance/business/save-data/business', () => {
 
   describe('when errorList is NOT provided', () => {
     it(`should call api.keystone.application.update.business with ${GOODS_OR_SERVICES}, ${YEARS_EXPORTING}, ${EMPLOYEES_INTERNATIONAL} and ${EMPLOYEES_UK}`, async () => {
-      await business.save(mockApplication, mockFormBody);
+      await save.business(mockApplication, mockFormBody);
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
@@ -60,7 +60,7 @@ describe('controllers/insurance/business/save-data/business', () => {
     });
 
     it('should return the API response', async () => {
-      const result = await business.save(mockApplication, mockFormBody);
+      const result = await save.business(mockApplication, mockFormBody);
 
       expect(result).toEqual(mockUpdateApplicationResponse);
     });

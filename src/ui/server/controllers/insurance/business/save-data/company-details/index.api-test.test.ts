@@ -1,4 +1,4 @@
-import companyDetails from '.';
+import save from '.';
 import api from '../../../../../api';
 import { FIELD_IDS } from '../../../../../constants';
 import { mockApplication } from '../../../../../test-mocks';
@@ -31,7 +31,7 @@ describe('controllers/insurance/business/save-data/company-details - API error',
 
     it('should throw an error', async () => {
       try {
-        await companyDetails.save(mockApplication, mockFormBody);
+        await save.companyDetails(mockApplication, mockFormBody);
       } catch (err) {
         const expected = new Error("Updating application's companyDetails");
         expect(err).toEqual(expected);

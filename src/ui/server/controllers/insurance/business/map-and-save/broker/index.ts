@@ -1,6 +1,6 @@
 import hasFormData from '../../../../../helpers/has-form-data';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
-import broker from '../../save-data/broker';
+import save from '../../save-data/broker';
 
 /**
  * maps broker request and calls save function
@@ -10,16 +10,16 @@ import broker from '../../save-data/broker';
  * @param {Object} validationErrors
  * @returns {Boolean}
  */
-const mapAndSave = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
+const broker = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
       // maps through formBody and puts fields in correct format
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await broker.save(application, formBody, validationErrors.errorList);
+        saveResponse = await save.broker(application, formBody, validationErrors.errorList);
       } else {
-        saveResponse = await broker.save(application, formBody);
+        saveResponse = await save.broker(application, formBody);
       }
 
       if (!saveResponse) {
@@ -31,9 +31,9 @@ const mapAndSave = async (formBody: RequestBody, application: Application, valid
 
     return true;
   } catch (err) {
-    console.error('Error mapping and saving broker section of application', { err });
+    console.error('Error mapping and saving business - broker section of application', { err });
     return false;
   }
 };
 
-export default { mapAndSave };
+export default { broker };
