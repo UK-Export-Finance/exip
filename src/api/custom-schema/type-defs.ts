@@ -142,6 +142,7 @@ const typeDefs = `
     success: Boolean!
     token: String
     expired: Boolean
+    invalid: Boolean
     accountId: String
   }
 
