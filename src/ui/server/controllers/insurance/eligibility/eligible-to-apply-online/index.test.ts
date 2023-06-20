@@ -77,6 +77,12 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
         };
       });
 
+      it('should wipe req.session.submittedData.insuranceEligibility', async () => {
+        await post(req, res);
+
+        expect(req.session.submittedData.insuranceEligibility).toEqual({});
+      });
+
       it('should call api.keystone.application.create', async () => {
         const eligibilityAnswers = req.session.submittedData.insuranceEligibility;
 
@@ -87,18 +93,6 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
         const sanitisedData = sanitiseData(eligibilityAnswers);
 
         expect(createApplicationSpy).toHaveBeenCalledWith(sanitisedData, mockAccount.id);
-      });
-
-      it('should mark req.session.requestedApplicationCreation as false', async () => {
-        await post(req, res);
-
-        expect(req.session.requestedApplicationCreation).toEqual(false);
-      });
-
-      it('should wipe req.session.submittedData.insuranceEligibility', async () => {
-        await post(req, res);
-
-        expect(req.session.submittedData.insuranceEligibility).toEqual({});
       });
 
       it(`should redirect to ${ALL_SECTIONS}`, async () => {

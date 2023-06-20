@@ -9,7 +9,6 @@ describe('server/helpers/can-create-an-application', () => {
           insuranceEligibility: mockEligibility,
           quoteEligibility: {},
         },
-        requestedApplicationCreation: false,
       };
 
       const result = canCreateAnApplication(mockSession);
@@ -25,23 +24,6 @@ describe('server/helpers/can-create-an-application', () => {
           insuranceEligibility: {},
           quoteEligibility: {},
         },
-        requestedApplicationCreation: false,
-      };
-
-      const result = canCreateAnApplication(mockSession);
-
-      expect(result).toEqual(false);
-    });
-  });
-
-  describe('when session.requestedApplicationCreation is true', () => {
-    it('should return false', () => {
-      const mockSession = {
-        submittedData: {
-          insuranceEligibility: mockEligibility,
-          quoteEligibility: {},
-        },
-        requestedApplicationCreation: true,
       };
 
       const result = canCreateAnApplication(mockSession);

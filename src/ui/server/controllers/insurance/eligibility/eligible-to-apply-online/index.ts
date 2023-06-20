@@ -36,21 +36,17 @@ export const post = async (req: Request, res: Response) => {
      * 5) Redirect to the application
      */
     if (req.session.user && canCreateAnApplication(req.session)) {
-      req.session.requestedApplicationCreation = true;
-
       const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
 
-      const application = await api.keystone.application.create(eligibilityAnswers, req.session.user.id);
+      req.session.submittedData.insuranceEligibility = {};
 
-      req.session.requestedApplicationCreation = false;
+      const application = await api.keystone.application.create(eligibilityAnswers, req.session.user.id);
 
       if (!application) {
         console.error('Error creating application');
 
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
-
-      req.session.submittedData.insuranceEligibility = {};
 
       const applicationUrl = `${INSURANCE_ROOT}/${application.referenceNumber}${ALL_SECTIONS}`;
 
