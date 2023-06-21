@@ -1,7 +1,7 @@
 import { Request, Response } from '../../../../../../types';
 import { TEMPLATES, ROUTES } from '../../../../../constants';
 import generateValidationErrors from '../validation';
-import mapAndSave from '../../map-and-save';
+import mapAndSave from '../../map-and-save/broker';
 
 const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 

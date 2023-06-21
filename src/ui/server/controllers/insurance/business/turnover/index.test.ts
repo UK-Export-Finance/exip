@@ -6,7 +6,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/turnover';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -27,7 +27,7 @@ const { TURNOVER_SAVE_AND_BACK, BROKER_ROOT, CHECK_YOUR_ANSWERS, TURNOVER_CHANGE
 
 const { TURNOVER: TURNOVER_FIELDS } = FIELDS;
 
-jest.mock('../map-and-save');
+jest.mock('../map-and-save/turnover');
 
 describe('controllers/insurance/business/turnover', () => {
   let req: Request;

@@ -1,7 +1,7 @@
 import { Request, Response } from '../../../../../../types';
 import { ROUTES } from '../../../../../constants';
 import generateValidationErrors from '../validation';
-import mapAndSave from '../../map-and-save';
+import mapAndSave from '../../map-and-save/contact';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 

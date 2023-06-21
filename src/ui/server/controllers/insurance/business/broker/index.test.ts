@@ -7,7 +7,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockBroker } from '../../../../test-mocks';
 

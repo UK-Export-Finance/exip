@@ -10,7 +10,7 @@ import generateValidationErrors from './validation';
 import { FIELDS, ACCOUNT_FIELDS } from '../../../../content-strings/fields/insurance';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockBusinessContact } from '../../../../test-mocks';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/contact';
 import getFromSessionOrApplication from '../../../../helpers/get-values-from-user-session-or-application';
 
 const { BUSINESS } = FIELD_IDS;

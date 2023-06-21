@@ -3,7 +3,7 @@ import { post } from '.';
 import { ROUTES } from '../../../../../constants';
 import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
-import mapAndSave from '../../map-and-save';
+import mapAndSave from '../../map-and-save/contact';
 import ACCOUNT_FIELD_IDS from '../../../../../constants/field-ids/insurance/account';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
