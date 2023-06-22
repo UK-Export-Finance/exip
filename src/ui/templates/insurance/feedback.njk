@@ -1,9 +1,9 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% import '../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -188,12 +188,8 @@
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
         <div class="govuk-button-group">
-          {{ govukButton({
-            text: CONTENT_STRINGS.BUTTONS.SEND_FEEDBACK,
-            attributes: {
-              'data-cy': 'submit-button',
-              id: 'submit-button'
-            }
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.SEND_FEEDBACK
           }) }}
         </div>
       </div>

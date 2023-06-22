@@ -6,6 +6,7 @@
 {% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
 {% from "govuk/components/hint/macro.njk" import govukHint %}
 {% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+{% import '../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -74,12 +75,8 @@
         }) }}
 
         <div class="govuk-button-group">
-          {{ govukButton({
-            text: CONTENT_STRINGS.BUTTONS.CONTINUE,
-            attributes: {
-              'data-cy': 'submit-button',
-              id: 'submit-button'
-            }
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE
           }) }}
 
           {{ govukButton({

@@ -1,7 +1,7 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
-{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% import '../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -38,12 +38,8 @@
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
-    {{ govukButton({
-      text: CONTENT_STRINGS.SUBMIT_BUTTON,
-      attributes: {
-        'data-cy': 'submit-button',
-              id: 'submit-button'
-      }
+    {{ submitButton.render({
+      text: CONTENT_STRINGS.SUBMIT_BUTTON
     }) }}
 
   </form>
