@@ -12,16 +12,6 @@ var disableButton = function () {
 };
 
 /**
- * Enable the submit button.
- * This ensures that the button is not disabled.
- */
-var enableButton = function () {
-  submitButton.removeAttribute('disabled');
-  submitButton.removeAttribute('aria-disabled');
-  submitButton.classList.remove('govuk-button--disabled');
-};
-
-/**
  * If a form exists,
  * Add a submit event listener.
  * When submitted, disable the submit button
