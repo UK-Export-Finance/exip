@@ -2,20 +2,20 @@ import mockIndustrySectors from '../../test-mocks/mock-industry-sectors';
 import { mapCompaniesHouseFields } from '.';
 import createFullTimestampFromDayAndMonth from '../create-full-timestamp-from-day-month';
 import mapSicCodeDescriptions from '../map-sic-code-descriptions';
-import { CompanyHouseAPI } from '../../types';
+import { CompaniesHouseResponse } from '../../types';
 
 describe('mapCompaniesHouseFields()', () => {
-  const companyHouseResponseMock = {
+  const companiesHouseResponseMock = {
     company_name: 'Test name',
     registered_office_address: {
-      care_of: null,
-      premises: null,
+      care_of: undefined,
+      premises: undefined,
       address_line_1: '10',
-      address_line_2: null,
+      address_line_2: undefined,
       locality: 'Westminster',
       region: 'London',
       postal_code: 'SW1A 2HQ',
-      country: null,
+      country: undefined,
     },
     company_number: '123',
     date_of_creation: '2022-05-10',
@@ -28,31 +28,31 @@ describe('mapCompaniesHouseFields()', () => {
         month: '12',
       },
     },
-  } as CompanyHouseAPI;
+  } as CompaniesHouseResponse;
 
-  describe('when some fields from the response are null', () => {
-    it('should return a response with certain fields as null which are not present in response', () => {
-      const result = mapCompaniesHouseFields(companyHouseResponseMock, mockIndustrySectors);
+  describe('when some fields from the response are undefined', () => {
+    it('should return a response with certain fields as undefined which are not present in response', () => {
+      const result = mapCompaniesHouseFields(companiesHouseResponseMock, mockIndustrySectors);
 
       const expected = {
-        companyName: companyHouseResponseMock.company_name,
+        companyName: companiesHouseResponseMock.company_name,
         registeredOfficeAddress: {
-          careOf: null,
-          premises: null,
-          addressLine1: companyHouseResponseMock.registered_office_address.address_line_1,
-          addressLine2: null,
-          locality: companyHouseResponseMock.registered_office_address.locality,
-          region: companyHouseResponseMock.registered_office_address.region,
-          postalCode: companyHouseResponseMock.registered_office_address.postal_code,
-          country: null,
+          careOf: undefined,
+          premises: undefined,
+          addressLine1: companiesHouseResponseMock.registered_office_address.address_line_1,
+          addressLine2: undefined,
+          locality: companiesHouseResponseMock.registered_office_address.locality,
+          region: companiesHouseResponseMock.registered_office_address.region,
+          postalCode: companiesHouseResponseMock.registered_office_address.postal_code,
+          country: undefined,
         },
-        companyNumber: companyHouseResponseMock.company_number,
-        dateOfCreation: companyHouseResponseMock.date_of_creation,
-        sicCodes: companyHouseResponseMock.sic_codes,
-        industrySectorNames: mapSicCodeDescriptions(companyHouseResponseMock.sic_codes, mockIndustrySectors),
+        companyNumber: companiesHouseResponseMock.company_number,
+        dateOfCreation: companiesHouseResponseMock.date_of_creation,
+        sicCodes: companiesHouseResponseMock.sic_codes,
+        industrySectorNames: mapSicCodeDescriptions(companiesHouseResponseMock.sic_codes, mockIndustrySectors),
         financialYearEndDate: createFullTimestampFromDayAndMonth(
-          companyHouseResponseMock.accounts.accounting_reference_date.day,
-          companyHouseResponseMock.accounts.accounting_reference_date.month,
+          companiesHouseResponseMock.accounts.accounting_reference_date.day,
+          companiesHouseResponseMock.accounts.accounting_reference_date.month,
         ),
       };
 
@@ -62,32 +62,32 @@ describe('mapCompaniesHouseFields()', () => {
 
   describe('when all fields are present in the response', () => {
     it('should return a response with all fields completed', () => {
-      companyHouseResponseMock.registered_office_address.care_of = 'tester';
-      companyHouseResponseMock.registered_office_address.premises = 'building';
-      companyHouseResponseMock.registered_office_address.address_line_2 = 'Downing';
-      companyHouseResponseMock.registered_office_address.country = 'United Kingdom';
+      companiesHouseResponseMock.registered_office_address.care_of = 'tester';
+      companiesHouseResponseMock.registered_office_address.premises = 'building';
+      companiesHouseResponseMock.registered_office_address.address_line_2 = 'Downing';
+      companiesHouseResponseMock.registered_office_address.country = 'United Kingdom';
 
-      const result = mapCompaniesHouseFields(companyHouseResponseMock, mockIndustrySectors);
+      const result = mapCompaniesHouseFields(companiesHouseResponseMock, mockIndustrySectors);
 
       const expected = {
-        companyName: companyHouseResponseMock.company_name,
+        companyName: companiesHouseResponseMock.company_name,
         registeredOfficeAddress: {
           careOf: 'tester',
           premises: 'building',
-          addressLine1: companyHouseResponseMock.registered_office_address.address_line_1,
+          addressLine1: companiesHouseResponseMock.registered_office_address.address_line_1,
           addressLine2: 'Downing',
-          locality: companyHouseResponseMock.registered_office_address.locality,
-          region: companyHouseResponseMock.registered_office_address.region,
-          postalCode: companyHouseResponseMock.registered_office_address.postal_code,
+          locality: companiesHouseResponseMock.registered_office_address.locality,
+          region: companiesHouseResponseMock.registered_office_address.region,
+          postalCode: companiesHouseResponseMock.registered_office_address.postal_code,
           country: 'United Kingdom',
         },
-        companyNumber: companyHouseResponseMock.company_number,
-        dateOfCreation: companyHouseResponseMock.date_of_creation,
-        sicCodes: companyHouseResponseMock.sic_codes,
-        industrySectorNames: mapSicCodeDescriptions(companyHouseResponseMock.sic_codes, mockIndustrySectors),
+        companyNumber: companiesHouseResponseMock.company_number,
+        dateOfCreation: companiesHouseResponseMock.date_of_creation,
+        sicCodes: companiesHouseResponseMock.sic_codes,
+        industrySectorNames: mapSicCodeDescriptions(companiesHouseResponseMock.sic_codes, mockIndustrySectors),
         financialYearEndDate: createFullTimestampFromDayAndMonth(
-          companyHouseResponseMock.accounts.accounting_reference_date.day,
-          companyHouseResponseMock.accounts.accounting_reference_date.month,
+          companiesHouseResponseMock.accounts.accounting_reference_date.day,
+          companiesHouseResponseMock.accounts.accounting_reference_date.month,
         ),
       };
 

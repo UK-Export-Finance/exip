@@ -1,6 +1,6 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
-import { CompanyHouseAPIResponse } from '../../types';
+import { CompaniesHouseAPIResponse } from '../../types';
 
 dotenv.config();
 
@@ -11,10 +11,10 @@ const companiesHouseURL: any = process.env.COMPANIES_HOUSE_API_URL;
  * getCompanyHouseDetails
  * makes companies house API call and returns company
  * @param {String} companyNumber
- * @returns {CompanyHouseAPIResponse} CompanyHouseResponse object
+ * @returns {CompaniesHouseAPIResponse} CompanyHouseResponse object
  */
 const companiesHouse = {
-  getCompanyHouseDetails: async (companyNumber: string): Promise<CompanyHouseAPIResponse> => {
+  getCompanyHouseDetails: async (companyNumber: string): Promise<CompaniesHouseAPIResponse> => {
     try {
       const response = await axios({
         method: 'get',
@@ -26,7 +26,7 @@ const companiesHouse = {
         },
       });
 
-      // if no data in response or status is not 200 then return blank object
+      // if no data in response or status is not 200 then return success as false
       if (!response.data || response.status !== 200) {
         return {
           success: false,

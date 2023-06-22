@@ -15,7 +15,7 @@ const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHo
   try {
     const { companiesHouseNumber } = variables;
 
-    console.info('Calling Companies House API for ', companiesHouseNumber);
+    console.info('Getting Companies House information for ', companiesHouseNumber);
 
     const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, '0');
 

@@ -4255,7 +4255,7 @@ var companies_house_default = companiesHouse;
 var getCompaniesHouseInformation = async (root, variables) => {
   try {
     const { companiesHouseNumber } = variables;
-    console.info("Calling Companies House API for ", companiesHouseNumber);
+    console.info("Getting Companies House information for ", companiesHouseNumber);
     const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, "0");
     const response = await companies_house_default.getCompanyHouseDetails(sanitisedRegNo);
     if (!response.success || !response.data) {

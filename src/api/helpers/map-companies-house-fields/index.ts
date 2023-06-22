@@ -1,12 +1,12 @@
 import createFullTimestampFromDayAndMonth from '../create-full-timestamp-from-day-month';
 import mapSicCodeDescriptions from '../map-sic-code-descriptions';
-import { IndustrySector, CompanyHouseAPI } from '../../types';
+import { IndustrySector, CompaniesHouseResponse } from '../../types';
 
 /**
  * mapping function to change names to camel case
  * response from companies house API does not follow camel case so requires mapping and conversion
  */
-const mapCompaniesHouseFields = (companiesHouseResponse: CompanyHouseAPI, sectors: Array<IndustrySector>) => {
+const mapCompaniesHouseFields = (companiesHouseResponse: CompaniesHouseResponse, sectors: Array<IndustrySector>) => {
   return {
     companyName: companiesHouseResponse.company_name,
     registeredOfficeAddress: {
