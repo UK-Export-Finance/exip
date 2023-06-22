@@ -34,7 +34,7 @@
   {% endif %}
 
   <div class="govuk-grid-row">
-    <form method="POST" novalidate>
+    <form method="POST" id="form" novalidate>
       <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
@@ -198,6 +198,7 @@
             text: CONTENT_STRINGS.BUTTONS.CONTINUE,
             attributes: {
               'data-cy': 'submit-button',
+              id: 'submit-button',
               'formaction' : POST_ROUTES.COMPANY_DETAILS
             }
           }) }}

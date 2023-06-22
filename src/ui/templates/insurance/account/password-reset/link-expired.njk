@@ -16,7 +16,7 @@
 
       <p class="govuk-body" data-cy="if-you-would-like">{{ CONTENT_STRINGS.IF_YOU_WOULD_LIKE }}</p>
 
-      <form method="POST" novalidate>
+      <form method="POST" id="form" novalidate>
 
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
@@ -24,7 +24,8 @@
           {{ govukButton({
             text: CONTENT_STRINGS.BUTTONS.SEND_NEW_LINK,
             attributes: {
-              'data-cy': 'submit-button'
+              'data-cy': 'submit-button',
+              id: 'submit-button'
             }
           }) }}
         </div>

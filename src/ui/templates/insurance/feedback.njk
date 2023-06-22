@@ -36,7 +36,7 @@
   <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
   <div class="govuk-grid-row">
-    <form method="POST" novalidate>
+    <form method="POST" id="form" novalidate>
       <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
@@ -191,7 +191,8 @@
           {{ govukButton({
             text: CONTENT_STRINGS.BUTTONS.SEND_FEEDBACK,
             attributes: {
-              'data-cy': 'submit-button'
+              'data-cy': 'submit-button',
+              id: 'submit-button'
             }
           }) }}
         </div>

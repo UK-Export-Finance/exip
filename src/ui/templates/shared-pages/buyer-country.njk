@@ -27,7 +27,7 @@
     }) }}
   {% endif %}
 
-  <form method="POST" novalidate>
+  <form method="POST" id="form" novalidate>
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     <input type="hidden" name="{{ HIDDEN_FIELD_ID }}" id="{{ HIDDEN_FIELD_ID }}" value="{{ submittedValues[HIDDEN_FIELD_ID].name }}">
@@ -85,7 +85,8 @@
     {{ govukButton({
       text: CONTENT_STRINGS.BUTTONS.CONTINUE,
       attributes: {
-        'data-cy': 'submit-button'
+        'data-cy': 'submit-button',
+              id: 'submit-button'
       }
     }) }}
 

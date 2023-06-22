@@ -37,7 +37,7 @@
     </div>
   </div>
 
-  <form method="POST" novalidate>
+  <form method="POST" id="form" novalidate>
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
@@ -45,7 +45,8 @@
       text: CONTENT_STRINGS.BUTTONS.START_NOW,
       isStartButton: true,
       attributes: {
-        'data-cy': 'submit-button'
+        'data-cy': 'submit-button',
+        id: 'submit-button'
       }
     }) }}
 

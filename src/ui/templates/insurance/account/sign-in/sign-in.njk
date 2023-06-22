@@ -73,7 +73,7 @@
 
   <p data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
 
-  <form method="POST" novalidate>
+  <form method="POST" id="form" novalidate>
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
@@ -135,7 +135,8 @@
           {{ govukButton({
             text: CONTENT_STRINGS.BUTTONS.CONTINUE,
             attributes: {
-              'data-cy': 'submit-button'
+              'data-cy': 'submit-button',
+              id: 'submit-button'
             }
           }) }}
         </div>
