@@ -143,7 +143,7 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
     });
   });
 
-  describe(`when no account is found from the provided ${REACTIVATION_EXPIRY}`, () => {
+  describe(`when no account is found from the provided ${REACTIVATION_HASH}`, () => {
     test('it should return success=false and invalid=true', async () => {
       variables.token = 'invalid';
 

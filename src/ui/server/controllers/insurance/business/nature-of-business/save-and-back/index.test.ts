@@ -2,7 +2,7 @@ import { Request, Response } from '../../../../../../types';
 import { post } from '.';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { mockReq, mockRes, mockApplication, mockBusinessNatureOfBusiness } from '../../../../../test-mocks';
-import mapAndSave from '../../map-and-save';
+import mapAndSave from '../../map-and-save/nature-of-business';
 
 const {
   EXPORTER_BUSINESS: {

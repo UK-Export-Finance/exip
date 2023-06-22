@@ -5,6 +5,7 @@ const verifyAccountPasswordResetToken = gql`
     verifyAccountPasswordResetToken(token: $token) {
       success
       expired
+      invalid
       accountId
     }
   }

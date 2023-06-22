@@ -57,7 +57,7 @@ describe('controllers/insurance/account/suspended/verify-email', () => {
       api.keystone.account.verifyAccountReactivationToken = verifyAccountReactivationTokenSpy;
     });
 
-    it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED}`, async () => {
+    it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED} with query param`, async () => {
       await get(req, res);
 
       const expected = `${VERIFY_EMAIL_LINK_EXPIRED}?id=${mockAccount.id}`;

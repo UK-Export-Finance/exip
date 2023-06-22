@@ -6,7 +6,7 @@ import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import companiesHouseSearch from './helpers/companies-house-search.helper';
 import companyDetailsValidation from './validation/company-details';
 import { isPopulatedArray } from '../../../../helpers/array';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/company-details';
 import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-house-summary-list';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';

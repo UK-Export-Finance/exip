@@ -8,7 +8,7 @@ import companiesHouseValidation from './validation/companies-house';
 import companyDetailsValidation from './validation/company-details';
 import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from '../../../../test-mocks';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/company-details';
 import api from '../../../../api';
 
 const {
@@ -37,7 +37,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-jest.mock('../map-and-save');
+jest.mock('../map-and-save/company-details');
 
 describe('controllers/insurance/business/companies-details', () => {
   let req: Request;

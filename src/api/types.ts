@@ -237,6 +237,7 @@ interface VerifyEmailAddressVariables {
 interface VerifyEmailAddressResponse extends SuccessResponse {
   accountId?: string;
   expired?: boolean;
+  invalid?: boolean;
   emailRecipient?: string;
 }
 
@@ -288,6 +289,7 @@ interface VerifyAccountPasswordResetTokenVariables {
 interface AccountPasswordResetTokenResponse extends SuccessResponse {
   token?: string;
   expired?: boolean;
+  invalid?: boolean;
   accountId?: string;
 }
 

@@ -24,7 +24,7 @@ import {
   get as suspendedVerifyEmailLinkExpiredGet,
   post as suspendedVerifyEmailLinkExpiredPost,
 } from '../../../controllers/insurance/account/suspended/link-expired';
-import { get as suspendedVerifyEmailLinkInvalidGet } from '../../../controllers/insurance/account/invalid-link';
+import { get as invalidLinkGet } from '../../../controllers/insurance/account/invalid-link';
 import { get as reactivatedGet } from '../../../controllers/insurance/account/reactivated';
 
 // @ts-ignore
@@ -39,6 +39,7 @@ insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.CREATE.CONFIRM_EMAIL_RESENT,
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL, verifyEmailGet);
 
+insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL_LINK_INVALID, invalidLinkGet);
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL_LINK_EXPIRED, verifyEmailLinkExpiredGet);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.ROOT, signInGet);
@@ -57,6 +58,8 @@ insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.LINK_SENT, pa
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.LINK_EXPIRED, passwordResetLinkExpiredGet);
 insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.LINK_EXPIRED, passwordResetLinkExpiredPost);
+
+insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.LINK_INVALID, invalidLinkGet);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD, newPasswordGet);
 insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD, newPasswordPost);
@@ -79,7 +82,7 @@ insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL, susp
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_EXPIRED, suspendedVerifyEmailLinkExpiredGet);
 insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_EXPIRED, suspendedVerifyEmailLinkExpiredPost);
 
-insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_INVALID, suspendedVerifyEmailLinkInvalidGet);
+insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_INVALID, invalidLinkGet);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.REACTIVATED_ROOT, reactivatedGet);
 

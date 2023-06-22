@@ -38,7 +38,7 @@ describe('custom-resolvers/verify-account-password-reset-token', () => {
   });
 
   describe(`when the account does not have ${PASSWORD_RESET_HASH}`, () => {
-    test('it should return success=false', async () => {
+    test('it should return success=false and invalid=true', async () => {
       // update the account so it does not have a PASSWORD_RESET_HASH
       await context.query.Account.updateOne({
         where: { id: account.id },
@@ -49,7 +49,10 @@ describe('custom-resolvers/verify-account-password-reset-token', () => {
 
       result = await verifyAccountPasswordResetToken({}, variables, context);
 
-      const expected = { success: false };
+      const expected = {
+        success: false,
+        invalid: true,
+      };
 
       expect(result).toEqual(expected);
     });
@@ -81,6 +84,26 @@ describe('custom-resolvers/verify-account-password-reset-token', () => {
     });
   });
 
+  describe(`when no account is found from the provided ${PASSWORD_RESET_HASH}`, () => {
+    test('it should return success=false and invalid=true', async () => {
+      // update the account so PASSWORD_RESET_HASH has a value
+      await context.query.Account.updateOne({
+        where: { id: account.id },
+        data: {
+          [PASSWORD_RESET_HASH]: mockAccount[PASSWORD_RESET_HASH],
+        },
+      });
+
+      variables.token = 'invalid';
+
+      result = await verifyAccountPasswordResetToken({}, variables, context);
+
+      const expected = { success: false, invalid: true };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('when no account is found', () => {
     test('it should return success=false', async () => {
       // wipe accounts so an account will not be found.
@@ -88,7 +111,10 @@ describe('custom-resolvers/verify-account-password-reset-token', () => {
 
       result = await verifyAccountPasswordResetToken({}, variables, context);
 
-      const expected = { success: false };
+      const expected = {
+        success: false,
+        invalid: true,
+      };
 
       expect(result).toEqual(expected);
     });
