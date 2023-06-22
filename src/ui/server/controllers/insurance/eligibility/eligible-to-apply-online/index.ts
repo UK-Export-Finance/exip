@@ -28,12 +28,11 @@ export const get = (req: Request, res: Response) =>
 export const post = async (req: Request, res: Response) => {
   try {
     /**
-     * If the user is signed in and there are eligibility answers in the session:
-     * 1) Add requestedApplicationCreation to the session
-     * 2) Create an application
-     * 3) Remove requestedApplicationCreation from the session
-     * 4) Wipe the eligibility answers in the session.
-     * 5) Redirect to the application
+     * If there are eligibility answers in the session:
+     * 1) Sanitise and store eligibility answers.
+     * 2) Remove eligibility answers from the session.
+     * 3) Create an application
+     * 4) Redirect to the application
      */
     if (req.session.user && canCreateAnApplication(req.session)) {
       const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);

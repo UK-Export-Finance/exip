@@ -127,10 +127,10 @@ export const post = async (req: Request, res: Response) => {
 
       /**
        * If there are eligibility answers in the session:
-       * 1) Add requestedApplicationCreation to the session
-       * 2) Create an application
-       * 3) Remove requestedApplicationCreation from the session
-       * 4) Remove eligibility answers in the session.
+       * 1) Sanitise and store eligibility answers.
+       * 2) Remove eligibility answers from the session.
+       * 3) Create an application
+       * 4) Redirect to the next part of the flow - "dashboard"
        */
       if (canCreateAnApplication(req.session)) {
         const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
@@ -143,8 +143,6 @@ export const post = async (req: Request, res: Response) => {
           console.error('Error creating application');
           return res.redirect(PROBLEM_WITH_SERVICE);
         }
-
-        req.session.submittedData.insuranceEligibility = {};
       }
 
       // otherwise, redirect to the next part of the flow - dashboard
