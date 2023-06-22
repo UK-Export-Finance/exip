@@ -125,7 +125,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, INPUT);
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
@@ -174,7 +174,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, TRADING_NAME);
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
@@ -215,7 +215,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, TRADING_ADDRESS);
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
@@ -255,7 +255,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, PHONE_NUMBER);
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
@@ -296,7 +296,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, WEBSITE);
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
