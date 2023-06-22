@@ -1,7 +1,8 @@
 import mockIndustrySectors from '../../test-mocks/mock-industry-sectors';
-import { mapCompaniesHouseFields, CompanyHouseResponse } from '.';
+import { mapCompaniesHouseFields } from '.';
 import createFullTimestampFromDayAndMonth from '../create-full-timestamp-from-day-month';
 import mapSicCodeDescriptions from '../map-sic-code-descriptions';
+import { CompanyHouseAPI } from '../../types';
 
 describe('mapCompaniesHouseFields()', () => {
   const companyHouseResponseMock = {
@@ -27,7 +28,7 @@ describe('mapCompaniesHouseFields()', () => {
         month: '12',
       },
     },
-  } as CompanyHouseResponse;
+  } as CompanyHouseAPI;
 
   describe('when some fields from the response are null', () => {
     it('should return a response with certain fields as null which are not present in response', () => {

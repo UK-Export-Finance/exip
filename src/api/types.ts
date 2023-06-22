@@ -189,13 +189,45 @@ interface CompaniesHouseAddress {
   country: string | null;
 }
 
-interface CompanyHouseResponse extends SuccessResponse {
+interface CompaniesHouseAccountReferenceDate {
+  month: string;
+  day: string;
+}
+
+interface CompaniesHouseAccounts {
+  accounting_reference_date: CompaniesHouseAccountReferenceDate;
+}
+
+interface CompaniesHouseAPIAddress {
+  care_of: string | null;
+  premises: string | null;
+  address_line_1: string | null;
+  address_line_2: string | null;
+  locality: string | null;
+  region: string | null;
+  postal_code: string | null;
+  country: string | null;
+}
+
+interface CompanyHouseAPI {
+  company_name: string;
+  registered_office_address: CompaniesHouseAPIAddress;
+  company_number: string;
+  date_of_creation: string;
+  sic_codes: Array<string>;
+  accounts: CompaniesHouseAccounts;
+}
+
+interface CompanyHouseAPIResponse extends SuccessResponse {
+  data?: CompanyHouseAPI;
+}
+
+interface CompanyHouseResponse {
   companyName: string;
   registeredOfficeAddress: CompaniesHouseAddress;
   companyNumber: string;
   dateOfCreation: string;
   sicCodes: Array<string>;
-  apiError: boolean;
 }
 
 interface EmailResponse extends SuccessResponse {
@@ -453,6 +485,8 @@ export {
   BufferEncoding,
   CompanyHouseResponse,
   CompanyResponse,
+  CompanyHouseAPI,
+  CompanyHouseAPIResponse,
   Country,
   Currency,
   DeleteApplicationByReferenceNumberVariables,
