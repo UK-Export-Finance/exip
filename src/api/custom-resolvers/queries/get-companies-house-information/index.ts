@@ -1,13 +1,7 @@
-import axios from 'axios';
-import dotenv from 'dotenv';
 import { mapCompaniesHouseFields } from '../../../helpers/map-companies-house-fields';
 import { GetCompaniesHouseInformationVariables } from '../../../types';
 import getIndustrySectorNames from '../../../integrations/industry-sector';
-
-dotenv.config();
-
-const username: any = process.env.COMPANIES_HOUSE_API_KEY;
-const companiesHouseURL: any = process.env.COMPANIES_HOUSE_API_URL;
+import companiesHouse from '../../../integrations/companies-house';
 
 /**
  * getCompaniesHouseInformation
@@ -21,29 +15,21 @@ const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHo
   try {
     const { companiesHouseNumber } = variables;
 
-    console.info('Calling Companies House API for ', companiesHouseNumber);
+    console.info('Getting Companies House information for ', companiesHouseNumber);
 
     const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, '0');
 
-    const response = await axios({
-      method: 'get',
-      url: `${companiesHouseURL}/company/${sanitisedRegNo}`,
-      auth: { username, password: '' },
-      validateStatus(status) {
-        const acceptableStatus = [200, 404];
-        return acceptableStatus.includes(status);
-      },
-    });
+    const response = await companiesHouse.get(sanitisedRegNo);
 
     // if no data in response or status is not 200 then return blank object
-    if (!response.data || response.status === 404) {
+    if (!response.success || !response.data) {
       return {
         success: false,
       };
     }
 
     // gets all industry sectors
-    const industrySectorNames = await getIndustrySectorNames();
+    const industrySectorNames = await getIndustrySectorNames.get();
 
     if (!industrySectorNames.success || industrySectorNames.apiError) {
       return {
@@ -60,7 +46,7 @@ const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHo
       success: true,
     };
   } catch (err) {
-    console.error('Error calling Companies House API', { err });
+    console.error('Error getting companies house information', { err });
     return {
       apiError: true,
       success: false,
