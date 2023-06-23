@@ -13,6 +13,7 @@ const {
     INSURANCE_ROOT,
     ALL_SECTIONS,
     ELIGIBILITY: { ACCOUNT_TO_APPLY_ONLINE },
+    DASHBOARD,
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
@@ -129,6 +130,23 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
 
           expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
+      });
+    });
+
+    describe('when there is a user, but no eligibility answers in the session', () => {
+      it(`should redirect to ${DASHBOARD}`, async () => {
+        req.session = {
+          ...req.session,
+          user: mockAccount,
+          submittedData: {
+            ...req.session.submittedData,
+            insuranceEligibility: {},
+          },
+        };
+
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(DASHBOARD);
       });
     });
   });
