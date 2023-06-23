@@ -90,7 +90,7 @@ export const requiredInsuranceEligibilityDataProvided = (req: Request, res: Resp
 
   const requiredData = generateRequiredData();
 
-  if (req.session && req.session.submittedData) {
+  if (req.session?.submittedData) {
     const { submittedData } = req.session;
 
     if (!hasRequiredData(url, requiredData, submittedData.insuranceEligibility)) {

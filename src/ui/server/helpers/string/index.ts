@@ -12,6 +12,6 @@ const isEmptyString = (str: string) => str === '';
  * @param {String}
  * @returns {String} String without commas
  */
-const stripCommas = (str: string) => str.replace(/[,]/g, '');
+const stripCommas = (str: string) => str.replace(/,/g, '');
 
 export { isEmptyString, stripCommas };

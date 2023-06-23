@@ -21,9 +21,7 @@ import { mockInsuranceFeedback } from './mock-feedback';
 import mockBusinessContact from './mock-business-contact';
 
 const mockReq = () => {
-  let req = {} as Request;
-
-  req = {
+  const req = {
     body: {},
     cookies: {},
     csrfToken: () => 'mock',
@@ -47,7 +45,7 @@ const mockReq = () => {
         insuranceEligibility: {},
       },
     },
-  };
+  } as Request;
 
   return req;
 };

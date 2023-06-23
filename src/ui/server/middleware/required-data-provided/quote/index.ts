@@ -129,7 +129,7 @@ export const requiredQuoteEligibilityDataProvided = (req: Request, res: Response
     return next();
   }
 
-  if (req.session && req.session.submittedData) {
+  if (req.session?.submittedData) {
     const { submittedData } = req.session;
     const requiredDataState = generateRequiredDataState(submittedData.quoteEligibility);
 
