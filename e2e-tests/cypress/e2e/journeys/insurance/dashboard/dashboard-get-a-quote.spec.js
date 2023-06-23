@@ -7,7 +7,7 @@ const {
   QUOTE: { YOUR_QUOTE },
 } = ROUTES;
 
-context('Insurance - Dashboard - Get a quote buton - As an Exporter, I want to visit the `Get a quote` tool from my dashboard, So that I can easily access the Get a Quote from the digital service.', () => {
+context('Insurance - Dashboard - Get a quote button - As an Exporter, I want to visit the `Get a quote` tool from my dashboard, So that I can easily access the Get a Quote from the digital service.', () => {
   const baseUrl = Cypress.config('baseUrl');
 
   let referenceNumber;
