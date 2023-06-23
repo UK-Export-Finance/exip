@@ -9,6 +9,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
+import constructPayload from '../../../../helpers/construct-payload';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
@@ -17,6 +18,8 @@ const { NATURE_OF_YOUR_BUSINESS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 export const TEMPLATE = NATURE_OF_YOUR_BUSINESS_TEMPLATE;
+
+export const NATURE_OF_BUSINESS_FIELDS_IDS = [GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL];
 
 const {
   INSURANCE_ROOT,
@@ -105,13 +108,7 @@ const post = async (req: Request, res: Response) => {
 
     const { body } = req;
 
-    // populate submittedValues
-    const submittedValues = {
-      [GOODS_OR_SERVICES]: body[GOODS_OR_SERVICES],
-      [YEARS_EXPORTING]: body[YEARS_EXPORTING],
-      [EMPLOYEES_UK]: body[EMPLOYEES_UK],
-      [EMPLOYEES_INTERNATIONAL]: body[EMPLOYEES_INTERNATIONAL],
-    };
+    const payload = constructPayload(body, NATURE_OF_BUSINESS_FIELDS_IDS);
 
     // run validation on inputs
     const validationErrors = generateValidationErrors(body);
@@ -127,12 +124,12 @@ const post = async (req: Request, res: Response) => {
         ...pageVariables(application.referenceNumber),
         validationErrors,
         application: mapApplicationToFormFields(application),
-        submittedValues,
+        submittedValues: payload,
       });
     }
 
     // if no errors, then runs save api call to db
-    const saveResponse = await mapAndSave.natureOfBusiness(body, application);
+    const saveResponse = await mapAndSave.natureOfBusiness(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

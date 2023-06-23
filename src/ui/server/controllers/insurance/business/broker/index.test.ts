@@ -1,5 +1,5 @@
 import { PAGES } from '../../../../content-strings';
-import { pageVariables, get, post, TEMPLATE } from '.';
+import { pageVariables, get, post, TEMPLATE, BROKER_FIELDS_IDS } from '.';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -10,6 +10,7 @@ import { FIELDS } from '../../../../content-strings/fields/insurance/your-busine
 import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockBroker } from '../../../../test-mocks';
+import constructPayload from '../../../../helpers/construct-payload';
 
 const { BROKER: BROKER_FIELDS } = FIELDS;
 
@@ -177,9 +178,11 @@ describe('controllers/insurance/business/broker', () => {
 
         await post(req, res);
 
+        const payload = constructPayload(req.body, BROKER_FIELDS_IDS);
+
         expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.broker).toHaveBeenCalledWith(req.body, mockApplication);
+        expect(mapAndSave.broker).toHaveBeenCalledWith(payload, mockApplication);
       });
 
       describe("when the url's last substring is `check-and-change`", () => {
@@ -193,6 +196,23 @@ describe('controllers/insurance/business/broker', () => {
           const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe('when an extra field is inserted onto the page', () => {
+        it('should call mapAndSave.broker once without the extra field', async () => {
+          req.body = {
+            ...mockBroker,
+            injection: 1,
+          };
+
+          await post(req, res);
+
+          const payload = constructPayload(req.body, BROKER_FIELDS_IDS);
+
+          expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
+
+          expect(mapAndSave.broker).toHaveBeenCalledWith(payload, mockApplication);
         });
       });
     });

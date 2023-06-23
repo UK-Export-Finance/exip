@@ -1,5 +1,5 @@
 import { Request, Response } from '../../../../../types';
-import { pageVariables, post } from '.';
+import { pageVariables, post, COMPANY_DETAILS_FIELDS_IDS } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -10,6 +10,7 @@ import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/company-details';
 import api from '../../../../api';
+import constructPayload from '../../../../helpers/construct-payload';
 
 const {
   EXPORTER_BUSINESS: {
@@ -115,11 +116,35 @@ describe('controllers/insurance/business/companies-details', () => {
 
         expect(mapAndSave.companyDetails).toHaveBeenCalledTimes(1);
 
+        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELDS_IDS);
+
         const updateBody = {
-          ...req.body,
+          ...payload,
           ...mockCompany,
         };
         expect(mapAndSave.companyDetails).toHaveBeenCalledWith(updateBody, mockApplication);
+      });
+
+      describe('when an extra field is inserted onto the page', () => {
+        it('should call mapAndSave.companyDetails once without the extra field', async () => {
+          req.body = {
+            ...body,
+            injection: 1,
+          };
+
+          await post(req, res);
+
+          const payload = constructPayload(req.body, COMPANY_DETAILS_FIELDS_IDS);
+
+          const updateBody = {
+            ...payload,
+            ...mockCompany,
+          };
+
+          expect(mapAndSave.companyDetails).toHaveBeenCalledTimes(1);
+
+          expect(mapAndSave.companyDetails).toHaveBeenCalledWith(updateBody, mockApplication);
+        });
       });
 
       describe("when the url's last substring is `change`", () => {

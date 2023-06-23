@@ -1,11 +1,15 @@
 import { Request, Response } from '../../../../../../types';
 import { post } from '.';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
-import { mockReq, mockRes, mockApplication, mockPhoneNumbers } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from '../../../../../test-mocks';
 import mapAndSave from '../../map-and-save/company-details';
+import constructPayload from '../../../../../helpers/construct-payload';
+import { COMPANY_DETAILS_FIELDS_IDS } from '..';
+import api from '../../../../../api';
 
 const {
   EXPORTER_BUSINESS: {
+    COMPANY_HOUSE: { INPUT },
     YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
   },
 } = FIELD_IDS.INSURANCE;
@@ -27,6 +31,9 @@ describe('controllers/insurance/business/companies-details', () => {
     res.locals.application = mockApplication;
 
     mapAndSave.companyDetails = updateMapAndSave;
+
+    const getCompaniesHouseResponse = jest.fn(() => Promise.resolve(mockCompany));
+    api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
   });
 
   afterAll(() => {
@@ -35,12 +42,14 @@ describe('controllers/insurance/business/companies-details', () => {
 
   describe('post', () => {
     describe('when there are validation errors', () => {
+      const body = {
+        [TRADING_NAME]: 'true',
+        [TRADING_ADDRESS]: 'false',
+        [PHONE_NUMBER]: INVALID_PHONE_NUMBERS.TOO_SHORT_SPECIAL_CHAR,
+      };
+
       it('should redirect to next page', async () => {
-        req.body = {
-          [TRADING_NAME]: 'true',
-          [TRADING_ADDRESS]: 'false',
-          [PHONE_NUMBER]: INVALID_PHONE_NUMBERS.TOO_SHORT_SPECIAL_CHAR,
-        };
+        req.body = body;
 
         await post(req, res);
 
@@ -48,11 +57,7 @@ describe('controllers/insurance/business/companies-details', () => {
       });
 
       it('should call mapAndSave.companyDetails once', async () => {
-        req.body = {
-          [TRADING_NAME]: 'true',
-          [TRADING_ADDRESS]: 'false',
-          [PHONE_NUMBER]: INVALID_PHONE_NUMBERS.TOO_SHORT_SPECIAL_CHAR,
-        };
+        req.body = body;
 
         await post(req, res);
 
@@ -61,12 +66,15 @@ describe('controllers/insurance/business/companies-details', () => {
     });
 
     describe('when there are no validation errors', () => {
+      const body = {
+        [INPUT]: '8989898',
+        [TRADING_NAME]: 'true',
+        [TRADING_ADDRESS]: 'false',
+        [PHONE_NUMBER]: VALID_PHONE_NUMBERS.MOBILE,
+      };
+
       it('should redirect to next page', async () => {
-        req.body = {
-          [TRADING_NAME]: 'true',
-          [TRADING_ADDRESS]: 'false',
-          [PHONE_NUMBER]: INVALID_PHONE_NUMBERS.TOO_SHORT_SPECIAL_CHAR,
-        };
+        req.body = body;
 
         await post(req, res);
 
@@ -74,15 +82,33 @@ describe('controllers/insurance/business/companies-details', () => {
       });
 
       it('should call mapAndSave.companyDetails once', async () => {
-        req.body = {
-          [TRADING_NAME]: 'true',
-          [TRADING_ADDRESS]: 'false',
-          [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
-        };
+        req.body = body;
 
         await post(req, res);
 
         expect(updateMapAndSave).toHaveBeenCalledTimes(1);
+      });
+
+      describe('when an extra field is inserted onto the page', () => {
+        it('should call mapAndSave.companyDetails once without the extra field', async () => {
+          req.body = {
+            ...body,
+            injection: 1,
+          };
+
+          await post(req, res);
+
+          const payload = constructPayload(req.body, COMPANY_DETAILS_FIELDS_IDS);
+
+          const updateBody = {
+            ...payload,
+            ...mockCompany,
+          };
+
+          expect(updateMapAndSave).toHaveBeenCalledTimes(1);
+
+          expect(updateMapAndSave).toHaveBeenCalledWith(updateBody, mockApplication, {});
+        });
       });
     });
 

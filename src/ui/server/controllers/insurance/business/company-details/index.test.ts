@@ -1,4 +1,4 @@
-import { pageVariables, get, redirectToExitPage, postCompaniesHouseSearch, TEMPLATE } from '.';
+import { pageVariables, get, redirectToExitPage, postCompaniesHouseSearch, TEMPLATE, COMPANY_DETAILS_FIELDS_IDS } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -9,6 +9,7 @@ import { companyHouseSummaryList } from '../../../../helpers/summary-lists/compa
 import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-house-summary-list';
 import { mockReq, mockRes, mockCompany, mockApplication } from '../../../../test-mocks';
 import { Request, Response, Application } from '../../../../../types';
+import constructPayload from '../../../../helpers/construct-payload';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
@@ -216,9 +217,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '',
         };
 
-        const submittedValues = {
-          [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        };
+        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELDS_IDS);
 
         await postCompaniesHouseSearch(req, res);
 
@@ -231,7 +230,7 @@ describe('controllers/insurance/business/companies-details', () => {
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
           validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
-          submittedValues,
+          submittedValues: payload,
         });
       });
 
@@ -240,9 +239,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '1234',
         };
 
-        const submittedValues = {
-          [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        };
+        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELDS_IDS);
 
         await postCompaniesHouseSearch(req, res);
 
@@ -255,7 +252,7 @@ describe('controllers/insurance/business/companies-details', () => {
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
           validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
-          submittedValues,
+          submittedValues: payload,
         });
       });
 
@@ -264,9 +261,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '123456!',
         };
 
-        const submittedValues = {
-          [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        };
+        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELDS_IDS);
 
         await postCompaniesHouseSearch(req, res);
 
@@ -279,7 +274,7 @@ describe('controllers/insurance/business/companies-details', () => {
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
           validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
-          submittedValues,
+          submittedValues: payload,
         });
       });
 
@@ -288,9 +283,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '123456',
         };
 
-        const submittedValues = {
-          [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        };
+        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELDS_IDS);
 
         const getCompaniesHouseResponse = jest.fn(() => Promise.resolve({ success: false }));
         api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
@@ -306,7 +299,7 @@ describe('controllers/insurance/business/companies-details', () => {
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
           validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
-          submittedValues,
+          submittedValues: payload,
         });
       });
 
@@ -325,17 +318,19 @@ describe('controllers/insurance/business/companies-details', () => {
     });
 
     describe('should render template with summary list populated when company found by companies house api', () => {
+      let getCompaniesHouseResponse = jest.fn();
+
+      beforeEach(() => {
+        getCompaniesHouseResponse = jest.fn(() => Promise.resolve(mockCompany));
+        api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
+      });
+
       it('should render template with summary list populated if receive response from api', async () => {
         req.body = {
           companiesHouseNumber: '123456',
         };
 
-        const submittedValues = {
-          [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        };
-
-        const getCompaniesHouseResponse = jest.fn(() => Promise.resolve(mockCompany));
-        api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
+        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELDS_IDS);
 
         await postCompaniesHouseSearch(req, res);
 
@@ -347,8 +342,22 @@ describe('controllers/insurance/business/companies-details', () => {
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
           SUMMARY_LIST: companyHouseSummaryList(mockCompany),
-          submittedValues,
+          submittedValues: payload,
           validationErrors: {},
+        });
+      });
+
+      describe('when an extra field is inserted onto the page', () => {
+        it('should call api.keystone.getCompaniesHouseInformation without the extra field', async () => {
+          req.body = {
+            companiesHouseNumber: '123456',
+            injection: 1,
+          };
+          await postCompaniesHouseSearch(req, res);
+
+          const payload = constructPayload(req.body, COMPANY_DETAILS_FIELDS_IDS);
+
+          expect(getCompaniesHouseResponse).toHaveBeenCalledWith(payload[COMPANY_HOUSE.INPUT]);
         });
       });
     });

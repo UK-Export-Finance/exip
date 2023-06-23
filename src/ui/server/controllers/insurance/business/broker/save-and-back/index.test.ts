@@ -3,6 +3,8 @@ import { post } from '.';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { mockReq, mockRes, mockApplication, mockBroker } from '../../../../../test-mocks';
 import mapAndSave from '../../map-and-save/broker';
+import constructPayload from '../../../../../helpers/construct-payload';
+import { BROKER_FIELDS_IDS } from '..';
 
 const {
   EXPORTER_BUSINESS: {
@@ -49,6 +51,23 @@ describe('controllers/insurance/business/broker/save-and-back', () => {
         await post(req, res);
 
         expect(updateMapAndSave).toHaveBeenCalledTimes(1);
+      });
+
+      describe('when an extra field is inserted onto the page', () => {
+        it('should call mapAndSave.broker once without the extra field', async () => {
+          req.body = {
+            ...validBody,
+            injection: 1,
+          };
+
+          await post(req, res);
+
+          const payload = constructPayload(req.body, BROKER_FIELDS_IDS);
+
+          expect(updateMapAndSave).toHaveBeenCalledTimes(1);
+
+          expect(updateMapAndSave).toHaveBeenCalledWith(payload, mockApplication, false);
+        });
       });
     });
 

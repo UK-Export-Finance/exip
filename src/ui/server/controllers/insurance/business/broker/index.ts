@@ -9,6 +9,7 @@ import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/broker';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
+import constructPayload from '../../../../helpers/construct-payload';
 
 const { USING_BROKER, HEADING, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL, DETAILS } = FIELD_IDS.BROKER;
 
@@ -16,6 +17,8 @@ const { BROKER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 export const TEMPLATE = BROKER_TEMPLATE;
+
+export const BROKER_FIELDS_IDS = [USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL];
 
 const {
   INSURANCE_ROOT,
@@ -120,6 +123,8 @@ const post = async (req: Request, res: Response) => {
 
     const { body } = req;
 
+    const payload = constructPayload(body, BROKER_FIELDS_IDS);
+
     // run validation on inputs
     const validationErrors = generateValidationErrors(body);
 
@@ -134,12 +139,12 @@ const post = async (req: Request, res: Response) => {
         ...pageVariables(application.referenceNumber),
         validationErrors,
         application: mapApplicationToFormFields(application),
-        submittedValues: body,
+        submittedValues: payload,
       });
     }
 
     // if no errors, then runs save api call to db
-    const saveResponse = await mapAndSave.broker(body, application);
+    const saveResponse = await mapAndSave.broker(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

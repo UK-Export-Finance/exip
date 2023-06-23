@@ -12,6 +12,7 @@ import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
 import { Request, Response } from '../../../../../types';
+import constructPayload from '../../../../helpers/construct-payload';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
@@ -25,6 +26,8 @@ const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { COMPANY_DETAILS: COMPANY_DETAILS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 export const TEMPLATE = COMPANY_DETAILS_TEMPLATE;
+
+export const COMPANY_DETAILS_FIELDS_IDS = [COMPANY_HOUSE.INPUT, TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER];
 
 const {
   INSURANCE_ROOT,
@@ -141,17 +144,10 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
     const { referenceNumber } = application;
     const { body } = req;
 
-    const { companiesHouseNumber } = body;
-    const submittedValues = {
-      [COMPANY_HOUSE.INPUT]: companiesHouseNumber,
-      [TRADING_NAME]: body[TRADING_NAME],
-      [TRADING_ADDRESS]: body[TRADING_ADDRESS],
-      [WEBSITE]: body[WEBSITE],
-      [PHONE_NUMBER]: body[PHONE_NUMBER],
-    };
+    const payload = constructPayload(body, COMPANY_DETAILS_FIELDS_IDS);
 
     // checks if input is correctly formatted before searching
-    const response = await companiesHouseSearch(body);
+    const response = await companiesHouseSearch(payload);
 
     const { validationErrors, apiError, company } = response;
 
@@ -168,7 +164,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         ...pageVariables(application.referenceNumber, req.originalUrl),
         validationErrors,
-        submittedValues,
+        submittedValues: payload,
       });
     }
 
@@ -185,7 +181,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
         ...pageVariables(application.referenceNumber, req.originalUrl),
         validationErrors,
         SUMMARY_LIST: summaryList,
-        submittedValues,
+        submittedValues: payload,
       });
     }
 
@@ -225,6 +221,8 @@ const post = async (req: Request, res: Response) => {
 
     let { validationErrors } = response;
 
+    const payload = constructPayload(body, COMPANY_DETAILS_FIELDS_IDS);
+
     // populate submittedValues
     const submittedValues = {
       [COMPANY_HOUSE.INPUT]: companiesHouseNumber,
@@ -253,7 +251,7 @@ const post = async (req: Request, res: Response) => {
     }
 
     const updateBody = {
-      ...body,
+      ...payload,
       ...company,
     };
 

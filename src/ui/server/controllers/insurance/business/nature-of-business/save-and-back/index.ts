@@ -2,6 +2,8 @@ import { Request, Response } from '../../../../../../types';
 import { TEMPLATES, ROUTES } from '../../../../../constants';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/nature-of-business';
+import constructPayload from '../../../../../helpers/construct-payload';
+import { NATURE_OF_BUSINESS_FIELDS_IDS } from '..';
 
 const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
@@ -26,11 +28,14 @@ const post = async (req: Request, res: Response) => {
     }
 
     const { body } = req;
+
+    const payload = constructPayload(body, NATURE_OF_BUSINESS_FIELDS_IDS);
+
     // run validation on inputs
     const validationErrors = generateValidationErrors(body);
 
     // runs save and go back commmand
-    const saveResponse = await mapAndSave.natureOfBusiness(body, application, validationErrors);
+    const saveResponse = await mapAndSave.natureOfBusiness(payload, application, validationErrors);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

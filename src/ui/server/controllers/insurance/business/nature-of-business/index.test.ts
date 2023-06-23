@@ -1,5 +1,5 @@
 import { PAGES } from '../../../../content-strings';
-import { pageVariables, get, TEMPLATE, post } from '.';
+import { pageVariables, get, TEMPLATE, post, NATURE_OF_BUSINESS_FIELDS_IDS } from '.';
 import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -9,6 +9,7 @@ import mapAndSave from '../map-and-save/nature-of-business';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import constructPayload from '../../../../helpers/construct-payload';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
@@ -132,11 +133,9 @@ describe('controllers/insurance/business/nature-of-business', () => {
       it('should render template with validation errors', async () => {
         req.body = {};
 
-        const submittedValues = {
-          [GOODS_OR_SERVICES]: req.body[GOODS_OR_SERVICES],
-        };
-
         await post(req, res);
+
+        const payload = constructPayload(req.body, NATURE_OF_BUSINESS_FIELDS_IDS);
 
         const validationErrors = generateValidationErrors(req.body);
 
@@ -149,7 +148,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
           ...pageVariables(mockApplication.referenceNumber),
           validationErrors,
           application: mapApplicationToFormFields(mockApplication),
-          submittedValues,
+          submittedValues: payload,
         });
       });
     });
@@ -176,9 +175,11 @@ describe('controllers/insurance/business/nature-of-business', () => {
 
         await post(req, res);
 
+        const payload = constructPayload(req.body, NATURE_OF_BUSINESS_FIELDS_IDS);
+
         expect(mapAndSave.natureOfBusiness).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.natureOfBusiness).toHaveBeenCalledWith(req.body, mockApplication);
+        expect(mapAndSave.natureOfBusiness).toHaveBeenCalledWith(payload, mockApplication);
       });
 
       describe("when the url's last substring is `change`", () => {
@@ -205,6 +206,23 @@ describe('controllers/insurance/business/nature-of-business', () => {
           const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe('when an extra field is inserted onto the page', () => {
+        it('should call mapAndSave.natureOfBusiness once without the extra field', async () => {
+          req.body = {
+            ...body,
+            injection: 1,
+          };
+
+          await post(req, res);
+
+          const payload = constructPayload(req.body, NATURE_OF_BUSINESS_FIELDS_IDS);
+
+          expect(mapAndSave.natureOfBusiness).toHaveBeenCalledTimes(1);
+
+          expect(mapAndSave.natureOfBusiness).toHaveBeenCalledWith(payload, mockApplication);
         });
       });
     });

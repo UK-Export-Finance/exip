@@ -3,8 +3,11 @@ import { ROUTES, FIELD_IDS } from '../../../../../constants';
 import companiesHouseSearch from '../helpers/companies-house-search.helper';
 import companyDetailsValidation from '../validation/company-details';
 import mapAndSave from '../../map-and-save/company-details';
+import constructPayload from '../../../../../helpers/construct-payload';
+import { COMPANY_DETAILS_FIELDS_IDS } from '..';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
+
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE, NO_COMPANIES_HOUSE_NUMBER, COMPANY_DETAILS_SAVE_AND_BACK } = EXPORTER_BUSINESS_ROUTES;
@@ -36,17 +39,21 @@ const post = async (req: Request, res: Response) => {
     }
 
     const { body } = req;
+
     // runs companiesHouse validation and api call first for companiesHouse input
     const response = await companiesHouseSearch(body);
     let { validationErrors } = response;
+
     const { company } = response;
+
+    const payload = constructPayload(body, COMPANY_DETAILS_FIELDS_IDS);
 
     // run validation on other fields on page
     validationErrors = companyDetailsValidation(body, validationErrors);
 
     // body for update containing companies house info and request body
     const updateBody = {
-      ...body,
+      ...payload,
       ...company,
     };
 
