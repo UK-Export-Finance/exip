@@ -15,7 +15,7 @@ describe('getCompaniesHouseInformation', () => {
 
   describe('when companies house API returns success as false', () => {
     beforeEach(() => {
-      companiesHouse.getCompanyHouseDetails = jest.fn(() => Promise.resolve({ success: false }));
+      companiesHouse.get = jest.fn(() => Promise.resolve({ success: false }));
     });
 
     it('should return object containing success as false', async () => {
@@ -29,7 +29,7 @@ describe('getCompaniesHouseInformation', () => {
 
   describe('when companies house API returns empty data object', () => {
     beforeEach(() => {
-      companiesHouse.getCompanyHouseDetails = jest.fn(() => Promise.resolve({ success: true, data: undefined }));
+      companiesHouse.get = jest.fn(() => Promise.resolve({ success: true, data: undefined }));
     });
 
     it('should return object containing success as false', async () => {
@@ -43,7 +43,7 @@ describe('getCompaniesHouseInformation', () => {
 
   describe('when companies house API is down', () => {
     beforeEach(() => {
-      companiesHouse.getCompanyHouseDetails = jest.fn(() => Promise.reject());
+      companiesHouse.get = jest.fn(() => Promise.reject());
     });
 
     it('should return object containing success as false and apiError as true', async () => {
@@ -57,7 +57,7 @@ describe('getCompaniesHouseInformation', () => {
 
   describe('when companies house returns a response but industry sector returns a success = false', () => {
     beforeEach(() => {
-      companiesHouse.getCompanyHouseDetails = jest.fn(() => Promise.resolve({ success: true, data: mockCompanyAPIResponse }));
+      companiesHouse.get = jest.fn(() => Promise.resolve({ success: true, data: mockCompanyAPIResponse }));
       getIndustrySectorNames.get = jest.fn(() => Promise.resolve({ success: false }));
     });
 
@@ -72,7 +72,7 @@ describe('getCompaniesHouseInformation', () => {
 
   describe('when companies house returns a response but industry sector returns an apiError', () => {
     beforeEach(() => {
-      companiesHouse.getCompanyHouseDetails = jest.fn(() => Promise.resolve({ success: true, data: mockCompanyAPIResponse }));
+      companiesHouse.get = jest.fn(() => Promise.resolve({ success: true, data: mockCompanyAPIResponse }));
       getIndustrySectorNames.get = jest.fn(() => Promise.resolve({ success: false, apiError: true }));
     });
 
@@ -87,7 +87,7 @@ describe('getCompaniesHouseInformation', () => {
 
   describe('when companies house returns a response but industry sector errors', () => {
     beforeEach(() => {
-      companiesHouse.getCompanyHouseDetails = jest.fn(() => Promise.resolve({ success: true, data: mockCompanyAPIResponse }));
+      companiesHouse.get = jest.fn(() => Promise.resolve({ success: true, data: mockCompanyAPIResponse }));
       getIndustrySectorNames.get = jest.fn(() => Promise.reject());
     });
 
@@ -102,7 +102,7 @@ describe('getCompaniesHouseInformation', () => {
 
   describe('when companies house returns a response but industry sector returns a response', () => {
     beforeEach(() => {
-      companiesHouse.getCompanyHouseDetails = jest.fn(() => Promise.resolve({ success: true, data: mockCompanyAPIResponse }));
+      companiesHouse.get = jest.fn(() => Promise.resolve({ success: true, data: mockCompanyAPIResponse }));
       getIndustrySectorNames.get = jest.fn(() => Promise.resolve({ success: true, data: mockIndustrySectors }));
     });
 

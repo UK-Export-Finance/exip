@@ -19,7 +19,7 @@ const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHo
 
     const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, '0');
 
-    const response = await companiesHouse.getCompanyHouseDetails(sanitisedRegNo);
+    const response = await companiesHouse.get(sanitisedRegNo);
 
     // if no data in response or status is not 200 then return blank object
     if (!response.success || !response.data) {

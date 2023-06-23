@@ -8,13 +8,13 @@ const username: any = process.env.COMPANIES_HOUSE_API_KEY;
 const companiesHouseURL: any = process.env.COMPANIES_HOUSE_API_URL;
 
 /**
- * getCompanyHouseDetails
+ * companiesHouse
  * makes companies house API call and returns company
  * @param {String} companyNumber
- * @returns {CompaniesHouseAPIResponse} CompanyHouseResponse object
+ * @returns {CompaniesHouseAPIResponse} CompaniesHouseAPIResponse object
  */
 const companiesHouse = {
-  getCompanyHouseDetails: async (companyNumber: string): Promise<CompaniesHouseAPIResponse> => {
+  get: async (companyNumber: string): Promise<CompaniesHouseAPIResponse> => {
     try {
       const response = await axios({
         method: 'get',

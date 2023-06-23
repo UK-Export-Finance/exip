@@ -4223,7 +4223,7 @@ import_dotenv6.default.config();
 var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
 var companiesHouse = {
-  getCompanyHouseDetails: async (companyNumber) => {
+  get: async (companyNumber) => {
     try {
       const response = await (0, import_axios2.default)({
         method: "get",
@@ -4257,7 +4257,7 @@ var getCompaniesHouseInformation = async (root, variables) => {
     const { companiesHouseNumber } = variables;
     console.info("Getting Companies House information for ", companiesHouseNumber);
     const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, "0");
-    const response = await companies_house_default.getCompanyHouseDetails(sanitisedRegNo);
+    const response = await companies_house_default.get(sanitisedRegNo);
     if (!response.success || !response.data) {
       return {
         success: false
