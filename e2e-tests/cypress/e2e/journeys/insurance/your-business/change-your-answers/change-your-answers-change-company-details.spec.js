@@ -98,7 +98,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, INPUT);
+        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS);
       });
 
       it('should render the new answer', () => {
@@ -142,7 +142,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, TRADING_NAME);
+        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS);
       });
 
       it('should render the new answer', () => {
@@ -178,7 +178,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, TRADING_ADDRESS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS);
       });
 
       it('should render the new answer', () => {
@@ -216,7 +216,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, PHONE_NUMBER);
+        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS);
       });
 
       it('should render the new answer', () => {
@@ -252,7 +252,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, WEBSITE);
+        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS);
       });
 
       it('should render the new answer', () => {
