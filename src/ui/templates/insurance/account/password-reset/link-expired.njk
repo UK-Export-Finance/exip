@@ -1,5 +1,5 @@
 {% extends 'index.njk' %}
-{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% import '../../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -16,16 +16,13 @@
 
       <p class="govuk-body" data-cy="if-you-would-like">{{ CONTENT_STRINGS.IF_YOU_WOULD_LIKE }}</p>
 
-      <form method="POST" novalidate>
+      <form method="POST" id="form" novalidate>
 
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
         <div class="govuk-button-group">
-          {{ govukButton({
-            text: CONTENT_STRINGS.BUTTONS.SEND_NEW_LINK,
-            attributes: {
-              'data-cy': 'submit-button'
-            }
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.SEND_NEW_LINK
           }) }}
         </div>
 

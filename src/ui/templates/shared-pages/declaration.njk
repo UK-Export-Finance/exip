@@ -4,6 +4,7 @@
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
 {% import '../components/keystone/document/index.njk' as keystoneDocument %}
+{% import '../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -43,7 +44,7 @@
     </div>
   </div>
 
-  <form method="POST" novalidate>
+  <form method="POST" id="form" novalidate>
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
@@ -78,11 +79,8 @@
     }) }}
 
     <div class="govuk-button-group">
-      {{ govukButton({
-        text: SUBMIT_BUTTON_COPY or CONTENT_STRINGS.BUTTONS.CONTINUE,
-        attributes: {
-          'data-cy': 'submit-button'
-        }
+      {{ submitButton.render({
+        text: SUBMIT_BUTTON_COPY or CONTENT_STRINGS.BUTTONS.CONTINUE
       }) }}
 
       {{ govukButton({

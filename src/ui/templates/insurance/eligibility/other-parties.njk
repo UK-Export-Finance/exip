@@ -2,9 +2,9 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
-{% from 'govuk/components/button/macro.njk' import govukButton %}
 {% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
 {% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+{% import '../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -27,7 +27,7 @@
     }) }}
   {% endif %}
 
-  <form method="POST" novalidate>
+  <form method="POST" id="form" novalidate>
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
@@ -73,11 +73,8 @@
       </div>
     </div>
 
-    {{ govukButton({
-      text: CONTENT_STRINGS.BUTTONS.CONTINUE,
-      attributes: {
-        'data-cy': 'submit-button'
-      }
+    {{ submitButton.render({
+      text: CONTENT_STRINGS.BUTTONS.CONTINUE
     }) }}
 
   </form>
