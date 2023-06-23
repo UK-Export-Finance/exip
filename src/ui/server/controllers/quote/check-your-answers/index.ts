@@ -8,7 +8,7 @@ import { Request, Response } from '../../../../types';
 
 export const TEMPLATE = TEMPLATES.QUOTE.CHECK_YOUR_ANSWERS;
 
-export const get = async (req: Request, res: Response) => {
+export const get = (req: Request, res: Response) => {
   const answers = mapAnswersToContent(req.session.submittedData.quoteEligibility);
 
   const summaryList = answersSummaryList(answers);
