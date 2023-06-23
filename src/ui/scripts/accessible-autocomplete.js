@@ -9,6 +9,8 @@ const init = () => {
     selectElement: element,
     defaultValue: '',
   });
+
+  return accessibleAutocomplete;
 };
 
 export default init();
