@@ -6,6 +6,7 @@
   {% set isStartButton = params.isStartButton %}
   {% set classes = params.classes %}
   {% set href = params.href %}
+  {% set formaction = params.formaction %}
  
   {{ govukButton({
     text: text,
@@ -14,7 +15,8 @@
     href: href,
     attributes: {
       'data-cy': 'submit-button',
-      id: 'submit-button'
+      id: 'submit-button',
+      formaction: formaction
     }
   }) }}
 

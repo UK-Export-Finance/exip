@@ -197,11 +197,7 @@
         <div class="govuk-button-group">
           {{ submitButton.render({
             text: CONTENT_STRINGS.BUTTONS.CONTINUE,
-            attributes: {
-              'data-cy': 'submit-button',
-              id: 'submit-button',
-              'formaction' : POST_ROUTES.COMPANY_DETAILS
-            }
+            formaction : POST_ROUTES.COMPANY_DETAILS
           }) }}
 
           {{ govukButton({
@@ -209,7 +205,7 @@
             classes: "govuk-button--secondary",
             attributes: {
               'data-cy': 'save-and-back-button',
-              'formaction' : POST_ROUTES.SAVE_AND_BACK_URL
+              formaction : POST_ROUTES.SAVE_AND_BACK_URL
             }
           }) }}
         </div>

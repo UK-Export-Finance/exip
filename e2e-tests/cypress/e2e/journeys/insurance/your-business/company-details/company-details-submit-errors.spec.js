@@ -91,29 +91,25 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     it('should display companies house error and trading name, address errors when companies house incorrectly entered', () => {
       cy.completeAndSubmitCompaniesHouseSearchForm({ companiesHouseNumber: '123456!' });
 
-      // EMS-1800 - renable when bug is fixed
+      submitButton().click();
 
-      // submitButton().click();
+      cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[INPUT].INCORRECT_FORMAT);
 
-      // cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[INPUT].INCORRECT_FORMAT);
+      cy.checkText(partials.errorSummaryListItems().eq(1), COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
 
-      // cy.checkText(partials.errorSummaryListItems().eq(1), COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
-
-      // cy.checkText(partials.errorSummaryListItems().eq(2), COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
+      cy.checkText(partials.errorSummaryListItems().eq(2), COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
     });
 
     it('should display companies house error and trading name, address errors when companies house not found', () => {
       cy.completeAndSubmitCompaniesHouseSearchForm({ companiesHouseNumber: '123456' });
 
-      // EMS-1800 - renable when bug is fixed
+      submitButton().click();
 
-      // submitButton().click();
+      cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[INPUT].NOT_FOUND);
 
-      // cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[INPUT].NOT_FOUND);
+      cy.checkText(partials.errorSummaryListItems().eq(1), COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
 
-      // cy.checkText(partials.errorSummaryListItems().eq(1), COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
-
-      // cy.checkText(partials.errorSummaryListItems().eq(2), COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
+      cy.checkText(partials.errorSummaryListItems().eq(2), COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
     });
   });
 });
