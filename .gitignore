@@ -5,6 +5,7 @@
 .database
 node_modules
 src/api/.keystone/admin
+Src/api/coverage
 e2e-tests/cypress/screenshots/*
 e2e-tests/cypress/videos/*
 e2e-tests/cypress/downloads/*
