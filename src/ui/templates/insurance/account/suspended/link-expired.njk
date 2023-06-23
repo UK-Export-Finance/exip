@@ -1,5 +1,5 @@
 {% extends 'index.njk' %}
-{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% import '../../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -14,16 +14,13 @@
 
       <p class="govuk-body" data-cy="body">{{ CONTENT_STRINGS.BODY }}</p>
 
-      <form method="POST" novalidate>
+      <form method="POST" id="form" novalidate>
 
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
         <div class="govuk-button-group">
-          {{ govukButton({
-            text: CONTENT_STRINGS.BUTTONS.REACTIVATE_ACCOUNT,
-            attributes: {
-              'data-cy': 'submit-button'
-            }
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.REACTIVATE_ACCOUNT
           }) }}
         </div>
 

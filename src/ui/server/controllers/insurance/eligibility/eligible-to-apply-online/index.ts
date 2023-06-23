@@ -12,6 +12,7 @@ const {
     INSURANCE_ROOT,
     ALL_SECTIONS,
     ELIGIBILITY: { ACCOUNT_TO_APPLY_ONLINE },
+    DASHBOARD,
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
@@ -28,32 +29,42 @@ export const get = (req: Request, res: Response) =>
 export const post = async (req: Request, res: Response) => {
   try {
     /**
-     * If the user is signed in and there are eligibility answers in the session:
-     * 1) Add requestedApplicationCreation to the session
-     * 2) Create an application
-     * 3) Remove requestedApplicationCreation from the session
-     * 4) Wipe the eligibility answers in the session.
-     * 5) Redirect to the application
+     * If there are eligibility answers in the session:
+     * 1) Sanitise and store eligibility answers.
+     * 2) Remove eligibility answers from the session.
+     * 3) Create an application
+     * 4) Redirect to the application
      */
-    if (req.session.user && canCreateAnApplication(req.session)) {
-      const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
+    if (req.session.user) {
+      if (canCreateAnApplication(req.session)) {
+        const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
 
-      req.session.submittedData.insuranceEligibility = {};
+        req.session.submittedData.insuranceEligibility = {};
 
-      const application = await api.keystone.application.create(eligibilityAnswers, req.session.user.id);
+        const application = await api.keystone.application.create(eligibilityAnswers, req.session.user.id);
 
-      if (!application) {
-        console.error('Error creating application');
+        if (!application) {
+          console.error('Error creating application');
 
-        return res.redirect(PROBLEM_WITH_SERVICE);
+          return res.redirect(PROBLEM_WITH_SERVICE);
+        }
+
+        const applicationUrl = `${INSURANCE_ROOT}/${application.referenceNumber}${ALL_SECTIONS}`;
+
+        return res.redirect(applicationUrl);
       }
 
-      const applicationUrl = `${INSURANCE_ROOT}/${application.referenceNumber}${ALL_SECTIONS}`;
-
-      return res.redirect(applicationUrl);
+      /**
+       * User is signed in, but cannot create an application.
+       * Therefore, redirect to the dashboard.
+       */
+      return res.redirect(DASHBOARD);
     }
 
-    // otherwise, redirect to the next part of the flow - account creation/sign in
+    /**
+     * User is not signed in.
+     * Therefore, redirect to account creation/sign in flow.
+     */
     return res.redirect(ACCOUNT_TO_APPLY_ONLINE);
   } catch (err) {
     console.error('Error creating application ', { err });

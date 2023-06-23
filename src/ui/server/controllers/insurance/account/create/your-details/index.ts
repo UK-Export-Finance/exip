@@ -143,11 +143,10 @@ export const post = async (req: Request, res: Response) => {
 
     /**
      * If there are eligibility answers in the session:
-     * 1) Add requestedApplicationCreation to the session
-     * 2) Create an application
-     * 3) Remove requestedApplicationCreation from the session
-     * 4) Remove eligibility answers in the session.
-     * 5) Redirect to the next part of the flow - "confirm email"
+     * 1) Sanitise and store eligibility answers.
+     * 2) Remove eligibility answers from the session.
+     * 3) Create an application
+     * 4) Redirect to the next part of the flow - "confirm email"
      */
     if (canCreateAnApplication(req.session)) {
       const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
