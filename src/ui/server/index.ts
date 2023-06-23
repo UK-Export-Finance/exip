@@ -34,14 +34,16 @@ import corePageVariables from './helpers/page-variables/core';
 import isQuoteRoute from './helpers/is-quote-route';
 
 // @ts-ignore
-const app = express();
+const app1 = express();
+app1.disable('x-powered-by');
+
 const PORT = process.env.PORT || 5000;
 const https = Boolean(process.env.HTTPS || 0);
 const secureCookieName = https ? '__Host-exip-session' : 'exip-session';
 
-app.use(seo);
-app.use(security);
-app.use(compression());
+app1.use(seo);
+app1.use(security);
+app1.use(compression());
 
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
@@ -51,7 +53,7 @@ const limiter = rateLimit({
 });
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(limiter);
+  app1.use(limiter);
 }
 
 const cookie = {
@@ -70,15 +72,15 @@ const sessionOptions = {
   cookie,
 };
 
-app.use(session(sessionOptions));
+app1.use(session(sessionOptions));
 
 // @ts-ignore
-app.use(express.json());
+app1.use(express.json());
 // @ts-ignore
-app.use(express.urlencoded({ extended: true }));
+app1.use(express.urlencoded({ extended: true }));
 
-app.use(cookieParser());
-app.use(
+app1.use(cookieParser());
+app1.use(
   csrf({
     cookie: {
       ...cookie,
@@ -87,19 +89,19 @@ app.use(
   }),
 );
 
-app.use(cookiesConsent);
+app1.use(cookiesConsent);
 
-app.use(csrfToken());
+app1.use(csrfToken());
 
-app.use(flash());
+app1.use(flash());
 
 configureNunjucks({
   autoescape: true,
-  express: app,
+  express: app1,
   noCache: true,
 });
 
-app.use(
+app1.use(
   morgan('dev', {
     // @ts-ignore
     skip: (req) => req.url.startsWith('/assets'),
@@ -107,7 +109,7 @@ app.use(
 );
 
 if (process.env.NODE_ENV !== 'production') {
-  app.use(
+  app1.use(
     basicAuth({
       users: {
         // @ts-ignore
@@ -118,18 +120,18 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
-app.use('/quote', requiredQuoteEligibilityDataProvided);
-app.use('/insurance/eligibility', requiredInsuranceEligibilityDataProvided);
-app.use('/insurance/:referenceNumber/*', getApplication);
-app.use('/insurance/:referenceNumber/*', applicationAccess);
-app.use('/insurance/:referenceNumber/*', applicationStatus);
-app.use('/', userSession);
+app1.use('/quote', requiredQuoteEligibilityDataProvided);
+app1.use('/insurance/eligibility', requiredInsuranceEligibilityDataProvided);
+app1.use('/insurance/:referenceNumber/*', getApplication);
+app1.use('/insurance/:referenceNumber/*', applicationAccess);
+app1.use('/insurance/:referenceNumber/*', applicationStatus);
+app1.use('/', userSession);
 
-app.use('/', rootRoute);
-app.use('/', quoteRoutes);
-app.use('/', insuranceRoutes);
+app1.use('/', rootRoute);
+app1.use('/', quoteRoutes);
+app1.use('/', insuranceRoutes);
 
-app.use(
+app1.use(
   '/assets',
   // @ts-ignore
   express.static(path.join(__dirname, '..', 'node_modules', 'govuk-frontend', 'govuk', 'assets')),
@@ -145,12 +147,12 @@ const errorHandler: express.ErrorRequestHandler = (err, req, res, next) => {
 };
 /* eslint-enable no-unused-vars, prettier/prettier */
 
-app.use(errorHandler);
+app1.use(errorHandler);
 
 const INSURANCE_PAGE_NOT_FOUND_TEMPLATE = 'insurance/page-not-found.njk';
 const PAGE_NOT_FOUND_TEMPLATE = 'page-not-found.njk';
 
-app.get('*', (req: Request, res: Response) => {
+app1.get('*', (req: Request, res: Response) => {
   /**
    * if route contains "insurance" eg /insurance/dashboard
    * insurance page-not-found should be rendered
@@ -180,6 +182,6 @@ app.get('*', (req: Request, res: Response) => {
   });
 });
 
-app.listen(PORT, () => console.info(`EXIP UI app listening on port ${PORT}!`));
+app1.listen(PORT, () => console.info(`EXIP UI app listening on port ${PORT}!`));
 
 /* eslint-enable @typescript-eslint/ban-ts-comment */
