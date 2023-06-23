@@ -12,7 +12,7 @@ const getCountries = async () => {
   try {
     const config: AxiosRequestConfig = {
       method: 'GET',
-      url: `${process.env.APIM_MDM_URL}`,
+      url: `${process.env.APIM_MDM_URL}/markets`,
       headers,
     };
 
@@ -29,7 +29,7 @@ const getCurrencies = async () => {
   try {
     const config: AxiosRequestConfig = {
       method: 'GET',
-      url: `${process.env.APIM_MDM_URL}`,
+      url: `${process.env.APIM_MDM_URL}/currencies`,
       headers,
     };
 
