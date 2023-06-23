@@ -4,7 +4,7 @@ on:
   pull_request:
 
 env:
-  environment: dev
+  environment: 'qa'
 
 jobs:
   set-environment:
@@ -41,7 +41,7 @@ jobs:
           channel: '#exip-github-actions'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()  
+        if: failure()
 
   unit-tests:
     name: Run unit tests
@@ -117,7 +117,7 @@ jobs:
           group: 'EXIPS'
           project: ./e2e-tests
           config: video=false
-        env: 
+        env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: act10ns/slack@v1
