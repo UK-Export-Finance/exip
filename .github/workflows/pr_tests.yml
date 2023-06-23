@@ -4,7 +4,7 @@ on:
   pull_request:
 
 env:
-  environment: dev
+  environment: qa
 
 jobs:
   set-environment:
@@ -13,9 +13,9 @@ jobs:
     outputs:
       environment: ${{ env.environment }}
     steps:
-    - name: Initialise Environment
-      run: |
-        echo Setting environment to ${{ env.environment }}
+      - name: Initialise Environment
+        run: |
+          echo Setting environment to ${{ env.environment }}
 
   linting:
     name: Run linting
@@ -41,7 +41,7 @@ jobs:
           channel: '#exip-github-actions'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()  
+        if: failure()
 
   unit-tests:
     name: Run unit tests
@@ -80,7 +80,7 @@ jobs:
       # https://github.com/cypress-io/github-action/issues/48
       fail-fast: false
       matrix:
-        machines: [ 1, 2, 3, 4 ]
+        machines: [1, 2, 3, 4]
 
     env:
       BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
@@ -114,7 +114,7 @@ jobs:
           group: 'EXIPS'
           project: ./e2e-tests
           config: video=false
-        env: 
+        env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: act10ns/slack@v1
