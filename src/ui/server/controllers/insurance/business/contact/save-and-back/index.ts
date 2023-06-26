@@ -4,7 +4,7 @@ import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/contact';
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 import constructPayload from '../../../../../helpers/construct-payload';
-import { CONTACT_FIELDS_IDS } from '..';
+import { CONTACT_FIELD_IDS } from '..';
 
 /**
  * saves and goes back to all sections from contact page unless there are api errors
@@ -24,7 +24,7 @@ const post = async (req: Request, res: Response) => {
 
     const { body } = req;
 
-    const payload = constructPayload(body, CONTACT_FIELDS_IDS);
+    const payload = constructPayload(body, CONTACT_FIELD_IDS);
 
     // run validation on inputs
     const validationErrors = generateValidationErrors(body);

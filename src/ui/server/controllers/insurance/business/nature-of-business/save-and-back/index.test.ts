@@ -1,10 +1,10 @@
-import { Request, Response } from '../../../../../../types';
 import { post } from '.';
+import constructPayload from '../../../../../helpers/construct-payload';
+import { NATURE_OF_BUSINESS_FIELD_IDS } from '..';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { mockReq, mockRes, mockApplication, mockBusinessNatureOfBusiness } from '../../../../../test-mocks';
 import mapAndSave from '../../map-and-save/nature-of-business';
-import constructPayload from '../../../../../helpers/construct-payload';
-import { NATURE_OF_BUSINESS_FIELDS_IDS } from '..';
+import { Request, Response } from '../../../../../../types';
 
 const {
   EXPORTER_BUSINESS: {
@@ -44,31 +44,19 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call mapAndSave.natureOfBusiness once', async () => {
+      it('should call mapAndSave.natureOfBusiness once with data from constructPayload', async () => {
         req.body = {
           ...mockBusinessNatureOfBusiness,
+          injection: 1,
         };
 
         await post(req, res);
 
+        const payload = constructPayload(req.body, NATURE_OF_BUSINESS_FIELD_IDS);
+
         expect(updateMapAndSave).toHaveBeenCalledTimes(1);
-      });
 
-      describe('when an extra field is inserted onto the page', () => {
-        it('should call mapAndSave.natureOfBusiness once without the extra field', async () => {
-          req.body = {
-            ...mockBusinessNatureOfBusiness,
-            injection: 1,
-          };
-
-          await post(req, res);
-
-          const payload = constructPayload(req.body, NATURE_OF_BUSINESS_FIELDS_IDS);
-
-          expect(updateMapAndSave).toHaveBeenCalledTimes(1);
-
-          expect(updateMapAndSave).toHaveBeenCalledWith(payload, mockApplication, false);
-        });
+        expect(updateMapAndSave).toHaveBeenCalledWith(payload, mockApplication, false);
       });
     });
 

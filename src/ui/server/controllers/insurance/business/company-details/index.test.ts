@@ -1,15 +1,15 @@
-import { pageVariables, get, redirectToExitPage, postCompaniesHouseSearch, TEMPLATE, COMPANY_DETAILS_FIELDS_IDS } from '.';
+import { pageVariables, get, redirectToExitPage, postCompaniesHouseSearch, TEMPLATE, COMPANY_DETAILS_FIELD_IDS } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
+import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../helpers/validation';
 import api from '../../../../api';
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
 import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-house-summary-list';
 import { mockReq, mockRes, mockCompany, mockApplication } from '../../../../test-mocks';
 import { Request, Response, Application } from '../../../../../types';
-import constructPayload from '../../../../helpers/construct-payload';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
@@ -54,6 +54,12 @@ describe('controllers/insurance/business/companies-details', () => {
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
       expect(TEMPLATE).toEqual(companyDetailsTemplate);
+    });
+  });
+
+  describe('COMPANY_DETAILS_FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      expect(COMPANY_DETAILS_FIELD_IDS).toEqual([COMPANY_HOUSE.INPUT, TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER]);
     });
   });
 
@@ -217,7 +223,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '',
         };
 
-        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELDS_IDS);
+        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELD_IDS);
 
         await postCompaniesHouseSearch(req, res);
 
@@ -239,7 +245,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '1234',
         };
 
-        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELDS_IDS);
+        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELD_IDS);
 
         await postCompaniesHouseSearch(req, res);
 
@@ -261,7 +267,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '123456!',
         };
 
-        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELDS_IDS);
+        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELD_IDS);
 
         await postCompaniesHouseSearch(req, res);
 
@@ -283,7 +289,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '123456',
         };
 
-        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELDS_IDS);
+        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELD_IDS);
 
         const getCompaniesHouseResponse = jest.fn(() => Promise.resolve({ success: false }));
         api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
@@ -330,7 +336,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '123456',
         };
 
-        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELDS_IDS);
+        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELD_IDS);
 
         await postCompaniesHouseSearch(req, res);
 
@@ -348,14 +354,14 @@ describe('controllers/insurance/business/companies-details', () => {
       });
 
       describe('when an extra field is inserted onto the page', () => {
-        it('should call api.keystone.getCompaniesHouseInformation without the extra field', async () => {
+        it('should call api.keystone.getCompaniesHouseInformation with the data from constructPayload function', async () => {
           req.body = {
             companiesHouseNumber: '123456',
             injection: 1,
           };
           await postCompaniesHouseSearch(req, res);
 
-          const payload = constructPayload(req.body, COMPANY_DETAILS_FIELDS_IDS);
+          const payload = constructPayload(req.body, COMPANY_DETAILS_FIELD_IDS);
 
           expect(getCompaniesHouseResponse).toHaveBeenCalledWith(payload[COMPANY_HOUSE.INPUT]);
         });

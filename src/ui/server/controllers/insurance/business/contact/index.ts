@@ -7,12 +7,12 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import getValuesFromUserSessionOrApplication from '../../../../helpers/get-values-from-user-session-or-application';
+import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import { Request, Response } from '../../../../../types';
 import mapAndSave from '../map-and-save/contact';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import constructPayload from '../../../../helpers/construct-payload';
+import { Request, Response } from '../../../../../types';
 
 const { BUSINESS } = FIELD_IDS;
 const { COMPANY_NAME, POSITION, BUSINESS_CONTACT_DETAIL } = FIELD_IDS.CONTACT;
@@ -23,7 +23,7 @@ const { CONTACT: CONTACT_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 export const TEMPLATE = CONTACT_TEMPLATE;
 
-export const CONTACT_FIELDS_IDS = [FIRST_NAME, LAST_NAME, EMAIL, POSITION];
+export const CONTACT_FIELD_IDS = [FIRST_NAME, LAST_NAME, EMAIL, POSITION];
 
 const {
   INSURANCE_ROOT,
@@ -111,7 +111,7 @@ const post = async (req: Request, res: Response) => {
 
     const { body } = req;
 
-    const payload = constructPayload(body, CONTACT_FIELDS_IDS);
+    const payload = constructPayload(body, CONTACT_FIELD_IDS);
 
     // run validation on inputs
     const validationErrors = generateValidationErrors(body);

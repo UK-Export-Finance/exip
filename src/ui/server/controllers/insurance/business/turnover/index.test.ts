@@ -1,15 +1,15 @@
 import { PAGES } from '../../../../content-strings';
-import { pageVariables, get, post, TEMPLATE, TURNOVER_FIELDS_IDS } from '.';
+import { pageVariables, get, post, TEMPLATE, TURNOVER_FIELD_IDS } from '.';
 import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/turnover';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
-import constructPayload from '../../../../helpers/construct-payload';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER } = EXPORTER_BUSINESS.TURNOVER;
@@ -48,6 +48,12 @@ describe('controllers/insurance/business/turnover', () => {
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
       expect(TEMPLATE).toEqual(TURNOVER_TEMPLATE);
+    });
+  });
+
+  describe('TURNOVER_FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      expect(TURNOVER_FIELD_IDS).toEqual([FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER]);
     });
   });
 
@@ -116,7 +122,7 @@ describe('controllers/insurance/business/turnover', () => {
       it('should render template with validation errors', async () => {
         req.body = {};
 
-        const payload = constructPayload(req.body, TURNOVER_FIELDS_IDS);
+        const payload = constructPayload(req.body, TURNOVER_FIELD_IDS);
 
         await post(req, res);
 
@@ -151,12 +157,15 @@ describe('controllers/insurance/business/turnover', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call mapAndSave.turnover once with turnover and application', async () => {
-        req.body = body;
+      it('should call mapAndSave.turnover once with data from constructPayload and application', async () => {
+        req.body = {
+          ...body,
+          injection: 1,
+        };
 
         await post(req, res);
 
-        const payload = constructPayload(req.body, TURNOVER_FIELDS_IDS);
+        const payload = constructPayload(req.body, TURNOVER_FIELD_IDS);
 
         expect(mapAndSave.turnover).toHaveBeenCalledTimes(1);
 
@@ -187,23 +196,6 @@ describe('controllers/insurance/business/turnover', () => {
           const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
-        });
-      });
-
-      describe('when an extra field is inserted onto the page', () => {
-        it('should call mapAndSave.turnover once without the extra field', async () => {
-          req.body = {
-            ...body,
-            injection: 1,
-          };
-
-          await post(req, res);
-
-          const payload = constructPayload(req.body, TURNOVER_FIELDS_IDS);
-
-          expect(mapAndSave.turnover).toHaveBeenCalledTimes(1);
-
-          expect(mapAndSave.turnover).toHaveBeenCalledWith(payload, mockApplication);
         });
       });
     });

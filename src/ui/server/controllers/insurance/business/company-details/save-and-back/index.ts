@@ -1,10 +1,10 @@
-import { Request, Response } from '../../../../../../types';
+import { COMPANY_DETAILS_FIELD_IDS } from '..';
 import { ROUTES, FIELD_IDS } from '../../../../../constants';
 import companiesHouseSearch from '../helpers/companies-house-search.helper';
+import constructPayload from '../../../../../helpers/construct-payload';
 import companyDetailsValidation from '../validation/company-details';
 import mapAndSave from '../../map-and-save/company-details';
-import constructPayload from '../../../../../helpers/construct-payload';
-import { COMPANY_DETAILS_FIELDS_IDS } from '..';
+import { Request, Response } from '../../../../../../types';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 
@@ -46,7 +46,7 @@ const post = async (req: Request, res: Response) => {
 
     const { company } = response;
 
-    const payload = constructPayload(body, COMPANY_DETAILS_FIELDS_IDS);
+    const payload = constructPayload(body, COMPANY_DETAILS_FIELD_IDS);
 
     // run validation on other fields on page
     validationErrors = companyDetailsValidation(body, validationErrors);

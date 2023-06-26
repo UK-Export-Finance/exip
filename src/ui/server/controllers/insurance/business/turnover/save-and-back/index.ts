@@ -1,9 +1,9 @@
-import { Request, Response } from '../../../../../../types';
 import { TEMPLATES, ROUTES } from '../../../../../constants';
+import { TURNOVER_FIELD_IDS } from '..';
+import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/turnover';
-import constructPayload from '../../../../../helpers/construct-payload';
-import { TURNOVER_FIELDS_IDS } from '..';
+import { Request, Response } from '../../../../../../types';
 
 const { TURNOVER: TURNOVER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
@@ -29,7 +29,7 @@ const post = async (req: Request, res: Response) => {
 
     const { body } = req;
 
-    const payload = constructPayload(body, TURNOVER_FIELDS_IDS);
+    const payload = constructPayload(body, TURNOVER_FIELD_IDS);
 
     // run validation on inputs
     const validationErrors = generateValidationErrors(body);

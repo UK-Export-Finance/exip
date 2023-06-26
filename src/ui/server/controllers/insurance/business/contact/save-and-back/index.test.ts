@@ -6,7 +6,7 @@ import FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
 import mapAndSave from '../../map-and-save/contact';
 import ACCOUNT_FIELD_IDS from '../../../../../constants/field-ids/insurance/account';
 import constructPayload from '../../../../../helpers/construct-payload';
-import { CONTACT_FIELDS_IDS } from '..';
+import { CONTACT_FIELD_IDS } from '..';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -49,29 +49,19 @@ describe('controllers/insurance/business/contact/save-and-back', () => {
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call mapAndSave.contact once', async () => {
-        req.body = validBody;
+      it('should call mapAndSave.broker once with data from constructPayload function', async () => {
+        req.body = {
+          ...validBody,
+          injection: 1,
+        };
 
         await post(req, res);
 
-        expect(updateMapAndSave).toHaveBeenCalledTimes(1);
-      });
+        const payload = constructPayload(req.body, CONTACT_FIELD_IDS);
 
-      describe('when an extra field is inserted onto the page', () => {
-        it('should call mapAndSave.broker once without the extra field', async () => {
-          req.body = {
-            ...validBody,
-            injection: 1,
-          };
+        expect(mapAndSave.contact).toHaveBeenCalledTimes(1);
 
-          await post(req, res);
-
-          const payload = constructPayload(req.body, CONTACT_FIELDS_IDS);
-
-          expect(mapAndSave.contact).toHaveBeenCalledTimes(1);
-
-          expect(mapAndSave.contact).toHaveBeenCalledWith(payload, mockApplication, false);
-        });
+        expect(mapAndSave.contact).toHaveBeenCalledWith(payload, mockApplication, false);
       });
     });
 

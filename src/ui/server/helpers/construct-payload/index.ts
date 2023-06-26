@@ -11,7 +11,7 @@ import { isPopulatedArray } from '../array';
  * @returns {Object} constructed payload
  */
 const constructPayload = (requestBody: RequestBody, fieldIds: Array<string>) => {
-  let payload = {};
+  const payload = {};
 
   // if either requestBody or fieldsIds are empty, return empty object
   if (!objectHasKeysAndValues(requestBody) || !isPopulatedArray(fieldIds)) {
@@ -24,10 +24,7 @@ const constructPayload = (requestBody: RequestBody, fieldIds: Array<string>) => 
    * else will add an empty string
    */
   fieldIds.forEach((fieldId) => {
-    payload = {
-      ...payload,
-      [fieldId]: requestBody[fieldId] ?? '',
-    };
+    payload[fieldId] = requestBody[fieldId] ?? '';
   });
 
   return payload;

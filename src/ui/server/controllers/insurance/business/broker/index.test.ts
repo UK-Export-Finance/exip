@@ -1,8 +1,9 @@
 import { PAGES } from '../../../../content-strings';
-import { pageVariables, get, post, TEMPLATE, BROKER_FIELDS_IDS } from '.';
+import { pageVariables, get, post, TEMPLATE, BROKER_FIELD_IDS } from '.';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import constructPayload from '../../../../helpers/construct-payload';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
@@ -10,7 +11,6 @@ import { FIELDS } from '../../../../content-strings/fields/insurance/your-busine
 import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockBroker } from '../../../../test-mocks';
-import constructPayload from '../../../../helpers/construct-payload';
 
 const { BROKER: BROKER_FIELDS } = FIELDS;
 
@@ -46,6 +46,12 @@ describe('controllers/insurance/business/broker', () => {
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
       expect(TEMPLATE).toEqual(BROKER_TEMPLATE);
+    });
+  });
+
+  describe('BROKER_FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      expect(BROKER_FIELD_IDS).toEqual([USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL]);
     });
   });
 
@@ -173,12 +179,15 @@ describe('controllers/insurance/business/broker', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call mapAndSave.broker once with broker and application', async () => {
-        req.body = mockBroker;
+      it('should call mapAndSave.broker once with data from constructPayload function', async () => {
+        req.body = {
+          ...mockBroker,
+          injection: 1,
+        };
 
         await post(req, res);
 
-        const payload = constructPayload(req.body, BROKER_FIELDS_IDS);
+        const payload = constructPayload(req.body, BROKER_FIELD_IDS);
 
         expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
 
@@ -196,23 +205,6 @@ describe('controllers/insurance/business/broker', () => {
           const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
-        });
-      });
-
-      describe('when an extra field is inserted onto the page', () => {
-        it('should call mapAndSave.broker once without the extra field', async () => {
-          req.body = {
-            ...mockBroker,
-            injection: 1,
-          };
-
-          await post(req, res);
-
-          const payload = constructPayload(req.body, BROKER_FIELDS_IDS);
-
-          expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
-
-          expect(mapAndSave.broker).toHaveBeenCalledWith(payload, mockApplication);
         });
       });
     });

@@ -1,5 +1,5 @@
 import { Request, Response } from '../../../../../types';
-import { pageVariables, post, COMPANY_DETAILS_FIELDS_IDS } from '.';
+import { pageVariables, post, COMPANY_DETAILS_FIELD_IDS } from '.';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -109,42 +109,23 @@ describe('controllers/insurance/business/companies-details', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call mapAndSave.companyDetails once with updateBody and application', async () => {
-        req.body = body;
+      it('should call mapAndSave.companyDetails once with data from constructPayload function and application', async () => {
+        req.body = {
+          ...body,
+          injection: 1,
+        };
 
         await post(req, res);
 
         expect(mapAndSave.companyDetails).toHaveBeenCalledTimes(1);
 
-        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELDS_IDS);
+        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELD_IDS);
 
         const updateBody = {
           ...payload,
           ...mockCompany,
         };
         expect(mapAndSave.companyDetails).toHaveBeenCalledWith(updateBody, mockApplication);
-      });
-
-      describe('when an extra field is inserted onto the page', () => {
-        it('should call mapAndSave.companyDetails once without the extra field', async () => {
-          req.body = {
-            ...body,
-            injection: 1,
-          };
-
-          await post(req, res);
-
-          const payload = constructPayload(req.body, COMPANY_DETAILS_FIELDS_IDS);
-
-          const updateBody = {
-            ...payload,
-            ...mockCompany,
-          };
-
-          expect(mapAndSave.companyDetails).toHaveBeenCalledTimes(1);
-
-          expect(mapAndSave.companyDetails).toHaveBeenCalledWith(updateBody, mockApplication);
-        });
       });
 
       describe("when the url's last substring is `change`", () => {

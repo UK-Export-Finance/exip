@@ -4,7 +4,7 @@ import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from '../../../../../test-mocks';
 import mapAndSave from '../../map-and-save/company-details';
 import constructPayload from '../../../../../helpers/construct-payload';
-import { COMPANY_DETAILS_FIELDS_IDS } from '..';
+import { COMPANY_DETAILS_FIELD_IDS } from '..';
 import api from '../../../../../api';
 
 const {
@@ -81,34 +81,24 @@ describe('controllers/insurance/business/companies-details', () => {
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call mapAndSave.companyDetails once', async () => {
-        req.body = body;
+      it('should call mapAndSave.companyDetails once with the data from constructPayload function and company', async () => {
+        req.body = {
+          ...body,
+          injection: 1,
+        };
 
         await post(req, res);
 
+        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELD_IDS);
+
         expect(updateMapAndSave).toHaveBeenCalledTimes(1);
-      });
 
-      describe('when an extra field is inserted onto the page', () => {
-        it('should call mapAndSave.companyDetails once without the extra field', async () => {
-          req.body = {
-            ...body,
-            injection: 1,
-          };
+        const updateBody = {
+          ...payload,
+          ...mockCompany,
+        };
 
-          await post(req, res);
-
-          const payload = constructPayload(req.body, COMPANY_DETAILS_FIELDS_IDS);
-
-          const updateBody = {
-            ...payload,
-            ...mockCompany,
-          };
-
-          expect(updateMapAndSave).toHaveBeenCalledTimes(1);
-
-          expect(updateMapAndSave).toHaveBeenCalledWith(updateBody, mockApplication, {});
-        });
+        expect(updateMapAndSave).toHaveBeenCalledWith(updateBody, mockApplication, {});
       });
     });
 

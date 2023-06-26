@@ -4,6 +4,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import companiesHouseSearch from './helpers/companies-house-search.helper';
+import constructPayload from '../../../../helpers/construct-payload';
 import companyDetailsValidation from './validation/company-details';
 import { isPopulatedArray } from '../../../../helpers/array';
 import mapAndSave from '../map-and-save/company-details';
@@ -12,7 +13,6 @@ import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
 import { Request, Response } from '../../../../../types';
-import constructPayload from '../../../../helpers/construct-payload';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
@@ -27,7 +27,7 @@ const { COMPANY_DETAILS: COMPANY_DETAILS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORT
 
 export const TEMPLATE = COMPANY_DETAILS_TEMPLATE;
 
-export const COMPANY_DETAILS_FIELDS_IDS = [COMPANY_HOUSE.INPUT, TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER];
+export const COMPANY_DETAILS_FIELD_IDS = [COMPANY_HOUSE.INPUT, TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER];
 
 const {
   INSURANCE_ROOT,
@@ -144,7 +144,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
     const { referenceNumber } = application;
     const { body } = req;
 
-    const payload = constructPayload(body, COMPANY_DETAILS_FIELDS_IDS);
+    const payload = constructPayload(body, COMPANY_DETAILS_FIELD_IDS);
 
     // checks if input is correctly formatted before searching
     const response = await companiesHouseSearch(payload);
@@ -221,7 +221,7 @@ const post = async (req: Request, res: Response) => {
 
     let { validationErrors } = response;
 
-    const payload = constructPayload(body, COMPANY_DETAILS_FIELDS_IDS);
+    const payload = constructPayload(body, COMPANY_DETAILS_FIELD_IDS);
 
     // populate submittedValues
     const submittedValues = {
