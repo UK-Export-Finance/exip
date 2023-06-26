@@ -1,6 +1,7 @@
 import { PAGES } from '../../../../content-strings';
-import { pageVariables, get, TEMPLATE, post, NATURE_OF_BUSINESS_FIELD_IDS } from '.';
-import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
+import { pageVariables, get, TEMPLATE, post, FIELD_IDS } from '.';
+import { TEMPLATES, ROUTES } from '../../../../constants';
+import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -11,8 +12,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
-const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
-const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
+const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK } = BUSINESS_FIELD_IDS.NATURE_OF_YOUR_BUSINESS;
 
 const { NATURE_OF_YOUR_BUSINESS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -60,9 +60,9 @@ describe('controllers/insurance/business/nature-of-business', () => {
     });
   });
 
-  describe('NATURE_OF_BUSINESS_FIELD_IDS', () => {
+  describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      expect(NATURE_OF_BUSINESS_FIELD_IDS).toEqual([GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL]);
+      expect(FIELD_IDS).toEqual([GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL]);
     });
   });
 
@@ -141,7 +141,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
 
         await post(req, res);
 
-        const payload = constructPayload(req.body, NATURE_OF_BUSINESS_FIELD_IDS);
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         const validationErrors = generateValidationErrors(req.body);
 
@@ -184,7 +184,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
 
         await post(req, res);
 
-        const payload = constructPayload(req.body, NATURE_OF_BUSINESS_FIELD_IDS);
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(mapAndSave.natureOfBusiness).toHaveBeenCalledTimes(1);
 

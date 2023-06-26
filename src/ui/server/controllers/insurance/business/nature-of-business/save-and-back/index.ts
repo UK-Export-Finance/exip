@@ -1,5 +1,5 @@
 import { TEMPLATES, ROUTES } from '../../../../../constants';
-import { NATURE_OF_BUSINESS_FIELD_IDS } from '..';
+import { FIELD_IDS } from '..';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/nature-of-business';
 import constructPayload from '../../../../../helpers/construct-payload';
@@ -29,7 +29,7 @@ const post = async (req: Request, res: Response) => {
 
     const { body } = req;
 
-    const payload = constructPayload(body, NATURE_OF_BUSINESS_FIELD_IDS);
+    const payload = constructPayload(body, FIELD_IDS);
 
     // run validation on inputs
     const validationErrors = generateValidationErrors(body);

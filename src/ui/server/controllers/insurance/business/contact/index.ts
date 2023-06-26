@@ -1,6 +1,6 @@
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES, ROUTES } from '../../../../constants';
-import FIELD_IDS from '../../../../constants/field-ids/insurance/business';
+import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
 import { FIELDS, ACCOUNT_FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -14,8 +14,8 @@ import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
-const { BUSINESS } = FIELD_IDS;
-const { COMPANY_NAME, POSITION, BUSINESS_CONTACT_DETAIL } = FIELD_IDS.CONTACT;
+const { BUSINESS } = BUSINESS_FIELD_IDS;
+const { COMPANY_NAME, POSITION, BUSINESS_CONTACT_DETAIL } = BUSINESS_FIELD_IDS.CONTACT;
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
 const { CONTACT } = PAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -23,7 +23,7 @@ const { CONTACT: CONTACT_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 export const TEMPLATE = CONTACT_TEMPLATE;
 
-export const CONTACT_FIELD_IDS = [FIRST_NAME, LAST_NAME, EMAIL, POSITION];
+export const FIELD_IDS = [FIRST_NAME, LAST_NAME, EMAIL, POSITION];
 
 const {
   INSURANCE_ROOT,
@@ -111,7 +111,7 @@ const post = async (req: Request, res: Response) => {
 
     const { body } = req;
 
-    const payload = constructPayload(body, CONTACT_FIELD_IDS);
+    const payload = constructPayload(body, FIELD_IDS);
 
     // run validation on inputs
     const validationErrors = generateValidationErrors(body);

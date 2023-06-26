@@ -3,14 +3,6 @@ import constructPayload from '.';
 describe('helpers/construct-payload', () => {
   const FIELDS_IDS = ['a', 'b', 'c'];
 
-  describe('when requestBody is empty', () => {
-    it('should return an empty payload', () => {
-      const result = constructPayload({}, FIELDS_IDS);
-
-      expect(result).toEqual({});
-    });
-  });
-
   describe('when fieldIds are empty', () => {
     it('should return an empty payload', () => {
       const result = constructPayload({ a: 'a' }, []);

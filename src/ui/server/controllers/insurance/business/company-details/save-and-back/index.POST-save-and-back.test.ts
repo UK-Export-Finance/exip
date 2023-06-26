@@ -1,18 +1,17 @@
 import { Request, Response } from '../../../../../../types';
 import { post } from '.';
-import { FIELD_IDS, ROUTES } from '../../../../../constants';
+import { FIELD_IDS } from '..';
+import { ROUTES } from '../../../../../constants';
+import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
 import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from '../../../../../test-mocks';
 import mapAndSave from '../../map-and-save/company-details';
 import constructPayload from '../../../../../helpers/construct-payload';
-import { COMPANY_DETAILS_FIELD_IDS } from '..';
 import api from '../../../../../api';
 
 const {
-  EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { INPUT },
-    YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
-  },
-} = FIELD_IDS.INSURANCE;
+  COMPANY_HOUSE: { INPUT },
+  YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
+} = BUSINESS_FIELD_IDS;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -89,7 +88,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await post(req, res);
 
-        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELD_IDS);
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(updateMapAndSave).toHaveBeenCalledTimes(1);
 

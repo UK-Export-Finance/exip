@@ -1,5 +1,6 @@
-import { pageVariables, get, redirectToExitPage, postCompaniesHouseSearch, TEMPLATE, COMPANY_DETAILS_FIELD_IDS } from '.';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { pageVariables, get, redirectToExitPage, postCompaniesHouseSearch, TEMPLATE, FIELD_IDS } from '.';
+import { ROUTES, TEMPLATES } from '../../../../constants';
+import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
@@ -11,13 +12,10 @@ import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-
 import { mockReq, mockRes, mockCompany, mockApplication } from '../../../../test-mocks';
 import { Request, Response, Application } from '../../../../../types';
 
-const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
-  EXPORTER_BUSINESS: {
-    COMPANY_HOUSE,
-    YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
-  },
-} = FIELD_IDS.INSURANCE;
+  COMPANY_HOUSE,
+  YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
+} = BUSINESS_FIELD_IDS;
 
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { COMPANY_DETAILS: companyDetailsTemplate } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -57,9 +55,9 @@ describe('controllers/insurance/business/companies-details', () => {
     });
   });
 
-  describe('COMPANY_DETAILS_FIELD_IDS', () => {
+  describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      expect(COMPANY_DETAILS_FIELD_IDS).toEqual([COMPANY_HOUSE.INPUT, TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER]);
+      expect(FIELD_IDS).toEqual([COMPANY_HOUSE.INPUT, TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER]);
     });
   });
 
@@ -76,7 +74,7 @@ describe('controllers/insurance/business/companies-details', () => {
           NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
           SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
         },
-        FIELDS: EXPORTER_BUSINESS,
+        FIELDS: BUSINESS_FIELD_IDS,
       };
 
       expect(result).toEqual(expected);
@@ -95,7 +93,7 @@ describe('controllers/insurance/business/companies-details', () => {
             NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
             SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
           },
-          FIELDS: EXPORTER_BUSINESS,
+          FIELDS: BUSINESS_FIELD_IDS,
         };
 
         expect(result).toEqual(expected);
@@ -115,7 +113,7 @@ describe('controllers/insurance/business/companies-details', () => {
             NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
             SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
           },
-          FIELDS: EXPORTER_BUSINESS,
+          FIELDS: BUSINESS_FIELD_IDS,
         };
 
         expect(result).toEqual(expected);
@@ -223,7 +221,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '',
         };
 
-        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELD_IDS);
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         await postCompaniesHouseSearch(req, res);
 
@@ -245,7 +243,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '1234',
         };
 
-        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELD_IDS);
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         await postCompaniesHouseSearch(req, res);
 
@@ -267,7 +265,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '123456!',
         };
 
-        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELD_IDS);
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         await postCompaniesHouseSearch(req, res);
 
@@ -289,7 +287,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '123456',
         };
 
-        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELD_IDS);
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         const getCompaniesHouseResponse = jest.fn(() => Promise.resolve({ success: false }));
         api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
@@ -336,7 +334,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '123456',
         };
 
-        const payload = constructPayload(req.body, COMPANY_DETAILS_FIELD_IDS);
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         await postCompaniesHouseSearch(req, res);
 
@@ -361,7 +359,7 @@ describe('controllers/insurance/business/companies-details', () => {
           };
           await postCompaniesHouseSearch(req, res);
 
-          const payload = constructPayload(req.body, COMPANY_DETAILS_FIELD_IDS);
+          const payload = constructPayload(req.body, FIELD_IDS);
 
           expect(getCompaniesHouseResponse).toHaveBeenCalledWith(payload[COMPANY_HOUSE.INPUT]);
         });

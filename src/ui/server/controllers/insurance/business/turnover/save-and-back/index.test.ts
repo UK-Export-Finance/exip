@@ -1,16 +1,15 @@
 import { post } from '.';
-import { TURNOVER_FIELD_IDS } from '..';
-import { FIELD_IDS, ROUTES } from '../../../../../constants';
+import { FIELD_IDS } from '..';
+import { ROUTES } from '../../../../../constants';
+import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
 import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/turnover';
 import { mockReq, mockRes, mockApplication, mockBusinessTurnover } from '../../../../../test-mocks';
 import { Request, Response } from '../../../../../../types';
 
 const {
-  EXPORTER_BUSINESS: {
-    TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-  },
-} = FIELD_IDS.INSURANCE;
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+} = BUSINESS_FIELD_IDS;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 describe('controllers/insurance/business/turnover/save-and-back', () => {
@@ -52,7 +51,7 @@ describe('controllers/insurance/business/turnover/save-and-back', () => {
 
         await post(req, res);
 
-        const payload = constructPayload(req.body, TURNOVER_FIELD_IDS);
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(updateMapAndSave).toHaveBeenCalledTimes(1);
 

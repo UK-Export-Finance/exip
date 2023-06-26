@@ -1,5 +1,6 @@
 import { PAGES } from '../../../../content-strings';
-import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
+import { TEMPLATES, ROUTES } from '../../../../constants';
+import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
@@ -14,20 +15,17 @@ import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
 import { Request, Response } from '../../../../../types';
 
-const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
-  EXPORTER_BUSINESS: {
-    COMPANY_HOUSE,
-    YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
-  },
-} = FIELD_IDS.INSURANCE;
+  COMPANY_HOUSE,
+  YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
+} = BUSINESS_FIELD_IDS;
 
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { COMPANY_DETAILS: COMPANY_DETAILS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 export const TEMPLATE = COMPANY_DETAILS_TEMPLATE;
 
-export const COMPANY_DETAILS_FIELD_IDS = [COMPANY_HOUSE.INPUT, TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER];
+export const FIELD_IDS = [COMPANY_HOUSE.INPUT, TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER];
 
 const {
   INSURANCE_ROOT,
@@ -61,7 +59,7 @@ const pageVariables = (referenceNumber: number, ORIGINAL_URL: string) => {
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
       NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
     },
-    FIELDS: EXPORTER_BUSINESS,
+    FIELDS: BUSINESS_FIELD_IDS,
   };
 };
 
@@ -144,7 +142,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
     const { referenceNumber } = application;
     const { body } = req;
 
-    const payload = constructPayload(body, COMPANY_DETAILS_FIELD_IDS);
+    const payload = constructPayload(body, FIELD_IDS);
 
     // checks if input is correctly formatted before searching
     const response = await companiesHouseSearch(payload);
@@ -221,7 +219,7 @@ const post = async (req: Request, res: Response) => {
 
     let { validationErrors } = response;
 
-    const payload = constructPayload(body, COMPANY_DETAILS_FIELD_IDS);
+    const payload = constructPayload(body, FIELD_IDS);
 
     // populate submittedValues
     const submittedValues = {

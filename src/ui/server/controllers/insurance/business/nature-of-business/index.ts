@@ -1,5 +1,6 @@
 import { PAGES } from '../../../../content-strings';
-import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
+import { TEMPLATES, ROUTES } from '../../../../constants';
+import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -11,15 +12,14 @@ import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
-const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
-const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
+const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL } = BUSINESS_FIELD_IDS.NATURE_OF_YOUR_BUSINESS;
 
 const { NATURE_OF_YOUR_BUSINESS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 export const TEMPLATE = NATURE_OF_YOUR_BUSINESS_TEMPLATE;
 
-export const NATURE_OF_BUSINESS_FIELD_IDS = [GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL];
+export const FIELD_IDS = [GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL];
 
 const {
   INSURANCE_ROOT,
@@ -108,7 +108,7 @@ const post = async (req: Request, res: Response) => {
 
     const { body } = req;
 
-    const payload = constructPayload(body, NATURE_OF_BUSINESS_FIELD_IDS);
+    const payload = constructPayload(body, FIELD_IDS);
 
     // run validation on inputs
     const validationErrors = generateValidationErrors(body);

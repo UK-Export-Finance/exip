@@ -1,6 +1,6 @@
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES, ROUTES } from '../../../../constants';
-import FIELD_IDS from '../../../../constants/field-ids/insurance/business';
+import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -11,14 +11,14 @@ import mapAndSave from '../map-and-save/broker';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
-const { USING_BROKER, HEADING, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL, DETAILS } = FIELD_IDS.BROKER;
+const { USING_BROKER, HEADING, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL, DETAILS } = BUSINESS_FIELD_IDS.BROKER;
 
 const { BROKER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 export const TEMPLATE = BROKER_TEMPLATE;
 
-export const BROKER_FIELD_IDS = [USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL];
+export const FIELD_IDS = [USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL];
 
 const {
   INSURANCE_ROOT,
@@ -123,7 +123,7 @@ const post = async (req: Request, res: Response) => {
 
     const { body } = req;
 
-    const payload = constructPayload(body, BROKER_FIELD_IDS);
+    const payload = constructPayload(body, FIELD_IDS);
 
     // run validation on inputs
     const validationErrors = generateValidationErrors(body);

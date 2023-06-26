@@ -1,6 +1,6 @@
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES, ROUTES } from '../../../../constants';
-import FIELD_IDS from '../../../../constants/field-ids/insurance/business';
+import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -12,14 +12,14 @@ import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
-const { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER } = FIELD_IDS.TURNOVER;
+const { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER } = BUSINESS_FIELD_IDS.TURNOVER;
 
 const { TURNOVER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { TURNOVER: TURNOVER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 export const TEMPLATE = TURNOVER_TEMPLATE;
 
-export const TURNOVER_FIELD_IDS = [FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER];
+export const FIELD_IDS = [FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER];
 
 const {
   INSURANCE_ROOT,
@@ -98,7 +98,7 @@ const post = async (req: Request, res: Response) => {
 
     const { body } = req;
 
-    const payload = constructPayload(req.body, TURNOVER_FIELD_IDS);
+    const payload = constructPayload(req.body, FIELD_IDS);
 
     // run validation on inputs
     const validationErrors = generateValidationErrors(body);

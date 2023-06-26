@@ -1,7 +1,7 @@
 import { PAGES } from '../../../../content-strings';
-import { pageVariables, get, post, TEMPLATE, CONTACT_FIELD_IDS } from '.';
+import { pageVariables, get, post, TEMPLATE, FIELD_IDS } from '.';
 import { TEMPLATES, ROUTES } from '../../../../constants';
-import FIELD_IDS from '../../../../constants/field-ids/insurance/business';
+import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -14,8 +14,8 @@ import mapAndSave from '../map-and-save/contact';
 import getFromSessionOrApplication from '../../../../helpers/get-values-from-user-session-or-application';
 import { Request, Response } from '../../../../../types';
 
-const { BUSINESS } = FIELD_IDS;
-const { COMPANY_NAME, POSITION, BUSINESS_CONTACT_DETAIL } = FIELD_IDS.CONTACT;
+const { BUSINESS } = BUSINESS_FIELD_IDS;
+const { COMPANY_NAME, POSITION, BUSINESS_CONTACT_DETAIL } = BUSINESS_FIELD_IDS.CONTACT;
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
 const { CONTACT } = PAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -53,9 +53,9 @@ describe('controllers/insurance/business/contact', () => {
     });
   });
 
-  describe('CONTACT_FIELD_IDS', () => {
+  describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      expect(CONTACT_FIELD_IDS).toEqual([FIRST_NAME, LAST_NAME, EMAIL, POSITION]);
+      expect(FIELD_IDS).toEqual([FIRST_NAME, LAST_NAME, EMAIL, POSITION]);
     });
   });
 
@@ -133,7 +133,7 @@ describe('controllers/insurance/business/contact', () => {
       it('should render template with validation errors', async () => {
         req.body = {};
 
-        const payload = constructPayload(req.body, CONTACT_FIELD_IDS);
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         await post(req, res);
 
@@ -171,7 +171,7 @@ describe('controllers/insurance/business/contact', () => {
 
         await post(req, res);
 
-        const payload = constructPayload(req.body, CONTACT_FIELD_IDS);
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(mapAndSave.contact).toHaveBeenCalledTimes(1);
 

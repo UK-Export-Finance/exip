@@ -1,17 +1,17 @@
-import { Request, Response } from '../../../../../../types';
 import { post } from '.';
+import { FIELD_IDS } from '..';
 import { ROUTES } from '../../../../../constants';
-import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
-import FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
-import mapAndSave from '../../map-and-save/contact';
+import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
 import ACCOUNT_FIELD_IDS from '../../../../../constants/field-ids/insurance/account';
 import constructPayload from '../../../../../helpers/construct-payload';
-import { CONTACT_FIELD_IDS } from '..';
+import mapAndSave from '../../map-and-save/contact';
+import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
+import { Request, Response } from '../../../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
-const { POSITION } = FIELD_IDS.CONTACT;
+const { POSITION } = BUSINESS_FIELD_IDS.CONTACT;
 
 describe('controllers/insurance/business/contact/save-and-back', () => {
   let req: Request;
@@ -57,7 +57,7 @@ describe('controllers/insurance/business/contact/save-and-back', () => {
 
         await post(req, res);
 
-        const payload = constructPayload(req.body, CONTACT_FIELD_IDS);
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(mapAndSave.contact).toHaveBeenCalledTimes(1);
 
