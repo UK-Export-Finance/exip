@@ -1,5 +1,4 @@
 import { RequestBody } from '../../../types';
-import { objectHasKeysAndValues } from '../object';
 import { isPopulatedArray } from '../array';
 
 /**
@@ -14,7 +13,7 @@ const constructPayload = (requestBody: RequestBody, fieldIds: Array<string>) => 
   const payload = {};
 
   // if either requestBody or fieldsIds are empty, return empty object
-  if (!objectHasKeysAndValues(requestBody) || !isPopulatedArray(fieldIds)) {
+  if (!isPopulatedArray(fieldIds)) {
     return payload;
   }
 
