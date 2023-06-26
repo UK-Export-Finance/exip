@@ -7,7 +7,7 @@ describe('shared-validation/website', () => {
   const errors = {};
 
   it('should return an error when website is invalid', () => {
-    const website = 'http://www';
+    const website = 'https://www';
 
     const result = validateWebsiteAddress(website, fieldId, errorMessage, errors);
     const expected = generateValidationErrors(fieldId, errorMessage);
@@ -16,7 +16,7 @@ describe('shared-validation/website', () => {
   });
 
   it('should NOT return an error when website is valid', () => {
-    const website = 'http://google.com';
+    const website = 'https://google.com';
 
     const result = validateWebsiteAddress(website, fieldId, errorMessage, errors);
 

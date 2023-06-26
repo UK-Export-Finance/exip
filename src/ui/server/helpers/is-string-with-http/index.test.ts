@@ -9,7 +9,7 @@ describe('helpers/isStringWithHttp', () => {
   });
 
   it('should not add "http://" to beginning of string incoming string already contains "http://"', () => {
-    const website = 'http://www.google.com';
+    const website = 'https://www.google.com';
 
     const result = isStringWithHttp(website);
     expect(result).toEqual(website);
