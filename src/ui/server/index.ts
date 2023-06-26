@@ -10,7 +10,7 @@ import csrf from 'csurf';
 import path from 'path';
 import flash from 'connect-flash';
 import basicAuth from 'express-basic-auth';
-import { csrf as csrfToken, cookiesConsent, security, seo } from './middleware';
+import { csrf as csrfToken, cookiesConsent, security, seo, queryParams } from './middleware';
 import { Request, Response } from '../types';
 
 import * as dotenv from 'dotenv';
@@ -44,6 +44,7 @@ const secureCookieName = https ? '__Host-exip-session' : 'exip-session';
 app1.use(seo);
 app1.use(security);
 app1.use(compression());
+app1.use(queryParams);
 
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
