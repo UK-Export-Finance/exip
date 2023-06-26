@@ -1,6 +1,7 @@
 import { Request, Response } from '../../../../../types';
-import { pageVariables, post } from '.';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { pageVariables, post, FIELD_IDS } from '.';
+import { ROUTES, TEMPLATES } from '../../../../constants';
+import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { PAGES } from '../../../../content-strings';
@@ -10,13 +11,12 @@ import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/company-details';
 import api from '../../../../api';
+import constructPayload from '../../../../helpers/construct-payload';
 
 const {
-  EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { INPUT },
-    YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
-  },
-} = FIELD_IDS.INSURANCE;
+  COMPANY_HOUSE: { INPUT },
+  YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
+} = BUSINESS_FIELD_IDS;
 
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { COMPANY_DETAILS: companyDetailsTemplate } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -108,15 +108,20 @@ describe('controllers/insurance/business/companies-details', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call mapAndSave.companyDetails once with updateBody and application', async () => {
-        req.body = body;
+      it('should call mapAndSave.companyDetails once with data from constructPayload function and application', async () => {
+        req.body = {
+          ...body,
+          injection: 1,
+        };
 
         await post(req, res);
 
         expect(mapAndSave.companyDetails).toHaveBeenCalledTimes(1);
 
+        const payload = constructPayload(req.body, FIELD_IDS);
+
         const updateBody = {
-          ...req.body,
+          ...payload,
           ...mockCompany,
         };
         expect(mapAndSave.companyDetails).toHaveBeenCalledWith(updateBody, mockApplication);

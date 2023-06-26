@@ -13,7 +13,7 @@
     "dev": "keystone dev",
     "start": "keystone start",
     "build": "keystone build",
-    "test": "jest --runInBand --testTimeout=60000"
+    "test": "jest --runInBand --testTimeout=60000 --coverage"
   },
   "repository": {
     "type": "git",

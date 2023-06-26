@@ -1,8 +1,10 @@
-import { pageVariables, get, redirectToExitPage, postCompaniesHouseSearch, TEMPLATE } from '.';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { pageVariables, get, redirectToExitPage, postCompaniesHouseSearch, TEMPLATE, FIELD_IDS } from '.';
+import { ROUTES, TEMPLATES } from '../../../../constants';
+import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
+import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../helpers/validation';
 import api from '../../../../api';
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
@@ -10,13 +12,10 @@ import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-
 import { mockReq, mockRes, mockCompany, mockApplication } from '../../../../test-mocks';
 import { Request, Response, Application } from '../../../../../types';
 
-const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
-  EXPORTER_BUSINESS: {
-    COMPANY_HOUSE,
-    YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
-  },
-} = FIELD_IDS.INSURANCE;
+  COMPANY_HOUSE,
+  YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
+} = BUSINESS_FIELD_IDS;
 
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { COMPANY_DETAILS: companyDetailsTemplate } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -56,6 +55,12 @@ describe('controllers/insurance/business/companies-details', () => {
     });
   });
 
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      expect(FIELD_IDS).toEqual([COMPANY_HOUSE.INPUT, TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER]);
+    });
+  });
+
   describe('pageVariables', () => {
     it('should have correct properties', () => {
       const ORIGINAL_URL = COMPANY_DETAILS_ROUTE;
@@ -69,7 +74,7 @@ describe('controllers/insurance/business/companies-details', () => {
           NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
           SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
         },
-        FIELDS: EXPORTER_BUSINESS,
+        FIELDS: BUSINESS_FIELD_IDS,
       };
 
       expect(result).toEqual(expected);
@@ -88,7 +93,7 @@ describe('controllers/insurance/business/companies-details', () => {
             NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
             SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
           },
-          FIELDS: EXPORTER_BUSINESS,
+          FIELDS: BUSINESS_FIELD_IDS,
         };
 
         expect(result).toEqual(expected);
@@ -108,7 +113,7 @@ describe('controllers/insurance/business/companies-details', () => {
             NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
             SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
           },
-          FIELDS: EXPORTER_BUSINESS,
+          FIELDS: BUSINESS_FIELD_IDS,
         };
 
         expect(result).toEqual(expected);
@@ -216,9 +221,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '',
         };
 
-        const submittedValues = {
-          [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        };
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         await postCompaniesHouseSearch(req, res);
 
@@ -231,7 +234,7 @@ describe('controllers/insurance/business/companies-details', () => {
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
           validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
-          submittedValues,
+          submittedValues: payload,
         });
       });
 
@@ -240,9 +243,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '1234',
         };
 
-        const submittedValues = {
-          [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        };
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         await postCompaniesHouseSearch(req, res);
 
@@ -255,7 +256,7 @@ describe('controllers/insurance/business/companies-details', () => {
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
           validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
-          submittedValues,
+          submittedValues: payload,
         });
       });
 
@@ -264,9 +265,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '123456!',
         };
 
-        const submittedValues = {
-          [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        };
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         await postCompaniesHouseSearch(req, res);
 
@@ -279,7 +278,7 @@ describe('controllers/insurance/business/companies-details', () => {
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
           validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
-          submittedValues,
+          submittedValues: payload,
         });
       });
 
@@ -288,9 +287,7 @@ describe('controllers/insurance/business/companies-details', () => {
           companiesHouseNumber: '123456',
         };
 
-        const submittedValues = {
-          [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        };
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         const getCompaniesHouseResponse = jest.fn(() => Promise.resolve({ success: false }));
         api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
@@ -306,7 +303,7 @@ describe('controllers/insurance/business/companies-details', () => {
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
           validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
-          submittedValues,
+          submittedValues: payload,
         });
       });
 
@@ -325,17 +322,19 @@ describe('controllers/insurance/business/companies-details', () => {
     });
 
     describe('should render template with summary list populated when company found by companies house api', () => {
+      let getCompaniesHouseResponse = jest.fn();
+
+      beforeEach(() => {
+        getCompaniesHouseResponse = jest.fn(() => Promise.resolve(mockCompany));
+        api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
+      });
+
       it('should render template with summary list populated if receive response from api', async () => {
         req.body = {
           companiesHouseNumber: '123456',
         };
 
-        const submittedValues = {
-          [COMPANY_HOUSE.INPUT]: req.body[COMPANY_HOUSE.INPUT],
-        };
-
-        const getCompaniesHouseResponse = jest.fn(() => Promise.resolve(mockCompany));
-        api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         await postCompaniesHouseSearch(req, res);
 
@@ -347,8 +346,22 @@ describe('controllers/insurance/business/companies-details', () => {
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
           SUMMARY_LIST: companyHouseSummaryList(mockCompany),
-          submittedValues,
+          submittedValues: payload,
           validationErrors: {},
+        });
+      });
+
+      describe('when an extra field is inserted onto the page', () => {
+        it('should call api.keystone.getCompaniesHouseInformation with the data from constructPayload function', async () => {
+          req.body = {
+            companiesHouseNumber: '123456',
+            injection: 1,
+          };
+          await postCompaniesHouseSearch(req, res);
+
+          const payload = constructPayload(req.body, FIELD_IDS);
+
+          expect(getCompaniesHouseResponse).toHaveBeenCalledWith(payload[COMPANY_HOUSE.INPUT]);
         });
       });
     });

@@ -1,10 +1,12 @@
-import { Request, Response } from '../../../../../../types';
-import { ROUTES, FIELD_IDS } from '../../../../../constants';
+import { FIELD_IDS } from '..';
+import { ROUTES } from '../../../../../constants';
+import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
 import companiesHouseSearch from '../helpers/companies-house-search.helper';
+import constructPayload from '../../../../../helpers/construct-payload';
 import companyDetailsValidation from '../validation/company-details';
 import mapAndSave from '../../map-and-save/company-details';
+import { Request, Response } from '../../../../../../types';
 
-const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 const { COMPANY_HOUSE_SEARCH, COMPANY_DETAILS: COMPANY_DETAILS_ROUTE, NO_COMPANIES_HOUSE_NUMBER, COMPANY_DETAILS_SAVE_AND_BACK } = EXPORTER_BUSINESS_ROUTES;
@@ -16,7 +18,7 @@ const pageVariables = (referenceNumber: number) => ({
     SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
     NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
   },
-  FIELDS: EXPORTER_BUSINESS,
+  FIELDS: BUSINESS_FIELD_IDS,
 });
 
 /**
@@ -36,17 +38,21 @@ const post = async (req: Request, res: Response) => {
     }
 
     const { body } = req;
+
     // runs companiesHouse validation and api call first for companiesHouse input
     const response = await companiesHouseSearch(body);
     let { validationErrors } = response;
+
     const { company } = response;
+
+    const payload = constructPayload(body, FIELD_IDS);
 
     // run validation on other fields on page
     validationErrors = companyDetailsValidation(body, validationErrors);
 
     // body for update containing companies house info and request body
     const updateBody = {
-      ...body,
+      ...payload,
       ...company,
     };
 
