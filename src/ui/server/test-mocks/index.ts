@@ -55,6 +55,7 @@ const mockRes = () => {
 
   res.redirect = jest.fn();
   res.render = jest.fn();
+  res.status = jest.fn();
 
   res.locals = {
     csrfToken: 'mock',

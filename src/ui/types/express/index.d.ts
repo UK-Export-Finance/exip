@@ -84,6 +84,7 @@ interface Response {
   locals: ResponseLocals;
   setHeader: (str1: string, str2?: string) => any; // eslint-disable-line @typescript-eslint/no-explicit-any
   removeHeader: (str1: string) => any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  status: (status: number) => any;
 }
 
 declare module 'express-session' {
