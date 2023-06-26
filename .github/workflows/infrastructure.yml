@@ -320,7 +320,8 @@ jobs:
           API_URL='https://${{ env.API_URL }}/api/graphql' \
           APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
           APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
-          APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}'
+          APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
+          URL_ORIGIN='${{ vars.URL_ORIGIN }}'
 
           # API
           az webapp config appsettings set \
