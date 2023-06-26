@@ -1,20 +1,21 @@
 import { PAGES } from '../../../../content-strings';
-import { pageVariables, get, post, TEMPLATE } from '.';
+import { pageVariables, get, post, TEMPLATE, FIELD_IDS } from '.';
 import { TEMPLATES, ROUTES } from '../../../../constants';
-import FIELD_IDS from '../../../../constants/field-ids/insurance/business';
+import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { FIELDS, ACCOUNT_FIELDS } from '../../../../content-strings/fields/insurance';
-import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockBusinessContact } from '../../../../test-mocks';
 import mapAndSave from '../map-and-save/contact';
 import getFromSessionOrApplication from '../../../../helpers/get-values-from-user-session-or-application';
+import { Request, Response } from '../../../../../types';
 
-const { BUSINESS } = FIELD_IDS;
-const { COMPANY_NAME, POSITION, BUSINESS_CONTACT_DETAIL } = FIELD_IDS.CONTACT;
+const { BUSINESS } = BUSINESS_FIELD_IDS;
+const { COMPANY_NAME, POSITION, BUSINESS_CONTACT_DETAIL } = BUSINESS_FIELD_IDS.CONTACT;
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
 const { CONTACT } = PAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -49,6 +50,12 @@ describe('controllers/insurance/business/contact', () => {
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
       expect(TEMPLATE).toEqual(CONTACT_TEMPLATE);
+    });
+  });
+
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      expect(FIELD_IDS).toEqual([FIRST_NAME, LAST_NAME, EMAIL, POSITION]);
     });
   });
 
@@ -126,9 +133,7 @@ describe('controllers/insurance/business/contact', () => {
       it('should render template with validation errors', async () => {
         req.body = {};
 
-        const submittedValues = {
-          [FIRST_NAME]: req.body[FIRST_NAME],
-        };
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         await post(req, res);
 
@@ -143,7 +148,7 @@ describe('controllers/insurance/business/contact', () => {
           application: mapApplicationToFormFields(mockApplication),
           ...pageVariables(mockApplication.referenceNumber),
           validationErrors,
-          submittedValues,
+          submittedValues: payload,
         });
       });
     });
@@ -159,13 +164,18 @@ describe('controllers/insurance/business/contact', () => {
       });
 
       it('should call mapAndSave.contact once with the contents of body', async () => {
-        req.body = mockBusinessContact;
+        req.body = {
+          ...mockBusinessContact,
+          injection: 1,
+        };
 
         await post(req, res);
 
+        const payload = constructPayload(req.body, FIELD_IDS);
+
         expect(mapAndSave.contact).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.contact).toHaveBeenCalledWith(req.body, mockApplication);
+        expect(mapAndSave.contact).toHaveBeenCalledWith(payload, mockApplication);
       });
 
       describe("when the url's last substring is `change`", () => {

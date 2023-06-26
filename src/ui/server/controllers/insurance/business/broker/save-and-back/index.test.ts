@@ -1,14 +1,15 @@
-import { Request, Response } from '../../../../../../types';
 import { post } from '.';
-import { FIELD_IDS, ROUTES } from '../../../../../constants';
-import { mockReq, mockRes, mockApplication, mockBroker } from '../../../../../test-mocks';
+import { FIELD_IDS } from '..';
+import { ROUTES } from '../../../../../constants';
+import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
+import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/broker';
+import { mockReq, mockRes, mockApplication, mockBroker } from '../../../../../test-mocks';
+import { Request, Response } from '../../../../../../types';
 
 const {
-  EXPORTER_BUSINESS: {
-    BROKER: { NAME, POSTCODE },
-  },
-} = FIELD_IDS.INSURANCE;
+  BROKER: { NAME, POSTCODE },
+} = BUSINESS_FIELD_IDS;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -43,12 +44,19 @@ describe('controllers/insurance/business/broker/save-and-back', () => {
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
       });
 
-      it('should call mapAndSave.broker once', async () => {
-        req.body = validBody;
+      it('should call mapAndSave.broker once with data from constructPayload function', async () => {
+        req.body = {
+          ...validBody,
+          injection: 1,
+        };
 
         await post(req, res);
 
+        const payload = constructPayload(req.body, FIELD_IDS);
+
         expect(updateMapAndSave).toHaveBeenCalledTimes(1);
+
+        expect(updateMapAndSave).toHaveBeenCalledWith(payload, mockApplication, false);
       });
     });
 

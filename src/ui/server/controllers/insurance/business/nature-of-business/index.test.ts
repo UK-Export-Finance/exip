@@ -1,17 +1,18 @@
 import { PAGES } from '../../../../content-strings';
-import { pageVariables, get, TEMPLATE, post } from '.';
-import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
+import { pageVariables, get, TEMPLATE, post, FIELD_IDS } from '.';
+import { TEMPLATES, ROUTES } from '../../../../constants';
+import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/nature-of-business';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
-const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
-const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
+const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK } = BUSINESS_FIELD_IDS.NATURE_OF_YOUR_BUSINESS;
 
 const { NATURE_OF_YOUR_BUSINESS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -56,6 +57,12 @@ describe('controllers/insurance/business/nature-of-business', () => {
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
       expect(TEMPLATE).toEqual(NATURE_OF_YOUR_BUSINESS_TEMPLATE);
+    });
+  });
+
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      expect(FIELD_IDS).toEqual([GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL]);
     });
   });
 
@@ -132,11 +139,9 @@ describe('controllers/insurance/business/nature-of-business', () => {
       it('should render template with validation errors', async () => {
         req.body = {};
 
-        const submittedValues = {
-          [GOODS_OR_SERVICES]: req.body[GOODS_OR_SERVICES],
-        };
-
         await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         const validationErrors = generateValidationErrors(req.body);
 
@@ -149,7 +154,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
           ...pageVariables(mockApplication.referenceNumber),
           validationErrors,
           application: mapApplicationToFormFields(mockApplication),
-          submittedValues,
+          submittedValues: payload,
         });
       });
     });
@@ -171,14 +176,19 @@ describe('controllers/insurance/business/nature-of-business', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call mapAndSave.natureOfBusiness once with natureOfBusiness and application', async () => {
-        req.body = body;
+      it('should call mapAndSave.natureOfBusiness once with the data from constructPayload function and application', async () => {
+        req.body = {
+          ...body,
+          injection: 1,
+        };
 
         await post(req, res);
 
+        const payload = constructPayload(req.body, FIELD_IDS);
+
         expect(mapAndSave.natureOfBusiness).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.natureOfBusiness).toHaveBeenCalledWith(req.body, mockApplication);
+        expect(mapAndSave.natureOfBusiness).toHaveBeenCalledWith(payload, mockApplication);
       });
 
       describe("when the url's last substring is `change`", () => {
