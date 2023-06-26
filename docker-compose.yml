@@ -80,6 +80,7 @@ services:
       NODE_ENV:
       TZ: Europe/London
       PORT: ${UI_PORT}
+      URL_ORIGIN:
       API_URL:
       SESSION_SECRET:
       BASIC_AUTH_KEY:

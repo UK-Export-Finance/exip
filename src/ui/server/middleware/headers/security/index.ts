@@ -1,7 +1,14 @@
-import { Request, Response } from '../../../types';
+import * as dotenv from 'dotenv';
+import isUrl from 'is-url';
+import { Request, Response } from '../../../../types';
+
+dotenv.config();
+
+const URL_ORIGIN = String(process.env.URL_ORIGIN);
 
 /**
  * Global middleware, ensures myriads of imperative security headers.
+ * - Sanitise request "referer" header
  * - `HSTS` - 1 Year
  * - `X-Frame-Options` - Clickjacking
  * - `XSS`
@@ -22,6 +29,24 @@ import { Request, Response } from '../../../types';
  */
 
 export const security = (req: Request, res: Response, next: () => void) => {
+  const { referer } = req.headers;
+
+  /**
+   * If the referer is a URL, only return the provided referer if the origin matches URL_ORIGIN.
+   * Otherwise the URL is invalid - set referer as an empty string.
+   */
+  if (referer) {
+    if (isUrl(referer)) {
+      const { origin } = new URL('/', referer);
+
+      if (origin !== URL_ORIGIN) {
+        req.headers.referer = '';
+      }
+    } else {
+      req.headers.referer = '';
+    }
+  }
+
   res.setHeader('Strict-Transport-Security', 'max-age=15552000; includeSubDomains; preload');
   res.setHeader('X-Frame-Options', 'deny');
   res.setHeader('X-XSS-Protection', '1; mode=block');
@@ -44,5 +69,6 @@ export const security = (req: Request, res: Response, next: () => void) => {
   );
 
   res.removeHeader('X-Powered-By');
+
   next();
 };
