@@ -189,7 +189,7 @@ describe('controllers/insurance/business/broker', () => {
 
         expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.broker).toHaveBeenCalledWith(req.body, mockApplication);
+        expect(mapAndSave.broker).toHaveBeenCalledWith(payload, mockApplication);
       });
 
       describe("when the url's last substring is `check-and-change`", () => {
