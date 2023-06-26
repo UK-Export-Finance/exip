@@ -328,7 +328,7 @@ const deleteApplicationByReferenceNumber = async (referenceNumber) => {
   } catch (err) {
     console.error(err);
 
-    throw new Error('Deleting applications by ID ', { err });
+    return err;
   }
 };
 
