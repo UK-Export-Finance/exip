@@ -11,7 +11,7 @@ const getApplication = async (referenceNumber: number) => {
     const application = await api.keystone.application.get(referenceNumber);
 
     // check that the application exists and has core structure.
-    if (!application || !application.policyAndExport || !application.policyAndExport.id) {
+    if (!application?.id) {
       return false;
     }
 

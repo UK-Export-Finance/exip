@@ -9,8 +9,6 @@ const checkCookiesConsentBannerIsNotVisible = () => {
   partials.cookieBanner.question.copy2().should('not.exist');
   partials.cookieBanner.question.acceptButton().should('not.exist');
   partials.cookieBanner.question.rejectButton().should('not.exist');
-
-  // partials.cookieBanner.accepted.copy().should('not.be.visible');
 };
 
 export default checkCookiesConsentBannerIsNotVisible;

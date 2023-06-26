@@ -25,7 +25,7 @@ describe('server/controllers/insurance/business/turnover/helpers/map-financial-y
 
   describe(`when ${FINANCIAL_YEAR_END_DATE} is undefined`, () => {
     it('should return formatted timestamp', () => {
-      const response = mapFinancialYearEndDate(undefined);
+      const response = mapFinancialYearEndDate();
 
       expect(response).toBeNull();
     });

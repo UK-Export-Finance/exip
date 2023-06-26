@@ -163,7 +163,7 @@ const getAccountByEmail = async (email) => {
       url,
     });
 
-    if (!response.body || !response.body.data) {
+    if (!response.body?.data) {
       throw new Error('Getting account by email ', { response });
     }
 
@@ -299,7 +299,7 @@ const getApplicationByReferenceNumber = async (referenceNumber) => {
       url,
     });
 
-    if (!response.body || !response.body.data) {
+    if (!response.body?.data) {
       throw new Error(`Getting application by reference number ${referenceNumber}`, { response });
     }
 

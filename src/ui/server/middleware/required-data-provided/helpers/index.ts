@@ -50,7 +50,7 @@ export const hasRequiredData = (
        * If the field is "buyer country"
        * We need to make sure that the country has support to apply or get a quote online
        */
-      if (submittedData[fieldId] && submittedData[fieldId].canApplyOnline) {
+      if (submittedData?.[fieldId].canApplyOnline) {
         suppliedDataCount += 1;
       }
     } else if (submittedData[fieldId] || submittedData[fieldId] === false) {

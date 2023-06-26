@@ -26,9 +26,7 @@ const generateFields = (
   currencies: Array<Currency>,
   checkAndChange: boolean,
 ) => {
-  let fields = [] as Array<SummaryListItemData>;
-
-  fields = generatePolicyAndDateFields(answers, referenceNumber, checkAndChange);
+  let fields = generatePolicyAndDateFields(answers, referenceNumber, checkAndChange) as Array<SummaryListItemData>;
 
   if (isSinglePolicyType(answers[POLICY_TYPE])) {
     fields = [...fields, ...generateSingleContractPolicyFields(answers, referenceNumber, checkAndChange)];

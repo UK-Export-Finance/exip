@@ -11,12 +11,10 @@ import { SummaryListItemData, ApplicationBuyer } from '../../../../types';
  * @returns {Object} All your business values in an object structure for GOVUK summary list structure
  */
 const generateFields = (answersBuyer: ApplicationBuyer, referenceNumber: number, checkAndChange: boolean) => {
-  let fields = [] as Array<SummaryListItemData>;
-
-  fields = [
+  const fields = [
     ...generateCompanyOrOrganisationFields(answersBuyer, referenceNumber, checkAndChange),
     ...workingWithBuyerFields(answersBuyer, referenceNumber, checkAndChange),
-  ];
+  ] as Array<SummaryListItemData>;
 
   return fields;
 };

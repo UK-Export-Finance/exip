@@ -59,7 +59,7 @@ context('Insurance - Account - Create - Your details page - form validation - As
     const value = mockAccount.email;
     const fieldIndex = 0;
     const TOTAL_REQUIRED_FIELDS = 1;
-    const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[EMAIL].ACCOUNT_ALREADY_EXISTS;
+    const expectedMessage = String(YOUR_DETAILS_ERROR_MESSAGES[EMAIL].ACCOUNT_ALREADY_EXISTS);
 
     cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
   });

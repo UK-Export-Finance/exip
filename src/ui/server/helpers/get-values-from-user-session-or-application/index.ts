@@ -12,7 +12,7 @@ import { objectHasKeysAndValues } from '../object';
  * @returns {Object} session or application section
  */
 const getValuesFromUserSessionOrApplication = (application: Application, section: string, field: string, userSession?: RequestSessionUser) => {
-  if (!application[section] || !application[section][field]) {
+  if (!application?.[section]?.[field]) {
     return userSession;
   }
 

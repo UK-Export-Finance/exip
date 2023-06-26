@@ -27,7 +27,7 @@ export const get = (req: Request, res: Response) => {
    */
   req.flash('emailAddressForPasswordReset', emailAddressForPasswordReset);
 
-  const accountEmail = emailAddressForPasswordReset || req.flash('emailAddressForPasswordReset');
+  const accountEmail = emailAddressForPasswordReset ?? req.flash('emailAddressForPasswordReset');
 
   if (!accountEmail) {
     return res.redirect(PROBLEM_WITH_SERVICE);

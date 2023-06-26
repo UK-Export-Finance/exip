@@ -28,7 +28,7 @@ export const get = (req: Request, res: Response) => {
    */
   req.flash('emailAddressForAccountReactivation', emailAddressForAccountReactivation);
 
-  const accountEmail = emailAddressForAccountReactivation || req.flash('emailAddressForAccountReactivation');
+  const accountEmail = emailAddressForAccountReactivation ?? req.flash('emailAddressForAccountReactivation');
 
   if (!accountEmail) {
     return res.redirect(PROBLEM_WITH_SERVICE);

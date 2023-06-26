@@ -23,7 +23,7 @@ export const get = async (req: Request, res: Response) => {
     const { accountIdToConfirm } = req.session;
     const { id } = req.query;
 
-    const accountId = accountIdToConfirm || id;
+    const accountId = accountIdToConfirm ?? id;
 
     if (!accountId) {
       return res.redirect(PROBLEM_WITH_SERVICE);
