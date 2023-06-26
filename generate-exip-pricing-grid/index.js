@@ -16,8 +16,8 @@ const getWorkSheets = () => {
   const workSheetsFromFile = xlsx.parse(spreadsheet);
 
   const sheets = {
-    multiPolicy: workSheetsFromFile[2],
-    singlePolicy: workSheetsFromFile[3],
+    singlePolicy: workSheetsFromFile[0],
+    multiPolicy: workSheetsFromFile[1],
   };
 
   return sheets;
@@ -189,12 +189,14 @@ const addPolicyToGrid = (grid, policyType, rows) => {
   let updatedGrid;
 
   rows.forEach((row) => {
-    const months = Number(row[1]);
+    if (row.length) {
+      const months = Number(row[1]);
 
-    const rates = mapRowRates(row);
-    const riskCategory = mapRiskCategory(row[0]);
+      const rates = mapRowRates(row);
+      const riskCategory = mapRiskCategory(row[0]);
 
-    updatedGrid = addRowToGrid(grid, months, rates, policyType, riskCategory);
+      updatedGrid = addRowToGrid(grid, months, rates, policyType, riskCategory);
+    }
   });
 
   return updatedGrid;
