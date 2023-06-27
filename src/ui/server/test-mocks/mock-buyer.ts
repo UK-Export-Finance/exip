@@ -10,7 +10,7 @@ const mockBuyer = {
     name: 'United Kingdom',
   },
   registrationNumber: '1234',
-  website: 'www.google.com',
+  website: 'www.gov.uk',
   contactFirstName: 'Bob',
   contactLastName: 'Smith',
   contactPosition: 'CEO',

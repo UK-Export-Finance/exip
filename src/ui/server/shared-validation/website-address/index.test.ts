@@ -16,7 +16,7 @@ describe('shared-validation/website', () => {
   });
 
   it('should NOT return an error when website is valid', () => {
-    const website = 'https://google.com';
+    const website = 'https://gov.uk';
 
     const result = validateWebsiteAddress(website, fieldId, errorMessage, errors);
 

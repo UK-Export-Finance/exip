@@ -63,7 +63,7 @@ export const mockInsuranceFeedbackEmail = {
 export const mockInsuranceFeedback = {
   ...mockInsuranceFeedbackEmail,
   service: 'Insurance',
-  referralUrl: 'www.google.com',
+  referralUrl: 'www.gov.uk',
   product: 'EXIP',
 };
 
