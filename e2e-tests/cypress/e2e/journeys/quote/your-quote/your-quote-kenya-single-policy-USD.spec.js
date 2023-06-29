@@ -75,7 +75,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
 
     // Check estimated cost in the quote
     yourQuotePage.panel.summaryList[QUOTE.ESTIMATED_COST].value().invoke('text').then((text) => {
-      const expected = '$5,330.00';
+      const expected = '$5,090.00';
 
       expect(text.trim()).equal(expected);
     });
