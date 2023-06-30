@@ -23,7 +23,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT;
+const expectedMessage = String(YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT);
 
 const submitAndAssertFieldErrors = (fieldValue) => {
   const field = accountFormFields[EMAIL];

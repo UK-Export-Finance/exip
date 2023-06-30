@@ -116,7 +116,7 @@ const post = async (req: Request, res: Response) => {
 
       const saveResponse = await api.keystone.feedback.create(feedbackVariables);
 
-      if (!saveResponse || !saveResponse.success) {
+      if (!saveResponse?.success) {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
     }

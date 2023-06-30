@@ -32,7 +32,7 @@ export const get = (req: Request, res: Response) => {
    */
   req.flash('passwordResetSuccess', String(passwordResetSuccess));
 
-  const success = passwordResetSuccess || req.flash('passwordResetSuccess');
+  const success = passwordResetSuccess ?? req.flash('passwordResetSuccess');
 
   if (!success) {
     return res.redirect(PASSWORD_RESET_ROOT);

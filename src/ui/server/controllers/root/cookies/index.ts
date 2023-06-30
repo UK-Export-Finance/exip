@@ -44,7 +44,7 @@ export const get = (req: Request, res: Response) => {
     userName: getUserNameFromSession(req.session.user),
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
     FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
-    submittedValue: req.cookies.optionalCookies || req.cookies[SECURE_OPTION_COOKIE],
+    submittedValue: req.cookies.optionalCookies ?? req.cookies[SECURE_OPTION_COOKIE],
   });
 };
 

@@ -83,7 +83,7 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
 
     describe('when there are no sic codes (undefined)', () => {
       it('should return default empty string', () => {
-        const result = generateSicCodesValue(undefined);
+        const result = generateSicCodesValue();
 
         const expected = DEFAULT.EMPTY;
 

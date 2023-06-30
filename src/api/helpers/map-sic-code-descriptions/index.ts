@@ -11,7 +11,7 @@ const mapSicCodeDescriptions = (sicCodes: Array<string>, sectors: Array<Industry
   const industrySectorNames = [] as Array<string>;
 
   // if sectors or sic codes is null or empty, then return empty array
-  if (!sicCodes || !sicCodes.length || !sectors || !sectors.length) {
+  if (!sicCodes?.length || !sectors?.length) {
     return industrySectorNames;
   }
 

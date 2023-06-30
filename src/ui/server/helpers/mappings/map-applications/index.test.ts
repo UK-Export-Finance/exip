@@ -16,7 +16,7 @@ describe('server/helpers/mappings/map-applications', () => {
         status,
         lastUpdated: formatDate(new Date(updatedAt)),
         referenceNumber,
-        buyerLocation: buyer?.country?.name || DEFAULT.EMPTY,
+        buyerLocation: buyer?.country?.name ?? DEFAULT.EMPTY,
         buyerName: replaceCharacterCodesWithCharacters(buyer.companyOrOrganisationName),
         insuredFor: mapInsuredFor(mockApplication),
       };

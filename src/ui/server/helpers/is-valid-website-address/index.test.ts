@@ -1,16 +1,16 @@
 import isValidWebsiteAddress from '.';
 
 describe('helpers/is-valid-website-address', () => {
-  it('should return false when website is not complete "http://www"', () => {
-    const website = 'http://www';
+  it('should return false when website is not complete "https://www"', () => {
+    const website = 'https://www';
 
     const result = isValidWebsiteAddress(website);
 
     expect(result).toEqual(false);
   });
 
-  it('should return false when website is not complete "http://google."', () => {
-    const website = 'http://google.';
+  it('should return false when website is not complete "https://google."', () => {
+    const website = 'https://google.';
 
     const result = isValidWebsiteAddress(website);
 
@@ -34,7 +34,7 @@ describe('helpers/is-valid-website-address', () => {
   });
 
   it('should return true when website is in the correct format', () => {
-    const website = 'http://www.google.com';
+    const website = 'https://www.gov.uk';
 
     const result = isValidWebsiteAddress(website);
 
@@ -42,7 +42,7 @@ describe('helpers/is-valid-website-address', () => {
   });
 
   it('should return true when website is in the correct format but does not contain "www."', () => {
-    const website = 'http://google.com';
+    const website = 'https://gov.uk';
 
     const result = isValidWebsiteAddress(website);
 
@@ -50,7 +50,7 @@ describe('helpers/is-valid-website-address', () => {
   });
 
   it('should return true when website is in the correct format and has "/"', () => {
-    const website = 'http://google.com/123';
+    const website = 'https://gov.uk/123';
 
     const result = isValidWebsiteAddress(website);
 

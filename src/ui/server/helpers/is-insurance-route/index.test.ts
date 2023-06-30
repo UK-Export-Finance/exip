@@ -3,7 +3,7 @@ import { INSURANCE_ROOT } from '../../constants/routes/insurance';
 
 describe('helpers/is-insurance-route', () => {
   it('should return true if url is undefined', () => {
-    const response = isInsuranceRoute(undefined);
+    const response = isInsuranceRoute();
 
     expect(response).toEqual(true);
   });

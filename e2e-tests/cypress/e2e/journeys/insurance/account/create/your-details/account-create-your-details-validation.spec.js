@@ -51,7 +51,7 @@ context('Insurance - Account - Create - Your details page - empty form validatio
     const field = yourDetailsPage[FIRST_NAME];
     const value = null;
     const fieldIndex = 0;
-    const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[FIRST_NAME].IS_EMPTY;
+    const expectedMessage = String(YOUR_DETAILS_ERROR_MESSAGES[FIRST_NAME].IS_EMPTY);
 
     cy.navigateToUrl(url);
 
@@ -62,7 +62,7 @@ context('Insurance - Account - Create - Your details page - empty form validatio
     const field = yourDetailsPage[LAST_NAME];
     const value = null;
     const fieldIndex = 1;
-    const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[LAST_NAME].IS_EMPTY;
+    const expectedMessage = String(YOUR_DETAILS_ERROR_MESSAGES[LAST_NAME].IS_EMPTY);
 
     cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
   });
@@ -71,7 +71,7 @@ context('Insurance - Account - Create - Your details page - empty form validatio
     const field = accountFormFields[EMAIL];
     const value = null;
     const fieldIndex = 2;
-    const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT;
+    const expectedMessage = String(YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT);
 
     cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
   });
@@ -80,7 +80,7 @@ context('Insurance - Account - Create - Your details page - empty form validatio
     const field = accountFormFields[PASSWORD];
     const value = null;
     const fieldIndex = 3;
-    const expectedMessage = YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT;
+    const expectedMessage = String(YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT);
 
     cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
   });

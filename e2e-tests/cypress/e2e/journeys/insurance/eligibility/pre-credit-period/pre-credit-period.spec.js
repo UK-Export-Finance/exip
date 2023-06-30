@@ -131,7 +131,7 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
       partials.errorSummaryListItems().should('exist');
       partials.errorSummaryListItems().should('have.length', 1);
 
-      const expectedMessage = ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY;
+      const expectedMessage = String(ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY);
 
       cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 

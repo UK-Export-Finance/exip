@@ -163,7 +163,7 @@ const getAccountByEmail = async (email) => {
       url,
     });
 
-    if (!response.body || !response.body.data) {
+    if (!response?.body?.data) {
       throw new Error('Getting account by email ', { response });
     }
 
@@ -216,7 +216,7 @@ const deleteAnAccount = async (email) => {
   } catch (err) {
     console.error(err);
 
-    throw new Error('Deleting account by email ', { err });
+    return err;
   }
 };
 
@@ -299,7 +299,7 @@ const getApplicationByReferenceNumber = async (referenceNumber) => {
       url,
     });
 
-    if (!response.body || !response.body.data) {
+    if (!response?.body?.data) {
       throw new Error(`Getting application by reference number ${referenceNumber}`, { response });
     }
 
@@ -328,7 +328,7 @@ const deleteApplicationByReferenceNumber = async (referenceNumber) => {
   } catch (err) {
     console.error(err);
 
-    throw new Error('Deleting applications by ID ', { err });
+    return err;
   }
 };
 
