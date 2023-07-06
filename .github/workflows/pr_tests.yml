@@ -72,7 +72,7 @@ jobs:
     needs: set-environment
     environment:
       name: ${{ needs.set-environment.outputs.environment }}
-    runs-on: [self-hosted, linux]
+    runs-on: ubuntu-latest
 
     env:
       BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
