@@ -12,6 +12,7 @@ services:
       - ./src/ui/templates:/app/templates:ro
     environment:
       - PORT=5000
+      - NODE_ENV
       - BASIC_AUTH_KEY
       - BASIC_AUTH_SECRET
       - GOOGLE_ANALYTICS_ID
