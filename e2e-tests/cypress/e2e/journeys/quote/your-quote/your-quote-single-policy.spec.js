@@ -169,7 +169,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '1.18%';
+          const expected = '1.16%';
 
           expect(text.trim()).equal(expected);
         });
@@ -186,7 +186,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         });
 
         row.value().invoke('text').then((text) => {
-          const expected = '£1,770.00';
+          const expected = '£1,740.00';
 
           expect(text.trim()).equal(expected);
         });

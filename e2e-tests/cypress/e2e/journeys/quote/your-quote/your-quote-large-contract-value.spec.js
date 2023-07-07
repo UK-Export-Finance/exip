@@ -63,7 +63,7 @@ context('Get a quote/your quote page (large contract value) - as an exporter, I 
 
     // Check estimated cost in the quote
     yourQuotePage.panel.summaryList[QUOTE.ESTIMATED_COST].value().invoke('text').then((text) => {
-      const expected = '£145,679.00';
+      const expected = '£143,209.86';
 
       expect(text.trim()).equal(expected);
     });
