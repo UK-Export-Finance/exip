@@ -9,7 +9,7 @@ describe('server/helpers/mappings/map-countries', () => {
       marketName: 'Abu Dhabi',
       isoCode: 'XAD',
       shortTermCoverAvailabilityDesc: 'A',
-      ESRAClasificationDesc: 'B',
+      ESRAClassificationDesc: 'B',
       NBIIssue: 'C',
     },
     {
@@ -17,7 +17,7 @@ describe('server/helpers/mappings/map-countries', () => {
       isoCode: 'DZA',
       oecdRiskCategory: 2,
       shortTermCoverAvailabilityDesc: 'D',
-      ESRAClasificationDesc: 'E',
+      ESRAClassificationDesc: 'E',
       NBIIssue: 'F',
     },
   ] as Array<CisCountry>;
@@ -158,7 +158,7 @@ describe('server/helpers/mappings/map-countries', () => {
         name: mockCountries[0].marketName,
         isoCode: mockCountries[0].isoCode,
         value: mockCountries[0].isoCode,
-        riskCategory: mapRiskCategory(mockCountries[0].ESRAClasificationDesc),
+        riskCategory: mapRiskCategory(mockCountries[0].ESRAClassificationDesc),
         shortTermCoverAvailable: mapShortTermCoverAvailable(mockCountries[0].shortTermCoverAvailabilityDesc),
         nbiIssueAvailable: mapNbiIssueAvailable(mockCountries[0].NBIIssue),
       } as Country;
@@ -176,7 +176,7 @@ describe('server/helpers/mappings/map-countries', () => {
           name: mockCountries[0].marketName,
           isoCode: mockCountries[0].isoCode,
           value: mockCountries[0].isoCode,
-          riskCategory: mapRiskCategory(mockCountries[0].ESRAClasificationDesc),
+          riskCategory: mapRiskCategory(mockCountries[0].ESRAClassificationDesc),
           shortTermCoverAvailable: mapShortTermCoverAvailable(mockCountries[0].shortTermCoverAvailabilityDesc),
           nbiIssueAvailable: mapNbiIssueAvailable(mockCountries[0].NBIIssue),
           selected: true,
