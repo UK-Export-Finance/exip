@@ -31,14 +31,15 @@ context('Need to start again exit page', () => {
     cy.url().should('include', ROUTES.QUOTE.NEED_TO_START_AGAIN);
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 75,
-      'best-practices': 100,
-      seo: 60,
-    });
-  });
+  // TODO: re-enable after solution for lighthouse-GHA found
+  // it('passes the audits', () => {
+  //   cy.lighthouse({
+  //     accessibility: 100,
+  //     performance: 75,
+  //     'best-practices': 100,
+  //     seo: 60,
+  //   });
+  // });
 
   it('renders an analytics cookies consent banner that can be accepted', () => {
     cy.checkAnalyticsCookiesConsentAndAccept();
@@ -50,7 +51,7 @@ context('Need to start again exit page', () => {
 
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
-  }); 
+  });
 
   it('renders a page title and heading', () => {
     const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
@@ -80,5 +81,5 @@ context('Need to start again exit page', () => {
 
       cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
     });
-  });  
+  });
 });

@@ -1,20 +1,19 @@
-import axios, { AxiosBasicCredentials, AxiosResponse, AxiosRequestConfig } from 'axios';
 import dotenv from 'dotenv';
+import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 
 dotenv.config();
+
+const headers = {
+  'Content-Type': 'application/json',
+  [String(process.env.APIM_MDM_KEY)]: process.env.APIM_MDM_VALUE,
+};
 
 const getCountries = async () => {
   try {
     const config: AxiosRequestConfig = {
       method: 'GET',
-      url: process.env.MULESOFT_API_CIS_URL,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      auth: {
-        username: process.env.MULESOFT_API_CIS_KEY,
-        password: process.env.MULESOFT_API_CIS_SECRET,
-      } as AxiosBasicCredentials,
+      url: `${process.env.APIM_MDM_URL}/markets`,
+      headers,
     };
 
     const response: AxiosResponse = await axios(config);
@@ -30,14 +29,8 @@ const getCurrencies = async () => {
   try {
     const config: AxiosRequestConfig = {
       method: 'GET',
-      url: process.env.MULESOFT_API_MDM_EA_URL,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      auth: {
-        username: process.env.MULESOFT_API_MDM_EA_KEY,
-        password: process.env.MULESOFT_API_MDM_EA_SECRET,
-      } as AxiosBasicCredentials,
+      url: `${process.env.APIM_MDM_URL}/currencies`,
+      headers,
     };
 
     const response: AxiosResponse = await axios(config);

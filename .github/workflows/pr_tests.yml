@@ -4,7 +4,7 @@ on:
   pull_request:
 
 env:
-  environment: dev
+  environment: qa
 
 jobs:
   set-environment:
@@ -13,9 +13,9 @@ jobs:
     outputs:
       environment: ${{ env.environment }}
     steps:
-    - name: Initialise Environment
-      run: |
-        echo Setting environment to ${{ env.environment }}
+      - name: Initialise Environment
+        run: |
+          echo Setting environment to ${{ env.environment }}
 
   linting:
     name: Run linting
@@ -34,14 +34,6 @@ jobs:
           cd ../../
           npm install --legacy-peer-deps
           npm run lint
-      - uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-          channel: '#exip-github-actions'
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()  
 
   unit-tests:
     name: Run unit tests
@@ -58,14 +50,6 @@ jobs:
         run: |
           npm install --legacy-peer-deps
           npm run test
-      - uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-          channel: '#exip-github-actions'
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()
 
   e2e-tests:
     name: Run e2e tests
@@ -80,9 +64,10 @@ jobs:
       # https://github.com/cypress-io/github-action/issues/48
       fail-fast: false
       matrix:
-        machines: [ 1, 2, 3, 4 ]
+        machines: [1, 2, 3, 4]
 
     env:
+      NODE_ENV: ${{ secrets.NODE_ENV }}
       BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
       BASIC_AUTH_SECRET: ${{ secrets.BASIC_AUTH_SECRET }}
       USER_1_KEY: ${{ secrets.USER_1_KEY }}
@@ -95,13 +80,10 @@ jobs:
       USER_4_SECRET: ${{ secrets.USER_4_SECRET }}
       USER_5_KEY: ${{ secrets.USER_4_KEY }}
       USER_5_SECRET: ${{ secrets.USER_5_SECRET }}
-      MULESOFT_API_CIS_URL: ${{ secrets.MULESOFT_API_CIS_URL }}
-      MULESOFT_API_CIS_KEY: ${{ secrets.MULESOFT_API_CIS_KEY }}
-      MULESOFT_API_CIS_SECRET: ${{ secrets.MULESOFT_API_CIS_SECRET }}
-      MULESOFT_API_MDM_EA_URL: ${{ secrets.MULESOFT_API_MDM_EA_URL }}
-      MULESOFT_API_MDM_EA_KEY: ${{ secrets.MULESOFT_API_MDM_EA_KEY }}
-      MULESOFT_API_MDM_EA_SECRET: ${{ secrets.MULESOFT_API_MDM_EA_SECRET }}
       GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
+      APIM_MDM_URL: ${{ secrets.APIM_MDM_URL }}
+      APIM_MDM_KEY: ${{ secrets.APIM_MDM_KEY }}
+      APIM_MDM_VALUE: ${{ secrets.APIM_MDM_VALUE }}
 
     steps:
       - uses: actions/checkout@v3
@@ -117,14 +99,7 @@ jobs:
           group: 'EXIPS'
           project: ./e2e-tests
           config: video=false
-        env: 
+        env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: act10ns/slack@v1
-        with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-          channel: '#exip-github-actions'
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()
+
