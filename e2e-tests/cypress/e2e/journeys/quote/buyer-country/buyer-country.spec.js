@@ -20,14 +20,15 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
   });
 
-  it('passes the audits', () => {
-    cy.lighthouse({
-      accessibility: 100,
-      performance: 70,
-      'best-practices': 100,
-      seo: 60,
-    });
-  });
+  // TODO: re-enable after solution for lighthouse-GHA found
+  // it('passes the audits', () => {
+  //   cy.lighthouse({
+  //     accessibility: 100,
+  //     performance: 70,
+  //     'best-practices': 100,
+  //     seo: 60,
+  //   });
+  // });
 
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
@@ -110,7 +111,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
       // search for a different country, submit with enter key
       buyerCountryPage.searchInput().type('Brazil{enter}');
 
-      // check selected value in autocomplete 
+      // check selected value in autocomplete
       const expectedValue = 'Brazil';
 
       buyerCountryPage.results().invoke('text').then((text) => {
