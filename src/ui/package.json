@@ -67,7 +67,7 @@
     "nodemon": "2.0.22",
     "nunjucks": "3.2.4",
     "path": "0.12.7",
-    "postcode-validator": "^3.8.11",
+    "postcode-validator": "^3.8.12",
     "ts-node": "^10.9.1",
     "tslib": "^2.6.0",
     "typescript": "^5.1.6"
