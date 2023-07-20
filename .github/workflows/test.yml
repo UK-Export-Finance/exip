@@ -66,7 +66,6 @@ jobs:
           GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
           GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
-          URL_ORIGIN: ${{ secrets.URL_ORIGIN }}
         run: |
           npm ci --legacy-peer-deps
           npm run test
@@ -131,7 +130,6 @@ jobs:
           DATABASE_PORT: ${{ vars.DATABASE_PORT }}
           API_PORT: ${{ vars.API_PORT }}
           UI_PORT: ${{ vars.UI_PORT }}
-          URL_ORIGIN: ${{ vars.URL_ORIGIN }}
           API_URL: ${{ secrets.API_URL }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}

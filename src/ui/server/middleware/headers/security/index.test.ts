@@ -24,56 +24,47 @@ describe('middleware/security', () => {
   });
 
   describe('request', () => {
-    describe('when req.headers.referer is not a URL', () => {
-      it('should replace req.headers.referer with an empty string', () => {
-        req.headers.referer = 'not-a-url';
+    describe('when req.headers.referer does not match the hostname', () => {
+      it('should set req.headers.referer to an empty string', () => {
+        req.headers.referer = `${req.hostname}-invalid`;
+
         security(req, res, nextSpy);
 
         expect(req.headers.referer).toEqual('');
       });
     });
 
-    describe('when req.headers.referer contains javascript', () => {
-      it('should replace req.headers.referer with an empty string', () => {
-        req.headers.referer = 'javascript.alert()';
+    describe('when req.headers.referer matches the hostname', () => {
+      it('should NOT modify req.headers.referer', () => {
+        const validReferer = `http://${req.hostname}.com/test`;
+
+        req.headers.referer = validReferer;
+
         security(req, res, nextSpy);
 
-        expect(req.headers.referer).toEqual('');
+        expect(req.headers.referer).toEqual(validReferer);
       });
     });
 
-    describe('when req.headers.referer is a URL', () => {
-      describe('when the origin matches process.env.URL_ORIGIN', () => {
-        it('should NOT replace req.headers.referer with an empty string', () => {
-          const validUrl = `${process.env.URL_ORIGIN}/mock-route`;
+    describe('when req.headers.origin does not match the hostname', () => {
+      it('should set req.headers.origin to an empty string', () => {
+        req.headers.origin = `${req.hostname}-invalid`;
 
-          req.headers.referer = validUrl;
-          security(req, res, nextSpy);
+        security(req, res, nextSpy);
 
-          expect(req.headers.referer).toEqual(validUrl);
-        });
+        expect(req.headers.origin).toEqual('');
       });
+    });
 
-      describe('when the origin does NOT match process.env.URL_ORIGIN', () => {
-        it('should replace req.headers.referer with an empty string', () => {
-          const invalidUrl = 'https://invalid-domain.com';
+    describe('when req.headers.origin matches the hostname', () => {
+      it('should NOT modify req.headers.origin', () => {
+        const validOrigin = `http://${req.hostname}.com/test`;
 
-          req.headers.referer = invalidUrl;
-          security(req, res, nextSpy);
+        req.headers.origin = validOrigin;
 
-          expect(req.headers.referer).toEqual('');
-        });
-      });
+        security(req, res, nextSpy);
 
-      describe('when the origin does NOT match process.env.URL_ORIGIN and the origin is in another part of the string', () => {
-        it('should replace req.headers.referer with an empty string', () => {
-          const invalidUrl = `https://invalid-domain.com${process.env.URL_ORIGIN}/mock-route`;
-
-          req.headers.referer = invalidUrl;
-          security(req, res, nextSpy);
-
-          expect(req.headers.referer).toEqual('');
-        });
+        expect(req.headers.origin).toEqual(validOrigin);
       });
     });
   });

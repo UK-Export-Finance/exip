@@ -31,6 +31,7 @@ const mockReq = () => {
       origin: 'https://mock-origin.com',
       host: 'mock-host.com',
     },
+    hostname: 'mock',
     method: 'GET',
     originalUrl: 'mock?mockQueryParam',
     baseUrl: 'mock',

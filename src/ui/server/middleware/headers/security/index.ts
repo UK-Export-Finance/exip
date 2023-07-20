@@ -1,14 +1,9 @@
-import * as dotenv from 'dotenv';
-import isUrl from 'is-url';
+import isRequestHeaderOriginValid from './is-request-header-origin-valid';
 import { Request, Response } from '../../../../types';
-
-dotenv.config();
-
-const URL_ORIGIN = String(process.env.URL_ORIGIN);
 
 /**
  * Global middleware, ensures myriads of imperative security headers.
- * - Sanitise request "referer" header
+ * - Sanitise request "referer" and "origin" headers
  * - `HSTS` - 1 Year
  * - `X-Frame-Options` - Clickjacking
  * - `XSS`
@@ -29,21 +24,17 @@ const URL_ORIGIN = String(process.env.URL_ORIGIN);
  */
 
 export const security = (req: Request, res: Response, next: () => void) => {
-  const { referer } = req.headers;
+  const { hostname } = req;
 
-  /**
-   * If the referer is a URL, only return the provided referer if the origin matches URL_ORIGIN.
-   * Otherwise the URL is invalid - set referer as an empty string.
-   */
-  if (referer) {
-    if (isUrl(referer)) {
-      const { origin } = new URL('/', referer);
-
-      if (origin !== URL_ORIGIN) {
-        req.headers.referer = '';
-      }
-    } else {
+  if (req.headers.referer) {
+    if (!isRequestHeaderOriginValid(hostname, req.headers.referer)) {
       req.headers.referer = '';
+    }
+  }
+
+  if (req.headers.origin) {
+    if (!isRequestHeaderOriginValid(hostname, req.headers.origin)) {
+      req.headers.origin = '';
     }
   }
 
