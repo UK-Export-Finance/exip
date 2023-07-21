@@ -18,6 +18,10 @@ describe('api/middleware/headers/check-api-key', () => {
     next = nextSpy;
   });
 
+  afterAll(() => {
+    jest.resetAllMocks();
+  });
+
   describe('when x-api-key header is valid', () => {
     it('should call next()', async () => {
       next = nextSpy;
