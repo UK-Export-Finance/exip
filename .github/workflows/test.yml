@@ -77,6 +77,7 @@ jobs:
           API_PORT: ${{ vars.API_PORT }}
           UI_PORT: ${{ vars.UI_PORT }}
           API_URL: ${{ secrets.API_URL_LOCAL }}
+          API_KEY: ${{ secrets.API_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL_LOCAL }}
           MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
@@ -131,6 +132,7 @@ jobs:
           API_PORT: ${{ vars.API_PORT }}
           UI_PORT: ${{ vars.UI_PORT }}
           API_URL: ${{ secrets.API_URL }}
+          API_KEY: ${{ secrets.API_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
