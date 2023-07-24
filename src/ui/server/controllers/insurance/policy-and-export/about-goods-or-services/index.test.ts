@@ -1,9 +1,11 @@
-import { pageVariables, TEMPLATE, get, post } from '.';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { pageVariables, TEMPLATE, FIELD_IDS, get, post } from '.';
+import { ROUTES, TEMPLATES } from '../../../../constants';
+import POLICY_AND_EXPORTS_FIELD_IDS from '../../../../constants/field-ids/insurance/policy-and-exports';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import generateValidationErrors from './validation';
 import mapCountries from '../../../../helpers/mappings/map-countries';
@@ -21,10 +23,8 @@ const {
 } = ROUTES;
 
 const {
-  POLICY_AND_EXPORTS: { ABOUT_GOODS_OR_SERVICES },
-} = FIELD_IDS.INSURANCE;
-
-const { DESCRIPTION, FINAL_DESTINATION } = ABOUT_GOODS_OR_SERVICES;
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+} = POLICY_AND_EXPORTS_FIELD_IDS;
 
 describe('controllers/insurance/policy-and-export/about-goods-or-services', () => {
   let req: Request;
@@ -85,6 +85,14 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
       expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES);
+    });
+  });
+
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      const expected = [DESCRIPTION, FINAL_DESTINATION];
+
+      expect(FIELD_IDS).toEqual(expected);
     });
   });
 
@@ -200,12 +208,14 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
         req.body = validBody;
       });
 
-      it('should call mapAndSave.policyAndExport with req.body and application', async () => {
+      it('should call mapAndSave.policyAndExport with data from constructPayload function and application', async () => {
         await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(req.body, res.locals.application);
+        expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
@@ -239,6 +249,8 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
       it('should render template with validation errors', async () => {
         await post(req, res);
 
+        const payload = constructPayload(req.body, FIELD_IDS);
+
         const expectedVariables = {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
@@ -247,7 +259,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
           ...pageVariables(refNumber),
           userName: getUserNameFromSession(req.session.user),
           application: mockApplicationWithoutCountryCode,
-          submittedValues: req.body,
+          submittedValues: payload,
           countries: mapCountries(mockCountries),
           validationErrors: generateValidationErrors(req.body),
         };
@@ -267,6 +279,8 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
         it('should render template with countries mapped to submitted country', async () => {
           await post(req, res);
 
+          const payload = constructPayload(req.body, FIELD_IDS);
+
           const expectedVariables = {
             ...insuranceCorePageVariables({
               PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
@@ -275,7 +289,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
             ...pageVariables(refNumber),
             userName: getUserNameFromSession(req.session.user),
             application: mockApplicationWithoutCountryCode,
-            submittedValues: req.body,
+            submittedValues: payload,
             countries: mapCountries(mockCountries, countryIsoCode),
             validationErrors: generateValidationErrors(req.body),
           };

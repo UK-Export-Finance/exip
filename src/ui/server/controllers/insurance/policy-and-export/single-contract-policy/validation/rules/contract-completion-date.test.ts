@@ -211,7 +211,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
 
       const mockSubmittedData = {
         [`${CONTRACT_COMPLETION_DATE}-day`]: getDate(futureDate),
-        [`${CONTRACT_COMPLETION_DATE}-month`]: getMonth(futureDate),
+        [`${CONTRACT_COMPLETION_DATE}-month`]: getMonth(futureDate) + 1,
         [`${CONTRACT_COMPLETION_DATE}-year`]: getYear(futureDate),
       };
 

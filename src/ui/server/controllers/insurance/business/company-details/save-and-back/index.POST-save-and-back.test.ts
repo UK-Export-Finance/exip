@@ -1,11 +1,9 @@
 import { Request, Response } from '../../../../../../types';
 import { post } from '.';
-import { FIELD_IDS } from '..';
 import { ROUTES } from '../../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
 import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from '../../../../../test-mocks';
 import mapAndSave from '../../map-and-save/company-details';
-import constructPayload from '../../../../../helpers/construct-payload';
 import api from '../../../../../api';
 
 const {
