@@ -94,7 +94,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER].IS_EMPTY;
+        const expectedMessage = String(ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER].IS_EMPTY);
 
         cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 

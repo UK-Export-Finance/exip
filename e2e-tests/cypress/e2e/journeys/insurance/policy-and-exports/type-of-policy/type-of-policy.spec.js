@@ -126,7 +126,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY[FIELD_ID].IS_EMPTY;
+        const expectedMessage = String(ERROR_MESSAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY[FIELD_ID].IS_EMPTY);
 
         cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 

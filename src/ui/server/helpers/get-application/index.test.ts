@@ -37,9 +37,9 @@ describe('helpers/get-application', () => {
     });
   });
 
-  describe('when there is no application.policyAndExport.id', () => {
+  describe('when there is no application.id', () => {
     it('should return false', async () => {
-      getApplicationSpy = jest.fn(() => Promise.resolve({ policyAndExport: {} }));
+      getApplicationSpy = jest.fn(() => Promise.resolve({}));
       api.keystone.application.get = getApplicationSpy;
 
       const result = await getApplication(mockApplication.referenceNumber);

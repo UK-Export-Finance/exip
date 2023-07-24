@@ -142,7 +142,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY;
+        const expectedMessage = String(ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
 
         cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 

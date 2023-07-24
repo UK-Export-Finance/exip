@@ -14,7 +14,7 @@ import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } fro
  */
 const send = async (application: Application, xlsxPath: string): Promise<SuccessResponse> => {
   try {
-    const { referenceNumber, owner, company, buyer, policyAndExport, business } = application as Application;
+    const { referenceNumber, owner, company, buyer, policyAndExport, business } = application;
 
     const { businessContactDetail } = business;
 

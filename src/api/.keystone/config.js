@@ -1590,7 +1590,7 @@ var getAccountByField = async (context, field, value) => {
       },
       take: 1
     });
-    if (!accountsArray || !accountsArray.length || !accountsArray[0]) {
+    if (!accountsArray?.length || !accountsArray[0]) {
       console.info("Getting account by field - no account exists with the provided field/value");
       return false;
     }
@@ -2876,7 +2876,7 @@ var delete_application_by_refrence_number_default = deleteApplicationByReference
 // helpers/map-sic-codes/index.ts
 var mapSicCodes = (company, sicCodes, industrySectorNames) => {
   const mapped = [];
-  if (!sicCodes || !sicCodes.length) {
+  if (!sicCodes?.length) {
     return mapped;
   }
   sicCodes.forEach((code, index) => {
@@ -2945,7 +2945,7 @@ var getCountryByField = async (context, field, value) => {
       },
       take: 1
     });
-    if (!countriesArray || !countriesArray.length || !countriesArray[0]) {
+    if (!countriesArray?.length || !countriesArray[0]) {
       console.info("Getting country by field - no country exists with the provided field/value");
       return false;
     }
@@ -4137,7 +4137,7 @@ var create_full_timestamp_from_day_month_default = createFullTimestampFromDayAnd
 // helpers/map-sic-code-descriptions/index.ts
 var mapSicCodeDescriptions = (sicCodes, sectors) => {
   const industrySectorNames = [];
-  if (!sicCodes || !sicCodes.length || !sectors || !sectors.length) {
+  if (!sicCodes?.length || !sectors?.length) {
     return industrySectorNames;
   }
   sicCodes.forEach((sicCode) => {

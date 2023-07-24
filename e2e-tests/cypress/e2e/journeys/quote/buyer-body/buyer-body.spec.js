@@ -56,7 +56,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES.ELIGIBILITY[VALID_BUYER_BODY];
+        const expectedMessage = String(ERROR_MESSAGES.ELIGIBILITY[VALID_BUYER_BODY]);
 
         cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 

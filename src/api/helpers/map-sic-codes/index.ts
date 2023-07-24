@@ -10,7 +10,7 @@ import { CompanyResponse, SicCode } from '../../types';
 const mapSicCodes = (company: CompanyResponse, sicCodes?: Array<string>, industrySectorNames?: Array<string>) => {
   const mapped = [] as Array<SicCode>;
 
-  if (!sicCodes || !sicCodes.length) {
+  if (!sicCodes?.length) {
     return mapped;
   }
 

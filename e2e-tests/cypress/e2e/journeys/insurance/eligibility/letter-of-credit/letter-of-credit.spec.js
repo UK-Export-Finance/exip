@@ -90,7 +90,7 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
         partials.errorSummaryListItems().should('exist');
         partials.errorSummaryListItems().should('have.length', 1);
 
-        const expectedMessage = ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_IDS.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT].IS_EMPTY;
+        const expectedMessage = String(ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_IDS.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT].IS_EMPTY);
 
         cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 

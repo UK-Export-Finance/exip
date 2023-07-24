@@ -24,25 +24,25 @@ const mapNameFields = (application: Application): Application => {
     business.businessContactDetail[FIRST_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
   }
 
-  if (business && business.businessContactDetail[LAST_NAME]) {
+  if (business?.businessContactDetail[LAST_NAME]) {
     const fieldValue = business.businessContactDetail[LAST_NAME];
 
     business.businessContactDetail[LAST_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
   }
 
-  if (buyer && buyer[BUYER_NAME]) {
+  if (buyer?.[BUYER_NAME]) {
     const fieldValue = buyer[BUYER_NAME];
 
     buyer[BUYER_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
   }
 
-  if (buyer && buyer[BUYER_CONTACT_FIRST_NAME]) {
+  if (buyer?.[BUYER_CONTACT_FIRST_NAME]) {
     const fieldValue = buyer[BUYER_CONTACT_FIRST_NAME];
 
     buyer[BUYER_CONTACT_FIRST_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
   }
 
-  if (buyer && buyer[BUYER_CONTACT_LAST_NAME]) {
+  if (buyer?.[BUYER_CONTACT_LAST_NAME]) {
     const fieldValue = buyer[BUYER_CONTACT_LAST_NAME];
 
     buyer[BUYER_CONTACT_LAST_NAME] = replaceCharacterCodesWithCharacters(fieldValue);

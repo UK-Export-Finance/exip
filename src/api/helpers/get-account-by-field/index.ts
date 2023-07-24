@@ -20,7 +20,7 @@ const getAccountByField = async (context: Context, field: string, value: string)
     });
 
     // ensure that we have found an account with the requsted field/value
-    if (!accountsArray || !accountsArray.length || !accountsArray[0]) {
+    if (!accountsArray?.length || !accountsArray[0]) {
       console.info('Getting account by field - no account exists with the provided field/value');
 
       return false;

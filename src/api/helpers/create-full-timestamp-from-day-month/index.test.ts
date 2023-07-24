@@ -14,7 +14,7 @@ describe('api/helpers/create-date-from-numbers', () => {
 
   describe('when month is not provided', () => {
     it('should return null', () => {
-      const result = createTimestampFromNumbers(day, undefined);
+      const result = createTimestampFromNumbers(day);
 
       expect(result).toEqual(null);
     });

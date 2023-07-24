@@ -35,7 +35,7 @@ const mapApplicationToFormFields = (application?: Application): object => {
       mapped[SUBMISSION_DEADLINE] = formatDate(application[SUBMISSION_DEADLINE]);
     }
 
-    if (application.policyAndExport && application.policyAndExport[REQUESTED_START_DATE]) {
+    if (application?.policyAndExport?.[REQUESTED_START_DATE]) {
       const timestamp = application.policyAndExport[REQUESTED_START_DATE];
 
       mapped.policyAndExport = {
@@ -44,7 +44,7 @@ const mapApplicationToFormFields = (application?: Application): object => {
       };
     }
 
-    if (application.policyAndExport && application.policyAndExport[CONTRACT_COMPLETION_DATE]) {
+    if (application?.policyAndExport?.[CONTRACT_COMPLETION_DATE]) {
       const timestamp = application.policyAndExport[CONTRACT_COMPLETION_DATE];
 
       mapped.policyAndExport = {
@@ -53,7 +53,7 @@ const mapApplicationToFormFields = (application?: Application): object => {
       };
     }
 
-    if (application.company && application.company[FINANCIAL_YEAR_END_DATE]) {
+    if (application?.company?.[FINANCIAL_YEAR_END_DATE]) {
       mapped.company = {
         ...mapped.company,
         [FINANCIAL_YEAR_END_DATE]: mapFinancialYearEndDate(application.company[FINANCIAL_YEAR_END_DATE]),

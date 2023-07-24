@@ -25,7 +25,7 @@ const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 export const get = async (req: Request, res: Response) => {
   try {
-    if (!req.session.submittedData || !req.session.submittedData.insuranceEligibility) {
+    if (!req.session?.submittedData?.insuranceEligibility) {
       req.session.submittedData = {
         ...req.session.submittedData,
         insuranceEligibility: {},
@@ -40,7 +40,7 @@ export const get = async (req: Request, res: Response) => {
 
     let countryValue;
 
-    if (req.session.submittedData && req.session.submittedData.insuranceEligibility[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]) {
+    if (req.session.submittedData.insuranceEligibility[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]) {
       countryValue = req.session.submittedData.insuranceEligibility[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
     }
 

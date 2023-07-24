@@ -146,7 +146,7 @@ context('Insurance - Change your answers - Policy and exports - Change single to
       });
 
       it('should render the new answers and `change` links to the newly submitted fields', () => {
-        const expectedTotalMonthsOfCover = `${application.POLICY_AND_EXPORTS[TOTAL_MONTHS_OF_COVER]} months`;
+        const expectedTotalMonthsOfCover = `${String(application.POLICY_AND_EXPORTS[TOTAL_MONTHS_OF_COVER])} months`;
 
         cy.assertSummaryListRowValueNew(summaryList, TOTAL_MONTHS_OF_COVER, expectedTotalMonthsOfCover);
 
