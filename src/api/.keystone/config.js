@@ -42,7 +42,7 @@ var { API_KEY } = process.env;
 var checkApiKey = (req, res, next) => {
   const { "x-api-key": xApiKey } = req.headers;
   if (xApiKey !== API_KEY) {
-    return res.status(401).send("Unauthorised");
+    return res.status(401).json({ message: "Unauthorised" });
   }
   next();
 };

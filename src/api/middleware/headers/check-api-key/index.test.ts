@@ -41,7 +41,7 @@ describe('api/middleware/headers/check-api-key', () => {
       checkApiKey(req, res, next);
 
       expect(res.status).toHaveBeenCalledWith(401);
-      expect(res.send).toHaveBeenCalledWith('Unauthorised');
+      expect(res.json).toHaveBeenCalledWith({ message: 'Unauthorised' });
     });
   });
 
@@ -52,7 +52,7 @@ describe('api/middleware/headers/check-api-key', () => {
       checkApiKey(req, res, next);
 
       expect(res.status).toHaveBeenCalledWith(401);
-      expect(res.send).toHaveBeenCalledWith('Unauthorised');
+      expect(res.json).toHaveBeenCalledWith({ message: 'Unauthorised' });
     });
   });
 
@@ -63,7 +63,7 @@ describe('api/middleware/headers/check-api-key', () => {
       checkApiKey(req, res, next);
 
       expect(res.status).toHaveBeenCalledWith(401);
-      expect(res.send).toHaveBeenCalledWith('Unauthorised');
+      expect(res.json).toHaveBeenCalledWith({ message: 'Unauthorised' });
     });
   });
 });

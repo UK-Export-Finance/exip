@@ -15,7 +15,7 @@ const checkApiKey = (req: Request, res: Response, next: NextFunction) => {
   const { 'x-api-key': xApiKey } = req.headers;
 
   if (xApiKey !== API_KEY) {
-    return res.status(401).send('Unauthorised');
+    return res.status(401).json({ message: 'Unauthorised' });
   }
 
   next();

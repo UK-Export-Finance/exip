@@ -79,6 +79,7 @@ export const mockReq = {
 export const mockRes = () => {
   const res = {} as Response;
 
+  res.json = jest.fn();
   res.redirect = jest.fn();
   res.render = jest.fn();
   res.send = jest.fn();
