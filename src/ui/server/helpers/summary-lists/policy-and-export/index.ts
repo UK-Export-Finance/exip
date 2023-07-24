@@ -6,7 +6,7 @@ import generateCreditPeriodAndCurrencyFields from './credit-period-and-currency-
 import generateAboutGoodsOrServicesFields from './about-goods-or-services-fields';
 import generateSingleContractPolicyFields from './single-contract-policy-fields';
 import generateMultipleContractPolicyFields from './multiple-contract-policy-fields';
-import { ApplicationPolicyAndExport, Country, Currency, SummaryListItemData } from '../../../../types';
+import { ApplicationPolicyAndExport, Country, Currency } from '../../../../types';
 
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },
@@ -26,9 +26,7 @@ const generateFields = (
   currencies: Array<Currency>,
   checkAndChange: boolean,
 ) => {
-  let fields = [] as Array<SummaryListItemData>;
-
-  fields = generatePolicyAndDateFields(answers, referenceNumber, checkAndChange);
+  let fields = generatePolicyAndDateFields(answers, referenceNumber, checkAndChange);
 
   if (isSinglePolicyType(answers[POLICY_TYPE])) {
     fields = [...fields, ...generateSingleContractPolicyFields(answers, referenceNumber, checkAndChange)];

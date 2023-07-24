@@ -52,7 +52,7 @@ export const getBackLink = (referer?: string): string => {
 };
 
 export const get = async (req: Request, res: Response) => {
-  if (!req.session.submittedData || !req.session.submittedData.quoteEligibility) {
+  if (!req.session.submittedData?.quoteEligibility) {
     req.session.submittedData = {
       ...req.session.submittedData,
       quoteEligibility: {},

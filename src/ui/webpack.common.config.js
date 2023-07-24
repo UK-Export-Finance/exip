@@ -10,6 +10,7 @@ module.exports = {
     mojFrontend: './scripts/moj-frontend.js',
     accessibleAutocomplete: './scripts/accessible-autocomplete.js',
     cookies: './scripts/cookies.js',
+    formSubmission: './scripts/form-submission.js',
   },
   output: {
     path: path.join(__dirname, 'public/js'),

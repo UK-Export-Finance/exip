@@ -87,7 +87,7 @@ const checkValidationErrors = () => {
   partials.errorSummaryListItems().should('exist');
   partials.errorSummaryListItems().should('have.length', 1);
 
-  const expectedMessage = ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
+  const expectedMessage = String(ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]);
 
   cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 

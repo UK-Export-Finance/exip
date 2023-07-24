@@ -178,24 +178,56 @@ interface DeleteApplicationByReferenceNumberVariables {
   referenceNumber: number;
 }
 
-interface CompaniesHouseAddress {
-  careOf: string | null;
-  premises: string | null;
-  addressLine1: string | null;
-  addressLine2: string | null;
-  locality: string | null;
-  region: string | null;
-  postalCode: string | null;
-  country: string | null;
+interface MappedCompaniesHouseAddress {
+  careOf?: string;
+  premises?: string;
+  addressLine1?: string;
+  addressLine2?: string;
+  locality?: string;
+  region?: string;
+  postalCode?: string;
+  country?: string;
 }
 
-interface CompanyHouseResponse extends SuccessResponse {
+interface CompaniesHouseAccountReferenceDate {
+  month: string;
+  day: string;
+}
+
+interface CompaniesHouseAccounts {
+  accounting_reference_date: CompaniesHouseAccountReferenceDate;
+}
+
+interface CompaniesHouseAPIAddress {
+  care_of?: string;
+  premises?: string;
+  address_line_1?: string;
+  address_line_2?: string;
+  locality?: string;
+  region?: string;
+  postal_code?: string;
+  country?: string;
+}
+
+interface CompaniesHouseResponse {
+  company_name: string;
+  registered_office_address: CompaniesHouseAPIAddress;
+  company_number: string;
+  date_of_creation: string;
+  sic_codes: Array<string>;
+  accounts: CompaniesHouseAccounts;
+}
+
+interface CompaniesHouseAPIResponse extends SuccessResponse {
+  data?: CompaniesHouseResponse;
+}
+
+interface MappedCompaniesHouseResponse {
   companyName: string;
-  registeredOfficeAddress: CompaniesHouseAddress;
+  registeredOfficeAddress: MappedCompaniesHouseAddress;
   companyNumber: string;
   dateOfCreation: string;
   sicCodes: Array<string>;
-  apiError: boolean;
 }
 
 interface EmailResponse extends SuccessResponse {
@@ -451,8 +483,10 @@ export {
   ApplicationSubmissionEmailVariables,
   ApplicationVersion,
   BufferEncoding,
-  CompanyHouseResponse,
+  MappedCompaniesHouseResponse,
   CompanyResponse,
+  CompaniesHouseResponse,
+  CompaniesHouseAPIResponse,
   Country,
   Currency,
   DeleteApplicationByReferenceNumberVariables,

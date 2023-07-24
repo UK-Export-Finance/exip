@@ -265,7 +265,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
           summaryList.field(fieldId).changeLink().click();
 
-          fieldVariables.newValueInput = `${application.POLICY_AND_EXPORTS[fieldId]} additional text`;
+          fieldVariables.newValueInput = `${String(application.POLICY_AND_EXPORTS[fieldId])} additional text`;
           changeAnswerField(fieldVariables, multipleContractPolicyPage[fieldId].input());
         });
 

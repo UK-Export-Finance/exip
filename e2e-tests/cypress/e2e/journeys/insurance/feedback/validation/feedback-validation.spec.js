@@ -43,7 +43,7 @@ context('Insurance - Feedback - form validation', () => {
       const field = feedbackPage.field(IMPROVEMENT);
       const value = 'a'.repeat(1201);
       const fieldIndex = 0;
-      const expectedMessage = ERROR_MESSAGE_IMPROVEMENT;
+      const expectedMessage = String(ERROR_MESSAGE_IMPROVEMENT);
 
       cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
     });
@@ -52,7 +52,7 @@ context('Insurance - Feedback - form validation', () => {
       const field = feedbackPage.field(OTHER_COMMENTS);
       const value = 'a'.repeat(1201);
       const fieldIndex = 0;
-      const expectedMessage = ERROR_MESSAGE_OTHER_COMMENT;
+      const expectedMessage = String(ERROR_MESSAGE_OTHER_COMMENT);
 
       cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
     });

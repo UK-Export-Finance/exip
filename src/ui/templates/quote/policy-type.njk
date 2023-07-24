@@ -4,8 +4,8 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% import '../components/details-text.njk' as detailsText %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+{% import '../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -31,7 +31,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
-      <form method="POST" novalidate>
+      <form method="POST" id="form" novalidate>
 
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
@@ -158,11 +158,8 @@
           }
         }) }}
 
-        {{ govukButton({
-          text: CONTENT_STRINGS.BUTTONS.CONTINUE,
-          attributes: {
-            'data-cy': 'submit-button'
-          }
+        {{ submitButton.render({
+          text: CONTENT_STRINGS.BUTTONS.CONTINUE
         }) }}
 
       </form>

@@ -9,9 +9,7 @@ import generateEligibilityFields from './eligibility-fields';
  * @returns {Object} All your business values in an object structure for GOVUK summary list structure
  */
 const generateFields = (answersEligibility: InsuranceEligibility) => {
-  let fields = [] as Array<SummaryListItemData>;
-
-  fields = [...generateEligibilityFields(answersEligibility)];
+  const fields = [...generateEligibilityFields(answersEligibility)] as Array<SummaryListItemData>;
 
   return fields;
 };

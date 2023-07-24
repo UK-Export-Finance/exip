@@ -1590,7 +1590,7 @@ var getAccountByField = async (context, field, value) => {
       },
       take: 1
     });
-    if (!accountsArray || !accountsArray.length || !accountsArray[0]) {
+    if (!accountsArray?.length || !accountsArray[0]) {
       console.info("Getting account by field - no account exists with the provided field/value");
       return false;
     }
@@ -2876,7 +2876,7 @@ var delete_application_by_refrence_number_default = deleteApplicationByReference
 // helpers/map-sic-codes/index.ts
 var mapSicCodes = (company, sicCodes, industrySectorNames) => {
   const mapped = [];
-  if (!sicCodes || !sicCodes.length) {
+  if (!sicCodes?.length) {
     return mapped;
   }
   sicCodes.forEach((code, index) => {
@@ -2945,7 +2945,7 @@ var getCountryByField = async (context, field, value) => {
       },
       take: 1
     });
-    if (!countriesArray || !countriesArray.length || !countriesArray[0]) {
+    if (!countriesArray?.length || !countriesArray[0]) {
       console.info("Getting country by field - no country exists with the provided field/value");
       return false;
     }
@@ -4125,10 +4125,6 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
 };
 var verify_account_reactivation_token_default = verifyAccountReactivationToken;
 
-// custom-resolvers/queries/get-companies-house-information/index.ts
-var import_axios2 = __toESM(require("axios"));
-var import_dotenv6 = __toESM(require("dotenv"));
-
 // helpers/create-full-timestamp-from-day-month/index.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
   if (day && month) {
@@ -4141,7 +4137,7 @@ var create_full_timestamp_from_day_month_default = createFullTimestampFromDayAnd
 // helpers/map-sic-code-descriptions/index.ts
 var mapSicCodeDescriptions = (sicCodes, sectors) => {
   const industrySectorNames = [];
-  if (!sicCodes || !sicCodes.length || !sectors || !sectors.length) {
+  if (!sicCodes?.length || !sectors?.length) {
     return industrySectorNames;
   }
   sicCodes.forEach((sicCode) => {
@@ -4187,61 +4183,87 @@ var headers = {
   "Content-Type": "application/json",
   [String(process.env.APIM_MDM_KEY)]: process.env.APIM_MDM_VALUE
 };
-var getIndustrySectorNames = async () => {
-  try {
-    console.info("Calling industry sector API");
-    const response = await (0, import_axios.default)({
-      method: "get",
-      url: `${process.env.APIM_MDM_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`,
-      headers,
-      validateStatus(status) {
-        const acceptableStatus = [200, 404];
-        return acceptableStatus.includes(status);
+var getIndustrySectorNames = {
+  get: async () => {
+    try {
+      console.info("Calling industry sector API");
+      const response = await (0, import_axios.default)({
+        method: "get",
+        url: `${process.env.APIM_MDM_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`,
+        headers,
+        validateStatus(status) {
+          const acceptableStatus = [200, 404];
+          return acceptableStatus.includes(status);
+        }
+      });
+      if (!response.data || response.status !== 200) {
+        return {
+          success: false
+        };
       }
-    });
-    if (!response.data || response.status !== 200) {
       return {
+        data: response.data,
+        success: true
+      };
+    } catch (err) {
+      console.error("Error calling industry sector API ", { err });
+      return {
+        apiError: true,
         success: false
       };
     }
-    return {
-      data: response.data,
-      success: true
-    };
-  } catch (err) {
-    console.error("Error calling industry sector API ", { err });
-    return {
-      apiError: true,
-      success: false
-    };
   }
 };
 var industry_sector_default = getIndustrySectorNames;
 
-// custom-resolvers/queries/get-companies-house-information/index.ts
+// integrations/companies-house/index.ts
+var import_axios2 = __toESM(require("axios"));
+var import_dotenv6 = __toESM(require("dotenv"));
 import_dotenv6.default.config();
 var username = process.env.COMPANIES_HOUSE_API_KEY;
 var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
+var companiesHouse = {
+  get: async (companyNumber) => {
+    try {
+      const response = await (0, import_axios2.default)({
+        method: "get",
+        url: `${companiesHouseURL}/company/${companyNumber}`,
+        auth: { username, password: "" },
+        validateStatus(status) {
+          const acceptableStatus = [200, 404];
+          return acceptableStatus.includes(status);
+        }
+      });
+      if (!response.data || response.status !== 200) {
+        return {
+          success: false
+        };
+      }
+      return {
+        data: response.data,
+        success: true
+      };
+    } catch (err) {
+      console.error("Error calling Companies House API", { err });
+      throw new Error(`Calling Companies House API. Unable to search for company ${err}`);
+    }
+  }
+};
+var companies_house_default = companiesHouse;
+
+// custom-resolvers/queries/get-companies-house-information/index.ts
 var getCompaniesHouseInformation = async (root, variables) => {
   try {
     const { companiesHouseNumber } = variables;
-    console.info("Calling Companies House API for ", companiesHouseNumber);
+    console.info("Getting Companies House information for ", companiesHouseNumber);
     const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, "0");
-    const response = await (0, import_axios2.default)({
-      method: "get",
-      url: `${companiesHouseURL}/company/${sanitisedRegNo}`,
-      auth: { username, password: "" },
-      validateStatus(status) {
-        const acceptableStatus = [200, 404];
-        return acceptableStatus.includes(status);
-      }
-    });
-    if (!response.data || response.status === 404) {
+    const response = await companies_house_default.get(sanitisedRegNo);
+    if (!response.success || !response.data) {
       return {
         success: false
       };
     }
-    const industrySectorNames = await industry_sector_default();
+    const industrySectorNames = await industry_sector_default.get();
     if (!industrySectorNames.success || industrySectorNames.apiError) {
       return {
         apiError: true,
@@ -4254,7 +4276,7 @@ var getCompaniesHouseInformation = async (root, variables) => {
       success: true
     };
   } catch (err) {
-    console.error("Error calling Companies House API", { err });
+    console.error("Error getting companies house information", { err });
     return {
       apiError: true,
       success: false

@@ -111,7 +111,7 @@ const get = async (req: Request, res: Response) => {
     }
 
     let mappedCurrencies;
-    if (submittedData && submittedData.quoteEligibility && submittedData.quoteEligibility[CURRENCY]) {
+    if (submittedData?.quoteEligibility && submittedData.quoteEligibility[CURRENCY]) {
       mappedCurrencies = mapCurrencies(currencies, submittedData.quoteEligibility[CURRENCY].isoCode);
     } else {
       mappedCurrencies = mapCurrencies(currencies);
@@ -119,7 +119,7 @@ const get = async (req: Request, res: Response) => {
 
     let mappedPercentageOfCover;
 
-    if (submittedData && submittedData.quoteEligibility && submittedData.quoteEligibility[PERCENTAGE_OF_COVER]) {
+    if (submittedData?.quoteEligibility && submittedData.quoteEligibility[PERCENTAGE_OF_COVER]) {
       mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER, Number(submittedData.quoteEligibility[PERCENTAGE_OF_COVER]));
     } else {
       mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER);
@@ -128,7 +128,7 @@ const get = async (req: Request, res: Response) => {
     const creditPeriodOptions = FIELDS[CREDIT_PERIOD].OPTIONS as Array<SelectOption>;
     let mappedCreditPeriod;
 
-    if (submittedData && submittedData.quoteEligibility && submittedData.quoteEligibility[CREDIT_PERIOD]) {
+    if (submittedData?.quoteEligibility && submittedData.quoteEligibility[CREDIT_PERIOD]) {
       mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions, String(submittedData.quoteEligibility[CREDIT_PERIOD]));
     } else {
       mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions);

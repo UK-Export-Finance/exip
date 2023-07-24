@@ -1,0 +1,23 @@
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+
+{% macro render(params) %}
+
+  {% set text = params.text %}
+  {% set isStartButton = params.isStartButton %}
+  {% set classes = params.classes %}
+  {% set href = params.href %}
+  {% set formaction = params.formaction %}
+ 
+  {{ govukButton({
+    text: text,
+    isStartButton: isStartButton,
+    classes: classes,
+    href: href,
+    attributes: {
+      'data-cy': 'submit-button',
+      id: 'submit-button',
+      formaction: formaction
+    }
+  }) }}
+
+{% endmacro %}

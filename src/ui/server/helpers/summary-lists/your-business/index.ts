@@ -28,14 +28,13 @@ const generateFields = (
   referenceNumber: number,
   checkAndChange: boolean,
 ) => {
-  let fields = [] as Array<SummaryListItemData>;
-  fields = [
+  const fields = [
     ...generateYourCompanyFields(answersCompany, referenceNumber, checkAndChange),
     ...generateBusinessContactFields(answersBusiness[BUSINESS_CONTACT_DETAIL], referenceNumber, checkAndChange),
     ...generateNatureOfYourBusinessFields(answersBusiness, referenceNumber, checkAndChange),
     ...generateTurnoverFields(answersBusiness, referenceNumber, checkAndChange),
     ...generateBrokerFields(answersBroker, referenceNumber, checkAndChange),
-  ];
+  ] as Array<SummaryListItemData>;
 
   return fields;
 };

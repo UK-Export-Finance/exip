@@ -1,7 +1,9 @@
 import { Request, Response } from '../../../../../../types';
 import { TEMPLATES, ROUTES } from '../../../../../constants';
+import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/broker';
+import { FIELD_IDS } from '..';
 
 const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
@@ -26,11 +28,14 @@ const post = async (req: Request, res: Response) => {
     }
 
     const { body } = req;
+
+    const payload = constructPayload(body, FIELD_IDS);
+
     // run validation on inputs
     const validationErrors = generateValidationErrors(body);
 
     // runs save and go back commmand
-    const saveResponse = await mapAndSave.broker(body, application, validationErrors);
+    const saveResponse = await mapAndSave.broker(payload, application, validationErrors);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

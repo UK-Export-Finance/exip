@@ -1,5 +1,5 @@
 {% extends 'index.njk' %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
+{% import '../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -14,12 +14,9 @@
         <p data-cy="feedback-confirmation">{{ CONTENT_STRINGS.FEEDBACK_TEXT }} </p>
 
         <div class="govuk-button-group govuk-!-margin-top-5">
-          {{ govukButton({
+          {{ submitButton.render({
             text: CONTENT_STRINGS.BUTTONS.BACK_TO_SERVICE,
-            href: BACK_TO_SERVICE_URL,
-            attributes: {
-              'data-cy': 'submit-button'
-            }
+            href: BACK_TO_SERVICE_URL
           }) }}
         </div>
     </div>

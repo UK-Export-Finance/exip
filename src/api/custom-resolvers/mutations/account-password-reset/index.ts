@@ -43,7 +43,7 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
      * Check if the account has a reset hash and expiry.
      * If not, return success=false
      */
-    const { id: accountId, passwordResetHash, passwordResetExpiry, salt: currentSalt, hash: currentHash } = account as Account;
+    const { id: accountId, passwordResetHash, passwordResetExpiry, salt: currentSalt, hash: currentHash } = account;
 
     if (!passwordResetHash || !passwordResetExpiry) {
       console.info('Unable to reset account password - reset hash or expiry does not exist');

@@ -182,7 +182,7 @@ context('Cookies page - Quote', () => {
           partials.errorSummaryListItems().should('exist');
           partials.errorSummaryListItems().should('have.length', 1);
 
-          const expectedMessage = ERROR_MESSAGES[FIELD_IDS.OPTIONAL_COOKIES];
+          const expectedMessage = String(ERROR_MESSAGES[FIELD_IDS.OPTIONAL_COOKIES]);
 
           cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
 

@@ -1,8 +1,10 @@
 import { PAGES } from '../../../../content-strings';
-import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
+import { TEMPLATES, ROUTES } from '../../../../constants';
+import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/nature-of-business';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
@@ -10,13 +12,14 @@ import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
-const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
-const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
+const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL } = BUSINESS_FIELD_IDS.NATURE_OF_YOUR_BUSINESS;
 
 const { NATURE_OF_YOUR_BUSINESS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 export const TEMPLATE = NATURE_OF_YOUR_BUSINESS_TEMPLATE;
+
+export const FIELD_IDS = [GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL];
 
 const {
   INSURANCE_ROOT,
@@ -105,13 +108,7 @@ const post = async (req: Request, res: Response) => {
 
     const { body } = req;
 
-    // populate submittedValues
-    const submittedValues = {
-      [GOODS_OR_SERVICES]: body[GOODS_OR_SERVICES],
-      [YEARS_EXPORTING]: body[YEARS_EXPORTING],
-      [EMPLOYEES_UK]: body[EMPLOYEES_UK],
-      [EMPLOYEES_INTERNATIONAL]: body[EMPLOYEES_INTERNATIONAL],
-    };
+    const payload = constructPayload(body, FIELD_IDS);
 
     // run validation on inputs
     const validationErrors = generateValidationErrors(body);
@@ -127,12 +124,12 @@ const post = async (req: Request, res: Response) => {
         ...pageVariables(application.referenceNumber),
         validationErrors,
         application: mapApplicationToFormFields(application),
-        submittedValues,
+        submittedValues: payload,
       });
     }
 
     // if no errors, then runs save api call to db
-    const saveResponse = await mapAndSave.natureOfBusiness(body, application);
+    const saveResponse = await mapAndSave.natureOfBusiness(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

@@ -1,26 +1,29 @@
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES, ROUTES } from '../../../../constants';
-import FIELD_IDS from '../../../../constants/field-ids/insurance/business';
+import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
 import { FIELDS, ACCOUNT_FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import getValuesFromUserSessionOrApplication from '../../../../helpers/get-values-from-user-session-or-application';
+import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import { Request, Response } from '../../../../../types';
 import mapAndSave from '../map-and-save/contact';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
+import { Request, Response } from '../../../../../types';
 
-const { BUSINESS } = FIELD_IDS;
-const { COMPANY_NAME, POSITION, BUSINESS_CONTACT_DETAIL } = FIELD_IDS.CONTACT;
+const { BUSINESS } = BUSINESS_FIELD_IDS;
+const { COMPANY_NAME, POSITION, BUSINESS_CONTACT_DETAIL } = BUSINESS_FIELD_IDS.CONTACT;
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
 const { CONTACT } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { CONTACT: CONTACT_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 export const TEMPLATE = CONTACT_TEMPLATE;
+
+export const FIELD_IDS = [FIRST_NAME, LAST_NAME, EMAIL, POSITION];
 
 const {
   INSURANCE_ROOT,
@@ -108,6 +111,8 @@ const post = async (req: Request, res: Response) => {
 
     const { body } = req;
 
+    const payload = constructPayload(body, FIELD_IDS);
+
     // run validation on inputs
     const validationErrors = generateValidationErrors(body);
 
@@ -122,12 +127,12 @@ const post = async (req: Request, res: Response) => {
         application: mapApplicationToFormFields(application),
         ...pageVariables(application.referenceNumber),
         validationErrors,
-        submittedValues: body,
+        submittedValues: payload,
       });
     }
 
     // // if no errors, then runs save api call to db
-    const saveResponse = await mapAndSave.contact(body, application);
+    const saveResponse = await mapAndSave.contact(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

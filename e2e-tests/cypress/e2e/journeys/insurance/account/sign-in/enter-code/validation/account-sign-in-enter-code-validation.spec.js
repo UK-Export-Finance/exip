@@ -22,7 +22,7 @@ const field = enterCodePage[SECURITY_CODE];
 let value = null;
 const fieldIndex = 0;
 const TOTAL_REQUIRED_FIELDS = 1;
-const expectedMessage = SECURITY_CODE_ERROR_MESSAGE.INCORRECT;
+const expectedMessage = String(SECURITY_CODE_ERROR_MESSAGE.INCORRECT);
 
 context('Insurance - Account - Sign in - Enter code - validation', () => {
   const url = `${Cypress.config('baseUrl')}${ENTER_CODE}`;

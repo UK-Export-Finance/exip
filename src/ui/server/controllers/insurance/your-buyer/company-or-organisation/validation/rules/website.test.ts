@@ -36,7 +36,7 @@ describe('controllers/insurance/your-buyer/validation/website', () => {
 
   describe('when the website is valid', () => {
     it('should not return validation errors', () => {
-      mockBody[FIELD_ID] = 'www.google.com';
+      mockBody[FIELD_ID] = 'www.gov.uk';
 
       const result = websiteRule(mockBody, mockErrors);
 

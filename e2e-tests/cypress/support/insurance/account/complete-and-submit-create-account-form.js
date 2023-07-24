@@ -21,7 +21,7 @@ const {
 } = INSURANCE_ROUTES;
 
 export default (params) => {
-  if (params && params.navigateToAccountCreationPage) {
+  if (params?.navigateToAccountCreationPage) {
     cy.navigateToUrl(YOUR_DETAILS);
   }
 

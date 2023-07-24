@@ -45,7 +45,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
 
   describe(`${WEBSITE} is the correct format`, () => {
     it('should not return a validation error', () => {
-      mockBody[WEBSITE] = 'www.google.com';
+      mockBody[WEBSITE] = 'www.gov.uk';
 
       const result = companyWebsite(mockBody, mockErrors);
 

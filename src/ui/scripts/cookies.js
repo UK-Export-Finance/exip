@@ -1,32 +1,32 @@
-var hideButton = document.querySelector('.js-hide');
-var cookieBanner = document.querySelector('.govuk-cookie-banner');
-var acceptButton = document.querySelector('.js-cookies-button-accept');
-var rejectButton = document.querySelector('.js-cookies-button-reject');
-var changeCookiesSubmitButton = document.querySelector('.change-cookies-submit-button');
-var https = window.location.protocol == 'https:';
+const hideButton = document.querySelector('.js-hide');
+const cookieBanner = document.querySelector('.govuk-cookie-banner');
+const acceptButton = document.querySelector('.js-cookies-button-accept');
+const rejectButton = document.querySelector('.js-cookies-button-reject');
+const changeCookiesSubmitButton = document.querySelector('.change-cookies-submit-button');
+const https = window.location.protocol == 'https:';
 // `__Secure` prefix will only work with Secure flag i.e. HTTPS
-var cookieName = https ? '__Secure-optionalCookies' : 'optionalCookies';
+const cookieName = https ? '__Secure-optionalCookies' : 'optionalCookies';
 
-var expiryDate = function () {
+const expiryDate = () => {
   const date = new Date();
 
   // 1 day.
-  date.setDate(date.getDate() + 1);
+  const oneDay = date.setDate(date.getDate() + 1);
 
-  date.toUTCString();
+  const utcString = new Date(oneDay).toUTCString();
 
-  return 'expires=' + date + '; ';
+  return 'expires=' + utcString + '; ';
 };
 
-const domain = function () {
+const domain = () => {
   return 'domain=' + window.location.hostname;
 };
 
-var createRejectCookie = function () {
+const createRejectCookie = () => {
   document.cookie = cookieName + '=false; path=/; SameSite=Strict; secure; ' + expiryDate() + domain();
 };
 
-var createAcceptCookie = function () {
+const createAcceptCookie = () => {
   document.cookie = cookieName + '=true; path=/; SameSite=Strict; secure; ' + expiryDate() + domain();
 };
 
@@ -48,7 +48,7 @@ if (!document.cookie.includes(cookieName)) {
   // Shift focus to the banner
   cookieBanner.setAttribute('tabindex', '-1');
   cookieBanner.focus();
-  cookieBanner.addEventListener('blur', function () {
+  cookieBanner.addEventListener('blur', () => {
     cookieBanner.removeAttribute('tabindex');
   });
 }

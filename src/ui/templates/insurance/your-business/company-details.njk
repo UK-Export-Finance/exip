@@ -8,6 +8,7 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {%- from "moj/components/search/macro.njk" import mojSearch -%}
 {% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+{% import '../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -34,7 +35,7 @@
   {% endif %}
 
   <div class="govuk-grid-row">
-    <form method="POST" novalidate>
+    <form method="POST" id="form" novalidate>
       <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
@@ -194,12 +195,9 @@
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
         <div class="govuk-button-group">
-          {{ govukButton({
+          {{ submitButton.render({
             text: CONTENT_STRINGS.BUTTONS.CONTINUE,
-            attributes: {
-              'data-cy': 'submit-button',
-              'formaction' : POST_ROUTES.COMPANY_DETAILS
-            }
+            formaction : POST_ROUTES.COMPANY_DETAILS
           }) }}
 
           {{ govukButton({
@@ -207,7 +205,7 @@
             classes: "govuk-button--secondary",
             attributes: {
               'data-cy': 'save-and-back-button',
-              'formaction' : POST_ROUTES.SAVE_AND_BACK_URL
+              formaction : POST_ROUTES.SAVE_AND_BACK_URL
             }
           }) }}
         </div>

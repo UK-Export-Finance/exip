@@ -1,9 +1,11 @@
 import { PAGES } from '../../../../content-strings';
-import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
+import { TEMPLATES, ROUTES } from '../../../../constants';
+import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import companiesHouseSearch from './helpers/companies-house-search.helper';
+import constructPayload from '../../../../helpers/construct-payload';
 import companyDetailsValidation from './validation/company-details';
 import { isPopulatedArray } from '../../../../helpers/array';
 import mapAndSave from '../map-and-save/company-details';
@@ -13,18 +15,17 @@ import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route
 import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
 import { Request, Response } from '../../../../../types';
 
-const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
-  EXPORTER_BUSINESS: {
-    COMPANY_HOUSE,
-    YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
-  },
-} = FIELD_IDS.INSURANCE;
+  COMPANY_HOUSE,
+  YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
+} = BUSINESS_FIELD_IDS;
 
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { COMPANY_DETAILS: COMPANY_DETAILS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 export const TEMPLATE = COMPANY_DETAILS_TEMPLATE;
+
+export const FIELD_IDS = [COMPANY_HOUSE.INPUT, TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER];
 
 const {
   INSURANCE_ROOT,
@@ -58,7 +59,7 @@ const pageVariables = (referenceNumber: number, ORIGINAL_URL: string) => {
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
       NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
     },
-    FIELDS: EXPORTER_BUSINESS,
+    FIELDS: BUSINESS_FIELD_IDS,
   };
 };
 
@@ -141,17 +142,10 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
     const { referenceNumber } = application;
     const { body } = req;
 
-    const { companiesHouseNumber } = body;
-    const submittedValues = {
-      [COMPANY_HOUSE.INPUT]: companiesHouseNumber,
-      [TRADING_NAME]: body[TRADING_NAME],
-      [TRADING_ADDRESS]: body[TRADING_ADDRESS],
-      [WEBSITE]: body[WEBSITE],
-      [PHONE_NUMBER]: body[PHONE_NUMBER],
-    };
+    const payload = constructPayload(body, FIELD_IDS);
 
     // checks if input is correctly formatted before searching
-    const response = await companiesHouseSearch(body);
+    const response = await companiesHouseSearch(payload);
 
     const { validationErrors, apiError, company } = response;
 
@@ -168,7 +162,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         ...pageVariables(application.referenceNumber, req.originalUrl),
         validationErrors,
-        submittedValues,
+        submittedValues: payload,
       });
     }
 
@@ -185,7 +179,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
         ...pageVariables(application.referenceNumber, req.originalUrl),
         validationErrors,
         SUMMARY_LIST: summaryList,
-        submittedValues,
+        submittedValues: payload,
       });
     }
 
@@ -225,6 +219,8 @@ const post = async (req: Request, res: Response) => {
 
     let { validationErrors } = response;
 
+    const payload = constructPayload(body, FIELD_IDS);
+
     // populate submittedValues
     const submittedValues = {
       [COMPANY_HOUSE.INPUT]: companiesHouseNumber,
@@ -253,7 +249,7 @@ const post = async (req: Request, res: Response) => {
     }
 
     const updateBody = {
-      ...body,
+      ...payload,
       ...company,
     };
 
