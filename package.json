@@ -9,7 +9,7 @@
   },
   "scripts": {
     "postinstall": "husky install",
-    "lint": "npm i --legacy-peer-deps --prefix ./src/ui && eslint --ext .ts src/ui && npm i --prefix ./src/api && eslint --ext .ts src/api && eslint --ext .js e2e-tests",
+    "lint": "npm i && npm i --prefix ./src/ui && eslint --ext .ts src/ui && npm i --prefix ./src/api && eslint --ext .ts src/api && eslint --ext .js e2e-tests",
     "lint:fix": "prettier --write src/ui  && eslint --ext .ts src/api --fix && eslint --ext .ts src/ui --fix &&  eslint --ext .js e2e-tests --fix",
     "install:all": "npm i && npm i --legacy-peer-deps --prefix ./src/ui && npm i --legacy-peer-deps --prefix ./src/api && npm i --legacy-peer-deps --prefix ./generate-exip-pricing-grid",
     "update:all": "npm update --save && npm update --save --legacy-peer-deps --prefix ./src/ui && npm update --save --prefix ./src/api && npm update --save --prefix ./generate-exip-pricing-grid",
