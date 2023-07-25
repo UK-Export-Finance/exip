@@ -1,16 +1,17 @@
-import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
+import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
 import { validation as generateValidationErrors } from '../../../../shared-validation/buyer-country';
 import api from '../../../../api';
 import { mapCisCountries } from '../../../../helpers/mappings/map-cis-countries';
 import getCountryByName from '../../../../helpers/get-country-by-name';
 import mapSubmittedEligibilityCountry from '../../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
-import { mockReq, mockRes, mockAnswers, mockSession, mockCisCountries } from '../../../../test-mocks';
 import { Country, Request, Response } from '../../../../../types';
+import { mockReq, mockRes, mockAnswers, mockSession, mockCisCountries } from '../../../../test-mocks';
 
 const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -32,6 +33,14 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
   afterAll(() => {
     jest.resetAllMocks();
+  });
+
+  describe('FIELD_ID', () => {
+    it('should have the correct ID', () => {
+      const expected = FIELD_IDS.INSURANCE.ELIGIBILITY.BUYER_COUNTRY;
+
+      expect(FIELD_ID).toEqual(expected);
+    });
   });
 
   describe('PAGE_VARIABLES', () => {
@@ -173,15 +182,17 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
     });
 
     describe('when there are validation errors', () => {
-      it('should render template with validation errors', async () => {
+      it('should render template with validation errors with data from constructPayload function', async () => {
         await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables(PAGE_VARIABLES),
           userName: getUserNameFromSession(req.session.user),
           BACK_LINK: req.headers.referer,
           countries: mapCisCountries(mockCountriesResponse),
-          validationErrors: generateValidationErrors(req.body),
+          validationErrors: generateValidationErrors(payload),
         });
       });
     });
