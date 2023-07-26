@@ -1269,8 +1269,11 @@ var { withAuth } = (0, import_auth.createAuth)({
   sessionData: "name",
   secretField: "password",
   initFirstItem: {
-    // If there are no items in the database, keystone will ask you to create
-    // a new user, filling in these fields.
+    /**
+     * Ensure that if there are no items in the database,
+     * keystone admin UI will ask you to create
+     * a new user, with the following fields.
+     */
     fields: ["name", "email", "password"]
   }
 });
@@ -4383,7 +4386,8 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 });
 
 // keystone.ts
-var enableLogging = process.env.NODE_ENV === "development";
+var { NODE_ENV, DATABASE_URL } = process.env;
+var isDevEnvironment = NODE_ENV === "development";
 var keystone_default = withAuth(
   (0, import_core2.config)({
     server: {
@@ -4391,14 +4395,21 @@ var keystone_default = withAuth(
     },
     db: {
       provider: "mysql",
-      url: String(process.env.DATABASE_URL),
-      enableLogging
+      url: String(DATABASE_URL),
+      enableLogging: isDevEnvironment
+    },
+    graphql: {
+      playground: isDevEnvironment,
+      apolloConfig: {
+        introspection: isDevEnvironment
+      }
     },
     ui: {
+      isDisabled: !isDevEnvironment,
       isAccessAllowed: (context) => !!context.session?.data
     },
-    lists,
     session,
+    lists,
     extendGraphqlSchema
   })
 );
