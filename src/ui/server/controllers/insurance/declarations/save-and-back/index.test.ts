@@ -1,7 +1,9 @@
-import { post } from '.';
+import { FIELD_IDS, post } from '.';
 import { ROUTES } from '../../../../constants';
-import { Request, Response } from '../../../../../types';
+import DECLARATIONS_FIELD_IDS from '../../../../constants/field-ids/insurance/declarations';
+import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
+import { Request, Response } from '../../../../../types';
 import { mockApplication, mockReq, mockRes } from '../../../../test-mocks';
 
 const {
@@ -34,12 +36,22 @@ describe('controllers/insurance/declarations/confidentiality/save-and-back', () 
     req.body = mockFormBody;
   });
 
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      const expected = Object.keys(DECLARATIONS_FIELD_IDS);
+
+      expect(FIELD_IDS).toEqual(expected);
+    });
+  });
+
   describe('when the form has data', () => {
-    it('should call save.declaration with application and req.body', async () => {
+    it('should call save.declaration with application and submitted values from constructPayload function', async () => {
       await post(req, res);
 
+      const payload = constructPayload(req.body, FIELD_IDS);
+
       expect(save.declaration).toHaveBeenCalledTimes(1);
-      expect(save.declaration).toHaveBeenCalledWith(res.locals.application, mockFormBody);
+      expect(save.declaration).toHaveBeenCalledWith(res.locals.application, payload);
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, async () => {
