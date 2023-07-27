@@ -86,7 +86,7 @@ describe('server/helpers/sanitise-data', () => {
   describe('shouldChangeToNumber', () => {
     describe('when the value is a string number', () => {
       it('should return true', () => {
-        const result = shouldChangeToNumber(mockFieldKey, '123');
+        const result = shouldChangeToNumber({ key: mockFieldKey, value: '123' });
 
         expect(result).toEqual(true);
       });
@@ -94,7 +94,7 @@ describe('server/helpers/sanitise-data', () => {
 
     describe('when the value is a string number of 0', () => {
       it('should return true', () => {
-        const result = shouldChangeToNumber(mockFieldKey, '0');
+        const result = shouldChangeToNumber({ key: mockFieldKey, value: '0' });
 
         expect(result).toEqual(true);
       });
@@ -102,7 +102,7 @@ describe('server/helpers/sanitise-data', () => {
 
     describe('when the value is a string number with commas and translates to a number', () => {
       it('should return true', () => {
-        const result = shouldChangeToNumber(mockFieldKey, '123,456');
+        const result = shouldChangeToNumber({ key: mockFieldKey, value: '123,456' });
 
         expect(result).toEqual(true);
       });
@@ -110,14 +110,14 @@ describe('server/helpers/sanitise-data', () => {
 
     describe('when the value is a string number with commas that does NOT translate to a number', () => {
       it('should return true', () => {
-        const result = shouldChangeToNumber(mockFieldKey, '£123,456');
+        const result = shouldChangeToNumber({ key: mockFieldKey, value: '£123,456' });
 
         expect(result).toEqual(false);
       });
     });
 
     it('should return false', () => {
-      const result = shouldChangeToNumber(mockFieldKey, 'mock');
+      const result = shouldChangeToNumber({ key: mockFieldKey, value: 'mock' });
 
       expect(result).toEqual(false);
     });
@@ -202,7 +202,10 @@ describe('server/helpers/sanitise-data', () => {
 
         const result = sanitiseArray(mockKey, mockArray);
 
-        const expected = [sanitiseValue(mockKey, mockArray[0]), sanitiseValue(mockKey, mockArray[1])];
+        const expectedObj1 = sanitiseValue({ key: mockKey, value: mockArray[0] });
+        const expectedObj2 = sanitiseValue({ key: mockKey, value: mockArray[1] });
+
+        const expected = [expectedObj1, expectedObj2];
 
         expect(result).toEqual(expected);
       });
@@ -219,8 +222,8 @@ describe('server/helpers/sanitise-data', () => {
       const result = sanitiseObject(mockObject);
 
       const expected = {
-        a: sanitiseValue('a', mockObject.a),
-        b: sanitiseValue('b', mockObject.b),
+        a: sanitiseValue({ key: 'a', value: mockObject.a }),
+        b: sanitiseValue({ key: 'b', value: mockObject.b }),
       };
 
       expect(result).toEqual(expected);
@@ -228,59 +231,59 @@ describe('server/helpers/sanitise-data', () => {
   });
 
   describe('sanitiseValue', () => {
-    describe('when value is a string of true', () => {
+    describe('when the value is a string of true', () => {
       it('should return boolean', () => {
-        const result = sanitiseValue(mockFieldKey, 'true');
+        const result = sanitiseValue({ value: 'true' });
 
         expect(result).toEqual(true);
       });
     });
 
-    describe('when value is a string of false', () => {
+    describe('when the value is a string of false', () => {
       it('should return boolean', () => {
-        const result = sanitiseValue(mockFieldKey, 'false');
+        const result = sanitiseValue({ value: 'false' });
 
         expect(result).toEqual(false);
       });
     });
 
-    describe('when value is a true boolean', () => {
+    describe('when the value is a true boolean', () => {
       it('should return boolean', () => {
-        const result = sanitiseValue(mockFieldKey, true);
+        const result = sanitiseValue({ value: true });
 
         expect(result).toEqual(true);
       });
     });
 
-    describe('when value is a false boolean', () => {
+    describe('when the value is a false boolean', () => {
       it('should return boolean', () => {
-        const result = sanitiseValue(mockFieldKey, false);
+        const result = sanitiseValue({ value: false });
 
         expect(result).toEqual(false);
       });
     });
 
-    describe('when value is a string number', () => {
+    describe('when the value is a string number', () => {
       it('should return a number', () => {
-        const result = sanitiseValue(mockFieldKey, '123');
+        const result = sanitiseValue({ value: '123' });
 
         expect(result).toEqual(123);
       });
     });
 
-    describe('when value is a string number with commas', () => {
+    describe('when the value is a string number with commas', () => {
       it('should return a number with commas removed', () => {
-        const result = sanitiseValue(mockFieldKey, '1,234,567');
+        const result = sanitiseValue({ value: '1,234,567' });
 
         expect(result).toEqual(1234567);
       });
     });
 
-    describe('when value is a string', () => {
+    describe('when the value is a string', () => {
       it('should return value with replaceCharactersWithCharacterCode', () => {
         const mockStr = '\'mock\'&><"test"/';
 
-        const result = sanitiseValue(mockFieldKey, mockStr);
+        const result = sanitiseValue({ value: mockStr });
 
         const expected = replaceCharactersWithCharacterCode(mockStr);
 
@@ -288,29 +291,29 @@ describe('server/helpers/sanitise-data', () => {
       });
     });
 
-    describe(`when value is ${COMPANY_NUMBER}`, () => {
-      it('should return value', () => {
-        const result = sanitiseValue(COMPANY_NUMBER, '12345');
+    describe(`when the key is ${COMPANY_NUMBER} with a string number value`, () => {
+      it('should return the value as a string', () => {
+        const result = sanitiseValue({ key: COMPANY_NUMBER, value: '12345' });
 
         expect(result).toEqual('12345');
       });
     });
 
-    describe(`when value is ${PHONE_NUMBER}`, () => {
+    describe(`when the key is ${PHONE_NUMBER}`, () => {
       it('should return value', () => {
         const phoneNumber = mockPhoneNumbers.VALID_PHONE_NUMBERS.LANDLINE;
 
-        const result = sanitiseValue(COMPANY_NUMBER, phoneNumber);
+        const result = sanitiseValue({ key: COMPANY_NUMBER, value: phoneNumber });
 
         expect(result).toEqual(phoneNumber);
       });
     });
 
-    describe(`when value is ${WEBSITE}`, () => {
+    describe(`when the key is ${WEBSITE}`, () => {
       it('should return value without sanitisation', () => {
         const website = mockBuyer[WEBSITE];
 
-        const result = sanitiseValue(WEBSITE, website);
+        const result = sanitiseValue({ key: WEBSITE, value: website });
 
         expect(result).toEqual(website);
       });
@@ -409,7 +412,7 @@ describe('server/helpers/sanitise-data', () => {
 
         const result = sanitiseFormField(mockKey, mockValue);
 
-        const expected = sanitiseValue(mockKey, mockValue);
+        const expected = sanitiseValue({ key: mockKey, value: mockValue });
 
         expect(result).toEqual(expected);
       });

@@ -2,15 +2,12 @@ import { PAGES } from '../../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
-import generateValidationErrors from './validation';
 import { sanitiseValue } from '../../../../../helpers/sanitise-data';
+import constructPayload from '../../../../../helpers/construct-payload';
+import generateValidationErrors from './validation';
 import api from '../../../../../api';
 import cannotUseNewPasswordValidation from './validation/cannot-use-new-password';
 import { Request, Response } from '../../../../../../types';
-
-const {
-  ACCOUNT: { PASSWORD: FIELD_ID },
-} = FIELD_IDS.INSURANCE;
 
 const {
   INSURANCE: {
@@ -20,6 +17,8 @@ const {
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
+
+export const FIELD_ID = FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD;
 
 /**
  * PAGE_VARIABLES
@@ -52,7 +51,9 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PASSWORD_RESET_ROOT);
     }
 
-    const response = await api.keystone.account.verifyPasswordResetToken(token);
+    const sanitisedToken = String(sanitiseValue({ value: token }));
+
+    const response = await api.keystone.account.verifyPasswordResetToken(sanitisedToken);
 
     if (response.expired && response.accountId) {
       return res.redirect(`${LINK_EXPIRED}?id=${response.accountId}`);
@@ -90,7 +91,10 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PASSWORD_RESET_ROOT);
     }
 
-    const validationErrors = generateValidationErrors(req.body);
+    const sanitisedToken = String(sanitiseValue({ value: token }));
+    const payload = constructPayload(req.body, [FIELD_ID]);
+
+    const validationErrors = generateValidationErrors(payload);
 
     if (validationErrors) {
       return res.render(TEMPLATE, {
@@ -99,14 +103,14 @@ export const post = async (req: Request, res: Response) => {
           BACK_LINK: req.headers.referer,
         }),
         ...PAGE_VARIABLES,
-        submittedValues: req.body,
+        submittedValues: payload,
         validationErrors,
       });
     }
 
-    const password = String(sanitiseValue(FIELD_ID, req.body[FIELD_ID]));
+    const sanitisedPassword = String(sanitiseValue({ value: payload[FIELD_ID] }));
 
-    const response = await api.keystone.account.passwordReset(token, password);
+    const response = await api.keystone.account.passwordReset(sanitisedToken, sanitisedPassword);
 
     if (response.success) {
       // set a success flag for consumption in the next part of the flow.
@@ -122,7 +126,7 @@ export const post = async (req: Request, res: Response) => {
           BACK_LINK: req.headers.referer,
         }),
         ...PAGE_VARIABLES,
-        submittedValues: req.body,
+        submittedValues: payload,
         validationErrors: cannotUseNewPasswordValidation(),
       });
     }

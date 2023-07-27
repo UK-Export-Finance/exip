@@ -195,7 +195,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
 
         expect(verifyAccountSignInCodeSpy).toHaveBeenCalledTimes(1);
 
-        const sanitisedSecurityCode = sanitiseValue(SECURITY_CODE, validBody[SECURITY_CODE]);
+        const sanitisedSecurityCode = sanitiseValue({ value: validBody[SECURITY_CODE] });
 
         expect(verifyAccountSignInCodeSpy).toHaveBeenCalledWith(req.session.accountId, String(sanitisedSecurityCode));
       });

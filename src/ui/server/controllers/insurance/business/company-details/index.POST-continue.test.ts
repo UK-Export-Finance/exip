@@ -66,8 +66,8 @@ describe('controllers/insurance/business/companies-details', () => {
 
         const submittedValues = {
           [INPUT]: req.body[INPUT],
-          [TRADING_NAME]: sanitiseValue(TRADING_NAME, req.body[TRADING_NAME]),
-          [TRADING_ADDRESS]: sanitiseValue(TRADING_ADDRESS, req.body[TRADING_ADDRESS]),
+          [TRADING_NAME]: sanitiseValue({ value: req.body[TRADING_NAME] }),
+          [TRADING_ADDRESS]: sanitiseValue({ value: req.body[TRADING_ADDRESS] }),
           [WEBSITE]: req.body[WEBSITE],
         };
 

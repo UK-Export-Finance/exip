@@ -53,6 +53,7 @@ import {
   SingleInputPageVariables,
 } from './page-variables';
 import { InsuranceFeedbackVariables } from './feedback';
+import { SanitiseValueObjParams } from './sanitise-value';
 
 export {
   Account,
@@ -106,6 +107,7 @@ export {
   SubmittedDataQuoteEligibility,
   SubmittedDataInsuranceEligibility,
   InsuranceSubmittedBuyer,
+  SanitiseValueObjParams,
   SubmittedData,
   SummaryListItemData,
   SummaryListItemDataFieldSummary,

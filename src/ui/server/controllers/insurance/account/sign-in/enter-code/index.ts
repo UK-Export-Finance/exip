@@ -93,7 +93,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(SIGN_IN_ROOT);
     }
 
-    const securityCode = sanitiseValue(FIELD_ID, req.body[FIELD_ID]);
+    const securityCode = sanitiseValue({ value: req.body[FIELD_ID] });
 
     let validationErrors = generateValidationErrors(req.body);
 

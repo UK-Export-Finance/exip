@@ -1,5 +1,6 @@
 import api from '../../../../../api';
 import { ROUTES } from '../../../../../constants';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import { Request, Response } from '../../../../../../types';
 
 const {
@@ -24,7 +25,9 @@ export const get = async (req: Request, res: Response) => {
     const { token } = req.query;
 
     if (token) {
-      const response = await api.keystone.account.verifyEmailAddress(token);
+      const sanitisedToken = String(sanitiseValue({ value: token }));
+
+      const response = await api.keystone.account.verifyEmailAddress(sanitisedToken);
 
       if (response.expired && response.accountId) {
         const url = `${VERIFY_EMAIL_LINK_EXPIRED}?id=${response.accountId}`;

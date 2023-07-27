@@ -1,4 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 
@@ -25,7 +26,9 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(SUSPENDED_ROOT);
     }
 
-    const response = await api.keystone.account.verifyAccountReactivationToken(token);
+    const sanitisedToken = String(sanitiseValue({ value: token }));
+
+    const response = await api.keystone.account.verifyAccountReactivationToken(sanitisedToken);
 
     if (response.expired && response.accountId) {
       const url = `${VERIFY_EMAIL_LINK_EXPIRED}?id=${response.accountId}`;

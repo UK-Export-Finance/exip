@@ -1,6 +1,7 @@
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../../constants';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
@@ -21,9 +22,14 @@ const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 export const get = async (req: Request, res: Response) => {
   try {
     const { accountIdToConfirm } = req.session;
-    const { id } = req.query;
 
-    const accountId = accountIdToConfirm ?? id;
+    let sanitisedId;
+
+    if (req.query.id) {
+      sanitisedId = String(sanitiseValue({ value: req.query.id }));
+    }
+
+    const accountId = accountIdToConfirm ?? sanitisedId;
 
     if (!accountId) {
       return res.redirect(PROBLEM_WITH_SERVICE);
