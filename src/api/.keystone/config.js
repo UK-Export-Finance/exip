@@ -2047,13 +2047,15 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
           accountId: id
         };
       }
+      console.info("Verified account email - updating account to be verified");
+      const accountUpdate = {
+        isVerified: true,
+        verificationHash: "",
+        verificationExpiry: null
+      };
       await context.db.Account.updateOne({
         where: { id: account.id },
-        data: {
-          isVerified: true,
-          verificationHash: "",
-          verificationExpiry: null
-        }
+        data: accountUpdate
       });
       return {
         success: true,
@@ -2543,6 +2545,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
     }
     const isValid = otpSalt && otpHash && is_valid_otp_default(securityCode, otpSalt, otpHash);
     if (isValid) {
+      console.info("Verified account sign in code - creating JWT and updating account");
       await delete_authentication_retries_default(context, accountId);
       const jwt = create_jwt_default.JWT(accountId);
       const { sessionIdentifier } = jwt;
@@ -4102,14 +4105,15 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
         };
       }
       console.info(`Reactivating account ${account.id}`);
+      const accountUpdate = {
+        isBlocked: false,
+        isVerified: true,
+        reactivationHash: "",
+        reactivationExpiry: null
+      };
       await context.db.Account.updateOne({
         where: { id: account.id },
-        data: {
-          isBlocked: false,
-          isVerified: true,
-          reactivationHash: "",
-          reactivationExpiry: null
-        }
+        data: accountUpdate
       });
       await delete_authentication_retries_default(context, account.id);
       return {

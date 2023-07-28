@@ -58,14 +58,16 @@ const verifyAccountReactivationToken = async (
        */
       console.info(`Reactivating account ${account.id}`);
 
+      const accountUpdate = {
+        isBlocked: false,
+        isVerified: true,
+        reactivationHash: '',
+        reactivationExpiry: null,
+      };
+
       await context.db.Account.updateOne({
         where: { id: account.id },
-        data: {
-          isBlocked: false,
-          isVerified: true,
-          reactivationHash: '',
-          reactivationExpiry: null,
-        },
+        data: accountUpdate,
       });
 
       /**

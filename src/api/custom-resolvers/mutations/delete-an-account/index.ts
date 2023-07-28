@@ -3,6 +3,18 @@ import getAccountByField from '../../../helpers/get-account-by-field';
 import getAuthenticationRetriesByAccountId from '../../../helpers/get-authentication-retries-by-account-id';
 import { Account, AccountDeletionVariables } from '../../../types';
 
+/**
+ * deleteAnAccount
+ * Deletes an account.
+ * NOTE: this is currently only used for E2E tests.
+ * 1) Check if the account exists.
+ * 2) Delete authentication retry entries.
+ * 3) Delete the account.
+ * @param {Object} GraphQL root variables
+ * @param {Object} GraphQL variables for the DeleteAnAccount mutation
+ * @param {Object} KeystoneJS context API
+ * @returns {Object} Object with success flag
+ */
 const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, context: Context) => {
   console.info('Deleting account ', variables.email);
 

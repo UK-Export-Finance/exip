@@ -64,6 +64,8 @@ const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignIn
     const isValid = otpSalt && otpHash && isValidOTP(securityCode, otpSalt, otpHash);
 
     if (isValid) {
+      console.info('Verified account sign in code - creating JWT and updating account');
+
       // delete authentication retries for the account
       await deleteAuthenticationRetries(context, accountId);
 

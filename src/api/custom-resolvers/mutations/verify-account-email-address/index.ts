@@ -41,14 +41,21 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
         };
       }
 
-      // mark the account has verified and nullify the verification hash and expiry.
+      /**
+       * mark the account has verified and
+       * nullify the verification hash and expiry.
+       */
+      console.info('Verified account email - updating account to be verified');
+
+      const accountUpdate = {
+        isVerified: true,
+        verificationHash: '',
+        verificationExpiry: null,
+      };
+
       await context.db.Account.updateOne({
         where: { id: account.id },
-        data: {
-          isVerified: true,
-          verificationHash: '',
-          verificationExpiry: null,
-        },
+        data: accountUpdate,
       });
 
       return {
