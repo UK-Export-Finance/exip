@@ -9,6 +9,7 @@ import { policyAndExportSummaryList } from '../../../../helpers/summary-lists/po
 import api from '../../../../api';
 import requiredFields from '../../../../helpers/required-fields/policy-and-exports';
 import sectionStatus from '../../../../helpers/section-status';
+import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries, mockCurrencies } from '../../../../test-mocks';
@@ -182,11 +183,13 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
       req.body = mockBody;
     });
 
-    it('should call save.sectionReview with application and req.body', async () => {
+    it('should call save.sectionReview with application and data from constructPayload function', async () => {
       await post(req, res);
 
+      const payload = constructPayload(req.body, [FIELD_ID]);
+
       expect(save.sectionReview).toHaveBeenCalledTimes(1);
-      expect(save.sectionReview).toHaveBeenCalledWith(mockApplication, mockBody);
+      expect(save.sectionReview).toHaveBeenCalledWith(mockApplication, payload);
     });
 
     it(`should redirect to ${YOUR_BUSINESS}`, async () => {
