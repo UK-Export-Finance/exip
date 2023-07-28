@@ -1,10 +1,13 @@
-import { post } from '.';
-import { ROUTES } from '../../../../constants';
+import { FIELD_IDS, post } from '.';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import CHECK_YOUR_ANSWERS_FIELD_IDS from '../../../../constants/field-ids/insurance/check-your-answers';
+import constructPayload from '../../../../helpers/construct-payload';
+import stripEmptyFormFields from '../../../../helpers/strip-empty-form-fields';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
-const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/check-your-answers/save-and-back', () => {
   let req: Request;
@@ -17,6 +20,8 @@ describe('controllers/insurance/check-your-answers/save-and-back', () => {
 
   beforeEach(() => {
     req = mockReq();
+    req.body[FIELD_IDS[0]] = 'true';
+
     res = mockRes();
 
     res.locals.application = mockApplication;
@@ -24,6 +29,23 @@ describe('controllers/insurance/check-your-answers/save-and-back', () => {
 
   afterAll(() => {
     jest.resetAllMocks();
+  });
+
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      const expected = Object.values(CHECK_YOUR_ANSWERS_FIELD_IDS);
+
+      expect(FIELD_IDS).toEqual(expected);
+    });
+  });
+
+  it('should call save.sectionReview with application and data from constructPayload function', async () => {
+    await post(req, res);
+
+    const payload = stripEmptyFormFields(constructPayload(req.body, FIELD_IDS));
+
+    expect(save.sectionReview).toHaveBeenCalledTimes(1);
+    expect(save.sectionReview).toHaveBeenCalledWith(mockApplication, payload);
   });
 
   it('should redirect to all sections page', async () => {
