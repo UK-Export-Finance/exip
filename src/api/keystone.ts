@@ -52,6 +52,6 @@ export default withAuth(
     session,
     lists,
     extendGraphqlSchema,
-    telemetry: false
+    telemetry: false,
   }),
 );
