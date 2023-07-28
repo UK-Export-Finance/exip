@@ -4410,6 +4410,7 @@ var keystone_default = withAuth(
     },
     session,
     lists,
-    extendGraphqlSchema
+    extendGraphqlSchema,
+    telemetry: false
   })
 );

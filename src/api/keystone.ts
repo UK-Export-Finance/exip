@@ -26,6 +26,7 @@ const isDevEnvironment = NODE_ENV === 'development';
  * - KeystoneJS admin UI/CMS session configuration
  * - KeystoneJS lists schema (API and DB fields/operations that will be automatically generated)
  * - KeystoneJS custom schema (custom GraphQL operations defined outside of the supported lists schema)
+ * - KeystoneJS telemetry data (disabled, otherwise is enabled by default)
  * @returns {Object} AuthConfig
  */
 export default withAuth(
@@ -51,5 +52,6 @@ export default withAuth(
     session,
     lists,
     extendGraphqlSchema,
+    telemetry: false
   }),
 );
