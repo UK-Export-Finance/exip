@@ -1,7 +1,7 @@
 import * as dotenv from 'dotenv';
-import api from '../../../../../api';
 import { ROUTES } from '../../../../../constants';
 import { sanitiseValue } from '../../../../../helpers/sanitise-data';
+import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 
 dotenv.config();
