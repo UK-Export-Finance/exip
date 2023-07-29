@@ -9,10 +9,10 @@
   },
   "scripts": {
     "postinstall": "husky install",
-    "lint": "npm i && npm i --legacy-peer-deps --prefix ./src/ui && eslint --ext .ts src/ui && npm i --prefix ./src/api && eslint --ext .ts src/api && eslint --ext .js e2e-tests",
+    "lint": "npm i --legacy-peer-deps && npm i --legacy-peer-deps --prefix ./src/ui && eslint --ext .ts src/ui && npm i --legacy-peer-deps --prefix ./src/api && eslint --ext .ts src/api && eslint --ext .js e2e-tests",
     "lint:fix": "prettier --write src/ui  && eslint --ext .ts src/api --fix && eslint --ext .ts src/ui --fix &&  eslint --ext .js e2e-tests --fix",
-    "install:all": "npm i && npm i --legacy-peer-deps --prefix ./src/ui && npm i --legacy-peer-deps --prefix ./src/api && npm i --legacy-peer-deps --prefix ./generate-exip-pricing-grid",
-    "update:all": "npm update --save && npm update --save --legacy-peer-deps --prefix ./src/ui && npm update --save --prefix ./src/api && npm update --save --prefix ./generate-exip-pricing-grid",
+    "install:all": "npm i --legacy-peer-deps && npm i --legacy-peer-deps --prefix ./src/ui && npm i --legacy-peer-deps --prefix ./src/api && npm i --legacy-peer-deps --prefix ./generate-exip-pricing-grid",
+    "update:all": "npm update --save --legacy-peer-deps && npm update --save --legacy-peer-deps --prefix ./src/ui && npm update --save --legacy-peer-deps --prefix ./src/api && npm update --save --legacy-peer-deps --prefix ./generate-exip-pricing-grid",
     "audit:all": "npm audit && npm audit --prefix ./src/ui && npm audit --prefix ./src/api && npm audit --prefix ./generate-exip-pricing-grid"
   },
   "repository": {
@@ -49,7 +49,7 @@
     "@types/node": "^20.4.5",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
     "@typescript-eslint/parser": "^6.2.0",
-    "eslint": "^8.45.0",
+    "eslint": "^8.46.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.1.0",
