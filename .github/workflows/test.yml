@@ -161,6 +161,7 @@ jobs:
       - name: Execute
         uses: cypress-io/github-action@v4
         with:
+          install: false
           headed: false
           record: true
           parallel: true
