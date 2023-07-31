@@ -33,8 +33,32 @@ __export(keystone_exports, {
   default: () => keystone_default
 });
 module.exports = __toCommonJS(keystone_exports);
-var import_config2 = require("dotenv/config");
+var import_config3 = require("dotenv/config");
 var import_core2 = require("@keystone-6/core");
+
+// middleware/headers/check-api-key/index.ts
+var import_config = require("dotenv/config");
+var { API_KEY } = process.env;
+var checkApiKey = (req, res, next) => {
+  const { "x-api-key": xApiKey } = req.headers;
+  if (!xApiKey || xApiKey !== API_KEY) {
+    return res.status(401).json({ message: "Unauthorised" });
+  }
+  next();
+};
+var check_api_key_default = checkApiKey;
+
+// middleware/rate-limiter/index.js
+var import_express_rate_limit = __toESM(require("express-rate-limit"));
+var rateLimiter = (0, import_express_rate_limit.default)({
+  windowMs: 1 * 60 * 1e3,
+  // 1 minute
+  max: 1e3,
+  // 1K requests / 1 window
+  standardHeaders: false,
+  legacyHeaders: false
+});
+var rate_limiter_default = rateLimiter;
 
 // schema.ts
 var import_core = require("@keystone-6/core");
@@ -1254,7 +1278,7 @@ var lists = {
 };
 
 // auth.ts
-var import_config = require("dotenv/config");
+var import_config2 = require("dotenv/config");
 var import_auth = require("@keystone-6/auth");
 var import_session = require("@keystone-6/core/session");
 var sessionSecret = String(process.env.SESSION_SECRET);
@@ -4395,7 +4419,13 @@ var isDevEnvironment = NODE_ENV === "development";
 var keystone_default = withAuth(
   (0, import_core2.config)({
     server: {
-      port: 5001
+      port: 5001,
+      extendExpressApp: (app) => {
+        app.use(check_api_key_default);
+        if (NODE_ENV === "production") {
+          app.use(rate_limiter_default);
+        }
+      }
     },
     db: {
       provider: "mysql",
