@@ -39,6 +39,7 @@ COPY --chown=node:node ./content-strings ./content-strings
 COPY --chown=node:node ./custom-schema ./custom-schema
 COPY --chown=node:node ./file-system ./file-system
 COPY --chown=node:node ./generate-xlsx ./generate-xlsx
+COPY --chown=node:node ./middleware ./middleware
 COPY --chown=node:node ./XLSX ./XLSX
 
 
@@ -72,6 +73,7 @@ COPY --chown=node:node --from=build /app/emails ./emails
 COPY --chown=node:node --from=build /app/custom-resolvers ./custom-resolvers
 COPY --chown=node:node --from=build /app/file-system ./file-system
 COPY --chown=node:node --from=build /app/generate-xlsx ./generate-xlsx
+COPY --chown=node:node --from=build /app/middleware ./middleware
 COPY --chown=node:node --from=build /app/XLSX ./XLSX
 
 # Container healthcheck

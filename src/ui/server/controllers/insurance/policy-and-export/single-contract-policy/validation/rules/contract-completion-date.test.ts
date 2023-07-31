@@ -190,7 +190,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
       it('should return validation error', () => {
         const mockSubmittedData = {
           ...requestedStartDateFields,
-          [`${CONTRACT_COMPLETION_DATE}-day`]: getDate(completionDate),
+          [`${CONTRACT_COMPLETION_DATE}-day`]: getDate(completionDate) + 1,
           [`${CONTRACT_COMPLETION_DATE}-month`]: getMonth(completionDate),
           [`${CONTRACT_COMPLETION_DATE}-year`]: getYear(completionDate),
         };

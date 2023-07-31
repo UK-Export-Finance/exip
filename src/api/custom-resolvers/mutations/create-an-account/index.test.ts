@@ -1,5 +1,5 @@
 import createAnAccount from '.';
-import { ACCOUNT } from '../../../constants';
+import { ACCOUNT, DATE_24_HOURS_FROM_NOW } from '../../../constants';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
 import accounts from '../../../test-helpers/accounts';
@@ -62,13 +62,12 @@ describe('custom-resolvers/create-an-account', () => {
   });
 
   it('should generate and return verification expiry date', () => {
-    const now = new Date();
-
-    const tomorrowDay = new Date(now).getDate() + 1;
-
     const expiry = new Date(account.verificationExpiry);
 
     const expiryDay = expiry.getDate();
+
+    const tomorrow = DATE_24_HOURS_FROM_NOW();
+    const tomorrowDay = new Date(tomorrow).getDate();
 
     expect(expiryDay).toEqual(tomorrowDay);
   });

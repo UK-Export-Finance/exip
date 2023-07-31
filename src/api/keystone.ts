@@ -1,19 +1,30 @@
 import 'dotenv/config';
 import { config } from '@keystone-6/core';
+import checkApiKey from './middleware/headers/check-api-key';
+import rateLimiter from './middleware/rate-limiter';
 import { lists } from './schema';
 import { withAuth, session } from './auth';
 import { extendGraphqlSchema } from './custom-schema';
 
-const enableLogging = process.env.NODE_ENV === 'development';
+const { NODE_ENV, DATABASE_URL } = process.env;
+
+const enableLogging = NODE_ENV === 'development';
 
 export default withAuth(
   config({
     server: {
       port: 5001,
+      extendExpressApp: (app) => {
+        app.use(checkApiKey);
+
+        if (NODE_ENV === 'production') {
+          app.use(rateLimiter);
+        }
+      },
     },
     db: {
       provider: 'mysql',
-      url: String(process.env.DATABASE_URL),
+      url: String(DATABASE_URL),
       enableLogging,
     },
     ui: {
