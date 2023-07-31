@@ -44,6 +44,7 @@ services:
       TZ: Europe/London
       PORT: ${API_PORT}
       DATABASE_URL:
+      API_KEY:
       SESSION_SECRET:
       COMPANIES_HOUSE_API_URL:
       COMPANIES_HOUSE_API_KEY:
@@ -81,6 +82,7 @@ services:
       TZ: Europe/London
       PORT: ${UI_PORT}
       API_URL:
+      API_KEY:
       SESSION_SECRET:
       BASIC_AUTH_KEY:
       BASIC_AUTH_SECRET:

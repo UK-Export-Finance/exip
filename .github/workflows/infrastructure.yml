@@ -332,6 +332,7 @@ jobs:
           DATABASE_URL='${{ secrets.DATABASE_URL }}' \
           MYSQL_DATABASE='${{ secrets.MYSQL_DATABASE }}' \
           MYSQL_ROOT_PASSWORD='${{ secrets.MYSQL_ROOT_PASSWORD }}' \
+          API_KEY='${{ secrets.API_KEY }}' \
           APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
           APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
           APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
