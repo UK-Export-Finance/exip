@@ -1,6 +1,12 @@
 import gql from 'graphql-tag';
 import apollo from './apollo';
 
+const APOLLO_CONTEXT = {
+  headers: {
+    'x-api-key': Cypress.env('API_KEY'),
+  },
+};
+
 const queryStrings = {
   createAnAccount: () => gql`
     mutation CreateAnAccount($urlOrigin: String!, $firstName: String!, $lastName: String!, $email: String!, $password: String!) {
@@ -143,6 +149,7 @@ const createAnAccount = (urlOrigin, firstName, lastName, email, password) =>
       email,
       password,
     },
+    context: APOLLO_CONTEXT,
   }).then((response) => response.data.createAnAccount);
 
 /**
@@ -159,6 +166,7 @@ const getAccountByEmail = async (email) => {
     const response = await cy.request({
       headers: {
         'content-type': 'application/json',
+        'x-api-key': Cypress.env('API_KEY'),
       },
       url,
     });
@@ -189,6 +197,7 @@ const updateAccount = async (id, updateObj) => {
         where: { id },
         data: updateObj,
       },
+      context: APOLLO_CONTEXT,
     }).then((response) => response.data.updateAccount);
 
     return responseBody;
@@ -210,6 +219,7 @@ const deleteAnAccount = async (email) => {
     const responseBody = await apollo.query({
       query: queryStrings.deleteAnAccount(),
       variables: { email },
+      context: APOLLO_CONTEXT,
     }).then((response) => response.data.deleteAnAccount);
 
     return responseBody.success;
@@ -243,6 +253,7 @@ const addAndGetOTP = async (emailAddress) => {
     const responseBody = await apollo.query({
       query: queryStrings.addAndGetOTP(),
       variables: { email },
+      context: APOLLO_CONTEXT,
     }).then((response) => response.data.addAndGetOTP);
 
     return responseBody.securityCode;
@@ -271,6 +282,7 @@ const getAccountPasswordResetToken = async () => {
     const responseBody = await apollo.query({
       query: queryStrings.getAccountPasswordResetToken(),
       variables: { email: accountEmail },
+      context: APOLLO_CONTEXT,
     }).then((response) => response.data.getAccountPasswordResetToken);
 
     return responseBody.token;
@@ -295,6 +307,7 @@ const getApplicationByReferenceNumber = async (referenceNumber) => {
     const response = await cy.request({
       headers: {
         'content-type': 'application/json',
+        'x-api-key': Cypress.env('API_KEY'),
       },
       url,
     });
@@ -322,6 +335,7 @@ const deleteApplicationByReferenceNumber = async (referenceNumber) => {
     const responseBody = await apollo.query({
       query: queryStrings.deleteApplicationByReferenceNumber(),
       variables: { referenceNumber },
+      context: APOLLO_CONTEXT,
     }).then((response) => response.data);
 
     return responseBody;
@@ -342,6 +356,7 @@ const declarations = {
     try {
       const responseBody = await apollo.query({
         query: queryStrings.declarations.getLatestConfidentiality(),
+        context: APOLLO_CONTEXT,
       }).then((response) => response.data.declarationConfidentialities[0]);
 
       return responseBody;
@@ -360,6 +375,7 @@ const declarations = {
     try {
       const responseBody = await apollo.query({
         query: queryStrings.declarations.getLatestAntiBribery(),
+        context: APOLLO_CONTEXT,
       }).then((response) => response.data.declarationAntiBriberies[0]);
 
       return responseBody;
@@ -378,6 +394,7 @@ const declarations = {
     try {
       const responseBody = await apollo.query({
         query: queryStrings.declarations.getLatestConfirmationAndAcknowledgements(),
+        context: APOLLO_CONTEXT,
       }).then((response) => response.data.declarationConfirmationAndAcknowledgements[0]);
 
       return responseBody;
@@ -396,6 +413,7 @@ const declarations = {
     try {
       const responseBody = await apollo.query({
         query: queryStrings.declarations.getLatestHowDataWillBeUsed(),
+        context: APOLLO_CONTEXT,
       }).then((response) => response.data.declarationHowDataWillBeUseds[0]);
 
       return responseBody;

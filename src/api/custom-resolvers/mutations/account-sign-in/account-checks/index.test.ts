@@ -1,7 +1,7 @@
 import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import { ACCOUNT, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../../constants';
+import { DATE_ONE_MINUTE_IN_THE_PAST, DATE_24_HOURS_FROM_NOW } from '../../../../constants';
 import accountChecks from '.';
 import baseConfig from '../../../../keystone';
 import confirmEmailAddressEmail from '../../../../helpers/send-email-confirm-email-address';
@@ -19,8 +19,6 @@ const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
 dotenv.config();
 
 const context = getContext(config, PrismaModule) as Context;
-
-const { EMAIL } = ACCOUNT;
 
 describe('custom-resolvers/account-sign-in/account-checks', () => {
   let account: Account;
@@ -128,16 +126,11 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
         newExpiryDay = new Date(updatedAccount.verificationExpiry).getDate();
       });
 
-      test('it should be reset and have a new day vale', async () => {
-        const expectedExpiryDay = new Date(EMAIL.VERIFICATION_EXPIRY()).getDate();
+      test('it should be reset and have the correct day value', async () => {
+        const tomorrow = DATE_24_HOURS_FROM_NOW();
+        const tomorrowDay = new Date(tomorrow).getDate();
 
-        expect(newExpiryDay).toEqual(expectedExpiryDay);
-      });
-
-      test('the account`s verificationExpiry should NOT have have the same day as the previous verificationExpiry', async () => {
-        const originalExpiryDay = new Date(account.verificationExpiry).getDay();
-
-        expect(newExpiryDay).not.toEqual(originalExpiryDay);
+        expect(newExpiryDay).toEqual(tomorrowDay);
       });
     });
 
