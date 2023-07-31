@@ -41,7 +41,7 @@ var import_config = require("dotenv/config");
 var { API_KEY } = process.env;
 var checkApiKey = (req, res, next) => {
   const { "x-api-key": xApiKey } = req.headers;
-  if (xApiKey !== API_KEY) {
+  if (!xApiKey || xApiKey !== API_KEY) {
     return res.status(401).json({ message: "Unauthorised" });
   }
   next();
