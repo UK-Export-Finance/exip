@@ -7,10 +7,10 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const urlRoot = process.env.API_URL;
+const { API_URL, API_KEY } = process.env;
 
 const createHttpLinkOptions = {
-  uri: `${urlRoot}`,
+  uri: API_URL,
   fetch,
 } as FetchOptions;
 
@@ -38,6 +38,11 @@ const doQuery = async (query: DocumentNode, variables: OperationVariables) => {
     return await client.query({
       query,
       variables,
+      context: {
+        headers: {
+          'x-api-key': API_KEY,
+        },
+      },
     });
   } catch (err) {
     return err;
@@ -49,6 +54,11 @@ const doMutate = async (mutation: DocumentNode, variables: OperationVariables) =
     return await client.mutate({
       mutation,
       variables,
+      context: {
+        headers: {
+          'x-api-key': API_KEY,
+        },
+      },
     });
   } catch (err) {
     return err;

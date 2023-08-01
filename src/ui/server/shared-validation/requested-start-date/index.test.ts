@@ -148,7 +148,7 @@ describe('shared-validation/requested-start-date', () => {
 
       const mockSubmittedData = {
         [`${FIELD_ID}-day`]: getDate(futureDate),
-        [`${FIELD_ID}-month`]: getMonth(futureDate),
+        [`${FIELD_ID}-month`]: getMonth(futureDate) + 1,
         [`${FIELD_ID}-year`]: getYear(futureDate),
       };
 
