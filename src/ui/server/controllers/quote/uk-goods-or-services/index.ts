@@ -2,12 +2,13 @@ import { PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../helpers/construct-payload';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import isChangeRoute from '../../../helpers/is-change-route';
 import { Request, Response } from '../../../../types';
 
-const FIELD_ID = FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES;
+export const FIELD_ID = FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES;
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
@@ -32,7 +33,9 @@ export const get = (req: Request, res: Response) =>
   });
 
 export const post = (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[FIELD_ID].IS_EMPTY);
+  const payload = constructPayload(req.body, [FIELD_ID]);
+
+  const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
@@ -43,7 +46,7 @@ export const post = (req: Request, res: Response) => {
     });
   }
 
-  const answer = req.body[FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+  const answer = payload[FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
   const redirectToExitPage = answer === 'false';
 
@@ -58,7 +61,7 @@ export const post = (req: Request, res: Response) => {
     return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
   }
 
-  req.session.submittedData.quoteEligibility = updateSubmittedData(req.body, req.session.submittedData.quoteEligibility);
+  req.session.submittedData.quoteEligibility = updateSubmittedData(payload, req.session.submittedData.quoteEligibility);
 
   if (isChangeRoute(req.originalUrl)) {
     return res.redirect(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);

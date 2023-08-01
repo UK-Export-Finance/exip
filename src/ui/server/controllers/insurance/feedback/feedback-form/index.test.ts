@@ -1,16 +1,18 @@
-import { TEMPLATE, pageVariables, MAXIMUM, get, post } from '.';
+import { FIELD_IDS, TEMPLATE, pageVariables, MAXIMUM, get, post } from '.';
 import { PAGES, FIELDS } from '../../../../content-strings';
-import { TEMPLATES, ROUTES, FIELD_IDS } from '../../../../constants';
+import { TEMPLATES, ROUTES, INSURANCE, SERVICE_NAME } from '../../../../constants';
+import { FEEDBACK_FIELD_IDS } from '../../../../constants/field-ids/feedback';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import { mockReq, mockRes, mockInsuranceFeedback } from '../../../../test-mocks';
-import { Request, Response } from '../../../../../types';
+import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import generateValidationErrors from './validation';
+import { Request, Response } from '../../../../../types';
+import { mockReq, mockRes, mockInsuranceFeedback } from '../../../../test-mocks';
 
-const {
-  FEEDBACK: { SATISFACTION, IMPROVEMENT, OTHER_COMMENTS, VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED, REFERRAL_URL },
-} = FIELD_IDS;
+const { SATISFACTION, IMPROVEMENT, OTHER_COMMENTS, VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED } = FEEDBACK_FIELD_IDS;
+
+const { REFERRAL_URL, SERVICE, PRODUCT } = FEEDBACK_FIELD_IDS;
 
 const { FEEDBACK_PAGE } = PAGES;
 const { FEEDBACK: FEEDBACK_TEMPLATE } = TEMPLATES.INSURANCE;
@@ -28,6 +30,14 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
     req.flash = mockFlash;
 
     res = mockRes();
+  });
+
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      const expected = [SATISFACTION, IMPROVEMENT, OTHER_COMMENTS];
+
+      expect(FIELD_IDS).toEqual(expected);
+    });
   });
 
   describe('TEMPLATE', () => {
@@ -112,14 +122,20 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
 
-        it('should call api.keystone.feedback.create once with relevant fields', async () => {
+        it('should call api.keystone.feedback.create once with data from constructPayload function and additional flags', async () => {
           req.body = body;
 
           await post(req, res);
 
+          const { _csrf, ...submittedFeedback } = body;
+
+          const payload = constructPayload(submittedFeedback, FIELD_IDS);
+
           const saveVariables = {
-            ...mockInsuranceFeedback,
+            ...payload,
             [REFERRAL_URL]: req.headers.referer,
+            [SERVICE]: INSURANCE,
+            [PRODUCT]: SERVICE_NAME,
           };
 
           expect(api.keystone.feedback.create).toHaveBeenCalledTimes(1);
@@ -165,7 +181,11 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
 
         await post(req, res);
 
-        const validationErrors = generateValidationErrors(req.body);
+        const { _csrf, ...submittedFeedback } = body;
+
+        const payload = constructPayload(submittedFeedback, FIELD_IDS);
+
+        const validationErrors = generateValidationErrors(payload);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...insuranceCorePageVariables({
@@ -174,7 +194,7 @@ describe('controllers/insurance/feedback/feedback-confirmation', () => {
           }),
           ...pageVariables(),
           validationErrors,
-          submittedValues: body,
+          submittedValues: payload,
           userName: getUserNameFromSession(req.session.user),
         });
       });
