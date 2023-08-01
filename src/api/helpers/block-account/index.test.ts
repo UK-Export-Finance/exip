@@ -47,7 +47,8 @@ describe('helpers/block-account', () => {
       try {
         await blockAccount(context, invalidId);
       } catch (err) {
-        const expected = new Error('Blocking account Input error: Only a cuid can be passed to id filters');
+        const expected = new Error('Blocking account Access denied: You cannot update that Account - it may not exist');
+
         expect(err).toEqual(expected);
       }
     });
@@ -61,6 +62,7 @@ describe('helpers/block-account', () => {
         await blockAccount(context, account.id);
       } catch (err) {
         const expected = new Error('Blocking account Access denied: You cannot update that Account - it may not exist');
+
         expect(err).toEqual(expected);
       }
     });
