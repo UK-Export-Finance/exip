@@ -1,6 +1,6 @@
 interface SanitiseValueObjParams {
   key?: string;
-  value: string | number | boolean
+  value: string | number | boolean;
 }
 
 export { SanitiseValueObjParams };
