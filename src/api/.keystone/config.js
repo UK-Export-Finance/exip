@@ -4426,10 +4426,10 @@ var keystone_default = withAuth(
     server: {
       port: 5001,
       extendExpressApp: (app) => {
-        app.use(check_api_key_default);
         if (NODE_ENV === "production") {
           app.use(rate_limiter_default);
         }
+        app.use(check_api_key_default);
       }
     },
     db: {
