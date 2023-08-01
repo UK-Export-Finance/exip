@@ -15,11 +15,11 @@ export default withAuth(
     server: {
       port: 5001,
       extendExpressApp: (app) => {
-        app.use(checkApiKey);
-
         if (NODE_ENV === 'production') {
           app.use(rateLimiter);
         }
+
+        app.use(checkApiKey);
       },
     },
     db: {
