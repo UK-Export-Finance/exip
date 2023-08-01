@@ -1,6 +1,6 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { mockAccount } from '../test-mocks';
-import { Account } from '../types';
+import { Account, TestHelperAccountCreate } from '../types';
 
 /**
  * deleteAll test helper
@@ -29,12 +29,6 @@ const deleteAll = async (context: Context) => {
   }
 };
 
-interface TestHelperAccountCreate {
-  context: Context;
-  accountData?: Account;
-  deleteAccounts?: boolean;
-}
-
 /**
  * create account test helper
  * Create an account with mock account data and any provied custom account data.
@@ -42,7 +36,7 @@ interface TestHelperAccountCreate {
  * @param {Object} Account data
  * @returns {Object} Created account
  */
-const create = async ({ context, accountData, deleteAccounts = true }: TestHelperAccountCreate) => {
+const create = async ({ context, data, deleteAccounts = true }: TestHelperAccountCreate) => {
   try {
     console.info('Creating an account (test helpers)');
 
@@ -52,8 +46,8 @@ const create = async ({ context, accountData, deleteAccounts = true }: TestHelpe
 
     let accountInput = mockAccount;
 
-    if (accountData) {
-      accountInput = accountData;
+    if (data) {
+      accountInput = data;
     }
 
     const account = (await context.query.Account.createOne({

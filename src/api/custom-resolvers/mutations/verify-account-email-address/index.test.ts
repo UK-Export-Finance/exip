@@ -61,7 +61,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
       verificationExpiry,
     };
 
-    account = await accounts.create({ context, accountData: unverifiedAccount });
+    account = await accounts.create({ context, data: unverifiedAccount });
 
     expect(account.isVerified).toEqual(false);
 
@@ -111,7 +111,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
         [VERIFICATION_EXPIRY]: oneMinuteInThePast,
       };
 
-      account = await accounts.create({ context, accountData: accountVerificationExpired });
+      account = await accounts.create({ context, data: accountVerificationExpired });
 
       result = await verifyAccountEmailAddress({}, variables, context);
 

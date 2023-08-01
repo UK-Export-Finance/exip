@@ -133,7 +133,7 @@ describe('custom-resolvers/account-sign-in', () => {
           isBlocked: false,
         };
 
-        account = await accounts.create({ context, accountData: unblockedAccount });
+        account = await accounts.create({ context, data: unblockedAccount });
 
         // wipe the AuthenticationRetry table so we have a clean slate.
         retries = await context.query.AuthenticationRetry.findMany();

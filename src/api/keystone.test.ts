@@ -257,7 +257,7 @@ describe('Account', () => {
 
     describe('when an account already exists with the provided email', () => {
       test('it should not create the account', async () => {
-        const response = (await accounts.create({ context, accountData: mockAccount, deleteAccounts: false })) as Account;
+        const response = (await accounts.create({ context, data: mockAccount, deleteAccounts: false })) as Account;
 
         expect(response.id).toBeUndefined();
         expect(response.email).toBeUndefined();
