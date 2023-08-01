@@ -1,7 +1,7 @@
 import sendEmailReactivateAccountLink from '.';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
-import { ACCOUNT } from '../../../constants';
+import { ACCOUNT, DATE_24_HOURS_FROM_NOW } from '../../../constants';
 import accounts from '../../../test-helpers/accounts';
 import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../../test-mocks';
 import { Account, SuccessResponse, AccountSendEmailReactivateLinkVariables } from '../../../types';
@@ -67,18 +67,16 @@ describe('custom-resolvers/send-email-reactivate-account-link', () => {
     expect(account.reactivationHash.length).toEqual(KEY_LENGTH * 2);
   });
 
-  // TODO: Enable test
-  // it('should generate and add a reactivationExpiry to the account', async () => {
-  //   const now = new Date();
+  it('should generate and add a reactivationExpiry to the account', async () => {
+    const tomorrow = DATE_24_HOURS_FROM_NOW();
+    const tomorrowDay = new Date(tomorrow).getDate();
 
-  //   const tomorrowDay = new Date(now).getDay() + 1;
+    const expiry = new Date(account.reactivationExpiry);
 
-  //   const expiry = new Date(account.reactivationExpiry);
+    const expiryDay = new Date(expiry).getDate();
 
-  //   const expiryDay = expiry.getDay();
-
-  //   expect(expiryDay).toEqual(tomorrowDay);
-  // });
+    expect(expiryDay).toEqual(tomorrowDay);
+  });
 
   test('it should call sendEmail.reactivateAccountLink', () => {
     const { email, reactivationHash } = account;
