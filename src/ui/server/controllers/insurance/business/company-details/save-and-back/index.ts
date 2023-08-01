@@ -48,7 +48,7 @@ const post = async (req: Request, res: Response) => {
     const payload = constructPayload(body, FIELD_IDS);
 
     // run validation on other fields on page
-    validationErrors = companyDetailsValidation(body, validationErrors);
+    validationErrors = companyDetailsValidation(payload, validationErrors);
 
     // body for update containing companies house info and request body
     const updateBody = {

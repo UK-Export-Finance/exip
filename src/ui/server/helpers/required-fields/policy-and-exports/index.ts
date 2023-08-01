@@ -1,5 +1,14 @@
-import { FIELD_IDS, FIELD_VALUES } from '../../../constants';
-import { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy-and-exports';
+import POLICY_AND_EXPORTS_FIELD_IDS, { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy-and-exports';
+import { isSinglePolicyType, isMultiPolicyType } from '../../policy-type';
+
+const { REQUESTED_START_DATE, CREDIT_PERIOD_WITH_BUYER, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
+
+const { CONTRACT_POLICY, TYPE_OF_POLICY, ABOUT_GOODS_OR_SERVICES } = POLICY_AND_EXPORTS_FIELD_IDS;
+
+const {
+  SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+  MULTIPLE,
+} = CONTRACT_POLICY;
 
 /**
  * getContractPolicyTasks
@@ -8,15 +17,18 @@ import { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/p
  * @returns {Object} Contract policy tasks
  */
 export const getContractPolicyTasks = (policyType?: string): object => {
-  if (policyType === FIELD_VALUES.POLICY_TYPE.SINGLE) {
-    return FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.SINGLE;
+  if (policyType && isSinglePolicyType(policyType)) {
+    return {
+      CONTRACT_COMPLETION_DATE,
+      TOTAL_CONTRACT_VALUE,
+    };
   }
 
-  if (policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE) {
-    return FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.MULTIPLE;
+  if (policyType && isMultiPolicyType(policyType)) {
+    return MULTIPLE;
   }
 
-  return FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY;
+  return TYPE_OF_POLICY;
 };
 
 /**
@@ -26,10 +38,12 @@ export const getContractPolicyTasks = (policyType?: string): object => {
  */
 const requiredFields = (policyType?: string) =>
   Object.values({
-    ...FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
-    ...SHARED_CONTRACT_POLICY,
+    ...TYPE_OF_POLICY,
+    REQUESTED_START_DATE,
+    CREDIT_PERIOD_WITH_BUYER,
+    POLICY_CURRENCY_CODE,
     ...getContractPolicyTasks(policyType),
-    ...FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
+    ...ABOUT_GOODS_OR_SERVICES,
   });
 
 export default requiredFields;

@@ -1,28 +1,42 @@
 import requiredFields, { getContractPolicyTasks } from '.';
-import { FIELD_IDS, FIELD_VALUES } from '../../../constants';
-import { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy-and-exports';
+import { FIELD_VALUES } from '../../../constants';
+import POLICY_AND_EXPORTS_FIELD_IDS, { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy-and-exports';
 import { mockApplication } from '../../../test-mocks';
+
+const { POLICY_TYPE } = FIELD_VALUES;
+
+const { REQUESTED_START_DATE, CREDIT_PERIOD_WITH_BUYER, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
+
+const { CONTRACT_POLICY, TYPE_OF_POLICY, ABOUT_GOODS_OR_SERVICES } = POLICY_AND_EXPORTS_FIELD_IDS;
+
+const {
+  SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+  MULTIPLE,
+} = CONTRACT_POLICY;
 
 describe('server/helpers/required-fields/policy-and-exports', () => {
   const { policyAndExport } = mockApplication;
   const { policyType } = policyAndExport;
 
   describe('getContractPolicyTasks', () => {
-    describe(`when the policy type is ${FIELD_VALUES.POLICY_TYPE.SINGLE}`, () => {
+    describe(`when the policy type is ${POLICY_TYPE.SINGLE}`, () => {
       it('should return single contract policy specific fields that need to be completed', () => {
-        const result = getContractPolicyTasks(FIELD_VALUES.POLICY_TYPE.SINGLE);
+        const result = getContractPolicyTasks(POLICY_TYPE.SINGLE);
 
-        const expected = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.SINGLE;
+        const expected = {
+          CONTRACT_COMPLETION_DATE,
+          TOTAL_CONTRACT_VALUE,
+        };
 
         expect(result).toEqual(expected);
       });
     });
 
-    describe(`when the policy type is ${FIELD_VALUES.POLICY_TYPE.MULTIPLE}`, () => {
+    describe(`when the policy type is ${POLICY_TYPE.MULTIPLE}`, () => {
       it('should return single contract policy specific fields that need to be completed', () => {
-        const result = getContractPolicyTasks(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+        const result = getContractPolicyTasks(POLICY_TYPE.MULTIPLE);
 
-        const expected = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.MULTIPLE;
+        const expected = MULTIPLE;
 
         expect(result).toEqual(expected);
       });
@@ -32,7 +46,7 @@ describe('server/helpers/required-fields/policy-and-exports', () => {
       it('should return type of policy specific fields that need to be completed', () => {
         const result = getContractPolicyTasks();
 
-        const expected = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY;
+        const expected = TYPE_OF_POLICY;
 
         expect(result).toEqual(expected);
       });
@@ -44,10 +58,12 @@ describe('server/helpers/required-fields/policy-and-exports', () => {
       const result = requiredFields(policyType);
 
       const expected = Object.values({
-        ...FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
-        ...SHARED_CONTRACT_POLICY,
+        ...TYPE_OF_POLICY,
+        REQUESTED_START_DATE,
+        CREDIT_PERIOD_WITH_BUYER,
+        POLICY_CURRENCY_CODE,
         ...getContractPolicyTasks(policyType),
-        ...FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
+        ...ABOUT_GOODS_OR_SERVICES,
       });
 
       expect(result).toEqual(expected);
