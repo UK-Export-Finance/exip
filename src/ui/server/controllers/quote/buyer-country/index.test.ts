@@ -1,8 +1,9 @@
-import { PAGE_VARIABLES, TEMPLATE, getBackLink, get, post } from '.';
+import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, getBackLink, get, post } from '.';
 import { LINKS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../helpers/construct-payload';
 import { validation as generateValidationErrors } from '../../../shared-validation/buyer-country';
 import isChangeRoute from '../../../helpers/is-change-route';
 import getCountryByName from '../../../helpers/get-country-by-name';
@@ -34,10 +35,18 @@ describe('controllers/quote/buyer-country', () => {
     jest.resetAllMocks();
   });
 
+  describe('FIELD_ID', () => {
+    it('should have the correct ID', () => {
+      const expected = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
+
+      expect(FIELD_ID).toEqual(expected);
+    });
+  });
+
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY,
+        FIELD_ID,
         PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
       };
 
@@ -100,7 +109,7 @@ describe('controllers/quote/buyer-country', () => {
     let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
     beforeEach(() => {
-      delete req.session.submittedData.quoteEligibility[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
+      delete req.session.submittedData.quoteEligibility[FIELD_ID];
       api.external.getCountries = getCountriesSpy;
     });
 
@@ -166,10 +175,7 @@ describe('controllers/quote/buyer-country', () => {
 
         await get(req, res);
 
-        const expectedCountries = mapCisCountries(
-          mockCountriesResponse,
-          req.session.submittedData.quoteEligibility[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY].isoCode,
-        );
+        const expectedCountries = mapCisCountries(mockCountriesResponse, req.session.submittedData.quoteEligibility[FIELD_ID].isoCode);
 
         const expectedVariables = {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer), ORIGINAL_URL: req.originalUrl }),
@@ -220,14 +226,16 @@ describe('controllers/quote/buyer-country', () => {
     });
 
     describe('when there are validation errors', () => {
-      it('should render template with validation errors', async () => {
+      it('should render template with validation errors from constructPayload function', async () => {
         await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer), ORIGINAL_URL: req.originalUrl }),
           userName: getUserNameFromSession(req.session.user),
           countries: mapCisCountries(mockCountriesResponse),
-          validationErrors: generateValidationErrors(req.body),
+          validationErrors: generateValidationErrors(payload),
           isChangeRoute: isChangeRoute(req.originalUrl),
         });
       });
@@ -235,7 +243,7 @@ describe('controllers/quote/buyer-country', () => {
 
     describe('when the submitted country can only get a quote via email', () => {
       beforeEach(() => {
-        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = countrySupportedViaEmailOnly.marketName;
+        req.body[FIELD_ID] = countrySupportedViaEmailOnly.marketName;
       });
 
       it('should update the session with submitted data, popluated with country object', async () => {
@@ -273,7 +281,7 @@ describe('controllers/quote/buyer-country', () => {
 
     describe('when the submitted country is not found', () => {
       beforeEach(() => {
-        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = 'Country not in the mock response';
+        req.body[FIELD_ID] = 'Country not in the mock response';
       });
 
       it(`should redirect to ${ROUTES.QUOTE.CANNOT_APPLY}`, async () => {
@@ -285,7 +293,7 @@ describe('controllers/quote/buyer-country', () => {
 
     describe('when the submitted country is not supported', () => {
       beforeEach(() => {
-        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = countryUnsupported.marketName;
+        req.body[FIELD_ID] = countryUnsupported.marketName;
       });
 
       it('should update the session with submitted data, popluated with country object', async () => {
@@ -323,12 +331,12 @@ describe('controllers/quote/buyer-country', () => {
     });
 
     describe('when the country is supported for an online quote and there are no validation errors', () => {
-      const selectedCountryName = mockAnswers[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
+      const selectedCountryName = mockAnswers[FIELD_ID];
 
       const selectedCountry = getCountryByName(mappedCountries, selectedCountryName) as Country;
 
       const validBody = {
-        [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: selectedCountryName,
+        [FIELD_ID]: selectedCountryName,
       };
 
       beforeEach(() => {

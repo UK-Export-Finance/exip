@@ -1,10 +1,12 @@
 import { add, getMonth, getYear } from 'date-fns';
-import { pageVariables, TEMPLATE, totalMonthsOfCoverOptions, get, post } from '.';
-import { FIELD_IDS, GBP_CURRENCY_CODE, ROUTES, TEMPLATES } from '../../../../constants';
+import { pageVariables, TEMPLATE, FIELD_IDS, totalMonthsOfCoverOptions, get, post } from '.';
+import { GBP_CURRENCY_CODE, ROUTES, TEMPLATES } from '../../../../constants';
+import POLICY_AND_EXPORTS_FIELD_IDS from '../../../../constants/field-ids/insurance/policy-and-exports';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
 import mapTotalMonthsOfCover from '../../../../helpers/mappings/map-total-months-of-insurance';
@@ -25,15 +27,16 @@ const {
 } = ROUTES;
 
 const {
-  POLICY_AND_EXPORTS: { CONTRACT_POLICY },
-} = FIELD_IDS.INSURANCE;
-
-const {
-  REQUESTED_START_DATE,
-  MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-  CREDIT_PERIOD_WITH_BUYER,
-  POLICY_CURRENCY_CODE,
-} = CONTRACT_POLICY;
+  CONTRACT_POLICY: {
+    REQUESTED_START_DATE,
+    REQUESTED_START_DATE_DAY,
+    REQUESTED_START_DATE_MONTH,
+    REQUESTED_START_DATE_YEAR,
+    MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+    CREDIT_PERIOD_WITH_BUYER,
+    POLICY_CURRENCY_CODE,
+  },
+} = POLICY_AND_EXPORTS_FIELD_IDS;
 
 describe('controllers/insurance/policy-and-export/multiple-contract-policy', () => {
   let req: Request;
@@ -120,6 +123,23 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
       const expected = FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_MONTHS_OF_COVER].OPTIONS;
 
       expect(totalMonthsOfCoverOptions).toEqual(expected);
+    });
+  });
+
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      const expected = [
+        REQUESTED_START_DATE_DAY,
+        REQUESTED_START_DATE_MONTH,
+        REQUESTED_START_DATE_YEAR,
+        TOTAL_MONTHS_OF_COVER,
+        TOTAL_SALES_TO_BUYER,
+        MAXIMUM_BUYER_WILL_OWE,
+        CREDIT_PERIOD_WITH_BUYER,
+        POLICY_CURRENCY_CODE,
+      ];
+
+      expect(FIELD_IDS).toEqual(expected);
     });
   });
 
@@ -283,12 +303,14 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
         req.body = validBody;
       });
 
-      it('should call mapAndSave.policyAndExport with req.body and application', async () => {
+      it('should call mapAndSave.policyAndExport with data from from constructPayload function and application', async () => {
         await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(req.body, res.locals.application);
+        expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
       it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, async () => {
@@ -334,6 +356,8 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
       it('should render template with validation errors', async () => {
         await post(req, res);
 
+        const payload = constructPayload(req.body, FIELD_IDS);
+
         const expectedCurrencies = mapCurrencies(mockCurrencies, req.body[POLICY_CURRENCY_CODE]);
 
         const expectedVariables = {
@@ -344,7 +368,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
           ...pageVariables(refNumber),
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplicationWithoutOptionsSubmission),
-          submittedValues: req.body,
+          submittedValues: payload,
           currencies: expectedCurrencies,
           monthOptions: mapTotalMonthsOfCover(totalMonthsOfCoverOptions),
           validationErrors: generateValidationErrors(req.body),
@@ -365,6 +389,8 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
         it('should render template with currencies mapped to submitted currency', async () => {
           await post(req, res);
 
+          const payload = constructPayload(req.body, FIELD_IDS);
+
           const expectedCurrencies = mapCurrencies(mockCurrencies, currencyCode);
 
           const expectedVariables = {
@@ -375,7 +401,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
             ...pageVariables(refNumber),
             userName: getUserNameFromSession(req.session.user),
             application: mapApplicationToFormFields(mockApplicationWithoutOptionsSubmission),
-            submittedValues: req.body,
+            submittedValues: payload,
             currencies: expectedCurrencies,
             monthOptions: mapTotalMonthsOfCover(totalMonthsOfCoverOptions),
             validationErrors: generateValidationErrors(req.body),
@@ -397,6 +423,8 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
         it('should render template with months of cover mapped to submitted months of cover', async () => {
           await post(req, res);
 
+          const payload = constructPayload(req.body, FIELD_IDS);
+
           const expectedMonthOptions = mapTotalMonthsOfCover(totalMonthsOfCoverOptions, monthsOfCover);
 
           const expectedVariables = {
@@ -407,7 +435,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
             ...pageVariables(refNumber),
             userName: getUserNameFromSession(req.session.user),
             application: mapApplicationToFormFields(mockApplicationWithoutOptionsSubmission),
-            submittedValues: req.body,
+            submittedValues: payload,
             currencies: mapCurrencies(mockCurrencies),
             monthOptions: expectedMonthOptions,
             validationErrors: generateValidationErrors(req.body),

@@ -1,5 +1,6 @@
 import SHARED from './shared';
 import SHARED_ELIGIBILITY_FIELD_IDS from './shared-eligibility';
+import FEEDBACK from './feedback';
 import INSURANCE from './insurance';
 
 export const FIELD_IDS = {
@@ -22,19 +23,6 @@ export const FIELD_IDS = {
     ESTIMATED_COST: 'estimatedCost',
     BUYER_LOCATION: 'buyerCountry',
   },
-  FEEDBACK: {
-    SATISFACTION: 'satisfaction',
-    VERY_SATISFIED: 'verySatisfied',
-    SATISFIED: 'satisfied',
-    NEITHER: 'neither',
-    DISSATISFIED: 'dissatisfied',
-    VERY_DISSATISIFED: 'veryDissatisfied',
-    IMPROVEMENT: 'improvement',
-    OTHER_COMMENTS: 'otherComments',
-    SERVICE: 'service',
-    REFERRAL_URL: 'referralUrl',
-    PRODUCT: 'product',
-    CREATED_AT: 'createdAt',
-  },
+  FEEDBACK,
   INSURANCE,
 };
