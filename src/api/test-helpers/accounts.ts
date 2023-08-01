@@ -58,7 +58,6 @@ const create = async ({ context, data, deleteAccounts = true }: TestHelperAccoun
     return account;
   } catch (err) {
     console.error(err);
-    // throw new Error(`Creating an account (test helpers) ${err}`);
     return err;
   }
 };
