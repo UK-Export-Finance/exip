@@ -1,17 +1,17 @@
 import { PAGES } from '../../../../content-strings';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { ROUTES, TEMPLATES } from '../../../../constants';
+import BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
+import constructPayload from '../../../../helpers/construct-payload';
 import mapAndSave from '../map-and-save';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
-const {
-  YOUR_BUYER: { WORKING_WITH_BUYER },
-} = FIELD_IDS.INSURANCE;
+const { WORKING_WITH_BUYER } = BUYER_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
@@ -23,6 +23,8 @@ const {
 const { WORKING_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS } = YOUR_BUYER_ROUTES;
 
 const { TRADED_WITH_BUYER, CONNECTED_WITH_BUYER } = WORKING_WITH_BUYER;
+
+export const FIELD_IDS = [TRADED_WITH_BUYER, CONNECTED_WITH_BUYER];
 
 export const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
@@ -75,7 +77,9 @@ export const post = async (req: Request, res: Response) => {
     const { referenceNumber } = req.params;
     const { body } = req;
 
-    const validationErrors = generateValidationErrors(body);
+    const payload = constructPayload(body, FIELD_IDS);
+
+    const validationErrors = generateValidationErrors(payload);
 
     if (validationErrors) {
       return res.render(TEMPLATE, {
@@ -85,14 +89,14 @@ export const post = async (req: Request, res: Response) => {
         }),
         userName: getUserNameFromSession(req.session.user),
         ...pageVariables(application.referenceNumber),
-        submittedValues: body,
+        submittedValues: payload,
         application: mapApplicationToFormFields(application),
         validationErrors,
       });
     }
 
     // if no errors, then runs save api call to db
-    const saveResponse = await mapAndSave.yourBuyer(body, application);
+    const saveResponse = await mapAndSave.yourBuyer(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
