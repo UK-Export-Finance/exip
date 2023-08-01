@@ -1,8 +1,9 @@
-import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
+import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { ERROR_MESSAGES, PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../helpers/construct-payload';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
@@ -15,6 +16,14 @@ describe('controllers/quote/uk-goods-or-services', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
+  });
+
+  describe('FIELD_ID', () => {
+    it('should have the correct ID', () => {
+      const expected = FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES;
+
+      expect(FIELD_ID).toEqual(expected);
+    });
   });
 
   describe('PAGE_VARIABLES', () => {
@@ -53,14 +62,16 @@ describe('controllers/quote/uk-goods-or-services', () => {
 
   describe('post', () => {
     describe('when there are validation errors', () => {
-      it('should render template with validation errors', () => {
+      it('should render template with validation errors from constructPayload function', () => {
         post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES, {
           userName: getUserNameFromSession(req.session.user),
           ...singleInputPageVariables(PAGE_VARIABLES),
           BACK_LINK: req.headers.referer,
-          validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
+          validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
         });
       });
     });
@@ -95,10 +106,12 @@ describe('controllers/quote/uk-goods-or-services', () => {
         req.body = validBody;
       });
 
-      it('should update the session with submitted data', () => {
+      it('should update the session with submitted data from constructPayload function', () => {
         post(req, res);
 
-        const expected = updateSubmittedData(req.body, req.session.submittedData.quoteEligibility);
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        const expected = updateSubmittedData(payload, req.session.submittedData.quoteEligibility);
 
         expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });

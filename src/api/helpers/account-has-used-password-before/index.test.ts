@@ -23,7 +23,7 @@ describe('helpers/account-has-used-password-before', () => {
   let mockEntry: object;
 
   beforeAll(async () => {
-    account = await accounts.create(context);
+    account = await accounts.create({ context });
 
     // wipe the Authentication table so we have a clean slate.
     const retries = await context.query.Authentication.findMany();

@@ -30,7 +30,7 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
   beforeEach(async () => {
     await accounts.deleteAll(context);
 
-    account = await accounts.create(context);
+    account = await accounts.create({ context });
 
     jest.resetAllMocks();
 

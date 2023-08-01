@@ -1,8 +1,10 @@
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { ROUTES, TEMPLATES } from '../../../../constants';
+import POLICY_AND_EXPORTS_FIELD_IDS from '../../../../constants/field-ids/insurance/policy-and-exports';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import { isPopulatedArray } from '../../../../helpers/array';
 import { objectHasProperty } from '../../../../helpers/object';
@@ -25,15 +27,16 @@ const {
 } = ROUTES;
 
 const {
-  POLICY_AND_EXPORTS: { CONTRACT_POLICY },
-} = FIELD_IDS.INSURANCE;
-
-const {
-  REQUESTED_START_DATE,
-  MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-  CREDIT_PERIOD_WITH_BUYER,
-  POLICY_CURRENCY_CODE,
-} = CONTRACT_POLICY;
+  CONTRACT_POLICY: {
+    REQUESTED_START_DATE,
+    REQUESTED_START_DATE_DAY,
+    REQUESTED_START_DATE_MONTH,
+    REQUESTED_START_DATE_YEAR,
+    MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+    CREDIT_PERIOD_WITH_BUYER,
+    POLICY_CURRENCY_CODE,
+  },
+} = POLICY_AND_EXPORTS_FIELD_IDS;
 
 /**
  * pageVariables
@@ -72,6 +75,17 @@ export const pageVariables = (referenceNumber: number) => ({
 });
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY;
+
+export const FIELD_IDS = [
+  REQUESTED_START_DATE_DAY,
+  REQUESTED_START_DATE_MONTH,
+  REQUESTED_START_DATE_YEAR,
+  TOTAL_MONTHS_OF_COVER,
+  TOTAL_SALES_TO_BUYER,
+  MAXIMUM_BUYER_WILL_OWE,
+  CREDIT_PERIOD_WITH_BUYER,
+  POLICY_CURRENCY_CODE,
+];
 
 export const totalMonthsOfCoverOptions = FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_MONTHS_OF_COVER].OPTIONS as Array<number>;
 
@@ -150,7 +164,9 @@ export const post = async (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
   const refNumber = Number(referenceNumber);
 
-  const validationErrors = generateValidationErrors(req.body);
+  const payload = constructPayload(req.body, FIELD_IDS);
+
+  const validationErrors = generateValidationErrors(payload);
 
   if (validationErrors) {
     try {
@@ -162,16 +178,16 @@ export const post = async (req: Request, res: Response) => {
 
       let mappedCurrencies;
 
-      if (objectHasProperty(req.body, POLICY_CURRENCY_CODE)) {
-        mappedCurrencies = mapCurrencies(currencies, req.body[POLICY_CURRENCY_CODE]);
+      if (objectHasProperty(payload, POLICY_CURRENCY_CODE)) {
+        mappedCurrencies = mapCurrencies(currencies, payload[POLICY_CURRENCY_CODE]);
       } else {
         mappedCurrencies = mapCurrencies(currencies);
       }
 
       let mappedTotalMonthsOfCover;
 
-      if (objectHasProperty(req.body, TOTAL_MONTHS_OF_COVER)) {
-        mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions, req.body[TOTAL_MONTHS_OF_COVER]);
+      if (objectHasProperty(payload, TOTAL_MONTHS_OF_COVER)) {
+        mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions, payload[TOTAL_MONTHS_OF_COVER]);
       } else {
         mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions);
       }
@@ -184,7 +200,7 @@ export const post = async (req: Request, res: Response) => {
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(application),
-        submittedValues: req.body,
+        submittedValues: payload,
         currencies: mappedCurrencies,
         monthOptions: mappedTotalMonthsOfCover,
         validationErrors,
@@ -198,7 +214,7 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     // save the application
-    const saveResponse = await mapAndSave.policyAndExport(req.body, application);
+    const saveResponse = await mapAndSave.policyAndExport(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

@@ -47,7 +47,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
       where: retries,
     });
 
-    account = await accounts.create(context);
+    account = await accounts.create({ context });
 
     jest.resetAllMocks();
 

@@ -573,6 +573,29 @@ var updateApplication = {
 };
 var update_application_default = updateApplication;
 
+// helpers/get-account-by-field/index.ts
+var getAccountByField = async (context, field, value) => {
+  try {
+    console.info("Getting account by field/value");
+    const accountsArray = await context.db.Account.findMany({
+      where: {
+        [field]: { equals: value }
+      },
+      take: 1
+    });
+    if (!accountsArray?.length || !accountsArray[0]) {
+      console.info("Getting account by field - no account exists with the provided field/value");
+      return false;
+    }
+    const account = accountsArray[0];
+    return account;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Getting account by field/value ${err}`);
+  }
+};
+var get_account_by_field_default = getAccountByField;
+
 // schema.ts
 var lists = {
   ReferenceNumber: {
@@ -908,6 +931,18 @@ var lists = {
         ref: "Application",
         many: true
       })
+    },
+    hooks: {
+      validateInput: async ({ context, operation, resolvedData }) => {
+        if (operation === "create") {
+          const { email } = resolvedData;
+          const requestedEmail = String(email);
+          const account = await get_account_by_field_default(context, account_default.EMAIL, requestedEmail);
+          if (account) {
+            throw new Error(`Unable to create a new account for ${requestedEmail} - account already exists`);
+          }
+        }
+      }
     },
     access: import_access.allowAll
   }),
@@ -1607,29 +1642,6 @@ var type_defs_default = typeDefs;
 // custom-resolvers/mutations/create-an-account/index.ts
 var import_crypto2 = __toESM(require("crypto"));
 
-// helpers/get-account-by-field/index.ts
-var getAccountByField = async (context, field, value) => {
-  try {
-    console.info("Getting account by field/value");
-    const accountsArray = await context.db.Account.findMany({
-      where: {
-        [field]: { equals: value }
-      },
-      take: 1
-    });
-    if (!accountsArray?.length || !accountsArray[0]) {
-      console.info("Getting account by field - no account exists with the provided field/value");
-      return false;
-    }
-    const account = accountsArray[0];
-    return account;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting account by field/value ${err}`);
-  }
-};
-var get_account_by_field_default = getAccountByField;
-
 // helpers/encrypt-password/index.ts
 var import_crypto = __toESM(require("crypto"));
 var { ENCRYPTION } = ACCOUNT2;
@@ -1950,7 +1962,7 @@ var createAnAccount = async (root, variables, context) => {
   console.info("Creating new account for ", variables.email);
   try {
     const { urlOrigin, firstName, lastName, email, password: password2 } = variables;
-    const account = await get_account_by_field_default(context, "email", email);
+    const account = await get_account_by_field_default(context, account_default.EMAIL, email);
     if (account) {
       console.info(`Unable to create a new account for ${variables.email} - account already exists`);
       return { success: false };
@@ -4421,10 +4433,10 @@ var keystone_default = withAuth(
     server: {
       port: 5001,
       extendExpressApp: (app) => {
-        app.use(check_api_key_default);
         if (NODE_ENV === "production") {
           app.use(rate_limiter_default);
         }
+        app.use(check_api_key_default);
       }
     },
     db: {

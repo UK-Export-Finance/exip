@@ -1,16 +1,14 @@
 import { add, getDate, getMonth, getYear } from 'date-fns';
 import requestedStartDateRules from '.';
-import { FIELD_IDS } from '../../constants';
+import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../content-strings';
 import generateValidationErrors from '../../helpers/validation';
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: { REQUESTED_START_DATE: FIELD_ID },
-    },
+  POLICY_AND_EXPORTS: {
+    CONTRACT_POLICY: { REQUESTED_START_DATE: FIELD_ID },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {

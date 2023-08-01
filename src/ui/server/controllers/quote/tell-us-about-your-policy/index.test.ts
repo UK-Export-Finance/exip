@@ -1,9 +1,10 @@
-import { generatePageVariables, TEMPLATE, get, post } from '.';
+import { FIELD_IDS, generatePageVariables, TEMPLATE, get, post } from '.';
 import { BUTTONS, COOKIES_CONSENT, FIELDS, QUOTE_FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT, HEADER } from '../../../content-strings';
-import { FIELD_IDS, FIELD_VALUES, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
+import { FIELD_IDS as ALL_FIELD_IDS, FIELD_VALUES, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import getCurrencyByCode from '../../../helpers/get-currency-by-code';
 import mapPercentageOfCover from '../../../helpers/mappings/map-percentage-of-cover';
@@ -17,7 +18,7 @@ const {
   ELIGIBILITY: { BUYER_COUNTRY, AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
   POLICY_TYPE,
   POLICY_LENGTH,
-} = FIELD_IDS;
+} = ALL_FIELD_IDS;
 
 const { START: quoteStart } = ROUTES.QUOTE;
 
@@ -47,6 +48,14 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
   afterAll(() => {
     jest.resetAllMocks();
+  });
+
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      const expected = [AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER];
+
+      expect(FIELD_IDS).toEqual(expected);
+    });
   });
 
   describe('generatePageVariables', () => {
@@ -387,8 +396,10 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         req.body = {};
       });
 
-      it('should render template with validation errors and submitted values', async () => {
+      it('should render template with validation errors and submitted values from constructPayload function', async () => {
         await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
           userName: getUserNameFromSession(req.session.user),
@@ -399,11 +410,11 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           currencies: mapCurrencies(mockCurrencies),
           validationErrors: generateValidationErrors({
             ...req.session.submittedData.quoteEligibility,
-            ...req.body,
+            ...payload,
           }),
           percentageOfCover: mappedPercentageOfCover,
           creditPeriod: mappedCreditPeriod,
-          submittedValues: req.body,
+          submittedValues: payload,
         });
       });
 
@@ -416,8 +427,10 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           req.body[CURRENCY] = mockAnswers[CURRENCY];
         });
 
-        it('should render template with mapped submitted currency', async () => {
+        it('should render template with mapped submitted currency from constructPayload function', async () => {
           await post(req, res);
+
+          const payload = constructPayload(req.body, FIELD_IDS);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
             userName: getUserNameFromSession(req.session.user),
@@ -425,14 +438,14 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             BACK_LINK: req.headers.referer,
             isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
-            currencies: mapCurrencies(mockCurrencies, req.body[CURRENCY]),
+            currencies: mapCurrencies(mockCurrencies, payload[CURRENCY]),
             validationErrors: generateValidationErrors({
               ...req.session.submittedData.quoteEligibility,
-              ...req.body,
+              ...payload,
             }),
             percentageOfCover: mappedPercentageOfCover,
             creditPeriod: mappedCreditPeriod,
-            submittedValues: req.body,
+            submittedValues: payload,
           });
         });
       });
@@ -442,8 +455,10 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           req.body[PERCENTAGE_OF_COVER] = mockAnswers[PERCENTAGE_OF_COVER];
         });
 
-        it('should render template with mapped submitted percentage', async () => {
+        it('should render template with mapped submitted percentage from constructPayload function', async () => {
           await post(req, res);
+
+          const payload = constructPayload(req.body, FIELD_IDS);
 
           const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.body[PERCENTAGE_OF_COVER]);
 
@@ -453,14 +468,14 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             BACK_LINK: req.headers.referer,
             isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
-            currencies: mapCurrencies(mockCurrencies, req.body[CURRENCY]),
+            currencies: mapCurrencies(mockCurrencies, payload[CURRENCY]),
             validationErrors: generateValidationErrors({
               ...req.session.submittedData.quoteEligibility,
-              ...req.body,
+              ...payload,
             }),
             percentageOfCover: mappedPercentageOfCoverWithSelected,
             creditPeriod: mappedCreditPeriod,
-            submittedValues: req.body,
+            submittedValues: payload,
           });
         });
       });
@@ -470,8 +485,10 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           req.body[CREDIT_PERIOD] = mockAnswers[CREDIT_PERIOD];
         });
 
-        it('should render template with mapped submitted credit period', async () => {
+        it('should render template with mapped submitted credit period from constructPayload function', async () => {
           await post(req, res);
+
+          const payload = constructPayload(req.body, FIELD_IDS);
 
           const mappedCreditPeriodWithSelected = mapCreditPeriod(creditPeriodOptions, String(req.session.submittedData.quoteEligibility[CREDIT_PERIOD]));
 
@@ -481,14 +498,14 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             BACK_LINK: req.headers.referer,
             isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
-            currencies: mapCurrencies(mockCurrencies, req.body[CURRENCY]),
+            currencies: mapCurrencies(mockCurrencies, payload[CURRENCY]),
             validationErrors: generateValidationErrors({
               ...req.session.submittedData.quoteEligibility,
-              ...req.body,
+              ...payload,
             }),
             percentageOfCover: mappedPercentageOfCover,
             creditPeriod: mappedCreditPeriodWithSelected,
-            submittedValues: req.body,
+            submittedValues: payload,
           });
         });
       });
@@ -506,11 +523,13 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         req.body = validBody;
       });
 
-      it('should update the session with submitted data, popluated with full currency object', async () => {
+      it('should update the session with submitted data, popluated with full currency object from constructPayload function', async () => {
         await post(req, res);
 
+        const payload = constructPayload(req.body, FIELD_IDS);
+
         const expectedPopulatedData = {
-          ...validBody,
+          ...payload,
           [CURRENCY]: getCurrencyByCode(mockCurrencies, validBody[CURRENCY]),
           [PERCENTAGE_OF_COVER]: validBody[PERCENTAGE_OF_COVER],
         };

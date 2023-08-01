@@ -29,7 +29,7 @@ describe('helpers/create-authentication-entry', () => {
 
     expect(entries.length).toEqual(0);
 
-    account = await accounts.create(context);
+    account = await accounts.create({ context });
 
     const authEntry = {
       account: {
