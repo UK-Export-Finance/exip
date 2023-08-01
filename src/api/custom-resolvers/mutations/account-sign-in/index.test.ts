@@ -59,7 +59,7 @@ describe('custom-resolvers/account-sign-in', () => {
         where: retries,
       });
 
-      account = await accounts.create(context);
+      account = await accounts.create({ context });
 
       result = await accountSignIn({}, variables, context);
     });
@@ -97,7 +97,7 @@ describe('custom-resolvers/account-sign-in', () => {
         where: retries,
       });
 
-      account = await accounts.create(context);
+      account = await accounts.create({ context });
 
       result = await accountSignIn({}, variables, context);
 
@@ -128,10 +128,12 @@ describe('custom-resolvers/account-sign-in', () => {
         await accounts.deleteAll(context);
 
         // create a new account and ensure it is not blocked so that we have a clean slate.
-        account = await accounts.create(context, {
+        const unblockedAccount = {
           ...mockAccount,
           isBlocked: false,
-        });
+        };
+
+        account = await accounts.create({ context, accountData: unblockedAccount });
 
         // wipe the AuthenticationRetry table so we have a clean slate.
         retries = await context.query.AuthenticationRetry.findMany();
@@ -170,7 +172,7 @@ describe('custom-resolvers/account-sign-in', () => {
       beforeEach(async () => {
         await accounts.deleteAll(context);
 
-        account = await accounts.create(context);
+        account = await accounts.create({ context });
 
         account = (await context.query.Account.updateOne({
           where: { id: account.id },

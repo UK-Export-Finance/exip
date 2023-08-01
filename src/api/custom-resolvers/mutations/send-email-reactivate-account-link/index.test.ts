@@ -38,7 +38,7 @@ describe('custom-resolvers/send-email-reactivate-account-link', () => {
 
     const blockedAccount = { ...mockAccount, isBlocked: true };
 
-    account = await accounts.create(context, blockedAccount);
+    account = await accounts.create({ context, accountData: blockedAccount });
 
     jest.resetAllMocks();
 

@@ -29,7 +29,7 @@ describe('helpers/send-email-confirm-email-address', () => {
   });
 
   beforeEach(async () => {
-    account = await accounts.create(context);
+    account = await accounts.create({ context });
 
     jest.resetAllMocks();
 

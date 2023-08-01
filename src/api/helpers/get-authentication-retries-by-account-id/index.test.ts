@@ -32,7 +32,7 @@ describe('helpers/get-authentication-retries-by-account-id', () => {
       isBlocked: false,
     };
 
-    account = await accounts.create(context, unblockedAccount);
+    account = await accounts.create({ context, accountData: unblockedAccount });
 
     // create some new entries
     await createAuthenticationRetryEntry(context, account.id);

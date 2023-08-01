@@ -57,7 +57,7 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
     });
 
     // create an account
-    account = await accounts.create(context);
+    account = await accounts.create({ context });
 
     jest.resetAllMocks();
 

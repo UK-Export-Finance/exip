@@ -64,7 +64,7 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
       reactivationExpiry,
     };
 
-    account = await accounts.create(context, unverifiedAndBlockedAccount);
+    account = await accounts.create({ context, accountData: unverifiedAndBlockedAccount });
 
     expect(account.isVerified).toEqual(false);
     expect(account.isBlocked).toEqual(true);
@@ -129,7 +129,7 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
         [REACTIVATION_EXPIRY]: oneMinuteInThePast,
       };
 
-      account = await accounts.create(context, accountBlockedAndReactivationExpired);
+      account = await accounts.create({ context, accountData: accountBlockedAndReactivationExpired });
 
       result = await verifyAccountReactivationToken({}, variables, context);
 
