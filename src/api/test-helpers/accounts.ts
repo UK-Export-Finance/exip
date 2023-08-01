@@ -32,8 +32,7 @@ const deleteAll = async (context: Context) => {
 /**
  * create account test helper
  * Create an account with mock account data and any provied custom account data.
- * @param {Object} KeystoneJS context API
- * @param {Object} Account data
+ * @param {Object} KeystoneJS context API, account data, deleteAccounts flag
  * @returns {Object} Created account
  */
 const create = async ({ context, data, deleteAccounts = true }: TestHelperAccountCreate) => {
