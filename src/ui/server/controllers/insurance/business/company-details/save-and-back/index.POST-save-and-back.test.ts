@@ -1,10 +1,12 @@
-import { Request, Response } from '../../../../../../types';
 import { post } from '.';
+import { FIELD_IDS } from '..';
 import { ROUTES } from '../../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
-import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from '../../../../../test-mocks';
+import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/company-details';
 import api from '../../../../../api';
+import { Request, Response } from '../../../../../../types';
+import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from '../../../../../test-mocks';
 
 const {
   COMPANY_HOUSE: { INPUT },
@@ -76,6 +78,23 @@ describe('controllers/insurance/business/companies-details', () => {
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
+      });
+
+      it('should call mapAndSave.companyDetails once with the data from constructPayload function and company', async () => {
+        req.body = body;
+
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(updateMapAndSave).toHaveBeenCalledTimes(1);
+
+        const updateBody = {
+          ...payload,
+          ...mockCompany,
+        };
+
+        expect(updateMapAndSave).toHaveBeenCalledWith(updateBody, mockApplication, {});
       });
     });
 
