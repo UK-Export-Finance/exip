@@ -261,7 +261,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
           application: mockApplicationWithoutCountryCode,
           submittedValues: payload,
           countries: mapCountries(mockCountries),
-          validationErrors: generateValidationErrors(req.body),
+          validationErrors: generateValidationErrors(payload),
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -291,7 +291,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
             application: mockApplicationWithoutCountryCode,
             submittedValues: payload,
             countries: mapCountries(mockCountries, countryIsoCode),
-            validationErrors: generateValidationErrors(req.body),
+            validationErrors: generateValidationErrors(payload),
           };
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

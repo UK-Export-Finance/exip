@@ -119,7 +119,7 @@ export const post = async (req: Request, res: Response) => {
 
   const payload = constructPayload(req.body, FIELD_IDS);
 
-  const validationErrors = generateValidationErrors(req.body);
+  const validationErrors = generateValidationErrors(payload);
 
   if (validationErrors) {
     try {
@@ -131,8 +131,8 @@ export const post = async (req: Request, res: Response) => {
 
       let mappedCountries;
 
-      if (objectHasProperty(req.body, FINAL_DESTINATION)) {
-        mappedCountries = mapCountries(countries, req.body[FINAL_DESTINATION]);
+      if (objectHasProperty(payload, FINAL_DESTINATION)) {
+        mappedCountries = mapCountries(countries, payload[FINAL_DESTINATION]);
       } else {
         mappedCountries = mapCountries(countries);
       }
