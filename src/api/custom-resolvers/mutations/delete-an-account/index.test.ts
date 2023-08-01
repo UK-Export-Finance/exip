@@ -18,7 +18,7 @@ describe('custom-resolvers/delete-an-account', () => {
   beforeAll(async () => {
     await accounts.deleteAll(context);
 
-    account = await accounts.create(context);
+    account = await accounts.create({ context });
   });
 
   test('it should return success=true', async () => {
@@ -35,7 +35,7 @@ describe('custom-resolvers/delete-an-account', () => {
     let retries;
 
     beforeEach(async () => {
-      account = await accounts.create(context);
+      account = await accounts.create({ context });
 
       // wipe the table so we have a clean slate.
       retries = await context.query.AuthenticationRetry.findMany();

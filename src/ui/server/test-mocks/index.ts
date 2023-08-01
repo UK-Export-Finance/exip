@@ -31,6 +31,7 @@ const mockReq = () => {
       origin: 'https://mock-origin.com',
       host: 'mock-host.com',
     },
+    hostname: 'mock',
     method: 'GET',
     originalUrl: 'mock?mockQueryParam',
     baseUrl: 'mock',
@@ -55,6 +56,8 @@ const mockRes = () => {
 
   res.redirect = jest.fn();
   res.render = jest.fn();
+  res.removeHeader = jest.fn();
+  res.setHeader = jest.fn();
   res.status = jest.fn();
 
   res.locals = {

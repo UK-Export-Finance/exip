@@ -30,6 +30,7 @@ const cypressConfig = defineConfig({
       GOV_NOTIFY_EMAIL_RECIPIENT_1: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
       GOV_NOTIFY_EMAIL_RECIPIENT_2: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_2,
       MOCK_ACCOUNT_PASSWORD: process.env.MOCK_ACCOUNT_PASSWORD,
+      API_KEY: process.env.API_KEY,
     },
     // eslint-disable-next-line
     setupNodeEvents(on, config) {

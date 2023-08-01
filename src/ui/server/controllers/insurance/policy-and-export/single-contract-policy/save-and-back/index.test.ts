@@ -1,8 +1,10 @@
 import { post } from '.';
 import { ROUTES } from '../../../../../constants';
-import { Request, Response } from '../../../../../../types';
+import { FIELD_IDS } from '..';
+import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save';
 import generateValidationErrors from '../validation';
+import { Request, Response } from '../../../../../../types';
 import { mockApplication, mockReq, mockRes } from '../../../../../test-mocks';
 
 const {
@@ -36,13 +38,15 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/save-an
   });
 
   describe('when the form has data', () => {
-    it('should call mapAndSave.policyAndExport with req.body, application and validationErrors', async () => {
+    it('should call mapAndSave.policyAndExport with data from constructPayload function, application and validationErrors', async () => {
       await post(req, res);
 
-      const validationErrors = generateValidationErrors(req.body);
+      const payload = constructPayload(req.body, FIELD_IDS);
+
+      const validationErrors = generateValidationErrors(payload);
 
       expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
-      expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(mockFormBody, res.locals.application, validationErrors);
+      expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, async () => {

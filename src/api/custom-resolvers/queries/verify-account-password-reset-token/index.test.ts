@@ -24,7 +24,7 @@ describe('custom-resolvers/verify-account-password-reset-token', () => {
   beforeEach(async () => {
     await accounts.deleteAll(context);
 
-    account = await accounts.create(context);
+    account = await accounts.create({ context });
 
     result = await verifyAccountPasswordResetToken({}, variables, context);
   });

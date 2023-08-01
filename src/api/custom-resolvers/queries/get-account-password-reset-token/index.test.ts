@@ -23,7 +23,7 @@ describe('custom-resolvers/get-account-password-reset-token', () => {
   beforeEach(async () => {
     await accounts.deleteAll(context);
 
-    account = await accounts.create(context);
+    account = await accounts.create({ context });
 
     result = await getAccountPasswordResetToken({}, variables, context);
   });

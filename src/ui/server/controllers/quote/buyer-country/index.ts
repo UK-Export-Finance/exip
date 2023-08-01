@@ -5,6 +5,7 @@ import { isPopulatedArray } from '../../../helpers/array';
 import { mapCisCountries } from '../../../helpers/mappings/map-cis-countries';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../helpers/construct-payload';
 import { validation as generateValidationErrors } from '../../../shared-validation/buyer-country';
 import isChangeRoute from '../../../helpers/is-change-route';
 import getCountryByName from '../../../helpers/get-country-by-name';
@@ -13,8 +14,10 @@ import mapSubmittedEligibilityCountry from '../../../helpers/mappings/map-submit
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
 
+export const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
+
 export const PAGE_VARIABLES = {
-  FIELD_ID: FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY,
+  FIELD_ID,
   PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
 };
 
@@ -68,8 +71,8 @@ export const get = async (req: Request, res: Response) => {
 
     let countryValue;
 
-    if (req.session.submittedData.quoteEligibility[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]) {
-      countryValue = req.session.submittedData.quoteEligibility[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
+    if (req.session.submittedData.quoteEligibility[FIELD_ID]) {
+      countryValue = req.session.submittedData.quoteEligibility[FIELD_ID];
     }
 
     let mappedCountries;
@@ -104,7 +107,9 @@ export const post = async (req: Request, res: Response) => {
 
     const mappedCountries = mapCisCountries(countries);
 
-    const validationErrors = generateValidationErrors(req.body);
+    const payload = constructPayload(req.body, [FIELD_ID]);
+
+    const validationErrors = generateValidationErrors(payload);
 
     if (validationErrors) {
       return res.render(TEMPLATE, {
@@ -116,7 +121,7 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
-    const submittedCountryName = req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
+    const submittedCountryName = payload[FIELD_ID];
 
     const country = getCountryByName(mappedCountries, submittedCountryName);
 

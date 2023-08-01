@@ -45,7 +45,7 @@ describe('custom-resolvers/account-password-reset', () => {
 
     expect(authEntries.length).toEqual(0);
 
-    account = await accounts.create(context);
+    account = await accounts.create({ context });
 
     // create an AuthenticationRetry so we can assert it becomes wiped.
     await createAuthenticationRetryEntry(context, account.id);
@@ -224,7 +224,7 @@ describe('custom-resolvers/account-password-reset', () => {
   describe('when the provided password has been used before', () => {
     test('it should return success=false and hasBeenUsedBefore=true', async () => {
       // create an account
-      account = await accounts.create(context);
+      account = await accounts.create({ context });
 
       const authEntry = {
         account: {

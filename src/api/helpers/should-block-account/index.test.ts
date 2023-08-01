@@ -25,7 +25,7 @@ describe('helpers/should-block-account', () => {
   beforeEach(async () => {
     await accounts.deleteAll(context);
 
-    account = await accounts.create(context);
+    account = await accounts.create({ context });
   });
 
   describe(`when the account has ${MAX_AUTH_RETRIES} entries in the AuthenticationRetry table that are within MAX_AUTH_RETRIES_TIMEFRAME`, () => {

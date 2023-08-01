@@ -1,36 +1,6 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { mockAccount } from '../test-mocks';
-import { Account } from '../types';
-
-/**
- * create account test helper
- * Create an account with mock account data and any provied custom account data.
- * @param {Object} KeystoneJS context API
- * @param {Object} Account data
- * @returns {Object} Created account
- */
-const create = async (context: Context, accountData?: Account) => {
-  try {
-    console.info('Creating an account (test helpers)');
-
-    let accountInput = mockAccount;
-
-    if (accountData) {
-      accountInput = accountData;
-    }
-
-    const account = (await context.query.Account.createOne({
-      data: accountInput,
-      query:
-        'id email firstName lastName email salt hash verificationHash sessionExpiry otpExpiry reactivationHash reactivationExpiry isVerified isBlocked passwordResetHash passwordResetExpiry',
-    })) as Account;
-
-    return account;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Creating an account (test helpers) ${err}`);
-  }
-};
+import { Account, TestHelperAccountCreate } from '../types';
 
 /**
  * deleteAll test helper
@@ -56,6 +26,39 @@ const deleteAll = async (context: Context) => {
   } catch (err) {
     console.error(err);
     throw new Error(`Getting and deleting accounts (test helpers) ${err}`);
+  }
+};
+
+/**
+ * create account test helper
+ * Create an account with mock account data and any provied custom account data.
+ * @param {Object} KeystoneJS context API, account data, deleteAccounts flag
+ * @returns {Object} Created account
+ */
+const create = async ({ context, data, deleteAccounts = true }: TestHelperAccountCreate) => {
+  try {
+    console.info('Creating an account (test helpers)');
+
+    if (deleteAccounts) {
+      await deleteAll(context);
+    }
+
+    let accountInput = mockAccount;
+
+    if (data) {
+      accountInput = data;
+    }
+
+    const account = (await context.query.Account.createOne({
+      data: accountInput,
+      query:
+        'id email firstName lastName email salt hash verificationHash sessionExpiry otpExpiry reactivationHash reactivationExpiry isVerified isBlocked passwordResetHash passwordResetExpiry',
+    })) as Account;
+
+    return account;
+  } catch (err) {
+    console.error(err);
+    return err;
   }
 };
 
