@@ -30,7 +30,7 @@ describe('helpers/delete-authentication-retries', () => {
       where: retries,
     });
 
-    account = await accounts.create(context);
+    account = await accounts.create({ context });
 
     // create some entries
     const mockEntry = {

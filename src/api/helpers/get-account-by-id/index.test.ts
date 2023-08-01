@@ -18,7 +18,7 @@ describe('helpers/get-account-by-id', () => {
   let account: Account;
 
   beforeEach(async () => {
-    account = await accounts.create(context);
+    account = await accounts.create({ context });
   });
 
   it('should return an account/account by ID', async () => {

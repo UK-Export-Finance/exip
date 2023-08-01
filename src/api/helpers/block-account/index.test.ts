@@ -25,7 +25,7 @@ describe('helpers/block-account', () => {
       isBlocked: false,
     };
 
-    account = await accounts.create(context, unblockedAccount);
+    account = await accounts.create({ context, data: unblockedAccount });
 
     result = await blockAccount(context, account.id);
   });

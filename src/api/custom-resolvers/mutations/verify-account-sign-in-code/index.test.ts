@@ -34,7 +34,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
   create.JWT = () => mockJWT;
 
   beforeEach(async () => {
-    account = await accounts.create(context);
+    account = await accounts.create({ context });
 
     // wipe the AuthenticationRetry table so we have a clean slate.
     retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
@@ -163,7 +163,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
 
   describe(`when the account's OTP has expired`, () => {
     beforeAll(async () => {
-      account = await accounts.create(context);
+      account = await accounts.create({ context });
     });
 
     const otp = generate.otp();
@@ -212,7 +212,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
 
   describe('when the account does not have OTP salt, hash or expiry', () => {
     test('it should return success=false', async () => {
-      account = await accounts.create(context);
+      account = await accounts.create({ context });
 
       result = await verifyAccountSignInCode({}, variables, context);
 

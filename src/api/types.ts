@@ -1,4 +1,4 @@
-import { AccountUpdateInput, CompanyUpdateInput } from '.keystone/types'; // eslint-disable-line
+import { AccountUpdateInput, CompanyUpdateInput, Context } from '.keystone/types'; // eslint-disable-line
 
 interface SuccessResponse {
   success: boolean;
@@ -434,6 +434,12 @@ interface IndustrySector {
   ukefIndustryName: string;
 }
 
+interface TestHelperAccountCreate {
+  context: Context;
+  data?: Account;
+  deleteAccounts?: boolean;
+}
+
 interface XLSXTitleRowIndexes {
   HEADER: number;
   KEY_INFORMATION: number;
@@ -502,6 +508,7 @@ export {
   SendExporterEmailVariables,
   SubmitApplicationVariables,
   SuccessResponse,
+  TestHelperAccountCreate,
   UpdateCompanyAndCompanyAddressVariables,
   XLSXTitleRowIndexes,
   XLSXRowIndexes,
