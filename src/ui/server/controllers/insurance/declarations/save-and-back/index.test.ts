@@ -38,7 +38,7 @@ describe('controllers/insurance/declarations/confidentiality/save-and-back', () 
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = Object.keys(DECLARATIONS_FIELD_IDS);
+      const expected = Object.values(DECLARATIONS_FIELD_IDS);
 
       expect(FIELD_IDS).toEqual(expected);
     });

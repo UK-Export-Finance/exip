@@ -9,7 +9,7 @@ const {
   INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
 } = ROUTES;
 
-export const FIELD_IDS = Object.keys(DECLARATIONS_FIELD_IDS);
+export const FIELD_IDS = Object.values(DECLARATIONS_FIELD_IDS);
 
 /**
  * post
