@@ -52,12 +52,13 @@
       <div class="govuk-grid-column-three-quarters-from-desktop">
         {{ yesNoRadioButtons.render({
           fieldId: FIELDS.CONNECTED_WITH_BUYER.ID,
-          heading: FIELDS.CONNECTED_WITH_BUYER.LABEL,
+          legendText: FIELDS.CONNECTED_WITH_BUYER.LABEL,
+          legendClass: 'govuk-fieldset__legend--m',
+          legendSpan: true,
           hintText: FIELDS.CONNECTED_WITH_BUYER.HINT,
           submittedAnswer: submittedValues[FIELDS.CONNECTED_WITH_BUYER.ID] or application.buyer[FIELDS.CONNECTED_WITH_BUYER.ID],
           errorMessage: validationErrors.errorList[FIELDS.CONNECTED_WITH_BUYER.ID],
-          headerClass: 'govuk-fieldset__legend--m',
-          dataCyHeading: FIELDS.CONNECTED_WITH_BUYER.ID + '-label',
+          dataCyLegend: FIELDS.CONNECTED_WITH_BUYER.ID + '-label',
           dataCyHint: FIELDS.CONNECTED_WITH_BUYER.ID + '-hint',
           yesNoValueString: true,
           horizontalRadios: true
@@ -65,11 +66,12 @@
 
         {{ yesNoRadioButtons.render({
           fieldId: FIELDS.TRADED_WITH_BUYER.ID,
-          heading: FIELDS.TRADED_WITH_BUYER.LABEL,
+          legendText: FIELDS.TRADED_WITH_BUYER.LABEL,
+          legendClass: 'govuk-fieldset__legend--m',
+          legendSpan: true,
           submittedAnswer: submittedValues[FIELDS.TRADED_WITH_BUYER.ID] or application.buyer[FIELDS.TRADED_WITH_BUYER.ID],
           errorMessage: validationErrors.errorList[FIELDS.TRADED_WITH_BUYER.ID],
-          headerClass: 'govuk-fieldset__legend--m',
-          dataCyHeading: FIELDS.TRADED_WITH_BUYER.ID + '-label',
+          dataCyLegend: FIELDS.TRADED_WITH_BUYER.ID + '-label',
           yesNoValueString: true,
           conditionalYesHtml: tradedHTML,
           horizontalRadios: true
