@@ -14,21 +14,21 @@ const page = {
       const response = (await apollo('GET', pageQuery, queryParams)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error querying keystone page ', response.errors);
+        console.error('GraphQL error querying keystone page %O', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error querying keystone page ', response.networkError.result.errors);
+        console.error('GraphQL network error querying keystone page %O', response.networkError.result.errors);
       }
 
       if (response?.data?.page) {
         return response.data.page;
       }
 
-      console.error(response);
+      console.error('Error with apollo pageQuery %O', response);
       throw new Error('Getting page data');
     } catch (err) {
-      console.error(err);
+      console.error('Error getting page data %O', err);
       throw new Error('Getting page data');
     }
   },

@@ -94,7 +94,7 @@ export const get = async (req: Request, res: Response) => {
       countries: mappedCountries,
     });
   } catch (err) {
-    console.error('Error getting countries ', { err });
+    console.error('Error getting countries %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -150,7 +150,7 @@ export const post = async (req: Request, res: Response) => {
         validationErrors,
       });
     } catch (err) {
-      console.error('Error getting countries ', { err });
+      console.error('Error getting countries %O', err);
 
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
@@ -170,7 +170,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (err) {
-    console.error('Error updating application - policy and exports - about goods or services', { err });
+    console.error('Error updating application - policy and exports - about goods or services %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

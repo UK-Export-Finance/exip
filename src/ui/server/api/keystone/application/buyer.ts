@@ -17,21 +17,21 @@ const buyer = {
       const response = (await apollo('POST', updateBuyerMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error updating application buyer ', response.errors);
+        console.error('GraphQL error updating application buyer %O', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error updating application buyer ', response.networkError.result.errors);
+        console.error('GraphQL network error updating application buyer %O', response.networkError.result.errors);
       }
 
       if (response?.data?.updateBuyer) {
         return response.data.updateBuyer;
       }
 
-      console.error(response);
+      console.error('Error with apollo updateBuyerMutation %O', response);
       throw new Error('Updating application buyer');
     } catch (err) {
-      console.error(err);
+      console.error('Error updating application buyer %O', err);
       throw new Error('Updating application buyer');
     }
   },

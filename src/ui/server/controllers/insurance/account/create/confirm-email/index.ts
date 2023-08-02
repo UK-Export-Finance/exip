@@ -55,7 +55,7 @@ export const get = async (req: Request, res: Response) => {
       accountId,
     });
   } catch (err) {
-    console.error("Error getting exporter by email and rendering 'confirm email' page", { err });
+    console.error("Error getting exporter by email and rendering 'confirm email' page %O", err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

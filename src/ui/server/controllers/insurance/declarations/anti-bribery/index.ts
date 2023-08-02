@@ -69,7 +69,7 @@ export const get = async (req: Request, res: Response) => {
       application: mapApplicationToFormFields(res.locals.application),
     });
   } catch (err) {
-    console.error("Error getting declarations - anti-bribery and rendering 'anti-bribery' page ", { err });
+    console.error("Error getting declarations - anti-bribery and rendering 'anti-bribery' page %O", err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -112,7 +112,7 @@ export const post = async (req: Request, res: Response) => {
         validationErrors,
       });
     } catch (err) {
-      console.error("Error getting declarations - confidentiality and rendering 'confidentiality' page ", { err });
+      console.error("Error getting declarations - confidentiality and rendering 'confidentiality' page %O", err);
 
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
@@ -128,7 +128,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`);
   } catch (err) {
-    console.error('Error updating application - declarations - anti-bribery ', { err });
+    console.error('Error updating application - declarations - anti-bribery %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

@@ -34,21 +34,21 @@ const createInitialApplication = async (accountId: string) => {
     const response = (await apollo('POST', createApplicationMutation, variables)) as ApolloResponse;
 
     if (response.errors) {
-      console.error('GraphQL error creating empty application ', response.errors);
+      console.error('GraphQL error creating empty application %O', response.errors);
     }
 
     if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error creating empty application ', response.networkError.result.errors);
+      console.error('GraphQL network error creating empty application %O', response.networkError.result.errors);
     }
 
     if (response?.data?.createApplication) {
       return response.data.createApplication;
     }
 
-    console.error(response);
+    console.error('Error with apollo createApplicationMutation %O', response);
     throw new Error('Creating empty application');
   } catch (err) {
-    console.error(err);
+    console.error('Error creating empty application %O', err);
     throw new Error('Creating empty application');
   }
 };
@@ -85,7 +85,7 @@ const application = {
         return newApplication;
       }
     } catch (err) {
-      console.error(err);
+      console.error('Error creating application with relationships %O', err);
       throw new Error('Creating application with relationships');
     }
   },
@@ -96,11 +96,11 @@ const application = {
       const response = (await apollo('GET', getApplicationQuery, { referenceNumber })) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error getting application ', response.errors);
+        console.error('GraphQL error getting application %O', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error getting application ', response.networkError.result.errors);
+        console.error('GraphQL network error getting application %O', response.networkError.result.errors);
       }
 
       if (response?.data?.referenceNumber && response?.data?.referenceNumber?.application) {
@@ -112,10 +112,10 @@ const application = {
         };
       }
 
-      console.error(response);
+      console.error('Error with apollo getApplicationQuery %O', response);
       throw new Error('Getting application');
     } catch (err) {
-      console.error(err);
+      console.error('Error getting application %O', err);
       throw new Error('Getting application');
     }
   },
@@ -132,21 +132,21 @@ const application = {
         const response = (await apollo('POST', updateApplicationPolicyAndExportMutation, variables)) as ApolloResponse;
 
         if (response.errors) {
-          console.error('GraphQL error updating application policy and export ', response.errors);
+          console.error('GraphQL error updating application policy and export %O', response.errors);
         }
 
         if (response?.networkError?.result?.errors) {
-          console.error('GraphQL network error updating application policy and export ', response.networkError.result.errors);
+          console.error('GraphQL network error updating application policy and export %O', response.networkError.result.errors);
         }
 
         if (response?.data?.updatePolicyAndExport) {
           return response.data.updatePolicyAndExport;
         }
 
-        console.error(response);
+        console.error('Error with apollo updateApplicationPolicyAndExportMutation %O', response);
         throw new Error('Updating application policy and export');
       } catch (err) {
-        console.error(err);
+        console.error('Error updating application policy and export %O', err);
         throw new Error('Updating application policy and export');
       }
     },
@@ -162,21 +162,21 @@ const application = {
         const response = (await apollo('POST', updateBrokerMutation, variables)) as ApolloResponse;
 
         if (response.errors) {
-          console.error('GraphQL error updating application broker ', response.errors);
+          console.error('GraphQL error updating application broker %O', response.errors);
         }
 
         if (response?.networkError?.result?.errors) {
-          console.error('GraphQL network error updating application broker ', response.networkError.result.errors);
+          console.error('GraphQL network error updating application broker %O', response.networkError.result.errors);
         }
 
         if (response?.data?.updateBroker) {
           return response.data.updateBroker;
         }
 
-        console.error(response);
+        console.error('Error with apollo updateBrokerMutation %O', response);
         throw new Error('Updating application broker');
       } catch (err) {
-        console.error(err);
+        console.error('Error updating application broker %O', err);
         throw new Error('Updating application broker');
       }
     },
@@ -192,21 +192,21 @@ const application = {
         const response = (await apollo('POST', updateBusinessMutation, variables)) as ApolloResponse;
 
         if (response.errors) {
-          console.error('GraphQL error updating application business ', response.errors);
+          console.error('GraphQL error updating application business %O', response.errors);
         }
 
         if (response?.networkError?.result?.errors) {
-          console.error('GraphQL network error updating application business ', response.networkError.result.errors);
+          console.error('GraphQL network error updating application business %O', response.networkError.result.errors);
         }
 
         if (response?.data?.updateBusiness) {
           return response.data.updateBusiness;
         }
 
-        console.error(response);
+        console.error('Error with apollo updateBusinessMutation %O', response);
         throw new Error('Updating application business');
       } catch (err) {
-        console.error(err);
+        console.error('Error updating application business %O', err);
         throw new Error('Updating application business');
       }
     },
@@ -222,22 +222,22 @@ const application = {
         const response = (await apollo('POST', updateBusinessContactMutation, variables)) as ApolloResponse;
 
         if (response.errors) {
-          console.error('GraphQL error updating application business contact ', response.errors);
+          console.error('GraphQL error updating application business contact %O', response.errors);
         }
 
         if (response?.networkError?.result?.errors) {
-          console.error('GraphQL network error updating application business contact ', response.networkError.result.errors);
+          console.error('GraphQL network error updating application business contact %O', response.networkError.result.errors);
         }
 
         if (response?.data?.updateBusinessContactDetail) {
           return response.data.updateBusinessContactDetail;
         }
 
-        console.error(response);
-        throw new Error('Updating application business');
+        console.error('Error with apollo updateBusinessContactMutation %O', response);
+        throw new Error('Updating application business contact');
       } catch (err) {
-        console.error(err);
-        throw new Error('Updating application business');
+        console.error('Error updating application business contact %O', err);
+        throw new Error('Updating application business contact');
       }
     },
     company: async (companyId: string, companyAddressId: string, update: object) => {
@@ -253,21 +253,21 @@ const application = {
         const response = (await apollo('POST', updateApplicationCompanyMutation, variables)) as ApolloResponse;
 
         if (response.errors) {
-          console.error('GraphQL error updating application company ', response.errors);
+          console.error('GraphQL error updating application company %O', response.errors);
         }
 
         if (response?.networkError?.result?.errors) {
-          console.error('GraphQL network error updating application company ', response.networkError.result.errors);
+          console.error('GraphQL network error updating application company %O', response.networkError.result.errors);
         }
 
         if (response?.data?.updateCompanyAndCompanyAddress) {
           return response.data.updateCompanyAndCompanyAddress;
         }
 
-        console.error(response);
+        console.error('Error with apollo updateApplicationCompanyMutation %O', response);
         throw new Error('Updating application company');
       } catch (err) {
-        console.error(err);
+        console.error('Error updating application company %O', err);
         throw new Error('Updating application company');
       }
     },
@@ -299,21 +299,21 @@ const application = {
         const response = (await apollo('POST', updateBuyerMutation, variables)) as ApolloResponse;
 
         if (response.errors) {
-          console.error('GraphQL error updating application buyer ', response.errors);
+          console.error('GraphQL error updating application buyer %O', response.errors);
         }
 
         if (response?.networkError?.result?.errors) {
-          console.error('GraphQL network error updating application buyer ', response.networkError.result.errors);
+          console.error('GraphQL network error updating application buyer %O', response.networkError.result.errors);
         }
 
         if (response?.data?.updateBuyer) {
           return response.data.updateBuyer;
         }
 
-        console.error(response);
+        console.error('Error with apollo updateBuyerMutation %O', response);
         throw new Error('Updating application buyer');
       } catch (err) {
-        console.error(err);
+        console.error('Error updating application buyer %O', err);
         throw new Error('Updating application buyer');
       }
     },
@@ -330,21 +330,21 @@ const application = {
         const response = (await apollo('POST', updateApplicationSectionReviewMutation, variables)) as ApolloResponse;
 
         if (response.errors) {
-          console.error('GraphQL error updating application section review ', response.errors);
+          console.error('GraphQL error updating application section review %O', response.errors);
         }
 
         if (response?.networkError?.result?.errors) {
-          console.error('GraphQL network error updating application section review ', response.networkError.result.errors);
+          console.error('GraphQL network error updating application section review %O', response.networkError.result.errors);
         }
 
         if (response?.data?.updateSectionReview) {
           return response.data.updateSectionReview;
         }
 
-        console.error(response);
+        console.error('Error with apollo updateApplicationSectionReviewMutation %O', response);
         throw new Error('Updating application section review');
       } catch (err) {
-        console.error(err);
+        console.error('Error updating application section review %O', err);
         throw new Error('Updating application section review');
       }
     },
@@ -358,21 +358,21 @@ const application = {
       const response = (await apollo('POST', submitApplicationMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error submitting application ', response.errors);
+        console.error('GraphQL error submitting application %O', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error submitting application ', response.networkError.result.errors);
+        console.error('GraphQL network error submitting application %O', response.networkError.result.errors);
       }
 
       if (response?.data?.submitApplication) {
         return response.data.submitApplication;
       }
 
-      console.error(response);
+      console.error('Error with apollo submitApplicationMutation %O', response);
       throw new Error(`Submitting application ${applicationId}`);
     } catch (err) {
-      console.error(err);
+      console.error('Error submitting application %O', err);
       throw new Error(`Submitting application ${applicationId}`);
     }
   },

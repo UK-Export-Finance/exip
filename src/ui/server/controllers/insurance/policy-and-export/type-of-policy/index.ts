@@ -113,7 +113,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
-    console.error('Error updating application - policy and exports - type of policy', { err });
+    console.error('Error updating application - policy and exports - type of policy %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

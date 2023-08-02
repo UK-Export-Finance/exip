@@ -23,7 +23,7 @@ const callMapAndSave = async (formData: RequestBody, application: Application, v
 
     return saveResponse;
   } catch (err) {
-    console.error('Error calling mapAndSave.policyAndExport', { err });
+    console.error('Error calling mapAndSave.policyAndExport %O', err);
 
     return false;
   }

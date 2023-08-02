@@ -56,7 +56,7 @@ export const get = (req: Request, res: Response) => {
       formattedSubmissionDeadline,
     });
   } catch (err) {
-    console.error('Error getting check your answers - start new applcation', { err });
+    console.error('Error getting check your answers - start new applcation %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

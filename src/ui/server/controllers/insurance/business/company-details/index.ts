@@ -104,7 +104,7 @@ const get = (req: Request, res: Response) => {
       SUMMARY_LIST: populateCompaniesHouseSummaryList(company),
     });
   } catch (err) {
-    console.error('Error getting company details', { err });
+    console.error('Error getting company details %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -185,7 +185,7 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
-    console.error('Error posting companise house search - your business - company details', { err });
+    console.error('Error posting companise house search - your business - company details %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -270,7 +270,7 @@ const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CONTACT_ROOT}`);
   } catch (err) {
-    console.error('Error updating application - your business - company details', { err });
+    console.error('Error updating application - your business - company details %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

@@ -24,7 +24,7 @@ const timestamp = async (context: Context, applicationId: string) => {
 
     return application;
   } catch (err) {
-    console.error(err);
+    console.error('Error updating application updatedAt timestamp %O', err);
 
     throw new Error(`Updating application updatedAt timestamp ${err}`);
   }

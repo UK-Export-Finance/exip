@@ -67,7 +67,7 @@ export const post = async (req: Request, res: Response) => {
      */
     return res.redirect(ACCOUNT_TO_APPLY_ONLINE);
   } catch (err) {
-    console.error('Error creating application ', { err });
+    console.error('Error creating application %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

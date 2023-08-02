@@ -91,7 +91,7 @@ export const get = async (req: Request, res: Response) => {
       isChangeRoute: isChangeRoute(req.originalUrl),
     });
   } catch (err) {
-    console.error('Error getting CIS countries ', { err });
+    console.error('Error getting CIS countries %O', err);
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
@@ -176,7 +176,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
     }
   } catch (err) {
-    console.error('Error getting CIS countries ', { err });
+    console.error('Error getting CIS countries %O', err);
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }

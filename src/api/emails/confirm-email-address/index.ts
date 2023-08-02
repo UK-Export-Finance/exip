@@ -22,7 +22,7 @@ export const confirmEmailAddress = async (emailAddress: string, urlOrigin: strin
 
     return response;
   } catch (err) {
-    console.error(err);
+    console.error('Error sending confirm email address email %O', err);
 
     throw new Error(`Sending confirm email address email ${err}`);
   }

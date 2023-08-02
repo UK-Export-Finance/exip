@@ -42,7 +42,7 @@ const getIndustrySectorNames = {
         success: true,
       };
     } catch (err) {
-      console.error('Error calling industry sector API ', { err });
+      console.error('Error calling industry sector API %O', err);
       return {
         apiError: true,
         success: false,

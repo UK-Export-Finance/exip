@@ -111,7 +111,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`);
     }
   } catch (err) {
-    console.error('Error updating application - declarations - anti-bribery - exporting with code of conduct ', { err });
+    console.error('Error updating application - declarations - anti-bribery - exporting with code of conduct %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

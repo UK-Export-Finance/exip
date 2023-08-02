@@ -141,7 +141,7 @@ export const get = async (req: Request, res: Response) => {
       monthOptions: mappedTotalMonthsOfCover,
     });
   } catch (err) {
-    console.error('Error getting currencies ', { err });
+    console.error('Error getting currencies %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -206,7 +206,7 @@ export const post = async (req: Request, res: Response) => {
         validationErrors,
       });
     } catch (err) {
-      console.error('Error getting currencies ', { err });
+      console.error('Error getting currencies %O', err);
 
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
@@ -230,7 +230,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
   } catch (err) {
-    console.error('Error updating application - policy and exports - multiple contract policy', { err });
+    console.error('Error updating application - policy and exports - multiple contract policy %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

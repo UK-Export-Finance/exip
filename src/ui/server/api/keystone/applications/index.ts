@@ -12,21 +12,21 @@ const applications = {
       const response = (await apollo('GET', getApplicationsQuery, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error getting all applications ', response.errors);
+        console.error('GraphQL error getting all applications %O', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error getting all applications ', response.networkError.result.errors);
+        console.error('GraphQL network error getting all applications %O', response.networkError.result.errors);
       }
 
       if (response?.data?.applications) {
         return response.data.applications;
       }
 
-      console.error(response);
+      console.error('Error with apollo getApplicationsQuery %O', response);
       throw new Error('Getting all applications');
     } catch (err) {
-      console.error(err);
+      console.error('Error getting all applications %O', err);
       throw new Error('Getting all applications');
     }
   },

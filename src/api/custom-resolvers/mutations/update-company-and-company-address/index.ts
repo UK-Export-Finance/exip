@@ -16,7 +16,7 @@ const updateCompanyAndCompanyAddress = async (
   context: Context,
 ): Promise<ApplicationRelationship> => {
   try {
-    console.info('Updating application company and company address for ', variables.companyId);
+    console.info('Updating application company and company address for %s', variables.companyId);
     const { address, sicCodes, industrySectorNames, oldSicCodes, ...company } = variables.data;
 
     const updatedCompany = await context.db.Company.updateOne({
@@ -50,7 +50,7 @@ const updateCompanyAndCompanyAddress = async (
       id: variables.companyId,
     };
   } catch (err) {
-    console.error('Error updating application - company and company address', { err });
+    console.error('Error updating application - company and company address %O', err);
 
     throw new Error(`Updating application - company and company address ${err}`);
   }

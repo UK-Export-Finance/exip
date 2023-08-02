@@ -93,7 +93,7 @@ export const get = async (req: Request, res: Response) => {
       application: mapApplicationToFormFields(application),
     });
   } catch (err) {
-    console.error('Error getting insurance - your buyer - buyers company or organisation ', { err });
+    console.error('Error getting insurance - your buyer - buyers company or organisation %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -144,7 +144,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`);
   } catch (err) {
-    console.error('Error posting insurance - your buyer - buyers company or organisation ', { err });
+    console.error('Error posting insurance - your buyer - buyers company or organisation %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

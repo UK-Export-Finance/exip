@@ -143,7 +143,7 @@ app1.use(
 /* eslint-disable no-unused-vars, prettier/prettier */
 // @ts-ignore
 const errorHandler: express.ErrorRequestHandler = (err, req, res, next) => {
-  console.error('Error with EXIP UI app', err);
+  console.error('Error with EXIP UI app %O', err);
   res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
 };
 /* eslint-enable no-unused-vars, prettier/prettier */
@@ -183,6 +183,6 @@ app1.get('*', (req: Request, res: Response) => {
   });
 });
 
-app1.listen(PORT, () => console.info(`EXIP UI app listening on port ${PORT}!`));
+app1.listen(PORT, () => console.info('EXIP UI app listening on port %s!', PORT));
 
 /* eslint-enable @typescript-eslint/ban-ts-comment */

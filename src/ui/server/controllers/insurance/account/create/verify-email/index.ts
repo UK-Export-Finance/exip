@@ -50,7 +50,7 @@ export const get = async (req: Request, res: Response) => {
 
     return res.redirect(VERIFY_EMAIL_LINK_INVALID);
   } catch (err) {
-    console.error('Error verifying account email address', { err });
+    console.error('Error verifying account email address %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

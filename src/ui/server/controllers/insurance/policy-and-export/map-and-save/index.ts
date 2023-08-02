@@ -33,7 +33,7 @@ const policyAndExport = async (formBody: RequestBody, application: Application, 
 
     return true;
   } catch (err) {
-    console.error('Error mapping and saving application', { err });
+    console.error('Error mapping and saving application %O', err);
 
     return false;
   }

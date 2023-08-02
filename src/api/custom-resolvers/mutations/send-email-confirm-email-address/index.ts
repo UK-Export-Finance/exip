@@ -19,7 +19,7 @@ const sendEmailConfirmEmailAddressMutation = async (root: any, variables: SendEx
 
     throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${emailResponse}`);
   } catch (err) {
-    console.error(err);
+    console.error('Error sending email verification for account creation (sendEmailConfirmEmailAddress mutation) %O', err);
     throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${err}`);
   }
 };

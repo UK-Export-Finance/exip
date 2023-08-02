@@ -67,7 +67,7 @@ export const get = async (req: Request, res: Response) => {
       application: mapApplicationToFormFields(res.locals.application),
     });
   } catch (err) {
-    console.error("Error getting declarations - confirmation and acknowledgements and rendering 'confirmation and acknowledgements' page ", { err });
+    console.error("Error getting declarations - confirmation and acknowledgements and rendering 'confirmation and acknowledgements' page %O", err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -110,7 +110,7 @@ export const post = async (req: Request, res: Response) => {
         validationErrors,
       });
     } catch (err) {
-      console.error("Error getting declarations - confirmation and acknowledgements and rendering 'confirmation and acknowledgements' page ", { err });
+      console.error("Error getting declarations - confirmation and acknowledgements and rendering 'confirmation and acknowledgements' page %O", err);
 
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
@@ -126,7 +126,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`);
   } catch (err) {
-    console.error('Error updating application - declarations - confirmation and acknowledgements ', { err });
+    console.error('Error updating application - declarations - confirmation and acknowledgements %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

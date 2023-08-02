@@ -50,7 +50,7 @@ export const get = async (req: Request, res: Response) => {
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
-    console.error("Error sending 'confirm email address' email", { err });
+    console.error("Error sending 'confirm email address' email %O", err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

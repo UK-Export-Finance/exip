@@ -8,7 +8,7 @@ import { Account } from '../../types';
  * @returns {Boolean}
  */
 const blockAccount = async (context: Context, accountId: string) => {
-  console.info(`Blocking account ${accountId}`);
+  console.info('Blocking account %s', accountId);
 
   try {
     const result = (await context.db.Account.updateOne({
@@ -22,7 +22,7 @@ const blockAccount = async (context: Context, accountId: string) => {
 
     return false;
   } catch (err) {
-    console.error(err);
+    console.error('Error blocking account %O', err);
 
     throw new Error(`Blocking account ${err}`);
   }
