@@ -3,12 +3,13 @@ import { DECLARATIONS_FIELDS } from '../../../../../content-strings/fields/insur
 import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../../../constants';
 import singleInputPageVariables from '../../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
 import save from '../../save-data';
 import { Request, Response } from '../../../../../../types';
 
-const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.HAS_ANTI_BRIBERY_CODE_OF_CONDUCT;
+export const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.HAS_ANTI_BRIBERY_CODE_OF_CONDUCT;
 
 const {
   INSURANCE_ROOT,
@@ -76,10 +77,12 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
+  const payload = constructPayload(req.body, [FIELD_ID]);
+
   const { referenceNumber } = req.params;
   const refNumber = Number(referenceNumber);
 
-  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
+  const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
@@ -92,13 +95,13 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     // save the application
-    const saveResponse = await save.declaration(application, req.body);
+    const saveResponse = await save.declaration(application, payload);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const answer = req.body[FIELD_ID];
+    const answer = payload[FIELD_ID];
 
     if (answer === FIELD_VALUES.YES) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`);

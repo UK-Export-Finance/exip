@@ -1,18 +1,17 @@
-import { pageVariables, TEMPLATE, get, post } from '.';
+import { FIELD_ID, pageVariables, TEMPLATE, get, post } from '.';
 import { BUTTONS, PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, TEMPLATES, ROUTES, APPLICATION } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
 import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockDeclarations } from '../../../../test-mocks';
-
-const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_HOW_YOUR_DATA_WILL_BE_USED;
 
 const {
   INSURANCE_ROOT,
@@ -32,7 +31,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
   let req: Request;
   let res: Response;
 
-  let getLatesHowDataWillBeUsedSpy = jest.fn(() => Promise.resolve(mockDeclarations.howDataWillBeUsed));
+  let getLatestHowDataWillBeUsedSpy = jest.fn(() => Promise.resolve(mockDeclarations.howDataWillBeUsed));
 
   beforeEach(() => {
     req = mockReq();
@@ -40,7 +39,15 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
 
     res.locals.application = mockApplication;
 
-    api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatesHowDataWillBeUsedSpy;
+    api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatestHowDataWillBeUsedSpy;
+  });
+
+  describe('FIELD_ID', () => {
+    it('should have the correct ID', () => {
+      const expected = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_HOW_YOUR_DATA_WILL_BE_USED;
+
+      expect(FIELD_ID).toEqual(expected);
+    });
   });
 
   describe('pageVariables', () => {
@@ -67,10 +74,10 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
   });
 
   describe('get', () => {
-    it('should call api.keystone.application.declarations.getLatesHowDataWillBeUsed', async () => {
+    it('should call api.keystone.application.declarations.getLatestHowDataWillBeUsed', async () => {
       await get(req, res);
 
-      expect(getLatesHowDataWillBeUsedSpy).toHaveBeenCalledTimes(1);
+      expect(getLatestHowDataWillBeUsedSpy).toHaveBeenCalledTimes(1);
     });
 
     it('should render template', async () => {
@@ -106,9 +113,9 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
     describe('api error handling', () => {
       describe('when there is an error', () => {
         beforeAll(() => {
-          getLatesHowDataWillBeUsedSpy = jest.fn(() => Promise.reject());
+          getLatestHowDataWillBeUsedSpy = jest.fn(() => Promise.reject());
 
-          api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatesHowDataWillBeUsedSpy;
+          api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatestHowDataWillBeUsedSpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -126,9 +133,9 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
     };
 
     beforeEach(() => {
-      getLatesHowDataWillBeUsedSpy = jest.fn(() => Promise.resolve(mockDeclarations.howDataWillBeUsed));
+      getLatestHowDataWillBeUsedSpy = jest.fn(() => Promise.resolve(mockDeclarations.howDataWillBeUsed));
 
-      api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatesHowDataWillBeUsedSpy;
+      api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatestHowDataWillBeUsedSpy;
 
       api.keystone.application.submit = submitApplicationSpy;
     });
@@ -138,11 +145,13 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
         req.body = validBody;
       });
 
-      it('should call save.declaration with application and req.body', async () => {
+      it('should call save.declaration with application and submitted values from constructPayload function', async () => {
         await post(req, res);
 
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
         expect(save.declaration).toHaveBeenCalledTimes(1);
-        expect(save.declaration).toHaveBeenCalledWith(mockApplication, validBody);
+        expect(save.declaration).toHaveBeenCalledWith(mockApplication, payload);
       });
 
       it('should call api.keystone.application.submit with the application ID', async () => {
@@ -175,10 +184,10 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
     });
 
     describe('when there are validation errors', () => {
-      it('should call api.keystone.application.declarations.getLatesHowDataWillBeUsed', async () => {
+      it('should call api.keystone.application.declarations.getLatestHowDataWillBeUsed', async () => {
         await post(req, res);
 
-        expect(getLatesHowDataWillBeUsedSpy).toHaveBeenCalledTimes(1);
+        expect(getLatestHowDataWillBeUsedSpy).toHaveBeenCalledTimes(1);
       });
 
       it('should render template with validation errors', async () => {
@@ -216,8 +225,8 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
       describe('get latest how your data will be used call', () => {
         describe('when the get latest how your data will be used API call fails', () => {
           beforeEach(() => {
-            getLatesHowDataWillBeUsedSpy = jest.fn(() => Promise.reject());
-            api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatesHowDataWillBeUsedSpy;
+            getLatestHowDataWillBeUsedSpy = jest.fn(() => Promise.reject());
+            api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatestHowDataWillBeUsedSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

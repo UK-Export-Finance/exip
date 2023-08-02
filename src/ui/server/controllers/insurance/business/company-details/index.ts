@@ -200,15 +200,17 @@ const postCompaniesHouseSearch = async (req: Request, res: Response) => {
 const post = async (req: Request, res: Response) => {
   try {
     const { application } = res.locals;
+
     if (!application) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const { referenceNumber } = application;
 
-    const { body } = req;
+    const payload = constructPayload(req.body, FIELD_IDS);
+
     // runs companiesHouse validation and api call first for companiesHouse input
-    const response = await companiesHouseSearch(body);
+    const response = await companiesHouseSearch(payload);
 
     const { apiError, companiesHouseNumber, company } = response;
 
@@ -219,20 +221,18 @@ const post = async (req: Request, res: Response) => {
 
     let { validationErrors } = response;
 
-    const payload = constructPayload(body, FIELD_IDS);
-
     // populate submittedValues
     const submittedValues = {
       [COMPANY_HOUSE.INPUT]: companiesHouseNumber,
       // if trading name is string true, then convert to boolean true
-      [TRADING_NAME]: sanitiseValue(TRADING_NAME, body[TRADING_NAME]),
-      [TRADING_ADDRESS]: sanitiseValue(TRADING_ADDRESS, body[TRADING_ADDRESS]),
-      [WEBSITE]: body[WEBSITE],
-      [PHONE_NUMBER]: body[PHONE_NUMBER],
+      [TRADING_NAME]: sanitiseValue({ key: TRADING_NAME, value: payload[TRADING_NAME] }),
+      [TRADING_ADDRESS]: sanitiseValue({ key: TRADING_ADDRESS, value: payload[TRADING_ADDRESS] }),
+      [WEBSITE]: payload[WEBSITE],
+      [PHONE_NUMBER]: payload[PHONE_NUMBER],
     };
 
     // run validation on other fields on page
-    validationErrors = companyDetailsValidation(body, validationErrors);
+    validationErrors = companyDetailsValidation(payload, validationErrors);
 
     // if any errors then render template with errors
     if (isPopulatedArray(Object.keys(validationErrors))) {

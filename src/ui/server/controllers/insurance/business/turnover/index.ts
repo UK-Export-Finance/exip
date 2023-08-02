@@ -98,10 +98,10 @@ const post = async (req: Request, res: Response) => {
 
     const { body } = req;
 
-    const payload = constructPayload(req.body, FIELD_IDS);
+    const payload = constructPayload(body, FIELD_IDS);
 
     // run validation on inputs
-    const validationErrors = generateValidationErrors(body);
+    const validationErrors = generateValidationErrors(payload);
 
     // if any errors then render template with errors
     if (validationErrors) {

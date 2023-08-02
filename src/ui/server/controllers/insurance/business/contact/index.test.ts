@@ -9,10 +9,10 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { FIELDS, ACCOUNT_FIELDS } from '../../../../content-strings/fields/insurance';
-import { mockReq, mockRes, mockApplication, mockBusinessContact } from '../../../../test-mocks';
 import mapAndSave from '../map-and-save/contact';
 import getFromSessionOrApplication from '../../../../helpers/get-values-from-user-session-or-application';
 import { Request, Response } from '../../../../../types';
+import { mockReq, mockRes, mockApplication, mockBusinessContact } from '../../../../test-mocks';
 
 const { BUSINESS } = BUSINESS_FIELD_IDS;
 const { COMPANY_NAME, POSITION, BUSINESS_CONTACT_DETAIL } = BUSINESS_FIELD_IDS.CONTACT;
@@ -94,22 +94,20 @@ describe('controllers/insurance/business/contact', () => {
   });
 
   describe('get', () => {
-    describe('when the application exists', () => {
-      it('should render the contact template with correct variables', () => {
-        res.locals.application = mockApplication;
+    it('should render the contact template with correct variables', () => {
+      res.locals.application = mockApplication;
 
-        get(req, res);
+      get(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(CONTACT_TEMPLATE, {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: CONTACT,
-            BACK_LINK: req.headers.referer,
-          }),
-          userName: getUserNameFromSession(req.session.user),
-          application: mapApplicationToFormFields(mockApplication),
-          submittedValues: getFromSessionOrApplication(mockApplication, BUSINESS, BUSINESS_CONTACT_DETAIL, req.session.user),
-          ...pageVariables(mockApplication.referenceNumber),
-        });
+      expect(res.render).toHaveBeenCalledWith(CONTACT_TEMPLATE, {
+        ...insuranceCorePageVariables({
+          PAGE_CONTENT_STRINGS: CONTACT,
+          BACK_LINK: req.headers.referer,
+        }),
+        userName: getUserNameFromSession(req.session.user),
+        application: mapApplicationToFormFields(mockApplication),
+        submittedValues: getFromSessionOrApplication(mockApplication, BUSINESS, BUSINESS_CONTACT_DETAIL, req.session.user),
+        ...pageVariables(mockApplication.referenceNumber),
       });
     });
 
@@ -130,14 +128,14 @@ describe('controllers/insurance/business/contact', () => {
     mapAndSave.contact = jest.fn(() => Promise.resolve(true));
 
     describe('when there are validation errors', () => {
-      it('should render template with validation errors', async () => {
+      it('should render template with validation errors and submitted values', async () => {
         req.body = {};
-
-        const payload = constructPayload(req.body, FIELD_IDS);
 
         await post(req, res);
 
-        const validationErrors = generateValidationErrors(req.body);
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        const validationErrors = generateValidationErrors(payload);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...insuranceCorePageVariables({
@@ -163,7 +161,7 @@ describe('controllers/insurance/business/contact', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call mapAndSave.contact once with the contents of body', async () => {
+      it('should call mapAndSave.contact once with data from constructPayload function', async () => {
         req.body = {
           ...mockBusinessContact,
           injection: 1,

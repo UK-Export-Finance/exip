@@ -1,7 +1,7 @@
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import { replaceCharactersWithCharacterCode } from '../../../../helpers/sanitise-data';
+import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
 
@@ -44,7 +44,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const sanitisedId = replaceCharactersWithCharacterCode(req.query.id);
+    const sanitisedId = String(sanitiseValue({ value: req.query.id }));
 
     const response = await api.keystone.account.sendEmailReactivateAccountLink(urlOrigin, sanitisedId);
 
