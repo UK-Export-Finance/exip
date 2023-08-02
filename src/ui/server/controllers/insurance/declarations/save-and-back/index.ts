@@ -1,11 +1,15 @@
 import { ROUTES } from '../../../../constants';
-import { Request, Response } from '../../../../../types';
+import DECLARATIONS_FIELD_IDS from '../../../../constants/field-ids/insurance/declarations';
 import hasFormData from '../../../../helpers/has-form-data';
+import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
+import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
 } = ROUTES;
+
+export const FIELD_IDS = Object.values(DECLARATIONS_FIELD_IDS);
 
 /**
  * post
@@ -25,7 +29,9 @@ export const post = async (req: Request, res: Response) => {
     const { referenceNumber } = req.params;
 
     if (hasFormData(req.body)) {
-      const saveResponse = await save.declaration(application, req.body);
+      const payload = constructPayload(req.body, FIELD_IDS);
+
+      const saveResponse = await save.declaration(application, payload);
 
       if (!saveResponse) {
         return res.redirect(PROBLEM_WITH_SERVICE);

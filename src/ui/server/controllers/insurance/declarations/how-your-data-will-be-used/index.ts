@@ -4,6 +4,7 @@ import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/field
 import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
@@ -11,7 +12,7 @@ import save from '../save-data';
 import canSubmitApplication from '../../../../helpers/can-submit-application';
 import { Request, Response } from '../../../../../types';
 
-const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_HOW_YOUR_DATA_WILL_BE_USED;
+export const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_HOW_YOUR_DATA_WILL_BE_USED;
 
 const {
   INSURANCE_ROOT,
@@ -88,10 +89,13 @@ export const post = async (req: Request, res: Response) => {
   if (!application) {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
+
+  const payload = constructPayload(req.body, [FIELD_ID]);
+
   const { referenceNumber } = req.params;
   const refNumber = Number(referenceNumber);
 
-  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
+  const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
     try {
