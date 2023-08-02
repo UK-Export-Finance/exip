@@ -4,7 +4,7 @@ import { isEmptyString, stripCommas } from '../string';
 import { objectHasKeysAndValues } from '../object';
 import { FIELD_IDS } from '../../constants';
 import isValidWebsiteAddress from '../is-valid-website-address';
-import { RequestBody } from '../../../types';
+import { SanitiseValueObjParams, RequestBody } from '../../../types';
 
 const {
   ACCOUNT: { SECURITY_CODE },
@@ -80,12 +80,14 @@ export const STRING_NUMBER_FIELDS = [
 /**
  * shouldChangeToNumber
  * Check if a form field value should change from a string to a number
- * @param {String | Number} Field value
+ * @param {Object} Field key and value
  * @returns {Boolean}
  */
-export const shouldChangeToNumber = (key: string, value: string | number) => {
-  if (STRING_NUMBER_FIELDS.includes(key) || isEmptyString(String(value))) {
-    return false;
+export const shouldChangeToNumber = ({ key, value }: SanitiseValueObjParams) => {
+  if (key) {
+    if (STRING_NUMBER_FIELDS.includes(key) || isEmptyString(String(value))) {
+      return false;
+    }
   }
 
   if (typeof value === 'string') {
@@ -118,10 +120,10 @@ export const replaceCharactersWithCharacterCode = (str: string) =>
 /**
  * sanitiseValue
  * Sanitise a form field value
- * @param {String | Number | Boolean} Field value
+ * @param {Object} Field key and value
  * @returns {Boolean}
  */
-export const sanitiseValue = (key: string, value: string | number | boolean) => {
+export const sanitiseValue = ({ key, value }: SanitiseValueObjParams) => {
   if (value === 'true' || value === true) {
     return true;
   }
@@ -130,15 +132,20 @@ export const sanitiseValue = (key: string, value: string | number | boolean) => 
     return false;
   }
 
-  if (shouldChangeToNumber(key, value)) {
+  if (shouldChangeToNumber({ key, value })) {
     const stripped = stripCommas(String(value));
 
     return Number(stripped);
   }
 
-  // Do not sanitise a valid website address. Otherwise, the website address becomes invalid.
-  if (key === WEBSITE && isValidWebsiteAddress(String(value))) {
-    return value;
+  if (key) {
+    /**
+     * Do not sanitise a valid website address.
+     * Otherwise, the it becomes invalid.
+     */
+    if (key === WEBSITE && isValidWebsiteAddress(String(value))) {
+      return value;
+    }
   }
 
   return replaceCharactersWithCharacterCode(String(value));
@@ -156,7 +163,7 @@ export const sanitiseObject = (obj: object) => {
   Object.keys(obj).forEach((key) => {
     const value = obj[key];
 
-    sanitised[key] = sanitiseValue(key, value);
+    sanitised[key] = sanitiseValue({ key, value });
   });
 
   return sanitised;
@@ -176,7 +183,7 @@ export const sanitiseArray = (key: string, arr: Array<string> | Array<object>) =
     }
 
     if (typeof value === 'string') {
-      return sanitiseValue(key, value);
+      return sanitiseValue({ key, value });
     }
 
     return null;
@@ -238,7 +245,7 @@ export const sanitiseFormField = (key: string, value: string | boolean | object 
   }
 
   if (typeof value === 'string') {
-    return sanitiseValue(key, value);
+    return sanitiseValue({ key, value });
   }
 
   if (typeof value === 'object') {

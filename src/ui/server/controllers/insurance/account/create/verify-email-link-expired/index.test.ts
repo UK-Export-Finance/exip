@@ -2,6 +2,7 @@ import { TEMPLATE, PAGE_CONTENT_STRINGS, get } from '.';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../../constants';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../../types';
 import { mockAccount, mockReq, mockRes } from '../../../../../test-mocks';
@@ -19,11 +20,13 @@ describe('controllers/insurance/account/create/verify-email-link-expired', () =>
   let req: Request;
   let res: Response;
 
+  const mockQueryId = mockAccount.id;
+
   beforeEach(() => {
     req = mockReq();
 
     req.query = {
-      id: mockAccount.id,
+      id: mockQueryId,
     };
 
     res = mockRes();
@@ -45,10 +48,12 @@ describe('controllers/insurance/account/create/verify-email-link-expired', () =>
     it('should render template', () => {
       get(req, res);
 
+      const sanitisedId = String(sanitiseValue({ value: mockQueryId }));
+
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
-          BACK_LINK: `${CONFIRM_EMAIL}?id=${req.query.id}`,
+          BACK_LINK: `${CONFIRM_EMAIL}?id=${sanitisedId}`,
         }),
         userName: getUserNameFromSession(req.session.user),
       });

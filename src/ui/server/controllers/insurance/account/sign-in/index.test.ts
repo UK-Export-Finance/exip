@@ -1,8 +1,10 @@
-import { PAGE_VARIABLES, TEMPLATE, PAGE_CONTENT_STRINGS, get, post } from '.';
+import { FIELD_IDS, PAGE_VARIABLES, TEMPLATE, PAGE_CONTENT_STRINGS, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { ROUTES, TEMPLATES } from '../../../../constants';
+import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import constructPayload from '../../../../helpers/construct-payload';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
@@ -10,9 +12,7 @@ import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockAccount } from '../../../../test-mocks';
 
-const {
-  ACCOUNT: { EMAIL, PASSWORD },
-} = FIELD_IDS.INSURANCE;
+const { EMAIL, PASSWORD } = ACCOUNT_FIELD_IDS;
 
 const {
   INSURANCE: {
@@ -44,6 +44,14 @@ describe('controllers/insurance/account/sign-in', () => {
     res = mockRes();
 
     api.keystone.account.signIn = accountSignInSpy;
+  });
+
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      const expected = [EMAIL, PASSWORD];
+
+      expect(FIELD_IDS).toEqual(expected);
+    });
   });
 
   describe('PAGE_VARIABLES', () => {
@@ -173,8 +181,10 @@ describe('controllers/insurance/account/sign-in', () => {
     };
 
     describe('when there are validation errors', () => {
-      it('should render template with validation errors and submitted values', async () => {
+      it('should render template with validation errors and submitted values from constructPayload function', async () => {
         await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...insuranceCorePageVariables({
@@ -184,8 +194,8 @@ describe('controllers/insurance/account/sign-in', () => {
           ...PAGE_VARIABLES,
           renderBackLink: true,
           userName: getUserNameFromSession(req.session.user),
-          submittedValues: req.body,
-          validationErrors: generateValidationErrors(req.body),
+          submittedValues: payload,
+          validationErrors: generateValidationErrors(payload),
         });
       });
     });
@@ -200,7 +210,9 @@ describe('controllers/insurance/account/sign-in', () => {
 
         expect(accountSignInSpy).toHaveBeenCalledTimes(1);
 
-        const sanitisedData = sanitiseData(req.body);
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        const sanitisedData = sanitiseData(payload);
 
         expect(accountSignInSpy).toHaveBeenCalledWith(req.headers.origin, sanitisedData[EMAIL], sanitisedData[PASSWORD]);
       });
@@ -229,8 +241,10 @@ describe('controllers/insurance/account/sign-in', () => {
           api.keystone.account.signIn = accountSignInSpy;
         });
 
-        it('should render template with validation errors and submitted values', async () => {
+        it('should render template with validation errors and submitted values from constructPayload function', async () => {
           await post(req, res);
+
+          const payload = constructPayload(req.body, FIELD_IDS);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
             ...insuranceCorePageVariables({
@@ -240,7 +254,7 @@ describe('controllers/insurance/account/sign-in', () => {
             ...PAGE_VARIABLES,
             renderBackLink: true,
             userName: getUserNameFromSession(req.session.user),
-            submittedValues: req.body,
+            submittedValues: payload,
             validationErrors: generateValidationErrors({}),
           });
         });
@@ -296,7 +310,9 @@ describe('controllers/insurance/account/sign-in', () => {
 
           expect(accountSignInSpy).toHaveBeenCalledTimes(1);
 
-          const sanitisedData = sanitiseData(req.body);
+          const payload = constructPayload(req.body, FIELD_IDS);
+
+          const sanitisedData = sanitiseData(payload);
 
           expect(accountSignInSpy).toHaveBeenCalledWith(req.headers.origin, sanitisedData[EMAIL], String(sanitisedData[PASSWORD]));
         });

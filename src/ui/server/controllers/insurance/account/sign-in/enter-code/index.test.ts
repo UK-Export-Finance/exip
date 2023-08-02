@@ -1,4 +1,4 @@
-import { PAGE_VARIABLES, TEMPLATE, PAGE_CONTENT_STRINGS, get, post } from '.';
+import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, PAGE_CONTENT_STRINGS, get, post } from '.';
 import { PAGES } from '../../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
@@ -40,11 +40,19 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
     res = mockRes();
   });
 
+  describe('FIELD_ID', () => {
+    it('should have the correct ID', () => {
+      const expected = SECURITY_CODE;
+
+      expect(FIELD_ID).toEqual(expected);
+    });
+  });
+
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD: {
-          ID: SECURITY_CODE,
+          ID: FIELD_ID,
           ...FIELDS[SECURITY_CODE],
         },
       };
@@ -195,7 +203,12 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
 
         expect(verifyAccountSignInCodeSpy).toHaveBeenCalledTimes(1);
 
-        const sanitisedSecurityCode = sanitiseValue(SECURITY_CODE, validBody[SECURITY_CODE]);
+        const submittedCode = req.body[FIELD_ID];
+
+        const sanitisedSecurityCode = sanitiseValue({
+          key: FIELD_ID,
+          value: submittedCode,
+        });
 
         expect(verifyAccountSignInCodeSpy).toHaveBeenCalledWith(req.session.accountId, String(sanitisedSecurityCode));
       });
