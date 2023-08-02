@@ -218,94 +218,102 @@ describe('controllers/insurance/business/companies-details', () => {
 
   describe('postCompaniesHouseSearch', () => {
     describe('when there are validation errors', () => {
-      it('should render template with validation errors when companies house input is empty', async () => {
-        req.body = {
-          companiesHouseNumber: '',
-        };
+      describe('when companies house input is empty', () => {
+        it('should render template with validation errors and submitted values', async () => {
+          req.body = {
+            companiesHouseNumber: '',
+          };
 
-        const payload = constructPayload(req.body, FIELD_IDS);
+          const payload = constructPayload(req.body, FIELD_IDS);
 
-        await postCompaniesHouseSearch(req, res);
+          await postCompaniesHouseSearch(req, res);
 
-        const errorMessage = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].INCORRECT_FORMAT;
-        expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-            BACK_LINK: req.headers.referer,
-          }),
-          userName: getUserNameFromSession(req.session.user),
-          ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
-          validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
-          submittedValues: payload,
+          const errorMessage = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].INCORRECT_FORMAT;
+          expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
+            ...insuranceCorePageVariables({
+              PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
+              BACK_LINK: req.headers.referer,
+            }),
+            userName: getUserNameFromSession(req.session.user),
+            ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
+            validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
+            submittedValues: payload,
+          });
         });
       });
 
-      it('should render template with validation errors when companies house input is less than 6 numbers', async () => {
-        req.body = {
-          companiesHouseNumber: '1234',
-        };
+      describe('when companies house input is less than 6 numbers', () => {
+        it('should render template with validation errors', async () => {
+          req.body = {
+            companiesHouseNumber: '1234',
+          };
 
-        const payload = constructPayload(req.body, FIELD_IDS);
+          const payload = constructPayload(req.body, FIELD_IDS);
 
-        await postCompaniesHouseSearch(req, res);
+          await postCompaniesHouseSearch(req, res);
 
-        const errorMessage = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].INCORRECT_FORMAT;
-        expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-            BACK_LINK: req.headers.referer,
-          }),
-          userName: getUserNameFromSession(req.session.user),
-          ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
-          validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
-          submittedValues: payload,
+          const errorMessage = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].INCORRECT_FORMAT;
+          expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
+            ...insuranceCorePageVariables({
+              PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
+              BACK_LINK: req.headers.referer,
+            }),
+            userName: getUserNameFromSession(req.session.user),
+            ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
+            validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
+            submittedValues: payload,
+          });
         });
       });
 
-      it('should render template with validation errors when companies house input has special characters', async () => {
-        req.body = {
-          companiesHouseNumber: '123456!',
-        };
+      describe('when companies house input has special characters', () => {
+        it('should render template with validation errors', async () => {
+          req.body = {
+            companiesHouseNumber: '123456!',
+          };
 
-        const payload = constructPayload(req.body, FIELD_IDS);
+          const payload = constructPayload(req.body, FIELD_IDS);
 
-        await postCompaniesHouseSearch(req, res);
+          await postCompaniesHouseSearch(req, res);
 
-        const errorMessage = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].INCORRECT_FORMAT;
-        expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-            BACK_LINK: req.headers.referer,
-          }),
-          userName: getUserNameFromSession(req.session.user),
-          ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
-          validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
-          submittedValues: payload,
+          const errorMessage = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].INCORRECT_FORMAT;
+          expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
+            ...insuranceCorePageVariables({
+              PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
+              BACK_LINK: req.headers.referer,
+            }),
+            userName: getUserNameFromSession(req.session.user),
+            ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
+            validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
+            submittedValues: payload,
+          });
         });
       });
 
-      it('should render template with validation errors if company not found', async () => {
-        req.body = {
-          companiesHouseNumber: '123456',
-        };
+      describe('when a company is not found', () => {
+        it('should render template with validation errors', async () => {
+          req.body = {
+            companiesHouseNumber: '123456',
+          };
 
-        const payload = constructPayload(req.body, FIELD_IDS);
+          const payload = constructPayload(req.body, FIELD_IDS);
 
-        const getCompaniesHouseResponse = jest.fn(() => Promise.resolve({ success: false }));
-        api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
+          const getCompaniesHouseResponse = jest.fn(() => Promise.resolve({ success: false }));
+          api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
 
-        await postCompaniesHouseSearch(req, res);
+          await postCompaniesHouseSearch(req, res);
 
-        const errorMessage = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].NOT_FOUND;
-        expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-            BACK_LINK: req.headers.referer,
-          }),
-          userName: getUserNameFromSession(req.session.user),
-          ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
-          validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
-          submittedValues: payload,
+          const errorMessage = EXPORTER_BUSINESS_ERROR[COMPANY_HOUSE.INPUT].NOT_FOUND;
+          expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
+            ...insuranceCorePageVariables({
+              PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
+              BACK_LINK: req.headers.referer,
+            }),
+            userName: getUserNameFromSession(req.session.user),
+            ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROUTE),
+            validationErrors: generateValidationErrors(COMPANY_HOUSE.INPUT, errorMessage, {}),
+            submittedValues: payload,
+          });
         });
       });
 
