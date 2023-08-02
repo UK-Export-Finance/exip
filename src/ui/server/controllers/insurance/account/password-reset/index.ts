@@ -80,7 +80,7 @@ export const post = async (req: Request, res: Response) => {
 
     const urlOrigin = req.headers.origin;
 
-    const email = String(sanitiseValue(FIELD_ID, req.body[FIELD_ID]));
+    const email = String(sanitiseValue({ value: req.body[FIELD_ID] }));
 
     const response = await api.keystone.account.sendEmailPasswordResetLink(urlOrigin, email);
 

@@ -1,6 +1,7 @@
 import { ROUTES, TEMPLATES } from '../../../../../constants';
 import { PAGES } from '../../../../../content-strings';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../../types';
 
@@ -30,10 +31,14 @@ export const get = (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    const { id } = req.query;
+
+    const sanitisedId = String(sanitiseValue({ value: id }));
+
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
-        BACK_LINK: `${CONFIRM_EMAIL}?id=${req.query.id}`,
+        BACK_LINK: `${CONFIRM_EMAIL}?id=${sanitisedId}`,
       }),
       userName: getUserNameFromSession(req.session.user),
     });
