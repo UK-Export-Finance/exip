@@ -4454,8 +4454,8 @@ var keystone_default = withAuth(
       isDisabled: !isDevEnvironment,
       isAccessAllowed: (context) => !!context.session?.data
     },
-    session,
     lists,
+    session,
     extendGraphqlSchema,
     telemetry: false
   })
