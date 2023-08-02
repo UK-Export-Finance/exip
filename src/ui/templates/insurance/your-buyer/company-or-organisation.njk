@@ -259,8 +259,9 @@
           hintText: FIELDS.CAN_CONTACT_BUYER.HINT,
           submittedAnswer: submittedValues[FIELDS.CAN_CONTACT_BUYER.ID] or application.buyer[FIELDS.CAN_CONTACT_BUYER.ID],
           errorMessage: validationErrors.errorList[FIELDS.CAN_CONTACT_BUYER.ID],
-          headerClass: 'govuk-fieldset__legend--m',
-          dataCyHeading: FIELDS.CAN_CONTACT_BUYER.ID + '-label',
+          spanLegend: true,
+          headingClass: 'govuk-fieldset__legend--m',
+          dataCyLegend: FIELDS.CAN_CONTACT_BUYER.ID + '-label',
           yesNoValueString: true
         }) }}
       </div>

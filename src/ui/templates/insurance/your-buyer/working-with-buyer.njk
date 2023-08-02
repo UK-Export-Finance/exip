@@ -56,8 +56,9 @@
           hintText: FIELDS.CONNECTED_WITH_BUYER.HINT,
           submittedAnswer: submittedValues[FIELDS.CONNECTED_WITH_BUYER.ID] or application.buyer[FIELDS.CONNECTED_WITH_BUYER.ID],
           errorMessage: validationErrors.errorList[FIELDS.CONNECTED_WITH_BUYER.ID],
-          headerClass: 'govuk-fieldset__legend--m',
-          dataCyHeading: FIELDS.CONNECTED_WITH_BUYER.ID + '-label',
+          spanLegend: true,
+          headingClass: 'govuk-fieldset__legend--m',
+          dataCyLegend: FIELDS.CONNECTED_WITH_BUYER.ID + '-label',
           dataCyHint: FIELDS.CONNECTED_WITH_BUYER.ID + '-hint',
           yesNoValueString: true,
           horizontalRadios: true
@@ -68,8 +69,9 @@
           heading: FIELDS.TRADED_WITH_BUYER.LABEL,
           submittedAnswer: submittedValues[FIELDS.TRADED_WITH_BUYER.ID] or application.buyer[FIELDS.TRADED_WITH_BUYER.ID],
           errorMessage: validationErrors.errorList[FIELDS.TRADED_WITH_BUYER.ID],
-          headerClass: 'govuk-fieldset__legend--m',
-          dataCyHeading: FIELDS.TRADED_WITH_BUYER.ID + '-label',
+          spanLegend: true,
+          headingClass: 'govuk-fieldset__legend--m',
+          dataCyLegend: FIELDS.TRADED_WITH_BUYER.ID + '-label',
           yesNoValueString: true,
           conditionalYesHtml: tradedHTML,
           horizontalRadios: true

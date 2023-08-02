@@ -12,16 +12,29 @@
   {% set conditionalYesHtml = params.conditionalYesHtml %}
   {% set conditionalNoHtml = params.conditionalNoHtml %}
 
-  {% if params.headerClass %}
-    {% set headerClass = params.headerClass %}
+  {% if params.headingLevel %}
+    {% set headingLevel = params.headingLevel %}
   {% else %}
-    {% set headerClass = 'govuk-heading-l' %}
+    {% set headingLevel = 1 %}
   {% endif %}
 
-  {% if params.dataCyHeading %}
-    {% set dataCyHeading = params.dataCyHeading %}
+  {% if params.headingClass %}
+    {% set headingClass = params.headingClass %}
   {% else %}
-    {% set dataCyHeading = 'heading' %}
+    {% set headingClass = 'govuk-heading-l' %}
+  {% endif %}
+
+  {% if params.dataCyLegend %}
+    {% set dataCyLegend = params.dataCyLegend %}
+  {% else %}
+    {% set dataCyLegend = 'heading' %}
+  {% endif %}
+
+  {% if params.spanLegend %}
+    {% set legendHtml = "<span data-cy='" + dataCyLegend + "' class='" + headingClass + "'>" + heading + "</span>" %}
+
+  {% else %}
+    {% set legendHtml = "<h" + headingLevel + " class=" + headingClass + " id='heading' data-cy='" + dataCyLegend + "'>" + heading + "</h" + headingLevel + ">" %}
   {% endif %}
 
   {% if params.dataCyHint %}
@@ -48,7 +61,7 @@
     name: fieldId,
     fieldset: {
       legend: {
-        html: "<h1 class=" + headerClass + " id='heading' data-cy='" + dataCyHeading + "'>" + heading + "</h1>"
+        html: legendHtml
       }
     },
     hint: {
