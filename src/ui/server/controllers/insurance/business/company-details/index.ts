@@ -225,8 +225,8 @@ const post = async (req: Request, res: Response) => {
     const submittedValues = {
       [COMPANY_HOUSE.INPUT]: companiesHouseNumber,
       // if trading name is string true, then convert to boolean true
-      [TRADING_NAME]: sanitiseValue(TRADING_NAME, payload[TRADING_NAME]),
-      [TRADING_ADDRESS]: sanitiseValue(TRADING_ADDRESS, payload[TRADING_ADDRESS]),
+      [TRADING_NAME]: sanitiseValue({ key: TRADING_NAME, value: payload[TRADING_NAME] }),
+      [TRADING_ADDRESS]: sanitiseValue({ key: TRADING_ADDRESS, value: payload[TRADING_ADDRESS] }),
       [WEBSITE]: payload[WEBSITE],
       [PHONE_NUMBER]: payload[PHONE_NUMBER],
     };

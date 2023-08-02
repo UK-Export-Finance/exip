@@ -1,10 +1,12 @@
 import { add, getMonth, getYear } from 'date-fns';
-import { pageVariables, TEMPLATE, get, post } from '.';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { pageVariables, TEMPLATE, FIELD_IDS, get, post } from '.';
+import { ROUTES, TEMPLATES } from '../../../../constants';
+import POLICY_AND_EXPORTS_FIELD_IDS from '../../../../constants/field-ids/insurance/policy-and-exports';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
@@ -23,15 +25,16 @@ const {
 } = ROUTES;
 
 const {
-  POLICY_AND_EXPORTS: { CONTRACT_POLICY },
-} = FIELD_IDS.INSURANCE;
-
-const {
-  REQUESTED_START_DATE,
-  SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-  CREDIT_PERIOD_WITH_BUYER,
-  POLICY_CURRENCY_CODE,
-} = CONTRACT_POLICY;
+  CONTRACT_POLICY: {
+    REQUESTED_START_DATE,
+    REQUESTED_START_DATE_DAY,
+    REQUESTED_START_DATE_MONTH,
+    REQUESTED_START_DATE_YEAR,
+    SINGLE: { CONTRACT_COMPLETION_DATE, CONTRACT_COMPLETION_DATE_DAY, CONTRACT_COMPLETION_DATE_MONTH, CONTRACT_COMPLETION_DATE_YEAR, TOTAL_CONTRACT_VALUE },
+    CREDIT_PERIOD_WITH_BUYER,
+    POLICY_CURRENCY_CODE,
+  },
+} = POLICY_AND_EXPORTS_FIELD_IDS;
 
 describe('controllers/insurance/policy-and-export/single-contract-policy', () => {
   let req: Request;
@@ -105,6 +108,24 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
       expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY);
+    });
+  });
+
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      const expected = [
+        REQUESTED_START_DATE_DAY,
+        REQUESTED_START_DATE_MONTH,
+        REQUESTED_START_DATE_YEAR,
+        CONTRACT_COMPLETION_DATE_DAY,
+        CONTRACT_COMPLETION_DATE_MONTH,
+        CONTRACT_COMPLETION_DATE_YEAR,
+        TOTAL_CONTRACT_VALUE,
+        CREDIT_PERIOD_WITH_BUYER,
+        POLICY_CURRENCY_CODE,
+      ];
+
+      expect(FIELD_IDS).toEqual(expected);
     });
   });
 
@@ -233,12 +254,14 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
         req.body = validBody;
       });
 
-      it('should call mapAndSave.policyAndExport with req.body and application', async () => {
+      it('should call mapAndSave.policyAndExport with data from from constructPayload function and application', async () => {
         await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(req.body, res.locals.application);
+        expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
       it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, async () => {
@@ -284,6 +307,8 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
       it('should render template with validation errors', async () => {
         await post(req, res);
 
+        const payload = constructPayload(req.body, FIELD_IDS);
+
         const expectedCurrencies = mapCurrencies(mockCurrencies);
 
         const expectedVariables = {
@@ -294,9 +319,9 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
           ...pageVariables(refNumber),
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplicationWithoutCurrencyCode),
-          submittedValues: req.body,
+          submittedValues: payload,
           currencies: expectedCurrencies,
-          validationErrors: generateValidationErrors(req.body),
+          validationErrors: generateValidationErrors(payload),
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -314,6 +339,8 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
         it('should render template with currencies mapped to submitted currency', async () => {
           await post(req, res);
 
+          const payload = constructPayload(req.body, FIELD_IDS);
+
           const expectedCurrencies = mapCurrencies(mockCurrencies, currencyCode);
 
           const expectedVariables = {
@@ -324,9 +351,9 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
             ...pageVariables(refNumber),
             userName: getUserNameFromSession(req.session.user),
             application: mapApplicationToFormFields(mockApplicationWithoutCurrencyCode),
-            submittedValues: req.body,
+            submittedValues: payload,
             currencies: expectedCurrencies,
-            validationErrors: generateValidationErrors(req.body),
+            validationErrors: generateValidationErrors(payload),
           };
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

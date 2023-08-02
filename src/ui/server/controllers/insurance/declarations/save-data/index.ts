@@ -1,5 +1,6 @@
 import api from '../../../../api';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
+import stripEmptyFormFields from '../../../../helpers/strip-empty-form-fields';
 import { Application, RequestBody } from '../../../../../types';
 
 /**
@@ -11,8 +12,11 @@ import { Application, RequestBody } from '../../../../../types';
  * @returns {Object} Saved data
  */
 const declaration = async (application: Application, formBody: RequestBody) => {
+  // strip empty form fields.
+  const fieldsWithValues = stripEmptyFormFields(formBody);
+
   // sanitise the form data.
-  const sanitisedData = sanitiseData(formBody);
+  const sanitisedData = sanitiseData(fieldsWithValues);
 
   // send the form data to the API for database update.
   const declarationId = application.declaration?.id;

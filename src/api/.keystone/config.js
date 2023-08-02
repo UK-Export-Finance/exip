@@ -33,8 +33,32 @@ __export(keystone_exports, {
   default: () => keystone_default
 });
 module.exports = __toCommonJS(keystone_exports);
-var import_config2 = require("dotenv/config");
+var import_config3 = require("dotenv/config");
 var import_core2 = require("@keystone-6/core");
+
+// middleware/headers/check-api-key/index.ts
+var import_config = require("dotenv/config");
+var { API_KEY } = process.env;
+var checkApiKey = (req, res, next) => {
+  const { "x-api-key": xApiKey } = req.headers;
+  if (!xApiKey || xApiKey !== API_KEY) {
+    return res.status(401).json({ message: "Unauthorised" });
+  }
+  next();
+};
+var check_api_key_default = checkApiKey;
+
+// middleware/rate-limiter/index.js
+var import_express_rate_limit = __toESM(require("express-rate-limit"));
+var rateLimiter = (0, import_express_rate_limit.default)({
+  windowMs: 1 * 60 * 1e3,
+  // 1 minute
+  max: 1e3,
+  // 1K requests / 1 window
+  standardHeaders: false,
+  legacyHeaders: false
+});
+var rate_limiter_default = rateLimiter;
 
 // schema.ts
 var import_core = require("@keystone-6/core");
@@ -549,6 +573,29 @@ var updateApplication = {
 };
 var update_application_default = updateApplication;
 
+// helpers/get-account-by-field/index.ts
+var getAccountByField = async (context, field, value) => {
+  try {
+    console.info("Getting account by field/value");
+    const accountsArray = await context.db.Account.findMany({
+      where: {
+        [field]: { equals: value }
+      },
+      take: 1
+    });
+    if (!accountsArray?.length || !accountsArray[0]) {
+      console.info("Getting account by field - no account exists with the provided field/value");
+      return false;
+    }
+    const account = accountsArray[0];
+    return account;
+  } catch (err) {
+    console.error(err);
+    throw new Error(`Getting account by field/value ${err}`);
+  }
+};
+var get_account_by_field_default = getAccountByField;
+
 // schema.ts
 var lists = {
   ReferenceNumber: {
@@ -884,6 +931,18 @@ var lists = {
         ref: "Application",
         many: true
       })
+    },
+    hooks: {
+      validateInput: async ({ context, operation, resolvedData }) => {
+        if (operation === "create") {
+          const { email } = resolvedData;
+          const requestedEmail = String(email);
+          const account = await get_account_by_field_default(context, account_default.EMAIL, requestedEmail);
+          if (account) {
+            throw new Error(`Unable to create a new account for ${requestedEmail} - account already exists`);
+          }
+        }
+      }
     },
     access: import_access.allowAll
   }),
@@ -1254,7 +1313,7 @@ var lists = {
 };
 
 // auth.ts
-var import_config = require("dotenv/config");
+var import_config2 = require("dotenv/config");
 var import_auth = require("@keystone-6/auth");
 var import_session = require("@keystone-6/core/session");
 var sessionSecret = String(process.env.SESSION_SECRET);
@@ -1580,29 +1639,6 @@ var type_defs_default = typeDefs;
 // custom-resolvers/mutations/create-an-account/index.ts
 var import_crypto2 = __toESM(require("crypto"));
 
-// helpers/get-account-by-field/index.ts
-var getAccountByField = async (context, field, value) => {
-  try {
-    console.info("Getting account by field/value");
-    const accountsArray = await context.db.Account.findMany({
-      where: {
-        [field]: { equals: value }
-      },
-      take: 1
-    });
-    if (!accountsArray?.length || !accountsArray[0]) {
-      console.info("Getting account by field - no account exists with the provided field/value");
-      return false;
-    }
-    const account = accountsArray[0];
-    return account;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting account by field/value ${err}`);
-  }
-};
-var get_account_by_field_default = getAccountByField;
-
 // helpers/encrypt-password/index.ts
 var import_crypto = __toESM(require("crypto"));
 var { ENCRYPTION } = ACCOUNT2;
@@ -1923,7 +1959,7 @@ var createAnAccount = async (root, variables, context) => {
   console.info("Creating new account for ", variables.email);
   try {
     const { urlOrigin, firstName, lastName, email, password: password2 } = variables;
-    const account = await get_account_by_field_default(context, "email", email);
+    const account = await get_account_by_field_default(context, account_default.EMAIL, email);
     if (account) {
       console.info(`Unable to create a new account for ${variables.email} - account already exists`);
       return { success: false };
@@ -4383,15 +4419,22 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 });
 
 // keystone.ts
-var enableLogging = process.env.NODE_ENV === "development";
+var { NODE_ENV, DATABASE_URL } = process.env;
+var enableLogging = NODE_ENV === "development";
 var keystone_default = withAuth(
   (0, import_core2.config)({
     server: {
-      port: 5001
+      port: 5001,
+      extendExpressApp: (app) => {
+        if (NODE_ENV === "production") {
+          app.use(rate_limiter_default);
+        }
+        app.use(check_api_key_default);
+      }
     },
     db: {
       provider: "mysql",
-      url: String(process.env.DATABASE_URL),
+      url: String(DATABASE_URL),
       enableLogging
     },
     ui: {

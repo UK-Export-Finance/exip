@@ -51,7 +51,9 @@ describe('controllers/insurance/business/broker', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      expect(FIELD_IDS).toEqual([USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL]);
+      const expected = [USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL];
+
+      expect(FIELD_IDS).toEqual(expected);
     });
   });
 

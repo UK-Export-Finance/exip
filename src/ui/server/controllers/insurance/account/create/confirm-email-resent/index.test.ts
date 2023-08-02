@@ -3,6 +3,7 @@ import { PAGES } from '../../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../../constants';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import { Request, Response } from '../../../../../../types';
 import api from '../../../../../api';
 import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
@@ -13,6 +14,8 @@ describe('controllers/insurance/account/create/confirm-email-resent', () => {
   let req: Request;
   let res: Response;
 
+  const mockQueryId = mockAccount.id;
+
   const mockGetAccountResponse = {
     success: true,
     email: mockAccount.email,
@@ -22,7 +25,7 @@ describe('controllers/insurance/account/create/confirm-email-resent', () => {
 
   beforeEach(() => {
     req = mockReq();
-    req.query.id = mockAccount.id;
+    req.query.id = mockQueryId;
 
     res = mockRes();
 
@@ -47,12 +50,14 @@ describe('controllers/insurance/account/create/confirm-email-resent', () => {
   });
 
   describe('get', () => {
+    const sanitisedId = String(sanitiseValue({ value: mockQueryId }));
+
     it('should call api.keystone.account.get with ID from req.query', async () => {
       await get(req, res);
 
       expect(getAccountSpy).toHaveBeenCalledTimes(1);
 
-      expect(getAccountSpy).toHaveBeenCalledWith(req.query.id);
+      expect(getAccountSpy).toHaveBeenCalledWith(sanitisedId);
     });
 
     it('should render template', async () => {
@@ -65,7 +70,7 @@ describe('controllers/insurance/account/create/confirm-email-resent', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         accountEmail: mockGetAccountResponse.email,
-        accountId: req.query.id,
+        accountId: sanitisedId,
       });
     });
 

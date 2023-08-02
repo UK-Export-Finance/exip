@@ -103,7 +103,7 @@ describe('controllers/insurance/account/password-reset', () => {
     });
 
     describe('when there are no validation errors', () => {
-      const sanitisedEmail = sanitiseValue(FIELD_ID, validBody[FIELD_ID]);
+      const sanitisedEmail = sanitiseValue({ value: validBody[FIELD_ID] });
 
       beforeEach(() => {
         req.body = validBody;

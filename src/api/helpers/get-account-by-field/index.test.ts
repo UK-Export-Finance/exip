@@ -24,7 +24,7 @@ describe('helpers/get-account-by-field', () => {
   beforeEach(async () => {
     await accounts.deleteAll(context);
 
-    account = await accounts.create(context);
+    account = await accounts.create({ context });
   });
 
   it('should return an account by ID', async () => {

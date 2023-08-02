@@ -2,10 +2,11 @@ import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { Request, Response } from '../../../../../types';
 
-const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE;
+export const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE;
 
 const {
   ACCOUNT: { SIGN_IN, CREATE },
@@ -35,7 +36,9 @@ export const get = (req: Request, res: Response) => res.render(TEMPLATE, singleI
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
 export const post = (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY);
+  const payload = constructPayload(req.body, [FIELD_ID]);
+
+  const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
@@ -48,7 +51,7 @@ export const post = (req: Request, res: Response) => {
     });
   }
 
-  const answer = req.body[FIELD_ID];
+  const answer = payload[FIELD_ID];
 
   if (answer === 'true') {
     return res.redirect(SIGN_IN.ROOT);

@@ -77,6 +77,7 @@ jobs:
           API_PORT: ${{ vars.API_PORT }}
           UI_PORT: ${{ vars.UI_PORT }}
           API_URL: ${{ secrets.API_URL_LOCAL }}
+          API_KEY: ${{ secrets.API_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL_LOCAL }}
           MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
@@ -131,6 +132,7 @@ jobs:
           API_PORT: ${{ vars.API_PORT }}
           UI_PORT: ${{ vars.UI_PORT }}
           API_URL: ${{ secrets.API_URL }}
+          API_KEY: ${{ secrets.API_KEY }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
           MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
@@ -159,6 +161,7 @@ jobs:
       - name: Execute
         uses: cypress-io/github-action@v4
         with:
+          install: false
           headed: false
           record: true
           parallel: true
@@ -170,6 +173,7 @@ jobs:
           TZ: Europe/London
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          API_KEY: ${{ secrets.API_KEY }}
           GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
           GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}

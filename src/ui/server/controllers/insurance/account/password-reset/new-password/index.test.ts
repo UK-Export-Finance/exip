@@ -1,18 +1,15 @@
-import { PAGE_VARIABLES, TEMPLATE, PAGE_CONTENT_STRINGS, get, post } from '.';
+import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, PAGE_CONTENT_STRINGS, get, post } from '.';
 import { PAGES } from '../../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
+import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import api from '../../../../../api';
 import cannotUseNewPasswordValidation from './validation/cannot-use-new-password';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
-
-const {
-  ACCOUNT: { PASSWORD: FIELD_ID },
-} = FIELD_IDS.INSURANCE;
-
 const {
   INSURANCE: {
     ACCOUNT: {
@@ -36,6 +33,39 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
     res = mockRes();
   });
 
+  describe('FIELD_ID', () => {
+    it('should have the correct ID', () => {
+      const expected = FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD;
+
+      expect(FIELD_ID).toEqual(expected);
+    });
+  });
+
+  describe('PAGE_VARIABLES', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        FIELD: {
+          ID: FIELD_ID,
+          ...FIELDS.NEW_PASSWORD[FIELD_ID],
+        },
+      };
+
+      expect(PAGE_VARIABLES).toEqual(expected);
+    });
+  });
+
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD);
+    });
+  });
+
+  describe('PAGE_CONTENT_STRINGS', () => {
+    it('should have the correct strings', () => {
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD);
+    });
+  });
+
   describe('get', () => {
     const verifyPasswordResetTokenResponse = { success: true };
 
@@ -45,29 +75,14 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
       api.keystone.account.verifyPasswordResetToken = verifyAccountPasswordResetTokenSpy;
     });
 
-    describe('PAGE_VARIABLES', () => {
-      it('should have correct properties', () => {
-        const expected = {
-          FIELD: {
-            ID: FIELD_ID,
-            ...FIELDS.NEW_PASSWORD[FIELD_ID],
-          },
-        };
+    it('should call api.keystone.account.verifyPasswordResetToken with req.headers.origin and sanitised email', async () => {
+      await get(req, res);
 
-        expect(PAGE_VARIABLES).toEqual(expected);
-      });
-    });
+      const sanitisedToken = String(sanitiseValue({ value: mockToken }));
 
-    describe('TEMPLATE', () => {
-      it('should have the correct template defined', () => {
-        expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD);
-      });
-    });
+      expect(verifyAccountPasswordResetTokenSpy).toHaveBeenCalledTimes(1);
 
-    describe('PAGE_CONTENT_STRINGS', () => {
-      it('should have the correct strings', () => {
-        expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD);
-      });
+      expect(verifyAccountPasswordResetTokenSpy).toHaveBeenCalledWith(sanitisedToken);
     });
 
     it('should render template', async () => {
@@ -175,8 +190,10 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
     });
 
     describe('when there are validation errors', () => {
-      it('should render template with validation errors and submitted values', async () => {
+      it('should render template with validation errors and submitted values from constructPayload function', async () => {
         await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...insuranceCorePageVariables({
@@ -184,8 +201,8 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
             BACK_LINK: req.headers.referer,
           }),
           ...PAGE_VARIABLES,
-          submittedValues: req.body,
-          validationErrors: generateValidationErrors(req.body),
+          submittedValues: payload,
+          validationErrors: generateValidationErrors(payload),
         });
       });
     });
@@ -206,12 +223,15 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
         req.body = validBody;
       });
 
-      it('should call api.keystone.account.passwordReset with req.body and req.headers.origin', async () => {
+      it('should call api.keystone.account.passwordReset with sanitised token and submitted value from constructPayload function', async () => {
         await post(req, res);
+
+        const sanitisedToken = String(sanitiseValue({ value: mockToken }));
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
         expect(passwordResetSpy).toHaveBeenCalledTimes(1);
 
-        expect(passwordResetSpy).toHaveBeenCalledWith(req.query.token, req.body[FIELD_ID]);
+        expect(passwordResetSpy).toHaveBeenCalledWith(sanitisedToken, payload[FIELD_ID]);
       });
 
       it(`should redirect to ${SUCCESS}`, async () => {

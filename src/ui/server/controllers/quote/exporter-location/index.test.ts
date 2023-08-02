@@ -1,8 +1,9 @@
-import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
+import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { ERROR_MESSAGES, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../helpers/construct-payload';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
@@ -17,10 +18,18 @@ describe('controllers/quote/exporter-location', () => {
     res = mockRes();
   });
 
+  describe('FIELD_ID', () => {
+    it('should have the correct ID', () => {
+      const expected = FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION;
+
+      expect(FIELD_ID).toEqual(expected);
+    });
+  });
+
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION,
+        FIELD_ID,
         PAGE_CONTENT_STRINGS: PAGES.EXPORTER_LOCATION,
       };
 
@@ -49,14 +58,16 @@ describe('controllers/quote/exporter-location', () => {
 
   describe('post', () => {
     describe('when there are validation errors', () => {
-      it('should render template with validation errors', () => {
+      it('should render template with validation errors from constructPayload function', () => {
         post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, ORIGINAL_URL: req.originalUrl }),
           userName: getUserNameFromSession(req.session.user),
           BACK_LINK: req.headers.referer,
-          validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID]),
+          validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID]),
         });
       });
     });
@@ -64,7 +75,7 @@ describe('controllers/quote/exporter-location', () => {
     describe('when submitted answer is false', () => {
       beforeEach(() => {
         req.body = {
-          [FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION]: 'false',
+          [FIELD_ID]: 'false',
         };
       });
 
@@ -86,7 +97,7 @@ describe('controllers/quote/exporter-location', () => {
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION]: 'true',
+        [FIELD_ID]: 'true',
       };
 
       beforeEach(() => {
@@ -96,7 +107,9 @@ describe('controllers/quote/exporter-location', () => {
       it('should update the session with submitted data', () => {
         post(req, res);
 
-        const expected = updateSubmittedData(req.body, req.session.submittedData.quoteEligibility);
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        const expected = updateSubmittedData(payload, req.session.submittedData.quoteEligibility);
 
         expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });

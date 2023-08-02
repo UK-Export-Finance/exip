@@ -1,4 +1,5 @@
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { ROUTES, TEMPLATES } from '../../../../constants';
+import POLICY_AND_EXPORTS_FIELD_IDS from '../../../../constants/field-ids/insurance/policy-and-exports';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -7,23 +8,30 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import { objectHasKeysAndValues } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
 import { isMultiPolicyType, isSinglePolicyType } from '../../../../helpers/policy-type';
+import constructPayload from '../../../../helpers/construct-payload';
 import mapAndSave from '../map-and-save';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE: { INSURANCE_ROOT, PROBLEM_WITH_SERVICE },
 } = ROUTES;
-const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
+
+const {
+  TYPE_OF_POLICY: { POLICY_TYPE },
+} = POLICY_AND_EXPORTS_FIELD_IDS;
+
 const { INSURANCE } = ROUTES;
 
 export const pageVariables = (referenceNumber: number) => ({
-  FIELD: FIELDS[POLICY_AND_EXPORTS.POLICY_TYPE],
+  FIELD: FIELDS[POLICY_TYPE],
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY_SAVE_AND_BACK}`,
 });
 
-const FIELD_ID = POLICY_AND_EXPORTS.POLICY_TYPE;
+const FIELD_ID = POLICY_TYPE;
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY;
+
+export const FIELD_IDS = [FIELD_ID];
 
 /**
  * get
@@ -70,8 +78,10 @@ export const post = async (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
   const refNumber = Number(referenceNumber);
 
+  const payload = constructPayload(req.body, FIELD_IDS);
+
   // check for form errors.
-  const validationErrors = generateValidationErrors(req.body);
+  const validationErrors = generateValidationErrors(payload);
 
   if (objectHasKeysAndValues(validationErrors)) {
     return res.render(TEMPLATE, {
@@ -87,17 +97,17 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     // save the application
-    const saveResponse = await mapAndSave.policyAndExport(req.body, application);
+    const saveResponse = await mapAndSave.policyAndExport(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    if (isSinglePolicyType(req.body[FIELD_ID])) {
+    if (isSinglePolicyType(payload[FIELD_ID])) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`);
     }
 
-    if (isMultiPolicyType(req.body[FIELD_ID])) {
+    if (isMultiPolicyType(payload[FIELD_ID])) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`);
     }
 

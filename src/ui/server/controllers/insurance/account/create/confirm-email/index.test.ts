@@ -2,6 +2,7 @@ import { TEMPLATE, PAGE_CONTENT_STRINGS, get } from '.';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../../constants';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../../types';
 import api from '../../../../../api';
@@ -64,9 +65,11 @@ describe('controllers/insurance/account/create/confirm-email', () => {
 
         await get(req, res);
 
+        const sanitisedId = String(sanitiseValue({ value: req.query.id }));
+
         expect(getAccountSpy).toHaveBeenCalledTimes(1);
 
-        expect(getAccountSpy).toHaveBeenCalledWith(mockId);
+        expect(getAccountSpy).toHaveBeenCalledWith(sanitisedId);
       });
     });
 

@@ -1,6 +1,7 @@
 import save from '.';
 import api from '../../../../api';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
+import stripEmptyFormFields from '../../../../helpers/strip-empty-form-fields';
 import { FIELD_IDS } from '../../../../constants';
 import { mockApplication } from '../../../../test-mocks';
 
@@ -26,13 +27,16 @@ describe('controllers/insurance/declarations/save-data', () => {
     expect(result).toEqual(mockUpdateApplicationResponse);
   });
 
-  it('should call api.keystone.application.update.declarations with declaration ID and sanitised data', async () => {
+  it('should call api.keystone.application.update.declarations with declaration ID and sanitised data without empty fields', async () => {
     await save.declaration(mockApplication, mockFormBody);
 
     expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
-    const expectedSanitisedData = sanitiseData(mockFormBody);
-    expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.declaration.id, expectedSanitisedData);
+    const fieldsWithValues = stripEmptyFormFields(mockFormBody);
+
+    const expectedData = sanitiseData(fieldsWithValues);
+
+    expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.declaration.id, expectedData);
   });
 
   it('should return the API response', async () => {

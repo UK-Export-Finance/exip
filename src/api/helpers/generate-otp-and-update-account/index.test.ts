@@ -28,7 +28,7 @@ describe('helpers/generate-otp-and-update-account', () => {
   beforeEach(async () => {
     await accounts.deleteAll(context);
 
-    account = await accounts.create(context);
+    account = await accounts.create({ context });
 
     result = await generateOTPAndUpdateAccount(context, account.id);
 

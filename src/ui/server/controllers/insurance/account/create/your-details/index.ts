@@ -1,7 +1,9 @@
 import { PAGES } from '../../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
+import { ROUTES, TEMPLATES } from '../../../../../constants';
+import ACCOUNT_FIELD_IDS from '../../../../../constants/field-ids/insurance/account';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import constructPayload from '../../../../../helpers/construct-payload';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
 import generateAccountAlreadyExistsValidationErrors from './validation/account-already-exists';
@@ -11,9 +13,7 @@ import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 
-const {
-  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD },
-} = FIELD_IDS.INSURANCE;
+const { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD } = ACCOUNT_FIELD_IDS;
 
 const {
   INSURANCE: {
@@ -25,6 +25,8 @@ const {
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
+
+export const FIELD_IDS = [FIRST_NAME, LAST_NAME, EMAIL, PASSWORD];
 
 /**
  * PAGE_VARIABLES
@@ -91,7 +93,9 @@ export const get = (req: Request, res: Response) => {
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
 export const post = async (req: Request, res: Response) => {
-  let validationErrors = generateValidationErrors(req.body);
+  const payload = constructPayload(req.body, FIELD_IDS);
+
+  let validationErrors = generateValidationErrors(payload);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
@@ -101,7 +105,7 @@ export const post = async (req: Request, res: Response) => {
       }),
       ...PAGE_VARIABLES,
       userName: getUserNameFromSession(req.session.user),
-      submittedValues: req.body,
+      submittedValues: payload,
       validationErrors,
     });
   }
@@ -110,7 +114,7 @@ export const post = async (req: Request, res: Response) => {
     // save the account
     const urlOrigin = req.headers.origin;
 
-    const saveResponse = await saveData.account(urlOrigin, req.body);
+    const saveResponse = await saveData.account(urlOrigin, payload);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
@@ -127,7 +131,7 @@ export const post = async (req: Request, res: Response) => {
           }),
           ...PAGE_VARIABLES,
           userName: getUserNameFromSession(req.session.user),
-          submittedValues: req.body,
+          submittedValues: payload,
           validationErrors,
         });
       }

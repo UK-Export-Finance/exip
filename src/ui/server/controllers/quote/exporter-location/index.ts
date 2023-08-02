@@ -2,12 +2,13 @@ import { ERROR_MESSAGES, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../helpers/construct-payload';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import isChangeRoute from '../../../helpers/is-change-route';
 import { Request, Response } from '../../../../types';
 
-const FIELD_ID = FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION;
+export const FIELD_ID = FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION;
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
@@ -28,7 +29,9 @@ export const get = (req: Request, res: Response) =>
   });
 
 export const post = (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[FIELD_ID]);
+  const payload = constructPayload(req.body, [FIELD_ID]);
+
+  const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[FIELD_ID]);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
@@ -43,11 +46,11 @@ export const post = (req: Request, res: Response) => {
   }
 
   req.session.submittedData = {
-    quoteEligibility: updateSubmittedData(req.body, req.session.submittedData.quoteEligibility),
+    quoteEligibility: updateSubmittedData(payload, req.session.submittedData.quoteEligibility),
     insuranceEligibility: {},
   };
 
-  const answer = req.body[FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION];
+  const answer = payload[FIELD_ID];
 
   if (answer === 'false') {
     req.flash('previousRoute', ROUTES.QUOTE.EXPORTER_LOCATION);

@@ -57,7 +57,9 @@ describe('controllers/insurance/business/companies-details', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      expect(FIELD_IDS).toEqual([COMPANY_HOUSE.INPUT, TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER]);
+      const expected = [COMPANY_HOUSE.INPUT, TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER];
+
+      expect(FIELD_IDS).toEqual(expected);
     });
   });
 
@@ -356,20 +358,6 @@ describe('controllers/insurance/business/companies-details', () => {
           SUMMARY_LIST: companyHouseSummaryList(mockCompany),
           submittedValues: payload,
           validationErrors: {},
-        });
-      });
-
-      describe('when an extra field is inserted onto the page', () => {
-        it('should call api.keystone.getCompaniesHouseInformation with the data from constructPayload function', async () => {
-          req.body = {
-            companiesHouseNumber: '123456',
-            injection: 1,
-          };
-          await postCompaniesHouseSearch(req, res);
-
-          const payload = constructPayload(req.body, FIELD_IDS);
-
-          expect(getCompaniesHouseResponse).toHaveBeenCalledWith(payload[COMPANY_HOUSE.INPUT]);
         });
       });
     });

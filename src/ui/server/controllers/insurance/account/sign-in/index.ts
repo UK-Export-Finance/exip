@@ -1,16 +1,16 @@
 import { PAGES } from '../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { ROUTES, TEMPLATES } from '../../../../constants';
+import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import constructPayload from '../../../../helpers/construct-payload';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
 
-const {
-  ACCOUNT: { EMAIL, PASSWORD },
-} = FIELD_IDS.INSURANCE;
+const { EMAIL, PASSWORD } = ACCOUNT_FIELD_IDS;
 
 const {
   INSURANCE: {
@@ -22,6 +22,8 @@ const {
     DASHBOARD,
   },
 } = ROUTES;
+
+export const FIELD_IDS = [EMAIL, PASSWORD];
 
 /**
  * PAGE_VARIABLES
@@ -89,7 +91,9 @@ export const get = (req: Request, res: Response) => {
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
 export const post = async (req: Request, res: Response) => {
-  let validationErrors = generateValidationErrors(req.body);
+  const payload = constructPayload(req.body, FIELD_IDS);
+
+  let validationErrors = generateValidationErrors(payload);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
@@ -100,14 +104,14 @@ export const post = async (req: Request, res: Response) => {
       ...PAGE_VARIABLES,
       renderBackLink: true,
       userName: getUserNameFromSession(req.session.user),
-      submittedValues: req.body,
+      submittedValues: payload,
       validationErrors,
     });
   }
 
   try {
     // validate credentials
-    const sanitisedData = sanitiseData(req.body);
+    const sanitisedData = sanitiseData(payload);
 
     const email = sanitisedData[EMAIL];
     const password = String(sanitisedData[PASSWORD]);
@@ -143,7 +147,7 @@ export const post = async (req: Request, res: Response) => {
       ...PAGE_VARIABLES,
       renderBackLink: true,
       userName: getUserNameFromSession(req.session.user),
-      submittedValues: req.body,
+      submittedValues: payload,
       validationErrors,
     });
   } catch (err) {

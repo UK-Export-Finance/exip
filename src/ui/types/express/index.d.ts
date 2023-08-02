@@ -69,6 +69,7 @@ interface Request {
   csrfToken: () => string;
   flash: (str1: string, str2?: string) => string;
   headers: RequestHeaders;
+  hostname: string;
   method: string;
   originalUrl: string;
   baseUrl: string;

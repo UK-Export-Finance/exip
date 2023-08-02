@@ -2,6 +2,7 @@ import { TEMPLATE, PAGE_CONTENT_STRINGS, get, post } from '.';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../../constants';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 import { mockAccount, mockReq, mockRes } from '../../../../../test-mocks';
@@ -64,9 +65,11 @@ describe('controllers/insurance/account/password-reset/link-expired', () => {
     it('should call api.keystone.account.get with req.query.id', async () => {
       await post(req, res);
 
+      const sanitisedId = String(sanitiseValue({ value: mockAccount.id }));
+
       expect(getAccountSpy).toHaveBeenCalledTimes(1);
 
-      expect(getAccountSpy).toHaveBeenCalledWith(req.query.id);
+      expect(getAccountSpy).toHaveBeenCalledWith(sanitisedId);
     });
 
     it('should call api.keystone.account.sendEmailPasswordResetLink with req.headers.origin and account email address', async () => {

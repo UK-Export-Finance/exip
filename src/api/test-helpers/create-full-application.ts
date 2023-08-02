@@ -55,7 +55,7 @@ export const createFullApplication = async (context: Context) => {
     throw new Error('No country found from mock country ISO code');
   }
 
-  const account = await accounts.create(context);
+  const account = await accounts.create({ context });
 
   // create a new application
   const application = (await context.query.Application.createOne({

@@ -2,7 +2,7 @@ import { TEMPLATE, PAGE_CONTENT_STRINGS, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import { replaceCharactersWithCharacterCode } from '../../../../helpers/sanitise-data';
+import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockAccount } from '../../../../test-mocks';
@@ -54,7 +54,7 @@ describe('controllers/insurance/account/suspended', () => {
 
     let sendEmailReactivateAccountLinkResponseSpy = jest.fn(() => Promise.resolve(sendEmailReactivateAccountLinkResponse));
 
-    const sanitisedId = replaceCharactersWithCharacterCode(mockAccount.id);
+    const sanitisedId = String(sanitiseValue({ value: mockAccount.id }));
 
     beforeEach(() => {
       api.keystone.account.sendEmailReactivateAccountLink = sendEmailReactivateAccountLinkResponseSpy;

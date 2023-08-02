@@ -6,6 +6,7 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import { APPLICATION } from './constants';
 import updateApplication from './helpers/update-application';
 import accounts from './test-helpers/accounts';
+import { mockAccount } from './test-mocks';
 import { Application, Account } from './types';
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -249,15 +250,34 @@ describe('Create an Application', () => {
 describe('Account', () => {
   let account: Account;
 
+  describe('create', () => {
+    beforeAll(async () => {
+      await accounts.create({ context });
+    });
+
+    describe('when an account already exists with the provided email', () => {
+      test('it should not create the account', async () => {
+        const response = (await accounts.create({ context, data: mockAccount, deleteAccounts: false })) as Account;
+
+        expect(response.id).toBeUndefined();
+        expect(response.email).toBeUndefined();
+
+        const allAccounts = await context.query.Account.findMany();
+
+        expect(allAccounts.length).toEqual(1);
+      });
+    });
+  });
+
   describe('update', () => {
-    let updatedExporter: Account;
+    let updatedAccount: Account;
 
     const accountUpdate = { firstName: 'Updated' };
 
     beforeAll(async () => {
-      account = await accounts.create(context);
+      account = await accounts.create({ context });
 
-      updatedExporter = (await context.query.Account.updateOne({
+      updatedAccount = (await context.query.Account.updateOne({
         where: { id: account.id },
         data: accountUpdate,
         query: 'id createdAt updatedAt firstName lastName email salt hash isVerified verificationHash verificationExpiry',
@@ -265,11 +285,11 @@ describe('Account', () => {
     });
 
     test('it should update the provided fields', () => {
-      expect(updatedExporter.firstName).toEqual(accountUpdate.firstName);
+      expect(updatedAccount.firstName).toEqual(accountUpdate.firstName);
     });
 
     test('it should update updatedAt', () => {
-      expect(updatedExporter.updatedAt).not.toEqual(account.createdAt);
+      expect(updatedAccount.updatedAt).not.toEqual(account.createdAt);
     });
   });
 });

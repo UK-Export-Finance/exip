@@ -1,5 +1,6 @@
 import { get } from '.';
 import { ROUTES } from '../../../../../constants';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 import { mockAccount, mockReq, mockRes } from '../../../../../test-mocks';
@@ -22,10 +23,12 @@ describe('controllers/insurance/account/suspended/verify-email', () => {
 
   let verifyAccountReactivationTokenSpy = jest.fn(() => Promise.resolve(verifyAccountReactivationTokenResponse));
 
+  const mockToken = 'mockToken';
+
   beforeEach(() => {
     req = mockReq();
 
-    req.query.token = 'mockToken';
+    req.query.token = mockToken;
 
     res = mockRes();
 
@@ -48,6 +51,16 @@ describe('controllers/insurance/account/suspended/verify-email', () => {
 
       expect(res.redirect).toHaveBeenCalledWith(SUSPENDED_ROOT);
     });
+  });
+
+  it('should call api.keystone.account.verifyAccountReactivationToken with sanitised token', async () => {
+    await get(req, res);
+
+    const sanitisedToken = String(sanitiseValue({ value: mockToken }));
+
+    expect(verifyAccountReactivationTokenSpy).toHaveBeenCalledTimes(1);
+
+    expect(verifyAccountReactivationTokenSpy).toHaveBeenCalledWith(sanitisedToken);
   });
 
   describe('when api.keystone.account.verifyAccountReactivationToken returns expired=true and an accountId', () => {
