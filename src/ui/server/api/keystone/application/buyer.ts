@@ -28,7 +28,7 @@ const buyer = {
         return response.data.updateBuyer;
       }
 
-      console.error('Error with apollo updateBuyerMutation %O', response);
+      console.error('Error with GraphQL updateBuyerMutation %O', response);
       throw new Error('Updating application buyer');
     } catch (err) {
       console.error('Error updating application buyer %O', err);

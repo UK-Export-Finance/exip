@@ -45,7 +45,7 @@ const createInitialApplication = async (accountId: string) => {
       return response.data.createApplication;
     }
 
-    console.error('Error with apollo createApplicationMutation %O', response);
+    console.error('Error with GraphQL createApplicationMutation %O', response);
     throw new Error('Creating empty application');
   } catch (err) {
     console.error('Error creating empty application %O', err);
@@ -112,7 +112,7 @@ const application = {
         };
       }
 
-      console.error('Error with apollo getApplicationQuery %O', response);
+      console.error('Error with GraphQL getApplicationQuery %O', response);
       throw new Error('Getting application');
     } catch (err) {
       console.error('Error getting application %O', err);
@@ -143,7 +143,7 @@ const application = {
           return response.data.updatePolicyAndExport;
         }
 
-        console.error('Error with apollo updateApplicationPolicyAndExportMutation %O', response);
+        console.error('Error with GraphQL updateApplicationPolicyAndExportMutation %O', response);
         throw new Error('Updating application policy and export');
       } catch (err) {
         console.error('Error updating application policy and export %O', err);
@@ -173,7 +173,7 @@ const application = {
           return response.data.updateBroker;
         }
 
-        console.error('Error with apollo updateBrokerMutation %O', response);
+        console.error('Error with GraphQL updateBrokerMutation %O', response);
         throw new Error('Updating application broker');
       } catch (err) {
         console.error('Error updating application broker %O', err);
@@ -203,7 +203,7 @@ const application = {
           return response.data.updateBusiness;
         }
 
-        console.error('Error with apollo updateBusinessMutation %O', response);
+        console.error('Error with GraphQL updateBusinessMutation %O', response);
         throw new Error('Updating application business');
       } catch (err) {
         console.error('Error updating application business %O', err);
@@ -233,7 +233,7 @@ const application = {
           return response.data.updateBusinessContactDetail;
         }
 
-        console.error('Error with apollo updateBusinessContactMutation %O', response);
+        console.error('Error with GraphQL updateBusinessContactMutation %O', response);
         throw new Error('Updating application business contact');
       } catch (err) {
         console.error('Error updating application business contact %O', err);
@@ -264,7 +264,7 @@ const application = {
           return response.data.updateCompanyAndCompanyAddress;
         }
 
-        console.error('Error with apollo updateApplicationCompanyMutation %O', response);
+        console.error('Error with GraphQL updateApplicationCompanyMutation %O', response);
         throw new Error('Updating application company');
       } catch (err) {
         console.error('Error updating application company %O', err);
@@ -310,7 +310,7 @@ const application = {
           return response.data.updateBuyer;
         }
 
-        console.error('Error with apollo updateBuyerMutation %O', response);
+        console.error('Error with GraphQL updateBuyerMutation %O', response);
         throw new Error('Updating application buyer');
       } catch (err) {
         console.error('Error updating application buyer %O', err);
@@ -341,7 +341,7 @@ const application = {
           return response.data.updateSectionReview;
         }
 
-        console.error('Error with apollo updateApplicationSectionReviewMutation %O', response);
+        console.error('Error with GraphQL updateApplicationSectionReviewMutation %O', response);
         throw new Error('Updating application section review');
       } catch (err) {
         console.error('Error updating application section review %O', err);
@@ -369,7 +369,7 @@ const application = {
         return response.data.submitApplication;
       }
 
-      console.error('Error with apollo submitApplicationMutation %O', response);
+      console.error('Error with GraphQL submitApplicationMutation %O', response);
       throw new Error(`Submitting application ${applicationId}`);
     } catch (err) {
       console.error('Error submitting application %O', err);

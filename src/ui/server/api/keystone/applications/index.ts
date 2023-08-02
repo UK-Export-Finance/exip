@@ -23,7 +23,7 @@ const applications = {
         return response.data.applications;
       }
 
-      console.error('Error with apollo getApplicationsQuery %O', response);
+      console.error('Error with GraphQL getApplicationsQuery %O', response);
       throw new Error('Getting all applications');
     } catch (err) {
       console.error('Error getting all applications %O', err);

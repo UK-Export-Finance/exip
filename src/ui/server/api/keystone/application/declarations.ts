@@ -25,7 +25,7 @@ const declarations = {
         return response.data.declarationAntiBriberies[0];
       }
 
-      console.error('Error with apollo getDeclarationAntiBriberyQuery %O', response);
+      console.error('Error with GraphQL getDeclarationAntiBriberyQuery %O', response);
       throw new Error('Getting latest declaration - anti-bribery');
     } catch (err) {
       console.error('Error getting latest declaration - anti bribery %O', err);
@@ -50,7 +50,7 @@ const declarations = {
         return response.data.declarationConfirmationAndAcknowledgements[0];
       }
 
-      console.error('Error with apollo getDeclarationConfirmationAndAcknowledgementQuery %O', response);
+      console.error('Error with GraphQL getDeclarationConfirmationAndAcknowledgementQuery %O', response);
       throw new Error('Getting latest declaration - confirmation and acknowledgement');
     } catch (err) {
       console.error('Error getting latest declaration - confirmation and acknowledgement %O', err);
@@ -75,7 +75,7 @@ const declarations = {
         return response.data.declarationHowDataWillBeUseds[0];
       }
 
-      console.error('Error with apollo getDeclarationHowDataWillBeUsedQuery %O', response);
+      console.error('Error with GraphQL getDeclarationHowDataWillBeUsedQuery %O', response);
       throw new Error('Getting latest declaration - how data will be used');
     } catch (err) {
       console.error('Error getting latest declaration - how data will be used %O', err);
@@ -105,7 +105,7 @@ const declarations = {
         return response.data.updateDeclaration;
       }
 
-      console.error('Error with apollo updateApplicationDeclarationMutation %O', response);
+      console.error('Error with GraphQL updateApplicationDeclarationMutation %O', response);
       throw new Error('Updating application declaration');
     } catch (err) {
       console.error('Error updating application declaration %O', err);

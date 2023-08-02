@@ -21,7 +21,7 @@ const feedback = {
         return response.data.createFeedbackAndSendEmail;
       }
 
-      console.error('Error with apollo createInsuranceFeedbackMutation %O', response);
+      console.error('Error with GraphQL createInsuranceFeedbackMutation %O', response);
       throw new Error('Creating feedback');
     } catch (err) {
       console.error('Error creating feedback %O', err);

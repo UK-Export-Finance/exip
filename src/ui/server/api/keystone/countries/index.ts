@@ -22,7 +22,7 @@ const countries = {
         return response.data.countries;
       }
 
-      console.error('Error with apollo getCountries %O', response);
+      console.error('Error with GraphQL getCountries %O', response);
       throw new Error('Getting countries');
     } catch (err) {
       console.error('Error getting countries %O', err);
@@ -49,7 +49,7 @@ const countries = {
         return response.data.countries[0];
       }
 
-      console.error('Error with apollo getCountriesByIsoCodeQuery %O', response);
+      console.error('Error with GraphQL getCountriesByIsoCodeQuery %O', response);
       throw new Error('Getting country');
     } catch (err) {
       console.error('Error getting country %O', err);

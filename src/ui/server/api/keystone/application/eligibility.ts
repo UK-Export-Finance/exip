@@ -28,7 +28,7 @@ const eligibility = {
         return response.data.updateEligibility;
       }
 
-      console.error('Error with apollo updateEligibilityMutation %O', response);
+      console.error('Error with GraphQL updateEligibilityMutation %O', response);
       throw new Error('Updating eligibility');
     } catch (err) {
       console.error('Error updating eligibility %O', err);

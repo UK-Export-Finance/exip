@@ -23,7 +23,7 @@ const getCompaniesHouseInformation = async (companiesHouseNumber: string) => {
       return response.data.getCompaniesHouseInformation;
     }
 
-    console.error('Error with apollo companiesHouseQuery %O', response);
+    console.error('Error with GraphQL companiesHouseQuery %O', response);
     throw new Error('Getting Companies house information');
   } catch (err) {
     console.error('Error getting companies house information %O', err);

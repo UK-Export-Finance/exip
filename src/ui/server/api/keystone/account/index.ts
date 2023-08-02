@@ -38,7 +38,7 @@ const account = {
         return response.data.createAnAccount;
       }
 
-      console.error('Error with apollo createAccountMutation query %O', response);
+      console.error('Error with GraphQL createAccountMutation query %O', response);
       throw new Error('Creating an account');
     } catch (err) {
       console.error('Error creating an account %O', err);
@@ -65,7 +65,7 @@ const account = {
         return response.data.account;
       }
 
-      console.error('Error with apollo getAccountQuery %O', response);
+      console.error('Error with GraphQL getAccountQuery %O', response);
       throw new Error('Getting an account');
     } catch (err) {
       console.error('Error getting an account %O', err);
@@ -92,7 +92,7 @@ const account = {
         return response.data.verifyAccountEmailAddress;
       }
 
-      console.error('Error with apollo verifyAccountEmailAddressMutation %O', response);
+      console.error('Error with GraphQL verifyAccountEmailAddressMutation %O', response);
       throw new Error('Verifying account email address');
     } catch (err) {
       console.error('Error verifying account email address %O', err);
@@ -119,7 +119,7 @@ const account = {
         return response.data.sendEmailConfirmEmailAddress;
       }
 
-      console.error('Error with apollo sendEmailConfirmEmailAddressMutation %O', response);
+      console.error('Error with GraphQL sendEmailConfirmEmailAddressMutation %O', response);
       throw new Error('Sending email verification for account creation');
     } catch (err) {
       console.error('Error sending email verification for account creation %O', err);
@@ -146,7 +146,7 @@ const account = {
         return response.data.accountSignIn;
       }
 
-      console.error('Error with apollo accountSignInMutation %O', response);
+      console.error('Error with GraphQL accountSignInMutation %O', response);
       throw new Error('Signing in account');
     } catch (err) {
       console.error('Error signing into account %O', err);
@@ -173,7 +173,7 @@ const account = {
         return response.data.accountSignInSendNewCode;
       }
 
-      console.error('Error with apollo accountSignInSendNewCodeMutation %O', response);
+      console.error('Error with GraphQL accountSignInSendNewCodeMutation %O', response);
       throw new Error('Sending new sign in code for account');
     } catch (err) {
       console.error('Error sending new sign in code for account %O', err);
@@ -200,7 +200,7 @@ const account = {
         return response.data.verifyAccountSignInCode;
       }
 
-      console.error('Error with apollo verifyAccountSignInCodeMutation %O', response);
+      console.error('Error with GraphQL verifyAccountSignInCodeMutation %O', response);
       throw new Error('Verifying account sign in code');
     } catch (err) {
       console.error('Error verifying account sign in code %O', err);
@@ -227,7 +227,7 @@ const account = {
         return response.data.verifyAccountSession;
       }
 
-      console.error('Error with apollo verifyAccountSessionMutation %O', response);
+      console.error('Error with GraphQL verifyAccountSessionMutation %O', response);
       throw new Error('Verifying account session');
     } catch (err) {
       console.error('Error verifying account session %O', err);
@@ -254,7 +254,7 @@ const account = {
         return response.data.sendEmailPasswordResetLink;
       }
 
-      console.error('Error with apollo sendEmailPasswordResetLinkMutation %O', response);
+      console.error('Error with GraphQL sendEmailPasswordResetLinkMutation %O', response);
       throw new Error('Sending email for account password reset');
     } catch (err) {
       console.error('Error sending email for account password reset %O', err);
@@ -281,7 +281,7 @@ const account = {
         return response.data.sendEmailReactivateAccountLink;
       }
 
-      console.error('Error with apollo sendEmailReactivateAccountLinkMutation %O', response);
+      console.error('Error with GraphQL sendEmailReactivateAccountLinkMutation %O', response);
       throw new Error('Sending email for account reactivation');
     } catch (err) {
       console.error('Error sending email for account reactivation %O', err);
@@ -308,7 +308,7 @@ const account = {
         return response.data.verifyAccountReactivationToken;
       }
 
-      console.error('Error with apollo verifyAccountReactivationTokenMutation %O', response);
+      console.error('Error with GraphQL verifyAccountReactivationTokenMutation %O', response);
       throw new Error('Verifying account reactivation token');
     } catch (err) {
       console.error('Error verifying account reactivation token %O', err);
@@ -335,7 +335,7 @@ const account = {
         return response.data.verifyAccountPasswordResetToken;
       }
 
-      console.error('Error with apollo verifyAccountPasswordResetTokenQuery %O', response);
+      console.error('Error with GraphQL verifyAccountPasswordResetTokenQuery %O', response);
       throw new Error('Verifying account password reset token');
     } catch (err) {
       console.error('Error verifying account password reset token %O', err);
@@ -362,7 +362,7 @@ const account = {
         return response.data.accountPasswordReset;
       }
 
-      console.error('Error with apollo accountPasswordResetMutation %O', response);
+      console.error('Error with GraphQL accountPasswordResetMutation %O', response);
       throw new Error('Resetting account password');
     } catch (err) {
       console.error('Error resetting account password %O', err);
