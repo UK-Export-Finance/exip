@@ -1,5 +1,5 @@
 import { Request, Response } from '../../../../../types';
-import { pageVariables, post, FIELD_IDS } from '.';
+import { FIELD_IDS, pageVariables, post } from '.';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -7,11 +7,11 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import { PAGES } from '../../../../content-strings';
 import companiesHouseValidation from './validation/companies-house';
 import companyDetailsValidation from './validation/company-details';
-import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from '../../../../test-mocks';
+import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/company-details';
 import api from '../../../../api';
-import constructPayload from '../../../../helpers/construct-payload';
+import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from '../../../../test-mocks';
 
 const {
   COMPANY_HOUSE: { INPUT },
@@ -61,20 +61,23 @@ describe('controllers/insurance/business/companies-details', () => {
 
   describe('post', () => {
     describe('when there are validation errors', () => {
-      it('should render template with validation errors', async () => {
+      it('should render template with validation errors and submitted values', async () => {
         req.body = {};
 
-        const submittedValues = {
-          [INPUT]: req.body[INPUT],
-          [TRADING_NAME]: sanitiseValue({ value: req.body[TRADING_NAME] }),
-          [TRADING_ADDRESS]: sanitiseValue({ value: req.body[TRADING_ADDRESS] }),
-          [WEBSITE]: req.body[WEBSITE],
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        const expectedSubmittedValues = {
+          [INPUT]: payload[INPUT],
+          [TRADING_NAME]: sanitiseValue({ key: TRADING_NAME, value: payload[TRADING_NAME] }),
+          [TRADING_ADDRESS]: sanitiseValue({ key: TRADING_ADDRESS, value: payload[TRADING_ADDRESS] }),
+          [WEBSITE]: payload[WEBSITE],
+          [PHONE_NUMBER]: payload[PHONE_NUMBER],
         };
 
         await post(req, res);
 
-        let validationErrors = companiesHouseValidation(req.body);
-        validationErrors = companyDetailsValidation(req.body, validationErrors);
+        let validationErrors = companiesHouseValidation(payload);
+        validationErrors = companyDetailsValidation(payload, validationErrors);
 
         expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
           ...insuranceCorePageVariables({
@@ -84,13 +87,13 @@ describe('controllers/insurance/business/companies-details', () => {
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber, COMPANY_DETAILS_ROOT),
           validationErrors,
-          submittedValues,
+          submittedValues: expectedSubmittedValues,
         });
       });
     });
 
     describe('when there are no validation errors', () => {
-      const body = {
+      const validBody = {
         [INPUT]: '8989898',
         [TRADING_NAME]: 'true',
         [TRADING_ADDRESS]: 'false',
@@ -98,8 +101,7 @@ describe('controllers/insurance/business/companies-details', () => {
       };
 
       it('should redirect to next page', async () => {
-        req.body = body;
-
+        req.body = validBody;
         req.originalUrl = `insurance/${mockApplication.referenceNumber}/${COMPANY_DETAILS_ROOT}`;
 
         await post(req, res);
@@ -110,7 +112,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
       it('should call mapAndSave.companyDetails once with data from constructPayload function and application', async () => {
         req.body = {
-          ...body,
+          ...validBody,
           injection: 1,
         };
 
@@ -124,12 +126,13 @@ describe('controllers/insurance/business/companies-details', () => {
           ...payload,
           ...mockCompany,
         };
+
         expect(mapAndSave.companyDetails).toHaveBeenCalledWith(updateBody, mockApplication);
       });
 
       describe("when the url's last substring is `change`", () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.body = body;
+          req.body = validBody;
 
           req.originalUrl = COMPANY_DETAILS_CHANGE;
 
@@ -142,8 +145,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
       describe("when the url's last substring is `check-and-change`", () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-          req.body = body;
-
+          req.body = validBody;
           req.originalUrl = COMPANY_DETAILS_CHECK_AND_CHANGE;
 
           await post(req, res);
