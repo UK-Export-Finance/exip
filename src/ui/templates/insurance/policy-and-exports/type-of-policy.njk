@@ -35,7 +35,9 @@
 
         {% set legendHtml %}
           <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--l"><h1 class="govuk-fieldset__heading" id="heading" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1></legend>
+          <span class="govuk-fieldset__legend govuk-fieldset__legend--l">
+            <h1 class="govuk-fieldset__heading" id="heading" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+          </span>
           <p class="govuk-body" data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
         {% endset %}
 
