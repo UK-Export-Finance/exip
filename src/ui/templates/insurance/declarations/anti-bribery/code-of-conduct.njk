@@ -52,10 +52,10 @@
 
     {{ yesNoRadioButtons.render({
       fieldId: FIELD.ID,
-      heading: CONTENT_STRINGS.PAGE_TITLE,
+      legendText: CONTENT_STRINGS.PAGE_TITLE,
+      legendClass: 'govuk-heading-xl',
       submittedAnswer: application.declaration[FIELD.ID],
       errorMessage: validationErrors.errorList[FIELD.ID],
-      headerClass: 'govuk-heading-xl',
       hintHtml: hintHtml,
       horizontalRadios: true,
       conditionalYesHtml: conditionalYesHtml,

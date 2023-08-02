@@ -109,10 +109,10 @@
       <div class="govuk-grid-column-three-quarters-from-desktop">
         {{ yesNoRadioButtons.render({
           fieldId: FIELDS.USING_BROKER.ID,
-          heading: CONTENT_STRINGS.PAGE_TITLE,
+          legendText: CONTENT_STRINGS.PAGE_TITLE,
+          legendClass: 'govuk-fieldset__legend--xl',
           submittedAnswer: submittedValues[FIELDS.USING_BROKER.ID] or application.broker[FIELDS.USING_BROKER.ID],
           errorMessage: validationErrors.errorList[FIELDS.USING_BROKER.ID],
-          headerClass: 'govuk-fieldset__legend--xl',
           yesNoValueString: true,
           conditionalYesHtml: brokerHTML,
           horizontalRadios: true
