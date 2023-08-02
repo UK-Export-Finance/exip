@@ -18,7 +18,7 @@ export const documentsEmail = async (variables: ApplicationSubmissionEmailVariab
 
     return response;
   } catch (err) {
-    console.error(err);
+    console.error('Error sending documents email %O', err);
 
     throw new Error(`Sending documents email ${err}`);
   }

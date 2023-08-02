@@ -37,7 +37,7 @@ const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, c
       });
     }
 
-    console.info(`Deleting account ${accountId}`);
+    console.info('Deleting account %s', accountId);
 
     await context.db.Account.deleteOne({
       where: {
@@ -49,7 +49,7 @@ const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, c
       success: true,
     };
   } catch (err) {
-    console.error(err);
+    console.error('Error deleting account %O', err);
 
     throw new Error(`Deleting account ${err}`);
   }

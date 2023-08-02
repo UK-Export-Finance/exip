@@ -63,7 +63,7 @@ export const get = async (req: Request, res: Response) => {
       submittedValues: req.session.submittedData.insuranceEligibility,
     });
   } catch (err) {
-    console.error('Error getting insurance - eligibility - buyer-country ', { err });
+    console.error('Error getting insurance - eligibility - buyer-country %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -145,7 +145,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
     }
   } catch (err) {
-    console.error('Error posting insurance - eligibility - buyer-country ', { err });
+    console.error('Error posting insurance - eligibility - buyer-country %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

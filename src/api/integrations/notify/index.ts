@@ -20,7 +20,7 @@ const notify = {
    */
   sendEmail: async (templateId: string, sendToEmailAddress: string, variables: object, file?: Buffer) => {
     try {
-      console.info('Calling Notify API. templateId: ', templateId);
+      console.info('Calling Notify API. templateId: %s', templateId);
 
       const personalisation = variables as NotifyPeronsalisation;
 
@@ -38,7 +38,7 @@ const notify = {
         emailRecipient: sendToEmailAddress,
       };
     } catch (err) {
-      console.error(err);
+      console.error('Error calling Notify API. Unable to send email %O', err);
 
       throw new Error(`Calling Notify API. Unable to send email ${err}`);
     }

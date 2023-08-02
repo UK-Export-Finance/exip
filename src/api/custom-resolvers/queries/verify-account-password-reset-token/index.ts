@@ -52,14 +52,14 @@ const verifyAccountPasswordResetToken = async (
       };
     }
 
-    console.info(`Unable to verify account password reset token - no account found from the provided ${PASSWORD_RESET_HASH}`);
+    console.info('Unable to verify account password reset token - no account found from the provided %s', PASSWORD_RESET_HASH);
 
     return {
       success: false,
       invalid: true,
     };
   } catch (err) {
-    console.error(err);
+    console.error('Error verifying account password reset token %O', err);
 
     throw new Error(`Verifying account password reset token ${err}`);
   }

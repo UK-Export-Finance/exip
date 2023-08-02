@@ -40,7 +40,7 @@ const get = (req: Request, res: Response) => {
       ALL_SECTIONS: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
     });
   } catch (err) {
-    console.error('Error getting companies house unavailable page', { err });
+    console.error('Error getting companies house unavailable page %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

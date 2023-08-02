@@ -30,7 +30,7 @@ const yourBuyer = async (formBody: RequestBody, application: Application, valida
 
     return true;
   } catch (err) {
-    console.error('Error mapping and saving buyer section of application', { err });
+    console.error('Error mapping and saving buyer section of application %O', err);
     return false;
   }
 };

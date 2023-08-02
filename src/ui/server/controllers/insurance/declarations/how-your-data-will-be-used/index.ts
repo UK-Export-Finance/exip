@@ -70,7 +70,7 @@ export const get = async (req: Request, res: Response) => {
       application: mapApplicationToFormFields(res.locals.application),
     });
   } catch (err) {
-    console.error("Error getting declarations - how data will be used and rendering 'how data will be used' page ", { err });
+    console.error("Error getting declarations - how data will be used and rendering 'how data will be used' page %O", err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -113,7 +113,7 @@ export const post = async (req: Request, res: Response) => {
         validationErrors,
       });
     } catch (err) {
-      console.error("Error getting declarations - how data will be used and rendering 'how data will be used' page ", { err });
+      console.error("Error getting declarations - how data will be used and rendering 'how data will be used' page %O", err);
 
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
@@ -152,7 +152,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
-    console.error('Error updating application - declarations - how data will be used ', { err });
+    console.error('Error updating application - declarations - how data will be used %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

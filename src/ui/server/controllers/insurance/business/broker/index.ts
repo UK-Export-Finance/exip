@@ -99,7 +99,7 @@ const get = (req: Request, res: Response) => {
       ...pageVariables(application.referenceNumber),
     });
   } catch (err) {
-    console.error('Error getting broker', { err });
+    console.error('Error getting broker %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -156,7 +156,7 @@ const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (err) {
-    console.error('Error updating application - your business - broker', { err });
+    console.error('Error updating application - your business - broker %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

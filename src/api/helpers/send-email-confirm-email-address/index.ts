@@ -39,7 +39,7 @@ const send = async (context: Context, urlOrigin: string, accountId: string): Pro
 
     throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${emailResponse}`);
   } catch (err) {
-    console.error(err);
+    console.error('Error sending email verification (sendEmailConfirmEmailAddress helper) %O', err);
     throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${err}`);
   }
 };

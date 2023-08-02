@@ -32,7 +32,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (err) {
-    console.error('Error updating check your answers section review ', { err });
+    console.error('Error updating check your answers section review %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

@@ -50,7 +50,7 @@ export const get = async (req: Request, res: Response) => {
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
-    console.error("Error getting account and rendering 'confirm email resent' page", { err });
+    console.error("Error getting account and rendering 'confirm email resent' page %O", err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

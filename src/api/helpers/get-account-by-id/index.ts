@@ -20,7 +20,7 @@ const getAccountById = async (context: Context, accountId: string) => {
 
     return account;
   } catch (err) {
-    console.error(err);
+    console.error('Error getting account by ID %O', err);
 
     throw new Error(`Getting account by ID ${err}`);
   }

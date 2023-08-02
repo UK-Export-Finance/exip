@@ -107,9 +107,9 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const EXPECTED_FIELD_IDS = [NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER];
+      const expected = [NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER];
 
-      expect(FIELD_IDS).toEqual(EXPECTED_FIELD_IDS);
+      expect(FIELD_IDS).toEqual(expected);
     });
   });
 

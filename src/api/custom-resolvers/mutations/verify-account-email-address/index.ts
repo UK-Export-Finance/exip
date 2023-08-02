@@ -58,14 +58,14 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
       };
     }
 
-    console.info(`Unable to verify account email - no account found from the provided ${VERIFICATION_HASH}`);
+    console.info('Unable to verify account email - no account found from the provided %s', VERIFICATION_HASH);
 
     return {
       success: false,
       invalid: true,
     };
   } catch (err) {
-    console.error(err);
+    console.error('Error verifying account email address %O', err);
 
     throw new Error(`Verifying account email address ${err}`);
   }

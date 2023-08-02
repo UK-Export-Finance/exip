@@ -19,7 +19,7 @@ const {
 } = ENCRYPTION;
 
 const createAnAccount = async (root: any, variables: AccountCreationVariables, context: Context) => {
-  console.info('Creating new account for ', variables.email);
+  console.info('Creating new account for %s', variables.email);
 
   try {
     const { urlOrigin, firstName, lastName, email, password } = variables;
@@ -28,7 +28,7 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
     const account = await getAccountByField(context, ACCOUNT_FIELD_IDS.EMAIL, email);
 
     if (account) {
-      console.info(`Unable to create a new account for ${variables.email} - account already exists`);
+      console.info('Unable to create a new account for %s - account already exists', variables.email);
 
       return { success: false };
     }
@@ -75,6 +75,7 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
 
     throw new Error(`Sending email verification for account creation ${emailResponse}`);
   } catch (err) {
+    console.error('Error creating a new account %O', err);
     throw new Error(`Creating a new account ${err}`);
   }
 };

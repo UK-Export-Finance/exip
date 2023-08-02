@@ -12,7 +12,7 @@ import { Application } from '../types';
  */
 const XLSX = (application: Application): Promise<string> => {
   try {
-    console.info(`Generating XLSX file for application ${application.id}`);
+    console.info('Generating XLSX file for application %s', application.id);
 
     const { referenceNumber } = application;
 
@@ -54,7 +54,7 @@ const XLSX = (application: Application): Promise<string> => {
       workbook.xlsx.writeFile(filePath).then(() => resolve(filePath));
     });
   } catch (err) {
-    console.error(err);
+    console.error('Error generating XLSX file %O', err);
 
     throw new Error(`Generating XLSX file ${err}`);
   }

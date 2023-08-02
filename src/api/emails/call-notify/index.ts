@@ -26,7 +26,7 @@ export const callNotify = async (templateId: string, emailAddress: string, varia
 
     throw new Error(`Sending email ${emailResponse}`);
   } catch (err) {
-    console.error(err);
+    console.error('Error sending email %O', err);
 
     throw new Error(`Sending email ${err}`);
   }
