@@ -255,12 +255,13 @@
 
         {{ yesNoRadioButtons.render({
           fieldId: FIELDS.CAN_CONTACT_BUYER.ID,
-          heading: FIELDS.CAN_CONTACT_BUYER.LABEL,
+          legendText: FIELDS.CAN_CONTACT_BUYER.LABEL,
+          legendClass: 'govuk-fieldset__legend--m',
+          legendSpan: true,
           hintText: FIELDS.CAN_CONTACT_BUYER.HINT,
           submittedAnswer: submittedValues[FIELDS.CAN_CONTACT_BUYER.ID] or application.buyer[FIELDS.CAN_CONTACT_BUYER.ID],
           errorMessage: validationErrors.errorList[FIELDS.CAN_CONTACT_BUYER.ID],
-          headerClass: 'govuk-fieldset__legend--m',
-          dataCyHeading: FIELDS.CAN_CONTACT_BUYER.ID + '-label',
+          dataCyLegend: FIELDS.CAN_CONTACT_BUYER.ID + '-label',
           yesNoValueString: true
         }) }}
       </div>

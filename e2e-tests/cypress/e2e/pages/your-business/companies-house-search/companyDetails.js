@@ -27,12 +27,12 @@ const companyDetails = {
   yourBusinessSummaryList: () => cy.get(`[data-cy="${SEARCH}-summary-list`),
 
   tradingName: () => cy.get(`[data-cy="${TRADING_NAME}`),
-  tradingNameLabel: () => cy.get(`[data-cy="${TRADING_NAME}-heading`),
+  tradingNameLabel: () => cy.get(`[data-cy="${TRADING_NAME}-legend`),
   tradingNameYesRadioInput: () => yesRadioInput().first(),
   tradingNameNoRadioInput: () => noRadioInput().first(),
 
   tradingAddress: () => cy.get(`[data-cy="${TRADING_ADDRESS}`),
-  tradingAddressLabel: () => cy.get(`[data-cy="${TRADING_ADDRESS}-heading`),
+  tradingAddressLabel: () => cy.get(`[data-cy="${TRADING_ADDRESS}-legend`),
   tradingAddressYesRadioInput: () => yesRadioInput().eq(1),
   tradingAddressNoRadioInput: () => noRadioInput().eq(1),
 
