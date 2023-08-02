@@ -3,7 +3,7 @@
 {% macro render(params) %}
 
   {% set fieldId = params.fieldId %}
-  {% set heading = params.heading %}
+  {% set legendText = params.legendText %}
   {% set hintText = params.hintText %}
   {% set hintHtml = params.hintHtml %}
   {% set submittedAnswer = params.submittedAnswer %}
@@ -18,10 +18,10 @@
     {% set headingLevel = 1 %}
   {% endif %}
 
-  {% if params.headingClass %}
-    {% set headingClass = params.headingClass %}
+  {% if params.legendClass %}
+    {% set legendClass = params.legendClass %}
   {% else %}
-    {% set headingClass = 'govuk-heading-l' %}
+    {% set legendClass = 'govuk-heading-l' %}
   {% endif %}
 
   {% if params.dataCyLegend %}
@@ -30,11 +30,10 @@
     {% set dataCyLegend = 'heading' %}
   {% endif %}
 
-  {% if params.spanLegend %}
-    {% set legendHtml = "<span data-cy='" + dataCyLegend + "' class='" + headingClass + "'>" + heading + "</span>" %}
-
+  {% if params.legendSpan %}
+    {% set legendHtml = "<span data-cy='" + dataCyLegend + "' class='" + legendClass + "'>" + legendText + "</span>" %}
   {% else %}
-    {% set legendHtml = "<h" + headingLevel + " class=" + headingClass + " id='heading' data-cy='" + dataCyLegend + "'>" + heading + "</h" + headingLevel + ">" %}
+    {% set legendHtml = "<h" + headingLevel + " class=" + legendClass + " id='heading' data-cy='" + dataCyLegend + "'>" + legendText + "</h" + headingLevel + ">" %}
   {% endif %}
 
   {% if params.dataCyHint %}
@@ -85,7 +84,7 @@
         },
         attributes: {
           "data-cy": "yes-input",
-          'aria-label': heading + ' Yes'
+          'aria-label': legendText + ' Yes'
         },
         checked: submittedAnswer === yesValue
       },
@@ -102,7 +101,7 @@
         },
         attributes: {
           "data-cy": "no-input",
-          'aria-label': heading + ' No'
+          'aria-label': legendText + ' No'
         },
         checked: submittedAnswer === noValue
       }

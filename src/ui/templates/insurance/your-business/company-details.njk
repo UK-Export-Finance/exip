@@ -108,11 +108,11 @@
       <div class="govuk-grid-column-three-quarters-from-desktop">
         {{ yesNoRadioButtons.render({
           fieldId: FIELDS.YOUR_COMPANY.TRADING_NAME,
-          heading: CONTENT_STRINGS.TRADING_NAME,
+          legendText: CONTENT_STRINGS.TRADING_NAME,
+          legendClass: 'govuk-fieldset__legend--m',
+          legendSpan: true,
           submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.TRADING_NAME],
           errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.TRADING_NAME],
-          spanLegend: true,
-          headingClass: 'govuk-fieldset__legend--m',
           dataCyLegend: FIELDS.YOUR_COMPANY.TRADING_NAME + '-legend',
           yesNoValueString: true
         }) }}
@@ -121,11 +121,11 @@
       <div class="govuk-grid-column-three-quarters-from-desktop">
           {{ yesNoRadioButtons.render({
             fieldId: FIELDS.YOUR_COMPANY.TRADING_ADDRESS,
-            heading: CONTENT_STRINGS.TRADING_ADDRESS,
+            legendText: CONTENT_STRINGS.TRADING_ADDRESS,
+            legendClass: 'govuk-fieldset__legend--m',
+            legendSpan: true,
             submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
             errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
-            spanLegend: true,
-            headingClass: 'govuk-fieldset__legend--m',
             dataCyLegend: FIELDS.YOUR_COMPANY.TRADING_ADDRESS + '-legend',
             yesNoValueString: true
           }) }}

@@ -52,12 +52,12 @@
       <div class="govuk-grid-column-three-quarters-from-desktop">
         {{ yesNoRadioButtons.render({
           fieldId: FIELDS.CONNECTED_WITH_BUYER.ID,
-          heading: FIELDS.CONNECTED_WITH_BUYER.LABEL,
+          legendText: FIELDS.CONNECTED_WITH_BUYER.LABEL,
+          legendClass: 'govuk-fieldset__legend--m',
+          legendSpan: true,
           hintText: FIELDS.CONNECTED_WITH_BUYER.HINT,
           submittedAnswer: submittedValues[FIELDS.CONNECTED_WITH_BUYER.ID] or application.buyer[FIELDS.CONNECTED_WITH_BUYER.ID],
           errorMessage: validationErrors.errorList[FIELDS.CONNECTED_WITH_BUYER.ID],
-          spanLegend: true,
-          headingClass: 'govuk-fieldset__legend--m',
           dataCyLegend: FIELDS.CONNECTED_WITH_BUYER.ID + '-label',
           dataCyHint: FIELDS.CONNECTED_WITH_BUYER.ID + '-hint',
           yesNoValueString: true,
@@ -66,11 +66,11 @@
 
         {{ yesNoRadioButtons.render({
           fieldId: FIELDS.TRADED_WITH_BUYER.ID,
-          heading: FIELDS.TRADED_WITH_BUYER.LABEL,
+          legendText: FIELDS.TRADED_WITH_BUYER.LABEL,
+          legendClass: 'govuk-fieldset__legend--m',
+          legendSpan: true,
           submittedAnswer: submittedValues[FIELDS.TRADED_WITH_BUYER.ID] or application.buyer[FIELDS.TRADED_WITH_BUYER.ID],
           errorMessage: validationErrors.errorList[FIELDS.TRADED_WITH_BUYER.ID],
-          spanLegend: true,
-          headingClass: 'govuk-fieldset__legend--m',
           dataCyLegend: FIELDS.TRADED_WITH_BUYER.ID + '-label',
           yesNoValueString: true,
           conditionalYesHtml: tradedHTML,
