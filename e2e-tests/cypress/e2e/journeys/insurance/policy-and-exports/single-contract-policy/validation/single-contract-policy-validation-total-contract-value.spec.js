@@ -156,7 +156,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
   });
 
   it('should render a validation error when total contract value is above the maximum', () => {
-    cy.keyboardInput(field.input(), '500000');
+    cy.keyboardInput(field.input(), '500001');
     submitButton().click();
 
     cy.checkText(

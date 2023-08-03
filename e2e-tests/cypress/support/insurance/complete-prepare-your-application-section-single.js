@@ -13,12 +13,15 @@ const task = taskList.prepareApplication.tasks.policyTypeAndExports;
  * - exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form. Defaults to "yes".
  * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
  * - useDifferentContactEmail: Should submit a different email address in the "exporter contact" details form.
+ * - policyAndExportsMaximumValue: should submit an application with the maximum value of 500000
  */
-const completePrepareYourApplicationSectionSingle = ({ exporterHasTradedWithBuyer, usingBroker, useDifferentContactEmail }) => {
+const completePrepareYourApplicationSectionSingle = ({
+  exporterHasTradedWithBuyer, usingBroker, useDifferentContactEmail, policyAndExportsMaximumValue,
+}) => {
   task.link().click();
 
   cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-  cy.completeAndSubmitSingleContractPolicyForm();
+  cy.completeAndSubmitSingleContractPolicyForm({ policyAndExportsMaximumValue });
   cy.completeAndSubmitAboutGoodsOrServicesForm();
 
   submitButton().click();

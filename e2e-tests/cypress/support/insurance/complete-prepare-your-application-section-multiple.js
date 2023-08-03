@@ -11,12 +11,13 @@ const task = taskList.prepareApplication.tasks.policyTypeAndExports;
  * Runs through the full prepare your application journey for multiple policy type
  * @param {Object} Object with flags on how to complete specific parts of the application
  * - useDifferentContactEmail: Should submit a different email address in the "exporter contact" details form.
+ * - policyAndExportsMaximumValue: should submit an application with the maximum value of 500000
  */
-const completePrepareApplicationMultiplePolicyType = ({ useDifferentContactEmail }) => {
+const completePrepareApplicationMultiplePolicyType = ({ useDifferentContactEmail, policyAndExportsMaximumValue }) => {
   task.link().click();
 
   cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
-  cy.completeAndSubmitMultipleContractPolicyForm();
+  cy.completeAndSubmitMultipleContractPolicyForm({ policyAndExportsMaximumValue });
   cy.completeAndSubmitAboutGoodsOrServicesForm();
 
   submitButton().click();
