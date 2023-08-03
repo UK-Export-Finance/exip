@@ -47,7 +47,7 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
     // checks if application owner email on application is the same as tghe business contact email provided
     const isOwnerSameAsContact = isOwnerSameAsBusinessContact(email, businessContactDetail.email);
 
-    console.info('Sending application submitted email to application account owner: ', sendEmailVars.emailAddress);
+    console.info('Sending application submitted email to application account owner: %s', sendEmailVars.emailAddress);
     // send "application submitted" email receipt to the application owner
     const accountSubmittedResponse = await sendEmail.application.submittedEmail(sendEmailVars);
 
@@ -60,7 +60,7 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
      * then it sends the same "application submitted" email receipt to the contact email address
      */
     if (!isOwnerSameAsContact) {
-      console.info('Sending application submitted email to business contact email: ', sendContactEmailVars.emailAddress);
+      console.info('Sending application submitted email to business contact email: %s', sendContactEmailVars.emailAddress);
       const contactSubmittedResponse = await sendEmail.application.submittedEmail(sendContactEmailVars);
 
       if (!contactSubmittedResponse.success) {
@@ -80,7 +80,7 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
 
     // send "documents" email to the applicant depending on submitted answers
     if (templateIds.account) {
-      console.info('Sending documents email to application owner: ', sendEmailVars.emailAddress);
+      console.info('Sending documents email to application owner: %s', sendEmailVars.emailAddress);
       const documentsResponse = await sendEmail.documentsEmail(sendEmailVars, templateIds.account);
 
       if (!documentsResponse.success) {
@@ -92,7 +92,7 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
        * then it sends the same "application submitted" email receipt to the contact email address
        */
       if (!isOwnerSameAsContact) {
-        console.info('Sending documents email to business contact: ', sendContactEmailVars.emailAddress);
+        console.info('Sending documents email to business contact: %s', sendContactEmailVars.emailAddress);
         const contactDocumentsResponse = await sendEmail.documentsEmail(sendContactEmailVars, templateIds.account);
 
         if (!contactDocumentsResponse.success) {
@@ -106,7 +106,7 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
       success: true,
     };
   } catch (err) {
-    console.error(err);
+    console.error('Error sending application submitted emails %O', err);
 
     throw new Error(`Sending application submitted emails ${err}`);
   }

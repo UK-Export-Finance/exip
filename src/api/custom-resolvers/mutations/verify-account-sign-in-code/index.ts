@@ -103,7 +103,7 @@ const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignIn
       success: false,
     };
   } catch (err) {
-    console.error(err);
+    console.error('Error verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) %O', err);
     throw new Error(`Verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) ${err}`);
   }
 };

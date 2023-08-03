@@ -87,7 +87,7 @@ const get = (req: Request, res: Response) => {
       ...pageVariables(application.referenceNumber),
     });
   } catch (err) {
-    console.error('Error getting contact', { err });
+    console.error('Error getting contact %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -148,7 +148,7 @@ const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`);
   } catch (err) {
-    console.error('Error updating application - your business - contact', { err });
+    console.error('Error updating application - your business - contact %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

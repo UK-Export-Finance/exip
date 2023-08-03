@@ -151,7 +151,7 @@ const get = async (req: Request, res: Response) => {
       submittedValues: submittedData.quoteEligibility,
     });
   } catch (err) {
-    console.error('Error getting quote - tell us about your policy ', { err });
+    console.error('Error getting quote - tell us about your policy %O', err);
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
@@ -237,7 +237,7 @@ const post = async (req: Request, res: Response) => {
 
     return res.redirect(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
   } catch (err) {
-    console.error('Error posting quote - tell us about your policy ', { err });
+    console.error('Error posting quote - tell us about your policy %O', err);
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }

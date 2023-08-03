@@ -70,7 +70,7 @@ export const get = (req: Request, res: Response) => {
       ...pageVariables(application.referenceNumber),
     });
   } catch (err) {
-    console.error('Error getting check your answers - eligibility', { err });
+    console.error('Error getting check your answers - eligibility %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -101,7 +101,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`);
   } catch (err) {
-    console.error('Error updating check your answers - policy and exports', { err });
+    console.error('Error updating check your answers - policy and exports %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

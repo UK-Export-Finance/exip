@@ -192,9 +192,9 @@ export const lists = {
 
             return modifiedData;
           } catch (err) {
-            console.error('Error adding default data to a new application. ', { err });
+            console.error('Error adding default data to a new application. %O', err);
 
-            return err;
+            return false;
           }
         }
 
@@ -319,9 +319,9 @@ export const lists = {
               },
             });
           } catch (err) {
-            console.error('Error adding an application ID to relationships ', { err });
+            console.error('Error adding an application ID to relationships %O', err);
 
-            return err;
+            return false;
           }
         }
       },

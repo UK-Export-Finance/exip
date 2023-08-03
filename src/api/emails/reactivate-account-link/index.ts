@@ -22,7 +22,7 @@ export const reactivateAccountLink = async (urlOrigin: string, emailAddress: str
 
     return response;
   } catch (err) {
-    console.error(err);
+    console.error('Error sending email for account reactivation %O', err);
 
     throw new Error(`Sending email for account reactivation ${err}`);
   }

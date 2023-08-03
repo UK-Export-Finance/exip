@@ -56,7 +56,7 @@ const getApplicationMiddleware = async (req: Request, res: Response, next: Next)
 
       return res.redirect(PAGE_NOT_FOUND);
     } catch (err) {
-      console.error('Error getting application ', { err });
+      console.error('Error getting application %O', err);
 
       return res.redirect(PAGE_NOT_FOUND);
     }

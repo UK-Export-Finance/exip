@@ -108,7 +108,7 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
 
     return { success: false };
   } catch (err) {
-    console.error(err);
+    console.error('Error signing into account %O', err);
 
     throw new Error(`Signing in account (accountSignIn mutation) ${err}`);
   }

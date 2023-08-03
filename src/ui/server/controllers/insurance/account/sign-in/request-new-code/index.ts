@@ -73,7 +73,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ENTER_CODE);
     }
   } catch (err) {
-    console.error('Error verifying account sign in code', { err });
+    console.error('Error verifying account sign in code %O', err);
     return res.redirect(ROUTES.INSURANCE.PROBLEM_WITH_SERVICE);
   }
 };

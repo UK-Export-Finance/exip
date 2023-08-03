@@ -14,21 +14,21 @@ const declarations = {
       const response = (await apollo('POST', getDeclarationAntiBriberyQuery, {})) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error getting latest declaration - anti-bribery ', response.errors);
+        console.error('GraphQL error getting latest declaration - anti-bribery %O', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error getting latest declaration - anti-bribery ', response.networkError.result.errors);
+        console.error('GraphQL network error getting latest declaration - anti-bribery %O', response.networkError.result.errors);
       }
 
       if (response?.data?.declarationAntiBriberies && isPopulatedArray(response.data.declarationAntiBriberies)) {
         return response.data.declarationAntiBriberies[0];
       }
 
-      console.error(response);
+      console.error('Error with GraphQL getDeclarationAntiBriberyQuery %O', response);
       throw new Error('Getting latest declaration - anti-bribery');
     } catch (err) {
-      console.error(err);
+      console.error('Error getting latest declaration - anti bribery %O', err);
       throw new Error('Getting latest declaration - anti-bribery');
     }
   },
@@ -39,21 +39,21 @@ const declarations = {
       const response = (await apollo('POST', getDeclarationConfirmationAndAcknowledgementQuery, {})) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error getting latest declaration - confirmation and acknowledgement ', response.errors);
+        console.error('GraphQL error getting latest declaration - confirmation and acknowledgement %O', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error getting latest declaration - confirmation and acknowledgement ', response.networkError.result.errors);
+        console.error('GraphQL network error getting latest declaration - confirmation and acknowledgement %O', response.networkError.result.errors);
       }
 
       if (response?.data?.declarationConfirmationAndAcknowledgements && isPopulatedArray(response.data.declarationConfirmationAndAcknowledgements)) {
         return response.data.declarationConfirmationAndAcknowledgements[0];
       }
 
-      console.error(response);
+      console.error('Error with GraphQL getDeclarationConfirmationAndAcknowledgementQuery %O', response);
       throw new Error('Getting latest declaration - confirmation and acknowledgement');
     } catch (err) {
-      console.error(err);
+      console.error('Error getting latest declaration - confirmation and acknowledgement %O', err);
       throw new Error('Getting latest declaration - confirmation and acknowledgement');
     }
   },
@@ -64,21 +64,21 @@ const declarations = {
       const response = (await apollo('POST', getDeclarationHowDataWillBeUsedQuery, {})) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error getting latest declaration - how data will be used ', response.errors);
+        console.error('GraphQL error getting latest declaration - how data will be used %O', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error getting latest declaration - how data will be used ', response.networkError.result.errors);
+        console.error('GraphQL network error getting latest declaration - how data will be used %O', response.networkError.result.errors);
       }
 
       if (response?.data?.declarationHowDataWillBeUseds && isPopulatedArray(response.data.declarationHowDataWillBeUseds)) {
         return response.data.declarationHowDataWillBeUseds[0];
       }
 
-      console.error(response);
+      console.error('Error with GraphQL getDeclarationHowDataWillBeUsedQuery %O', response);
       throw new Error('Getting latest declaration - how data will be used');
     } catch (err) {
-      console.error(err);
+      console.error('Error getting latest declaration - how data will be used %O', err);
       throw new Error('Getting latest declaration - how data will be used');
     }
   },
@@ -94,21 +94,21 @@ const declarations = {
       const response = (await apollo('POST', updateApplicationDeclarationMutation, variables)) as ApolloResponse;
 
       if (response.errors) {
-        console.error('GraphQL error updating application declaration ', response.errors);
+        console.error('GraphQL error updating application declaration %O', response.errors);
       }
 
       if (response?.networkError?.result?.errors) {
-        console.error('GraphQL network error updating application declaration ', response.networkError.result.errors);
+        console.error('GraphQL network error updating application declaration %O', response.networkError.result.errors);
       }
 
       if (response?.data?.updateDeclaration) {
         return response.data.updateDeclaration;
       }
 
-      console.error(response);
+      console.error('Error with GraphQL updateApplicationDeclarationMutation %O', response);
       throw new Error('Updating application declaration');
     } catch (err) {
-      console.error(err);
+      console.error('Error updating application declaration %O', err);
       throw new Error('Updating application declaration');
     }
   },

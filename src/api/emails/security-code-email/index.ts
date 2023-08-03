@@ -22,7 +22,7 @@ export const securityCodeEmail = async (emailAddress: string, name: string, secu
 
     return response;
   } catch (err) {
-    console.error(err);
+    console.error('Error sending security code email for account sign in %O', err);
 
     throw new Error(`Sending security code email for account sign in ${err}`);
   }

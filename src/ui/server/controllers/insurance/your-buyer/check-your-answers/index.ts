@@ -41,7 +41,7 @@ const get = (req: Request, res: Response) => {
       SUMMARY_LIST: summaryList,
     });
   } catch (err) {
-    console.error('Error getting check your answers', { err });
+    console.error('Error getting check your answers %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

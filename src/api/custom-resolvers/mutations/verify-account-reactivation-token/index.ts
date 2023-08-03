@@ -32,7 +32,7 @@ const verifyAccountReactivationToken = async (
     const account = (await getAccountByField(context, REACTIVATION_HASH, variables.token)) as Account;
 
     if (account) {
-      console.info(`Received a request to reactivate account - found account ${account.id}`);
+      console.info('Received a request to reactivate account - found account %s', account.id);
 
       // check that the verification period has not expired.
       const now = new Date();
@@ -56,7 +56,7 @@ const verifyAccountReactivationToken = async (
        * - nullify the reactivation hash and expiry
        * - mark the account has unblocked and nullify the verification hash and expiry.
        */
-      console.info(`Reactivating account ${account.id}`);
+      console.info('Reactivating account %s', account.id);
 
       const accountUpdate = {
         isBlocked: false,
@@ -81,14 +81,14 @@ const verifyAccountReactivationToken = async (
       };
     }
 
-    console.info(`Unable to reactivate account - no account found from the provided ${REACTIVATION_HASH}`);
+    console.info('Unable to reactivate account - no account found from the provided %s', REACTIVATION_HASH);
 
     return {
       success: false,
       invalid: true,
     };
   } catch (err) {
-    console.error(err);
+    console.error('Error checking account and reactivating account(verifyAccountReactivationToken mutation) %O', err);
     throw new Error(`Checking account and reactivating account(verifyAccountReactivationToken mutation) ${err}`);
   }
 };

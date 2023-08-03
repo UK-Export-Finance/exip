@@ -40,7 +40,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (err) {
-    console.error('Error updating application - declarations (save and back) ', { err });
+    console.error('Error updating application - declarations (save and back) %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

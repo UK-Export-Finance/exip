@@ -74,7 +74,7 @@ const get = (req: Request, res: Response) => {
       ...pageVariables(application.referenceNumber),
     });
   } catch (err) {
-    console.error('Error getting turnover', { err });
+    console.error('Error getting turnover %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -135,7 +135,7 @@ const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
   } catch (err) {
-    console.error('Error updating application - your business - turnover', { err });
+    console.error('Error updating application - your business - turnover %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

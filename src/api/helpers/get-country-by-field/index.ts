@@ -30,7 +30,7 @@ const getCountryByField = async (context: Context, field: string, value: string)
 
     return country;
   } catch (err) {
-    console.error(err);
+    console.error('Error getting country by field/value %O', err);
     throw new Error(`Getting country by field/value ${err}`);
   }
 };

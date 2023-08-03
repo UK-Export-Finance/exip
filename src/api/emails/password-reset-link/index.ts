@@ -22,7 +22,7 @@ export const passwordResetLink = async (urlOrigin: string, emailAddress: string,
 
     return response;
   } catch (err) {
-    console.error(err);
+    console.error('Error sending email for account password reset %O', err);
 
     throw new Error(`Sending email for account password reset ${err}`);
   }

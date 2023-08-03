@@ -41,7 +41,7 @@ export const get = async (req: Request, res: Response) => {
       SUBMITTED_STATUS: APPLICATION.STATUS.SUBMITTED,
     });
   } catch (err) {
-    console.error("Error getting applications and rendering 'dashboard' page ", { err });
+    console.error("Error getting applications and rendering 'dashboard' page %O", err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

@@ -15,7 +15,7 @@ const { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT;
  * @returns {Boolean}
  */
 const shouldBlockAccount = async (context: Context, accountId: string): Promise<boolean> => {
-  console.info(`Checking account ${accountId} authentication retries`);
+  console.info('Checking account authentication retries %s', accountId);
 
   try {
     /**
@@ -47,14 +47,14 @@ const shouldBlockAccount = async (context: Context, accountId: string): Promise<
      * - total of MAX_AUTH_RETRIES in less than MAX_AUTH_RETRIES_TIMEFRAME
      */
     if (retriesInTimeframe.length >= MAX_AUTH_RETRIES) {
-      console.info(`Account ${accountId} authentication retries exceeds the threshold`);
+      console.info('Account authentication retries exceeds the threshold %s', accountId);
 
       return true;
     }
 
     return false;
   } catch (err) {
-    console.error(err);
+    console.error('Error checking account authentication retries %O', err);
 
     throw new Error(`Checking account authentication retries  ${err}`);
   }

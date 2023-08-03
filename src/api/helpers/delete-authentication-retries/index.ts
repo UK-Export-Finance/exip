@@ -9,7 +9,7 @@ import getAuthenticationRetriesByAccountId from '../get-authentication-retries-b
  * @returns {Boolean}
  */
 const deleteAuthenticationRetries = async (context: Context, accountId: string) => {
-  console.info(`Deleting authentication retries for account ${accountId}`);
+  console.info('Deleting authentication retries for account %s', accountId);
 
   try {
     const retries = await getAuthenticationRetriesByAccountId(context, accountId);
@@ -24,7 +24,7 @@ const deleteAuthenticationRetries = async (context: Context, accountId: string) 
 
     return result;
   } catch (err) {
-    console.error(err);
+    console.error('Error deleting authentication retries %O', err);
 
     throw new Error(`Deleting authentication retries ${err}`);
   }
