@@ -21,6 +21,11 @@ const {
   },
 } = FIELD_IDS;
 
+/**
+ * completeAndSubmitMultipleContractPolicyForm
+ * @param {Object} Object with flags completing and submitting multiple contract policy form
+ * - policyAndExportsMaximumValue: should submit an application with the maximum value of 500000
+ */
 export default ({ policyAndExportsMaximumValue }) => {
   cy.keyboardInput(multipleContractPolicyPage[REQUESTED_START_DATE].dayInput(), application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].day);
   cy.keyboardInput(multipleContractPolicyPage[REQUESTED_START_DATE].monthInput(), application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);

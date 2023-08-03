@@ -17,7 +17,7 @@ context('Insurance - submit an application single policy type - As an Exporter, 
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
