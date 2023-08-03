@@ -1,4 +1,4 @@
-import { pageVariables, get, post, TEMPLATE } from '.';
+import { FIELD_ID, pageVariables, get, post, TEMPLATE } from '.';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
@@ -8,13 +8,12 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import { yourBusinessSummaryList } from '../../../../helpers/summary-lists/your-business';
 import requiredFields from '../../../../helpers/required-fields/business';
 import sectionStatus from '../../../../helpers/section-status';
+import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
-
-const FIELD_ID = FIELD_IDS.CHECK_YOUR_ANSWERS.EXPORTER_BUSINESS;
 
 const {
   INSURANCE: {
@@ -40,6 +39,14 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
 
     res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
+  });
+
+  describe('FIELD_ID', () => {
+    it('should have the correct FIELD_ID', () => {
+      const expected = FIELD_IDS.CHECK_YOUR_ANSWERS.EXPORTER_BUSINESS;
+
+      expect(FIELD_ID).toEqual(expected);
+    });
   });
 
   describe('pageVariables', () => {
@@ -116,11 +123,13 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
       req.body = mockBody;
     });
 
-    it('should call save.sectionReview with application and req.body', async () => {
+    it('should call save.sectionReview with application and data from constructPayload function', async () => {
       await post(req, res);
 
+      const payload = constructPayload(req.body, [FIELD_ID]);
+
       expect(save.sectionReview).toHaveBeenCalledTimes(1);
-      expect(save.sectionReview).toHaveBeenCalledWith(mockApplication, mockBody);
+      expect(save.sectionReview).toHaveBeenCalledWith(mockApplication, payload);
     });
 
     it(`should redirect to ${YOUR_BUYER}`, async () => {

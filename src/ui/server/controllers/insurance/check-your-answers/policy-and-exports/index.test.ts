@@ -1,7 +1,7 @@
-import { pageVariables, get, post, TEMPLATE } from '.';
+import { FIELD_ID, pageVariables, get, post, TEMPLATE } from '.';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
-import FIELD_IDS from '../../../../constants/field-ids/insurance';
+import CHECK_YOUR_ANSWERS_FIELD_IDS from '../../../../constants/field-ids/insurance/check-your-answers';
 import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -9,13 +9,12 @@ import { policyAndExportSummaryList } from '../../../../helpers/summary-lists/po
 import api from '../../../../api';
 import requiredFields from '../../../../helpers/required-fields/policy-and-exports';
 import sectionStatus from '../../../../helpers/section-status';
+import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries, mockCurrencies } from '../../../../test-mocks';
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
-
-const FIELD_ID = FIELD_IDS.CHECK_YOUR_ANSWERS.POLICY_AND_EXPORT;
 
 const {
   INSURANCE: {
@@ -46,6 +45,14 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
     req.params.referenceNumber = String(mockApplication.referenceNumber);
     api.keystone.countries.getAll = getCountriesSpy;
     api.external.getCurrencies = getCurrenciesSpy;
+  });
+
+  describe('FIELD_ID', () => {
+    it('should have the correct FIELD_ID', () => {
+      const expected = CHECK_YOUR_ANSWERS_FIELD_IDS.POLICY_AND_EXPORT;
+
+      expect(FIELD_ID).toEqual(expected);
+    });
   });
 
   describe('pageVariables', () => {
@@ -176,11 +183,13 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
       req.body = mockBody;
     });
 
-    it('should call save.sectionReview with application and req.body', async () => {
+    it('should call save.sectionReview with application and data from constructPayload function', async () => {
       await post(req, res);
 
+      const payload = constructPayload(req.body, [FIELD_ID]);
+
       expect(save.sectionReview).toHaveBeenCalledTimes(1);
-      expect(save.sectionReview).toHaveBeenCalledWith(mockApplication, mockBody);
+      expect(save.sectionReview).toHaveBeenCalledWith(mockApplication, payload);
     });
 
     it(`should redirect to ${YOUR_BUSINESS}`, async () => {
