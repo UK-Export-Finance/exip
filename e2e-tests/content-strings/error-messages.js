@@ -52,7 +52,7 @@ export const ERROR_MESSAGES = {
   INSURANCE: {
     ELIGIBILITY: {
       [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT]: {
-        IS_EMPTY: `Select whether you want to be insured for ${MAX_COVER_AMOUNT} or more`,
+        IS_EMPTY: `Select whether you want to be insured for more than ${MAX_COVER_AMOUNT}`,
       },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD]: {
         IS_EMPTY: `Select whether you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years`,
