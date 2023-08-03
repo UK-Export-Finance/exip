@@ -1,11 +1,11 @@
 import { ALLOWED_GRAPHQL_RESOLVERS } from '../constants';
 
-interface TempTypeRequest {
+interface ApolloOperation {
   operationName: string;
 }
 
-interface TempType {
-  request: TempTypeRequest;
+interface ApolloDidResolveOperation {
+  request: ApolloOperation;
 }
 
 export const requestDidStart = () => ({
@@ -19,7 +19,7 @@ export const requestDidStart = () => ({
    * Therefore, We use this event to check that a requested operation is allowed to be executed,
    * via an explicit list of allowed resolvers.
    */
-  didResolveOperation({ request }: TempType) {
+  didResolveOperation({ request }: ApolloDidResolveOperation) {
     if (!ALLOWED_GRAPHQL_RESOLVERS.includes(request.operationName)) {
       throw new Error('Operation not permitted');
     }
