@@ -1,13 +1,17 @@
 import { FIELDS, PAGES } from '../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
+import { ROUTES, TEMPLATES } from '../../../constants';
+import SHARED_FIELD_IDS from '../../../constants/field-ids/shared';
 import corePageVariables from '../../../helpers/page-variables/core/quote';
 import generateValidationErrors from './validation';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../helpers/construct-payload';
 import { isSinglePolicyType } from '../../../helpers/policy-type';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
 
-const { MULTIPLE_POLICY_TYPE, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH, SINGLE_POLICY_TYPE } = FIELD_IDS;
+const { MULTIPLE_POLICY_TYPE, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH, SINGLE_POLICY_TYPE } = SHARED_FIELD_IDS;
+
+export const FIELD_IDS = [POLICY_TYPE, SINGLE_POLICY_LENGTH, MULTIPLE_POLICY_TYPE];
 
 export const PAGE_VARIABLES = {
   FIELDS: {
@@ -45,7 +49,9 @@ export const get = (req: Request, res: Response) =>
   });
 
 export const post = (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body);
+  const payload = constructPayload(req.body, FIELD_IDS);
+
+  const validationErrors = generateValidationErrors(payload);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
@@ -53,16 +59,16 @@ export const post = (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       ...PAGE_VARIABLES,
       validationErrors,
-      submittedValues: req.body,
+      submittedValues: payload,
     });
   }
 
-  let populatedData = req.body;
+  let populatedData = payload;
 
-  if (isSinglePolicyType(req.body[POLICY_TYPE])) {
+  if (isSinglePolicyType(payload[POLICY_TYPE])) {
     populatedData = {
-      [POLICY_TYPE]: req.body[POLICY_TYPE],
-      [POLICY_LENGTH]: req.body[SINGLE_POLICY_LENGTH],
+      [POLICY_TYPE]: payload[POLICY_TYPE],
+      [POLICY_LENGTH]: payload[SINGLE_POLICY_LENGTH],
     };
   }
 

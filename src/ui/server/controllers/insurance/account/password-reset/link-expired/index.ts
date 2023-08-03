@@ -1,6 +1,7 @@
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../../constants';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 
@@ -43,13 +44,13 @@ export const post = async (req: Request, res: Response) => {
 
     const urlOrigin = req.headers.origin;
 
-    const accountId = req.query.id;
-
-    if (!accountId) {
+    if (!req.query.id) {
       return res.redirect(PASSWORD_RESET_ROOT);
     }
 
-    const account = await api.keystone.account.get(accountId);
+    const sanitisedId = String(sanitiseValue({ value: req.query.id }));
+
+    const account = await api.keystone.account.get(sanitisedId);
 
     const response = await api.keystone.account.sendEmailPasswordResetLink(urlOrigin, account.email);
 
@@ -62,7 +63,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
-    console.error('Error posting account password reset - link expired form', { err });
+    console.error('Error posting account password reset - link expired form %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

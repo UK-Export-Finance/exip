@@ -39,7 +39,7 @@ const hasAccountUsedPasswordBefore = async (context: Context, accountId: string,
 
     return usedBefore;
   } catch (err) {
-    console.error(err);
+    console.error('Error checking if an account has used a password before %O', err);
 
     throw new Error(`Checking if an account has used a password before ${err}`);
   }

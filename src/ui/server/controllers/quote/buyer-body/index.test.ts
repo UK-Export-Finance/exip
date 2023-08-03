@@ -1,8 +1,9 @@
-import { PAGE_VARIABLES, TEMPLATE, mapAnswer, mapSubmittedAnswer, get, post } from '.';
+import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, mapAnswer, mapSubmittedAnswer, get, post } from '.';
 import { ERROR_MESSAGES, PAGES } from '../../../content-strings';
-import { ROUTES, TEMPLATES } from '../../../constants';
+import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../helpers/construct-payload';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { mockReq, mockRes } from '../../../test-mocks';
@@ -23,6 +24,14 @@ describe('controllers/quote/buyer-body', () => {
 
   afterAll(() => {
     jest.resetAllMocks();
+  });
+
+  describe('FIELD_ID', () => {
+    it('should have the correct ID', () => {
+      const expected = FIELD_IDS.ELIGIBILITY.VALID_BUYER_BODY;
+
+      expect(FIELD_ID).toEqual(expected);
+    });
   });
 
   describe('PAGE_VARIABLES', () => {
@@ -105,13 +114,15 @@ describe('controllers/quote/buyer-body', () => {
 
   describe('post', () => {
     describe('when there are validation errors', () => {
-      it('should render template with validation errors', async () => {
+      it('should render template with validation errors from constructPayload function', async () => {
         await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
           userName: getUserNameFromSession(req.session.user),
-          validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID]),
+          validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID]),
         });
       });
     });
@@ -154,7 +165,9 @@ describe('controllers/quote/buyer-body', () => {
       it('should update the session with submitted data, popluated with mapped buyer body answer', async () => {
         await post(req, res);
 
-        const expectedMappedAnswer = mapAnswer(req.body[PAGE_VARIABLES.FIELD_ID]);
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        const expectedMappedAnswer = mapAnswer(payload[PAGE_VARIABLES.FIELD_ID]);
 
         const expected = updateSubmittedData({ [PAGE_VARIABLES.FIELD_ID]: expectedMappedAnswer }, req.session.submittedData.quoteEligibility);
 

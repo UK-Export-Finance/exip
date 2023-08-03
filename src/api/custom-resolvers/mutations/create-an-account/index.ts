@@ -1,6 +1,7 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import crypto from 'crypto';
 import { ACCOUNT } from '../../../constants';
+import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import encryptPassword from '../../../helpers/encrypt-password';
 import getFullNameString from '../../../helpers/get-full-name-string';
@@ -18,16 +19,16 @@ const {
 } = ENCRYPTION;
 
 const createAnAccount = async (root: any, variables: AccountCreationVariables, context: Context) => {
-  console.info('Creating new account for ', variables.email);
+  console.info('Creating new account for %s', variables.email);
 
   try {
     const { urlOrigin, firstName, lastName, email, password } = variables;
 
     // check if an account with the email already exists
-    const account = await getAccountByField(context, 'email', email);
+    const account = await getAccountByField(context, ACCOUNT_FIELD_IDS.EMAIL, email);
 
     if (account) {
-      console.info(`Unable to create a new account for ${variables.email} - account already exists`);
+      console.info('Unable to create a new account for %s - account already exists', variables.email);
 
       return { success: false };
     }
@@ -74,6 +75,7 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
 
     throw new Error(`Sending email verification for account creation ${emailResponse}`);
   } catch (err) {
+    console.error('Error creating a new account %O', err);
     throw new Error(`Creating a new account ${err}`);
   }
 };

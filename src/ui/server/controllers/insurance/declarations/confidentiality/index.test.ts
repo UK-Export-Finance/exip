@@ -1,16 +1,15 @@
-import { pageVariables, TEMPLATE, get, post } from '.';
+import { FIELD_ID, pageVariables, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
-
-const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
 
 const {
   INSURANCE_ROOT,
@@ -38,6 +37,14 @@ describe('controllers/insurance/declarations/confidentiality', () => {
     res = mockRes();
 
     res.locals.application = mockApplication;
+  });
+
+  describe('FIELD_ID', () => {
+    it('should have the correct ID', () => {
+      const expected = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
+
+      expect(FIELD_ID).toEqual(expected);
+    });
   });
 
   describe('pageVariables', () => {
@@ -103,6 +110,15 @@ describe('controllers/insurance/declarations/confidentiality', () => {
         req.body = validBody;
       });
 
+      it('should call save.declaration with application and submitted values from constructPayload function', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        expect(save.declaration).toHaveBeenCalledTimes(1);
+        expect(save.declaration).toHaveBeenCalledWith(mockApplication, payload);
+      });
+
       it(`should redirect to ${ANTI_BRIBERY_ROOT}`, async () => {
         await post(req, res);
 
@@ -110,18 +126,13 @@ describe('controllers/insurance/declarations/confidentiality', () => {
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
-
-      it('should call save.declaration with application and req.body', async () => {
-        await post(req, res);
-
-        expect(save.declaration).toHaveBeenCalledTimes(1);
-        expect(save.declaration).toHaveBeenCalledWith(mockApplication, validBody);
-      });
     });
 
     describe('when there are validation errors', () => {
-      it('should render template with validation errors', async () => {
+      it('should render template with validation errors from constructPayload function', async () => {
         await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
@@ -131,7 +142,7 @@ describe('controllers/insurance/declarations/confidentiality', () => {
           ...pageVariables(mockApplication.referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           CONFIDENTIALITY_CONTENT,
-          validationErrors: generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
+          validationErrors: generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

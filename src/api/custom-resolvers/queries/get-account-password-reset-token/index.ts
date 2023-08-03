@@ -46,6 +46,7 @@ const getAccountPasswordResetToken = async (
 
     return { success: false };
   } catch (err) {
+    console.error('Error getting account password reset token %O', err);
     throw new Error(`Getting account password reset token ${err}`);
   }
 };

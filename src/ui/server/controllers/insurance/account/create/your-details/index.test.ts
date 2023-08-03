@@ -1,8 +1,10 @@
-import { PAGE_VARIABLES, TEMPLATE, PAGE_CONTENT_STRINGS, get, post } from '.';
+import { FIELD_IDS, PAGE_VARIABLES, TEMPLATE, PAGE_CONTENT_STRINGS, get, post } from '.';
 import { PAGES } from '../../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
+import { ROUTES, TEMPLATES } from '../../../../../constants';
+import ACCOUNT_FIELD_IDS from '../../../../../constants/field-ids/insurance/account';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
+import constructPayload from '../../../../../helpers/construct-payload';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
 import generateAccountAlreadyExistsValidationErrors from './validation/account-already-exists';
@@ -12,9 +14,7 @@ import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockAccount, mockApplication, mockSession } from '../../../../../test-mocks';
 
-const {
-  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD },
-} = FIELD_IDS.INSURANCE;
+const { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD } = ACCOUNT_FIELD_IDS;
 
 const {
   INSURANCE: {
@@ -132,6 +132,8 @@ describe('controllers/insurance/account/create/your-details', () => {
       it('should render template with validation errors and submitted values', async () => {
         await post(req, res);
 
+        const payload = constructPayload(req.body, FIELD_IDS);
+
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS,
@@ -139,7 +141,7 @@ describe('controllers/insurance/account/create/your-details', () => {
           }),
           ...PAGE_VARIABLES,
           userName: getUserNameFromSession(req.session.user),
-          submittedValues: req.body,
+          submittedValues: payload,
           validationErrors: generateValidationErrors(req.body),
         });
       });
@@ -258,8 +260,10 @@ describe('controllers/insurance/account/create/your-details', () => {
             saveData.account = saveDataSpy;
           });
 
-          it('should render template with validation errors and submitted values', async () => {
+          it('should render template with validation errors from constructPayload function', async () => {
             await post(req, res);
+
+            const payload = constructPayload(req.body, FIELD_IDS);
 
             expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
               ...insuranceCorePageVariables({
@@ -268,7 +272,7 @@ describe('controllers/insurance/account/create/your-details', () => {
               }),
               ...PAGE_VARIABLES,
               userName: getUserNameFromSession(req.session.user),
-              submittedValues: req.body,
+              submittedValues: payload,
               validationErrors: generateAccountAlreadyExistsValidationErrors(),
             });
           });

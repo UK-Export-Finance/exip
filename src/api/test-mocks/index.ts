@@ -1,3 +1,4 @@
+import { Request, Response } from 'express';
 import { ACCOUNT, ANSWERS, FIELD_IDS } from '../constants';
 import encryptPassword from '../helpers/encrypt-password';
 import application from './mock-application';
@@ -70,3 +71,19 @@ export const mockInsuranceFeedback = {
 export const mockSendEmailResponse = { success: true, emailRecipient: mockAccount.email };
 
 export const mockUrlOrigin = 'https://mock-origin.com';
+
+export const mockReq = {
+  headers: {},
+} as Request;
+
+export const mockRes = () => {
+  const res = {} as Response;
+
+  res.json = jest.fn();
+  res.redirect = jest.fn();
+  res.render = jest.fn();
+  res.send = jest.fn();
+  res.status = jest.fn(() => res);
+
+  return res;
+};

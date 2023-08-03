@@ -41,7 +41,7 @@ export const insuranceFeedbackEmail = async (variables: InsuranceFeedbackVariabl
 
     return response;
   } catch (err) {
-    console.error(err);
+    console.error('Error sending insurance feedback email %O', err);
 
     throw new Error(`Sending insurance feedback email ${err}`);
   }

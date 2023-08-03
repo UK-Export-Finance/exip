@@ -51,7 +51,9 @@ describe('controllers/insurance/business/broker', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      expect(FIELD_IDS).toEqual([USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL]);
+      const expected = [USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL];
+
+      expect(FIELD_IDS).toEqual(expected);
     });
   });
 
@@ -109,21 +111,19 @@ describe('controllers/insurance/business/broker', () => {
   });
 
   describe('get', () => {
-    describe('when the application exists', () => {
-      it('should render the broker template with correct variables', () => {
-        res.locals.application = mockApplication;
+    it('should render the broker template with correct variables', () => {
+      res.locals.application = mockApplication;
 
-        get(req, res);
+      get(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(BROKER_TEMPLATE, {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: BROKER,
-            BACK_LINK: req.headers.referer,
-          }),
-          userName: getUserNameFromSession(req.session.user),
-          application: mapApplicationToFormFields(mockApplication),
-          ...pageVariables(mockApplication.referenceNumber),
-        });
+      expect(res.render).toHaveBeenCalledWith(BROKER_TEMPLATE, {
+        ...insuranceCorePageVariables({
+          PAGE_CONTENT_STRINGS: BROKER,
+          BACK_LINK: req.headers.referer,
+        }),
+        userName: getUserNameFromSession(req.session.user),
+        application: mapApplicationToFormFields(mockApplication),
+        ...pageVariables(mockApplication.referenceNumber),
       });
     });
 
@@ -144,14 +144,14 @@ describe('controllers/insurance/business/broker', () => {
     mapAndSave.broker = jest.fn(() => Promise.resolve(true));
 
     describe('when there are validation errors', () => {
-      it('should render template with validation errors', async () => {
+      it('should render template with validation errors and submitted values', async () => {
         req.body = {};
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
         await post(req, res);
 
-        const validationErrors = generateValidationErrors(req.body);
+        const validationErrors = generateValidationErrors(payload);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...insuranceCorePageVariables({

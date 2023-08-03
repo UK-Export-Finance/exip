@@ -33,8 +33,32 @@ __export(keystone_exports, {
   default: () => keystone_default
 });
 module.exports = __toCommonJS(keystone_exports);
-var import_config2 = require("dotenv/config");
+var import_config3 = require("dotenv/config");
 var import_core2 = require("@keystone-6/core");
+
+// middleware/headers/check-api-key/index.ts
+var import_config = require("dotenv/config");
+var { API_KEY } = process.env;
+var checkApiKey = (req, res, next) => {
+  const { "x-api-key": xApiKey } = req.headers;
+  if (!xApiKey || xApiKey !== API_KEY) {
+    return res.status(401).json({ message: "Unauthorised" });
+  }
+  next();
+};
+var check_api_key_default = checkApiKey;
+
+// middleware/rate-limiter/index.js
+var import_express_rate_limit = __toESM(require("express-rate-limit"));
+var rateLimiter = (0, import_express_rate_limit.default)({
+  windowMs: 1 * 60 * 1e3,
+  // 1 minute
+  max: 1e3,
+  // 1K requests / 1 window
+  standardHeaders: false,
+  legacyHeaders: false
+});
+var rate_limiter_default = rateLimiter;
 
 // schema.ts
 var import_core = require("@keystone-6/core");
@@ -540,7 +564,7 @@ var timestamp = async (context, applicationId) => {
     });
     return application2;
   } catch (err) {
-    console.error(err);
+    console.error("Error updating application updatedAt timestamp %O", err);
     throw new Error(`Updating application updatedAt timestamp ${err}`);
   }
 };
@@ -548,6 +572,29 @@ var updateApplication = {
   timestamp
 };
 var update_application_default = updateApplication;
+
+// helpers/get-account-by-field/index.ts
+var getAccountByField = async (context, field, value) => {
+  try {
+    console.info("Getting account by field/value");
+    const accountsArray = await context.db.Account.findMany({
+      where: {
+        [field]: { equals: value }
+      },
+      take: 1
+    });
+    if (!accountsArray?.length || !accountsArray[0]) {
+      console.info("Getting account by field - no account exists with the provided field/value");
+      return false;
+    }
+    const account = accountsArray[0];
+    return account;
+  } catch (err) {
+    console.error("Error getting account by field/value %O", err);
+    throw new Error(`Getting account by field/value ${err}`);
+  }
+};
+var get_account_by_field_default = getAccountByField;
 
 // schema.ts
 var lists = {
@@ -694,7 +741,7 @@ var lists = {
             modifiedData.status = APPLICATION.STATUS.DRAFT;
             return modifiedData;
           } catch (err) {
-            console.error("Error adding default data to a new application. ", { err });
+            console.error("Error adding default data to a new application. %O", err);
             return err;
           }
         }
@@ -798,7 +845,7 @@ var lists = {
               }
             });
           } catch (err) {
-            console.error("Error adding an application ID to relationships ", { err });
+            console.error("Error adding an application ID to relationships %O", err);
             return err;
           }
         }
@@ -884,6 +931,18 @@ var lists = {
         ref: "Application",
         many: true
       })
+    },
+    hooks: {
+      validateInput: async ({ context, operation, resolvedData }) => {
+        if (operation === "create") {
+          const { email } = resolvedData;
+          const requestedEmail = String(email);
+          const account = await get_account_by_field_default(context, account_default.EMAIL, requestedEmail);
+          if (account) {
+            throw new Error(`Unable to create a new account for ${requestedEmail} - account already exists`);
+          }
+        }
+      }
     },
     access: import_access.allowAll
   }),
@@ -1254,7 +1313,7 @@ var lists = {
 };
 
 // auth.ts
-var import_config = require("dotenv/config");
+var import_config2 = require("dotenv/config");
 var import_auth = require("@keystone-6/auth");
 var import_session = require("@keystone-6/core/session");
 var sessionSecret = String(process.env.SESSION_SECRET);
@@ -1580,29 +1639,6 @@ var type_defs_default = typeDefs;
 // custom-resolvers/mutations/create-an-account/index.ts
 var import_crypto2 = __toESM(require("crypto"));
 
-// helpers/get-account-by-field/index.ts
-var getAccountByField = async (context, field, value) => {
-  try {
-    console.info("Getting account by field/value");
-    const accountsArray = await context.db.Account.findMany({
-      where: {
-        [field]: { equals: value }
-      },
-      take: 1
-    });
-    if (!accountsArray?.length || !accountsArray[0]) {
-      console.info("Getting account by field - no account exists with the provided field/value");
-      return false;
-    }
-    const account = accountsArray[0];
-    return account;
-  } catch (err) {
-    console.error(err);
-    throw new Error(`Getting account by field/value ${err}`);
-  }
-};
-var get_account_by_field_default = getAccountByField;
-
 // helpers/encrypt-password/index.ts
 var import_crypto = __toESM(require("crypto"));
 var { ENCRYPTION } = ACCOUNT2;
@@ -1667,7 +1703,7 @@ var notify = {
         emailRecipient: sendToEmailAddress
       };
     } catch (err) {
-      console.error(err);
+      console.error("Error calling Notify API. Unable to send email %O", err);
       throw new Error(`Calling Notify API. Unable to send email ${err}`);
     }
   }
@@ -1688,7 +1724,7 @@ var callNotify = async (templateId, emailAddress, variables, file) => {
     }
     throw new Error(`Sending email ${emailResponse}`);
   } catch (err) {
-    console.error(err);
+    console.error("Error sending email %O", err);
     throw new Error(`Sending email ${err}`);
   }
 };
@@ -1702,7 +1738,7 @@ var confirmEmailAddress = async (emailAddress, urlOrigin, name, verificationHash
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (err) {
-    console.error(err);
+    console.error("Error sending confirm email address email %O", err);
     throw new Error(`Sending confirm email address email ${err}`);
   }
 };
@@ -1716,7 +1752,7 @@ var securityCodeEmail = async (emailAddress, name, securityCode) => {
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (err) {
-    console.error(err);
+    console.error("Error sending security code email for account sign in %O", err);
     throw new Error(`Sending security code email for account sign in ${err}`);
   }
 };
@@ -1730,7 +1766,7 @@ var passwordResetLink = async (urlOrigin, emailAddress, name, passwordResetHash)
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (err) {
-    console.error(err);
+    console.error("Error sending email for account password reset %O", err);
     throw new Error(`Sending email for account password reset ${err}`);
   }
 };
@@ -1744,7 +1780,7 @@ var reactivateAccountLink = async (urlOrigin, emailAddress, name, reactivationHa
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (err) {
-    console.error(err);
+    console.error("Error sending email for account reactivation %O", err);
     throw new Error(`Sending email for account reactivation ${err}`);
   }
 };
@@ -1775,7 +1811,7 @@ var readFile = async (filePath) => {
     }
     throw new Error("Reading file - does not exist or is unaccepted file type");
   } catch (err) {
-    console.error(err);
+    console.error("Error reading file %O", err);
     throw new Error(`Reading file ${err}`);
   }
 };
@@ -1788,7 +1824,7 @@ var unlink = async (filePath) => {
     }
     return false;
   } catch (err) {
-    console.error(err);
+    console.error("Error deleting file %O", err);
     throw new Error(`Deleting file ${err}`);
   }
 };
@@ -1816,7 +1852,7 @@ var application = {
       const response = await callNotify(templateId, emailAddress, variables);
       return response;
     } catch (err) {
-      console.error(err);
+      console.error("Error sending application submitted email to to application owner or provided business contact %O", err);
       throw new Error(`Sending application submitted email to to application owner or provided business contact ${err}`);
     }
   },
@@ -1841,7 +1877,7 @@ var application = {
       }
       throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
     } catch (err) {
-      console.error(err);
+      console.error("Error sending application submitted email to underwriting team %O", err);
       throw new Error(`Sending application submitted email to underwriting team ${err}`);
     }
   }
@@ -1855,7 +1891,7 @@ var documentsEmail = async (variables, templateId) => {
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (err) {
-    console.error(err);
+    console.error("Error sending documents email %O", err);
     throw new Error(`Sending documents email ${err}`);
   }
 };
@@ -1892,7 +1928,7 @@ var insuranceFeedbackEmail = async (variables) => {
     const response = await callNotify(templateId, emailAddress, emailVariables);
     return response;
   } catch (err) {
-    console.error(err);
+    console.error("Error sending insurance feedback email %O", err);
     throw new Error(`Sending insurance feedback email ${err}`);
   }
 };
@@ -1923,7 +1959,7 @@ var createAnAccount = async (root, variables, context) => {
   console.info("Creating new account for ", variables.email);
   try {
     const { urlOrigin, firstName, lastName, email, password: password2 } = variables;
-    const account = await get_account_by_field_default(context, "email", email);
+    const account = await get_account_by_field_default(context, account_default.EMAIL, email);
     if (account) {
       console.info(`Unable to create a new account for ${variables.email} - account already exists`);
       return { success: false };
@@ -1957,6 +1993,7 @@ var createAnAccount = async (root, variables, context) => {
     }
     throw new Error(`Sending email verification for account creation ${emailResponse}`);
   } catch (err) {
+    console.error("Error creating a new account %O", err);
     throw new Error(`Creating a new account ${err}`);
   }
 };
@@ -1977,7 +2014,7 @@ var getAuthenticationRetriesByAccountId = async (context, accountId) => {
     });
     return retries;
   } catch (err) {
-    console.error(err);
+    console.error("Error getting authentication retries by account ID %O", err);
     throw new Error(`Getting authentication retries by account ID ${err}`);
   }
 };
@@ -2015,7 +2052,7 @@ var deleteAnAccount = async (root, variables, context) => {
       success: true
     };
   } catch (err) {
-    console.error(err);
+    console.error("Error deleting account %O", err);
     throw new Error(`Deleting account ${err}`);
   }
 };
@@ -2064,7 +2101,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
       invalid: true
     };
   } catch (err) {
-    console.error(err);
+    console.error("Error verifying account email address %O", err);
     throw new Error(`Verifying account email address ${err}`);
   }
 };
@@ -2081,7 +2118,7 @@ var getAccountById = async (context, accountId) => {
     });
     return account;
   } catch (err) {
-    console.error(err);
+    console.error("Error getting account by ID %O", err);
     throw new Error(`Getting account by ID ${err}`);
   }
 };
@@ -2106,7 +2143,7 @@ var send = async (context, urlOrigin, accountId) => {
     }
     throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${emailResponse}`);
   } catch (err) {
-    console.error(err);
+    console.error("Error sending email verification (sendEmailConfirmEmailAddress helper) %O", err);
     throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${err}`);
   }
 };
@@ -2124,7 +2161,7 @@ var sendEmailConfirmEmailAddressMutation = async (root, variables, context) => {
     }
     throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${emailResponse}`);
   } catch (err) {
-    console.error(err);
+    console.error("Error sending email verification for account creation (sendEmailConfirmEmailAddress mutation) %O", err);
     throw new Error(`Sending email verification for account creation (sendEmailConfirmEmailAddress mutation) ${err}`);
   }
 };
@@ -2183,7 +2220,7 @@ var createAuthenticationRetryEntry = async (context, accountId) => {
       success: false
     };
   } catch (err) {
-    console.error(`Creating account authentication retry entry ${err}`);
+    console.error("Error creating account authentication retry entry %O", err);
     throw new Error(`${err}`);
   }
 };
@@ -2211,7 +2248,7 @@ var shouldBlockAccount = async (context, accountId) => {
     }
     return false;
   } catch (err) {
-    console.error(err);
+    console.error("Error checking account authentication retries %O", err);
     throw new Error(`Checking account authentication retries  ${err}`);
   }
 };
@@ -2230,7 +2267,7 @@ var blockAccount = async (context, accountId) => {
     }
     return false;
   } catch (err) {
-    console.error(err);
+    console.error("Error blocking account %O", err);
     throw new Error(`Blocking account ${err}`);
   }
 };
@@ -2266,7 +2303,7 @@ var generateOtp = () => {
       expiry
     };
   } catch (err) {
-    console.error(err);
+    console.error("Error generating OTP %O", err);
     throw new Error(`Error generating OTP ${err}`);
   }
 };
@@ -2295,7 +2332,7 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
       securityCode
     };
   } catch (err) {
-    console.error(err);
+    console.error("Error adding OTP to an account %O", err);
     throw new Error(`Adding OTP to an account ${err}`);
   }
 };
@@ -2347,7 +2384,7 @@ var accountChecks = async (context, account, urlOrigin) => {
       success: false
     };
   } catch (err) {
-    console.error(err);
+    console.error("Error validating password or sending email for account sign in (accountSignIn mutation - account checks) %O", err);
     throw new Error(`Validating password or sending email for account sign in (accountSignIn mutation - account checks) ${err}`);
   }
 };
@@ -2393,7 +2430,7 @@ var accountSignIn = async (root, variables, context) => {
     }
     return { success: false };
   } catch (err) {
-    console.error(err);
+    console.error("Error signing into account %O", err);
     throw new Error(`Signing in account (accountSignIn mutation) ${err}`);
   }
 };
@@ -2423,7 +2460,7 @@ var accountSignInSendNewCode = async (root, variables, context) => {
       success: false
     };
   } catch (err) {
-    console.error(err);
+    console.error("Error generating and sending new sign in code for account (accountSignInSendNewCode mutation) %O", err);
     throw new Error(`Generating and sending new sign in code for account (accountSignInSendNewCode mutation) ${err}`);
   }
 };
@@ -2451,7 +2488,7 @@ var isValidOTP = (securityCode, otpSalt, otpHash) => {
     }
     return false;
   } catch (err) {
-    console.error(err);
+    console.error("Error validating OTP %O", err);
     throw new Error(`Error validating OTP ${err}`);
   }
 };
@@ -2470,7 +2507,7 @@ var deleteAuthenticationRetries = async (context, accountId) => {
     });
     return result;
   } catch (err) {
-    console.error(err);
+    console.error("Error deleting authentication retries %O", err);
     throw new Error(`Deleting authentication retries ${err}`);
   }
 };
@@ -2568,7 +2605,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
       success: false
     };
   } catch (err) {
-    console.error(err);
+    console.error("Error verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) %O", err);
     throw new Error(`Verifying account sign in code and generating JWT (verifyAccountSignInCode mutation) ${err}`);
   }
 };
@@ -2590,7 +2627,7 @@ var addAndGetOTP = async (root, variables, context) => {
       securityCode
     };
   } catch (err) {
-    console.error(err);
+    console.error("Error adding OTP to an account (addAndGetOTP mutation) %O", err);
     throw new Error(`Adding OTP to an account (addAndGetOTP mutation) ${err}`);
   }
 };
@@ -2633,6 +2670,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
           };
         }
       } catch (err) {
+        console.error("Error blocking account $O", err);
         return { success: false };
       }
     }
@@ -2655,7 +2693,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
     }
     return { success: false };
   } catch (err) {
-    console.error(err);
+    console.error("Error checking account and sending password reset email (sendEmailPasswordResetLink mutation) $O", err);
     throw new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${err}`);
   }
 };
@@ -2688,7 +2726,7 @@ var hasAccountUsedPasswordBefore = async (context, accountId, newPassword) => {
     }
     return usedBefore;
   } catch (err) {
-    console.error(err);
+    console.error("Error checking if an account has used a password before %O", err);
     throw new Error(`Checking if an account has used a password before ${err}`);
   }
 };
@@ -2706,7 +2744,7 @@ var createAuthenticationEntry = async (context, entry) => {
     });
     return result;
   } catch (err) {
-    console.error(err);
+    console.error("Error creating authentication entry %O", err);
     throw new Error(`Creating authentication entry ${err}`);
   }
 };
@@ -2786,7 +2824,7 @@ var accountPasswordReset = async (root, variables, context) => {
       success: true
     };
   } catch (err) {
-    console.error(err);
+    console.error("Error resetting account password %O", err);
     throw new Error(`Resetting account password ${err}`);
   }
 };
@@ -2836,7 +2874,7 @@ var sendEmailReactivateAccountLink = async (root, variables, context) => {
     }
     return { accountId, email, success: false };
   } catch (err) {
-    console.error(err);
+    console.error("Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) %O", err);
     throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) ${err}`);
   }
 };
@@ -2867,7 +2905,7 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
       success: false
     };
   } catch (err) {
-    console.error(err);
+    console.error("Error deleting application by reference number %O", err);
     throw new Error(`Deleting application by reference number (DeleteApplicationByReferenceNumber mutation) ${err}`);
   }
 };
@@ -2926,7 +2964,7 @@ var updateCompanyAndCompanyAddress = async (root, variables, context) => {
       id: variables.companyId
     };
   } catch (err) {
-    console.error("Error updating application - company and company address", { err });
+    console.error("Error updating application - company and company address %O", err);
     throw new Error(`Updating application - company and company address ${err}`);
   }
 };
@@ -2952,7 +2990,7 @@ var getCountryByField = async (context, field, value) => {
     const country = countriesArray[0];
     return country;
   } catch (err) {
-    console.error(err);
+    console.error("Error getting country by field/value %O", err);
     throw new Error(`Getting country by field/value ${err}`);
   }
 };
@@ -3169,7 +3207,7 @@ var send2 = async (application2, xlsxPath) => {
       success: true
     };
   } catch (err) {
-    console.error(err);
+    console.error("Error sending application submitted emails %O", err);
     throw new Error(`Sending application submitted emails ${err}`);
   }
 };
@@ -3924,7 +3962,7 @@ var mapApplicationToXLSX = (application2) => {
     ];
     return mapped;
   } catch (err) {
-    console.error(err);
+    console.error("Error mapping application to XLSX %O", err);
     throw new Error(`Mapping application to XLSX ${err}`);
   }
 };
@@ -3999,7 +4037,7 @@ var XLSX2 = (application2) => {
       workbook.xlsx.writeFile(filePath).then(() => resolve(filePath));
     });
   } catch (err) {
-    console.error(err);
+    console.error("Error generating XLSX file %O", err);
     throw new Error(`Generating XLSX file ${err}`);
   }
 };
@@ -4044,7 +4082,7 @@ var submitApplication = async (root, variables, context) => {
       success: false
     };
   } catch (err) {
-    console.error(err);
+    console.error("Error submitting application %O", err);
     throw new Error(`Submitting application ${err}`);
   }
 };
@@ -4070,6 +4108,7 @@ var createFeedback = async (root, variables, context) => {
     }
     return { success: false };
   } catch (err) {
+    console.error("Error creating feedback %O", err);
     throw new Error(`Creating feedback: ${err}`);
   }
 };
@@ -4119,7 +4158,7 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
       invalid: true
     };
   } catch (err) {
-    console.error(err);
+    console.error("Error checking account and reactivating account(verifyAccountReactivationToken mutation) %O", err);
     throw new Error(`Checking account and reactivating account(verifyAccountReactivationToken mutation) ${err}`);
   }
 };
@@ -4206,7 +4245,7 @@ var getIndustrySectorNames = {
         success: true
       };
     } catch (err) {
-      console.error("Error calling industry sector API ", { err });
+      console.error("Error calling industry sector API %O", err);
       return {
         apiError: true,
         success: false
@@ -4244,7 +4283,7 @@ var companiesHouse = {
         success: true
       };
     } catch (err) {
-      console.error("Error calling Companies House API", { err });
+      console.error("Error calling Companies House API %O", err);
       throw new Error(`Calling Companies House API. Unable to search for company ${err}`);
     }
   }
@@ -4276,7 +4315,7 @@ var getCompaniesHouseInformation = async (root, variables) => {
       success: true
     };
   } catch (err) {
-    console.error("Error getting companies house information", { err });
+    console.error("Error getting companies house information %O", err);
     return {
       apiError: true,
       success: false
@@ -4304,6 +4343,7 @@ var getAccountPasswordResetToken = async (root, variables, context) => {
     console.info("Unable to get account password reset token - reset hash does not exist");
     return { success: false };
   } catch (err) {
+    console.error("Error getting account password reset token %O", err);
     throw new Error(`Getting account password reset token ${err}`);
   }
 };
@@ -4341,7 +4381,7 @@ var verifyAccountPasswordResetToken = async (root, variables, context) => {
       invalid: true
     };
   } catch (err) {
-    console.error(err);
+    console.error("Error verifying account password reset token %O", err);
     throw new Error(`Verifying account password reset token ${err}`);
   }
 };
@@ -4383,15 +4423,22 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 });
 
 // keystone.ts
-var enableLogging = process.env.NODE_ENV === "development";
+var { NODE_ENV, DATABASE_URL } = process.env;
+var enableLogging = NODE_ENV === "development";
 var keystone_default = withAuth(
   (0, import_core2.config)({
     server: {
-      port: 5001
+      port: 5001,
+      extendExpressApp: (app) => {
+        if (NODE_ENV === "production") {
+          app.use(rate_limiter_default);
+        }
+        app.use(check_api_key_default);
+      }
     },
     db: {
       provider: "mysql",
-      url: String(process.env.DATABASE_URL),
+      url: String(DATABASE_URL),
       enableLogging
     },
     ui: {

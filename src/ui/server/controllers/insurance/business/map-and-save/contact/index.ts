@@ -31,7 +31,7 @@ const contact = async (formBody: RequestBody, application: Application, validati
 
     return true;
   } catch (err) {
-    console.error('Error mapping and saving business - contact section of application', { err });
+    console.error('Error mapping and saving business - contact section of application %O', err);
     return false;
   }
 };

@@ -1,18 +1,17 @@
-import { pageVariables, TEMPLATE, get, post } from '.';
+import { FIELD_ID, pageVariables, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, TEMPLATES, ROUTES } from '../../../../constants';
 import { DECLARATIONS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/declarations';
 import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import keystoneDocumentRendererConfig from '../../../../helpers/keystone-document-renderer-config';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockDeclarations } from '../../../../test-mocks';
-
-const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIRMATION_ACKNOWLEDGEMENTS;
 
 const {
   INSURANCE_ROOT,
@@ -39,6 +38,14 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
     res.locals.application = mockApplication;
 
     api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement = getLatestConfirmationAndAcknowledgementSpy;
+  });
+
+  describe('FIELD_ID', () => {
+    it('should have the correct ID', () => {
+      const expected = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIRMATION_ACKNOWLEDGEMENTS;
+
+      expect(FIELD_ID).toEqual(expected);
+    });
   });
 
   describe('pageVariables', () => {
@@ -133,11 +140,13 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
         req.body = validBody;
       });
 
-      it('should call save.declaration with application and req.body', async () => {
+      it('should call save.declaration with application and submitted values from constructPayload function', async () => {
         await post(req, res);
 
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
         expect(save.declaration).toHaveBeenCalledTimes(1);
-        expect(save.declaration).toHaveBeenCalledWith(mockApplication, validBody);
+        expect(save.declaration).toHaveBeenCalledWith(mockApplication, payload);
       });
 
       it(`should redirect to ${HOW_YOUR_DATA_WILL_BE_USED}`, async () => {
@@ -156,8 +165,10 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
         expect(getLatestConfirmationAndAcknowledgementSpy).toHaveBeenCalledTimes(1);
       });
 
-      it('should render template with validation errors', async () => {
+      it('should render template with validation errors from constructPayload function', async () => {
         await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
@@ -168,7 +179,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
           userName: getUserNameFromSession(req.session.user),
           documentContent: mockDeclarations.confirmationAndAcknowledgement.content.document,
           documentConfig: keystoneDocumentRendererConfig(),
-          validationErrors: generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
+          validationErrors: generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

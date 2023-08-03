@@ -1,7 +1,9 @@
-import { Request, Response } from '../../../types';
+import isRequestHeaderOriginValid from './is-request-header-origin-valid';
+import { Request, Response } from '../../../../types';
 
 /**
  * Global middleware, ensures myriads of imperative security headers.
+ * - Sanitise request "referer" and "origin" headers
  * - `HSTS` - 1 Year
  * - `X-Frame-Options` - Clickjacking
  * - `XSS`
@@ -22,6 +24,20 @@ import { Request, Response } from '../../../types';
  */
 
 export const security = (req: Request, res: Response, next: () => void) => {
+  const { hostname } = req;
+
+  if (req.headers.referer) {
+    if (!isRequestHeaderOriginValid(hostname, req.headers.referer)) {
+      req.headers.referer = '';
+    }
+  }
+
+  if (req.headers.origin) {
+    if (!isRequestHeaderOriginValid(hostname, req.headers.origin)) {
+      req.headers.origin = '';
+    }
+  }
+
   res.setHeader('Strict-Transport-Security', 'max-age=15552000; includeSubDomains; preload');
   res.setHeader('X-Frame-Options', 'deny');
   res.setHeader('X-XSS-Protection', '1; mode=block');
@@ -44,5 +60,6 @@ export const security = (req: Request, res: Response, next: () => void) => {
   );
 
   res.removeHeader('X-Powered-By');
+
   next();
 };

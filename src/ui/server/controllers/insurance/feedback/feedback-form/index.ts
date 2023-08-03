@@ -1,22 +1,25 @@
 import { PAGES, FIELDS } from '../../../../content-strings';
-import { TEMPLATES, ROUTES, FIELD_IDS, INSURANCE, SERVICE_NAME } from '../../../../constants';
+import { TEMPLATES, ROUTES, INSURANCE, SERVICE_NAME } from '../../../../constants';
+import { FEEDBACK_FIELD_IDS } from '../../../../constants/field-ids/feedback';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import { objectHasKeysAndValues } from '../../../../helpers/object';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import { Request, Response, InsuranceFeedbackVariables } from '../../../../../types';
 import api from '../../../../api';
+import { Request, Response, InsuranceFeedbackVariables } from '../../../../../types';
 
-const {
-  FEEDBACK: { SATISFACTION, IMPROVEMENT, OTHER_COMMENTS, VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED, REFERRAL_URL, SERVICE, PRODUCT },
-} = FIELD_IDS;
+const { SATISFACTION, IMPROVEMENT, OTHER_COMMENTS, VERY_SATISFIED, SATISFIED, NEITHER, DISSATISFIED, VERY_DISSATISIFED } = FEEDBACK_FIELD_IDS;
 
+const { REFERRAL_URL, SERVICE, PRODUCT } = FEEDBACK_FIELD_IDS;
 const { FEEDBACK_PAGE } = PAGES;
 const { FEEDBACK: FEEDBACK_TEMPLATE } = TEMPLATES.INSURANCE;
 
 const { FEEDBACK_SENT, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 export const TEMPLATE = FEEDBACK_TEMPLATE;
+
+export const FIELD_IDS = [SATISFACTION, IMPROVEMENT, OTHER_COMMENTS];
 
 export const MAXIMUM = 1200;
 
@@ -62,7 +65,7 @@ const get = (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
     });
   } catch (err) {
-    console.error('Error getting insurance feedback page', { err });
+    console.error('Error getting insurance feedback page %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -77,10 +80,12 @@ const post = async (req: Request, res: Response) => {
   try {
     const { body } = req;
 
-    const { _csrf, ...feedback } = body;
+    const { _csrf, ...submittedFeedback } = body;
+
+    const payload = constructPayload(submittedFeedback, FIELD_IDS);
 
     // run validation on inputs
-    const validationErrors = generateValidationErrors(body);
+    const validationErrors = generateValidationErrors(payload);
 
     // if any errors then render template with errors
     if (validationErrors) {
@@ -91,7 +96,7 @@ const post = async (req: Request, res: Response) => {
         }),
         ...pageVariables(),
         validationErrors,
-        submittedValues: body,
+        submittedValues: payload,
         userName: getUserNameFromSession(req.session.user),
       });
     }
@@ -103,12 +108,12 @@ const post = async (req: Request, res: Response) => {
      */
     req.flash('serviceOriginUrl', referralUrl);
 
-    if (objectHasKeysAndValues(feedback)) {
+    if (objectHasKeysAndValues(payload)) {
       const feedbackVariables = {
         // satisfaction will be null if not selected so set as empty string if null
-        [SATISFACTION]: feedback[SATISFACTION] ?? '',
-        [IMPROVEMENT]: feedback[IMPROVEMENT],
-        [OTHER_COMMENTS]: feedback[OTHER_COMMENTS],
+        [SATISFACTION]: payload[SATISFACTION] ?? '',
+        [IMPROVEMENT]: payload[IMPROVEMENT],
+        [OTHER_COMMENTS]: payload[OTHER_COMMENTS],
         [REFERRAL_URL]: referralUrl?.toString(),
         [SERVICE]: INSURANCE,
         [PRODUCT]: SERVICE_NAME,
@@ -123,7 +128,7 @@ const post = async (req: Request, res: Response) => {
 
     return res.redirect(FEEDBACK_SENT);
   } catch (err) {
-    console.error('Error posting insurance feedback page', { err });
+    console.error('Error posting insurance feedback page %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

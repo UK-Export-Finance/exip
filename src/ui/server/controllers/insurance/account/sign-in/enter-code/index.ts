@@ -11,7 +11,7 @@ import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 
 const {
-  ACCOUNT: { SECURITY_CODE: FIELD_ID },
+  ACCOUNT: { SECURITY_CODE },
 } = FIELD_IDS.INSURANCE;
 
 const {
@@ -23,6 +23,8 @@ const {
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
+
+export const FIELD_ID = SECURITY_CODE;
 
 /**
  * PAGE_VARIABLES
@@ -93,7 +95,12 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(SIGN_IN_ROOT);
     }
 
-    const securityCode = sanitiseValue(FIELD_ID, req.body[FIELD_ID]);
+    const submittedCode = req.body[FIELD_ID];
+
+    const securityCode = sanitiseValue({
+      key: FIELD_ID,
+      value: submittedCode,
+    });
 
     let validationErrors = generateValidationErrors(req.body);
 
@@ -163,7 +170,7 @@ export const post = async (req: Request, res: Response) => {
       validationErrors,
     });
   } catch (err) {
-    console.error('Error verifying account sign in code', { err });
+    console.error('Error verifying account sign in code %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

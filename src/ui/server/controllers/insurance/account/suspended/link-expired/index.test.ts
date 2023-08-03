@@ -3,7 +3,7 @@ import { PAGES } from '../../../../../content-strings';
 import { TEMPLATES } from '../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
-import { replaceCharactersWithCharacterCode } from '../../../../../helpers/sanitise-data';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
@@ -55,7 +55,7 @@ describe('controllers/insurance/account/suspended/link-sent', () => {
 
     let sendEmailReactivateAccountLinkResponseSpy = jest.fn(() => Promise.resolve(sendEmailReactivateAccountLinkResponse));
 
-    const sanitisedId = replaceCharactersWithCharacterCode(mockAccount.id);
+    const sanitisedId = String(sanitiseValue({ value: mockAccount.id }));
 
     beforeEach(() => {
       api.keystone.account.sendEmailReactivateAccountLink = sendEmailReactivateAccountLinkResponseSpy;
@@ -63,7 +63,7 @@ describe('controllers/insurance/account/suspended/link-sent', () => {
       req.query.id = mockAccount.id;
     });
 
-    it('should call api.keystone.account.sendEmailReactivateAccountLink with req.headers.origin and sanitised email', async () => {
+    it('should call api.keystone.account.sendEmailReactivateAccountLink with req.headers.origin and sanitised ID', async () => {
       await post(req, res);
 
       expect(sendEmailReactivateAccountLinkResponseSpy).toHaveBeenCalledTimes(1);

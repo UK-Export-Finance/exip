@@ -46,7 +46,7 @@ const mapApplicationToXLSX = (application: Application) => {
 
     return mapped;
   } catch (err) {
-    console.error(err);
+    console.error('Error mapping application to XLSX %O', err);
 
     throw new Error(`Mapping application to XLSX ${err}`);
   }

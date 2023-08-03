@@ -1,10 +1,12 @@
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { ROUTES, TEMPLATES } from '../../../../constants';
+import POLICY_AND_EXPORTS_FIELD_IDS from '../../../../constants/field-ids/insurance/policy-and-exports';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import api from '../../../../api';
 import { isPopulatedArray } from '../../../../helpers/array';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
 import { objectHasProperty } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
 import mapCountries from '../../../../helpers/mappings/map-countries';
@@ -22,10 +24,8 @@ const {
 } = ROUTES;
 
 const {
-  POLICY_AND_EXPORTS: { ABOUT_GOODS_OR_SERVICES },
-} = FIELD_IDS.INSURANCE;
-
-const { DESCRIPTION, FINAL_DESTINATION } = ABOUT_GOODS_OR_SERVICES;
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+} = POLICY_AND_EXPORTS_FIELD_IDS;
 
 /**
  * pageVariables
@@ -48,6 +48,8 @@ export const pageVariables = (referenceNumber: number) => ({
 });
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES;
+
+export const FIELD_IDS = [DESCRIPTION, FINAL_DESTINATION];
 
 /**
  * get
@@ -92,7 +94,7 @@ export const get = async (req: Request, res: Response) => {
       countries: mappedCountries,
     });
   } catch (err) {
-    console.error('Error getting countries ', { err });
+    console.error('Error getting countries %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -115,7 +117,9 @@ export const post = async (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
   const refNumber = Number(referenceNumber);
 
-  const validationErrors = generateValidationErrors(req.body);
+  const payload = constructPayload(req.body, FIELD_IDS);
+
+  const validationErrors = generateValidationErrors(payload);
 
   if (validationErrors) {
     try {
@@ -127,8 +131,8 @@ export const post = async (req: Request, res: Response) => {
 
       let mappedCountries;
 
-      if (objectHasProperty(req.body, FINAL_DESTINATION)) {
-        mappedCountries = mapCountries(countries, req.body[FINAL_DESTINATION]);
+      if (objectHasProperty(payload, FINAL_DESTINATION)) {
+        mappedCountries = mapCountries(countries, payload[FINAL_DESTINATION]);
       } else {
         mappedCountries = mapCountries(countries);
       }
@@ -141,12 +145,12 @@ export const post = async (req: Request, res: Response) => {
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
         application,
-        submittedValues: req.body,
+        submittedValues: payload,
         countries: mappedCountries,
         validationErrors,
       });
     } catch (err) {
-      console.error('Error getting countries ', { err });
+      console.error('Error getting countries %O', err);
 
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
@@ -166,7 +170,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (err) {
-    console.error('Error updating application - policy and exports - about goods or services', { err });
+    console.error('Error updating application - policy and exports - about goods or services %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

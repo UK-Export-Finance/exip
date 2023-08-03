@@ -1,6 +1,8 @@
 import { ROUTES } from '../../../../../constants';
 import { Request, Response } from '../../../../../../types';
 import hasFormData from '../../../../../helpers/has-form-data';
+import { FIELD_IDS } from '..';
+import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import callMapAndSave from '../../call-map-and-save';
 
@@ -26,7 +28,9 @@ export const post = async (req: Request, res: Response) => {
     const { referenceNumber } = req.params;
 
     if (hasFormData(req.body)) {
-      const saveResponse = await callMapAndSave(req.body, application, generateValidationErrors(req.body));
+      const payload = constructPayload(req.body, FIELD_IDS);
+
+      const saveResponse = await callMapAndSave(payload, application, generateValidationErrors(payload));
 
       if (!saveResponse) {
         return res.redirect(PROBLEM_WITH_SERVICE);
@@ -35,7 +39,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (err) {
-    console.error('Error updating application - policy and exports - multiple contract policy (save and back)', { err });
+    console.error('Error updating application - policy and exports - multiple contract policy (save and back) %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

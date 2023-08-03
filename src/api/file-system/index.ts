@@ -42,7 +42,7 @@ const isAcceptedFileType = (filePath: string) => {
  */
 const readFile = async (filePath: string): Promise<Buffer> => {
   try {
-    console.info(`Reading file ${filePath}`);
+    console.info('Reading file %s', filePath);
 
     const file = await fs.readFile(filePath);
 
@@ -52,7 +52,7 @@ const readFile = async (filePath: string): Promise<Buffer> => {
 
     throw new Error('Reading file - does not exist or is unaccepted file type');
   } catch (err) {
-    console.error(err);
+    console.error('Error reading file %O', err);
 
     throw new Error(`Reading file ${err}`);
   }
@@ -66,7 +66,7 @@ const readFile = async (filePath: string): Promise<Buffer> => {
  */
 const unlink = async (filePath: string) => {
   try {
-    console.info(`Deleting file ${filePath}`);
+    console.info('Deleting file %s', filePath);
 
     const file = await readFile(filePath);
 
@@ -76,7 +76,7 @@ const unlink = async (filePath: string) => {
 
     return false;
   } catch (err) {
-    console.error(err);
+    console.error('Error deleting file %O', err);
 
     throw new Error(`Deleting file ${err}`);
   }

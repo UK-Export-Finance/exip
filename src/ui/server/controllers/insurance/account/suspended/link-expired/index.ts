@@ -2,7 +2,7 @@ import { PAGES } from '../../../../../content-strings';
 import { TEMPLATES } from '../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
-import { replaceCharactersWithCharacterCode } from '../../../../../helpers/sanitise-data';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 
@@ -42,7 +42,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(SUSPENDED_ROOT);
     }
 
-    const sanitisedId = replaceCharactersWithCharacterCode(req.query.id);
+    const sanitisedId = String(sanitiseValue({ value: req.query.id }));
 
     const response = await api.keystone.account.sendEmailReactivateAccountLink(urlOrigin, sanitisedId);
 
@@ -58,7 +58,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
-    console.error('Error posting reactivate account - link expired form', { err });
+    console.error('Error posting reactivate account - link expired form %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

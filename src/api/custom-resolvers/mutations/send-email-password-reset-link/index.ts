@@ -82,6 +82,7 @@ const sendEmailPasswordResetLink = async (
           };
         }
       } catch (err) {
+        console.error('Error blocking account $O', err);
         return { success: false };
       }
     }
@@ -118,7 +119,7 @@ const sendEmailPasswordResetLink = async (
 
     return { success: false };
   } catch (err) {
-    console.error(err);
+    console.error('Error checking account and sending password reset email (sendEmailPasswordResetLink mutation) $O', err);
 
     throw new Error(`Checking account and sending password reset email (sendEmailPasswordResetLink mutation) ${err}`);
   }

@@ -1,5 +1,6 @@
 import { get } from '.';
 import { ROUTES } from '../../../../../constants';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 import { mockAccount, mockReq, mockRes } from '../../../../../test-mocks';
@@ -18,13 +19,13 @@ describe('controllers/insurance/account/create/verify-email', () => {
   let req: Request;
   let res: Response;
 
-  let verifyEmailAddressSpy;
+  const mockToken = 'mockToken';
 
   const mockVerifyEmailAddressResponse = {
     success: true,
   };
 
-  const mockToken = 'mockToken';
+  let verifyEmailAddressSpy = jest.fn(() => Promise.resolve(mockVerifyEmailAddressResponse));
 
   beforeEach(() => {
     req = mockReq();
@@ -33,9 +34,24 @@ describe('controllers/insurance/account/create/verify-email', () => {
 
   describe('get', () => {
     describe('when req.query.token exists', () => {
+      beforeEach(() => {
+        req.query.token = mockToken;
+      });
+
+      it('should call api.keystone.account.verifyEmailAddress', async () => {
+        api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
+
+        await get(req, res);
+
+        const sanitisedToken = String(sanitiseValue({ value: mockToken }));
+
+        expect(verifyEmailAddressSpy).toHaveBeenCalledTimes(1);
+
+        expect(verifyEmailAddressSpy).toHaveBeenCalledWith(sanitisedToken);
+      });
+
       describe('when api.keystone.account.verifyEmailAddress returns success=true', () => {
         beforeEach(() => {
-          req.query.token = mockToken;
           verifyEmailAddressSpy = jest.fn(() => Promise.resolve(mockVerifyEmailAddressResponse));
 
           api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
@@ -56,7 +72,6 @@ describe('controllers/insurance/account/create/verify-email', () => {
 
       describe('when api.keystone.account.verifyEmailAddress returns expired=true and an accountId', () => {
         beforeEach(() => {
-          req.query.token = mockToken;
           verifyEmailAddressSpy = jest.fn(() => Promise.resolve({ success: true, expired: true, accountId: mockAccount.id }));
 
           api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
@@ -72,7 +87,6 @@ describe('controllers/insurance/account/create/verify-email', () => {
 
       describe('when api.keystone.account.verifyEmailAddress returns invalid=true', () => {
         beforeEach(() => {
-          req.query.token = mockToken;
           verifyEmailAddressSpy = jest.fn(() => Promise.resolve({ success: false, invalid: true }));
 
           api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
@@ -107,7 +121,6 @@ describe('controllers/insurance/account/create/verify-email', () => {
     describe('when there is no req.query.token', () => {
       beforeEach(() => {
         req.query = {};
-        verifyEmailAddressSpy = jest.fn(() => Promise.resolve({}));
 
         api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
       });

@@ -38,7 +38,7 @@ const companiesHouse = {
         success: true,
       };
     } catch (err) {
-      console.error('Error calling Companies House API', { err });
+      console.error('Error calling Companies House API %O', err);
 
       throw new Error(`Calling Companies House API. Unable to search for company ${err}`);
     }

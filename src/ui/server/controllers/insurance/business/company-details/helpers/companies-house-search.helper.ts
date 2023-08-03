@@ -36,7 +36,7 @@ const companiesHouseSearch = async (formBody: RequestBody) => {
     try {
       company = await api.keystone.getCompaniesHouseInformation(companiesHouseNumber);
     } catch (err) {
-      console.error('Error posting to companies house API', { err });
+      console.error('Error posting to companies house API %O', err);
       return {
         apiError: true,
         companiesHouseNumber,

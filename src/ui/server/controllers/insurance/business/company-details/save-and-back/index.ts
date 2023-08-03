@@ -48,7 +48,7 @@ const post = async (req: Request, res: Response) => {
     const payload = constructPayload(body, FIELD_IDS);
 
     // run validation on other fields on page
-    validationErrors = companyDetailsValidation(body, validationErrors);
+    validationErrors = companyDetailsValidation(payload, validationErrors);
 
     // body for update containing companies house info and request body
     const updateBody = {
@@ -66,7 +66,7 @@ const post = async (req: Request, res: Response) => {
     // redirect to all sections page
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (err) {
-    console.error('Error updating application - your business - company details (save and back)', { err });
+    console.error('Error updating application - your business - company details (save and back) %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

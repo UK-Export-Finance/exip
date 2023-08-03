@@ -15,7 +15,7 @@ const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHo
   try {
     const { companiesHouseNumber } = variables;
 
-    console.info('Getting Companies House information for ', companiesHouseNumber);
+    console.info('Getting Companies House information for %s', companiesHouseNumber);
 
     const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, '0');
 
@@ -46,7 +46,7 @@ const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHo
       success: true,
     };
   } catch (err) {
-    console.error('Error getting companies house information', { err });
+    console.error('Error getting companies house information %O', err);
     return {
       apiError: true,
       success: false,

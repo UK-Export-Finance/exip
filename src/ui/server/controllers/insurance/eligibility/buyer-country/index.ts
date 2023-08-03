@@ -5,6 +5,7 @@ import { isPopulatedArray } from '../../../../helpers/array';
 import { mapCisCountries } from '../../../../helpers/mappings/map-cis-countries';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
 import { validation as generateValidationErrors } from '../../../../shared-validation/buyer-country';
 import getCountryByName from '../../../../helpers/get-country-by-name';
 import { canApplyOnline, canApplyOffline, cannotApply } from '../../../../helpers/country-support';
@@ -12,7 +13,7 @@ import mapSubmittedEligibilityCountry from '../../../../helpers/mappings/map-sub
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
 
-const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
+export const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
@@ -62,7 +63,7 @@ export const get = async (req: Request, res: Response) => {
       submittedValues: req.session.submittedData.insuranceEligibility,
     });
   } catch (err) {
-    console.error('Error getting insurance - eligibility - buyer-country ', { err });
+    console.error('Error getting insurance - eligibility - buyer-country %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
@@ -70,7 +71,9 @@ export const get = async (req: Request, res: Response) => {
 
 export const post = async (req: Request, res: Response) => {
   try {
-    const validationErrors = generateValidationErrors(req.body);
+    const payload = constructPayload(req.body, [FIELD_ID]);
+
+    const validationErrors = generateValidationErrors(payload);
 
     const countries = await api.external.getCountries();
 
@@ -92,7 +95,7 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
-    const submittedCountryName = req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
+    const submittedCountryName = payload[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
 
     const country = getCountryByName(mappedCountries, submittedCountryName);
 
@@ -142,7 +145,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
     }
   } catch (err) {
-    console.error('Error posting insurance - eligibility - buyer-country ', { err });
+    console.error('Error posting insurance - eligibility - buyer-country %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

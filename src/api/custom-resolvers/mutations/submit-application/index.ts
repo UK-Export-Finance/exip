@@ -19,7 +19,7 @@ import { SubmitApplicationVariables, SuccessResponse } from '../../../types';
  */
 const submitApplication = async (root: any, variables: SubmitApplicationVariables, context: Context): Promise<SuccessResponse> => {
   try {
-    console.info(`Submitting application ${variables.applicationId}`);
+    console.info('Submitting application %s', variables.applicationId);
 
     // get the application
     const application = (await context.db.Application.findOne({
@@ -72,7 +72,7 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
       success: false,
     };
   } catch (err) {
-    console.error(err);
+    console.error('Error submitting application %O', err);
     throw new Error(`Submitting application ${err}`);
   }
 };

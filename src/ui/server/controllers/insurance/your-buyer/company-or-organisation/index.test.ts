@@ -1,18 +1,18 @@
-import { get, post, pageVariables, TEMPLATE } from '.';
+import { get, post, pageVariables, TEMPLATE, FIELD_IDS } from '.';
 import { PAGES } from '../../../../content-strings';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { ROUTES, TEMPLATES } from '../../../../constants';
+import BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import yourBuyerDetailsValidation from './validation';
+import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockBuyer } from '../../../../test-mocks';
 
-const {
-  YOUR_BUYER: { COMPANY_OR_ORGANISATION },
-} = FIELD_IDS.INSURANCE;
+const { COMPANY_OR_ORGANISATION } = BUYER_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
@@ -105,6 +105,14 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
     });
   });
 
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      const expected = [NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER];
+
+      expect(FIELD_IDS).toEqual(expected);
+    });
+  });
+
   describe('get', () => {
     it('should render template', async () => {
       await get(req, res);
@@ -155,14 +163,19 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call mapAndSave.buyer once with buyer and application', async () => {
-        req.body = mockBuyer;
+      it('should call mapAndSave.buyer once with data from constructPayload function and application', async () => {
+        req.body = {
+          ...mockBuyer,
+          injection: 1,
+        };
 
         await post(req, res);
 
         expect(mapAndSave.yourBuyer).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.yourBuyer).toHaveBeenCalledWith(req.body, mockApplication);
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(mapAndSave.yourBuyer).toHaveBeenCalledWith(payload, mockApplication);
       });
 
       describe("when the url's last substring is `change`", () => {
@@ -199,7 +212,10 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
     describe('when there are validation errors', () => {
       it('should render template with validation errors', async () => {
         await post(req, res);
-        const validationErrors = yourBuyerDetailsValidation(req.body);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        const validationErrors = yourBuyerDetailsValidation(payload);
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
@@ -208,7 +224,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
           }),
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber),
-          submittedValues: req.body,
+          submittedValues: payload,
           validationErrors,
         };
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

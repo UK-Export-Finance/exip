@@ -2,6 +2,7 @@ import { PAGES } from '../../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../../constants';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 
@@ -29,7 +30,9 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const accountResponse = await api.keystone.account.get(id);
+    const sanitisedId = String(sanitiseValue({ value: id }));
+
+    const accountResponse = await api.keystone.account.get(sanitisedId);
 
     if (accountResponse?.email) {
       const accountEmail = accountResponse.email;
@@ -37,17 +40,17 @@ export const get = async (req: Request, res: Response) => {
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
-          BACK_LINK: `${req.headers.referer}?id=${id}`,
+          BACK_LINK: `${req.headers.referer}?id=${sanitisedId}`,
         }),
         userName: getUserNameFromSession(req.session.user),
         accountEmail,
-        accountId: id,
+        accountId: sanitisedId,
       });
     }
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
-    console.error("Error getting account and rendering 'confirm email resent' page", { err });
+    console.error("Error getting account and rendering 'confirm email resent' page %O", err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

@@ -1,8 +1,9 @@
-import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
+import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
@@ -15,6 +16,14 @@ describe('controllers/insurance/eligibility/exporter-location', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
+  });
+
+  describe('FIELD_ID', () => {
+    it('should have the correct ID', () => {
+      const expected = FIELD_IDS.INSURANCE.ELIGIBILITY.VALID_EXPORTER_LOCATION;
+
+      expect(FIELD_ID).toEqual(expected);
+    });
   });
 
   describe('PAGE_VARIABLES', () => {
@@ -48,13 +57,15 @@ describe('controllers/insurance/eligibility/exporter-location', () => {
 
   describe('post', () => {
     describe('when there are validation errors', () => {
-      it('should render template with validation errors', () => {
+      it('should render template with validation errors from constructPayload function', () => {
         post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
           userName: getUserNameFromSession(req.session.user),
-          validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID]),
+          validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID]),
         });
       });
     });

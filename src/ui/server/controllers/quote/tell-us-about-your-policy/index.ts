@@ -1,9 +1,10 @@
 import { BUTTONS, COOKIES_CONSENT, FIELDS, QUOTE_FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT, HEADER } from '../../../content-strings';
-import { FIELD_IDS, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
+import { FIELD_IDS as ALL_FIELD_IDS, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { isPopulatedArray } from '../../../helpers/array';
 import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import getCurrencyByCode from '../../../helpers/get-currency-by-code';
 import mapPercentageOfCover from '../../../helpers/mappings/map-percentage-of-cover';
@@ -16,9 +17,11 @@ import { Request, Response, SelectOption, TellUsAboutPolicyPageVariables } from 
 const {
   ELIGIBILITY: { AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
   POLICY_TYPE,
-} = FIELD_IDS;
+} = ALL_FIELD_IDS;
 
 const { START: quoteStart } = ROUTES.QUOTE;
+
+export const FIELD_IDS = [AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER];
 
 const generatePageVariables = (policyType: string, ORIGINAL_URL: string) => {
   const pageVariables: TellUsAboutPolicyPageVariables = {
@@ -148,7 +151,7 @@ const get = async (req: Request, res: Response) => {
       submittedValues: submittedData.quoteEligibility,
     });
   } catch (err) {
-    console.error('Error getting quote - tell us about your policy ', { err });
+    console.error('Error getting quote - tell us about your policy %O', err);
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }
@@ -158,9 +161,11 @@ const post = async (req: Request, res: Response) => {
   try {
     const { submittedData } = req.session;
 
+    const payload = constructPayload(req.body, FIELD_IDS);
+
     const validationErrors = generateValidationErrors({
       ...submittedData.quoteEligibility,
-      ...req.body,
+      ...payload,
     });
 
     const currencies = await api.external.getCurrencies();
@@ -169,7 +174,7 @@ const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const submittedCurrencyCode = req.body[CURRENCY];
+    const submittedCurrencyCode = payload[CURRENCY];
 
     if (validationErrors) {
       // map currencies drop down options
@@ -183,7 +188,7 @@ const post = async (req: Request, res: Response) => {
 
       // map percentage of cover drop down options
       let mappedPercentageOfCover = [];
-      const submittedPercentageOfCover = req.body[PERCENTAGE_OF_COVER];
+      const submittedPercentageOfCover = payload[PERCENTAGE_OF_COVER];
 
       if (submittedPercentageOfCover) {
         mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER, submittedPercentageOfCover);
@@ -193,7 +198,7 @@ const post = async (req: Request, res: Response) => {
 
       // map credit period drop down options
       let mappedCreditPeriod = [];
-      const submittedCreditPeriod = req.body[CREDIT_PERIOD];
+      const submittedCreditPeriod = payload[CREDIT_PERIOD];
 
       const creditPeriodOptions = FIELDS[CREDIT_PERIOD].OPTIONS as Array<SelectOption>;
 
@@ -215,12 +220,12 @@ const post = async (req: Request, res: Response) => {
         validationErrors,
         percentageOfCover: mappedPercentageOfCover,
         creditPeriod: mappedCreditPeriod,
-        submittedValues: req.body,
+        submittedValues: payload,
       });
     }
 
     const populatedData = {
-      ...req.body,
+      ...payload,
       [CURRENCY]: getCurrencyByCode(currencies, submittedCurrencyCode),
     };
 
@@ -232,7 +237,7 @@ const post = async (req: Request, res: Response) => {
 
     return res.redirect(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
   } catch (err) {
-    console.error('Error posting quote - tell us about your policy ', { err });
+    console.error('Error posting quote - tell us about your policy %O', err);
 
     return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
   }

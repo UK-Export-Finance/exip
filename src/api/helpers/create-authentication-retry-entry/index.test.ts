@@ -18,7 +18,7 @@ describe('helpers/create-authentication-retry-entry', () => {
   let account: Account;
 
   beforeAll(async () => {
-    account = await accounts.create(context);
+    account = await accounts.create({ context });
 
     // wipe the AuthenticationRetry table so we have a clean slate.
     const retries = await context.query.AuthenticationRetry.findMany();

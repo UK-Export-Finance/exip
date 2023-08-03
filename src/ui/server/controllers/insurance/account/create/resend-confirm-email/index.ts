@@ -1,6 +1,7 @@
 import * as dotenv from 'dotenv';
-import api from '../../../../../api';
 import { ROUTES } from '../../../../../constants';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
+import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 
 dotenv.config();
@@ -39,15 +40,17 @@ export const get = async (req: Request, res: Response) => {
 
     const urlOrigin = `${protocol}${req.headers.host}`;
 
-    const response = await api.keystone.account.sendEmailConfirmEmailAddress(urlOrigin, id);
+    const sanitisedId = String(sanitiseValue({ value: id }));
+
+    const response = await api.keystone.account.sendEmailConfirmEmailAddress(urlOrigin, sanitisedId);
 
     if (response.success) {
-      return res.redirect(`${CONFIRM_EMAIL_RESENT}?id=${id}`);
+      return res.redirect(`${CONFIRM_EMAIL_RESENT}?id=${sanitisedId}`);
     }
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
-    console.error("Error sending 'confirm email address' email", { err });
+    console.error("Error sending 'confirm email address' email %O", err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
