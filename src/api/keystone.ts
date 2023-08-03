@@ -19,6 +19,14 @@ const { NODE_ENV, DATABASE_URL } = process.env;
 const isDevEnvironment = NODE_ENV === 'development';
 
 /**
+ * Disable the following functionalities if the environment is production
+ * Note - disabling this in a dev environment breaks things,
+ * It has to be disabled explicitly in a production mode.
+ * 1) Keystone Admin UI/CMS
+ */
+const isProdEnvironment = NODE_ENV === 'production';
+
+/**
  * KeystoneJS configuration
  * This file sets up the following:
  * - Server port
@@ -55,7 +63,7 @@ export default withAuth(
       },
     },
     ui: {
-      // isDisabled: !isDevEnvironment,
+      isDisabled: isProdEnvironment,
       isAccessAllowed: (context) => !!context.session?.data,
     },
     lists,

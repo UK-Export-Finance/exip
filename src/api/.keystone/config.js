@@ -4432,6 +4432,7 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 // keystone.ts
 var { NODE_ENV, DATABASE_URL } = process.env;
 var isDevEnvironment = NODE_ENV === "development";
+var isProdEnvironment = NODE_ENV === "production";
 var keystone_default = withAuth(
   (0, import_core2.config)({
     server: {
@@ -4455,7 +4456,7 @@ var keystone_default = withAuth(
       }
     },
     ui: {
-      // isDisabled: !isDevEnvironment,
+      isDisabled: isProdEnvironment,
       isAccessAllowed: (context) => !!context.session?.data
     },
     lists,
