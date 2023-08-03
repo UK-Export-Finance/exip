@@ -50,9 +50,9 @@ export default withAuth(
     },
     graphql: {
       playground: isDevEnvironment,
-      apolloConfig: {
-        introspection: isDevEnvironment,
-      },
+      // apolloConfig: {
+      //   introspection: isDevEnvironment,
+      // },
     },
     ui: {
       isDisabled: !isDevEnvironment,

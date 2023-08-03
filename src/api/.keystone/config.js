@@ -742,7 +742,7 @@ var lists = {
             return modifiedData;
           } catch (err) {
             console.error("Error adding default data to a new application. %O", err);
-            return err;
+            return false;
           }
         }
         return resolvedData;
@@ -846,7 +846,7 @@ var lists = {
             });
           } catch (err) {
             console.error("Error adding an application ID to relationships %O", err);
-            return err;
+            return false;
           }
         }
       }
@@ -1692,7 +1692,7 @@ var notify = {
    */
   sendEmail: async (templateId, sendToEmailAddress, variables, file) => {
     try {
-      console.info("Calling Notify API. templateId: ", templateId);
+      console.info("Calling Notify API. templateId: %s", templateId);
       const personalisation = variables;
       if (file) {
         personalisation.linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true });
@@ -1807,7 +1807,7 @@ var isAcceptedFileType = (filePath) => {
 };
 var readFile = async (filePath) => {
   try {
-    console.info(`Reading file ${filePath}`);
+    console.info("Reading file %s", filePath);
     const file = await import_fs.promises.readFile(filePath);
     if (fileExists(file) && isAcceptedFileType(filePath)) {
       return file;
@@ -1820,7 +1820,7 @@ var readFile = async (filePath) => {
 };
 var unlink = async (filePath) => {
   try {
-    console.info(`Deleting file ${filePath}`);
+    console.info("Deleting file %s", filePath);
     const file = await readFile(filePath);
     if (file) {
       await import_fs.promises.unlink(filePath);
@@ -1959,12 +1959,12 @@ var {
   }
 } = ENCRYPTION2;
 var createAnAccount = async (root, variables, context) => {
-  console.info("Creating new account for ", variables.email);
+  console.info("Creating new account for %s", variables.email);
   try {
     const { urlOrigin, firstName, lastName, email, password: password2 } = variables;
     const account = await get_account_by_field_default(context, account_default.EMAIL, email);
     if (account) {
-      console.info(`Unable to create a new account for ${variables.email} - account already exists`);
+      console.info("Unable to create a new account for %s - account already exists", variables.email);
       return { success: false };
     }
     const { salt, hash } = encrypt_password_default(password2);
@@ -2045,7 +2045,7 @@ var deleteAnAccount = async (root, variables, context) => {
         where: retriesArray
       });
     }
-    console.info(`Deleting account ${accountId}`);
+    console.info("Deleting account %s", accountId);
     await context.db.Account.deleteOne({
       where: {
         id: accountId
@@ -2100,7 +2100,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
         emailRecipient: account[EMAIL2]
       };
     }
-    console.info(`Unable to verify account email - no account found from the provided ${VERIFICATION_HASH}`);
+    console.info("Unable to verify account email - no account found from the provided %s", VERIFICATION_HASH);
     return {
       success: false,
       invalid: true
@@ -2235,7 +2235,7 @@ var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
 var import_date_fns4 = require("date-fns");
 var { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT2;
 var shouldBlockAccount = async (context, accountId) => {
-  console.info(`Checking account ${accountId} authentication retries`);
+  console.info("Checking account authentication retries %s", accountId);
   try {
     const retries = await get_authentication_retries_by_account_id_default(context, accountId);
     const now = /* @__PURE__ */ new Date();
@@ -2248,7 +2248,7 @@ var shouldBlockAccount = async (context, accountId) => {
       }
     });
     if (retriesInTimeframe.length >= MAX_AUTH_RETRIES) {
-      console.info(`Account ${accountId} authentication retries exceeds the threshold`);
+      console.info("Account authentication retries exceeds the threshold %s", accountId);
       return true;
     }
     return false;
@@ -2261,7 +2261,7 @@ var should_block_account_default = shouldBlockAccount;
 
 // helpers/block-account/index.ts
 var blockAccount = async (context, accountId) => {
-  console.info(`Blocking account ${accountId}`);
+  console.info("Blocking account %s", accountId);
   try {
     const result = await context.db.Account.updateOne({
       where: { id: accountId },
@@ -2501,7 +2501,7 @@ var is_valid_otp_default = isValidOTP;
 
 // helpers/delete-authentication-retries/index.ts
 var deleteAuthenticationRetries = async (context, accountId) => {
-  console.info(`Deleting authentication retries for account ${accountId}`);
+  console.info("Deleting authentication retries for account %s", accountId);
   try {
     const retries = await get_authentication_retries_by_account_id_default(context, accountId);
     const retryIds = retries.map((obj) => ({
@@ -2911,7 +2911,7 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
       success: false
     };
   } catch (err) {
-    console.error("Error deleting application by reference number %O", err);
+    console.error("Error deleting application by reference number (DeleteApplicationByReferenceNumber mutation) %O", err);
     throw new Error(`Deleting application by reference number (DeleteApplicationByReferenceNumber mutation) ${err}`);
   }
 };
@@ -2945,7 +2945,7 @@ var mapSicCodes = (company, sicCodes, industrySectorNames) => {
 // custom-resolvers/mutations/update-company-and-company-address/index.ts
 var updateCompanyAndCompanyAddress = async (root, variables, context) => {
   try {
-    console.info("Updating application company and company address for ", variables.companyId);
+    console.info("Updating application company and company address for %s", variables.companyId);
     const { address, sicCodes, industrySectorNames, oldSicCodes, ...company } = variables.data;
     const updatedCompany = await context.db.Company.updateOne({
       where: { id: variables.companyId },
@@ -3178,13 +3178,13 @@ var send2 = async (application2, xlsxPath) => {
       emailAddress: businessContactDetail.email
     };
     const isOwnerSameAsContact = is_owner_same_as_business_contact_default(email, businessContactDetail.email);
-    console.info("Sending application submitted email to application account owner: ", sendEmailVars.emailAddress);
+    console.info("Sending application submitted email to application account owner: %s", sendEmailVars.emailAddress);
     const accountSubmittedResponse = await emails_default.application.submittedEmail(sendEmailVars);
     if (!accountSubmittedResponse.success) {
       throw new Error("Sending application submitted email to owner/account");
     }
     if (!isOwnerSameAsContact) {
-      console.info("Sending application submitted email to business contact email: ", sendContactEmailVars.emailAddress);
+      console.info("Sending application submitted email to business contact email: %s", sendContactEmailVars.emailAddress);
       const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars);
       if (!contactSubmittedResponse.success) {
         throw new Error("Sending application submitted email to contact");
@@ -3196,13 +3196,13 @@ var send2 = async (application2, xlsxPath) => {
       throw new Error("Sending application submitted email to underwriting team");
     }
     if (templateIds.account) {
-      console.info("Sending documents email to application owner: ", sendEmailVars.emailAddress);
+      console.info("Sending documents email to application owner: %s", sendEmailVars.emailAddress);
       const documentsResponse = await emails_default.documentsEmail(sendEmailVars, templateIds.account);
       if (!documentsResponse.success) {
         throw new Error(`Sending application documents emails ${documentsResponse}`);
       }
       if (!isOwnerSameAsContact) {
-        console.info("Sending documents email to business contact: ", sendContactEmailVars.emailAddress);
+        console.info("Sending documents email to business contact: %s", sendContactEmailVars.emailAddress);
         const contactDocumentsResponse = await emails_default.documentsEmail(sendContactEmailVars, templateIds.account);
         if (!contactDocumentsResponse.success) {
           throw new Error(`Sending application documents emails to contact ${documentsResponse}`);
@@ -4022,7 +4022,7 @@ var styled_columns_default = styledColumns;
 // generate-xlsx/index.ts
 var XLSX2 = (application2) => {
   try {
-    console.info(`Generating XLSX file for application ${application2.id}`);
+    console.info("Generating XLSX file for application %s", application2.id);
     const { referenceNumber } = application2;
     const refNumber = String(referenceNumber);
     return new Promise((resolve) => {
@@ -4055,7 +4055,7 @@ var generate_xlsx_default = generate2;
 // custom-resolvers/mutations/submit-application/index.ts
 var submitApplication = async (root, variables, context) => {
   try {
-    console.info(`Submitting application ${variables.applicationId}`);
+    console.info("Submitting application %s", variables.applicationId);
     const application2 = await context.db.Application.findOne({
       where: { id: variables.applicationId }
     });
@@ -4132,7 +4132,7 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
     console.info("Received a request to reactivate account - checking account");
     const account = await get_account_by_field_default(context, REACTIVATION_HASH, variables.token);
     if (account) {
-      console.info(`Received a request to reactivate account - found account ${account.id}`);
+      console.info("Received a request to reactivate account - found account %s", account.id);
       const now = /* @__PURE__ */ new Date();
       const canReactivateAccount = (0, import_date_fns9.isBefore)(now, account[REACTIVATION_EXPIRY]);
       if (!canReactivateAccount) {
@@ -4143,7 +4143,7 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
           accountId: account.id
         };
       }
-      console.info(`Reactivating account ${account.id}`);
+      console.info("Reactivating account %s", account.id);
       const accountUpdate = {
         isBlocked: false,
         isVerified: true,
@@ -4159,7 +4159,7 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
         success: true
       };
     }
-    console.info(`Unable to reactivate account - no account found from the provided ${REACTIVATION_HASH}`);
+    console.info("Unable to reactivate account - no account found from the provided %s", REACTIVATION_HASH);
     return {
       success: false,
       invalid: true
@@ -4301,7 +4301,7 @@ var companies_house_default = companiesHouse;
 var getCompaniesHouseInformation = async (root, variables) => {
   try {
     const { companiesHouseNumber } = variables;
-    console.info("Getting Companies House information for ", companiesHouseNumber);
+    console.info("Getting Companies House information for %s", companiesHouseNumber);
     const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, "0");
     const response = await companies_house_default.get(sanitisedRegNo);
     if (!response.success || !response.data) {
@@ -4382,7 +4382,7 @@ var verifyAccountPasswordResetToken = async (root, variables, context) => {
         success: true
       };
     }
-    console.info(`Unable to verify account password reset token - no account found from the provided ${PASSWORD_RESET_HASH}`);
+    console.info("Unable to verify account password reset token - no account found from the provided %s", PASSWORD_RESET_HASH);
     return {
       success: false,
       invalid: true
@@ -4449,10 +4449,10 @@ var keystone_default = withAuth(
       enableLogging: isDevEnvironment
     },
     graphql: {
-      playground: isDevEnvironment,
-      apolloConfig: {
-        introspection: isDevEnvironment
-      }
+      playground: isDevEnvironment
+      // apolloConfig: {
+      //   introspection: isDevEnvironment,
+      // },
     },
     ui: {
       isDisabled: !isDevEnvironment,
