@@ -144,7 +144,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     it('should redirect to the next page as all fields are valid', () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitMultipleContractPolicyForm();
+      cy.completeAndSubmitMultipleContractPolicyForm({});
       cy.clickBackLink();
 
       cy.keyboardInput(multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input(), '1,234');

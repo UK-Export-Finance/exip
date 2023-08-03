@@ -113,7 +113,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
       // complete and submit the form
-      cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitSingleContractPolicyForm({});
     });
 
     it(`should render a formatted value of ${TOTAL_CONTRACT_VALUE} in the ${TABLE_HEADERS.INSURED_FOR} cell`, () => {
@@ -145,7 +145,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
       // complete and submit the form
-      cy.completeAndSubmitMultipleContractPolicyForm();
+      cy.completeAndSubmitMultipleContractPolicyForm({});
     });
 
     it(`should render a formatted value of ${MAXIMUM_BUYER_WILL_OWE} in the ${TABLE_HEADERS.INSURED_FOR} cell`, () => {

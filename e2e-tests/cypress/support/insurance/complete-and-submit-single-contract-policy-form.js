@@ -22,7 +22,7 @@ const {
  * @param {Object} Object with flags completing and submitting single contract policy form
  * - policyAndExportsMaximumValue: should submit an application with the maximum value of 500000
  */
-export default ({ policyAndExportsMaximumValue }) => {
+export default ({ policyAndExportsMaximumValue = false }) => {
   cy.keyboardInput(singleContractPolicyPage[REQUESTED_START_DATE].dayInput(), application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].day);
   cy.keyboardInput(singleContractPolicyPage[REQUESTED_START_DATE].monthInput(), application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);
   cy.keyboardInput(singleContractPolicyPage[REQUESTED_START_DATE].yearInput(), application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].year);

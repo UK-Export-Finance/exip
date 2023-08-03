@@ -16,7 +16,7 @@ const task = taskList.prepareApplication.tasks.policyTypeAndExports;
  * - policyAndExportsMaximumValue: should submit an application with the maximum value of 500000
  */
 const completePrepareYourApplicationSectionSingle = ({
-  exporterHasTradedWithBuyer, usingBroker, useDifferentContactEmail, policyAndExportsMaximumValue,
+  exporterHasTradedWithBuyer, usingBroker, useDifferentContactEmail, policyAndExportsMaximumValue = false,
 }) => {
   task.link().click();
 
