@@ -48,14 +48,14 @@ export default withAuth(
       url: String(DATABASE_URL),
       enableLogging: isDevEnvironment,
     },
-    // graphql: {
-      // playground: isDevEnvironment,
-      // apolloConfig: {
-      //   introspection: isDevEnvironment,
-      // },
-    // },
+    graphql: {
+      playground: isDevEnvironment,
+      apolloConfig: {
+        introspection: isDevEnvironment,
+      },
+    },
     ui: {
-      isDisabled: !isDevEnvironment,
+      // isDisabled: !isDevEnvironment,
       isAccessAllowed: (context) => !!context.session?.data,
     },
     lists,
