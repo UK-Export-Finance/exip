@@ -42,7 +42,7 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
       }
 
       /**
-       * mark the account has verified and
+       * Mark the account has verified and
        * nullify the verification hash and expiry.
        */
       console.info('Verified account email - updating account to be verified');

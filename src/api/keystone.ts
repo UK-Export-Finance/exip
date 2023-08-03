@@ -14,7 +14,6 @@ const { NODE_ENV, DATABASE_URL } = process.env;
  * 1) Logging of database operations
  * 2) GraphQL playground
  * 3) Apollo introspection
- * 4) Keystone Admin UI/CMS
  */
 const isDevEnvironment = NODE_ENV === 'development';
 
