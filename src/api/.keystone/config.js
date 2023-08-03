@@ -1328,8 +1328,11 @@ var { withAuth } = (0, import_auth.createAuth)({
   sessionData: "name",
   secretField: "password",
   initFirstItem: {
-    // If there are no items in the database, keystone will ask you to create
-    // a new user, filling in these fields.
+    /**
+     * Ensure that if there are no items in the database,
+     * keystone admin UI will ask you to create
+     * a new user, with the following fields.
+     */
     fields: ["name", "email", "password"]
   }
 });
@@ -2081,13 +2084,15 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
           accountId: id
         };
       }
+      console.info("Verified account email - updating account to be verified");
+      const accountUpdate = {
+        isVerified: true,
+        verificationHash: "",
+        verificationExpiry: null
+      };
       await context.db.Account.updateOne({
         where: { id: account.id },
-        data: {
-          isVerified: true,
-          verificationHash: "",
-          verificationExpiry: null
-        }
+        data: accountUpdate
       });
       return {
         success: true,
@@ -2577,6 +2582,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
     }
     const isValid = otpSalt && otpHash && is_valid_otp_default(securityCode, otpSalt, otpHash);
     if (isValid) {
+      console.info("Verified account sign in code - creating JWT and updating account");
       await delete_authentication_retries_default(context, accountId);
       const jwt = create_jwt_default.JWT(accountId);
       const { sessionIdentifier } = jwt;
@@ -4138,14 +4144,15 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
         };
       }
       console.info("Reactivating account %s", account.id);
+      const accountUpdate = {
+        isBlocked: false,
+        isVerified: true,
+        reactivationHash: "",
+        reactivationExpiry: null
+      };
       await context.db.Account.updateOne({
         where: { id: account.id },
-        data: {
-          isBlocked: false,
-          isVerified: true,
-          reactivationHash: "",
-          reactivationExpiry: null
-        }
+        data: accountUpdate
       });
       await delete_authentication_retries_default(context, account.id);
       return {
@@ -4424,7 +4431,8 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 
 // keystone.ts
 var { NODE_ENV, DATABASE_URL } = process.env;
-var enableLogging = NODE_ENV === "development";
+var isDevEnvironment = NODE_ENV === "development";
+var isProdEnvironment = NODE_ENV === "production";
 var keystone_default = withAuth(
   (0, import_core2.config)({
     server: {
@@ -4439,13 +4447,21 @@ var keystone_default = withAuth(
     db: {
       provider: "mysql",
       url: String(DATABASE_URL),
-      enableLogging
+      enableLogging: isDevEnvironment
+    },
+    graphql: {
+      playground: isDevEnvironment,
+      apolloConfig: {
+        introspection: isDevEnvironment
+      }
     },
     ui: {
+      isDisabled: isProdEnvironment,
       isAccessAllowed: (context) => !!context.session?.data
     },
     lists,
     session,
-    extendGraphqlSchema
+    extendGraphqlSchema,
+    telemetry: false
   })
 );

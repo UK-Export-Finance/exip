@@ -1,6 +1,16 @@
 import { Application, Context } from '.keystone/types'; // eslint-disable-line
 import { DeleteApplicationByReferenceNumberVariables, SuccessResponse } from '../../../types';
 
+/**
+ * deleteApplicationByReferenceNumber
+ * Deletes an application by reference number.
+ * 1) Check if the application exists.
+ * 2) Delete the application.
+ * @param {Object} GraphQL root variables
+ * @param {Object} GraphQL variables for the DeleteApplicationByReferenceNumber mutation
+ * @param {Object} KeystoneJS context API
+ * @returns {Object} Object with success flag
+ */
 const deleteApplicationByReferenceNumber = async (
   root: any,
   variables: DeleteApplicationByReferenceNumberVariables,
