@@ -7,12 +7,13 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import { yourBusinessSummaryList } from '../../../../helpers/summary-lists/your-business';
 import requiredFields from '../../../../helpers/required-fields/business';
 import sectionStatus from '../../../../helpers/section-status';
+import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 
 export const TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
-const FIELD_ID = FIELD_IDS.CHECK_YOUR_ANSWERS.EXPORTER_BUSINESS;
+export const FIELD_ID = FIELD_IDS.CHECK_YOUR_ANSWERS.EXPORTER_BUSINESS;
 
 const {
   INSURANCE: {
@@ -95,7 +96,9 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     // save the application
-    const saveResponse = await save.sectionReview(application, req.body);
+    const payload = constructPayload(req.body, [FIELD_ID]);
+
+    const saveResponse = await save.sectionReview(application, payload);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

@@ -9,7 +9,7 @@ export const CHECK_IF_ELIGIBLE = {
 };
 
 export const INSURED_AMOUNT = {
-  PAGE_TITLE: `Do you want to be insured for ${MAX_COVER_AMOUNT} or more?`,
+  PAGE_TITLE: `Do you want to be insured for more than ${MAX_COVER_AMOUNT}?`,
 };
 
 export const INSURED_PERIOD = {

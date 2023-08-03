@@ -1,18 +1,19 @@
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
-import FIELD_IDS from '../../../../constants/field-ids/insurance';
+import CHECK_YOUR_ANSWERS_FIELD_IDS from '../../../../constants/field-ids/insurance/check-your-answers';
 import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { eligibilitySummaryList } from '../../../../helpers/summary-lists/eligibility';
 import requiredFields from '../../../../helpers/required-fields/eligibility';
 import sectionStatus from '../../../../helpers/section-status';
+import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 
 export const TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
-const FIELD_ID = FIELD_IDS.CHECK_YOUR_ANSWERS.ELIGIBILITY;
+export const FIELD_ID = CHECK_YOUR_ANSWERS_FIELD_IDS.ELIGIBILITY;
 
 const {
   INSURANCE: {
@@ -93,7 +94,9 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     // save the application
-    const saveResponse = await save.sectionReview(application, req.body);
+    const payload = constructPayload(req.body, [FIELD_ID]);
+
+    const saveResponse = await save.sectionReview(application, payload);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
