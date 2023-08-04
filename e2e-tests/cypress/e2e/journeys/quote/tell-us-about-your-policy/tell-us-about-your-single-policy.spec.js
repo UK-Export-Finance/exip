@@ -59,19 +59,6 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       Cypress.Cookies.preserveOnce('exip-session');
     });
 
-    // TODO: re-enable after solution for lighthouse-GHA found
-    // it('passes the audits', () => {
-    //   cy.lighthouse({
-    //     // accessibility threshold is reduced here because
-    //     // the radio component from design system has an invalid aria attribute.
-    //     // this is out of our control
-    //     accessibility: 92,
-    //     performance: 75,
-    //     'best-practices': 100,
-    //     seo: 60,
-    //   });
-    // });
-
     it('renders `currency and amount` legend', () => {
       const fieldId = AMOUNT_CURRENCY;
 

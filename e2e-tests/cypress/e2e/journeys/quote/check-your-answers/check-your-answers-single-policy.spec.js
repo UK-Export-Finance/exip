@@ -60,16 +60,6 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
     });
   });
 
-  // TODO: re-enable after solution for lighthouse-GHA found
-  // it('passes the audits', () => {
-  //   cy.lighthouse({
-  //     accessibility: 100,
-  //     performance: 75,
-  //     'best-practices': 100,
-  //     seo: 60,
-  //   });
-  // });
-
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);

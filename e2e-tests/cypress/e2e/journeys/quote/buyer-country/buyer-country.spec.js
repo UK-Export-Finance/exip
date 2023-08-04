@@ -31,16 +31,6 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     });
   });
 
-  // TODO: re-enable after solution for lighthouse-GHA found
-  // it('passes the audits', () => {
-  //   cy.lighthouse({
-  //     accessibility: 100,
-  //     performance: 70,
-  //     'best-practices': 100,
-  //     seo: 60,
-  //   });
-  // });
-
   it('renders a phase banner', () => {
     cy.checkPhaseBanner();
   });
