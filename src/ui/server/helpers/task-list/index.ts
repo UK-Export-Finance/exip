@@ -42,7 +42,7 @@ export const generateSimplifiedTaskList = (taskList: TaskListData): Array<TaskLi
           status: task.status,
           title: task.title,
         })),
-      } as TaskListGroup),
+      }) as TaskListGroup,
   );
 };
 
