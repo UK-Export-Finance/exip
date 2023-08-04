@@ -9,7 +9,7 @@ const APOLLO_CONTEXT = {
 
 const queryStrings = {
   createAnAccount: () => gql`
-    mutation CreateAnAccount($urlOrigin: String!, $firstName: String!, $lastName: String!, $email: String!, $password: String!) {
+    mutation createAnAccount($urlOrigin: String!, $firstName: String!, $lastName: String!, $email: String!, $password: String!) {
       createAnAccount(urlOrigin: $urlOrigin, firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
         success
         id
@@ -21,7 +21,7 @@ const queryStrings = {
     }
   `,
   deleteAnAccount: () => gql`
-    mutation DeleteAnAccount($email: String!)  {
+    mutation deleteAnAccount($email: String!)  {
       deleteAnAccount(email: $email) {
         success
       }
@@ -40,7 +40,7 @@ const queryStrings = {
       }
     }`,
   updateAccount: () => gql`
-    mutation UpdateAccount($where: AccountWhereUniqueInput!, $data: AccountUpdateInput!)  {
+    mutation updateAccount($where: AccountWhereUniqueInput!, $data: AccountUpdateInput!)  {
       updateAccount(where: $where, data: $data) {
         id
         verificationHash
@@ -50,7 +50,7 @@ const queryStrings = {
     }
   `,
   addAndGetOTP: () => gql`
-    mutation AddAndGetOTP($email: String!) {
+    mutation addAndGetOTP($email: String!) {
       addAndGetOTP(email: $email) {
         success
         securityCode
@@ -58,7 +58,7 @@ const queryStrings = {
     }
   `,
   getAccountPasswordResetToken: () => gql`
-    query GetAccountPasswordResetToken($email: String!) {
+    query getAccountPasswordResetToken($email: String!) {
       getAccountPasswordResetToken(email: $email) {
         success
         token
@@ -76,7 +76,7 @@ const queryStrings = {
     }
   }`,
   deleteApplicationByReferenceNumber: () => gql`
-    mutation DeleteApplicationByReferenceNumber($referenceNumber: Int!)  {
+    mutation deleteApplicationByReferenceNumber($referenceNumber: Int!)  {
       deleteApplicationByReferenceNumber(referenceNumber: $referenceNumber) {
         success
       }
@@ -84,7 +84,7 @@ const queryStrings = {
   `,
   declarations: {
     getLatestConfidentiality: () => gql`
-      query DeclarationConfidentialities {
+      query declarationConfidentialities {
         declarationConfidentialities(orderBy: { version: desc }, take: 1) {
           id
           version
@@ -95,7 +95,7 @@ const queryStrings = {
       }
     `,
     getLatestAntiBribery: () => gql`
-      query DeclarationAntiBriberies {
+      query declarationAntiBriberies {
         declarationAntiBriberies(orderBy: { version: desc }, take: 1) {
           id
           version
@@ -106,7 +106,7 @@ const queryStrings = {
       }
     `,
     getLatestConfirmationAndAcknowledgements: () => gql`
-      query DeclarationConfirmationAndAcknowledgements {
+      query declarationConfirmationAndAcknowledgements {
         declarationConfirmationAndAcknowledgements(orderBy: { version: desc }, take: 1) {
           id
           version
@@ -117,7 +117,7 @@ const queryStrings = {
       }
     `,
     getLatestHowDataWillBeUsed: () => gql`
-      query DeclarationHowDataWillBeUsed {
+      query declarationHowDataWillBeUsed {
         declarationHowDataWillBeUseds(orderBy: { version: desc }, take: 1) {
           id
           version
