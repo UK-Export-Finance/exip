@@ -4,7 +4,7 @@ import partials from '../../partials';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
-const CONTENT_STRINGS = PAGES.GET_A_QUOTE_BY_EMAIL_PAGE;
+const CONTENT_STRINGS = PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL;
 
 const COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY = 'Egypt';
 
