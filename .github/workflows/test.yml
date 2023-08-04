@@ -15,6 +15,7 @@ on:
       - 'src/**'
       - 'e2e-tests/**'
       - 'generate-exip-pricing-grid/**'
+      - 'package*.json'
 
 env:
   environment: 'qa'
