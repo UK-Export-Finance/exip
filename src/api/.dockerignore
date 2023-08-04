@@ -43,13 +43,5 @@ coverage
 **/report/*
 **/generated_reports
 **/temp/*
-**/actionsheets/*
-**/json/*
-**/amendments/*
-**/exports/*
-**/bss-ewcs/dump/*
-**/bss-ewcs/data/*
-**/gef/dump/*
-**/gef/data/*
 **/json/*
 public
