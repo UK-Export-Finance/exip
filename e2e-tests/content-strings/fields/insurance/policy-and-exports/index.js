@@ -75,7 +75,7 @@ export const POLICY_AND_EXPORT_FIELDS = {
       [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
         LABEL: "What's the total value of the contract you want to insure?",
         HINT: {
-          NEED_MORE_COVER: 'If you need cover for more than £499,999,',
+          NEED_MORE_COVER: 'If you need cover for more than £500,000,',
           FILL_IN_FORM: {
             TEXT: 'fill in this form instead',
             HREF: LINKS.EXTERNAL.PROPOSAL_FORM,
@@ -107,7 +107,7 @@ export const POLICY_AND_EXPORT_FIELDS = {
         LABEL: 'Estimate the maximum amount your buyer will owe you at any single point during this time',
         HINT: {
           FOR_EXAMPLE: 'For example, your total sales might be £250,000 but the maximum the buyer will owe you at any single point is £100,000.',
-          NEED_MORE_COVER: 'If you need cover for more than £499,999, ',
+          NEED_MORE_COVER: 'If you need cover for more than £500,000, ',
           FILL_IN_FORM: {
             TEXT: 'fill in this form instead.',
             HREF: LINKS.EXTERNAL.PROPOSAL_FORM,

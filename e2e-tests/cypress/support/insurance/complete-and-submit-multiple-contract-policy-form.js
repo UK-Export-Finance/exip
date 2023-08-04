@@ -1,4 +1,4 @@
-import { FIELD_IDS } from '../../../constants';
+import { FIELD_IDS, APPLICATION } from '../../../constants';
 import { multipleContractPolicyPage } from '../../e2e/pages/insurance/policy-and-export';
 import insurancePartials from '../../e2e/partials/insurance';
 import { submitButton } from '../../e2e/pages/shared';
@@ -21,14 +21,24 @@ const {
   },
 } = FIELD_IDS;
 
-export default () => {
+/**
+ * completeAndSubmitMultipleContractPolicyForm
+ * @param {Object} Object with flags completing and submitting multiple contract policy form
+ * - policyAndExportsMaximumValue: should submit an application with the maximum value of 500000
+ */
+export default ({ policyAndExportsMaximumValue = false }) => {
   cy.keyboardInput(multipleContractPolicyPage[REQUESTED_START_DATE].dayInput(), application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].day);
   cy.keyboardInput(multipleContractPolicyPage[REQUESTED_START_DATE].monthInput(), application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);
   cy.keyboardInput(multipleContractPolicyPage[REQUESTED_START_DATE].yearInput(), application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].year);
 
   multipleContractPolicyPage[TOTAL_MONTHS_OF_COVER].input().select(application.POLICY_AND_EXPORTS[TOTAL_MONTHS_OF_COVER]);
   cy.keyboardInput(multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input(), application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
-  cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), application.POLICY_AND_EXPORTS[MAXIMUM_BUYER_WILL_OWE]);
+
+  if (policyAndExportsMaximumValue) {
+    cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), APPLICATION.POLICY_AND_EXPORT.MAXIMUM_BUYER_CAN_OWE);
+  } else {
+    cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), application.POLICY_AND_EXPORTS[MAXIMUM_BUYER_WILL_OWE]);
+  }
   cy.keyboardInput(multipleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input(), application.POLICY_AND_EXPORTS[CREDIT_PERIOD_WITH_BUYER]);
 
   insurancePartials.policyCurrencyCodeFormField.input().select(application.POLICY_AND_EXPORTS[POLICY_CURRENCY_CODE]);

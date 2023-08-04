@@ -185,7 +185,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitSingleContractPolicyForm({});
     });
 
     it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, () => {
@@ -204,7 +204,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitSingleContractPolicyForm();
+        cy.completeAndSubmitSingleContractPolicyForm({});
 
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`);
 
