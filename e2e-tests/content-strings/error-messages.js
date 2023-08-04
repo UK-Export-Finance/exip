@@ -186,7 +186,7 @@ export const ERROR_MESSAGES = {
           [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
             INCORRECT_FORMAT: 'Enter your contract value as a whole number - do not enter decimals',
             BELOW_MINIMUM: 'Your contract value must be 1 or more',
-            ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £499.999',
+            ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £500,000',
           },
         },
         MULTIPLE: {
@@ -200,7 +200,7 @@ export const ERROR_MESSAGES = {
           [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
             INCORRECT_FORMAT: 'Enter the maximum the buyer will owe as a whole number - do not enter decimals',
             BELOW_MINIMUM: 'The maximum the buyer will owe must be 1 or more',
-            ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £499.999',
+            ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £500,000',
           },
         },
       },

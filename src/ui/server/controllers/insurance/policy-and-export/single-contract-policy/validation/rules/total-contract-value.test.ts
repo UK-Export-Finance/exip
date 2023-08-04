@@ -1,5 +1,5 @@
 import totalContractValueRules from './total-contract-value';
-import { FIELD_IDS } from '../../../../../../constants';
+import { FIELD_IDS, APPLICATION } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
 
@@ -22,6 +22,8 @@ const {
     },
   },
 } = ERROR_MESSAGES;
+
+const { MAXIMUM } = APPLICATION.POLICY_AND_EXPORT.TOTAL_VALUE_OF_CONTRACT;
 
 describe('controllers/insurance/policy-and-export/single-contract-policy/validation/rules/total-contract-value', () => {
   const mockErrors = {
@@ -100,7 +102,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
   describe('when total contract value is above the maximum', () => {
     it('should return validation error', () => {
       const mockSubmittedData = {
-        [FIELD_ID]: '500000',
+        [FIELD_ID]: String(MAXIMUM + 1),
       };
 
       const result = totalContractValueRules(mockSubmittedData, mockErrors);

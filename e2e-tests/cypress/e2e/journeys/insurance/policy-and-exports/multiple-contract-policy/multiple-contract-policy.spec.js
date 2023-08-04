@@ -202,7 +202,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
     });
 
     it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, () => {
-      cy.completeAndSubmitMultipleContractPolicyForm();
+      cy.completeAndSubmitMultipleContractPolicyForm({});
 
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
       cy.url().should('eq', expectedUrl);
