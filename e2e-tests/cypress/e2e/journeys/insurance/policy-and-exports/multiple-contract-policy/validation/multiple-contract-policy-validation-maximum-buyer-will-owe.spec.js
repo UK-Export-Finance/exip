@@ -163,7 +163,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
   });
 
   it('should redirect to the next page when maximum buyer will owe is valid and contains a comma as all fields are valid', () => {
-    cy.completeAndSubmitMultipleContractPolicyForm();
+    cy.completeAndSubmitMultipleContractPolicyForm({});
     cy.clickBackLink();
 
     cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234');

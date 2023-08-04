@@ -112,7 +112,7 @@ context('Insurance - Change your answers - Policy and exports - Change multiple 
       cy.navigateToUrl(`${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}#heading`);
 
       // complete the form/now required fields for a single contract policy
-      cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitSingleContractPolicyForm({});
 
       cy.assertUrl(`${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}#heading`);
 

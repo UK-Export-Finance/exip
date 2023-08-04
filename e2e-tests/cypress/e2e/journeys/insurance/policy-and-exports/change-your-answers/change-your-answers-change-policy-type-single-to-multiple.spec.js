@@ -54,7 +54,7 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
       task.link().click();
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-      cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();
 
       checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -107,7 +107,7 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
         cy.navigateToUrl(`${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}#heading`);
 
         // complete the form/now required fields for a multiple contract policy
-        cy.completeAndSubmitMultipleContractPolicyForm();
+        cy.completeAndSubmitMultipleContractPolicyForm({});
 
         cy.assertUrl(`${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}#heading`);
 
