@@ -2,9 +2,10 @@ import { buyerCountryPage, submitButton } from '../../pages/shared';
 import { getAQuoteByEmailPage } from '../../pages/quote';
 import partials from '../../partials';
 import { PAGES } from '../../../../content-strings';
-import { ROUTES } from '../../../../constants';
+import CONSTANTS from '../../../../constants';
 
-const CONTENT_STRINGS = PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL;
+const CONTENT_STRINGS = PAGES.GET_A_QUOTE_BY_EMAIL_PAGE;
+const { ROUTES } = CONSTANTS;
 
 const COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY = 'Egypt';
 
@@ -39,6 +40,16 @@ context('Get a quote via email exit page', () => {
       },
     });
   });
+
+  // TODO: re-enable after solution for lighthouse-GHA found
+  // it('passes the audits', () => {
+  //   cy.lighthouse({
+  //     accessibility: 100,
+  //     performance: 75,
+  //     'best-practices': 100,
+  //     seo: 60,
+  //   });
+  // });
 
   it('should render a header with href to quote start', () => {
     partials.header.serviceName().should('have.attr', 'href', startRoute);

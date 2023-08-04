@@ -59,6 +59,19 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
       cy.navigateToUrl(url);
     });
 
+    // TODO: re-enable after solution for lighthouse-GHA found
+    // it('passes the audits', () => {
+    //   cy.lighthouse({
+    //     // accessibility threshold is reduced here because
+    //     // the radio component from design system has an invalid aria attribute.
+    //     // this is out of our control
+    //     accessibility: 90,
+    //     performance: 75,
+    //     'best-practices': 100,
+    //     seo: 60,
+    //   });
+    // });
+
     it('should render a header with href to quote start', () => {
       partials.header.serviceName().should('have.attr', 'href', startRoute);
     });

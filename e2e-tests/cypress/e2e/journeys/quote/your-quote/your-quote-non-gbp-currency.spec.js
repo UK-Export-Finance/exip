@@ -70,7 +70,7 @@ context('Get a quote/your quote page (non GBP currency) - as an exporter, I want
 
         cy.checkText(row.key(), expectedKeyText);
 
-        const expected = '€1,770.00';
+        const expected = '€1,740.00';
         cy.checkText(row.value(), expected);
 
         row.changeLink().should('not.exist');

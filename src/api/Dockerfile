@@ -58,7 +58,7 @@ USER node
 # 2. PRODUCTION
 ###################
 
-FROM node:20.0-alpine3.16 AS production
+FROM node:20.3.1-alpine3.17 AS production
 
 WORKDIR /app
 

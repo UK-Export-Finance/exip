@@ -6,27 +6,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 0.69
+            "premiumRate": 0.68
           },
           {
             "insuredFor": 75,
-            "premiumRate": 0.74
+            "premiumRate": 0.73
           },
           {
             "insuredFor": 80,
-            "premiumRate": 0.79
+            "premiumRate": 0.77
           },
           {
             "insuredFor": 85,
-            "premiumRate": 0.84
+            "premiumRate": 0.82
           },
           {
             "insuredFor": 90,
-            "premiumRate": 0.89
+            "premiumRate": 0.87
           },
           {
             "insuredFor": 95,
-            "premiumRate": 0.94
+            "premiumRate": 0.92
           }
         ]
       },
@@ -35,27 +35,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 0.81
+            "premiumRate": 0.79
           },
           {
             "insuredFor": 75,
-            "premiumRate": 0.86
+            "premiumRate": 0.85
           },
           {
             "insuredFor": 80,
-            "premiumRate": 0.92
+            "premiumRate": 0.9
           },
           {
             "insuredFor": 85,
-            "premiumRate": 0.98
+            "premiumRate": 0.96
           },
           {
             "insuredFor": 90,
-            "premiumRate": 1.03
+            "premiumRate": 1.02
           },
           {
             "insuredFor": 95,
-            "premiumRate": 1.09
+            "premiumRate": 1.07
           }
         ]
       },
@@ -64,614 +64,32 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 0.92
+            "premiumRate": 0.9
           },
           {
             "insuredFor": 75,
-            "premiumRate": 0.98
+            "premiumRate": 0.97
           },
           {
             "insuredFor": 80,
-            "premiumRate": 1.05
+            "premiumRate": 1.03
           },
           {
             "insuredFor": 85,
-            "premiumRate": 1.12
+            "premiumRate": 1.1
           },
           {
             "insuredFor": 90,
-            "premiumRate": 1.18
+            "premiumRate": 1.16
           },
           {
             "insuredFor": 95,
-            "premiumRate": 1.25
+            "premiumRate": 1.22
           }
         ]
       },
       {
         "months": 5,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 1.03
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 1.11
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 1.18
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 1.25
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 1.33
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 1.4
-          }
-        ]
-      },
-      {
-        "months": 6,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 1.15
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 1.23
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 1.31
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 1.39
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 1.47
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 1.56
-          }
-        ]
-      },
-      {
-        "months": 7,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 1.26
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 1.35
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 1.44
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 1.53
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 1.62
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 1.71
-          }
-        ]
-      },
-      {
-        "months": 8,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 1.38
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 1.47
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 1.57
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 1.67
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 1.77
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 1.87
-          }
-        ]
-      },
-      {
-        "months": 9,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 1.49
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 1.6
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 1.7
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 1.81
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 1.92
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 2.02
-          }
-        ]
-      },
-      {
-        "months": 10,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 1.61
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 1.72
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 1.83
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 1.95
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 2.06
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 2.18
-          }
-        ]
-      },
-      {
-        "months": 11,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 1.72
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 1.84
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 1.96
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 2.09
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 2.21
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 2.33
-          }
-        ]
-      },
-      {
-        "months": 12,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 1.83
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 1.96
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 2.1
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 2.23
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 2.36
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 2.49
-          }
-        ]
-      },
-      {
-        "months": 13,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 1.95
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 2.09
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 2.23
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 2.36
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 2.5
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 2.64
-          }
-        ]
-      },
-      {
-        "months": 14,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 2.06
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 2.21
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 2.35
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 2.5
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 2.65
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 2.79
-          }
-        ]
-      },
-      {
-        "months": 15,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 2.17
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 2.32
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 2.48
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 2.63
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 2.79
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 2.94
-          }
-        ]
-      },
-      {
-        "months": 16,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 2.27
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 2.44
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 2.6
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 2.76
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 2.92
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 3.09
-          }
-        ]
-      },
-      {
-        "months": 17,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 2.38
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 2.55
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 2.72
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 2.89
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 3.06
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 3.23
-          }
-        ]
-      },
-      {
-        "months": 18,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 2.48
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 2.66
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 2.84
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 3.01
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 3.19
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 3.37
-          }
-        ]
-      },
-      {
-        "months": 19,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 2.58
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 2.77
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 2.95
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 3.14
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 3.32
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 3.5
-          }
-        ]
-      },
-      {
-        "months": 20,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 2.68
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 2.87
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 3.06
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 3.25
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 3.45
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 3.64
-          }
-        ]
-      },
-      {
-        "months": 21,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 2.78
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 2.98
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 3.17
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 3.37
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 3.57
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 3.77
-          }
-        ]
-      },
-      {
-        "months": 22,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 2.87
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 3.08
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 3.28
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 3.49
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 3.69
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 3.9
-          }
-        ]
-      },
-      {
-        "months": 23,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 2.96
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 3.18
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 3.39
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 3.6
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 3.81
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 4.02
-          }
-        ]
-      }
-    ],
-    "HIGH": [
-      {
-        "months": 2,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 0.87
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 0.94
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 1
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 1.06
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 1.12
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 1.18
-          }
-        ]
-      },
-      {
-        "months": 3,
         "rates": [
           {
             "insuredFor": 70,
@@ -687,11 +105,11 @@
           },
           {
             "insuredFor": 85,
-            "premiumRate": 1.24
+            "premiumRate": 1.23
           },
           {
             "insuredFor": 90,
-            "premiumRate": 1.31
+            "premiumRate": 1.3
           },
           {
             "insuredFor": 95,
@@ -700,89 +118,31 @@
         ]
       },
       {
-        "months": 4,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 1.16
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 1.25
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 1.33
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 1.41
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 1.49
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 1.58
-          }
-        ]
-      },
-      {
-        "months": 5,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 1.31
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 1.4
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 1.49
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 1.59
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 1.68
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 1.77
-          }
-        ]
-      },
-      {
         "months": 6,
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 1.45
+            "premiumRate": 1.13
           },
           {
             "insuredFor": 75,
-            "premiumRate": 1.56
+            "premiumRate": 1.21
           },
           {
             "insuredFor": 80,
-            "premiumRate": 1.66
+            "premiumRate": 1.29
           },
           {
             "insuredFor": 85,
-            "premiumRate": 1.76
+            "premiumRate": 1.37
           },
           {
             "insuredFor": 90,
-            "premiumRate": 1.87
+            "premiumRate": 1.45
           },
           {
             "insuredFor": 95,
-            "premiumRate": 1.97
+            "premiumRate": 1.53
           }
         ]
       },
@@ -791,27 +151,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 1.6
+            "premiumRate": 1.24
           },
           {
             "insuredFor": 75,
-            "premiumRate": 1.71
+            "premiumRate": 1.33
           },
           {
             "insuredFor": 80,
-            "premiumRate": 1.83
+            "premiumRate": 1.42
           },
           {
             "insuredFor": 85,
-            "premiumRate": 1.94
+            "premiumRate": 1.5
           },
           {
             "insuredFor": 90,
-            "premiumRate": 2.05
+            "premiumRate": 1.59
           },
           {
             "insuredFor": 95,
-            "premiumRate": 2.17
+            "premiumRate": 1.68
           }
         ]
       },
@@ -820,27 +180,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 1.74
+            "premiumRate": 1.35
           },
           {
             "insuredFor": 75,
-            "premiumRate": 1.87
+            "premiumRate": 1.45
           },
           {
             "insuredFor": 80,
-            "premiumRate": 1.99
+            "premiumRate": 1.54
           },
           {
             "insuredFor": 85,
-            "premiumRate": 2.12
+            "premiumRate": 1.64
           },
           {
             "insuredFor": 90,
-            "premiumRate": 2.24
+            "premiumRate": 1.74
           },
           {
             "insuredFor": 95,
-            "premiumRate": 2.36
+            "premiumRate": 1.83
           }
         ]
       },
@@ -849,27 +209,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 1.89
+            "premiumRate": 1.46
           },
           {
             "insuredFor": 75,
-            "premiumRate": 2.02
+            "premiumRate": 1.57
           },
           {
             "insuredFor": 80,
-            "premiumRate": 2.16
+            "premiumRate": 1.67
           },
           {
             "insuredFor": 85,
-            "premiumRate": 2.29
+            "premiumRate": 1.78
           },
           {
             "insuredFor": 90,
-            "premiumRate": 2.43
+            "premiumRate": 1.88
           },
           {
             "insuredFor": 95,
-            "premiumRate": 2.56
+            "premiumRate": 1.98
           }
         ]
       },
@@ -878,32 +238,1196 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 2.03
+            "premiumRate": 1.58
           },
           {
             "insuredFor": 75,
-            "premiumRate": 2.18
+            "premiumRate": 1.69
           },
           {
             "insuredFor": 80,
-            "premiumRate": 2.32
+            "premiumRate": 1.8
           },
           {
             "insuredFor": 85,
-            "premiumRate": 2.47
+            "premiumRate": 1.91
           },
           {
             "insuredFor": 90,
-            "premiumRate": 2.61
+            "premiumRate": 2.03
           },
           {
             "insuredFor": 95,
-            "premiumRate": 2.76
+            "premiumRate": 2.14
           }
         ]
       },
       {
         "months": 11,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 1.69
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 1.81
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 1.93
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 2.05
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 2.17
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 2.29
+          }
+        ]
+      },
+      {
+        "months": 12,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 1.8
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 1.93
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 2.06
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 2.19
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 2.31
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 2.44
+          }
+        ]
+      },
+      {
+        "months": 13,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 1.91
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 2.05
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 2.18
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 2.32
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 2.46
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 2.59
+          }
+        ]
+      },
+      {
+        "months": 14,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2.02
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 2.16
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 2.31
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 2.45
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 2.6
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 2.74
+          }
+        ]
+      },
+      {
+        "months": 15,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2.13
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 2.28
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 2.43
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 2.58
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 2.73
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 2.89
+          }
+        ]
+      },
+      {
+        "months": 16,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2.23
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 2.39
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 2.55
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 2.71
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 2.87
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 3.03
+          }
+        ]
+      },
+      {
+        "months": 17,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2.34
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 2.5
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 2.67
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 2.84
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 3
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 3.17
+          }
+        ]
+      },
+      {
+        "months": 18,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2.44
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 2.61
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 2.78
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 2.96
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 3.13
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 3.3
+          }
+        ]
+      },
+      {
+        "months": 19,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2.54
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 2.72
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 2.9
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 3.08
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 3.26
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 3.44
+          }
+        ]
+      },
+      {
+        "months": 20,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2.63
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 2.82
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 3.01
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 3.19
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 3.38
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 3.57
+          }
+        ]
+      },
+      {
+        "months": 21,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2.73
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 2.92
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 3.12
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 3.31
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 3.5
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 3.7
+          }
+        ]
+      },
+      {
+        "months": 22,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2.82
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 3.02
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 3.22
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 3.42
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 3.62
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 3.82
+          }
+        ]
+      },
+      {
+        "months": 23,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2.91
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 3.12
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 3.32
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 3.53
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 3.74
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 3.95
+          }
+        ]
+      }
+    ],
+    "HIGH": [
+      {
+        "months": 2,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 0.86
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 0.92
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 0.98
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 1.04
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 1.1
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 1.16
+          }
+        ]
+      },
+      {
+        "months": 3,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 1
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 1.07
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 1.14
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 1.21
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 1.28
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 1.36
+          }
+        ]
+      },
+      {
+        "months": 4,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 1.14
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 1.22
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 1.3
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 1.39
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 1.47
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 1.55
+          }
+        ]
+      },
+      {
+        "months": 5,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 1.28
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 1.38
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 1.47
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 1.56
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 1.65
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 1.74
+          }
+        ]
+      },
+      {
+        "months": 6,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 1.43
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 1.53
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 1.63
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 1.73
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 1.83
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 1.93
+          }
+        ]
+      },
+      {
+        "months": 7,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 1.57
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 1.68
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 1.79
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 1.9
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 2.02
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 2.13
+          }
+        ]
+      },
+      {
+        "months": 8,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 1.71
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 1.83
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 1.95
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 2.08
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 2.2
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 2.32
+          }
+        ]
+      },
+      {
+        "months": 9,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 1.85
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 1.98
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 2.12
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 2.25
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 2.38
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 2.51
+          }
+        ]
+      },
+      {
+        "months": 10,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 2.14
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 2.28
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 2.42
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 2.56
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 2.71
+          }
+        ]
+      },
+      {
+        "months": 11,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2.14
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 2.29
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 2.44
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 2.59
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 2.75
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 2.9
+          }
+        ]
+      },
+      {
+        "months": 12,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2.28
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 2.44
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 2.6
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 2.77
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 2.93
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 3.09
+          }
+        ]
+      },
+      {
+        "months": 13,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2.42
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 2.59
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 2.77
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 2.94
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 3.11
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 3.28
+          }
+        ]
+      },
+      {
+        "months": 14,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2.56
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 2.74
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 2.92
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 3.11
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 3.29
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 3.47
+          }
+        ]
+      },
+      {
+        "months": 15,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2.69
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 2.89
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 3.08
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 3.27
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 3.46
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 3.65
+          }
+        ]
+      },
+      {
+        "months": 16,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2.83
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 3.03
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 3.23
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 3.43
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 3.63
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 3.83
+          }
+        ]
+      },
+      {
+        "months": 17,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 2.96
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 3.17
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 3.38
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 3.59
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 3.8
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 4.01
+          }
+        ]
+      },
+      {
+        "months": 18,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 3.08
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 3.3
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 3.52
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 3.74
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 3.96
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 4.18
+          }
+        ]
+      },
+      {
+        "months": 19,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 3.21
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 3.44
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 3.67
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 3.9
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 4.13
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 4.35
+          }
+        ]
+      },
+      {
+        "months": 20,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 3.33
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 3.57
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 3.81
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 4.05
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 4.28
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 4.52
+          }
+        ]
+      },
+      {
+        "months": 21,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 3.45
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 3.7
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 3.94
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 4.19
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 4.44
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 4.68
+          }
+        ]
+      },
+      {
+        "months": 22,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 3.57
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 3.82
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 4.08
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 4.33
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 4.59
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 4.84
+          }
+        ]
+      },
+      {
+        "months": 23,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 3.68
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 3.95
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 4.21
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 4.47
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 4.73
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 5
+          }
+        ]
+      }
+    ],
+    "VERY_HIGH": [
+      {
+        "months": 2,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 1.19
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 1.27
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 1.36
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 1.44
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 1.53
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 1.61
+          }
+        ]
+      },
+      {
+        "months": 3,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 1.39
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 1.49
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 1.59
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 1.68
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 1.78
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 1.88
+          }
+        ]
+      },
+      {
+        "months": 4,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 1.59
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 1.7
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 1.81
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 1.92
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 2.04
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 2.15
+          }
+        ]
+      },
+      {
+        "months": 5,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 1.78
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 1.91
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 2.04
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 2.16
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 2.29
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 2.42
+          }
+        ]
+      },
+      {
+        "months": 6,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 1.98
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 2.12
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 2.26
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 2.4
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 2.54
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 2.69
+          }
+        ]
+      },
+      {
+        "months": 7,
         "rates": [
           {
             "insuredFor": 70,
@@ -932,555 +1456,31 @@
         ]
       },
       {
-        "months": 12,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 2.32
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 2.49
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 2.65
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 2.82
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 2.98
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 3.15
-          }
-        ]
-      },
-      {
-        "months": 13,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 2.47
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 2.64
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 2.82
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 2.99
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 3.17
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 3.34
-          }
-        ]
-      },
-      {
-        "months": 14,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 2.61
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 2.79
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 2.98
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 3.16
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 3.35
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 3.54
-          }
-        ]
-      },
-      {
-        "months": 15,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 2.74
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 2.94
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 3.14
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 3.33
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 3.53
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 3.72
-          }
-        ]
-      },
-      {
-        "months": 16,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 2.88
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 3.09
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 3.29
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 3.5
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 3.7
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 3.91
-          }
-        ]
-      },
-      {
-        "months": 17,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 3.01
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 3.23
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 3.44
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 3.66
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 3.87
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 4.09
-          }
-        ]
-      },
-      {
-        "months": 18,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 3.14
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 3.37
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 3.59
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 3.82
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 4.04
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 4.26
-          }
-        ]
-      },
-      {
-        "months": 19,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 3.27
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 3.5
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 3.74
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 3.97
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 4.2
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 4.44
-          }
-        ]
-      },
-      {
-        "months": 20,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 3.39
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 3.64
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 3.88
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 4.12
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 4.36
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 4.61
-          }
-        ]
-      },
-      {
-        "months": 21,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 3.52
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 3.77
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 4.02
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 4.27
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 4.52
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 4.77
-          }
-        ]
-      },
-      {
-        "months": 22,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 3.64
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 3.9
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 4.15
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 4.41
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 4.67
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 4.93
-          }
-        ]
-      },
-      {
-        "months": 23,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 3.75
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 4.02
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 4.29
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 4.56
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 4.82
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 5.09
-          }
-        ]
-      }
-    ],
-    "VERY_HIGH": [
-      {
-        "months": 2,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 1.24
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 1.33
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 1.42
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 1.51
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 1.6
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 1.69
-          }
-        ]
-      },
-      {
-        "months": 3,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 1.45
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 1.55
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 1.66
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 1.76
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 1.86
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 1.97
-          }
-        ]
-      },
-      {
-        "months": 4,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 1.66
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 1.78
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 1.89
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 2.01
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 2.13
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 2.25
-          }
-        ]
-      },
-      {
-        "months": 5,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 1.86
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 2
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 2.13
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 2.26
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 2.4
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 2.53
-          }
-        ]
-      },
-      {
-        "months": 6,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 2.07
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 2.22
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 2.37
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 2.51
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 2.66
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 2.81
-          }
-        ]
-      },
-      {
-        "months": 7,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 2.28
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 2.44
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 2.6
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 2.76
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 2.93
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 3.09
-          }
-        ]
-      },
-      {
         "months": 8,
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 2.48
+            "premiumRate": 2.38
           },
           {
             "insuredFor": 75,
-            "premiumRate": 2.66
+            "premiumRate": 2.54
           },
           {
             "insuredFor": 80,
-            "premiumRate": 2.84
+            "premiumRate": 2.71
           },
           {
             "insuredFor": 85,
-            "premiumRate": 3.02
+            "premiumRate": 2.88
           },
           {
             "insuredFor": 90,
-            "premiumRate": 3.19
+            "premiumRate": 3.05
           },
           {
             "insuredFor": 95,
-            "premiumRate": 3.37
+            "premiumRate": 3.22
           }
         ]
       },
@@ -1489,27 +1489,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 2.69
+            "premiumRate": 2.57
           },
           {
             "insuredFor": 75,
-            "premiumRate": 2.88
+            "premiumRate": 2.76
           },
           {
             "insuredFor": 80,
-            "premiumRate": 3.07
+            "premiumRate": 2.94
           },
           {
             "insuredFor": 85,
-            "premiumRate": 3.27
+            "premiumRate": 3.12
           },
           {
             "insuredFor": 90,
-            "premiumRate": 3.46
+            "premiumRate": 3.31
           },
           {
             "insuredFor": 95,
-            "premiumRate": 3.65
+            "premiumRate": 3.49
           }
         ]
       },
@@ -1518,27 +1518,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 2.9
+            "premiumRate": 2.77
           },
           {
             "insuredFor": 75,
-            "premiumRate": 3.1
+            "premiumRate": 2.97
           },
           {
             "insuredFor": 80,
-            "premiumRate": 3.31
+            "premiumRate": 3.17
           },
           {
             "insuredFor": 85,
-            "premiumRate": 3.52
+            "premiumRate": 3.36
           },
           {
             "insuredFor": 90,
-            "premiumRate": 3.72
+            "premiumRate": 3.56
           },
           {
             "insuredFor": 95,
-            "premiumRate": 3.93
+            "premiumRate": 3.76
           }
         ]
       },
@@ -1547,27 +1547,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 3.1
+            "premiumRate": 2.97
           },
           {
             "insuredFor": 75,
-            "premiumRate": 3.33
+            "premiumRate": 3.18
           },
           {
             "insuredFor": 80,
-            "premiumRate": 3.55
+            "premiumRate": 3.39
           },
           {
             "insuredFor": 85,
-            "premiumRate": 3.77
+            "premiumRate": 3.6
           },
           {
             "insuredFor": 90,
-            "premiumRate": 3.99
+            "premiumRate": 3.81
           },
           {
             "insuredFor": 95,
-            "premiumRate": 4.21
+            "premiumRate": 4.03
           }
         ]
       },
@@ -1576,27 +1576,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 3.31
+            "premiumRate": 3.17
           },
           {
             "insuredFor": 75,
-            "premiumRate": 3.55
+            "premiumRate": 3.39
           },
           {
             "insuredFor": 80,
-            "premiumRate": 3.78
+            "premiumRate": 3.62
           },
           {
             "insuredFor": 85,
-            "premiumRate": 4.02
+            "premiumRate": 3.84
           },
           {
             "insuredFor": 90,
-            "premiumRate": 4.26
+            "premiumRate": 4.07
           },
           {
             "insuredFor": 95,
-            "premiumRate": 4.49
+            "premiumRate": 4.29
           }
         ]
       },
@@ -1605,27 +1605,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 3.52
+            "premiumRate": 3.36
           },
           {
             "insuredFor": 75,
-            "premiumRate": 3.77
+            "premiumRate": 3.6
           },
           {
             "insuredFor": 80,
-            "premiumRate": 4.02
+            "premiumRate": 3.84
           },
           {
             "insuredFor": 85,
-            "premiumRate": 4.27
+            "premiumRate": 4.08
           },
           {
             "insuredFor": 90,
-            "premiumRate": 4.52
+            "premiumRate": 4.32
           },
           {
             "insuredFor": 95,
-            "premiumRate": 4.77
+            "premiumRate": 4.56
           }
         ]
       },
@@ -1634,27 +1634,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 3.72
+            "premiumRate": 3.55
           },
           {
             "insuredFor": 75,
-            "premiumRate": 3.98
+            "premiumRate": 3.81
           },
           {
             "insuredFor": 80,
-            "premiumRate": 4.25
+            "premiumRate": 4.06
           },
           {
             "insuredFor": 85,
-            "premiumRate": 4.51
+            "premiumRate": 4.31
           },
           {
             "insuredFor": 90,
-            "premiumRate": 4.78
+            "premiumRate": 4.57
           },
           {
             "insuredFor": 95,
-            "premiumRate": 5.04
+            "premiumRate": 4.82
           }
         ]
       },
@@ -1663,32 +1663,61 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 3.91
+            "premiumRate": 3.74
           },
           {
             "insuredFor": 75,
-            "premiumRate": 4.19
+            "premiumRate": 4.01
           },
           {
             "insuredFor": 80,
-            "premiumRate": 4.47
+            "premiumRate": 4.27
           },
           {
             "insuredFor": 85,
-            "premiumRate": 4.75
+            "premiumRate": 4.54
           },
           {
             "insuredFor": 90,
-            "premiumRate": 5.03
+            "premiumRate": 4.81
           },
           {
             "insuredFor": 95,
-            "premiumRate": 5.31
+            "premiumRate": 5.08
           }
         ]
       },
       {
         "months": 16,
+        "rates": [
+          {
+            "insuredFor": 70,
+            "premiumRate": 3.93
+          },
+          {
+            "insuredFor": 75,
+            "premiumRate": 4.21
+          },
+          {
+            "insuredFor": 80,
+            "premiumRate": 4.49
+          },
+          {
+            "insuredFor": 85,
+            "premiumRate": 4.77
+          },
+          {
+            "insuredFor": 90,
+            "premiumRate": 5.05
+          },
+          {
+            "insuredFor": 95,
+            "premiumRate": 5.33
+          }
+        ]
+      },
+      {
+        "months": 17,
         "rates": [
           {
             "insuredFor": 70,
@@ -1717,60 +1746,31 @@
         ]
       },
       {
-        "months": 17,
-        "rates": [
-          {
-            "insuredFor": 70,
-            "premiumRate": 4.3
-          },
-          {
-            "insuredFor": 75,
-            "premiumRate": 4.6
-          },
-          {
-            "insuredFor": 80,
-            "premiumRate": 4.91
-          },
-          {
-            "insuredFor": 85,
-            "premiumRate": 5.22
-          },
-          {
-            "insuredFor": 90,
-            "premiumRate": 5.52
-          },
-          {
-            "insuredFor": 95,
-            "premiumRate": 5.83
-          }
-        ]
-      },
-      {
         "months": 18,
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 4.48
+            "premiumRate": 4.28
           },
           {
             "insuredFor": 75,
-            "premiumRate": 4.8
+            "premiumRate": 4.59
           },
           {
             "insuredFor": 80,
-            "premiumRate": 5.12
+            "premiumRate": 4.9
           },
           {
             "insuredFor": 85,
-            "premiumRate": 5.44
+            "premiumRate": 5.2
           },
           {
             "insuredFor": 90,
-            "premiumRate": 5.76
+            "premiumRate": 5.51
           },
           {
             "insuredFor": 95,
-            "premiumRate": 6.08
+            "premiumRate": 5.81
           }
         ]
       },
@@ -1779,27 +1779,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 4.66
+            "premiumRate": 4.46
           },
           {
             "insuredFor": 75,
-            "premiumRate": 5
+            "premiumRate": 4.78
           },
           {
             "insuredFor": 80,
-            "premiumRate": 5.33
+            "premiumRate": 5.09
           },
           {
             "insuredFor": 85,
-            "premiumRate": 5.66
+            "premiumRate": 5.41
           },
           {
             "insuredFor": 90,
-            "premiumRate": 5.99
+            "premiumRate": 5.73
           },
           {
             "insuredFor": 95,
-            "premiumRate": 6.33
+            "premiumRate": 6.05
           }
         ]
       },
@@ -1808,27 +1808,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 4.84
+            "premiumRate": 4.63
           },
           {
             "insuredFor": 75,
-            "premiumRate": 5.19
+            "premiumRate": 4.96
           },
           {
             "insuredFor": 80,
-            "premiumRate": 5.53
+            "premiumRate": 5.29
           },
           {
             "insuredFor": 85,
-            "premiumRate": 5.88
+            "premiumRate": 5.62
           },
           {
             "insuredFor": 90,
-            "premiumRate": 6.22
+            "premiumRate": 5.95
           },
           {
             "insuredFor": 95,
-            "premiumRate": 6.57
+            "premiumRate": 6.28
           }
         ]
       },
@@ -1837,27 +1837,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 5.02
+            "premiumRate": 4.79
           },
           {
             "insuredFor": 75,
-            "premiumRate": 5.37
+            "premiumRate": 5.14
           },
           {
             "insuredFor": 80,
-            "premiumRate": 5.73
+            "premiumRate": 5.48
           },
           {
             "insuredFor": 85,
-            "premiumRate": 6.09
+            "premiumRate": 5.82
           },
           {
             "insuredFor": 90,
-            "premiumRate": 6.45
+            "premiumRate": 6.16
           },
           {
             "insuredFor": 95,
-            "premiumRate": 6.8
+            "premiumRate": 6.51
           }
         ]
       },
@@ -1866,27 +1866,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 5.19
+            "premiumRate": 4.96
           },
           {
             "insuredFor": 75,
-            "premiumRate": 5.56
+            "premiumRate": 5.31
           },
           {
             "insuredFor": 80,
-            "premiumRate": 5.93
+            "premiumRate": 5.66
           },
           {
             "insuredFor": 85,
-            "premiumRate": 6.3
+            "premiumRate": 6.02
           },
           {
             "insuredFor": 90,
-            "premiumRate": 6.67
+            "premiumRate": 6.37
           },
           {
             "insuredFor": 95,
-            "premiumRate": 7.04
+            "premiumRate": 6.73
           }
         ]
       },
@@ -1895,27 +1895,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 5.35
+            "premiumRate": 5.12
           },
           {
             "insuredFor": 75,
-            "premiumRate": 5.73
+            "premiumRate": 5.48
           },
           {
             "insuredFor": 80,
-            "premiumRate": 6.12
+            "premiumRate": 5.85
           },
           {
             "insuredFor": 85,
-            "premiumRate": 6.5
+            "premiumRate": 6.21
           },
           {
             "insuredFor": 90,
-            "premiumRate": 6.88
+            "premiumRate": 6.58
           },
           {
             "insuredFor": 95,
-            "premiumRate": 7.26
+            "premiumRate": 6.94
           }
         ]
       }
@@ -1928,27 +1928,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 0.9
+            "premiumRate": 0.88
           },
           {
             "insuredFor": 75,
-            "premiumRate": 0.96
+            "premiumRate": 0.94
           },
           {
             "insuredFor": 80,
-            "premiumRate": 1.02
+            "premiumRate": 1
           },
           {
             "insuredFor": 85,
-            "premiumRate": 1.09
+            "premiumRate": 1.07
           },
           {
             "insuredFor": 90,
-            "premiumRate": 1.15
+            "premiumRate": 1.13
           },
           {
             "insuredFor": 95,
-            "premiumRate": 1.21
+            "premiumRate": 1.19
           }
         ]
       },
@@ -1957,27 +1957,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 1.02
+            "premiumRate": 1
           },
           {
             "insuredFor": 75,
-            "premiumRate": 1.09
+            "premiumRate": 1.07
           },
           {
             "insuredFor": 80,
-            "premiumRate": 1.17
+            "premiumRate": 1.15
           },
           {
             "insuredFor": 85,
-            "premiumRate": 1.24
+            "premiumRate": 1.22
           },
           {
             "insuredFor": 90,
-            "premiumRate": 1.31
+            "premiumRate": 1.29
           },
           {
             "insuredFor": 95,
-            "premiumRate": 1.38
+            "premiumRate": 1.36
           }
         ]
       }
@@ -1988,27 +1988,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 1.13
+            "premiumRate": 1.11
           },
           {
             "insuredFor": 75,
-            "premiumRate": 1.21
+            "premiumRate": 1.19
           },
           {
             "insuredFor": 80,
-            "premiumRate": 1.3
+            "premiumRate": 1.27
           },
           {
             "insuredFor": 85,
-            "premiumRate": 1.38
+            "premiumRate": 1.35
           },
           {
             "insuredFor": 90,
-            "premiumRate": 1.46
+            "premiumRate": 1.43
           },
           {
             "insuredFor": 95,
-            "premiumRate": 1.54
+            "premiumRate": 1.51
           }
         ]
       },
@@ -2017,27 +2017,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 1.29
+            "premiumRate": 1.27
           },
           {
             "insuredFor": 75,
-            "premiumRate": 1.38
+            "premiumRate": 1.36
           },
           {
             "insuredFor": 80,
-            "premiumRate": 1.48
+            "premiumRate": 1.45
           },
           {
             "insuredFor": 85,
-            "premiumRate": 1.57
+            "premiumRate": 1.54
           },
           {
             "insuredFor": 90,
-            "premiumRate": 1.66
+            "premiumRate": 1.63
           },
           {
             "insuredFor": 95,
-            "premiumRate": 1.75
+            "premiumRate": 1.72
           }
         ]
       }
@@ -2048,27 +2048,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 1.62
+            "premiumRate": 1.54
           },
           {
             "insuredFor": 75,
-            "premiumRate": 1.73
+            "premiumRate": 1.65
           },
           {
             "insuredFor": 80,
-            "premiumRate": 1.85
+            "premiumRate": 1.76
           },
           {
             "insuredFor": 85,
-            "premiumRate": 1.96
+            "premiumRate": 1.87
           },
           {
             "insuredFor": 90,
-            "premiumRate": 2.08
+            "premiumRate": 1.98
           },
           {
             "insuredFor": 95,
-            "premiumRate": 2.19
+            "premiumRate": 2.09
           }
         ]
       },
@@ -2077,27 +2077,27 @@
         "rates": [
           {
             "insuredFor": 70,
-            "premiumRate": 1.84
+            "premiumRate": 1.76
           },
           {
             "insuredFor": 75,
-            "premiumRate": 1.97
+            "premiumRate": 1.89
           },
           {
             "insuredFor": 80,
-            "premiumRate": 2.1
+            "premiumRate": 2.01
           },
           {
             "insuredFor": 85,
-            "premiumRate": 2.24
+            "premiumRate": 2.14
           },
           {
             "insuredFor": 90,
-            "premiumRate": 2.37
+            "premiumRate": 2.26
           },
           {
             "insuredFor": 95,
-            "premiumRate": 2.5
+            "premiumRate": 2.39
           }
         ]
       }
