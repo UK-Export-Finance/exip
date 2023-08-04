@@ -3,6 +3,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../../helpers/construct-payload';
 import { sanitiseData, sanitiseValue } from '../../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import securityCodeValidationErrors from './validation/rules/security-code';
@@ -95,14 +96,16 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(SIGN_IN_ROOT);
     }
 
-    const submittedCode = req.body[FIELD_ID];
+    const payload = constructPayload(req.body, [FIELD_ID]);
+
+    const submittedCode = payload[FIELD_ID];
 
     const securityCode = sanitiseValue({
       key: FIELD_ID,
       value: submittedCode,
     });
 
-    let validationErrors = generateValidationErrors(req.body);
+    let validationErrors = generateValidationErrors(payload);
 
     if (validationErrors) {
       return res.render(TEMPLATE, {
@@ -112,7 +115,7 @@ export const post = async (req: Request, res: Response) => {
         }),
         ...PAGE_VARIABLES,
         userName: getUserNameFromSession(req.session.user),
-        submittedValues: req.body,
+        submittedValues: payload,
         validationErrors,
       });
     }

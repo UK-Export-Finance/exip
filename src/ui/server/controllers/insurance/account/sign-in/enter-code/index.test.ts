@@ -4,6 +4,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../../helpers/construct-payload';
 import { sanitiseData, sanitiseValue } from '../../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import securityCodeValidationErrors from './validation/rules/security-code';
@@ -177,8 +178,10 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
     });
 
     describe('when there are validation errors', () => {
-      it('should render template with validation errors and submitted values', async () => {
+      it('should render template with validation errors and submitted values from constructPayload function', async () => {
         await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...insuranceCorePageVariables({
@@ -187,8 +190,8 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
           }),
           ...PAGE_VARIABLES,
           userName: getUserNameFromSession(req.session.user),
-          submittedValues: req.body,
-          validationErrors: generateValidationErrors(req.body),
+          submittedValues: payload,
+          validationErrors: generateValidationErrors(payload),
         });
       });
     });
@@ -307,8 +310,10 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
           api.keystone.account.verifyAccountSignInCode = verifyAccountSignInCodeSpy;
         });
 
-        it('should render template with validation errors and submitted values', async () => {
+        it('should render template with validation errors and submitted values from constructPayload function', async () => {
           await post(req, res);
+
+          const payload = constructPayload(req.body, [FIELD_ID]);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
             ...insuranceCorePageVariables({
@@ -317,7 +322,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
             }),
             ...PAGE_VARIABLES,
             userName: getUserNameFromSession(req.session.user),
-            submittedValues: req.body,
+            submittedValues: payload,
             validationErrors: securityCodeValidationErrors({}, {}),
           });
         });

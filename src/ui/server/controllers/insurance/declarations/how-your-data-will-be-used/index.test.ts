@@ -190,8 +190,10 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
         expect(getLatestHowDataWillBeUsedSpy).toHaveBeenCalledTimes(1);
       });
 
-      it('should render template with validation errors', async () => {
+      it('should render template with validation errors from constructPayload function', async () => {
         await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
@@ -202,7 +204,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
           userName: getUserNameFromSession(req.session.user),
           documentContent: mockDeclarations.howDataWillBeUsed.content.document,
           documentConfig: keystoneDocumentRendererConfig(),
-          validationErrors: generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
+          validationErrors: generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

@@ -1,12 +1,13 @@
 import { ERROR_MESSAGES, FIELDS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES, SECURE_OPTION_COOKIE } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input';
+import constructPayload from '../../../helpers/construct-payload';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 import isInsuranceRoute from '../../../helpers/is-insurance-route';
 import { Request, Response } from '../../../../types';
 
-const FIELD_ID = FIELD_IDS.OPTIONAL_COOKIES;
+export const FIELD_ID = FIELD_IDS.OPTIONAL_COOKIES;
 
 const { COOKIES_SAVED, INSURANCE } = ROUTES;
 
@@ -56,7 +57,9 @@ export const get = (req: Request, res: Response) => {
  * @returns {Express.Response.redirect} Cookies page with validation errors or the Cookies saved page
  */
 export const post = (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body, FIELD_ID, ERROR_MESSAGES[FIELD_ID]);
+  const payload = constructPayload(req.body, [FIELD_ID]);
+
+  const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES[FIELD_ID]);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
