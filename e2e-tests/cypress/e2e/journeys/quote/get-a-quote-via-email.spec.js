@@ -2,10 +2,9 @@ import { buyerCountryPage, submitButton } from '../../pages/shared';
 import { getAQuoteByEmailPage } from '../../pages/quote';
 import partials from '../../partials';
 import { PAGES } from '../../../../content-strings';
-import CONSTANTS from '../../../../constants';
+import { ROUTES } from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.GET_A_QUOTE_BY_EMAIL_PAGE;
-const { ROUTES } = CONSTANTS;
 
 const COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY = 'Egypt';
 

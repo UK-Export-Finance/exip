@@ -55,8 +55,6 @@ context('Tell us about your single policy page - as an exporter, I want to provi
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-      Cypress.Cookies.preserveOnce('_csrf');
-      Cypress.Cookies.preserveOnce('exip-session');
     });
 
     it('renders `currency and amount` legend', () => {

@@ -37,18 +37,6 @@ context('Get a Quote - Need to start again exit page', () => {
     partials.header.serviceName().should('have.attr', 'href', startRoute);
   });
 
-  it('renders an analytics cookies consent banner that can be accepted', () => {
-    cy.checkAnalyticsCookiesConsentAndAccept();
-  });
-
-  it('renders an analytics cookies consent banner that can be rejected', () => {
-    cy.rejectAnalyticsCookies();
-  });
-
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
   it('renders a reason', () => {
     needToStartAgainPage.reason().should('exist');
   });

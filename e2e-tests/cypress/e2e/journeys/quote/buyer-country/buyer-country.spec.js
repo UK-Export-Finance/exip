@@ -31,10 +31,6 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     });
   });
 
-  it('renders a phase banner', () => {
-    cy.checkPhaseBanner();
-  });
-
   it('renders a hint', () => {
     checkInputHint();
   });
