@@ -29,4 +29,14 @@ describe('apollo-plugins/index', () => {
       expect(result).toBeUndefined();
     });
   });
+
+  describe("when a request's operationName is undefined", () => {
+    it('should not return anything (operation can continue)', () => {
+      const mockRequest = {};
+
+      const result = requestDidStart().didResolveOperation({ request: mockRequest });
+
+      expect(result).toBeUndefined();
+    });
+  });
 });

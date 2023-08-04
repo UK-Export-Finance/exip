@@ -1404,7 +1404,7 @@ var requestDidStart = () => ({
    * via an explicit list of allowed resolvers.
    */
   didResolveOperation({ request }) {
-    if (!ALLOWED_GRAPHQL_RESOLVERS.includes(request.operationName)) {
+    if (request.operationName && !ALLOWED_GRAPHQL_RESOLVERS.includes(request.operationName)) {
       throw new Error("Operation not permitted");
     }
   }

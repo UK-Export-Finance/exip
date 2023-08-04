@@ -1,7 +1,7 @@
 import { ALLOWED_GRAPHQL_RESOLVERS } from '../constants';
 
 interface ApolloOperation {
-  operationName: string;
+  operationName?: string;
 }
 
 interface ApolloDidResolveOperation {
@@ -20,7 +20,7 @@ export const requestDidStart = () => ({
    * via an explicit list of allowed resolvers.
    */
   didResolveOperation({ request }: ApolloDidResolveOperation) {
-    if (!ALLOWED_GRAPHQL_RESOLVERS.includes(request.operationName)) {
+    if (request.operationName && !ALLOWED_GRAPHQL_RESOLVERS.includes(request.operationName)) {
       throw new Error('Operation not permitted');
     }
   },
