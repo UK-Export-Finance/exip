@@ -277,6 +277,7 @@ var DEFAULT_RESOLVERS = [
   "applications",
   // account
   "account",
+  "updateAccount",
   // misc
   "countries",
   "page"
@@ -300,7 +301,7 @@ var CUSTOM_RESOLVERS = [
   // application
   "declarationAntiBriberies",
   "declarationConfirmationAndAcknowledgements",
-  "declarationHowDataWillBeUseds",
+  "declarationHowDataWillBeUsed",
   "deleteApplicationByReferenceNumber",
   "getCompaniesHouseInformation",
   "submitApplication",

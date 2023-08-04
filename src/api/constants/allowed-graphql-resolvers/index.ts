@@ -18,6 +18,7 @@ const DEFAULT_RESOLVERS = [
 
   // account
   'account',
+  'updateAccount',
 
   // misc
   'countries',
@@ -48,7 +49,7 @@ const CUSTOM_RESOLVERS = [
   // application
   'declarationAntiBriberies',
   'declarationConfirmationAndAcknowledgements',
-  'declarationHowDataWillBeUseds',
+  'declarationHowDataWillBeUsed',
   'deleteApplicationByReferenceNumber',
   'getCompaniesHouseInformation',
   'submitApplication',
