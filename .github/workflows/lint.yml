@@ -10,9 +10,11 @@ on:
   pull_request:
     branches: [main-application]
     paths:
+      - '.github/workflows/lint.yml'
       - 'src/**'
       - 'e2e-tests/**'
       - 'generate-exip-pricing-grid/**'
+      - 'package*.json'
 
 env:
   environment: 'qa'
