@@ -13,7 +13,6 @@ keystone.test.ts
 renovate.json
 .dockerignore
 .editorconfig
-.prettierrc.json
 .eslintrc.json
 .git
 .gitattributes
@@ -21,7 +20,6 @@ renovate.json
 .gitignore
 .husky
 .prettierignore
-.prettierrc.json
 .whitesource
 README.md
 CHANGELOG.md
