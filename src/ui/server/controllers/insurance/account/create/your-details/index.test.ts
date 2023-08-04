@@ -142,7 +142,7 @@ describe('controllers/insurance/account/create/your-details', () => {
           ...PAGE_VARIABLES,
           userName: getUserNameFromSession(req.session.user),
           submittedValues: payload,
-          validationErrors: generateValidationErrors(req.body),
+          validationErrors: generateValidationErrors(payload),
         });
       });
     });

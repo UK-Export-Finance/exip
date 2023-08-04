@@ -141,7 +141,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        const validationErrors = generateValidationErrors(req.body);
+        const validationErrors = generateValidationErrors(payload);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...insuranceCorePageVariables({
