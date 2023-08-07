@@ -13,16 +13,16 @@ const {
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-export const TEMPLATE = TEMPLATES.INSURANCE.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_EXPIRED;
+export const TEMPLATE = TEMPLATES.INSURANCE.ACCOUNT.SUSPENDED.VERIFY_EMAIL_EXPIRED_LINK;
 
-export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_EXPIRED;
+export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SUSPENDED.VERIFY_EMAIL_EXPIRED_LINK;
 
 /**
  * get
- * Render the "Reactivate account - link expired" page
+ * Render the "Reactivate account - expired link" page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} "Reactivate account - link expired" page
+ * @returns {Express.Response.render} "Reactivate account - expired link" page
  */
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
@@ -34,7 +34,7 @@ export const get = (req: Request, res: Response) =>
 
 export const post = async (req: Request, res: Response) => {
   try {
-    console.info('Posting reactivate account - link expired form');
+    console.info('Posting reactivate account - expired link form');
 
     const urlOrigin = req.headers.origin;
 
@@ -58,7 +58,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
-    console.error('Error posting reactivate account - link expired form %O', err);
+    console.error('Error posting reactivate account - expired link form %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

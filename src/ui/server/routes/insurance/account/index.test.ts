@@ -5,13 +5,13 @@ import { get as confirmEmailGet } from '../../../controllers/insurance/account/c
 import { get as resendConfirmEmailGet } from '../../../controllers/insurance/account/create/resend-confirm-email';
 import { get as confirmEmailResentGet } from '../../../controllers/insurance/account/create/confirm-email-resent';
 import { get as verifyEmailGet } from '../../../controllers/insurance/account/create/verify-email';
-import { get as verifyEmailLinkExpiredGet } from '../../../controllers/insurance/account/create/verify-email-link-expired';
+import { get as verifyEmailExpiredLinkGet } from '../../../controllers/insurance/account/create/verify-email-expired-link';
 import { get as signInGet, post as signInPost } from '../../../controllers/insurance/account/sign-in';
 import { get as enterCodeGet, post as enterCodePost } from '../../../controllers/insurance/account/sign-in/enter-code';
 import { get as requestNewCodeGet, post as requestNewCodePost } from '../../../controllers/insurance/account/sign-in/request-new-code';
 import { get as passwordResetGet, post as passwordResetPost } from '../../../controllers/insurance/account/password-reset';
 import { get as passwordResetLinkSentGet } from '../../../controllers/insurance/account/password-reset/link-sent';
-import { get as passwordResetLinkExpiredGet, post as passwordResetLinkExpiredPost } from '../../../controllers/insurance/account/password-reset/link-expired';
+import { get as passwordResetExpiredLinkGet, post as passwordResetExpiredLinkPost } from '../../../controllers/insurance/account/password-reset/expired-link';
 import { get as newPasswordGet, post as newPasswordPost } from '../../../controllers/insurance/account/password-reset/new-password';
 import { get as passwordSuccessGet } from '../../../controllers/insurance/account/password-reset/success';
 import { get as manageGet } from '../../../controllers/insurance/account/manage';
@@ -20,9 +20,9 @@ import { get as signedOutGet } from '../../../controllers/insurance/account/sign
 import { get as suspendedGet, post as suspendedPost } from '../../../controllers/insurance/account/suspended';
 import { get as suspendedVerifyEmailGet } from '../../../controllers/insurance/account/suspended/verify-email';
 import {
-  get as suspendedVerifyEmailLinkExpiredGet,
-  post as suspendedVerifyEmailLinkExpiredPost,
-} from '../../../controllers/insurance/account/suspended/link-expired';
+  get as suspendedVerifyEmailExpiredLinkGet,
+  post as suspendedVerifyEmailExpiredLinkPost,
+} from '../../../controllers/insurance/account/suspended/expired-link';
 import { get as invalidLinkGet } from '../../../controllers/insurance/account/invalid-link';
 import { get as reactivatedGet } from '../../../controllers/insurance/account/reactivated';
 
@@ -48,8 +48,8 @@ describe('routes/insurance/account', () => {
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL, verifyEmailGet);
 
-    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL_LINK_INVALID, invalidLinkGet);
-    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL_LINK_EXPIRED, verifyEmailLinkExpiredGet);
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL_INVALID_LINK, invalidLinkGet);
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL_EXPIRED_LINK, verifyEmailExpiredLinkGet);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.ROOT, signInGet);
     expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.ROOT, signInPost);
@@ -65,10 +65,10 @@ describe('routes/insurance/account', () => {
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.LINK_SENT, passwordResetLinkSentGet);
 
-    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.LINK_EXPIRED, passwordResetLinkExpiredGet);
-    expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.LINK_EXPIRED, passwordResetLinkExpiredPost);
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.EXPIRED_LINK, passwordResetExpiredLinkGet);
+    expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.EXPIRED_LINK, passwordResetExpiredLinkPost);
 
-    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.LINK_INVALID, invalidLinkGet);
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.INVALID_LINK, invalidLinkGet);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD, newPasswordGet);
     expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD, newPasswordPost);
@@ -86,10 +86,10 @@ describe('routes/insurance/account', () => {
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL, suspendedVerifyEmailGet);
 
-    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_EXPIRED, suspendedVerifyEmailLinkExpiredGet);
-    expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_EXPIRED, suspendedVerifyEmailLinkExpiredPost);
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_EXPIRED_LINK, suspendedVerifyEmailExpiredLinkGet);
+    expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_EXPIRED_LINK, suspendedVerifyEmailExpiredLinkPost);
 
-    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_INVALID, invalidLinkGet);
+    expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_INVALID_LINK, invalidLinkGet);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.REACTIVATED_ROOT, reactivatedGet);
   });

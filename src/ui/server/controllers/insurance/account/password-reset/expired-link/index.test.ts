@@ -14,7 +14,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-describe('controllers/insurance/account/password-reset/link-expired', () => {
+describe('controllers/insurance/account/password-reset/expired-link', () => {
   let req: Request;
   let res: Response;
 
@@ -25,13 +25,13 @@ describe('controllers/insurance/account/password-reset/link-expired', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ACCOUNT.PASSWORD_RESET.LINK_EXPIRED);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ACCOUNT.PASSWORD_RESET.EXPIRED_LINK);
     });
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct strings', () => {
-      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.LINK_EXPIRED);
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.EXPIRED_LINK);
     });
   });
 

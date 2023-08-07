@@ -12,7 +12,7 @@ import { Request, Response } from '../../../../../../types';
 const {
   INSURANCE: {
     ACCOUNT: {
-      PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, SUCCESS, LINK_EXPIRED, LINK_INVALID },
+      PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, SUCCESS, EXPIRED_LINK, INVALID_LINK },
     },
     PROBLEM_WITH_SERVICE,
   },
@@ -56,11 +56,11 @@ export const get = async (req: Request, res: Response) => {
     const response = await api.keystone.account.verifyPasswordResetToken(sanitisedToken);
 
     if (response.expired && response.accountId) {
-      return res.redirect(`${LINK_EXPIRED}?id=${response.accountId}`);
+      return res.redirect(`${EXPIRED_LINK}?id=${response.accountId}`);
     }
 
     if (response.invalid || !response.success) {
-      return res.redirect(LINK_INVALID);
+      return res.redirect(INVALID_LINK);
     }
 
     return res.render(TEMPLATE, {

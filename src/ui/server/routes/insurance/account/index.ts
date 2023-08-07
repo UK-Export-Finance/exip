@@ -5,13 +5,13 @@ import { get as confirmEmailGet } from '../../../controllers/insurance/account/c
 import { get as resendConfirmEmailGet } from '../../../controllers/insurance/account/create/resend-confirm-email';
 import { get as confirmEmailResentGet } from '../../../controllers/insurance/account/create/confirm-email-resent';
 import { get as verifyEmailGet } from '../../../controllers/insurance/account/create/verify-email';
-import { get as verifyEmailLinkExpiredGet } from '../../../controllers/insurance/account/create/verify-email-link-expired';
+import { get as verifyEmailExpiredLinkGet } from '../../../controllers/insurance/account/create/verify-email-expired-link';
 import { get as signInGet, post as signInPost } from '../../../controllers/insurance/account/sign-in';
 import { get as enterCodeGet, post as enterCodePost } from '../../../controllers/insurance/account/sign-in/enter-code';
 import { get as requestNewCodeGet, post as requestNewCodePost } from '../../../controllers/insurance/account/sign-in/request-new-code';
 import { get as passwordResetGet, post as passwordResetPost } from '../../../controllers/insurance/account/password-reset';
 import { get as passwordResetLinkSentGet } from '../../../controllers/insurance/account/password-reset/link-sent';
-import { get as passwordResetLinkExpiredGet, post as passwordResetLinkExpiredPost } from '../../../controllers/insurance/account/password-reset/link-expired';
+import { get as passwordResetExpiredLinkGet, post as passwordResetExpiredLinkPost } from '../../../controllers/insurance/account/password-reset/expired-link';
 import { get as newPasswordGet, post as newPasswordPost } from '../../../controllers/insurance/account/password-reset/new-password';
 import { get as passwordResetSuccessGet } from '../../../controllers/insurance/account/password-reset/success';
 import { get as manageGet } from '../../../controllers/insurance/account/manage';
@@ -21,9 +21,9 @@ import { get as suspendedGet, post as suspendedPost } from '../../../controllers
 import { get as suspendedEmailSentGet } from '../../../controllers/insurance/account/suspended/email-sent';
 import { get as suspendedVerifyEmailGet } from '../../../controllers/insurance/account/suspended/verify-email';
 import {
-  get as suspendedVerifyEmailLinkExpiredGet,
-  post as suspendedVerifyEmailLinkExpiredPost,
-} from '../../../controllers/insurance/account/suspended/link-expired';
+  get as suspendedVerifyEmailExpiredLinkGet,
+  post as suspendedVerifyEmailExpireddLinkPost,
+} from '../../../controllers/insurance/account/suspended/expired-link';
 import { get as invalidLinkGet } from '../../../controllers/insurance/account/invalid-link';
 import { get as reactivatedGet } from '../../../controllers/insurance/account/reactivated';
 
@@ -39,8 +39,8 @@ insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.CREATE.CONFIRM_EMAIL_RESENT,
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL, verifyEmailGet);
 
-insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL_LINK_INVALID, invalidLinkGet);
-insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL_LINK_EXPIRED, verifyEmailLinkExpiredGet);
+insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL_INVALID_LINK, invalidLinkGet);
+insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL_EXPIRED_LINK, verifyEmailExpiredLinkGet);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.ROOT, signInGet);
 insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.ROOT, signInPost);
@@ -56,10 +56,10 @@ insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.ROOT, passwo
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.LINK_SENT, passwordResetLinkSentGet);
 
-insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.LINK_EXPIRED, passwordResetLinkExpiredGet);
-insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.LINK_EXPIRED, passwordResetLinkExpiredPost);
+insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.EXPIRED_LINK, passwordResetExpiredLinkGet);
+insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.EXPIRED_LINK, passwordResetExpiredLinkPost);
 
-insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.LINK_INVALID, invalidLinkGet);
+insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.INVALID_LINK, invalidLinkGet);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD, newPasswordGet);
 insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD, newPasswordPost);
@@ -79,10 +79,10 @@ insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.EMAIL_SENT, suspen
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL, suspendedVerifyEmailGet);
 
-insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_EXPIRED, suspendedVerifyEmailLinkExpiredGet);
-insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_EXPIRED, suspendedVerifyEmailLinkExpiredPost);
+insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_EXPIRED_LINK, suspendedVerifyEmailExpiredLinkGet);
+insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_EXPIRED_LINK, suspendedVerifyEmailExpireddLinkPost);
 
-insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_INVALID, invalidLinkGet);
+insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_INVALID_LINK, invalidLinkGet);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.REACTIVATED_ROOT, reactivatedGet);
 

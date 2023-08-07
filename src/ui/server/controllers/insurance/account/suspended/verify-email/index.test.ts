@@ -8,7 +8,7 @@ import { mockAccount, mockReq, mockRes } from '../../../../../test-mocks';
 const {
   INSURANCE: {
     ACCOUNT: {
-      SUSPENDED: { ROOT: SUSPENDED_ROOT, VERIFY_EMAIL_LINK_EXPIRED, VERIFY_EMAIL_LINK_INVALID },
+      SUSPENDED: { ROOT: SUSPENDED_ROOT, VERIFY_EMAIL_EXPIRED_LINK, VERIFY_EMAIL_INVALID_LINK },
       REACTIVATED_ROOT,
     },
     PROBLEM_WITH_SERVICE,
@@ -70,10 +70,10 @@ describe('controllers/insurance/account/suspended/verify-email', () => {
       api.keystone.account.verifyAccountReactivationToken = verifyAccountReactivationTokenSpy;
     });
 
-    it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED} with query param`, async () => {
+    it(`should redirect to ${VERIFY_EMAIL_EXPIRED_LINK} with query param`, async () => {
       await get(req, res);
 
-      const expected = `${VERIFY_EMAIL_LINK_EXPIRED}?id=${mockAccount.id}`;
+      const expected = `${VERIFY_EMAIL_EXPIRED_LINK}?id=${mockAccount.id}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });
@@ -86,10 +86,10 @@ describe('controllers/insurance/account/suspended/verify-email', () => {
       api.keystone.account.verifyAccountReactivationToken = verifyAccountReactivationTokenSpy;
     });
 
-    it(`should redirect to ${VERIFY_EMAIL_LINK_INVALID}`, async () => {
+    it(`should redirect to ${VERIFY_EMAIL_INVALID_LINK}`, async () => {
       await get(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_LINK_INVALID);
+      expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_INVALID_LINK);
     });
   });
 
@@ -100,10 +100,10 @@ describe('controllers/insurance/account/suspended/verify-email', () => {
       api.keystone.account.verifyAccountReactivationToken = verifyAccountReactivationTokenSpy;
     });
 
-    it(`should redirect to ${VERIFY_EMAIL_LINK_INVALID}`, async () => {
+    it(`should redirect to ${VERIFY_EMAIL_INVALID_LINK}`, async () => {
       await get(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_LINK_INVALID);
+      expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_INVALID_LINK);
     });
   });
 
