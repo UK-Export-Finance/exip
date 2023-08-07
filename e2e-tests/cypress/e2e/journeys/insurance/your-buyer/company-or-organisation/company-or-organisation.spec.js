@@ -130,12 +130,17 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       field.input().should('exist');
     });
 
-    it(`renders ${FIRST_NAME} heading, hint, label and input`, () => {
+    it('renders the contact details fieldset heading', () => {
       const fieldId = FIRST_NAME;
       const field = companyOrOrganisationPage[fieldId];
 
       field.heading().should('exist');
       cy.checkText(field.heading(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HEADING);
+    });
+
+    it(`renders ${FIRST_NAME} heading, hint, label and input`, () => {
+      const fieldId = FIRST_NAME;
+      const field = companyOrOrganisationPage[fieldId];
 
       field.hint().should('exist');
       cy.checkText(field.hint(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HINT);

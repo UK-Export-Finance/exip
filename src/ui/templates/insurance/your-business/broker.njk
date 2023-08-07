@@ -7,73 +7,80 @@
 {% import '../../components/address-fields.njk' as addressInput %}
 {% import '../../components/submit-button.njk' as submitButton %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% import '../../components/fieldset-legend.njk' as fieldsetLegend %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
 {% endblock %}
 
 {% set brokerHTML %}
-  <h2 class="govuk-heading-m govuk-!-margin-bottom-5 govuk-!-margin-top-5" data-cy="{{ FIELDS.HEADING.ID }}-heading">{{ FIELDS.HEADING.HEADING }}</h2>
-
-  {{ govukInput({
-    id: FIELDS.NAME.ID,
-    name: FIELDS.NAME.ID,
-    value: submittedValues[FIELDS.NAME.ID] or application.broker[FIELDS.NAME.ID],
-    label: {
-      text: FIELDS.NAME.LABEL,
-      classes: "govuk-body govuk-!-font-weight-bold",
-      attributes: {
-        id: FIELDS.NAME.ID + '-label',
-        "data-cy": FIELDS.NAME.ID + "-label"
+  {% call govukFieldset({
+      legend: {
+        html: fieldsetLegend.render({ id:FIELDS.HEADING.ID, legendText: FIELDS.HEADING.HEADING }),
+        isPageHeading: false
       }
-    },
-    classes: "govuk-input--width-20",
-    attributes: {
-      "data-cy": FIELDS.NAME.ID + "-input"
-    },
-    errorMessage: validationErrors.errorList[FIELDS.NAME.ID] and {
-      text: validationErrors.errorList[FIELDS.NAME.ID].text,
-      attributes: {
-        "data-cy": FIELDS.NAME.ID + "-error"
-      }
-    }
-  }) }}
+  }) %}
 
-  {{ addressInput.render({
-    addressLineOne: FIELDS.ADDRESS_LINE_1,
-    addressLineTwo: FIELDS.ADDRESS_LINE_2,
-    town: FIELDS.TOWN,
-    country: FIELDS.COUNTY,
-    postcode: FIELDS.POSTCODE,
-    validationErrors: validationErrors,
-    submittedValues: submittedValues,
-    application: application.broker
-  }) }}
-
-  {{ govukInput({
-    id: FIELDS.EMAIL.ID,
-    name: FIELDS.EMAIL.ID,
-    value: submittedValues[FIELDS.EMAIL.ID] or application.broker[FIELDS.EMAIL.ID],
-    label: {
-      text: FIELDS.EMAIL.LABEL,
-      classes: "govuk-body govuk-!-font-weight-bold",
+    {{ govukInput({
+      id: FIELDS.NAME.ID,
+      name: FIELDS.NAME.ID,
+      value: submittedValues[FIELDS.NAME.ID] or application.broker[FIELDS.NAME.ID],
+      label: {
+        text: FIELDS.NAME.LABEL,
+        classes: "govuk-body govuk-!-font-weight-bold",
+        attributes: {
+          id: FIELDS.NAME.ID + '-label',
+          "data-cy": FIELDS.NAME.ID + "-label"
+        }
+      },
+      classes: "govuk-input--width-20",
       attributes: {
-        id: FIELDS.EMAIL.ID + '-label',
-        "data-cy": FIELDS.EMAIL.ID + "-label"
+        "data-cy": FIELDS.NAME.ID + "-input"
+      },
+      errorMessage: validationErrors.errorList[FIELDS.NAME.ID] and {
+        text: validationErrors.errorList[FIELDS.NAME.ID].text,
+        attributes: {
+          "data-cy": FIELDS.NAME.ID + "-error"
+        }
       }
-    },
-    classes: "govuk-input--width-20",
-    attributes: {
-      "data-cy": FIELDS.EMAIL.ID + "-input"
-    },
-    errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID] and {
-      text: validationErrors.errorList[FIELDS.EMAIL.ID].text,
-      attributes: {
-        "data-cy": FIELDS.EMAIL.ID + "-error"
-      }
-    }
-  }) }}
+    }) }}
 
+    {{ addressInput.render({
+      addressLineOne: FIELDS.ADDRESS_LINE_1,
+      addressLineTwo: FIELDS.ADDRESS_LINE_2,
+      town: FIELDS.TOWN,
+      country: FIELDS.COUNTY,
+      postcode: FIELDS.POSTCODE,
+      validationErrors: validationErrors,
+      submittedValues: submittedValues,
+      application: application.broker
+    }) }}
+
+    {{ govukInput({
+      id: FIELDS.EMAIL.ID,
+      name: FIELDS.EMAIL.ID,
+      value: submittedValues[FIELDS.EMAIL.ID] or application.broker[FIELDS.EMAIL.ID],
+      label: {
+        text: FIELDS.EMAIL.LABEL,
+        classes: "govuk-body govuk-!-font-weight-bold",
+        attributes: {
+          id: FIELDS.EMAIL.ID + '-label',
+          "data-cy": FIELDS.EMAIL.ID + "-label"
+        }
+      },
+      classes: "govuk-input--width-20",
+      attributes: {
+        "data-cy": FIELDS.EMAIL.ID + "-input"
+      },
+      errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID] and {
+        text: validationErrors.errorList[FIELDS.EMAIL.ID].text,
+        attributes: {
+          "data-cy": FIELDS.EMAIL.ID + "-error"
+        }
+      }
+    }) }}
+  {% endcall %}
 {% endset %}
 
 {% block content %}

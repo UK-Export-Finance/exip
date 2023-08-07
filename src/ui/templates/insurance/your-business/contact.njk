@@ -4,8 +4,10 @@
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/hint/macro.njk" import govukHint %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
 {% import '../../components/personal-details-input.njk' as personalDetailsInput %}
 {% import '../../components/submit-button.njk' as submitButton %}
+{% import '../../components/fieldset-legend.njk' as fieldsetLegend %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -56,51 +58,56 @@
       </div>
 
       <div class="govuk-grid-column-three-quarters-from-desktop govuk-!-margin-top-5">
-        <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-cy="contact-details-heading">{{ CONTENT_STRINGS.CONTACT_DETAILS.LABEL }}</h2>
-
-        {{ govukHint({
-          text: CONTENT_STRINGS.CONTACT_DETAILS.HINT,
-          attributes: {
-          "data-cy": "contact-details-hint"
+        {% call govukFieldset({
+          legend: {
+            html: fieldsetLegend.render({ id:"contact-details", legendText: CONTENT_STRINGS.CONTACT_DETAILS.LABEL }),
+            isPageHeading: false
           }
-        }) }}
+        }) %}
 
-        {{ personalDetailsInput.render({
-          class: "govuk-input--width-11",
-          fieldId: FIELDS.FIRST_NAME.ID,
-          label: FIELDS.FIRST_NAME.LABEL,
-          labelClass: "govuk-label--s",
-          validationErrors: validationErrors,
-          submittedValues: submittedValues
-        }) }}
+          {{ govukHint({
+            text: CONTENT_STRINGS.CONTACT_DETAILS.HINT,
+            attributes: {
+            "data-cy": "contact-details-hint"
+            }
+          }) }}
 
-        {{ personalDetailsInput.render({
-          class: "govuk-input--width-11",
-          fieldId: FIELDS.LAST_NAME.ID,
-          label: FIELDS.LAST_NAME.LABEL,
-          labelClass: "govuk-label--s",
-          validationErrors: validationErrors,
-          submittedValues: submittedValues
-        }) }}
+          {{ personalDetailsInput.render({
+            class: "govuk-input--width-11",
+            fieldId: FIELDS.FIRST_NAME.ID,
+            label: FIELDS.FIRST_NAME.LABEL,
+            labelClass: "govuk-label--s",
+            validationErrors: validationErrors,
+            submittedValues: submittedValues
+          }) }}
 
-        {{ personalDetailsInput.render({
-          class: "govuk-input--width-11",
-          fieldId: FIELDS.EMAIL_ADDRESS.ID,
-          label: FIELDS.EMAIL_ADDRESS.LABEL,
-          labelClass: "govuk-label--s",
-          validationErrors: validationErrors,
-          submittedValues: submittedValues
-        }) }}
+          {{ personalDetailsInput.render({
+            class: "govuk-input--width-11",
+            fieldId: FIELDS.LAST_NAME.ID,
+            label: FIELDS.LAST_NAME.LABEL,
+            labelClass: "govuk-label--s",
+            validationErrors: validationErrors,
+            submittedValues: submittedValues
+          }) }}
 
-        {{ personalDetailsInput.render({
-          class: "govuk-input--width-11",
-          fieldId: FIELDS.POSITION.ID,
-          label: FIELDS.POSITION.LABEL,
-          labelClass: "govuk-label--s",
-          validationErrors: validationErrors,
-          submittedValues: submittedValues
-        }) }}
+          {{ personalDetailsInput.render({
+            class: "govuk-input--width-11",
+            fieldId: FIELDS.EMAIL_ADDRESS.ID,
+            label: FIELDS.EMAIL_ADDRESS.LABEL,
+            labelClass: "govuk-label--s",
+            validationErrors: validationErrors,
+            submittedValues: submittedValues
+          }) }}
 
+          {{ personalDetailsInput.render({
+            class: "govuk-input--width-11",
+            fieldId: FIELDS.POSITION.ID,
+            label: FIELDS.POSITION.LABEL,
+            labelClass: "govuk-label--s",
+            validationErrors: validationErrors,
+            submittedValues: submittedValues
+          }) }}
+        {% endcall %}
       </div>
 
       <div class="govuk-grid-column-three-quarters-from-desktop govuk-!-margin-top-5">

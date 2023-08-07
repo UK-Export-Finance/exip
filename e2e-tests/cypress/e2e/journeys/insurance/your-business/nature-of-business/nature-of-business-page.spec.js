@@ -107,13 +107,19 @@ context('Insurance - Your business - Nature of your business page - As an Export
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
 
+    it('should display the employees fieldset heading', () => {
+      const fieldId = EMPLOYEES_UK;
+      const field = natureOfBusiness[fieldId];
+
+      cy.checkText(field.heading(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HEADING);
+    });
+
     it(`should display ${EMPLOYEES_UK} input box`, () => {
       const fieldId = EMPLOYEES_UK;
       const field = natureOfBusiness[fieldId];
 
       field.input().should('exist');
       cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
-      cy.checkText(field.heading(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HEADING);
     });
 
     it(`should display ${EMPLOYEES_INTERNATIONAL} input box`, () => {
