@@ -7,11 +7,12 @@ This script reads the pricing grid XLSX spreadsheet and transforms it to JSON.
 1. Check and modify the spreadsheet:
 
     * Ensure that the sheets are in the correct order:
-      * "Revolving Policy - Digital" should be the 3rd sheet.
-      * "Single Policy - Digital" should be the 4th sheet.
+      * "Single Policy - Digital" should be the 1st sheet.
+      * "Revolving Policy - Digital" should be the 2nd sheet.
     * Remove all intro text from both sheets.
     * Copy all table cells, starting from the body and paste into the first row, first cell of the spreadsheet.
     * Copy the first cell (risk category) and paste this into each appropriate column, so each section has the risk category as the first cell.
+      * For example, "Standard Risk (S)" should be "Standard Risk" and present on every single row of this section.
     * The spreadsheet should now look like the example below.
 
 2. Install dependencies:
@@ -26,7 +27,15 @@ This script reads the pricing grid XLSX spreadsheet and transforms it to JSON.
   node index.js --spreadsheet=./path/to/spreadsheet.xlsx --outputDirectory=./path/to/save
   ```
 
-A JSON file will be generated in the root, called `pricing-grid.json`
+A JSON file will be generated in the root, called `pricing-grid.json`.
+
+4. Copy the new pricing grid JSON into the UI: [src/ui/server/generate-quote/pricing-grid.json](https://github.com/UK-Export-Finance/exip/tree/main-application/src/ui/server/generate-quote/pricing-grid.json)
+
+The UI will then automatically consume this JSON.
+
+5. Execute [quote E2E tests](https://github.com/UK-Export-Finance/exip/tree/main-application/e2e-tests/cypress/e2e/journeys/quote/your-quote) - more than likely that some assertions will need to be updated, because pricing has changed.
+
+
 
 ## Expected spreadsheet format
 

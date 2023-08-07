@@ -8,7 +8,7 @@ import { mockAccount, mockReq, mockRes } from '../../../../../test-mocks';
 const {
   INSURANCE: {
     ACCOUNT: {
-      CREATE: { VERIFY_EMAIL_LINK_INVALID, VERIFY_EMAIL_LINK_EXPIRED },
+      CREATE: { VERIFY_EMAIL_INVALID_LINK, VERIFY_EMAIL_EXPIRED_LINK },
       SIGN_IN,
     },
     PROBLEM_WITH_SERVICE,
@@ -77,10 +77,10 @@ describe('controllers/insurance/account/create/verify-email', () => {
           api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
         });
 
-        it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED} with ID param`, async () => {
+        it(`should redirect to ${VERIFY_EMAIL_EXPIRED_LINK} with ID param`, async () => {
           await get(req, res);
 
-          const expected = `${VERIFY_EMAIL_LINK_EXPIRED}?id=${mockAccount.id}`;
+          const expected = `${VERIFY_EMAIL_EXPIRED_LINK}?id=${mockAccount.id}`;
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
@@ -92,10 +92,10 @@ describe('controllers/insurance/account/create/verify-email', () => {
           api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
         });
 
-        it(`should redirect to ${VERIFY_EMAIL_LINK_INVALID}`, async () => {
+        it(`should redirect to ${VERIFY_EMAIL_INVALID_LINK}`, async () => {
           await get(req, res);
 
-          const expected = `${VERIFY_EMAIL_LINK_INVALID}`;
+          const expected = `${VERIFY_EMAIL_INVALID_LINK}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -110,10 +110,10 @@ describe('controllers/insurance/account/create/verify-email', () => {
           api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
         });
 
-        it(`should redirect to ${VERIFY_EMAIL_LINK_INVALID}`, async () => {
+        it(`should redirect to ${VERIFY_EMAIL_INVALID_LINK}`, async () => {
           await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_LINK_INVALID);
+          expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_INVALID_LINK);
         });
       });
     });
@@ -125,10 +125,10 @@ describe('controllers/insurance/account/create/verify-email', () => {
         api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
       });
 
-      it(`should redirect to ${VERIFY_EMAIL_LINK_INVALID}`, async () => {
+      it(`should redirect to ${VERIFY_EMAIL_INVALID_LINK}`, async () => {
         await get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_LINK_INVALID);
+        expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_INVALID_LINK);
       });
     });
 

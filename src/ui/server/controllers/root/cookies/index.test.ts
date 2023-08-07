@@ -1,7 +1,8 @@
-import { PAGE_VARIABLES, TEMPLATE, get, post } from '.';
+import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { ERROR_MESSAGES, FIELDS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input';
+import constructPayload from '../../../helpers/construct-payload';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 import { Request, Response } from '../../../../types';
@@ -16,6 +17,14 @@ describe('controllers/root/cookies', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
+  });
+
+  describe('FIELD_ID', () => {
+    it('should have the correct ID', () => {
+      const expected = FIELD_IDS.OPTIONAL_COOKIES;
+
+      expect(FIELD_ID).toEqual(expected);
+    });
   });
 
   describe('PAGE_VARIABLES', () => {
@@ -56,14 +65,16 @@ describe('controllers/root/cookies', () => {
 
   describe('post', () => {
     describe('when there are validation errors', () => {
-      it('should render template with validation errors and submittedValue', () => {
+      it('should render template with validation errors and submittedValue from constructPayload function', () => {
         post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           userName: getUserNameFromSession(req.session.user),
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
           FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
-          validationErrors: generateValidationErrors(req.body, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID]),
+          validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID]),
         });
       });
     });

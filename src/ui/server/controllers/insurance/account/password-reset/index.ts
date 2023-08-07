@@ -2,6 +2,7 @@ import { PAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import api from '../../../../api';
@@ -9,7 +10,7 @@ import accountDoesNotExistValidation from './validation/account-does-not-exist';
 import { Request, Response } from '../../../../../types';
 
 const {
-  ACCOUNT: { EMAIL: FIELD_ID },
+  ACCOUNT: { EMAIL },
 } = FIELD_IDS.INSURANCE;
 
 const {
@@ -20,6 +21,8 @@ const {
     },
   },
 } = ROUTES;
+
+export const FIELD_ID = EMAIL;
 
 /**
  * PAGE_VARIABLES
@@ -64,7 +67,9 @@ export const post = async (req: Request, res: Response) => {
   try {
     console.info('Posting account password reset form');
 
-    let validationErrors = generateValidationErrors(req.body);
+    const payload = constructPayload(req.body, [FIELD_ID]);
+
+    let validationErrors = generateValidationErrors(payload);
 
     if (validationErrors) {
       return res.render(TEMPLATE, {
@@ -73,14 +78,14 @@ export const post = async (req: Request, res: Response) => {
           BACK_LINK: req.headers.referer,
         }),
         ...PAGE_VARIABLES,
-        submittedValues: req.body,
+        submittedValues: payload,
         validationErrors,
       });
     }
 
     const urlOrigin = req.headers.origin;
 
-    const email = String(sanitiseValue({ value: req.body[FIELD_ID] }));
+    const email = String(sanitiseValue({ value: payload[FIELD_ID] }));
 
     const response = await api.keystone.account.sendEmailPasswordResetLink(urlOrigin, email);
 
@@ -104,7 +109,7 @@ export const post = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       ...PAGE_VARIABLES,
-      submittedValues: req.body,
+      submittedValues: payload,
       validationErrors,
     });
   } catch (err) {

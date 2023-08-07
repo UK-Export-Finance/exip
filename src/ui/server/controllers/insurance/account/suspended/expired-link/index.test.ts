@@ -15,7 +15,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-describe('controllers/insurance/account/suspended/link-sent', () => {
+describe('controllers/insurance/account/suspended/expired-link', () => {
   let req: Request;
   let res: Response;
 
@@ -29,13 +29,13 @@ describe('controllers/insurance/account/suspended/link-sent', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_EXPIRED);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ACCOUNT.SUSPENDED.VERIFY_EMAIL_EXPIRED_LINK);
     });
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct strings', () => {
-      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_EXPIRED);
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.ACCOUNT.SUSPENDED.VERIFY_EMAIL_EXPIRED_LINK);
     });
   });
 

@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const accountSignInSendNewCodeMutation = gql`
-  mutation AccountSignInSendNewCode($accountId: String!) {
+  mutation accountSignInSendNewCode($accountId: String!) {
     accountSignInSendNewCode(accountId: $accountId) {
       accountId
       success

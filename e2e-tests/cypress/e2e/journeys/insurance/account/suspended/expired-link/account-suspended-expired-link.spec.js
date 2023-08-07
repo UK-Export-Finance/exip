@@ -10,7 +10,7 @@ const {
   ACCOUNT: {
     SUSPENDED: {
       VERIFY_EMAIL,
-      VERIFY_EMAIL_LINK_EXPIRED,
+      VERIFY_EMAIL_EXPIRED_LINK,
     },
   },
 } = INSURANCE_ROUTES;
@@ -19,12 +19,12 @@ const {
   ACCOUNT: { REACTIVATION_EXPIRY, REACTIVATION_HASH },
 } = INSURANCE_FIELD_IDS;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SUSPENDED.VERIFY_EMAIL_LINK_EXPIRED;
+const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SUSPENDED.VERIFY_EMAIL_EXPIRED_LINK;
 
 context('Insurance - Account - Suspended - Verify email - Visit with an expired token query param', () => {
   const baseUrl = Cypress.config('baseUrl');
   const verifyEmailUrl = `${baseUrl}${VERIFY_EMAIL}`;
-  const verifyEmailLinkExpiredUrl = `${baseUrl}${VERIFY_EMAIL_LINK_EXPIRED}`;
+  const verifyEmailLinkExpiredUrl = `${baseUrl}${VERIFY_EMAIL_EXPIRED_LINK}`;
 
   before(() => {
     cy.createAnAccountAndBecomeBlocked({ startReactivationJourney: true });
@@ -64,7 +64,7 @@ context('Insurance - Account - Suspended - Verify email - Visit with an expired 
       updatedAccount = await api.updateAccount(account.id, updateObj);
     });
 
-    it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED} and renders page elements`, () => {
+    it(`should redirect to ${VERIFY_EMAIL_EXPIRED_LINK} and renders page elements`, () => {
       cy.navigateToUrl(`${verifyEmailUrl}?token=${updatedAccount[REACTIVATION_HASH]}`);
 
       const expectedUrl = `${verifyEmailLinkExpiredUrl}?id=${updatedAccount.id}`;

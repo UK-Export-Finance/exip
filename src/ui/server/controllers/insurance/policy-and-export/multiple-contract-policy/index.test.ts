@@ -303,7 +303,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
         req.body = validBody;
       });
 
-      it('should call mapAndSave.policyAndExport with data from from constructPayload function and application', async () => {
+      it('should call mapAndSave.policyAndExport with data from constructPayload function and application', async () => {
         await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
@@ -353,12 +353,12 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
         expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
       });
 
-      it('should render template with validation errors', async () => {
+      it('should render template with validation errors and submitted values from constructPayload function', async () => {
         await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        const expectedCurrencies = mapCurrencies(mockCurrencies, req.body[POLICY_CURRENCY_CODE]);
+        const expectedCurrencies = mapCurrencies(mockCurrencies, payload[POLICY_CURRENCY_CODE]);
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
@@ -371,7 +371,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
           submittedValues: payload,
           currencies: expectedCurrencies,
           monthOptions: mapTotalMonthsOfCover(totalMonthsOfCoverOptions),
-          validationErrors: generateValidationErrors(req.body),
+          validationErrors: generateValidationErrors(payload),
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -404,7 +404,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
             submittedValues: payload,
             currencies: expectedCurrencies,
             monthOptions: mapTotalMonthsOfCover(totalMonthsOfCoverOptions),
-            validationErrors: generateValidationErrors(req.body),
+            validationErrors: generateValidationErrors(payload),
           };
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -438,7 +438,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
             submittedValues: payload,
             currencies: mapCurrencies(mockCurrencies),
             monthOptions: expectedMonthOptions,
-            validationErrors: generateValidationErrors(req.body),
+            validationErrors: generateValidationErrors(payload),
           };
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

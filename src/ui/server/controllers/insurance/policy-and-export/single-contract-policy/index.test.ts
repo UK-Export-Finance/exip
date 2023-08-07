@@ -254,7 +254,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
         req.body = validBody;
       });
 
-      it('should call mapAndSave.policyAndExport with data from from constructPayload function and application', async () => {
+      it('should call mapAndSave.policyAndExport with data from constructPayload function and application', async () => {
         await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);

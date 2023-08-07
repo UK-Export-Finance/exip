@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const getAccountQuery = gql`
-  query GetAccount($id: ID!) {
+  query account($id: ID!) {
     account(where: { id: $id }) {
       id
       email

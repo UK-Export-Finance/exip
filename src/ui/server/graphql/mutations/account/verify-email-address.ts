@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const verifyAccountEmailMutation = gql`
-  mutation VerifyAccountEmailAddress($token: String!) {
+  mutation verifyAccountEmailAddress($token: String!) {
     verifyAccountEmailAddress(token: $token) {
       success
       accountId

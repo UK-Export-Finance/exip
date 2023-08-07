@@ -261,6 +261,56 @@ var FIELD_IDS = {
   INSURANCE: insurance_default
 };
 
+// constants/allowed-graphql-resolvers/index.ts
+var DEFAULT_RESOLVERS = [
+  // application
+  "createApplication",
+  "updateBroker",
+  "updateBusinessContactDetail",
+  "updateBusiness",
+  "updateBuyer",
+  "updateDeclaration",
+  "updatePolicyAndExport",
+  "updateSectionReview",
+  "updateEligibility",
+  "referenceNumber",
+  "applications",
+  // account
+  "account",
+  "updateAccount",
+  // misc
+  "countries",
+  "page"
+];
+var CUSTOM_RESOLVERS = [
+  // account
+  "accountPasswordReset",
+  "addAndGetOTP",
+  "accountSignIn",
+  "accountSignInSendNewCode",
+  "createAnAccount",
+  "deleteAnAccount",
+  "getAccountPasswordResetToken",
+  "sendEmailConfirmEmailAddress",
+  "sendEmailPasswordResetLink",
+  "sendEmailReactivateAccountLink",
+  "verifyAccountEmailAddress",
+  "verifyAccountPasswordResetToken",
+  "verifyAccountReactivationToken",
+  "verifyAccountSignInCode",
+  // application
+  "declarationAntiBriberies",
+  "declarationConfirmationAndAcknowledgements",
+  "declarationHowDataWillBeUsed",
+  "deleteApplicationByReferenceNumber",
+  "getCompaniesHouseInformation",
+  "submitApplication",
+  "updateCompanyAndCompanyAddress",
+  // feedback
+  "createFeedbackAndSendEmail"
+];
+var ALLOWED_GRAPHQL_RESOLVERS = [...DEFAULT_RESOLVERS, ...CUSTOM_RESOLVERS];
+
 // constants/answers/index.ts
 var ANSWERS = {
   YES: "Yes",
@@ -1341,6 +1391,27 @@ var session = (0, import_session.statelessSessions)({
   maxAge: sessionMaxAge,
   secret: sessionSecret
 });
+
+// apollo-plugins/index.ts
+var requestDidStart = () => ({
+  /**
+   * The didResolveOperation event fires after the graphql library successfully determines the operation to execute.
+   * At this stage, the operationName is available.
+   * When this event fires, your resolvers have not yet executed.
+   * https://www.apollographql.com/docs/apollo-server/integrations/plugins-event-reference/#didresolveoperation
+   *
+   * KeystoneJS automatically generates many GraphQL resolvers that we do not use or need.
+   * Therefore, We use this event to check that a requested operation is allowed to be executed,
+   * via an explicit list of allowed resolvers.
+   */
+  didResolveOperation({ request }) {
+    if (request.operationName && !ALLOWED_GRAPHQL_RESOLVERS.includes(request.operationName)) {
+      throw new Error("Operation not permitted");
+    }
+  }
+});
+var apolloPlugins = [{ requestDidStart }];
+var apollo_plugins_default = apolloPlugins;
 
 // custom-schema/index.ts
 var import_schema = require("@graphql-tools/schema");
@@ -4438,10 +4509,10 @@ var keystone_default = withAuth(
     server: {
       port: 5001,
       extendExpressApp: (app) => {
+        app.use(check_api_key_default);
         if (NODE_ENV === "production") {
           app.use(rate_limiter_default);
         }
-        app.use(check_api_key_default);
       }
     },
     db: {
@@ -4452,7 +4523,8 @@ var keystone_default = withAuth(
     graphql: {
       playground: isDevEnvironment,
       apolloConfig: {
-        introspection: isDevEnvironment
+        introspection: isDevEnvironment,
+        plugins: apollo_plugins_default
       }
     },
     ui: {
