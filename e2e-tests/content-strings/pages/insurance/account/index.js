@@ -45,7 +45,7 @@ const ACCOUNT = {
       PAGE_TITLE: 'New link sent - confirm your email address',
       WE_SENT_LINK_TO: "We've sent another link by email to",
     },
-    VERIFY_EMAIL_LINK_EXPIRED: {
+    VERIFY_EMAIL_EXPIRED_LINK: {
       PAGE_TITLE: 'Your link has expired',
       BODY: "You'll need to enter your details and create an account again.",
       CREATE_ACCOUNT: {
@@ -126,7 +126,7 @@ const ACCOUNT = {
         },
       },
     },
-    LINK_EXPIRED: {
+    EXPIRED_LINK: {
       PAGE_TITLE: 'Your password reset link has expired',
       PASSWORD_NOT_RESET: 'Your password has not been reset.',
       IF_YOU_WOULD_LIKE: 'If you would still like to reset your password we can send you a new link.',
@@ -160,7 +160,7 @@ const ACCOUNT = {
       CHECK_YOUR_EMAIL: 'Check your email and follow the link to confirm your email address and reactivate your account.',
       HAVING_PROBLEMS: 'Having problems?',
     },
-    VERIFY_EMAIL_LINK_EXPIRED: {
+    VERIFY_EMAIL_EXPIRED_LINK: {
       PAGE_TITLE: 'Your link has expired',
       BODY: "Your account has not been reactivated. You'll need to request another reactivation link.",
     },
@@ -169,7 +169,7 @@ const ACCOUNT = {
     PAGE_TITLE: 'Your account has been reactivated',
     THANK_YOU: 'Thank you for confirming your email address. Your account has been reactivated and you can now sign in.',
   },
-  LINK_INVALID: {
+  INVALID_LINK: {
     PAGE_TITLE: 'Your link is not recognised',
     BODY: 'Please make sure you have copied the link correctly from the email we sent you.',
   },
