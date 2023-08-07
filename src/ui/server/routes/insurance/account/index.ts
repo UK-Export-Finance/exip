@@ -22,7 +22,7 @@ import { get as suspendedEmailSentGet } from '../../../controllers/insurance/acc
 import { get as suspendedVerifyEmailGet } from '../../../controllers/insurance/account/suspended/verify-email';
 import {
   get as suspendedVerifyEmailExpiredLinkGet,
-  post as suspendedVerifyEmailExpiredPLinkost,
+  post as suspendedVerifyEmailExpireddLinkPost,
 } from '../../../controllers/insurance/account/suspended/expired-link';
 import { get as invalidLinkGet } from '../../../controllers/insurance/account/invalid-link';
 import { get as reactivatedGet } from '../../../controllers/insurance/account/reactivated';
@@ -80,7 +80,7 @@ insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.EMAIL_SENT, suspen
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL, suspendedVerifyEmailGet);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_EXPIRED_LINK, suspendedVerifyEmailExpiredLinkGet);
-insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_EXPIRED_LINK, suspendedVerifyEmailExpiredPLinkost);
+insuranceAccountRouter.post(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_EXPIRED_LINK, suspendedVerifyEmailExpireddLinkPost);
 
 insuranceAccountRouter.get(INSURANCE_ROUTES.ACCOUNT.SUSPENDED.VERIFY_EMAIL_INVALID_LINK, invalidLinkGet);
 
