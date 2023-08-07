@@ -32,7 +32,7 @@ const post = async (req: Request, res: Response) => {
     const payload = constructPayload(body, FIELD_IDS);
 
     // run validation on inputs
-    const validationErrors = generateValidationErrors(body);
+    const validationErrors = generateValidationErrors(payload);
 
     // runs save and go back commmand
     const saveResponse = await mapAndSave.natureOfBusiness(payload, application, validationErrors);

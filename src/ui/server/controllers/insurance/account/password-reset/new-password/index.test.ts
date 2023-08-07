@@ -13,7 +13,7 @@ import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
 const {
   INSURANCE: {
     ACCOUNT: {
-      PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, SUCCESS, LINK_EXPIRED, LINK_INVALID },
+      PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, SUCCESS, EXPIRED_LINK, INVALID_LINK },
     },
     PROBLEM_WITH_SERVICE,
   },
@@ -114,10 +114,10 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
         api.keystone.account.verifyPasswordResetToken = verifyAccountPasswordResetTokenSpy;
       });
 
-      it(`should redirect to ${LINK_INVALID}`, async () => {
+      it(`should redirect to ${INVALID_LINK}`, async () => {
         await get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(LINK_INVALID);
+        expect(res.redirect).toHaveBeenCalledWith(INVALID_LINK);
       });
     });
 
@@ -134,10 +134,10 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
         api.keystone.account.verifyPasswordResetToken = verifyAccountPasswordResetTokenSpy;
       });
 
-      it(`should redirect to ${LINK_EXPIRED} with ID query param`, async () => {
+      it(`should redirect to ${EXPIRED_LINK} with ID query param`, async () => {
         await get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(`${LINK_EXPIRED}?id=${mockAccount.id}`);
+        expect(res.redirect).toHaveBeenCalledWith(`${EXPIRED_LINK}?id=${mockAccount.id}`);
       });
     });
 
@@ -153,10 +153,10 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
         api.keystone.account.verifyPasswordResetToken = verifyAccountPasswordResetTokenSpy;
       });
 
-      it(`should redirect to ${LINK_INVALID}`, async () => {
+      it(`should redirect to ${INVALID_LINK}`, async () => {
         await get(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(LINK_INVALID);
+        expect(res.redirect).toHaveBeenCalledWith(INVALID_LINK);
       });
     });
 

@@ -5,9 +5,9 @@ import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../../types';
 
-export const TEMPLATE = TEMPLATES.INSURANCE.ACCOUNT.CREATE.VERIFY_EMAIL_LINK_EXPIRED;
+export const TEMPLATE = TEMPLATES.INSURANCE.ACCOUNT.CREATE.VERIFY_EMAIL_EXPIRED_LINK;
 
-export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.VERIFY_EMAIL_LINK_EXPIRED;
+export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.VERIFY_EMAIL_EXPIRED_LINK;
 
 const {
   INSURANCE: {
@@ -20,10 +20,10 @@ const {
 
 /**
  * get
- * Verify email link expired page
+ * Verify email expired link page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} Verify email link expired page
+ * @returns {Express.Response.render} Verify email expired link page
  */
 export const get = (req: Request, res: Response) => {
   try {
@@ -43,7 +43,7 @@ export const get = (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
     });
   } catch (err) {
-    console.error("Error rendering 'verify email link expired' page %O", err);
+    console.error("Error rendering 'verify email expired link' page %O", err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

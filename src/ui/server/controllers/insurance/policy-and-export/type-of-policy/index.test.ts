@@ -110,7 +110,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         };
       });
 
-      it('should call mapAndSave.policyAndExport with data from from constructPayload function and application', async () => {
+      it('should call mapAndSave.policyAndExport with data from constructPayload function and application', async () => {
         await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
@@ -146,8 +146,10 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
     });
 
     describe('when there are validation errors', () => {
-      it('should render template with validation errors', async () => {
+      it('should render template with validation errors from constructPayload function', async () => {
         await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
@@ -156,7 +158,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
           }),
           ...pageVariables(refNumber),
           userName: getUserNameFromSession(req.session.user),
-          validationErrors: generateValidationErrors(req.body),
+          validationErrors: generateValidationErrors(payload),
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

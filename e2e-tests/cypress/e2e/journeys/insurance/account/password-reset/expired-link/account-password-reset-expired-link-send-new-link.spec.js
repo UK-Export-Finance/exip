@@ -12,7 +12,7 @@ const {
     PASSWORD_RESET: {
       NEW_PASSWORD,
       LINK_SENT,
-      LINK_EXPIRED,
+      EXPIRED_LINK,
     },
   },
 } = INSURANCE_ROUTES;
@@ -21,7 +21,7 @@ const {
   ACCOUNT: { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY },
 } = INSURANCE_FIELD_IDS;
 
-context('Insurance - Account - Password reset - link expired page - send new link', () => {
+context('Insurance - Account - Password reset - expired link page - send new link', () => {
   const baseUrl = Cypress.config('baseUrl');
 
   before(() => {
@@ -80,7 +80,7 @@ context('Insurance - Account - Password reset - link expired page - send new lin
     it(`should redirect to ${LINK_SENT} with ID query param`, () => {
       cy.navigateToUrl(`${baseUrl}${NEW_PASSWORD}?token=${updatedAccount[PASSWORD_RESET_HASH]}`);
 
-      let expectedUrl = `${baseUrl}${LINK_EXPIRED}?id=${updatedAccount.id}`;
+      let expectedUrl = `${baseUrl}${EXPIRED_LINK}?id=${updatedAccount.id}`;
 
       cy.assertUrl(expectedUrl);
 

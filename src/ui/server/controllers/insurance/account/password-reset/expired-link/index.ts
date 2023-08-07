@@ -5,9 +5,9 @@ import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 
-export const TEMPLATE = TEMPLATES.INSURANCE.ACCOUNT.PASSWORD_RESET.LINK_EXPIRED;
+export const TEMPLATE = TEMPLATES.INSURANCE.ACCOUNT.PASSWORD_RESET.EXPIRED_LINK;
 
-export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.LINK_EXPIRED;
+export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.EXPIRED_LINK;
 
 const {
   ACCOUNT: {
@@ -18,10 +18,10 @@ const {
 
 /**
  * get
- * Render the "Password reset - link expired" page
+ * Render the "Password reset - expired link" page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} "Password reset - link expired" page
+ * @returns {Express.Response.render} "Password reset - expired link" page
  */
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
@@ -40,7 +40,7 @@ export const get = (req: Request, res: Response) =>
  */
 export const post = async (req: Request, res: Response) => {
   try {
-    console.info('Posting account password reset - link expired form');
+    console.info('Posting account password reset - expired link form');
 
     const urlOrigin = req.headers.origin;
 
@@ -63,7 +63,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
-    console.error('Error posting account password reset - link expired form %O', err);
+    console.error('Error posting account password reset - expired link form %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

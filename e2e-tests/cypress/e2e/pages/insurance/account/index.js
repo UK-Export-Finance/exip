@@ -1,11 +1,11 @@
 import create from './create';
-import linkInvalid from './link-invalid';
+import invalidLink from './invalid-link';
 import signIn from './sign-in';
 import suspended from './suspended';
 
 export {
   create,
-  linkInvalid,
+  invalidLink,
   signIn,
   suspended,
 };

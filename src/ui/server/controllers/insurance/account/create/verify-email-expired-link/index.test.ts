@@ -16,7 +16,7 @@ const {
   },
 } = ROUTES;
 
-describe('controllers/insurance/account/create/verify-email-link-expired', () => {
+describe('controllers/insurance/account/create/verify-email-expired-link', () => {
   let req: Request;
   let res: Response;
 
@@ -34,13 +34,13 @@ describe('controllers/insurance/account/create/verify-email-link-expired', () =>
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ACCOUNT.CREATE.VERIFY_EMAIL_LINK_EXPIRED);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ACCOUNT.CREATE.VERIFY_EMAIL_EXPIRED_LINK);
     });
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct strings', () => {
-      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.ACCOUNT.CREATE.VERIFY_EMAIL_LINK_EXPIRED);
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.ACCOUNT.CREATE.VERIFY_EMAIL_EXPIRED_LINK);
     });
   });
 

@@ -25,13 +25,13 @@ describe('controllers/insurance/account/invalid-link', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ACCOUNT.LINK_INVALID);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ACCOUNT.INVALID_LINK);
     });
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct strings', () => {
-      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.ACCOUNT.LINK_INVALID);
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.ACCOUNT.INVALID_LINK);
     });
   });
 

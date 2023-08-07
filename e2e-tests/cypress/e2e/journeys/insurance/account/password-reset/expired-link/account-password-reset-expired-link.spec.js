@@ -8,14 +8,14 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 import { DATE_ONE_MINUTE_IN_THE_PAST } from '../../../../../../../constants/dates';
 import api from '../../../../../../support/api';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.LINK_EXPIRED;
+const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.EXPIRED_LINK;
 
 const {
   START,
   ACCOUNT: {
     PASSWORD_RESET: {
       NEW_PASSWORD,
-      LINK_EXPIRED,
+      EXPIRED_LINK,
     },
   },
 } = INSURANCE_ROUTES;
@@ -24,7 +24,7 @@ const {
   ACCOUNT: { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY },
 } = INSURANCE_FIELD_IDS;
 
-context('Insurance - Account - Password reset - link expired page', () => {
+context('Insurance - Account - Password reset - expired link page', () => {
   const baseUrl = Cypress.config('baseUrl');
 
   before(() => {
@@ -84,16 +84,16 @@ context('Insurance - Account - Password reset - link expired page', () => {
       updatedAccount = await api.updateAccount(account.id, updateObj);
     });
 
-    it(`should redirect to ${LINK_EXPIRED} and render core page elements and content`, () => {
+    it(`should redirect to ${EXPIRED_LINK} and render core page elements and content`, () => {
       cy.navigateToUrl(`${baseUrl}${NEW_PASSWORD}?token=${updatedAccount[PASSWORD_RESET_HASH]}`);
 
-      const expectedUrl = `${baseUrl}${LINK_EXPIRED}?id=${updatedAccount.id}`;
+      const expectedUrl = `${baseUrl}${EXPIRED_LINK}?id=${updatedAccount.id}`;
 
       cy.assertUrl(expectedUrl);
 
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-        currentHref: LINK_EXPIRED,
+        currentHref: EXPIRED_LINK,
         assertBackLink: false,
         assertAuthenticatedHeader: false,
         assertSubmitButton: false,
