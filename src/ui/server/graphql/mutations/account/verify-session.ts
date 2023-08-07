@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const verifyAccountSessionMutation = gql`
-  mutation VerifyAccountSession($token: String!) {
+  mutation verifyAccountSession($token: String!) {
     verifyAccountSession(token: $token) {
       success
     }
