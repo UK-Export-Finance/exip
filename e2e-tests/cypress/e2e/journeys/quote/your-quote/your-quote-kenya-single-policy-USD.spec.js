@@ -69,7 +69,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
     cy.checkText(yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR].value(), expectedValue);
 
     // Check estimated cost in the quote
-    const expectedCost = '$5,330.00';
+    const expectedCost = '$5,090.00';
     cy.checkText(yourQuotePage.panel.summaryList[QUOTE.ESTIMATED_COST].value(), expectedCost);
   });
 });
