@@ -3,11 +3,11 @@ import { verifyEmailLinkExpiredPage } from '../../../../../pages/insurance/accou
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import api from '../../../../../../support/api';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.VERIFY_EMAIL_LINK_EXPIRED;
+const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.VERIFY_EMAIL_EXPIRED_LINK;
 
 const {
   START,
-  ACCOUNT: { CREATE: { CONFIRM_EMAIL, VERIFY_EMAIL, VERIFY_EMAIL_LINK_EXPIRED } },
+  ACCOUNT: { CREATE: { CONFIRM_EMAIL, VERIFY_EMAIL, VERIFY_EMAIL_EXPIRED_LINK } },
 } = ROUTES;
 
 context('Insurance - Account - Create - Confirm email page - expired token - As an Exporter I want to verify my email address for account creation, So that I can activate my email address and use it to create a digital service account with UKEF', () => {
@@ -62,12 +62,12 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
       updatedAccount = await api.updateAccount(account.id, updateObj);
     });
 
-    it(`should redirect to ${VERIFY_EMAIL_LINK_EXPIRED} and render core page elements and content`, () => {
+    it(`should redirect to ${VERIFY_EMAIL_EXPIRED_LINK} and render core page elements and content`, () => {
       const { verificationHash } = updatedAccount;
 
       cy.navigateToUrl(`${Cypress.config('baseUrl')}${VERIFY_EMAIL}?token=${verificationHash}`);
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${VERIFY_EMAIL_LINK_EXPIRED}?id=${account.id}`;
+      const expectedUrl = `${Cypress.config('baseUrl')}${VERIFY_EMAIL_EXPIRED_LINK}?id=${account.id}`;
 
       cy.assertUrl(expectedUrl);
 

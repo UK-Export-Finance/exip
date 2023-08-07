@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import { Algorithm } from 'jsonwebtoken';
 import { BufferEncoding } from '../types';
 export * from './field-ids';
+export * from './allowed-graphql-resolvers';
 export * from './answers';
 export * from './application';
 export * from './field-values';

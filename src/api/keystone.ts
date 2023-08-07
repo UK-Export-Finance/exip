@@ -4,6 +4,7 @@ import checkApiKey from './middleware/headers/check-api-key';
 import rateLimiter from './middleware/rate-limiter';
 import { lists } from './schema';
 import { withAuth, session } from './auth';
+import apolloPlugins from './apollo-plugins';
 import { extendGraphqlSchema } from './custom-schema';
 
 const { NODE_ENV, DATABASE_URL } = process.env;
@@ -43,11 +44,11 @@ export default withAuth(
     server: {
       port: 5001,
       extendExpressApp: (app) => {
+        app.use(checkApiKey);
+
         if (NODE_ENV === 'production') {
           app.use(rateLimiter);
         }
-
-        app.use(checkApiKey);
       },
     },
     db: {
@@ -59,6 +60,7 @@ export default withAuth(
       playground: isDevEnvironment,
       apolloConfig: {
         introspection: isDevEnvironment,
+        plugins: apolloPlugins,
       },
     },
     ui: {

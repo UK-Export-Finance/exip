@@ -5,7 +5,7 @@ import { Request, Response } from '../../../../../../types';
 
 const {
   ACCOUNT: {
-    SUSPENDED: { ROOT: SUSPENDED_ROOT, VERIFY_EMAIL_LINK_EXPIRED, VERIFY_EMAIL_LINK_INVALID },
+    SUSPENDED: { ROOT: SUSPENDED_ROOT, VERIFY_EMAIL_EXPIRED_LINK, VERIFY_EMAIL_INVALID_LINK },
     REACTIVATED_ROOT,
   },
   PROBLEM_WITH_SERVICE,
@@ -16,7 +16,7 @@ const {
  * Verify the token is valid and if so, redirect to the Account reactivated page.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.redirect} Account reactivated page or link expired page
+ * @returns {Express.Response.redirect} Account reactivated page or expired link page
  */
 export const get = async (req: Request, res: Response) => {
   try {
@@ -31,13 +31,13 @@ export const get = async (req: Request, res: Response) => {
     const response = await api.keystone.account.verifyAccountReactivationToken(sanitisedToken);
 
     if (response.expired && response.accountId) {
-      const url = `${VERIFY_EMAIL_LINK_EXPIRED}?id=${response.accountId}`;
+      const url = `${VERIFY_EMAIL_EXPIRED_LINK}?id=${response.accountId}`;
 
       return res.redirect(url);
     }
 
     if (response.invalid || !response.success) {
-      return res.redirect(VERIFY_EMAIL_LINK_INVALID);
+      return res.redirect(VERIFY_EMAIL_INVALID_LINK);
     }
 
     return res.redirect(REACTIVATED_ROOT);
