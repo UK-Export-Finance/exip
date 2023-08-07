@@ -107,11 +107,11 @@ context('Insurance - Your business - Nature of your business page - As an Export
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
 
-    it('should display the employees fieldset heading', () => {
+    it('should display the employees fieldset legend', () => {
       const fieldId = EMPLOYEES_UK;
       const field = natureOfBusiness[fieldId];
 
-      cy.checkText(field.heading(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HEADING);
+      cy.checkText(field.legend(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HEADING);
     });
 
     it(`should display ${EMPLOYEES_UK} input box`, () => {

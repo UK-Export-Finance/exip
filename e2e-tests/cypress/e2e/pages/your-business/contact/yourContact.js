@@ -1,5 +1,5 @@
 const yourContactPage = {
-  contactDetailsHeading: () => cy.get('[data-cy="contact-details-heading"]'),
+  contactDetailsLegend: () => cy.get('[data-cy="contact-details-legend"]'),
   contactDetailsHint: () => cy.get('[data-cy="contact-details-hint"]'),
   field: (field) => ({
     label: () => cy.get(`[data-cy="${field}-label"]`),

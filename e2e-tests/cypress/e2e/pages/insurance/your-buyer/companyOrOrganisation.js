@@ -41,7 +41,7 @@ const companyOrOrganisation = {
     errorMessage: () => cy.get(`[data-cy="${WEBSITE}-error-message"]`),
   },
   [FIRST_NAME]: {
-    heading: () => cy.get(`[data-cy="${FIRST_NAME}-heading"]`),
+    legend: () => cy.get(`[data-cy="${FIRST_NAME}-legend"]`),
     hint: () => cy.get(`[data-cy="${FIRST_NAME}-hint"]`),
     label: () => cy.get(`[data-cy="${FIRST_NAME}-label"]`),
     input: () => cy.get(`[data-cy="${FIRST_NAME}-input"]`),
