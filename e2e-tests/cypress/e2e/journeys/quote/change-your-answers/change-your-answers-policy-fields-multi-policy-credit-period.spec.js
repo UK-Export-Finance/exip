@@ -13,7 +13,7 @@ context('Change your answers (policy credit period field) - as an exporter, I wa
   before(() => {
     cy.login();
     cy.submitQuoteAnswersHappyPathMultiplePolicy();
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   let row = checkYourAnswersPage.summaryLists.policy[CREDIT_PERIOD];
@@ -28,12 +28,12 @@ context('Change your answers (policy credit period field) - as an exporter, I wa
 
   it(`clicking 'change' redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
     const expectedUrl = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE;
-    cy.url().should('include', expectedUrl);
+    cy.assertUrl(expectedUrl);
   });
 
   it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
     const expected = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`;
-    cy.url().should('include', expected);
+    cy.assertUrl(expected);
   });
 
   it('renders a back link with correct url', () => {
@@ -56,7 +56,7 @@ context('Change your answers (policy credit period field) - as an exporter, I wa
 
     submitButton().click();
 
-    cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+    cy.assertUrl(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
   });
 
   it('renders the new answer in `Check your answers` page', () => {

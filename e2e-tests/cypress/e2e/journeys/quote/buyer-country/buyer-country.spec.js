@@ -15,7 +15,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
   beforeEach(() => {
     cy.login();
 
-    cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+    cy.assertUrl(ROUTES.QUOTE.BUYER_COUNTRY);
   });
 
   it('renders core page elements', () => {
@@ -95,7 +95,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
       });
 
       it(`should redirect to ${ROUTES.QUOTE.BUYER_BODY}`, () => {
-        cy.url().should('include', ROUTES.QUOTE.BUYER_BODY);
+        cy.assertUrl(ROUTES.QUOTE.BUYER_BODY);
       });
 
       it('should prepopulate the field when going back to the page via back link', () => {

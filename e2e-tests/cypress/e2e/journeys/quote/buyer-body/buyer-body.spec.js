@@ -19,7 +19,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
     cy.login();
     completeAndSubmitBuyerCountryForm();
 
-    cy.url().should('include', ROUTES.QUOTE.BUYER_BODY);
+    cy.assertUrl(ROUTES.QUOTE.BUYER_BODY);
   });
 
   it('renders core page elements', () => {
@@ -76,7 +76,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
         noRadio().click();
         submitButton().click();
 
-        cy.url().should('include', ROUTES.QUOTE.EXPORTER_LOCATION);
+        cy.assertUrl(ROUTES.QUOTE.EXPORTER_LOCATION);
       });
     });
   });

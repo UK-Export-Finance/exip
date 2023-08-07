@@ -3,7 +3,7 @@
  * @param {String} Expected URL
  */
 const assertUrl = (url) => {
-  cy.url().should('eq', url);
+  cy.assertUrl(url);
 };
 
 export default assertUrl;

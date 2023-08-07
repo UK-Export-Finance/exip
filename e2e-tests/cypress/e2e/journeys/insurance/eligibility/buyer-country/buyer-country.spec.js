@@ -19,7 +19,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
     completeStartForm();
     completeCheckIfEligibleForm();
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
+    cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
   });
 
   it('renders core page elements', () => {
@@ -98,7 +98,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION}`, () => {
-        cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
+        cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
       });
 
       it('should prepopulate the field when going back to the page via back link', () => {

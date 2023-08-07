@@ -42,7 +42,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
       cy.completeAndSubmitSingleContractPolicyForm({});
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -64,7 +64,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
@@ -84,7 +84,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
 
     it('should update the status of task `type of policy and exports`to `in progress`', () => {
@@ -127,7 +127,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {

@@ -54,7 +54,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
     cy.submitQuoteAnswersHappyPathSinglePolicy();
     submitButton().click();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -307,7 +307,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
     context('clicking `start again`', () => {
       it('redirects to the first page of the flow', () => {
         yourQuotePage.links.startAgain().click();
-        cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+        cy.assertUrl(ROUTES.QUOTE.BUYER_COUNTRY);
       });
 
       it('clears the session', () => {

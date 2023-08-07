@@ -24,7 +24,7 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
 
     submitButton().click();
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+    cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
   });
 
   it('renders core page elements', () => {

@@ -53,7 +53,7 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CONTACT}`;
       natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -158,7 +158,7 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
 
       cy.completeAndSubmitYourContact({});
 
-      cy.url().should('eq', natureOfBusinessUrl);
+      cy.assertUrl(natureOfBusinessUrl);
     });
   });
 

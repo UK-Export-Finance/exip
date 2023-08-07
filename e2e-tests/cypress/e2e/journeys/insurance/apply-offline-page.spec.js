@@ -23,7 +23,7 @@ context('Insurance - apply offline exit page', () => {
 
     submitButton().click();
 
-    cy.url().should('include', ROUTES.INSURANCE.APPLY_OFFLINE);
+    cy.assertUrl(ROUTES.INSURANCE.APPLY_OFFLINE);
   });
 
   it('renders core page elements', () => {

@@ -18,7 +18,7 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
     completeCheckIfEligibleForm();
     completeAndSubmitBuyerCountryForm();
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -31,7 +31,7 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
   });
 
   it('redirects to exit page', () => {
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+    cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
   });
 
   it('renders a back link with correct url', () => {

@@ -25,12 +25,12 @@ context('Insurance - speak to UKEF EFM exit page', () => {
     completeUkGoodsAndServicesForm();
     completeInsuredAmountForm();
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD);
+    cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD);
 
     yesRadio().click();
     submitButton().click();
 
-    cy.url().should('include', ROUTES.INSURANCE.SPEAK_TO_UKEF_EFM);
+    cy.assertUrl(ROUTES.INSURANCE.SPEAK_TO_UKEF_EFM);
   });
 
   it('renders core page elements', () => {

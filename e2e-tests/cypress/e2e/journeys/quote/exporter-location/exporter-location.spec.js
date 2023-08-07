@@ -21,7 +21,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
     completeAndSubmitBuyerCountryForm();
     completeAndSubmitBuyerBodyForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   it('renders core page elements', () => {
@@ -74,7 +74,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
         yesRadio().click();
         submitButton().click();
 
-        cy.url().should('include', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
+        cy.assertUrl(ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
       });
     });
   });

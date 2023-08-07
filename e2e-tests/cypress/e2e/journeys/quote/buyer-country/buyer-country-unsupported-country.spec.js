@@ -12,7 +12,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
 
   before(() => {
     cy.navigateToUrl(url);
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -29,7 +29,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
   });
 
   it('redirects to `cannot obtain cover` exit page', () => {
-    cy.url().should('include', ROUTES.QUOTE.CANNOT_APPLY);
+    cy.assertUrl(ROUTES.QUOTE.CANNOT_APPLY);
   });
 
   it('renders a back link with correct url', () => {

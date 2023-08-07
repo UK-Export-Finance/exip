@@ -7,7 +7,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
 
   beforeEach(() => {
     cy.navigateToUrl(url);
-    cy.url().should('include', url);
+    cy.assertUrl(url);
 
     cy.keyboardInput(buyerCountryPage.input(), COUNTRY_SUPPORTRED_BY_EMAIL.name);
 
@@ -18,7 +18,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
   });
 
   it('redirects to `get a quote via email` exit page', () => {
-    cy.url().should('include', ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
+    cy.assertUrl(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
   });
 
   it('renders a back link with correct url', () => {

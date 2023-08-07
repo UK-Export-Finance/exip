@@ -23,7 +23,7 @@ context('Insurance - submit an application - As an Exporter, I want to submit my
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -38,7 +38,7 @@ context('Insurance - submit an application - As an Exporter, I want to submit my
   it(`should redirect to ${APPLICATION_SUBMITTED}`, () => {
     const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
 
-    cy.url().should('eq', expectedUrl);
+    cy.assertUrl(expectedUrl);
   });
 
   describe('when visiting the dashboard', () => {

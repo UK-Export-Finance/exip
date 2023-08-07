@@ -9,7 +9,7 @@ context('Cookies consent - reject', () => {
   beforeEach(() => {
     cy.login();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   describe('when clicking `reject cookies` button', () => {
@@ -22,7 +22,7 @@ context('Cookies consent - reject', () => {
     });
 
     it('should remain on the same page', () => {
-      cy.url().should('include', url);
+      cy.assertUrl(url);
     });
 
     it('should not render the question banner', () => {

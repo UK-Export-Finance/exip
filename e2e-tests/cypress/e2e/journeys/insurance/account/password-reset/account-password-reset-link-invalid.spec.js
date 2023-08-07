@@ -16,6 +16,6 @@ context('Insurance - Account - Password reset - new password page - Visit with a
   });
 
   it(`should redirect to ${LINK_INVALID}`, () => {
-    cy.url().should('eq', linkExpiredUrl);
+    cy.assertUrl(linkExpiredUrl);
   });
 });

@@ -48,7 +48,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
 
     url = `${Cypress.config('baseUrl')}${ELIGIBLE_TO_APPLY_ONLINE}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -92,7 +92,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
 
         const expectedUrl = `${Cypress.config('baseUrl')}${ACCOUNT_TO_APPLY_ONLINE}`;
 
-        cy.url().should('eq', expectedUrl);
+        cy.assertUrl(expectedUrl);
       });
     });
   });

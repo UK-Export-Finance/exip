@@ -18,7 +18,7 @@ context('Policy type page - policy type & length validation - single policy type
     completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {

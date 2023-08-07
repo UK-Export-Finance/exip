@@ -19,7 +19,7 @@ context('Get a Quote - Need to start again exit page', () => {
 
     cy.saveSession();
 
-    cy.url().should('include', ROUTES.QUOTE.NEED_TO_START_AGAIN);
+    cy.assertUrl(ROUTES.QUOTE.NEED_TO_START_AGAIN);
   });
 
   it('renders core page elements', () => {
@@ -45,7 +45,7 @@ context('Get a Quote - Need to start again exit page', () => {
     it(`should redirect to ${ROUTES.QUOTE.BUYER_COUNTRY}`, () => {
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+      cy.assertUrl(ROUTES.QUOTE.BUYER_COUNTRY);
     });
   });
 });

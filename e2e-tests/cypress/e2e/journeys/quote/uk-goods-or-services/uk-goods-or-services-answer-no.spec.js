@@ -15,14 +15,14 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
 
-    cy.url().should('include', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
+    cy.assertUrl(ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
 
     noRadio().click();
     submitButton().click();
   });
 
   it('redirects to exit page', () => {
-    cy.url().should('include', ROUTES.QUOTE.CANNOT_APPLY);
+    cy.assertUrl(ROUTES.QUOTE.CANNOT_APPLY);
   });
 
   it('renders a back link with correct url', () => {

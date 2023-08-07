@@ -26,7 +26,7 @@ describe("Insurance - Your business - Company details page- As an Exporter I wan
 
       cy.navigateToUrl(url);
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

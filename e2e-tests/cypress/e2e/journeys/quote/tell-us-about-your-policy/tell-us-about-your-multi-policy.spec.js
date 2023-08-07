@@ -42,7 +42,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     completeAndSubmitUkContentForm();
     completeAndSubmitPolicyTypeMultiForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -189,7 +189,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
 
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      cy.assertUrl(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
   });
 });

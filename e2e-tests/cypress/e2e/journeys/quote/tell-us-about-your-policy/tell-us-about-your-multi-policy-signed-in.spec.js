@@ -23,7 +23,7 @@ context('Tell us about your multiple policy page - Signed in', () => {
     completeAndSubmitUkContentForm();
     completeAndSubmitPolicyTypeMultiForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {

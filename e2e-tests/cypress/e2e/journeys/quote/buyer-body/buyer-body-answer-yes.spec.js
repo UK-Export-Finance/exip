@@ -13,7 +13,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
     cy.login();
     completeAndSubmitBuyerCountryForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -26,7 +26,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   });
 
   it('redirects to exit page', () => {
-    cy.url().should('include', ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
+    cy.assertUrl(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
   });
 
   it('renders a back link with correct url', () => {

@@ -35,7 +35,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
     completeAndSubmitUkContentForm();
     completeAndSubmitPolicyTypeSingleForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -141,7 +141,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
 
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      cy.assertUrl(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
   });
 });

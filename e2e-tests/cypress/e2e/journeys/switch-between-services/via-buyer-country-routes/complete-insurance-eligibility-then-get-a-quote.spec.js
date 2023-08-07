@@ -39,7 +39,7 @@ context('Complete insurance eligibility, get a quote and then re-visit the insur
     cy.submitQuoteAnswersHappyPathSinglePolicy();
     submitButton().click();
 
-    cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
+    cy.assertUrl(ROUTES.QUOTE.YOUR_QUOTE);
   });
 
   it('allows an exporter to start another insurance eligibility when visiting the buyer country page directly', () => {
@@ -47,6 +47,6 @@ context('Complete insurance eligibility, get a quote and then re-visit the insur
 
     completeAndSubmitBuyerCountryForm();
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
+    cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
   });
 });

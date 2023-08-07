@@ -60,7 +60,7 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
       checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       changeLinkHref = `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}`;
 
-      cy.url().should('eq', checkYourAnswersUrl);
+      cy.assertUrl(checkYourAnswersUrl);
     });
   });
 
@@ -82,7 +82,7 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
     it(`should redirect to ${TYPE_OF_POLICY_CHANGE}`, () => {
       const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_CHANGE}#heading`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
   });
 
@@ -99,7 +99,7 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
     it(`should redirect to ${MULTIPLE_CONTRACT_POLICY}`, () => {
       const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}#heading`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
 
     describe(`after completing (now required) fields in ${MULTIPLE_CONTRACT_POLICY} and proceeding to ${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, () => {

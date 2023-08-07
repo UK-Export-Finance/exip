@@ -35,7 +35,7 @@ context('Insurance - Other parties page - I want to check if I can use online se
 
     url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -147,7 +147,7 @@ context('Insurance - Other parties page - I want to check if I can use online se
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`, () => {
         const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`;
 
-        cy.url().should('eq', expected);
+        cy.assertUrl(expected);
       });
 
       describe('when going back to the page', () => {

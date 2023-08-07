@@ -24,7 +24,7 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
 
     url = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -69,7 +69,7 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
 
       const expectedUrl = `${Cypress.config('baseUrl')}${VERIFY_EMAIL_LINK_EXPIRED}?id=${account.id}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
 
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,

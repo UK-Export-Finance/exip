@@ -41,7 +41,7 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
       checkYourAnswersUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -131,7 +131,7 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
         it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
           cy.completeAndSubmitWorkingWithBuyerForm({});
 
-          cy.url().should('eq', checkYourAnswersUrl);
+          cy.assertUrl(checkYourAnswersUrl);
         });
       });
 

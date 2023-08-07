@@ -50,7 +50,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
       brokerUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -130,7 +130,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
 
       cy.completeAndSubmitTurnoverForm();
 
-      cy.url().should('eq', brokerUrl);
+      cy.assertUrl(brokerUrl);
     });
   });
 

@@ -9,7 +9,7 @@ context('Get a quote, Complete insurance eligibility and then re-visit the quote
     cy.submitQuoteAnswersHappyPathSinglePolicy();
     submitButton().click();
 
-    cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
+    cy.assertUrl(ROUTES.QUOTE.YOUR_QUOTE);
   });
 
   beforeEach(() => {
@@ -27,6 +27,6 @@ context('Get a quote, Complete insurance eligibility and then re-visit the quote
 
     completeAndSubmitBuyerCountryForm();
 
-    cy.url().should('include', ROUTES.QUOTE.BUYER_BODY);
+    cy.assertUrl(ROUTES.QUOTE.BUYER_BODY);
   });
 });

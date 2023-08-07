@@ -75,7 +75,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       cy.login();
       cy.submitQuoteAnswersHappyPathSinglePolicy();
 
-      cy.url().should('include', url);
+      cy.assertUrl(url);
       row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
     });
 
@@ -89,12 +89,12 @@ context('Change your answers - as an exporter, I want to change the details befo
 
     it(`clicking 'change' redirects to ${ROUTES.QUOTE.POLICY_TYPE_CHANGE}`, () => {
       const expectedUrl = ROUTES.QUOTE.POLICY_TYPE_CHANGE;
-      cy.url().should('include', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
 
     it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
       const expected = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`;
-      cy.url().should('include', expected);
+      cy.assertUrl(expected);
     });
 
     it('renders a back link with correct url', () => {
@@ -116,7 +116,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       policyTypePage[POLICY_TYPE].multiple.input().click();
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+      cy.assertUrl(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
   });
 
@@ -125,7 +125,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       cy.login();
 
       cy.submitQuoteAnswersHappyPathSinglePolicy();
-      cy.url().should('include', url);
+      cy.assertUrl(url);
       row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
 
       cy.navigateToUrl(url);
@@ -165,7 +165,7 @@ context('Change your answers - as an exporter, I want to change the details befo
         cy.login();
 
         cy.submitQuoteAnswersHappyPathSinglePolicy();
-        cy.url().should('include', url);
+        cy.assertUrl(url);
 
         cy.navigateToUrl(url);
 
@@ -186,7 +186,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
       it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
         const expected = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`;
-        cy.url().should('include', expected);
+        cy.assertUrl(expected);
       });
 
       it('renders a back link with correct url', () => {
@@ -204,7 +204,7 @@ context('Change your answers - as an exporter, I want to change the details befo
         policyTypePage[POLICY_TYPE].multiple.input().click();
         submitButton().click();
 
-        cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+        cy.assertUrl(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
       });
     });
 
@@ -213,7 +213,7 @@ context('Change your answers - as an exporter, I want to change the details befo
         cy.login();
 
         cy.submitQuoteAnswersHappyPathSinglePolicy();
-        cy.url().should('include', url);
+        cy.assertUrl(url);
 
         cy.navigateToUrl(url);
 
@@ -249,7 +249,7 @@ context('Change your answers - as an exporter, I want to change the details befo
         cy.login();
 
         cy.submitQuoteAnswersHappyPathSinglePolicy();
-        cy.url().should('include', url);
+        cy.assertUrl(url);
 
         cy.navigateToUrl(url);
 
@@ -272,7 +272,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
       it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
         const expected = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`;
-        cy.url().should('include', expected);
+        cy.assertUrl(expected);
       });
 
       it('renders a back link with correct url', () => {
@@ -290,7 +290,7 @@ context('Change your answers - as an exporter, I want to change the details befo
         policyTypePage[POLICY_TYPE].single.input().click();
         submitButton().click();
 
-        cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+        cy.assertUrl(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
       });
     });
   });

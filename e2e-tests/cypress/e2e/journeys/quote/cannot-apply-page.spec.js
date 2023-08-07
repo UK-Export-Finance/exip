@@ -17,12 +17,12 @@ context('Cannot apply exit page', () => {
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
 
-    cy.url().should('include', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
+    cy.assertUrl(ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
 
     noRadio().click();
     submitButton().click();
 
-    cy.url().should('include', ROUTES.QUOTE.CANNOT_APPLY);
+    cy.assertUrl(ROUTES.QUOTE.CANNOT_APPLY);
   });
 
   it('renders core page elements', () => {

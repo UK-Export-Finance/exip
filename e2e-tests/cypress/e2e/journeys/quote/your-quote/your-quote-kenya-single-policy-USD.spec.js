@@ -54,7 +54,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
 
     submitButton().click();
 
-    cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+    cy.assertUrl(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
 
     // Check contract value formatting in the answers page
     const answersAmount = checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE].value();

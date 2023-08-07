@@ -6,7 +6,7 @@ context('Manually going to the `Tell us about your policy` page via URL without 
   });
 
   it('should redirect to the `need to start again` exit page', () => {
-    cy.url().should('include', ROUTES.QUOTE.NEED_TO_START_AGAIN);
+    cy.assertUrl(ROUTES.QUOTE.NEED_TO_START_AGAIN);
   });
 });
 
@@ -16,6 +16,6 @@ context('Manually going to the `Change Tell us about your policy` page via URL w
   });
 
   it('should redirect to the `need to start again` exit page', () => {
-    cy.url().should('include', ROUTES.QUOTE.NEED_TO_START_AGAIN);
+    cy.assertUrl(ROUTES.QUOTE.NEED_TO_START_AGAIN);
   });
 });

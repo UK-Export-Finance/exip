@@ -28,7 +28,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -120,7 +120,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
         yesRadio().click();
         submitButton().click();
 
-        cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
+        cy.assertUrl(ROUTES.QUOTE.POLICY_TYPE);
       });
     });
   });

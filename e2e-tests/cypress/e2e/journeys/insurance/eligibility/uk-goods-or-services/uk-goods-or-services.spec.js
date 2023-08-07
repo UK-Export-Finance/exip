@@ -42,7 +42,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
 
     url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES}`;
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -149,7 +149,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     });
 
     it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`, () => {
-      cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT);
+      cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT);
     });
 
     describe('when going back to the page', () => {

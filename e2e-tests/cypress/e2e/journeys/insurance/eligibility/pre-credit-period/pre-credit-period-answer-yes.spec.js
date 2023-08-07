@@ -44,7 +44,7 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
   });
 
   it('redirects to exit page', () => {
-    cy.url().should('include', ROUTES.INSURANCE.APPLY_OFFLINE);
+    cy.assertUrl(ROUTES.INSURANCE.APPLY_OFFLINE);
   });
 
   it('renders a back link with correct url', () => {

@@ -40,7 +40,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -60,7 +60,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
@@ -79,7 +79,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
@@ -112,7 +112,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {

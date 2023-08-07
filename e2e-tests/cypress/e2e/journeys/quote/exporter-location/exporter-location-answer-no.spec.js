@@ -16,7 +16,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
     completeAndSubmitBuyerCountryForm();
     completeAndSubmitBuyerBodyForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -29,7 +29,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
   });
 
   it('redirects to exit page', () => {
-    cy.url().should('include', ROUTES.QUOTE.CANNOT_APPLY);
+    cy.assertUrl(ROUTES.QUOTE.CANNOT_APPLY);
   });
 
   it('renders a back link with correct url', () => {

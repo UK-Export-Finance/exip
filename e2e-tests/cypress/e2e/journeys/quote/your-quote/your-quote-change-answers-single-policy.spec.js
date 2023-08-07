@@ -30,7 +30,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     cy.submitQuoteAnswersHappyPathSinglePolicy();
     submitButton().click();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   describe('change `contract value`', () => {
@@ -42,12 +42,12 @@ context('Your quote page - change answers (single policy type to multiple policy
 
     it(`clicking 'change' redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
       const expected = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
-      cy.url().should('include', expected);
+      cy.assertUrl(expected);
     });
 
     it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
       const expected = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
-      cy.url().should('include', expected);
+      cy.assertUrl(expected);
     });
 
     it('renders a back link with correct url', () => {
@@ -61,7 +61,7 @@ context('Your quote page - change answers (single policy type to multiple policy
       cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '1000');
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      cy.assertUrl(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
 
     it('renders the new answer in the quote', () => {
@@ -87,12 +87,12 @@ context('Your quote page - change answers (single policy type to multiple policy
 
     it(`clicking 'change' redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
       const expectedUrl = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}`;
-      cy.url().should('include', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
 
     it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
       const expected = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
-      cy.url().should('include', expected);
+      cy.assertUrl(expected);
     });
 
     it('renders a back link with correct url', () => {
@@ -106,7 +106,7 @@ context('Your quote page - change answers (single policy type to multiple policy
       tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('85');
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      cy.assertUrl(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
 
     it('renders the new answer in the quote', () => {
@@ -132,12 +132,12 @@ context('Your quote page - change answers (single policy type to multiple policy
 
     it(`clicking 'change' redirects to ${ROUTES.QUOTE.POLICY_TYPE_CHANGE}`, () => {
       const expectedUrl = ROUTES.QUOTE.POLICY_TYPE_CHANGE;
-      cy.url().should('include', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
 
     it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
       const expected = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
-      cy.url().should('include', expected);
+      cy.assertUrl(expected);
     });
 
     it('renders a back link with correct url', () => {
@@ -151,7 +151,7 @@ context('Your quote page - change answers (single policy type to multiple policy
       policyTypePage[POLICY_TYPE].multiple.input().click();
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+      cy.assertUrl(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
 
     it('renders the new answers in the quote', () => {
@@ -168,7 +168,7 @@ context('Your quote page - change answers (single policy type to multiple policy
       // submit check your answers
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
+      cy.assertUrl(ROUTES.QUOTE.YOUR_QUOTE);
 
       const insuredFor = yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR];
 
@@ -189,12 +189,12 @@ context('Your quote page - change answers (single policy type to multiple policy
 
     it(`clicking 'change' redirects to ${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}`, () => {
       const expectedUrl = ROUTES.QUOTE.BUYER_COUNTRY_CHANGE;
-      cy.url().should('include', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
 
     it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
       const expected = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
-      cy.url().should('include', expected);
+      cy.assertUrl(expected);
     });
 
     it('renders a back link with correct url', () => {
@@ -211,7 +211,7 @@ context('Your quote page - change answers (single policy type to multiple policy
 
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      cy.assertUrl(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
 
     it('renders the new answer in the quote', () => {

@@ -18,11 +18,11 @@ context('Insurance Eligibility - Need to start again exit page', () => {
     completeStartForm();
     completeCheckIfEligibleForm();
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
+    cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
 
     cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD);
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN);
+    cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN);
   });
 
   it('renders core page elements', () => {
@@ -50,7 +50,7 @@ context('Insurance Eligibility - Need to start again exit page', () => {
 
       const expected = `${Cypress.config('baseUrl')}${buyerCountryRoute}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
   });
 });

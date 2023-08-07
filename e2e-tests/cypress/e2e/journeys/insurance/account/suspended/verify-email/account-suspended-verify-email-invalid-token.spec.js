@@ -22,7 +22,7 @@ context('Insurance - Account - Suspended - verify email - Visit with an invalid 
   });
 
   it(`should redirect to ${VERIFY_EMAIL_LINK_INVALID}`, () => {
-    cy.url().should('eq', verifyEmailLinkExpiredUrl);
+    cy.assertUrl(verifyEmailLinkExpiredUrl);
   });
 
   it(`should redirect to ${SIGN_IN_ROOT} when clicking the 'return to sign in' button/link`, () => {

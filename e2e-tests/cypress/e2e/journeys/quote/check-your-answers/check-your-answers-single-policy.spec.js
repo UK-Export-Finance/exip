@@ -42,7 +42,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
   before(() => {
     cy.login();
     cy.submitQuoteAnswersHappyPathSinglePolicy();
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -217,7 +217,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
 
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
+      cy.assertUrl(ROUTES.QUOTE.YOUR_QUOTE);
     });
   });
 });

@@ -54,7 +54,7 @@ context('Insurance - Account - Signed out -  As an Exporter I want the system to
 
       const expectedUrl = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
   });
 });

@@ -37,7 +37,7 @@ context('Get a quote/your quote page (non GBP currency) - as an exporter, I want
 
     submitButton().click();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {

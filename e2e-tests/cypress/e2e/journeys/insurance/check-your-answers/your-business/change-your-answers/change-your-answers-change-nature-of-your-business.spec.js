@@ -64,7 +64,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

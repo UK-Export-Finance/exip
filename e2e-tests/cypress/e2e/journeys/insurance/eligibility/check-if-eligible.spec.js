@@ -16,7 +16,7 @@ context('Insurance Eligibility - check if eligible page', () => {
 
     completeStartForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -47,7 +47,7 @@ context('Insurance Eligibility - check if eligible page', () => {
 
         const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
 
-        cy.url().should('eq', expected);
+        cy.assertUrl(expected);
       });
     });
   });

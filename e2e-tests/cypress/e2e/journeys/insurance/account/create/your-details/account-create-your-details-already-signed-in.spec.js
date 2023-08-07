@@ -17,7 +17,7 @@ context('Insurance - Account - Create - Your details page - Already signed in', 
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -34,6 +34,6 @@ context('Insurance - Account - Create - Your details page - Already signed in', 
 
     const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
-    cy.url().should('eq', expectedUrl);
+    cy.assertUrl(expectedUrl);
   });
 });

@@ -6,7 +6,7 @@ context('Cookies consent - initial/default', () => {
   beforeEach(() => {
     cy.login();
 
-    cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+    cy.assertUrl(ROUTES.QUOTE.BUYER_COUNTRY);
   });
 
   describe('question banner', () => {
@@ -57,7 +57,7 @@ context('Cookies consent - initial/default', () => {
 
     it('should redirect to cookies page when clicking cookies link', () => {
       partials.cookieBanner.cookiesLink().click();
-      cy.url().should('include', ROUTES.COOKIES);
+      cy.assertUrl(ROUTES.COOKIES);
     });
   });
 

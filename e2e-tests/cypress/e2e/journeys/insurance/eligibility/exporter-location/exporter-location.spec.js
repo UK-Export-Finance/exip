@@ -19,7 +19,7 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
     completeCheckIfEligibleForm();
     completeAndSubmitBuyerCountryForm();
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
+    cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
   });
 
   it('renders core page elements', () => {
@@ -77,7 +77,7 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES}`, () => {
-        cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
+        cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
       });
 
       describe('when going back to the page', () => {

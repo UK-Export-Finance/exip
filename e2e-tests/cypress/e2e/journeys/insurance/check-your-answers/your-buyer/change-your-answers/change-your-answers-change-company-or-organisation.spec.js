@@ -76,7 +76,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUYER}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

@@ -6,7 +6,7 @@ context('Manually going to the `Exporter location` page via URL without completi
   });
 
   it('should redirect to the `need to start again` exit page', () => {
-    cy.url().should('include', ROUTES.QUOTE.NEED_TO_START_AGAIN);
+    cy.assertUrl(ROUTES.QUOTE.NEED_TO_START_AGAIN);
   });
 });
 
@@ -16,6 +16,6 @@ context('Manually going to the `Change Company based` page via URL without compl
   });
 
   it('should redirect to the `need to start again` exit page', () => {
-    cy.url().should('include', ROUTES.QUOTE.NEED_TO_START_AGAIN);
+    cy.assertUrl(ROUTES.QUOTE.NEED_TO_START_AGAIN);
   });
 });

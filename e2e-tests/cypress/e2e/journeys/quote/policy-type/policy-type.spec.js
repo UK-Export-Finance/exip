@@ -31,7 +31,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
     completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   it('renders core page elements', () => {
@@ -135,7 +135,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
 
         submitButton().click();
 
-        cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+        cy.assertUrl(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
       });
     });
   });

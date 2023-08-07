@@ -30,6 +30,6 @@ context('Insurance - application submitted page - visit directly without a compl
   it(`should redirect to ${ALL_SECTIONS}`, () => {
     const url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 });

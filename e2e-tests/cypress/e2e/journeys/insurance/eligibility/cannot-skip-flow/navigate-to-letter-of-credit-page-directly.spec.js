@@ -6,6 +6,6 @@ context('Manually going to the `Letter of credit` page via URL without completin
   });
 
   it('should redirect to the `need to start again` exit page', () => {
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN);
+    cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN);
   });
 });

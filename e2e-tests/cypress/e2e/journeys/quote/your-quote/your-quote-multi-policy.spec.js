@@ -40,7 +40,7 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
     cy.submitQuoteAnswersHappyPathMultiplePolicy();
     submitButton().click();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {

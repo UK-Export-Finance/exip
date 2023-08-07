@@ -42,7 +42,7 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
       cy.completeAndSubmitAboutGoodsOrServicesForm();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

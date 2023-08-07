@@ -23,7 +23,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
   before(() => {
     cy.login();
     cy.submitQuoteAnswersHappyPathSinglePolicy();
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -41,7 +41,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
 
     it(`clicking 'change' redirects to ${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}`, () => {
       const expectedUrl = ROUTES.QUOTE.BUYER_COUNTRY_CHANGE;
-      cy.url().should('include', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders a back link with correct url', () => {
@@ -59,7 +59,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
 
     it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
       const expected = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
-      cy.url().should('include', expected);
+      cy.assertUrl(expected);
     });
 
     describe('when submitting a new answer', () => {
@@ -75,7 +75,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
       });
 
       it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`, () => {
-        cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+        cy.assertUrl(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
       });
 
       it('renders the new answer in `Check your answers` page', () => {
@@ -98,12 +98,12 @@ context('Change your answers (export fields) - as an exporter, I want to change 
 
     it(`clicking 'change' redirects to ${ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE}`, () => {
       const expectedUrl = ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE;
-      cy.url().should('include', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
 
     it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
       const expected = `${ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE}#heading`;
-      cy.url().should('include', expected);
+      cy.assertUrl(expected);
     });
 
     it('renders a back link with correct url', () => {
@@ -120,7 +120,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      cy.assertUrl(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
   });
 
@@ -135,12 +135,12 @@ context('Change your answers (export fields) - as an exporter, I want to change 
 
     it(`clicking 'change' redirects to ${ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE}`, () => {
       const expectedUrl = ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE;
-      cy.url().should('include', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
 
     it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
       const expected = `${ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE}#heading`;
-      cy.url().should('include', expected);
+      cy.assertUrl(expected);
     });
 
     it('renders a back link with correct url', () => {
@@ -157,7 +157,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when resubmitting`, () => {
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      cy.assertUrl(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
     });
   });
 });

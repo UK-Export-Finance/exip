@@ -9,7 +9,7 @@ context('Cookies consent - accept', () => {
   beforeEach(() => {
     cy.login();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   describe('when clicking `accept cookies` button', () => {
@@ -22,7 +22,7 @@ context('Cookies consent - accept', () => {
     });
 
     it('should remain on the same page', () => {
-      cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+      cy.assertUrl(ROUTES.QUOTE.BUYER_COUNTRY);
     });
 
     it('should not render the question banner', () => {

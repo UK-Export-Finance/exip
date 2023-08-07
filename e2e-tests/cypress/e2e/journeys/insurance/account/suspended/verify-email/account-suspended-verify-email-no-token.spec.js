@@ -17,6 +17,6 @@ context('Insurance - Account - Suspended - verify email - Visit without a token 
   });
 
   it(`should redirect to ${SUSPENDED_ROOT}`, () => {
-    cy.url().should('eq', accountSuspendedUrl);
+    cy.assertUrl(accountSuspendedUrl);
   });
 });

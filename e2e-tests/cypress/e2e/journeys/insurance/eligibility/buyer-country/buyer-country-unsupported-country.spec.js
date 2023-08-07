@@ -25,7 +25,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
   });
 
   it('redirects to `cannot apply` exit page', () => {
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+    cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
   });
 
   it('renders a reason', () => {

@@ -30,7 +30,7 @@ context('Change your answers (policy type) - multiple times via back button - as
     completeAndSubmitUkContentForm();
     completeAndSubmitPolicyTypeSingleForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
 
     cy.clickBackLink();
   };
@@ -42,14 +42,14 @@ context('Change your answers (policy type) - multiple times via back button - as
   });
 
   it(`should redirect to ${ROUTES.QUOTE.POLICY_TYPE}`, () => {
-    cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
+    cy.assertUrl(ROUTES.QUOTE.POLICY_TYPE);
   });
 
   it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
     policyTypePage[POLICY_TYPE].multiple.input().click();
     submitButton().click();
 
-    cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+    cy.assertUrl(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
   });
 
   it('renders credit period field in the `tell us about your policy` page', () => {
@@ -71,14 +71,14 @@ context('Change your answers (policy type) - multiple times via back button - as
       submitButton().click();
 
       cy.clickBackLink();
-      cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
+      cy.assertUrl(ROUTES.QUOTE.POLICY_TYPE);
 
       policyTypePage[POLICY_TYPE].single.input().click();
       cy.keyboardInput(policyTypePage[SINGLE_POLICY_LENGTH].input(), '2');
 
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+      cy.assertUrl(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
 
     it('does NOT render credit period field in the `tell us about your policy` page', () => {
@@ -100,23 +100,23 @@ context('Change your answers (policy type) - multiple times via back button - as
 
       // 2nd time - change from multiple to single
       cy.clickBackLink();
-      cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
+      cy.assertUrl(ROUTES.QUOTE.POLICY_TYPE);
 
       policyTypePage[POLICY_TYPE].single.input().click();
       cy.keyboardInput(policyTypePage[SINGLE_POLICY_LENGTH].input(), '2');
 
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+      cy.assertUrl(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
 
       // 3rd time - change from single to multiple
       cy.clickBackLink();
-      cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
+      cy.assertUrl(ROUTES.QUOTE.POLICY_TYPE);
 
       policyTypePage[POLICY_TYPE].multiple.input().click();
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+      cy.assertUrl(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
     });
 
     it('renders credit period field in the `tell us about your policy` page', () => {
