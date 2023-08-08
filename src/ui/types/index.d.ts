@@ -11,12 +11,15 @@ import {
   ApplicationBusinessContactDetail,
   ApplicationBroker,
   ApplicationBuyer,
+  ApplicationBuyerApiInput,
+  ApplicationBuyerUiInput,
   ApplicationVersion,
 } from './application';
 import { ApolloResponse } from './apollo';
 import { CisCountry } from './cis-country';
 import { CompanyDetails, SicCode } from './company-details';
 import { CompanyHouseResponse } from './company-house-response';
+import { Connect } from './connect';
 import { Country } from './country';
 import { Currency } from './currency';
 import { NumberErrorMessage } from './errors';
@@ -31,7 +34,6 @@ import {
   InsuranceEligibility,
   InsuranceEligibilityCore,
   SubmittedDataInsuranceEligibility,
-  InsuranceSubmittedBuyer,
   SubmittedData,
 } from './submitted-data';
 import { SummaryListItem, SummaryListItemData, SummaryListItemDataInput, SummaryListItemDataInputField, SummaryListItemDataFieldSummary } from './summary-list';
@@ -69,11 +71,14 @@ export {
   ApplicationBusinessContactDetail,
   ApplicationBroker,
   ApplicationBuyer,
+  ApplicationBuyerApiInput,
+  ApplicationBuyerUiInput,
   ApplicationVersion,
   ApolloResponse,
   CisCountry,
   CompanyDetails,
   CompanyHouseResponse,
+  Connect,
   CorePageVariablesInitialInput,
   CorePageVariablesInput,
   CorePageVariables,
@@ -106,7 +111,6 @@ export {
   SingleInputPageVariables,
   SubmittedDataQuoteEligibility,
   SubmittedDataInsuranceEligibility,
-  InsuranceSubmittedBuyer,
   SanitiseValueObjParams,
   SubmittedData,
   SummaryListItemData,
