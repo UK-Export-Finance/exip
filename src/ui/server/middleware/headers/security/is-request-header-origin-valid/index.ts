@@ -12,7 +12,6 @@ import getUrlOrigin from '../get-url-origin';
 const isRequestHeaderOriginValid = (origin: string, requestHeader: string) => {
   if (isUrl(requestHeader)) {
     const requestOrigin = getUrlOrigin(requestHeader);
-
     if (requestOrigin === origin) {
       return true;
     }
