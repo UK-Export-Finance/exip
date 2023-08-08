@@ -24,10 +24,6 @@ import { Request, Response } from '../../../../types';
  */
 
 export const security = (req: Request, res: Response, next: () => void) => {
-  console.log('--> req..hostname ', req.hostname); // eslint-disable-line no-console
-  console.log('--> req.headers.referer ', req.headers.referer); // eslint-disable-line no-console
-  console.log('--> req.headers.origin ', req.headers.origin); // eslint-disable-line no-console
-
   const { hostname } = req;
 
   if (req.headers.referer) {

@@ -36,7 +36,7 @@ describe('middleware/security', () => {
 
     describe('when req.headers.referer matches the hostname', () => {
       it('should NOT modify req.headers.referer', () => {
-        const validReferer = `http://${req.hostname}.com/test`;
+        const validReferer = `http://${req.hostname}/test`;
 
         req.headers.referer = validReferer;
 
@@ -58,7 +58,7 @@ describe('middleware/security', () => {
 
     describe('when req.headers.origin matches the hostname', () => {
       it('should NOT modify req.headers.origin', () => {
-        const validOrigin = `http://${req.hostname}.com/test`;
+        const validOrigin = `http://${req.hostname}`;
 
         req.headers.origin = validOrigin;
 
