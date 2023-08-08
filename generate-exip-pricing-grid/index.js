@@ -1,6 +1,6 @@
+const fs = require('fs');
 const args = require('minimist')(process.argv.slice(2));
 const xlsx = require('node-xlsx');
-const fs = require('fs');
 const { RISK, RISK_FIELDS } = require('./constants');
 
 const { spreadsheet, outputDirectory } = args;
@@ -219,7 +219,7 @@ const createJson = (data) => {
 /**
  * run
  * Executes everything.
- * - Get work sheeets
+ * - Get work sheets
  * - Create empty pricing grid
  * - Map and add all policy types to the create
  * - Create a JSON file.
