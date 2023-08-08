@@ -15,7 +15,7 @@ const turnover = {
     hint: () => cy.get(`[data-cy="${FINANCIAL_YEAR_END_DATE}-hint`),
   },
   [ESTIMATED_ANNUAL_TURNOVER]: {
-    heading: () => cy.get(`[data-cy="${ESTIMATED_ANNUAL_TURNOVER}-heading`),
+    legend: () => cy.get(`[data-cy="${ESTIMATED_ANNUAL_TURNOVER}-legend`),
     label: () => cy.get(`[data-cy="${ESTIMATED_ANNUAL_TURNOVER}-label`),
     prefix: () => cy.get(`[data-cy="${ESTIMATED_ANNUAL_TURNOVER}-prefix`),
     input: () => cy.get(`[data-cy="${ESTIMATED_ANNUAL_TURNOVER}`),

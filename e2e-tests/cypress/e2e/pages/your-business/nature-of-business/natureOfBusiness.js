@@ -25,7 +25,7 @@ const natureOfBusiness = {
   },
   [EMPLOYEES_UK]: {
     input: () => cy.get(`[data-cy="${EMPLOYEES_UK}`),
-    heading: () => cy.get(`[data-cy="${EMPLOYEES_UK}-heading`),
+    legend: () => cy.get(`[data-cy="${EMPLOYEES_UK}-legend`),
     label: () => cy.get(`[data-cy="${EMPLOYEES_UK}-label`),
     errorMessage: () => cy.get(`[data-cy="${EMPLOYEES_UK}-error`),
   },
