@@ -135,7 +135,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       const field = companyOrOrganisationPage[fieldId];
 
       field.legend().should('exist');
-      cy.checkText(field.legend(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HEADING);
+      cy.checkText(field.legend(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LEGEND);
     });
 
     it(`renders ${FIRST_NAME} heading, hint, label and input`, () => {
