@@ -18,5 +18,13 @@
   "dependencies": {
     "minimist": "^1.2.8",
     "node-xlsx": "^0.23.0"
+  },
+  "lint-staged": {
+    "package.json": "sort-package-json",
+    "*.js": "eslint --fix",
+    "*.ts": "eslint --fix",
+    "*": [
+      "cspell lint --fail-fast --gitignore --color"
+    ]
   }
 }

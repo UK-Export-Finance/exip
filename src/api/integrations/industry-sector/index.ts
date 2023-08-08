@@ -4,7 +4,7 @@ import { EXTERNAL_API_ENDPOINTS } from '../../constants';
 
 dotenv.config();
 
-const { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
+const { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 const headers = {
   'Content-Type': 'application/json',
   [String(process.env.APIM_MDM_KEY)]: process.env.APIM_MDM_VALUE,
@@ -22,7 +22,7 @@ const getIndustrySectorNames = {
 
       const response = await axios({
         method: 'get',
-        url: `${process.env.APIM_MDM_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`,
+        url: `${process.env.APIM_MDM_URL}${APIM_MDM.INDUSTRY_SECTORS}`,
         headers,
         validateStatus(status) {
           const acceptableStatus = [200, 404];

@@ -13,7 +13,7 @@ dotenv.config();
 export const GBP_CURRENCY_CODE = 'GBP';
 
 export const EXTERNAL_API_ENDPOINTS = {
-  MULESOFT_MDM_EA: {
+  APIM_MDM: {
     CURRENCY: '/currencies',
     INDUSTRY_SECTORS: '/sector-industries',
     MARKETS: '/markets',

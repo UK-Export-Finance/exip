@@ -4,7 +4,7 @@ import { EXTERNAL_API_ENDPOINTS } from '../../constants';
 
 dotenv.config();
 
-const { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
+const { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 const headers = {
   'Content-Type': 'application/json',
   [String(process.env.APIM_MDM_KEY)]: process.env.APIM_MDM_VALUE,
@@ -15,7 +15,7 @@ const external = {
     try {
       const config: RawAxiosRequestConfig = {
         method: 'GET',
-        url: `${process.env.APIM_MDM_URL}${MULESOFT_MDM_EA.MARKETS}`,
+        url: `${process.env.APIM_MDM_URL}${APIM_MDM.MARKETS}`,
         headers,
       };
 
@@ -31,7 +31,7 @@ const external = {
     try {
       const config: RawAxiosRequestConfig = {
         method: 'GET',
-        url: `${process.env.APIM_MDM_URL}${MULESOFT_MDM_EA.CURRENCY}`,
+        url: `${process.env.APIM_MDM_URL}${APIM_MDM.CURRENCY}`,
         headers,
       };
 
