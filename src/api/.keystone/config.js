@@ -33,7 +33,7 @@ __export(keystone_exports, {
   default: () => keystone_default
 });
 module.exports = __toCommonJS(keystone_exports);
-var import_config3 = require("dotenv/config");
+var import_config4 = require("dotenv/config");
 var import_core2 = require("@keystone-6/core");
 
 // middleware/headers/check-api-key/index.ts
@@ -262,6 +262,9 @@ var FIELD_IDS = {
 };
 
 // constants/allowed-graphql-resolvers/index.ts
+var import_config2 = require("dotenv/config");
+var { NODE_ENV } = process.env;
+var isDevEnvironment = NODE_ENV === "development";
 var DEFAULT_RESOLVERS = [
   // application
   "createApplication",
@@ -285,12 +288,9 @@ var DEFAULT_RESOLVERS = [
 var CUSTOM_RESOLVERS = [
   // account
   "accountPasswordReset",
-  "addAndGetOTP",
   "accountSignIn",
   "accountSignInSendNewCode",
   "createAnAccount",
-  "deleteAnAccount",
-  "getAccountPasswordResetToken",
   "sendEmailConfirmEmailAddress",
   "sendEmailPasswordResetLink",
   "sendEmailReactivateAccountLink",
@@ -309,6 +309,9 @@ var CUSTOM_RESOLVERS = [
   // feedback
   "createFeedbackAndSendEmail"
 ];
+if (isDevEnvironment) {
+  CUSTOM_RESOLVERS.push("addAndGetOTP", "deleteAnAccount", "getAccountPasswordResetToken");
+}
 var ALLOWED_GRAPHQL_RESOLVERS = [...DEFAULT_RESOLVERS, ...CUSTOM_RESOLVERS];
 
 // constants/answers/index.ts
@@ -1363,7 +1366,7 @@ var lists = {
 };
 
 // auth.ts
-var import_config2 = require("dotenv/config");
+var import_config3 = require("dotenv/config");
 var import_auth = require("@keystone-6/auth");
 var import_session = require("@keystone-6/core/session");
 var sessionSecret = String(process.env.SESSION_SECRET);
@@ -4501,16 +4504,16 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 });
 
 // keystone.ts
-var { NODE_ENV, DATABASE_URL } = process.env;
-var isDevEnvironment = NODE_ENV === "development";
-var isProdEnvironment = NODE_ENV === "production";
+var { NODE_ENV: NODE_ENV2, DATABASE_URL } = process.env;
+var isDevEnvironment2 = NODE_ENV2 === "development";
+var isProdEnvironment = NODE_ENV2 === "production";
 var keystone_default = withAuth(
   (0, import_core2.config)({
     server: {
       port: 5001,
       extendExpressApp: (app) => {
         app.use(check_api_key_default);
-        if (NODE_ENV === "production") {
+        if (NODE_ENV2 === "production") {
           app.use(rate_limiter_default);
         }
       }
@@ -4518,12 +4521,12 @@ var keystone_default = withAuth(
     db: {
       provider: "mysql",
       url: String(DATABASE_URL),
-      enableLogging: isDevEnvironment
+      enableLogging: isDevEnvironment2
     },
     graphql: {
-      playground: isDevEnvironment,
+      playground: isDevEnvironment2,
       apolloConfig: {
-        introspection: isDevEnvironment,
+        introspection: isDevEnvironment2,
         plugins: apollo_plugins_default
       }
     },
