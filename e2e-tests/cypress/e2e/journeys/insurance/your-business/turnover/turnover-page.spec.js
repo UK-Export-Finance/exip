@@ -95,13 +95,18 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       field.hint().contains(FIELDS.TURNOVER[fieldId].HINT);
     });
 
+    it('should display turnover fieldset legend', () => {
+      const fieldId = ESTIMATED_ANNUAL_TURNOVER;
+      const field = turnover[fieldId];
+
+      cy.checkText(field.legend(), FIELDS.TURNOVER[fieldId].HEADING);
+    });
+
     it(`should display ${ESTIMATED_ANNUAL_TURNOVER} section`, () => {
       const fieldId = ESTIMATED_ANNUAL_TURNOVER;
       const field = turnover[fieldId];
 
       field.input().should('exist');
-
-      cy.checkText(field.heading(), FIELDS.TURNOVER[fieldId].HEADING);
 
       cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
 

@@ -1,0 +1,8 @@
+{% macro render(params) %}
+
+  {% set id = params.id %}
+  {% set legendText = params.legendText %}
+
+  <legend class=govuk-label--m id="{{ id }}-legend" data-cy="{{ id }}-legend">{{ legendText }}</legend>
+
+{% endmacro %}

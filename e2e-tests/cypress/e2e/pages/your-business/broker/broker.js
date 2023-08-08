@@ -17,7 +17,7 @@ const {
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const broker = {
-  [HEADING]: () => cy.get(`[data-cy="${HEADING}-heading`),
+  [HEADING]: () => cy.get(`[data-cy="${HEADING}-legend`),
   [USING_BROKER]: {
     value: () => cy.get(`[data-cy="${USING_BROKER}`),
     yesRadioInput: () => yesRadioInput().eq(0),

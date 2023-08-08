@@ -4,7 +4,9 @@
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/hint/macro.njk" import govukHint %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
 {% import '../../components/submit-button.njk' as submitButton %}
+{% import '../../components/fieldset-legend.njk' as fieldsetLegend %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -57,70 +59,75 @@
       {% endif %}
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
-        <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-cy="{{FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID}}-heading">{{ FIELDS.ESTIMATED_ANNUAL_TURNOVER.HEADING }}</h2>
-
-        {{ govukInput({
-          id: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID,
-          name: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID,
-          value: submittedValues[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID] or application.business[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID],
-          label: {
-            text: FIELDS.ESTIMATED_ANNUAL_TURNOVER.LABEL,
-            classes: "govuk-body",
-            attributes: {
-              "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + "-label"
-            }
-          },
-          prefix: {
-            text: FIELDS.ESTIMATED_ANNUAL_TURNOVER.PREFIX,
-            attributes: {
-              id: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + '-label',
-              "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + "-prefix"
-            }
-          },
-          classes: "govuk-input--width-5",
-          attributes: {
-            "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID
-          },
-          errorMessage: validationErrors.errorList[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID] and {
-            text: validationErrors.errorList[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID].text,
-            attributes: {
-              "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + "-error"
-            }
+        {% call govukFieldset({
+          legend: {
+            html: fieldsetLegend.render({ id: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID, legendText: FIELDS.ESTIMATED_ANNUAL_TURNOVER.HEADING }),
+            isPageHeading: false
           }
-        }) }}
+        }) %}
+
+          {{ govukInput({
+            id: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID,
+            name: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID,
+            value: submittedValues[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID] or application.business[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID],
+            label: {
+              text: FIELDS.ESTIMATED_ANNUAL_TURNOVER.LABEL,
+              classes: "govuk-body",
+              attributes: {
+                "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + "-label"
+              }
+            },
+            prefix: {
+              text: FIELDS.ESTIMATED_ANNUAL_TURNOVER.PREFIX,
+              attributes: {
+                id: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + '-label',
+                "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + "-prefix"
+              }
+            },
+            classes: "govuk-input--width-5",
+            attributes: {
+              "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID
+            },
+            errorMessage: validationErrors.errorList[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID] and {
+              text: validationErrors.errorList[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID].text,
+              attributes: {
+                "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + "-error"
+              }
+            }
+          }) }}
+
+          {{ govukInput({
+            id: FIELDS.PERCENTAGE_TURNOVER.ID,
+            name: FIELDS.PERCENTAGE_TURNOVER.ID,
+            value: submittedValues[FIELDS.PERCENTAGE_TURNOVER.ID] or application.business[FIELDS.PERCENTAGE_TURNOVER.ID],
+            label: {
+              text: FIELDS.PERCENTAGE_TURNOVER.LABEL,
+              classes: "govuk-body",
+              attributes: {
+                id: FIELDS.PERCENTAGE_TURNOVER.ID + '-label',
+                "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID + "-label"
+              }
+            },
+            suffix: {
+              text: FIELDS.PERCENTAGE_TURNOVER.SUFFIX,
+              attributes: {
+                "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID + "-suffix"
+              }
+            },
+            classes: "govuk-input--width-5",
+            attributes: {
+              "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID
+            },
+            errorMessage: validationErrors.errorList[FIELDS.PERCENTAGE_TURNOVER.ID] and {
+              text: validationErrors.errorList[FIELDS.PERCENTAGE_TURNOVER.ID].text,
+              attributes: {
+                "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID + "-error"
+              }
+            }
+          }) }}
+        {% endcall %}
       </div>
 
-      <div class="govuk-grid-column-three-quarters-from-desktop">
-        {{ govukInput({
-          id: FIELDS.PERCENTAGE_TURNOVER.ID,
-          name: FIELDS.PERCENTAGE_TURNOVER.ID,
-          value: submittedValues[FIELDS.PERCENTAGE_TURNOVER.ID] or application.business[FIELDS.PERCENTAGE_TURNOVER.ID],
-          label: {
-            text: FIELDS.PERCENTAGE_TURNOVER.LABEL,
-            classes: "govuk-body",
-            attributes: {
-              id: FIELDS.PERCENTAGE_TURNOVER.ID + '-label',
-              "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID + "-label"
-            }
-          },
-          suffix: {
-            text: FIELDS.PERCENTAGE_TURNOVER.SUFFIX,
-            attributes: {
-              "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID + "-suffix"
-            }
-          },
-          classes: "govuk-input--width-5",
-          attributes: {
-            "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID
-          },
-          errorMessage: validationErrors.errorList[FIELDS.PERCENTAGE_TURNOVER.ID] and {
-            text: validationErrors.errorList[FIELDS.PERCENTAGE_TURNOVER.ID].text,
-            attributes: {
-              "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID + "-error"
-            }
-          }
-        }) }}
-      </div>
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
         <div class="govuk-button-group">

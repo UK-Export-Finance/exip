@@ -97,8 +97,8 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
       cy.checkText(field.details(), application.EXPORTER_COMPANY[fieldId]);
     });
 
-    it('should display contact details section heading and hint', () => {
-      cy.checkText(yourContactPage.contactDetailsHeading(), CONTENT_STRINGS.CONTACT_DETAILS.LABEL);
+    it('should display contact details section legend and hint', () => {
+      cy.checkText(yourContactPage.contactDetailsLegend(), CONTENT_STRINGS.CONTACT_DETAILS.LABEL);
 
       cy.checkText(yourContactPage.contactDetailsHint(), CONTENT_STRINGS.CONTACT_DETAILS.HINT);
     });
