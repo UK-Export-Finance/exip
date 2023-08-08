@@ -40,10 +40,4 @@ type SubmittedData = {
   insuranceEligibility: SubmittedDataInsuranceEligibility;
 };
 
-export {
-  SubmittedDataQuoteEligibility,
-  InsuranceEligibility,
-  InsuranceEligibilityCore,
-  SubmittedDataInsuranceEligibility,
-  SubmittedData,
-};
+export { SubmittedDataQuoteEligibility, InsuranceEligibility, InsuranceEligibilityCore, SubmittedDataInsuranceEligibility, SubmittedData };

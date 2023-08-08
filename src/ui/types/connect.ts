@@ -3,7 +3,7 @@ interface ConnectObj {
 }
 
 interface Connect {
-  connect: ConnectObj
+  connect: ConnectObj;
 }
 
 export { Connect };
