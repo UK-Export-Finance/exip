@@ -28,7 +28,7 @@ const mockReq = () => {
     flash: jest.fn(),
     headers: {
       referer: 'mock.com/route',
-      // origin: 'mock.com',
+      origin: 'mock.com',
       origin: 'http://mock.com',
       host: 'mock-host.com',
     },
