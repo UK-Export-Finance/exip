@@ -12,7 +12,7 @@ This repo is based on [template-typescript-package](https://github.com/UK-Export
 
 ##  Prerequisite
 
-- Node version 16 or highr with a corresponding `npm`.
+- Node version 16 or higher with a corresponding `npm`.
 - Make sure you have an `.env` Use `.env.sample` as a base. Some sensitive variables need to be shared from the team.
 - Run `npm install` in the root directory
 - Run `npm install --legacy-peer-deps` in the `src/ui`
@@ -248,7 +248,7 @@ As an agile team, we want to move tickets across the sprint board as much as pos
 
 When a new sprint starts - once an "in progress" ticket is ready for PR review, instead of picking up a new feature ticket, we prioritise bug fixes before picking up a new feature ticket. This is to ensure that everything works as expected and we don't end up with a large list of bugs in the backlog.
 
-Recommened: When fixing a bug, write an E2E test first and then fix it. We need a test to make sure the bug doesn't happen again.
+Recommended: When fixing a bug, write an E2E test first and then fix it. We need a test to make sure the bug doesn't happen again.
 
 ## Keeping page and fields separated
 
