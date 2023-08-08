@@ -13,7 +13,11 @@
         "**/public/**",
         "**/webpack.common.**",
         ".gitignore",
-        "**/Dockerfile"
+        "**/Dockerfile",
+        ".database",
+        "database",
+        ".api",
+        "**logs"
     ],
     "language": "en",
     "noConfigSearch": true,
@@ -66,7 +70,6 @@
         "limitter",
         "lintstagedrc",
         "localise",
-        "Markan",
         "mdm",
         "MRUI",
         "Mulesoft",
@@ -98,7 +101,7 @@
         "Useds",
         "venv",
         "VNET",
-        "XLXS"
+        "XLSX"
     ],
     "dictionaries": [
         "en-gb",

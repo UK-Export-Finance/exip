@@ -29,7 +29,7 @@
     "*.js": "eslint --fix",
     "*.ts": "eslint --fix",
     "*": [
-      "cspell lint --fail-fast --gitignore --color"
+      "cspell lint --gitignore --no-summary --no-progress --no-must-find-files --color"
     ]
   },
   "homepage": "https://github.com/UK-Export-Finance/exip#readme",
