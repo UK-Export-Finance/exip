@@ -27,7 +27,7 @@
     "*.js": "eslint --fix",
     "*.ts": "eslint --fix",
     "*": [
-      "cspell lint --gitignore --no-summary --no-progress --no-must-find-files --color"
+      "cspell lint --gitignore --no-summary --no-must-find-files --color"
     ]
   },
   "dependencies": {
