@@ -54,16 +54,12 @@ context('Accessibility statement page - Insurance', () => {
     });
   });
 
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', startRoute);
-  });
-
   it('renders a service link', () => {
-    accessibilityStatementPage.serviceLink().invoke('text').then((text) => {
-      expect(text.trim()).equal(SERVICE_LINK.TEXT);
-    });
-
-    accessibilityStatementPage.serviceLink().should('have.attr', 'href', SERVICE_LINK.HREF);
+    cy.checkLink(
+      accessibilityStatementPage.serviceLink(),
+      SERVICE_LINK.HREF,
+      SERVICE_LINK.TEXT,
+    );
   });
 
   describe('using our service', () => {
@@ -103,11 +99,11 @@ context('Accessibility statement page - Insurance', () => {
 
     describe('outro', () => {
       it('renders AbilityNet link and outro copy', () => {
-        usingOurService.abilityNet.link().invoke('text').then((text) => {
-          expect(text.trim()).equal(USING_OUR_SERVICE.OUTRO.ABILITY_NET.LINK.TEXT);
-        });
-
-        usingOurService.abilityNet.link().should('have.attr', 'href', USING_OUR_SERVICE.OUTRO.ABILITY_NET.LINK.HREF);
+        cy.checkLink(
+          usingOurService.abilityNet.link(),
+          USING_OUR_SERVICE.OUTRO.ABILITY_NET.LINK.HREF,
+          USING_OUR_SERVICE.OUTRO.ABILITY_NET.LINK.TEXT,
+        );
 
         usingOurService.abilityNet.outro().invoke('text').then((text) => {
           expect(text.trim()).equal(USING_OUR_SERVICE.OUTRO.ABILITY_NET.DESCRIPTION);
@@ -174,11 +170,11 @@ context('Accessibility statement page - Insurance', () => {
     });
 
     it('renders a link', () => {
-      enforcementProcedure.link().invoke('text').then((text) => {
-        expect(text.trim()).equal(ENFORCEMENT_PROCEDURE.CONTACT.TEXT);
-      });
-
-      enforcementProcedure.link().should('have.attr', 'href', ENFORCEMENT_PROCEDURE.CONTACT.HREF);
+      cy.checkLink(
+        enforcementProcedure.link(),
+        ENFORCEMENT_PROCEDURE.CONTACT.HREF,
+        ENFORCEMENT_PROCEDURE.CONTACT.TEXT,
+      );
     });
   });
 
@@ -210,11 +206,11 @@ context('Accessibility statement page - Insurance', () => {
     });
 
     it('renders a link', () => {
-      complianceStatus.link().invoke('text').then((text) => {
-        expect(text.trim()).equal(COMPLIANCE_STATUS.GUIDLINES_LINK.TEXT);
-      });
-
-      complianceStatus.link().should('have.attr', 'href', COMPLIANCE_STATUS.GUIDLINES_LINK.HREF);
+      cy.checkLink(
+        complianceStatus.link(),
+        COMPLIANCE_STATUS.GUIDLINES_LINK.HREF,
+        COMPLIANCE_STATUS.GUIDLINES_LINK.TEXT,
+      );
     });
 
     it('renders an outro', () => {

@@ -6,7 +6,6 @@ import {
 } from '../../../../support/quote/forms';
 import { submitButton } from '../../../pages/shared';
 import { policyTypePage } from '../../../pages/quote';
-import partials from '../../../partials';
 import {
   LINKS,
   FIELDS,
@@ -17,8 +16,6 @@ import { ROUTES, FIELD_IDS } from '../../../../../constants';
 const CONTENT_STRINGS = PAGES.QUOTE.POLICY_TYPE;
 
 const { POLICY_TYPE } = FIELD_IDS;
-
-const startRoute = ROUTES.QUOTE.START;
 
 context('Policy type page - as an exporter, I want to get UKEF export insurance quote based on the export policy - provide policy type', () => {
   const url = ROUTES.QUOTE.POLICY_TYPE;
@@ -57,10 +54,6 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to quote start', () => {
-      partials.header.serviceName().should('have.attr', 'href', startRoute);
     });
 
     it('renders `policy type` radio inputs with labels and hints', () => {
@@ -104,7 +97,13 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
         });
 
         const expectedHref = LINKS.EXTERNAL.NBI_FORM;
-        singlePolicyLength.hintLink().should('have.attr', 'href', expectedHref);
+        const expectedText = FIELDS[singlePolicyLengthId].HINT[0][1].text;
+
+        cy.checkLink(
+          singlePolicyLength.hintLink(),
+          expectedHref,
+          expectedText,
+        );
       });
     });
 
@@ -124,7 +123,13 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
         });
 
         const expectedHref = LINKS.EXTERNAL.NBI_FORM;
-        multiPolicyType.inset.link().should('have.attr', 'href', expectedHref);
+        const expectedText = insetText[1].text;
+
+        cy.checkLink(
+          multiPolicyType.inset.link(),
+          expectedHref,
+          expectedText,
+        );
       });
     });
 

@@ -55,11 +55,15 @@ context('Insurance - All sections - new application', () => {
           cy.navigateToUrl(url);
 
           const task = taskList.initialChecks.tasks.eligibility;
-          const expectedLink = TASKS.LIST.INITIAL_CHECKS.TASKS.ELIGIBILITY;
 
-          cy.checkText(task.link(), expectedLink);
+          const expectedHref = '#';
+          const expectedText = TASKS.LIST.INITIAL_CHECKS.TASKS.ELIGIBILITY;
 
-          task.link().should('have.attr', 'href', '#');
+          cy.checkLink(
+            task.link(),
+            expectedText,
+            expectedHref,
+          );
 
           const expectedStatus = TASKS.STATUS.COMPLETED;
 
@@ -85,11 +89,14 @@ context('Insurance - All sections - new application', () => {
         it('should render a `type of policy and exports` task with link and `not started` status', () => {
           const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
-          const expectedLink = TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY_TYPE_AND_EXPORTS;
-          cy.checkText(task.link(), expectedLink);
+          const expectedHref = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;
+          const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY_TYPE_AND_EXPORTS;
 
-          const expectedUrl = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;
-          task.link().should('have.attr', 'href', expectedUrl);
+          cy.checkLink(
+            task.link(),
+            expectedText,
+            expectedHref,
+          );
 
           const expectedStatus = TASKS.STATUS.NOT_STARTED_YET;
 
@@ -99,12 +106,14 @@ context('Insurance - All sections - new application', () => {
         it('should render a `your business` task with link and `not started` status', () => {
           const task = taskList.prepareApplication.tasks.business;
 
-          const expectedLink = TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS;
+          const expectedHref = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+          const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS;
 
-          cy.checkText(task.link(), expectedLink);
-
-          const expectedUrl = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
-          task.link().should('have.attr', 'href', expectedUrl);
+          cy.checkLink(
+            task.link(),
+            expectedText,
+            expectedHref,
+          );
 
           const expectedStatus = TASKS.STATUS.NOT_STARTED_YET;
           cy.checkText(task.status(), expectedStatus);
@@ -113,11 +122,14 @@ context('Insurance - All sections - new application', () => {
         it('should render a `your buyer` task with link and `not started` status', () => {
           const task = taskList.prepareApplication.tasks.buyer;
 
-          const expectedLink = TASKS.LIST.PREPARE_APPLICATION.TASKS.BUYER;
-          cy.checkText(task.link(), expectedLink);
+          const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.BUYER;
+          const expectedHref = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
 
-          const expectedUrl = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
-          task.link().should('have.attr', 'href', expectedUrl);
+          cy.checkLink(
+            task.link(),
+            expectedText,
+            expectedHref,
+          );
 
           const expectedStatus = TASKS.STATUS.NOT_STARTED_YET;
           cy.checkText(task.status(), expectedStatus);
@@ -144,8 +156,6 @@ context('Insurance - All sections - new application', () => {
           const expectedText = TASKS.LIST.SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS;
           cy.checkText(task.text(), expectedText);
 
-          // const expectedUrl = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY}`;
-          // task.link().should('have.attr', 'href', expectedUrl);
           task.link().should('not.exist');
 
           const expectedStatus = TASKS.STATUS.CANNOT_START;

@@ -12,8 +12,6 @@ const {
   ELIGIBILITY: { VALID_BUYER_BODY },
 } = FIELD_IDS;
 
-const startRoute = ROUTES.QUOTE.START;
-
 context('Buyer body page - as an exporter, I want to check if I can get an EXIP online quote for my buyers country', () => {
   beforeEach(() => {
     cy.login();
@@ -30,10 +28,6 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
     });
-  });
-
-  it('should render a header with href to quote start', () => {
-    partials.header.serviceName().should('have.attr', 'href', startRoute);
   });
 
   it('renders `yes` radio button', () => {

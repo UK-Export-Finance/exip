@@ -39,7 +39,16 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
 
     cy.navigateToUrl(url);
 
-    companyDetails.companiesHouseNoNumber().should('have.attr', 'href', `${ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`);
+    const expectedHref = `${ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`;
+
+    const expectedText = CONTENT_STRINGS.REASON.NO_COMPANIES_HOUSE_NUMBER;
+
+    cy.checkLink(
+      companyDetails.companiesHouseNoNumber(),
+      expectedHref,
+      expectedText,
+    );
+
     companyDetails.companiesHouseNoNumber().click();
   });
 
@@ -58,7 +67,14 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
   });
 
   it('should contain link to proposal form on the apply offline page', () => {
-    insurance.applyOfflinePage.downloadFormLink().should('have.attr', 'href', ACTIONS.DOWNLOAD_FORM.LINK.HREF_PROPOSAL);
+    const expectedHref = ACTIONS.DOWNLOAD_FORM.LINK.HREF_PROPOSAL;
+    const expectedText = ACTIONS.DOWNLOAD_FORM.LINK.TEXT;
+
+    cy.checkLink(
+      insurance.applyOfflinePage.downloadFormLink(),
+      expectedHref,
+      expectedText,
+    );
   });
 
   it('should take you back to company-details page when pressing the back button', () => {

@@ -9,7 +9,6 @@ import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  START,
   ALL_SECTIONS,
   YOUR_BUYER: {
     WORKING_WITH_BUYER,
@@ -62,10 +61,6 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
     });
 
     it('renders a heading caption', () => {

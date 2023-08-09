@@ -3,6 +3,7 @@ import {
 } from '../../../pages/shared';
 import { checkYourAnswersPage } from '../../../pages/quote';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
+import { LINKS } from '../../../../../content-strings';
 
 const {
   ELIGIBILITY: {
@@ -45,10 +46,13 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     });
 
     it('renders a back link with correct url', () => {
-      backLink().should('exist');
+      const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-      backLink().should('have.attr', 'href', expected);
+      cy.checkLink(
+        backLink(),
+        expectedHref,
+        LINKS.BACK,
+      );
     });
 
     it('has originally submitted answer selected', () => {
@@ -107,10 +111,13 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     });
 
     it('renders a back link with correct url', () => {
-      backLink().should('exist');
+      const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-      backLink().should('have.attr', 'href', expected);
+      cy.checkLink(
+        backLink(),
+        expectedHref,
+        LINKS.BACK,
+      );
     });
 
     it('has originally submitted answer selected', () => {
@@ -144,10 +151,13 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     });
 
     it('renders a back link with correct url', () => {
-      backLink().should('exist');
+      const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-      backLink().should('have.attr', 'href', expected);
+      cy.checkLink(
+        backLink(),
+        expectedHref,
+        LINKS.BACK,
+      );
     });
 
     it('has originally submitted answer', () => {

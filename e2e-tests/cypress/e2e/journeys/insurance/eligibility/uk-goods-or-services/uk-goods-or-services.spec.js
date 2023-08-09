@@ -27,8 +27,6 @@ const {
   ELIGIBILITY: { HAS_MINIMUM_UK_GOODS_OR_SERVICES },
 } = FIELD_IDS;
 
-const insuranceStartRoute = ROUTES.INSURANCE.START;
-
 context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
   let url;
 
@@ -61,10 +59,6 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
     });
 
     it('renders `yes` radio button', () => {

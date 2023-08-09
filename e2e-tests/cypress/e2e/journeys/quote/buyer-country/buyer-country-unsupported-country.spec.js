@@ -1,7 +1,7 @@
 import {
   backLink, buyerCountryPage, cannotApplyPage, submitButton,
 } from '../../../pages/shared';
-import { PAGES } from '../../../../../content-strings';
+import { LINKS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { COUNTRY_UNSUPPORTRED } from '../../../../fixtures/countries';
 
@@ -33,9 +33,11 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
   });
 
   it('renders a back link with correct url', () => {
-    backLink().should('exist');
-
-    backLink().should('have.attr', 'href', url);
+    cy.checkLink(
+      backLink(),
+      url,
+      LINKS.BACK,
+    );
   });
 
   it('renders a specific reason', () => {

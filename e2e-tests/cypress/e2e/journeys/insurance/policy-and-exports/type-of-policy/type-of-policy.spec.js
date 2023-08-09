@@ -16,8 +16,7 @@ import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-st
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 
-const { POLICY_AND_EXPORTS, START } = ROUTES.INSURANCE;
-const insuranceStartRoute = START;
+const { POLICY_AND_EXPORTS } = ROUTES.INSURANCE;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY;
 
@@ -69,10 +68,6 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
     });
 
     it('renders a heading caption', () => {
