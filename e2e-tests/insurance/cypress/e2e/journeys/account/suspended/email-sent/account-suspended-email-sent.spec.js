@@ -1,8 +1,8 @@
-import { emailSentPage } from '../../../../../pages/insurance/account/suspended';
-import { submitButton } from '../../../../../pages/shared';
+import { emailSentPage } from '../../../../../../../pages/insurance/account/suspended';
+import { submitButton } from '../../../../../../../pages/shared';
 import { PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
-import api from '../../../../../../support/api';
+import api from '../../../../../../../commands/api';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SUSPENDED.EMAIL_SENT;
 

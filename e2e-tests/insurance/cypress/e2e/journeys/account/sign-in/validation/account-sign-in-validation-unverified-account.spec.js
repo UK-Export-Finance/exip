@@ -1,7 +1,7 @@
-import { yourDetailsPage, confirmEmailPage } from '../../../../../pages/insurance/account/create';
+import { yourDetailsPage, confirmEmailPage } from '../../../../../../../pages/insurance/account/create';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import { PAGES } from '../../../../../../../content-strings';
-import api from '../../../../../../support/api';
+import api from '../../../../../../../commands/api';
 
 const {
   START,

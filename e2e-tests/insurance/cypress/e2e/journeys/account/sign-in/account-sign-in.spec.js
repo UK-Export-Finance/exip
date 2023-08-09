@@ -1,7 +1,7 @@
-import partials from '../../../../partials';
-import { signInPage } from '../../../../pages/insurance/account/sign-in';
-import { yourDetailsPage } from '../../../../pages/insurance/account/create';
-import accountFormFields from '../../../../partials/insurance/accountFormFields';
+import partials from '../../../../../../partials';
+import { signInPage } from '../../../../../../pages/insurance/account/sign-in';
+import { yourDetailsPage } from '../../../../../../pages/insurance/account/create';
+import accountFormFields from '../../../../../../partials/insurance/accountFormFields';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { ACCOUNT_FIELDS } from '../../../../../../content-strings/fields/insurance/account';

@@ -1,5 +1,5 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
-import api from '../../../../../../support/api';
+import api from '../../../../../../../commands/api';
 
 const {
   ACCOUNT: {

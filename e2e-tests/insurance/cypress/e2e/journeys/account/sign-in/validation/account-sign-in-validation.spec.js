@@ -1,9 +1,9 @@
-import { submitButton } from '../../../../../pages/shared';
-import accountFormFields from '../../../../../partials/insurance/accountFormFields';
+import { submitButton } from '../../../../../../../pages/shared';
+import accountFormFields from '../../../../../../../partials/insurance/accountFormFields';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
-import account from '../../../../../../fixtures/account';
+import account from '../../../../../../../fixtures/account';
 
 const {
   START,

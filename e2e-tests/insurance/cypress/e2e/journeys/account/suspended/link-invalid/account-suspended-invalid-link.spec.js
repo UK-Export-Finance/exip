@@ -1,6 +1,6 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import { PAGES } from '../../../../../../../content-strings';
-import invalidLinkPage from '../../../../../pages/insurance/account/invalid-link';
+import invalidLinkPage from '../../../../../../../pages/insurance/account/invalid-link';
 
 const {
   ACCOUNT: {

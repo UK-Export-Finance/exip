@@ -1,4 +1,4 @@
-import dashboardPage from '../../../pages/insurance/dashboard';
+import dashboardPage from '../../../../../pages/insurance/dashboard';
 import { ROUTES } from '../../../../../constants';
 
 const { table } = dashboardPage;

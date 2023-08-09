@@ -1,10 +1,10 @@
-import { enterCodePage } from '../../../../pages/insurance/account/sign-in';
-import dashboardPage from '../../../../pages/insurance/dashboard';
-import accountFormFields from '../../../../partials/insurance/accountFormFields';
-import { submitButton } from '../../../../pages/shared';
+import { enterCodePage } from '../../../../../../pages/insurance/account/sign-in';
+import dashboardPage from '../../../../../../pages/insurance/dashboard';
+import accountFormFields from '../../../../../../partials/insurance/accountFormFields';
+import { submitButton } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import account from '../../../../../fixtures/account';
+import account from '../../../../../../fixtures/account';
 
 const {
   START,

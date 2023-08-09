@@ -1,6 +1,6 @@
-import partials from '../../../../../partials';
-import { submitButton } from '../../../../../pages/shared';
-import { enterCodePage, requestNewCodePage } from '../../../../../pages/insurance/account/sign-in';
+import partials from '../../../../../../../partials';
+import { submitButton } from '../../../../../../../pages/shared';
+import { enterCodePage, requestNewCodePage } from '../../../../../../../pages/insurance/account/sign-in';
 import { BUTTONS, PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 

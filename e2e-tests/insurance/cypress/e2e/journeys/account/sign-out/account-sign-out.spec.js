@@ -1,6 +1,6 @@
-import header from '../../../../partials/header';
-import { backLink } from '../../../../pages/shared';
-import { signInPage } from '../../../../pages/insurance/account/sign-in';
+import header from '../../../../../../partials/header';
+import { backLink } from '../../../../../../pages/shared';
+import { signInPage } from '../../../../../../pages/insurance/account/sign-in';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
 

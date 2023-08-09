@@ -1,7 +1,7 @@
-import { suspendedPage } from '../../../../pages/insurance/account/suspended';
+import { suspendedPage } from '../../../../../../pages/insurance/account/suspended';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
-import api from '../../../../../support/api';
+import api from '../../../../../../commands/api';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SUSPENDED.ROOT;
 

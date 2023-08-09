@@ -1,7 +1,7 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
-import reactivatedPage from '../../../../../pages/insurance/account/reactivated';
+import reactivatedPage from '../../../../../../../pages/insurance/account/reactivated';
 
-import api from '../../../../../../support/api';
+import api from '../../../../../../../commands/api';
 
 const {
   ACCOUNT: {

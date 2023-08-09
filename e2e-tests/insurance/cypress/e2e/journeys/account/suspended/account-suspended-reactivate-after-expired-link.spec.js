@@ -1,8 +1,8 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { DATE_ONE_MINUTE_IN_THE_PAST } from '../../../../../../constants/dates';
-import { submitButton } from '../../../../pages/shared';
-import api from '../../../../../support/api';
+import { submitButton } from '../../../../../../pages/shared';
+import api from '../../../../../../commands/api';
 
 const {
   ACCOUNT: {

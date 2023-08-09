@@ -1,7 +1,7 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import mockAccount from '../../../../../../fixtures/account';
-import api from '../../../../../../support/api';
+import mockAccount from '../../../../../../../fixtures/account';
+import api from '../../../../../../../commands/api';
 
 const {
   ACCOUNT: {

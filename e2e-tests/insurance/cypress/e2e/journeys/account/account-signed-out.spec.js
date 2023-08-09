@@ -1,5 +1,5 @@
-import partials from '../../../partials';
-import signedOutPage from '../../../pages/insurance/account/signed-out';
+import partials from '../../../../../partials';
+import signedOutPage from '../../../../../pages/insurance/account/signed-out';
 import { BUTTONS, PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../constants/routes/insurance';
 
