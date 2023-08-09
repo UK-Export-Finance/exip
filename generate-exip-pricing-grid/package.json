@@ -1,24 +1,15 @@
 {
   "name": "generate-exip-pricing-grid",
-  "versio": "1.0.0",
-  "engines": {
-    "node": ">=18",
-    "npm": ">=9.5.0"
+  "homepage": "https://github.com/UK-Export-Finance/exip#readme",
+  "bugs": {
+    "url": "https://github.com/UK-Export-Finance/exip/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/UK-Export-Finance/exip.git"
   },
-  "author": "UK Export Finance",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/UK-Export-Finance/exip/issues"
-  },
-  "homepage": "https://github.com/UK-Export-Finance/exip#readme",
-  "dependencies": {
-    "minimist": "^1.2.8",
-    "node-xlsx": "^0.23.0"
-  },
+  "author": "UK Export Finance",
   "lint-staged": {
     "package.json": "sort-package-json",
     "*.js": "eslint --fix",
@@ -26,5 +17,14 @@
     "*": [
       "cspell lint --gitignore --no-summary --fail-fast --no-must-find-files --color"
     ]
-  }
+  },
+  "dependencies": {
+    "minimist": "^1.2.8",
+    "node-xlsx": "^0.23.0"
+  },
+  "engines": {
+    "node": ">=18",
+    "npm": ">=9.5.0"
+  },
+  "versio": "1.0.0"
 }

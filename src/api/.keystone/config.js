@@ -469,7 +469,7 @@ var XLSX_CONFIG = {
 import_dotenv.default.config();
 var GBP_CURRENCY_CODE = "GBP";
 var EXTERNAL_API_ENDPOINTS = {
-  MULESOFT_MDM_EA: {
+  APIM_MDM: {
     CURRENCY: "/currencies",
     INDUSTRY_SECTORS: "/sector-industries",
     MARKETS: "/markets"
@@ -1605,7 +1605,7 @@ var typeDefs = `
       token: String!
     ): VerifyAccountEmailAddressResponse
 
-    """ verify an account's reactivation tokeen """
+    """ verify an account's reactivation token """
     verifyAccountReactivationToken(
       token: String!
     ): VerifyAccountReactivationTokenResponse
@@ -4295,7 +4295,7 @@ var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => {
 var import_axios = __toESM(require("axios"));
 var import_dotenv5 = __toESM(require("dotenv"));
 import_dotenv5.default.config();
-var { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
+var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 var headers = {
   "Content-Type": "application/json",
   [String(process.env.APIM_MDM_KEY)]: process.env.APIM_MDM_VALUE
@@ -4306,7 +4306,7 @@ var getIndustrySectorNames = {
       console.info("Calling industry sector API");
       const response = await (0, import_axios.default)({
         method: "get",
-        url: `${process.env.APIM_MDM_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`,
+        url: `${process.env.APIM_MDM_URL}${APIM_MDM.INDUSTRY_SECTORS}`,
         headers,
         validateStatus(status) {
           const acceptableStatus = [200, 404];
@@ -4507,7 +4507,7 @@ var isProdEnvironment = NODE_ENV === "production";
 var keystone_default = withAuth(
   (0, import_core2.config)({
     server: {
-      port: 5001,
+      port: 4001,
       extendExpressApp: (app) => {
         app.use(check_api_key_default);
         if (NODE_ENV === "production") {
@@ -4537,3 +4537,4 @@ var keystone_default = withAuth(
     telemetry: false
   })
 );
+//# sourceMappingURL=config.js.map
