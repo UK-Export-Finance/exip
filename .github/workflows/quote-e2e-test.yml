@@ -11,7 +11,7 @@ on:
   pull_request:
     branches: [main-application]
     paths:
-      - '.github/workflows/test.yml'
+      - '.github/workflows/quote-e2e-test.yml'
       - 'src/**'
       - 'e2e-tests/**'
       - 'generate-exip-pricing-grid/**'
