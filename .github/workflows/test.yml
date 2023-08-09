@@ -103,8 +103,8 @@ jobs:
           npm run test --prefix ./src/api
 
   # 3. E2E - E2E Journey test cases
-  e2e-tests:
-    name: E2E 👷
+  insurance-e2e-tests:
+    name: E2E - Insurance 👷
     needs: setup
     environment:
       name: ${{ needs.setup.outputs.environment }}
@@ -113,6 +113,11 @@ jobs:
       fail-fast: true
       matrix:
         machines: [1, 2, 3, 4]
+
+    # Cancel Previous runs
+    concurrency:
+      group: tfm-submit-${{ github.workflow }}-${{ github.ref }}-${{ matrix.containers }}
+      cancel-in-progress: true
 
     steps:
       - uses: actions/checkout@v3
@@ -168,7 +173,7 @@ jobs:
           parallel: true
           browser: chrome
           group: 'EXIP'
-          project: ./e2e-tests
+          project: ./e2e-tests/insurance
           config: video=false
         env:
           TZ: Europe/London
