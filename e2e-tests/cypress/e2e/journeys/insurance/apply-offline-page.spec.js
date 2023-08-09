@@ -48,20 +48,6 @@ context('Insurance - apply offline exit page', () => {
   });
 
   it('renders `contact` copy with link', () => {
-    const expected = `${ACTIONS.CONTACT.TEXT} ${ACTIONS.CONTACT.LINK.TEXT}`;
-    cy.checkText(insurance.applyOfflinePage.contactCopy(), expected);
-
-    const expectedHref = ACTIONS.CONTACT.LINK.HREF;
-    const expectedText = ACTIONS.CONTACT.LINK.TEXT;
-
-    cy.checkLink(
-      insurance.applyOfflinePage.contactLink(),
-      expectedText,
-      expectedHref,
-    );
-  });
-
-  it('renders `contact` copy with link', () => {
     const expectedContactCopy = `${ACTIONS.CONTACT.TEXT} ${ACTIONS.CONTACT.LINK.TEXT}`;
 
     cy.checkText(insurance.applyOfflinePage.contactCopy(), expectedContactCopy);
