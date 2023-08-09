@@ -92,7 +92,7 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
     });
 
     it('should display contact details section legend and hint', () => {
-      cy.checkText(yourContactPage.contactDetailsLegend(), CONTENT_STRINGS.CONTACT_DETAILS.LABEL);
+      cy.checkText(yourContactPage.contactDetailsLegend(), CONTENT_STRINGS.CONTACT_DETAILS.LEGEND);
 
       cy.checkText(yourContactPage.contactDetailsHint(), CONTENT_STRINGS.CONTACT_DETAILS.HINT);
     });

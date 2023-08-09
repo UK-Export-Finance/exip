@@ -14,7 +14,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.BROKER;
 const {
   BROKER: {
     USING_BROKER,
-    HEADING,
+    LEGEND,
     NAME,
     ADDRESS_LINE_1,
     ADDRESS_LINE_2,
@@ -116,7 +116,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
       const field = broker[fieldId];
       field.yesRadioInput().click();
 
-      cy.checkText(broker[HEADING](), FIELDS.BROKER[HEADING].HEADING);
+      cy.checkText(broker[LEGEND](), FIELDS.BROKER[LEGEND].LEGEND);
 
       cy.checkText(broker[NAME].label(), FIELDS.BROKER[NAME].LABEL);
       broker[NAME].input().should('exist');

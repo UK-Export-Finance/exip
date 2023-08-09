@@ -4,7 +4,7 @@ import { yesRadioInput, noRadioInput } from '../../shared';
 const {
   BROKER: {
     USING_BROKER,
-    HEADING,
+    LEGEND,
     NAME,
     ADDRESS_LINE_1,
     ADDRESS_LINE_2,
@@ -17,7 +17,7 @@ const {
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const broker = {
-  [HEADING]: () => cy.get(`[data-cy="${HEADING}-legend`),
+  [LEGEND]: () => cy.get(`[data-cy="${LEGEND}-legend`),
   [USING_BROKER]: {
     value: () => cy.get(`[data-cy="${USING_BROKER}`),
     yesRadioInput: () => yesRadioInput().eq(0),

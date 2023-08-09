@@ -105,7 +105,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
       const fieldId = EMPLOYEES_UK;
       const field = natureOfBusiness[fieldId];
 
-      cy.checkText(field.legend(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HEADING);
+      cy.checkText(field.legend(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LEGEND);
     });
 
     it(`should display ${EMPLOYEES_UK} input box`, () => {
