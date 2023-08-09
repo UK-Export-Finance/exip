@@ -43,6 +43,11 @@ jobs:
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
+
+    concurrency:
+      group: unit-tests-${{ github.workflow }}-${{ github.run_id }}
+      cancel-in-progress: true
+
     steps:
       - name: Timezone
         uses: szenius/set-timezone@v1.2
@@ -113,6 +118,10 @@ jobs:
       fail-fast: true
       matrix:
         machines: [1, 2, 3, 4]
+
+    concurrency:
+      group: insurance-e2e-tests-${{ github.workflow }}-${{ github.run_id }}
+      cancel-in-progress: true
 
     steps:
       - uses: actions/checkout@v3
@@ -191,6 +200,10 @@ jobs:
       matrix:
         machines: [1, 2, 3, 4]
 
+    concurrency:
+      group: quote-e2e-tests-${{ github.workflow }}-${{ github.run_id }}
+      cancel-in-progress: true
+
     steps:
       - uses: actions/checkout@v3
 
@@ -245,7 +258,7 @@ jobs:
           parallel: true
           browser: chrome
           group: 'EXIP'
-          project: ./e2e-tests/insurance
+          project: ./e2e-tests/quote
           config: video=false
         env:
           TZ: Europe/London
@@ -266,6 +279,10 @@ jobs:
     strategy:
       fail-fast: true
 
+    concurrency:
+      group: switch-between-services-e2e-tests-${{ github.workflow }}-${{ github.run_id }}
+      cancel-in-progress: true
+
     steps:
       - uses: actions/checkout@v3
 
@@ -320,7 +337,7 @@ jobs:
           parallel: true
           browser: chrome
           group: 'EXIP'
-          project: ./e2e-tests/insurance
+          project: ./e2e-tests/switch-between-services
           config: video=false
         env:
           TZ: Europe/London
