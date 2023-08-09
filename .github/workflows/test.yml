@@ -44,10 +44,6 @@ jobs:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
-    concurrency:
-      group: unit-tests-${{ github.workflow }}-${{ github.run_id }}
-      cancel-in-progress: true
-
     steps:
       - name: Timezone
         uses: szenius/set-timezone@v1.2
@@ -118,10 +114,6 @@ jobs:
       fail-fast: true
       matrix:
         machines: [1, 2, 3, 4]
-
-    concurrency:
-      group: insurance-e2e-tests-${{ github.workflow }}-${{ github.run_id }}
-      cancel-in-progress: true
 
     steps:
       - uses: actions/checkout@v3
@@ -200,10 +192,6 @@ jobs:
       matrix:
         machines: [1, 2, 3, 4]
 
-    concurrency:
-      group: quote-e2e-tests-${{ github.workflow }}-${{ github.run_id }}
-      cancel-in-progress: true
-
     steps:
       - uses: actions/checkout@v3
 
@@ -278,10 +266,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
-
-    concurrency:
-      group: switch-between-services-e2e-tests-${{ github.workflow }}-${{ github.run_id }}
-      cancel-in-progress: true
 
     steps:
       - uses: actions/checkout@v3
