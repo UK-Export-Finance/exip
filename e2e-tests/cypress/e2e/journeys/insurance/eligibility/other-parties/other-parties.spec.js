@@ -17,8 +17,6 @@ import {
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED;
 
-const insuranceStartRoute = ROUTES.INSURANCE.START;
-
 context('Insurance - Other parties page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if there are other parties involved in the export', () => {
   let url;
 
@@ -54,10 +52,6 @@ context('Insurance - Other parties page - I want to check if I can use online se
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
     });
 
     it('renders `yes` radio button', () => {

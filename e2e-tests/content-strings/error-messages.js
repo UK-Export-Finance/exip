@@ -4,6 +4,7 @@ import formatCurrency from '../cypress/e2e/helpers/format-currency';
 export const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP);
 
 export const ERROR_MESSAGES = {
+  THERE_IS_A_PROBLEM: 'There is a problem',
   ELIGIBILITY: {
     [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: 'Select where your buyer is based',
     [FIELD_IDS.ELIGIBILITY.VALID_BUYER_BODY]: 'Select if your buyer is a government or public sector body',

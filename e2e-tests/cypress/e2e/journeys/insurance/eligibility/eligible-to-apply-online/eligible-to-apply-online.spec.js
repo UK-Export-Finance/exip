@@ -1,6 +1,5 @@
 import { submitButton } from '../../../../pages/shared';
 import { insurance } from '../../../../pages';
-import partials from '../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
@@ -68,10 +67,6 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
     });
 
     it('renders inset text', () => {

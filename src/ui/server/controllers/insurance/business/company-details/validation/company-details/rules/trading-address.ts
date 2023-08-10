@@ -1,5 +1,6 @@
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../../constants';
+import { objectHasProperty } from '../../../../../../../helpers/object';
 import generateValidationErrors from '../../../../../../../helpers/validation';
 import { RequestBody } from '../../../../../../../../types';
 
@@ -19,8 +20,7 @@ const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 const tradingAddress = (responseBody: RequestBody, errors: object) => {
   let updatedErrors = errors;
 
-  // if no tradingName in response
-  if (!responseBody[TRADING_ADDRESS]) {
+  if (!objectHasProperty(responseBody, TRADING_ADDRESS)) {
     const errorMessage = EXPORTER_BUSINESS[TRADING_ADDRESS].IS_EMPTY;
     updatedErrors = generateValidationErrors(TRADING_ADDRESS, errorMessage, errors);
   }

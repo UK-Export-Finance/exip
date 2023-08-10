@@ -1,7 +1,7 @@
 import {
   backLink, cannotApplyPage, noRadio, noRadioInput, submitButton,
 } from '../../../../pages/shared';
-import { PAGES } from '../../../../../../content-strings';
+import { LINKS, PAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility/forms';
@@ -35,11 +35,13 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
   });
 
   it('renders a back link with correct url', () => {
-    backLink().should('exist');
+    const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION}`;
 
-    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION}`;
-
-    backLink().should('have.attr', 'href', expectedUrl);
+    cy.checkLink(
+      backLink(),
+      expectedHref,
+      LINKS.BACK,
+    );
   });
 
   it('renders a specific reason', () => {

@@ -11,7 +11,7 @@ import isUrl from 'is-url';
  */
 const getUrlOrigin = (url: string) => {
   if (isUrl(url)) {
-    const origin = url.split(/[/:.]/);
+    const origin = url.split(/[/:]/);
 
     return origin[3];
   }

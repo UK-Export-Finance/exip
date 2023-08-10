@@ -10,7 +10,6 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT: INSURANCE_ROOT,
-  START,
   ALL_SECTIONS,
   CHECK_YOUR_ANSWERS: {
     YOUR_BUSINESS,
@@ -74,10 +73,6 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
     });
 
     it('renders a heading caption', () => {

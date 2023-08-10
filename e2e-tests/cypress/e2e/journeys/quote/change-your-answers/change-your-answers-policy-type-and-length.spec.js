@@ -5,6 +5,7 @@ import {
   tellUsAboutYourPolicyPage,
 } from '../../../pages/quote';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../constants';
+import { LINKS } from '../../../../../content-strings';
 
 const {
   ELIGIBILITY: {
@@ -98,10 +99,13 @@ context('Change your answers - as an exporter, I want to change the details befo
     });
 
     it('renders a back link with correct url', () => {
-      backLink().should('exist');
+      const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-      backLink().should('have.attr', 'href', expected);
+      cy.checkLink(
+        backLink(),
+        expectedHref,
+        LINKS.BACK,
+      );
     });
 
     it('has originally submitted `policy type` (single)', () => {
@@ -192,8 +196,13 @@ context('Change your answers - as an exporter, I want to change the details befo
       it('renders a back link with correct url', () => {
         backLink().should('exist');
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-        backLink().should('have.attr', 'href', expected);
+        const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
+
+        cy.checkLink(
+          backLink(),
+          expectedHref,
+          LINKS.BACK,
+        );
       });
 
       it('has previously submitted `policy type` (single)', () => {
@@ -276,10 +285,13 @@ context('Change your answers - as an exporter, I want to change the details befo
       });
 
       it('renders a back link with correct url', () => {
-        backLink().should('exist');
+        const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-        backLink().should('have.attr', 'href', expected);
+        cy.checkLink(
+          backLink(),
+          expectedHref,
+          LINKS.BACK,
+        );
       });
 
       it('has previously submitted `policy type` (single)', () => {

@@ -26,8 +26,6 @@ const {
   },
 } = ROUTES.INSURANCE;
 
-const insuranceStart = ROUTES.INSURANCE.START;
-
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
@@ -75,10 +73,6 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       cy.navigateToUrl(url);
     });
 
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStart);
-    });
-
     it('renders a heading caption', () => {
       cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
@@ -99,7 +93,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       const fieldId = ESTIMATED_ANNUAL_TURNOVER;
       const field = turnover[fieldId];
 
-      cy.checkText(field.legend(), FIELDS.TURNOVER[fieldId].HEADING);
+      cy.checkText(field.legend(), FIELDS.TURNOVER[fieldId].LEGEND);
     });
 
     it(`should display ${ESTIMATED_ANNUAL_TURNOVER} section`, () => {

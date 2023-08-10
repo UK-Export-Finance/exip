@@ -6,7 +6,7 @@ describe('middleware/headers/security/get-url-origin', () => {
 
     const result = getUrlOrigin(mockUrl);
 
-    const expected = 'gov';
+    const expected = 'gov.uk';
 
     expect(result).toEqual(expected);
   });
@@ -17,7 +17,31 @@ describe('middleware/headers/security/get-url-origin', () => {
 
       const result = getUrlOrigin(mockUrl);
 
-      const expected = 'get-a-ukef-product';
+      const expected = 'get-a-ukef-product.gov.uk';
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when the origin is localhost', () => {
+    it('should return the the origin of the URL', () => {
+      const mockUrl = 'http://localhost:1234';
+
+      const result = getUrlOrigin(mockUrl);
+
+      const expected = 'localhost';
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when the origin contains azurewebsites', () => {
+    it('should return the the origin of the URL', () => {
+      const mockUrl = 'https://get-a-ukef-product.azurewebsites.net';
+
+      const result = getUrlOrigin(mockUrl);
+
+      const expected = 'get-a-ukef-product.azurewebsites.net';
 
       expect(result).toEqual(expected);
     });

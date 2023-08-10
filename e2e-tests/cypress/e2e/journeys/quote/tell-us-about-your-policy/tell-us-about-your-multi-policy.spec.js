@@ -7,7 +7,6 @@ import {
 } from '../../../../support/quote/forms';
 import { submitButton } from '../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
-import partials from '../../../partials';
 import {
   LINKS,
   FIELDS,
@@ -27,8 +26,6 @@ const {
     CREDIT_PERIOD,
   },
 } = FIELD_IDS;
-
-const startRoute = ROUTES.QUOTE.START;
 
 context('Tell us about your multiple policy page - as an exporter, I want to provide my Export insurance policy details', () => {
   const url = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
@@ -68,10 +65,6 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to quote start', () => {
-      partials.header.serviceName().should('have.attr', 'href', startRoute);
     });
 
     it('renders `currency and amount` legend', () => {
@@ -165,7 +158,14 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       const expectedHintText = `${HINT[0].text} ${HINT[1].text} ${HINT[2].text}`;
       cy.checkText(field.hint(), expectedHintText);
 
-      field.hintLink().should('have.attr', 'href', LINKS.EXTERNAL.NBI_FORM);
+      const expectedHintLinkHref = LINKS.EXTERNAL.NBI_FORM;
+      const expectedHintLinkText = HINT[1].text;
+
+      cy.checkLink(
+        field.hintLink(),
+        expectedHintLinkHref,
+        expectedHintLinkText,
+      );
 
       field.input().should('exist');
 

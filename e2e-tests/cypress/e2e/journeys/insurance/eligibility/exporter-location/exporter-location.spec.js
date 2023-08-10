@@ -9,8 +9,6 @@ import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../s
 
 const CONTENT_STRINGS = PAGES.EXPORTER_LOCATION;
 
-const insuranceStartRoute = ROUTES.INSURANCE.START;
-
 context('Insurance - Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover', () => {
   beforeEach(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
@@ -29,10 +27,6 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
       backLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
       assertAuthenticatedHeader: false,
     });
-  });
-
-  it('should render a header with href to insurance start', () => {
-    partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
   });
 
   it('renders `yes` radio button', () => {

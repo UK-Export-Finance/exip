@@ -1,4 +1,3 @@
-import partials from '../../../../partials';
 import { backLink } from '../../../../pages/shared';
 import { signInPage } from '../../../../pages/insurance/account/sign-in';
 import { yourDetailsPage } from '../../../../pages/insurance/account/create';
@@ -11,7 +10,6 @@ import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/i
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.ROOT;
 
 const {
-  START,
   ACCOUNT: {
     SIGN_IN: { ROOT: SIGN_IN_ROOT },
     PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, LINK_SENT },
@@ -67,10 +65,6 @@ context('Insurance - Account - Password reset page - As an Exporter, I want to r
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
     });
 
     it('renders `email` label, hint and input', () => {

@@ -48,7 +48,7 @@ const EXPORTER_BUSINESS = {
     PERCENTAGE_TURNOVER: 'exportsTurnoverPercentage',
   },
   BROKER: {
-    HEADING: 'broker',
+    LEGEND: 'broker',
     USING_BROKER: 'isUsingBroker',
     NAME: 'name',
     ADDRESS_LINE_1: 'addressLine1',

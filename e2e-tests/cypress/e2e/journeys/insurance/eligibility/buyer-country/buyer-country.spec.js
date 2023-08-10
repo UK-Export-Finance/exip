@@ -1,6 +1,6 @@
 import { backLink, buyerCountryPage, submitButton } from '../../../../pages/shared';
 import { ROUTES } from '../../../../../../constants';
-import { PAGES } from '../../../../../../content-strings';
+import { LINKS, PAGES } from '../../../../../../content-strings';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility/forms';
 import {
   checkInputHint,
@@ -75,11 +75,13 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
       });
 
       it('renders a back link with correct url', () => {
-        backLink().should('exist');
+        const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
-
-        backLink().should('have.attr', 'href', expected);
+        cy.checkLink(
+          backLink(),
+          expectedHref,
+          LINKS.BACK,
+        );
       });
 
       it('should focus on input when clicking summary error message', () => {

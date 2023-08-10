@@ -1,6 +1,7 @@
 import { backLink, buyerCountryPage, submitButton } from '../../../pages/shared';
 import { tellUsAboutYourPolicyPage, yourQuotePage } from '../../../pages/quote';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
+import { LINKS } from '../../../../../content-strings';
 
 const {
   ELIGIBILITY: {
@@ -46,10 +47,13 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it('renders a back link with correct url', () => {
-      backLink().should('exist');
+      const expectedHref = `${Cypress.config('baseUrl')}${url}`;
 
-      const expected = `${Cypress.config('baseUrl')}${url}`;
-      backLink().should('have.attr', 'href', expected);
+      cy.checkLink(
+        backLink(),
+        expectedHref,
+        LINKS.BACK,
+      );
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
@@ -92,10 +96,13 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it('renders a back link with correct url', () => {
-      backLink().should('exist');
+      const expectedHref = `${Cypress.config('baseUrl')}${url}`;
 
-      const expected = `${Cypress.config('baseUrl')}${url}`;
-      backLink().should('have.attr', 'href', expected);
+      cy.checkLink(
+        backLink(),
+        expectedHref,
+        LINKS.BACK,
+      );
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
@@ -137,10 +144,13 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it('renders a back link with correct url', () => {
-      backLink().should('exist');
+      const expectedHref = `${Cypress.config('baseUrl')}${url}`;
 
-      const expected = `${Cypress.config('baseUrl')}${url}`;
-      backLink().should('have.attr', 'href', expected);
+      cy.checkLink(
+        backLink(),
+        expectedHref,
+        LINKS.BACK,
+      );
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {

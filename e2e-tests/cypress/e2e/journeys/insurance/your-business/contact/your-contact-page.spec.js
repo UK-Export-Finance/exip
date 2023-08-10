@@ -31,8 +31,6 @@ const {
   },
 } = ROUTES.INSURANCE;
 
-const insuranceStart = ROUTES.INSURANCE.START;
-
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
@@ -78,10 +76,6 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
       cy.navigateToUrl(url);
     });
 
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStart);
-    });
-
     it('renders a heading caption', () => {
       cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
@@ -98,7 +92,7 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
     });
 
     it('should display contact details section legend and hint', () => {
-      cy.checkText(yourContactPage.contactDetailsLegend(), CONTENT_STRINGS.CONTACT_DETAILS.LABEL);
+      cy.checkText(yourContactPage.contactDetailsLegend(), CONTENT_STRINGS.CONTACT_DETAILS.LEGEND);
 
       cy.checkText(yourContactPage.contactDetailsHint(), CONTENT_STRINGS.CONTACT_DETAILS.HINT);
     });

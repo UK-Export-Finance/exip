@@ -1,6 +1,7 @@
 import { PAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import api from '../../../../api';
+import { objectHasProperty } from '../../../../helpers/object';
 import { isPopulatedArray } from '../../../../helpers/array';
 import { mapCisCountries } from '../../../../helpers/mappings/map-cis-countries';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
@@ -26,7 +27,9 @@ const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 export const get = async (req: Request, res: Response) => {
   try {
-    if (!req.session?.submittedData?.insuranceEligibility) {
+    const { submittedData } = req.session;
+
+    if (!submittedData || !objectHasProperty(submittedData, 'insuranceEligibility')) {
       req.session.submittedData = {
         ...req.session.submittedData,
         insuranceEligibility: {},
@@ -40,9 +43,10 @@ export const get = async (req: Request, res: Response) => {
     }
 
     let countryValue;
+    const { insuranceEligibility } = req.session.submittedData;
 
-    if (req.session.submittedData.insuranceEligibility[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]) {
-      countryValue = req.session.submittedData.insuranceEligibility[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
+    if (objectHasProperty(insuranceEligibility, FIELD_ID)) {
+      countryValue = insuranceEligibility[FIELD_ID];
     }
 
     let mappedCountries;
@@ -95,7 +99,7 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
-    const submittedCountryName = payload[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
+    const submittedCountryName = payload[FIELD_ID];
 
     const country = getCountryByName(mappedCountries, submittedCountryName);
 

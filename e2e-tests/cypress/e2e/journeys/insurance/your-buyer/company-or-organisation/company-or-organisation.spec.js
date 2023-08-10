@@ -28,7 +28,6 @@ const {
 const { ELIGIBILITY: { BUYER_COUNTRY } } = FIELD_IDS;
 
 const {
-  START,
   YOUR_BUYER: { WORKING_WITH_BUYER, COMPANY_OR_ORGANISATION },
 } = ROUTES.INSURANCE;
 
@@ -74,10 +73,6 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
     });
 
     it('renders a heading caption', () => {
@@ -135,7 +130,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       const field = companyOrOrganisationPage[fieldId];
 
       field.legend().should('exist');
-      cy.checkText(field.legend(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HEADING);
+      cy.checkText(field.legend(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LEGEND);
     });
 
     it(`renders ${FIRST_NAME} heading, hint, label and input`, () => {

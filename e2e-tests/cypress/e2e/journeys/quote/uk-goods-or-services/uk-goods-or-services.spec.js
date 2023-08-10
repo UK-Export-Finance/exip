@@ -17,8 +17,6 @@ const {
   ELIGIBILITY: { HAS_MINIMUM_UK_GOODS_OR_SERVICES },
 } = FIELD_IDS;
 
-const startRoute = ROUTES.QUOTE.START;
-
 context('UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
   const url = ROUTES.QUOTE.UK_GOODS_OR_SERVICES;
 
@@ -48,10 +46,6 @@ context('UK goods or services page - as an exporter, I want to check if my expor
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to quote start', () => {
-      partials.header.serviceName().should('have.attr', 'href', startRoute);
     });
 
     it('renders `yes` radio button', () => {

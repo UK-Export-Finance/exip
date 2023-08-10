@@ -1,7 +1,7 @@
 import {
   backLink, cannotApplyPage, yesRadio, yesRadioInput, submitButton,
 } from '../../../../pages/shared';
-import { PAGES } from '../../../../../../content-strings';
+import { LINKS, PAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import {
@@ -46,11 +46,13 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
   });
 
   it('renders a back link with correct url', () => {
-    backLink().should('exist');
+    const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`;
 
-    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`;
-
-    backLink().should('have.attr', 'href', expectedUrl);
+    cy.checkLink(
+      backLink(),
+      expectedHref,
+      LINKS.BACK,
+    );
   });
 
   it('renders a specific reason', () => {

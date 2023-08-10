@@ -24,7 +24,7 @@ const EXPORTER_BUSINESS = {
     ...SHARED,
     PAGE_TITLE: 'Your contact details',
     CONTACT_DETAILS: {
-      LABEL: 'Contact details',
+      LEGEND: 'Contact details',
       HINT: 'This will be the name on the contract policy',
     },
   },

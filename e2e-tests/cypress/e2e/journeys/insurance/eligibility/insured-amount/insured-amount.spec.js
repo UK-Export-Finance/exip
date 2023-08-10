@@ -14,8 +14,6 @@ import {
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT;
 
-const insuranceStartRoute = ROUTES.INSURANCE.START;
-
 context('Insurance - Insured amount page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is less than the maxium amount of cover available online', () => {
   let url;
 
@@ -49,10 +47,6 @@ context('Insurance - Insured amount page - I want to check if I can use online s
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
     });
 
     it('renders `yes` radio button', () => {

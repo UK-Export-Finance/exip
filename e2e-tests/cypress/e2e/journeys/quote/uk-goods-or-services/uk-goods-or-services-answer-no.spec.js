@@ -1,7 +1,7 @@
 import {
   backLink, cannotApplyPage, noRadio, submitButton,
 } from '../../../pages/shared';
-import { PAGES } from '../../../../../content-strings';
+import { LINKS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../../support/quote/forms';
@@ -26,9 +26,13 @@ context('UK goods or services page - as an exporter, I want to check if my expor
   });
 
   it('renders a back link with correct url', () => {
-    backLink().should('exist');
+    const expectedHref = ROUTES.QUOTE.UK_GOODS_OR_SERVICES;
 
-    backLink().should('have.attr', 'href', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
+    cy.checkLink(
+      backLink(),
+      expectedHref,
+      LINKS.BACK,
+    );
   });
 
   it('renders a specific reason', () => {

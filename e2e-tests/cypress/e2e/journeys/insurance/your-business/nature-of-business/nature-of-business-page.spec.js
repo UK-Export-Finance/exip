@@ -25,8 +25,6 @@ const {
   },
 } = ROUTES.INSURANCE;
 
-const insuranceStart = ROUTES.INSURANCE.START;
-
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
@@ -74,10 +72,6 @@ context('Insurance - Your business - Nature of your business page - As an Export
       cy.navigateToUrl(natureOfBusinessUrl);
     });
 
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStart);
-    });
-
     it('renders a heading caption', () => {
       cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
@@ -111,7 +105,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
       const fieldId = EMPLOYEES_UK;
       const field = natureOfBusiness[fieldId];
 
-      cy.checkText(field.legend(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HEADING);
+      cy.checkText(field.legend(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LEGEND);
     });
 
     it(`should display ${EMPLOYEES_UK} input box`, () => {

@@ -164,9 +164,11 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
       const expected = `${HINT.NEED_MORE_COVER} ${HINT.FILL_IN_FORM.TEXT}`;
       cy.checkText(field.hint.needMoreCover(), expected);
 
-      cy.checkText(field.hint.fillInFormLink(), HINT.FILL_IN_FORM.TEXT);
-
-      field.hint.fillInFormLink().should('have.attr', 'href', LINKS.EXTERNAL.PROPOSAL_FORM);
+      cy.checkLink(
+        field.hint.fillInFormLink(),
+        LINKS.EXTERNAL.PROPOSAL_FORM,
+        HINT.FILL_IN_FORM.TEXT,
+      );
 
       cy.checkText(field.hint.noDecimals(), HINT.NO_DECIMALS);
 

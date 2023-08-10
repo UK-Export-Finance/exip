@@ -34,20 +34,10 @@ interface InsuranceEligibility extends InsuranceEligibilityCore {
 interface SubmittedDataInsuranceEligibility extends InsuranceEligibilityCore {
   buyerCountry?: Country;
 }
-interface InsuranceSubmittedBuyer {
-  country?: string;
-}
 
 type SubmittedData = {
   quoteEligibility: SubmittedDataQuoteEligibility;
   insuranceEligibility: SubmittedDataInsuranceEligibility;
 };
 
-export {
-  SubmittedDataQuoteEligibility,
-  InsuranceEligibility,
-  InsuranceEligibilityCore,
-  SubmittedDataInsuranceEligibility,
-  InsuranceSubmittedBuyer,
-  SubmittedData,
-};
+export { SubmittedDataQuoteEligibility, InsuranceEligibility, InsuranceEligibilityCore, SubmittedDataInsuranceEligibility, SubmittedData };
