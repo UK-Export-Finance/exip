@@ -1,5 +1,5 @@
-import { submitButton } from '../../../../pages/shared';
-import { aboutGoodsOrServicesPage, checkYourAnswersPage } from '../../../../pages/insurance/policy-and-export';
+import { submitButton, summaryList } from '../../../../pages/shared';
+import { aboutGoodsOrServicesPage } from '../../../../pages/insurance/policy-and-export';
 import partials from '../../../../partials';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
@@ -24,8 +24,6 @@ const {
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
-
-const { summaryList } = checkYourAnswersPage;
 
 context('Insurance - Policy and exports - Change your answers - About goods or services- As an exporter, I want to change my answers to the type of policy and exports section', () => {
   let referenceNumber;

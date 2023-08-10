@@ -1,6 +1,6 @@
 import partials from '../../../../partials';
-import { yourContactPage, checkYourAnswers } from '../../../../pages/your-business';
-import { submitButton } from '../../../../pages/shared';
+import { submitButton, summaryList } from '../../../../pages/shared';
+import { yourContactPage } from '../../../../pages/your-business';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -24,8 +24,6 @@ const { EMAIL, FIRST_NAME, LAST_NAME } = INSURANCE_FIELD_IDS.ACCOUNT;
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
-
-const { summaryList } = checkYourAnswers;
 
 context('Insurance - Your business - Change your answers - Contact- As an exporter, I want to change my answers to the contact section', () => {
   let referenceNumber;

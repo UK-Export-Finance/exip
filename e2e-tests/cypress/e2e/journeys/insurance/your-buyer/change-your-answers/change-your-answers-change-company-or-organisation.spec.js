@@ -5,8 +5,8 @@ import {
   ROUTES,
   WEBSITE_EXAMPLES,
 } from '../../../../../../constants';
-import { companyOrOrganisationPage, checkYourAnswersPage } from '../../../../pages/insurance/your-buyer';
-import { submitButton } from '../../../../pages/shared';
+import { companyOrOrganisationPage } from '../../../../pages/insurance/your-buyer';
+import { submitButton, summaryList } from '../../../../pages/shared';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import application from '../../../../../fixtures/application';
 
@@ -39,8 +39,6 @@ const {
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.buyer;
-
-const { summaryList } = checkYourAnswersPage;
 
 context('Insurance - Your buyer - Change your answers - Company or organisation - As an exporter, I want to change my answers to the company or organisation section', () => {
   let referenceNumber;

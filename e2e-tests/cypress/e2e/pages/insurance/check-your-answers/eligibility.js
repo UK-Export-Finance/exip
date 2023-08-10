@@ -1,14 +1,4 @@
-import SHARED from './shared';
-
-const checkYourAnswersEligibility = {
-  ...SHARED,
-  summaryList: {
-    field: (fieldId) => ({
-      key: () => cy.get(`.${fieldId}-key`),
-      value: () => cy.get(`.${fieldId}-value`),
-      changeLink: () => cy.get(`[data-cy="${fieldId}-change-link"]`),
-    }),
-  },
+export const checkYourAnswersEligibility = {
+  banner: () => cy.get('[data-cy="change-eligibility-banner"]'),
+  bannerLink: () => cy.get('[data-cy="change-eligibility-link"]'),
 };
-
-export default checkYourAnswersEligibility;

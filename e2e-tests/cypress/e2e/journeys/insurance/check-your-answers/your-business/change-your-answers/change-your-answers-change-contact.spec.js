@@ -1,7 +1,7 @@
 import partials from '../../../../../partials';
+import { summaryList } from '../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { checkYourAnswersYourBusiness } from '../../../../../pages/insurance/check-your-answers';
 import { yourContactPage } from '../../../../../pages/your-business';
 import {
   checkChangeLinkUrl,
@@ -31,8 +31,6 @@ const { EMAIL, FIRST_NAME, LAST_NAME } = INSURANCE_FIELD_IDS.ACCOUNT;
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
-
-const { summaryList } = checkYourAnswersYourBusiness;
 
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: CONTACT_CHECK_AND_CHANGE,

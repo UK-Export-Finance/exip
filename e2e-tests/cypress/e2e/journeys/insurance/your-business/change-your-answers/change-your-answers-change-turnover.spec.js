@@ -1,6 +1,6 @@
 import partials from '../../../../partials';
-import { turnover, checkYourAnswers } from '../../../../pages/your-business';
-import { submitButton } from '../../../../pages/shared';
+import { turnover } from '../../../../pages/your-business';
+import { submitButton, summaryList } from '../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -22,8 +22,6 @@ const {
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
-
-const { summaryList } = checkYourAnswers;
 
 context('Insurance - Your business - Change your answers - Turnover - As an exporter, I want to change my answers to the turnover section', () => {
   let referenceNumber;

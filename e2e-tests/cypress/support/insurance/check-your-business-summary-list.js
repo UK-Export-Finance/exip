@@ -1,5 +1,5 @@
-import checkYourAnswersPage from '../../e2e/pages/your-business/check-your-answers/checkYourAnswers';
 import getSummaryListField from './get-summary-list-field';
+import { summaryList } from '../../e2e/pages/shared';
 import { FIELD_IDS } from '../../../constants';
 import { LINKS, DEFAULT } from '../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../content-strings/fields/insurance/business';
@@ -58,7 +58,6 @@ const {
 } = FIELD_IDS;
 
 const assertRow = (fieldId, expectedKey, expectedValue, expectedChangeLinkText) => {
-  const { summaryList } = checkYourAnswersPage;
   const row = summaryList[fieldId];
 
   cy.checkText(
@@ -125,7 +124,6 @@ const checkYourBusinessSummaryList = ({
     const fieldId = COMPANY_ADDRESS;
     const expectedKey = FIELDS[fieldId].SUMMARY.TITLE;
 
-    const { summaryList } = checkYourAnswersPage;
     const row = summaryList[fieldId];
 
     cy.checkText(
@@ -297,7 +295,6 @@ const checkYourBusinessSummaryList = ({
 
     const expectedKey = FIELDS.BROKER[fieldId].SUMMARY.TITLE;
 
-    const { summaryList } = checkYourAnswersPage;
     const row = summaryList[fieldId];
 
     cy.checkText(

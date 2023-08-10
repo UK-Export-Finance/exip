@@ -1,6 +1,6 @@
 import partials from '../../../../partials';
-import { broker, checkYourAnswers } from '../../../../pages/your-business';
-import { submitButton } from '../../../../pages/shared';
+import { broker } from '../../../../pages/your-business';
+import { submitButton, summaryList } from '../../../../pages/shared';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -30,8 +30,6 @@ const {
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
-
-const { summaryList } = checkYourAnswers;
 
 context('Insurance - Your business - Change your answers - Broker - As an exporter, I want to change my answers to the broker section', () => {
   let referenceNumber;
