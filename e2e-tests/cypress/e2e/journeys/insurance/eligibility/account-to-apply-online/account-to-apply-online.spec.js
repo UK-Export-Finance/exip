@@ -54,10 +54,6 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
       cy.navigateToUrl(url);
     });
 
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
-    });
-
     it('renders a `yes` radio button with a hint', () => {
       cy.checkText(yesRadio(), FIELD_VALUES.YES);
 

@@ -139,12 +139,11 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
         hintContent.NEED_MORE_COVER,
       );
 
-      cy.checkText(
+      cy.checkLink(
         field.hint.link(),
+        LINKS.EXTERNAL.PROPOSAL_FORM,
         hintContent.FILL_IN_FORM.TEXT,
       );
-
-      field.hint.link().should('have.attr', 'href', LINKS.EXTERNAL.PROPOSAL_FORM);
 
       cy.checkText(
         field.hint.noDecimals(),

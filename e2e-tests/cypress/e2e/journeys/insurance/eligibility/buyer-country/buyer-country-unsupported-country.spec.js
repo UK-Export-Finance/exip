@@ -1,7 +1,7 @@
 import {
   backLink, buyerCountryPage, cannotApplyPage, submitButton,
 } from '../../../../pages/shared';
-import { PAGES } from '../../../../../../content-strings';
+import { LINKS, PAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { COUNTRY_UNSUPPORTRED } from '../../../../../fixtures/countries';
 
@@ -36,11 +36,13 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
   });
 
   it('renders a back link with correct url', () => {
-    backLink().should('exist');
+    const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
 
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
-
-    backLink().should('have.attr', 'href', expected);
+    cy.checkLink(
+      backLink(),
+      expectedHref,
+      LINKS.BACK,
+    );
   });
 
   it('should prepopulate the field when going back to the page via back link', () => {

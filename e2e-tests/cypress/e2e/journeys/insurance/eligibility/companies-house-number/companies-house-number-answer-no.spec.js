@@ -1,7 +1,7 @@
 import {
   backLink, cannotApplyPage, noRadio, noRadioInput, submitButton,
 } from '../../../../pages/shared';
-import { PAGES } from '../../../../../../content-strings';
+import { LINKS, PAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import {
@@ -50,11 +50,13 @@ context('Insurance - Eligibility - Companies house number page - I want to check
   });
 
   it('renders a back link with correct url', () => {
-    backLink().should('exist');
+    const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
 
-    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
-
-    backLink().should('have.attr', 'href', expectedUrl);
+    cy.checkLink(
+      backLink(),
+      expectedHref,
+      LINKS.BACK,
+    );
   });
 
   it('renders a specific reason', () => {

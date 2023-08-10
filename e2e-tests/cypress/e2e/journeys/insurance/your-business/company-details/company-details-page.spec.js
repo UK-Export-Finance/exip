@@ -21,8 +21,6 @@ const {
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
-const insuranceStart = ROUTES.INSURANCE.START;
-
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
@@ -67,10 +65,6 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
       cy.navigateToUrl(url);
     });
 
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStart);
-    });
-
     it('renders a heading caption', () => {
       cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
@@ -90,7 +84,7 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     });
 
     it('should display the no companies house link', () => {
-      cy.checkText(companyDetails.companiesHouseNoNumber(), CONTENT_STRINGS.NO_COMPANY_HOUSE_NUMER);
+      cy.checkText(companyDetails.companiesHouseNoNumber(), CONTENT_STRINGS.NO_COMPANIES_HOUSE_NUMBER);
     });
 
     it('should display the trading name radios', () => {
