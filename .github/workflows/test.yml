@@ -20,6 +20,32 @@ on:
 env:
   environment: 'qa'
   timezone: 'Europe/London'
+  NODE_ENV: ${{ secrets.NODE_ENV }}
+  DATABASE_PORT: ${{ vars.DATABASE_PORT }}
+  API_PORT: ${{ vars.API_PORT }}
+  UI_PORT: ${{ vars.UI_PORT }}
+  API_URL: ${{ secrets.API_URL }}
+  API_KEY: ${{ secrets.API_KEY }}
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+  MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+  SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+  BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
+  BASIC_AUTH_SECRET: ${{ secrets.BASIC_AUTH_SECRET }}
+  APIM_MDM_URL: ${{ secrets.APIM_MDM_URL }}
+  APIM_MDM_KEY: ${{ secrets.APIM_MDM_KEY }}
+  APIM_MDM_VALUE: ${{ secrets.APIM_MDM_VALUE }}
+  GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
+  GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
+  COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
+  COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
+  GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
+  GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
+  UNDERWRITING_TEAM_EMAIL: ${{ secrets.UNDERWRITING_TEAM_EMAIL }}
+  FEEDBACK_EMAIL_RECIPIENT: ${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
+  MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+  JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
+  JWT_VALIDATING_KEY: ${{ secrets.JWT_VALIDATING_KEY }}
 
 jobs:
   # 1. Setup test infrastructure
@@ -78,30 +104,6 @@ jobs:
 
       - name: API
         working-directory: ./
-        env:
-          DATABASE_PORT: ${{ vars.DATABASE_PORT }}
-          API_PORT: ${{ vars.API_PORT }}
-          UI_PORT: ${{ vars.UI_PORT }}
-          API_URL: ${{ secrets.API_URL_LOCAL }}
-          API_KEY: ${{ secrets.API_KEY }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL_LOCAL }}
-          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-          APIM_MDM_URL: ${{ secrets.APIM_MDM_URL }}
-          APIM_MDM_KEY: ${{ secrets.APIM_MDM_KEY }}
-          APIM_MDM_VALUE: ${{ secrets.APIM_MDM_VALUE }}
-          GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
-          GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
-          COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
-          COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
-          UNDERWRITING_TEAM_EMAIL: ${{ secrets.UNDERWRITING_TEAM_EMAIL }}
-          FEEDBACK_EMAIL_RECIPIENT: ${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
-          MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
-          JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
-          JWT_VALIDATING_KEY: ${{ secrets.JWT_VALIDATING_KEY }}
         run: |
           docker-compose up --build -d
           npm ci --legacy-peer-deps --prefix ./src/api
@@ -132,33 +134,6 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Docker
-        env:
-          NODE_ENV: ${{ secrets.NODE_ENV }}
-          DATABASE_PORT: ${{ vars.DATABASE_PORT }}
-          API_PORT: ${{ vars.API_PORT }}
-          UI_PORT: ${{ vars.UI_PORT }}
-          API_URL: ${{ secrets.API_URL }}
-          API_KEY: ${{ secrets.API_KEY }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-          BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
-          BASIC_AUTH_SECRET: ${{ secrets.BASIC_AUTH_SECRET }}
-          APIM_MDM_URL: ${{ secrets.APIM_MDM_URL }}
-          APIM_MDM_KEY: ${{ secrets.APIM_MDM_KEY }}
-          APIM_MDM_VALUE: ${{ secrets.APIM_MDM_VALUE }}
-          GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
-          GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
-          COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
-          COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
-          UNDERWRITING_TEAM_EMAIL: ${{ secrets.UNDERWRITING_TEAM_EMAIL }}
-          FEEDBACK_EMAIL_RECIPIENT: ${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
-          MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
-          JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
-          JWT_VALIDATING_KEY: ${{ secrets.JWT_VALIDATING_KEY }}
         run: docker-compose up --build -d
 
       - name: 30s Sleep
@@ -209,33 +184,6 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Docker
-        env:
-          NODE_ENV: ${{ secrets.NODE_ENV }}
-          DATABASE_PORT: ${{ vars.DATABASE_PORT }}
-          API_PORT: ${{ vars.API_PORT }}
-          UI_PORT: ${{ vars.UI_PORT }}
-          API_URL: ${{ secrets.API_URL }}
-          API_KEY: ${{ secrets.API_KEY }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-          BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
-          BASIC_AUTH_SECRET: ${{ secrets.BASIC_AUTH_SECRET }}
-          APIM_MDM_URL: ${{ secrets.APIM_MDM_URL }}
-          APIM_MDM_KEY: ${{ secrets.APIM_MDM_KEY }}
-          APIM_MDM_VALUE: ${{ secrets.APIM_MDM_VALUE }}
-          GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
-          GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
-          COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
-          COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
-          UNDERWRITING_TEAM_EMAIL: ${{ secrets.UNDERWRITING_TEAM_EMAIL }}
-          FEEDBACK_EMAIL_RECIPIENT: ${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
-          MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
-          JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
-          JWT_VALIDATING_KEY: ${{ secrets.JWT_VALIDATING_KEY }}
         run: docker-compose up --build -d
 
       - name: 30s Sleep
@@ -284,33 +232,6 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Docker
-        env:
-          NODE_ENV: ${{ secrets.NODE_ENV }}
-          DATABASE_PORT: ${{ vars.DATABASE_PORT }}
-          API_PORT: ${{ vars.API_PORT }}
-          UI_PORT: ${{ vars.UI_PORT }}
-          API_URL: ${{ secrets.API_URL }}
-          API_KEY: ${{ secrets.API_KEY }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
-          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
-          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-          BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
-          BASIC_AUTH_SECRET: ${{ secrets.BASIC_AUTH_SECRET }}
-          APIM_MDM_URL: ${{ secrets.APIM_MDM_URL }}
-          APIM_MDM_KEY: ${{ secrets.APIM_MDM_KEY }}
-          APIM_MDM_VALUE: ${{ secrets.APIM_MDM_VALUE }}
-          GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
-          GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
-          COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
-          COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
-          UNDERWRITING_TEAM_EMAIL: ${{ secrets.UNDERWRITING_TEAM_EMAIL }}
-          FEEDBACK_EMAIL_RECIPIENT: ${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
-          MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
-          JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
-          JWT_VALIDATING_KEY: ${{ secrets.JWT_VALIDATING_KEY }}
         run: docker-compose up --build -d
 
       - name: 30s Sleep
