@@ -109,13 +109,13 @@ jobs:
           npm ci --legacy-peer-deps --prefix ./src/api
           npm run test --prefix ./src/api
 
-  # 3. Insurance E2E - E2E Journey test cases
-  insurance-e2e-tests:
-    name: Insurance E2E 👷
+  e2e-tests-insurance:
+    name: E2E Insurance 👷
     needs: setup
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
+
     strategy:
       fail-fast: true
       matrix:
@@ -140,14 +140,13 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v4
         with:
           install: false
-          headed: false
           record: true
           parallel: true
           browser: chrome
-          group: 'EXIP'
+          group: "EXIP-E2E-INSURANCE"
           project: ./e2e-tests/insurance
           config: video=false
         env:
@@ -159,13 +158,20 @@ jobs:
           GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
 
-  # 4. Quote E2E - E2E Journey test cases
-  quote-e2e-tests:
-    name: Quote E2E 👷
+      - name: Screenshots
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@main
+        with:
+          name: screenshots
+          path: "./cypress/screenshots"
+
+  e2e-tests-quote:
+    name: E2E Quote 👷
     needs: setup
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
+
     strategy:
       fail-fast: true
       matrix:
@@ -190,14 +196,13 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v4
         with:
           install: false
-          headed: false
           record: true
           parallel: true
           browser: chrome
-          group: 'EXIP'
+          group: "EXIP-E2E-QUOTE"
           project: ./e2e-tests/quote
           config: video=false
         env:
@@ -209,15 +214,24 @@ jobs:
           GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
 
-  # 5. Switch between services E2E - E2E Journey test cases
-  switch-between-services-e2e-tests:
-    name: Switch between services E2E 👷
+      - name: Screenshots
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@main
+        with:
+          name: screenshots
+          path: "./cypress/screenshots"
+
+  e2e-tests-switch-between-services:
+    name: E2E Switch between services 👷
     needs: setup
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
+
     strategy:
       fail-fast: true
+      matrix:
+        machines: [1, 2, 3, 4]
 
     steps:
       - uses: actions/checkout@v3
@@ -238,14 +252,13 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v4
         with:
           install: false
-          headed: false
           record: true
           parallel: true
           browser: chrome
-          group: 'EXIP'
+          group: "EXIP-E2E-SWITCH-BETWEEN-SERVICES"
           project: ./e2e-tests/switch-between-services
           config: video=false
         env:
@@ -256,3 +269,10 @@ jobs:
           GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
           GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+
+      - name: Screenshots
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@main
+        with:
+          name: screenshots
+          path: "./cypress/screenshots"
