@@ -2,7 +2,7 @@ import {
   cannotApplyPage, noRadio, submitButton,
 } from '../../pages/shared';
 import partials from '../../partials';
-import { PAGES } from '../../../../content-strings';
+import { LINKS, PAGES } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../support/forms';
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../support/quote/forms';
@@ -66,8 +66,10 @@ context('Cannot apply exit page', () => {
   });
 
   describe('when clicking `eligibility` link', () => {
-    it('redirects to guidance page - eligibility section', () => {
-      cannotApplyPage.actions.eligibilityLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF);
+    it(`redirects to ${LINKS.EXTERNAL.GUIDANCE}`, () => {
+      cannotApplyPage.actions.eligibilityLink().click();
+
+      cy.url().should('eq', LINKS.EXTERNAL.GUIDANCE);
     });
   });
 });
