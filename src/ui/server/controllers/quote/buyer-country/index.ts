@@ -1,6 +1,7 @@
 import { LINKS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
+import { objectHasProperty } from '../../../helpers/object';
 import { isPopulatedArray } from '../../../helpers/array';
 import { mapCisCountries } from '../../../helpers/mappings/map-cis-countries';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
@@ -55,7 +56,9 @@ export const getBackLink = (referer?: string): string => {
 };
 
 export const get = async (req: Request, res: Response) => {
-  if (!req.session.submittedData?.quoteEligibility) {
+  const { submittedData } = req.session;
+
+  if (!submittedData || !objectHasProperty(submittedData, 'quoteEligibility')) {
     req.session.submittedData = {
       ...req.session.submittedData,
       quoteEligibility: {},
@@ -70,9 +73,10 @@ export const get = async (req: Request, res: Response) => {
     }
 
     let countryValue;
+    const { quoteEligibility } = req.session.submittedData;
 
-    if (req.session.submittedData.quoteEligibility[FIELD_ID]) {
-      countryValue = req.session.submittedData.quoteEligibility[FIELD_ID];
+    if (objectHasProperty(quoteEligibility, FIELD_ID)) {
+      countryValue = quoteEligibility[FIELD_ID];
     }
 
     let mappedCountries;

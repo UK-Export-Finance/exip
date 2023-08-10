@@ -1,6 +1,7 @@
 import { BUTTONS, COOKIES_CONSENT, FIELDS, QUOTE_FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT, HEADER } from '../../../content-strings';
 import { FIELD_IDS as ALL_FIELD_IDS, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
+import { objectHasProperty } from '../../../helpers/object';
 import { isPopulatedArray } from '../../../helpers/array';
 import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
@@ -114,7 +115,8 @@ const get = async (req: Request, res: Response) => {
     }
 
     let mappedCurrencies;
-    if (submittedData?.quoteEligibility && submittedData.quoteEligibility[CURRENCY]) {
+
+    if (objectHasProperty(submittedData.quoteEligibility, CURRENCY)) {
       mappedCurrencies = mapCurrencies(currencies, submittedData.quoteEligibility[CURRENCY].isoCode);
     } else {
       mappedCurrencies = mapCurrencies(currencies);
@@ -122,7 +124,7 @@ const get = async (req: Request, res: Response) => {
 
     let mappedPercentageOfCover;
 
-    if (submittedData?.quoteEligibility && submittedData.quoteEligibility[PERCENTAGE_OF_COVER]) {
+    if (objectHasProperty(submittedData.quoteEligibility, PERCENTAGE_OF_COVER)) {
       mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER, Number(submittedData.quoteEligibility[PERCENTAGE_OF_COVER]));
     } else {
       mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER);
@@ -131,7 +133,7 @@ const get = async (req: Request, res: Response) => {
     const creditPeriodOptions = FIELDS[CREDIT_PERIOD].OPTIONS as Array<SelectOption>;
     let mappedCreditPeriod;
 
-    if (submittedData?.quoteEligibility && submittedData.quoteEligibility[CREDIT_PERIOD]) {
+    if (objectHasProperty(submittedData.quoteEligibility, CREDIT_PERIOD)) {
       mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions, String(submittedData.quoteEligibility[CREDIT_PERIOD]));
     } else {
       mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions);
