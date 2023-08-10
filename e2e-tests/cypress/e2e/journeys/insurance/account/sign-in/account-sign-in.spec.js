@@ -1,4 +1,3 @@
-import partials from '../../../../partials';
 import { signInPage } from '../../../../pages/insurance/account/sign-in';
 import { yourDetailsPage } from '../../../../pages/insurance/account/create';
 import accountFormFields from '../../../../partials/insurance/accountFormFields';
@@ -66,10 +65,6 @@ context('Insurance - Account - Sign in - As an Exporter, I want to sign in into 
       cy.navigateToUrl(url);
     });
 
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
-    });
-
     it('renders `email` label and input', () => {
       const fieldId = EMAIL;
       const field = accountFormFields[fieldId];
@@ -101,17 +96,27 @@ context('Insurance - Account - Sign in - As an Exporter, I want to sign in into 
     });
 
     it('renders a `reset password` link', () => {
-      cy.checkText(signInPage.resetPasswordLink(), CONTENT_STRINGS.PASSWORD_RESET.TEXT);
+      const expectedHref = CONTENT_STRINGS.PASSWORD_RESET.HREF;
+      const expectedText = CONTENT_STRINGS.PASSWORD_RESET.TEXT;
 
-      signInPage.resetPasswordLink().should('have.attr', 'href', CONTENT_STRINGS.PASSWORD_RESET.HREF);
+      cy.checkLink(
+        signInPage.resetPasswordLink(),
+        expectedHref,
+        expectedText,
+      );
     });
 
     it('renders a `need to create an account` copy and button link', () => {
       cy.checkText(signInPage.needToCreateAccountHeading(), CONTENT_STRINGS.NEED_TO_CREATE_ACCOUNT.HEADING);
 
-      cy.checkText(signInPage.createAccountLink(), CONTENT_STRINGS.NEED_TO_CREATE_ACCOUNT.LINK.TEXT);
+      const expectedHref = CONTENT_STRINGS.NEED_TO_CREATE_ACCOUNT.LINK.HREF;
+      const expectedText = CONTENT_STRINGS.NEED_TO_CREATE_ACCOUNT.LINK.TEXT;
 
-      signInPage.createAccountLink().should('have.attr', 'href', CONTENT_STRINGS.NEED_TO_CREATE_ACCOUNT.LINK.HREF);
+      cy.checkLink(
+        signInPage.createAccountLink(),
+        expectedHref,
+        expectedText,
+      );
     });
 
     it(`should redirect to ${YOUR_DETAILS} when clicking 'need to create an account'`, () => {

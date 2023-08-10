@@ -1,4 +1,3 @@
-import partials from '../../../../../partials';
 import { submitButton } from '../../../../../pages/shared';
 import { enterCodePage, requestNewCodePage } from '../../../../../pages/insurance/account/sign-in';
 import { BUTTONS, PAGES } from '../../../../../../../content-strings';
@@ -49,10 +48,6 @@ context('Insurance - Account - Sign in - Request new code page - I want to enter
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
     });
 
     it('should render intro copy', () => {

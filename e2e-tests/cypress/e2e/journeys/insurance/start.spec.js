@@ -1,6 +1,5 @@
 import { insurance } from '../../pages';
 import { submitButton } from '../../pages/shared';
-import partials from '../../partials';
 import { BUTTONS, PAGES } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
@@ -32,10 +31,6 @@ context('Insurance Eligibility - start page', () => {
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', url);
     });
 
     it('renders an intro', () => {

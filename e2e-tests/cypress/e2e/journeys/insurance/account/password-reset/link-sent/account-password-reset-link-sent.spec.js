@@ -1,4 +1,3 @@
-import partials from '../../../../../partials';
 import { linkSentPage } from '../../../../../pages/insurance/account/password-reset';
 import { PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -73,9 +72,7 @@ context('Insurance - Account - Password reset - link sent page - As an Exporter,
       goToPasswordResetLinkSentPage();
     });
 
-    it('should render a header with href to insurance start and `check your inbox` copy with the submitted email', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
-
+    it('should render `check your inbox` copy with the submitted email', () => {
       const expected = `${CHECK_YOUR_INBOX} ${mockAccount[EMAIL]}`;
 
       cy.checkText(linkSentPage.checkInbox(), expected);

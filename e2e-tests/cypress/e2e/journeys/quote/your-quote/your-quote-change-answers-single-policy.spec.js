@@ -5,6 +5,7 @@ import {
   yourQuotePage,
 } from '../../../pages/quote';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
+import { LINKS } from '../../../../../content-strings';
 
 const {
   ELIGIBILITY: {
@@ -51,10 +52,13 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it('renders a back link with correct url', () => {
-      backLink().should('exist');
+      const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
-      backLink().should('have.attr', 'href', expected);
+      cy.checkLink(
+        backLink(),
+        expectedHref,
+        LINKS.BACK,
+      );
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
@@ -96,10 +100,13 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it('renders a back link with correct url', () => {
-      backLink().should('exist');
+      const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
-      backLink().should('have.attr', 'href', expected);
+      cy.checkLink(
+        backLink(),
+        expectedHref,
+        LINKS.BACK,
+      );
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
@@ -141,10 +148,13 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it('renders a back link with correct url', () => {
-      backLink().should('exist');
+      const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
-      backLink().should('have.attr', 'href', expected);
+      cy.checkLink(
+        backLink(),
+        expectedHref,
+        LINKS.BACK,
+      );
     });
 
     it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting a new answer`, () => {
@@ -198,10 +208,13 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it('renders a back link with correct url', () => {
-      backLink().should('exist');
+      const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
-      backLink().should('have.attr', 'href', expected);
+      cy.checkLink(
+        backLink(),
+        expectedHref,
+        LINKS.BACK,
+      );
     });
 
     it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {

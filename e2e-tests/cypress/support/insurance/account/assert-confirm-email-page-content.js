@@ -38,8 +38,11 @@ const havingProblemsSection = {
     cy.checkText(confirmEmailPage.havingProblems.wrongEmail.enteredIncorrectly(), ENTERED_INCORRECTLY);
   },
   createAccountLink: () => {
-    cy.checkText(wrongEmail.createAccountAgainLink(), CREATE_ACCOUNT_AGAIN.TEXT);
-    wrongEmail.createAccountAgainLink().should('have.attr', 'href', ROUTES.ACCOUNT.CREATE.YOUR_DETAILS);
+    cy.checkLink(
+      wrongEmail.createAccountAgainLink(),
+      ROUTES.ACCOUNT.CREATE.YOUR_DETAILS,
+      CREATE_ACCOUNT_AGAIN.TEXT,
+    );
   },
 };
 

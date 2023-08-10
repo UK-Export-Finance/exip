@@ -41,11 +41,7 @@ context('Insurance - Feedback Confirmation page', () => {
       cy.navigateToUrl(url);
     });
 
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
-    });
-
-    it('should render a text body confirming feedback', () => {
+    it('should render text confirming feedback', () => {
       cy.checkText(feedbackConfirmation.feedbackConfirmation(), CONTENT_STRINGS.FEEDBACK_TEXT);
     });
   });

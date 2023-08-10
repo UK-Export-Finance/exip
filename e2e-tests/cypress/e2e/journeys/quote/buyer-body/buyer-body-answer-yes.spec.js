@@ -2,7 +2,7 @@ import {
   backLink, yesRadio, yesRadioInput, submitButton,
 } from '../../../pages/shared';
 import { getAQuoteByEmailPage } from '../../../pages/quote';
-import { PAGES } from '../../../../../content-strings';
+import { LINKS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
@@ -30,9 +30,11 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   });
 
   it('renders a back link with correct url', () => {
-    backLink().should('exist');
-
-    backLink().should('have.attr', 'href', url);
+    cy.checkLink(
+      backLink(),
+      url,
+      LINKS.BACK,
+    );
   });
 
   it('renders a specific reason and description', () => {

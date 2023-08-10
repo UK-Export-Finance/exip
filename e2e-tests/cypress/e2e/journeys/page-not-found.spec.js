@@ -1,4 +1,4 @@
-import partials from '../partials';
+import header from '../partials/header';
 import { PAGES, PRODUCT } from '../../../content-strings';
 
 const CONTENT_STRINGS = PAGES.PAGE_NOT_FOUND_PAGE;
@@ -26,15 +26,22 @@ context('404 Page not found', () => {
 
   describe('header', () => {
     it('renders a GOV home link', () => {
-      partials.header.govHomeLink().should('exist');
-
-      partials.header.govHomeLink().should('have.attr', 'href', 'https://www.gov.uk');
+      cy.checkLink(
+        header.govHomeLink(),
+        'https://www.gov.uk',
+        'GOV.UK',
+      );
     });
 
     it('renders service name link', () => {
-      cy.checkText(partials.header.serviceName(), PRODUCT.DESCRIPTION.GENERIC);
+      const expectedHref = '/';
+      const expectedText = PRODUCT.DESCRIPTION.GENERIC;
 
-      partials.header.serviceName().should('have.attr', 'href', '/');
+      cy.checkLink(
+        header.serviceName(),
+        expectedHref,
+        expectedText,
+      );
     });
   });
 
