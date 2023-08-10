@@ -71,7 +71,7 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
   describe('when clicking `eligibility` link', () => {
     it(`redirects to ${LINKS.EXTERNAL.GUIDANCE}`, () => {
       cannotApplyPage.actions.eligibilityLink().click();
-      
+
       cy.url().should('eq', LINKS.EXTERNAL.GUIDANCE);
     });
   });

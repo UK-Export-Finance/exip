@@ -1,12 +1,7 @@
 import {
   cannotApplyPage, noRadio, submitButton,
 } from '../../pages/shared';
-<<<<<<< HEAD
-import partials from '../../partials';
 import { LINKS, PAGES } from '../../../../content-strings';
-=======
-import { PAGES } from '../../../../content-strings';
->>>>>>> main-application
 import { ROUTES } from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../support/forms';
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../support/quote/forms';
