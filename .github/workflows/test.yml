@@ -141,10 +141,6 @@ jobs:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
-    concurrency:
-      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.run_id }}
-      cancel-in-progress: true
-
     strategy:
       fail-fast: true
       matrix:
@@ -196,7 +192,7 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         with:
           install: false
           record: true
@@ -229,10 +225,6 @@ jobs:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
-    concurrency:
-      group: e2e-tests-quote-${{ github.workflow }}-${{ github.run_id }}
-      cancel-in-progress: true
-
     strategy:
       fail-fast: true
       matrix:
@@ -284,7 +276,7 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         with:
           install: false
           record: true
@@ -316,10 +308,6 @@ jobs:
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
-
-    concurrency:
-      group: e2e-tests-switch-between-services-${{ github.workflow }}-${{ github.run_id }}
-      cancel-in-progress: true
 
     strategy:
       fail-fast: true
@@ -370,7 +358,7 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         with:
           install: false
           record: true
