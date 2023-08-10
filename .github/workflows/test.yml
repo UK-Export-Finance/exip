@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
 
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
       cancel-in-progress: true
 
     steps:
@@ -120,7 +120,7 @@ jobs:
         machines: [1, 2, 3, 4]
 
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      group: '${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.ref }}'
       cancel-in-progress: true
 
     steps:
