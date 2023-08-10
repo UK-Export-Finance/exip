@@ -72,11 +72,13 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
       });
 
       it('renders a back link with correct url', () => {
-        backLink().should('exist');
+        const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.BUYER_COUNTRY}`;
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.BUYER_COUNTRY}`;
-
-        backLink().should('have.attr', 'href', expected);
+        cy.checkLink(
+          backLink(),
+          expectedHref,
+          LINKS.BACK,
+        );
       });
 
       it('should focus on input when clicking summary error message', () => {

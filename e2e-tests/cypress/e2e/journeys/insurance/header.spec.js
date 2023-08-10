@@ -1,5 +1,4 @@
 import header from '../../partials/header';
-import { PRODUCT } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
 context('Insurance - header', () => {
@@ -12,15 +11,18 @@ context('Insurance - header', () => {
   });
 
   it('renders a GOV home link', () => {
-    header.govHomeLink().should('exist');
+    const expectedHref = 'https://www.gov.uk';
+    const expectedText = 'GOV.UK';
 
-    header.govHomeLink().should('have.attr', 'href', 'https://www.gov.uk');
+    cy.checkLink(
+      header.govHomeLink(),
+      expectedHref,
+      expectedText,
+    );
   });
 
   it('renders service name link', () => {
-    cy.checkText(header.serviceName(), PRODUCT.DESCRIPTION.APPLICATION);
-
-    header.serviceName().should('have.attr', 'href', url);
+    cy.checkHeaderServiceNameAndHref({ isInsurancePage: true });
   });
 
   it('should NOT render authenticated navigation links', () => {

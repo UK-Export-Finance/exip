@@ -13,13 +13,10 @@ import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 
 const {
   POLICY_AND_EXPORTS,
-  START,
   EXPORTER_BUSINESS: {
     COMPANY_DETAILS,
   },
 } = ROUTES.INSURANCE;
-
-const insuranceStartRoute = START;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS;
 
@@ -67,10 +64,6 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
     });
 
     it('renders a heading caption', () => {

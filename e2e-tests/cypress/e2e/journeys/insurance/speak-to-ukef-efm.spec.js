@@ -47,11 +47,13 @@ context('Insurance - speak to UKEF EFM exit page', () => {
     const expectedText = `${ACTIONS.FIND_EFM[0][0].text} ${ACTIONS.FIND_EFM[0][1].text}${ACTIONS.FIND_EFM[0][2].text}`;
     cy.checkText(insurance.speakToUkefEfmPage.action.text(), expectedText);
 
-    const expectedLink = `${ACTIONS.FIND_EFM[0][1].text}`;
-    cy.checkText(insurance.speakToUkefEfmPage.action.link(), expectedLink);
-
+    const expectedLinkText = `${ACTIONS.FIND_EFM[0][1].text}`;
     const expectedHref = ACTIONS.FIND_EFM[0][1].href;
 
-    insurance.speakToUkefEfmPage.action.link().should('have.attr', 'href', expectedHref);
+    cy.checkLink(
+      insurance.speakToUkefEfmPage.action.link(),
+      expectedHref,
+      expectedLinkText,
+    );
   });
 });

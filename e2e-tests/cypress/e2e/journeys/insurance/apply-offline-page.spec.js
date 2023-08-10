@@ -40,15 +40,25 @@ context('Insurance - apply offline exit page', () => {
     const expected = `${ACTIONS.DOWNLOAD_FORM.LINK.TEXT} ${ACTIONS.DOWNLOAD_FORM.TEXT}`;
     cy.checkText(insurance.applyOfflinePage.downloadFormCopy(), expected);
 
-    cy.checkText(insurance.applyOfflinePage.downloadFormLink(), ACTIONS.DOWNLOAD_FORM.LINK.TEXT);
-
-    insurance.applyOfflinePage.downloadFormLink().should('have.attr', 'href', ACTIONS.DOWNLOAD_FORM.LINK.HREF_NBI);
+    cy.checkLink(
+      insurance.applyOfflinePage.downloadFormLink(),
+      ACTIONS.DOWNLOAD_FORM.LINK.HREF_NBI,
+      ACTIONS.DOWNLOAD_FORM.LINK.TEXT,
+    );
   });
 
   it('renders `contact` copy with link', () => {
-    const expected = `${ACTIONS.CONTACT.TEXT} ${ACTIONS.CONTACT.LINK.TEXT}`;
-    cy.checkText(insurance.applyOfflinePage.contactCopy(), expected);
+    const expectedContactCopy = `${ACTIONS.CONTACT.TEXT} ${ACTIONS.CONTACT.LINK.TEXT}`;
 
-    insurance.applyOfflinePage.contactLink().should('have.attr', 'href', ACTIONS.CONTACT.LINK.HREF);
+    cy.checkText(insurance.applyOfflinePage.contactCopy(), expectedContactCopy);
+
+    const expectedLinkHref = ACTIONS.CONTACT.LINK.HREF;
+    const expectedLinkText = ACTIONS.CONTACT.LINK.TEXT;
+
+    cy.checkLink(
+      insurance.applyOfflinePage.contactLink(),
+      expectedLinkHref,
+      expectedLinkText,
+    );
   });
 });

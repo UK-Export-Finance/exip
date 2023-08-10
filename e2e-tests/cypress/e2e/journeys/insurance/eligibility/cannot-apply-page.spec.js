@@ -52,12 +52,20 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
 
     cy.checkText(cannotApplyPage.actions.eligibility(), expectedEligibility);
 
-    cannotApplyPage.actions.eligibilityLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF);
+    cy.checkLink(
+      cannotApplyPage.actions.eligibilityLink(),
+      CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF,
+      CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.TEXT,
+    );
 
     const expectedBroker = `${CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT} ${CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.TEXT}`;
     cy.checkText(cannotApplyPage.actions.approvedBroker(), expectedBroker);
 
-    cannotApplyPage.actions.approvedBrokerLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.HREF);
+    cy.checkLink(
+      cannotApplyPage.actions.approvedBrokerLink(),
+      CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.HREF,
+      CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT,
+    );
   });
 
   describe('when clicking `eligibility` link', () => {

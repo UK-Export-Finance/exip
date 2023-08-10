@@ -1,4 +1,3 @@
-import partials from '../../../../../partials';
 import { BUTTONS, PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { ACCOUNT_FIELDS } from '../../../../../../../content-strings/fields/insurance/account';
@@ -9,7 +8,6 @@ import account from '../../../../../../fixtures/account';
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.NEW_PASSWORD;
 
 const {
-  START,
   ACCOUNT: {
     PASSWORD_RESET: {
       ROOT: PASSWORD_RESET_ROOT,
@@ -72,10 +70,6 @@ context('Insurance - Account - Password reset - new password page - As an Export
           assertAuthenticatedHeader: false,
           submitButtonCopy: BUTTONS.SUBMIT,
         });
-      });
-
-      it('should render a header with href to insurance start', () => {
-        partials.header.serviceName().should('have.attr', 'href', START);
       });
 
       describe('password', () => {

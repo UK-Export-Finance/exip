@@ -1,4 +1,4 @@
-import partials from '../../partials';
+import header from '../../partials/header';
 import { PRODUCT } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
@@ -12,14 +12,24 @@ context('Get a quote - header', () => {
   });
 
   it('renders a GOV home link', () => {
-    partials.header.govHomeLink().should('exist');
+    const expectedHref = 'https://www.gov.uk';
+    const expectedText = 'GOV.UK';
 
-    partials.header.govHomeLink().should('have.attr', 'href', 'https://www.gov.uk');
+    cy.checkLink(
+      header.govHomeLink(),
+      expectedHref,
+      expectedText,
+    );
   });
 
   it('renders service name link', () => {
-    cy.checkText(partials.header.serviceName(), PRODUCT.DESCRIPTION.QUOTE);
+    const expectedHref = '/';
+    const expectedText = PRODUCT.DESCRIPTION.QUOTE;
 
-    partials.header.serviceName().should('have.attr', 'href', '/');
+    cy.checkLink(
+      header.serviceName(),
+      expectedHref,
+      expectedText,
+    );
   });
 });

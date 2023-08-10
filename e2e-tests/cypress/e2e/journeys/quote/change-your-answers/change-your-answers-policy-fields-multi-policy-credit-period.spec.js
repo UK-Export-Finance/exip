@@ -4,6 +4,7 @@ import {
   checkYourAnswersPage,
 } from '../../../pages/quote';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
+import { LINKS } from '../../../../../content-strings';
 
 const { ELIGIBILITY: { CREDIT_PERIOD } } = FIELD_IDS;
 
@@ -37,10 +38,13 @@ context('Change your answers (policy credit period field) - as an exporter, I wa
   });
 
   it('renders a back link with correct url', () => {
-    backLink().should('exist');
+    const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
 
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-    backLink().should('have.attr', 'href', expected);
+    cy.checkLink(
+      backLink(),
+      expectedHref,
+      LINKS.BACK,
+    );
   });
 
   it('has originally submitted answer', () => {

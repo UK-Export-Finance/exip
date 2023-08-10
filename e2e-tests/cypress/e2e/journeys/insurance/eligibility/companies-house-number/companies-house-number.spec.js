@@ -61,10 +61,6 @@ context('Insurance - Eligibility - Companies house number page - I want to check
       cy.navigateToUrl(url);
     });
 
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
-    });
-
     it('renders `yes` radio button', () => {
       yesRadio().should('exist');
 

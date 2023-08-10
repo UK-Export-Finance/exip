@@ -29,12 +29,11 @@ const checkPolicyCurrencyCodeInput = () => {
     hintContent.NEED_DIFFERENT_CURRENCY,
   );
 
-  cy.checkText(
+  cy.checkLink(
     field.hint.link(),
+    LINKS.EXTERNAL.PROPOSAL_FORM,
     hintContent.APPLY_USING_FORM.TEXT,
   );
-
-  field.hint.link().should('have.attr', 'href', LINKS.EXTERNAL.PROPOSAL_FORM);
 
   field.input().should('exist');
 
