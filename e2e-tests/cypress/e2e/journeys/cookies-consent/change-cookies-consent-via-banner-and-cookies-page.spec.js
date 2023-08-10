@@ -3,6 +3,8 @@ import { submitButton } from '../../pages/shared';
 import { cookiesPage } from '../../pages';
 import { FIELD_IDS, ROUTES } from '../../../../constants';
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Cookies consent - change via banner and cookies page', () => {
   const cookiesPageUrl = ROUTES.COOKIES;
 
@@ -23,7 +25,10 @@ context('Cookies consent - change via banner and cookies page', () => {
       partials.cookieBanner.hideButton().click();
 
       partials.footer.supportLinks.cookies().click();
-      cy.assertUrl(cookiesPageUrl);
+
+      const expectedUrl = `${baseUrl}${cookiesPageUrl}`;
+
+      cy.assertUrl(expectedUrl);
 
       cy.checkAnalyticsScriptsAreRendered();
       cy.checkAnalyticsCookieIsTrue();

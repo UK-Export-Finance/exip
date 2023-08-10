@@ -2,11 +2,15 @@ import partials from '../../../partials';
 import { COOKIES_CONSENT, PRODUCT } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Cookies consent - initial/default', () => {
   beforeEach(() => {
     cy.login();
 
-    cy.assertUrl(ROUTES.QUOTE.BUYER_COUNTRY);
+    const expectedUrl = `${baseUrl}${ROUTES.QUOTE.BUYER_COUNTRY}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   describe('question banner', () => {

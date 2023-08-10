@@ -3,6 +3,8 @@ import { COOKIES_CONSENT } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Cookies consent - accept', () => {
   const url = ROUTES.QUOTE.BUYER_COUNTRY;
 
@@ -22,7 +24,9 @@ context('Cookies consent - accept', () => {
     });
 
     it('should remain on the same page', () => {
-      cy.assertUrl(ROUTES.QUOTE.BUYER_COUNTRY);
+      const expectedUrl = `${baseUrl}${ROUTES.QUOTE.BUYER_COUNTRY}`;
+
+      cy.assertUrl(expectedUrl);
     });
 
     it('should not render the question banner', () => {
