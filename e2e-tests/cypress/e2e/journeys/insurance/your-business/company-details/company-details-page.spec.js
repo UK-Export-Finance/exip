@@ -84,7 +84,7 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     });
 
     it('should display the no companies house link', () => {
-      cy.checkText(companyDetails.companiesHouseNoNumber(), CONTENT_STRINGS.NO_COMPANY_HOUSE_NUMER);
+      cy.checkText(companyDetails.companiesHouseNoNumber(), CONTENT_STRINGS.NO_COMPANIES_HOUSE_NUMBER);
     });
 
     it('should display the trading name radios', () => {

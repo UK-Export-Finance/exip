@@ -61,8 +61,8 @@ context('Insurance - All sections - new application', () => {
 
           cy.checkLink(
             task.link(),
-            expectedText,
             expectedHref,
+            expectedText,
           );
 
           const expectedStatus = TASKS.STATUS.COMPLETED;
@@ -94,8 +94,8 @@ context('Insurance - All sections - new application', () => {
 
           cy.checkLink(
             task.link(),
-            expectedText,
             expectedHref,
+            expectedText,
           );
 
           const expectedStatus = TASKS.STATUS.NOT_STARTED_YET;
@@ -111,8 +111,8 @@ context('Insurance - All sections - new application', () => {
 
           cy.checkLink(
             task.link(),
-            expectedText,
             expectedHref,
+            expectedText,
           );
 
           const expectedStatus = TASKS.STATUS.NOT_STARTED_YET;
@@ -127,8 +127,8 @@ context('Insurance - All sections - new application', () => {
 
           cy.checkLink(
             task.link(),
-            expectedText,
             expectedHref,
+            expectedText,
           );
 
           const expectedStatus = TASKS.STATUS.NOT_STARTED_YET;

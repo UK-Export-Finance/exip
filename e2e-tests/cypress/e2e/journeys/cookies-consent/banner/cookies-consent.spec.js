@@ -50,7 +50,7 @@ context('Cookies consent - initial/default', () => {
 
     it('should render a link to cookies', () => {
       cy.checkLink(
-        partials.cookieBanner.cookiesLink,
+        partials.cookieBanner.cookiesLink(),
         ROUTES.COOKIES,
         COOKIES_CONSENT.QUESTION.VIEW_COOKIES,
       );

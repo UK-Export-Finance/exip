@@ -3,18 +3,20 @@ import { insurance } from '../../../../pages';
 import {
   cannotApplyPage,
 } from '../../../../pages/shared';
-import { PAGES } from '../../../../../../content-strings';
+import INSURANCE_PAGES from '../../../../../../content-strings/pages/insurance';
 import { ROUTES } from '../../../../../../constants';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
-const { ACTIONS } = CONTENT_STRINGS;
+const {
+  APPLY_OFFLINE: { ACTIONS, REASON },
+  EXPORTER_BUSINESS: { COMPANY_DETAILS: { NO_COMPANIES_HOUSE_NUMBER } },
+} = INSURANCE_PAGES;
 
 const {
   ROOT,
   APPLY_OFFLINE,
   EXPORTER_BUSINESS: {
     COMPANY_DETAILS,
-    NO_COMPANIES_HOUSE_NUMBER,
+    NO_COMPANIES_HOUSE_NUMBER: NO_COMPANIES_HOUSE_NUMBER_ROUTE,
   },
 } = ROUTES.INSURANCE;
 
@@ -39,9 +41,9 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
 
     cy.navigateToUrl(url);
 
-    const expectedHref = `${ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`;
+    const expectedHref = `${ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER_ROUTE}`;
 
-    const expectedText = CONTENT_STRINGS.REASON.NO_COMPANIES_HOUSE_NUMBER;
+    const expectedText = NO_COMPANIES_HOUSE_NUMBER;
 
     cy.checkLink(
       companyDetails.companiesHouseNoNumber(),
@@ -60,8 +62,8 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
     cy.url().should('eq', `${Cypress.config('baseUrl')}${APPLY_OFFLINE}`);
   });
 
-  it(`should contain "${CONTENT_STRINGS.REASON.NO_COMPANIES_HOUSE_NUMBER}" message on apply offline page`, () => {
-    const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NO_COMPANIES_HOUSE_NUMBER}`;
+  it(`should contain "${REASON.NO_COMPANIES_HOUSE_NUMBER}" message on apply offline page`, () => {
+    const expected = `${REASON.INTRO} ${REASON.NO_COMPANIES_HOUSE_NUMBER}`;
 
     cy.checkText(cannotApplyPage.reason(), expected);
   });

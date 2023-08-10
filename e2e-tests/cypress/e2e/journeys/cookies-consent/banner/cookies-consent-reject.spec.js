@@ -42,7 +42,7 @@ context('Cookies consent - reject', () => {
       cy.checkText(partials.cookieBanner.rejected.copy(), expected);
 
       cy.checkLink(
-        partials.cookieBanner.cookiesLink,
+        partials.cookieBanner.cookiesLink(),
         ROUTES.COOKIES,
         COOKIES_CONSENT.COOKIES_LINK,
       );

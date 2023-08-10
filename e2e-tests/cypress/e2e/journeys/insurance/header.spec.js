@@ -22,7 +22,7 @@ context('Insurance - header', () => {
   });
 
   it('renders service name link', () => {
-    cy.checkHeaderServiceNameHref({ isInsurancePage: true });
+    cy.checkHeaderServiceNameAndHref({ isInsurancePage: true });
   });
 
   it('should NOT render authenticated navigation links', () => {
