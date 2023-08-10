@@ -76,7 +76,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_DETAILS_CHANGE, INPUT);
       });
@@ -88,7 +88,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(companyDetails.companiesHouseSearch(), newAnswer);
 
@@ -122,7 +122,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_DETAILS_CHANGE, fieldId);
       });
@@ -132,7 +132,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         companyDetails.tradingNameNoRadioInput().click();
 
@@ -158,7 +158,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_DETAILS_CHANGE, fieldId);
       });
@@ -168,7 +168,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         companyDetails.tradingAddressNoRadioInput().click();
 
@@ -194,7 +194,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_DETAILS_CHANGE, fieldId);
       });
@@ -206,7 +206,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(companyDetails.phoneNumber(), newAnswer);
 
@@ -230,7 +230,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_DETAILS_CHANGE, fieldId);
       });
@@ -242,7 +242,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(companyDetails.companyWebsite(), newAnswer);
 

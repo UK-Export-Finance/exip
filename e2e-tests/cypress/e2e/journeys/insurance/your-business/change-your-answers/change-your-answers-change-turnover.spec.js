@@ -58,7 +58,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
       it(`should redirect to ${TURNOVER_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, TURNOVER_CHANGE, ESTIMATED_ANNUAL_TURNOVER);
       });
@@ -70,7 +70,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(turnover[fieldId].input(), newAnswer);
 
@@ -94,7 +94,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
       it(`should redirect to ${TURNOVER_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, TURNOVER_CHANGE, fieldId);
       });
@@ -106,7 +106,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(turnover[fieldId].input(), newAnswer);
 

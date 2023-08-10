@@ -60,7 +60,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       it(`should redirect to ${WORKING_WITH_BUYER_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, WORKING_WITH_BUYER_CHANGE, CONNECTED_WITH_BUYER);
       });
@@ -70,7 +70,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         workingWithBuyerPage[fieldId].noRadioInput().click();
 
@@ -94,7 +94,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       it(`should redirect to ${WORKING_WITH_BUYER_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, WORKING_WITH_BUYER_CHANGE, TRADED_WITH_BUYER);
       });
@@ -104,7 +104,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         workingWithBuyerPage[fieldId].noRadioInput().click();
 

@@ -60,7 +60,7 @@ context('Insurance - Your business - Change your answers - Contact- As an export
       it(`should redirect to ${CONTACT_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, CONTACT_CHANGE, FIRST_NAME);
       });
@@ -73,7 +73,7 @@ context('Insurance - Your business - Change your answers - Contact- As an export
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(yourContactPage.field(FIRST_NAME).input(), newAnswerFirstName);
         cy.keyboardInput(yourContactPage.field(LAST_NAME).input(), newAnswerLastName);
@@ -98,7 +98,7 @@ context('Insurance - Your business - Change your answers - Contact- As an export
       it(`should redirect to ${CONTACT_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, CONTACT_CHANGE, EMAIL);
       });
@@ -110,7 +110,7 @@ context('Insurance - Your business - Change your answers - Contact- As an export
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(yourContactPage.field(EMAIL).input(), newAnswer);
 
@@ -134,7 +134,7 @@ context('Insurance - Your business - Change your answers - Contact- As an export
       it(`should redirect to ${CONTACT_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, CONTACT_CHANGE, fieldId);
       });
@@ -146,7 +146,7 @@ context('Insurance - Your business - Change your answers - Contact- As an export
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(yourContactPage.field(fieldId).input(), newAnswer);
 

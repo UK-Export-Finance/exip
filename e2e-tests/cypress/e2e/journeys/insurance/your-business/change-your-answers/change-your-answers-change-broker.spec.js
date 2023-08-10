@@ -66,7 +66,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       it(`should redirect to ${BROKER_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, NAME);
       });
@@ -78,7 +78,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(broker[fieldId].input(), newAnswer);
 
@@ -102,7 +102,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       it(`should redirect to ${BROKER_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, fieldId);
       });
@@ -118,7 +118,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(broker[fieldId].input(), addressLine1);
         cy.keyboardInput(broker[ADDRESS_LINE_2].input(), addressLine2);
@@ -160,7 +160,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       it(`should redirect to ${BROKER_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, NAME);
       });
@@ -172,7 +172,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(broker[fieldId].input(), newAnswer);
 
@@ -196,7 +196,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       it(`should redirect to ${BROKER_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, USING_BROKER);
       });
@@ -206,7 +206,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         broker[fieldId].noRadioInput().click();
 

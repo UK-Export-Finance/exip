@@ -63,7 +63,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
       it(`should redirect to ${NATURE_OF_BUSINESS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, NATURE_OF_BUSINESS_CHANGE, GOODS_OR_SERVICES);
       });
@@ -75,7 +75,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(natureOfBusiness[fieldId].input(), newAnswer);
 
@@ -99,7 +99,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
       it(`should redirect to ${NATURE_OF_BUSINESS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, NATURE_OF_BUSINESS_CHANGE, fieldId);
       });
@@ -111,7 +111,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(natureOfBusiness[fieldId].input(), newAnswer);
 
@@ -135,7 +135,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
       it(`should redirect to ${NATURE_OF_BUSINESS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, NATURE_OF_BUSINESS_CHANGE, fieldId);
       });
@@ -147,7 +147,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(natureOfBusiness[fieldId].input(), newAnswer);
 
@@ -171,7 +171,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
       it(`should redirect to ${NATURE_OF_BUSINESS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, NATURE_OF_BUSINESS_CHANGE, fieldId);
       });
@@ -183,7 +183,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(natureOfBusiness[fieldId].input(), newAnswer);
 
