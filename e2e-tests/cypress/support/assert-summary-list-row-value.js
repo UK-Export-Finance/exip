@@ -8,7 +8,7 @@
  */
 const assertSummaryListRowValue = (summaryList, fieldId, expected) => {
   cy.checkText(
-    summaryList[fieldId].value(),
+    summaryList.field(fieldId).value(),
     expected,
   );
 };

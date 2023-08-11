@@ -5,12 +5,8 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../support/quote/forms';
-import { submitButton } from '../../../pages/shared';
-import {
-  yourQuotePage,
-  tellUsAboutYourPolicyPage,
-  checkYourAnswersPage,
-} from '../../../pages/quote';
+import { submitButton, summaryList } from '../../../pages/shared';
+import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import { ROUTES, FIELD_IDS } from '../../../../../constants';
 import { GBP_CURRENCY_CODE } from '../../../../fixtures/currencies';
 
@@ -48,7 +44,7 @@ context('Get a quote/your quote page (large contract value) - as an exporter, I 
     cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
 
     // Check contract value formatting in the answers page
-    const answersAmount = checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE].value();
+    const answersAmount = summaryList.field(CONTRACT_VALUE).value();
 
     const expectedAmount = '£12,345,678';
     cy.checkText(answersAmount, expectedAmount);
@@ -57,10 +53,10 @@ context('Get a quote/your quote page (large contract value) - as an exporter, I 
 
     // Check contract value formatting in the quote
     const expectedValue = '£11,111,110.20';
-    cy.checkText(yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR].value(), expectedValue);
+    cy.checkText(summaryList.field(QUOTE.INSURED_FOR).value(), expectedValue);
 
     // Check estimated cost in the quote
     const expectedCost = '£143,209.86';
-    cy.checkText(yourQuotePage.panel.summaryList[QUOTE.ESTIMATED_COST].value(), expectedCost);
+    cy.checkText(summaryList.field(QUOTE.ESTIMATED_COST).value(), expectedCost);
   });
 });

@@ -1,5 +1,5 @@
-import { checkYourAnswersPage } from '../../e2e/pages/insurance/your-buyer';
 import getSummaryListField from './get-summary-list-field';
+import { summaryList } from '../../e2e/pages/shared';
 import { FIELD_IDS } from '../../../constants';
 import { LINKS, DEFAULT } from '../../../content-strings';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../content-strings/fields/insurance/your-buyer';
@@ -28,8 +28,7 @@ const {
 } = FIELD_IDS;
 
 const assertRow = (fieldId, expectedKey, expectedValue, expectedChangeLinkText) => {
-  const { summaryList } = checkYourAnswersPage;
-  const row = summaryList[fieldId];
+  const row = summaryList.field(fieldId);
 
   cy.checkText(
     row.key(),
@@ -87,8 +86,7 @@ const checkYourBusinessSummaryList = ({
     const fieldId = ADDRESS;
     const expectedKey = FIELDS.COMPANY_OR_ORGANISATION[fieldId].SUMMARY.TITLE;
 
-    const { summaryList } = checkYourAnswersPage;
-    const row = summaryList[fieldId];
+    const row = summaryList.field(fieldId);
 
     cy.checkText(
       row.key(),
@@ -120,8 +118,7 @@ const checkYourBusinessSummaryList = ({
     const fieldId = FIRST_NAME;
     const expectedKey = FIELDS.COMPANY_OR_ORGANISATION[fieldId].SUMMARY.TITLE;
 
-    const { summaryList } = checkYourAnswersPage;
-    const row = summaryList[fieldId];
+    const row = summaryList.field(fieldId);
 
     cy.checkText(
       row.key(),

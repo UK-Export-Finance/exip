@@ -3,12 +3,10 @@ import {
   completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
 } from '../../../../support/quote/forms';
-import { buyerCountryPage, submitButton } from '../../../pages/shared';
+import { buyerCountryPage, submitButton, summaryList } from '../../../pages/shared';
 import {
-  checkYourAnswersPage,
   policyTypePage,
   tellUsAboutYourPolicyPage,
-  yourQuotePage,
 } from '../../../pages/quote';
 import { ROUTES, FIELD_IDS } from '../../../../../constants';
 import { USD_CURRENCY_CODE } from '../../../../fixtures/currencies';
@@ -57,7 +55,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
     cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
 
     // Check contract value formatting in the answers page
-    const answersAmount = checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE].value();
+    const answersAmount = summaryList.field(CONTRACT_VALUE).value();
 
     const expectedAmount = '$100,000';
     cy.checkText(answersAmount, expectedAmount);
@@ -66,10 +64,10 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
 
     // Check contract value formatting in the quote
     const expectedValue = '$80,000.00';
-    cy.checkText(yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR].value(), expectedValue);
+    cy.checkText(summaryList.field(QUOTE.INSURED_FOR).value(), expectedValue);
 
     // Check estimated cost in the quote
     const expectedCost = '$5,090.00';
-    cy.checkText(yourQuotePage.panel.summaryList[QUOTE.ESTIMATED_COST].value(), expectedCost);
+    cy.checkText(summaryList.field(QUOTE.ESTIMATED_COST).value(), expectedCost);
   });
 });

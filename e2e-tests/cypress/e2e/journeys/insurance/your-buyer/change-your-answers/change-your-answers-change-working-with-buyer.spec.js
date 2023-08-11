@@ -1,7 +1,7 @@
 import partials from '../../../../partials';
+import { submitButton, summaryList } from '../../../../pages/shared';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
-import { workingWithBuyerPage, checkYourAnswersPage } from '../../../../pages/insurance/your-buyer';
-import { submitButton } from '../../../../pages/shared';
+import { workingWithBuyerPage } from '../../../../pages/insurance/your-buyer';
 
 const {
   INSURANCE: {
@@ -25,8 +25,6 @@ const {
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.buyer;
-
-const { summaryList } = checkYourAnswersPage;
 
 context('Insurance - Your buyer - Change your answers - Company or organisation - As an exporter, I want to change my answers to the company or organisation section', () => {
   let url;
@@ -62,7 +60,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       it(`should redirect to ${WORKING_WITH_BUYER_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, WORKING_WITH_BUYER_CHANGE, CONNECTED_WITH_BUYER);
       });
@@ -72,7 +70,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         workingWithBuyerPage[fieldId].noRadioInput().click();
 
@@ -96,7 +94,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       it(`should redirect to ${WORKING_WITH_BUYER_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, WORKING_WITH_BUYER_CHANGE, TRADED_WITH_BUYER);
       });
@@ -106,7 +104,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         workingWithBuyerPage[fieldId].noRadioInput().click();
 
