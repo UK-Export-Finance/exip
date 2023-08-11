@@ -1,4 +1,4 @@
-import { submitButton } from '../../../pages/shared';
+import { submitButton, summaryList } from '../../../pages/shared';
 import { checkYourAnswersPage } from '../../../pages/quote';
 import {
   FIELDS,
@@ -56,7 +56,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
     });
 
     it('renders `Buyer based` key, value and change link', () => {
-      const row = list[BUYER_COUNTRY];
+      const row = summaryList.field(BUYER_COUNTRY);
       const expectedKeyText = FIELDS[BUYER_COUNTRY].SUMMARY.TITLE;
 
       cy.checkText(row.key(), expectedKeyText);
@@ -75,7 +75,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
     });
 
     it('renders `Company` key, value and change link', () => {
-      const row = list[VALID_EXPORTER_LOCATION];
+      const row = summaryList.field(VALID_EXPORTER_LOCATION);
       const expectedKeyText = FIELDS[VALID_EXPORTER_LOCATION].SUMMARY.TITLE;
 
       cy.checkText(row.key(), expectedKeyText);
@@ -93,7 +93,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
     });
 
     it('renders `UK goods` key, value and change link', () => {
-      const row = list[HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+      const row = summaryList.field(HAS_MINIMUM_UK_GOODS_OR_SERVICES);
       const expectedKeyText = FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES].SUMMARY.TITLE;
 
       cy.checkText(row.key(), expectedKeyText);
@@ -123,7 +123,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
     });
 
     it('renders `Policy type` key, value and change link', () => {
-      const row = list[MULTIPLE_POLICY_TYPE];
+      const row = summaryList.field(MULTIPLE_POLICY_TYPE);
       const expectedKeyText = FIELDS[MULTIPLE_POLICY_TYPE].SUMMARY.TITLE;
 
       cy.checkText(row.key(), expectedKeyText);
@@ -141,7 +141,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
     });
 
     it('renders `Policy length` key and value (no change link)', () => {
-      const row = list[MULTIPLE_POLICY_LENGTH];
+      const row = summaryList.field(MULTIPLE_POLICY_LENGTH);
       const expectedKeyText = FIELDS[MULTIPLE_POLICY_LENGTH].SUMMARY.TITLE;
 
       cy.checkText(row.key(), expectedKeyText);
@@ -153,7 +153,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
     });
 
     it('renders `Max amount owed` key, value with no decimal points and change link', () => {
-      const row = list[MAX_AMOUNT_OWED];
+      const row = summaryList.field(MAX_AMOUNT_OWED);
       const expectedKeyText = FIELDS[MAX_AMOUNT_OWED].SUMMARY.TITLE;
 
       cy.checkText(row.key(), expectedKeyText);
@@ -172,7 +172,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
     });
 
     it('renders `Credit period` key, value and change link', () => {
-      const row = list[CREDIT_PERIOD];
+      const row = summaryList.field(CREDIT_PERIOD);
       const expectedKeyText = FIELDS[CREDIT_PERIOD].SUMMARY.TITLE;
 
       cy.checkText(row.key(), expectedKeyText);
@@ -191,7 +191,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
     });
 
     it('renders `Percentage of cover` key, value and change link', () => {
-      const row = list[PERCENTAGE_OF_COVER];
+      const row = summaryList.field(PERCENTAGE_OF_COVER);
       const expectedKeyText = FIELDS[PERCENTAGE_OF_COVER].SUMMARY.TITLE;
 
       cy.checkText(row.key(), expectedKeyText);

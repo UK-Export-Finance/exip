@@ -220,17 +220,17 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       it('should render the new answer and not render the optional broker sections', () => {
         cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
 
-        summaryList[NAME].key().should('not.exist');
-        summaryList[NAME].value().should('not.exist');
-        summaryList[NAME].changeLink().should('not.exist');
+        summaryList.field(NAME).key().should('not.exist');
+        summaryList.field(NAME).value().should('not.exist');
+        summaryList.field(NAME).changeLink().should('not.exist');
 
-        summaryList[ADDRESS_LINE_1].key().should('not.exist');
-        summaryList[ADDRESS_LINE_1].value().should('not.exist');
-        summaryList[ADDRESS_LINE_1].changeLink().should('not.exist');
+        summaryList.field(ADDRESS_LINE_1).key().should('not.exist');
+        summaryList.field(ADDRESS_LINE_1).value().should('not.exist');
+        summaryList.field(ADDRESS_LINE_1).changeLink().should('not.exist');
 
-        summaryList[EMAIL].key().should('not.exist');
-        summaryList[EMAIL].value().should('not.exist');
-        summaryList[EMAIL].changeLink().should('not.exist');
+        summaryList.field(EMAIL).key().should('not.exist');
+        summaryList.field(EMAIL).value().should('not.exist');
+        summaryList.field(EMAIL).changeLink().should('not.exist');
       });
     });
   });

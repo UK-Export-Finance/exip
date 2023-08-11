@@ -1,5 +1,5 @@
 import { FIELD_IDS } from '../../../constants';
-import checkYourAnswersEligibilityPage from '../../e2e/pages/insurance/check-your-answers/eligibility';
+import { summaryList } from '../../e2e/pages/shared';
 import { FIELDS_ELIGIBILITY as FIELDS } from '../../../content-strings/fields/insurance/eligibility';
 import application from '../../fixtures/application';
 import { LINKS, DEFAULT } from '../../../content-strings';
@@ -18,7 +18,6 @@ const {
 } = FIELD_IDS.INSURANCE.ELIGIBILITY;
 
 const assertRow = (fieldId, expectedKey, expectedValue, expectedChangeLinkText) => {
-  const { summaryList } = checkYourAnswersEligibilityPage;
   const row = summaryList.field(fieldId);
 
   cy.checkText(

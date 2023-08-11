@@ -1,8 +1,5 @@
 import { submitButton, summaryList } from '../../../pages/shared';
-import {
-  checkYourAnswersPage,
-  tellUsAboutYourPolicyPage,
-} from '../../../pages/quote';
+import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import { QUOTE_TITLES } from '../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../constants';
 import { EUR_CURRENCY_CODE } from '../../../../fixtures/currencies';
@@ -29,7 +26,7 @@ context('Get a quote/your quote page (non GBP currency) - as an exporter, I want
     cy.submitQuoteAnswersHappyPathSinglePolicy();
 
     // change currency to non-GBP
-    checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE].changeLink().click();
+    summaryList.field(CONTRACT_VALUE).changeLink().click();
 
     tellUsAboutYourPolicyPage[CURRENCY].input().select(EUR_CURRENCY_CODE);
     submitButton().click();

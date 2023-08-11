@@ -4,7 +4,7 @@ import {
   summaryList,
   submitButton,
 } from '../../../pages/shared';
-import { tellUsAboutYourPolicyPage, yourQuotePage } from '../../../pages/quote';
+import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { LINKS } from '../../../../../content-strings';
 
@@ -82,7 +82,7 @@ context('Your quote page - change answers (policy type and length from multiple 
   });
 
   describe('change `percentage of cover`', () => {
-    const row = yourQuotePage.panel.summaryList[PERCENTAGE_OF_COVER];
+    const row = summaryList.field(PERCENTAGE_OF_COVER);
 
     beforeEach(() => {
       cy.navigateToUrl(url);
@@ -130,7 +130,7 @@ context('Your quote page - change answers (policy type and length from multiple 
   });
 
   describe('change `buyer location`', () => {
-    const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
+    const row = summaryList.field(QUOTE.BUYER_LOCATION);
 
     beforeEach(() => {
       cy.navigateToUrl(url);
@@ -181,7 +181,7 @@ context('Your quote page - change answers (policy type and length from multiple 
 
       cy.url().should('include', url);
 
-      const buyerLocation = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
+      const buyerLocation = summaryList.field(QUOTE.BUYER_LOCATION);
 
       cy.checkText(buyerLocation.value(), 'Brazil');
     });
