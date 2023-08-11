@@ -1,4 +1,4 @@
-import { buyerCountryPage, submitButton } from '../../../pages/shared';
+import { buyerCountryPage, summaryList, submitButton } from '../../../pages/shared';
 import { yourQuotePage } from '../../../pages/quote';
 import {
   LINKS,
@@ -100,10 +100,8 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
           cy.navigateToUrl(url);
         });
 
-        const { summaryList } = yourQuotePage.panel;
-
         it('renders `contract value` key, value with no decimal points and change link', () => {
-          const row = summaryList[CONTRACT_VALUE];
+          const row = summaryList.field(CONTRACT_VALUE);
           const expectedKeyText = QUOTE_TITLES[CONTRACT_VALUE];
 
           cy.checkText(row.key(), expectedKeyText);
@@ -122,7 +120,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         });
 
         it('renders `percentage of cover` key, value and change link', () => {
-          const row = summaryList[PERCENTAGE_OF_COVER];
+          const row = summaryList.field(PERCENTAGE_OF_COVER);
           const expectedKeyText = QUOTE_TITLES[PERCENTAGE_OF_COVER];
 
           cy.checkText(row.key(), expectedKeyText);
@@ -141,7 +139,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         });
 
         it('renders `insured for` key and value with decimal points (no change link)', () => {
-          const row = summaryList[INSURED_FOR];
+          const row = summaryList.field(INSURED_FOR);
           const expectedKeyText = QUOTE_TITLES[`${INSURED_FOR}_SINGLE_POLICY`];
 
           cy.checkText(row.key(), expectedKeyText);
@@ -153,7 +151,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         });
 
         it('renders `premium rate` key and value (no change link)', () => {
-          const row = summaryList[PREMIUM_RATE_PERCENTAGE];
+          const row = summaryList.field(PREMIUM_RATE_PERCENTAGE);
           const expectedKeyText = QUOTE_TITLES[PREMIUM_RATE_PERCENTAGE];
 
           cy.checkText(row.key(), expectedKeyText);
@@ -165,7 +163,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         });
 
         it('renders `estimated cost` key and value (no change link)', () => {
-          const row = summaryList[ESTIMATED_COST];
+          const row = summaryList.field(ESTIMATED_COST);
           const expectedKeyText = QUOTE_TITLES[ESTIMATED_COST];
 
           cy.checkText(row.key(), expectedKeyText);
@@ -177,7 +175,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         });
 
         it('renders `policy length` key, value and change link', () => {
-          const row = summaryList[SINGLE_POLICY_LENGTH];
+          const row = summaryList.field(SINGLE_POLICY_LENGTH);
           const expectedKeyText = QUOTE_TITLES[POLICY_LENGTH];
 
           cy.checkText(row.key(), expectedKeyText);
@@ -196,7 +194,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         });
 
         it('renders `buyer location` key, value and change link', () => {
-          const row = summaryList[BUYER_LOCATION];
+          const row = summaryList.field(BUYER_LOCATION);
           const expectedKeyText = QUOTE_TITLES[BUYER_LOCATION];
 
           cy.checkText(row.key(), expectedKeyText);

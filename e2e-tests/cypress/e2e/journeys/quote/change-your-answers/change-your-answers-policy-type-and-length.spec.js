@@ -1,9 +1,5 @@
-import { backLink, submitButton } from '../../../pages/shared';
-import {
-  policyTypePage,
-  checkYourAnswersPage,
-  tellUsAboutYourPolicyPage,
-} from '../../../pages/quote';
+import { backLink, submitButton, summaryList } from '../../../pages/shared';
+import { policyTypePage, tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../constants';
 import { LINKS } from '../../../../../content-strings';
 
@@ -43,7 +39,7 @@ const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
  * via "check answers" and policy type page flow
  */
 const changeFromSingleToMultiple = () => {
-  const row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
+  const row = summaryList.field(SINGLE_POLICY_TYPE);
 
   row.changeLink().click();
 
@@ -63,7 +59,7 @@ const changeFromSingleToMultiple = () => {
  * via "check answers" and policy type page flow
  */
 const changeFromMultipleToSingle = () => {
-  const row = checkYourAnswersPage.summaryLists.policy[MULTIPLE_POLICY_TYPE];
+  const row = summaryList.field(MULTIPLE_POLICY_TYPE);
 
   // change from multiple to single
   row.changeLink().click();
@@ -87,7 +83,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       cy.submitQuoteAnswersHappyPathSinglePolicy();
 
       cy.assertUrl(url);
-      row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
+      row = summaryList.field(SINGLE_POLICY_TYPE);
     });
 
     beforeEach(() => {
@@ -137,8 +133,13 @@ context('Change your answers - as an exporter, I want to change the details befo
       cy.login();
 
       cy.submitQuoteAnswersHappyPathSinglePolicy();
+<<<<<<< HEAD
       cy.assertUrl(url);
       row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
+=======
+      cy.url().should('include', url);
+      row = summaryList.field(SINGLE_POLICY_TYPE);
+>>>>>>> main-application
 
       cy.navigateToUrl(url);
 
@@ -154,17 +155,17 @@ context('Change your answers - as an exporter, I want to change the details befo
     });
 
     it('renders the new answers in `Check your answers` page (multi, 8 months)', () => {
-      row = checkYourAnswersPage.summaryLists.policy[MAX_AMOUNT_OWED];
+      row = summaryList.field(MAX_AMOUNT_OWED);
 
       const expectedValue = '£120,000';
       cy.checkText(row.value(), expectedValue);
 
-      row = checkYourAnswersPage.summaryLists.policy[MULTIPLE_POLICY_TYPE];
+      row = summaryList.field(MULTIPLE_POLICY_TYPE);
 
       const expectedValue2 = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
       cy.checkText(row.value(), expectedValue2);
 
-      row = checkYourAnswersPage.summaryLists.policy[MULTIPLE_POLICY_LENGTH];
+      row = summaryList.field(MULTIPLE_POLICY_LENGTH);
 
       const expectedValue3 = `${FIELD_VALUES.POLICY_LENGTH.MULTIPLE} months`;
       cy.checkText(row.value(), expectedValue3);
@@ -185,7 +186,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
         changeFromMultipleToSingle();
 
-        row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
+        row = summaryList.field(SINGLE_POLICY_TYPE);
       });
 
       beforeEach(() => {
@@ -237,7 +238,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
         cy.navigateToUrl(url);
 
-        row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
+        row = summaryList.field(SINGLE_POLICY_TYPE);
 
         changeFromSingleToMultiple();
 
@@ -245,17 +246,17 @@ context('Change your answers - as an exporter, I want to change the details befo
       });
 
       it('renders the new answers in `Check your answers` page (single policy, 3 months)', () => {
-        row = checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE];
+        row = summaryList.field(CONTRACT_VALUE);
 
         const expectedValue = '£150';
         cy.checkText(row.value(), expectedValue);
 
-        row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
+        row = summaryList.field(SINGLE_POLICY_TYPE);
 
         const expectedValue2 = FIELD_VALUES.POLICY_TYPE.SINGLE;
         cy.checkText(row.value(), expectedValue2);
 
-        row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_LENGTH];
+        row = summaryList.field(SINGLE_POLICY_LENGTH);
 
         const expectedValue3 = '3 months';
         cy.checkText(row.value(), expectedValue3);
@@ -279,7 +280,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
         changeFromSingleToMultiple();
 
-        row = checkYourAnswersPage.summaryLists.policy[MULTIPLE_POLICY_TYPE];
+        row = summaryList.field(MULTIPLE_POLICY_TYPE);
       });
 
       beforeEach(() => {

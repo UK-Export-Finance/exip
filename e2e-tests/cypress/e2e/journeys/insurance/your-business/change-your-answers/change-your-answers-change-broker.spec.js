@@ -1,6 +1,6 @@
 import partials from '../../../../partials';
-import { broker, checkYourAnswers } from '../../../../pages/your-business';
-import { submitButton } from '../../../../pages/shared';
+import { broker } from '../../../../pages/your-business';
+import { submitButton, summaryList } from '../../../../pages/shared';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -30,8 +30,6 @@ const {
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
-
-const { summaryList } = checkYourAnswers;
 
 context('Insurance - Your business - Change your answers - Broker - As an exporter, I want to change my answers to the broker section', () => {
   let referenceNumber;
@@ -68,7 +66,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       it(`should redirect to ${BROKER_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, NAME);
       });
@@ -80,7 +78,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(broker[fieldId].input(), newAnswer);
 
@@ -104,7 +102,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       it(`should redirect to ${BROKER_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, fieldId);
       });
@@ -120,7 +118,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(broker[fieldId].input(), addressLine1);
         cy.keyboardInput(broker[ADDRESS_LINE_2].input(), addressLine2);
@@ -138,7 +136,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       it('should render the new answer', () => {
         const expectedKey = FIELDS.BROKER[fieldId].SUMMARY.TITLE;
 
-        const row = summaryList[fieldId];
+        const row = summaryList.field(fieldId);
 
         cy.checkText(
           row.key(),
@@ -162,7 +160,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       it(`should redirect to ${BROKER_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, NAME);
       });
@@ -174,7 +172,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(broker[fieldId].input(), newAnswer);
 
@@ -198,7 +196,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       it(`should redirect to ${BROKER_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, USING_BROKER);
       });
@@ -208,7 +206,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         broker[fieldId].noRadioInput().click();
 
@@ -222,17 +220,17 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       it('should render the new answer and not render the optional broker sections', () => {
         cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
 
-        summaryList[NAME].key().should('not.exist');
-        summaryList[NAME].value().should('not.exist');
-        summaryList[NAME].changeLink().should('not.exist');
+        summaryList.field(NAME).key().should('not.exist');
+        summaryList.field(NAME).value().should('not.exist');
+        summaryList.field(NAME).changeLink().should('not.exist');
 
-        summaryList[ADDRESS_LINE_1].key().should('not.exist');
-        summaryList[ADDRESS_LINE_1].value().should('not.exist');
-        summaryList[ADDRESS_LINE_1].changeLink().should('not.exist');
+        summaryList.field(ADDRESS_LINE_1).key().should('not.exist');
+        summaryList.field(ADDRESS_LINE_1).value().should('not.exist');
+        summaryList.field(ADDRESS_LINE_1).changeLink().should('not.exist');
 
-        summaryList[EMAIL].key().should('not.exist');
-        summaryList[EMAIL].value().should('not.exist');
-        summaryList[EMAIL].changeLink().should('not.exist');
+        summaryList.field(EMAIL).key().should('not.exist');
+        summaryList.field(EMAIL).value().should('not.exist');
+        summaryList.field(EMAIL).changeLink().should('not.exist');
       });
     });
   });

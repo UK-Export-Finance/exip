@@ -1,8 +1,5 @@
-import { backLink, submitButton } from '../../../pages/shared';
-import {
-  tellUsAboutYourPolicyPage,
-  checkYourAnswersPage,
-} from '../../../pages/quote';
+import { backLink, submitButton, summaryList } from '../../../pages/shared';
+import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { LINKS } from '../../../../../content-strings';
 
@@ -17,7 +14,7 @@ context('Change your answers (policy credit period field) - as an exporter, I wa
     cy.assertUrl(url);
   });
 
-  let row = checkYourAnswersPage.summaryLists.policy[CREDIT_PERIOD];
+  let row = summaryList.field(CREDIT_PERIOD);
 
   beforeEach(() => {
     cy.saveSession();
@@ -66,7 +63,7 @@ context('Change your answers (policy credit period field) - as an exporter, I wa
   it('renders the new answer in `Check your answers` page', () => {
     submitButton().click();
 
-    row = checkYourAnswersPage.summaryLists.policy[CREDIT_PERIOD];
+    row = summaryList.field(CREDIT_PERIOD);
 
     const expected = '2 months';
     cy.checkText(row.value(), expected);

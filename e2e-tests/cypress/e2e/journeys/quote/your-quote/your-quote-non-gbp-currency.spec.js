@@ -1,9 +1,5 @@
-import { submitButton } from '../../../pages/shared';
-import {
-  checkYourAnswersPage,
-  tellUsAboutYourPolicyPage,
-  yourQuotePage,
-} from '../../../pages/quote';
+import { submitButton, summaryList } from '../../../pages/shared';
+import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import { QUOTE_TITLES } from '../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../constants';
 import { EUR_CURRENCY_CODE } from '../../../../fixtures/currencies';
@@ -34,7 +30,7 @@ context('Get a quote/your quote page (non GBP currency) - as an exporter, I want
     cy.submitQuoteAnswersHappyPathSinglePolicy();
 
     // change currency to non-GBP
-    checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE].changeLink().click();
+    summaryList.field(CONTRACT_VALUE).changeLink().click();
 
     tellUsAboutYourPolicyPage[CURRENCY].input().select(EUR_CURRENCY_CODE);
     submitButton().click();
@@ -54,10 +50,8 @@ context('Get a quote/your quote page (non GBP currency) - as an exporter, I want
         cy.navigateToUrl(url);
       });
 
-      const { summaryList } = yourQuotePage.panel;
-
       it('renders `insured for` key and value with decimal points (no change link)', () => {
-        const row = summaryList[INSURED_FOR];
+        const row = summaryList.field(INSURED_FOR);
         const expectedKeyText = QUOTE_TITLES[`${INSURED_FOR}_SINGLE_POLICY`];
 
         cy.checkText(row.key(), expectedKeyText);
@@ -69,7 +63,7 @@ context('Get a quote/your quote page (non GBP currency) - as an exporter, I want
       });
 
       it('renders `estimated cost` key and value (no change link)', () => {
-        const row = summaryList[ESTIMATED_COST];
+        const row = summaryList.field(ESTIMATED_COST);
         const expectedKeyText = QUOTE_TITLES[ESTIMATED_COST];
 
         cy.checkText(row.key(), expectedKeyText);

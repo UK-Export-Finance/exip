@@ -1,5 +1,10 @@
-import { backLink, buyerCountryPage, submitButton } from '../../../pages/shared';
-import { tellUsAboutYourPolicyPage, yourQuotePage } from '../../../pages/quote';
+import {
+  backLink,
+  buyerCountryPage,
+  summaryList,
+  submitButton,
+} from '../../../pages/shared';
+import { tellUsAboutYourPolicyPage } from '../../../pages/quote';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { LINKS } from '../../../../../content-strings';
 
@@ -28,7 +33,7 @@ context('Your quote page - change answers (policy type and length from multiple 
   });
 
   describe('change `max amount owed`', () => {
-    const row = yourQuotePage.panel.summaryList[MAX_AMOUNT_OWED];
+    const row = summaryList.field(MAX_AMOUNT_OWED);
 
     beforeEach(() => {
       cy.navigateToUrl(url);
@@ -77,7 +82,7 @@ context('Your quote page - change answers (policy type and length from multiple 
   });
 
   describe('change `percentage of cover`', () => {
-    const row = yourQuotePage.panel.summaryList[PERCENTAGE_OF_COVER];
+    const row = summaryList.field(PERCENTAGE_OF_COVER);
 
     beforeEach(() => {
       cy.navigateToUrl(url);
@@ -125,7 +130,7 @@ context('Your quote page - change answers (policy type and length from multiple 
   });
 
   describe('change `buyer location`', () => {
-    const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
+    const row = summaryList.field(QUOTE.BUYER_LOCATION);
 
     beforeEach(() => {
       cy.navigateToUrl(url);
@@ -176,7 +181,7 @@ context('Your quote page - change answers (policy type and length from multiple 
 
       cy.assertUrl(url);
 
-      const buyerLocation = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
+      const buyerLocation = summaryList.field(QUOTE.BUYER_LOCATION);
 
       cy.checkText(buyerLocation.value(), 'Brazil');
     });

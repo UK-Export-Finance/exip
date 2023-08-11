@@ -1,8 +1,12 @@
-import { backLink, buyerCountryPage, submitButton } from '../../../pages/shared';
+import {
+  backLink,
+  buyerCountryPage,
+  submitButton,
+  summaryList,
+} from '../../../pages/shared';
 import {
   policyTypePage,
   tellUsAboutYourPolicyPage,
-  yourQuotePage,
 } from '../../../pages/quote';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 import { LINKS } from '../../../../../content-strings';
@@ -47,7 +51,7 @@ context('Your quote page - change answers (single policy type to multiple policy
   });
 
   describe('change `contract value`', () => {
-    const row = yourQuotePage.panel.summaryList[CONTRACT_VALUE];
+    const row = summaryList.field(CONTRACT_VALUE);
 
     beforeEach(() => {
       row.changeLink().click();
@@ -96,7 +100,7 @@ context('Your quote page - change answers (single policy type to multiple policy
   });
 
   describe('change `percentage of cover`', () => {
-    const row = yourQuotePage.panel.summaryList[PERCENTAGE_OF_COVER];
+    const row = summaryList.field(PERCENTAGE_OF_COVER);
 
     beforeEach(() => {
       row.changeLink().click();
@@ -148,7 +152,7 @@ context('Your quote page - change answers (single policy type to multiple policy
   });
 
   describe('change policy type to multi', () => {
-    const row = yourQuotePage.panel.summaryList[SINGLE_POLICY_LENGTH];
+    const row = summaryList.field(SINGLE_POLICY_LENGTH);
 
     beforeEach(() => {
       row.changeLink().click();
@@ -203,18 +207,18 @@ context('Your quote page - change answers (single policy type to multiple policy
 
       cy.assertUrl(expectedUrl);
 
-      const insuredFor = yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR];
+      const insuredFor = summaryList.field(QUOTE.INSURED_FOR);
 
       cy.checkText(insuredFor.value(), '£108,000.00');
 
-      const policyLength = yourQuotePage.panel.summaryList[MULTIPLE_POLICY_LENGTH];
+      const policyLength = summaryList.field(MULTIPLE_POLICY_LENGTH);
 
       cy.checkText(policyLength.value(), `${FIELD_VALUES.POLICY_LENGTH.MULTIPLE} months`);
     });
   });
 
   describe('change `buyer location`', () => {
-    const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
+    const row = summaryList.field(QUOTE.BUYER_LOCATION);
 
     beforeEach(() => {
       row.changeLink().click();

@@ -1,7 +1,6 @@
 import partials from '../../../../../partials';
+import { summaryList, status } from '../../../../../pages/shared';
 import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
-import { status } from '../../../../../pages/shared';
-import { checkYourAnswersPolicyAndExports } from '../../../../../pages/insurance/check-your-answers';
 import application from '../../../../../../fixtures/application';
 import { singleContractPolicyPage } from '../../../../../pages/insurance/policy-and-export';
 import {
@@ -40,8 +39,6 @@ const {
 const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
-
-const { summaryList } = checkYourAnswersPolicyAndExports;
 
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE,

@@ -1,4 +1,4 @@
-import { submitButton, status } from '../../../../../pages/shared';
+import { submitButton, summaryList, status } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import {
   FIELD_VALUES,
@@ -6,7 +6,6 @@ import {
   WEBSITE_EXAMPLES,
   COMPANY_EXAMPLE,
 } from '../../../../../../../constants';
-import { checkYourAnswersYourBusiness } from '../../../../../pages/insurance/check-your-answers';
 import { companyDetails } from '../../../../../pages/your-business';
 import {
   checkChangeLinkUrl,
@@ -47,8 +46,6 @@ const {
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
-
-const { summaryList } = checkYourAnswersYourBusiness;
 
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: COMPANY_DETAILS_CHECK_AND_CHANGE,

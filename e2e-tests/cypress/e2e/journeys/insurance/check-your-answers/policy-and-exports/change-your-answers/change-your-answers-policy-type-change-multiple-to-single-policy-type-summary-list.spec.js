@@ -1,7 +1,6 @@
 import partials from '../../../../../partials';
 import { FIELD_IDS, ROUTES, FIELD_VALUES } from '../../../../../../../constants';
-import { submitButton, saveAndBackButton } from '../../../../../pages/shared';
-import { checkYourAnswersPolicyAndExports } from '../../../../../pages/insurance/check-your-answers';
+import { submitButton, summaryList, saveAndBackButton } from '../../../../../pages/shared';
 import { LINKS } from '../../../../../../../content-strings';
 import { typeOfPolicyPage } from '../../../../../pages/insurance/policy-and-export';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy-and-exports';
@@ -37,8 +36,6 @@ const { CONTRACT_POLICY: { SINGLE: SINGLE_FIELD_STRINGS } } = FIELDS;
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
-
-const { summaryList } = checkYourAnswersPolicyAndExports;
 
 context('Insurance - Change your answers - Policy and exports - Change multiple to single policy type - Summary List', () => {
   const baseUrl = Cypress.config('baseUrl');

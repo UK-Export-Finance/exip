@@ -1,5 +1,5 @@
-import { submitButton } from '../../../../pages/shared';
-import { typeOfPolicyPage, checkYourAnswersPage } from '../../../../pages/insurance/policy-and-export';
+import { submitButton, summaryList } from '../../../../pages/shared';
+import { typeOfPolicyPage } from '../../../../pages/insurance/policy-and-export';
 import partials from '../../../../partials';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
@@ -35,8 +35,6 @@ const { CONTRACT_POLICY: { SINGLE: SINGLE_FIELD_STRINGS } } = FIELDS;
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
-
-const { summaryList } = checkYourAnswersPage;
 
 context('Insurance - Policy and exports - Change your answers - Policy type - multiple to single', () => {
   const baseUrl = Cypress.config('baseUrl');

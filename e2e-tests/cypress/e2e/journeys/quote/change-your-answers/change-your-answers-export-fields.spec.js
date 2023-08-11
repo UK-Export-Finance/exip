@@ -1,7 +1,6 @@
 import {
-  backLink, buyerCountryPage, yesRadioInput, submitButton,
+  backLink, buyerCountryPage, yesRadioInput, submitButton, summaryList,
 } from '../../../pages/shared';
-import { checkYourAnswersPage } from '../../../pages/quote';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { LINKS } from '../../../../../content-strings';
 
@@ -48,7 +47,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
   });
 
   describe('change `Buyer based`', () => {
-    let row = checkYourAnswersPage.summaryLists.export[BUYER_COUNTRY];
+    let row = summaryList.field(BUYER_COUNTRY);
 
     beforeEach(() => {
       cy.navigateToUrl(url);
@@ -95,7 +94,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
       });
 
       it('renders the new answer in `Check your answers` page', () => {
-        row = checkYourAnswersPage.summaryLists.export[BUYER_COUNTRY];
+        row = summaryList.field(BUYER_COUNTRY);
 
         const expected = 'Brazil';
         cy.checkText(row.value(), expected);
@@ -104,7 +103,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
   });
 
   describe('change `Company`', () => {
-    const row = checkYourAnswersPage.summaryLists.export[VALID_EXPORTER_LOCATION];
+    const row = summaryList.field(VALID_EXPORTER_LOCATION);
 
     beforeEach(() => {
       cy.navigateToUrl(url);
@@ -142,7 +141,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
   });
 
   describe('change `UK goods`', () => {
-    const row = checkYourAnswersPage.summaryLists.export[HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+    const row = summaryList.field(HAS_MINIMUM_UK_GOODS_OR_SERVICES);
 
     beforeEach(() => {
       cy.navigateToUrl(url);

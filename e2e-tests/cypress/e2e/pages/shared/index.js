@@ -2,6 +2,7 @@ import buyerCountryPage from './buyerCountry';
 import cannotApplyPage from './cannotApply';
 import exporterLocationPage from './exporterLocation';
 import needToStartAgainPage from './needToStartAgain';
+import summaryList from './summaryList';
 import ukGoodsOrServicesPage from './ukGoodsOrServices';
 
 const backLink = () => cy.get('[data-cy="back-link"]');
@@ -40,5 +41,6 @@ export {
   cannotApplyPage,
   exporterLocationPage,
   needToStartAgainPage,
+  summaryList,
   ukGoodsOrServicesPage,
 };
