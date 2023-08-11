@@ -20,8 +20,20 @@ const {
   SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
+const {
+  QUOTE: {
+    BUYER_COUNTRY_CHANGE,
+    POLICY_TYPE_CHANGE,
+    TELL_US_ABOUT_YOUR_POLICY,
+    TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+    YOUR_QUOTE,
+    CHECK_YOUR_ANSWERS,
+  },
+} = ROUTES;
+
 context('Your quote page - change answers (single policy type to multiple policy type) - as an exporter, I want to get an Export insurance quote', () => {
-  const url = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
+  const baseUrl = Cypress.config('baseUrl');
+  const url = `${baseUrl}${YOUR_QUOTE}`;
 
   beforeEach(() => {
     cy.saveSession();
@@ -41,18 +53,18 @@ context('Your quote page - change answers (single policy type to multiple policy
       row.changeLink().click();
     });
 
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
-      const expected = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
-      cy.assertUrl(expected);
+    it(`clicking 'change' redirects to ${TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
+      const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
+      cy.assertUrl(expectedUrl);
     });
 
     it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
-      cy.assertUrl(expected);
+      const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders a back link with correct url', () => {
-      const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
+      const expectedHref = `${Cypress.config('baseUrl')}${YOUR_QUOTE}`;
 
       cy.checkLink(
         backLink(),
@@ -61,11 +73,12 @@ context('Your quote page - change answers (single policy type to multiple policy
       );
     });
 
-    it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
+    it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '1000');
       submitButton().click();
 
-      cy.assertUrl(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders the new answer in the quote', () => {
@@ -89,18 +102,20 @@ context('Your quote page - change answers (single policy type to multiple policy
       row.changeLink().click();
     });
 
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
-      const expectedUrl = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}`;
+    it(`clicking 'change' redirects to ${TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
+      const expectedUrl = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}`;
+
       cy.assertUrl(expectedUrl);
     });
 
     it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
-      cy.assertUrl(expected);
+      const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
+
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders a back link with correct url', () => {
-      const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
+      const expectedHref = `${Cypress.config('baseUrl')}${YOUR_QUOTE}`;
 
       cy.checkLink(
         backLink(),
@@ -109,11 +124,13 @@ context('Your quote page - change answers (single policy type to multiple policy
       );
     });
 
-    it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
+    it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('85');
       submitButton().click();
 
-      cy.assertUrl(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
+
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders the new answer in the quote', () => {
@@ -137,18 +154,20 @@ context('Your quote page - change answers (single policy type to multiple policy
       row.changeLink().click();
     });
 
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.POLICY_TYPE_CHANGE}`, () => {
-      const expectedUrl = ROUTES.QUOTE.POLICY_TYPE_CHANGE;
+    it(`clicking 'change' redirects to ${POLICY_TYPE_CHANGE}`, () => {
+      const expectedUrl = POLICY_TYPE_CHANGE;
+
       cy.assertUrl(expectedUrl);
     });
 
     it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
-      cy.assertUrl(expected);
+      const expectedUrl = `${POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
+
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders a back link with correct url', () => {
-      const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
+      const expectedHref = `${Cypress.config('baseUrl')}${YOUR_QUOTE}`;
 
       cy.checkLink(
         backLink(),
@@ -157,11 +176,13 @@ context('Your quote page - change answers (single policy type to multiple policy
       );
     });
 
-    it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting a new answer`, () => {
+    it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting a new answer`, () => {
       policyTypePage[POLICY_TYPE].multiple.input().click();
       submitButton().click();
 
-      cy.assertUrl(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+      const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
+
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders the new answers in the quote', () => {
@@ -178,7 +199,9 @@ context('Your quote page - change answers (single policy type to multiple policy
       // submit check your answers
       submitButton().click();
 
-      cy.assertUrl(ROUTES.QUOTE.YOUR_QUOTE);
+      const expectedUrl = `${baseUrl}${YOUR_QUOTE}`;
+
+      cy.assertUrl(expectedUrl);
 
       const insuredFor = yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR];
 
@@ -197,18 +220,18 @@ context('Your quote page - change answers (single policy type to multiple policy
       row.changeLink().click();
     });
 
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}`, () => {
-      const expectedUrl = ROUTES.QUOTE.BUYER_COUNTRY_CHANGE;
+    it(`clicking 'change' redirects to ${BUYER_COUNTRY_CHANGE}`, () => {
+      const expectedUrl = `${baseUrl}${BUYER_COUNTRY_CHANGE}`;
       cy.assertUrl(expectedUrl);
     });
 
     it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
-      cy.assertUrl(expected);
+      const expectedUrl = `${baseUrl}${BUYER_COUNTRY_CHANGE}#heading`;
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders a back link with correct url', () => {
-      const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
+      const expectedHref = `${Cypress.config('baseUrl')}${YOUR_QUOTE}`;
 
       cy.checkLink(
         backLink(),
@@ -217,14 +240,16 @@ context('Your quote page - change answers (single policy type to multiple policy
       );
     });
 
-    it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
+    it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       cy.keyboardInput(buyerCountryPage.input(), 'Bahrain');
       const results = buyerCountryPage.results();
       results.first().click();
 
       submitButton().click();
 
-      cy.assertUrl(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
+
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders the new answer in the quote', () => {

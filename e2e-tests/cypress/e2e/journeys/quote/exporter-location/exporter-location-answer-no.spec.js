@@ -8,8 +8,14 @@ import { completeAndSubmitBuyerBodyForm } from '../../../../support/quote/forms'
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 
+const {
+  QUOTE: { EXPORTER_LOCATION, CANNOT_APPLY },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover - submit `not based inside the UK`', () => {
-  const url = ROUTES.QUOTE.EXPORTER_LOCATION;
+  const url = `${baseUrl}${EXPORTER_LOCATION}`;
 
   before(() => {
     cy.login();
@@ -29,13 +35,15 @@ context('Exporter location page - as an exporter, I want to check if my company 
   });
 
   it('redirects to exit page', () => {
-    cy.assertUrl(ROUTES.QUOTE.CANNOT_APPLY);
+    const expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders a back link with correct url', () => {
     cy.checkLink(
       backLink(),
-      ROUTES.QUOTE.EXPORTER_LOCATION,
+      EXPORTER_LOCATION,
       LINKS.BACK,
     );
   });

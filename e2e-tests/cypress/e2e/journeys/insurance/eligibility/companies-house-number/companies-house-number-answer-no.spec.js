@@ -2,7 +2,7 @@ import {
   backLink, cannotApplyPage, noRadio, noRadioInput, submitButton,
 } from '../../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../../content-strings';
-import { ROUTES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import {
   completeStartForm,
@@ -18,11 +18,19 @@ import {
 
 const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
 
+const {
+  ELIGIBILITY: { COMPANIES_HOUSE_NUMBER },
+  START,
+  APPLY_OFFLINE,
+} = INSURANCE_ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Eligibility - Companies house number page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if I do not have UK Companies House Registration Number - submit `no companies house number`', () => {
-  const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
+  const url = `${baseUrl}${COMPANIES_HOUSE_NUMBER}`;
 
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToUrl(START);
 
     completeStartForm();
     completeCheckIfEligibleForm();
@@ -46,11 +54,13 @@ context('Insurance - Eligibility - Companies house number page - I want to check
   });
 
   it('redirects to exit page', () => {
-    cy.assertUrl(ROUTES.INSURANCE.APPLY_OFFLINE);
+    const expectedUrl = `${baseUrl}${APPLY_OFFLINE}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders a back link with correct url', () => {
-    const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
+    const expectedHref = `${baseUrl}${COMPANIES_HOUSE_NUMBER}`;
 
     cy.checkLink(
       backLink(),

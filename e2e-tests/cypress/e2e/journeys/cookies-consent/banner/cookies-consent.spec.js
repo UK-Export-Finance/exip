@@ -2,13 +2,21 @@ import partials from '../../../partials';
 import { COOKIES_CONSENT, PRODUCT } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 
+const {
+  COOKIES,
+  QUOTE: { BUYER_COUNTRY },
+  INSURANCE: {
+    ELIGIBILITY: { CHECK_IF_ELIGIBLE },
+  },
+} = ROUTES;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Cookies consent - initial/default', () => {
   beforeEach(() => {
     cy.login();
 
-    const expectedUrl = `${baseUrl}${ROUTES.QUOTE.BUYER_COUNTRY}`;
+    const expectedUrl = `${baseUrl}${BUYER_COUNTRY}`;
 
     cy.assertUrl(expectedUrl);
   });
@@ -20,13 +28,13 @@ context('Cookies consent - initial/default', () => {
       });
 
       it('should render a heading when on an Insurance/application page', () => {
-        cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE);
+        cy.navigateToUrl(CHECK_IF_ELIGIBLE);
 
         cy.checkText(partials.cookieBanner.heading(), `${COOKIES_CONSENT.HEADING_INTRO} ${PRODUCT.DESCRIPTION.APPLICATION}`);
       });
 
       it('should render a heading when on an root page', () => {
-        cy.navigateToUrl(ROUTES.COOKIES);
+        cy.navigateToUrl(COOKIES);
 
         cy.checkText(partials.cookieBanner.heading(), `${COOKIES_CONSENT.HEADING_INTRO} ${PRODUCT.DESCRIPTION.QUOTE}`);
 
@@ -55,14 +63,17 @@ context('Cookies consent - initial/default', () => {
     it('should render a link to cookies', () => {
       cy.checkLink(
         partials.cookieBanner.cookiesLink(),
-        ROUTES.COOKIES,
+        COOKIES,
         COOKIES_CONSENT.QUESTION.VIEW_COOKIES,
       );
     });
 
     it('should redirect to cookies page when clicking cookies link', () => {
       partials.cookieBanner.cookiesLink().click();
-      cy.assertUrl(ROUTES.COOKIES);
+
+      const expectedUrl = `${baseUrl}${COOKIES}`;
+
+      cy.assertUrl(expectedUrl);
     });
   });
 

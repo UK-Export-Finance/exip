@@ -12,19 +12,31 @@ const {
   ELIGIBILITY: { VALID_BUYER_BODY },
 } = FIELD_IDS;
 
+const {
+  QUOTE: {
+    BUYER_BODY,
+    BUYER_COUNTRY,
+    EXPORTER_LOCATION,
+  },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Buyer body page - as an exporter, I want to check if I can get an EXIP online quote for my buyers country', () => {
   beforeEach(() => {
     cy.login();
     completeAndSubmitBuyerCountryForm();
 
-    cy.assertUrl(ROUTES.QUOTE.BUYER_BODY);
+    const expectedUrl = `${baseUrl}${BUYER_BODY}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.QUOTE.BUYER_BODY,
-      backLink: ROUTES.QUOTE.BUYER_COUNTRY,
+      currentHref: BUYER_BODY,
+      backLink: BUYER_COUNTRY,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
     });
@@ -66,11 +78,13 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
     });
 
     describe('when submitting the answer as `no`', () => {
-      it(`should redirect to ${ROUTES.QUOTE.EXPORTER_LOCATION}`, () => {
+      it(`should redirect to ${EXPORTER_LOCATION}`, () => {
         noRadio().click();
         submitButton().click();
 
-        cy.assertUrl(ROUTES.QUOTE.EXPORTER_LOCATION);
+        const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;
+
+        cy.assertUrl(expectedUrl);
       });
     });
   });

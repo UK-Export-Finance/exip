@@ -6,23 +6,35 @@ import { completeAndSubmitBuyerBodyForm } from '../../../support/quote/forms';
 
 const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_PAGE;
 
+const {
+  QUOTE: {
+    TELL_US_ABOUT_YOUR_POLICY,
+    NEED_TO_START_AGAIN,
+    BUYER_COUNTRY,
+  },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Get a Quote - Need to start again exit page', () => {
   beforeEach(() => {
     cy.login();
     completeAndSubmitBuyerCountryForm();
     completeAndSubmitBuyerBodyForm();
 
-    cy.navigateToUrl(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+    cy.navigateToUrl(TELL_US_ABOUT_YOUR_POLICY);
 
     cy.saveSession();
 
-    cy.assertUrl(ROUTES.QUOTE.NEED_TO_START_AGAIN);
+    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.QUOTE.NEED_TO_START_AGAIN,
+      currentHref: NEED_TO_START_AGAIN,
       submitButtonCopy: LINKS.START_AGAIN.TEXT,
       assertBackLink: false,
       assertAuthenticatedHeader: false,
@@ -35,10 +47,12 @@ context('Get a Quote - Need to start again exit page', () => {
   });
 
   describe('clicking the submit button', () => {
-    it(`should redirect to ${ROUTES.QUOTE.BUYER_COUNTRY}`, () => {
+    it(`should redirect to ${BUYER_COUNTRY}`, () => {
       submitButton().click();
 
-      cy.assertUrl(ROUTES.QUOTE.BUYER_COUNTRY);
+      const expectedUrl = `${baseUrl}${BUYER_COUNTRY}`;
+
+      cy.assertUrl(expectedUrl);
     });
   });
 });

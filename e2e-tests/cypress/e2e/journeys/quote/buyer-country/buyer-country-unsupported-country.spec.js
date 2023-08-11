@@ -7,8 +7,14 @@ import { COUNTRY_UNSUPPORTRED } from '../../../../fixtures/countries';
 
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 
+const {
+  QUOTE: { BUYER_COUNTRY, CANNOT_APPLY },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based - submit unsupported country', () => {
-  const url = ROUTES.QUOTE.BUYER_COUNTRY;
+  const url = `${baseUrl}${BUYER_COUNTRY}`;
 
   before(() => {
     cy.navigateToUrl(url);
@@ -29,7 +35,9 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
   });
 
   it('redirects to `cannot obtain cover` exit page', () => {
-    cy.assertUrl(ROUTES.QUOTE.CANNOT_APPLY);
+    const expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders a back link with correct url', () => {

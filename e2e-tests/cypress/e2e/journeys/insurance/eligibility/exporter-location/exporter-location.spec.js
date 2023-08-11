@@ -3,28 +3,42 @@ import {
 } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.EXPORTER_LOCATION;
 
+const {
+  START,
+  ELIGIBILITY: {
+    BUYER_COUNTRY,
+    EXPORTER_LOCATION,
+    UK_GOODS_OR_SERVICES,
+  },
+} = INSURANCE_ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover', () => {
   beforeEach(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToUrl(START);
 
     completeStartForm();
     completeCheckIfEligibleForm();
     completeAndSubmitBuyerCountryForm();
 
-    cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
+    const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION,
-      backLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
+      currentHref: EXPORTER_LOCATION,
+      backLink: BUYER_COUNTRY,
       assertAuthenticatedHeader: false,
     });
   });
@@ -70,8 +84,10 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
         submitButton().click();
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES}`, () => {
-        cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
+      it(`should redirect to ${UK_GOODS_OR_SERVICES}`, () => {
+        const expectedUrl = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
+
+        cy.assertUrl(expectedUrl);
       });
 
       describe('when going back to the page', () => {

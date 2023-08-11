@@ -1,7 +1,7 @@
 import { yesRadio, submitButton } from '../../pages/shared';
 import { insurance } from '../../pages';
 import { PAGES } from '../../../../content-strings';
-import { ROUTES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import {
   completeStartForm,
   completeCheckIfEligibleForm,
@@ -14,9 +14,17 @@ import { completeAndSubmitBuyerCountryForm } from '../../../support/forms';
 const CONTENT_STRINGS = PAGES.INSURANCE.SPEAK_TO_UKEF_EFM;
 const { ACTIONS } = CONTENT_STRINGS;
 
+const {
+  START,
+  ELIGIBILITY: { INSURED_PERIOD },
+  SPEAK_TO_UKEF_EFM,
+} = INSURANCE_ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - speak to UKEF EFM exit page', () => {
   beforeEach(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToUrl(START);
 
     completeStartForm();
     completeCheckIfEligibleForm();
@@ -25,19 +33,22 @@ context('Insurance - speak to UKEF EFM exit page', () => {
     completeUkGoodsAndServicesForm();
     completeInsuredAmountForm();
 
-    cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD);
+    let expectedUrl = `${baseUrl}${INSURED_PERIOD}`;
+    cy.assertUrl(expectedUrl);
 
     yesRadio().click();
     submitButton().click();
 
-    cy.assertUrl(ROUTES.INSURANCE.SPEAK_TO_UKEF_EFM);
+    expectedUrl = `${baseUrl}${SPEAK_TO_UKEF_EFM}`;
+
+    cy.assertUrl(SPEAK_TO_UKEF_EFM);
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.INSURANCE.SPEAK_TO_UKEF_EFM,
-      backLink: ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD,
+      currentHref: SPEAK_TO_UKEF_EFM,
+      backLink: INSURED_PERIOD,
       assertSubmitButton: false,
       assertAuthenticatedHeader: false,
     });
