@@ -3,7 +3,7 @@ import {
   cannotApplyPage,
   submitButton,
 } from '../../../pages/shared';
-import { PAGES } from '../../../../../content-strings';
+import { LINKS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../support/insurance/eligibility/forms';
 
@@ -69,15 +69,10 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
   });
 
   describe('when clicking `eligibility` link', () => {
-    it('redirects to guidance page - eligibility section', () => {
-      const expectedHref = CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF;
-      const expectedText = CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.TEXT;
+    it(`redirects to ${LINKS.EXTERNAL.GUIDANCE}`, () => {
+      cannotApplyPage.actions.eligibilityLink().click();
 
-      cy.checkLink(
-        cannotApplyPage.actions.eligibilityLink(),
-        expectedHref,
-        expectedText,
-      );
+      cy.url().should('eq', LINKS.EXTERNAL.GUIDANCE);
     });
   });
 });
