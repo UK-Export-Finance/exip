@@ -98,20 +98,14 @@ context('Change your answers - as an exporter, I want to change the details befo
       row.changeLink().click();
     });
 
-    it(`clicking 'change' redirects to ${POLICY_TYPE_CHANGE}`, () => {
-      const expectedUrl = `${baseUrl}${POLICY_TYPE_CHANGE}`;
-
-      cy.assertUrl(expectedUrl);
-    });
-
-    it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
+    it(`clicking 'change' redirects to ${POLICY_TYPE_CHANGE} with a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change`, () => {
       const expectedUrl = `${baseUrl}${POLICY_TYPE_CHANGE}#heading`;
 
       cy.assertUrl(expectedUrl);
     });
 
     it('renders a back link with correct url', () => {
-      const expectedHref = `${Cypress.config('baseUrl')}${CHECK_YOUR_ANSWERS}`;
+      const expectedHref = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
       cy.checkLink(
         backLink(),
@@ -132,7 +126,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       policyTypePage[POLICY_TYPE].multiple.input().click();
       submitButton().click();
 
-      const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
+      const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}#heading`;
 
       cy.assertUrl(expectedUrl);
     });
@@ -211,7 +205,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       it('renders a back link with correct url', () => {
         backLink().should('exist');
 
-        const expectedHref = `${Cypress.config('baseUrl')}${CHECK_YOUR_ANSWERS}`;
+        const expectedHref = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
         cy.checkLink(
           backLink(),
@@ -228,7 +222,7 @@ context('Change your answers - as an exporter, I want to change the details befo
         policyTypePage[POLICY_TYPE].multiple.input().click();
         submitButton().click();
 
-        const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
+        const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}#heading`;
 
         cy.assertUrl(expectedUrl);
       });
@@ -320,7 +314,9 @@ context('Change your answers - as an exporter, I want to change the details befo
         policyTypePage[POLICY_TYPE].single.input().click();
         submitButton().click();
 
-        cy.assertUrl(TELL_US_ABOUT_YOUR_POLICY);
+        const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}#heading`;
+
+        cy.assertUrl(expectedUrl);
       });
     });
   });

@@ -64,7 +64,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it('renders a back link with correct url', () => {
-      const expectedHref = `${Cypress.config('baseUrl')}${YOUR_QUOTE}`;
+      const expectedHref = `${baseUrl}${YOUR_QUOTE}`;
 
       cy.checkLink(
         backLink(),
@@ -77,7 +77,7 @@ context('Your quote page - change answers (single policy type to multiple policy
       cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '1000');
       submitButton().click();
 
-      const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
+      const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#${CONTRACT_VALUE}-label`;
       cy.assertUrl(expectedUrl);
     });
 
@@ -103,7 +103,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it(`clicking 'change' redirects to ${TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
-      const expectedUrl = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}`;
+      const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
 
       cy.assertUrl(expectedUrl);
     });
@@ -115,7 +115,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it('renders a back link with correct url', () => {
-      const expectedHref = `${Cypress.config('baseUrl')}${YOUR_QUOTE}`;
+      const expectedHref = `${baseUrl}${YOUR_QUOTE}`;
 
       cy.checkLink(
         backLink(),
@@ -128,7 +128,7 @@ context('Your quote page - change answers (single policy type to multiple policy
       tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('85');
       submitButton().click();
 
-      const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
+      const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#${PERCENTAGE_OF_COVER}-label`;
 
       cy.assertUrl(expectedUrl);
     });
@@ -155,19 +155,19 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it(`clicking 'change' redirects to ${POLICY_TYPE_CHANGE}`, () => {
-      const expectedUrl = POLICY_TYPE_CHANGE;
+      const expectedUrl = `${baseUrl}${POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
 
       cy.assertUrl(expectedUrl);
     });
 
     it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expectedUrl = `${POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
+      const expectedUrl = `${baseUrl}${POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
 
       cy.assertUrl(expectedUrl);
     });
 
     it('renders a back link with correct url', () => {
-      const expectedHref = `${Cypress.config('baseUrl')}${YOUR_QUOTE}`;
+      const expectedHref = `${baseUrl}${YOUR_QUOTE}`;
 
       cy.checkLink(
         backLink(),
@@ -180,7 +180,7 @@ context('Your quote page - change answers (single policy type to multiple policy
       policyTypePage[POLICY_TYPE].multiple.input().click();
       submitButton().click();
 
-      const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
+      const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}#${SINGLE_POLICY_LENGTH}-label`;
 
       cy.assertUrl(expectedUrl);
     });
@@ -199,7 +199,7 @@ context('Your quote page - change answers (single policy type to multiple policy
       // submit check your answers
       submitButton().click();
 
-      const expectedUrl = `${baseUrl}${YOUR_QUOTE}`;
+      const expectedUrl = `${baseUrl}${YOUR_QUOTE}#${SINGLE_POLICY_LENGTH}-label`;
 
       cy.assertUrl(expectedUrl);
 
@@ -221,7 +221,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it(`clicking 'change' redirects to ${BUYER_COUNTRY_CHANGE}`, () => {
-      const expectedUrl = `${baseUrl}${BUYER_COUNTRY_CHANGE}`;
+      const expectedUrl = `${baseUrl}${BUYER_COUNTRY_CHANGE}#heading`;
       cy.assertUrl(expectedUrl);
     });
 
@@ -231,7 +231,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it('renders a back link with correct url', () => {
-      const expectedHref = `${Cypress.config('baseUrl')}${YOUR_QUOTE}`;
+      const expectedHref = `${baseUrl}${YOUR_QUOTE}`;
 
       cy.checkLink(
         backLink(),
@@ -247,7 +247,7 @@ context('Your quote page - change answers (single policy type to multiple policy
 
       submitButton().click();
 
-      const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
+      const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#heading`;
 
       cy.assertUrl(expectedUrl);
     });
