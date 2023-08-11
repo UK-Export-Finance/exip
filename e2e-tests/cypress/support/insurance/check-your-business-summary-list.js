@@ -58,7 +58,7 @@ const {
 } = FIELD_IDS;
 
 const assertRow = (fieldId, expectedKey, expectedValue, expectedChangeLinkText) => {
-  const row = summaryList[fieldId];
+  const row = summaryList.field(fieldId);
 
   cy.checkText(
     row.key(),
@@ -124,7 +124,7 @@ const checkYourBusinessSummaryList = ({
     const fieldId = COMPANY_ADDRESS;
     const expectedKey = FIELDS[fieldId].SUMMARY.TITLE;
 
-    const row = summaryList[fieldId];
+    const row = summaryList.field(fieldId);
 
     cy.checkText(
       row.key(),
@@ -295,7 +295,7 @@ const checkYourBusinessSummaryList = ({
 
     const expectedKey = FIELDS.BROKER[fieldId].SUMMARY.TITLE;
 
-    const row = summaryList[fieldId];
+    const row = summaryList.field(fieldId);
 
     cy.checkText(
       row.key(),

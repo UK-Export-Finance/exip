@@ -1,4 +1,9 @@
-import { backLink, buyerCountryPage, submitButton } from '../../../pages/shared';
+import {
+  backLink,
+  buyerCountryPage,
+  summaryList,
+  submitButton,
+} from '../../../pages/shared';
 import { tellUsAboutYourPolicyPage, yourQuotePage } from '../../../pages/quote';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { LINKS } from '../../../../../content-strings';
@@ -28,7 +33,7 @@ context('Your quote page - change answers (policy type and length from multiple 
   });
 
   describe('change `max amount owed`', () => {
-    const row = yourQuotePage.panel.summaryList[MAX_AMOUNT_OWED];
+    const row = summaryList.field(MAX_AMOUNT_OWED);
 
     beforeEach(() => {
       cy.navigateToUrl(url);

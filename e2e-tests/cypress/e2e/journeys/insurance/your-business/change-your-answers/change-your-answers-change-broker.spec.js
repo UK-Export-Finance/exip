@@ -136,7 +136,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       it('should render the new answer', () => {
         const expectedKey = FIELDS.BROKER[fieldId].SUMMARY.TITLE;
 
-        const row = summaryList[fieldId];
+        const row = summaryList.field(fieldId);
 
         cy.checkText(
           row.key(),

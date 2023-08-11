@@ -134,7 +134,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       it('should render the new answer', () => {
         const expectedKey = FIELDS.COMPANY_OR_ORGANISATION[fieldId].SUMMARY.TITLE;
 
-        const row = summaryList[fieldId];
+        const row = summaryList.field(fieldId);
 
         cy.checkText(
           row.key(),
@@ -256,7 +256,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       it('should render the new answer', () => {
         const expectedKey = FIELDS.COMPANY_OR_ORGANISATION[fieldId].SUMMARY.TITLE;
 
-        const row = summaryList[fieldId];
+        const row = summaryList.field(fieldId);
 
         cy.checkText(
           row.key(),
