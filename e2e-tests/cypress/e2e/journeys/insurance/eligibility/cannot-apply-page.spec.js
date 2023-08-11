@@ -4,16 +4,23 @@ import {
   submitButton,
 } from '../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../content-strings';
-import { ROUTES } from '../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 
+const {
+  START,
+  ELIGIBILITY: { BUYER_COUNTRY, CANNOT_APPLY },
+} = INSURANCE_ROUTES;
+
 const COUNTRY_NAME_UNSUPPORTED = 'France';
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance Eligibility - Cannot apply exit page', () => {
   beforeEach(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToUrl(START);
 
     completeStartForm();
     completeCheckIfEligibleForm();
@@ -24,14 +31,16 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
 
     submitButton().click();
 
-    cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+    const expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY,
-      backLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
+      currentHref: CANNOT_APPLY,
+      backLink: BUYER_COUNTRY,
       assertSubmitButton: false,
       assertAuthenticatedHeader: false,
     });

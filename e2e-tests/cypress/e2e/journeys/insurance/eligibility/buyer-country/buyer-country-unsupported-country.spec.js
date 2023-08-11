@@ -2,14 +2,20 @@ import {
   backLink, buyerCountryPage, cannotApplyPage, submitButton,
 } from '../../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../../content-strings';
-import { ROUTES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { COUNTRY_UNSUPPORTRED } from '../../../../../fixtures/countries';
 
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 const { REASON } = CONTENT_STRINGS;
 
+const {
+  ELIGIBILITY: { BUYER_COUNTRY, CANNOT_APPLY },
+} = INSURANCE_ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Buyer country page - as an exporter, I want to check if UKEF offer export insurance policy for where my buyer is based - submit unsupported country', () => {
-  const url = ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY;
+  const url = `${baseUrl}${BUYER_COUNTRY}`;
 
   beforeEach(() => {
     cy.saveSession();
@@ -25,7 +31,9 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
   });
 
   it('redirects to `cannot apply` exit page', () => {
-    cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+    const expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders a reason', () => {
@@ -36,7 +44,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
   });
 
   it('renders a back link with correct url', () => {
-    const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
+    const expectedHref = `${baseUrl}${BUYER_COUNTRY}`;
 
     cy.checkLink(
       backLink(),

@@ -6,7 +6,7 @@ import { completeAndSubmitBuyerCountryForm } from '../../../../support/forms';
 const baseUrl = Cypress.config('baseUrl');
 
 context('Cookies consent - reject', () => {
-  const url = ROUTES.QUOTE.BUYER_COUNTRY;
+  const url = `${baseUrl}${ROUTES.QUOTE.BUYER_COUNTRY}`;
 
   beforeEach(() => {
     cy.login();

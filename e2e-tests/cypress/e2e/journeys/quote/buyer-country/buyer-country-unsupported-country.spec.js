@@ -43,7 +43,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
   it('renders a back link with correct url', () => {
     cy.checkLink(
       backLink(),
-      url,
+      BUYER_COUNTRY,
       LINKS.BACK,
     );
   });

@@ -48,7 +48,9 @@ context('Insurance - Insured amount page - I want to check if I can use online s
   });
 
   it('redirects to exit page', () => {
-    cy.assertUrl(APPLY_OFFLINE);
+    const expectedUrl = `${baseUrl}${APPLY_OFFLINE}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders a back link with correct url', () => {

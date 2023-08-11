@@ -41,7 +41,7 @@ context('Insurance - speak to UKEF EFM exit page', () => {
 
     expectedUrl = `${baseUrl}${SPEAK_TO_UKEF_EFM}`;
 
-    cy.assertUrl(SPEAK_TO_UKEF_EFM);
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders core page elements', () => {

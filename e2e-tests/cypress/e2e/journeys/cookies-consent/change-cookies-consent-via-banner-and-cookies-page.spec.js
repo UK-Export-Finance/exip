@@ -6,7 +6,7 @@ import { FIELD_IDS, ROUTES } from '../../../../constants';
 const baseUrl = Cypress.config('baseUrl');
 
 context('Cookies consent - change via banner and cookies page', () => {
-  const cookiesPageUrl = ROUTES.COOKIES;
+  const cookiesPageUrl = `${baseUrl}${ROUTES.COOKIES}`;
 
   beforeEach(() => {
     cy.clearCookies();

@@ -1,5 +1,5 @@
 import { backLink, buyerCountryPage, submitButton } from '../../../../pages/shared';
-import { ROUTES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { LINKS, PAGES } from '../../../../../../content-strings';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../support/insurance/eligibility/forms';
 import {
@@ -12,21 +12,30 @@ import { COUNTRY_SUPPORTED_ONLINE } from '../../../../../fixtures/countries';
 
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
+const {
+  START,
+  ELIGIBILITY: { BUYER_COUNTRY, CHECK_IF_ELIGIBLE, EXPORTER_LOCATION },
+} = INSURANCE_ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Buyer country page - as an exporter, I want to check if UKEF offer export insurance policy for where my buyer is based', () => {
   beforeEach(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToUrl(START);
 
     completeStartForm();
     completeCheckIfEligibleForm();
 
-    cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
+    const expectedUrl = `${baseUrl}${BUYER_COUNTRY}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
-      backLink: ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE,
+      currentHref: BUYER_COUNTRY,
+      backLink: CHECK_IF_ELIGIBLE,
       assertAuthenticatedHeader: false,
       lightHouseThresholds: {
         performance: 70,
@@ -75,7 +84,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
       });
 
       it('renders a back link with correct url', () => {
-        const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
+        const expectedHref = `${Cypress.config('baseUrl')}${BUYER_COUNTRY}`;
 
         cy.checkLink(
           backLink(),
@@ -99,8 +108,10 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
         submitButton().click();
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION}`, () => {
-        cy.assertUrl(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
+      it(`should redirect to ${EXPORTER_LOCATION}`, () => {
+        const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;
+
+        cy.assertUrl(expectedUrl);
       });
 
       it('should prepopulate the field when going back to the page via back link', () => {

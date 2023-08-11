@@ -21,14 +21,16 @@ context('Cannot apply exit page', () => {
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
 
-    const expectedUrl = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
+    let expectedUrl = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
 
     cy.assertUrl(expectedUrl);
 
     noRadio().click();
     submitButton().click();
 
-    cy.assertUrl(CANNOT_APPLY);
+    expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders core page elements', () => {
