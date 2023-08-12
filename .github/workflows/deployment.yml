@@ -73,7 +73,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Defaults ✨
-        uses: Azure/cli@v1.0.7
+        uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
             # Basic
@@ -100,7 +100,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Defaults ✨
-        uses: Azure/cli@v1.0.7
+        uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
             # Basic
@@ -137,7 +137,7 @@ jobs:
           docker push ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }}
 
       - name: Slot 🔀
-        uses: azure/cli@v1.0.7
+        uses: azure/cli@v1.0.8
         with:
           inlineScript: |
 
@@ -159,7 +159,7 @@ jobs:
             --name ${{ env.WEBAPP }}
 
       - name: Reboot ♻️
-        uses: azure/cli@v1.0.7
+        uses: azure/cli@v1.0.8
         with:
           inlineScript: |
             az webapp restart \
@@ -183,7 +183,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Defaults ✨
-        uses: Azure/cli@v1.0.7
+        uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
             # Basic
@@ -218,7 +218,7 @@ jobs:
           docker push ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }}
 
       - name: Slot 🔀
-        uses: azure/cli@v1.0.7
+        uses: azure/cli@v1.0.8
         with:
           inlineScript: |
 
@@ -240,7 +240,7 @@ jobs:
             --name ${{ env.WEBAPP }}
 
       - name: Reboot ♻️
-        uses: azure/cli@v1.0.7
+        uses: azure/cli@v1.0.8
         with:
           inlineScript: |
             az webapp restart \
