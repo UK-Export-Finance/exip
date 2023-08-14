@@ -2,6 +2,7 @@ import { backLink, buyerCountryPage, submitButton } from '../../../../../../page
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../../commands/insurance/eligibility/forms';
 import { COUNTRY_SUPPORTRED_BY_EMAIL } from '../../../../../../fixtures/countries';
+import { LINKS } from '../../../../../../content-strings';
 
 const {
   ELIGIBILITY: { BUYER_COUNTRY },
