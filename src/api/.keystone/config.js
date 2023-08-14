@@ -34,7 +34,7 @@ __export(keystone_exports, {
 });
 module.exports = __toCommonJS(keystone_exports);
 var import_config4 = require("dotenv/config");
-var import_core2 = require("@keystone-6/core");
+var import_core3 = require("@keystone-6/core");
 
 // middleware/headers/check-api-key/index.ts
 var import_config = require("dotenv/config");
@@ -61,7 +61,7 @@ var rateLimiter = (0, import_express_rate_limit.default)({
 var rate_limiter_default = rateLimiter;
 
 // schema.ts
-var import_core = require("@keystone-6/core");
+var import_core2 = require("@keystone-6/core");
 var import_access = require("@keystone-6/core/access");
 var import_fields = require("@keystone-6/core/fields");
 var import_fields_document = require("@keystone-6/fields-document");
@@ -649,6 +649,54 @@ var getAccountByField = async (context, field, value) => {
 };
 var get_account_by_field_default = getAccountByField;
 
+// custom-fields/nullable-checkbox/index.ts
+var import_types = require("@keystone-6/core/types");
+var import_core = require("@keystone-6/core");
+var nullableCheckbox = () => () => (
+  /**
+   * Database/GraphQL config.
+   * This defines the field as an optionl boolean with a default value of null.
+   */
+  (0, import_types.fieldType)({
+    kind: "scalar",
+    mode: "optional",
+    scalar: "Boolean"
+  })({
+    /**
+     * Input/ouput config.
+     * This determines what is set during a create, update and get operations.
+     */
+    input: {
+      create: {
+        arg: import_core.graphql.arg({ type: import_core.graphql.Boolean }),
+        resolve() {
+          return null;
+        }
+      },
+      update: {
+        arg: import_core.graphql.arg({ type: import_core.graphql.Boolean }),
+        resolve(value) {
+          return value;
+        }
+      }
+    },
+    output: import_core.graphql.field({
+      type: import_core.graphql.Boolean,
+      resolve({ value }) {
+        return value;
+      }
+    }),
+    /**
+     * Keystone admin UI/CMS config for this field.
+     * Since we do not use the UI/CMS, this can be empty.
+     */
+    views: "",
+    getAdminMeta() {
+      return {};
+    }
+  })
+);
+
 // schema.ts
 var lists = {
   ReferenceNumber: {
@@ -944,7 +992,7 @@ var lists = {
     },
     access: import_access.allowAll
   },
-  Account: (0, import_core.list)({
+  Account: (0, import_core2.list)({
     fields: {
       createdAt: (0, import_fields.timestamp)(),
       updatedAt: (0, import_fields.timestamp)(),
@@ -999,7 +1047,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  AuthenticationRetry: (0, import_core.list)({
+  AuthenticationRetry: (0, import_core2.list)({
     fields: {
       account: (0, import_fields.relationship)({
         ref: "Account",
@@ -1009,7 +1057,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  Authentication: (0, import_core.list)({
+  Authentication: (0, import_core2.list)({
     fields: {
       account: (0, import_fields.relationship)({
         ref: "Account",
@@ -1021,7 +1069,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  Business: (0, import_core.list)({
+  Business: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       goodsOrServicesSupplied: (0, import_fields.text)({
@@ -1045,7 +1093,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  BusinessContactDetail: (0, import_core.list)({
+  BusinessContactDetail: (0, import_core2.list)({
     fields: {
       business: (0, import_fields.relationship)({ ref: "Business.businessContactDetail" }),
       firstName: (0, import_fields.text)(),
@@ -1055,16 +1103,10 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  Broker: (0, import_core.list)({
+  Broker: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      isUsingBroker: (0, import_fields.select)({
-        options: [
-          { label: ANSWERS.YES, value: ANSWERS.YES },
-          { label: ANSWERS.NO, value: ANSWERS.NO }
-        ],
-        db: { isNullable: true }
-      }),
+      isUsingBroker: nullableCheckbox(),
       name: (0, import_fields.text)(),
       addressLine1: (0, import_fields.text)(),
       addressLine2: (0, import_fields.text)(),
@@ -1082,7 +1124,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  CompanyAddress: (0, import_core.list)({
+  CompanyAddress: (0, import_core2.list)({
     fields: {
       company: (0, import_fields.relationship)({ ref: "Company.registeredOfficeAddress" }),
       addressLine1: (0, import_fields.text)(),
@@ -1096,7 +1138,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  Company: (0, import_core.list)({
+  Company: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       registeredOfficeAddress: (0, import_fields.relationship)({ ref: "CompanyAddress.company" }),
@@ -1107,20 +1149,8 @@ var lists = {
       companyName: (0, import_fields.text)(),
       companyNumber: (0, import_fields.text)(),
       dateOfCreation: (0, import_fields.timestamp)(),
-      hasTradingAddress: (0, import_fields.select)({
-        options: [
-          { label: ANSWERS.YES, value: ANSWERS.YES },
-          { label: ANSWERS.NO, value: ANSWERS.NO }
-        ],
-        db: { isNullable: true }
-      }),
-      hasTradingName: (0, import_fields.select)({
-        options: [
-          { label: ANSWERS.YES, value: ANSWERS.YES },
-          { label: ANSWERS.NO, value: ANSWERS.NO }
-        ],
-        db: { isNullable: true }
-      }),
+      hasTradingAddress: nullableCheckbox(),
+      hasTradingName: nullableCheckbox(),
       companyWebsite: (0, import_fields.text)(),
       phoneNumber: (0, import_fields.text)(),
       financialYearEndDate: (0, import_fields.timestamp)()
@@ -1134,7 +1164,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  CompanySicCode: (0, import_core.list)({
+  CompanySicCode: (0, import_core2.list)({
     fields: {
       company: (0, import_fields.relationship)({ ref: "Company.sicCodes" }),
       sicCode: (0, import_fields.text)(),
@@ -1142,7 +1172,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  Buyer: (0, import_core.list)({
+  Buyer: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       companyOrOrganisationName: (0, import_fields.text)(),
@@ -1156,24 +1186,9 @@ var lists = {
       contactLastName: (0, import_fields.text)(),
       contactPosition: (0, import_fields.text)(),
       contactEmail: (0, import_fields.text)(),
-      canContactBuyer: (0, import_fields.select)({
-        options: [
-          { label: ANSWERS.YES, value: ANSWERS.YES },
-          { label: ANSWERS.NO, value: ANSWERS.NO }
-        ]
-      }),
-      exporterIsConnectedWithBuyer: (0, import_fields.select)({
-        options: [
-          { label: ANSWERS.YES, value: ANSWERS.YES },
-          { label: ANSWERS.NO, value: ANSWERS.NO }
-        ]
-      }),
-      exporterHasTradedWithBuyer: (0, import_fields.select)({
-        options: [
-          { label: ANSWERS.YES, value: ANSWERS.YES },
-          { label: ANSWERS.NO, value: ANSWERS.NO }
-        ]
-      })
+      canContactBuyer: nullableCheckbox(),
+      exporterIsConnectedWithBuyer: nullableCheckbox(),
+      exporterHasTradedWithBuyer: nullableCheckbox()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -1184,7 +1199,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  Country: (0, import_core.list)({
+  Country: (0, import_core2.list)({
     fields: {
       isoCode: (0, import_fields.text)({
         validation: { isRequired: true }
@@ -1195,7 +1210,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  Eligibility: (0, import_core.list)({
+  Eligibility: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       buyerCountry: (0, import_fields.relationship)({ ref: "Country" }),
@@ -1210,7 +1225,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  SectionReview: (0, import_core.list)({
+  SectionReview: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       eligibility: (0, import_fields.checkbox)(),
@@ -1227,30 +1242,18 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  Declaration: (0, import_core.list)({
+  Declaration: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       antiBribery: (0, import_fields.relationship)({ ref: "DeclarationAntiBribery" }),
       confirmationAndAcknowledgements: (0, import_fields.relationship)({ ref: "DeclarationConfirmationAndAcknowledgement" }),
       howDataWillBeUsed: (0, import_fields.relationship)({ ref: "DeclarationHowDataWillBeUsed" }),
-      agreeToConfidentiality: (0, import_fields.checkbox)(),
-      agreeToAntiBribery: (0, import_fields.checkbox)(),
-      hasAntiBriberyCodeOfConduct: (0, import_fields.select)({
-        options: [
-          { label: ANSWERS.YES, value: ANSWERS.YES },
-          { label: ANSWERS.NO, value: ANSWERS.NO }
-        ],
-        db: { isNullable: true }
-      }),
-      willExportWithAntiBriberyCodeOfConduct: (0, import_fields.select)({
-        options: [
-          { label: ANSWERS.YES, value: ANSWERS.YES },
-          { label: ANSWERS.NO, value: ANSWERS.NO }
-        ],
-        db: { isNullable: true }
-      }),
-      agreeToConfirmationAndAcknowledgements: (0, import_fields.checkbox)(),
-      agreeHowDataWillBeUsed: (0, import_fields.checkbox)()
+      agreeToConfidentiality: nullableCheckbox(),
+      agreeToAntiBribery: nullableCheckbox(),
+      hasAntiBriberyCodeOfConduct: nullableCheckbox(),
+      willExportWithAntiBriberyCodeOfConduct: nullableCheckbox(),
+      agreeToConfirmationAndAcknowledgements: nullableCheckbox(),
+      agreeHowDataWillBeUsed: nullableCheckbox()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -1261,7 +1264,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  DeclarationAntiBribery: (0, import_core.list)({
+  DeclarationAntiBribery: (0, import_core2.list)({
     fields: {
       version: (0, import_fields.text)({
         label: "Version",
@@ -1273,7 +1276,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  DeclarationConfirmationAndAcknowledgement: (0, import_core.list)({
+  DeclarationConfirmationAndAcknowledgement: (0, import_core2.list)({
     fields: {
       version: (0, import_fields.text)({
         label: "Version",
@@ -1285,7 +1288,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  DeclarationHowDataWillBeUsed: (0, import_core.list)({
+  DeclarationHowDataWillBeUsed: (0, import_core2.list)({
     fields: {
       version: (0, import_fields.text)({
         label: "Version",
@@ -1298,7 +1301,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  Page: (0, import_core.list)({
+  Page: (0, import_core2.list)({
     fields: {
       heading: (0, import_fields.text)({
         label: "Page heading"
@@ -1319,7 +1322,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  User: (0, import_core.list)({
+  User: (0, import_core2.list)({
     fields: {
       name: (0, import_fields.text)({ validation: { isRequired: true } }),
       email: (0, import_fields.text)({
@@ -1335,7 +1338,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  Feedback: (0, import_core.list)({
+  Feedback: (0, import_core2.list)({
     fields: {
       service: (0, import_fields.text)(),
       satisfaction: (0, import_fields.select)({
@@ -1501,8 +1504,8 @@ var typeDefs = `
     companyName: String
     companyNumber: String
     dateOfCreation: DateTime
-    hasTradingAddress: String
-    hasTradingName: String
+    hasTradingAddress: Boolean
+    hasTradingName: Boolean
     companyWebsite: String
     phoneNumber: String
   }
@@ -1514,8 +1517,8 @@ var typeDefs = `
     companyName: String
     companyNumber: String
     dateOfCreation: DateTime
-    hasTradingAddress: String
-    hasTradingName: String
+    hasTradingAddress: Boolean
+    hasTradingName: Boolean
     companyWebsite: String
     phoneNumber: String
     financialYearEndDate: DateTime
@@ -3200,23 +3203,21 @@ var getApplicationSubmittedEmailTemplateIds = (application2) => {
     underwritingTeam: "",
     account: ""
   };
-  const doesNotHaveAntiBriberyCodeOfConduct = declaration.hasAntiBriberyCodeOfConduct === ANSWERS.NO;
-  const hasNotTradedWithBuyer = buyer.exporterHasTradedWithBuyer === ANSWERS.NO;
-  if (doesNotHaveAntiBriberyCodeOfConduct && hasNotTradedWithBuyer) {
+  const { hasAntiBriberyCodeOfConduct } = declaration;
+  const { exporterHasTradedWithBuyer } = buyer;
+  if (!hasAntiBriberyCodeOfConduct && !exporterHasTradedWithBuyer) {
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NO_DOCUMENTS;
     return templateIds;
   }
-  const hasAntiBriberyCodeOfConduct = declaration.hasAntiBriberyCodeOfConduct === ANSWERS.YES;
   if (hasAntiBriberyCodeOfConduct) {
     templateIds.account = EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY;
   }
-  const hasTradedWithBuyer = buyer.exporterHasTradedWithBuyer === ANSWERS.YES;
-  if (hasTradedWithBuyer) {
+  if (exporterHasTradedWithBuyer) {
     templateIds.account = EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_TRADING_HISTORY;
   }
-  if (hasAntiBriberyCodeOfConduct && hasTradedWithBuyer) {
+  if (hasAntiBriberyCodeOfConduct && exporterHasTradedWithBuyer) {
     templateIds.account = EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY;
   }
@@ -3911,7 +3912,7 @@ var mapSicCodes2 = (sicCodes) => {
 var mapBroker = (application2) => {
   const { broker } = application2;
   let mapped = [xlsx_row_default(XLSX.FIELDS[USING_BROKER4], broker[USING_BROKER4])];
-  if (broker[USING_BROKER4] === ANSWERS.YES) {
+  if (broker[USING_BROKER4]) {
     const addressAnswer = {
       lineOneAndTwo: `${broker[ADDRESS_LINE_12]} ${xlsx_new_line_default}${broker[ADDRESS_LINE_2]}`,
       other: `${xlsx_new_line_default}${broker[TOWN]} ${xlsx_new_line_default}${broker[COUNTY]} ${xlsx_new_line_default}${broker[POSTCODE]}`
@@ -4508,7 +4509,7 @@ var { NODE_ENV: NODE_ENV2, DATABASE_URL } = process.env;
 var isDevEnvironment2 = NODE_ENV2 === "development";
 var isProdEnvironment = NODE_ENV2 === "production";
 var keystone_default = withAuth(
-  (0, import_core2.config)({
+  (0, import_core3.config)({
     server: {
       port: 5001,
       extendExpressApp: (app) => {

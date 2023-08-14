@@ -8,7 +8,6 @@
   {% set hintHtml = params.hintHtml %}
   {% set submittedAnswer = params.submittedAnswer %}
   {% set errorMessage = params.errorMessage %}
-  {% set yesNoValueString = params.yesNoValueString %}
   {% set conditionalYesHtml = params.conditionalYesHtml %}
   {% set conditionalNoHtml = params.conditionalNoHtml %}
 
@@ -42,14 +41,6 @@
     {% set dataCyHint = 'yes-no-input-hint' %}
   {% endif %}
 
-  {% set yesValue = true %}
-  {% set noValue = false %}
-
-  {% if yesNoValueString %}
-    {% set yesValue = 'Yes' %}
-    {% set noValue = 'No' %}
-  {% endif %}
-
   {% if not params.horizontalRadios %}
     {% set radioClass = 'govuk-radios--inline' %}
   {% endif %}
@@ -72,7 +63,7 @@
     },
     items: [
       {
-        value: yesValue,
+        value: true,
         text: "Yes",
         label: {
           attributes: {
@@ -86,10 +77,10 @@
           "data-cy": "yes-input",
           'aria-label': legendText + ' Yes'
         },
-        checked: submittedAnswer === yesValue
+        checked: submittedAnswer === true
       },
       {
-        value: noValue,
+        value: false,
         text: "No",
         label: {
           attributes: {
@@ -103,7 +94,7 @@
           "data-cy": "no-input",
           'aria-label': legendText + ' No'
         },
-        checked: submittedAnswer === noValue
+        checked: submittedAnswer === false
       }
     ],
     errorMessage: errorMessage and {

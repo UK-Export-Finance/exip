@@ -11,8 +11,7 @@ CREATE DATABASE IF NOT EXISTS `exip`;
 USE `exip`;
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */; /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 SET NAMES utf8mb4;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
@@ -204,9 +203,9 @@ CREATE TABLE `Buyer` (
   `contactLastName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `contactPosition` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `contactEmail` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `canContactBuyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `exporterHasTradedWithBuyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `exporterIsConnectedWithBuyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `canContactBuyer` tinyint(1) DEFAULT NULL,
+  `exporterIsConnectedWithBuyer` tinyint(1) DEFAULT NULL,
+  `exporterHasTradedWithBuyer` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Buyer_application_idx` (`application`),
   KEY `Buyer_country_idx` (`country`),
@@ -476,11 +475,11 @@ CREATE TABLE `Declaration` (
   `application` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `agreeToConfidentiality` tinyint(1) NOT NULL DEFAULT '0',
   `antiBribery` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `agreeToAntiBribery` tinyint(1) NOT NULL DEFAULT '0',
-  `agreeToConfirmationAndAcknowledgements` tinyint(1) NOT NULL DEFAULT '0',
-  `willExportWithAntiBriberyCodeOfConduct` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `hasAntiBriberyCodeOfConduct` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `agreeHowDataWillBeUsed` tinyint(1) NOT NULL DEFAULT '0',
+  `agreeToAntiBribery` tinyint(1) DEFAULT NULL,
+  `agreeToConfirmationAndAcknowledgements` tinyint(1) DEFAULT NULL,
+  `willExportWithAntiBriberyCodeOfConduct` tinyint(1) DEFAULT NULL,
+  `hasAntiBriberyCodeOfConduct` tinyint(1) DEFAULT NULL,
+  `agreeHowDataWillBeUsed` tinyint(1) DEFAULT NULL,
   `confirmationAndAcknowledgements` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `howDataWillBeUsed` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -627,7 +626,7 @@ DROP TABLE IF EXISTS `Broker`;
 CREATE TABLE `Broker` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `isUsingBroker` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `isUsingBroker` tinyint(1) DEFAULT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `addressLine1` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `addressLine2` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -693,8 +692,8 @@ CREATE TABLE IF NOT EXISTS `Company` (
   `companyName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `companyNumber` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `dateOfCreation` datetime(3) DEFAULT NULL,
-  `hasTradingAddress` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `hasTradingName` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hasTradingAddress` tinyint(1) DEFAULT NULL,
+  `hasTradingName` tinyint(1) DEFAULT NULL,
   `companyWebsite` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `phoneNumber` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 	`registeredOfficeAddress` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,

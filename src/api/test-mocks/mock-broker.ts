@@ -1,10 +1,9 @@
 import dotenv from 'dotenv';
-import { ANSWERS } from '../constants';
 
 dotenv.config();
 
 const mockBroker = {
-  isUsingBroker: ANSWERS.YES,
+  isUsingBroker: true,
   name: 'Test',
   addressLine1: 'Test',
   addressLine2: 'Test',

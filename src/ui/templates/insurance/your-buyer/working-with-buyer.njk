@@ -60,7 +60,6 @@
           errorMessage: validationErrors.errorList[FIELDS.CONNECTED_WITH_BUYER.ID],
           dataCyLegend: FIELDS.CONNECTED_WITH_BUYER.ID + '-label',
           dataCyHint: FIELDS.CONNECTED_WITH_BUYER.ID + '-hint',
-          yesNoValueString: true,
           horizontalRadios: true
         }) }}
 
@@ -72,7 +71,6 @@
           submittedAnswer: submittedValues[FIELDS.TRADED_WITH_BUYER.ID] or application.buyer[FIELDS.TRADED_WITH_BUYER.ID],
           errorMessage: validationErrors.errorList[FIELDS.TRADED_WITH_BUYER.ID],
           dataCyLegend: FIELDS.TRADED_WITH_BUYER.ID + '-label',
-          yesNoValueString: true,
           conditionalYesHtml: tradedHTML,
           horizontalRadios: true
         }) }}

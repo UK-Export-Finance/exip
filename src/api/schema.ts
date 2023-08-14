@@ -4,10 +4,11 @@ import { checkbox, integer, relationship, select, text, timestamp, password } fr
 import { document } from '@keystone-6/fields-document';
 import { addMonths } from 'date-fns';
 import { Lists } from '.keystone/types'; // eslint-disable-line
-import { ANSWERS, APPLICATION, FEEDBACK } from './constants';
+import { APPLICATION, FEEDBACK } from './constants';
 import ACCOUNT_FIELD_IDS from './constants/field-ids/insurance/account';
 import updateApplication from './helpers/update-application';
 import getAccountByField from './helpers/get-account-by-field';
+import { nullableCheckbox } from './custom-fields';
 
 export const lists = {
   ReferenceNumber: {
@@ -487,13 +488,7 @@ export const lists = {
   Broker: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      isUsingBroker: select({
-        options: [
-          { label: ANSWERS.YES, value: ANSWERS.YES },
-          { label: ANSWERS.NO, value: ANSWERS.NO },
-        ],
-        db: { isNullable: true },
-      }),
+      isUsingBroker: nullableCheckbox(),
       name: text(),
       addressLine1: text(),
       addressLine2: text(),
@@ -536,20 +531,8 @@ export const lists = {
       companyName: text(),
       companyNumber: text(),
       dateOfCreation: timestamp(),
-      hasTradingAddress: select({
-        options: [
-          { label: ANSWERS.YES, value: ANSWERS.YES },
-          { label: ANSWERS.NO, value: ANSWERS.NO },
-        ],
-        db: { isNullable: true },
-      }),
-      hasTradingName: select({
-        options: [
-          { label: ANSWERS.YES, value: ANSWERS.YES },
-          { label: ANSWERS.NO, value: ANSWERS.NO },
-        ],
-        db: { isNullable: true },
-      }),
+      hasTradingAddress: nullableCheckbox(),
+      hasTradingName: nullableCheckbox(),
       companyWebsite: text(),
       phoneNumber: text(),
       financialYearEndDate: timestamp(),
@@ -585,24 +568,9 @@ export const lists = {
       contactLastName: text(),
       contactPosition: text(),
       contactEmail: text(),
-      canContactBuyer: select({
-        options: [
-          { label: ANSWERS.YES, value: ANSWERS.YES },
-          { label: ANSWERS.NO, value: ANSWERS.NO },
-        ],
-      }),
-      exporterIsConnectedWithBuyer: select({
-        options: [
-          { label: ANSWERS.YES, value: ANSWERS.YES },
-          { label: ANSWERS.NO, value: ANSWERS.NO },
-        ],
-      }),
-      exporterHasTradedWithBuyer: select({
-        options: [
-          { label: ANSWERS.YES, value: ANSWERS.YES },
-          { label: ANSWERS.NO, value: ANSWERS.NO },
-        ],
-      }),
+      canContactBuyer: nullableCheckbox(),
+      exporterIsConnectedWithBuyer: nullableCheckbox(),
+      exporterHasTradedWithBuyer: nullableCheckbox(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -662,24 +630,12 @@ export const lists = {
       antiBribery: relationship({ ref: 'DeclarationAntiBribery' }),
       confirmationAndAcknowledgements: relationship({ ref: 'DeclarationConfirmationAndAcknowledgement' }),
       howDataWillBeUsed: relationship({ ref: 'DeclarationHowDataWillBeUsed' }),
-      agreeToConfidentiality: checkbox(),
-      agreeToAntiBribery: checkbox(),
-      hasAntiBriberyCodeOfConduct: select({
-        options: [
-          { label: ANSWERS.YES, value: ANSWERS.YES },
-          { label: ANSWERS.NO, value: ANSWERS.NO },
-        ],
-        db: { isNullable: true },
-      }),
-      willExportWithAntiBriberyCodeOfConduct: select({
-        options: [
-          { label: ANSWERS.YES, value: ANSWERS.YES },
-          { label: ANSWERS.NO, value: ANSWERS.NO },
-        ],
-        db: { isNullable: true },
-      }),
-      agreeToConfirmationAndAcknowledgements: checkbox(),
-      agreeHowDataWillBeUsed: checkbox(),
+      agreeToConfidentiality: nullableCheckbox(),
+      agreeToAntiBribery: nullableCheckbox(),
+      hasAntiBriberyCodeOfConduct: nullableCheckbox(),
+      willExportWithAntiBriberyCodeOfConduct: nullableCheckbox(),
+      agreeToConfirmationAndAcknowledgements: nullableCheckbox(),
+      agreeHowDataWillBeUsed: nullableCheckbox(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

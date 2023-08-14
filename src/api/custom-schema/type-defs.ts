@@ -85,8 +85,8 @@ const typeDefs = `
     companyName: String
     companyNumber: String
     dateOfCreation: DateTime
-    hasTradingAddress: String
-    hasTradingName: String
+    hasTradingAddress: Boolean
+    hasTradingName: Boolean
     companyWebsite: String
     phoneNumber: String
   }
@@ -98,8 +98,8 @@ const typeDefs = `
     companyName: String
     companyNumber: String
     dateOfCreation: DateTime
-    hasTradingAddress: String
-    hasTradingName: String
+    hasTradingAddress: Boolean
+    hasTradingName: Boolean
     companyWebsite: String
     phoneNumber: String
     financialYearEndDate: DateTime

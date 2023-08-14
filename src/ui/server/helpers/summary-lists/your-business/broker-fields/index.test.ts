@@ -1,7 +1,7 @@
 import { generateBrokerFields, optionalBrokerFields } from '.';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { ROUTES, FIELD_VALUES } from '../../../../constants';
+import { ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
@@ -37,7 +37,7 @@ describe('server/helpers/summary-lists/your-business/broker-fields', () => {
     ];
 
     it('should return fields and values from the submitted data/answers', () => {
-      mockAnswers[USING_BROKER] = FIELD_VALUES.YES;
+      mockAnswers[USING_BROKER] = true;
 
       const result = generateBrokerFields(mockAnswers, referenceNumber, checkAndChange);
 
@@ -84,7 +84,7 @@ describe('server/helpers/summary-lists/your-business/broker-fields', () => {
       ];
 
       it('should return array with optional fields', () => {
-        mockAnswers[USING_BROKER] = FIELD_VALUES.YES;
+        mockAnswers[USING_BROKER] = true;
 
         const result = optionalBrokerFields(mockAnswers, referenceNumber, checkAndChange);
 
@@ -92,9 +92,9 @@ describe('server/helpers/summary-lists/your-business/broker-fields', () => {
       });
     });
 
-    describe(`${USING_BROKER} is no`, () => {
+    describe(`${USING_BROKER} is false`, () => {
       it('should return array with optional fields', () => {
-        mockAnswers[USING_BROKER] = FIELD_VALUES.NO;
+        mockAnswers[USING_BROKER] = false;
 
         const result = optionalBrokerFields(mockAnswers, referenceNumber, checkAndChange);
 

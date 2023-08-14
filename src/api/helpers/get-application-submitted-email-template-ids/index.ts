@@ -1,4 +1,4 @@
-import { ANSWERS, EMAIL_TEMPLATE_IDS } from '../../constants';
+import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import { Application } from '../../types';
 
 const {
@@ -21,10 +21,10 @@ const getApplicationSubmittedEmailTemplateIds = (application: Application) => {
     account: '',
   };
 
-  const doesNotHaveAntiBriberyCodeOfConduct = declaration.hasAntiBriberyCodeOfConduct === ANSWERS.NO;
-  const hasNotTradedWithBuyer = buyer.exporterHasTradedWithBuyer === ANSWERS.NO;
+  const { hasAntiBriberyCodeOfConduct } = declaration;
+  const { exporterHasTradedWithBuyer } = buyer;
 
-  if (doesNotHaveAntiBriberyCodeOfConduct && hasNotTradedWithBuyer) {
+  if (!hasAntiBriberyCodeOfConduct && !exporterHasTradedWithBuyer) {
     /**
      * No documents required. Therefore:
      * - We do not need to send the applicant an email.
@@ -35,21 +35,17 @@ const getApplicationSubmittedEmailTemplateIds = (application: Application) => {
     return templateIds;
   }
 
-  const hasAntiBriberyCodeOfConduct = declaration.hasAntiBriberyCodeOfConduct === ANSWERS.YES;
-
   if (hasAntiBriberyCodeOfConduct) {
     templateIds.account = EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY;
   }
 
-  const hasTradedWithBuyer = buyer.exporterHasTradedWithBuyer === ANSWERS.YES;
-
-  if (hasTradedWithBuyer) {
+  if (exporterHasTradedWithBuyer) {
     templateIds.account = EXPORTER.SEND_DOCUMENTS.TRADING_HISTORY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_TRADING_HISTORY;
   }
 
-  if (hasAntiBriberyCodeOfConduct && hasTradedWithBuyer) {
+  if (hasAntiBriberyCodeOfConduct && exporterHasTradedWithBuyer) {
     templateIds.account = EXPORTER.SEND_DOCUMENTS.ANTI_BRIBERY_AND_TRADING_HISTORY;
     templateIds.underwritingTeam = UNDERWRITING_TEAM.NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY;
   }

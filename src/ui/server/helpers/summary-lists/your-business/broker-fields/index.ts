@@ -1,6 +1,6 @@
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { ROUTES, FIELD_VALUES } from '../../../../constants';
+import { ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
@@ -31,7 +31,7 @@ const optionalBrokerFields = (answers: ApplicationBroker, referenceNumber: numbe
   let fields = [] as Array<SummaryListItemData>;
 
   // if yes selected then will populate optional fields, else will return empty array
-  if (answers[USING_BROKER] === FIELD_VALUES.YES) {
+  if (answers[USING_BROKER]) {
     // address for HTML mapping
     const address = {
       [ADDRESS_LINE_1]: answers[ADDRESS_LINE_1],
