@@ -8,6 +8,12 @@ import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm }
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 
+const {
+  QUOTE: { UK_GOODS_OR_SERVICES, CANNOT_APPLY },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Cannot apply exit page', () => {
   beforeEach(() => {
     cy.login();
@@ -15,19 +21,23 @@ context('Cannot apply exit page', () => {
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
 
-    cy.url().should('include', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
+    let expectedUrl = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
+
+    cy.assertUrl(expectedUrl);
 
     noRadio().click();
     submitButton().click();
 
-    cy.url().should('include', ROUTES.QUOTE.CANNOT_APPLY);
+    expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.QUOTE.CANNOT_APPLY,
-      backLink: ROUTES.QUOTE.UK_GOODS_OR_SERVICES,
+      currentHref: CANNOT_APPLY,
+      backLink: UK_GOODS_OR_SERVICES,
       assertSubmitButton: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,

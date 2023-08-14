@@ -70,7 +70,7 @@ context('Insurance - Account - Manage - As an Exporter, I want the service to ha
     });
 
     it(`should redirect to ${MANAGE}`, () => {
-      cy.url().should('eq', manageAccountUrl);
+      cy.assertUrl(manageAccountUrl);
     });
 
     describe('page tests', () => {

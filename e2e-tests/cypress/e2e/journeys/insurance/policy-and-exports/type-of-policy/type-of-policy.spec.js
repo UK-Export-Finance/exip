@@ -45,7 +45,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -148,7 +148,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
         const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
 
-        cy.url().should('eq', expected);
+        cy.assertUrl(expected);
       });
 
       it('should have the originally submitted answer selected when going back to the page', () => {
@@ -168,7 +168,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
         const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
 
-        cy.url().should('eq', expected);
+        cy.assertUrl(expected);
       });
 
       it('should have the originally submitted answer selected when going back to the page', () => {

@@ -24,6 +24,19 @@ const {
   SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
+const {
+  QUOTE: {
+    CHECK_YOUR_ANSWERS,
+    TELL_US_ABOUT_YOUR_POLICY,
+    BUYER_COUNTRY_CHANGE,
+    EXPORTER_LOCATION_CHANGE,
+    UK_GOODS_OR_SERVICES_CHANGE,
+    POLICY_TYPE_CHANGE,
+    TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+    YOUR_QUOTE,
+  },
+} = ROUTES;
+
 const submissionData = {
   [BUYER_COUNTRY]: 'Algeria',
   [CREDIT_PERIOD]: '1',
@@ -33,13 +46,15 @@ const submissionData = {
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
 };
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Check your answers page (single policy) - as an exporter, I want to review the details before submitting the proposal', () => {
-  const url = ROUTES.QUOTE.CHECK_YOUR_ANSWERS;
+  const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
   before(() => {
     cy.login();
     cy.submitQuoteAnswersHappyPathSinglePolicy();
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -49,8 +64,8 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: url,
-      backLink: ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
+      currentHref: CHECK_YOUR_ANSWERS,
+      backLink: TELL_US_ABOUT_YOUR_POLICY,
       submitButtonCopy: CONTENT_STRINGS.SUBMIT_BUTTON,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
@@ -82,7 +97,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
         const expectedValue = submissionData[BUYER_COUNTRY];
         cy.checkText(row.value(), expectedValue);
 
-        const expectedChangeHref = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
+        const expectedChangeHref = `${BUYER_COUNTRY_CHANGE}#heading`;
         const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
         cy.checkLink(
@@ -100,7 +115,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
 
         cy.checkText(row.value(), SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION]);
 
-        const expectedChangeHref = `${ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE}#heading`;
+        const expectedChangeHref = `${EXPORTER_LOCATION_CHANGE}#heading`;
         const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
         cy.checkLink(
@@ -118,7 +133,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
 
         cy.checkText(row.value(), SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES]);
 
-        const expectedChangeHref = `${ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE}#heading`;
+        const expectedChangeHref = `${UK_GOODS_OR_SERVICES_CHANGE}#heading`;
         const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
         cy.checkLink(
@@ -148,7 +163,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
 
         cy.checkText(row.value(), submissionData[SINGLE_POLICY_TYPE]);
 
-        const expectedChangeHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`;
+        const expectedChangeHref = `${POLICY_TYPE_CHANGE}#heading`;
         const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
         cy.checkLink(
@@ -167,7 +182,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
         const expectedValue = `${submissionData[SINGLE_POLICY_LENGTH]} months`;
         cy.checkText(row.value(), expectedValue);
 
-        const expectedChangeHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
+        const expectedChangeHref = `${POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
         const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
         cy.checkLink(
@@ -186,7 +201,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
         const expectedValue = '£150,000';
         cy.checkText(row.value(), expectedValue);
 
-        const expectedChangeHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
+        const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
         const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
         cy.checkLink(
@@ -205,7 +220,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
         const expectedValue = `${submissionData[PERCENTAGE_OF_COVER]}%`;
         cy.checkText(row.value(), expectedValue);
 
-        const expectedChangeHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
+        const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
         const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
         cy.checkLink(
@@ -226,12 +241,14 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
   });
 
   context('form submission', () => {
-    it(`should redirect to ${ROUTES.QUOTE.YOUR_QUOTE}`, () => {
+    it(`should redirect to ${YOUR_QUOTE}`, () => {
       cy.navigateToUrl(url);
 
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
+      const expectedUrl = `${baseUrl}${YOUR_QUOTE}`;
+
+      cy.assertUrl(expectedUrl);
     });
   });
 });

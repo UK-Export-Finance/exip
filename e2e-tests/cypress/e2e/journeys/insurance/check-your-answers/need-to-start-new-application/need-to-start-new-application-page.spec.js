@@ -41,7 +41,7 @@ context('Insurance - Check your answers - Need to start new application page', (
 
       url = `${INSURANCE_ROOT}/${referenceNumber}${START_NEW_APPLICATION}`;
 
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${url}`);
+      cy.assertUrl(`${Cypress.config('baseUrl')}${url}`);
 
       eligibilityUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ELIGIBILITY}`;
 

@@ -50,7 +50,7 @@ context('Insurance - Account - Create - Your details page - form validation - em
 
     url = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {

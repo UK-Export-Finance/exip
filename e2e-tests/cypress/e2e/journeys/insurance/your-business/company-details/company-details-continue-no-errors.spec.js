@@ -31,7 +31,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       cy.navigateToUrl(url);
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -60,7 +60,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it(`should redirect to ${contactUrl}`, () => {
-        cy.url().should('eq', contactUrl);
+        cy.assertUrl(contactUrl);
       });
     });
 
@@ -74,7 +74,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it(`should redirect to ${contactUrl}`, () => {
-        cy.url().should('eq', contactUrl);
+        cy.assertUrl(contactUrl);
       });
     });
   });

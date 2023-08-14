@@ -21,7 +21,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
       task.link().click();
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -43,7 +43,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
     it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
       const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
 
     it('should retain the `type of policy and exports` task status as `not started yet`', () => {
@@ -68,7 +68,7 @@ context('Insurance - Policy and exports - Type of policy page - Save and go back
     it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
       const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
 
     it('should update the status of task `type of policy and exports`to `in progress`', () => {

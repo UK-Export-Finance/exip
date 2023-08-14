@@ -51,7 +51,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -73,7 +73,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
 
     it('should retain the status of task `declarations` as `in progress`', () => {

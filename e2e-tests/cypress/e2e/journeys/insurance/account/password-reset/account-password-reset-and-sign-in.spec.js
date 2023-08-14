@@ -59,17 +59,17 @@ context('Insurance - Account - Password reset and sign in - As an Exporter, I wa
 
         cy.completeAndSubmitNewPasswordAccountForm({ password: newPassword });
 
-        cy.url().should('eq', successUrl);
+        cy.assertUrl(successUrl);
 
         successPage.continueToSignInLinkButton().click();
 
-        cy.url().should('eq', signInUrl);
+        cy.assertUrl(signInUrl);
 
         cy.completeAndSubmitSignInAccountForm({ password: newPassword });
       });
 
       it(`should redirect to ${enterCodeUrl}`, () => {
-        cy.url().should('eq', enterCodeUrl);
+        cy.assertUrl(enterCodeUrl);
       });
     });
 
@@ -92,7 +92,7 @@ context('Insurance - Account - Password reset and sign in - As an Exporter, I wa
 
         const expectedUrl = `${baseUrl}${DASHBOARD}`;
 
-        cy.url().should('eq', expectedUrl);
+        cy.assertUrl(expectedUrl);
       });
     });
   });

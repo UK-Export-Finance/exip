@@ -109,7 +109,7 @@ context('Insurance Eligibility - start page', () => {
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
   });
 });

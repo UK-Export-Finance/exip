@@ -18,7 +18,7 @@ context('Insurance - All sections - new application', () => {
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

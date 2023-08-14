@@ -62,7 +62,7 @@ context('Insurance - Check your answers - Business contact - Your business - Sum
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

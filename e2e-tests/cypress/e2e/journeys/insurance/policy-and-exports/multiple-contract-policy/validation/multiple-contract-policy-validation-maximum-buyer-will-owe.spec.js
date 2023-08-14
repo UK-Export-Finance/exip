@@ -55,7 +55,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -170,6 +170,6 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     submitButton().click();
 
     const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
-    cy.url().should('eq', expectedUrl);
+    cy.assertUrl(expectedUrl);
   });
 });

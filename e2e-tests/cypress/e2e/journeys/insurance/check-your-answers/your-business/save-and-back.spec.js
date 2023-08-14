@@ -36,7 +36,7 @@ context('Insurance - Check your answers - Your business page - Save and back', (
 
       allSectionsUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -51,7 +51,7 @@ context('Insurance - Check your answers - Your business page - Save and back', (
   it(`should redirect to ${ALL_SECTIONS}`, () => {
     saveAndBackButton().click();
 
-    cy.url().should('eq', allSectionsUrl);
+    cy.assertUrl(allSectionsUrl);
   });
 
   it('should retain the status of task `check your answers` as `in progress`', () => {

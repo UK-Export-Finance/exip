@@ -2,7 +2,7 @@ import {
   backLink, cannotApplyPage, yesRadio, yesRadioInput, submitButton,
 } from '../../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../../content-strings';
-import { ROUTES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import {
   completeStartForm,
@@ -13,10 +13,19 @@ import {
 
 const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
 
+const {
+  ELIGIBILITY: { INSURED_AMOUNT },
+  START,
+  APPLY_OFFLINE,
+} = INSURANCE_ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Insured amount page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is less than the maxium amount of cover available online - submit `cover over max amount`', () => {
-  const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`;
+  const url = `${baseUrl}${INSURED_AMOUNT}`;
+
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToUrl(START);
 
     completeStartForm();
     completeCheckIfEligibleForm();
@@ -35,11 +44,13 @@ context('Insurance - Insured amount page - I want to check if I can use online s
   });
 
   it('redirects to exit page', () => {
-    cy.url().should('include', ROUTES.INSURANCE.APPLY_OFFLINE);
+    const expectedUrl = `${baseUrl}${APPLY_OFFLINE}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders a back link with correct url', () => {
-    const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`;
+    const expectedHref = `${baseUrl}${INSURED_AMOUNT}`;
 
     cy.checkLink(
       backLink(),

@@ -41,7 +41,7 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
     completeOtherPartiesForm();
     completeLetterOfCreditForm();
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -152,7 +152,7 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
     it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`, () => {
       const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
 
     describe('when going back to the page', () => {

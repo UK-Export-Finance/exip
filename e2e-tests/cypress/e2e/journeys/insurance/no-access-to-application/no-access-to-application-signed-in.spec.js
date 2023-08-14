@@ -49,7 +49,7 @@ context('Insurance - no access to application page - signed in', () => {
     it(`should redirect to ${NO_ACCESS_TO_APPLICATION}`, () => {
       const expectedUrl = `${Cypress.config('baseUrl')}${NO_ACCESS_TO_APPLICATION}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
   });
 });

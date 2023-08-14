@@ -63,7 +63,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUYER}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

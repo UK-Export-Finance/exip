@@ -26,6 +26,6 @@ context('Insurance - submit an application without `have code of conduct` declar
   it(`should successfully submit the application and redirect to ${APPLICATION_SUBMITTED}`, () => {
     url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 });
