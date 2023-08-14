@@ -41,7 +41,7 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
 
     cy.completeAndSubmitSignInAccountForm({});
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -88,7 +88,7 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
 
       const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
   });
 });

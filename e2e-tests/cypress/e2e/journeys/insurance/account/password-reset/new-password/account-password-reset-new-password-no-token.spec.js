@@ -15,6 +15,6 @@ context('Insurance - Account - Password reset - new password page - Visit withou
   });
 
   it(`should redirect to ${PASSWORD_RESET_ROOT}`, () => {
-    cy.url().should('eq', passwordResetUrl);
+    cy.assertUrl(passwordResetUrl);
   });
 });

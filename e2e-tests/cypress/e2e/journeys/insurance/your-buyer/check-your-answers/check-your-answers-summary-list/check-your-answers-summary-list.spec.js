@@ -32,6 +32,8 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.buyer;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your buyer - Check your answers - Summary list - your buyer', () => {
   let referenceNumber;
   let url;
@@ -47,7 +49,7 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitWorkingWithBuyerForm({});
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 

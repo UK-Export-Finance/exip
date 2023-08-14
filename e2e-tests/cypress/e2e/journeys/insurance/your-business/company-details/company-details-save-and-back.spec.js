@@ -43,7 +43,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
       cy.navigateToUrl(url);
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -63,7 +63,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       companyDetails.tradingAddressYesRadioInput().click();
       saveAndBackButton().click();
 
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
@@ -83,7 +83,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
       saveAndBackButton().click();
 
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
@@ -106,7 +106,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
       saveAndBackButton().click();
 
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
@@ -131,7 +131,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
       saveAndBackButton().click();
 
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
@@ -157,7 +157,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
       saveAndBackButton().click();
 
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       cy.checkTaskStatus(task, IN_PROGRESS);
     });
 

@@ -27,7 +27,7 @@ const verifyAccountEmail = () => {
       // User should be verified and therefore redirected to the "sign in" page.
       const expected = `${Cypress.config('baseUrl')}${SIGN_IN.ROOT}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
   } catch (err) {
     console.error(err);

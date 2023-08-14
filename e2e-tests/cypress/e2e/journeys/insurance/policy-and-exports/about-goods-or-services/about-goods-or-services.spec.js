@@ -58,7 +58,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -131,7 +131,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
       cy.completeAndSubmitAboutGoodsOrServicesForm();
 
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
 
     describe('after submitting the form', () => {

@@ -13,9 +13,21 @@ import {
 } from '../../../../support/insurance/eligibility/forms';
 import { ROUTES } from '../../../../../constants';
 
+const {
+  INSURANCE: {
+    ELIGIBILITY: {
+      BUYER_COUNTRY,
+      EXPORTER_LOCATION,
+    },
+  },
+  QUOTE,
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Complete insurance eligibility, get a quote and then re-visit the insurance eligibility - all by visiting the buyer country form instead of via `start now` route', () => {
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
+    cy.navigateToUrl(BUYER_COUNTRY);
 
     completeAndSubmitBuyerCountryForm();
     completeExporterLocationForm();
@@ -34,19 +46,23 @@ context('Complete insurance eligibility, get a quote and then re-visit the insur
   });
 
   it('allows an exporter to get a quote when visiting the buyer country page directly', () => {
-    cy.navigateToUrl(ROUTES.QUOTE.BUYER_COUNTRY);
+    cy.navigateToUrl(QUOTE.BUYER_COUNTRY);
 
     cy.submitQuoteAnswersHappyPathSinglePolicy();
     submitButton().click();
 
-    cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
+    const expectedUrl = `${baseUrl}${QUOTE.YOUR_QUOTE}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('allows an exporter to start another insurance eligibility when visiting the buyer country page directly', () => {
-    cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
+    cy.navigateToUrl(BUYER_COUNTRY);
 
     completeAndSubmitBuyerCountryForm();
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
+    const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;
+
+    cy.assertUrl(expectedUrl);
   });
 });

@@ -22,7 +22,7 @@ const assertChangeAnswersPageUrl = (referenceNumber, route, fieldId, fragmentSuf
     }
   }
 
-  cy.url().should('eq', expected);
+  cy.assertUrl(expected);
 };
 
 export default assertChangeAnswersPageUrl;

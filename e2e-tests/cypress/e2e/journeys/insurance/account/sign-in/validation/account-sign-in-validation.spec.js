@@ -37,7 +37,7 @@ context('Insurance - Account - Sign in - Validation', () => {
 
     url = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {

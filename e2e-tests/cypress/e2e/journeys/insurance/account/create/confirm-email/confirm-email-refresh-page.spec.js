@@ -17,7 +17,7 @@ context('Insurance - Account - Create - Confirm email page - refreshing the page
 
     const expected = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
 
-    cy.url().should('eq', expected);
+    cy.assertUrl(expected);
 
     cy.reload();
   });

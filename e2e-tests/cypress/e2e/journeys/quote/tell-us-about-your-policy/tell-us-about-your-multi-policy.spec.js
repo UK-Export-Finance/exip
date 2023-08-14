@@ -27,8 +27,18 @@ const {
   },
 } = FIELD_IDS;
 
+const {
+  QUOTE: {
+    TELL_US_ABOUT_YOUR_POLICY,
+    POLICY_TYPE,
+    CHECK_YOUR_ANSWERS,
+  },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Tell us about your multiple policy page - as an exporter, I want to provide my Export insurance policy details', () => {
-  const url = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
+  const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
   before(() => {
     cy.login();
@@ -39,7 +49,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     completeAndSubmitUkContentForm();
     completeAndSubmitPolicyTypeMultiForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -49,8 +59,8 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.MULTIPLE_POLICY_PAGE_TITLE,
-      currentHref: ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
-      backLink: ROUTES.QUOTE.POLICY_TYPE,
+      currentHref: TELL_US_ABOUT_YOUR_POLICY,
+      backLink: POLICY_TYPE,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
       lightHouseThresholds: {
@@ -179,7 +189,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
   });
 
   describe('when form is valid', () => {
-    it(`should redirect to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`, () => {
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '100');
@@ -189,7 +199,9 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
 
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
+
+      cy.assertUrl(expectedUrl);
     });
   });
 });

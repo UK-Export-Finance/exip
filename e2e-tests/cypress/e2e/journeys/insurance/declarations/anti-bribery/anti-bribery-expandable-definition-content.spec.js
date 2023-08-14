@@ -43,7 +43,7 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

@@ -19,6 +19,6 @@ context('Insurance - Account - Manage - visiting when not signed in', () => {
   });
 
   it(`should redirect to ${SIGN_IN_ROOT}`, () => {
-    cy.url().should('eq', signInUrl);
+    cy.assertUrl(signInUrl);
   });
 });

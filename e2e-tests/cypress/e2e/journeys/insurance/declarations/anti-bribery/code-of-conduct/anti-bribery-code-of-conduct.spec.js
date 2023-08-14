@@ -51,7 +51,7 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

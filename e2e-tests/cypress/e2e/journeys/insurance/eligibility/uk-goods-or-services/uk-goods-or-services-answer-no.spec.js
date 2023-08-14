@@ -28,7 +28,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
   it('redirects to exit page', () => {
     const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY}`;
 
-    cy.url().should('include', expectedUrl);
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders a back link with correct url', () => {

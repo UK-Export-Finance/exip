@@ -45,7 +45,7 @@ context('Insurance - Check your answers - Eligibility page - I want to confirm m
 
       startNewApplicationUrl = `${INSURANCE_ROOT}/${referenceNumber}${START_NEW_APPLICATION}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -99,7 +99,7 @@ context('Insurance - Check your answers - Eligibility page - I want to confirm m
 
         const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
-        cy.url().should('eq', expectedUrl);
+        cy.assertUrl(expectedUrl);
       });
 
       describe('when going back to the all sections page', () => {
@@ -120,7 +120,7 @@ context('Insurance - Check your answers - Eligibility page - I want to confirm m
 
           const expected = `${Cypress.config('baseUrl')}${startNewApplicationUrl}`;
 
-          cy.url().should('eq', expected);
+          cy.assertUrl(expected);
         });
       });
     });

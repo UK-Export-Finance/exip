@@ -42,7 +42,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
 
       cy.completeAndSubmitSignInAccountForm({});
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
 
     it('renders core page elements', () => {
@@ -88,7 +88,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
 
           const expectedUrl = `${Cypress.config('baseUrl')}${REQUEST_NEW_CODE}`;
 
-          cy.url().should('eq', expectedUrl);
+          cy.assertUrl(expectedUrl);
         });
       });
     });

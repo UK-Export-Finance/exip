@@ -39,7 +39,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -59,7 +59,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {
@@ -78,7 +78,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {
@@ -108,7 +108,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your buyer` task status as `completed`', () => {

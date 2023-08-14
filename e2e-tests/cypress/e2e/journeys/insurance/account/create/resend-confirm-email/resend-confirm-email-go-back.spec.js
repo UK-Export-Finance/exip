@@ -23,7 +23,7 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
 
-    cy.url().should('eq', confirmEmailUrl);
+    cy.assertUrl(confirmEmailUrl);
   });
 
   beforeEach(() => {
@@ -39,13 +39,13 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
       const [firstAccount] = data.accounts;
       account = firstAccount;
 
-      cy.url().should('eq', confirmEmailUrl);
+      cy.assertUrl(confirmEmailUrl);
 
       confirmEmailPage.havingProblems.requestNew.link().click();
 
       expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL_RESENT}?id=${account.id}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
 
       cy.clickBackLink();
     });
@@ -54,7 +54,7 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
   it('renders the page without error and have the account ID in the URL params', () => {
     expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}?id=${account.id}`;
 
-    cy.url().should('eq', expectedUrl);
+    cy.assertUrl(expectedUrl);
 
     cy.assertConfirmEmailPageContent(account.id);
   });

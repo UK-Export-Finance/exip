@@ -5,13 +5,22 @@ import { LINKS } from '../../../../../content-strings';
 
 const { ELIGIBILITY: { CREDIT_PERIOD } } = FIELD_IDS;
 
+const {
+  QUOTE: {
+    CHECK_YOUR_ANSWERS,
+    TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+  },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Change your answers (policy credit period field) - as an exporter, I want to change the details before submitting the proposal', () => {
-  const url = ROUTES.QUOTE.CHECK_YOUR_ANSWERS;
+  const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
   before(() => {
     cy.login();
     cy.submitQuoteAnswersHappyPathMultiplePolicy();
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   let row = summaryList.field(CREDIT_PERIOD);
@@ -24,18 +33,13 @@ context('Change your answers (policy credit period field) - as an exporter, I wa
     row.changeLink().click();
   });
 
-  it(`clicking 'change' redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
-    const expectedUrl = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE;
-    cy.url().should('include', expectedUrl);
-  });
-
-  it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-    const expected = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`;
-    cy.url().should('include', expected);
+  it(`clicking 'change' redirects to ${TELL_US_ABOUT_YOUR_POLICY_CHANGE} with a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change`, () => {
+    const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`;
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders a back link with correct url', () => {
-    const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
+    const expectedHref = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
     cy.checkLink(
       backLink(),
@@ -52,12 +56,14 @@ context('Change your answers (policy credit period field) - as an exporter, I wa
     secondOption.should('not.have.attr', 'selected');
   });
 
-  it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
+  it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
     tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('2');
 
     submitButton().click();
 
-    cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+    const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#${CREDIT_PERIOD}-label`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders the new answer in `Check your answers` page', () => {

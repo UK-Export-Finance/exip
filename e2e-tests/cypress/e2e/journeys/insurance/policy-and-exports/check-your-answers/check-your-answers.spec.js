@@ -40,7 +40,7 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -83,7 +83,7 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
         submitButton().click();
 
         const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
-        cy.url().should('eq', expectedUrl);
+        cy.assertUrl(expectedUrl);
       });
     });
   });

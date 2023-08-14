@@ -37,7 +37,7 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -75,7 +75,7 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
       submitButton().click();
 
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
   });
 });

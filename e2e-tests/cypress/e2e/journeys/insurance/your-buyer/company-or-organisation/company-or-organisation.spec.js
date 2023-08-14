@@ -50,7 +50,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
       workingWithBuyerUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -212,7 +212,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
         cy.completeAndSubmitCompanyOrOrganisationForm({});
 
-        cy.url().should('eq', workingWithBuyerUrl);
+        cy.assertUrl(workingWithBuyerUrl);
       });
     });
 

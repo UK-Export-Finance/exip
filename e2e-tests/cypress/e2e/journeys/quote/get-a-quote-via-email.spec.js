@@ -20,7 +20,7 @@ context('Get a quote via email exit page', () => {
 
     const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL}`;
 
-    cy.url().should('eq', expectedUrl);
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders core page elements', () => {

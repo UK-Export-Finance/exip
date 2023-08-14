@@ -32,7 +32,7 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
 
       cy.navigateToUrl(url);
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -59,7 +59,7 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
   });
 
   it(`should redirect to ${APPLY_OFFLINE} page when pressing the no companies house number link`, () => {
-    cy.url().should('eq', `${Cypress.config('baseUrl')}${APPLY_OFFLINE}`);
+    cy.assertUrl(`${Cypress.config('baseUrl')}${APPLY_OFFLINE}`);
   });
 
   it(`should contain "${REASON.NO_COMPANIES_HOUSE_NUMBER}" message on apply offline page`, () => {
@@ -82,6 +82,6 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
   it('should take you back to company-details page when pressing the back button', () => {
     cy.clickBackLink();
 
-    cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`);
+    cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`);
   });
 });

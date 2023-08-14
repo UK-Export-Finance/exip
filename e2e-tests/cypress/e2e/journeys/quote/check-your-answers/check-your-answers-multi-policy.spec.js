@@ -23,6 +23,18 @@ const {
   MULTIPLE_POLICY_TYPE,
 } = FIELD_IDS;
 
+const {
+  QUOTE: {
+    CHECK_YOUR_ANSWERS,
+    BUYER_COUNTRY_CHANGE,
+    EXPORTER_LOCATION_CHANGE,
+    POLICY_TYPE_CHANGE,
+    TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+    UK_GOODS_OR_SERVICES_CHANGE,
+    YOUR_QUOTE,
+  },
+} = ROUTES;
+
 const submissionData = {
   [BUYER_COUNTRY]: 'Algeria',
   [CREDIT_PERIOD]: '1',
@@ -31,13 +43,15 @@ const submissionData = {
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
 };
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Check your answers page (multiple policy) - as an exporter, I want to review the details before submitting the proposal', () => {
-  const url = ROUTES.QUOTE.CHECK_YOUR_ANSWERS;
+  const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
   before(() => {
     cy.login();
     cy.submitQuoteAnswersHappyPathMultiplePolicy();
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -64,7 +78,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
       const expectedValue = submissionData[BUYER_COUNTRY];
       cy.checkText(row.value(), expectedValue);
 
-      const expectedHref = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
+      const expectedHref = `${BUYER_COUNTRY_CHANGE}#heading`;
       const expectedText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
       cy.checkLink(
@@ -82,7 +96,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
 
       cy.checkText(row.value(), SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION]);
 
-      const expectedHref = `${ROUTES.QUOTE.EXPORTER_LOCATION_CHANGE}#heading`;
+      const expectedHref = `${EXPORTER_LOCATION_CHANGE}#heading`;
       const expectedText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
       cy.checkLink(
@@ -100,7 +114,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
 
       cy.checkText(row.value(), SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES]);
 
-      const expectedHref = `${ROUTES.QUOTE.UK_GOODS_OR_SERVICES_CHANGE}#heading`;
+      const expectedHref = `${UK_GOODS_OR_SERVICES_CHANGE}#heading`;
       const expectedText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
       cy.checkLink(
@@ -130,7 +144,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
 
       cy.checkText(row.value(), submissionData[MULTIPLE_POLICY_TYPE]);
 
-      const expectedChangeHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`;
+      const expectedChangeHref = `${POLICY_TYPE_CHANGE}#heading`;
       const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
       cy.checkLink(
@@ -161,7 +175,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
       const expectedValue = '£150,000';
       cy.checkText(row.value(), expectedValue);
 
-      const expectedChangeHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`;
+      const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`;
       const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
       cy.checkLink(
@@ -180,7 +194,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
       const expectedValue = `${submissionData[CREDIT_PERIOD]} month`;
       cy.checkText(row.value(), expectedValue);
 
-      const expectedChangeHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`;
+      const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CREDIT_PERIOD}-label`;
       const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
       cy.checkLink(
@@ -199,7 +213,7 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
       const expectedValue = `${submissionData[PERCENTAGE_OF_COVER]}%`;
       cy.checkText(row.value(), expectedValue);
 
-      const expectedChangeHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
+      const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
       const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
       cy.checkLink(
@@ -211,12 +225,14 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
   });
 
   context('form submission', () => {
-    it(`should redirect to ${ROUTES.QUOTE.YOUR_QUOTE}`, () => {
+    it(`should redirect to ${YOUR_QUOTE}`, () => {
       cy.navigateToUrl(url);
 
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
+      const expectedUrl = `${baseUrl}${YOUR_QUOTE}`;
+
+      cy.assertUrl(expectedUrl);
     });
   });
 });

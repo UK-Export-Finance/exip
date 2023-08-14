@@ -22,7 +22,7 @@ context('Insurance - application submitted page', () => {
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -124,7 +124,7 @@ context('Insurance - application submitted page', () => {
           selector().click();
 
           const expectedUrl = `${Cypress.config('baseUrl')}${BUYER_COUNTRY}`;
-          cy.url().should('eq', expectedUrl);
+          cy.assertUrl(expectedUrl);
         });
       });
 

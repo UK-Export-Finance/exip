@@ -12,13 +12,17 @@ const {
   QUOTE,
 } = FIELD_IDS;
 
+const { QUOTE: { YOUR_QUOTE } } = ROUTES;
+
 const {
   INSURED_FOR,
   ESTIMATED_COST,
 } = QUOTE;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Get a quote/your quote page (non GBP currency) - as an exporter, I want to get an Export insurance quote', () => {
-  const url = ROUTES.QUOTE.YOUR_QUOTE;
+  const url = `${baseUrl}${YOUR_QUOTE}`;
 
   before(() => {
     cy.login();
@@ -33,7 +37,9 @@ context('Get a quote/your quote page (non GBP currency) - as an exporter, I want
 
     submitButton().click();
 
-    cy.url().should('include', url);
+    const expectedUrl = `${url}#${CONTRACT_VALUE}-label`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   beforeEach(() => {
