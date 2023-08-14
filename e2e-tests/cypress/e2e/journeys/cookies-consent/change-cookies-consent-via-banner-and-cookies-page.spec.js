@@ -3,10 +3,15 @@ import { submitButton } from '../../pages/shared';
 import { cookiesPage } from '../../pages';
 import { FIELD_IDS, ROUTES } from '../../../../constants';
 
+const {
+  COOKIES,
+  QUOTE: { BUYER_COUNTRY },
+} = ROUTES;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Cookies consent - change via banner and cookies page', () => {
-  const cookiesPageUrl = `${baseUrl}${ROUTES.COOKIES}`;
+  const cookiesPageUrl = `${baseUrl}${COOKIES}`;
 
   beforeEach(() => {
     cy.clearCookies();
@@ -26,9 +31,7 @@ context('Cookies consent - change via banner and cookies page', () => {
 
       partials.footer.supportLinks.cookies().click();
 
-      const expectedUrl = `${baseUrl}${cookiesPageUrl}`;
-
-      cy.assertUrl(expectedUrl);
+      cy.assertUrl(cookiesPageUrl);
 
       cy.checkAnalyticsScriptsAreRendered();
       cy.checkAnalyticsCookieIsTrue();
@@ -58,7 +61,7 @@ context('Cookies consent - change via banner and cookies page', () => {
       cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput().click();
       submitButton().click();
 
-      cy.navigateToUrl(ROUTES.QUOTE.BUYER_COUNTRY);
+      cy.navigateToUrl(BUYER_COUNTRY);
 
       partials.cookieBanner.heading().should('not.exist');
       partials.cookieBanner.hideButton().should('not.exist');
@@ -106,7 +109,7 @@ context('Cookies consent - change via banner and cookies page', () => {
     });
 
     it('should NOT render the cookie consent banner when going to another page', () => {
-      cy.navigateToUrl(ROUTES.QUOTE.BUYER_COUNTRY);
+      cy.navigateToUrl(BUYER_COUNTRY);
 
       partials.cookieBanner.heading().should('not.exist');
       partials.cookieBanner.hideButton().should('not.exist');

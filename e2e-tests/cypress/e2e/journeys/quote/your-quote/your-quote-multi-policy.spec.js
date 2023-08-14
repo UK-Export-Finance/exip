@@ -23,12 +23,22 @@ const {
   BUYER_LOCATION,
 } = QUOTE;
 
+const {
+  QUOTE: {
+    YOUR_QUOTE,
+    TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+    BUYER_COUNTRY_CHANGE,
+  },
+} = ROUTES;
+
 const submissionData = {
   [BUYER_COUNTRY]: 'Algeria',
 };
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Get a quote/your quote page (multiple policy) - as an exporter, I want to get an Export insurance quote', () => {
-  const url = ROUTES.QUOTE.YOUR_QUOTE;
+  const url = `${baseUrl}${YOUR_QUOTE}`;
 
   before(() => {
     cy.login();
@@ -58,7 +68,7 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
         const expectedValue = '£150,000';
         cy.checkText(row.value(), expectedValue);
 
-        const expectedChangeHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`;
+        const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`;
         const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
         cy.checkLink(
@@ -77,7 +87,7 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
         const expectedValue = '90%';
         cy.checkText(row.value(), expectedValue);
 
-        const expectedChangeHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
+        const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
         const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
         cy.checkLink(
@@ -144,7 +154,7 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
         const expectedValue = submissionData[BUYER_COUNTRY];
         cy.checkText(row.value(), expectedValue);
 
-        const expectedChangeHref = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
+        const expectedChangeHref = `${BUYER_COUNTRY_CHANGE}#heading`;
         const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
         cy.checkLink(

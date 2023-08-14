@@ -13,8 +13,18 @@ import { completeAndSubmitBuyerBodyForm } from '../../../../support/quote/forms'
 
 const CONTENT_STRINGS = PAGES.EXPORTER_LOCATION;
 
+const {
+  QUOTE: {
+    EXPORTER_LOCATION,
+    BUYER_BODY,
+    UK_GOODS_OR_SERVICES,
+  },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover', () => {
-  const url = ROUTES.QUOTE.EXPORTER_LOCATION;
+  const url = `${baseUrl}${EXPORTER_LOCATION}`;
 
   beforeEach(() => {
     cy.login();
@@ -27,8 +37,8 @@ context('Exporter location page - as an exporter, I want to check if my company 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: url,
-      backLink: ROUTES.QUOTE.BUYER_BODY,
+      currentHref: EXPORTER_LOCATION,
+      backLink: BUYER_BODY,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
     });
@@ -70,11 +80,13 @@ context('Exporter location page - as an exporter, I want to check if my company 
     });
 
     describe('when submitting the answer as `yes`', () => {
-      it(`should redirect to ${ROUTES.QUOTE.UK_GOODS_OR_SERVICES}`, () => {
+      it(`should redirect to ${UK_GOODS_OR_SERVICES}`, () => {
         yesRadio().click();
         submitButton().click();
 
-        cy.assertUrl(ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
+        const expectedUrl = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
+
+        cy.assertUrl(expectedUrl);
       });
     });
   });

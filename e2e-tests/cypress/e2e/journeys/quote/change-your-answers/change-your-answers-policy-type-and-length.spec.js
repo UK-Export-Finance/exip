@@ -133,13 +133,9 @@ context('Change your answers - as an exporter, I want to change the details befo
       cy.login();
 
       cy.submitQuoteAnswersHappyPathSinglePolicy();
-<<<<<<< HEAD
       cy.assertUrl(url);
-      row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
-=======
-      cy.url().should('include', url);
+
       row = summaryList.field(SINGLE_POLICY_TYPE);
->>>>>>> main-application
 
       cy.navigateToUrl(url);
 

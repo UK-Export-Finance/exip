@@ -10,8 +10,17 @@ import { ROUTES } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
+const {
+  QUOTE: {
+    TELL_US_ABOUT_YOUR_POLICY,
+    POLICY_TYPE,
+  },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Tell us about your multiple policy page - Signed in', () => {
-  const url = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
+  const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
   before(() => {
     cy.completeSignInAndGoToApplication();
@@ -33,8 +42,8 @@ context('Tell us about your multiple policy page - Signed in', () => {
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.MULTIPLE_POLICY_PAGE_TITLE,
-      currentHref: ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
-      backLink: ROUTES.QUOTE.POLICY_TYPE,
+      currentHref: TELL_US_ABOUT_YOUR_POLICY,
+      backLink: POLICY_TYPE,
       assertAuthenticatedHeader: true,
       isInsurancePage: false,
       lightHouseThresholds: {

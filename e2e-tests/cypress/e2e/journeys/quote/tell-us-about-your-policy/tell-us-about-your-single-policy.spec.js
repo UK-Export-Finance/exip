@@ -23,8 +23,18 @@ const {
   },
 } = FIELD_IDS;
 
+const {
+  QUOTE: {
+    TELL_US_ABOUT_YOUR_POLICY,
+    POLICY_TYPE,
+    CHECK_YOUR_ANSWERS,
+  },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Tell us about your single policy page - as an exporter, I want to provide my Export insurance policy details', () => {
-  const url = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
+  const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
   before(() => {
     cy.login();
@@ -45,8 +55,8 @@ context('Tell us about your single policy page - as an exporter, I want to provi
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.SINGLE_POLICY_PAGE_TITLE,
-      currentHref: url,
-      backLink: ROUTES.QUOTE.POLICY_TYPE,
+      currentHref: TELL_US_ABOUT_YOUR_POLICY,
+      backLink: POLICY_TYPE,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
     });
@@ -132,7 +142,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
   });
 
   describe('when form is valid', () => {
-    it(`should redirect to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`, () => {
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '100');
@@ -141,7 +151,9 @@ context('Tell us about your single policy page - as an exporter, I want to provi
 
       submitButton().click();
 
-      cy.assertUrl(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
+
+      cy.assertUrl(expectedUrl);
     });
   });
 });

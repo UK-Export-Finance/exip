@@ -5,12 +5,8 @@ import { ROUTES } from '../../../../../constants';
 
 const {
   ROOT,
-  INSURANCE: { START },
-  QUOTE: {
-    BUYER_COUNTRY,
-    EXPORTER_LOCATION,
-    YOUR_QUOTE,
-  },
+  INSURANCE: { START, ELIGIBILITY },
+  QUOTE: { BUYER_COUNTRY, YOUR_QUOTE },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -48,7 +44,7 @@ context('Complete insurance eligibility, get a quote and then re-visit the insur
     completeCheckIfEligibleForm();
     completeAndSubmitBuyerCountryForm();
 
-    const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;
+    const expectedUrl = `${baseUrl}${ELIGIBILITY.EXPORTER_LOCATION}`;
 
     cy.assertUrl(expectedUrl);
   });

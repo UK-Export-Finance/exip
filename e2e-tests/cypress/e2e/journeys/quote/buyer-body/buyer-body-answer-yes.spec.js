@@ -40,7 +40,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   it('renders a back link with correct url', () => {
     cy.checkLink(
       backLink(),
-      url,
+      BUYER_BODY,
       LINKS.BACK,
     );
   });
