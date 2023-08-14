@@ -19,6 +19,12 @@ const {
   QUOTE,
 } = FIELD_IDS;
 
+const {
+  QUOTE: { CHECK_YOUR_ANSWERS },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Get a quote/your quote page (large contract value) - as an exporter, I want to get an Export insurance quote', () => {
   before(() => {
     cy.login();
@@ -41,7 +47,9 @@ context('Get a quote/your quote page (large contract value) - as an exporter, I 
 
     submitButton().click();
 
-    cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+    const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
+
+    cy.assertUrl(expectedUrl);
 
     // Check contract value formatting in the answers page
     const answersAmount = summaryList.field(CONTRACT_VALUE).value();

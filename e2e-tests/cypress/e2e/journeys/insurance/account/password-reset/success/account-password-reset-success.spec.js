@@ -53,7 +53,7 @@ context('Insurance - Account - Password reset - success page - I want to reset m
 
         cy.completeAndSubmitNewPasswordAccountForm({ password: newPassword });
 
-        cy.url().should('eq', successUrl);
+        cy.assertUrl(successUrl);
       });
 
       it('renders core page elements and a link button to sign in', () => {

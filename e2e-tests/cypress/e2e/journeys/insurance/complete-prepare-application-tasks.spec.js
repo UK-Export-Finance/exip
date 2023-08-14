@@ -29,7 +29,7 @@ context('Insurance - Complete `prepare your application` tasks', () => {
 
       cy.navigateToUrl(allSectionsUrl);
 
-      cy.url().should('eq', allSectionsUrl);
+      cy.assertUrl(allSectionsUrl);
     });
   });
 

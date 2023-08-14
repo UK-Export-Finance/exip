@@ -36,7 +36,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
 
     url = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -142,7 +142,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
 
         const expectedUrl = `${Cypress.config('baseUrl')}${SIGN_IN.ROOT}`;
 
-        cy.url().should('eq', expectedUrl);
+        cy.assertUrl(expectedUrl);
       });
     });
 
@@ -156,7 +156,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
         cy.completeAndSubmitCreateAccountForm();
 
         const expected = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
-        cy.url().should('eq', expected);
+        cy.assertUrl(expected);
       });
     });
   });

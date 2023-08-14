@@ -22,7 +22,7 @@ context('Insurance - no access to application when application is submitted', ()
       const submittedUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
       applicationUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', submittedUrl);
+      cy.assertUrl(submittedUrl);
     });
   });
 
@@ -44,7 +44,7 @@ context('Insurance - no access to application when application is submitted', ()
     });
 
     it(`should redirect to ${NO_ACCESS_APPLICATION_SUBMITTED}`, () => {
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders core page elements', () => {

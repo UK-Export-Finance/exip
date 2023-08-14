@@ -17,8 +17,18 @@ const {
   ELIGIBILITY: { HAS_MINIMUM_UK_GOODS_OR_SERVICES },
 } = FIELD_IDS;
 
+const {
+  QUOTE: {
+    UK_GOODS_OR_SERVICES,
+    EXPORTER_LOCATION,
+    POLICY_TYPE,
+  },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
-  const url = ROUTES.QUOTE.UK_GOODS_OR_SERVICES;
+  const url = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
 
   before(() => {
     cy.login();
@@ -26,7 +36,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -36,8 +46,8 @@ context('UK goods or services page - as an exporter, I want to check if my expor
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.QUOTE.UK_GOODS_OR_SERVICES,
-      backLink: ROUTES.QUOTE.EXPORTER_LOCATION,
+      currentHref: UK_GOODS_OR_SERVICES,
+      backLink: EXPORTER_LOCATION,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
     });
@@ -108,13 +118,15 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     });
 
     describe('when submitting the answer as `yes`', () => {
-      it(`should redirect to ${ROUTES.QUOTE.POLICY_TYPE}`, () => {
+      it(`should redirect to ${POLICY_TYPE}`, () => {
         cy.navigateToUrl(url);
 
         yesRadio().click();
         submitButton().click();
 
-        cy.url().should('include', ROUTES.QUOTE.POLICY_TYPE);
+        const expectedUrl = `${baseUrl}${POLICY_TYPE}`;
+
+        cy.assertUrl(expectedUrl);
       });
     });
   });

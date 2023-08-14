@@ -40,7 +40,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
   });
 

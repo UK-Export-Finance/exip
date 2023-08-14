@@ -28,7 +28,7 @@ context('Insurance - Account - Sign in - Request new code page - I want to enter
 
     enterCodePage.requestNewCodeLink().click();
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -97,7 +97,7 @@ context('Insurance - Account - Sign in - Request new code page - I want to enter
 
     it(`should redirect to ${ENTER_CODE}`, () => {
       const expected = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
 
     it('should render a success message', () => {

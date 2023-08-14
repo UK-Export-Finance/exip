@@ -55,7 +55,7 @@ context('Insurance - Account - Password reset - new password page - form validat
 
     url = `${Cypress.config('baseUrl')}${LINK_SENT}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -78,7 +78,7 @@ context('Insurance - Account - Password reset - new password page - form validat
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.url().should('eq', url);
+        cy.assertUrl(url);
       });
 
       it('should render a validation error when password does not have the minimum amount of characters', () => {

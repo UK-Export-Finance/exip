@@ -47,7 +47,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
 
       turnoverUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
 
-      cy.url().should('eq', natureOfBusinessUrl);
+      cy.assertUrl(natureOfBusinessUrl);
     });
   });
 
@@ -137,7 +137,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
 
       cy.completeAndSubmitNatureOfYourBusiness();
 
-      cy.url().should('eq', turnoverUrl);
+      cy.assertUrl(turnoverUrl);
     });
   });
 

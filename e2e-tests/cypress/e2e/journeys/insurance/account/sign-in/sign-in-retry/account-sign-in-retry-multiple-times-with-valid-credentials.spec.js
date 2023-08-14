@@ -67,7 +67,7 @@ context('Insurance - Account - Sign in - Submitting the form with valid credenti
 
         cy.completeAndSubmitEnterCodeAccountForm(validSecurityCode);
 
-        cy.url().should('eq', dashboardUrl);
+        cy.assertUrl(dashboardUrl);
       });
     });
   });

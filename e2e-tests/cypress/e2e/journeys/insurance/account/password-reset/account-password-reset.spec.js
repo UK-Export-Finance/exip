@@ -41,7 +41,7 @@ context('Insurance - Account - Password reset page - As an Exporter, I want to r
 
     url = `${Cypress.config('baseUrl')}${PASSWORD_RESET_ROOT}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -88,7 +88,7 @@ context('Insurance - Account - Password reset page - As an Exporter, I want to r
     it(`should redirect to ${LINK_SENT}`, () => {
       const expected = `${Cypress.config('baseUrl')}${LINK_SENT}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
   });
 });

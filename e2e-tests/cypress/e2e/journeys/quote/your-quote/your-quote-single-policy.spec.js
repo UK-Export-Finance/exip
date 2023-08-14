@@ -26,6 +26,18 @@ const {
 } = FIELD_IDS;
 
 const {
+  ROOT,
+  QUOTE: {
+    BUYER_COUNTRY: BUYER_COUNTRY_ROUTE,
+    TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+    POLICY_TYPE_CHANGE,
+    BUYER_COUNTRY_CHANGE,
+    YOUR_QUOTE,
+  },
+  INSURANCE: { START },
+} = ROUTES;
+
+const {
   INSURED_FOR,
   PREMIUM_RATE_PERCENTAGE,
   ESTIMATED_COST,
@@ -42,8 +54,10 @@ const submissionData = {
   [CREDIT_PERIOD]: '1',
 };
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Get a quote/your quote page (single policy) - as an exporter, I want to get an Export insurance quote', () => {
-  const url = ROUTES.QUOTE.YOUR_QUOTE;
+  const url = `${baseUrl}${YOUR_QUOTE}`;
 
   before(() => {
     cy.login();
@@ -51,7 +65,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
     cy.submitQuoteAnswersHappyPathSinglePolicy();
     submitButton().click();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -95,7 +109,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
           const expectedValue = '£150,000';
           cy.checkText(row.value(), expectedValue);
 
-          const expectedChangeHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
+          const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
           const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
           cy.checkLink(
@@ -114,7 +128,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
           const expectedValue = '90%';
           cy.checkText(row.value(), expectedValue);
 
-          const expectedChangeHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
+          const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
           const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
           cy.checkLink(
@@ -169,7 +183,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
           const expectedValue = `${submissionData[SINGLE_POLICY_LENGTH]} months`;
           cy.checkText(row.value(), expectedValue);
 
-          const expectedChangeHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
+          const expectedChangeHref = `${POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
           const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
           cy.checkLink(
@@ -188,7 +202,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
           const expectedValue = submissionData[BUYER_COUNTRY];
           cy.checkText(row.value(), expectedValue);
 
-          const expectedChangeHref = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
+          const expectedChangeHref = `${BUYER_COUNTRY_CHANGE}#heading`;
           const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
           cy.checkLink(
@@ -221,7 +235,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
 
         cy.checkLink(
           yourQuotePage.whatHappensNext.intro.fullApplicationLink(),
-          ROUTES.INSURANCE.START,
+          START,
           CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO.FULL_APPLICATION.TEXT,
         );
       });
@@ -300,7 +314,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
     it('renders `start again` link', () => {
       cy.checkLink(
         yourQuotePage.links.startAgain(),
-        ROUTES.ROOT,
+        ROOT,
         LINKS.START_AGAIN.TEXT,
       );
     });
@@ -308,7 +322,9 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
     context('clicking `start again`', () => {
       it('redirects to the first page of the flow', () => {
         yourQuotePage.links.startAgain().click();
-        cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+        const expectedUrl = `${baseUrl}${BUYER_COUNTRY_ROUTE}`;
+
+        cy.assertUrl(expectedUrl);
       });
 
       it('clears the session', () => {

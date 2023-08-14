@@ -1,11 +1,21 @@
-import { ROUTES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+
+const {
+  ELIGIBILITY: {
+    EXPORTER_LOCATION, NEED_TO_START_AGAIN,
+  },
+} = INSURANCE_ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Manually going to the `Exporter location` page via URL without completing the previous forms', () => {
   beforeEach(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
+    cy.navigateToUrl(EXPORTER_LOCATION);
   });
 
   it('should redirect to the `need to start again` exit page', () => {
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN);
+    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN}`;
+
+    cy.assertUrl(expectedUrl);
   });
 });

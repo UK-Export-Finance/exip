@@ -1,17 +1,25 @@
 import { buyerCountryPage, submitButton } from '../../pages/shared';
 import { insurance } from '../../pages';
 import { PAGES } from '../../../../content-strings';
-import { ROUTES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
 const { ACTIONS } = CONTENT_STRINGS;
 
+const {
+  START,
+  APPLY_OFFLINE,
+  ELIGIBILITY: { BUYER_COUNTRY },
+} = INSURANCE_ROUTES;
+
 const COUNTRY_NAME_APPLY_OFFLINE_ONLY = 'Angola';
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - apply offline exit page', () => {
   beforeEach(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToUrl(START);
 
     completeStartForm();
     completeCheckIfEligibleForm();
@@ -23,14 +31,16 @@ context('Insurance - apply offline exit page', () => {
 
     submitButton().click();
 
-    cy.url().should('include', ROUTES.INSURANCE.APPLY_OFFLINE);
+    const expectedUrl = `${baseUrl}${APPLY_OFFLINE}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.INSURANCE.APPLY_OFFLINE,
-      backLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
+      currentHref: APPLY_OFFLINE,
+      backLink: BUYER_COUNTRY,
       assertSubmitButton: false,
       assertAuthenticatedHeader: false,
     });

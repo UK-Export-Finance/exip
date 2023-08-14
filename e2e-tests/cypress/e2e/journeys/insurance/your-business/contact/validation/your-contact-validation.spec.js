@@ -40,7 +40,7 @@ describe('Insurance - Your business - Contact page - form validation', () => {
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CONTACT}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

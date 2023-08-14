@@ -41,7 +41,7 @@ context('Insurance - Account - Sign in - As an Exporter, I want to sign in into 
 
     url = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -124,7 +124,7 @@ context('Insurance - Account - Sign in - As an Exporter, I want to sign in into 
 
       const expectedUrl = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
   });
 
@@ -140,7 +140,7 @@ context('Insurance - Account - Sign in - As an Exporter, I want to sign in into 
         cy.completeAndSubmitSignInAccountForm({});
 
         const expected = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
-        cy.url().should('eq', expected);
+        cy.assertUrl(expected);
       });
     });
   });

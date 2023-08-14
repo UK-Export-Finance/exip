@@ -2,7 +2,7 @@ import {
   backLink, cannotApplyPage, yesRadio, yesRadioInput, submitButton,
 } from '../../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../../content-strings';
-import { ROUTES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../support/forms';
 import {
   completeStartForm,
@@ -16,11 +16,19 @@ import {
 
 const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
 
+const {
+  ELIGIBILITY: { LETTER_OF_CREDIT },
+  START,
+  APPLY_OFFLINE,
+} = INSURANCE_ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Eligibility - Letter of credit page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is paid via letter of credit - submit `paid by letter of credit`', () => {
-  const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`;
+  const url = `${baseUrl}${LETTER_OF_CREDIT}`;
 
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToUrl(START);
 
     completeStartForm();
     completeCheckIfEligibleForm();
@@ -42,11 +50,13 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
   });
 
   it('redirects to exit page', () => {
-    cy.url().should('include', ROUTES.INSURANCE.APPLY_OFFLINE);
+    const expectedUrl = `${baseUrl}${APPLY_OFFLINE}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders a back link with correct url', () => {
-    const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`;
+    const expectedHref = `${baseUrl}${LETTER_OF_CREDIT}`;
 
     cy.checkLink(
       backLink(),

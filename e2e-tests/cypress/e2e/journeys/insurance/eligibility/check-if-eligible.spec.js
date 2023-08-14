@@ -1,22 +1,27 @@
 import { submitButton } from '../../../pages/shared';
 import { insurance } from '../../../pages';
 import { PAGES } from '../../../../../content-strings';
-import { ROUTES } from '../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { completeStartForm } from '../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE;
 
-const insuranceStartRoute = ROUTES.INSURANCE.START;
+const {
+  START,
+  ELIGIBILITY: { CHECK_IF_ELIGIBLE, BUYER_COUNTRY },
+} = INSURANCE_ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance Eligibility - check if eligible page', () => {
-  const url = ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE;
+  const url = `${baseUrl}${CHECK_IF_ELIGIBLE}`;
 
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToUrl(START);
 
     completeStartForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -26,8 +31,8 @@ context('Insurance Eligibility - check if eligible page', () => {
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE,
-      backLink: insuranceStartRoute,
+      currentHref: CHECK_IF_ELIGIBLE,
+      backLink: START,
       assertAuthenticatedHeader: false,
     });
   });
@@ -42,12 +47,12 @@ context('Insurance Eligibility - check if eligible page', () => {
     });
 
     context('form submission', () => {
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`, () => {
+      it(`should redirect to ${BUYER_COUNTRY}`, () => {
         submitButton().click();
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
+        const expectedUrl = `${baseUrl}${BUYER_COUNTRY}`;
 
-        cy.url().should('eq', expected);
+        cy.assertUrl(expectedUrl);
       });
     });
   });

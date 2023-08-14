@@ -40,7 +40,7 @@ context('Insurance - Account - Password reset - new password page - As an Export
 
     url = `${Cypress.config('baseUrl')}${LINK_SENT}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -59,7 +59,7 @@ context('Insurance - Account - Password reset - new password page - As an Export
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.url().should('eq', url);
+        cy.assertUrl(url);
       });
 
       it('renders core page elements', () => {
@@ -87,7 +87,7 @@ context('Insurance - Account - Password reset - new password page - As an Export
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.url().should('eq', url);
+        cy.assertUrl(url);
       });
 
       it(`should redirect to ${SUCCESS}`, () => {
@@ -96,7 +96,7 @@ context('Insurance - Account - Password reset - new password page - As an Export
         cy.completeAndSubmitNewPasswordAccountForm({ password: newPassword });
 
         const expected = `${Cypress.config('baseUrl')}${SUCCESS}`;
-        cy.url().should('eq', expected);
+        cy.assertUrl(expected);
       });
     });
   });

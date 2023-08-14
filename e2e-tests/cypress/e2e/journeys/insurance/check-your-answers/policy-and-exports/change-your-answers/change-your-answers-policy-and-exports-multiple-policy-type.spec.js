@@ -66,7 +66,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

@@ -1,33 +1,42 @@
 import { submitButton, needToStartAgainPage } from '../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../content-strings';
-import { ROUTES } from '../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../support/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_PAGE;
 
-const buyerCountryRoute = ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY;
+const {
+  START,
+  ELIGIBILITY: { BUYER_COUNTRY, PRE_CREDIT_PERIOD, NEED_TO_START_AGAIN },
+} = INSURANCE_ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
+const buyerCountryUrl = `${baseUrl}${BUYER_COUNTRY}`;
 
 context('Insurance Eligibility - Need to start again exit page', () => {
   beforeEach(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToUrl(START);
 
     cy.saveSession();
 
     completeStartForm();
     completeCheckIfEligibleForm();
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY);
+    cy.assertUrl(buyerCountryUrl);
 
-    cy.navigateToUrl(ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD);
+    cy.navigateToUrl(PRE_CREDIT_PERIOD);
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN);
+    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.INSURANCE.ELIGIBILITY.NEED_TO_START_AGAIN,
-      backLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
+      currentHref: NEED_TO_START_AGAIN,
+      backLink: BUYER_COUNTRY,
       assertBackLink: false,
       submitButtonCopy: LINKS.START_AGAIN.TEXT,
       assertAuthenticatedHeader: false,
@@ -39,12 +48,10 @@ context('Insurance Eligibility - Need to start again exit page', () => {
   });
 
   describe('clicking the submit button', () => {
-    it(`should redirect to ${buyerCountryRoute}`, () => {
+    it(`should redirect to ${BUYER_COUNTRY}`, () => {
       submitButton().click();
 
-      const expected = `${Cypress.config('baseUrl')}${buyerCountryRoute}`;
-
-      cy.url().should('eq', expected);
+      cy.assertUrl(buyerCountryUrl);
     });
   });
 });

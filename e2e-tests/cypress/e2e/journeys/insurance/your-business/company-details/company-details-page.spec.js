@@ -37,7 +37,7 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

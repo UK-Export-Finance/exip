@@ -53,7 +53,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -75,7 +75,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
@@ -102,7 +102,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
@@ -135,7 +135,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
@@ -172,7 +172,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
 
     it('should retain the `type of policy and exports` task status as `in progress`', () => {
