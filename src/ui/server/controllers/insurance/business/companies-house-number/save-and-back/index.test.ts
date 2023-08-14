@@ -1,22 +1,17 @@
 import { post } from '.';
-import { FIELD_IDS } from '..';
-import { ROUTES } from '../../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
+import { ROUTES } from '../../../../../constants';
 import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/company-details';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCompany } from '../../../../../test-mocks';
 
-const {
-  YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
-} = BUSINESS_FIELD_IDS;
+const { COMPANIES_HOUSE_NUMBER } = BUSINESS_FIELD_IDS;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
-const { VALID_PHONE_NUMBERS, INVALID_PHONE_NUMBERS } = mockPhoneNumbers;
-
-describe('controllers/insurance/business/companies-details', () => {
+describe('controllers/insurance/business/companies-house-number/save-and-back', () => {
   let req: Request;
   let res: Response;
 
@@ -41,9 +36,7 @@ describe('controllers/insurance/business/companies-details', () => {
   describe('post', () => {
     describe('when there are validation errors', () => {
       const body = {
-        [TRADING_NAME]: 'true',
-        [TRADING_ADDRESS]: 'false',
-        [PHONE_NUMBER]: INVALID_PHONE_NUMBERS.TOO_SHORT_SPECIAL_CHAR,
+        [COMPANIES_HOUSE_NUMBER]: '8',
       };
 
       it('should redirect to next page', async () => {
@@ -65,9 +58,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
     describe('when there are no validation errors', () => {
       const body = {
-        [TRADING_NAME]: 'true',
-        [TRADING_ADDRESS]: 'false',
-        [PHONE_NUMBER]: VALID_PHONE_NUMBERS.MOBILE,
+        [COMPANIES_HOUSE_NUMBER]: '8989898',
       };
 
       it('should redirect to next page', async () => {
@@ -83,11 +74,16 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await post(req, res);
 
-        const payload = constructPayload(req.body, FIELD_IDS);
+        const payload = constructPayload(req.body, [COMPANIES_HOUSE_NUMBER]);
 
         expect(updateMapAndSave).toHaveBeenCalledTimes(1);
 
-        expect(updateMapAndSave).toHaveBeenCalledWith(payload, mockApplication, false);
+        const updateBody = {
+          ...payload,
+          ...mockCompany,
+        };
+
+        expect(updateMapAndSave).toHaveBeenCalledWith(updateBody, mockApplication, {});
       });
     });
 

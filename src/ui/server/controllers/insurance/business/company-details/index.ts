@@ -4,7 +4,6 @@ import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/busine
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
-import companiesHouseSearch from './helpers/companies-house-search.helper';
 import constructPayload from '../../../../helpers/construct-payload';
 import companyDetailsValidation from './validation/company-details';
 import { isPopulatedArray } from '../../../../helpers/array';
@@ -12,11 +11,9 @@ import mapAndSave from '../map-and-save/company-details';
 import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-house-summary-list';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import { companyHouseSummaryList } from '../../../../helpers/summary-lists/company-house-summary-list';
 import { Request, Response } from '../../../../../types';
 
 const {
-  COMPANY_HOUSE,
   YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
 } = BUSINESS_FIELD_IDS;
 
@@ -25,7 +22,7 @@ const { COMPANY_DETAILS: COMPANY_DETAILS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORT
 
 export const TEMPLATE = COMPANY_DETAILS_TEMPLATE;
 
-export const FIELD_IDS = [COMPANY_HOUSE.INPUT, TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER];
+export const FIELD_IDS = [TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER];
 
 const {
   INSURANCE_ROOT,
@@ -34,37 +31,14 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-const {
-  COMPANY_HOUSE_SEARCH,
-  COMPANY_DETAILS: COMPANY_DETAILS_ROUTE,
-  COMPANIES_HOUSE_UNAVAILABLE,
-  NO_COMPANIES_HOUSE_NUMBER,
-  COMPANY_DETAILS_SAVE_AND_BACK,
-  CONTACT_ROOT,
-  CHECK_YOUR_ANSWERS,
-} = EXPORTER_BUSINESS_ROUTES;
+const { COMPANY_DETAILS_SAVE_AND_BACK, CONTACT_ROOT, CHECK_YOUR_ANSWERS, COMPANIES_HOUSE_NUMBER_ROOT } = EXPORTER_BUSINESS_ROUTES;
 
-const pageVariables = (referenceNumber: number, ORIGINAL_URL: string) => {
-  let companyDetailsPostRoute = `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROUTE}`;
-
-  // if change route, then should use change url to go back to check your answers
-  if (isChangeRoute(ORIGINAL_URL) || isCheckAndChangeRoute(ORIGINAL_URL)) {
-    companyDetailsPostRoute = ORIGINAL_URL;
-  }
-
+const pageVariables = (referenceNumber: number) => {
   return {
-    POST_ROUTES: {
-      COMPANIES_HOUSE: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_HOUSE_SEARCH}`,
-      COMPANY_DETAILS: companyDetailsPostRoute,
-      SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
-      NO_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
-    },
+    SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
+    DIFFERENT_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${referenceNumber}${COMPANIES_HOUSE_NUMBER_ROOT}`,
     FIELDS: BUSINESS_FIELD_IDS,
   };
-};
-
-const exitReason = {
-  noCompaniesHouseNumber: PAGES.INSURANCE.APPLY_OFFLINE.REASON.NO_COMPANIES_HOUSE_NUMBER,
 };
 
 /**
@@ -85,7 +59,6 @@ const get = (req: Request, res: Response) => {
 
     // values from application if they exist
     const submittedValues = {
-      [COMPANY_HOUSE.INPUT]: company?.[COMPANY_HOUSE.COMPANY_NUMBER],
       [TRADING_NAME]: company?.[TRADING_NAME],
       [TRADING_ADDRESS]: company?.[TRADING_ADDRESS],
       [WEBSITE]: company?.[WEBSITE],
@@ -98,94 +71,13 @@ const get = (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       userName: getUserNameFromSession(req.session.user),
-      ...pageVariables(application.referenceNumber, req.originalUrl),
+      ...pageVariables(application.referenceNumber),
       submittedValues,
       // summary list for company details
       SUMMARY_LIST: populateCompaniesHouseSummaryList(company),
     });
   } catch (err) {
     console.error('Error getting company details %O', err);
-    return res.redirect(PROBLEM_WITH_SERVICE);
-  }
-};
-
-const redirectToExitPage = {
-  /**
-   * handles redirect to apply offline page if no companies house number link is pressed
-   * @param {Express.Request} Express request
-   * @param {Express.Response} Express response
-   * @returns {Express.Response.redirect} redirects to apply offline page
-   */
-  noCompaniesHouseNumber: (req: Request, res: Response) => {
-    req.flash('exitReason', exitReason.noCompaniesHouseNumber);
-
-    return res.redirect(ROUTES.INSURANCE.APPLY_OFFLINE);
-  },
-};
-
-/**
- * posts companies house number to company house api
- * validates input and response from companies house api and shows relevant errors if they exist
- * populates a summary list with the company information if no validation errors
- * @param {Express.Request} Express request
- * @param {Express.Response} Express response
- * @returns {Express.Response.render} companyDetails template with validation errors or summary list with company details populated
- */
-const postCompaniesHouseSearch = async (req: Request, res: Response) => {
-  try {
-    const { application } = res.locals;
-
-    if (!application) {
-      return res.redirect(PROBLEM_WITH_SERVICE);
-    }
-
-    const { referenceNumber } = application;
-    const { body } = req;
-
-    const payload = constructPayload(body, FIELD_IDS);
-
-    // checks if input is correctly formatted before searching
-    const response = await companiesHouseSearch(payload);
-
-    const { validationErrors, apiError, company } = response;
-
-    if (apiError) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${COMPANIES_HOUSE_UNAVAILABLE}`);
-    }
-
-    if (isPopulatedArray(Object.keys(validationErrors))) {
-      return res.render(TEMPLATE, {
-        ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-          BACK_LINK: req.headers.referer,
-        }),
-        userName: getUserNameFromSession(req.session.user),
-        ...pageVariables(application.referenceNumber, req.originalUrl),
-        validationErrors,
-        submittedValues: payload,
-      });
-    }
-
-    if (company) {
-      // populates summary list with company information
-      const summaryList = companyHouseSummaryList(company);
-
-      return res.render(TEMPLATE, {
-        ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
-          BACK_LINK: req.headers.referer,
-        }),
-        userName: getUserNameFromSession(req.session.user),
-        ...pageVariables(application.referenceNumber, req.originalUrl),
-        validationErrors,
-        SUMMARY_LIST: summaryList,
-        submittedValues: payload,
-      });
-    }
-
-    return res.redirect(PROBLEM_WITH_SERVICE);
-  } catch (err) {
-    console.error('Error posting companise house search - your business - company details %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -205,25 +97,12 @@ const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber } = application;
+    const { referenceNumber, company } = application;
 
     const payload = constructPayload(req.body, FIELD_IDS);
 
-    // runs companiesHouse validation and api call first for companiesHouse input
-    const response = await companiesHouseSearch(payload);
-
-    const { apiError, companiesHouseNumber, company } = response;
-
-    // if error, then there is problem with api/service to redirect
-    if (apiError) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${COMPANIES_HOUSE_UNAVAILABLE}`);
-    }
-
-    let { validationErrors } = response;
-
     // populate submittedValues
     const submittedValues = {
-      [COMPANY_HOUSE.INPUT]: companiesHouseNumber,
       // if trading name is string true, then convert to boolean true
       [TRADING_NAME]: sanitiseValue({ key: TRADING_NAME, value: payload[TRADING_NAME] }),
       [TRADING_ADDRESS]: sanitiseValue({ key: TRADING_ADDRESS, value: payload[TRADING_ADDRESS] }),
@@ -232,7 +111,7 @@ const post = async (req: Request, res: Response) => {
     };
 
     // run validation on other fields on page
-    validationErrors = companyDetailsValidation(payload, validationErrors);
+    const validationErrors = companyDetailsValidation(payload);
 
     // if any errors then render template with errors
     if (isPopulatedArray(Object.keys(validationErrors))) {
@@ -242,19 +121,15 @@ const post = async (req: Request, res: Response) => {
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),
-        ...pageVariables(application.referenceNumber, req.originalUrl),
+        ...pageVariables(application.referenceNumber),
         validationErrors,
         submittedValues,
+        SUMMARY_LIST: populateCompaniesHouseSummaryList(company),
       });
     }
 
-    const updateBody = {
-      ...payload,
-      ...company,
-    };
-
     // if no errors, then runs save api call to db
-    const saveResponse = await mapAndSave.companyDetails(updateBody, application);
+    const saveResponse = await mapAndSave.companyDetails(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
@@ -275,4 +150,4 @@ const post = async (req: Request, res: Response) => {
   }
 };
 
-export { pageVariables, get, postCompaniesHouseSearch, redirectToExitPage, post };
+export { pageVariables, get, post };

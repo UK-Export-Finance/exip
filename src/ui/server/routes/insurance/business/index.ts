@@ -2,11 +2,14 @@ import express from 'express';
 import { ROUTES } from '../../../constants';
 
 import {
-  get as getCompanyDetails,
-  postCompaniesHouseSearch,
+  get as getCompaniesHouseNumber,
   redirectToExitPage,
-  post as postCompanyDetails,
-} from '../../../controllers/insurance/business/company-details';
+  post as postCompaniesHouseNumber,
+} from '../../../controllers/insurance/business/companies-house-number';
+
+import { post as postCompaniesHouseNumberSaveAndBack } from '../../../controllers/insurance/business/companies-house-number/save-and-back';
+
+import { get as getCompanyDetails, post as postCompanyDetails } from '../../../controllers/insurance/business/company-details';
 
 import { post as postCompanyDetailsSaveAndBack } from '../../../controllers/insurance/business/company-details/save-and-back';
 
@@ -30,11 +33,18 @@ import { get as getCompaniesHouseError } from '../../../controllers/insurance/bu
 // @ts-ignore
 const insuranceBusinessRouter = express.Router();
 
+insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER_ROOT}`, getCompaniesHouseNumber);
+insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.NO_COMPANIES_HOUSE_NUMBER}`, redirectToExitPage.noCompaniesHouseNumber);
+insuranceBusinessRouter.post(
+  `/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER_SAVE_AND_BACK}`,
+  postCompaniesHouseNumberSaveAndBack,
+);
+insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER_ROOT}`, postCompaniesHouseNumber);
+
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`, getCompanyDetails);
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.NO_COMPANIES_HOUSE_NUMBER}`, redirectToExitPage.noCompaniesHouseNumber);
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_UNAVAILABLE}`, getCompaniesHouseError);
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH}`, getCompanyDetails);
-insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH}`, postCompaniesHouseSearch);
 insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS_SAVE_AND_BACK}`, postCompanyDetailsSaveAndBack);
 insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`, postCompanyDetails);
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS_CHANGE}`, getCompanyDetails);

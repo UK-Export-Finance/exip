@@ -3,7 +3,7 @@ import validationRules from './rules';
 import combineValidationRules from '../../../../../../helpers/combine-validation-rules';
 import { CompanyHouseResponse } from '../../../../../../../types';
 
-describe('controllers/insurance/business/company-details/validation/companies-house-response', () => {
+describe('controllers/insurance/business/companies-house-number/validation/companies-house-response', () => {
   it('should return an array of results from rule functions', () => {
     const mockFormBody = {
       success: false,
