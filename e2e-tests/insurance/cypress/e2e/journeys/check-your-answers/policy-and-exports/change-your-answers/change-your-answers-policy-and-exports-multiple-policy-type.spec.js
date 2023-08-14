@@ -1,6 +1,6 @@
 import partials from '../../../../../../../partials';
 import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
-import { checkYourAnswersPolicyAndExports } from '../../../../../../../pages/insurance/check-your-answers';
+import { summaryList } from '../../../../../../../pages/shared';
 import application from '../../../../../../../fixtures/application';
 import { multipleContractPolicyPage } from '../../../../../../../pages/insurance/policy-and-export';
 import {
@@ -40,8 +40,6 @@ const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-const { summaryList } = checkYourAnswersPolicyAndExports;
-
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
   checkYourAnswersRoute: TYPE_OF_POLICY,
@@ -68,7 +66,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

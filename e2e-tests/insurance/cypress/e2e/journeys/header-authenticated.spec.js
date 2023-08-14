@@ -58,7 +58,7 @@ context('Insurance - header - authenticated - As an Exporter, I want the system 
 
       const expectedUrl = `${Cypress.config('baseUrl')}${MANAGE}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
   });
 
@@ -76,7 +76,7 @@ context('Insurance - header - authenticated - As an Exporter, I want the system 
     it(`should redirect to ${DASHBOARD} when clicking the link`, () => {
       selector().click();
 
-      cy.url().should('eq', dashboardUrl);
+      cy.assertUrl(dashboardUrl);
     });
   });
 

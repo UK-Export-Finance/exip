@@ -46,7 +46,7 @@ context('Insurance - Account - Sign in - Enter code - without completing eligibi
 
       const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
   });
 });

@@ -7,7 +7,6 @@ import {
 } from '../../../../../../commands/quote/forms';
 import { submitButton } from '../../../../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
-import partials from '../../../../../../partials';
 import {
   LINKS,
   FIELDS,
@@ -28,10 +27,18 @@ const {
   },
 } = FIELD_IDS;
 
-const startRoute = ROUTES.QUOTE.START;
+const {
+  QUOTE: {
+    TELL_US_ABOUT_YOUR_POLICY,
+    POLICY_TYPE,
+    CHECK_YOUR_ANSWERS,
+  },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Tell us about your multiple policy page - as an exporter, I want to provide my Export insurance policy details', () => {
-  const url = ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
+  const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
   before(() => {
     cy.login();
@@ -42,7 +49,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     completeAndSubmitUkContentForm();
     completeAndSubmitPolicyTypeMultiForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -52,8 +59,8 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.MULTIPLE_POLICY_PAGE_TITLE,
-      currentHref: ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
-      backLink: ROUTES.QUOTE.POLICY_TYPE,
+      currentHref: TELL_US_ABOUT_YOUR_POLICY,
+      backLink: POLICY_TYPE,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
       lightHouseThresholds: {
@@ -68,10 +75,6 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to quote start', () => {
-      partials.header.serviceName().should('have.attr', 'href', startRoute);
     });
 
     it('renders `currency and amount` legend', () => {
@@ -165,7 +168,14 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       const expectedHintText = `${HINT[0].text} ${HINT[1].text} ${HINT[2].text}`;
       cy.checkText(field.hint(), expectedHintText);
 
-      field.hintLink().should('have.attr', 'href', LINKS.EXTERNAL.NBI_FORM);
+      const expectedHintLinkHref = LINKS.EXTERNAL.NBI_FORM;
+      const expectedHintLinkText = HINT[1].text;
+
+      cy.checkLink(
+        field.hintLink(),
+        expectedHintLinkHref,
+        expectedHintLinkText,
+      );
 
       field.input().should('exist');
 
@@ -179,7 +189,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
   });
 
   describe('when form is valid', () => {
-    it(`should redirect to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`, () => {
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '100');
@@ -189,7 +199,9 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
 
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
+
+      cy.assertUrl(expectedUrl);
     });
   });
 });

@@ -32,7 +32,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -52,7 +52,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
   it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, () => {
     const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
-    cy.url().should('eq', expectedUrl);
+    cy.assertUrl(expectedUrl);
   });
 
   it('should have the originally submitted answer selected when going back to the page after submission', () => {

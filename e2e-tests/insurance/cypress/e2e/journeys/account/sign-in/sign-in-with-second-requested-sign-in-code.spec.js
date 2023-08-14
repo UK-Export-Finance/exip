@@ -31,22 +31,22 @@ context('Insurance - Account - Sign in - I want to enter the new security code s
 
     cy.verifyAccountEmail();
 
-    cy.url().should('eq', `${baseUrl}${SIGN_IN_ROOT}`);
+    cy.assertUrl(`${baseUrl}${SIGN_IN_ROOT}`);
 
     cy.keyboardInput(accountFormFields[EMAIL].input(), account[EMAIL]);
     cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
 
     submitButton().click();
 
-    cy.url().should('eq', `${baseUrl}${ENTER_CODE}`);
+    cy.assertUrl(`${baseUrl}${ENTER_CODE}`);
 
     enterCodePage.requestNewCodeLink().click();
 
-    cy.url().should('eq', `${baseUrl}${REQUEST_NEW_CODE}`);
+    cy.assertUrl(`${baseUrl}${REQUEST_NEW_CODE}`);
 
     submitButton().click();
 
-    cy.url().should('eq', `${baseUrl}${ENTER_CODE}`);
+    cy.assertUrl(`${baseUrl}${ENTER_CODE}`);
   });
 
   beforeEach(() => {
@@ -78,7 +78,7 @@ context('Insurance - Account - Sign in - I want to enter the new security code s
 
       const expectedUrl = `${baseUrl}${DASHBOARD}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
   });
 });

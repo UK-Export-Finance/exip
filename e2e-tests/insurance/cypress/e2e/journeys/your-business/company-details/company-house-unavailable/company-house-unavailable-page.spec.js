@@ -1,13 +1,10 @@
 import { companiesHouseUnavailablePage } from '../../../../../../../pages/your-business';
-import partials from '../../../../../../../partials';
 import { PAGES } from '../../../../../../../content-strings';
 import { ROUTES } from '../../../../../../../constants';
 
 const { ROOT, ALL_SECTIONS } = ROUTES.INSURANCE;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_UNAVAILABLE;
-
-const insuranceStart = ROUTES.INSURANCE.START;
 
 const { COMPANY_DETAILS, COMPANIES_HOUSE_UNAVAILABLE } = ROUTES.INSURANCE.EXPORTER_BUSINESS;
 
@@ -52,10 +49,6 @@ context("Insurance - Your business - Companies house unavailable page - I want t
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStart);
     });
 
     it('should display the correct text on the page', () => {

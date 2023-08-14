@@ -17,7 +17,7 @@ context('Insurance - Task list - complete `prepare application` group', () => {
 
       const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

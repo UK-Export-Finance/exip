@@ -13,13 +13,10 @@ import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 
 const {
   POLICY_AND_EXPORTS,
-  START,
   EXPORTER_BUSINESS: {
     COMPANY_DETAILS,
   },
 } = ROUTES.INSURANCE;
-
-const insuranceStartRoute = START;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS;
 
@@ -43,7 +40,7 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -69,10 +66,6 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
       cy.navigateToUrl(url);
     });
 
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
-    });
-
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
@@ -90,7 +83,7 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
         submitButton().click();
 
         const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
-        cy.url().should('eq', expectedUrl);
+        cy.assertUrl(expectedUrl);
       });
     });
   });

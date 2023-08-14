@@ -69,7 +69,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
       checkYourAnswersUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -178,7 +178,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
           it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
             cy.completeAndSubmitBrokerForm({ usingBroker: true });
 
-            cy.url().should('eq', checkYourAnswersUrl);
+            cy.assertUrl(checkYourAnswersUrl);
           });
 
           describe('when going back to the page', () => {
@@ -202,7 +202,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
             broker[USING_BROKER].noRadioInput().click();
             submitButton().click();
 
-            cy.url().should('eq', checkYourAnswersUrl);
+            cy.assertUrl(checkYourAnswersUrl);
           });
 
           describe('when going back to the page', () => {

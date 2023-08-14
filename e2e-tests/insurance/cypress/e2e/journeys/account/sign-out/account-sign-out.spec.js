@@ -38,7 +38,7 @@ context('Insurance - Account - Sign out - As an Exporter, I want to be able to s
     it(`should redirect to ${SIGN_IN_ROOT}, display an 'important' banner with signed out copy and NOT render a back link`, () => {
       const expectedUrl = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
 
       signInPage.importantBanner.container().should('exist');
 
@@ -54,7 +54,7 @@ context('Insurance - Account - Sign out - As an Exporter, I want to be able to s
       // should be taken to the sign in paeg
       const expectedUrl = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
   });
 });

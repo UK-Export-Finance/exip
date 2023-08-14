@@ -38,7 +38,7 @@ const completeAndSubmitSignInAccountForm = ({
   if (assertRedirectUrl) {
     // assert we are on the 'enter code' page'
     const expectedUrl = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
-    cy.url().should('eq', expectedUrl);
+    cy.assertUrl(expectedUrl);
   }
 };
 

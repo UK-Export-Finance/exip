@@ -8,8 +8,16 @@ import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm, 
 
 const { POLICY_TYPE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
 
+const {
+  QUOTE: {
+    POLICY_TYPE: POLICY_TYPE_ROUTE,
+  },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Policy type page - policy type & length validation - single policy type', () => {
-  const url = ROUTES.QUOTE.POLICY_TYPE;
+  const url = `${baseUrl}${POLICY_TYPE_ROUTE}`;
 
   before(() => {
     cy.login();
@@ -18,7 +26,7 @@ context('Policy type page - policy type & length validation - single policy type
     completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {

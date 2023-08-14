@@ -52,7 +52,7 @@ context('Insurance - Check your answers - Your buyer page - Summary list', () =>
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUYER}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

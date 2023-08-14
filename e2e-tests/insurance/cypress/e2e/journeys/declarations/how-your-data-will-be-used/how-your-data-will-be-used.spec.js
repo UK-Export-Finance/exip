@@ -53,7 +53,7 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -164,7 +164,7 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
 
         const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
 
-        cy.url().should('eq', expectedUrl);
+        cy.assertUrl(expectedUrl);
       });
     });
   });

@@ -44,7 +44,7 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

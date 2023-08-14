@@ -41,7 +41,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

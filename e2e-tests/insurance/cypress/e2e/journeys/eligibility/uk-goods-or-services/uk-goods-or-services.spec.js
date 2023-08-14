@@ -7,7 +7,8 @@ import {
   PAGES,
   ERROR_MESSAGES,
 } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import { completeStartForm, completeCheckIfEligibleForm, completeExporterLocationForm } from '../../../../../../commands/insurance/eligibility/forms';
 import {
@@ -27,22 +28,25 @@ const {
   ELIGIBILITY: { HAS_MINIMUM_UK_GOODS_OR_SERVICES },
 } = FIELD_IDS;
 
-const insuranceStartRoute = ROUTES.INSURANCE.START;
+const {
+  START,
+  ELIGIBILITY: { UK_GOODS_OR_SERVICES, EXPORTER_LOCATION, INSURED_AMOUNT },
+} = INSURANCE_ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
-  let url;
+  const url = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
 
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToUrl(START);
 
     completeStartForm();
     completeCheckIfEligibleForm();
     completeAndSubmitBuyerCountryForm();
     completeExporterLocationForm();
 
-    url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES}`;
-
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -52,8 +56,8 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES,
-      backLink: ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION,
+      currentHref: UK_GOODS_OR_SERVICES,
+      backLink: EXPORTER_LOCATION,
       assertAuthenticatedHeader: false,
     });
   });
@@ -61,10 +65,6 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
     });
 
     it('renders `yes` radio button', () => {
@@ -148,8 +148,10 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
       submitButton().click();
     });
 
-    it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`, () => {
-      cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT);
+    it(`should redirect to ${INSURED_AMOUNT}`, () => {
+      const expectedUrl = `${baseUrl}${INSURED_AMOUNT}`;
+
+      cy.assertUrl(expectedUrl);
     });
 
     describe('when going back to the page', () => {

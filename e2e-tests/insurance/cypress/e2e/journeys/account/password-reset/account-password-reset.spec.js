@@ -1,4 +1,3 @@
-import partials from '../../../../../../partials';
 import { backLink } from '../../../../../../pages/shared';
 import { signInPage } from '../../../../../../pages/insurance/account/sign-in';
 import { yourDetailsPage } from '../../../../../../pages/insurance/account/create';
@@ -11,7 +10,6 @@ import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/i
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.PASSWORD_RESET.ROOT;
 
 const {
-  START,
   ACCOUNT: {
     SIGN_IN: { ROOT: SIGN_IN_ROOT },
     PASSWORD_RESET: { ROOT: PASSWORD_RESET_ROOT, LINK_SENT },
@@ -43,7 +41,7 @@ context('Insurance - Account - Password reset page - As an Exporter, I want to r
 
     url = `${Cypress.config('baseUrl')}${PASSWORD_RESET_ROOT}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -69,10 +67,6 @@ context('Insurance - Account - Password reset page - As an Exporter, I want to r
       cy.navigateToUrl(url);
     });
 
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
-    });
-
     it('renders `email` label, hint and input', () => {
       const fieldId = EMAIL;
       const field = accountFormFields[fieldId];
@@ -94,7 +88,7 @@ context('Insurance - Account - Password reset page - As an Exporter, I want to r
     it(`should redirect to ${LINK_SENT}`, () => {
       const expected = `${Cypress.config('baseUrl')}${LINK_SENT}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
   });
 });

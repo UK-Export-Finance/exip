@@ -25,7 +25,7 @@ context('Insurance - Account - Create - Confirm email page should render the sub
 
     const expected = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
 
-    cy.url().should('eq', expected);
+    cy.assertUrl(expected);
   });
 
   afterEach(() => {

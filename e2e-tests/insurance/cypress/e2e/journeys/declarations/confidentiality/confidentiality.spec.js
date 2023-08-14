@@ -39,7 +39,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -165,7 +165,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
 
         const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 
-        cy.url().should('eq', expectedUrl);
+        cy.assertUrl(expectedUrl);
       });
 
       describe('when going back to the page', () => {

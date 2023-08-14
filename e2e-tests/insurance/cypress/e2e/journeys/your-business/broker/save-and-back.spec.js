@@ -50,7 +50,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
       allSectionsUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -68,7 +68,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
       saveAndBackButton().click();
 
-      cy.url().should('eq', allSectionsUrl);
+      cy.assertUrl(allSectionsUrl);
 
       const expected = TASKS.STATUS.IN_PROGRESS;
       cy.checkText(task.status(), expected);
@@ -85,7 +85,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
       saveAndBackButton().click();
 
-      cy.url().should('eq', allSectionsUrl);
+      cy.assertUrl(allSectionsUrl);
 
       const expected = TASKS.STATUS.IN_PROGRESS;
       cy.checkText(task.status(), expected);
@@ -133,7 +133,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
         saveAndBackButton().click();
 
-        cy.url().should('eq', allSectionsUrl);
+        cy.assertUrl(allSectionsUrl);
 
         const expected = TASKS.STATUS.COMPLETED;
         cy.checkTaskStatus(task, expected);
@@ -172,7 +172,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
         saveAndBackButton().click();
 
-        cy.url().should('eq', allSectionsUrl);
+        cy.assertUrl(allSectionsUrl);
 
         const expected = TASKS.STATUS.COMPLETED;
         cy.checkTaskStatus(task, expected);

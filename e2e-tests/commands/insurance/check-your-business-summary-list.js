@@ -1,4 +1,4 @@
-import checkYourAnswersPage from '../../pages/your-business/check-your-answers/checkYourAnswers';
+import { summaryList } from '../../pages/shared';
 import getSummaryListField from './get-summary-list-field';
 import { FIELD_IDS } from '../../constants';
 import { LINKS, DEFAULT } from '../../content-strings';
@@ -58,8 +58,7 @@ const {
 } = FIELD_IDS;
 
 const assertRow = (fieldId, expectedKey, expectedValue, expectedChangeLinkText) => {
-  const { summaryList } = checkYourAnswersPage;
-  const row = summaryList[fieldId];
+  const row = summaryList.field(fieldId);
 
   cy.checkText(
     row.key(),
@@ -125,8 +124,7 @@ const checkYourBusinessSummaryList = ({
     const fieldId = COMPANY_ADDRESS;
     const expectedKey = FIELDS[fieldId].SUMMARY.TITLE;
 
-    const { summaryList } = checkYourAnswersPage;
-    const row = summaryList[fieldId];
+    const row = summaryList.field(fieldId);
 
     cy.checkText(
       row.key(),
@@ -297,8 +295,7 @@ const checkYourBusinessSummaryList = ({
 
     const expectedKey = FIELDS.BROKER[fieldId].SUMMARY.TITLE;
 
-    const { summaryList } = checkYourAnswersPage;
-    const row = summaryList[fieldId];
+    const row = summaryList.field(fieldId);
 
     cy.checkText(
       row.key(),

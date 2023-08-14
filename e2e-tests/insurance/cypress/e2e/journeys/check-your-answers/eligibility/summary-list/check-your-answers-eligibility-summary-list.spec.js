@@ -39,7 +39,7 @@ context('Insurance - Check your answers - Eligibility - Summary List', () => {
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ELIGIBILITY}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

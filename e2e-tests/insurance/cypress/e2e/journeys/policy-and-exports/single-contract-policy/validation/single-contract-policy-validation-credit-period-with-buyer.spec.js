@@ -40,7 +40,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
       url = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

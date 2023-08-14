@@ -1,6 +1,5 @@
 import { submitButton } from '../../../../../../pages/shared';
 import { insurance } from '../../../../../../pages';
-import partials from '../../../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
@@ -48,7 +47,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
 
     url = `${Cypress.config('baseUrl')}${ELIGIBLE_TO_APPLY_ONLINE}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -70,10 +69,6 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
       cy.navigateToUrl(url);
     });
 
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
-    });
-
     it('renders inset text', () => {
       insurance.eligibility.eligibleToApplyOnlinePage.insetText().should('exist');
 
@@ -92,7 +87,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
 
         const expectedUrl = `${Cypress.config('baseUrl')}${ACCOUNT_TO_APPLY_ONLINE}`;
 
-        cy.url().should('eq', expectedUrl);
+        cy.assertUrl(expectedUrl);
       });
     });
   });

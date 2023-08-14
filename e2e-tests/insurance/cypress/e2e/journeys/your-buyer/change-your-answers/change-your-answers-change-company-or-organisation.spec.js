@@ -5,8 +5,8 @@ import {
   ROUTES,
   WEBSITE_EXAMPLES,
 } from '../../../../../../constants';
-import { companyOrOrganisationPage, checkYourAnswersPage } from '../../../../../../pages/insurance/your-buyer';
-import { submitButton } from '../../../../../../pages/shared';
+import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
+import { submitButton, summaryList } from '../../../../../../pages/shared';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import application from '../../../../../../fixtures/application';
 
@@ -40,8 +40,6 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.buyer;
 
-const { summaryList } = checkYourAnswersPage;
-
 context('Insurance - Your buyer - Change your answers - Company or organisation - As an exporter, I want to change my answers to the company or organisation section', () => {
   let referenceNumber;
   let url;
@@ -74,7 +72,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       it(`should redirect to ${COMPANY_OR_ORGANISATION_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, NAME);
       });
@@ -86,7 +84,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(companyOrOrganisationPage[fieldId].input(), newAnswer);
 
@@ -110,7 +108,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       it(`should redirect to ${COMPANY_OR_ORGANISATION_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, ADDRESS);
       });
@@ -122,7 +120,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(companyOrOrganisationPage[fieldId].input(), newAnswer);
 
@@ -136,7 +134,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       it('should render the new answer', () => {
         const expectedKey = FIELDS.COMPANY_OR_ORGANISATION[fieldId].SUMMARY.TITLE;
 
-        const row = summaryList[fieldId];
+        const row = summaryList.field(fieldId);
 
         cy.checkText(
           row.key(),
@@ -156,7 +154,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       it(`should redirect to ${COMPANY_OR_ORGANISATION_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, REGISTRATION_NUMBER);
       });
@@ -168,7 +166,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(companyOrOrganisationPage[fieldId].input(), newAnswer);
 
@@ -192,7 +190,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       it(`should redirect to ${COMPANY_OR_ORGANISATION_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, WEBSITE);
       });
@@ -204,7 +202,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(companyOrOrganisationPage[fieldId].input(), newAnswer);
 
@@ -228,7 +226,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       it(`should redirect to ${COMPANY_OR_ORGANISATION_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, FIRST_NAME);
       });
@@ -242,7 +240,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(companyOrOrganisationPage[fieldId].input(), newAnswerFirstName);
         cy.keyboardInput(companyOrOrganisationPage[LAST_NAME].input(), newAnswerLastName);
@@ -258,7 +256,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       it('should render the new answer', () => {
         const expectedKey = FIELDS.COMPANY_OR_ORGANISATION[fieldId].SUMMARY.TITLE;
 
-        const row = summaryList[fieldId];
+        const row = summaryList.field(fieldId);
 
         cy.checkText(
           row.key(),
@@ -281,7 +279,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       it(`should redirect to ${COMPANY_OR_ORGANISATION_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, CAN_CONTACT_BUYER);
       });
@@ -291,7 +289,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         companyOrOrganisationPage[fieldId].noRadioInput().click();
 

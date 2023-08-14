@@ -14,7 +14,7 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
 
     const expected = `${Cypress.config('baseUrl')}${ACCOUNT_TO_APPLY_ONLINE}`;
 
-    cy.url().should('eq', expected);
+    cy.assertUrl(expected);
   });
 
   beforeEach(() => {
@@ -26,6 +26,6 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
     submitButton().click();
 
     const expected = `${Cypress.config('baseUrl')}${CREATE.YOUR_DETAILS}`;
-    cy.url().should('eq', expected);
+    cy.assertUrl(expected);
   });
 });

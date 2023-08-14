@@ -1,7 +1,6 @@
 import partials from '../../../../../../../partials';
 import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
-import { status } from '../../../../../../../pages/shared';
-import { checkYourAnswersPolicyAndExports } from '../../../../../../../pages/insurance/check-your-answers';
+import { status, summaryList } from '../../../../../../../pages/shared';
 import application from '../../../../../../../fixtures/application';
 import { singleContractPolicyPage } from '../../../../../../../pages/insurance/policy-and-export';
 import {
@@ -41,8 +40,6 @@ const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-const { summaryList } = checkYourAnswersPolicyAndExports;
-
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
   checkYourAnswersRoute: TYPE_OF_POLICY,
@@ -52,6 +49,8 @@ const getFieldVariables = (fieldId, referenceNumber) => ({
   summaryList,
   changeLink: summaryList.field(fieldId).changeLink,
 });
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Change your answers - Policy and exports - Single contract policy - Summary List', () => {
   let url;
@@ -67,9 +66,9 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
       // To get past "Eligibility" check your answers page
       cy.submitCheckYourAnswersForm();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

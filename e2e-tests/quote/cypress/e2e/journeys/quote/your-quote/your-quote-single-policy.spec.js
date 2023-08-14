@@ -1,6 +1,5 @@
-import { buyerCountryPage, submitButton } from '../../../../../../pages/shared';
+import { buyerCountryPage, submitButton, summaryList } from '../../../../../../pages/shared';
 import { yourQuotePage } from '../../../../../../pages/quote';
-import partials from '../../../../../../partials';
 import {
   LINKS,
   PAGES,
@@ -27,6 +26,18 @@ const {
 } = FIELD_IDS;
 
 const {
+  ROOT,
+  QUOTE: {
+    BUYER_COUNTRY: BUYER_COUNTRY_ROUTE,
+    TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+    POLICY_TYPE_CHANGE,
+    BUYER_COUNTRY_CHANGE,
+    YOUR_QUOTE,
+  },
+  INSURANCE: { START },
+} = ROUTES;
+
+const {
   INSURED_FOR,
   PREMIUM_RATE_PERCENTAGE,
   ESTIMATED_COST,
@@ -43,10 +54,10 @@ const submissionData = {
   [CREDIT_PERIOD]: '1',
 };
 
-const startRoute = ROUTES.QUOTE.START;
+const baseUrl = Cypress.config('baseUrl');
 
 context('Get a quote/your quote page (single policy) - as an exporter, I want to get an Export insurance quote', () => {
-  const url = ROUTES.QUOTE.YOUR_QUOTE;
+  const url = `${baseUrl}${YOUR_QUOTE}`;
 
   before(() => {
     cy.login();
@@ -54,7 +65,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
     cy.submitQuoteAnswersHappyPathSinglePolicy();
     submitButton().click();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -77,12 +88,6 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
       cy.navigateToUrl(url);
     });
 
-    it('should render a header with href to quote start', () => {
-      cy.navigateToUrl(url);
-
-      partials.header.serviceName().should('have.attr', 'href', startRoute);
-    });
-
     context('panel/quote', () => {
       it('renders `your quote` heading', () => {
         cy.navigateToUrl(url);
@@ -95,10 +100,8 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
           cy.navigateToUrl(url);
         });
 
-        const { summaryList } = yourQuotePage.panel;
-
         it('renders `contract value` key, value with no decimal points and change link', () => {
-          const row = summaryList[CONTRACT_VALUE];
+          const row = summaryList.field(CONTRACT_VALUE);
           const expectedKeyText = QUOTE_TITLES[CONTRACT_VALUE];
 
           cy.checkText(row.key(), expectedKeyText);
@@ -106,15 +109,18 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
           const expectedValue = '£150,000';
           cy.checkText(row.value(), expectedValue);
 
-          const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
-          cy.checkText(row.changeLink(), expectedChangeLink);
+          const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
+          const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-          const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
-          row.changeLink().should('have.attr', 'href', expectedHref);
+          cy.checkLink(
+            row.changeLink(),
+            expectedChangeHref,
+            expectedChangeText,
+          );
         });
 
         it('renders `percentage of cover` key, value and change link', () => {
-          const row = summaryList[PERCENTAGE_OF_COVER];
+          const row = summaryList.field(PERCENTAGE_OF_COVER);
           const expectedKeyText = QUOTE_TITLES[PERCENTAGE_OF_COVER];
 
           cy.checkText(row.key(), expectedKeyText);
@@ -122,15 +128,18 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
           const expectedValue = '90%';
           cy.checkText(row.value(), expectedValue);
 
-          const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
-          cy.checkText(row.changeLink(), expectedChangeLink);
+          const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
+          const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-          const expectedHref = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
-          row.changeLink().should('have.attr', 'href', expectedHref);
+          cy.checkLink(
+            row.changeLink(),
+            expectedChangeHref,
+            expectedChangeText,
+          );
         });
 
         it('renders `insured for` key and value with decimal points (no change link)', () => {
-          const row = summaryList[INSURED_FOR];
+          const row = summaryList.field(INSURED_FOR);
           const expectedKeyText = QUOTE_TITLES[`${INSURED_FOR}_SINGLE_POLICY`];
 
           cy.checkText(row.key(), expectedKeyText);
@@ -142,7 +151,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         });
 
         it('renders `premium rate` key and value (no change link)', () => {
-          const row = summaryList[PREMIUM_RATE_PERCENTAGE];
+          const row = summaryList.field(PREMIUM_RATE_PERCENTAGE);
           const expectedKeyText = QUOTE_TITLES[PREMIUM_RATE_PERCENTAGE];
 
           cy.checkText(row.key(), expectedKeyText);
@@ -154,7 +163,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         });
 
         it('renders `estimated cost` key and value (no change link)', () => {
-          const row = summaryList[ESTIMATED_COST];
+          const row = summaryList.field(ESTIMATED_COST);
           const expectedKeyText = QUOTE_TITLES[ESTIMATED_COST];
 
           cy.checkText(row.key(), expectedKeyText);
@@ -166,7 +175,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         });
 
         it('renders `policy length` key, value and change link', () => {
-          const row = summaryList[SINGLE_POLICY_LENGTH];
+          const row = summaryList.field(SINGLE_POLICY_LENGTH);
           const expectedKeyText = QUOTE_TITLES[POLICY_LENGTH];
 
           cy.checkText(row.key(), expectedKeyText);
@@ -174,15 +183,18 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
           const expectedValue = `${submissionData[SINGLE_POLICY_LENGTH]} months`;
           cy.checkText(row.value(), expectedValue);
 
-          const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
-          cy.checkText(row.changeLink(), expectedChangeLink);
+          const expectedChangeHref = `${POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
+          const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-          const expectedHref = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
-          row.changeLink().should('have.attr', 'href', expectedHref);
+          cy.checkLink(
+            row.changeLink(),
+            expectedChangeHref,
+            expectedChangeText,
+          );
         });
 
         it('renders `buyer location` key, value and change link', () => {
-          const row = summaryList[BUYER_LOCATION];
+          const row = summaryList.field(BUYER_LOCATION);
           const expectedKeyText = QUOTE_TITLES[BUYER_LOCATION];
 
           cy.checkText(row.key(), expectedKeyText);
@@ -190,11 +202,14 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
           const expectedValue = submissionData[BUYER_COUNTRY];
           cy.checkText(row.value(), expectedValue);
 
-          const expectedChangeLink = `${LINKS.CHANGE} ${expectedKeyText}`;
-          cy.checkText(row.changeLink(), expectedChangeLink);
+          const expectedChangeHref = `${BUYER_COUNTRY_CHANGE}#heading`;
+          const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-          const expectedHref = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
-          row.changeLink().should('have.attr', 'href', expectedHref);
+          cy.checkLink(
+            row.changeLink(),
+            expectedChangeHref,
+            expectedChangeText,
+          );
         });
       });
     });
@@ -220,7 +235,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
 
         cy.checkLink(
           yourQuotePage.whatHappensNext.intro.fullApplicationLink(),
-          ROUTES.INSURANCE.START,
+          START,
           CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO.FULL_APPLICATION.TEXT,
         );
       });
@@ -289,25 +304,27 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
     });
 
     it('renders a `feedback` link', () => {
-      yourQuotePage.links.feedback().should('exist');
-
-      cy.checkText(yourQuotePage.links.feedback(), LINKS.GIVE_FEEDBACK);
-
-      yourQuotePage.links.feedback().should('have.attr', 'href', LINKS.EXTERNAL.FEEDBACK);
+      cy.checkLink(
+        yourQuotePage.links.feedback(),
+        LINKS.EXTERNAL.FEEDBACK,
+        LINKS.GIVE_FEEDBACK,
+      );
     });
 
     it('renders `start again` link', () => {
-      yourQuotePage.links.startAgain().should('exist');
-
-      cy.checkText(yourQuotePage.links.startAgain(), LINKS.START_AGAIN.TEXT);
-
-      yourQuotePage.links.startAgain().should('have.attr', 'href', ROUTES.ROOT);
+      cy.checkLink(
+        yourQuotePage.links.startAgain(),
+        ROOT,
+        LINKS.START_AGAIN.TEXT,
+      );
     });
 
     context('clicking `start again`', () => {
       it('redirects to the first page of the flow', () => {
         yourQuotePage.links.startAgain().click();
-        cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+        const expectedUrl = `${baseUrl}${BUYER_COUNTRY_ROUTE}`;
+
+        cy.assertUrl(expectedUrl);
       });
 
       it('clears the session', () => {

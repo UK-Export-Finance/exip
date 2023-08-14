@@ -1,14 +1,18 @@
 import {
   cannotApplyPage, noRadio, submitButton,
 } from '../../../../../pages/shared';
-import partials from '../../../../../partials';
-import { PAGES } from '../../../../../content-strings';
+import { PAGES, LINKS } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms';
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../../../commands/quote/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
-const startRoute = ROUTES.QUOTE.START;
+
+const {
+  QUOTE: { UK_GOODS_OR_SERVICES, CANNOT_APPLY },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Cannot apply exit page', () => {
   beforeEach(() => {
@@ -17,19 +21,23 @@ context('Cannot apply exit page', () => {
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
 
-    cy.url().should('include', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
+    let expectedUrl = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
+
+    cy.assertUrl(expectedUrl);
 
     noRadio().click();
     submitButton().click();
 
-    cy.url().should('include', ROUTES.QUOTE.CANNOT_APPLY);
+    expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.QUOTE.CANNOT_APPLY,
-      backLink: ROUTES.QUOTE.UK_GOODS_OR_SERVICES,
+      currentHref: CANNOT_APPLY,
+      backLink: UK_GOODS_OR_SERVICES,
       assertSubmitButton: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
@@ -37,10 +45,6 @@ context('Cannot apply exit page', () => {
         seo: 60,
       },
     });
-  });
-
-  it('should render a header with href to quote start', () => {
-    partials.header.serviceName().should('have.attr', 'href', startRoute);
   });
 
   it('renders a reason', () => {
@@ -57,17 +61,28 @@ context('Cannot apply exit page', () => {
     const expectedEligibility = `${CONTENT_STRINGS.ACTIONS.ELIGIBILITY.TEXT} ${CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.TEXT}`;
     cy.checkText(cannotApplyPage.actions.eligibility(), expectedEligibility);
 
-    cannotApplyPage.actions.eligibilityLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF);
+    cy.checkLink(
+      cannotApplyPage.actions.eligibilityLink(),
+      CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF,
+      CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.TEXT,
+    );
 
     const expectedBroker = `${CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT} ${CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.TEXT}`;
+
     cy.checkText(cannotApplyPage.actions.approvedBroker(), expectedBroker);
 
-    cannotApplyPage.actions.approvedBrokerLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.HREF);
+    cy.checkLink(
+      cannotApplyPage.actions.approvedBrokerLink(),
+      CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.HREF,
+      CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT,
+    );
   });
 
   describe('when clicking `eligibility` link', () => {
-    it('redirects to guidance page - eligibility section', () => {
-      cannotApplyPage.actions.eligibilityLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF);
+    it(`redirects to ${LINKS.EXTERNAL.GUIDANCE}`, () => {
+      cannotApplyPage.actions.eligibilityLink().click();
+
+      cy.url().should('eq', LINKS.EXTERNAL.GUIDANCE);
     });
   });
 });

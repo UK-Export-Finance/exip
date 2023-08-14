@@ -32,91 +32,89 @@ describe('controllers/insurance/business/contact/save-and-back', () => {
     jest.resetAllMocks();
   });
 
-  describe('post - save and back', () => {
-    const validBody = {
-      [FIRST_NAME]: 'firstName',
-      [LAST_NAME]: 'lastName',
-      [EMAIL]: 'test@test.com',
-      [POSITION]: 'CEO',
-    };
+  const validBody = {
+    [FIRST_NAME]: 'firstName',
+    [LAST_NAME]: 'lastName',
+    [EMAIL]: 'test@test.com',
+    [POSITION]: 'CEO',
+  };
 
-    describe('when there are no validation errors', () => {
-      it('should redirect to all sections page', async () => {
-        req.body = validBody;
+  describe('when there are no validation errors', () => {
+    it('should redirect to all sections page', async () => {
+      req.body = validBody;
 
-        await post(req, res);
+      await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
-      });
-
-      it('should call mapAndSave.broker once with data from constructPayload function', async () => {
-        req.body = {
-          ...validBody,
-          injection: 1,
-        };
-
-        await post(req, res);
-
-        const payload = constructPayload(req.body, FIELD_IDS);
-
-        expect(mapAndSave.contact).toHaveBeenCalledTimes(1);
-
-        expect(mapAndSave.contact).toHaveBeenCalledWith(payload, mockApplication, false);
-      });
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
     });
 
-    describe('when there are validation errors', () => {
-      it('should redirect to all sections page', async () => {
-        req.body = {
-          [FIRST_NAME]: 'firstName',
-          [LAST_NAME]: 'lastName',
-          [EMAIL]: 'test',
-          [POSITION]: 'CEO',
-        };
+    it('should call mapAndSave.broker once with data from constructPayload function', async () => {
+      req.body = {
+        ...validBody,
+        injection: 1,
+      };
 
-        await post(req, res);
+      await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
-      });
+      const payload = constructPayload(req.body, FIELD_IDS);
 
-      it('should call mapAndSave.contact once', async () => {
-        req.body = {
-          [FIRST_NAME]: 'firstName',
-          [LAST_NAME]: 'lastName',
-          [EMAIL]: 'test',
-          [POSITION]: 'CEO',
-        };
+      expect(mapAndSave.contact).toHaveBeenCalledTimes(1);
 
-        await post(req, res);
+      expect(mapAndSave.contact).toHaveBeenCalledWith(payload, mockApplication, false);
+    });
+  });
 
-        expect(updateMapAndSave).toHaveBeenCalledTimes(1);
-      });
+  describe('when there are validation errors', () => {
+    it('should redirect to all sections page', async () => {
+      req.body = {
+        [FIRST_NAME]: 'firstName',
+        [LAST_NAME]: 'lastName',
+        [EMAIL]: 'test',
+        [POSITION]: 'CEO',
+      };
+
+      await post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
     });
 
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
-      });
+    it('should call mapAndSave.contact once', async () => {
+      req.body = {
+        [FIRST_NAME]: 'firstName',
+        [LAST_NAME]: 'lastName',
+        [EMAIL]: 'test',
+        [POSITION]: 'CEO',
+      };
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
+      expect(updateMapAndSave).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('when there is no application', () => {
+    beforeEach(() => {
+      res.locals = { csrfToken: '1234' };
     });
 
-    describe('when mapAndSave.contact fails', () => {
-      beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
-        updateMapAndSave = jest.fn(() => Promise.reject());
-        mapAndSave.contact = updateMapAndSave;
-      });
+    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
+      post(req, res);
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+    });
+  });
 
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
+  describe('when mapAndSave.contact fails', () => {
+    beforeEach(() => {
+      res.locals = { csrfToken: '1234' };
+      updateMapAndSave = jest.fn(() => Promise.reject());
+      mapAndSave.contact = updateMapAndSave;
+    });
+
+    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
+      post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
     });
   });
 });

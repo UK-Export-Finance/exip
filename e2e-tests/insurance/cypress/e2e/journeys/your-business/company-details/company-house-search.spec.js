@@ -45,7 +45,7 @@ context('Insurance - Your business - Company details page - company house search
 
       cy.navigateToUrl(url);
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

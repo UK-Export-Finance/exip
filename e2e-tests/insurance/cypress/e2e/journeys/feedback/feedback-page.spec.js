@@ -52,10 +52,6 @@ context('Insurance - Feedback - As an exporter I want to give feedback on the UK
       cy.navigateToUrl(url);
     });
 
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
-    });
-
     it(`should render the ${SATISFACTION} radios`, () => {
       const field = feedbackPage.field(SATISFACTION);
 

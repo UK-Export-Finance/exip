@@ -9,7 +9,6 @@ import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/i
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.MANAGE;
 
 const {
-  START,
   ACCOUNT: {
     CREATE: { YOUR_DETAILS },
     SIGN_IN: { ENTER_CODE },
@@ -71,7 +70,7 @@ context('Insurance - Account - Manage - As an Exporter, I want the service to ha
     });
 
     it(`should redirect to ${MANAGE}`, () => {
-      cy.url().should('eq', manageAccountUrl);
+      cy.assertUrl(manageAccountUrl);
     });
 
     describe('page tests', () => {
@@ -90,10 +89,6 @@ context('Insurance - Account - Manage - As an Exporter, I want the service to ha
           assertSubmitButton: false,
           assertAuthenticatedHeader: true,
         });
-      });
-
-      it('should render a header with href to insurance start', () => {
-        partials.header.serviceName().should('have.attr', 'href', START);
       });
 
       it('renders an introduction', () => {

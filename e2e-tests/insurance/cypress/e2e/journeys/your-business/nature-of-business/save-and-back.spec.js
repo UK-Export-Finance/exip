@@ -41,7 +41,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -61,7 +61,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
@@ -81,7 +81,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
@@ -117,7 +117,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {

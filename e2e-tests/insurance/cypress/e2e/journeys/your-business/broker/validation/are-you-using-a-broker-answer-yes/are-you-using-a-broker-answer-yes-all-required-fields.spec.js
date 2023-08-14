@@ -34,7 +34,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
       const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
       checkYourAnswersUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -51,6 +51,6 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
     partials.errorSummaryListItems().should('have.length', 0);
 
-    cy.url().should('eq', checkYourAnswersUrl);
+    cy.assertUrl(checkYourAnswersUrl);
   });
 });

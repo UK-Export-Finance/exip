@@ -20,7 +20,7 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
 
     const expected = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
 
-    cy.url().should('eq', expected);
+    cy.assertUrl(expected);
   });
 
   beforeEach(() => {
@@ -49,7 +49,7 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
     it(`should redirect to ${CONFIRM_EMAIL} and render core page elements and content`, () => {
       expectedUrl = CONFIRM_EMAIL;
 
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${expectedUrl}`);
+      cy.assertUrl(`${Cypress.config('baseUrl')}${expectedUrl}`);
 
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,

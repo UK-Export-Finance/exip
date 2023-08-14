@@ -1,7 +1,7 @@
 import partials from '../../../../../../../partials';
+import { summaryList } from '../../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { checkYourAnswersYourBusiness } from '../../../../../../../pages/insurance/check-your-answers';
 import { natureOfBusiness } from '../../../../../../../pages/your-business';
 import {
   checkChangeLinkUrl,
@@ -31,8 +31,6 @@ const {
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
-
-const { summaryList } = checkYourAnswersYourBusiness;
 
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: NATURE_OF_BUSINESS_CHECK_AND_CHANGE,
@@ -64,7 +62,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

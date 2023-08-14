@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import { enterCodePage } from '../../../../../../../pages/insurance/account/sign-in';
 import accountFormFields from '../../../../../../../partials/insurance/accountFormFields';
 import { PAGES } from '../../../../../../../content-strings';
@@ -43,7 +42,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
 
       cy.completeAndSubmitSignInAccountForm({});
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
 
     it('renders core page elements', () => {
@@ -60,10 +59,6 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
         cy.navigateToUrl(url);
       });
 
-      it('should render a header with href to insurance start', () => {
-        partials.header.serviceName().should('have.attr', 'href', START);
-      });
-
       it('renders `security code` label and input', () => {
         const fieldId = SECURITY_CODE;
         const field = accountFormFields[fieldId];
@@ -77,9 +72,14 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
       });
 
       it('renders a `request new code` link', () => {
-        cy.checkText(enterCodePage.requestNewCodeLink(), CONTENT_STRINGS.REQUEST_NEW_CODE.TEXT);
+        const expectedHref = CONTENT_STRINGS.REQUEST_NEW_CODE.HREF;
+        const expectedText = CONTENT_STRINGS.REQUEST_NEW_CODE.TEXT;
 
-        enterCodePage.requestNewCodeLink().should('have.attr', 'href', CONTENT_STRINGS.REQUEST_NEW_CODE.HREF);
+        cy.checkLink(
+          enterCodePage.requestNewCodeLink(),
+          expectedHref,
+          expectedText,
+        );
       });
 
       describe('when clicking `request new code`', () => {
@@ -88,7 +88,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
 
           const expectedUrl = `${Cypress.config('baseUrl')}${REQUEST_NEW_CODE}`;
 
-          cy.url().should('eq', expectedUrl);
+          cy.assertUrl(expectedUrl);
         });
       });
     });

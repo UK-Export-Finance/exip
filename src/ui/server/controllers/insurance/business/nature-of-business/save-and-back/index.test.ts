@@ -31,82 +31,80 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
     jest.resetAllMocks();
   });
 
-  describe('post - save and back', () => {
-    describe('when there are no validation errors', () => {
-      it('should redirect to all sections page', async () => {
-        req.body = {
-          ...mockBusinessNatureOfBusiness,
-        };
+  describe('when there are no validation errors', () => {
+    it('should redirect to all sections page', async () => {
+      req.body = {
+        ...mockBusinessNatureOfBusiness,
+      };
 
-        await post(req, res);
+      await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
-      });
-
-      it('should call mapAndSave.natureOfBusiness once with data from constructPayload', async () => {
-        req.body = {
-          ...mockBusinessNatureOfBusiness,
-          injection: 1,
-        };
-
-        await post(req, res);
-
-        const payload = constructPayload(req.body, FIELD_IDS);
-
-        expect(updateMapAndSave).toHaveBeenCalledTimes(1);
-
-        expect(updateMapAndSave).toHaveBeenCalledWith(payload, mockApplication, false);
-      });
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
     });
 
-    describe('when there are validation errors', () => {
-      it('should redirect to all sections page', async () => {
-        req.body = {
-          [YEARS_EXPORTING]: '5O',
-          [EMPLOYEES_UK]: '2000',
-        };
+    it('should call mapAndSave.natureOfBusiness once with data from constructPayload', async () => {
+      req.body = {
+        ...mockBusinessNatureOfBusiness,
+        injection: 1,
+      };
 
-        await post(req, res);
+      await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
-      });
+      const payload = constructPayload(req.body, FIELD_IDS);
 
-      it('should call mapAndSave.natureOfBusiness once', async () => {
-        req.body = {
-          [YEARS_EXPORTING]: '5O',
-          [EMPLOYEES_UK]: '2000',
-        };
+      expect(updateMapAndSave).toHaveBeenCalledTimes(1);
 
-        await post(req, res);
+      expect(updateMapAndSave).toHaveBeenCalledWith(payload, mockApplication, false);
+    });
+  });
 
-        expect(updateMapAndSave).toHaveBeenCalledTimes(1);
-      });
+  describe('when there are validation errors', () => {
+    it('should redirect to all sections page', async () => {
+      req.body = {
+        [YEARS_EXPORTING]: '5O',
+        [EMPLOYEES_UK]: '2000',
+      };
+
+      await post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
     });
 
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
-      });
+    it('should call mapAndSave.natureOfBusiness once', async () => {
+      req.body = {
+        [YEARS_EXPORTING]: '5O',
+        [EMPLOYEES_UK]: '2000',
+      };
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
+      expect(updateMapAndSave).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('when there is no application', () => {
+    beforeEach(() => {
+      res.locals = { csrfToken: '1234' };
     });
 
-    describe('when mapAndSave.natureOfBusiness fails', () => {
-      beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
-        updateMapAndSave = jest.fn(() => Promise.reject());
-        mapAndSave.natureOfBusiness = updateMapAndSave;
-      });
+    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
+      post(req, res);
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+    });
+  });
 
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
+  describe('when mapAndSave.natureOfBusiness fails', () => {
+    beforeEach(() => {
+      res.locals = { csrfToken: '1234' };
+      updateMapAndSave = jest.fn(() => Promise.reject());
+      mapAndSave.natureOfBusiness = updateMapAndSave;
+    });
+
+    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
+      post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
     });
   });
 });

@@ -3,13 +3,15 @@ import { COOKIES_CONSENT } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Cookies consent - reject', () => {
-  const url = ROUTES.QUOTE.BUYER_COUNTRY;
+  const url = `${baseUrl}${ROUTES.QUOTE.BUYER_COUNTRY}`;
 
   beforeEach(() => {
     cy.login();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   describe('when clicking `reject cookies` button', () => {
@@ -22,7 +24,9 @@ context('Cookies consent - reject', () => {
     });
 
     it('should remain on the same page', () => {
-      cy.url().should('include', url);
+      const expectedUrl = `${baseUrl}${ROUTES.QUOTE.BUYER_COUNTRY}`;
+
+      cy.assertUrl(expectedUrl);
     });
 
     it('should not render the question banner', () => {
@@ -41,10 +45,11 @@ context('Cookies consent - reject', () => {
       const expected = `${REJECTED.COPY_1} ${COOKIES_CONSENT.COOKIES_LINK} ${REJECTED.COPY_2}`;
       cy.checkText(partials.cookieBanner.rejected.copy(), expected);
 
-      partials.cookieBanner.cookiesLink().should('exist');
-      cy.checkText(partials.cookieBanner.cookiesLink(), COOKIES_CONSENT.COOKIES_LINK);
-
-      partials.cookieBanner.cookiesLink().should('have.attr', 'href', ROUTES.COOKIES);
+      cy.checkLink(
+        partials.cookieBanner.cookiesLink(),
+        ROUTES.COOKIES,
+        COOKIES_CONSENT.COOKIES_LINK,
+      );
 
       partials.cookieBanner.hideButton().should('exist');
       cy.checkText(partials.cookieBanner.hideButton(), COOKIES_CONSENT.HIDE_BUTTON);

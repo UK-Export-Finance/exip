@@ -6,7 +6,6 @@ import {
 } from '../../../../../../commands/quote/forms';
 import { submitButton } from '../../../../../../pages/shared';
 import { policyTypePage } from '../../../../../../pages/quote';
-import partials from '../../../../../../partials';
 import {
   LINKS,
   FIELDS,
@@ -18,10 +17,18 @@ const CONTENT_STRINGS = PAGES.QUOTE.POLICY_TYPE;
 
 const { POLICY_TYPE } = FIELD_IDS;
 
-const startRoute = ROUTES.QUOTE.START;
+const {
+  QUOTE: {
+    POLICY_TYPE: POLICY_TYPE_ROUTE,
+    UK_GOODS_OR_SERVICES,
+    TELL_US_ABOUT_YOUR_POLICY,
+  },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Policy type page - as an exporter, I want to get UKEF export insurance quote based on the export policy - provide policy type', () => {
-  const url = ROUTES.QUOTE.POLICY_TYPE;
+  const url = `${baseUrl}${POLICY_TYPE_ROUTE}`;
 
   before(() => {
     cy.login();
@@ -31,14 +38,14 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
     completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.QUOTE.POLICY_TYPE,
-      backLink: ROUTES.QUOTE.UK_GOODS_OR_SERVICES,
+      currentHref: POLICY_TYPE_ROUTE,
+      backLink: UK_GOODS_OR_SERVICES,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
       lightHouseThresholds: {
@@ -57,10 +64,6 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to quote start', () => {
-      partials.header.serviceName().should('have.attr', 'href', startRoute);
     });
 
     it('renders `policy type` radio inputs with labels and hints', () => {
@@ -104,7 +107,13 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
         });
 
         const expectedHref = LINKS.EXTERNAL.NBI_FORM;
-        singlePolicyLength.hintLink().should('have.attr', 'href', expectedHref);
+        const expectedText = FIELDS[singlePolicyLengthId].HINT[0][1].text;
+
+        cy.checkLink(
+          singlePolicyLength.hintLink(),
+          expectedHref,
+          expectedText,
+        );
       });
     });
 
@@ -124,18 +133,26 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
         });
 
         const expectedHref = LINKS.EXTERNAL.NBI_FORM;
-        multiPolicyType.inset.link().should('have.attr', 'href', expectedHref);
+        const expectedText = insetText[1].text;
+
+        cy.checkLink(
+          multiPolicyType.inset.link(),
+          expectedHref,
+          expectedText,
+        );
       });
     });
 
     describe('when form is valid', () => {
-      it(`should redirect to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY}`, () => {
+      it(`should redirect to ${TELL_US_ABOUT_YOUR_POLICY}`, () => {
         policyTypePage[POLICY_TYPE].single.input().click();
         cy.keyboardInput(policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input(), '8');
 
         submitButton().click();
 
-        cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+        const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
+
+        cy.assertUrl(expectedUrl);
       });
     });
   });

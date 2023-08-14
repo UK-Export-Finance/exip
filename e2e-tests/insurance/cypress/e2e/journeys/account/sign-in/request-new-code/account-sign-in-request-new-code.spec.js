@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import { submitButton } from '../../../../../../../pages/shared';
 import { enterCodePage, requestNewCodePage } from '../../../../../../../pages/insurance/account/sign-in';
 import { BUTTONS, PAGES } from '../../../../../../../content-strings';
@@ -29,7 +28,7 @@ context('Insurance - Account - Sign in - Request new code page - I want to enter
 
     enterCodePage.requestNewCodeLink().click();
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -49,10 +48,6 @@ context('Insurance - Account - Sign in - Request new code page - I want to enter
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
     });
 
     it('should render intro copy', () => {
@@ -102,7 +97,7 @@ context('Insurance - Account - Sign in - Request new code page - I want to enter
 
     it(`should redirect to ${ENTER_CODE}`, () => {
       const expected = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
 
     it('should render a success message', () => {

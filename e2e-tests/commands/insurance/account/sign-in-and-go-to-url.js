@@ -36,7 +36,7 @@ const signInAndGoToUrl = (url) => {
     submitButton().click();
 
     cy.navigateToUrl(url);
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 };
 

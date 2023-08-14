@@ -7,7 +7,7 @@ const COMPANY_DETAILS = {
   TRADING_ADDRESS: 'Do you trade from a different address to your registered office address for this company?',
   WEBSITE: 'Enter your company website, if you have one (optional)',
   TABLE_NAME: 'Your company',
-  NO_COMPANY_HOUSE_NUMER: 'I do not have a UK Companies House registration number',
+  NO_COMPANIES_HOUSE_NUMBER: 'I do not have a UK Companies House registration number',
   YOUR_BUSINESS_HEADING: 'Your company',
   PHONE_NUMBER: 'Your UK telephone number (optional)',
   PHONE_NUMBER_HINT: 'We may need to contact you about your application',

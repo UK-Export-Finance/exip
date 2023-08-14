@@ -73,7 +73,7 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

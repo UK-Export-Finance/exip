@@ -47,7 +47,7 @@ context('Insurance - Your business - Contact page - Save and go back', () => {
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CONTACT}`;
       allSectionsUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -65,7 +65,7 @@ context('Insurance - Your business - Contact page - Save and go back', () => {
 
       saveAndBackButton().click();
 
-      cy.url().should('eq', allSectionsUrl);
+      cy.assertUrl(allSectionsUrl);
 
       const expected = TASKS.STATUS.IN_PROGRESS;
       cy.checkText(task.status(), expected);
@@ -96,7 +96,7 @@ context('Insurance - Your business - Contact page - Save and go back', () => {
 
       saveAndBackButton().click();
 
-      cy.url().should('eq', allSectionsUrl);
+      cy.assertUrl(allSectionsUrl);
 
       const expected = TASKS.STATUS.IN_PROGRESS;
       cy.checkText(task.status(), expected);
@@ -128,7 +128,7 @@ context('Insurance - Your business - Contact page - Save and go back', () => {
 
       saveAndBackButton().click();
 
-      cy.url().should('eq', allSectionsUrl);
+      cy.assertUrl(allSectionsUrl);
 
       const expected = TASKS.STATUS.IN_PROGRESS;
       cy.checkText(task.status(), expected);

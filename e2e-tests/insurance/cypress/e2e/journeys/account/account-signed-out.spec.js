@@ -1,4 +1,3 @@
-import partials from '../../../../../partials';
 import signedOutPage from '../../../../../pages/insurance/account/signed-out';
 import { BUTTONS, PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../constants/routes/insurance';
@@ -41,10 +40,6 @@ context('Insurance - Account - Signed out -  As an Exporter I want the system to
       cy.navigateToUrl(url);
     });
 
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
-    });
-
     it('renders a `sign in` button link', () => {
       cy.checkLink(signedOutPage.signIn(), SIGN_IN_ROOT, BUTTONS.SIGN_IN);
     });
@@ -54,7 +49,7 @@ context('Insurance - Account - Signed out -  As an Exporter I want the system to
 
       const expectedUrl = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
 
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
   });
 });

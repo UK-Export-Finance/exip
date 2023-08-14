@@ -54,7 +54,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

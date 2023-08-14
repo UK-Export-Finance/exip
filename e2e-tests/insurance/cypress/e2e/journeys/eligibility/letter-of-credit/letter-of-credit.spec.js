@@ -17,8 +17,6 @@ import {
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT;
 
-const insuranceStartRoute = ROUTES.INSURANCE.START;
-
 context('Insurance - Eligibility - Letter of credit page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is paid via letter of credit', () => {
   let url;
 
@@ -36,7 +34,7 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
 
     url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -55,10 +53,6 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
     });
 
     it('renders `yes` radio button', () => {
@@ -114,7 +108,7 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD}`, () => {
         const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD}`;
 
-        cy.url().should('eq', expected);
+        cy.assertUrl(expected);
       });
 
       describe('when going back to the page', () => {

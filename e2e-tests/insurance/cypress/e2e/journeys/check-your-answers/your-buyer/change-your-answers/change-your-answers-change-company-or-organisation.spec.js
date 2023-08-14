@@ -1,9 +1,8 @@
-import { submitButton, status } from '../../../../../../../pages/shared';
+import { submitButton, status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { WEBSITE_EXAMPLES, FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import { checkYourAnswersYourBuyer } from '../../../../../../../pages/insurance/check-your-answers';
 import { companyOrOrganisationPage } from '../../../../../../../pages/insurance/your-buyer';
 import {
   checkChangeLinkUrl,
@@ -41,8 +40,6 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-const { summaryList } = checkYourAnswersYourBuyer;
-
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE,
   checkYourAnswersRoute: YOUR_BUYER,
@@ -76,7 +73,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUYER}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

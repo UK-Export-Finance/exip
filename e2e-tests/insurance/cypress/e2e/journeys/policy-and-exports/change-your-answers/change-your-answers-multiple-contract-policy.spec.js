@@ -1,5 +1,5 @@
-import { submitButton } from '../../../../../../pages/shared';
-import { multipleContractPolicyPage, checkYourAnswersPage } from '../../../../../../pages/insurance/policy-and-export';
+import { submitButton, summaryList } from '../../../../../../pages/shared';
+import { multipleContractPolicyPage } from '../../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../../partials';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
@@ -32,8 +32,6 @@ const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
-const { summaryList } = checkYourAnswersPage;
-
 context('Insurance - Policy and exports - Change your answers - Multiple contract policy - As an exporter, I want to change my answers to the type of policy and exports section', () => {
   let referenceNumber;
   let url;
@@ -49,7 +47,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
       cy.completeAndSubmitAboutGoodsOrServicesForm();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

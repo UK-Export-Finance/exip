@@ -33,98 +33,96 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
     jest.resetAllMocks();
   });
 
-  describe('post - save and back', () => {
-    const { exporterIsConnectedWithBuyer, exporterHasTradedWithBuyer, ...companyOrOrganisationMock } = mockBuyer;
-    const validBody = companyOrOrganisationMock;
+  const { exporterIsConnectedWithBuyer, exporterHasTradedWithBuyer, ...companyOrOrganisationMock } = mockBuyer;
+  const validBody = companyOrOrganisationMock;
 
-    describe('when there are no validation errors', () => {
-      it('should redirect to all sections page', async () => {
-        req.body = validBody;
+  describe('when there are no validation errors', () => {
+    it('should redirect to all sections page', async () => {
+      req.body = validBody;
 
-        await post(req, res);
+      await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
-      });
-
-      it('should call mapAndSave.buyer once with data from constructPayload function', async () => {
-        req.body = validBody;
-
-        await post(req, res);
-
-        expect(updateMapAndSave).toHaveBeenCalledTimes(1);
-
-        const payload = constructPayload(req.body, FIELD_IDS);
-        const validationErrors = generateValidationErrors(payload);
-
-        expect(updateMapAndSave).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
-      });
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
     });
 
-    describe('when there are validation errors', () => {
-      it('should redirect to all sections page', async () => {
-        req.body = {
-          [NAME]: 'Test',
-        };
+    it('should call mapAndSave.buyer once with data from constructPayload function', async () => {
+      req.body = validBody;
 
-        await post(req, res);
+      await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
-      });
+      expect(updateMapAndSave).toHaveBeenCalledTimes(1);
 
-      it('should call mapAndSave.buyer once with data from constructPayload function', async () => {
-        req.body = {
-          [NAME]: 'Test',
-        };
+      const payload = constructPayload(req.body, FIELD_IDS);
+      const validationErrors = generateValidationErrors(payload);
 
-        await post(req, res);
+      expect(updateMapAndSave).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
+    });
+  });
 
-        expect(updateMapAndSave).toHaveBeenCalledTimes(1);
+  describe('when there are validation errors', () => {
+    it('should redirect to all sections page', async () => {
+      req.body = {
+        [NAME]: 'Test',
+      };
 
-        const payload = constructPayload(req.body, FIELD_IDS);
-        const validationErrors = generateValidationErrors(payload);
+      await post(req, res);
 
-        expect(updateMapAndSave).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
-      });
+      expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
     });
 
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
-      });
+    it('should call mapAndSave.buyer once with data from constructPayload function', async () => {
+      req.body = {
+        [NAME]: 'Test',
+      };
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
+      expect(updateMapAndSave).toHaveBeenCalledTimes(1);
+
+      const payload = constructPayload(req.body, FIELD_IDS);
+      const validationErrors = generateValidationErrors(payload);
+
+      expect(updateMapAndSave).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
+    });
+  });
+
+  describe('when there is no application', () => {
+    beforeEach(() => {
+      res.locals = { csrfToken: '1234' };
     });
 
-    describe('when mapAndSave.buyer returns false', () => {
-      beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
-        updateMapAndSave = jest.fn(() => Promise.resolve(false));
-        mapAndSave.yourBuyer = updateMapAndSave;
-      });
+    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
+      post(req, res);
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+    });
+  });
 
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
+  describe('when mapAndSave.buyer returns false', () => {
+    beforeEach(() => {
+      res.locals = { csrfToken: '1234' };
+      updateMapAndSave = jest.fn(() => Promise.resolve(false));
+      mapAndSave.yourBuyer = updateMapAndSave;
     });
 
-    describe('when mapAndSave.buyer fails', () => {
-      beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
-        updateMapAndSave = jest.fn(() => Promise.reject());
-        mapAndSave.yourBuyer = updateMapAndSave;
-      });
+    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
+      post(req, res);
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+    });
+  });
 
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
+  describe('when mapAndSave.buyer fails', () => {
+    beforeEach(() => {
+      res.locals = { csrfToken: '1234' };
+      updateMapAndSave = jest.fn(() => Promise.reject());
+      mapAndSave.yourBuyer = updateMapAndSave;
+    });
+
+    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
+      post(req, res);
+
+      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
     });
   });
 });

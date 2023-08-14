@@ -1,4 +1,4 @@
-import { submitButton, status } from '../../../../../../../pages/shared';
+import { submitButton, status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import {
   FIELD_VALUES,
@@ -6,7 +6,6 @@ import {
   WEBSITE_EXAMPLES,
   COMPANY_EXAMPLE,
 } from '../../../../../../../constants';
-import { checkYourAnswersYourBusiness } from '../../../../../../../pages/insurance/check-your-answers';
 import { companyDetails } from '../../../../../../../pages/your-business';
 import {
   checkChangeLinkUrl,
@@ -48,8 +47,6 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-const { summaryList } = checkYourAnswersYourBusiness;
-
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: COMPANY_DETAILS_CHECK_AND_CHANGE,
   checkYourAnswersRoute: YOUR_BUSINESS,
@@ -80,7 +77,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

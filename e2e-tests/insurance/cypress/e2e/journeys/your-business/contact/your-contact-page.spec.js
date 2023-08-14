@@ -31,8 +31,6 @@ const {
   },
 } = ROUTES.INSURANCE;
 
-const insuranceStart = ROUTES.INSURANCE.START;
-
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
@@ -53,7 +51,7 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CONTACT}`;
       natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -76,10 +74,6 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStart);
     });
 
     it('renders a heading caption', () => {
@@ -158,7 +152,7 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
 
       cy.completeAndSubmitYourContact({});
 
-      cy.url().should('eq', natureOfBusinessUrl);
+      cy.assertUrl(natureOfBusinessUrl);
     });
   });
 

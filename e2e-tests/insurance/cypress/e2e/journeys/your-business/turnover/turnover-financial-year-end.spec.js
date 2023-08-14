@@ -43,7 +43,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

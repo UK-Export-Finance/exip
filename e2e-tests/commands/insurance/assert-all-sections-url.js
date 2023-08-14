@@ -9,7 +9,7 @@ const { ROOT: INSURANCE_ROOT, ALL_SECTIONS } = INSURANCE_ROUTES;
 const assertAllSectionsUrl = (referenceNumber) => {
   const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-  cy.url().should('eq', expected);
+  cy.assertUrl(expected);
 };
 
 export default assertAllSectionsUrl;

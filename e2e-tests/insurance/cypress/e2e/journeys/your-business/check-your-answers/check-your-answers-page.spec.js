@@ -13,7 +13,6 @@ import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  START,
   ALL_SECTIONS,
   EXPORTER_BUSINESS: {
     BROKER,
@@ -23,8 +22,6 @@ const {
     COMPANY_OR_ORGANISATION,
   },
 } = ROUTES.INSURANCE;
-
-const insuranceStartRoute = START;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.CHECK_YOUR_ANSWERS;
 
@@ -50,7 +47,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -76,10 +73,6 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
       cy.navigateToUrl(url);
     });
 
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
-    });
-
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
@@ -101,7 +94,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
         submitButton().click();
 
         const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`;
-        cy.url().should('eq', expectedUrl);
+        cy.assertUrl(expectedUrl);
       });
     });
 
@@ -112,7 +105,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
         saveAndBackButton().click();
 
         const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-        cy.url().should('eq', expectedUrl);
+        cy.assertUrl(expectedUrl);
       });
     });
   });

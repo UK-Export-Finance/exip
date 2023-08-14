@@ -1,4 +1,4 @@
-import { checkYourAnswersPage } from '../../pages/insurance/policy-and-export';
+import { summaryList } from '../../pages/shared';
 import { FIELD_IDS, FIELD_VALUES } from '../../constants';
 import { LINKS } from '../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../content-strings/fields/insurance/policy-and-exports';
@@ -29,7 +29,6 @@ const {
 } = FIELD_IDS;
 
 const assertRow = (fieldId, expectedKey, expectedValue, expectedChangeLinkText) => {
-  const { summaryList } = checkYourAnswersPage;
   const row = summaryList.field(fieldId);
 
   cy.checkText(

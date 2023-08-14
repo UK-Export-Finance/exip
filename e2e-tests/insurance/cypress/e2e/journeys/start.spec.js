@@ -1,6 +1,5 @@
 import { insurance } from '../../../../pages';
 import { submitButton } from '../../../../pages/shared';
-import partials from '../../../../partials';
 import { BUTTONS, PAGES } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
@@ -32,10 +31,6 @@ context('Insurance Eligibility - start page', () => {
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', url);
     });
 
     it('renders an intro', () => {
@@ -114,7 +109,7 @@ context('Insurance Eligibility - start page', () => {
 
       const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
   });
 });

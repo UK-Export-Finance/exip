@@ -11,17 +11,25 @@ import { COUNTRY_SUPPORTED_ONLINE } from '../../../../../../fixtures/countries';
 
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
+const {
+  QUOTE: { BUYER_COUNTRY, BUYER_BODY },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based', () => {
   beforeEach(() => {
     cy.login();
 
-    cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+    const expectedUrl = `${baseUrl}${BUYER_COUNTRY}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.QUOTE.BUYER_COUNTRY,
+      currentHref: BUYER_COUNTRY,
       backLink: LINKS.EXTERNAL.BEFORE_YOU_START,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
@@ -72,11 +80,13 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
       });
 
       it('renders a back link with correct url', () => {
-        backLink().should('exist');
+        const expectedHref = `${Cypress.config('baseUrl')}${BUYER_COUNTRY}`;
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.BUYER_COUNTRY}`;
-
-        backLink().should('have.attr', 'href', expected);
+        cy.checkLink(
+          backLink(),
+          expectedHref,
+          LINKS.BACK,
+        );
       });
 
       it('should focus on input when clicking summary error message', () => {
@@ -94,8 +104,10 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
         submitButton().click();
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.BUYER_BODY}`, () => {
-        cy.url().should('include', ROUTES.QUOTE.BUYER_BODY);
+      it(`should redirect to ${BUYER_BODY}`, () => {
+        const expectedUrl = `${baseUrl}${BUYER_BODY}`;
+
+        cy.assertUrl(expectedUrl);
       });
 
       it('should prepopulate the field when going back to the page via back link', () => {

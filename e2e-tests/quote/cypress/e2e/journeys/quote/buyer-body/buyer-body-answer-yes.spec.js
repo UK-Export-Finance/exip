@@ -2,18 +2,24 @@ import {
   backLink, yesRadio, yesRadioInput, submitButton,
 } from '../../../../../../pages/shared';
 import { getAQuoteByEmailPage } from '../../../../../../pages/quote';
-import { PAGES } from '../../../../../../content-strings';
+import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
+const {
+  QUOTE: { BUYER_BODY, GET_A_QUOTE_BY_EMAIL },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Buyer body page - as an exporter, I want to check if I can get an EXIP online quote for my buyers country - submit `buyer is a government or public sector body`', () => {
-  const url = ROUTES.QUOTE.BUYER_BODY;
+  const url = `${baseUrl}${BUYER_BODY}`;
 
   before(() => {
     cy.login();
     completeAndSubmitBuyerCountryForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -26,13 +32,17 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   });
 
   it('redirects to exit page', () => {
-    cy.url().should('include', ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
+    const expectedUrl = `${baseUrl}${GET_A_QUOTE_BY_EMAIL}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders a back link with correct url', () => {
-    backLink().should('exist');
-
-    backLink().should('have.attr', 'href', url);
+    cy.checkLink(
+      backLink(),
+      BUYER_BODY,
+      LINKS.BACK,
+    );
   });
 
   it('renders a specific reason and description', () => {

@@ -27,7 +27,7 @@ const completeSignInAndGoToDashboard = () => cy.createAccount({}).then((verifyAc
 
     // assert we are on the dashboard
     const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
-    cy.url().should('eq', expectedUrl);
+    cy.assertUrl(expectedUrl);
   });
 });
 

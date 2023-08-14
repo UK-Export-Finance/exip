@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import accountFormFields from '../../../../../../../partials/insurance/accountFormFields';
 import { yourDetailsPage } from '../../../../../../../pages/insurance/account/create';
 import { BUTTONS, PAGES } from '../../../../../../../content-strings';
@@ -37,7 +36,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
 
     url = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -59,10 +58,6 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
     });
 
     it('renders intro text', () => {
@@ -131,9 +126,14 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     it('renders a `already got an account` copy and button link', () => {
       cy.checkText(yourDetailsPage.alreadyGotAnAccountHeading(), CONTENT_STRINGS.ALREADY_GOT_AN_ACCOUNT);
 
-      cy.checkText(yourDetailsPage.signInButtonLink(), BUTTONS.SIGN_IN);
+      const expectedHref = SIGN_IN.ROOT;
+      const expectedText = BUTTONS.SIGN_IN;
 
-      yourDetailsPage.signInButtonLink().should('have.attr', 'href', SIGN_IN.ROOT);
+      cy.checkLink(
+        yourDetailsPage.signInButtonLink(),
+        expectedHref,
+        expectedText,
+      );
     });
 
     describe('when clicking `already got an account`', () => {
@@ -142,7 +142,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
 
         const expectedUrl = `${Cypress.config('baseUrl')}${SIGN_IN.ROOT}`;
 
-        cy.url().should('eq', expectedUrl);
+        cy.assertUrl(expectedUrl);
       });
     });
 
@@ -156,7 +156,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
         cy.completeAndSubmitCreateAccountForm();
 
         const expected = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
-        cy.url().should('eq', expected);
+        cy.assertUrl(expected);
       });
     });
   });

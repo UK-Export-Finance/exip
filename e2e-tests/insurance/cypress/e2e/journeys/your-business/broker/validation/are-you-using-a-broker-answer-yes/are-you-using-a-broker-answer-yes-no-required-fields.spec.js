@@ -45,7 +45,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
       const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

@@ -17,10 +17,11 @@ const checkCookiesConsentBannerIsVisible = () => {
   partials.cookieBanner.question.rejectButton().should('exist');
   cy.checkText(partials.cookieBanner.question.rejectButton(), COOKIES_CONSENT.QUESTION.REJECT_BUTTON);
 
-  partials.cookieBanner.cookiesLink().should('exist');
-  cy.checkText(partials.cookieBanner.cookiesLink(), COOKIES_CONSENT.QUESTION.VIEW_COOKIES);
-
-  partials.cookieBanner.cookiesLink().should('have.attr', 'href', ROUTES.COOKIES);
+  cy.checkLink(
+    partials.cookieBanner.cookiesLink(),
+    ROUTES.COOKIES,
+    COOKIES_CONSENT.QUESTION.VIEW_COOKIES,
+  );
 };
 
 export default checkCookiesConsentBannerIsVisible;

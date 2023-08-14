@@ -1,5 +1,5 @@
-import { submitButton } from '../../../../../../pages/shared';
-import { typeOfPolicyPage, checkYourAnswersPage } from '../../../../../../pages/insurance/policy-and-export';
+import { submitButton, summaryList } from '../../../../../../pages/shared';
+import { typeOfPolicyPage } from '../../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../../partials';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
@@ -39,8 +39,6 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
-const { summaryList } = checkYourAnswersPage;
-
 context('Insurance - Policy and exports - Change your answers - Policy type - single to multiple', () => {
   const baseUrl = Cypress.config('baseUrl');
   let referenceNumber;
@@ -60,7 +58,7 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
       checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       changeLinkHref = `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}`;
 
-      cy.url().should('eq', checkYourAnswersUrl);
+      cy.assertUrl(checkYourAnswersUrl);
     });
   });
 
@@ -82,7 +80,7 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
     it(`should redirect to ${TYPE_OF_POLICY_CHANGE}`, () => {
       const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_CHANGE}#heading`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
   });
 
@@ -99,7 +97,7 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
     it(`should redirect to ${MULTIPLE_CONTRACT_POLICY}`, () => {
       const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}#heading`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
 
     describe(`after completing (now required) fields in ${MULTIPLE_CONTRACT_POLICY} and proceeding to ${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, () => {

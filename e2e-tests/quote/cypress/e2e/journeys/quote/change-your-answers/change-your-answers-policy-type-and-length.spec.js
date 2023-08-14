@@ -1,10 +1,10 @@
-import { backLink, submitButton } from '../../../../../../pages/shared';
+import { backLink, submitButton, summaryList } from '../../../../../../pages/shared';
 import {
   policyTypePage,
-  checkYourAnswersPage,
   tellUsAboutYourPolicyPage,
 } from '../../../../../../pages/quote';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
+import { LINKS } from '../../../../../../content-strings';
 
 const {
   ELIGIBILITY: {
@@ -20,19 +20,29 @@ const {
   SINGLE_POLICY_TYPE,
 } = FIELD_IDS;
 
+const {
+  QUOTE: {
+    TELL_US_ABOUT_YOUR_POLICY,
+    POLICY_TYPE_CHANGE,
+    CHECK_YOUR_ANSWERS,
+  },
+} = ROUTES;
+
 const submissionData = {
   [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
   [POLICY_LENGTH]: '3',
 };
 
-const url = ROUTES.QUOTE.CHECK_YOUR_ANSWERS;
+const baseUrl = Cypress.config('baseUrl');
+
+const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
 /**
  * Change policy type from single to multiple
  * via "check answers" and policy type page flow
  */
 const changeFromSingleToMultiple = () => {
-  const row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
+  const row = summaryList.field(SINGLE_POLICY_TYPE);
 
   row.changeLink().click();
 
@@ -52,7 +62,7 @@ const changeFromSingleToMultiple = () => {
  * via "check answers" and policy type page flow
  */
 const changeFromMultipleToSingle = () => {
-  const row = checkYourAnswersPage.summaryLists.policy[MULTIPLE_POLICY_TYPE];
+  const row = summaryList.field(MULTIPLE_POLICY_TYPE);
 
   // change from multiple to single
   row.changeLink().click();
@@ -75,8 +85,8 @@ context('Change your answers - as an exporter, I want to change the details befo
       cy.login();
       cy.submitQuoteAnswersHappyPathSinglePolicy();
 
-      cy.url().should('include', url);
-      row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
+      cy.assertUrl(url);
+      row = summaryList.field(SINGLE_POLICY_TYPE);
     });
 
     beforeEach(() => {
@@ -87,21 +97,20 @@ context('Change your answers - as an exporter, I want to change the details befo
       row.changeLink().click();
     });
 
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.POLICY_TYPE_CHANGE}`, () => {
-      const expectedUrl = ROUTES.QUOTE.POLICY_TYPE_CHANGE;
-      cy.url().should('include', expectedUrl);
-    });
+    it(`clicking 'change' redirects to ${POLICY_TYPE_CHANGE} with a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change`, () => {
+      const expectedUrl = `${baseUrl}${POLICY_TYPE_CHANGE}#heading`;
 
-    it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`;
-      cy.url().should('include', expected);
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders a back link with correct url', () => {
-      backLink().should('exist');
+      const expectedHref = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-      backLink().should('have.attr', 'href', expected);
+      cy.checkLink(
+        backLink(),
+        expectedHref,
+        LINKS.BACK,
+      );
     });
 
     it('has originally submitted `policy type` (single)', () => {
@@ -112,11 +121,13 @@ context('Change your answers - as an exporter, I want to change the details befo
       policyTypePage[SINGLE_POLICY_LENGTH].input().should('have.attr', 'value', submissionData[POLICY_LENGTH]);
     });
 
-    it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
+    it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
       policyTypePage[POLICY_TYPE].multiple.input().click();
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+      const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}#heading`;
+
+      cy.assertUrl(expectedUrl);
     });
   });
 
@@ -125,8 +136,9 @@ context('Change your answers - as an exporter, I want to change the details befo
       cy.login();
 
       cy.submitQuoteAnswersHappyPathSinglePolicy();
-      cy.url().should('include', url);
-      row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
+      cy.assertUrl(url);
+
+      row = summaryList.field(SINGLE_POLICY_TYPE);
 
       cy.navigateToUrl(url);
 
@@ -142,17 +154,17 @@ context('Change your answers - as an exporter, I want to change the details befo
     });
 
     it('renders the new answers in `Check your answers` page (multi, 8 months)', () => {
-      row = checkYourAnswersPage.summaryLists.policy[MAX_AMOUNT_OWED];
+      row = summaryList.field(MAX_AMOUNT_OWED);
 
       const expectedValue = '£120,000';
       cy.checkText(row.value(), expectedValue);
 
-      row = checkYourAnswersPage.summaryLists.policy[MULTIPLE_POLICY_TYPE];
+      row = summaryList.field(MULTIPLE_POLICY_TYPE);
 
       const expectedValue2 = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
       cy.checkText(row.value(), expectedValue2);
 
-      row = checkYourAnswersPage.summaryLists.policy[MULTIPLE_POLICY_LENGTH];
+      row = summaryList.field(MULTIPLE_POLICY_LENGTH);
 
       const expectedValue3 = `${FIELD_VALUES.POLICY_LENGTH.MULTIPLE} months`;
       cy.checkText(row.value(), expectedValue3);
@@ -165,7 +177,7 @@ context('Change your answers - as an exporter, I want to change the details befo
         cy.login();
 
         cy.submitQuoteAnswersHappyPathSinglePolicy();
-        cy.url().should('include', url);
+        cy.assertUrl(url);
 
         cy.navigateToUrl(url);
 
@@ -173,7 +185,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
         changeFromMultipleToSingle();
 
-        row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
+        row = summaryList.field(SINGLE_POLICY_TYPE);
       });
 
       beforeEach(() => {
@@ -185,26 +197,34 @@ context('Change your answers - as an exporter, I want to change the details befo
       });
 
       it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-        const expected = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`;
-        cy.url().should('include', expected);
+        const expectedUrl = `${baseUrl}${POLICY_TYPE_CHANGE}#heading`;
+
+        cy.assertUrl(expectedUrl);
       });
 
       it('renders a back link with correct url', () => {
         backLink().should('exist');
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-        backLink().should('have.attr', 'href', expected);
+        const expectedHref = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
+
+        cy.checkLink(
+          backLink(),
+          expectedHref,
+          LINKS.BACK,
+        );
       });
 
       it('has previously submitted `policy type` (single)', () => {
         policyTypePage[POLICY_TYPE].single.input().should('be.checked');
       });
 
-      it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
+      it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
         policyTypePage[POLICY_TYPE].multiple.input().click();
         submitButton().click();
 
-        cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+        const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}#heading`;
+
+        cy.assertUrl(expectedUrl);
       });
     });
 
@@ -213,11 +233,11 @@ context('Change your answers - as an exporter, I want to change the details befo
         cy.login();
 
         cy.submitQuoteAnswersHappyPathSinglePolicy();
-        cy.url().should('include', url);
+        cy.assertUrl(url);
 
         cy.navigateToUrl(url);
 
-        row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
+        row = summaryList.field(SINGLE_POLICY_TYPE);
 
         changeFromSingleToMultiple();
 
@@ -225,17 +245,17 @@ context('Change your answers - as an exporter, I want to change the details befo
       });
 
       it('renders the new answers in `Check your answers` page (single policy, 3 months)', () => {
-        row = checkYourAnswersPage.summaryLists.policy[CONTRACT_VALUE];
+        row = summaryList.field(CONTRACT_VALUE);
 
         const expectedValue = '£150';
         cy.checkText(row.value(), expectedValue);
 
-        row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_TYPE];
+        row = summaryList.field(SINGLE_POLICY_TYPE);
 
         const expectedValue2 = FIELD_VALUES.POLICY_TYPE.SINGLE;
         cy.checkText(row.value(), expectedValue2);
 
-        row = checkYourAnswersPage.summaryLists.policy[SINGLE_POLICY_LENGTH];
+        row = summaryList.field(SINGLE_POLICY_LENGTH);
 
         const expectedValue3 = '3 months';
         cy.checkText(row.value(), expectedValue3);
@@ -249,7 +269,7 @@ context('Change your answers - as an exporter, I want to change the details befo
         cy.login();
 
         cy.submitQuoteAnswersHappyPathSinglePolicy();
-        cy.url().should('include', url);
+        cy.assertUrl(url);
 
         cy.navigateToUrl(url);
 
@@ -259,7 +279,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
         changeFromSingleToMultiple();
 
-        row = checkYourAnswersPage.summaryLists.policy[MULTIPLE_POLICY_TYPE];
+        row = summaryList.field(MULTIPLE_POLICY_TYPE);
       });
 
       beforeEach(() => {
@@ -271,26 +291,32 @@ context('Change your answers - as an exporter, I want to change the details befo
       });
 
       it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-        const expected = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`;
-        cy.url().should('include', expected);
+        const expectedUrl = `${baseUrl}${POLICY_TYPE_CHANGE}#heading`;
+
+        cy.assertUrl(expectedUrl);
       });
 
       it('renders a back link with correct url', () => {
-        backLink().should('exist');
+        const expectedHref = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`;
-        backLink().should('have.attr', 'href', expected);
+        cy.checkLink(
+          backLink(),
+          expectedHref,
+          LINKS.BACK,
+        );
       });
 
       it('has previously submitted `policy type` (single)', () => {
         policyTypePage[POLICY_TYPE].multiple.input().should('be.checked');
       });
 
-      it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
+      it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
         policyTypePage[POLICY_TYPE].single.input().click();
         submitButton().click();
 
-        cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+        const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}#heading`;
+
+        cy.assertUrl(expectedUrl);
       });
     });
   });

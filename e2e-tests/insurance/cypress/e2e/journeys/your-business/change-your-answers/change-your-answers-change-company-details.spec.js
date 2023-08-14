@@ -5,8 +5,8 @@ import {
   COMPANY_EXAMPLE,
   FIELD_VALUES,
 } from '../../../../../../constants';
-import { companyDetails, checkYourAnswers } from '../../../../../../pages/your-business';
-import { submitButton } from '../../../../../../pages/shared';
+import { companyDetails } from '../../../../../../pages/your-business';
+import { submitButton, summaryList } from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -38,8 +38,6 @@ const {
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
-
-const { summaryList } = checkYourAnswers;
 
 context('Insurance - Your business - Change your answers - Company details - As an exporter, I want to change my answers to the company details section', () => {
   let referenceNumber;
@@ -78,7 +76,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_DETAILS_CHANGE, INPUT);
       });
@@ -90,7 +88,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(companyDetails.companiesHouseSearch(), newAnswer);
 
@@ -124,7 +122,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_DETAILS_CHANGE, fieldId);
       });
@@ -134,7 +132,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         companyDetails.tradingNameNoRadioInput().click();
 
@@ -160,7 +158,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_DETAILS_CHANGE, fieldId);
       });
@@ -170,7 +168,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         companyDetails.tradingAddressNoRadioInput().click();
 
@@ -196,7 +194,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_DETAILS_CHANGE, fieldId);
       });
@@ -208,7 +206,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(companyDetails.phoneNumber(), newAnswer);
 
@@ -232,7 +230,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_DETAILS_CHANGE, fieldId);
       });
@@ -244,7 +242,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(companyDetails.companyWebsite(), newAnswer);
 

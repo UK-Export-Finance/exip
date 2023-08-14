@@ -17,7 +17,6 @@ const {
 } = FIELD_IDS;
 
 const {
-  START,
   YOUR_BUYER: { COMPANY_OR_ORGANISATION, WORKING_WITH_BUYER, CHECK_YOUR_ANSWERS },
 } = ROUTES.INSURANCE;
 
@@ -41,7 +40,7 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
       checkYourAnswersUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -70,10 +69,6 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
     });
 
     it('renders a heading caption', () => {
@@ -131,7 +126,7 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
         it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
           cy.completeAndSubmitWorkingWithBuyerForm({});
 
-          cy.url().should('eq', checkYourAnswersUrl);
+          cy.assertUrl(checkYourAnswersUrl);
         });
       });
 

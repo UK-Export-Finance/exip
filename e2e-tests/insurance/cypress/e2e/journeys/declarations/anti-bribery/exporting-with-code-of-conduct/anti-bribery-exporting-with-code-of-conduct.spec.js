@@ -47,7 +47,7 @@ context("Insurance - Declarations - Anti-bribery - Exporting with code of conduc
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -132,7 +132,7 @@ context("Insurance - Declarations - Anti-bribery - Exporting with code of conduc
 
         const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
-        cy.url().should('eq', expectedUrl);
+        cy.assertUrl(expectedUrl);
       });
 
       describe('when going back to the page', () => {

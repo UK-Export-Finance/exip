@@ -72,7 +72,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -164,9 +164,11 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
       const expected = `${HINT.NEED_MORE_COVER} ${HINT.FILL_IN_FORM.TEXT}`;
       cy.checkText(field.hint.needMoreCover(), expected);
 
-      cy.checkText(field.hint.fillInFormLink(), HINT.FILL_IN_FORM.TEXT);
-
-      field.hint.fillInFormLink().should('have.attr', 'href', LINKS.EXTERNAL.PROPOSAL_FORM);
+      cy.checkLink(
+        field.hint.fillInFormLink(),
+        LINKS.EXTERNAL.PROPOSAL_FORM,
+        HINT.FILL_IN_FORM.TEXT,
+      );
 
       cy.checkText(field.hint.noDecimals(), HINT.NO_DECIMALS);
 
@@ -205,7 +207,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
       cy.completeAndSubmitMultipleContractPolicyForm({});
 
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
 
     it('should retain the `type of policy and exports` task status as `in progress` after submitting the form', () => {

@@ -1,13 +1,21 @@
 import { backLink, buyerCountryPage, submitButton } from '../../../../../../pages/shared';
-import { ROUTES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../../commands/insurance/eligibility/forms';
 import { COUNTRY_SUPPORTRED_BY_EMAIL } from '../../../../../../fixtures/countries';
 
+const {
+  ELIGIBILITY: { BUYER_COUNTRY },
+  START,
+  APPLY_OFFLINE,
+} = INSURANCE_ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based - submit country that can only apply offline/via a physical form', () => {
-  const buyerCountryUrl = ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY;
+  const buyerCountryUrl = BUYER_COUNTRY;
 
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToUrl(START);
 
     completeStartForm();
     completeCheckIfEligibleForm();
@@ -27,15 +35,19 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
   });
 
   it('redirects to `apply offline` exit page', () => {
-    cy.url().should('include', ROUTES.INSURANCE.APPLY_OFFLINE);
+    const expectedUrl = `${baseUrl}${APPLY_OFFLINE}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders a back link with correct url', () => {
-    backLink().should('exist');
+    const expectedHref = `${Cypress.config('baseUrl')}${BUYER_COUNTRY}`;
 
-    const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
-
-    backLink().should('have.attr', 'href', expected);
+    cy.checkLink(
+      backLink(),
+      expectedHref,
+      LINKS.BACK,
+    );
   });
 
   it('should prepopulate the field when going back to the page via back link', () => {

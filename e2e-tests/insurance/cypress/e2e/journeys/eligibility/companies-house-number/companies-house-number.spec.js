@@ -40,7 +40,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
 
     url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -59,10 +59,6 @@ context('Insurance - Eligibility - Companies house number page - I want to check
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
     });
 
     it('renders `yes` radio button', () => {
@@ -120,7 +116,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE}`, () => {
         const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE}`;
 
-        cy.url().should('eq', expected);
+        cy.assertUrl(expected);
       });
 
       describe('when going back to the page', () => {

@@ -33,7 +33,7 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -55,7 +55,7 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
 
     it('should retain the status of task `declarations` as `not started yet`', () => {
@@ -75,7 +75,7 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
 
     it('should update the status of task `declarations` to `in progress`', () => {

@@ -33,7 +33,7 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
 
     url = `${Cypress.config('baseUrl')}${ACCOUNT_TO_APPLY_ONLINE}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -52,10 +52,6 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
     });
 
     it('renders a `yes` radio button with a hint', () => {
@@ -106,7 +102,7 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
         submitButton().click();
 
         const expected = `${Cypress.config('baseUrl')}${SIGN_IN.ROOT}`;
-        cy.url().should('eq', expected);
+        cy.assertUrl(expected);
       });
     });
   });

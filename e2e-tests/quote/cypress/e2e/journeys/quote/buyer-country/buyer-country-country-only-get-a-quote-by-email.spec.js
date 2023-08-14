@@ -1,13 +1,23 @@
 import { backLink, buyerCountryPage, submitButton } from '../../../../../../pages/shared';
 import { ROUTES } from '../../../../../../constants';
+import { LINKS } from '../../../../../../content-strings';
 import { COUNTRY_SUPPORTRED_BY_EMAIL } from '../../../../../../fixtures/countries';
 
+const {
+  QUOTE: {
+    BUYER_COUNTRY,
+    GET_A_QUOTE_BY_EMAIL,
+  },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based - submit country that can only get a quote offline/via email', () => {
-  const url = ROUTES.QUOTE.BUYER_COUNTRY;
+  const url = `${baseUrl}${BUYER_COUNTRY}`;
 
   beforeEach(() => {
     cy.navigateToUrl(url);
-    cy.url().should('include', url);
+    cy.assertUrl(url);
 
     cy.keyboardInput(buyerCountryPage.input(), COUNTRY_SUPPORTRED_BY_EMAIL.name);
 
@@ -18,15 +28,17 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
   });
 
   it('redirects to `get a quote via email` exit page', () => {
-    cy.url().should('include', ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
+    const expectedUrl = `${baseUrl}${GET_A_QUOTE_BY_EMAIL}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders a back link with correct url', () => {
-    backLink().should('exist');
-
-    const expected = ROUTES.QUOTE.BUYER_COUNTRY;
-
-    backLink().should('have.attr', 'href', expected);
+    cy.checkLink(
+      backLink(),
+      BUYER_COUNTRY,
+      LINKS.BACK,
+    );
   });
 
   it('should prepopulate the field when going back to the page via back link', () => {

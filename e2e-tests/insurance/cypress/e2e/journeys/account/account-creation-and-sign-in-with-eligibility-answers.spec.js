@@ -58,7 +58,7 @@ context('Insurance - Account - When answering eligibility answers, creating an a
     });
 
     it(`should redirect to ${dashboardUrl} and have one application in the table`, () => {
-      cy.url().should('eq', dashboardUrl);
+      cy.assertUrl(dashboardUrl);
 
       table.body.rows().should('have.length', 1);
 

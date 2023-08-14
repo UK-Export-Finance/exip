@@ -10,7 +10,6 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT: INSURANCE_ROOT,
-  START,
   ALL_SECTIONS,
   CHECK_YOUR_ANSWERS: {
     TYPE_OF_POLICY,
@@ -48,7 +47,7 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
 
       allSectionsUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -74,10 +73,6 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
       cy.navigateToUrl(url);
     });
 
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
-    });
-
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
@@ -101,7 +96,7 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
         submitButton().click();
 
         const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`;
-        cy.url().should('eq', expectedUrl);
+        cy.assertUrl(expectedUrl);
       });
 
       describe('when going back to the all sections page', () => {

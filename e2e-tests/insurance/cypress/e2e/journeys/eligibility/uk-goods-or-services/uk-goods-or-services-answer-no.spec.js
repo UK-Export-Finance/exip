@@ -1,7 +1,7 @@
 import {
   backLink, cannotApplyPage, noRadio, noRadioInput, submitButton,
 } from '../../../../../../pages/shared';
-import { PAGES } from '../../../../../../content-strings';
+import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { completeStartForm, completeCheckIfEligibleForm, completeExporterLocationForm } from '../../../../../../commands/insurance/eligibility/forms';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
@@ -28,15 +28,17 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
   it('redirects to exit page', () => {
     const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY}`;
 
-    cy.url().should('include', expectedUrl);
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders a back link with correct url', () => {
-    backLink().should('exist');
+    const expectedHref = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES}`;
 
-    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES}`;
-
-    backLink().should('have.attr', 'href', expectedUrl);
+    cy.checkLink(
+      backLink(),
+      expectedHref,
+      LINKS.BACK,
+    );
   });
 
   it('renders a specific reason', () => {

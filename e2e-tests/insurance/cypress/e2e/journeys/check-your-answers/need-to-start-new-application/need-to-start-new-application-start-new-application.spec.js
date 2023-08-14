@@ -50,7 +50,7 @@ context('Insurance - Check your answers - Need to start new application - start 
     });
 
     it(`should redirect to ${DASHBOARD}`, () => {
-      cy.url().should('eq', dashboardUrl);
+      cy.assertUrl(dashboardUrl);
     });
 
     it('should now render 2 applications in the dashboard', () => {

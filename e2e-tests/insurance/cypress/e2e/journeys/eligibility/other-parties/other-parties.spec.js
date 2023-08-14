@@ -17,8 +17,6 @@ import {
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED;
 
-const insuranceStartRoute = ROUTES.INSURANCE.START;
-
 context('Insurance - Other parties page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if there are other parties involved in the export', () => {
   let url;
 
@@ -35,7 +33,7 @@ context('Insurance - Other parties page - I want to check if I can use online se
 
     url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -54,10 +52,6 @@ context('Insurance - Other parties page - I want to check if I can use online se
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
     });
 
     it('renders `yes` radio button', () => {
@@ -147,7 +141,7 @@ context('Insurance - Other parties page - I want to check if I can use online se
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`, () => {
         const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`;
 
-        cy.url().should('eq', expected);
+        cy.assertUrl(expected);
       });
 
       describe('when going back to the page', () => {

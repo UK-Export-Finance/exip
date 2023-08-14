@@ -1,6 +1,6 @@
 import partials from '../../../../../../partials';
-import { yourContactPage, checkYourAnswers } from '../../../../../../pages/your-business';
-import { submitButton } from '../../../../../../pages/shared';
+import { yourContactPage } from '../../../../../../pages/your-business';
+import { submitButton, summaryList } from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -24,8 +24,6 @@ const { EMAIL, FIRST_NAME, LAST_NAME } = INSURANCE_FIELD_IDS.ACCOUNT;
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
-
-const { summaryList } = checkYourAnswers;
 
 context('Insurance - Your business - Change your answers - Contact- As an exporter, I want to change my answers to the contact section', () => {
   let referenceNumber;
@@ -62,7 +60,7 @@ context('Insurance - Your business - Change your answers - Contact- As an export
       it(`should redirect to ${CONTACT_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, CONTACT_CHANGE, FIRST_NAME);
       });
@@ -75,7 +73,7 @@ context('Insurance - Your business - Change your answers - Contact- As an export
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(yourContactPage.field(FIRST_NAME).input(), newAnswerFirstName);
         cy.keyboardInput(yourContactPage.field(LAST_NAME).input(), newAnswerLastName);
@@ -100,7 +98,7 @@ context('Insurance - Your business - Change your answers - Contact- As an export
       it(`should redirect to ${CONTACT_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, CONTACT_CHANGE, EMAIL);
       });
@@ -112,7 +110,7 @@ context('Insurance - Your business - Change your answers - Contact- As an export
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(yourContactPage.field(EMAIL).input(), newAnswer);
 
@@ -136,7 +134,7 @@ context('Insurance - Your business - Change your answers - Contact- As an export
       it(`should redirect to ${CONTACT_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, CONTACT_CHANGE, fieldId);
       });
@@ -148,7 +146,7 @@ context('Insurance - Your business - Change your answers - Contact- As an export
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        summaryList[fieldId].changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(yourContactPage.field(fieldId).input(), newAnswer);
 

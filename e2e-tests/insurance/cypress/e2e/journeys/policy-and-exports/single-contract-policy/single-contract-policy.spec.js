@@ -68,7 +68,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -139,12 +139,11 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
         hintContent.NEED_MORE_COVER,
       );
 
-      cy.checkText(
+      cy.checkLink(
         field.hint.link(),
+        LINKS.EXTERNAL.PROPOSAL_FORM,
         hintContent.FILL_IN_FORM.TEXT,
       );
-
-      field.hint.link().should('have.attr', 'href', LINKS.EXTERNAL.PROPOSAL_FORM);
 
       cy.checkText(
         field.hint.noDecimals(),
@@ -190,7 +189,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
     it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, () => {
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
-      cy.url().should('eq', expectedUrl);
+      cy.assertUrl(expectedUrl);
     });
 
     it('should retain the `type of policy and exports` task status as `in progress` after submitting the form', () => {

@@ -1,10 +1,12 @@
-import { backLink, buyerCountryPage, submitButton } from '../../../../../../pages/shared';
+import {
+  backLink, buyerCountryPage, submitButton, summaryList,
+} from '../../../../../../pages/shared';
 import {
   policyTypePage,
   tellUsAboutYourPolicyPage,
-  yourQuotePage,
 } from '../../../../../../pages/quote';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
+import { LINKS } from '../../../../../../content-strings';
 
 const {
   ELIGIBILITY: {
@@ -19,8 +21,20 @@ const {
   SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
+const {
+  QUOTE: {
+    BUYER_COUNTRY_CHANGE,
+    POLICY_TYPE_CHANGE,
+    TELL_US_ABOUT_YOUR_POLICY,
+    TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+    YOUR_QUOTE,
+    CHECK_YOUR_ANSWERS,
+  },
+} = ROUTES;
+
 context('Your quote page - change answers (single policy type to multiple policy type) - as an exporter, I want to get an Export insurance quote', () => {
-  const url = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
+  const baseUrl = Cypress.config('baseUrl');
+  const url = `${baseUrl}${YOUR_QUOTE}`;
 
   beforeEach(() => {
     cy.saveSession();
@@ -30,38 +44,42 @@ context('Your quote page - change answers (single policy type to multiple policy
     cy.submitQuoteAnswersHappyPathSinglePolicy();
     submitButton().click();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   describe('change `contract value`', () => {
-    const row = yourQuotePage.panel.summaryList[CONTRACT_VALUE];
+    const row = summaryList.field(CONTRACT_VALUE);
 
     beforeEach(() => {
       row.changeLink().click();
     });
 
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
-      const expected = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
-      cy.url().should('include', expected);
+    it(`clicking 'change' redirects to ${TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
+      const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
+      cy.assertUrl(expectedUrl);
     });
 
     it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
-      cy.url().should('include', expected);
+      const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders a back link with correct url', () => {
-      backLink().should('exist');
+      const expectedHref = `${baseUrl}${YOUR_QUOTE}`;
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
-      backLink().should('have.attr', 'href', expected);
+      cy.checkLink(
+        backLink(),
+        expectedHref,
+        LINKS.BACK,
+      );
     });
 
-    it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
+    it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '1000');
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#${CONTRACT_VALUE}-label`;
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders the new answer in the quote', () => {
@@ -79,34 +97,41 @@ context('Your quote page - change answers (single policy type to multiple policy
   });
 
   describe('change `percentage of cover`', () => {
-    const row = yourQuotePage.panel.summaryList[PERCENTAGE_OF_COVER];
+    const row = summaryList.field(PERCENTAGE_OF_COVER);
 
     beforeEach(() => {
       row.changeLink().click();
     });
 
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
-      const expectedUrl = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}`;
-      cy.url().should('include', expectedUrl);
+    it(`clicking 'change' redirects to ${TELL_US_ABOUT_YOUR_POLICY_CHANGE}`, () => {
+      const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
+
+      cy.assertUrl(expectedUrl);
     });
 
     it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
-      cy.url().should('include', expected);
+      const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
+
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders a back link with correct url', () => {
-      backLink().should('exist');
+      const expectedHref = `${baseUrl}${YOUR_QUOTE}`;
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
-      backLink().should('have.attr', 'href', expected);
+      cy.checkLink(
+        backLink(),
+        expectedHref,
+        LINKS.BACK,
+      );
     });
 
-    it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
+    it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('85');
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#${PERCENTAGE_OF_COVER}-label`;
+
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders the new answer in the quote', () => {
@@ -124,34 +149,41 @@ context('Your quote page - change answers (single policy type to multiple policy
   });
 
   describe('change policy type to multi', () => {
-    const row = yourQuotePage.panel.summaryList[SINGLE_POLICY_LENGTH];
+    const row = summaryList.field(SINGLE_POLICY_LENGTH);
 
     beforeEach(() => {
       row.changeLink().click();
     });
 
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.POLICY_TYPE_CHANGE}`, () => {
-      const expectedUrl = ROUTES.QUOTE.POLICY_TYPE_CHANGE;
-      cy.url().should('include', expectedUrl);
+    it(`clicking 'change' redirects to ${POLICY_TYPE_CHANGE}`, () => {
+      const expectedUrl = `${baseUrl}${POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
+
+      cy.assertUrl(expectedUrl);
     });
 
     it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
-      cy.url().should('include', expected);
+      const expectedUrl = `${baseUrl}${POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
+
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders a back link with correct url', () => {
-      backLink().should('exist');
+      const expectedHref = `${baseUrl}${YOUR_QUOTE}`;
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
-      backLink().should('have.attr', 'href', expected);
+      cy.checkLink(
+        backLink(),
+        expectedHref,
+        LINKS.BACK,
+      );
     });
 
-    it(`redirects to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY} when submitting a new answer`, () => {
+    it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting a new answer`, () => {
       policyTypePage[POLICY_TYPE].multiple.input().click();
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+      const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}#${SINGLE_POLICY_LENGTH}-label`;
+
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders the new answers in the quote', () => {
@@ -168,50 +200,57 @@ context('Your quote page - change answers (single policy type to multiple policy
       // submit check your answers
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.YOUR_QUOTE);
+      const expectedUrl = `${baseUrl}${YOUR_QUOTE}#${SINGLE_POLICY_LENGTH}-label`;
 
-      const insuredFor = yourQuotePage.panel.summaryList[QUOTE.INSURED_FOR];
+      cy.assertUrl(expectedUrl);
+
+      const insuredFor = summaryList.field(QUOTE.INSURED_FOR);
 
       cy.checkText(insuredFor.value(), '£108,000.00');
 
-      const policyLength = yourQuotePage.panel.summaryList[MULTIPLE_POLICY_LENGTH];
+      const policyLength = summaryList.field(MULTIPLE_POLICY_LENGTH);
 
       cy.checkText(policyLength.value(), `${FIELD_VALUES.POLICY_LENGTH.MULTIPLE} months`);
     });
   });
 
   describe('change `buyer location`', () => {
-    const row = yourQuotePage.panel.summaryList[QUOTE.BUYER_LOCATION];
+    const row = summaryList.field(QUOTE.BUYER_LOCATION);
 
     beforeEach(() => {
       row.changeLink().click();
     });
 
-    it(`clicking 'change' redirects to ${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}`, () => {
-      const expectedUrl = ROUTES.QUOTE.BUYER_COUNTRY_CHANGE;
-      cy.url().should('include', expectedUrl);
+    it(`clicking 'change' redirects to ${BUYER_COUNTRY_CHANGE}`, () => {
+      const expectedUrl = `${baseUrl}${BUYER_COUNTRY_CHANGE}#heading`;
+      cy.assertUrl(expectedUrl);
     });
 
     it('has a hash tag and heading/label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expected = `${ROUTES.QUOTE.BUYER_COUNTRY_CHANGE}#heading`;
-      cy.url().should('include', expected);
+      const expectedUrl = `${baseUrl}${BUYER_COUNTRY_CHANGE}#heading`;
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders a back link with correct url', () => {
-      backLink().should('exist');
+      const expectedHref = `${baseUrl}${YOUR_QUOTE}`;
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.YOUR_QUOTE}`;
-      backLink().should('have.attr', 'href', expected);
+      cy.checkLink(
+        backLink(),
+        expectedHref,
+        LINKS.BACK,
+      );
     });
 
-    it(`redirects to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
+    it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       cy.keyboardInput(buyerCountryPage.input(), 'Bahrain');
       const results = buyerCountryPage.results();
       results.first().click();
 
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+      const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#heading`;
+
+      cy.assertUrl(expectedUrl);
     });
 
     it('renders the new answer in the quote', () => {

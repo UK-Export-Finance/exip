@@ -47,7 +47,7 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -176,7 +176,7 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
 
         const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
 
-        cy.url().should('eq', expectedUrl);
+        cy.assertUrl(expectedUrl);
       });
 
       describe('when going back to the page', () => {

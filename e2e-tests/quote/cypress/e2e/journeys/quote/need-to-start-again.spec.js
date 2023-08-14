@@ -1,5 +1,4 @@
 import { submitButton, needToStartAgainPage } from '../../../../../pages/shared';
-import partials from '../../../../../partials';
 import { LINKS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms';
@@ -7,7 +6,15 @@ import { completeAndSubmitBuyerBodyForm } from '../../../../../commands/quote/fo
 
 const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_PAGE;
 
-const startRoute = ROUTES.QUOTE.START;
+const {
+  QUOTE: {
+    TELL_US_ABOUT_YOUR_POLICY,
+    NEED_TO_START_AGAIN,
+    BUYER_COUNTRY,
+  },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Get a Quote - Need to start again exit page', () => {
   beforeEach(() => {
@@ -15,17 +22,19 @@ context('Get a Quote - Need to start again exit page', () => {
     completeAndSubmitBuyerCountryForm();
     completeAndSubmitBuyerBodyForm();
 
-    cy.navigateToUrl(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
+    cy.navigateToUrl(TELL_US_ABOUT_YOUR_POLICY);
 
     cy.saveSession();
 
-    cy.url().should('include', ROUTES.QUOTE.NEED_TO_START_AGAIN);
+    const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.QUOTE.NEED_TO_START_AGAIN,
+      currentHref: NEED_TO_START_AGAIN,
       submitButtonCopy: LINKS.START_AGAIN.TEXT,
       assertBackLink: false,
       assertAuthenticatedHeader: false,
@@ -33,19 +42,17 @@ context('Get a Quote - Need to start again exit page', () => {
     });
   });
 
-  it('should render a header with href to quote start', () => {
-    partials.header.serviceName().should('have.attr', 'href', startRoute);
-  });
-
   it('renders a reason', () => {
     needToStartAgainPage.reason().should('exist');
   });
 
   describe('clicking the submit button', () => {
-    it(`should redirect to ${ROUTES.QUOTE.BUYER_COUNTRY}`, () => {
+    it(`should redirect to ${BUYER_COUNTRY}`, () => {
       submitButton().click();
 
-      cy.url().should('include', ROUTES.QUOTE.BUYER_COUNTRY);
+      const expectedUrl = `${baseUrl}${BUYER_COUNTRY}`;
+
+      cy.assertUrl(expectedUrl);
     });
   });
 });

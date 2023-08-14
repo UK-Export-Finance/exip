@@ -28,7 +28,6 @@ const {
 const { ELIGIBILITY: { BUYER_COUNTRY } } = FIELD_IDS;
 
 const {
-  START,
   YOUR_BUYER: { WORKING_WITH_BUYER, COMPANY_OR_ORGANISATION },
 } = ROUTES.INSURANCE;
 
@@ -51,7 +50,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
       workingWithBuyerUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -74,10 +73,6 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
     });
 
     it('renders a heading caption', () => {
@@ -217,7 +212,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
         cy.completeAndSubmitCompanyOrOrganisationForm({});
 
-        cy.url().should('eq', workingWithBuyerUrl);
+        cy.assertUrl(workingWithBuyerUrl);
       });
     });
 

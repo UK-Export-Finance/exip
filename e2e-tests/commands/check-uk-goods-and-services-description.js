@@ -26,12 +26,20 @@ const checkDescriptionContentSections = {
     const expectedStaffingCostText = `${CONTENT_STRINGS.INCLUDES.STAFFING_COSTS.LINK.TEXT} ${CONTENT_STRINGS.INCLUDES.STAFFING_COSTS.TEXT}`;
     cy.checkText(partials.ukGoodsOrServicesDescription.includes.listItem3(), expectedStaffingCostText);
 
-    partials.ukGoodsOrServicesDescription.includes.listItem3Link().should('have.attr', 'href', CONTENT_STRINGS.INCLUDES.STAFFING_COSTS.LINK.HREF);
+    cy.checkLink(
+      partials.ukGoodsOrServicesDescription.includes.listItem3Link(),
+      CONTENT_STRINGS.INCLUDES.STAFFING_COSTS.LINK.HREF,
+      CONTENT_STRINGS.INCLUDES.STAFFING_COSTS.LINK.TEXT,
+    );
 
     const expectedPhysicalAssetsText = `${CONTENT_STRINGS.INCLUDES.NON_PHYSICAL_ASSETS.LINK.TEXT} ${CONTENT_STRINGS.INCLUDES.NON_PHYSICAL_ASSETS.TEXT}`;
     cy.checkText(partials.ukGoodsOrServicesDescription.includes.listItem4(), expectedPhysicalAssetsText);
 
-    partials.ukGoodsOrServicesDescription.includes.listItem4Link().should('have.attr', 'href', CONTENT_STRINGS.INCLUDES.NON_PHYSICAL_ASSETS.LINK.HREF);
+    cy.checkLink(
+      partials.ukGoodsOrServicesDescription.includes.listItem4Link(),
+      CONTENT_STRINGS.INCLUDES.NON_PHYSICAL_ASSETS.LINK.HREF,
+      CONTENT_STRINGS.INCLUDES.NON_PHYSICAL_ASSETS.LINK.TEXT,
+    );
 
     cy.checkText(partials.ukGoodsOrServicesDescription.includes.canCountAs(), CONTENT_STRINGS.INCLUDES.CAN_COUNT_AS);
   },

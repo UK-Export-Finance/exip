@@ -3,18 +3,20 @@ import { insurance } from '../../../../../../pages';
 import {
   cannotApplyPage,
 } from '../../../../../../pages/shared';
-import { PAGES } from '../../../../../../content-strings';
+import INSURANCE_PAGES from '../../../../../../content-strings/pages/insurance';
 import { ROUTES } from '../../../../../../constants';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
-const { ACTIONS } = CONTENT_STRINGS;
+const {
+  APPLY_OFFLINE: { ACTIONS, REASON },
+  EXPORTER_BUSINESS: { COMPANY_DETAILS: { NO_COMPANIES_HOUSE_NUMBER } },
+} = INSURANCE_PAGES;
 
 const {
   ROOT,
   APPLY_OFFLINE,
   EXPORTER_BUSINESS: {
     COMPANY_DETAILS,
-    NO_COMPANIES_HOUSE_NUMBER,
+    NO_COMPANIES_HOUSE_NUMBER: NO_COMPANIES_HOUSE_NUMBER_ROUTE,
   },
 } = ROUTES.INSURANCE;
 
@@ -30,7 +32,7 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
 
       cy.navigateToUrl(url);
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 
@@ -39,7 +41,16 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
 
     cy.navigateToUrl(url);
 
-    companyDetails.companiesHouseNoNumber().should('have.attr', 'href', `${ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`);
+    const expectedHref = `${ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER_ROUTE}`;
+
+    const expectedText = NO_COMPANIES_HOUSE_NUMBER;
+
+    cy.checkLink(
+      companyDetails.companiesHouseNoNumber(),
+      expectedHref,
+      expectedText,
+    );
+
     companyDetails.companiesHouseNoNumber().click();
   });
 
@@ -48,22 +59,29 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
   });
 
   it(`should redirect to ${APPLY_OFFLINE} page when pressing the no companies house number link`, () => {
-    cy.url().should('eq', `${Cypress.config('baseUrl')}${APPLY_OFFLINE}`);
+    cy.assertUrl(`${Cypress.config('baseUrl')}${APPLY_OFFLINE}`);
   });
 
-  it(`should contain "${CONTENT_STRINGS.REASON.NO_COMPANIES_HOUSE_NUMBER}" message on apply offline page`, () => {
-    const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NO_COMPANIES_HOUSE_NUMBER}`;
+  it(`should contain "${REASON.NO_COMPANIES_HOUSE_NUMBER}" message on apply offline page`, () => {
+    const expected = `${REASON.INTRO} ${REASON.NO_COMPANIES_HOUSE_NUMBER}`;
 
     cy.checkText(cannotApplyPage.reason(), expected);
   });
 
   it('should contain link to proposal form on the apply offline page', () => {
-    insurance.applyOfflinePage.downloadFormLink().should('have.attr', 'href', ACTIONS.DOWNLOAD_FORM.LINK.HREF_PROPOSAL);
+    const expectedHref = ACTIONS.DOWNLOAD_FORM.LINK.HREF_PROPOSAL;
+    const expectedText = ACTIONS.DOWNLOAD_FORM.LINK.TEXT;
+
+    cy.checkLink(
+      insurance.applyOfflinePage.downloadFormLink(),
+      expectedHref,
+      expectedText,
+    );
   });
 
   it('should take you back to company-details page when pressing the back button', () => {
     cy.clickBackLink();
 
-    cy.url().should('eq', `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`);
+    cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`);
   });
 });

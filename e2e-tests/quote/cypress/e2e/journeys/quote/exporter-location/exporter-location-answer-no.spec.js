@@ -1,22 +1,28 @@
 import {
   backLink, cannotApplyPage, noRadio, submitButton,
 } from '../../../../../../pages/shared';
-import { PAGES } from '../../../../../../content-strings';
+import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import { completeAndSubmitBuyerBodyForm } from '../../../../../../commands/quote/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 
+const {
+  QUOTE: { EXPORTER_LOCATION, CANNOT_APPLY },
+} = ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
 context('Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover - submit `not based inside the UK`', () => {
-  const url = ROUTES.QUOTE.EXPORTER_LOCATION;
+  const url = `${baseUrl}${EXPORTER_LOCATION}`;
 
   before(() => {
     cy.login();
     completeAndSubmitBuyerCountryForm();
     completeAndSubmitBuyerBodyForm();
 
-    cy.url().should('include', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -29,13 +35,17 @@ context('Exporter location page - as an exporter, I want to check if my company 
   });
 
   it('redirects to exit page', () => {
-    cy.url().should('include', ROUTES.QUOTE.CANNOT_APPLY);
+    const expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders a back link with correct url', () => {
-    backLink().should('exist');
-
-    backLink().should('have.attr', 'href', ROUTES.QUOTE.EXPORTER_LOCATION);
+    cy.checkLink(
+      backLink(),
+      EXPORTER_LOCATION,
+      LINKS.BACK,
+    );
   });
 
   it('renders a specific reason', () => {

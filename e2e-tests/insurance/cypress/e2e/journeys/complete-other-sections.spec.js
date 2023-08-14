@@ -26,7 +26,7 @@ context('Insurance - Complete other sections page', () => {
 
       completeOtherSectionsUrl = `${insuranceRoute}/${referenceNumber}${COMPLETE_OTHER_SECTIONS}`;
 
-      cy.url().should('eq', completeOtherSectionsUrl);
+      cy.assertUrl(completeOtherSectionsUrl);
     });
   });
 

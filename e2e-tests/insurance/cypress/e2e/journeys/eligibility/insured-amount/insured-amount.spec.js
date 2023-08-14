@@ -14,8 +14,6 @@ import {
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT;
 
-const insuranceStartRoute = ROUTES.INSURANCE.START;
-
 context('Insurance - Insured amount page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is less than the maxium amount of cover available online', () => {
   let url;
 
@@ -30,7 +28,7 @@ context('Insurance - Insured amount page - I want to check if I can use online s
 
     url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`;
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -49,10 +47,6 @@ context('Insurance - Insured amount page - I want to check if I can use online s
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
     });
 
     it('renders `yes` radio button', () => {
@@ -110,7 +104,7 @@ context('Insurance - Insured amount page - I want to check if I can use online s
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`, () => {
         const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`;
 
-        cy.url().should('eq', expected);
+        cy.assertUrl(expected);
       });
 
       describe('when going back to the page', () => {

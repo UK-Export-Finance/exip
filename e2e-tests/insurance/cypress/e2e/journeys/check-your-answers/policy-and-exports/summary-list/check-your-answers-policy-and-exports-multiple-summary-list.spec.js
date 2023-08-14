@@ -48,7 +48,7 @@ context('Insurance - Check your answers - Policy and exports - Multiple contract
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
-      cy.url().should('eq', url);
+      cy.assertUrl(url);
     });
   });
 

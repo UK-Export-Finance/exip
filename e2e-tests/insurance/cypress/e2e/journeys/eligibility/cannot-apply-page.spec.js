@@ -3,17 +3,24 @@ import {
   cannotApplyPage,
   submitButton,
 } from '../../../../../pages/shared';
-import { PAGES } from '../../../../../content-strings';
-import { ROUTES } from '../../../../../constants';
+import { PAGES, LINKS } from '../../../../../content-strings';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../commands/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 
+const {
+  START,
+  ELIGIBILITY: { BUYER_COUNTRY, CANNOT_APPLY },
+} = INSURANCE_ROUTES;
+
 const COUNTRY_NAME_UNSUPPORTED = 'France';
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance Eligibility - Cannot apply exit page', () => {
   beforeEach(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToUrl(START);
 
     completeStartForm();
     completeCheckIfEligibleForm();
@@ -24,14 +31,16 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
 
     submitButton().click();
 
-    cy.url().should('include', ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+    const expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
+
+    cy.assertUrl(expectedUrl);
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY,
-      backLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
+      currentHref: CANNOT_APPLY,
+      backLink: BUYER_COUNTRY,
       assertSubmitButton: false,
       assertAuthenticatedHeader: false,
     });
@@ -52,17 +61,27 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
 
     cy.checkText(cannotApplyPage.actions.eligibility(), expectedEligibility);
 
-    cannotApplyPage.actions.eligibilityLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF);
+    cy.checkLink(
+      cannotApplyPage.actions.eligibilityLink(),
+      CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF,
+      CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.TEXT,
+    );
 
     const expectedBroker = `${CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT} ${CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.TEXT}`;
     cy.checkText(cannotApplyPage.actions.approvedBroker(), expectedBroker);
 
-    cannotApplyPage.actions.approvedBrokerLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.HREF);
+    cy.checkLink(
+      cannotApplyPage.actions.approvedBrokerLink(),
+      CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.HREF,
+      CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT,
+    );
   });
 
   describe('when clicking `eligibility` link', () => {
-    it('redirects to guidance page - eligibility section', () => {
-      cannotApplyPage.actions.eligibilityLink().should('have.attr', 'href', CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF);
+    it(`redirects to ${LINKS.EXTERNAL.GUIDANCE}`, () => {
+      cannotApplyPage.actions.eligibilityLink().click();
+
+      cy.url().should('eq', LINKS.EXTERNAL.GUIDANCE);
     });
   });
 });

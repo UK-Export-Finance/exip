@@ -6,7 +6,6 @@ import { ROUTES, APPLICATION, DATE_FORMAT } from '../../../../../../constants';
 
 const {
   ROOT: INSURANCE_ROOT,
-  START,
   ALL_SECTIONS,
   ELIGIBILITY: { BUYER_COUNTRY },
   CHECK_YOUR_ANSWERS: { ELIGIBILITY, START_NEW_APPLICATION },
@@ -42,7 +41,7 @@ context('Insurance - Check your answers - Need to start new application page', (
 
       url = `${INSURANCE_ROOT}/${referenceNumber}${START_NEW_APPLICATION}`;
 
-      cy.url().should('eq', `${Cypress.config('baseUrl')}${url}`);
+      cy.assertUrl(`${Cypress.config('baseUrl')}${url}`);
 
       eligibilityUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ELIGIBILITY}`;
 
@@ -70,10 +69,6 @@ context('Insurance - Check your answers - Need to start new application page', (
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', START);
     });
 
     it('renders inset text with submission deadline', () => {

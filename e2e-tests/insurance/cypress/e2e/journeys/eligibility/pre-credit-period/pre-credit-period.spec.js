@@ -24,7 +24,6 @@ import {
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD;
 
 const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD;
-const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 context('Insurance - Eligibility - Pre-credit period page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is paid via letter of credit', () => {
   const url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD}`;
@@ -42,7 +41,7 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
     completeOtherPartiesForm();
     completeLetterOfCreditForm();
 
-    cy.url().should('eq', url);
+    cy.assertUrl(url);
   });
 
   beforeEach(() => {
@@ -61,10 +60,6 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-    });
-
-    it('should render a header with href to insurance start', () => {
-      partials.header.serviceName().should('have.attr', 'href', insuranceStartRoute);
     });
 
     it('renders `yes` radio button with hint', () => {
@@ -157,7 +152,7 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
     it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`, () => {
       const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
 
-      cy.url().should('eq', expected);
+      cy.assertUrl(expected);
     });
 
     describe('when going back to the page', () => {
