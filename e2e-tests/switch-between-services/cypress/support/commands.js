@@ -17,3 +17,5 @@ Cypress.Commands.add('assertUrl', require('../../../commands/assert-url'));
 Cypress.Commands.add('submitQuoteAnswersHappyPathSinglePolicy', require('../../../commands/quote/submit-answers-happy-path-single-policy'));
 
 Cypress.Commands.add('submitInsuranceEligibilityAndStartApplication', require('../../../commands/insurance/submit-eligibility-and-start-an-application'));
+
+Cypress.Commands.add('keyboardInput', require('../../../commands/keyboard-input'));
