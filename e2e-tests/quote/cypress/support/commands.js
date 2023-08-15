@@ -42,6 +42,8 @@ Cypress.Commands.add('rejectAnalyticsCookies', analytics.rejectAnalyticsCookies)
 
 Cypress.Commands.add('checkAuthenticatedHeader', require('../../../commands/check-authenticated-header'));
 
+Cypress.Commands.add('completeSignInAndGoToApplication', require('../../../commands/insurance/account/complete-sign-in-and-go-to-application'));
+
 Cypress.Commands.add('assertCustomerServiceContactDetailsContent', require('../../../commands/assert-customer-service-contact-details-content'));
 
 Cypress.Commands.add('checkText', require('../../../commands/check-text'));
