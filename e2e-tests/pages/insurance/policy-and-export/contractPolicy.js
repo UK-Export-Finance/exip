@@ -1,4 +1,4 @@
-import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 
 const {
   POLICY_AND_EXPORTS: {

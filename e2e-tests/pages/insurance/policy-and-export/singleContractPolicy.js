@@ -1,18 +1,16 @@
-import { FIELD_IDS } from '../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import contractPolicy from './contractPolicy';
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        SINGLE: {
-          CONTRACT_COMPLETION_DATE,
-          TOTAL_CONTRACT_VALUE,
-        },
+  POLICY_AND_EXPORTS: {
+    CONTRACT_POLICY: {
+      SINGLE: {
+        CONTRACT_COMPLETION_DATE,
+        TOTAL_CONTRACT_VALUE,
       },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const singleContractPolicy = {
   ...contractPolicy,

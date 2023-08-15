@@ -1,19 +1,17 @@
-import { FIELD_IDS } from '../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import contractPolicy from './contractPolicy';
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        MULTIPLE: {
-          TOTAL_MONTHS_OF_COVER,
-          TOTAL_SALES_TO_BUYER,
-          MAXIMUM_BUYER_WILL_OWE,
-        },
+  POLICY_AND_EXPORTS: {
+    CONTRACT_POLICY: {
+      MULTIPLE: {
+        TOTAL_MONTHS_OF_COVER,
+        TOTAL_SALES_TO_BUYER,
+        MAXIMUM_BUYER_WILL_OWE,
       },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const multipleContractPolicy = {
   ...contractPolicy,
