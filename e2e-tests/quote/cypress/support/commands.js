@@ -36,6 +36,7 @@ Cypress.Commands.add('checkCookiesConsentBannerDoesNotExist', analytics.checkCoo
 Cypress.Commands.add('checkPageNotFoundPageText', require('../../../commands/check-page-not-found-page-text'));
 
 Cypress.Commands.add('checkHeaderServiceNameAndHref', require('../../../commands/check-header-service-name-href'));
+Cypress.Commands.add('checkFooterLinks', require('../../../commands/check-footer-links'));
 
 Cypress.Commands.add('rejectAnalyticsCookies', analytics.rejectAnalyticsCookies);
 
