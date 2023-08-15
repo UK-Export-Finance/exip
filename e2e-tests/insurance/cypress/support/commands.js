@@ -22,6 +22,7 @@ Cypress.Commands.add('submitQuoteAnswersHappyPathSinglePolicy', require('../../.
 
 Cypress.Commands.add('corePageChecks', require('../../../commands/core-page-checks'));
 
+Cypress.Commands.add('checkAnalyticsCookiesConsentAndAccept', analytics.checkAnalyticsCookiesConsentAndAccept);
 Cypress.Commands.add('checkAnalyticsCookieIsFalse', analytics.checkAnalyticsCookieIsFalse);
 Cypress.Commands.add('checkAnalyticsCookieIsTrue', analytics.checkAnalyticsCookieIsTrue);
 Cypress.Commands.add('checkAnalyticsScriptsAreNotRendered', analytics.checkAnalyticsScriptsAreNotRendered);
@@ -32,6 +33,8 @@ Cypress.Commands.add('checkCookiesConsentBannerDoesNotExist', analytics.checkCoo
 Cypress.Commands.add('checkPageNotFoundPageText', require('../../../commands/check-page-not-found-page-text'));
 
 Cypress.Commands.add('checkHeaderServiceNameAndHref', require('../../../commands/check-header-service-name-href'));
+
+Cypress.Commands.add('rejectAnalyticsCookies', analytics.rejectAnalyticsCookies);
 
 Cypress.Commands.add('checkAuthenticatedHeader', require('../../../commands/check-authenticated-header'));
 

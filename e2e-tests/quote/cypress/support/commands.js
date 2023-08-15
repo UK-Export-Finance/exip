@@ -36,6 +36,8 @@ Cypress.Commands.add('checkPageNotFoundPageText', require('../../../commands/che
 
 Cypress.Commands.add('checkHeaderServiceNameAndHref', require('../../../commands/check-header-service-name-href'));
 
+Cypress.Commands.add('rejectAnalyticsCookies', analytics.rejectAnalyticsCookies);
+
 Cypress.Commands.add('assertCustomerServiceContactDetailsContent', require('../../../commands/assert-customer-service-contact-details-content'));
 
 Cypress.Commands.add('checkText', require('../../../commands/check-text'));
