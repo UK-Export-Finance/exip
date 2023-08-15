@@ -1,8 +1,7 @@
 import policyCurrencyCodeRules from '.';
 import { FIELD_IDS } from '../../constants';
 import { ERROR_MESSAGES } from '../../content-strings';
-import generateValidationErrors from '../../helpers/validation';
-import { mockCurrencies } from '../../test-mocks';
+import emptyFieldValidation from '../empty-field';
 
 const {
   INSURANCE: {
@@ -21,32 +20,20 @@ const {
 } = ERROR_MESSAGES;
 
 describe('shared-validation/policy-currency-code', () => {
+  const mockBody = {
+    [FIELD_ID]: '',
+  };
+
   const mockErrors = {
     summary: [],
     errorList: {},
   };
 
-  describe('when the field is not provided', () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {};
+  it('should return the result of emptyFieldValidation', () => {
+    const result = policyCurrencyCodeRules(mockBody, mockErrors);
 
-      const result = policyCurrencyCodeRules(mockSubmittedData, mockErrors);
+    const expected = emptyFieldValidation(mockBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when there are no validation errors', () => {
-    it('should return the provided errors object', () => {
-      const mockSubmittedData = {
-        [FIELD_ID]: mockCurrencies[0].isoCode,
-      };
-
-      const result = policyCurrencyCodeRules(mockSubmittedData, mockErrors);
-
-      expect(result).toEqual(mockErrors);
-    });
+    expect(result).toEqual(expected);
   });
 });

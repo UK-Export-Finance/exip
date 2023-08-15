@@ -1,16 +1,14 @@
 import tradingAddress from './trading-address';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../../constants';
-import generateValidationErrors from '../../../../../../../helpers/validation';
+import emptyFieldValidation from '../../../../../../../shared-validation/empty-field';
 import { RequestBody } from '../../../../../../../../types';
 
 const {
-  YOUR_COMPANY: { TRADING_ADDRESS },
+  YOUR_COMPANY: { TRADING_ADDRESS: FIELD_ID },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
-const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
-
-const errorMessage = EXPORTER_BUSINESS[TRADING_ADDRESS].IS_EMPTY;
+const { EXPORTER_BUSINESS: ERROR_MESSAGE } = ERROR_MESSAGES.INSURANCE;
 
 describe('controllers/insurance/business/company-details/validation/company-details/rules/tradingAddress', () => {
   const mockErrors = {
@@ -19,50 +17,14 @@ describe('controllers/insurance/business/company-details/validation/company-deta
   };
 
   const mockBody = {
-    [TRADING_ADDRESS]: '',
+    [FIELD_ID]: '',
   } as RequestBody;
 
-  it(`should return a validation error when ${TRADING_ADDRESS} is an empty string`, () => {
+  it('should return the result of emptyFieldValidation', () => {
     const result = tradingAddress(mockBody, mockErrors);
 
-    const expected = generateValidationErrors(TRADING_ADDRESS, errorMessage, mockErrors);
+    const expected = emptyFieldValidation(mockBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
 
     expect(result).toEqual(expected);
-  });
-
-  it('should return a validation error when tradingAddress is null string', () => {
-    mockBody[TRADING_ADDRESS] = null;
-
-    const result = tradingAddress(mockBody, mockErrors);
-
-    const expected = generateValidationErrors(TRADING_ADDRESS, errorMessage, mockErrors);
-
-    expect(result).toEqual(expected);
-  });
-
-  it(`should return a validation error when ${TRADING_ADDRESS} is not in the body`, () => {
-    delete mockBody[TRADING_ADDRESS];
-
-    const result = tradingAddress(mockBody, mockErrors);
-
-    const expected = generateValidationErrors(TRADING_ADDRESS, errorMessage, mockErrors);
-
-    expect(result).toEqual(expected);
-  });
-
-  it(`should not return a validation error when ${TRADING_ADDRESS} is yes`, () => {
-    mockBody[TRADING_ADDRESS] = 'yes';
-
-    const result = tradingAddress(mockBody, mockErrors);
-
-    expect(result).toEqual(mockErrors);
-  });
-
-  it(`should not return a validation error when ${TRADING_ADDRESS} is no`, () => {
-    mockBody[TRADING_ADDRESS] = 'no';
-
-    const result = tradingAddress(mockBody, mockErrors);
-
-    expect(result).toEqual(mockErrors);
   });
 });
