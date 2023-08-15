@@ -1,11 +1,10 @@
 import { FIELD_IDS } from '../../../../../constants';
+import contractPolicy from './contractPolicy';
 
 const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
       CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
         SINGLE: {
           CONTRACT_COMPLETION_DATE,
           TOTAL_CONTRACT_VALUE,
@@ -16,14 +15,7 @@ const {
 } = FIELD_IDS;
 
 const singleContractPolicy = {
-  [REQUESTED_START_DATE]: {
-    label: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-label"]`),
-    hint: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-hint"]`),
-    dayInput: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-day-input"]`),
-    monthInput: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-month-input"]`),
-    yearInput: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-year-input"]`),
-    errorMessage: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-error-message"]`),
-  },
+  ...contractPolicy,
   [CONTRACT_COMPLETION_DATE]: {
     label: () => cy.get(`[data-cy="${CONTRACT_COMPLETION_DATE}-label"]`),
     hint: () => cy.get(`[data-cy="${CONTRACT_COMPLETION_DATE}-hint"]`),
@@ -42,12 +34,6 @@ const singleContractPolicy = {
     prefix: () => cy.get(`[data-cy="${TOTAL_CONTRACT_VALUE}-prefix"]`),
     input: () => cy.get(`[data-cy="${TOTAL_CONTRACT_VALUE}-input"]`),
     errorMessage: () => cy.get(`[data-cy="${TOTAL_CONTRACT_VALUE}-error-message"]`),
-  },
-  [CREDIT_PERIOD_WITH_BUYER]: {
-    label: () => cy.get(`[data-cy="${CREDIT_PERIOD_WITH_BUYER}-label"]`),
-    hint: () => cy.get(`[data-cy="${CREDIT_PERIOD_WITH_BUYER}-hint"]`),
-    input: () => cy.get(`[data-cy="${CREDIT_PERIOD_WITH_BUYER}-input"]`),
-    errorMessage: () => cy.get(`[data-cy="${CREDIT_PERIOD_WITH_BUYER}-error-message"]`),
   },
 };
 
