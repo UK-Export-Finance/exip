@@ -4,7 +4,7 @@ import emptyFieldValidation from '../../../../../shared-validation/empty-field';
 import { RequestBody } from '../../../../../../types';
 
 const { POLICY_TYPE: FIELD_ID } = FIELD_IDS;
-const ERROR_MESSAGE = ERROR_MESSAGES[FIELD_ID];
+const ERROR_MESSAGE = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
 
 /**
  * policyTypeRules
