@@ -17,7 +17,7 @@ describe('controllers/quote/policy-type/validation/rules/policy-type', () => {
 
       const result = rule(mockBody, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_IDS.SINGLE_POLICY_TYPE, ERROR_MESSAGES[FIELD_IDS.POLICY_TYPE], mockErrors);
+      const expected = generateValidationErrors(FIELD_IDS.SINGLE_POLICY_TYPE, ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.POLICY_TYPE], mockErrors);
 
       expect(result).toEqual(expected);
     });
