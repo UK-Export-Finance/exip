@@ -18,6 +18,7 @@ Cypress.Commands.add('submitQuoteAnswersHappyPathSinglePolicy', require('./quote
 Cypress.Commands.add('submitInsuranceEligibilityAnswersHappyPath', require('./insurance/eligibility/submit-answers-happy-path'));
 
 Cypress.Commands.add('checkAnalyticsCookiesConsentAndAccept', analytics.checkAnalyticsCookiesConsentAndAccept);
+Cypress.Commands.add('checkAnalyticsCookieDoesNotExist', analytics.checkAnalyticsCookieDoesNotExist);
 Cypress.Commands.add('checkAnalyticsCookieIsFalse', analytics.checkAnalyticsCookieIsFalse);
 Cypress.Commands.add('checkAnalyticsCookieIsTrue', analytics.checkAnalyticsCookieIsTrue);
 Cypress.Commands.add('checkAnalyticsScriptsAreNotRendered', analytics.checkAnalyticsScriptsAreNotRendered);
@@ -33,6 +34,8 @@ Cypress.Commands.add('checkFooterLinks', require('./check-footer-links'));
 Cypress.Commands.add('rejectAnalyticsCookies', analytics.rejectAnalyticsCookies);
 
 Cypress.Commands.add('checkAuthenticatedHeader', require('./check-authenticated-header'));
+
+Cypress.Commands.add('createAccount', require('./insurance/account/create-account'));
 
 Cypress.Commands.add('completeSignInAndGoToApplication', require('./insurance/account/complete-sign-in-and-go-to-application'));
 
