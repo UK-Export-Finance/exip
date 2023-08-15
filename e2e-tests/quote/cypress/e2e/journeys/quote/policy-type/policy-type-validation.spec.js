@@ -36,6 +36,19 @@ context('Policy type page - policy type & length validation - single policy type
     policyTypePage[POLICY_TYPE].single.input().click();
   });
 
+  describe('when submitting an empty form', () => {
+    it('should render a validation error when submitting an empty form', () => {
+      cy.navigateToUrl(url);
+      submitButton().click();
+
+      partials.errorSummaryListItems().should('have.length', 1);
+
+      const expectedMessage = ERROR_MESSAGES.ELIGIBILITY[POLICY_TYPE];
+
+      cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
+    });
+  });
+
   it('should render a validation error when `single policy length` is not provided', () => {
     submitButton().click();
 
