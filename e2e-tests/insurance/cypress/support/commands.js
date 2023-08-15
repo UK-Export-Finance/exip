@@ -29,8 +29,6 @@ Cypress.Commands.add('verifyAccountEmail', require('../../../commands/insurance/
 Cypress.Commands.add('deleteAccount', require('../../../commands/insurance/account/delete-account'));
 Cypress.Commands.add('deleteApplication', require('../../../commands/insurance/delete-application'));
 
-Cypress.Commands.add('createAccount', require('../../../commands/insurance/account/create-account'));
-
 Cypress.Commands.add('createAnAccountAndBecomeBlocked', require('../../../commands/insurance/account/create-an-account-and-become-blocked'));
 
 Cypress.Commands.add('accountAddAndGetOTP', require('../../../commands/insurance/account/add-and-get-OTP'));
