@@ -1,5 +1,5 @@
 import { FIELD_IDS, ELIGIBILITY } from '../constants';
-import formatCurrency from '../cypress/e2e/helpers/format-currency';
+import formatCurrency from '../helpers/format-currency';
 
 export const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP);
 
