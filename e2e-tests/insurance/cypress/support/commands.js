@@ -14,6 +14,7 @@ import analytics from '../../../commands/analytics';
 Cypress.Commands.add('saveSession', require('../../../commands/save-session'));
 
 Cypress.Commands.add('login', require('../../../commands/login'));
+Cypress.Commands.add('checkPhaseBanner', require('../../../commands/check-phase-banner'));
 Cypress.Commands.add('navigateToUrl', require('../../../commands/navigate-to-url'));
 Cypress.Commands.add('assertUrl', require('../../../commands/assert-url'));
 Cypress.Commands.add('clickBackLink', require('../../../commands/click-back-link'));

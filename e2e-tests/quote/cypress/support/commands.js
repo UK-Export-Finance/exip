@@ -14,6 +14,7 @@ import analytics from '../../../commands/analytics';
 Cypress.Commands.add('saveSession', require('../../../commands/save-session'));
 
 Cypress.Commands.add('login', require('../../../commands/login'));
+Cypress.Commands.add('checkPhaseBanner', require('../../../commands/check-phase-banner'));
 Cypress.Commands.add('navigateToUrl', require('../../../commands/navigate-to-url'));
 Cypress.Commands.add('assertUrl', require('../../../commands/assert-url'));
 Cypress.Commands.add('clickBackLink', require('../../../commands/click-back-link'));
@@ -37,6 +38,8 @@ Cypress.Commands.add('checkPageNotFoundPageText', require('../../../commands/che
 Cypress.Commands.add('checkHeaderServiceNameAndHref', require('../../../commands/check-header-service-name-href'));
 
 Cypress.Commands.add('rejectAnalyticsCookies', analytics.rejectAnalyticsCookies);
+
+Cypress.Commands.add('checkAuthenticatedHeader', require('../../../commands/check-authenticated-header'));
 
 Cypress.Commands.add('assertCustomerServiceContactDetailsContent', require('../../../commands/assert-customer-service-contact-details-content'));
 
