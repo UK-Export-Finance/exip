@@ -11,7 +11,7 @@ on:
   pull_request:
     branches: [main-application]
     paths:
-      - '.github/workflows/**'
+      - '.github/workflows/test.yml'
       - 'src/**'
       - 'e2e-tests/**'
       - 'generate-exip-pricing-grid/**'
@@ -57,10 +57,10 @@ jobs:
       timezone: ${{ env.timezone }}
     steps:
       - name: Environment 🧪
-        run: echo "Environment set to ${{ env.environment }}"
+        run: echo 'Environment set to ${{ env.environment }}'
 
       - name: Timezone 🌐
-        run: echo "Timezone set to ${{ env.timezone }}"
+        run: echo 'Timezone set to ${{ env.timezone }}'
 
   # 2. UI - Unit test cases
   unit-tests:
@@ -197,7 +197,7 @@ jobs:
           record: true
           parallel: true
           browser: chrome
-          group: "EXIP-E2E-INSURANCE"
+          group: 'EXIP-E2E-INSURANCE'
           project: ./e2e-tests/insurance
           config: video=false
         env:
@@ -214,7 +214,7 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: screenshots
-          path: "./cypress/screenshots"
+          path: './cypress/screenshots'
 
   # 5. E2E - Quote
   e2e-tests-quote:
@@ -254,7 +254,7 @@ jobs:
           record: true
           parallel: true
           browser: chrome
-          group: "EXIP-E2E-QUOTE"
+          group: 'EXIP-E2E-QUOTE'
           project: ./e2e-tests/quote
           config: video=false
         env:
@@ -271,7 +271,7 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: screenshots
-          path: "./cypress/screenshots"
+          path: './cypress/screenshots'
 
   # 6. E2E - Switch between services
   e2e-tests-switch-between-services:
@@ -309,7 +309,7 @@ jobs:
           record: true
           parallel: true
           browser: chrome
-          group: "EXIP-E2E-SWITCH-BETWEEN-SERVICES"
+          group: 'EXIP-E2E-SWITCH-BETWEEN-SERVICES'
           project: ./e2e-tests/switch-between-services
           config: video=false
         env:
@@ -326,4 +326,4 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: screenshots
-          path: "./cypress/screenshots"
+          path: './cypress/screenshots'
