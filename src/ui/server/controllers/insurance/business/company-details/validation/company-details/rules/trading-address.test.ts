@@ -8,7 +8,9 @@ const {
   YOUR_COMPANY: { TRADING_ADDRESS: FIELD_ID },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
-const { EXPORTER_BUSINESS: ERROR_MESSAGE } = ERROR_MESSAGES.INSURANCE;
+const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
+
+const ERROR_MESSAGE = EXPORTER_BUSINESS[FIELD_ID];
 
 describe('controllers/insurance/business/company-details/validation/company-details/rules/tradingAddress', () => {
   const mockErrors = {
