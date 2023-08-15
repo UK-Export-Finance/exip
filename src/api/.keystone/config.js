@@ -649,7 +649,7 @@ var getAccountByField = async (context, field, value) => {
 };
 var get_account_by_field_default = getAccountByField;
 
-// custom-fields/nullable-checkbox/index.ts
+// nullable-checkbox/index.ts
 var import_types = require("@keystone-6/core/types");
 var import_core = require("@keystone-6/core");
 var nullableCheckbox = () => () => (
@@ -690,12 +690,13 @@ var nullableCheckbox = () => () => (
      * Keystone admin UI/CMS config for this field.
      * Since we do not use the UI/CMS, this can be empty.
      */
-    views: "",
+    views: "./nullable-checkbox/views",
     getAdminMeta() {
       return {};
     }
   })
 );
+var nullable_checkbox_default = nullableCheckbox;
 
 // schema.ts
 var lists = {
@@ -1106,7 +1107,7 @@ var lists = {
   Broker: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      isUsingBroker: nullableCheckbox(),
+      isUsingBroker: nullable_checkbox_default(),
       name: (0, import_fields.text)(),
       addressLine1: (0, import_fields.text)(),
       addressLine2: (0, import_fields.text)(),
@@ -1149,8 +1150,8 @@ var lists = {
       companyName: (0, import_fields.text)(),
       companyNumber: (0, import_fields.text)(),
       dateOfCreation: (0, import_fields.timestamp)(),
-      hasTradingAddress: nullableCheckbox(),
-      hasTradingName: nullableCheckbox(),
+      hasTradingAddress: nullable_checkbox_default(),
+      hasTradingName: nullable_checkbox_default(),
       companyWebsite: (0, import_fields.text)(),
       phoneNumber: (0, import_fields.text)(),
       financialYearEndDate: (0, import_fields.timestamp)()
@@ -1186,9 +1187,9 @@ var lists = {
       contactLastName: (0, import_fields.text)(),
       contactPosition: (0, import_fields.text)(),
       contactEmail: (0, import_fields.text)(),
-      canContactBuyer: nullableCheckbox(),
-      exporterIsConnectedWithBuyer: nullableCheckbox(),
-      exporterHasTradedWithBuyer: nullableCheckbox()
+      canContactBuyer: nullable_checkbox_default(),
+      exporterIsConnectedWithBuyer: nullable_checkbox_default(),
+      exporterHasTradedWithBuyer: nullable_checkbox_default()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -1248,12 +1249,12 @@ var lists = {
       antiBribery: (0, import_fields.relationship)({ ref: "DeclarationAntiBribery" }),
       confirmationAndAcknowledgements: (0, import_fields.relationship)({ ref: "DeclarationConfirmationAndAcknowledgement" }),
       howDataWillBeUsed: (0, import_fields.relationship)({ ref: "DeclarationHowDataWillBeUsed" }),
-      agreeToConfidentiality: nullableCheckbox(),
-      agreeToAntiBribery: nullableCheckbox(),
-      hasAntiBriberyCodeOfConduct: nullableCheckbox(),
-      willExportWithAntiBriberyCodeOfConduct: nullableCheckbox(),
-      agreeToConfirmationAndAcknowledgements: nullableCheckbox(),
-      agreeHowDataWillBeUsed: nullableCheckbox()
+      agreeToConfidentiality: nullable_checkbox_default(),
+      agreeToAntiBribery: nullable_checkbox_default(),
+      hasAntiBriberyCodeOfConduct: nullable_checkbox_default(),
+      willExportWithAntiBriberyCodeOfConduct: nullable_checkbox_default(),
+      agreeToConfirmationAndAcknowledgements: nullable_checkbox_default(),
+      agreeHowDataWillBeUsed: nullable_checkbox_default()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -4541,3 +4542,4 @@ var keystone_default = withAuth(
     telemetry: false
   })
 );
+//# sourceMappingURL=config.js.map

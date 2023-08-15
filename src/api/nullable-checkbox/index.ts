@@ -54,7 +54,7 @@ export const nullableCheckbox = () => () =>
      * Keystone admin UI/CMS config for this field.
      * Since we do not use the UI/CMS, this can be empty.
      */
-    views: '',
+    views: './nullable-checkbox/views',
     getAdminMeta() {
       return {};
     },

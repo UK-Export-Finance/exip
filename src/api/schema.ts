@@ -8,7 +8,7 @@ import { APPLICATION, FEEDBACK } from './constants';
 import ACCOUNT_FIELD_IDS from './constants/field-ids/insurance/account';
 import updateApplication from './helpers/update-application';
 import getAccountByField from './helpers/get-account-by-field';
-import { nullableCheckbox } from './custom-fields';
+import nullableCheckbox from './nullable-checkbox';
 
 export const lists = {
   ReferenceNumber: {
