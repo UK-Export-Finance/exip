@@ -15,7 +15,6 @@ Cypress.Commands.add('submitEligibilityAndStartAccountCreation', require('../../
 Cypress.Commands.add('submitEligibilityAndStartAccountSignIn', require('../../../commands/insurance/submit-eligibility-and-start-account-sign-in'));
 
 Cypress.Commands.add('completeAndSubmitCreateAccountForm', require('../../../commands/insurance/account/complete-and-submit-create-account-form'));
-Cypress.Commands.add('completeAndSubmitSignInAccountForm', require('../../../commands/insurance/account/complete-and-submit-sign-in-account-form'));
 Cypress.Commands.add('completeAndSubmitSignInAccountFormMaximumInvalidRetries', require('../../../commands/insurance/account/complete-and-submit-sign-in-account-form-maximum-invalid-retries'));
 Cypress.Commands.add('completeAndSubmitEnterCodeAccountForm', require('../../../commands/insurance/account/complete-and-submit-enter-code-account-form'));
 
@@ -30,8 +29,6 @@ Cypress.Commands.add('deleteAccount', require('../../../commands/insurance/accou
 Cypress.Commands.add('deleteApplication', require('../../../commands/insurance/delete-application'));
 
 Cypress.Commands.add('createAnAccountAndBecomeBlocked', require('../../../commands/insurance/account/create-an-account-and-become-blocked'));
-
-Cypress.Commands.add('accountAddAndGetOTP', require('../../../commands/insurance/account/add-and-get-OTP'));
 
 Cypress.Commands.add('completeSignInAndGoToDashboard', require('../../../commands/insurance/account/complete-sign-in-and-go-to-dashboard'));
 

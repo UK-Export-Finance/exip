@@ -39,6 +39,10 @@ Cypress.Commands.add('createAccount', require('./insurance/account/create-accoun
 
 Cypress.Commands.add('completeSignInAndGoToApplication', require('./insurance/account/complete-sign-in-and-go-to-application'));
 
+Cypress.Commands.add('completeAndSubmitSignInAccountForm', require('./insurance/account/complete-and-submit-sign-in-account-form'));
+
+Cypress.Commands.add('accountAddAndGetOTP', require('./insurance/account/add-and-get-OTP'));
+
 Cypress.Commands.add('assertCustomerServiceContactDetailsContent', require('./assert-customer-service-contact-details-content'));
 
 Cypress.Commands.add('checkText', require('./check-text'));
