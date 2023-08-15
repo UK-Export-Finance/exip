@@ -16,6 +16,7 @@
 import 'cypress-v10-preserve-cookie';
 // Import commands.js using ES2015 syntax:
 import './commands';
+import '../../../commands/shared-commands';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
