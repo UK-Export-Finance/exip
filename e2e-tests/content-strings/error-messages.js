@@ -1,5 +1,5 @@
 import { FIELD_IDS, ELIGIBILITY } from '../constants';
-import formatCurrency from '../cypress/e2e/helpers/format-currency';
+import formatCurrency from '../helpers/format-currency';
 
 export const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP);
 
@@ -38,7 +38,7 @@ export const ERROR_MESSAGES = {
     [FIELD_IDS.ELIGIBILITY.PERCENTAGE_OF_COVER]: {
       IS_EMPTY: 'Select the percentage of cover you need',
     },
-    [FIELD_IDS.ELIGIBILITY.POLICY_TYPE]: 'Select whether you need a single or multiple contract policy',
+    [FIELD_IDS.POLICY_TYPE]: 'Select whether you need a single or multiple contract policy',
     [FIELD_IDS.SINGLE_POLICY_LENGTH]: {
       NOT_A_NUMBER: 'Policy length must be a number',
       NOT_A_WHOLE_NUMBER: 'Policy length must be a whole number, like 10 - you cannot enter decimal points',
