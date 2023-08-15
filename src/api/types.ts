@@ -77,7 +77,7 @@ interface ApplicationBuyer extends ApplicationRelationship {
 interface ApplicationDeclaration extends ApplicationRelationship {
   agreeToConfidentiality?: boolean;
   agreeToAntiBribery?: boolean;
-  hasAntiBriberyCodeOfConduct?: boolean;
+  hasAntiBriberyCodeOfConduct?: boolean | null;
   willExportWithAntiBriberyCodeOfConduct?: boolean;
   agreeToConfirmationAndAcknowledgements?: boolean;
   agreeHowDataWillBeUsed?: boolean;

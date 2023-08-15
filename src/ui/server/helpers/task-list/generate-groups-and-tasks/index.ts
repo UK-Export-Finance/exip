@@ -15,7 +15,12 @@ const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
  * @param {String} Application "Has anti-bribery code of conduct" flag
  * @returns {Array} Task list groups and tasks
  */
-const generateGroupsAndTasks = (referenceNumber: number, policyType?: string, isUsingBroker?: boolean, hasAntiBriberyCodeOfConduct?: string): TaskListData => {
+const generateGroupsAndTasks = (
+  referenceNumber: number,
+  policyType?: string,
+  isUsingBroker?: boolean,
+  hasAntiBriberyCodeOfConduct?: boolean | null,
+): TaskListData => {
   let groups = [
     {
       title: INITIAL_CHECKS.HEADING,

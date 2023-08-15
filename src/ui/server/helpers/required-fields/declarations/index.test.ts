@@ -1,6 +1,5 @@
 import requiredFields, { getAntiBriberyCodeOfConductTasks } from '.';
 import FIELD_IDS from '../../../constants/field-ids/insurance';
-import { FIELD_VALUES } from '../../../constants/field-values';
 import { mockApplication } from '../../../test-mocks';
 
 const { DECLARATIONS } = FIELD_IDS;
@@ -16,9 +15,9 @@ const {
 
 describe('server/helpers/required-fields/declarations', () => {
   describe('getAntiBriberyCodeOfConductTasks', () => {
-    describe(`when hasAntiBriberyCodeOfConduct is "${FIELD_VALUES.YES}"`, () => {
+    describe('when hasAntiBriberyCodeOfConduct is true', () => {
       it('should return multiple field ids in an array', () => {
-        const result = getAntiBriberyCodeOfConductTasks(FIELD_VALUES.YES);
+        const result = getAntiBriberyCodeOfConductTasks(true);
 
         const expected = [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT, WILL_EXPORT_WITH_CODE_OF_CONDUCT];
 
@@ -26,9 +25,17 @@ describe('server/helpers/required-fields/declarations', () => {
       });
     });
 
-    describe(`when hasAntiBriberyCodeOfConduct is "${FIELD_VALUES.NO}"`, () => {
-      it(`should return an array with just ${HAS_ANTI_BRIBERY_CODE_OF_CONDUCT} field ID`, () => {
-        const result = getAntiBriberyCodeOfConductTasks(FIELD_VALUES.NO);
+    describe('when hasAntiBriberyCodeOfConduct is false', () => {
+      it('should return an empty array', () => {
+        const result = getAntiBriberyCodeOfConductTasks(false);
+
+        expect(result).toEqual([]);
+      });
+    });
+
+    describe('when hasAntiBriberyCodeOfConduct is null', () => {
+      it(`should return an array with ${HAS_ANTI_BRIBERY_CODE_OF_CONDUCT} field ID`, () => {
+        const result = getAntiBriberyCodeOfConductTasks(null);
 
         const expected = [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT];
 
@@ -37,7 +44,7 @@ describe('server/helpers/required-fields/declarations', () => {
     });
 
     describe('when hasAntiBriberyCodeOfConduct is not provided/submitted', () => {
-      it(`should return an array with just ${HAS_ANTI_BRIBERY_CODE_OF_CONDUCT} field ID`, () => {
+      it(`should return an array with ${HAS_ANTI_BRIBERY_CODE_OF_CONDUCT} field ID`, () => {
         const result = getAntiBriberyCodeOfConductTasks();
 
         const expected = [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT];
