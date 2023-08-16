@@ -12,9 +12,9 @@ const { COMPANIES_HOUSE_UNAVAILABLE: COMPANIES_HOUSE_UNAVAILABLE_TEMPLATE } = TE
 
 const { INSURANCE_ROOT, ALL_SECTIONS, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
-const { COMPANY_DETAILS: COMPANY_DETAILS_ROUTE } = EXPORTER_BUSINESS_ROUTES;
+const { COMPANIES_HOUSE_NUMBER_ROOT } = EXPORTER_BUSINESS_ROUTES;
 
-describe('controllers/insurance/business/companies-details/companies-house-unavailable', () => {
+describe('controllers/insurance/business/companies-house-number/companies-house-unavailable', () => {
   let req: Request;
   let res: Response;
 
@@ -45,7 +45,7 @@ describe('controllers/insurance/business/companies-details/companies-house-unava
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),
-        COMPANY_DETAILS: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_ROUTE}`,
+        COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANIES_HOUSE_NUMBER_ROOT}`,
         ALL_SECTIONS: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`,
       });
     });
