@@ -4,11 +4,12 @@ import isFieldFalseOrZero from '../is-field-false-or-zero';
 
 /**
  * hasSubmittedField
+ * Note: this assumes that any data in submitted fields is a valid answer
+ * E.g, A false boolean or zero is a valid answer.
  * @param {Object} submittedData Submitted application data
  * @param {String} field ID of the field to get
  * @returns {Boolean} True if the field is in submittedData.
  */
-// Note: this assumes that any data in submitted fields is a valid answer. E.g, false boolean is a valid answer.
 export const hasSubmittedField = (submittedData: ApplicationFlat, fieldId: string) => {
   const fieldValue = submittedData[fieldId];
 
@@ -36,13 +37,11 @@ export const hasSubmittedField = (submittedData: ApplicationFlat, fieldId: strin
 export const getSubmittedFields = (fields: Array<string>, submittedData: ApplicationFlat): Array<string> => {
   const submittedFields = [] as Array<string>;
 
-  if (fields) {
-    fields.forEach((fieldId) => {
-      if (hasSubmittedField(submittedData, fieldId)) {
-        submittedFields.push(fieldId);
-      }
-    });
-  }
+  fields.forEach((fieldId) => {
+    if (hasSubmittedField(submittedData, fieldId)) {
+      submittedFields.push(fieldId);
+    }
+  });
 
   return submittedFields;
 };

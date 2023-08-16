@@ -1229,10 +1229,10 @@ var lists = {
   SectionReview: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      eligibility: (0, import_fields.checkbox)(),
-      policyAndExport: (0, import_fields.checkbox)(),
-      business: (0, import_fields.checkbox)(),
-      buyer: (0, import_fields.checkbox)()
+      eligibility: nullable_checkbox_default(),
+      policyAndExport: nullable_checkbox_default(),
+      business: nullable_checkbox_default(),
+      buyer: nullable_checkbox_default()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

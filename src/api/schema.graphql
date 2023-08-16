@@ -1400,18 +1400,10 @@ input SectionReviewWhereInput {
   NOT: [SectionReviewWhereInput!]
   id: IDFilter
   application: ApplicationWhereInput
-  eligibility: BooleanFilter
-  policyAndExport: BooleanFilter
-  business: BooleanFilter
-  buyer: BooleanFilter
 }
 
 input SectionReviewOrderByInput {
   id: OrderDirection
-  eligibility: OrderDirection
-  policyAndExport: OrderDirection
-  business: OrderDirection
-  buyer: OrderDirection
 }
 
 input SectionReviewUpdateInput {

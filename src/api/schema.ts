@@ -610,10 +610,10 @@ export const lists = {
   SectionReview: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      eligibility: checkbox(),
-      policyAndExport: checkbox(),
-      business: checkbox(),
-      buyer: checkbox(),
+      eligibility: nullableCheckbox(),
+      policyAndExport: nullableCheckbox(),
+      business: nullableCheckbox(),
+      buyer: nullableCheckbox(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

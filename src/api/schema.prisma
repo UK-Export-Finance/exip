@@ -283,10 +283,10 @@ model SectionReview {
   id                             String        @id @default(cuid())
   application                    Application?  @relation("SectionReview_application", fields: [applicationId], references: [id])
   applicationId                  String?       @map("application")
-  eligibility                    Boolean       @default(false)
-  policyAndExport                Boolean       @default(false)
-  business                       Boolean       @default(false)
-  buyer                          Boolean       @default(false)
+  eligibility                    Boolean?
+  policyAndExport                Boolean?
+  business                       Boolean?
+  buyer                          Boolean?
   from_Application_sectionReview Application[] @relation("Application_sectionReview")
 
   @@index([applicationId])

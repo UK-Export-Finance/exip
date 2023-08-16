@@ -818,10 +818,10 @@ DROP TABLE IF EXISTS `SectionReview`;
 
 CREATE TABLE `SectionReview` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `eligibility` tinyint(1) NOT NULL DEFAULT '0',
-  `policyAndExport` tinyint(1) NOT NULL DEFAULT '0',
-  `business` tinyint(1) NOT NULL DEFAULT '0',
-  `buyer` tinyint(1) NOT NULL DEFAULT '0',
+  `eligibility` tinyint(1) DEFAULT NULL,
+  `policyAndExport` tinyint(1) DEFAULT NULL,
+  `business` tinyint(1) DEFAULT NULL,
+  `buyer` tinyint(1) DEFAULT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `SectionReview_application_idx` (`application`),
