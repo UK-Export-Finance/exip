@@ -35,12 +35,28 @@
 
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
+        {% set singlePolicyHintHtml %}
+          <ul>
+            {% for item in FIELDS.POLICY_TYPE.OPTIONS.SINGLE.HINT %}
+              <li class="govuk-!-margin-bottom-5" data-cy="{{ FIELDS.POLICY_TYPE.OPTIONS.SINGLE.ID }}-hint-list-item-{{ loop.index }}">{{ item }} </li>
+            {% endfor %}
+          </ul>
+        {% endset %}
+
         {% set singlePolicyLengthHintHtml %}
           <div data-cy="{{ FIELDS.SINGLE_POLICY_LENGTH.ID }}-hint">
-            {{detailsText.render({
+            {{ detailsText.render({
               items: FIELDS.SINGLE_POLICY_LENGTH.HINT
             }) }}
           </div>
+        {% endset %}
+
+        {% set multiplePolicyHintHtml %}
+          <ul>
+            {% for item in FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.HINT %}
+              <li class="govuk-!-margin-bottom-5" data-cy="{{ FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.ID }}-hint-list-item-{{ loop.index }}">{{ item }} </li>
+            {% endfor %}
+          </ul>
         {% endset %}
 
         {% set singlePolicyLengthHtml %}
@@ -77,14 +93,6 @@
           }) }}
         {% endset %}
 
-        {% set multiplePolicyTypeInsetHtml %}
-          <div data-cy="multiple-policy-inset">
-            {{ detailsText.render({
-              items: FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.INSET
-            }) }}
-          </div>
-        {% endset %}
-
         {% if validationErrors.errorList[FIELDS.POLICY_TYPE.ID] %}
           {% set validationError = validationErrors.errorList[FIELDS.POLICY_TYPE.ID] %}
         {% endif %}
@@ -108,18 +116,17 @@
               value: FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE,
               text: FIELDS.POLICY_TYPE.OPTIONS.SINGLE.TEXT,
               label: {
+                classes: 'govuk-heading-m govuk-!-font-weight-bold govuk-!-font-size-24',
                 attributes: {
-                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE + '-label'
+                  'data-cy': FIELDS.POLICY_TYPE.OPTIONS.SINGLE.ID + '-label'
                 }
               },
               hint: {
-                text: FIELDS.POLICY_TYPE.OPTIONS.SINGLE.HINT,
-                attributes: {
-                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE + '-hint'
-                }
+                html: singlePolicyHintHtml,
+                classes: 'govuk-!-padding-left-0 govuk-!-margin-bottom-8'
               },
               attributes: {
-                'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE + '-input'
+                'data-cy': FIELDS.POLICY_TYPE.OPTIONS.SINGLE.ID + '-input'
               },
               checked: submittedValues[FIELDS.POLICY_TYPE.ID] === FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE,
               conditional: {
@@ -131,18 +138,17 @@
               value: FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.VALUE,
               text: FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.TEXT,
               label: {
+                classes: 'govuk-heading-m govuk-!-font-weight-bold govuk-!-font-size-24',
                 attributes: {
-                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.VALUE + '-label'
+                  'data-cy': FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.ID + '-label'
                 }
               },
               hint: {
-                text: FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.HINT,
-                attributes: {
-                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.VALUE + '-hint'
-                }
+                html: multiplePolicyHintHtml,
+                classes: 'govuk-!-padding-left-0'
               },
               attributes: {
-                'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.VALUE + '-input'
+                'data-cy': FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.ID + '-input'
               },
               checked: submittedValues[FIELDS.POLICY_TYPE.ID] === FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.VALUE,
               conditional: {
