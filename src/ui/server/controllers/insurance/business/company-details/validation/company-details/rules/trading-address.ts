@@ -1,14 +1,15 @@
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../../constants';
-import { objectHasProperty } from '../../../../../../../helpers/object';
-import generateValidationErrors from '../../../../../../../helpers/validation';
+import emptyFieldValidation from '../../../../../../../shared-validation/empty-field';
 import { RequestBody } from '../../../../../../../../types';
 
 const {
-  YOUR_COMPANY: { TRADING_ADDRESS },
+  YOUR_COMPANY: { TRADING_ADDRESS: FIELD_ID },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
+
+const ERROR_MESSAGE = EXPORTER_BUSINESS[FIELD_ID];
 
 /**
  * validates tradingAddress in company details response body
@@ -17,15 +18,6 @@ const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
  * @param {Object} errors errorList
  * @returns {object} object containing errors or blank object
  */
-const tradingAddress = (responseBody: RequestBody, errors: object) => {
-  let updatedErrors = errors;
-
-  if (!objectHasProperty(responseBody, TRADING_ADDRESS)) {
-    const errorMessage = EXPORTER_BUSINESS[TRADING_ADDRESS].IS_EMPTY;
-    updatedErrors = generateValidationErrors(TRADING_ADDRESS, errorMessage, errors);
-  }
-
-  return updatedErrors;
-};
+const tradingAddress = (responseBody: RequestBody, errors: object) => emptyFieldValidation(responseBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
 
 export default tradingAddress;

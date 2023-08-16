@@ -1,7 +1,7 @@
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
-import { RequestBody } from '../../../../../../../types';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
+import { RequestBody } from '../../../../../../../types';
 
 const {
   BROKER: { ADDRESS_LINE_1: FIELD_ID, USING_BROKER },
