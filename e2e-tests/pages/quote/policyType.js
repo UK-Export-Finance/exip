@@ -1,13 +1,11 @@
-import {
-  FIELD_IDS,
-  FIELD_VALUES,
-} from '../../constants';
-
-const { POLICY_TYPE, SINGLE_POLICY_TYPE, MULTIPLE_POLICY_TYPE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
+import { FIELD_IDS } from '../../constants';
 
 const {
-  POLICY_TYPE: { SINGLE, MULTIPLE },
-} = FIELD_VALUES;
+  POLICY_TYPE,
+  SINGLE_POLICY_TYPE,
+  MULTIPLE_POLICY_TYPE,
+  SINGLE_POLICY_LENGTH,
+} = FIELD_IDS;
 
 const policyTypePage = {
   [POLICY_TYPE]: {
