@@ -1,5 +1,4 @@
 import brokerName from './broker-name';
-import { FIELD_VALUES } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
 import { RequestBody } from '../../../../../../../types';
@@ -22,8 +21,8 @@ describe('controllers/insurance/business/broker/validation/rules/broker-name', (
     [NAME]: '',
   } as RequestBody;
 
-  it(`should return the result of emptyFieldValidation if using broker is "${FIELD_VALUES.YES}"`, () => {
-    mockBody[USING_BROKER] = FIELD_VALUES.YES;
+  it('should return the result of emptyFieldValidation if using broker is true', () => {
+    mockBody[USING_BROKER] = true;
 
     const response = brokerName(mockBody, mockErrors);
 
@@ -32,8 +31,8 @@ describe('controllers/insurance/business/broker/validation/rules/broker-name', (
     expect(response).toEqual(expected);
   });
 
-  it(`should return the mockErrors if using broker is "${FIELD_VALUES.NO}"`, () => {
-    mockBody[USING_BROKER] = FIELD_VALUES.NO;
+  it('should return the mockErrors if using broker is false', () => {
+    mockBody[USING_BROKER] = false;
 
     const response = brokerName(mockBody, mockErrors);
 

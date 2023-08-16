@@ -70,14 +70,14 @@ interface ApplicationBuyer extends ApplicationRelationship {
   contactPosition?: string;
   contactEmail?: string;
   canContactBuyer?: boolean;
-  exporterIsConnectedWithBuyer?: string;
-  exporterHasTradedWithBuyer?: string;
+  exporterIsConnectedWithBuyer?: boolean;
+  exporterHasTradedWithBuyer?: boolean;
 }
 
 interface ApplicationDeclaration extends ApplicationRelationship {
   agreeToConfidentiality?: boolean;
   agreeToAntiBribery?: boolean;
-  hasAntiBriberyCodeOfConduct?: string;
+  hasAntiBriberyCodeOfConduct?: boolean | null;
   willExportWithAntiBriberyCodeOfConduct?: boolean;
   agreeToConfirmationAndAcknowledgements?: boolean;
   agreeHowDataWillBeUsed?: boolean;

@@ -5,9 +5,10 @@ import { ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
-import mockApplication, { mockApplicationBuyer } from '../../../../test-mocks/mock-application';
+import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
 import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
+import mockApplication, { mockApplicationBuyer } from '../../../../test-mocks/mock-application';
 
 const { YOUR_BUYER: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
@@ -126,18 +127,21 @@ describe('server/helpers/summary-lists/your-buyer/company-or-organisation-fields
         },
         generateMultipleFieldHtml(contactDetailsObject),
       ),
-      fieldGroupItem({
-        field: getFieldById(FIELDS.COMPANY_OR_ORGANISATION, CAN_CONTACT_BUYER),
-        data: mockAnswers,
-        href: generateChangeLink(
-          COMPANY_OR_ORGANISATION_CHANGE,
-          COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE,
-          `#${CAN_CONTACT_BUYER}-label`,
-          referenceNumber,
-          checkAndChange,
-        ),
-        renderChangeLink: true,
-      }),
+      fieldGroupItem(
+        {
+          field: getFieldById(FIELDS.COMPANY_OR_ORGANISATION, CAN_CONTACT_BUYER),
+          data: mockAnswers,
+          href: generateChangeLink(
+            COMPANY_OR_ORGANISATION_CHANGE,
+            COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE,
+            `#${CAN_CONTACT_BUYER}-label`,
+            referenceNumber,
+            checkAndChange,
+          ),
+          renderChangeLink: true,
+        },
+        mapYesNoField(mockAnswers[CAN_CONTACT_BUYER]),
+      ),
     ];
 
     it('should return fields and values from the submitted data/answers', () => {

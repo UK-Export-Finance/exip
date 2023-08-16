@@ -91,7 +91,7 @@ interface ApplicationBusiness {
 
 interface ApplicationBroker {
   id: string;
-  isUsingBroker?: string;
+  isUsingBroker?: boolean;
   name?: string;
   addressLine1?: string;
   addressLine2?: string;
@@ -143,10 +143,10 @@ interface ApplicationSectionReview {
 
 interface ApplicationDeclaration {
   id: string;
-  agreeToConfidentiality?: string;
+  agreeToConfidentiality?: boolean;
   agreeToAntiBribery?: boolean;
-  hasAntiBriberyCodeOfConduct?: string;
-  willExportWithAntiBriberyCodeOfConduct?: string;
+  hasAntiBriberyCodeOfConduct?: boolean | null;
+  willExportWithAntiBriberyCodeOfConduct?: boolean;
   agreeToConfirmationAndAcknowledgements?: boolean;
   agreeHowDataWillBeUsed?: boolean;
 }

@@ -2,8 +2,8 @@ import { FIELDS_ELIGIBILITY } from '../../../../content-strings/fields/insurance
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
-import { InsuranceEligibility, SummaryListItemData } from '../../../../../types';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
+import { InsuranceEligibility, SummaryListItemData } from '../../../../../types';
 
 const { ELIGIBILITY: FIELD_IDS } = INSURANCE_FIELD_IDS;
 

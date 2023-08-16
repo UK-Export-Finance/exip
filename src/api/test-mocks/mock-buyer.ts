@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-import { ANSWERS } from '../constants';
 
 dotenv.config();
 
@@ -18,8 +17,8 @@ const mockBuyer = {
   contactPosition: 'CEO',
   contactEmail: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
   canContactBuyer: true,
-  exporterIsConnectedWithBuyer: ANSWERS.YES,
-  exporterHasTradedWithBuyer: ANSWERS.YES,
+  exporterIsConnectedWithBuyer: true,
+  exporterHasTradedWithBuyer: true,
 };
 
 export default mockBuyer;

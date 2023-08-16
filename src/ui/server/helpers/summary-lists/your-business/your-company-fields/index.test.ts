@@ -6,9 +6,10 @@ import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
 import generateYourCompanyFields from '.';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
-import sicCodeMapping from '../map-sic-codes';
-import mockApplication, { mockCompany } from '../../../../test-mocks/mock-application';
+import mapYesNoField from '../../../mappings/map-yes-no-field';
+import mapSicCodes from '../map-sic-codes';
 import generateChangeLink from '../../../generate-change-link';
+import mockApplication, { mockCompany } from '../../../../test-mocks/mock-application';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
@@ -68,7 +69,7 @@ describe('server/helpers/summary-lists/your-business/your-company-fields', () =>
         data: mockAnswers,
         renderChangeLink: false,
       },
-      sicCodeMapping(mockAnswers[COMPANY_SIC]),
+      mapSicCodes(mockAnswers[COMPANY_SIC]),
     ),
     fieldGroupItem(
       {
@@ -78,18 +79,24 @@ describe('server/helpers/summary-lists/your-business/your-company-fields', () =>
       },
       formatDate(mockAnswers[FINANCIAL_YEAR_END_DATE], DATE_FORMAT),
     ),
-    fieldGroupItem({
-      field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_NAME),
-      data: mockAnswers,
-      href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${TRADING_NAME}-label`, referenceNumber, checkAndChange),
-      renderChangeLink: true,
-    }),
-    fieldGroupItem({
-      field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_ADDRESS),
-      data: mockAnswers,
-      href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${TRADING_ADDRESS}-label`, referenceNumber, checkAndChange),
-      renderChangeLink: true,
-    }),
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_NAME),
+        data: mockAnswers,
+        href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${TRADING_NAME}-label`, referenceNumber, checkAndChange),
+        renderChangeLink: true,
+      },
+      mapYesNoField(mockAnswers[TRADING_NAME]),
+    ),
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_ADDRESS),
+        data: mockAnswers,
+        href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${TRADING_ADDRESS}-label`, referenceNumber, checkAndChange),
+        renderChangeLink: true,
+      },
+      mapYesNoField(mockAnswers[TRADING_ADDRESS]),
+    ),
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, WEBSITE),
       data: mockAnswers,

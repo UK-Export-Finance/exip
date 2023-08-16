@@ -1,5 +1,4 @@
 import FIELD_IDS from '../../../constants/field-ids/insurance';
-import { FIELD_VALUES } from '../../../constants/field-values';
 
 const { DECLARATIONS } = FIELD_IDS;
 
@@ -18,11 +17,23 @@ const {
  * @param {String} Application "Has anti-bribery code of conduct" flag
  * @returns {Array} Anti-bribery code of conduct tasks
  */
-export const getAntiBriberyCodeOfConductTasks = (hasAntiBriberyCodeOfConduct?: string): Array<string> => {
-  if (hasAntiBriberyCodeOfConduct && hasAntiBriberyCodeOfConduct === FIELD_VALUES.YES) {
+export const getAntiBriberyCodeOfConductTasks = (hasAntiBriberyCodeOfConduct?: boolean | null): Array<string> => {
+  // has not been answered yet.
+  if (hasAntiBriberyCodeOfConduct === undefined || hasAntiBriberyCodeOfConduct === null) {
+    return [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT];
+  }
+
+  // has been answered 'yes'
+  if (hasAntiBriberyCodeOfConduct === true) {
     return [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT, WILL_EXPORT_WITH_CODE_OF_CONDUCT];
   }
 
+  // has been answered 'no' - nothing else required.
+  if (hasAntiBriberyCodeOfConduct === false) {
+    return [];
+  }
+
+  // invalid data type.
   return [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT];
 };
 
@@ -30,7 +41,7 @@ export const getAntiBriberyCodeOfConductTasks = (hasAntiBriberyCodeOfConduct?: s
  * Required fields for the insurance - declarations section
  * @param {Array} Required field IDs
  */
-const requiredFields = (hasAntiBriberyCodeOfConduct?: string): Array<string> => {
+const requiredFields = (hasAntiBriberyCodeOfConduct?: boolean | null): Array<string> => {
   const fields = [
     AGREE_CONFIDENTIALITY,
     AGREE_ANTI_BRIBERY,
