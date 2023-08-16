@@ -40,9 +40,11 @@ Cypress.Commands.add('completeAndSubmitMultipleContractPolicyForm', require('../
 
 Cypress.Commands.add('completeAndSubmitAboutGoodsOrServicesForm', require('../../../commands/insurance/complete-and-submit-about-goods-or-services-form'));
 
+Cypress.Commands.add('completeCompaniesHouseNumberForm', require('../../../commands/insurance/complete-and-submit-companies-house-number-form'));
+
 Cypress.Commands.add('completeAndSubmitCompanyDetails', require('../../../commands/insurance/complete-and-submit-company-details'));
 Cypress.Commands.add('completeCompanyDetailsForm', require('../../../commands/insurance/complete-company-details-form'));
-Cypress.Commands.add('completeAndSubmitCompaniesHouseSearchForm', require('../../../commands/insurance/complete-and-submit-companies-house-search-form'));
+Cypress.Commands.add('completeAndSubmitCompaniesHouseSearchForm', require('../../../commands/insurance/complete-and-submit-companies-house-number-form'));
 
 Cypress.Commands.add('completeAndSubmitYourContact', require('../../../commands/insurance/complete-and-submit-your-contact-form'));
 Cypress.Commands.add('completeAndSubmitNatureOfYourBusiness', require('../../../commands/insurance/complete-and-submit-nature-of-your-business'));

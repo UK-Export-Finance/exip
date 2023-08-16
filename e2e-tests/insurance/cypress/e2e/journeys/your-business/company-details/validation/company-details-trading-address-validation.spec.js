@@ -1,5 +1,5 @@
 import { companyDetails } from '../../../../../../../pages/your-business';
-import { submitButton, inlineErrorMessage } from '../../../../../../../pages/shared';
+import { submitButton } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import partials from '../../../../../../../partials';
 import { ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER } from '../../../../../../../constants';
@@ -8,11 +8,15 @@ const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
       TRADING_ADDRESS,
+      TRADING_NAME,
     },
   },
 } = FIELD_IDS.INSURANCE;
 
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
+
+const { taskList } = partials.insurancePartials;
+const task = taskList.prepareApplication.tasks.business;
 
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - trading address validation", () => {
   let referenceNumber;
@@ -24,7 +28,9 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
-      cy.navigateToUrl(url);
+      task.link().click();
+
+      cy.completeCompaniesHouseNumberForm({ companiesHouseNumber: COMPANIES_HOUSE_NUMBER });
 
       cy.assertUrl(url);
     });
@@ -35,8 +41,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     cy.navigateToUrl(url);
 
-    cy.keyboardInput(companyDetails.companiesHouseSearch(), COMPANIES_HOUSE_NUMBER);
-    companyDetails.tradingNameYesRadioInput().click();
+    companyDetails[TRADING_NAME].yesRadioInput().click();
 
     submitButton().click();
   });
@@ -46,17 +51,6 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   });
 
   it('should display validation errors if trading address question is not answered', () => {
-    partials.errorSummaryListItems().should('have.length', 1);
-
-    cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
-  });
-
-  it('should focus to the trading address section when clicking the error', () => {
-    partials.errorSummaryListItemLinks().first().click();
-    companyDetails.tradingAddressYesRadioInput().should('have.focus');
-  });
-
-  it('should display the validation error for trading address in radio error summary', () => {
-    cy.checkText(inlineErrorMessage(), `Error: ${COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY}`);
+    cy.submitAndAssertRadioErrors(companyDetails[TRADING_ADDRESS], 0, 1, COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
   });
 });

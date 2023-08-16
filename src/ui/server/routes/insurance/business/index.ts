@@ -28,7 +28,7 @@ import { post as postBrokerSaveAndBack } from '../../../controllers/insurance/bu
 import { get as getCheckYourAnswers, post as postCheckYourAnswers } from '../../../controllers/insurance/business/check-your-answers';
 import { post as postCheckYourAnswersSaveAndBack } from '../../../controllers/insurance/business/check-your-answers/save-and-back';
 
-import { get as getCompaniesHouseError } from '../../../controllers/insurance/business/company-details/companies-house-unavailable';
+import { get as getCompaniesHouseError } from '../../../controllers/insurance/business/companies-house-number/companies-house-unavailable';
 
 // @ts-ignore
 const insuranceBusinessRouter = express.Router();

@@ -11,7 +11,7 @@ import { post as postCompaniesHouseNumberSaveAndBack } from '../../../controller
 
 import { get as getCompanyDetails, post as postCompanyDetails } from '../../../controllers/insurance/business/company-details';
 
-import { get as getCompaniesHouseError } from '../../../controllers/insurance/business/company-details/companies-house-unavailable';
+import { get as getCompaniesHouseError } from '../../../controllers/insurance/business/companies-house-number/companies-house-unavailable';
 
 import { post as postCompanyDetailsSaveAndBack } from '../../../controllers/insurance/business/company-details/save-and-back';
 

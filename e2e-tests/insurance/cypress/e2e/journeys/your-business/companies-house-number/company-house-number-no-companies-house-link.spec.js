@@ -1,4 +1,4 @@
-import { companyDetails } from '../../../../../../pages/your-business';
+import { companiesHouseNumber } from '../../../../../../pages/your-business';
 import { insurance } from '../../../../../../pages';
 import {
   cannotApplyPage,
@@ -8,14 +8,14 @@ import { ROUTES } from '../../../../../../constants';
 
 const {
   APPLY_OFFLINE: { ACTIONS, REASON },
-  EXPORTER_BUSINESS: { COMPANY_DETAILS: { NO_COMPANIES_HOUSE_NUMBER } },
+  EXPORTER_BUSINESS: { COMPANIES_HOUSE_NUMBER: { NO_COMPANIES_HOUSE_NUMBER } },
 } = INSURANCE_PAGES;
 
 const {
   ROOT,
   APPLY_OFFLINE,
   EXPORTER_BUSINESS: {
-    COMPANY_DETAILS,
+    COMPANIES_HOUSE_NUMBER,
     NO_COMPANIES_HOUSE_NUMBER: NO_COMPANIES_HOUSE_NUMBER_ROUTE,
   },
 } = ROUTES.INSURANCE;
@@ -28,7 +28,7 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${COMPANIES_HOUSE_NUMBER}`;
 
       cy.navigateToUrl(url);
 
@@ -46,12 +46,12 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
     const expectedText = NO_COMPANIES_HOUSE_NUMBER;
 
     cy.checkLink(
-      companyDetails.companiesHouseNoNumber(),
+      companiesHouseNumber.doNotHaveACompaniesHouseNumber(),
       expectedHref,
       expectedText,
     );
 
-    companyDetails.companiesHouseNoNumber().click();
+    companiesHouseNumber.doNotHaveACompaniesHouseNumber().click();
   });
 
   after(() => {
@@ -82,6 +82,6 @@ context('Insurance - Your business - Company details page - As an Exporter it sh
   it('should take you back to company-details page when pressing the back button', () => {
     cy.clickBackLink();
 
-    cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`);
+    cy.assertUrl(url);
   });
 });

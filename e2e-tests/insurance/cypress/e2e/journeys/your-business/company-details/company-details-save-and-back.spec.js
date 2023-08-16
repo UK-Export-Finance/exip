@@ -10,9 +10,6 @@ const { ALL_SECTIONS } = ROUTES.INSURANCE;
 
 const {
   EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: {
-      INPUT,
-    },
     YOUR_COMPANY: {
       TRADING_NAME,
       TRADING_ADDRESS,
@@ -41,7 +38,9 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
-      cy.navigateToUrl(url);
+      task.link().click();
+
+      cy.completeCompaniesHouseNumberForm({ companiesHouseNumber: COMPANIES_HOUSE_NUMBER });
 
       cy.assertUrl(url);
     });
@@ -59,8 +58,8 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should not display validation errors and redirect to task list with status of "In progress"', () => {
       cy.navigateToUrl(url);
 
-      companyDetails.tradingNameYesRadioInput().click();
-      companyDetails.tradingAddressYesRadioInput().click();
+      companyDetails[TRADING_NAME].yesRadioInput().click();
+      companyDetails[TRADING_ADDRESS].yesRadioInput().click();
       saveAndBackButton().click();
 
       cy.assertUrl(`${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
@@ -70,29 +69,8 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      companyDetails.tradingNameYesRadioInput().should('be.checked');
-      companyDetails.tradingAddressYesRadioInput().should('be.checked');
-    });
-  });
-
-  describe(`when required fields are completed and ${INPUT} is entered incorrectly`, () => {
-    it('should not display validation errors and redirect to task list', () => {
-      cy.navigateToUrl(url);
-
-      cy.completeCompanyDetailsForm({ companiesHouseNumber: '**/*' });
-
-      saveAndBackButton().click();
-
-      cy.assertUrl(`${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-      cy.checkTaskStatus(task, IN_PROGRESS);
-    });
-
-    it('should render valid submitted values when going back to the page', () => {
-      cy.navigateToUrl(url);
-
-      companyDetails.companiesHouseSearch().should('be.empty');
-      companyDetails.tradingNameYesRadioInput().should('be.checked');
-      companyDetails.tradingAddressYesRadioInput().should('be.checked');
+      companyDetails[TRADING_NAME].yesRadioInput().should('be.checked');
+      companyDetails[TRADING_ADDRESS].yesRadioInput().should('be.checked');
     });
   });
 
@@ -113,10 +91,9 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      companyDetails.companiesHouseSearch().should('have.value', COMPANIES_HOUSE_NUMBER);
-      companyDetails.tradingNameYesRadioInput().should('be.checked');
-      companyDetails.tradingAddressYesRadioInput().should('be.checked');
-      companyDetails.phoneNumber().should('be.empty');
+      companyDetails[TRADING_NAME].yesRadioInput().should('be.checked');
+      companyDetails[TRADING_ADDRESS].yesRadioInput().should('be.checked');
+      companyDetails[PHONE_NUMBER].input().should('be.empty');
     });
   });
 
@@ -138,11 +115,10 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      companyDetails.companiesHouseSearch().should('have.value', COMPANIES_HOUSE_NUMBER);
-      companyDetails.tradingNameYesRadioInput().should('be.checked');
-      companyDetails.tradingAddressYesRadioInput().should('be.checked');
-      companyDetails.phoneNumber().should('have.value', VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
-      companyDetails.companyWebsite().should('be.empty');
+      companyDetails[TRADING_NAME].yesRadioInput().should('be.checked');
+      companyDetails[TRADING_ADDRESS].yesRadioInput().should('be.checked');
+      cy.checkValue(companyDetails[PHONE_NUMBER], VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
+      companyDetails[WEBSITE].input().should('be.empty');
     });
   });
 
@@ -164,11 +140,10 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      companyDetails.companiesHouseSearch().should('have.value', COMPANIES_HOUSE_NUMBER);
-      companyDetails.tradingNameYesRadioInput().should('be.checked');
-      companyDetails.tradingAddressYesRadioInput().should('be.checked');
-      companyDetails.phoneNumber().should('have.value', VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
-      companyDetails.companyWebsite().should('have.value', WEBSITE_EXAMPLES.VALID);
+      companyDetails[TRADING_NAME].yesRadioInput().should('be.checked');
+      companyDetails[TRADING_ADDRESS].yesRadioInput().should('be.checked');
+      cy.checkValue(companyDetails[PHONE_NUMBER], VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
+      cy.checkValue(companyDetails[WEBSITE], WEBSITE_EXAMPLES.VALID);
     });
   });
 });
