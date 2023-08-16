@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 import brokerEmail from './broker-email';
-import { FIELD_VALUES } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
 import { RequestBody } from '../../../../../../../types';
@@ -25,10 +24,10 @@ describe('controllers/insurance/business/broker/validation/rules/broker-email', 
     [EMAIL]: '',
   } as RequestBody;
 
-  describe(`when using broker is "${FIELD_VALUES.YES}"`, () => {
+  describe('when using broker is true', () => {
     describe('if email is empty', () => {
       it('should return the result of emailValidation', () => {
-        mockBody[USING_BROKER] = FIELD_VALUES.YES;
+        mockBody[USING_BROKER] = true;
 
         const response = brokerEmail(mockBody, mockErrors);
 
@@ -40,7 +39,7 @@ describe('controllers/insurance/business/broker/validation/rules/broker-email', 
 
     describe('if email is the incorrect format', () => {
       it('should return the result of emailValidation', () => {
-        mockBody[USING_BROKER] = FIELD_VALUES.YES;
+        mockBody[USING_BROKER] = true;
         mockBody[EMAIL] = 'aaa.com';
 
         const response = brokerEmail(mockBody, mockErrors);
@@ -53,7 +52,7 @@ describe('controllers/insurance/business/broker/validation/rules/broker-email', 
 
     describe('if email is valid', () => {
       it('should return the provided errors object', () => {
-        mockBody[USING_BROKER] = FIELD_VALUES.YES;
+        mockBody[USING_BROKER] = true;
         mockBody[EMAIL] = process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1;
 
         const response = brokerEmail(mockBody, mockErrors);
@@ -63,9 +62,9 @@ describe('controllers/insurance/business/broker/validation/rules/broker-email', 
     });
   });
 
-  describe(`if using broker is "${FIELD_VALUES.NO}"`, () => {
+  describe('if using broker is false', () => {
     it('should return the provided errors object"', () => {
-      mockBody[USING_BROKER] = FIELD_VALUES.NO;
+      mockBody[USING_BROKER] = false;
 
       const response = brokerEmail(mockBody, mockErrors);
 

@@ -2,7 +2,7 @@ import mapExporter, { mapSicCodes, mapBroker } from '.';
 import FIELD_IDS from '../../../constants/field-ids/insurance/business';
 import { XLSX } from '../../../content-strings';
 import { FIELDS } from '../../../content-strings/fields/insurance/your-business';
-import { ANSWERS, GBP_CURRENCY_CODE } from '../../../constants';
+import { GBP_CURRENCY_CODE } from '../../../constants';
 import xlsxRow from '../helpers/xlsx-row';
 import mapExporterAddress from './map-address';
 import formatDate from '../../../helpers/format-date';
@@ -45,7 +45,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter', () => {
   });
 
   describe('mapBroker', () => {
-    describe(`when ${USING_BROKER} is ${ANSWERS.YES}`, () => {
+    describe(`when ${USING_BROKER} is true`, () => {
       it('should return an array of mapped exporter fields', () => {
         const result = mapBroker(mockApplication);
 
@@ -67,13 +67,13 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter', () => {
       });
     });
 
-    describe(`when ${USING_BROKER} is ${ANSWERS.NO}`, () => {
+    describe(`when ${USING_BROKER} is false`, () => {
       it('should return an array of mapped exporter fields', () => {
         const mockApplicationNoBroker = {
           ...mockApplication,
           broker: {
             ...mockApplication.broker,
-            [USING_BROKER]: ANSWERS.NO,
+            [USING_BROKER]: false,
           },
         };
 

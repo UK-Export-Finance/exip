@@ -4,10 +4,11 @@ import { ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
-import { ApplicationCompany, SummaryListItemData } from '../../../../../types';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
+import mapYesNoField from '../../../mappings/map-yes-no-field';
 import mapSicCodes from '../map-sic-codes';
 import generateChangeLink from '../../../generate-change-link';
+import { ApplicationCompany, SummaryListItemData } from '../../../../../types';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
@@ -81,18 +82,24 @@ const generateYourCompanyFields = (answers: ApplicationCompany, referenceNumber:
       },
       formatDate(answers[FINANCIAL_YEAR_END_DATE], DATE_FORMAT),
     ),
-    fieldGroupItem({
-      field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_NAME),
-      data: answers,
-      href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${TRADING_NAME}-label`, referenceNumber, checkAndChange),
-      renderChangeLink: true,
-    }),
-    fieldGroupItem({
-      field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_ADDRESS),
-      data: answers,
-      href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${TRADING_ADDRESS}-label`, referenceNumber, checkAndChange),
-      renderChangeLink: true,
-    }),
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_NAME),
+        data: answers,
+        href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${TRADING_NAME}-label`, referenceNumber, checkAndChange),
+        renderChangeLink: true,
+      },
+      mapYesNoField(answers[TRADING_NAME]),
+    ),
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_ADDRESS),
+        data: answers,
+        href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${TRADING_ADDRESS}-label`, referenceNumber, checkAndChange),
+        renderChangeLink: true,
+      },
+      mapYesNoField(answers[TRADING_ADDRESS]),
+    ),
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, WEBSITE),
       data: answers,

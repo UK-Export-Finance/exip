@@ -23,9 +23,9 @@ const {
 
 /**
  * mapApplicationToFormFields
- * Generate an object with application data mappings for UI form fields.
+ * Generate an object with application data mappings for UI form fields and summary lists.
  * @param {Object} Application
- * @returns {Object} Mapped application for UI form fields.
+ * @returns {Object} Mapped application for UI consumption
  */
 const mapApplicationToFormFields = (application?: Application): object => {
   if (application && objectHasKeysAndValues(application)) {

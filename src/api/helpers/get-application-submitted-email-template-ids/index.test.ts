@@ -1,5 +1,5 @@
 import getApplicationSubmittedEmailTemplateIds from '.';
-import { ANSWERS, EMAIL_TEMPLATE_IDS } from '../../constants';
+import { EMAIL_TEMPLATE_IDS } from '../../constants';
 import mockApplication from '../../test-mocks/mock-application';
 import { Application } from '../../types';
 
@@ -25,13 +25,13 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
     expect(result).toEqual(expected);
   });
 
-  describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct and buyer has exporterHasTradedWithBuyer answer of `Yes`', () => {
+  describe('when the declaration has an answer of false for hasAntiBriberyCodeOfConduct and buyer has exporterHasTradedWithBuyer answer of `Yes`', () => {
     beforeEach(() => {
       application = {
         ...mockApplication,
         declaration: {
           ...mockApplication.declaration,
-          hasAntiBriberyCodeOfConduct: ANSWERS.NO,
+          hasAntiBriberyCodeOfConduct: false,
         },
       };
     });
@@ -48,18 +48,18 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
     });
   });
 
-  describe('when the declaration has an answer of `No` for hasAntiBriberyCodeOfConduct and does NOT have exporterHasTradedWithBuyer', () => {
+  describe('when the declaration has an answer of false for hasAntiBriberyCodeOfConduct and does NOT have exporterHasTradedWithBuyer', () => {
     beforeEach(() => {
       application = {
         ...mockApplication,
         declaration: {
           ...mockApplication.declaration,
           ...mockApplication.declaration,
-          hasAntiBriberyCodeOfConduct: ANSWERS.NO,
+          hasAntiBriberyCodeOfConduct: false,
         },
         buyer: {
           ...mockApplication.buyer,
-          exporterHasTradedWithBuyer: ANSWERS.NO,
+          exporterHasTradedWithBuyer: false,
         },
       };
     });
@@ -76,17 +76,17 @@ describe('helpers/get-application-submitted-email-template-ids', () => {
     });
   });
 
-  describe('when the declaration has an answer of `Yes` for hasAntiBriberyCodeOfConduct and does NOT have exporterHasTradedWithBuyer', () => {
+  describe('when the declaration has an answer of true for hasAntiBriberyCodeOfConduct and does NOT have exporterHasTradedWithBuyer', () => {
     beforeEach(async () => {
       application = {
         ...mockApplication,
         declaration: {
           ...mockApplication.declaration,
-          hasAntiBriberyCodeOfConduct: ANSWERS.YES,
+          hasAntiBriberyCodeOfConduct: true,
         },
         buyer: {
           ...mockApplication.buyer,
-          exporterHasTradedWithBuyer: ANSWERS.NO,
+          exporterHasTradedWithBuyer: false,
         },
       };
     });

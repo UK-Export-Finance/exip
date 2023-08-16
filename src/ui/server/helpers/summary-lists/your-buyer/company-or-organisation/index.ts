@@ -3,10 +3,11 @@ import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
-import { ApplicationBuyer, SummaryListItemData } from '../../../../../types';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
+import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
 import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
+import { ApplicationBuyer, SummaryListItemData } from '../../../../../types';
 
 const { YOUR_BUYER: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
@@ -117,18 +118,21 @@ const generateCompanyOrOrganisationFields = (answers: ApplicationBuyer, referenc
       },
       generateMultipleFieldHtml(contactDetailsObject),
     ),
-    fieldGroupItem({
-      field: getFieldById(FIELDS.COMPANY_OR_ORGANISATION, CAN_CONTACT_BUYER),
-      data: answers,
-      href: generateChangeLink(
-        COMPANY_OR_ORGANISATION_CHANGE,
-        COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE,
-        `#${CAN_CONTACT_BUYER}-label`,
-        referenceNumber,
-        checkAndChange,
-      ),
-      renderChangeLink: true,
-    }),
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS.COMPANY_OR_ORGANISATION, CAN_CONTACT_BUYER),
+        data: answers,
+        href: generateChangeLink(
+          COMPANY_OR_ORGANISATION_CHANGE,
+          COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE,
+          `#${CAN_CONTACT_BUYER}-label`,
+          referenceNumber,
+          checkAndChange,
+        ),
+        renderChangeLink: true,
+      },
+      mapYesNoField(answers[CAN_CONTACT_BUYER]),
+    ),
   ] as Array<SummaryListItemData>;
 
   return fields;

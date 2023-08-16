@@ -1,8 +1,7 @@
-import { FIELD_VALUES } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
-import { RequestBody } from '../../../../../../../types';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
+import { RequestBody } from '../../../../../../../types';
 
 const {
   BROKER: { ADDRESS_LINE_1: FIELD_ID, USING_BROKER },
@@ -20,8 +19,7 @@ const {
  * @returns {object} errors
  */
 const brokerAddressLineOne = (responseBody: RequestBody, errors: object) => {
-  // if USING_BROKER radio is yes then check validation
-  if (responseBody[USING_BROKER] === FIELD_VALUES.YES) {
+  if (responseBody[USING_BROKER] === true) {
     return emptyFieldValidation(responseBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
   }
 

@@ -4,6 +4,7 @@ import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/busine
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
@@ -123,7 +124,9 @@ const post = async (req: Request, res: Response) => {
 
     const { body } = req;
 
-    const payload = constructPayload(body, FIELD_IDS);
+    const sanitisedData = sanitiseData(body);
+
+    const payload = constructPayload(sanitisedData, FIELD_IDS);
 
     // run validation on inputs
     const validationErrors = generateValidationErrors(payload);

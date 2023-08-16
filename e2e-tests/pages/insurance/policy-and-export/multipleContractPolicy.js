@@ -1,30 +1,20 @@
-import { FIELD_IDS } from '../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
+import contractPolicy from './contractPolicy';
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
-        MULTIPLE: {
-          TOTAL_MONTHS_OF_COVER,
-          TOTAL_SALES_TO_BUYER,
-          MAXIMUM_BUYER_WILL_OWE,
-        },
+  POLICY_AND_EXPORTS: {
+    CONTRACT_POLICY: {
+      MULTIPLE: {
+        TOTAL_MONTHS_OF_COVER,
+        TOTAL_SALES_TO_BUYER,
+        MAXIMUM_BUYER_WILL_OWE,
       },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const multipleContractPolicy = {
-  [REQUESTED_START_DATE]: {
-    label: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-label"]`),
-    hint: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-hint"]`),
-    dayInput: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-day-input"]`),
-    monthInput: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-month-input"]`),
-    yearInput: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-year-input"]`),
-    errorMessage: () => cy.get(`[data-cy="${REQUESTED_START_DATE}-error-message"]`),
-  },
+  ...contractPolicy,
   [TOTAL_MONTHS_OF_COVER]: {
     label: () => cy.get(`[data-cy="${TOTAL_MONTHS_OF_COVER}-label"]`),
     hint: () => cy.get(`[data-cy="${TOTAL_MONTHS_OF_COVER}-hint"]`),
@@ -54,12 +44,6 @@ const multipleContractPolicy = {
     prefix: () => cy.get(`[data-cy="${MAXIMUM_BUYER_WILL_OWE}-prefix"]`),
     input: () => cy.get(`[data-cy="${MAXIMUM_BUYER_WILL_OWE}-input"]`),
     errorMessage: () => cy.get(`[data-cy="${MAXIMUM_BUYER_WILL_OWE}-error-message"]`),
-  },
-  [CREDIT_PERIOD_WITH_BUYER]: {
-    label: () => cy.get(`[data-cy="${CREDIT_PERIOD_WITH_BUYER}-label"]`),
-    hint: () => cy.get(`[data-cy="${CREDIT_PERIOD_WITH_BUYER}-hint"]`),
-    input: () => cy.get(`[data-cy="${CREDIT_PERIOD_WITH_BUYER}-input"]`),
-    errorMessage: () => cy.get(`[data-cy="${CREDIT_PERIOD_WITH_BUYER}-error-message"]`),
   },
 };
 

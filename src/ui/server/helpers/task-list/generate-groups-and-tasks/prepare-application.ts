@@ -16,14 +16,14 @@ const { PREPARE_APPLICATION } = TASKS.LIST;
  * @param {Number} Application reference number
  * @param {Array} Task list groups
  * @param {String} Application "Policy type"
- * @param {String} Application "Is using broker" flag
+ * @param {Boolean} Application "Is using broker" flag
  * @returns {Array} Prepare application tasks
  */
 const createPrepareApplicationTasks = (
   referenceNumber: number,
   otherGroups: TaskListData,
   policyType?: string,
-  isUsingBroker?: string,
+  isUsingBroker?: boolean,
 ): Array<TaskListDataTask> => {
   const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
 

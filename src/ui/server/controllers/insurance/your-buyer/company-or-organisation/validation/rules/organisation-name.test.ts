@@ -1,7 +1,7 @@
 import companyOrOrganisationNameRules from './organisation-name';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import generateValidationErrors from '../../../../../../helpers/validation';
+import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 
 const {
   COMPANY_OR_ORGANISATION: { NAME: FIELD_ID },
@@ -16,20 +16,20 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/validation/organisation', () => {
+  const mockBody = {
+    [FIELD_ID]: '',
+  };
+
   const mockErrors = {
     summary: [],
     errorList: {},
   };
 
-  describe('when organisation name field is not provided', () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {};
+  it('should return the result of emptyFieldValidation', () => {
+    const result = companyOrOrganisationNameRules(mockBody, mockErrors);
 
-      const result = companyOrOrganisationNameRules(mockSubmittedData, mockErrors);
+    const expected = emptyFieldValidation(mockBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
+    expect(result).toEqual(expected);
   });
 });
