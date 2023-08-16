@@ -5,8 +5,9 @@ import { ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
-import mockApplication, { mockBroker } from '../../../../test-mocks/mock-application';
+import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
+import mockApplication, { mockBroker } from '../../../../test-mocks/mock-application';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
@@ -27,12 +28,15 @@ describe('server/helpers/summary-lists/your-business/broker-fields', () => {
     const checkAndChange = false;
 
     const expectedBase = [
-      fieldGroupItem({
-        field: getFieldById(FIELDS.BROKER, USING_BROKER),
-        data: mockAnswers,
-        href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${USING_BROKER}-label`, referenceNumber, checkAndChange),
-        renderChangeLink: true,
-      }),
+      fieldGroupItem(
+        {
+          field: getFieldById(FIELDS.BROKER, USING_BROKER),
+          data: mockAnswers,
+          href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${USING_BROKER}-label`, referenceNumber, checkAndChange),
+          renderChangeLink: true,
+        },
+        mapYesNoField(mockAnswers[USING_BROKER]),
+      ),
       ...optionalBrokerFields(mockAnswers, referenceNumber, checkAndChange),
     ];
 

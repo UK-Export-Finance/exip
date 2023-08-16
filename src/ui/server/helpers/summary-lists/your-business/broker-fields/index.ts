@@ -4,8 +4,9 @@ import { ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
-import { ApplicationBroker, SummaryListItemData } from '../../../../../types';
+import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
+import { ApplicationBroker, SummaryListItemData } from '../../../../../types';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
@@ -77,12 +78,15 @@ const optionalBrokerFields = (answers: ApplicationBroker, referenceNumber: numbe
  */
 const generateBrokerFields = (answers: ApplicationBroker, referenceNumber: number, checkAndChange: boolean) => {
   const fields = [
-    fieldGroupItem({
-      field: getFieldById(FIELDS.BROKER, USING_BROKER),
-      data: answers,
-      href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${USING_BROKER}-label`, referenceNumber, checkAndChange),
-      renderChangeLink: true,
-    }),
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS.BROKER, USING_BROKER),
+        data: answers,
+        href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${USING_BROKER}-label`, referenceNumber, checkAndChange),
+        renderChangeLink: true,
+      },
+      mapYesNoField(answers[USING_BROKER]),
+    ),
     ...optionalBrokerFields(answers, referenceNumber, checkAndChange),
   ] as Array<SummaryListItemData>;
 

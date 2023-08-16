@@ -3,8 +3,9 @@ import { pageVariables, get, post, TEMPLATE, FIELD_IDS } from '.';
 import { TEMPLATES, ROUTES } from '../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
-import constructPayload from '../../../../helpers/construct-payload';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
+import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
@@ -147,7 +148,9 @@ describe('controllers/insurance/business/broker', () => {
       it('should render template with validation errors and submitted values', async () => {
         req.body = {};
 
-        const payload = constructPayload(req.body, FIELD_IDS);
+        const sanitisedData = sanitiseData(req.body);
+
+        const payload = constructPayload(sanitisedData, FIELD_IDS);
 
         await post(req, res);
 
@@ -185,7 +188,9 @@ describe('controllers/insurance/business/broker', () => {
 
         await post(req, res);
 
-        const payload = constructPayload(req.body, FIELD_IDS);
+        const sanitisedData = sanitiseData(req.body);
+
+        const payload = constructPayload(sanitisedData, FIELD_IDS);
 
         expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
 
