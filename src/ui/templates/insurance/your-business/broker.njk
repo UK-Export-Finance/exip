@@ -17,7 +17,7 @@
 {% set brokerHTML %}
   {% call govukFieldset({
       legend: {
-        html: fieldsetLegend.render({ id: FIELDS.HEADING.ID, legendText: FIELDS.HEADING.HEADING }),
+        html: fieldsetLegend.render({ id: FIELDS.LEGEND.ID, legendText: FIELDS.LEGEND.LEGEND }),
         isPageHeading: false
       }
   }) %}
@@ -95,7 +95,7 @@
 
   {% if validationErrors.summary %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
       errorList: validationErrors.summary,
       attributes: {
         'data-cy': 'error-summary'

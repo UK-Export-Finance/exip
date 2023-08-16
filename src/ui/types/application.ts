@@ -1,4 +1,5 @@
 import { InsuranceEligibilityCore } from './submitted-data';
+import { Connect } from './connect';
 import { Country } from './country';
 
 interface ApplicationOwner {
@@ -104,11 +105,10 @@ interface ApplicationBuyerCountry {
   isoCode?: string;
   name?: string;
 }
-interface ApplicationBuyer {
-  id: string;
+
+interface ApplicationBuyerCore {
   companyOrOrganisationName?: string;
   address?: string;
-  country?: ApplicationBuyerCountry;
   registrationNumber?: string;
   website?: string;
   contactFirstName?: string;
@@ -118,6 +118,19 @@ interface ApplicationBuyer {
   canContactBuyer?: boolean;
   exporterIsConnectedWithBuyer?: boolean;
   exporterHasTradedWithBuyer?: boolean;
+}
+
+interface ApplicationBuyer extends ApplicationBuyerCore {
+  id: string;
+  country?: ApplicationBuyerCountry;
+}
+
+interface ApplicationBuyerUiInput extends ApplicationBuyerCore {
+  country?: string;
+}
+
+interface ApplicationBuyerApiInput extends ApplicationBuyerCore {
+  country?: Connect;
 }
 
 interface ApplicationSectionReview {
@@ -174,6 +187,8 @@ export {
   ApplicationBusinessContactDetail,
   ApplicationBroker,
   ApplicationBuyer,
+  ApplicationBuyerUiInput,
+  ApplicationBuyerApiInput,
   ApplicationSectionReview,
   ApplicationDeclaration,
   ApplicationVersion,

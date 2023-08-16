@@ -118,7 +118,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
       },
     },
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_UK]: {
-      HEADING: 'How many employees do you have?',
+      LEGEND: 'How many employees do you have?',
       LABEL: 'In the UK',
       SUMMARY: {
         TITLE: 'UK employees',
@@ -137,7 +137,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
       HINT: 'This information comes from Companies House',
     },
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.ESTIMATED_ANNUAL_TURNOVER]: {
-      HEADING: 'Estimated annual turnover for this current financial year',
+      LEGEND: 'Estimated annual turnover for this current financial year',
       LABEL: 'Estimate this to the nearest pound. Do not use decimal points.',
       PREFIX: '£',
       SUMMARY: {
@@ -153,8 +153,8 @@ export const EXPORTER_BUSINESS_FIELDS = {
     },
   },
   BROKER: {
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.HEADING]: {
-      HEADING: 'Enter contact details for your broker',
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.LEGEND]: {
+      LEGEND: 'Enter contact details for your broker',
     },
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.USING_BROKER]: {
       SUMMARY: {

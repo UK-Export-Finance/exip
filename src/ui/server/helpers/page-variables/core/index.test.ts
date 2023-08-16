@@ -2,6 +2,7 @@ import corePageVariables from '.';
 import {
   BUTTONS,
   COOKIES_CONSENT,
+  ERROR_MESSAGES,
   HEADER,
   QUOTE_FOOTER,
   INSURANCE_FOOTER,
@@ -10,6 +11,8 @@ import {
   PRODUCT as PRODUCT_CONTENT_STRING,
 } from '../../../content-strings';
 import { ROUTES } from '../../../constants';
+
+const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
 
 const { START: quoteStart } = ROUTES.QUOTE;
 const { START: insuranceStart } = ROUTES.INSURANCE;
@@ -37,6 +40,7 @@ describe('server/helpers/page-variables/core', () => {
           ...mock.PAGE_CONTENT_STRINGS,
           BUTTONS,
           COOKIES_CONSENT,
+          ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
           HEADER,
           FOOTER: INSURANCE_FOOTER,
           LINKS,
@@ -66,6 +70,7 @@ describe('server/helpers/page-variables/core', () => {
           ...mock.PAGE_CONTENT_STRINGS,
           BUTTONS,
           COOKIES_CONSENT,
+          ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
           HEADER,
           FOOTER: INSURANCE_FOOTER,
           LINKS,
@@ -95,6 +100,7 @@ describe('server/helpers/page-variables/core', () => {
           ...mock.PAGE_CONTENT_STRINGS,
           BUTTONS,
           COOKIES_CONSENT,
+          ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
           HEADER,
           FOOTER: QUOTE_FOOTER,
           LINKS,
@@ -125,6 +131,7 @@ describe('server/helpers/page-variables/core', () => {
           ...mock.PAGE_CONTENT_STRINGS,
           BUTTONS,
           COOKIES_CONSENT,
+          ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
           HEADER,
           FOOTER: QUOTE_FOOTER,
           LINKS,

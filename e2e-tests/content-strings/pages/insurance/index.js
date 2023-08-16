@@ -10,7 +10,7 @@ import * as DECLARATIONS from './declarations';
 import * as CHECK_YOUR_ANSWERS from './check-your-answers';
 import COMPLETE_OTHER_SECTIONS from './complete-other-sections';
 import * as APPLICATION_SUBMITTED from './application-submitted';
-import formatCurrency from '../../../cypress/e2e/helpers/format-currency';
+import formatCurrency from '../../../helpers/format-currency';
 
 export const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP);
 

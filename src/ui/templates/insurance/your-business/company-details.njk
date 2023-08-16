@@ -26,7 +26,7 @@
 
   {% if validationErrors.summary %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
       errorList: validationErrors.summary,
       attributes: {
         'data-cy': 'error-summary'
@@ -88,7 +88,7 @@
           }) }}
         </div>
 
-        <p class="govuk-!-margin-bottom-6"><a class="govuk-link" href="{{POST_ROUTES.NO_COMPANIES_HOUSE_NUMBER}}" data-cy="do-not-have-number">{{CONTENT_STRINGS.NO_COMPANY_HOUSE_NUMER}}</a></p>
+        <p class="govuk-!-margin-bottom-6"><a class="govuk-link" href="{{POST_ROUTES.NO_COMPANIES_HOUSE_NUMBER}}" data-cy="do-not-have-number">{{CONTENT_STRINGS.NO_COMPANIES_HOUSE_NUMBER}}</a></p>
       </div>
 
       {% if SUMMARY_LIST %}
