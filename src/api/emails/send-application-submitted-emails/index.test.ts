@@ -4,7 +4,6 @@ import sendApplicationSubmittedEmails from '.';
 import baseConfig from '../../keystone';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import sendEmail from '../index';
-import { ANSWERS } from '../../constants';
 import getFullNameString from '../../helpers/get-full-name-string';
 import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-application-submitted-email-template-ids';
 import formatDate from '../../helpers/format-date';
@@ -153,12 +152,12 @@ describe('emails/send-email-application-submitted', () => {
       beforeEach(() => {
         application.declaration = {
           ...application.declaration,
-          hasAntiBriberyCodeOfConduct: ANSWERS.NO,
+          hasAntiBriberyCodeOfConduct: false,
         };
 
         application.buyer = {
           ...application.buyer,
-          exporterHasTradedWithBuyer: ANSWERS.YES,
+          exporterHasTradedWithBuyer: true,
         };
       });
 
@@ -177,12 +176,12 @@ describe('emails/send-email-application-submitted', () => {
       beforeEach(() => {
         application.declaration = {
           ...application.declaration,
-          hasAntiBriberyCodeOfConduct: ANSWERS.NO,
+          hasAntiBriberyCodeOfConduct: false,
         };
 
         application.buyer = {
           ...application.buyer,
-          exporterHasTradedWithBuyer: ANSWERS.NO,
+          exporterHasTradedWithBuyer: false,
         };
       });
 
@@ -197,12 +196,12 @@ describe('emails/send-email-application-submitted', () => {
       beforeEach(async () => {
         application.declaration = {
           ...application.declaration,
-          hasAntiBriberyCodeOfConduct: ANSWERS.YES,
+          hasAntiBriberyCodeOfConduct: true,
         };
 
         application.buyer = {
           ...application.buyer,
-          exporterHasTradedWithBuyer: ANSWERS.NO,
+          exporterHasTradedWithBuyer: false,
         };
       });
 

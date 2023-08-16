@@ -1,11 +1,12 @@
 import { PAGES, ERROR_MESSAGES } from '../../../../../content-strings';
 import { DECLARATIONS_FIELDS } from '../../../../../content-strings/fields/insurance/declarations';
-import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../../../constants';
+import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import singleInputPageVariables from '../../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
+import { sanitiseValue } from '../../../../../helpers/sanitise-data';
 import save from '../../save-data';
 import { Request, Response } from '../../../../../../types';
 
@@ -101,15 +102,15 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const answer = payload[FIELD_ID];
+    const answer = sanitiseValue({ key: FIELD_ID, value: payload[FIELD_ID] });
 
-    if (answer === FIELD_VALUES.YES) {
+    // answer is true
+    if (answer) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`);
     }
 
-    if (answer === FIELD_VALUES.NO) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`);
-    }
+    // answer is false
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`);
   } catch (err) {
     console.error('Error updating application - declarations - anti-bribery - exporting with code of conduct %O', err);
 

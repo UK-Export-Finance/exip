@@ -1,7 +1,7 @@
 import { FIELD_ID, pageVariables, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../../content-strings';
 import { DECLARATIONS_FIELDS } from '../../../../../content-strings/fields/insurance/declarations';
-import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../../../constants';
+import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import singleInputPageVariables from '../../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../../helpers/construct-payload';
@@ -98,7 +98,7 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
 
   describe('post', () => {
     const validBody = {
-      [FIELD_ID]: FIELD_VALUES.YES,
+      [FIELD_ID]: 'true',
     };
 
     describe('when there are no validation errors', () => {
@@ -115,10 +115,10 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
         expect(save.declaration).toHaveBeenCalledWith(mockApplication, payload);
       });
 
-      describe(`when the answer is ${FIELD_VALUES.YES}`, () => {
+      describe('when the answer is true', () => {
         it(`should redirect to ${EXPORTING_WITH_CODE_OF_CONDUCT}`, async () => {
           req.body = {
-            [FIELD_ID]: FIELD_VALUES.YES,
+            [FIELD_ID]: 'true',
           };
 
           await post(req, res);
@@ -129,10 +129,10 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
         });
       });
 
-      describe(`when the answer is ${FIELD_VALUES.NO}`, () => {
+      describe('when the answer is false', () => {
         it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, async () => {
           req.body = {
-            [FIELD_ID]: FIELD_VALUES.NO,
+            [FIELD_ID]: 'false',
           };
 
           await post(req, res);

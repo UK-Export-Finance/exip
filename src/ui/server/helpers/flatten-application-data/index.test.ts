@@ -1,5 +1,5 @@
 import flattenApplicationData from '.';
-import getYesAndTrueAnswerProperties from '../get-true-properties';
+import getTrueAndFalseAnswers from '../get-true-and-false-answers';
 import { mockApplication } from '../../test-mocks';
 
 describe('server/helpers/flatten-application-data', () => {
@@ -24,8 +24,8 @@ describe('server/helpers/flatten-application-data', () => {
       ...business,
       ...broker,
       ...buyer,
-      ...getYesAndTrueAnswerProperties(sectionReview),
-      ...getYesAndTrueAnswerProperties(declaration),
+      ...getTrueAndFalseAnswers(sectionReview),
+      ...getTrueAndFalseAnswers(declaration),
     };
 
     expect(result).toEqual(expected);

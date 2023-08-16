@@ -1,12 +1,13 @@
 import { generateBrokerFields, optionalBrokerFields } from '.';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { ROUTES, FIELD_VALUES } from '../../../../constants';
+import { ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
-import mockApplication, { mockBroker } from '../../../../test-mocks/mock-application';
+import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
+import mockApplication, { mockBroker } from '../../../../test-mocks/mock-application';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
@@ -27,17 +28,20 @@ describe('server/helpers/summary-lists/your-business/broker-fields', () => {
     const checkAndChange = false;
 
     const expectedBase = [
-      fieldGroupItem({
-        field: getFieldById(FIELDS.BROKER, USING_BROKER),
-        data: mockAnswers,
-        href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${USING_BROKER}-label`, referenceNumber, checkAndChange),
-        renderChangeLink: true,
-      }),
+      fieldGroupItem(
+        {
+          field: getFieldById(FIELDS.BROKER, USING_BROKER),
+          data: mockAnswers,
+          href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${USING_BROKER}-label`, referenceNumber, checkAndChange),
+          renderChangeLink: true,
+        },
+        mapYesNoField(mockAnswers[USING_BROKER]),
+      ),
       ...optionalBrokerFields(mockAnswers, referenceNumber, checkAndChange),
     ];
 
     it('should return fields and values from the submitted data/answers', () => {
-      mockAnswers[USING_BROKER] = FIELD_VALUES.YES;
+      mockAnswers[USING_BROKER] = true;
 
       const result = generateBrokerFields(mockAnswers, referenceNumber, checkAndChange);
 
@@ -84,7 +88,7 @@ describe('server/helpers/summary-lists/your-business/broker-fields', () => {
       ];
 
       it('should return array with optional fields', () => {
-        mockAnswers[USING_BROKER] = FIELD_VALUES.YES;
+        mockAnswers[USING_BROKER] = true;
 
         const result = optionalBrokerFields(mockAnswers, referenceNumber, checkAndChange);
 
@@ -92,9 +96,9 @@ describe('server/helpers/summary-lists/your-business/broker-fields', () => {
       });
     });
 
-    describe(`${USING_BROKER} is no`, () => {
+    describe(`${USING_BROKER} is false`, () => {
       it('should return array with optional fields', () => {
-        mockAnswers[USING_BROKER] = FIELD_VALUES.NO;
+        mockAnswers[USING_BROKER] = false;
 
         const result = optionalBrokerFields(mockAnswers, referenceNumber, checkAndChange);
 

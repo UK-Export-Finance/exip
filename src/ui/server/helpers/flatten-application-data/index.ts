@@ -1,4 +1,4 @@
-import getYesAndTrueAnswerProperties from '../get-true-properties';
+import getTrueAndFalseAnswers from '../get-true-and-false-answers';
 import { Application, ApplicationFlat } from '../../../types';
 
 /**
@@ -26,8 +26,8 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
     ...business,
     ...broker,
     ...buyer,
-    ...getYesAndTrueAnswerProperties(sectionReview),
-    ...getYesAndTrueAnswerProperties(declaration),
+    ...getTrueAndFalseAnswers(sectionReview),
+    ...getTrueAndFalseAnswers(declaration),
   };
 
   return flattened;
