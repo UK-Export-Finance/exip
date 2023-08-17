@@ -1,8 +1,13 @@
-import { APPLICATION, FIELD_IDS, FIELD_VALUES } from '../../../../constants';
+import { APPLICATION, ELIGIBILITY, FIELD_IDS, FIELD_VALUES } from '../../../../constants';
 import { LINKS } from '../../../links';
 
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 const { CONTRACT_POLICY, ABOUT_GOODS_OR_SERVICES } = POLICY_AND_EXPORTS;
+
+const { MAX_COVER_PERIOD_YEARS } = ELIGIBILITY;
+const {
+  POLICY_AND_EXPORT: { TOTAL_MONTHS_OF_COVER },
+} = APPLICATION;
 
 export const POLICY_AND_EXPORTS_FIELDS = {
   [POLICY_AND_EXPORTS.POLICY_TYPE]: {
@@ -14,7 +19,7 @@ export const POLICY_AND_EXPORTS_FIELDS = {
         TEXT: 'Single contract policy',
         HINT_LIST: [
           'Covers a single contract with a buyer, for one or more shipments',
-          'Cover for up to 2 years',
+          `Cover for up to ${MAX_COVER_PERIOD_YEARS} years`,
           'Best for a one off- project, when you know the exact value of your export contract now',
           'You pay for the insurance before the policy starts',
         ],
@@ -24,7 +29,7 @@ export const POLICY_AND_EXPORTS_FIELDS = {
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         TEXT: 'Multiple contract policy',
         HINT_LIST: [
-          'Covers multiple contracts with the same buyer, usually for 12 months',
+          `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
           "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
           'You only pay for your insurance each time you declare a new contract or sale - no need to pay before the policy starts',
         ],
@@ -90,7 +95,7 @@ export const POLICY_AND_EXPORTS_FIELDS = {
     MULTIPLE: {
       [CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
         LABEL: 'How many months do you want to be insured for?',
-        HINT: `The maximum is ${APPLICATION.POLICY_AND_EXPORT.TOTAL_MONTHS_OF_COVER} months.`,
+        HINT: `The maximum is ${TOTAL_MONTHS_OF_COVER} months.`,
         OPTIONS: FIELD_VALUES.TOTAL_MONTHS_OF_COVER,
         SUMMARY: {
           TITLE: 'How many months you want to be insured for',
