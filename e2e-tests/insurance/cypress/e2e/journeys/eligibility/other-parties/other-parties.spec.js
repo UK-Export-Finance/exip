@@ -112,7 +112,7 @@ context('Insurance - Other parties page - I want to check if I can use online se
       it('should render validation errors', () => {
         submitButton().click();
 
-        partials.errorSummaryListItems().should('exist');
+        cy.checkErrorSummaryListHeading();
         partials.errorSummaryListItems().should('have.length', 1);
 
         const expectedMessage = String(ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_IDS.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED].IS_EMPTY);

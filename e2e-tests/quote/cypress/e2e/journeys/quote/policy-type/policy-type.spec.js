@@ -15,7 +15,7 @@ import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.QUOTE.POLICY_TYPE;
 
-const { POLICY_TYPE } = FIELD_IDS;
+const { POLICY_TYPE: FIELD_ID } = FIELD_IDS;
 
 const {
   QUOTE: {
@@ -66,19 +66,32 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
       cy.navigateToUrl(url);
     });
 
-    it('renders `policy type` radio inputs with labels and hints', () => {
-      const fieldId = POLICY_TYPE;
-      const field = policyTypePage[fieldId];
+    it('should render `single policy type` radio input with a label and hint', () => {
+      const field = policyTypePage[FIELD_ID].single;
 
-      field.single.input().should('exist');
-      cy.checkText(field.single.label(), FIELDS[fieldId].OPTIONS.SINGLE.TEXT);
+      field.input().should('exist');
 
-      cy.checkText(field.single.hint(), FIELDS[fieldId].OPTIONS.SINGLE.HINT);
+      cy.checkText(field.label(), FIELDS[FIELD_ID].OPTIONS.SINGLE.TEXT);
 
-      field.multiple.input().should('exist');
-      cy.checkText(field.multiple.label(), FIELDS[fieldId].OPTIONS.MULTIPLE.TEXT);
+      const HINT_STRINGS = FIELDS[FIELD_ID].OPTIONS.SINGLE.HINT;
 
-      cy.checkText(field.multiple.hint(), FIELDS[fieldId].OPTIONS.MULTIPLE.HINT);
+      cy.checkText(field.hintListItem(1), HINT_STRINGS[0]);
+      cy.checkText(field.hintListItem(2), HINT_STRINGS[1]);
+      cy.checkText(field.hintListItem(3), HINT_STRINGS[2]);
+      cy.checkText(field.hintListItem(4), HINT_STRINGS[3]);
+    });
+
+    it('should render `multiple policy type` radio input with a label and hint', () => {
+      const field = policyTypePage[FIELD_ID].multiple;
+
+      field.input().should('exist');
+      cy.checkText(field.label(), FIELDS[FIELD_ID].OPTIONS.MULTIPLE.TEXT);
+
+      const HINT_STRINGS = FIELDS[FIELD_ID].OPTIONS.MULTIPLE.HINT;
+
+      cy.checkText(field.hintListItem(1), HINT_STRINGS[0]);
+      cy.checkText(field.hintListItem(2), HINT_STRINGS[1]);
+      cy.checkText(field.hintListItem(3), HINT_STRINGS[2]);
     });
 
     it('should not render policy length inputs by default', () => {
@@ -88,7 +101,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
 
     describe('when clicking `single` policy type', () => {
       it('should reveal policy length input with label and hint', () => {
-        const singlePolicyType = policyTypePage[POLICY_TYPE].single;
+        const singlePolicyType = policyTypePage[FIELD_ID].single;
         singlePolicyType.label().click();
 
         const singlePolicyLengthId = FIELD_IDS.SINGLE_POLICY_LENGTH;
@@ -117,35 +130,9 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
       });
     });
 
-    describe('when clicking `multiple` policy type', () => {
-      it('should reveal inset text and link', () => {
-        const multiPolicyType = policyTypePage[POLICY_TYPE].multiple;
-        multiPolicyType.label().click();
-
-        const field = FIELDS[POLICY_TYPE];
-
-        const [insetText] = field.OPTIONS.MULTIPLE.INSET;
-
-        multiPolicyType.inset.text().invoke('text').then((text) => {
-          expect(text.trim()).includes(insetText[0].text);
-          expect(text.trim()).includes(insetText[1].text);
-          expect(text.trim()).includes(insetText[2].text);
-        });
-
-        const expectedHref = LINKS.EXTERNAL.NBI_FORM;
-        const expectedText = insetText[1].text;
-
-        cy.checkLink(
-          multiPolicyType.inset.link(),
-          expectedHref,
-          expectedText,
-        );
-      });
-    });
-
     describe('when form is valid', () => {
       it(`should redirect to ${TELL_US_ABOUT_YOUR_POLICY}`, () => {
-        policyTypePage[POLICY_TYPE].single.input().click();
+        policyTypePage[FIELD_ID].single.input().click();
         cy.keyboardInput(policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input(), '8');
 
         submitButton().click();

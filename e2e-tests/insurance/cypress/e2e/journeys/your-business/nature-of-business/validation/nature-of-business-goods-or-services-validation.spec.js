@@ -61,6 +61,8 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].IS_EMPTY;
 
     it('should display validation errors', () => {
+      cy.checkErrorSummaryListHeading();
+
       partials.errorSummaryListItems().should('have.length', 4);
       cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
     });
@@ -84,7 +86,9 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].ABOVE_MAXIMUM;
 
     it(`should display validation errors if ${GOODS_OR_SERVICES} left empty`, () => {
+      cy.checkErrorSummaryListHeading();
       partials.errorSummaryListItems().should('have.length', 4);
+
       cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
     });
 
@@ -99,6 +103,8 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
       cy.keyboardInput(field.input(), 'test');
       submitButton().click();
+
+      cy.checkErrorSummaryListHeading();
       partials.errorSummaryListItems().should('have.length', 3);
     });
   });

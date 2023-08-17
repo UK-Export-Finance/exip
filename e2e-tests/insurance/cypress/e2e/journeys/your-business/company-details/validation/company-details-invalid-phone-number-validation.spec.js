@@ -64,6 +64,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
+        cy.checkErrorSummaryListHeading();
+
         cy.submitAndAssertFieldErrors(
           companyDetails[PHONE_NUMBER],
           INVALID_PHONE_NUMBERS.LANDLINE.LONG,
@@ -82,6 +84,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
+        cy.checkErrorSummaryListHeading();
+
         cy.submitAndAssertFieldErrors(
           companyDetails[PHONE_NUMBER],
           INVALID_PHONE_NUMBERS.INTERNATIONAL,
@@ -100,6 +104,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
+        cy.checkErrorSummaryListHeading();
+
         cy.submitAndAssertFieldErrors(
           companyDetails[PHONE_NUMBER],
           INVALID_PHONE_NUMBERS.INTERNATIONAL_PLUS,
@@ -118,6 +124,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
+        cy.checkErrorSummaryListHeading();
+
         cy.submitAndAssertFieldErrors(
           companyDetails[PHONE_NUMBER],
           INVALID_PHONE_NUMBERS.MOBILE.LONG,
@@ -136,6 +144,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
+        cy.checkErrorSummaryListHeading();
+
         cy.submitAndAssertFieldErrors(
           companyDetails[PHONE_NUMBER],
           INVALID_PHONE_NUMBERS.LANDLINE.SHORT,
@@ -154,6 +164,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
+        cy.checkErrorSummaryListHeading();
+
         cy.submitAndAssertFieldErrors(
           companyDetails[PHONE_NUMBER],
           INVALID_PHONE_NUMBERS.LANDLINE.SPECIAL_CHAR,
@@ -172,6 +184,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
+        cy.checkErrorSummaryListHeading();
+
         cy.submitAndAssertFieldErrors(
           companyDetails[PHONE_NUMBER],
           INVALID_PHONE_NUMBERS.LANDLINE.LETTER,
@@ -190,6 +204,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
+        cy.checkErrorSummaryListHeading();
+
         cy.submitAndAssertFieldErrors(
           companyDetails[PHONE_NUMBER],
           INVALID_PHONE_NUMBERS.MOBILE.SPECIAL_CHAR,
@@ -208,6 +224,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
+        cy.checkErrorSummaryListHeading();
+
         cy.submitAndAssertFieldErrors(
           companyDetails[PHONE_NUMBER],
           INVALID_PHONE_NUMBERS.TOO_SHORT,
@@ -226,6 +244,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
+        cy.checkErrorSummaryListHeading();
+
         cy.submitAndAssertFieldErrors(
           companyDetails[PHONE_NUMBER],
           INVALID_PHONE_NUMBERS.ABOVE_MAX_CHARS,

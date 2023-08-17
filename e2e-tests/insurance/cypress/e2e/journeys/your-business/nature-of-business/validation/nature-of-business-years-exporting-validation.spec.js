@@ -60,7 +60,9 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       });
 
       it(`should display validation errors if ${YEARS_EXPORTING} left empty`, () => {
+        cy.checkErrorSummaryListHeading();
         partials.errorSummaryListItems().should('have.length', 4);
+
         cy.checkText(partials.errorSummaryListItems().eq(1), errorMessage);
       });
 
@@ -86,7 +88,9 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       });
 
       it(`should display validation errors for ${YEARS_EXPORTING}`, () => {
+        cy.checkErrorSummaryListHeading();
         partials.errorSummaryListItems().should('have.length', 4);
+
         cy.checkText(partials.errorSummaryListItems().eq(1), errorMessage);
       });
 
@@ -107,7 +111,9 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       });
 
       it(`should display validation errors for ${YEARS_EXPORTING}`, () => {
+        cy.checkErrorSummaryListHeading();
         partials.errorSummaryListItems().should('have.length', 4);
+
         cy.checkText(partials.errorSummaryListItems().eq(1), errorMessage);
       });
 
@@ -123,6 +129,8 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
       cy.keyboardInput(field.input(), '5');
       submitButton().click();
+
+      cy.checkErrorSummaryListHeading();
       partials.errorSummaryListItems().should('have.length', 3);
     });
   });
@@ -133,6 +141,8 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
       cy.keyboardInput(field.input(), '5,00');
       submitButton().click();
+
+      cy.checkErrorSummaryListHeading();
       partials.errorSummaryListItems().should('have.length', 3);
     });
   });

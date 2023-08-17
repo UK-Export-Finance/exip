@@ -72,6 +72,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
     submitButton().click();
 
+    cy.checkErrorSummaryListHeading();
     partials.errorSummaryListItems().should('have.length', 6);
   });
 
@@ -80,6 +81,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
     submitButton().click();
 
+    cy.checkErrorSummaryListHeading();
     partials.errorSummaryListItems().should('have.length', 6);
   });
 });

@@ -78,7 +78,7 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
       });
 
       it('should render validation errors', () => {
-        partials.errorSummaryListItems().should('exist');
+        cy.checkErrorSummaryListHeading();
         partials.errorSummaryListItems().should('have.length', 1);
 
         const expectedMessage = String(ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY);

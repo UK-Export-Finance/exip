@@ -46,7 +46,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
     });
 
     it('should render validation errors for all required fields', () => {
-      partials.errorSummaryListItems().should('exist');
+      cy.checkErrorSummaryListHeading();
 
       const TOTAL_REQUIRED_FIELDS = 4;
       partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);

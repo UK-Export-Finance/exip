@@ -59,7 +59,8 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
       it('should render validation errors', () => {
         submitButton().click();
 
-        partials.errorSummaryListItems().should('exist');
+        cy.checkErrorSummaryListHeading();
+
         partials.errorSummaryListItems().should('have.length', 1);
 
         const expectedMessage = String(ERROR_MESSAGES.ELIGIBILITY[VALID_BUYER_BODY]);

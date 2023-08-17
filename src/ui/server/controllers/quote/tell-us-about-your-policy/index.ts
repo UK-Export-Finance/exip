@@ -1,4 +1,4 @@
-import { BUTTONS, COOKIES_CONSENT, FIELDS, QUOTE_FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT, HEADER } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, ERROR_MESSAGES, FIELDS, QUOTE_FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT, HEADER } from '../../../content-strings';
 import { FIELD_IDS as ALL_FIELD_IDS, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { objectHasProperty } from '../../../helpers/object';
@@ -20,6 +20,8 @@ const {
   POLICY_TYPE,
 } = ALL_FIELD_IDS;
 
+const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
+
 const { START: quoteStart } = ROUTES.QUOTE;
 
 export const FIELD_IDS = [AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER];
@@ -29,6 +31,7 @@ const generatePageVariables = (policyType: string, ORIGINAL_URL: string) => {
     CONTENT_STRINGS: {
       BUTTONS,
       COOKIES_CONSENT,
+      ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
       LINKS,
       PHASE_BANNER,
       HEADER,

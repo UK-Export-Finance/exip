@@ -179,7 +179,7 @@ context('Cookies page - Insurance', () => {
         });
 
         it('should render validation errors', () => {
-          partials.errorSummaryListItems().should('exist');
+          cy.checkErrorSummaryListHeading();
           partials.errorSummaryListItems().should('have.length', 1);
 
           const expectedMessage = String(ERROR_MESSAGES[FIELD_IDS.OPTIONAL_COOKIES]);

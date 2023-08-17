@@ -45,6 +45,7 @@ Cypress.Commands.add('accountAddAndGetOTP', require('./insurance/account/add-and
 
 Cypress.Commands.add('assertCustomerServiceContactDetailsContent', require('./assert-customer-service-contact-details-content'));
 
+Cypress.Commands.add('checkErrorSummaryListHeading', require('./check-error-summary-list-heading'));
 Cypress.Commands.add('checkText', require('./check-text'));
 Cypress.Commands.add('checkValue', require('./check-value'));
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));
