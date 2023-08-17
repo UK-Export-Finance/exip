@@ -105,6 +105,21 @@ describe('controllers/insurance/business/companies-details', () => {
       });
     });
 
+    describe('when there is no company number', () => {
+      beforeEach(() => {
+        // @ts-ignore
+        res.locals.application.company.companyNumber = '';
+      });
+
+      it(`should redirect to ${COMPANIES_HOUSE_NUMBER_ROOT}`, () => {
+        get(req, res);
+
+        const expectedUrl = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANIES_HOUSE_NUMBER_ROOT}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expectedUrl);
+      });
+    });
+
     describe('when there is no application', () => {
       beforeEach(() => {
         res.locals = { csrfToken: '1234' };

@@ -5,14 +5,13 @@ import {
   COMPANY_EXAMPLE,
   FIELD_VALUES,
 } from '../../../../../../constants';
-import { companyDetails } from '../../../../../../pages/your-business';
+import { companyDetails, companiesHouseNumber } from '../../../../../../pages/your-business';
 import { submitButton, summaryList } from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   COMPANY_HOUSE: {
-    INPUT,
     COMPANY_NAME,
     COMPANY_NUMBER,
     COMPANY_INCORPORATED,
@@ -30,6 +29,7 @@ const {
 const {
   ROOT,
   EXPORTER_BUSINESS: {
+    COMPANIES_HOUSE_NUMBER_CHANGE,
     COMPANY_DETAILS_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
@@ -79,7 +79,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_DETAILS_CHANGE, INPUT);
+        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANIES_HOUSE_NUMBER_CHANGE, 'heading', null, true);
       });
     });
 
@@ -91,13 +91,13 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(companyDetails.companiesHouseSearch(), newAnswer);
+        cy.keyboardInput(companiesHouseNumber.input(), newAnswer);
 
         submitButton().click();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, 'heading', null, true);
       });
 
       it('should render the new answer', () => {
@@ -135,13 +135,13 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        companyDetails.tradingNameNoRadioInput().click();
+        companyDetails[TRADING_NAME].noRadioInput().click();
 
         submitButton().click();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
       });
 
       it('should render the new answer', () => {
@@ -171,13 +171,13 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        companyDetails.tradingAddressNoRadioInput().click();
+        companyDetails[TRADING_ADDRESS].noRadioInput().click();
 
         submitButton().click();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
       });
 
       it('should render the new answer', () => {
@@ -209,13 +209,13 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(companyDetails.phoneNumber(), newAnswer);
+        cy.keyboardInput(companyDetails[PHONE_NUMBER].input(), newAnswer);
 
         submitButton().click();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
       });
 
       it('should render the new answer', () => {
@@ -245,13 +245,13 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(companyDetails.companyWebsite(), newAnswer);
+        cy.keyboardInput(companyDetails[WEBSITE].input(), newAnswer);
 
         submitButton().click();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
       });
 
       it('should render the new answer', () => {

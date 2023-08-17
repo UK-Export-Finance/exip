@@ -6,7 +6,7 @@ import {
   WEBSITE_EXAMPLES,
   COMPANY_EXAMPLE,
 } from '../../../../../../../constants';
-import { companyDetails } from '../../../../../../../pages/your-business';
+import { companyDetails, companiesHouseNumber } from '../../../../../../../pages/your-business';
 import {
   checkChangeLinkUrl,
   changeAnswerField,
@@ -21,14 +21,12 @@ const {
     YOUR_BUSINESS,
   },
   EXPORTER_BUSINESS: {
-    COMPANY_DETAILS_CHECK_AND_CHANGE,
+    COMPANIES_HOUSE_NUMBER_CHECK_AND_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
 const {
-
   COMPANY_HOUSE: {
-    INPUT,
     COMPANY_NAME,
     COMPANY_NUMBER,
     COMPANY_INCORPORATED,
@@ -47,8 +45,8 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-const getFieldVariables = (fieldId, referenceNumber) => ({
-  route: COMPANY_DETAILS_CHECK_AND_CHANGE,
+const getFieldVariables = (fieldId, referenceNumber, route = COMPANY_DETAILS_CHECK_AND_CHANGE) => ({
+  route,
   checkYourAnswersRoute: YOUR_BUSINESS,
   newValueInput: '',
   fieldId,
@@ -94,20 +92,20 @@ context('Insurance - Check your answers - Company details - Your business - Summ
   describe(COMPANY_NUMBER, () => {
     const fieldId = COMPANY_NUMBER;
 
-    let fieldVariables = getFieldVariables(fieldId, referenceNumber);
+    let fieldVariables = getFieldVariables(fieldId, referenceNumber, COMPANIES_HOUSE_NUMBER_CHECK_AND_CHANGE);
 
     describe('when clicking the `change` link', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
       });
 
-      it(`should redirect to ${COMPANY_DETAILS_CHECK_AND_CHANGE}`, () => {
+      it(`should redirect to ${COMPANIES_HOUSE_NUMBER_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(url);
-        fieldVariables = getFieldVariables(fieldId, referenceNumber);
+        fieldVariables = getFieldVariables(fieldId, referenceNumber, COMPANIES_HOUSE_NUMBER_CHECK_AND_CHANGE);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_DETAILS_CHECK_AND_CHANGE, INPUT);
+        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANIES_HOUSE_NUMBER_CHECK_AND_CHANGE, 'heading', null, true);
       });
     });
 
@@ -118,11 +116,11 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = '14440211';
-        changeAnswerField(fieldVariables, companyDetails.companiesHouseSearch());
+        changeAnswerField(fieldVariables, companiesHouseNumber.input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, 'heading', null, true);
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
@@ -165,13 +163,13 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
         summaryList.field(fieldId).changeLink().click();
 
-        companyDetails.tradingNameNoRadioInput().click();
+        companyDetails[TRADING_NAME].noRadioInput().click();
 
         submitButton().click();
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
@@ -206,13 +204,13 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
         summaryList.field(fieldId).changeLink().click();
 
-        companyDetails.tradingAddressNoRadioInput().click();
+        companyDetails[TRADING_ADDRESS].noRadioInput().click();
 
         submitButton().click();
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
@@ -248,11 +246,11 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = VALID_PHONE_NUMBERS.LANDLINE.NORMAL;
-        changeAnswerField(fieldVariables, companyDetails.phoneNumber());
+        changeAnswerField(fieldVariables, companyDetails[PHONE_NUMBER].input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
@@ -289,11 +287,11 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = WEBSITE_EXAMPLES.VALID;
-        changeAnswerField(fieldVariables, companyDetails.companyWebsite());
+        changeAnswerField(fieldVariables, companyDetails[WEBSITE].input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {

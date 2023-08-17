@@ -40,8 +40,8 @@ describe('routes/insurance/your-business', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(20);
-    expect(post).toHaveBeenCalledTimes(25);
+    expect(get).toHaveBeenCalledTimes(22);
+    expect(post).toHaveBeenCalledTimes(27);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER_ROOT, getCompaniesHouseNumber);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER_ROOT, postCompaniesHouseNumber);

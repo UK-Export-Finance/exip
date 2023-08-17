@@ -34,7 +34,7 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
 
-context('Insurance - Your business - Company details page - As an Exporter I want to enter my business\'s CRN So that I can apply for UKEF Export Insurance policy', () => {
+context('Insurance - Your business - Company details page - As an Exporter I want to my companies details So that I can apply for UKEF Export Insurance policy', () => {
   let referenceNumber;
   let url;
 

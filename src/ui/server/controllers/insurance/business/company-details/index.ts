@@ -12,9 +12,11 @@ import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
+import { objectHasProperty } from '../../../../helpers/object';
 
 const {
   YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
+  COMPANY_HOUSE: { COMPANY_NUMBER },
 } = BUSINESS_FIELD_IDS;
 
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -56,6 +58,11 @@ const get = (req: Request, res: Response) => {
     }
 
     const { company } = application;
+
+    // if no company has been added to the db, then return to companies house number page
+    if (!objectHasProperty(company, COMPANY_NUMBER)) {
+      return res.redirect(`${INSURANCE_ROOT}/${application.referenceNumber}${COMPANIES_HOUSE_NUMBER_ROOT}`);
+    }
 
     // values from application if they exist
     const submittedValues = {
