@@ -123,7 +123,7 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
     it('should render validation errors', () => {
       submitButton().click();
 
-      partials.errorSummaryListItems().should('exist');
+      cy.checkErrorSummaryListHeading();
       partials.errorSummaryListItems().should('have.length', 1);
 
       const expectedMessage = String(ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY);

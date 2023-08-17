@@ -1,6 +1,7 @@
 type TellUsAboutPolicyPageVariablesContentStrings = {
   BUTTONS: object;
   COOKIES_CONSENT: object;
+  ERROR_MESSAGES: object;
   FOOTER: object;
   LINKS: object;
   PHASE_BANNER: object;

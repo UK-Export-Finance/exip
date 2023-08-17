@@ -11,6 +11,8 @@ import partials from '../partials';
 export default (field, errorIndex, errorSummaryLength, errorMessage, inlineErrorIndex = 0) => {
   submitButton().click();
 
+  cy.checkErrorSummaryListHeading();
+
   partials.errorSummaryListItems().should('have.length', errorSummaryLength);
 
   cy.checkText(

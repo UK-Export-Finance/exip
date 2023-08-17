@@ -59,6 +59,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
+        cy.checkErrorSummaryListHeading();
         partials.errorSummaryListItems().should('have.length', 1);
 
         cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT);
@@ -85,6 +86,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
+        cy.checkErrorSummaryListHeading();
         partials.errorSummaryListItems().should('have.length', 1);
 
         cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT);

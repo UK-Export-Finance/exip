@@ -106,7 +106,7 @@ context("Insurance - Declarations - Anti-bribery - Exporting with code of conduc
       it('should render a validation error', () => {
         submitButton().click();
 
-        partials.errorSummaryListItems().should('exist');
+        cy.checkErrorSummaryListHeading();
         partials.errorSummaryListItems().should('have.length', 1);
 
         const expectedMessage = String(ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
