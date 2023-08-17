@@ -163,13 +163,6 @@ export const FIELDS = {
       TITLE: 'Policy length',
     },
   },
-  // [FIELD_IDS.MULTIPLE_POLICY_LENGTH]: {
-  //   LABEL: 'How long do you need the policy for?',
-  //   HINT: 'You can get an online quote for up to 22 months.',
-  //   SUMMARY: {
-  //     TITLE: 'Policy length',
-  //   },
-  // },
   [FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD]: {
     HINT: 'This is known as the pre-credit period.',
   },

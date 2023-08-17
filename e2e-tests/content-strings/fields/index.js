@@ -148,16 +148,6 @@ export const FIELDS = {
       TITLE: 'Policy type',
     },
   },
-  [FIELD_IDS.SINGLE_POLICY_TYPE]: {
-    SUMMARY: {
-      TITLE: 'Policy type',
-    },
-  },
-  [FIELD_IDS.MULTIPLE_POLICY_TYPE]: {
-    SUMMARY: {
-      TITLE: 'Policy type',
-    },
-  },
   [FIELD_IDS.POLICY_LENGTH]: {
     LABEL: 'How long do you need the policy for?',
     HINT: [
@@ -174,11 +164,6 @@ export const FIELDS = {
         },
       ],
     ],
-    SUMMARY: {
-      TITLE: 'Policy length',
-    },
-  },
-  [FIELD_IDS.MULTIPLE_POLICY_LENGTH]: {
     SUMMARY: {
       TITLE: 'Policy length',
     },
