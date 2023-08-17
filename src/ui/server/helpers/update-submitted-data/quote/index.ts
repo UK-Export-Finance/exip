@@ -5,10 +5,8 @@ import { RequestBody, SubmittedDataQuoteEligibility } from '../../../../types';
 
 const {
   ELIGIBILITY: { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED },
-  MULTIPLE_POLICY_LENGTH,
   POLICY_LENGTH,
   POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
 /**
@@ -27,8 +25,6 @@ const mapSubmittedData = (submittedData: SubmittedDataQuoteEligibility): Submitt
   if (isSinglePolicyType(submittedData[POLICY_TYPE])) {
     mapped[POLICY_LENGTH] = submittedData[POLICY_LENGTH];
 
-    delete mapped[SINGLE_POLICY_LENGTH];
-    delete mapped[MULTIPLE_POLICY_LENGTH];
     delete mapped[CREDIT_PERIOD];
     delete mapped[MAX_AMOUNT_OWED];
   }
@@ -36,8 +32,6 @@ const mapSubmittedData = (submittedData: SubmittedDataQuoteEligibility): Submitt
   if (isMultiPolicyType(submittedData[POLICY_TYPE])) {
     mapped[POLICY_LENGTH] = FIELD_VALUES.POLICY_LENGTH.MULTIPLE;
 
-    delete mapped[SINGLE_POLICY_LENGTH];
-    delete mapped[MULTIPLE_POLICY_LENGTH];
     delete mapped[CONTRACT_VALUE];
   }
 

@@ -158,7 +158,7 @@ export const FIELDS = {
       TITLE: 'Policy type',
     },
   },
-  [FIELD_IDS.SINGLE_POLICY_LENGTH]: {
+  [FIELD_IDS.POLICY_LENGTH]: {
     LABEL: 'How long do you need the policy for?',
     HINT: [
       [

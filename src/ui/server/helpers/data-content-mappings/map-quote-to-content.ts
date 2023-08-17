@@ -8,6 +8,7 @@ import mapPercentage from '../map-percentage';
 
 const {
   ELIGIBILITY: { BUYER_COUNTRY, CURRENCY, PERCENTAGE_OF_COVER },
+  POLICY_TYPE,
   QUOTE,
 } = FIELD_IDS;
 
@@ -30,6 +31,7 @@ const mapQuoteToContent = (quote: Quote): QuoteContent => {
     estimatedCost: formatCurrency(quote[ESTIMATED_COST], currencyCode, 2),
     ...mapPolicyLength(quote),
     buyerCountry: mapCountry(quote[BUYER_COUNTRY]),
+    [POLICY_TYPE]: quote[POLICY_TYPE],
   };
 
   return mapped;

@@ -10,6 +10,7 @@ type TellUsAboutPolicyPageVariablesContentStrings = {
 };
 
 type TellUsAboutPolicyPageVariablesFields = {
+  POLICY_LENGTH?: object;
   AMOUNT_CURRENCY: object;
   CONTRACT_VALUE?: object;
   CREDIT_PERIOD?: object;

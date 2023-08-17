@@ -95,7 +95,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
     });
 
     it('should not render policy length inputs by default', () => {
-      const singlePolicyLength = policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH];
+      const singlePolicyLength = policyTypePage[FIELD_IDS.POLICY_LENGTH];
       singlePolicyLength.input().should('not.be.visible');
     });
 
@@ -104,7 +104,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
         const singlePolicyType = policyTypePage[FIELD_ID].single;
         singlePolicyType.label().click();
 
-        const singlePolicyLengthId = FIELD_IDS.SINGLE_POLICY_LENGTH;
+        const singlePolicyLengthId = FIELD_IDS.POLICY_LENGTH;
         const singlePolicyLength = policyTypePage[singlePolicyLengthId];
 
         singlePolicyLength.label().should('be.visible');
@@ -133,7 +133,7 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
     describe('when form is valid', () => {
       it(`should redirect to ${TELL_US_ABOUT_YOUR_POLICY}`, () => {
         policyTypePage[FIELD_ID].single.input().click();
-        cy.keyboardInput(policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input(), '8');
+        cy.keyboardInput(policyTypePage[FIELD_IDS.POLICY_LENGTH].input(), '8');
 
         submitButton().click();
 

@@ -43,7 +43,7 @@ export const ERROR_MESSAGES = {
       IS_EMPTY: 'Select the percentage of cover you need',
     },
     [FIELD_IDS.POLICY_TYPE]: 'Select whether you need a single or multiple contract policy',
-    [FIELD_IDS.SINGLE_POLICY_LENGTH]: {
+    [FIELD_IDS.POLICY_LENGTH]: {
       NOT_A_NUMBER: 'Policy length must be a number',
       NOT_A_WHOLE_NUMBER: 'Policy length must be a whole number, like 10 - you cannot enter decimal points',
       BELOW_MINIMUM: 'Policy length must be 1 month or more',

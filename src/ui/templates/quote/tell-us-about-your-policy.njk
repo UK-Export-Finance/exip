@@ -45,6 +45,45 @@
 
       <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
+
+      {% if isSinglePolicyType %}
+        {{ govukInput({
+          label: {
+            text: FIELDS.POLICY_LENGTH.LABEL,
+            attributes: {
+              id: FIELDS.POLICY_LENGTH.ID + '-label',
+              'data-cy': FIELDS.POLICY_LENGTH.ID + '-label'
+            },
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24"
+          },
+          hint: {
+            text: FIELDS.POLICY_LENGTH.HINT,
+            attributes: {
+              'data-cy': FIELDS.POLICY_LENGTH.ID + '-hint'
+            }
+          },
+          classes: "govuk-input--width-4 govuk-!-margin-bottom-4",
+          attributes: {
+            'data-cy': FIELDS.POLICY_LENGTH.ID + '-input'
+          },
+          id: FIELDS.POLICY_LENGTH.ID,
+          name: FIELDS.POLICY_LENGTH.ID,
+          inputmode: "numeric",
+          pattern: "[0-9]*",
+          suffix: {
+            text: "months"
+          },
+          spellcheck: false,
+          errorMessage: validationErrors.errorList[FIELDS.POLICY_LENGTH.ID]and {
+            text: validationErrors.errorList[FIELDS.POLICY_LENGTH.ID].text,
+            attributes: {
+              "data-cy": FIELDS.POLICY_LENGTH.ID + "-error-message"
+            }
+          },
+          value: submittedValues[FIELDS.POLICY_LENGTH.ID]
+        }) }}
+      {% endif %}
+
       <fieldset class="govuk-fieldset">
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-two-thirds-from-desktop">

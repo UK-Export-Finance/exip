@@ -1,6 +1,5 @@
 import { FIELD_IDS } from '../../constants';
 import { SUMMARY_ANSWERS } from '../../content-strings';
-import { isSinglePolicyType, isMultiPolicyType } from '../policy-type';
 import mapCountry from './map-country';
 import mapCost from './map-cost';
 import mapMonthString from './map-month-string';
@@ -9,32 +8,8 @@ import { SubmittedDataInsuranceEligibility, SubmittedDataQuoteEligibility } from
 
 const {
   ELIGIBILITY: { BUYER_COUNTRY, CREDIT_PERIOD, PERCENTAGE_OF_COVER, HAS_MINIMUM_UK_GOODS_OR_SERVICES, VALID_EXPORTER_LOCATION },
-  MULTIPLE_POLICY_TYPE,
   POLICY_TYPE,
-  SINGLE_POLICY_TYPE,
 } = FIELD_IDS;
-
-/**
- * mapPolicyType
- * Map policy type into an object for GOV summary list structure
- * @param {String} Policy type answer
- * @returns {Object} Answer in an object
- */
-const mapPolicyType = (answer: string) => {
-  if (isSinglePolicyType(answer)) {
-    return {
-      [SINGLE_POLICY_TYPE]: answer,
-    };
-  }
-
-  if (isMultiPolicyType(answer)) {
-    return {
-      [MULTIPLE_POLICY_TYPE]: answer,
-    };
-  }
-
-  return {};
-};
 
 /**
  * mapPercentageOfCover
@@ -55,8 +30,8 @@ const mapAnswersToContent = (answers: SubmittedDataQuoteEligibility | SubmittedD
     [VALID_EXPORTER_LOCATION]: SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION],
     [BUYER_COUNTRY]: mapCountry(answers[BUYER_COUNTRY]),
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
+    [POLICY_TYPE]: answers[POLICY_TYPE],
     ...mapCost(answers),
-    ...mapPolicyType(answers[POLICY_TYPE]),
     ...mapPolicyLength(answers),
     [PERCENTAGE_OF_COVER]: mapPercentageOfCover(answers[PERCENTAGE_OF_COVER]),
     [CREDIT_PERIOD]: mapMonthString(answers[CREDIT_PERIOD]),
@@ -65,4 +40,4 @@ const mapAnswersToContent = (answers: SubmittedDataQuoteEligibility | SubmittedD
   return mapped;
 };
 
-export { mapPolicyType, mapPercentageOfCover, mapAnswersToContent };
+export { mapPercentageOfCover, mapAnswersToContent };

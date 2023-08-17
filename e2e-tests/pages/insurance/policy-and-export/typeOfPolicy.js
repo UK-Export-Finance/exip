@@ -4,7 +4,7 @@ const { INSURANCE } = FIELD_IDS;
 
 const SINGLE_POLICY_TYPE_ID = INSURANCE.POLICY_AND_EXPORTS.SINGLE_POLICY_TYPE;
 const MULTIPLE_POLICY_TYPE_ID = INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_POLICY_TYPE;
-const SINGLE_POLICY_LENGTH_ID = FIELD_IDS.SINGLE_POLICY_LENGTH;
+const POLICY_LENGTH_ID = FIELD_IDS.POLICY_LENGTH;
 
 const typeOfPolicy = {
   intro: () => cy.get('[data-cy="intro"]'),
@@ -30,12 +30,12 @@ const typeOfPolicy = {
     },
     errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.POLICY_TYPE}-error-message"]`),
   },
-  [SINGLE_POLICY_LENGTH_ID]: {
-    label: () => cy.get(`[data-cy="${SINGLE_POLICY_LENGTH_ID}-label"]`),
-    hint: () => cy.get(`[data-cy="${SINGLE_POLICY_LENGTH_ID}-hint"]`),
-    hintLink: () => cy.get(`[data-cy="${SINGLE_POLICY_LENGTH_ID}-hint"] a`),
-    input: () => cy.get(`[data-cy="${SINGLE_POLICY_LENGTH_ID}-input"]`),
-    errorMessage: () => cy.get(`[data-cy="${SINGLE_POLICY_LENGTH_ID}-error-message"]`),
+  [POLICY_LENGTH_ID]: {
+    label: () => cy.get(`[data-cy="${POLICY_LENGTH_ID}-label"]`),
+    hint: () => cy.get(`[data-cy="${POLICY_LENGTH_ID}-hint"]`),
+    hintLink: () => cy.get(`[data-cy="${POLICY_LENGTH_ID}-hint"] a`),
+    input: () => cy.get(`[data-cy="${POLICY_LENGTH_ID}-input"]`),
+    errorMessage: () => cy.get(`[data-cy="${POLICY_LENGTH_ID}-error-message"]`),
   },
 };
 

@@ -19,7 +19,7 @@ const {
   },
   POLICY_TYPE,
   QUOTE,
-  SINGLE_POLICY_LENGTH,
+  POLICY_LENGTH,
 } = FIELD_IDS;
 
 const {
@@ -42,7 +42,6 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
     completeAndSubmitUkContentForm();
 
     policyTypePage[POLICY_TYPE].single.input().click();
-    cy.keyboardInput(policyTypePage[SINGLE_POLICY_LENGTH].input(), '18');
 
     submitButton().click();
   });
@@ -52,7 +51,9 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
   });
 
   it('should get a quote with a large contract value and render in the correct format', () => {
+    cy.keyboardInput(tellUsAboutYourPolicyPage[POLICY_LENGTH].input(), '18');
     cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '100,000');
+
     tellUsAboutYourPolicyPage[CURRENCY].input().select(USD_CURRENCY_CODE);
     tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('80');
 

@@ -11,7 +11,6 @@ const {
     MAX_AMOUNT_OWED,
     PERCENTAGE_OF_COVER,
   },
-  MULTIPLE_POLICY_LENGTH,
   POLICY_LENGTH,
   QUOTE,
 } = FIELD_IDS;
@@ -134,7 +133,7 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
       });
 
       it('renders `policy length` key, value and no change link (multiple policy)', () => {
-        const row = summaryList.field(MULTIPLE_POLICY_LENGTH);
+        const row = summaryList.field(POLICY_LENGTH);
         const expectedKeyText = QUOTE_TITLES[POLICY_LENGTH];
 
         cy.checkText(row.key(), expectedKeyText);

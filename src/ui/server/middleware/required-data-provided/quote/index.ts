@@ -59,10 +59,10 @@ export const allRequiredData = (submittedData: SubmittedDataQuoteEligibility): R
   requiredDataState[TELL_US_ABOUT_YOUR_POLICY] = [...requiredDataState[POLICY_TYPE], FIELD_IDS.POLICY_TYPE];
 
   if (isSinglePolicyType(submittedData[FIELD_IDS.POLICY_TYPE])) {
-    requiredDataState[TELL_US_ABOUT_YOUR_POLICY] = [...requiredDataState[TELL_US_ABOUT_YOUR_POLICY], FIELD_IDS.POLICY_LENGTH];
+    requiredDataState[TELL_US_ABOUT_YOUR_POLICY] = [...requiredDataState[TELL_US_ABOUT_YOUR_POLICY]];
   }
 
-  requiredDataState[CHECK_YOUR_ANSWERS] = [...requiredDataState[TELL_US_ABOUT_YOUR_POLICY], CURRENCY, PERCENTAGE_OF_COVER];
+  requiredDataState[CHECK_YOUR_ANSWERS] = [...requiredDataState[TELL_US_ABOUT_YOUR_POLICY], FIELD_IDS.POLICY_LENGTH, CURRENCY, PERCENTAGE_OF_COVER];
 
   if (isSinglePolicyType(submittedData[FIELD_IDS.POLICY_TYPE])) {
     requiredDataState[CHECK_YOUR_ANSWERS] = [...requiredDataState[CHECK_YOUR_ANSWERS], CONTRACT_VALUE];

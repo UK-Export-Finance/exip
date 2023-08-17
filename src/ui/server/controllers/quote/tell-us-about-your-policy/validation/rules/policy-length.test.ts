@@ -3,9 +3,9 @@ import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
 
-const { POLICY_TYPE, SINGLE_POLICY_LENGTH } = FIELD_IDS;
+const { POLICY_TYPE, POLICY_LENGTH } = FIELD_IDS;
 
-describe('controllers/quote/policy-type/validation/rules/policy-length', () => {
+describe('controllers/quote/tell-us-about-your-policy/validation/rules/policy-length', () => {
   const mockErrors = {
     summary: [],
     errorList: {},
@@ -20,61 +20,61 @@ describe('controllers/quote/policy-type/validation/rules/policy-length', () => {
       mockBody[POLICY_TYPE] = FIELD_VALUES.POLICY_TYPE.SINGLE;
     });
 
-    describe(`when ${SINGLE_POLICY_LENGTH} is not provided`, () => {
+    describe(`when ${POLICY_LENGTH} is not provided`, () => {
       it('should return validation error', () => {
-        mockBody[SINGLE_POLICY_LENGTH] = '';
+        mockBody[POLICY_LENGTH] = '';
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(SINGLE_POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[SINGLE_POLICY_LENGTH].IS_EMPTY, mockErrors);
+        const expected = generateValidationErrors(POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].IS_EMPTY, mockErrors);
 
         expect(result).toEqual(expected);
       });
     });
 
-    describe(`when ${SINGLE_POLICY_LENGTH} has a decimal`, () => {
+    describe(`when ${POLICY_LENGTH} has a decimal`, () => {
       it('should return validation error', () => {
-        mockBody[SINGLE_POLICY_LENGTH] = '1.2';
+        mockBody[POLICY_LENGTH] = '1.2';
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(SINGLE_POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[SINGLE_POLICY_LENGTH].NOT_A_WHOLE_NUMBER, mockErrors);
+        const expected = generateValidationErrors(POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].NOT_A_WHOLE_NUMBER, mockErrors);
 
         expect(result).toEqual(expected);
       });
     });
 
-    describe(`when ${SINGLE_POLICY_LENGTH} is not a number`, () => {
+    describe(`when ${POLICY_LENGTH} is not a number`, () => {
       it('should return validation error', () => {
-        mockBody[SINGLE_POLICY_LENGTH] = 'invalid';
+        mockBody[POLICY_LENGTH] = 'invalid';
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(SINGLE_POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[SINGLE_POLICY_LENGTH].NOT_A_NUMBER, mockErrors);
+        const expected = generateValidationErrors(POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].NOT_A_NUMBER, mockErrors);
 
         expect(result).toEqual(expected);
       });
     });
 
-    describe(`when ${SINGLE_POLICY_LENGTH} is below the minimum`, () => {
+    describe(`when ${POLICY_LENGTH} is below the minimum`, () => {
       it('should return validation error', () => {
-        mockBody[SINGLE_POLICY_LENGTH] = '0';
+        mockBody[POLICY_LENGTH] = '0';
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(SINGLE_POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[SINGLE_POLICY_LENGTH].BELOW_MINIMUM, mockErrors);
+        const expected = generateValidationErrors(POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].BELOW_MINIMUM, mockErrors);
 
         expect(result).toEqual(expected);
       });
     });
 
-    describe(`when ${SINGLE_POLICY_LENGTH} is above the maximum`, () => {
+    describe(`when ${POLICY_LENGTH} is above the maximum`, () => {
       it('should return validation error', () => {
-        mockBody[SINGLE_POLICY_LENGTH] = '25';
+        mockBody[POLICY_LENGTH] = '25';
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(SINGLE_POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[SINGLE_POLICY_LENGTH].ABOVE_MAXIMUM, mockErrors);
+        const expected = generateValidationErrors(POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].ABOVE_MAXIMUM, mockErrors);
 
         expect(result).toEqual(expected);
       });
@@ -84,7 +84,7 @@ describe('controllers/quote/policy-type/validation/rules/policy-length', () => {
   describe('when there are no validation errors - single policy', () => {
     it('should return the already provided errors', () => {
       mockBody[POLICY_TYPE] = FIELD_VALUES.POLICY_TYPE.SINGLE;
-      mockBody[SINGLE_POLICY_LENGTH] = '8';
+      mockBody[POLICY_LENGTH] = '8';
 
       const result = rule(mockBody, mockErrors);
 
