@@ -46,6 +46,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   });
 
   it('should display validation errors if trading address question is not answered', () => {
+    cy.checkErrorSummaryListHeading();
     partials.errorSummaryListItems().should('have.length', 1);
 
     cy.checkText(partials.errorSummaryListItems().first(), COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);

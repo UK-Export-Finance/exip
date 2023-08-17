@@ -60,7 +60,7 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
       it('should render validation errors', () => {
         submitButton().click();
 
-        partials.errorSummaryListItems().should('exist');
+        cy.checkErrorSummaryListHeading();
         partials.errorSummaryListItems().should('have.length', 1);
 
         const expectedMessage = String(ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION]);

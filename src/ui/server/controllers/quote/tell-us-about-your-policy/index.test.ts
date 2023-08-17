@@ -1,5 +1,5 @@
 import { FIELD_IDS, generatePageVariables, TEMPLATE, get, post } from '.';
-import { BUTTONS, COOKIES_CONSENT, FIELDS, QUOTE_FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT, HEADER } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, ERROR_MESSAGES, FIELDS, QUOTE_FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT, HEADER } from '../../../content-strings';
 import { FIELD_IDS as ALL_FIELD_IDS, FIELD_VALUES, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
@@ -19,6 +19,8 @@ const {
   POLICY_TYPE,
   POLICY_LENGTH,
 } = ALL_FIELD_IDS;
+
+const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
 
 const { START: quoteStart } = ROUTES.QUOTE;
 
@@ -69,6 +71,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           CONTENT_STRINGS: {
             BUTTONS,
             COOKIES_CONSENT,
+            ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
             HEADER,
             FOOTER: QUOTE_FOOTER,
             LINKS,
@@ -125,6 +128,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           CONTENT_STRINGS: {
             BUTTONS,
             COOKIES_CONSENT,
+            ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
             HEADER,
             FOOTER: QUOTE_FOOTER,
             LINKS,
@@ -185,6 +189,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             PRODUCT: {
               DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
             },
+            ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
             HEADER,
             FOOTER: QUOTE_FOOTER,
             LINKS,

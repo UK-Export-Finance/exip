@@ -18,6 +18,8 @@ export default (field, fieldValue, errorIndex, errorSummaryLength, errorMessage)
 
   submitButton().click();
 
+  cy.checkErrorSummaryListHeading();
+
   partials.errorSummaryListItems().should('have.length', errorSummaryLength);
 
   cy.checkText(

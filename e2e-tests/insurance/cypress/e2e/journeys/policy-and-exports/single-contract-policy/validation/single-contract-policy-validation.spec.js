@@ -63,7 +63,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
   it('should render validation errors for all required fields', () => {
     submitButton().click();
 
-    partials.errorSummaryListItems().should('exist');
+    cy.checkErrorSummaryListHeading();
 
     const TOTAL_REQUIRED_FIELDS = 5;
     partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);

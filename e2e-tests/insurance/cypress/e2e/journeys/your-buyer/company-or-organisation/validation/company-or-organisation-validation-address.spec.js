@@ -58,6 +58,8 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   });
 
   it('should render a validation error when address is above the maximum', () => {
+    cy.checkErrorSummaryListHeading();
+
     cy.checkText(
       partials.errorSummaryListItems().eq(1),
       COMPANY_OR_ORG_ERROR_MESSAGES[ADDRESS].ABOVE_MAXIMUM,
