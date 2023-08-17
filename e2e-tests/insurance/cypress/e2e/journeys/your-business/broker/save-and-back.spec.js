@@ -97,6 +97,8 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
       task.link().click();
 
+      // submit companies house number form
+      submitButton().click();
       // submit company details form
       submitButton().click();
       // your contact page submit
@@ -145,6 +147,8 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
         task.link().click();
 
+        // submit companies house number form
+        submitButton().click();
         // submit company details form
         submitButton().click();
         // your contact page submit
@@ -184,6 +188,8 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
         task.link().click();
 
+        // submit companies house number form
+        submitButton().click();
         // submit company details form
         submitButton().click();
         // your contact page submit

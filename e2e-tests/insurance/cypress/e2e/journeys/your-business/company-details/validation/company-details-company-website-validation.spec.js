@@ -62,8 +62,6 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
-        cy.checkErrorSummaryListHeading();
-
         cy.submitAndAssertFieldErrors(
           companyDetails[WEBSITE],
           WEBSITE_EXAMPLES.INVALID,
@@ -71,6 +69,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
           expectedErrors,
           errorMessage,
         );
+
+        cy.checkErrorSummaryListHeading();
       });
     });
 
@@ -82,8 +82,6 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
-        cy.checkErrorSummaryListHeading();
-
         cy.submitAndAssertFieldErrors(
           companyDetails[WEBSITE],
           WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH,
@@ -91,6 +89,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
           expectedErrors,
           errorMessage,
         );
+
+        cy.checkErrorSummaryListHeading();
       });
     });
   });

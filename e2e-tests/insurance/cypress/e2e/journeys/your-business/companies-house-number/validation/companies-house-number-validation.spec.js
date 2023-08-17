@@ -49,6 +49,8 @@ context('Insurance - Your business - Companies house number page validation', ()
 
     it('should display the incorrect format error', () => {
       cy.submitAndAssertFieldErrors(companiesHouseNumber, null, 0, 1, COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_NUMBER].INCORRECT_FORMAT);
+
+      cy.checkErrorSummaryListHeading();
     });
   });
 
@@ -59,6 +61,8 @@ context('Insurance - Your business - Companies house number page validation', ()
 
     it('should display the incorrect format error', () => {
       cy.submitAndAssertFieldErrors(companiesHouseNumber, '1234', 0, 1, COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_NUMBER].INCORRECT_FORMAT);
+
+      cy.checkErrorSummaryListHeading();
     });
   });
 
@@ -69,6 +73,8 @@ context('Insurance - Your business - Companies house number page validation', ()
 
     it('should display the incorrect format error', () => {
       cy.submitAndAssertFieldErrors(companiesHouseNumber, '123456!', 0, 1, COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_NUMBER].INCORRECT_FORMAT);
+
+      cy.checkErrorSummaryListHeading();
     });
   });
 
@@ -79,6 +85,8 @@ context('Insurance - Your business - Companies house number page validation', ()
 
     it('should display the incorrect format error', () => {
       cy.submitAndAssertFieldErrors(companiesHouseNumber, '123456 ', 0, 1, COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_NUMBER].INCORRECT_FORMAT);
+
+      cy.checkErrorSummaryListHeading();
     });
   });
 
@@ -89,6 +97,8 @@ context('Insurance - Your business - Companies house number page validation', ()
 
     it('should display the incorrect format error', () => {
       cy.submitAndAssertFieldErrors(companiesHouseNumber, '123456', 0, 1, COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_NUMBER].NOT_FOUND);
+
+      cy.checkErrorSummaryListHeading();
     });
   });
 
