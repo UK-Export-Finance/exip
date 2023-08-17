@@ -118,7 +118,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
       it('should render a validation error', () => {
         submitButton().click();
 
-        partials.errorSummaryListItems().should('exist');
+        cy.checkErrorSummaryListHeading();
         partials.errorSummaryListItems().should('have.length', 1);
 
         const expectedMessage = String(ERROR_MESSAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY[FIELD_ID].IS_EMPTY);

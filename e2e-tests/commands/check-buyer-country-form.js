@@ -84,7 +84,8 @@ const checkSubmitButton = () => {
 };
 
 const checkValidationErrors = () => {
-  partials.errorSummaryListItems().should('exist');
+  cy.checkErrorSummaryListHeading();
+
   partials.errorSummaryListItems().should('have.length', 1);
 
   const expectedMessage = String(ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]);

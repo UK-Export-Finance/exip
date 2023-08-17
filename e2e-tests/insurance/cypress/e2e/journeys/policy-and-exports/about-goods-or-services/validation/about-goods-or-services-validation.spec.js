@@ -53,7 +53,7 @@ context('Insurance - Policy and exports - About goods or services page - form va
   it('should render validation errors for all required fields', () => {
     submitButton().click();
 
-    partials.errorSummaryListItems().should('exist');
+    cy.checkErrorSummaryListHeading();
 
     const TOTAL_REQUIRED_FIELDS = 2;
     partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);

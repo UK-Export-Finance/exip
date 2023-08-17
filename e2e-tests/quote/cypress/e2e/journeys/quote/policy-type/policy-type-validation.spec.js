@@ -41,6 +41,8 @@ context('Policy type page - policy type & length validation - single policy type
       cy.navigateToUrl(url);
       submitButton().click();
 
+      cy.checkErrorSummaryListHeading();
+
       partials.errorSummaryListItems().should('have.length', 1);
 
       const expectedMessage = ERROR_MESSAGES.ELIGIBILITY[POLICY_TYPE];
