@@ -1,4 +1,6 @@
-import { submitButton, status, summaryList, noRadioInput } from '../../../../../../../pages/shared';
+import {
+  submitButton, status, summaryList, noRadioInput,
+} from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import {
   FIELD_VALUES,

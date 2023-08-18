@@ -8,7 +8,6 @@ const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
       TRADING_ADDRESS,
-      TRADING_NAME,
     },
   },
 } = FIELD_IDS.INSURANCE;
