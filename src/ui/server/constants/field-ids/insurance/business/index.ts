@@ -31,8 +31,8 @@ const EXPORTER_BUSINESS = {
   },
   YOUR_COMPANY: {
     YOUR_BUSINESS: 'yourBusiness',
-    TRADING_ADDRESS: 'hasTradingAddress',
-    TRADING_NAME: 'hasTradingName',
+    TRADING_ADDRESS: 'hasDifferentTradingAddress',
+    TRADING_NAME: 'hasDifferentTradingName',
     WEBSITE: 'companyWebsite',
     PHONE_NUMBER: 'phoneNumber',
   },
