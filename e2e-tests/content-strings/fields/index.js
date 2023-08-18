@@ -150,20 +150,7 @@ export const FIELDS = {
   },
   [FIELD_IDS.POLICY_LENGTH]: {
     LABEL: 'How long do you need the policy for?',
-    HINT: [
-      [
-        {
-          text: 'You can get an online quote for up to 22 months. For over 22 months',
-        },
-        {
-          text: 'fill in this form',
-          href: LINKS.EXTERNAL.NBI_FORM,
-        },
-        {
-          text: ' and email it to UKEF.',
-        },
-      ],
-    ],
+    HINT: 'You can get an online quote for up to 22 months.',
     SUMMARY: {
       TITLE: 'Policy length',
     },
