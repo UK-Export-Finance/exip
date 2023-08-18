@@ -3,7 +3,9 @@ import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
 
-const { POLICY_TYPE, POLICY_LENGTH } = FIELD_IDS;
+const { POLICY_TYPE, POLICY_LENGTH: FIELD_ID } = FIELD_IDS;
+
+const ERROR_MESSAGE = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
 
 describe('controllers/quote/tell-us-about-your-policy/validation/rules/policy-length', () => {
   const mockErrors = {
@@ -20,61 +22,61 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/policy-le
       mockBody[POLICY_TYPE] = FIELD_VALUES.POLICY_TYPE.SINGLE;
     });
 
-    describe(`when ${POLICY_LENGTH} is not provided`, () => {
+    describe(`when ${FIELD_ID} is not provided`, () => {
       it('should return validation error', () => {
-        mockBody[POLICY_LENGTH] = '';
+        mockBody[FIELD_ID] = '';
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].IS_EMPTY, mockErrors);
+        const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
 
         expect(result).toEqual(expected);
       });
     });
 
-    describe(`when ${POLICY_LENGTH} has a decimal`, () => {
+    describe(`when ${FIELD_ID} has a decimal`, () => {
       it('should return validation error', () => {
-        mockBody[POLICY_LENGTH] = '1.2';
+        mockBody[FIELD_ID] = '1.2';
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].NOT_A_WHOLE_NUMBER, mockErrors);
+        const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_WHOLE_NUMBER, mockErrors);
 
         expect(result).toEqual(expected);
       });
     });
 
-    describe(`when ${POLICY_LENGTH} is not a number`, () => {
+    describe(`when ${FIELD_ID} is not a number`, () => {
       it('should return validation error', () => {
-        mockBody[POLICY_LENGTH] = 'invalid';
+        mockBody[FIELD_ID] = 'invalid';
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].NOT_A_NUMBER, mockErrors);
+        const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_NUMBER, mockErrors);
 
         expect(result).toEqual(expected);
       });
     });
 
-    describe(`when ${POLICY_LENGTH} is below the minimum`, () => {
+    describe(`when ${FIELD_ID} is below the minimum`, () => {
       it('should return validation error', () => {
-        mockBody[POLICY_LENGTH] = '0';
+        mockBody[FIELD_ID] = '0';
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].BELOW_MINIMUM, mockErrors);
+        const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BELOW_MINIMUM, mockErrors);
 
         expect(result).toEqual(expected);
       });
     });
 
-    describe(`when ${POLICY_LENGTH} is above the maximum`, () => {
+    describe(`when ${FIELD_ID} is above the maximum`, () => {
       it('should return validation error', () => {
-        mockBody[POLICY_LENGTH] = '25';
+        mockBody[FIELD_ID] = '25';
 
         const result = rule(mockBody, mockErrors);
 
-        const expected = generateValidationErrors(POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].ABOVE_MAXIMUM, mockErrors);
+        const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, mockErrors);
 
         expect(result).toEqual(expected);
       });
@@ -84,7 +86,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/policy-le
   describe('when there are no validation errors - single policy', () => {
     it('should return the already provided errors', () => {
       mockBody[POLICY_TYPE] = FIELD_VALUES.POLICY_TYPE.SINGLE;
-      mockBody[POLICY_LENGTH] = '8';
+      mockBody[FIELD_ID] = '8';
 
       const result = rule(mockBody, mockErrors);
 

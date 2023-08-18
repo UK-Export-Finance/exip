@@ -9,44 +9,47 @@ import { RequestBody } from '../../../../../../types';
 const MINIMUM = 1;
 const SINGLE_POLICY_MAX_MONTHS = 22;
 
-const { POLICY_TYPE, POLICY_LENGTH } = FIELD_IDS;
+const { POLICY_TYPE, POLICY_LENGTH: FIELD_ID } = FIELD_IDS;
+
+const ERROR_MESSAGE = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
 
 const policyLengthRules = (formBody: RequestBody, errors: object) => {
   let updatedErrors = errors;
+  const isSinglePolicy = isSinglePolicyType(formBody[POLICY_TYPE]);
 
-  if (objectHasProperty(formBody, POLICY_TYPE)) {
-    if (isSinglePolicyType(formBody[POLICY_TYPE])) {
-      if (!objectHasProperty(formBody, POLICY_LENGTH)) {
-        const errorMessage = ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].IS_EMPTY;
+  if (objectHasProperty(formBody, POLICY_TYPE) && isSinglePolicy) {
+    if (!objectHasProperty(formBody, FIELD_ID)) {
+      const errorMessage = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID].IS_EMPTY;
 
-        updatedErrors = generateValidationErrors(POLICY_LENGTH, errorMessage, errors);
+      updatedErrors = generateValidationErrors(FIELD_ID, errorMessage, errors);
 
-        return updatedErrors;
-      }
+      return updatedErrors;
+    }
 
-      if (numberHasDecimal(formBody[POLICY_LENGTH])) {
-        updatedErrors = generateValidationErrors(POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].NOT_A_WHOLE_NUMBER, updatedErrors);
+    const submittedValue = formBody[FIELD_ID];
 
-        return updatedErrors;
-      }
+    if (numberHasDecimal(submittedValue)) {
+      updatedErrors = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_WHOLE_NUMBER, updatedErrors);
 
-      if (!isNumber(Number(formBody[POLICY_LENGTH]))) {
-        updatedErrors = generateValidationErrors(POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].NOT_A_NUMBER, updatedErrors);
+      return updatedErrors;
+    }
 
-        return updatedErrors;
-      }
+    if (!isNumber(Number(submittedValue))) {
+      updatedErrors = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_NUMBER, updatedErrors);
 
-      if (Number(formBody[POLICY_LENGTH]) < MINIMUM) {
-        updatedErrors = generateValidationErrors(POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].BELOW_MINIMUM, updatedErrors);
+      return updatedErrors;
+    }
 
-        return updatedErrors;
-      }
+    if (Number(submittedValue) < MINIMUM) {
+      updatedErrors = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BELOW_MINIMUM, updatedErrors);
 
-      if (Number(formBody[POLICY_LENGTH]) > SINGLE_POLICY_MAX_MONTHS) {
-        updatedErrors = generateValidationErrors(POLICY_LENGTH, ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].ABOVE_MAXIMUM, updatedErrors);
+      return updatedErrors;
+    }
 
-        return updatedErrors;
-      }
+    if (Number(submittedValue) > SINGLE_POLICY_MAX_MONTHS) {
+      updatedErrors = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, updatedErrors);
+
+      return updatedErrors;
     }
   }
 
