@@ -9,7 +9,7 @@ import { INSURANCE_ROOT } from '../../constants/routes/insurance';
  * @param {String} Field ID for the field that is being changed/navigated to
  * @param {String} Optional fragment suffix for the URL. E.g 'heading', 'label'. Defaults to label.
  */
-const assertChangeAnswersPageUrl = (referenceNumber, route, fieldId, fragmentSuffix, noSuffix = false) => {
+const assertChangeAnswersPageUrl = (referenceNumber, route, fieldId, fragmentSuffix) => {
   let expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${route}`;
 
   if (fieldId) {
@@ -17,8 +17,6 @@ const assertChangeAnswersPageUrl = (referenceNumber, route, fieldId, fragmentSuf
 
     if (fragmentSuffix) {
       expected = `${expected}-${fragmentSuffix}`;
-    } else if (noSuffix) {
-      expected = `${expected}`;
     } else {
       expected = `${expected}-label`;
     }

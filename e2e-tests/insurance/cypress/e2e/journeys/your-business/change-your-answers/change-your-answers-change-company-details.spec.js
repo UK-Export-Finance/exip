@@ -39,6 +39,8 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your business - Change your answers - Company details - As an exporter, I want to change my answers to the company details section', () => {
   let referenceNumber;
   let url;
@@ -58,7 +60,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitBrokerForm({});
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 
@@ -79,7 +81,9 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANIES_HOUSE_NUMBER_CHANGE, 'heading', null, true);
+        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${COMPANIES_HOUSE_NUMBER_CHANGE}#heading`;
+
+        cy.assertUrl(expectedUrl);
       });
     });
 
@@ -97,7 +101,9 @@ context('Insurance - Your business - Change your answers - Company details - As 
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, 'heading', null, true);
+        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}#heading`;
+
+        cy.assertUrl(expectedUrl);
       });
 
       it('should render the new answer', () => {

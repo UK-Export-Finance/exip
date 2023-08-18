@@ -47,6 +47,8 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
+const baseUrl = Cypress.config('baseUrl');
+
 const getFieldVariables = (fieldId, referenceNumber, route = COMPANY_DETAILS_CHECK_AND_CHANGE) => ({
   route,
   checkYourAnswersRoute: YOUR_BUSINESS,
@@ -75,7 +77,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       // To get past "Policy and exports" check your answers page
       cy.submitCheckYourAnswersForm();
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
       cy.assertUrl(url);
     });
@@ -107,7 +109,9 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANIES_HOUSE_NUMBER_CHECK_AND_CHANGE, 'heading', null, true);
+        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${COMPANIES_HOUSE_NUMBER_CHECK_AND_CHANGE}#heading`;
+
+        cy.assertUrl(expectedUrl);
       });
     });
 
@@ -122,7 +126,9 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, 'heading', null, true);
+        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}#heading`;
+
+        cy.assertUrl(expectedUrl);
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
