@@ -60,7 +60,6 @@ export const post = (req: Request, res: Response) => {
   if (isSinglePolicyType(payload[POLICY_TYPE])) {
     populatedData = {
       [POLICY_TYPE]: payload[POLICY_TYPE],
-      // [POLICY_LENGTH]: payload[POLICY_LENGTH],
     };
   }
 
