@@ -1,4 +1,5 @@
 export const BUSINESS_TEMPLATES = {
+  COMPANIES_HOUSE_NUMBER: 'insurance/your-business/companies_house_number.njk',
   COMPANY_DETAILS: 'insurance/your-business/company-details.njk',
   COMPANIES_HOUSE_UNAVAILABLE: 'insurance/your-business/companies-house-error.njk',
   CONTACT: 'insurance/your-business/contact.njk',

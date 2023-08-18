@@ -1,5 +1,6 @@
 import companyDetailsResponseRules from './rules';
 import { RequestBody, ValidationErrors } from '../../../../../../../types';
+import combineValidationRules from '../../../../../../helpers/combine-validation-rules';
 
 /**
  * validates company details page response
@@ -7,16 +8,6 @@ import { RequestBody, ValidationErrors } from '../../../../../../../types';
  * @param {Express.Request.body} responseBody containing an object with the company details response body
  * @returns {object} object containing errors or blank object
  */
-const validation = (responseBody: RequestBody, errors: object) => {
-  let updatedErrors = errors;
-
-  /* eslint-disable no-unused-vars, prettier/prettier */
-  companyDetailsResponseRules.forEach((rule: (ruleData: object, ruleErrors: ValidationErrors) => ValidationErrors) => {
-    /* eslint-enable no-unused-vars, prettier/prettier */
-    updatedErrors = rule(responseBody, updatedErrors);
-  });
-
-  return updatedErrors;
-};
+const validation = (formBody: RequestBody): ValidationErrors => combineValidationRules(companyDetailsResponseRules, formBody) as ValidationErrors;
 
 export default validation;

@@ -1,8 +1,8 @@
 const EXPORTER_BUSINESS = {
   BUSINESS: 'business',
+  COMPANIES_HOUSE_NUMBER: 'companiesHouseNumber',
   COMPANY_HOUSE: {
     SEARCH: 'companiesHouseSearch',
-    INPUT: 'companiesHouseNumber',
     COMPANY_NAME: 'companyName',
     COMPANY_ADDRESS: 'registeredOfficeAddress',
     COMPANY_NUMBER: 'companyNumber',

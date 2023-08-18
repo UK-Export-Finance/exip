@@ -26,6 +26,7 @@ const completePrepareYourApplicationSectionSingle = ({
 
   submitButton().click();
 
+  cy.completeCompaniesHouseNumberForm({});
   cy.completeAndSubmitCompanyDetails();
   cy.completeAndSubmitYourContact({ useDifferentContactEmail });
   cy.completeAndSubmitNatureOfYourBusiness();

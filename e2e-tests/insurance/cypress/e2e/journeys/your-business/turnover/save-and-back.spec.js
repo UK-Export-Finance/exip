@@ -34,6 +34,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
 
       task.link().click();
 
+      cy.completeCompaniesHouseNumberForm({});
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
@@ -89,6 +90,8 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
 
     it(`should retain the ${ESTIMATED_ANNUAL_TURNOVER} input on the page and the other fields should be empty`, () => {
       task.link().click();
+      // submit companies house number form
+      submitButton().click();
       // submit company details form
       submitButton().click();
       // your contact page submit
@@ -123,6 +126,8 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
 
     it('should retain all the fields on the page', () => {
       task.link().click();
+      // submit companies house number form
+      submitButton().click();
       // submit company details form
       submitButton().click();
       // your contact page submit

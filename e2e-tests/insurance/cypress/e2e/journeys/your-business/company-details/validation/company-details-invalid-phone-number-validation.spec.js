@@ -1,5 +1,4 @@
 import { companyDetails } from '../../../../../../../pages/your-business';
-import { submitButton } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import partials from '../../../../../../../partials';
 import {
@@ -10,6 +9,7 @@ const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
       PHONE_NUMBER,
+      WEBSITE,
     },
   },
 } = FIELD_IDS.INSURANCE;
@@ -18,17 +18,19 @@ const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 const errorMessage = COMPANY_DETAILS_ERRORS[PHONE_NUMBER].INCORRECT_FORMAT;
 
 const companyDetailsFormVariables = {
-  companiesHouseNumber: COMPANIES_HOUSE_NUMBER,
-  website: WEBSITE_EXAMPLES.VALID,
+  [WEBSITE]: WEBSITE_EXAMPLES.VALID,
 };
 
-const completeAllFields = (phoneNumber) => {
-  companyDetailsFormVariables.phoneNumber = phoneNumber;
+const { taskList } = partials.insurancePartials;
 
+const task = taskList.prepareApplication.tasks.business;
+
+const completeAllFields = () => {
   cy.completeCompanyDetailsForm(companyDetailsFormVariables);
-
-  submitButton().click();
 };
+
+const expectedErrors = 1;
+const errorIndex = 0;
 
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - phone number validation - invalid phone number", () => {
   let referenceNumber;
@@ -37,6 +39,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
       referenceNumber = refNumber;
+
+      task.link().click();
+
+      cy.completeCompaniesHouseNumberForm({ companiesHouseNumber: COMPANIES_HOUSE_NUMBER });
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
     });
@@ -51,124 +57,204 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   });
 
   describe(`when ${PHONE_NUMBER} is incorrectly entered`, () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-    });
-
     describe('invalid long landline phone number', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE.LONG);
+        completeAllFields();
       });
 
       it('should display validation errors', () => {
+        cy.submitAndAssertFieldErrors(
+          companyDetails[PHONE_NUMBER],
+          INVALID_PHONE_NUMBERS.LANDLINE.LONG,
+          errorIndex,
+          expectedErrors,
+          errorMessage,
+        );
+
         cy.checkErrorSummaryListHeading();
-        partials.errorSummaryListItems().should('have.length', 1);
-
-        cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
-      });
-
-      it('should focus to the phone number section when clicking the error', () => {
-        partials.errorSummaryListItemLinks().first().click();
-        companyDetails.phoneNumber().should('have.focus');
-      });
-
-      it('should display the validation error for phone number', () => {
-        cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
       });
     });
 
-    it('should display validation errors for international phone number', () => {
-      completeAllFields(INVALID_PHONE_NUMBERS.INTERNATIONAL);
+    describe('international phone number', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-      cy.checkErrorSummaryListHeading();
-      partials.errorSummaryListItems().should('have.length', 1);
+        completeAllFields();
+      });
 
-      cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+      it('should display validation errors', () => {
+        cy.submitAndAssertFieldErrors(
+          companyDetails[PHONE_NUMBER],
+          INVALID_PHONE_NUMBERS.INTERNATIONAL,
+          errorIndex,
+          expectedErrors,
+          errorMessage,
+        );
 
-      cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
+        cy.checkErrorSummaryListHeading();
+      });
     });
 
-    it('should display validation errors for international phone number with full code', () => {
-      completeAllFields(INVALID_PHONE_NUMBERS.INTERNATIONAL_PLUS);
+    describe('international phone number with full code', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-      cy.checkErrorSummaryListHeading();
-      partials.errorSummaryListItems().should('have.length', 1);
+        completeAllFields();
+      });
 
-      cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+      it('should display validation errors', () => {
+        cy.submitAndAssertFieldErrors(
+          companyDetails[PHONE_NUMBER],
+          INVALID_PHONE_NUMBERS.INTERNATIONAL_PLUS,
+          errorIndex,
+          expectedErrors,
+          errorMessage,
+        );
 
-      cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
+        cy.checkErrorSummaryListHeading();
+      });
     });
 
-    it('should display validation errors for mobile number with too many numbers', () => {
-      completeAllFields(INVALID_PHONE_NUMBERS.MOBILE.LONG);
+    describe('mobile number with too many numbers', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-      cy.checkErrorSummaryListHeading();
-      partials.errorSummaryListItems().should('have.length', 1);
-      cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+        completeAllFields();
+      });
 
-      cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
+      it('should display validation errors', () => {
+        cy.submitAndAssertFieldErrors(
+          companyDetails[PHONE_NUMBER],
+          INVALID_PHONE_NUMBERS.MOBILE.LONG,
+          errorIndex,
+          expectedErrors,
+          errorMessage,
+        );
+
+        cy.checkErrorSummaryListHeading();
+      });
     });
 
-    it('should display validation errors for landline number with too few numbers', () => {
-      completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE.SHORT);
+    describe('landline number with too few numbers', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-      cy.checkErrorSummaryListHeading();
-      partials.errorSummaryListItems().should('have.length', 1);
-      cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+        completeAllFields();
+      });
 
-      cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
+      it('should display validation errors', () => {
+        cy.submitAndAssertFieldErrors(
+          companyDetails[PHONE_NUMBER],
+          INVALID_PHONE_NUMBERS.LANDLINE.SHORT,
+          errorIndex,
+          expectedErrors,
+          errorMessage,
+        );
+
+        cy.checkErrorSummaryListHeading();
+      });
     });
 
-    it('should display validation errors for special characters in phone number', () => {
-      completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE.SPECIAL_CHAR);
+    describe('special characters in phone number', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-      cy.checkErrorSummaryListHeading();
-      partials.errorSummaryListItems().should('have.length', 1);
-      cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+        completeAllFields();
+      });
 
-      cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
+      it('should display validation errors', () => {
+        cy.submitAndAssertFieldErrors(
+          companyDetails[PHONE_NUMBER],
+          INVALID_PHONE_NUMBERS.LANDLINE.SPECIAL_CHAR,
+          errorIndex,
+          expectedErrors,
+          errorMessage,
+        );
+
+        cy.checkErrorSummaryListHeading();
+      });
     });
 
-    it('should display validation errors for letters in phone number', () => {
-      completeAllFields(INVALID_PHONE_NUMBERS.LANDLINE.LETTER);
+    describe('letters in phone number', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-      cy.checkErrorSummaryListHeading();
-      partials.errorSummaryListItems().should('have.length', 1);
-      cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+        completeAllFields();
+      });
 
-      cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
+      it('should display validation errors', () => {
+        cy.submitAndAssertFieldErrors(
+          companyDetails[PHONE_NUMBER],
+          INVALID_PHONE_NUMBERS.LANDLINE.LETTER,
+          errorIndex,
+          expectedErrors,
+          errorMessage,
+        );
+
+        cy.checkErrorSummaryListHeading();
+      });
     });
 
-    it('should display validation errors for special characters in mobile number', () => {
-      completeAllFields(INVALID_PHONE_NUMBERS.MOBILE.SPECIAL_CHAR);
+    describe('special characters in mobile number', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-      cy.checkErrorSummaryListHeading();
-      partials.errorSummaryListItems().should('have.length', 1);
-      cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+        completeAllFields();
+      });
 
-      cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
+      it('should display validation errors', () => {
+        cy.submitAndAssertFieldErrors(
+          companyDetails[PHONE_NUMBER],
+          INVALID_PHONE_NUMBERS.MOBILE.SPECIAL_CHAR,
+          errorIndex,
+          expectedErrors,
+          errorMessage,
+        );
+
+        cy.checkErrorSummaryListHeading();
+      });
     });
 
-    it('should display validation errors for too short a number with special chars', () => {
-      completeAllFields(INVALID_PHONE_NUMBERS.TOO_SHORT);
+    describe('too short a number with special chars', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-      cy.checkErrorSummaryListHeading();
-      partials.errorSummaryListItems().should('have.length', 1);
-      cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+        completeAllFields();
+      });
 
-      cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
+      it('should display validation errors', () => {
+        cy.submitAndAssertFieldErrors(
+          companyDetails[PHONE_NUMBER],
+          INVALID_PHONE_NUMBERS.TOO_SHORT,
+          errorIndex,
+          expectedErrors,
+          errorMessage,
+        );
+
+        cy.checkErrorSummaryListHeading();
+      });
     });
 
-    it('should display validation errors for a number above the maximum allowed characters', () => {
-      completeAllFields(INVALID_PHONE_NUMBERS.ABOVE_MAX_CHARS);
+    describe('should display validation errors for a number above the maximum allowed characters', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-      cy.checkErrorSummaryListHeading();
-      partials.errorSummaryListItems().should('have.length', 1);
-      cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+        completeAllFields();
+      });
 
-      cy.checkText(companyDetails.phoneNumberError(), `Error: ${errorMessage}`);
+      it('should display validation errors', () => {
+        cy.submitAndAssertFieldErrors(
+          companyDetails[PHONE_NUMBER],
+          INVALID_PHONE_NUMBERS.ABOVE_MAX_CHARS,
+          errorIndex,
+          expectedErrors,
+          errorMessage,
+        );
+
+        cy.checkErrorSummaryListHeading();
+      });
     });
   });
 });

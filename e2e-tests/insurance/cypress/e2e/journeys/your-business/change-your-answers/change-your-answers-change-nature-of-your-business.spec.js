@@ -38,6 +38,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
 
       task.link().click();
 
+      cy.completeCompaniesHouseNumberForm({});
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();

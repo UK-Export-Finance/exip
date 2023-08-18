@@ -6,13 +6,13 @@ const { ROOT, ALL_SECTIONS } = ROUTES.INSURANCE;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_UNAVAILABLE;
 
-const { COMPANY_DETAILS, COMPANIES_HOUSE_UNAVAILABLE } = ROUTES.INSURANCE.EXPORTER_BUSINESS;
+const { COMPANIES_HOUSE_NUMBER, COMPANIES_HOUSE_UNAVAILABLE } = ROUTES.INSURANCE.EXPORTER_BUSINESS;
 
 context("Insurance - Your business - Companies house unavailable page - I want to enter my business's Companies House Registration Number (CRN) but companies house API is down", () => {
   let referenceNumber;
   let url;
   let allSectionsUrl;
-  let companyDetailsUrl;
+  let companiesHouseNumberUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -22,7 +22,7 @@ context("Insurance - Your business - Companies house unavailable page - I want t
 
       allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      companyDetailsUrl = `${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
+      companiesHouseNumberUrl = `${ROOT}/${referenceNumber}${COMPANIES_HOUSE_NUMBER}`;
     });
   });
 
@@ -59,7 +59,7 @@ context("Insurance - Your business - Companies house unavailable page - I want t
     });
 
     it('should have the correct hrefs for the links on the page', () => {
-      cy.checkLink(companiesHouseUnavailablePage.tryAgainLink(), companyDetailsUrl, CONTENT_STRINGS.TRY_AGAIN);
+      cy.checkLink(companiesHouseUnavailablePage.tryAgainLink(), companiesHouseNumberUrl, CONTENT_STRINGS.TRY_AGAIN);
       cy.checkLink(companiesHouseUnavailablePage.continueLink(), allSectionsUrl, CONTENT_STRINGS.CONTINUE_LINK);
     });
   });
