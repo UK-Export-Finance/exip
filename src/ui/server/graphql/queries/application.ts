@@ -50,8 +50,8 @@ const applicationQuery = gql`
           companyName
           companyNumber
           companyWebsite
-          hasTradingName
-          hasTradingAddress
+          hasDifferentTradingName
+          hasDifferentTradingAddress
           dateOfCreation
           phoneNumber
           financialYearEndDate

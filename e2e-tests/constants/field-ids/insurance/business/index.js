@@ -19,8 +19,8 @@ export const EXPORTER_BUSINESS = {
   },
   YOUR_COMPANY: {
     YOUR_BUSINESS: 'yourBusiness',
-    TRADING_NAME: 'hasTradingName',
-    TRADING_ADDRESS: 'hasTradingAddress',
+    TRADING_NAME: 'hasDifferentTradingName',
+    TRADING_ADDRESS: 'hasDifferentTradingAddress',
     WEBSITE: 'companyWebsite',
     PHONE_NUMBER: 'phoneNumber',
   },
