@@ -1,10 +1,10 @@
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 
 const {
-  POLICY_TYPE,
   POLICY_AND_EXPORTS: {
     SINGLE_POLICY_TYPE,
     MULTIPLE_POLICY_TYPE,
+    TYPE_OF_POLICY: { POLICY_TYPE },
   },
 } = INSURANCE_FIELD_IDS;
 
