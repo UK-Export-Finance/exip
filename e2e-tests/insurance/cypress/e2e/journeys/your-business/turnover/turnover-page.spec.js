@@ -41,6 +41,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
 
       task.link().click();
 
+      cy.completeCompaniesHouseNumberForm({});
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();

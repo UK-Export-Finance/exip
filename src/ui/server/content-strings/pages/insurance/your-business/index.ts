@@ -5,6 +5,11 @@ const SHARED = {
 };
 
 const EXPORTER_BUSINESS = {
+  COMPANIES_HOUSE_NUMBER: {
+    ...SHARED,
+    PAGE_TITLE: 'Enter your Companies House registration number (CRN)',
+    NO_COMPANIES_HOUSE_NUMBER: 'I do not have a UK Companies House registration number',
+  },
   COMPANY_DETAILS: {
     ...SHARED,
     ...COMPANY_DETAILS,

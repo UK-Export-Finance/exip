@@ -1,8 +1,10 @@
 import { FIELD_IDS } from '../../../../constants';
+import { LINKS } from '../../..';
 
 const { EXPORTER_BUSINESS, ACCOUNT } = FIELD_IDS.INSURANCE;
 
 const {
+  COMPANIES_HOUSE_NUMBER,
   COMPANY_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS },
   CONTACT: { POSITION, COMPANY_NAME: CONTACT_COMPANY_NAME, NAME: CONTACT_NAME },
   YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
@@ -14,6 +16,11 @@ const {
 const { EMAIL: ACCOUNT_EMAIL } = ACCOUNT;
 
 export const FIELDS = {
+  COMPANIES_HOUSE_NUMBER: {
+    [COMPANIES_HOUSE_NUMBER]: {
+      HINT: `<p>For example, 8989898 or SC907816. You'll find it on your incorporation certificate or on the <a class="govuk-link" href="${LINKS.EXTERNAL.COMPANIES_HOUSE}">Companies House website</a>.</p>`,
+    },
+  },
   COMPANY_DETAILS: {
     [COMPANY_NUMBER]: {
       SUMMARY: {

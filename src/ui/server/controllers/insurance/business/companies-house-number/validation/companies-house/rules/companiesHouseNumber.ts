@@ -5,9 +5,7 @@ import { FIELD_IDS } from '../../../../../../../constants';
 import generateValidationErrors from '../../../../../../../helpers/validation';
 import { RequestBody, ValidationErrors } from '../../../../../../../../types';
 
-const {
-  COMPANY_HOUSE: { INPUT },
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+const { COMPANIES_HOUSE_NUMBER } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 
@@ -23,12 +21,12 @@ const schema = Joi.string().alphanum().min(6).required();
 const companiesHouseNumber = (formBody: RequestBody, errors: ValidationErrors) => {
   let updatedErrors = errors;
 
-  const validation = schema.validate(formBody[INPUT]);
+  const validation = schema.validate(formBody[COMPANIES_HOUSE_NUMBER]);
 
   // if error, then has failed schema check
   if (validation.error) {
-    const errorMessage = EXPORTER_BUSINESS[INPUT].INCORRECT_FORMAT;
-    updatedErrors = generateValidationErrors(INPUT, errorMessage, errors);
+    const errorMessage = EXPORTER_BUSINESS[COMPANIES_HOUSE_NUMBER].INCORRECT_FORMAT;
+    updatedErrors = generateValidationErrors(COMPANIES_HOUSE_NUMBER, errorMessage, errors);
   }
 
   return updatedErrors;

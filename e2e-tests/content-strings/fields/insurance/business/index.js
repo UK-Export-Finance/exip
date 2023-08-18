@@ -19,10 +19,6 @@ export const EXPORTER_BUSINESS_FIELDS = {
       text: 'Standard industrial classification (SIC) codes and nature of business',
     },
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT]: {
-    LABEL: 'Enter your Companies House registration number (CRN)',
-    HINT: 'For example, 8989898 or SC907816. You\'ll find it on your incorporation certificate or on the Companies House website',
-  },
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NUMBER]: {
     SUMMARY: {
       TITLE: 'Companies House registration number',

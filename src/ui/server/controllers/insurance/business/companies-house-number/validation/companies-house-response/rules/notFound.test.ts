@@ -4,13 +4,11 @@ import { FIELD_IDS } from '../../../../../../../constants';
 import generateValidationErrors from '../../../../../../../helpers/validation';
 import { CompanyHouseResponse } from '../../../../../../../../types';
 
-const {
-  COMPANY_HOUSE: { INPUT },
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+const { COMPANIES_HOUSE_NUMBER } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 
-describe('controllers/insurance/business/company-details/validation/companies-house-response/rules/notFound', () => {
+describe('controllers/insurance/business/companies-house-number/validation/companies-house-response/rules/notFound', () => {
   const mockErrors = {
     summary: [],
     errorList: {},
@@ -23,8 +21,8 @@ describe('controllers/insurance/business/company-details/validation/companies-ho
   it('should return validation error when success is false', () => {
     const result = notFound(mockBody, mockErrors);
 
-    const errorMessage = EXPORTER_BUSINESS[INPUT].NOT_FOUND;
-    const expected = generateValidationErrors(INPUT, errorMessage, mockErrors);
+    const errorMessage = EXPORTER_BUSINESS[COMPANIES_HOUSE_NUMBER].NOT_FOUND;
+    const expected = generateValidationErrors(COMPANIES_HOUSE_NUMBER, errorMessage, mockErrors);
 
     expect(result).toEqual(expected);
   });

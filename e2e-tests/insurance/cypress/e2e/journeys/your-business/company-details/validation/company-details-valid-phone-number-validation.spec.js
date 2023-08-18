@@ -9,6 +9,7 @@ const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
       PHONE_NUMBER,
+      WEBSITE,
     },
   },
 } = FIELD_IDS.INSURANCE;
@@ -17,9 +18,11 @@ let url;
 let yourContactUrl;
 
 const companyDetailsFormVariables = {
-  companiesHouseNumber: COMPANIES_HOUSE_NUMBER,
-  website: WEBSITE_EXAMPLES.VALID,
+  [WEBSITE]: WEBSITE_EXAMPLES.VALID,
 };
+
+const { taskList } = partials.insurancePartials;
+const task = taskList.prepareApplication.tasks.business;
 
 const completeAllFields = (phoneNumber) => {
   companyDetailsFormVariables.phoneNumber = phoneNumber;
@@ -40,7 +43,9 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       yourContactUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.CONTACT}`;
 
-      cy.navigateToUrl(url);
+      task.link().click();
+
+      cy.completeCompaniesHouseNumberForm({ companiesHouseNumber: COMPANIES_HOUSE_NUMBER });
 
       cy.assertUrl(url);
     });
@@ -62,7 +67,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
-      companyDetails.phoneNumber().clear();
+      companyDetails[PHONE_NUMBER].input().clear();
       submitButton().click();
     });
 

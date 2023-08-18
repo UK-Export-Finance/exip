@@ -5,14 +5,13 @@ import {
   COMPANY_EXAMPLE,
   FIELD_VALUES,
 } from '../../../../../../constants';
-import { companyDetails } from '../../../../../../pages/your-business';
-import { submitButton, summaryList } from '../../../../../../pages/shared';
+import { companyDetails, companiesHouseNumber } from '../../../../../../pages/your-business';
+import { submitButton, summaryList, noRadioInput } from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   COMPANY_HOUSE: {
-    INPUT,
     COMPANY_NAME,
     COMPANY_NUMBER,
     COMPANY_INCORPORATED,
@@ -30,6 +29,7 @@ const {
 const {
   ROOT,
   EXPORTER_BUSINESS: {
+    COMPANIES_HOUSE_NUMBER_CHANGE,
     COMPANY_DETAILS_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
@@ -38,6 +38,8 @@ const {
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your business - Change your answers - Company details - As an exporter, I want to change my answers to the company details section', () => {
   let referenceNumber;
@@ -51,13 +53,14 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
       task.link().click();
 
+      cy.completeCompaniesHouseNumberForm({});
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitBrokerForm({});
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 
@@ -78,7 +81,9 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_DETAILS_CHANGE, INPUT);
+        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${COMPANIES_HOUSE_NUMBER_CHANGE}#heading`;
+
+        cy.assertUrl(expectedUrl);
       });
     });
 
@@ -90,13 +95,15 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(companyDetails.companiesHouseSearch(), newAnswer);
+        cy.keyboardInput(companiesHouseNumber.input(), newAnswer);
 
         submitButton().click();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS);
+        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}#heading`;
+
+        cy.assertUrl(expectedUrl);
       });
 
       it('should render the new answer', () => {
@@ -134,13 +141,13 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        companyDetails.tradingNameNoRadioInput().click();
+        noRadioInput().first().click();
 
         submitButton().click();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
       });
 
       it('should render the new answer', () => {
@@ -170,13 +177,13 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        companyDetails.tradingAddressNoRadioInput().click();
+        noRadioInput().eq(1).click();
 
         submitButton().click();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
       });
 
       it('should render the new answer', () => {
@@ -208,13 +215,13 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(companyDetails.phoneNumber(), newAnswer);
+        cy.keyboardInput(companyDetails[PHONE_NUMBER].input(), newAnswer);
 
         submitButton().click();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
       });
 
       it('should render the new answer', () => {
@@ -244,13 +251,13 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(companyDetails.companyWebsite(), newAnswer);
+        cy.keyboardInput(companyDetails[WEBSITE].input(), newAnswer);
 
         submitButton().click();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS);
+        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
       });
 
       it('should render the new answer', () => {

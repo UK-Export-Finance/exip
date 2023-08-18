@@ -14,7 +14,7 @@ import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 const {
   POLICY_AND_EXPORTS,
   EXPORTER_BUSINESS: {
-    COMPANY_DETAILS,
+    COMPANIES_HOUSE_NUMBER,
   },
 } = ROUTES.INSURANCE;
 
@@ -77,12 +77,12 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
     });
 
     describe('form submission', () => {
-      it(`should redirect to ${COMPANY_DETAILS}`, () => {
+      it(`should redirect to ${COMPANIES_HOUSE_NUMBER}`, () => {
         cy.navigateToUrl(url);
 
         submitButton().click();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
+        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${COMPANIES_HOUSE_NUMBER}`;
         cy.assertUrl(expectedUrl);
       });
     });

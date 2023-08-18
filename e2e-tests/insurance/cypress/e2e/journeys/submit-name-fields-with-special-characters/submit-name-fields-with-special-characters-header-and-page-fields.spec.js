@@ -101,6 +101,7 @@ context('Insurance - Name fields - Header and page fields should render special 
 
         tasks.business.link().click();
 
+        cy.completeCompaniesHouseNumberForm({});
         cy.completeAndSubmitCompanyDetails();
 
         cy.completeAndSubmitYourContact({

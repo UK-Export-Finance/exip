@@ -8,7 +8,7 @@ describe('controllers/insurance/business/company-details/validation/company-deta
     const mockFormData = {} as RequestBody;
     const mockErrors = tradingName(mockFormData, {});
 
-    const result = validation(mockFormData, {});
+    const result = validation(mockFormData);
 
     const expected = tradingAddress(mockFormData, mockErrors);
 

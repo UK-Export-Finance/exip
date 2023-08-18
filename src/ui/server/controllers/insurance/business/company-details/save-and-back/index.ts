@@ -1,7 +1,6 @@
 import { FIELD_IDS } from '..';
 import { ROUTES } from '../../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
-import companiesHouseSearch from '../helpers/companies-house-search.helper';
 import constructPayload from '../../../../../helpers/construct-payload';
 import companyDetailsValidation from '../validation/company-details';
 import mapAndSave from '../../map-and-save/company-details';
@@ -39,25 +38,12 @@ const post = async (req: Request, res: Response) => {
 
     const { body } = req;
 
-    // runs companiesHouse validation and api call first for companiesHouse input
-    const response = await companiesHouseSearch(body);
-    let { validationErrors } = response;
-
-    const { company } = response;
-
     const payload = constructPayload(body, FIELD_IDS);
 
-    // run validation on other fields on page
-    validationErrors = companyDetailsValidation(payload, validationErrors);
-
-    // body for update containing companies house info and request body
-    const updateBody = {
-      ...payload,
-      ...company,
-    };
+    const validationErrors = companyDetailsValidation(payload);
 
     // runs save and go back commmand
-    const saveResponse = await mapAndSave.companyDetails(updateBody, application, validationErrors);
+    const saveResponse = await mapAndSave.companyDetails(payload, application, validationErrors);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
