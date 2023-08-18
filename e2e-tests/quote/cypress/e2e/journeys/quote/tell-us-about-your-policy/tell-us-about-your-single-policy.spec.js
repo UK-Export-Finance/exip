@@ -157,10 +157,10 @@ context('Tell us about your single policy page - as an exporter, I want to provi
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.keybaordInput(tellUsAboutYourPolicyPage[POLICY_LENGTH].input(), 1);
+      cy.keyboardInput(tellUsAboutYourPolicyPage[POLICY_LENGTH].input(), 1);
       cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), 100);
       tellUsAboutYourPolicyPage[CURRENCY].input().select(GBP_CURRENCY_CODE);
-      tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select(90);
+      tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
 
       submitButton().click();
 
