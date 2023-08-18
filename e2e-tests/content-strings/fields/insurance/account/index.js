@@ -11,7 +11,7 @@ const PASSWORD_HINT = {
     'an uppercase letter',
     'a lowercase letter',
     'a number',
-    'a special character',
+    'a special character (for example @%!?*)',
   ],
 };
 
