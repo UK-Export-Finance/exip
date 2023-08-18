@@ -36,7 +36,6 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     [BUYER_COUNTRY]: mockSession.submittedData.quoteEligibility[BUYER_COUNTRY],
     [CONTRACT_VALUE]: mockSession.submittedData.quoteEligibility[CONTRACT_VALUE],
     [POLICY_TYPE]: mockSession.submittedData.quoteEligibility[POLICY_TYPE],
-    [POLICY_LENGTH]: mockSession.submittedData.quoteEligibility[POLICY_LENGTH],
   };
 
   beforeEach(() => {
@@ -54,7 +53,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER];
+      const expected = [AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_LENGTH];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -83,6 +82,10 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
           },
           FIELDS: {
+            POLICY_LENGTH: {
+              ID: POLICY_LENGTH,
+              ...FIELDS[POLICY_LENGTH],
+            },
             AMOUNT_CURRENCY: {
               ID: AMOUNT_CURRENCY,
             },
@@ -520,7 +523,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       const validBody = {
         [CURRENCY]: mockAnswers[CURRENCY],
         [CONTRACT_VALUE]: '10',
-        [POLICY_LENGTH]: '40',
+        [POLICY_LENGTH]: '5',
         [PERCENTAGE_OF_COVER]: '95',
       };
 
@@ -531,12 +534,11 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       it('should update the session with submitted data, popluated with full currency object from constructPayload function', async () => {
         await post(req, res);
 
-        const payload = constructPayload(req.body, FIELD_IDS);
+        const payload = constructPayload(validBody, FIELD_IDS);
 
         const expectedPopulatedData = {
           ...payload,
           [CURRENCY]: getCurrencyByCode(mockCurrencies, validBody[CURRENCY]),
-          [PERCENTAGE_OF_COVER]: validBody[PERCENTAGE_OF_COVER],
         };
 
         const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);

@@ -12,7 +12,7 @@ const {
     PERCENTAGE_OF_COVER,
   },
   POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
+  POLICY_LENGTH,
 } = FIELD_IDS;
 
 export const completeAndSubmitBuyerBodyForm = () => {
@@ -32,7 +32,6 @@ export const completeAndSubmitUkContentForm = () => {
 
 export const completeAndSubmitPolicyTypeSingleForm = () => {
   policyTypePage[POLICY_TYPE].single.input().click();
-  cy.keyboardInput(policyTypePage[SINGLE_POLICY_LENGTH].input(), '3');
 
   submitButton().click();
 };
@@ -44,6 +43,7 @@ export const completeAndSubmitPolicyTypeMultiForm = () => {
 };
 
 export const completeAndSubmitTellUsAboutYourSinglePolicyForm = () => {
+  cy.keyboardInput(tellUsAboutYourPolicyPage[POLICY_LENGTH].input(), '3');
   tellUsAboutYourPolicyPage[CURRENCY].input().select(GBP_CURRENCY_CODE);
   cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '150000');
   tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');

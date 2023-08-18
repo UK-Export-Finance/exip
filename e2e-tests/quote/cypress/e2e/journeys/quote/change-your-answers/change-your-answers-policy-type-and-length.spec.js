@@ -12,12 +12,8 @@ const {
     CREDIT_PERIOD,
     MAX_AMOUNT_OWED,
   },
-  MULTIPLE_POLICY_LENGTH,
-  MULTIPLE_POLICY_TYPE,
   POLICY_LENGTH,
   POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
-  SINGLE_POLICY_TYPE,
 } = FIELD_IDS;
 
 const {
@@ -28,13 +24,7 @@ const {
   },
 } = ROUTES;
 
-const submissionData = {
-  [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-  [POLICY_LENGTH]: '3',
-};
-
 const baseUrl = Cypress.config('baseUrl');
-
 const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
 /**
@@ -42,7 +32,7 @@ const url = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
  * via "check answers" and policy type page flow
  */
 const changeFromSingleToMultiple = () => {
-  const row = summaryList.field(SINGLE_POLICY_TYPE);
+  const row = summaryList.field(POLICY_TYPE);
 
   row.changeLink().click();
 
@@ -62,17 +52,21 @@ const changeFromSingleToMultiple = () => {
  * via "check answers" and policy type page flow
  */
 const changeFromMultipleToSingle = () => {
-  const row = summaryList.field(MULTIPLE_POLICY_TYPE);
+  const row = summaryList.field(POLICY_TYPE);
 
   // change from multiple to single
   row.changeLink().click();
 
   policyTypePage[POLICY_TYPE].single.input().click();
-  cy.keyboardInput(policyTypePage[SINGLE_POLICY_LENGTH].input(), '3');
 
   submitButton().click();
 
-  // contract value field now required because it's a single policy
+  /**
+   * "Policy length" and "contract value fields" are now required,
+   * because it's a single policy.
+   */
+  cy.keyboardInput(tellUsAboutYourPolicyPage[POLICY_LENGTH].input(), '3');
+
   cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '150');
   submitButton().click();
 };
@@ -86,7 +80,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       cy.submitQuoteAnswersHappyPathSinglePolicy();
 
       cy.assertUrl(url);
-      row = summaryList.field(SINGLE_POLICY_TYPE);
+      row = summaryList.field(POLICY_TYPE);
     });
 
     beforeEach(() => {
@@ -117,10 +111,6 @@ context('Change your answers - as an exporter, I want to change the details befo
       policyTypePage[POLICY_TYPE].single.input().should('be.checked');
     });
 
-    it(`has originally submitted 'policy length' (${submissionData[POLICY_LENGTH]})`, () => {
-      policyTypePage[SINGLE_POLICY_LENGTH].input().should('have.attr', 'value', submissionData[POLICY_LENGTH]);
-    });
-
     it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
       policyTypePage[POLICY_TYPE].multiple.input().click();
       submitButton().click();
@@ -138,7 +128,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       cy.submitQuoteAnswersHappyPathSinglePolicy();
       cy.assertUrl(url);
 
-      row = summaryList.field(SINGLE_POLICY_TYPE);
+      row = summaryList.field(POLICY_TYPE);
 
       cy.navigateToUrl(url);
 
@@ -159,12 +149,12 @@ context('Change your answers - as an exporter, I want to change the details befo
       const expectedValue = '£120,000';
       cy.checkText(row.value(), expectedValue);
 
-      row = summaryList.field(MULTIPLE_POLICY_TYPE);
+      row = summaryList.field(POLICY_TYPE);
 
       const expectedValue2 = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
       cy.checkText(row.value(), expectedValue2);
 
-      row = summaryList.field(MULTIPLE_POLICY_LENGTH);
+      row = summaryList.field(POLICY_LENGTH);
 
       const expectedValue3 = `${FIELD_VALUES.POLICY_LENGTH.MULTIPLE} months`;
       cy.checkText(row.value(), expectedValue3);
@@ -185,7 +175,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
         changeFromMultipleToSingle();
 
-        row = summaryList.field(SINGLE_POLICY_TYPE);
+        row = summaryList.field(POLICY_TYPE);
       });
 
       beforeEach(() => {
@@ -237,7 +227,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
         cy.navigateToUrl(url);
 
-        row = summaryList.field(SINGLE_POLICY_TYPE);
+        row = summaryList.field(POLICY_TYPE);
 
         changeFromSingleToMultiple();
 
@@ -250,12 +240,12 @@ context('Change your answers - as an exporter, I want to change the details befo
         const expectedValue = '£150';
         cy.checkText(row.value(), expectedValue);
 
-        row = summaryList.field(SINGLE_POLICY_TYPE);
+        row = summaryList.field(POLICY_TYPE);
 
         const expectedValue2 = FIELD_VALUES.POLICY_TYPE.SINGLE;
         cy.checkText(row.value(), expectedValue2);
 
-        row = summaryList.field(SINGLE_POLICY_LENGTH);
+        row = summaryList.field(POLICY_LENGTH);
 
         const expectedValue3 = '3 months';
         cy.checkText(row.value(), expectedValue3);
@@ -279,7 +269,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
         changeFromSingleToMultiple();
 
-        row = summaryList.field(MULTIPLE_POLICY_TYPE);
+        row = summaryList.field(POLICY_TYPE);
       });
 
       beforeEach(() => {

@@ -6,11 +6,7 @@ import {
 } from '../../../../../../commands/quote/forms';
 import { submitButton } from '../../../../../../pages/shared';
 import { policyTypePage } from '../../../../../../pages/quote';
-import {
-  LINKS,
-  FIELDS,
-  PAGES,
-} from '../../../../../../content-strings';
+import { FIELDS, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.QUOTE.POLICY_TYPE;
@@ -94,46 +90,9 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
       cy.checkText(field.hintListItem(3), HINT_STRINGS[2]);
     });
 
-    it('should not render policy length inputs by default', () => {
-      const singlePolicyLength = policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH];
-      singlePolicyLength.input().should('not.be.visible');
-    });
-
-    describe('when clicking `single` policy type', () => {
-      it('should reveal policy length input with label and hint', () => {
-        const singlePolicyType = policyTypePage[FIELD_ID].single;
-        singlePolicyType.label().click();
-
-        const singlePolicyLengthId = FIELD_IDS.SINGLE_POLICY_LENGTH;
-        const singlePolicyLength = policyTypePage[singlePolicyLengthId];
-
-        singlePolicyLength.label().should('be.visible');
-        singlePolicyLength.hint().should('be.visible');
-        singlePolicyLength.input().should('be.visible');
-
-        cy.checkText(singlePolicyLength.label(), FIELDS[singlePolicyLengthId].LABEL);
-
-        singlePolicyLength.hint().invoke('text').then((text) => {
-          expect(text.trim()).includes(FIELDS[singlePolicyLengthId].HINT[0][0].text);
-          expect(text.trim()).includes(FIELDS[singlePolicyLengthId].HINT[0][1].text);
-          expect(text.trim()).includes(FIELDS[singlePolicyLengthId].HINT[0][2].text);
-        });
-
-        const expectedHref = LINKS.EXTERNAL.NBI_FORM;
-        const expectedText = FIELDS[singlePolicyLengthId].HINT[0][1].text;
-
-        cy.checkLink(
-          singlePolicyLength.hintLink(),
-          expectedHref,
-          expectedText,
-        );
-      });
-    });
-
     describe('when form is valid', () => {
       it(`should redirect to ${TELL_US_ABOUT_YOUR_POLICY}`, () => {
         policyTypePage[FIELD_ID].single.input().click();
-        cy.keyboardInput(policyTypePage[FIELD_IDS.SINGLE_POLICY_LENGTH].input(), '8');
 
         submitButton().click();
 

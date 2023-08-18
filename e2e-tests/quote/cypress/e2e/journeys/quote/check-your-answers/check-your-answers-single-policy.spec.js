@@ -20,8 +20,8 @@ const {
     VALID_EXPORTER_LOCATION,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   },
-  SINGLE_POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
+  POLICY_TYPE,
+  POLICY_LENGTH,
 } = FIELD_IDS;
 
 const {
@@ -41,8 +41,8 @@ const submissionData = {
   [BUYER_COUNTRY]: 'Algeria',
   [CREDIT_PERIOD]: '1',
   [PERCENTAGE_OF_COVER]: '90',
-  [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-  [SINGLE_POLICY_LENGTH]: '3',
+  [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+  [POLICY_LENGTH]: '3',
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
 };
 
@@ -156,12 +156,12 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
       });
 
       it('renders `Policy type` key, value and change link', () => {
-        const row = summaryList.field(SINGLE_POLICY_TYPE);
-        const expectedKeyText = FIELDS[SINGLE_POLICY_TYPE].SUMMARY.TITLE;
+        const row = summaryList.field(POLICY_TYPE);
+        const expectedKeyText = FIELDS[POLICY_TYPE].SUMMARY.TITLE;
 
         cy.checkText(row.key(), expectedKeyText);
 
-        cy.checkText(row.value(), submissionData[SINGLE_POLICY_TYPE]);
+        cy.checkText(row.value(), submissionData[POLICY_TYPE]);
 
         const expectedChangeHref = `${POLICY_TYPE_CHANGE}#heading`;
         const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
@@ -174,15 +174,15 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
       });
 
       it('renders `Policy length` key, value and change link', () => {
-        const row = summaryList.field(SINGLE_POLICY_LENGTH);
-        const expectedKeyText = FIELDS[SINGLE_POLICY_LENGTH].SUMMARY.TITLE;
+        const row = summaryList.field(POLICY_LENGTH);
+        const expectedKeyText = FIELDS[POLICY_LENGTH].SUMMARY.TITLE;
 
         cy.checkText(row.key(), expectedKeyText);
 
-        const expectedValue = `${submissionData[SINGLE_POLICY_LENGTH]} months`;
+        const expectedValue = `${submissionData[POLICY_LENGTH]} months`;
         cy.checkText(row.value(), expectedValue);
 
-        const expectedChangeHref = `${POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
+        const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${POLICY_LENGTH}-label`;
         const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
         cy.checkLink(

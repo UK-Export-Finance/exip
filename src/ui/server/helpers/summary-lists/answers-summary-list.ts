@@ -1,6 +1,7 @@
 import { FIELDS, PAGES } from '../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../constants';
 import fieldGroupItem from './generate-field-group-item';
+import { isSinglePolicyType, isMultiPolicyType } from '../policy-type';
 import getFieldById from '../get-field-by-id';
 import generateSummaryListRows from './generate-summary-list-rows';
 import { AnswersContent, AnswersFieldGroups } from '../../../types';
@@ -15,10 +16,8 @@ const {
     HAS_MINIMUM_UK_GOODS_OR_SERVICES,
     VALID_EXPORTER_LOCATION,
   },
-  MULTIPLE_POLICY_LENGTH,
-  MULTIPLE_POLICY_TYPE,
-  SINGLE_POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
+  POLICY_TYPE,
+  POLICY_LENGTH,
 } = FIELD_IDS;
 
 /**
@@ -33,6 +32,8 @@ const {
  * @returns {Object} All quote values in an object structure for GOVUK summary list structure
  */
 const generateFieldGroups = (answers: AnswersContent) => {
+  const policyType = answers[POLICY_TYPE];
+
   const fieldGroups = {
     EXPORT_DETAILS: [],
     POLICY_DETAILS: [],
@@ -59,19 +60,19 @@ const generateFieldGroups = (answers: AnswersContent) => {
     }),
   ];
 
-  if (answers[SINGLE_POLICY_TYPE]) {
+  if (isSinglePolicyType(policyType)) {
     fieldGroups.POLICY_DETAILS = [
       fieldGroupItem({
-        field: getFieldById(FIELDS, SINGLE_POLICY_TYPE),
+        field: getFieldById(FIELDS, POLICY_TYPE),
         data: answers,
         renderChangeLink: true,
         href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`,
       }),
       fieldGroupItem({
-        field: getFieldById(FIELDS, SINGLE_POLICY_LENGTH),
+        field: getFieldById(FIELDS, POLICY_LENGTH),
         data: answers,
         renderChangeLink: true,
-        href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
+        href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${POLICY_LENGTH}-label`,
       }),
       fieldGroupItem({
         field: getFieldById(FIELDS, CONTRACT_VALUE),
@@ -88,16 +89,16 @@ const generateFieldGroups = (answers: AnswersContent) => {
     ];
   }
 
-  if (answers[MULTIPLE_POLICY_TYPE]) {
+  if (isMultiPolicyType(policyType)) {
     fieldGroups.POLICY_DETAILS = [
       fieldGroupItem({
-        field: getFieldById(FIELDS, MULTIPLE_POLICY_TYPE),
+        field: getFieldById(FIELDS, POLICY_TYPE),
         data: answers,
         renderChangeLink: true,
         href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`,
       }),
       fieldGroupItem({
-        field: getFieldById(FIELDS, MULTIPLE_POLICY_LENGTH),
+        field: getFieldById(FIELDS, POLICY_LENGTH),
         data: answers,
       }),
       fieldGroupItem({

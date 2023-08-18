@@ -17,10 +17,8 @@ const { INSURANCE } = ROUTES;
 const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = INSURANCE;
 
 const {
-  TYPE_OF_POLICY: { POLICY_TYPE },
+  TYPE_OF_POLICY: { POLICY_TYPE: FIELD_ID },
 } = POLICY_AND_EXPORTS_FIELD_IDS;
-
-const FIELD_ID = POLICY_TYPE;
 
 describe('controllers/insurance/policy-and-export/type-of-policy', () => {
   let req: Request;
@@ -50,7 +48,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
       const result = pageVariables(refNumber);
 
       const expected = {
-        FIELD: FIELDS[POLICY_TYPE],
+        FIELD: FIELDS[FIELD_ID],
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY_SAVE_AND_BACK}`,
       };
 

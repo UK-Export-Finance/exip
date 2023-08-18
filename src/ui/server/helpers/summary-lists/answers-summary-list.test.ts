@@ -18,18 +18,15 @@ const {
     VALID_EXPORTER_LOCATION,
   },
   POLICY_TYPE,
-  MULTIPLE_POLICY_LENGTH,
-  MULTIPLE_POLICY_TYPE,
-  SINGLE_POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
+  POLICY_LENGTH,
 } = FIELD_IDS;
 
 describe('server/helpers/summary-lists/answers-summary-list', () => {
   describe('generateFieldGroups - no policy type', () => {
     it('should map over each field group with value from submittedData', () => {
       const mockAnswersContent = mapAnswersToContent(mockSession.submittedData.quoteEligibility);
-      delete mockAnswersContent[SINGLE_POLICY_TYPE];
-      delete mockAnswersContent[SINGLE_POLICY_LENGTH];
+      delete mockAnswersContent[POLICY_TYPE];
+      delete mockAnswersContent[POLICY_LENGTH];
 
       const result = generateFieldGroups(mockAnswersContent);
 
@@ -61,7 +58,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
     });
 
     describe('when policy type is single', () => {
-      it(`should add a ${SINGLE_POLICY_TYPE} object to POLICY_DETAILS`, () => {
+      it(`should add a ${POLICY_TYPE} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
           ...mapAnswersToContent({
             ...mockSession.submittedData.quoteEligibility,
@@ -74,7 +71,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const [expectedField] = result.POLICY_DETAILS;
 
         const expected = fieldGroupItem({
-          field: getFieldById(FIELDS, SINGLE_POLICY_TYPE),
+          field: getFieldById(FIELDS, POLICY_TYPE),
           data: mockAnswersContent,
           renderChangeLink: true,
           href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`,
@@ -83,12 +80,10 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         expect(expectedField).toEqual(expected);
       });
 
-      it(`should add a ${SINGLE_POLICY_LENGTH} object to POLICY_DETAILS`, () => {
+      it(`should add a ${POLICY_LENGTH} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
           ...mapAnswersToContent(mockSession.submittedData.quoteEligibility),
-          [SINGLE_POLICY_TYPE]: {
-            text: FIELD_VALUES.POLICY_TYPE.SINGLE,
-          },
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
         };
 
         const result = generateFieldGroups(mockAnswersContent);
@@ -96,10 +91,10 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         const { 1: expectedField } = result.POLICY_DETAILS;
 
         const expected = fieldGroupItem({
-          field: getFieldById(FIELDS, SINGLE_POLICY_LENGTH),
+          field: getFieldById(FIELDS, POLICY_LENGTH),
           data: mockAnswersContent,
           renderChangeLink: true,
-          href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
+          href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${POLICY_LENGTH}-label`,
         });
 
         expect(expectedField).toEqual(expected);
@@ -108,9 +103,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
       it(`should add ${CONTRACT_VALUE} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
           ...mapAnswersToContent(mockSession.submittedData.quoteEligibility),
-          [SINGLE_POLICY_TYPE]: {
-            text: FIELD_VALUES.POLICY_TYPE.SINGLE,
-          },
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
         };
 
         const result = generateFieldGroups(mockAnswersContent);
@@ -130,9 +123,7 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
       it(`should add ${PERCENTAGE_OF_COVER} object to POLICY_DETAILS`, () => {
         const mockAnswersContent = {
           ...mapAnswersToContent(mockSession.submittedData.quoteEligibility),
-          [SINGLE_POLICY_TYPE]: {
-            text: FIELD_VALUES.POLICY_TYPE.SINGLE,
-          },
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
         };
 
         const result = generateFieldGroups(mockAnswersContent);
@@ -156,27 +147,23 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
       beforeEach(() => {
         mockAnswersContent = {
           ...mapAnswersToContent(mockSession.submittedData.quoteEligibility),
-          [MULTIPLE_POLICY_TYPE]: {
-            text: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
-          },
-          [MULTIPLE_POLICY_LENGTH]: {
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+          [POLICY_LENGTH]: {
             text: 2,
           },
           [MAX_AMOUNT_OWED]: {
             text: '£12,345',
           },
         };
-
-        delete mockAnswersContent[SINGLE_POLICY_TYPE];
       });
 
-      it(`should add a ${MULTIPLE_POLICY_TYPE} object to POLICY_DETAILS`, () => {
+      it(`should add a ${POLICY_TYPE} object to POLICY_DETAILS`, () => {
         const result = generateFieldGroups(mockAnswersContent);
 
         const [expectedField] = result.POLICY_DETAILS;
 
         const expected = fieldGroupItem({
-          field: getFieldById(FIELDS, MULTIPLE_POLICY_TYPE),
+          field: getFieldById(FIELDS, POLICY_TYPE),
           data: mockAnswersContent,
           renderChangeLink: true,
           href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#heading`,
@@ -185,13 +172,13 @@ describe('server/helpers/summary-lists/answers-summary-list', () => {
         expect(expectedField).toEqual(expected);
       });
 
-      it(`should add a ${MULTIPLE_POLICY_LENGTH} object to POLICY_DETAILS with single policy length field values`, () => {
+      it(`should add a ${POLICY_LENGTH} object to POLICY_DETAILS with policy length field values`, () => {
         const result = generateFieldGroups(mockAnswersContent);
 
         const { 1: expectedField } = result.POLICY_DETAILS;
 
         const expected = fieldGroupItem({
-          field: getFieldById(FIELDS, MULTIPLE_POLICY_LENGTH),
+          field: getFieldById(FIELDS, POLICY_LENGTH),
           data: mockAnswersContent,
         });
 

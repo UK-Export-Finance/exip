@@ -15,17 +15,14 @@ const {
     MAX_AMOUNT_OWED,
     PERCENTAGE_OF_COVER,
   },
-  MULTIPLE_POLICY_LENGTH,
   POLICY_TYPE,
   QUOTE,
-  SINGLE_POLICY_LENGTH,
+  POLICY_LENGTH,
 } = FIELD_IDS;
 
 const {
   QUOTE: {
     BUYER_COUNTRY_CHANGE,
-    POLICY_TYPE_CHANGE,
-    TELL_US_ABOUT_YOUR_POLICY,
     TELL_US_ABOUT_YOUR_POLICY_CHANGE,
     YOUR_QUOTE,
     CHECK_YOUR_ANSWERS,
@@ -149,66 +146,41 @@ context('Your quote page - change answers (single policy type to multiple policy
   });
 
   describe('change policy type to multi', () => {
-    const row = summaryList.field(SINGLE_POLICY_LENGTH);
-
     beforeEach(() => {
+      /**
+       * Go back to the previous page via browser back button.
+       * The quote page does not have a back or change link for policy type.
+       */
+      cy.go('back');
+
+      const row = summaryList.field(POLICY_TYPE);
       row.changeLink().click();
     });
 
-    it(`clicking 'change' redirects to ${POLICY_TYPE_CHANGE}`, () => {
-      const expectedUrl = `${baseUrl}${POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
-
-      cy.assertUrl(expectedUrl);
-    });
-
-    it('has a hash tag and label ID in the URL so that the element gains focus and user has context of what they want to change', () => {
-      const expectedUrl = `${baseUrl}${POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
-
-      cy.assertUrl(expectedUrl);
-    });
-
-    it('renders a back link with correct url', () => {
-      const expectedHref = `${baseUrl}${YOUR_QUOTE}`;
-
-      cy.checkLink(
-        backLink(),
-        expectedHref,
-        LINKS.BACK,
-      );
-    });
-
-    it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting a new answer`, () => {
+    it('renders the new answers and `insured for` in the quote after submitting a new answer', () => {
       policyTypePage[POLICY_TYPE].multiple.input().click();
       submitButton().click();
 
-      const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}#${SINGLE_POLICY_LENGTH}-label`;
-
-      cy.assertUrl(expectedUrl);
-    });
-
-    it('renders the new answers in the quote', () => {
-      policyTypePage[POLICY_TYPE].multiple.input().click();
       submitButton().click();
-
       // max amount owed and credit period fields are now required because it's a multiple policy
       cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '120000');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
 
-      // form submit
+      // submit the "tell us about your policy" form
       submitButton().click();
 
-      // submit check your answers
+      // submit the "check your answers" form
       submitButton().click();
 
-      const expectedUrl = `${baseUrl}${YOUR_QUOTE}#${SINGLE_POLICY_LENGTH}-label`;
+      const expectedUrl = `${baseUrl}${YOUR_QUOTE}#heading`;
 
       cy.assertUrl(expectedUrl);
 
       const insuredFor = summaryList.field(QUOTE.INSURED_FOR);
 
-      cy.checkText(insuredFor.value(), '£108,000.00');
+      cy.checkText(insuredFor.value(), '£84,000.00');
 
-      const policyLength = summaryList.field(MULTIPLE_POLICY_LENGTH);
+      const policyLength = summaryList.field(POLICY_LENGTH);
 
       cy.checkText(policyLength.value(), `${FIELD_VALUES.POLICY_LENGTH.MULTIPLE} months`);
     });

@@ -21,6 +21,7 @@ const {
     CREDIT_PERIOD,
     AMOUNT_CURRENCY,
   },
+  POLICY_LENGTH,
 } = FIELD_IDS;
 
 const {
@@ -52,7 +53,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
     cy.saveSession();
   });
 
-  it('renders core page elements', () => {
+  it('should render core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.SINGLE_POLICY_PAGE_TITLE,
       currentHref: TELL_US_ABOUT_YOUR_POLICY,
@@ -67,7 +68,18 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       cy.navigateToUrl(url);
     });
 
-    it('renders `currency and amount` legend', () => {
+    it('should render policy length input with label and hint', () => {
+      const fieldId = POLICY_LENGTH;
+      const field = tellUsAboutYourPolicyPage[fieldId];
+
+      field.input().should('be.visible');
+
+      cy.checkText(field.label(), FIELDS[fieldId].LABEL);
+
+      cy.checkText(field.hint(), FIELDS[fieldId].HINT);
+    });
+
+    it('should render `currency and amount` legend', () => {
       const fieldId = AMOUNT_CURRENCY;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
@@ -76,7 +88,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       cy.checkText(field.legend(), FIELDS[fieldId].SINGLE_POLICY.LEGEND);
     });
 
-    it('renders `currency` legend, label and input', () => {
+    it('should render `currency` legend, label and input', () => {
       const fieldId = CURRENCY;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
@@ -87,7 +99,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       field.input().should('exist');
     });
 
-    it('renders only supported currencies in alphabetical order', () => {
+    it('should render only supported currencies in alphabetical order', () => {
       const fieldId = CURRENCY;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
@@ -97,7 +109,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       field.input().select(3).should('have.value', SUPPORTED_CURRENCIES[2]);
     });
 
-    it('renders `contract value` label and input', () => {
+    it('should render `contract value` label and input', () => {
       const fieldId = CONTRACT_VALUE;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
@@ -108,7 +120,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       field.input().should('exist');
     });
 
-    it('renders `percentage of cover` label, no hint and input with correct options', () => {
+    it('should render `percentage of cover` label, no hint and input with correct options', () => {
       const fieldId = PERCENTAGE_OF_COVER;
 
       const field = tellUsAboutYourPolicyPage[fieldId];
@@ -145,7 +157,8 @@ context('Tell us about your single policy page - as an exporter, I want to provi
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '100');
+      cy.keyboardInput(tellUsAboutYourPolicyPage[POLICY_LENGTH].input(), 1);
+      cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), 100);
       tellUsAboutYourPolicyPage[CURRENCY].input().select(GBP_CURRENCY_CODE);
       tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
 

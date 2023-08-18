@@ -15,7 +15,6 @@ import {
 const {
   ELIGIBILITY: { CREDIT_PERIOD },
   POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
 const {
@@ -84,7 +83,6 @@ context('Change your answers (policy type) - multiple times via back button - as
       cy.assertUrl(policyTypeUrl);
 
       policyTypePage[POLICY_TYPE].single.input().click();
-      cy.keyboardInput(policyTypePage[SINGLE_POLICY_LENGTH].input(), '2');
 
       submitButton().click();
 
@@ -114,7 +112,6 @@ context('Change your answers (policy type) - multiple times via back button - as
       cy.assertUrl(policyTypeUrl);
 
       policyTypePage[POLICY_TYPE].single.input().click();
-      cy.keyboardInput(policyTypePage[SINGLE_POLICY_LENGTH].input(), '2');
 
       submitButton().click();
 

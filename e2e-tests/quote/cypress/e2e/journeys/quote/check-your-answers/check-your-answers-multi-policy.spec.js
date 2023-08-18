@@ -19,8 +19,8 @@ const {
     VALID_EXPORTER_LOCATION,
     MAX_AMOUNT_OWED,
   },
-  MULTIPLE_POLICY_LENGTH,
-  MULTIPLE_POLICY_TYPE,
+  POLICY_LENGTH,
+  POLICY_TYPE,
 } = FIELD_IDS;
 
 const {
@@ -39,7 +39,7 @@ const submissionData = {
   [BUYER_COUNTRY]: 'Algeria',
   [CREDIT_PERIOD]: '1',
   [PERCENTAGE_OF_COVER]: '90',
-  [MULTIPLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+  [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
 };
 
@@ -137,12 +137,12 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
     });
 
     it('renders `Policy type` key, value and change link', () => {
-      const row = summaryList.field(MULTIPLE_POLICY_TYPE);
-      const expectedKeyText = FIELDS[MULTIPLE_POLICY_TYPE].SUMMARY.TITLE;
+      const row = summaryList.field(POLICY_TYPE);
+      const expectedKeyText = FIELDS[POLICY_TYPE].SUMMARY.TITLE;
 
       cy.checkText(row.key(), expectedKeyText);
 
-      cy.checkText(row.value(), submissionData[MULTIPLE_POLICY_TYPE]);
+      cy.checkText(row.value(), submissionData[POLICY_TYPE]);
 
       const expectedChangeHref = `${POLICY_TYPE_CHANGE}#heading`;
       const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
@@ -155,8 +155,8 @@ context('Check your answers page (multiple policy) - as an exporter, I want to r
     });
 
     it('renders `Policy length` key and value (no change link)', () => {
-      const row = summaryList.field(MULTIPLE_POLICY_LENGTH);
-      const expectedKeyText = FIELDS[MULTIPLE_POLICY_LENGTH].SUMMARY.TITLE;
+      const row = summaryList.field(POLICY_LENGTH);
+      const expectedKeyText = FIELDS[POLICY_LENGTH].SUMMARY.TITLE;
 
       cy.checkText(row.key(), expectedKeyText);
 

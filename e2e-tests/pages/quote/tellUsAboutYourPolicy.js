@@ -9,10 +9,17 @@ const {
     PERCENTAGE_OF_COVER,
     CREDIT_PERIOD,
   },
+  POLICY_LENGTH,
 } = FIELD_IDS;
 
 const tellUsAboutYourPolicyPage = {
   description: () => cy.get('[data-cy="description"]'),
+  [POLICY_LENGTH]: {
+    label: () => cy.get(`[data-cy="${POLICY_LENGTH}-label"]`),
+    hint: () => cy.get(`[data-cy="${POLICY_LENGTH}-hint"]`),
+    input: () => cy.get(`[data-cy="${POLICY_LENGTH}-input"]`),
+    errorMessage: () => cy.get(`[data-cy="${POLICY_LENGTH}-error-message"]`),
+  },
   [AMOUNT_CURRENCY]: {
     legend: () => cy.get(`[data-cy="${AMOUNT_CURRENCY}-legend"]`),
   },

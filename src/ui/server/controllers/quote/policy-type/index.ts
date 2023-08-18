@@ -9,19 +9,15 @@ import { isSinglePolicyType } from '../../../helpers/policy-type';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
 
-const { MULTIPLE_POLICY_TYPE, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH, SINGLE_POLICY_TYPE } = SHARED_FIELD_IDS;
+const { MULTIPLE_POLICY_TYPE, POLICY_TYPE, SINGLE_POLICY_TYPE } = SHARED_FIELD_IDS;
 
-export const FIELD_IDS = [POLICY_TYPE, SINGLE_POLICY_LENGTH, MULTIPLE_POLICY_TYPE];
+export const FIELD_IDS = [POLICY_TYPE, MULTIPLE_POLICY_TYPE];
 
 export const PAGE_VARIABLES = {
   FIELDS: {
     MULTIPLE_POLICY_TYPE: {
       ID: MULTIPLE_POLICY_TYPE,
       ...FIELDS[POLICY_TYPE],
-    },
-    POLICY_LENGTH: {
-      ID: POLICY_LENGTH,
-      ...FIELDS[POLICY_LENGTH],
     },
     POLICY_TYPE: {
       ID: POLICY_TYPE,
@@ -30,10 +26,6 @@ export const PAGE_VARIABLES = {
     SINGLE_POLICY_TYPE: {
       ID: SINGLE_POLICY_TYPE,
       ...FIELDS[POLICY_TYPE],
-    },
-    SINGLE_POLICY_LENGTH: {
-      ID: SINGLE_POLICY_LENGTH,
-      ...FIELDS[SINGLE_POLICY_LENGTH],
     },
   },
 };
@@ -68,7 +60,6 @@ export const post = (req: Request, res: Response) => {
   if (isSinglePolicyType(payload[POLICY_TYPE])) {
     populatedData = {
       [POLICY_TYPE]: payload[POLICY_TYPE],
-      [POLICY_LENGTH]: payload[SINGLE_POLICY_LENGTH],
     };
   }
 

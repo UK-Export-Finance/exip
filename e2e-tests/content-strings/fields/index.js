@@ -148,37 +148,9 @@ export const FIELDS = {
       TITLE: 'Policy type',
     },
   },
-  [FIELD_IDS.SINGLE_POLICY_TYPE]: {
-    SUMMARY: {
-      TITLE: 'Policy type',
-    },
-  },
-  [FIELD_IDS.MULTIPLE_POLICY_TYPE]: {
-    SUMMARY: {
-      TITLE: 'Policy type',
-    },
-  },
-  [FIELD_IDS.SINGLE_POLICY_LENGTH]: {
+  [FIELD_IDS.POLICY_LENGTH]: {
     LABEL: 'How long do you need the policy for?',
-    HINT: [
-      [
-        {
-          text: 'You can get an online quote for up to 22 months. For over 22 months',
-        },
-        {
-          text: 'fill in this form',
-          href: LINKS.EXTERNAL.NBI_FORM,
-        },
-        {
-          text: ' and email it to UKEF.',
-        },
-      ],
-    ],
-    SUMMARY: {
-      TITLE: 'Policy length',
-    },
-  },
-  [FIELD_IDS.MULTIPLE_POLICY_LENGTH]: {
+    HINT: 'You can get an online quote for up to 22 months.',
     SUMMARY: {
       TITLE: 'Policy length',
     },

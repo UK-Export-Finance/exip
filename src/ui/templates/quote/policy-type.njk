@@ -1,10 +1,8 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% import '../components/details-text.njk' as detailsText %}
-{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
 {% import '../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
@@ -44,9 +42,9 @@
         {% endset %}
 
         {% set singlePolicyLengthHintHtml %}
-          <div data-cy="{{ FIELDS.SINGLE_POLICY_LENGTH.ID }}-hint">
+          <div data-cy="{{ FIELDS.POLICY_LENGTH.ID }}-hint">
             {{ detailsText.render({
-              items: FIELDS.SINGLE_POLICY_LENGTH.HINT
+              items: FIELDS.POLICY_LENGTH.HINT
             }) }}
           </div>
         {% endset %}
@@ -58,48 +56,6 @@
             {% endfor %}
           </ul>
         {% endset %}
-
-        {% set singlePolicyLengthHtml %}
-          {{ govukInput({
-            label: {
-              text: FIELDS.SINGLE_POLICY_LENGTH.LABEL,
-              attributes: {
-                id: FIELDS.SINGLE_POLICY_LENGTH.ID + '-label',
-                'data-cy': FIELDS.SINGLE_POLICY_LENGTH.ID + '-label'
-              }
-            },
-            hint: {
-              html: singlePolicyLengthHintHtml
-            },
-            classes: "govuk-input--width-4 govuk-!-margin-bottom-4",
-            attributes: {
-              'data-cy': FIELDS.SINGLE_POLICY_LENGTH.ID + '-input'
-            },
-            id: FIELDS.SINGLE_POLICY_LENGTH.ID,
-            name: FIELDS.SINGLE_POLICY_LENGTH.ID,
-            inputmode: "numeric",
-            pattern: "[0-9]*",
-            suffix: {
-              text: "months"
-            },
-            spellcheck: false,
-            errorMessage: validationErrors.errorList[FIELDS.SINGLE_POLICY_LENGTH.ID]and {
-              text: validationErrors.errorList[FIELDS.SINGLE_POLICY_LENGTH.ID].text,
-              attributes: {
-                "data-cy": FIELDS.SINGLE_POLICY_LENGTH.ID + "-error-message"
-              }
-            },
-            value: submittedValues[FIELDS.POLICY_LENGTH.ID]
-          }) }}
-        {% endset %}
-
-        {% if validationErrors.errorList[FIELDS.POLICY_TYPE.ID] %}
-          {% set validationError = validationErrors.errorList[FIELDS.POLICY_TYPE.ID] %}
-        {% endif %}
-
-        {% if validationErrors.errorList[FIELDS.SINGLE_POLICY_TYPE.ID] %}
-          {% set validationError = validationErrors.errorList[FIELDS.SINGLE_POLICY_TYPE.ID] %}
-        {% endif %}
 
         {{ govukRadios({
           idPrefix: FIELDS.POLICY_TYPE.ID,
@@ -128,10 +84,7 @@
               attributes: {
                 'data-cy': FIELDS.POLICY_TYPE.OPTIONS.SINGLE.ID + '-input'
               },
-              checked: submittedValues[FIELDS.POLICY_TYPE.ID] === FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE,
-              conditional: {
-                html: singlePolicyLengthHtml
-              }
+              checked: submittedValues[FIELDS.POLICY_TYPE.ID] === FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE
             },
             {
               id: FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.ID,

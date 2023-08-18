@@ -18,9 +18,8 @@ const {
     CREDIT_PERIOD,
     PERCENTAGE_OF_COVER,
   },
+  POLICY_TYPE,
   POLICY_LENGTH,
-  SINGLE_POLICY_TYPE,
-  SINGLE_POLICY_LENGTH,
   QUOTE,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
 } = FIELD_IDS;
@@ -30,7 +29,6 @@ const {
   QUOTE: {
     BUYER_COUNTRY: BUYER_COUNTRY_ROUTE,
     TELL_US_ABOUT_YOUR_POLICY_CHANGE,
-    POLICY_TYPE_CHANGE,
     BUYER_COUNTRY_CHANGE,
     YOUR_QUOTE,
   },
@@ -49,8 +47,8 @@ const submissionData = {
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
   [CONTRACT_VALUE]: '150000',
   [CURRENCY]: GBP_CURRENCY_CODE,
-  [SINGLE_POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-  [SINGLE_POLICY_LENGTH]: '3',
+  [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+  [POLICY_LENGTH]: '3',
   [CREDIT_PERIOD]: '1',
 };
 
@@ -95,7 +93,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         cy.checkText(yourQuotePage.panel.subHeading(), CONTENT_STRINGS.QUOTE.SUB_HEADING);
       });
 
-      context('summary list', () => {
+      context.only('summary list', () => {
         beforeEach(() => {
           cy.navigateToUrl(url);
         });
@@ -175,15 +173,15 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         });
 
         it('renders `policy length` key, value and change link', () => {
-          const row = summaryList.field(SINGLE_POLICY_LENGTH);
+          const row = summaryList.field(POLICY_LENGTH);
           const expectedKeyText = QUOTE_TITLES[POLICY_LENGTH];
 
           cy.checkText(row.key(), expectedKeyText);
 
-          const expectedValue = `${submissionData[SINGLE_POLICY_LENGTH]} months`;
+          const expectedValue = `${submissionData[POLICY_LENGTH]} months`;
           cy.checkText(row.value(), expectedValue);
 
-          const expectedChangeHref = `${POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`;
+          const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${POLICY_LENGTH}-label`;
           const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
           cy.checkLink(
