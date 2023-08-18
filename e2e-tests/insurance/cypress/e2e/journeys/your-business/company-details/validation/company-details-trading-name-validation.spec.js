@@ -1,5 +1,5 @@
 import { companyDetails } from '../../../../../../../pages/your-business';
-import { submitButton } from '../../../../../../../pages/shared';
+import { submitButton, yesRadioInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import partials from '../../../../../../../partials';
 import { ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER } from '../../../../../../../constants';
@@ -8,7 +8,6 @@ const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
       TRADING_NAME,
-      TRADING_ADDRESS,
     },
   },
 } = FIELD_IDS.INSURANCE;
@@ -41,7 +40,7 @@ describe("Insurance - Your business - Company details page- As an Exporter I wan
 
     cy.navigateToUrl(url);
 
-    companyDetails[TRADING_ADDRESS].yesRadioInput().click();
+    yesRadioInput().eq(1).click();
 
     submitButton().click();
   });
