@@ -7,6 +7,7 @@ const {
 } = FIELD_IDS;
 
 const {
+  SEARCH,
   COMPANY_ADDRESS,
   REGISTED_OFFICE_ADDRESS,
   COMPANY_SIC,

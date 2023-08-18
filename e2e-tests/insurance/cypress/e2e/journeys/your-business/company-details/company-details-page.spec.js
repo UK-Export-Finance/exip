@@ -1,6 +1,6 @@
 import { companyDetails } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
-import { saveAndBackButton } from '../../../../../../pages/shared';
+import { saveAndBackButton, yesRadioInput, noRadioInput } from '../../../../../../pages/shared';
 import { PAGES, BUTTONS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER } from '../../../../../../constants';
@@ -120,9 +120,9 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     it('should display the trading address radios', () => {
       cy.checkText(companyDetails[TRADING_ADDRESS].label(), FIELDS[TRADING_ADDRESS].LABEL);
 
-      cy.checkAriaLabel(companyDetails[TRADING_ADDRESS].yesRadioInput(), `${FIELDS[TRADING_ADDRESS].LABEL} Yes`);
+      cy.checkAriaLabel(yesRadioInput().eq(1), `${FIELDS[TRADING_ADDRESS].LABEL} Yes`);
 
-      cy.checkAriaLabel(companyDetails[TRADING_ADDRESS].noRadioInput(), `${FIELDS[TRADING_ADDRESS].LABEL} No`);
+      cy.checkAriaLabel(noRadioInput().eq(1), `${FIELDS[TRADING_ADDRESS].LABEL} No`);
     });
 
     it('should display the company website text area', () => {
