@@ -6,7 +6,7 @@ import {
   FIELD_VALUES,
 } from '../../../../../../constants';
 import { companyDetails, companiesHouseNumber } from '../../../../../../pages/your-business';
-import { submitButton, summaryList } from '../../../../../../pages/shared';
+import { submitButton, summaryList, noRadioInput } from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -135,7 +135,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        companyDetails[TRADING_NAME].noRadioInput().click();
+        noRadioInput().first().click();
 
         submitButton().click();
       });
@@ -171,7 +171,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        companyDetails[TRADING_ADDRESS].noRadioInput().click();
+        noRadioInput().eq(1).click();
 
         submitButton().click();
       });

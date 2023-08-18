@@ -28,9 +28,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
   let referenceNumber;
   let url;
 
-  const companyDetailsFormVariables = {
-    companiesHouseNumber: COMPANIES_HOUSE_NUMBER,
-  };
+  const companyDetailsFormVariables = {};
 
   before(() => {
     cy.completeSignInAndGoToApplication().then((refNumber) => {
@@ -78,7 +76,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should not display validation errors and redirect to task list', () => {
       cy.navigateToUrl(url);
 
-      companyDetailsFormVariables.phoneNumber = INVALID_PHONE_NUMBERS.LANDLINE.SPECIAL_CHAR;
+      companyDetailsFormVariables[PHONE_NUMBER] = INVALID_PHONE_NUMBERS.LANDLINE.SPECIAL_CHAR;
 
       cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
@@ -101,8 +99,8 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should not display validation errors and redirect to task list', () => {
       cy.navigateToUrl(url);
 
-      companyDetailsFormVariables.phoneNumber = VALID_PHONE_NUMBERS.LANDLINE.NORMAL;
-      companyDetailsFormVariables.website = WEBSITE_EXAMPLES.INVALID;
+      companyDetailsFormVariables[PHONE_NUMBER] = VALID_PHONE_NUMBERS.LANDLINE.NORMAL;
+      companyDetailsFormVariables[WEBSITE] = WEBSITE_EXAMPLES.INVALID;
 
       cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
@@ -126,8 +124,8 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should not display validation errors and redirect to task list if all fields are entered correctly', () => {
       cy.navigateToUrl(url);
 
-      companyDetailsFormVariables.phoneNumber = VALID_PHONE_NUMBERS.LANDLINE.NORMAL;
-      companyDetailsFormVariables.website = WEBSITE_EXAMPLES.VALID;
+      companyDetailsFormVariables[PHONE_NUMBER] = VALID_PHONE_NUMBERS.LANDLINE.NORMAL;
+      companyDetailsFormVariables[WEBSITE] = WEBSITE_EXAMPLES.VALID;
 
       cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 

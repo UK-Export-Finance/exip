@@ -88,8 +88,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
   describe('continue to next page', () => {
     const companyDetailsFormVariables = {
-      phoneNumber: VALID_PHONE_NUMBERS.LANDLINE.NORMAL,
-      website: WEBSITE_EXAMPLES.VALID,
+      [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE.NORMAL,
+      [WEBSITE]: WEBSITE_EXAMPLES.VALID,
     };
 
     describe('when required fields entered correctly', () => {

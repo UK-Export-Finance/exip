@@ -9,6 +9,7 @@ const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
       PHONE_NUMBER,
+      WEBSITE,
     },
   },
 } = FIELD_IDS.INSURANCE;
@@ -17,8 +18,7 @@ let url;
 let yourContactUrl;
 
 const companyDetailsFormVariables = {
-  companiesHouseNumber: COMPANIES_HOUSE_NUMBER,
-  website: WEBSITE_EXAMPLES.VALID,
+  [WEBSITE]: WEBSITE_EXAMPLES.VALID,
 };
 
 const { taskList } = partials.insurancePartials;

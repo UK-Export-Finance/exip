@@ -1,4 +1,4 @@
-import { submitButton, status, summaryList } from '../../../../../../../pages/shared';
+import { submitButton, status, summaryList, noRadioInput } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import {
   FIELD_VALUES,
@@ -163,7 +163,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
         summaryList.field(fieldId).changeLink().click();
 
-        companyDetails[TRADING_NAME].noRadioInput().click();
+        noRadioInput().first().click();
 
         submitButton().click();
       });
@@ -204,7 +204,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
         summaryList.field(fieldId).changeLink().click();
 
-        companyDetails[TRADING_ADDRESS].noRadioInput().click();
+        noRadioInput().eq(1).click();
 
         submitButton().click();
       });

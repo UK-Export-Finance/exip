@@ -9,6 +9,7 @@ const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
       PHONE_NUMBER,
+      WEBSITE,
     },
   },
 } = FIELD_IDS.INSURANCE;
@@ -17,7 +18,7 @@ const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 const errorMessage = COMPANY_DETAILS_ERRORS[PHONE_NUMBER].INCORRECT_FORMAT;
 
 const companyDetailsFormVariables = {
-  website: WEBSITE_EXAMPLES.VALID,
+  [WEBSITE]: WEBSITE_EXAMPLES.VALID,
 };
 
 const { taskList } = partials.insurancePartials;
