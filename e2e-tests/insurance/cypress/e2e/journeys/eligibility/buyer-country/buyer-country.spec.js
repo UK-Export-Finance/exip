@@ -4,11 +4,11 @@ import { PAGES, LINKS } from '../../../../../../content-strings';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../../commands/insurance/eligibility/forms';
 import {
   checkInputHint,
-  checkAutocompleteInput,
   checkValidationErrors,
   checkFocusOnInputWhenClickingSummaryErrorMessage,
 } from '../../../../../../commands/check-buyer-country-form';
 import { COUNTRY_SUPPORTED_ONLINE } from '../../../../../../fixtures/countries';
+import checkAutocompleteInput from '../../../../../../commands/check-autocomplete-input';
 
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
@@ -49,27 +49,27 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
 
   describe('searchable autocomplete input', () => {
     it('has working client side JS', () => {
-      checkAutocompleteInput.hasWorkingClientSideJS();
+      checkAutocompleteInput.hasWorkingClientSideJS(buyerCountryPage);
     });
 
     it('renders an input', () => {
-      checkAutocompleteInput.rendersInput();
+      checkAutocompleteInput.rendersInput(buyerCountryPage);
     });
 
     it('renders `no results` message when no results are found', () => {
-      checkAutocompleteInput.rendersNoResultsMessage();
+      checkAutocompleteInput.rendersNoResultsMessage(buyerCountryPage, 'test');
     });
 
     it('renders a single country result after searching', () => {
-      checkAutocompleteInput.rendersSingleResult();
+      checkAutocompleteInput.rendersSingleResult(buyerCountryPage, 'Alg');
     });
 
     it('renders multiple country results after searching', () => {
-      checkAutocompleteInput.rendersMultipleResults();
+      checkAutocompleteInput.rendersMultipleResults(buyerCountryPage, 'Be');
     });
 
     it('allows user to remove a selected country and search again', () => {
-      checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain();
+      checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(buyerCountryPage, 'Algeria', 'Brazil');
     });
   });
 

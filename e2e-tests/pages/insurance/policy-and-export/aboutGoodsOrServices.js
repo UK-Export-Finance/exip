@@ -25,7 +25,9 @@ const aboutGoodsOrServices = {
   },
   [FINAL_DESTINATION]: {
     label: () => cy.get(`[data-cy="${FINAL_DESTINATION}-label"]`),
-    input: () => cy.get(`[data-cy="${FINAL_DESTINATION}-input"]`),
+    input: () => cy.get(`[id="${FINAL_DESTINATION}"]`),
+    results: () => cy.get(`#${FINAL_DESTINATION} + ul li`),
+    noResults: () => cy.get('.autocomplete__option--no-results'),
     inputOption: () => cy.get(`[data-cy="${FINAL_DESTINATION}-input"]`).find('option'),
     inputFirstOption: () => cy.get(`[data-cy="${FINAL_DESTINATION}-input"]`).find('option').eq(0),
     inputOptionSelected: () => cy.get(`[data-cy="${FINAL_DESTINATION}-input"]`).find(':selected'),
