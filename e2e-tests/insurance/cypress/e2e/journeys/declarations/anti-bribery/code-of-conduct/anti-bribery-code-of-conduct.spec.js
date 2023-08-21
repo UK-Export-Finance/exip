@@ -84,11 +84,11 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
     });
 
     it('renders `yes` radio button', () => {
-      yesRadio().input().should('exist');
-
       cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
 
       cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
+
+      yesRadio().input().should('exist');
     });
 
     it('renders `no` radio button', () => {

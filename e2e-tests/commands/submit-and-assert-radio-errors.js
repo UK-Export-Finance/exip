@@ -5,8 +5,8 @@ import partials from '../partials';
  * @param {String} field
  * @param {Number} errorIndex - index of error in errorSummary
  * @param {Number} errorSummaryLength - the number of expected errors in errorSummary
- * @param {Number} inlineError - the index of radios to find error
- * @param {String} errorMessage
+ * @param {Number} errorMessage - error message to assert
+ * @param {Number} inlineErrorIndex - the index of radios to find error
  */
 const submitAndAssertRadioErrors = (field, errorIndex, errorSummaryLength, errorMessage, inlineErrorIndex = 0) => {
   submitButton().click();

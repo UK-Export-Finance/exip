@@ -1,8 +1,4 @@
-import {
-  headingCaption,
-  singleInputField,
-  submitButton,
-} from '../../../../../../pages/shared';
+import { headingCaption, singleInputField } from '../../../../../../pages/shared';
 import { antiBriberyPage } from '../../../../../../pages/insurance/declarations';
 import partials from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
@@ -148,8 +144,6 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
       });
 
       it('should render a validation error', () => {
-        submitButton().click();
-
         const expectedErrorsCount = 1;
 
         cy.submitAndAssertFieldErrors(
@@ -158,6 +152,7 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
           0,
           expectedErrorsCount,
           ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
+          false,
         );
       });
     });

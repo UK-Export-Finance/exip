@@ -62,11 +62,16 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
 
     describe(`when ${CONNECTED_WITH_BUYER} is not selected`, () => {
       it('should display validation errors', () => {
-        const numberOfExpectedErrors = 2;
+        const expectedErrorsCount = 2;
         const errorIndex = 0;
         const errorMessage = ERROR_MESSAGE_CONNECTED_WITH_BUYER.IS_EMPTY;
 
-        cy.submitAndAssertRadioErrors(field, errorIndex, numberOfExpectedErrors, errorMessage, errorIndex);
+        const radioField = {
+          ...field,
+          input: field.yesRadioInput,
+        };
+
+        cy.submitAndAssertRadioErrors(radioField, errorIndex, expectedErrorsCount, errorMessage, errorIndex);
       });
     });
 
@@ -103,11 +108,16 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
       it('should display validation errors', () => {
         cy.navigateToUrl(url);
 
-        const numberOfExpectedErrors = 2;
+        const expectedErrorsCount = 2;
         const errorIndex = 1;
         const errorMessage = ERROR_MESSAGE_TRADED_WITH_BUYER.IS_EMPTY;
 
-        cy.submitAndAssertRadioErrors(field, errorIndex, numberOfExpectedErrors, errorMessage, errorIndex);
+        const radioField = {
+          ...field,
+          input: field.yesRadioInput,
+        };
+
+        cy.submitAndAssertRadioErrors(radioField, errorIndex, expectedErrorsCount, errorMessage);
       });
     });
 

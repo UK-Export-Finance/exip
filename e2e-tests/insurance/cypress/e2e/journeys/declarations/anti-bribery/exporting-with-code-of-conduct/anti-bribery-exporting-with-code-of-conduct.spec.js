@@ -75,19 +75,19 @@ context("Insurance - Declarations - Anti-bribery - Exporting with code of conduc
     });
 
     it('renders `yes` radio button', () => {
-      yesRadio().input().should('exist');
-
       cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
 
       cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
+
+      yesRadio().input().should('exist');
     });
 
     it('renders `no` radio button', () => {
-      noRadio().input().should('exist');
-
       cy.checkText(noRadio().label(), FIELD_VALUES.NO);
 
       cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
+
+      noRadio().input().should('exist');
     });
 
     it('renders a submit button and `save and back` button', () => {

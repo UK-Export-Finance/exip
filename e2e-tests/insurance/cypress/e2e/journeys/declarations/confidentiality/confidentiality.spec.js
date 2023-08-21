@@ -20,6 +20,8 @@ const {
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
 
+const field = singleInputField(FIELD_ID);
+
 context('Insurance - Declarations - Confidentiality page - As an Exporter, I want to make confidentiality declaration for my export insurance application, So that UKEF can be assured of my agreement with regards to confidentiality while processing my export insurance application', () => {
   let referenceNumber;
   let url;
@@ -59,8 +61,6 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
   });
 
   describe('page tests', () => {
-    let field;
-
     beforeEach(() => {
       cy.navigateToUrl(url);
     });
@@ -109,7 +109,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
     });
 
     it("renders `I've read and agree` label and input", () => {
-      field.label().should('exist');
+      field.input().should('exist');
       cy.checkText(field.label(), FIELDS[FIELD_ID].LABEL);
 
       field.input().should('exist');
@@ -130,10 +130,11 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
         const expectedErrorsCount = 1;
 
         cy.submitAndAssertRadioErrors(
-          singleInputField(FIELD_ID),
+          field,
           0,
           expectedErrorsCount,
           ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
+          false,
         );
       });
     });
@@ -157,7 +158,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
 
           cy.navigateToUrl(url);
 
-          singleInputField(FIELD_ID).input().should('be.checked');
+          field.input().should('be.checked');
         });
       });
     });

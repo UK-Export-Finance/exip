@@ -55,7 +55,7 @@
         {% set class = "govuk-form-group" %}
 
         {% if validationErrors.errorList[FIELD_ID] %}
-          {% set class = "govuk-form-group govuk-form-group--error" %}
+          {% set class = "govuk-form-group govuk-form-group--error-message" %}
         {% endif %}
 
         <div class="{{ class }}">

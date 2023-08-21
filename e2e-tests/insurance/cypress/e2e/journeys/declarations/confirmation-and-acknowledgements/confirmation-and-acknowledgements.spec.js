@@ -108,7 +108,6 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
     });
 
     it("renders `I've read and agree` label and input", () => {
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS[FIELD_ID].LABEL);
 
       field.input().should('exist');
@@ -133,6 +132,7 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
           0,
           expectedErrorsCount,
           ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
+          false,
         );
       });
     });

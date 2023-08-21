@@ -64,7 +64,12 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     const errorMessage = ERROR_MESSAGE.IS_EMPTY;
     const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
 
-    cy.submitAndAssertRadioErrors(field, errorIndex, numberOfExpectedErrors, errorMessage);
+    const radioField = {
+      ...field,
+      input: field.yesRadioInput,
+    };
+
+    cy.submitAndAssertRadioErrors(radioField, errorIndex, numberOfExpectedErrors, errorMessage);
   });
 
   it('should NOT display validation errors when yes radio is selected', () => {

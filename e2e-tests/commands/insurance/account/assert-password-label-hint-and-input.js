@@ -10,8 +10,6 @@ const fieldId = PASSWORD;
 const field = accountFormFields[fieldId];
 
 const assertPasswordLabelHintAndInput = (fieldStrings) => {
-  field.label().should('exist');
-
   cy.checkText(field.label(), fieldStrings.LABEL);
 
   cy.checkText(accountFormFields[fieldId].hint.intro(), fieldStrings.HINT.INTRO);
