@@ -78,7 +78,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     });
 
     it('renders `no` radio button', () => {
-      cy.checkText(noRadio(), FIELD_VALUES.NO);
+      cy.checkText(noRadio().label(), FIELD_VALUES.NO);
 
       cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });

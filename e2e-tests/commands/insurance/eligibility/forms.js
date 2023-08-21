@@ -19,27 +19,27 @@ export const completeUkGoodsAndServicesForm = () => {
 };
 
 export const completeInsuredAmountForm = () => {
-  noRadio().click();
+  noRadio().input().click();
   submitButton().click();
 };
 
 export const completeInsuredPeriodForm = () => {
-  noRadio().click();
+  noRadio().input().click();
   submitButton().click();
 };
 
 export const completeOtherPartiesForm = () => {
-  noRadio().click();
+  noRadio().input().click();
   submitButton().click();
 };
 
 export const completeLetterOfCreditForm = () => {
-  noRadio().click();
+  noRadio().input().click();
   submitButton().click();
 };
 
 export const completePreCreditPeriodForm = () => {
-  noRadio().click();
+  noRadio().input().click();
   submitButton().click();
 };
 

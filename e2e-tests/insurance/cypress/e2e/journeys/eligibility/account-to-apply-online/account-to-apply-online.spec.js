@@ -64,7 +64,7 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
     });
 
     it('renders a `no` radio button', () => {
-      cy.checkText(noRadio(), FIELD_VALUES.NO);
+      cy.checkText(noRadio().label(), FIELD_VALUES.NO);
 
       cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });

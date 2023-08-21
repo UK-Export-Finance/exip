@@ -7,7 +7,7 @@ import { FIELD_VALUES } from '../../../constants';
  */
 const completeAndSubmitAntiBriberyExportingWithCodeOfConductForm = (answer) => {
   if (answer === FIELD_VALUES.NO) {
-    noRadio().click();
+    noRadio().input().click();
   } else {
     yesRadio().input().click();
   }

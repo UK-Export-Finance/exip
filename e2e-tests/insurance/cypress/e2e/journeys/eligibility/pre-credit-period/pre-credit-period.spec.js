@@ -72,7 +72,7 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
     });
 
     it('renders `no` radio button', () => {
-      cy.checkText(noRadio(), FIELD_VALUES.NO);
+      cy.checkText(noRadio().label(), FIELD_VALUES.NO);
 
       cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
@@ -137,7 +137,7 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      noRadio().click();
+      noRadio().input().click();
       submitButton().click();
     });
 

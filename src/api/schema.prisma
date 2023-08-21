@@ -199,21 +199,21 @@ model CompanyAddress {
 }
 
 model Company {
-  id                        String           @id @default(cuid())
-  application               Application?     @relation("Company_application", fields: [applicationId], references: [id])
-  applicationId             String?          @map("application")
-  registeredOfficeAddress   CompanyAddress?  @relation("Company_registeredOfficeAddress", fields: [registeredOfficeAddressId], references: [id])
-  registeredOfficeAddressId String?          @unique @map("registeredOfficeAddress")
-  sicCodes                  CompanySicCode[] @relation("CompanySicCode_company")
-  companyName               String           @default("")
-  companyNumber             String           @default("")
-  dateOfCreation            DateTime?
-  hasDifferentTradingAddress         Boolean?
-  hasDifferentTradingName            Boolean?
-  companyWebsite            String           @default("")
-  phoneNumber               String           @default("")
-  financialYearEndDate      DateTime?
-  from_Application_company  Application[]    @relation("Application_company")
+  id                         String           @id @default(cuid())
+  application                Application?     @relation("Company_application", fields: [applicationId], references: [id])
+  applicationId              String?          @map("application")
+  registeredOfficeAddress    CompanyAddress?  @relation("Company_registeredOfficeAddress", fields: [registeredOfficeAddressId], references: [id])
+  registeredOfficeAddressId  String?          @unique @map("registeredOfficeAddress")
+  sicCodes                   CompanySicCode[] @relation("CompanySicCode_company")
+  companyName                String           @default("")
+  companyNumber              String           @default("")
+  dateOfCreation             DateTime?
+  hasDifferentTradingAddress Boolean?
+  hasDifferentTradingName    Boolean?
+  companyWebsite             String           @default("")
+  phoneNumber                String           @default("")
+  financialYearEndDate       DateTime?
+  from_Application_company   Application[]    @relation("Application_company")
 
   @@index([applicationId])
 }

@@ -158,8 +158,8 @@ var EXPORTER_BUSINESS = {
   },
   YOUR_COMPANY: {
     YOUR_BUSINESS: "yourBusiness",
-    TRADING_ADDRESS: "hasTradingAddress",
-    TRADING_NAME: "hasTradingName",
+    TRADING_ADDRESS: "hasDifferentTradingAddress",
+    TRADING_NAME: "hasDifferentTradingName",
     WEBSITE: "companyWebsite",
     PHONE_NUMBER: "phoneNumber"
   },
@@ -1148,8 +1148,8 @@ var lists = {
       companyName: (0, import_fields.text)(),
       companyNumber: (0, import_fields.text)(),
       dateOfCreation: (0, import_fields.timestamp)(),
-      hasTradingAddress: nullable_checkbox_default(),
-      hasTradingName: nullable_checkbox_default(),
+      hasDifferentTradingAddress: nullable_checkbox_default(),
+      hasDifferentTradingName: nullable_checkbox_default(),
       companyWebsite: (0, import_fields.text)(),
       phoneNumber: (0, import_fields.text)(),
       financialYearEndDate: (0, import_fields.timestamp)()
@@ -1503,8 +1503,8 @@ var typeDefs = `
     companyName: String
     companyNumber: String
     dateOfCreation: DateTime
-    hasTradingAddress: Boolean
-    hasTradingName: Boolean
+    hasDifferentTradingAddress: Boolean
+    hasDifferentTradingName: Boolean
     companyWebsite: String
     phoneNumber: String
   }
@@ -1516,8 +1516,8 @@ var typeDefs = `
     companyName: String
     companyNumber: String
     dateOfCreation: DateTime
-    hasTradingAddress: Boolean
-    hasTradingName: Boolean
+    hasDifferentTradingAddress: Boolean
+    hasDifferentTradingName: Boolean
     companyWebsite: String
     phoneNumber: String
     financialYearEndDate: DateTime
