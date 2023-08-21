@@ -9,12 +9,12 @@ export const completeCheckIfEligibleForm = () => {
 };
 
 export const completeExporterLocationForm = () => {
-  yesRadio().click();
+  yesRadio().input().click();
   submitButton().click();
 };
 
 export const completeUkGoodsAndServicesForm = () => {
-  yesRadio().click();
+  yesRadio().input().click();
   submitButton().click();
 };
 
@@ -44,7 +44,7 @@ export const completePreCreditPeriodForm = () => {
 };
 
 export const completeCompaniesHouseNumberForm = () => {
-  yesRadio().click();
+  yesRadio().input().click();
   submitButton().click();
 };
 
@@ -53,6 +53,6 @@ export const completeEligibleToApplyOnlineForm = () => {
 };
 
 export const completeAccountToApplyOnlineForm = () => {
-  yesRadio().click();
+  yesRadio().input().click();
   submitButton().click();
 };

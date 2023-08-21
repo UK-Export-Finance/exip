@@ -1,5 +1,5 @@
 import {
-  yesNoRadioHint, yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton,
+  yesNoRadioHint, yesRadio, yesRadioInput, noRadio, submitButton,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import {
@@ -25,7 +25,7 @@ import {
 const CONTENT_STRINGS = PAGES.UK_GOODS_OR_SERVICES;
 
 const {
-  ELIGIBILITY: { HAS_MINIMUM_UK_GOODS_OR_SERVICES },
+  ELIGIBILITY: { HAS_MINIMUM_UK_GOODS_OR_SERVICES: FIELD_ID },
 } = FIELD_IDS;
 
 const {
@@ -68,9 +68,11 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     });
 
     it('renders `yes` radio button', () => {
-      cy.checkText(yesRadio(), FIELD_VALUES.YES);
+      yesRadio().input().should('exist');
 
-      cy.checkText(yesNoRadioHint(), FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES].HINT);
+      cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
+
+      cy.checkText(yesNoRadioHint(), FIELDS[FIELD_ID].HINT);
 
       cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
@@ -120,23 +122,14 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     });
 
     it('should render validation errors', () => {
-      submitButton().click();
+      const expectedErrorsCount = 1;
 
-      cy.checkErrorSummaryListHeading();
-      partials.errorSummaryListItems().should('have.length', 1);
-
-      const expectedMessage = String(ERROR_MESSAGES.ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES].IS_EMPTY);
-
-      cy.checkText(partials.errorSummaryListItems(), expectedMessage);
-
-      cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
-    });
-
-    it('should focus on input when clicking summary error message', () => {
-      submitButton().click();
-
-      partials.errorSummaryListItemLinks().eq(0).click();
-      yesRadioInput().should('have.focus');
+      cy.submitAndAssertRadioErrors(
+        yesRadio(FIELD_ID),
+        0,
+        expectedErrorsCount,
+        ERROR_MESSAGES.ELIGIBILITY[FIELD_ID].IS_EMPTY,
+      );
     });
   });
 
@@ -144,7 +137,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      yesRadio().click();
+      yesRadio().input().click();
       submitButton().click();
     });
 

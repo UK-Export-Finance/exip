@@ -1,10 +1,8 @@
 import {
   headingCaption,
-  submitButton,
   yesRadio,
   yesRadioInput,
   noRadio,
-  inlineErrorMessage,
 } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../../content-strings';
@@ -77,9 +75,9 @@ context("Insurance - Declarations - Anti-bribery - Exporting with code of conduc
     });
 
     it('renders `yes` radio button', () => {
-      yesRadio().should('exist');
+      yesRadio().input().should('exist');
 
-      cy.checkText(yesRadio(), FIELD_VALUES.YES);
+      cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
 
       cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
@@ -104,23 +102,14 @@ context("Insurance - Declarations - Anti-bribery - Exporting with code of conduc
       });
 
       it('should render a validation error', () => {
-        submitButton().click();
+        const expectedErrorsCount = 1;
 
-        cy.checkErrorSummaryListHeading();
-        partials.errorSummaryListItems().should('have.length', 1);
-
-        const expectedMessage = String(ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
-
-        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
-
-        cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
-      });
-
-      it('should focus on input when clicking summary error message', () => {
-        submitButton().click();
-
-        partials.errorSummaryListItemLinks().eq(0).click();
-        yesRadioInput().should('have.focus');
+        cy.submitAndAssertRadioErrors(
+          yesRadio(FIELD_ID),
+          0,
+          expectedErrorsCount,
+          ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
+        );
       });
     });
 

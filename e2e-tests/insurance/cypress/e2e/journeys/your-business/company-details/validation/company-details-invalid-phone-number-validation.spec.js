@@ -72,8 +72,6 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
           expectedErrors,
           errorMessage,
         );
-
-        cy.checkErrorSummaryListHeading();
       });
     });
 
@@ -92,8 +90,6 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
           expectedErrors,
           errorMessage,
         );
-
-        cy.checkErrorSummaryListHeading();
       });
     });
 
@@ -112,8 +108,6 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
           expectedErrors,
           errorMessage,
         );
-
-        cy.checkErrorSummaryListHeading();
       });
     });
 
@@ -132,8 +126,6 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
           expectedErrors,
           errorMessage,
         );
-
-        cy.checkErrorSummaryListHeading();
       });
     });
 
@@ -152,8 +144,6 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
           expectedErrors,
           errorMessage,
         );
-
-        cy.checkErrorSummaryListHeading();
       });
     });
 
@@ -172,8 +162,6 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
           expectedErrors,
           errorMessage,
         );
-
-        cy.checkErrorSummaryListHeading();
       });
     });
 
@@ -192,8 +180,6 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
           expectedErrors,
           errorMessage,
         );
-
-        cy.checkErrorSummaryListHeading();
       });
     });
 
@@ -212,8 +198,6 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
           expectedErrors,
           errorMessage,
         );
-
-        cy.checkErrorSummaryListHeading();
       });
     });
 
@@ -232,8 +216,6 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
           expectedErrors,
           errorMessage,
         );
-
-        cy.checkErrorSummaryListHeading();
       });
     });
 
@@ -252,8 +234,6 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
           expectedErrors,
           errorMessage,
         );
-
-        cy.checkErrorSummaryListHeading();
       });
     });
   });

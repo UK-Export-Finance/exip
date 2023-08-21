@@ -1,4 +1,4 @@
-import { submitButton, inlineErrorMessage } from '../pages/shared';
+import { submitButton } from '../pages/shared';
 import partials from '../partials';
 
 /**
@@ -8,7 +8,7 @@ import partials from '../partials';
  * @param {Number} inlineError - the index of radios to find error
  * @param {String} errorMessage
  */
-export default (field, errorIndex, errorSummaryLength, errorMessage, inlineErrorIndex = 0) => {
+const submitAndAssertRadioErrors = (field, errorIndex, errorSummaryLength, errorMessage, inlineErrorIndex = 0) => {
   submitButton().click();
 
   cy.checkErrorSummaryListHeading();
@@ -21,7 +21,10 @@ export default (field, errorIndex, errorSummaryLength, errorMessage, inlineError
   );
 
   partials.errorSummaryListItemLinks().eq(errorIndex).click();
-  field.yesRadioInput().should('have.focus');
 
-  cy.checkText(inlineErrorMessage().eq(inlineErrorIndex), `Error: ${errorMessage}`);
+  field.input().should('have.focus');
+
+  cy.checkText(field.errorMessage().eq(inlineErrorIndex), `Error: ${errorMessage}`);
 };
+
+export default submitAndAssertRadioErrors;

@@ -1,9 +1,9 @@
 import {
-  yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton,
+  yesRadio, yesRadioInput, noRadio, submitButton,
 } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../../commands/insurance/eligibility/forms';
@@ -18,6 +18,10 @@ const {
     UK_GOODS_OR_SERVICES,
   },
 } = INSURANCE_ROUTES;
+
+const {
+  ELIGIBILITY: { VALID_EXPORTER_LOCATION: FIELD_ID },
+} = INSURANCE_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -44,7 +48,9 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
   });
 
   it('renders `yes` radio button', () => {
-    cy.checkText(yesRadio(), FIELD_VALUES.YES);
+    yesRadio().input().should('exist');
+
+    cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
 
     cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
   });
@@ -58,29 +64,22 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       it('should render validation errors', () => {
+        const expectedErrorsCount = 1;
+
+        cy.submitAndAssertRadioErrors(
+          yesRadio(FIELD_ID),
+          0,
+          expectedErrorsCount,
+          ERROR_MESSAGES.ELIGIBILITY[FIELD_ID],
+        );
+
         submitButton().click();
-
-        cy.checkErrorSummaryListHeading();
-        partials.errorSummaryListItems().should('have.length', 1);
-
-        const expectedMessage = String(ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION]);
-
-        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
-
-        cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
-      });
-
-      it('should focus on input when clicking summary error message', () => {
-        submitButton().click();
-
-        partials.errorSummaryListItemLinks().eq(0).click();
-        yesRadioInput().should('have.focus');
       });
     });
 
     describe('when submitting the answer as `yes`', () => {
       beforeEach(() => {
-        yesRadio().click();
+        yesRadio().input().click();
         submitButton().click();
       });
 

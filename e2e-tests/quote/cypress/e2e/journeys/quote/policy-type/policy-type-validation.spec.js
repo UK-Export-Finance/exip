@@ -1,6 +1,4 @@
-import { submitButton } from '../../../../../../pages/shared';
 import { policyTypePage } from '../../../../../../pages/quote';
-import partials from '../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
@@ -13,6 +11,8 @@ const {
     POLICY_TYPE: POLICY_TYPE_ROUTE,
   },
 } = ROUTES;
+
+const { single } = policyTypePage[POLICY_TYPE];
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -33,21 +33,24 @@ context('Policy type page - policy type & length validation - single policy type
     cy.saveSession();
 
     cy.navigateToUrl(url);
-    policyTypePage[POLICY_TYPE].single.input().click();
   });
 
   describe('when submitting an empty form', () => {
     it('should render a validation error when submitting an empty form', () => {
       cy.navigateToUrl(url);
-      submitButton().click();
 
-      cy.checkErrorSummaryListHeading();
+      const expectedErrorsCount = 1;
+      const expectedErrorMessage = ERROR_MESSAGES.ELIGIBILITY[POLICY_TYPE];
+      const assertFieldFocus = false;
 
-      partials.errorSummaryListItems().should('have.length', 1);
-
-      const expectedMessage = ERROR_MESSAGES.ELIGIBILITY[POLICY_TYPE];
-
-      cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
+      cy.submitAndAssertRadioErrors(
+        single,
+        0,
+        expectedErrorsCount,
+        expectedErrorMessage,
+        0,
+        assertFieldFocus,
+      );
     });
   });
 });

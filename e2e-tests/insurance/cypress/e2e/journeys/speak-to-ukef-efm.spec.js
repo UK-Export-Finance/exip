@@ -36,7 +36,7 @@ context('Insurance - speak to UKEF EFM exit page', () => {
     let expectedUrl = `${baseUrl}${INSURED_PERIOD}`;
     cy.assertUrl(expectedUrl);
 
-    yesRadio().click();
+    yesRadio().input().click();
     submitButton().click();
 
     expectedUrl = `${baseUrl}${SPEAK_TO_UKEF_EFM}`;

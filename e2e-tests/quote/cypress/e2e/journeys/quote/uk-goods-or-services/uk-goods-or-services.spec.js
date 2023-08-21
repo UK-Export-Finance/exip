@@ -1,5 +1,5 @@
 import {
-  yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton,
+  yesRadio, noRadio, submitButton,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
@@ -14,7 +14,7 @@ const CONTENT_STRINGS = {
 };
 
 const {
-  ELIGIBILITY: { HAS_MINIMUM_UK_GOODS_OR_SERVICES },
+  ELIGIBILITY: { HAS_MINIMUM_UK_GOODS_OR_SERVICES: FIELD_ID },
 } = FIELD_IDS;
 
 const {
@@ -59,13 +59,13 @@ context('UK goods or services page - as an exporter, I want to check if my expor
     });
 
     it('renders `yes` radio button', () => {
-      cy.checkText(yesRadio(), FIELD_VALUES.YES);
+      cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
 
       cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
 
     it('renders `no` radio button', () => {
-      cy.checkText(noRadio(), FIELD_VALUES.NO);
+      cy.checkText(noRadio().label(), FIELD_VALUES.NO);
 
       cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
@@ -97,24 +97,15 @@ context('UK goods or services page - as an exporter, I want to check if my expor
       });
 
       it('should render validation errors', () => {
-        submitButton().click();
+        const expectedErrorsCount = 1;
+        const expectedErrorMessage = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID].IS_EMPTY;
 
-        cy.checkErrorSummaryListHeading();
-
-        partials.errorSummaryListItems().should('have.length', 1);
-
-        const expectedMessage = String(ERROR_MESSAGES.ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES].IS_EMPTY);
-
-        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
-
-        cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
-      });
-
-      it('should focus on input when clicking summary error message', () => {
-        submitButton().click();
-
-        partials.errorSummaryListItemLinks().eq(0).click();
-        yesRadioInput().should('have.focus');
+        cy.submitAndAssertRadioErrors(
+          yesRadio(FIELD_ID),
+          0,
+          expectedErrorsCount,
+          expectedErrorMessage,
+        );
       });
     });
 
@@ -122,7 +113,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
       it(`should redirect to ${POLICY_TYPE}`, () => {
         cy.navigateToUrl(url);
 
-        yesRadio().click();
+        yesRadio().input().click();
         submitButton().click();
 
         const expectedUrl = `${baseUrl}${POLICY_TYPE}`;

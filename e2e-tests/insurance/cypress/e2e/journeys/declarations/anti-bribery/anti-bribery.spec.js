@@ -150,21 +150,15 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
       it('should render a validation error', () => {
         submitButton().click();
 
-        cy.checkErrorSummaryListHeading();
-        partials.errorSummaryListItems().should('have.length', 1);
+        const expectedErrorsCount = 1;
 
-        const expectedMessage = String(ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
-
-        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
-
-        cy.checkText(field.errorMessage(), `Error: ${expectedMessage}`);
-      });
-
-      it('should focus on input when clicking summary error message', () => {
-        submitButton().click();
-
-        partials.errorSummaryListItemLinks().eq(0).click();
-        field.input().should('have.focus');
+        cy.submitAndAssertFieldErrors(
+          field,
+          null,
+          0,
+          expectedErrorsCount,
+          ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
+        );
       });
     });
 

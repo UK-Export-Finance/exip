@@ -51,7 +51,5 @@ describe("Insurance - Your business - Company details page- As an Exporter I wan
 
   it('should display validation errors if trading name question is not answered', () => {
     cy.submitAndAssertRadioErrors(companyDetails[TRADING_NAME], 0, 1, COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
-
-    cy.checkErrorSummaryListHeading();
   });
 });

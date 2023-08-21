@@ -62,7 +62,7 @@
           {{ govukErrorMessage({
             text: validationErrors.errorList[FIELD_ID].text,
             attributes: {
-              "data-cy": "inline-error-message"
+              "data-cy": FIELD_ID + "-error-message"
             }
           }) }}
 

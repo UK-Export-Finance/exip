@@ -72,9 +72,7 @@ var import_dotenv = __toESM(require("dotenv"));
 
 // constants/field-ids/shared/index.ts
 var SHARED = {
-  POLICY_TYPE: "policyType",
-  SINGLE_POLICY_TYPE: "singlePolicyType",
-  MULTIPLE_POLICY_TYPE: "multiplePolicyType"
+  POLICY_TYPE: "policyType"
 };
 var shared_default = SHARED;
 

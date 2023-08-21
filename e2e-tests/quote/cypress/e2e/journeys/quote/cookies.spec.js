@@ -1,4 +1,4 @@
-import { inlineErrorMessage, submitButton } from '../../../../../pages/shared';
+import { submitButton } from '../../../../../pages/shared';
 import { cookiesPage, cookiesSavedPage } from '../../../../../pages';
 import partials from '../../../../../partials';
 import {
@@ -18,6 +18,12 @@ const {
     },
   },
 } = ROUTES;
+
+const {
+  OPTIONAL_COOKIES: FIELD_ID,
+} = FIELD_IDS;
+
+const { accept, reject } = cookiesPage[FIELD_ID];
 
 context('Cookies page - Quote', () => {
   const baseUrl = Cypress.config('baseUrl');
@@ -149,17 +155,14 @@ context('Cookies page - Quote', () => {
     });
 
     it('renders accept and reject radio buttons', () => {
-      const acceptRadio = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput();
-      acceptRadio.should('exist');
+      accept.input().should('exist');
 
-      const acceptRadioLabel = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptLabel();
-      cy.checkText(acceptRadioLabel, FIELDS[FIELD_IDS.OPTIONAL_COOKIES].OPTIONS.ACCEPT.TEXT);
+      cy.checkText(accept.label(), FIELDS[FIELD_ID].OPTIONS.ACCEPT.TEXT);
 
-      const rejectRadio = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput();
+      const rejectRadio = reject.input();
       rejectRadio.should('exist');
 
-      const rejectRadioLabel = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectLabel();
-      cy.checkText(rejectRadioLabel, FIELDS[FIELD_IDS.OPTIONAL_COOKIES].OPTIONS.REJECT.TEXT);
+      cy.checkText(reject.label(), FIELDS[FIELD_ID].OPTIONS.REJECT.TEXT);
     });
 
     it('renders a submit button', () => {
@@ -174,27 +177,18 @@ context('Cookies page - Quote', () => {
           cy.clearCookies();
 
           cy.navigateToUrl(url);
-
-          submitButton().click();
         });
 
         it('should render validation errors', () => {
-          cy.checkErrorSummaryListHeading();
+          const expectedErrorsCount = 1;
+          const errorMessage = ERROR_MESSAGES[FIELD_ID];
 
-          partials.errorSummaryListItems().should('have.length', 1);
-
-          const expectedMessage = String(ERROR_MESSAGES[FIELD_IDS.OPTIONAL_COOKIES]);
-
-          cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
-
-          cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
-        });
-
-        it('should focus on input when clicking summary error message', () => {
-          submitButton().click();
-
-          partials.errorSummaryListItemLinks().eq(0).click();
-          cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().should('have.focus');
+          cy.submitAndAssertRadioErrors(
+            accept,
+            0,
+            expectedErrorsCount,
+            errorMessage,
+          );
         });
       });
 
@@ -206,7 +200,7 @@ context('Cookies page - Quote', () => {
 
           partials.footer.supportLinks.cookies().click();
 
-          cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
+          accept.input().click();
           submitButton().click();
         });
 
@@ -245,7 +239,7 @@ context('Cookies page - Quote', () => {
 
           partials.footer.supportLinks.cookies().click();
 
-          cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput().click();
+          reject.input().click();
           submitButton().click();
         });
 
@@ -282,7 +276,7 @@ context('Cookies page - Quote', () => {
 
           cy.navigateToUrl(COOKIES);
 
-          cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
+          accept.input().click();
           submitButton().click();
         });
 
@@ -303,7 +297,7 @@ context('Cookies page - Quote', () => {
 
           cy.navigateToUrl(COOKIES);
 
-          cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
+          accept.input().click();
           submitButton().click();
         });
 

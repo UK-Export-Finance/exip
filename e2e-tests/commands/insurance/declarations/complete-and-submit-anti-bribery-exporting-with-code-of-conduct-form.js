@@ -9,7 +9,7 @@ const completeAndSubmitAntiBriberyExportingWithCodeOfConductForm = (answer) => {
   if (answer === FIELD_VALUES.NO) {
     noRadio().click();
   } else {
-    yesRadio().click();
+    yesRadio().input().click();
   }
 
   submitButton().click();

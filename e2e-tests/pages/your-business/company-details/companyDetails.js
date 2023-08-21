@@ -24,13 +24,13 @@ const companyDetails = {
     label: () => cy.get(`[data-cy="${TRADING_NAME}-legend"]`),
     yesRadioInput: () => yesRadioInput().first(),
     noRadioInput: () => noRadioInput().first(),
-    errorMessage: () => cy.get('[data-cy="inline-error-message"]').first(),
+    errorMessage: () => cy.get(`[data-cy="${TRADING_NAME}-error-message"]`),
   },
   [TRADING_ADDRESS]: {
     label: () => cy.get(`[data-cy="${TRADING_ADDRESS}-legend"]`),
     yesRadioInput: () => yesRadioInput().eq(1),
     noRadioInput: () => noRadioInput().eq(1),
-    errorMessage: () => cy.get('[data-cy="inline-error-message"]').eq(1),
+    errorMessage: () => cy.get(`[data-cy="${TRADING_ADDRESS}-error-message"]`),
   },
   [WEBSITE]: {
     label: () => cy.get(`[data-cy="${WEBSITE}-label"]`),

@@ -1,8 +1,4 @@
-import {
-  headingCaption,
-  singleInputField,
-  submitButton,
-} from '../../../../../../pages/shared';
+import { headingCaption, singleInputField } from '../../../../../../pages/shared';
 import { howYourDataWillBeUsedPage } from '../../../../../../pages/insurance/declarations';
 import partials from '../../../../../../partials';
 import {
@@ -80,8 +76,6 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
 
     beforeEach(() => {
       cy.navigateToUrl(url);
-
-      field = singleInputField(FIELD_ID);
     });
 
     it('renders a heading caption', () => {
@@ -127,32 +121,19 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
-      let field;
-
       beforeEach(() => {
         cy.navigateToUrl(url);
-
-        field = singleInputField(FIELD_ID);
       });
 
       it('should render a validation error', () => {
-        submitButton().click();
+        const expectedErrorsCount = 1;
 
-        cy.checkErrorSummaryListHeading();
-        partials.errorSummaryListItems().should('have.length', 1);
-
-        const expectedMessage = String(ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
-
-        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
-
-        cy.checkText(field.errorMessage(), `Error: ${expectedMessage}`);
-      });
-
-      it('should focus on input when clicking summary error message', () => {
-        submitButton().click();
-
-        partials.errorSummaryListItemLinks().eq(0).click();
-        field.input().should('have.focus');
+        cy.submitAndAssertRadioErrors(
+          singleInputField(FIELD_ID),
+          0,
+          expectedErrorsCount,
+          ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
+        );
       });
     });
 
