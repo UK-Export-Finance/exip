@@ -1022,8 +1022,8 @@ type Company {
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: Boolean
-  hasTradingName: Boolean
+  hasDifferentTradingAddress: Boolean
+  hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String
   financialYearEndDate: DateTime
@@ -1072,8 +1072,8 @@ input CompanyUpdateInput {
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: Boolean
-  hasTradingName: Boolean
+  hasDifferentTradingAddress: Boolean
+  hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String
   financialYearEndDate: DateTime
@@ -1104,8 +1104,8 @@ input CompanyCreateInput {
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: Boolean
-  hasTradingName: Boolean
+  hasDifferentTradingAddress: Boolean
+  hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String
   financialYearEndDate: DateTime
@@ -2287,8 +2287,8 @@ type CompanyAndCompanyAddress {
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: Boolean
-  hasTradingName: Boolean
+  hasDifferentTradingAddress: Boolean
+  hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String
 }
@@ -2300,8 +2300,8 @@ input CompanyAndCompanyAddressInput {
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: Boolean
-  hasTradingName: Boolean
+  hasDifferentTradingAddress: Boolean
+  hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String
   financialYearEndDate: DateTime

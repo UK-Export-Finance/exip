@@ -66,8 +66,8 @@ interface ApplicationCompany {
   companyName?: string;
   companyNumber?: string;
   companyWebsite?: string;
-  hasTradingName?: boolean;
-  hasTradingAddress?: boolean;
+  hasDifferentTradingName?: boolean;
+  hasDifferentTradingAddress?: boolean;
   registeredOfficeAddress: ApplicationCompanyAddress;
   sicCodes: Array<ApplicationExporterSicCodes>;
 }

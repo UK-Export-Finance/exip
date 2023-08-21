@@ -44,8 +44,8 @@ export const mockCompany = {
   companyName: 'Test Name',
   companyNumber: '0123456',
   companyWebsite: '',
-  hasTradingName: false,
-  hasTradingAddress: false,
+  hasDifferentTradingName: false,
+  hasDifferentTradingAddress: false,
   dateOfCreation: '2014-04-10T00:00:00.000Z',
   sicCodes: [
     {
