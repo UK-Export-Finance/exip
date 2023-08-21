@@ -26,6 +26,8 @@ const {
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_HOW_YOUR_DATA_WILL_BE_USED;
 
+const field = singleInputField(FIELD_ID);
+
 context('Insurance - Declarations - How your data will be used page - As an Exporter, I want to have details of how my export insurance application data will be used, So that I can determine if I am okay with the use of my application in that format', () => {
   let referenceNumber;
   let url;
@@ -72,8 +74,6 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
   });
 
   describe('page tests', () => {
-    let field;
-
     beforeEach(() => {
       cy.navigateToUrl(url);
     });

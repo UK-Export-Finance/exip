@@ -10,6 +10,8 @@ const {
   INSURANCE: { COOKIES, COOKIES_SAVED, START },
 } = ROUTES;
 
+const { OPTIONAL_COOKIES: FIELD_ID } = FIELD_IDS;
+
 context('Cookies saved page - Insurance', () => {
   const baseUrl = Cypress.config('baseUrl');
   const url = `${baseUrl}${COOKIES_SAVED}`;
@@ -24,7 +26,7 @@ context('Cookies saved page - Insurance', () => {
 
     cy.saveSession();
 
-    cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
+    cookiesPage[FIELD_ID].accept.input().click();
 
     submitButton().click();
 

@@ -24,6 +24,8 @@ const {
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIRMATION_ACKNOWLEDGEMENTS;
 
+const field = singleInputField(FIELD_ID);
+
 context("Insurance - Declarations - Confirmation and acknowledgements page - As an Exporter, I want the system to provide the details of my application's confirmation and acknowledgement, So that, I can readily confirm my export insurance application", () => {
   let referenceNumber;
   let url;
@@ -66,8 +68,6 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
   });
 
   describe('page tests', () => {
-    let field;
-
     beforeEach(() => {
       cy.navigateToUrl(url);
     });
@@ -128,7 +128,7 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
         const expectedErrorsCount = 1;
 
         cy.submitAndAssertRadioErrors(
-          singleInputField(FIELD_ID),
+          field,
           0,
           expectedErrorsCount,
           ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
@@ -152,7 +152,7 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
         it('should have the submitted value', () => {
           cy.navigateToUrl(url);
 
-          singleInputField(FIELD_ID).input().should('be.checked');
+          field.input().should('be.checked');
         });
       });
     });

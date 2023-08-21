@@ -35,13 +35,13 @@ const companyDetails = {
   [WEBSITE]: {
     label: () => cy.get(`[data-cy="${WEBSITE}-label"]`),
     input: () => cy.get(`[data-cy="${WEBSITE}"]`),
-    errorMessage: () => cy.get(`[data-cy="${WEBSITE}-error"]`),
+    errorMessage: () => cy.get(`[data-cy="${WEBSITE}-error-message"]`),
   },
   [PHONE_NUMBER]: {
     label: () => cy.get(`[data-cy="${PHONE_NUMBER}-label"]`),
     input: () => cy.get(`[data-cy="${PHONE_NUMBER}"]`),
     hint: () => cy.get(`[data-cy="${PHONE_NUMBER}-hint"]`),
-    errorMessage: () => cy.get(`[data-cy="${PHONE_NUMBER}-error"]`),
+    errorMessage: () => cy.get(`[data-cy="${PHONE_NUMBER}-error-message"]`),
   },
 };
 
