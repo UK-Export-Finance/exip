@@ -3,7 +3,7 @@ import {
   completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
 } from '../../../../../../commands/quote/forms';
-import { buyerCountryPage, submitButton, summaryList } from '../../../../../../pages/shared';
+import { countryInput, submitButton, summaryList } from '../../../../../../pages/shared';
 import {
   policyTypePage,
   tellUsAboutYourPolicyPage,
@@ -16,6 +16,7 @@ const {
     CONTRACT_VALUE,
     CURRENCY,
     PERCENTAGE_OF_COVER,
+    BUYER_COUNTRY,
   },
   POLICY_TYPE,
   QUOTE,
@@ -32,8 +33,8 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
   before(() => {
     cy.login();
 
-    cy.keyboardInput(buyerCountryPage.input(), 'Kenya');
-    const results = buyerCountryPage.results();
+    cy.keyboardInput(countryInput.field(BUYER_COUNTRY).input(), 'Kenya');
+    const results = countryInput.field(BUYER_COUNTRY).results();
     results.first().click();
     submitButton().click();
 

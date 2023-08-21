@@ -2,6 +2,7 @@ import {
   headingCaption,
   submitButton,
   saveAndBackButton,
+  countryInput,
 } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../../partials';
@@ -108,19 +109,17 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
     it('renders `final destination` label and input with disabled first input', () => {
       const fieldId = FINAL_DESTINATION;
-      const field = aboutGoodsOrServicesPage[fieldId];
+      const field = countryInput.field(fieldId);
 
       field.label().should('exist');
       cy.checkText(field.label(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].LABEL);
 
       field.input().should('exist');
-
-      field.inputFirstOption().should('be.disabled');
     });
 
     describe('searchable autocomplete input', () => {
       const fieldId = FINAL_DESTINATION;
-      const field = aboutGoodsOrServicesPage[fieldId];
+      const field = countryInput.field(fieldId);
 
       it('has working client side JS', () => {
         checkAutocompleteInput.hasWorkingClientSideJS(field);
@@ -143,7 +142,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
       });
 
       it('allows user to remove a selected country and search again', () => {
-        checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(field, 'Algeria', 'Brazil');
+        checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(field, countries[1].name, countries[4].name);
       });
     });
 
@@ -188,7 +187,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
         aboutGoodsOrServicesPage[DESCRIPTION].input().should('have.value', application.POLICY_AND_EXPORTS[DESCRIPTION]);
 
         const country = countries.find((c) => c.isoCode === application.POLICY_AND_EXPORTS[FINAL_DESTINATION]);
-        cy.checkText(aboutGoodsOrServicesPage[FINAL_DESTINATION].inputOptionSelected(), country.name);
+        cy.checkText(countryInput.field(FINAL_DESTINATION).results(), country.name);
       });
     });
 

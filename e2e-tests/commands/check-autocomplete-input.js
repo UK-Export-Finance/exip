@@ -15,7 +15,7 @@ const checkAutocompleteInput = {
     cy.checkText(noResults, 'No results found');
   },
   rendersSingleResult: (field, input) => {
-    // start searching for Algeria
+    // start searching for a country
     cy.keyboardInput(field.input(), input);
 
     const noResults = field.noResults();
@@ -39,7 +39,7 @@ const checkAutocompleteInput = {
     cy.keyboardInput(field.input(), input);
     const results = field.results();
 
-    // select the first result (Algeria)
+    // select the first result
     results.first().click();
 
     // clear the input

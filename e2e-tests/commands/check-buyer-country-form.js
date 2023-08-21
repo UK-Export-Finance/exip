@@ -1,5 +1,5 @@
 import {
-  buyerCountryPage, heading, inlineErrorMessage, submitButton,
+  countryInput, heading, inlineErrorMessage, submitButton,
 } from '../pages/shared';
 import partials from '../partials';
 import {
@@ -9,6 +9,8 @@ import { FIELD_IDS } from '../constants';
 
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
+const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
+
 const checkPageTitleAndHeading = () => {
   const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} - ${ORGANISATION}`;
   cy.title().should('eq', expectedPageTitle);
@@ -17,7 +19,7 @@ const checkPageTitleAndHeading = () => {
 };
 
 const checkInputHint = () => {
-  cy.checkText(buyerCountryPage.hint(), FIELDS[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY].HINT);
+  cy.checkText(countryInput.field(FIELD_ID).hint(), FIELDS[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY].HINT);
 };
 
 const checkSubmitButton = () => {
@@ -46,7 +48,7 @@ const checkFocusOnInputWhenClickingSummaryErrorMessage = () => {
 
   partials.errorSummaryListItemLinks().eq(0).click();
 
-  buyerCountryPage.input().should('have.class', 'autocomplete__input--focused');
+  countryInput.field(FIELD_ID).input().should('have.class', 'autocomplete__input--focused');
 };
 
 export {

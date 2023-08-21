@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../../constants';
 const {
   INSURANCE: {
     POLICY_AND_EXPORTS: {
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
     },
   },
 } = FIELD_IDS;
@@ -22,16 +22,6 @@ const aboutGoodsOrServices = {
     prefix: () => cy.get(`[data-cy="${DESCRIPTION}-prefix"]`),
     input: () => cy.get(`[data-cy="${DESCRIPTION}-input"]`),
     errorMessage: () => cy.get(`[data-cy="${DESCRIPTION}-error-message"]`),
-  },
-  [FINAL_DESTINATION]: {
-    label: () => cy.get(`[data-cy="${FINAL_DESTINATION}-label"]`),
-    input: () => cy.get(`[id="${FINAL_DESTINATION}"]`),
-    results: () => cy.get(`#${FINAL_DESTINATION} + ul li`),
-    noResults: () => cy.get('.autocomplete__option--no-results'),
-    inputOption: () => cy.get(`[data-cy="${FINAL_DESTINATION}-input"]`).find('option'),
-    inputFirstOption: () => cy.get(`[data-cy="${FINAL_DESTINATION}-input"]`).find('option').eq(0),
-    inputOptionSelected: () => cy.get(`[data-cy="${FINAL_DESTINATION}-input"]`).find(':selected'),
-    errorMessage: () => cy.get(`[data-cy="${FINAL_DESTINATION}-error-message"]`),
   },
 };
 

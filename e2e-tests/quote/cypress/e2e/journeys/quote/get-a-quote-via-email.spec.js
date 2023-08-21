@@ -1,9 +1,11 @@
-import { buyerCountryPage, submitButton } from '../../../../../pages/shared';
+import { countryInput, submitButton } from '../../../../../pages/shared';
 import { getAQuoteByEmailPage } from '../../../../../pages/quote';
 import { PAGES } from '../../../../../content-strings';
-import { ROUTES } from '../../../../../constants';
+import { ROUTES, FIELD_IDS } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.QUOTE.GET_A_QUOTE_BY_EMAIL;
+
+const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
 const COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY = 'Egypt';
 
@@ -11,9 +13,9 @@ context('Get a quote via email exit page', () => {
   beforeEach(() => {
     cy.login();
 
-    cy.keyboardInput(buyerCountryPage.input(), COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY);
+    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY);
 
-    const results = buyerCountryPage.results();
+    const results = countryInput.field(FIELD_ID).results();
     results.first().click();
 
     submitButton().click();

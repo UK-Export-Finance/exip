@@ -1,5 +1,5 @@
-import { backLink, buyerCountryPage, submitButton } from '../../../../../../pages/shared';
-import { ROUTES } from '../../../../../../constants';
+import { backLink, countryInput, submitButton } from '../../../../../../pages/shared';
+import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
 import { COUNTRY_SUPPORTRED_BY_EMAIL } from '../../../../../../fixtures/countries';
 
@@ -10,6 +10,8 @@ const {
   },
 } = ROUTES;
 
+const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based - submit country that can only get a quote offline/via email', () => {
@@ -19,9 +21,9 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     cy.navigateToUrl(url);
     cy.assertUrl(url);
 
-    cy.keyboardInput(buyerCountryPage.input(), COUNTRY_SUPPORTRED_BY_EMAIL.name);
+    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_SUPPORTRED_BY_EMAIL.name);
 
-    const results = buyerCountryPage.results();
+    const results = countryInput.field(FIELD_ID).results();
     results.first().click();
 
     submitButton().click();
@@ -46,8 +48,8 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
 
     const expectedValue = COUNTRY_SUPPORTRED_BY_EMAIL.name;
 
-    cy.checkValue(buyerCountryPage, expectedValue);
+    cy.checkValue(countryInput.field(FIELD_ID), expectedValue);
 
-    cy.checkText(buyerCountryPage.results(), expectedValue);
+    cy.checkText(countryInput.field(FIELD_ID).results(), expectedValue);
   });
 });

@@ -1,7 +1,8 @@
 import {
-  backLink, buyerCountryPage, cannotApplyPage, submitButton,
+  backLink, countryInput, cannotApplyPage, submitButton,
 } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
+import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { COUNTRY_UNSUPPORTRED } from '../../../../../../fixtures/countries';
 
@@ -11,6 +12,8 @@ const { REASON } = CONTENT_STRINGS;
 const {
   ELIGIBILITY: { BUYER_COUNTRY, CANNOT_APPLY },
 } = INSURANCE_ROUTES;
+
+const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -22,9 +25,9 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
 
     cy.navigateToUrl(url);
 
-    cy.keyboardInput(buyerCountryPage.input(), COUNTRY_UNSUPPORTRED.name);
+    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_UNSUPPORTRED.name);
 
-    const results = buyerCountryPage.results();
+    const results = countryInput.field(FIELD_ID).results();
     results.first().click();
 
     submitButton().click();
@@ -58,8 +61,8 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
 
     const expectedValue = COUNTRY_UNSUPPORTRED.name;
 
-    cy.checkValue(buyerCountryPage, expectedValue);
+    cy.checkValue(countryInput.field(FIELD_ID), expectedValue);
 
-    cy.checkText(buyerCountryPage.results(), expectedValue);
+    cy.checkText(countryInput.field(FIELD_ID).results(), expectedValue);
   });
 });

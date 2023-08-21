@@ -1,6 +1,6 @@
-import { backLink, buyerCountryPage, submitButton } from '../../../../../../pages/shared';
+import { backLink, countryInput, submitButton } from '../../../../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../../content-strings';
-import { ROUTES } from '../../../../../../constants';
+import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import {
   checkInputHint,
   checkValidationErrors,
@@ -10,6 +10,8 @@ import { COUNTRY_SUPPORTED_ONLINE } from '../../../../../../fixtures/countries';
 import checkAutocompleteInput from '../../../../../../commands/check-autocomplete-input';
 
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
+
+const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
 const {
   QUOTE: { BUYER_COUNTRY, BUYER_BODY },
@@ -45,27 +47,27 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
 
   describe('searchable autocomplete input', () => {
     it('has working client side JS', () => {
-      checkAutocompleteInput.hasWorkingClientSideJS(buyerCountryPage);
+      checkAutocompleteInput.hasWorkingClientSideJS(countryInput.field(FIELD_ID));
     });
 
     it('renders an input', () => {
-      checkAutocompleteInput.rendersInput(buyerCountryPage);
+      checkAutocompleteInput.rendersInput(countryInput.field(FIELD_ID));
     });
 
     it('renders `no results` message when no results are found', () => {
-      checkAutocompleteInput.rendersNoResultsMessage(buyerCountryPage, 'test');
+      checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(FIELD_ID), 'test');
     });
 
     it('renders a single country result after searching', () => {
-      checkAutocompleteInput.rendersSingleResult(buyerCountryPage, 'Alg');
+      checkAutocompleteInput.rendersSingleResult(countryInput.field(FIELD_ID), 'Alg');
     });
 
     it('renders multiple country results after searching', () => {
-      checkAutocompleteInput.rendersMultipleResults(buyerCountryPage, 'Be');
+      checkAutocompleteInput.rendersMultipleResults(countryInput.field(FIELD_ID), 'Be');
     });
 
     it('allows user to remove a selected country and search again', () => {
-      checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(buyerCountryPage, 'Algeria', 'Brazil');
+      checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(countryInput.field(FIELD_ID), 'Algeria', 'Brazil');
     });
   });
 
@@ -96,9 +98,9 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
 
     describe('when submitting with a supported country', () => {
       beforeEach(() => {
-        cy.keyboardInput(buyerCountryPage.input(), COUNTRY_SUPPORTED_ONLINE.name);
+        cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_SUPPORTED_ONLINE.name);
 
-        const results = buyerCountryPage.results();
+        const results = countryInput.field(FIELD_ID).results();
         results.first().click();
 
         submitButton().click();
@@ -115,9 +117,9 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
 
         const expectedValue = COUNTRY_SUPPORTED_ONLINE.name;
 
-        cy.checkValue(buyerCountryPage, expectedValue);
+        cy.checkValue(countryInput.field(FIELD_ID), expectedValue);
 
-        cy.checkText(buyerCountryPage.results(), expectedValue);
+        cy.checkText(countryInput.field(FIELD_ID).results(), expectedValue);
       });
     });
   });

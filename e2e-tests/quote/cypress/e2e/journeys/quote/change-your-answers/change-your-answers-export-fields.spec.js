@@ -1,5 +1,5 @@
 import {
-  backLink, buyerCountryPage, yesRadioInput, submitButton, summaryList,
+  backLink, countryInput, yesRadioInput, submitButton, summaryList,
 } from '../../../../../../pages/shared';
 import { LINKS } from '../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
@@ -72,7 +72,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     it('has originally submitted answer selected', () => {
       const expectedValue = submissionData[BUYER_COUNTRY];
 
-      cy.checkText(buyerCountryPage.results(), expectedValue);
+      cy.checkText(countryInput.field(BUYER_COUNTRY).results(), expectedValue);
     });
 
     describe('when submitting a new answer', () => {
@@ -80,8 +80,8 @@ context('Change your answers (export fields) - as an exporter, I want to change 
         cy.navigateToUrl(url);
         row.changeLink().click();
 
-        cy.keyboardInput(buyerCountryPage.input(), 'Brazil');
-        const results = buyerCountryPage.results();
+        cy.keyboardInput(countryInput.field(BUYER_COUNTRY).input(), 'Brazil');
+        const results = countryInput.field(BUYER_COUNTRY).results();
         results.first().click();
 
         submitButton().click();
