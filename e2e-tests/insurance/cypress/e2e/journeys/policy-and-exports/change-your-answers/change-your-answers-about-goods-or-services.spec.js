@@ -104,14 +104,14 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
     });
 
     describe('form submission with a new answer', () => {
-      const newAnswer = countries[0].isoCode;
+      const newAnswer = countries[0].name;
 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        aboutGoodsOrServicesPage[fieldId].input().select(newAnswer);
+        cy.keyboardInput(aboutGoodsOrServicesPage[fieldId].input(), newAnswer);
 
         submitButton().click();
       });
