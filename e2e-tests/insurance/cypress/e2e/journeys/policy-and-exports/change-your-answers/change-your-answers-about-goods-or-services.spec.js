@@ -1,4 +1,4 @@
-import { submitButton, summaryList } from '../../../../../../pages/shared';
+import { submitButton, summaryList, countryInput } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../../partials';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
@@ -111,7 +111,7 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(aboutGoodsOrServicesPage[fieldId].input(), newAnswer);
+        cy.keyboardInput(countryInput.field(fieldId).input(), newAnswer);
 
         submitButton().click();
       });

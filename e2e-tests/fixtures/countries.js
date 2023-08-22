@@ -18,7 +18,7 @@ const mockCountries = [
   {
     name: 'Brazil',
     isoCode: 'BRA',
-  }
+  },
 ];
 
 export const { 1: COUNTRY_SUPPORTED_ONLINE, 2: COUNTRY_SUPPORTRED_BY_EMAIL, 3: COUNTRY_UNSUPPORTRED } = mockCountries;
