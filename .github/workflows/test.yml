@@ -191,7 +191,7 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           install: false
           record: true
@@ -248,7 +248,7 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           install: false
           record: true
@@ -303,7 +303,7 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           install: false
           record: true
