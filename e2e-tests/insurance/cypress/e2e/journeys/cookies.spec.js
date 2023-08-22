@@ -1,4 +1,4 @@
-import { inlineErrorMessage, submitButton } from '../../../../pages/shared';
+import { submitButton } from '../../../../pages/shared';
 import { cookiesPage, cookiesSavedPage } from '../../../../pages';
 import partials from '../../../../partials';
 import {
@@ -18,6 +18,10 @@ const {
     },
   },
 } = ROUTES;
+
+const {
+  OPTIONAL_COOKIES: FIELD_ID,
+} = FIELD_IDS;
 
 context('Cookies page - Insurance', () => {
   const baseUrl = Cypress.config('baseUrl');
@@ -149,17 +153,17 @@ context('Cookies page - Insurance', () => {
     });
 
     it('renders accept and reject radio buttons', () => {
-      const acceptRadio = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput();
+      const acceptRadio = cookiesPage[FIELD_ID].accept.input();
       acceptRadio.should('exist');
 
-      const acceptRadioLabel = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptLabel();
-      cy.checkText(acceptRadioLabel, FIELDS[FIELD_IDS.OPTIONAL_COOKIES].OPTIONS.ACCEPT.TEXT);
+      const acceptRadioLabel = cookiesPage[FIELD_ID].accept.label();
+      cy.checkText(acceptRadioLabel, FIELDS[FIELD_ID].OPTIONS.ACCEPT.TEXT);
 
-      const rejectRadio = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput();
+      const rejectRadio = cookiesPage[FIELD_ID].reject.input();
       rejectRadio.should('exist');
 
-      const rejectRadioLabel = cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectLabel();
-      cy.checkText(rejectRadioLabel, FIELDS[FIELD_IDS.OPTIONAL_COOKIES].OPTIONS.REJECT.TEXT);
+      const rejectRadioLabel = cookiesPage[FIELD_ID].reject.label();
+      cy.checkText(rejectRadioLabel, FIELDS[FIELD_ID].OPTIONS.REJECT.TEXT);
     });
 
     it('renders a submit button', () => {
@@ -179,21 +183,15 @@ context('Cookies page - Insurance', () => {
         });
 
         it('should render validation errors', () => {
-          cy.checkErrorSummaryListHeading();
-          partials.errorSummaryListItems().should('have.length', 1);
+          const expectedErrorsCount = 1;
+          const expectedErrorMessage = ERROR_MESSAGES[FIELD_ID];
 
-          const expectedMessage = String(ERROR_MESSAGES[FIELD_IDS.OPTIONAL_COOKIES]);
-
-          cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
-
-          cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
-        });
-
-        it('should focus on input when clicking summary error message', () => {
-          submitButton().click();
-
-          partials.errorSummaryListItemLinks().eq(0).click();
-          cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().should('have.focus');
+          cy.submitAndAssertRadioErrors(
+            cookiesPage[FIELD_ID].accept,
+            0,
+            expectedErrorsCount,
+            expectedErrorMessage,
+          );
         });
       });
 
@@ -201,7 +199,7 @@ context('Cookies page - Insurance', () => {
         beforeEach(() => {
           cy.saveSession();
 
-          cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
+          cookiesPage[FIELD_ID].accept.input().click();
           submitButton().click();
         });
 
@@ -240,7 +238,7 @@ context('Cookies page - Insurance', () => {
         beforeEach(() => {
           cy.saveSession();
 
-          cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput().click();
+          cookiesPage[FIELD_ID].reject.input().click();
           submitButton().click();
         });
 
@@ -281,7 +279,7 @@ context('Cookies page - Insurance', () => {
 
           cy.navigateToUrl(url);
 
-          cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
+          cookiesPage[FIELD_ID].accept.input().click();
           submitButton().click();
         });
 
@@ -302,7 +300,7 @@ context('Cookies page - Insurance', () => {
 
           cy.navigateToUrl(url);
 
-          cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput().click();
+          cookiesPage[FIELD_ID].reject.input().click();
           submitButton().click();
         });
 

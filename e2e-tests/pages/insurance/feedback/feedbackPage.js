@@ -4,7 +4,7 @@ const feedbackPage = {
     label: () => cy.get(`[data-cy="${fieldId}-label"]`),
     hint: () => cy.get(`[data-cy="${fieldId}-hint"]`),
     input: () => cy.get(`[data-cy="${fieldId}"]`),
-    errorMessage: () => cy.get(`[data-cy="${fieldId}-error"]`),
+    errorMessage: () => cy.get(`[data-cy="${fieldId}-error-message"]`),
   }),
 };
 

@@ -20,6 +20,7 @@ const typeOfPolicy = {
         item3: () => cy.get(`[data-cy="${SINGLE_POLICY_TYPE}-hint-list-item-3"]`),
         item4: () => cy.get(`[data-cy="${SINGLE_POLICY_TYPE}-hint-list-item-4"]`),
       },
+      errorMessage: () => cy.get(`[data-cy="${POLICY_TYPE}-error-message"]`),
     },
     multiple: {
       label: () => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE}-label"]`),
@@ -29,8 +30,8 @@ const typeOfPolicy = {
         item2: () => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE}-hint-list-item-2"]`),
         item3: () => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE}-hint-list-item-3"]`),
       },
+      errorMessage: () => cy.get(`[data-cy="${POLICY_TYPE}-error-message"]`),
     },
-    errorMessage: () => cy.get(`[data-cy="${POLICY_TYPE}-error-message"]`),
   },
 };
 

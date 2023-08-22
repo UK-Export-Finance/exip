@@ -24,24 +24,24 @@ const companyDetails = {
     label: () => cy.get(`[data-cy="${TRADING_NAME}-legend"]`),
     yesRadioInput: () => yesRadioInput().first(),
     noRadioInput: () => noRadioInput().first(),
-    errorMessage: () => cy.get('[data-cy="inline-error-message"]').first(),
+    errorMessage: () => cy.get(`[data-cy="${TRADING_NAME}-error-message"]`),
   },
   [TRADING_ADDRESS]: {
     label: () => cy.get(`[data-cy="${TRADING_ADDRESS}-legend"]`),
     yesRadioInput: () => yesRadioInput().eq(1),
     noRadioInput: () => noRadioInput().eq(1),
-    errorMessage: () => cy.get('[data-cy="inline-error-message"]').eq(1),
+    errorMessage: () => cy.get(`[data-cy="${TRADING_ADDRESS}-error-message"]`),
   },
   [WEBSITE]: {
     label: () => cy.get(`[data-cy="${WEBSITE}-label"]`),
     input: () => cy.get(`[data-cy="${WEBSITE}"]`),
-    errorMessage: () => cy.get(`[data-cy="${WEBSITE}-error"]`),
+    errorMessage: () => cy.get(`[data-cy="${WEBSITE}-error-message"]`),
   },
   [PHONE_NUMBER]: {
     label: () => cy.get(`[data-cy="${PHONE_NUMBER}-label"]`),
     input: () => cy.get(`[data-cy="${PHONE_NUMBER}"]`),
     hint: () => cy.get(`[data-cy="${PHONE_NUMBER}-hint"]`),
-    errorMessage: () => cy.get(`[data-cy="${PHONE_NUMBER}-error"]`),
+    errorMessage: () => cy.get(`[data-cy="${PHONE_NUMBER}-error-message"]`),
   },
 };
 

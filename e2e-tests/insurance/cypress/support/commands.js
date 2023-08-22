@@ -75,8 +75,6 @@ Cypress.Commands.add('assertAllSectionsUrl', require('../../../commands/insuranc
 Cypress.Commands.add('assertChangeAnswersPageUrl', require('../../../commands/insurance/assert-change-answers-page-url'));
 Cypress.Commands.add('assertSummaryListRowValue', require('../../../commands/assert-summary-list-row-value'));
 Cypress.Commands.add('assertSummaryListRowValueNew', require('../../../commands/assert-summary-list-row-value-new'));
-Cypress.Commands.add('submitAndAssertRadioErrors', require('../../../commands/submit-and-assert-radio-errors'));
-Cypress.Commands.add('submitAndAssertFieldErrors', require('../../../commands/submit-and-assert-field-errors'));
 
 Cypress.Commands.add('assertPasswordLabelHintAndInput', require('../../../commands/insurance/account/assert-password-label-hint-and-input'));
 Cypress.Commands.add('assertPasswordRevealButton', require('../../../commands/insurance/account/assert-password-reveal-button'));

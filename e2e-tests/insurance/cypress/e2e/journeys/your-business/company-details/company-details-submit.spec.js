@@ -64,11 +64,25 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
   describe('all page errors', () => {
     it('should display the validation error for trading name in radio error summary', () => {
-      cy.submitAndAssertRadioErrors(companyDetails[TRADING_NAME], 0, expectedErrors, COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
+      const field = companyDetails[TRADING_NAME];
+
+      const radioField = {
+        ...field,
+        input: field.yesRadioInput,
+      };
+
+      cy.submitAndAssertRadioErrors(radioField, 0, expectedErrors, COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
     });
 
     it('should display the validation error for trading address in radio error summary', () => {
-      cy.submitAndAssertRadioErrors(companyDetails[TRADING_ADDRESS], 1, expectedErrors, COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY, 1);
+      const field = companyDetails[TRADING_ADDRESS];
+
+      const radioField = {
+        ...field,
+        input: field.yesRadioInput,
+      };
+
+      cy.submitAndAssertRadioErrors(radioField, 1, expectedErrors, COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
     });
 
     it('should display the validation error for company website in company website section', () => {

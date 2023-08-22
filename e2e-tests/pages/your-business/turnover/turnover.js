@@ -19,13 +19,13 @@ const turnover = {
     label: () => cy.get(`[data-cy="${ESTIMATED_ANNUAL_TURNOVER}-label`),
     prefix: () => cy.get(`[data-cy="${ESTIMATED_ANNUAL_TURNOVER}-prefix`),
     input: () => cy.get(`[data-cy="${ESTIMATED_ANNUAL_TURNOVER}`),
-    errorMessage: () => cy.get(`[data-cy="${ESTIMATED_ANNUAL_TURNOVER}-error`),
+    errorMessage: () => cy.get(`[data-cy="${ESTIMATED_ANNUAL_TURNOVER}-error-message`),
   },
   [PERCENTAGE_TURNOVER]: {
     label: () => cy.get(`[data-cy="${PERCENTAGE_TURNOVER}-label`),
     suffix: () => cy.get(`[data-cy="${PERCENTAGE_TURNOVER}-suffix`),
     input: () => cy.get(`[data-cy="${PERCENTAGE_TURNOVER}`),
-    errorMessage: () => cy.get(`[data-cy="${PERCENTAGE_TURNOVER}-error`),
+    errorMessage: () => cy.get(`[data-cy="${PERCENTAGE_TURNOVER}-error-message`),
   },
 };
 

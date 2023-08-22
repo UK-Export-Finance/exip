@@ -45,7 +45,7 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
 
     cy.navigateToUrl(url);
 
-    yesRadio().click();
+    yesRadio().input().click();
     submitButton().click();
   });
 

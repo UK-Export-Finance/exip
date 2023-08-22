@@ -6,6 +6,8 @@ const {
   INSURANCE: { COOKIES, DASHBOARD },
 } = ROUTES;
 
+const { OPTIONAL_COOKIES: FIELD_ID } = FIELD_IDS;
+
 context('Cookies saved page - Insurance - visit the page directly as a signed in user and submit the cookies form', () => {
   let referenceNumber;
   const baseUrl = Cypress.config('baseUrl');
@@ -17,7 +19,7 @@ context('Cookies saved page - Insurance - visit the page directly as a signed in
 
       cy.navigateToUrl(COOKIES);
 
-      cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
+      cookiesPage[FIELD_ID].accept.input().click();
 
       submitButton().click();
     });
@@ -39,7 +41,7 @@ context('Cookies saved page - Insurance - visit the page directly as a signed in
     beforeEach(() => {
       cy.navigateToUrl(COOKIES);
 
-      cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
+      cookiesPage[FIELD_ID].accept.input().click();
 
       submitButton().click();
     });

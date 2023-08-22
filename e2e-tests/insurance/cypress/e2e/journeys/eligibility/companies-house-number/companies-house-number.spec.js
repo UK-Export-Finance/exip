@@ -1,9 +1,9 @@
 import {
-  yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton,
+  yesRadio, yesRadioInput, noRadio, submitButton,
 } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
+import { ROUTES, FIELD_VALUES } from '../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import {
   completeStartForm,
@@ -18,6 +18,10 @@ import {
 } from '../../../../../../commands/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER;
+
+const {
+  ELIGIBILITY: { COMPANIES_HOUSE_NUMBER: FIELD_ID },
+} = INSURANCE_FIELD_IDS;
 
 const insuranceStartRoute = ROUTES.INSURANCE.START;
 
@@ -62,17 +66,17 @@ context('Insurance - Eligibility - Companies house number page - I want to check
     });
 
     it('renders `yes` radio button', () => {
-      yesRadio().should('exist');
+      yesRadio().input().should('exist');
 
-      cy.checkText(yesRadio(), FIELD_VALUES.YES);
+      cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
 
       cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
 
     it('renders `no` radio button', () => {
-      noRadio().should('exist');
+      noRadio().input().should('exist');
 
-      cy.checkText(noRadio(), FIELD_VALUES.NO);
+      cy.checkText(noRadio().label(), FIELD_VALUES.NO);
 
       cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
@@ -85,23 +89,14 @@ context('Insurance - Eligibility - Companies house number page - I want to check
       });
 
       it('should render validation errors', () => {
-        submitButton().click();
+        const expectedErrorsCount = 1;
 
-        cy.checkErrorSummaryListHeading();
-        partials.errorSummaryListItems().should('have.length', 1);
-
-        const expectedMessage = String(ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER].IS_EMPTY);
-
-        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
-
-        cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
-      });
-
-      it('should focus on input when clicking summary error message', () => {
-        submitButton().click();
-
-        partials.errorSummaryListItemLinks().eq(0).click();
-        yesRadioInput().should('have.focus');
+        cy.submitAndAssertRadioErrors(
+          yesRadio(FIELD_ID),
+          0,
+          expectedErrorsCount,
+          ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY,
+        );
       });
     });
 
@@ -109,7 +104,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        yesRadio().click();
+        yesRadio().input().click();
         submitButton().click();
       });
 

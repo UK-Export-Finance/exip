@@ -22,17 +22,17 @@ const broker = {
     value: () => cy.get(`[data-cy="${USING_BROKER}`),
     yesRadioInput: () => yesRadioInput().eq(0),
     noRadioInput: () => noRadioInput().eq(0),
-    errorMessage: () => cy.get(`[data-cy="${USING_BROKER}-error`),
+    errorMessage: () => cy.get(`[data-cy="${USING_BROKER}-error-message`),
   },
   [NAME]: {
     label: () => cy.get(`[data-cy="${NAME}-label`),
     input: () => cy.get(`[data-cy="${NAME}-input`),
-    errorMessage: () => cy.get(`[data-cy="${NAME}-error`),
+    errorMessage: () => cy.get(`[data-cy="${NAME}-error-message`),
   },
   [ADDRESS_LINE_1]: {
     label: () => cy.get(`[data-cy="${ADDRESS_LINE_1}-label`),
     input: () => cy.get(`[data-cy="${ADDRESS_LINE_1}-input`),
-    errorMessage: () => cy.get(`[data-cy="${ADDRESS_LINE_1}-error`),
+    errorMessage: () => cy.get(`[data-cy="${ADDRESS_LINE_1}-error-message`),
   },
   [ADDRESS_LINE_2]: {
     label: () => cy.get(`[data-cy="${ADDRESS_LINE_2}-label`),
@@ -41,7 +41,7 @@ const broker = {
   [TOWN]: {
     label: () => cy.get(`[data-cy="${TOWN}-label`),
     input: () => cy.get(`[data-cy="${TOWN}-input`),
-    errorMessage: () => cy.get(`[data-cy="${TOWN}-error`),
+    errorMessage: () => cy.get(`[data-cy="${TOWN}-error-message`),
   },
   [COUNTY]: {
     label: () => cy.get(`[data-cy="${COUNTY}-label`),
@@ -50,12 +50,12 @@ const broker = {
   [POSTCODE]: {
     label: () => cy.get(`[data-cy="${POSTCODE}-label`),
     input: () => cy.get(`[data-cy="${POSTCODE}-input`),
-    errorMessage: () => cy.get(`[data-cy="${POSTCODE}-error`),
+    errorMessage: () => cy.get(`[data-cy="${POSTCODE}-error-message`),
   },
   [EMAIL]: {
     label: () => cy.get(`[data-cy="${EMAIL}-label`),
     input: () => cy.get(`[data-cy="${EMAIL}-input`),
-    errorMessage: () => cy.get(`[data-cy="${EMAIL}-error`),
+    errorMessage: () => cy.get(`[data-cy="${EMAIL}-error-message`),
   },
   [DETAILS]: {
     details: () => cy.get(`[data-cy="${DETAILS}`),
