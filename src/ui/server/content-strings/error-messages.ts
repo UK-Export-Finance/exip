@@ -94,7 +94,7 @@ export const ERROR_MESSAGES = {
         },
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER]: {
-        INCORRECT_FORMAT: 'Enter your Companies House registration number in the correct format, like 8989898 or SC907816',
+        INCORRECT_FORMAT: 'Enter your Companies House registration number in the correct format - for example, 8989898 or SC907816',
         NOT_FOUND: 'The number you entered does not match any company in Companies House - try again',
         TECHNICAL_ISSUES: 'Due to technical issues, you cannot search for your Companies House registration number right now - try again in few minutes',
       },
