@@ -1,4 +1,4 @@
-import buyerCountryPage from './buyerCountry';
+import countryInput from './countryInput';
 import cannotApplyPage from './cannotApply';
 import exporterLocationPage from './exporterLocation';
 import needToStartAgainPage from './needToStartAgain';
@@ -43,7 +43,7 @@ export {
   saveAndBackButton,
   status,
   singleInputField,
-  buyerCountryPage,
+  countryInput,
   cannotApplyPage,
   exporterLocationPage,
   needToStartAgainPage,

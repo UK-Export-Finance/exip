@@ -1,7 +1,7 @@
 import dashboardPage from '../../../../pages/insurance/dashboard';
-import { buyerCountryPage } from '../../../../pages/shared';
+import { countryInput } from '../../../../pages/shared';
 import partials from '../../../../partials';
-import { ROUTES } from '../../../../constants';
+import { ROUTES, FIELD_IDS } from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../commands/forms';
 import {
   completeExporterLocationForm,
@@ -13,6 +13,8 @@ import {
   completePreCreditPeriodForm,
   completeCompaniesHouseNumberForm,
 } from '../../../../commands/insurance/eligibility/forms';
+
+const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
 const {
   ELIGIBILITY: { BUYER_COUNTRY },
@@ -49,7 +51,7 @@ context('Insurance - Eligibility - start and complete for a second time after cr
 
   it('should NOT have prepopulated answers', () => {
     // buyer country question
-    cy.checkValue(buyerCountryPage, '');
+    cy.checkValue(countryInput.field(FIELD_ID), '');
     completeAndSubmitBuyerCountryForm();
 
     // exporter location question

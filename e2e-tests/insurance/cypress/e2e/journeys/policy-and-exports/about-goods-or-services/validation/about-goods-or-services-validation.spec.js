@@ -1,5 +1,6 @@
 import { aboutGoodsOrServicesPage } from '../../../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../../../partials';
+import { countryInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 
@@ -65,7 +66,7 @@ context('Insurance - Policy and exports - About goods or services page - form va
 
     // final destination
     cy.submitAndAssertFieldErrors(
-      aboutGoodsOrServicesPage[FINAL_DESTINATION],
+      countryInput.field(FINAL_DESTINATION),
       null,
       1,
       expectedErrorsCount,

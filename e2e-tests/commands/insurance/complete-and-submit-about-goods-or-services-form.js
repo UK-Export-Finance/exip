@@ -1,7 +1,8 @@
 import { FIELD_IDS } from '../../constants';
 import { aboutGoodsOrServicesPage } from '../../pages/insurance/policy-and-export';
-import { submitButton } from '../../pages/shared';
+import { submitButton, countryInput } from '../../pages/shared';
 import application from '../../fixtures/application';
+import mockCountries from '../../fixtures/countries';
 
 const {
   INSURANCE: {
@@ -16,7 +17,7 @@ const {
 
 export default () => {
   cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].input(), application.POLICY_AND_EXPORTS[DESCRIPTION]);
-  aboutGoodsOrServicesPage[FINAL_DESTINATION].input().select(application.POLICY_AND_EXPORTS[FINAL_DESTINATION]);
+  cy.keyboardInput(countryInput.field(FINAL_DESTINATION).input(), mockCountries[1].name);
 
   submitButton().click();
 };

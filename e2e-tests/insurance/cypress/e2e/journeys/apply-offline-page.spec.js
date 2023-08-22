@@ -1,11 +1,14 @@
-import { buyerCountryPage, submitButton } from '../../../../pages/shared';
+import { countryInput, submitButton } from '../../../../pages/shared';
 import { insurance } from '../../../../pages';
 import { PAGES } from '../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import { FIELD_IDS } from '../../../../constants';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../commands/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
 const { ACTIONS } = CONTENT_STRINGS;
+
+const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
 const {
   START,
@@ -24,9 +27,9 @@ context('Insurance - apply offline exit page', () => {
     completeStartForm();
     completeCheckIfEligibleForm();
 
-    cy.keyboardInput(buyerCountryPage.input(), COUNTRY_NAME_APPLY_OFFLINE_ONLY);
+    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_NAME_APPLY_OFFLINE_ONLY);
 
-    const results = buyerCountryPage.results();
+    const results = countryInput.field(FIELD_ID).results();
     results.first().click();
 
     submitButton().click();

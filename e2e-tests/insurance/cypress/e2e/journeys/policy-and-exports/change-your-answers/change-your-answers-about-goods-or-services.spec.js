@@ -1,4 +1,4 @@
-import { submitButton, summaryList } from '../../../../../../pages/shared';
+import { submitButton, summaryList, countryInput } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../../partials';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
@@ -104,14 +104,14 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
     });
 
     describe('form submission with a new answer', () => {
-      const newAnswer = countries[0].isoCode;
+      const newAnswer = countries[0].name;
 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        aboutGoodsOrServicesPage[fieldId].input().select(newAnswer);
+        cy.keyboardInput(countryInput.field(fieldId).input(), newAnswer);
 
         submitButton().click();
       });
