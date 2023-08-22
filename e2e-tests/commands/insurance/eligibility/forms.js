@@ -9,42 +9,42 @@ export const completeCheckIfEligibleForm = () => {
 };
 
 export const completeExporterLocationForm = () => {
-  yesRadio().click();
+  yesRadio().input().click();
   submitButton().click();
 };
 
 export const completeUkGoodsAndServicesForm = () => {
-  yesRadio().click();
+  yesRadio().input().click();
   submitButton().click();
 };
 
 export const completeInsuredAmountForm = () => {
-  noRadio().click();
+  noRadio().input().click();
   submitButton().click();
 };
 
 export const completeInsuredPeriodForm = () => {
-  noRadio().click();
+  noRadio().input().click();
   submitButton().click();
 };
 
 export const completeOtherPartiesForm = () => {
-  noRadio().click();
+  noRadio().input().click();
   submitButton().click();
 };
 
 export const completeLetterOfCreditForm = () => {
-  noRadio().click();
+  noRadio().input().click();
   submitButton().click();
 };
 
 export const completePreCreditPeriodForm = () => {
-  noRadio().click();
+  noRadio().input().click();
   submitButton().click();
 };
 
 export const completeCompaniesHouseNumberForm = () => {
-  yesRadio().click();
+  yesRadio().input().click();
   submitButton().click();
 };
 
@@ -53,6 +53,6 @@ export const completeEligibleToApplyOnlineForm = () => {
 };
 
 export const completeAccountToApplyOnlineForm = () => {
-  yesRadio().click();
+  yesRadio().input().click();
   submitButton().click();
 };

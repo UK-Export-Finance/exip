@@ -50,8 +50,13 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   });
 
   it('should display validation errors if trading address question is not answered', () => {
-    cy.submitAndAssertRadioErrors(companyDetails[TRADING_ADDRESS], 0, 1, COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
+    const field = companyDetails[TRADING_ADDRESS];
 
-    cy.checkErrorSummaryListHeading();
+    const radioField = {
+      ...field,
+      input: field.yesRadioInput,
+    };
+
+    cy.submitAndAssertRadioErrors(radioField, 0, 1, COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
   });
 });

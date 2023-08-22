@@ -19,6 +19,8 @@ const {
 const fieldId = YEARS_EXPORTING;
 const field = natureOfBusiness[fieldId];
 
+const expectedErrorsCount = 4;
+
 describe('Insurance - Your business - Nature of your business page - As an Exporter I want to enter details about the nature of my business - years exporting input validation', () => {
   let referenceNumber;
   let url;
@@ -53,26 +55,24 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
       beforeEach(() => {
         cy.navigateToUrl(url);
-
-        field.input().clear();
-
-        submitButton().click();
       });
 
-      it(`should display validation errors if ${YEARS_EXPORTING} left empty`, () => {
-        cy.checkErrorSummaryListHeading();
-        partials.errorSummaryListItems().should('have.length', 4);
-
-        cy.checkText(partials.errorSummaryListItems().eq(1), errorMessage);
+      it(`should display validation errors if ${YEARS_EXPORTING} is left empty`, () => {
+        cy.submitAndAssertFieldErrors(
+          field,
+          null,
+          1,
+          expectedErrorsCount,
+          errorMessage,
+          true,
+        );
       });
 
       it(`should focus to the ${YEARS_EXPORTING} section when clicking the error`, () => {
+        submitButton().click();
+
         partials.errorSummaryListItemLinks().eq(1).click();
         field.input().should('have.focus');
-      });
-
-      it(`should display the validation error for ${YEARS_EXPORTING}`, () => {
-        cy.checkText(field.error(), `Error: ${errorMessage}`);
       });
     });
 
@@ -81,21 +81,19 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
       beforeEach(() => {
         cy.navigateToUrl(url);
-
-        cy.keyboardInput(field.input(), '5.5');
-
-        submitButton().click();
       });
 
       it(`should display validation errors for ${YEARS_EXPORTING}`, () => {
-        cy.checkErrorSummaryListHeading();
-        partials.errorSummaryListItems().should('have.length', 4);
+        const submittedValue = '5.5';
 
-        cy.checkText(partials.errorSummaryListItems().eq(1), errorMessage);
-      });
-
-      it(`should display the validation error for ${YEARS_EXPORTING}`, () => {
-        cy.checkText(field.error(), `Error: ${errorMessage}`);
+        cy.submitAndAssertFieldErrors(
+          field,
+          submittedValue,
+          1,
+          expectedErrorsCount,
+          errorMessage,
+          true,
+        );
       });
     });
 
@@ -104,21 +102,19 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
       beforeEach(() => {
         cy.navigateToUrl(url);
-
-        cy.keyboardInput(field.input(), '5!');
-
-        submitButton().click();
       });
 
       it(`should display validation errors for ${YEARS_EXPORTING}`, () => {
-        cy.checkErrorSummaryListHeading();
-        partials.errorSummaryListItems().should('have.length', 4);
+        const submittedValue = '5!';
 
-        cy.checkText(partials.errorSummaryListItems().eq(1), errorMessage);
-      });
-
-      it(`should display the validation error for ${YEARS_EXPORTING}`, () => {
-        cy.checkText(field.error(), `Error: ${errorMessage}`);
+        cy.submitAndAssertFieldErrors(
+          field,
+          submittedValue,
+          1,
+          expectedErrorsCount,
+          errorMessage,
+          true,
+        );
       });
     });
   });

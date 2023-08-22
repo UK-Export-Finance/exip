@@ -16,17 +16,17 @@ const {
 } = FIELD_IDS;
 
 export const completeAndSubmitBuyerBodyForm = () => {
-  noRadio().click();
+  noRadio().input().click();
   submitButton().click();
 };
 
 export const completeAndSubmitExporterLocationForm = () => {
-  yesRadio().click();
+  yesRadio().input().click();
   submitButton().click();
 };
 
 export const completeAndSubmitUkContentForm = () => {
-  yesRadio().click();
+  yesRadio().input().click();
   submitButton().click();
 };
 

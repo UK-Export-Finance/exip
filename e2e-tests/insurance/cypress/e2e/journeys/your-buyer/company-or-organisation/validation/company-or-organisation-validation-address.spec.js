@@ -1,4 +1,3 @@
-import { submitButton } from '../../../../../../../pages/shared';
 import { companyOrOrganisationPage } from '../../../../../../../pages/insurance/your-buyer';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
@@ -47,31 +46,21 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     cy.saveSession();
 
     cy.navigateToUrl(url);
-
-    cy.keyboardInput(field.input(), submittedValue);
-
-    submitButton().click();
   });
 
   after(() => {
     cy.deleteApplication(referenceNumber);
   });
 
-  it('should render a validation error when address is above the maximum', () => {
-    cy.checkErrorSummaryListHeading();
+  it('should render a validation error and retain the submitted value when address is above the maximum', () => {
+    const expectedErrorsCount = 7;
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
+    cy.submitAndAssertFieldErrors(
+      field,
+      submittedValue,
+      1,
+      expectedErrorsCount,
       COMPANY_OR_ORG_ERROR_MESSAGES[ADDRESS].ABOVE_MAXIMUM,
     );
-
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${COMPANY_OR_ORG_ERROR_MESSAGES[ADDRESS].ABOVE_MAXIMUM}`,
-    );
-  });
-
-  it('should retain the submitted value', () => {
-    field.input().should('have.value', submittedValue);
   });
 });

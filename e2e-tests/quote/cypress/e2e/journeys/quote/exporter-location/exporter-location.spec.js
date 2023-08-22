@@ -1,11 +1,8 @@
 import {
   yesRadio,
-  yesRadioInput,
   noRadio,
-  inlineErrorMessage,
   submitButton,
 } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
@@ -20,6 +17,10 @@ const {
     UK_GOODS_OR_SERVICES,
   },
 } = ROUTES;
+
+const {
+  ELIGIBILITY: { VALID_EXPORTER_LOCATION: FIELD_ID },
+} = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -45,13 +46,13 @@ context('Exporter location page - as an exporter, I want to check if my company 
   });
 
   it('renders `yes` radio button', () => {
-    cy.checkText(yesRadio(), FIELD_VALUES.YES);
+    cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
 
     cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `no` radio button', () => {
-    cy.checkText(noRadio(), FIELD_VALUES.NO);
+    cy.checkText(noRadio().label(), FIELD_VALUES.NO);
 
     cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
   });
@@ -59,30 +60,21 @@ context('Exporter location page - as an exporter, I want to check if my company 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       it('should render validation errors', () => {
-        submitButton().click();
+        const expectedErrorsCount = 1;
+        const expectedErrorMessage = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
 
-        cy.checkErrorSummaryListHeading();
-
-        partials.errorSummaryListItems().should('have.length', 1);
-
-        const expectedMessage = String(ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION]);
-
-        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
-
-        cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
-      });
-
-      it('should focus on input when clicking summary error message', () => {
-        submitButton().click();
-
-        partials.errorSummaryListItemLinks().eq(0).click();
-        yesRadioInput().should('have.focus');
+        cy.submitAndAssertRadioErrors(
+          yesRadio(FIELD_ID),
+          0,
+          expectedErrorsCount,
+          expectedErrorMessage,
+        );
       });
     });
 
     describe('when submitting the answer as `yes`', () => {
       it(`should redirect to ${UK_GOODS_OR_SERVICES}`, () => {
-        yesRadio().click();
+        yesRadio().input().click();
         submitButton().click();
 
         const expectedUrl = `${baseUrl}${UK_GOODS_OR_SERVICES}`;

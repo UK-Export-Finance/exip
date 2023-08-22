@@ -12,13 +12,14 @@ const policyTypePage = {
       label: () => cy.get(`[data-cy="${SINGLE_POLICY_TYPE}-label"]`),
       hintListItem: (index) => cy.get(`[data-cy="${SINGLE_POLICY_TYPE}-hint-list-item-${index}"]`),
       input: () => cy.get(`[data-cy="${SINGLE_POLICY_TYPE}-input"]`),
+      errorMessage: () => cy.get(`[data-cy="${POLICY_TYPE}-error-message"]`),
     },
     multiple: {
       label: () => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE}-label"]`),
       hintListItem: (index) => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE}-hint-list-item-${index}"]`),
       input: () => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE}-input"]`),
+      errorMessage: () => cy.get(`[data-cy="${POLICY_TYPE}-error-message"]`),
     },
-    errorMessage: () => cy.get(`[data-cy="${POLICY_TYPE}-error-message"]`),
   },
 };
 

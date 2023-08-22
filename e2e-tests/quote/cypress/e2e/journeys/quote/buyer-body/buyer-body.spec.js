@@ -1,7 +1,6 @@
 import {
-  yesRadio, yesRadioInput, noRadio, inlineErrorMessage, submitButton,
+  yesRadio, noRadio, submitButton,
 } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
@@ -9,7 +8,7 @@ import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/fo
 const CONTENT_STRINGS = PAGES.QUOTE.BUYER_BODY;
 
 const {
-  ELIGIBILITY: { VALID_BUYER_BODY },
+  ELIGIBILITY: { VALID_BUYER_BODY: FIELD_ID },
 } = FIELD_IDS;
 
 const {
@@ -43,13 +42,13 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   });
 
   it('renders `yes` radio button', () => {
-    cy.checkText(yesRadio(), FIELD_VALUES.YES);
+    cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
 
     cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
   });
 
   it('renders `no` radio button', () => {
-    cy.checkText(noRadio(), FIELD_VALUES.NO);
+    cy.checkText(noRadio().label(), FIELD_VALUES.NO);
 
     cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
   });
@@ -57,30 +56,21 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       it('should render validation errors', () => {
-        submitButton().click();
+        const expectedErrorsCount = 1;
+        const expectedErrorMessage = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
 
-        cy.checkErrorSummaryListHeading();
-
-        partials.errorSummaryListItems().should('have.length', 1);
-
-        const expectedMessage = String(ERROR_MESSAGES.ELIGIBILITY[VALID_BUYER_BODY]);
-
-        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
-
-        cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
-      });
-
-      it('should focus on input when clicking summary error message', () => {
-        submitButton().click();
-
-        partials.errorSummaryListItemLinks().eq(0).click();
-        yesRadioInput().should('have.focus');
+        cy.submitAndAssertRadioErrors(
+          yesRadio(FIELD_ID),
+          0,
+          expectedErrorsCount,
+          expectedErrorMessage,
+        );
       });
     });
 
     describe('when submitting the answer as `no`', () => {
       it(`should redirect to ${EXPORTER_LOCATION}`, () => {
-        noRadio().click();
+        noRadio().input().click();
         submitButton().click();
 
         const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;

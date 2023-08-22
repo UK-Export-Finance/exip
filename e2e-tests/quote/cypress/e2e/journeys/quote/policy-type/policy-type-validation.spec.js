@@ -1,5 +1,4 @@
 import { submitButton } from '../../../../../../pages/shared';
-import { policyTypePage } from '../../../../../../pages/quote';
 import partials from '../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
@@ -33,7 +32,6 @@ context('Policy type page - policy type & length validation - single policy type
     cy.saveSession();
 
     cy.navigateToUrl(url);
-    policyTypePage[POLICY_TYPE].single.input().click();
   });
 
   describe('when submitting an empty form', () => {

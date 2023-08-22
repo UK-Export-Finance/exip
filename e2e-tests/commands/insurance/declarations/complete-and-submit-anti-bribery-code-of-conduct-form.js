@@ -7,9 +7,9 @@ import { FIELD_VALUES } from '../../../constants';
  */
 export default (answer) => {
   if (answer === FIELD_VALUES.NO) {
-    noRadio().click();
+    noRadio().input().click();
   } else {
-    yesRadio().click();
+    yesRadio().input().click();
   }
 
   submitButton().click();

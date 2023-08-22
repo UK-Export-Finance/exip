@@ -8,11 +8,11 @@ import partials from '../partials';
  * @param {Number} errorSummaryLength - the number of expected errors in errorSummary
  * @param {String} errorMessage
  */
-export default (field, fieldValue, errorIndex, errorSummaryLength, errorMessage) => {
+const submitAndAssertFieldErrors = (field, fieldValue, errorIndex, errorSummaryLength, errorMessage, clearInput = true) => {
   // only type if a field value is provided
   if (fieldValue) {
     cy.keyboardInput(field.input(), fieldValue);
-  } else {
+  } else if (clearInput) {
     field.input().clear();
   }
 
@@ -32,3 +32,5 @@ export default (field, fieldValue, errorIndex, errorSummaryLength, errorMessage)
 
   cy.checkText(field.errorMessage(), `Error: ${errorMessage}`);
 };
+
+export default submitAndAssertFieldErrors;

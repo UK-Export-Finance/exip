@@ -9,7 +9,7 @@ const companiesHouseNumber = {
 
   hint: () => cy.get(`[data-cy="${COMPANIES_HOUSE_NUMBER}-hint"]`),
   input: () => cy.get(`[data-cy="${COMPANIES_HOUSE_NUMBER}"]`),
-  errorMessage: () => cy.get(`[data-cy="${COMPANIES_HOUSE_NUMBER}-error"]`),
+  errorMessage: () => cy.get(`[data-cy="${COMPANIES_HOUSE_NUMBER}-error-message"]`),
 
   doNotHaveACompaniesHouseNumber: () => cy.get('[data-cy="do-not-have-number"]'),
 

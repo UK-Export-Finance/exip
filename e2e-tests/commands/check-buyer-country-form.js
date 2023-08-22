@@ -1,11 +1,15 @@
 import {
-  buyerCountryPage, heading, inlineErrorMessage, submitButton,
+  buyerCountryPage, heading, submitButton,
 } from '../pages/shared';
 import partials from '../partials';
 import {
   BUTTONS, ERROR_MESSAGES, FIELDS, ORGANISATION, PAGES,
 } from '../content-strings';
 import { FIELD_IDS } from '../constants';
+
+const {
+  ELIGIBILITY: { BUYER_COUNTRY: FIELD_ID },
+} = FIELD_IDS;
 
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
@@ -17,7 +21,7 @@ const checkPageTitleAndHeading = () => {
 };
 
 const checkInputHint = () => {
-  cy.checkText(buyerCountryPage.hint(), FIELDS[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY].HINT);
+  cy.checkText(buyerCountryPage.hint(), FIELDS[FIELD_ID].HINT);
 };
 
 const checkAutocompleteInput = {
@@ -84,15 +88,15 @@ const checkSubmitButton = () => {
 };
 
 const checkValidationErrors = () => {
-  cy.checkErrorSummaryListHeading();
+  const expectedErrorsCount = 1;
 
-  partials.errorSummaryListItems().should('have.length', 1);
-
-  const expectedMessage = String(ERROR_MESSAGES.ELIGIBILITY[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]);
-
-  cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
-
-  cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
+  cy.submitAndAssertFieldErrors(
+    buyerCountryPage,
+    null,
+    0,
+    expectedErrorsCount,
+    ERROR_MESSAGES.ELIGIBILITY[FIELD_ID],
+  );
 };
 
 const checkFocusOnInputWhenClickingSummaryErrorMessage = () => {

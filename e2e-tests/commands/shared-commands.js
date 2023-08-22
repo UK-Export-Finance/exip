@@ -57,3 +57,6 @@ Cypress.Commands.add('checkTaskStatusCompleted', require('./check-completed-task
 Cypress.Commands.add('checkLink', require('./check-link'));
 Cypress.Commands.add('getReferenceNumber', require('./get-reference-number'));
 Cypress.Commands.add('keyboardInput', require('./keyboard-input'));
+
+Cypress.Commands.add('submitAndAssertRadioErrors', require('./submit-and-assert-radio-errors'));
+Cypress.Commands.add('submitAndAssertFieldErrors', require('./submit-and-assert-field-errors'));

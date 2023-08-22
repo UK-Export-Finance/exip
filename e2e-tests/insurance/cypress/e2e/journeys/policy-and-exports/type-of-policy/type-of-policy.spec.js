@@ -1,6 +1,5 @@
 import {
   headingCaption,
-  inlineErrorMessage,
   submitButton,
   saveAndBackButton,
 } from '../../../../../../pages/shared';
@@ -116,23 +115,14 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
       });
 
       it('should render a validation error', () => {
-        submitButton().click();
+        const expectedErrorsCount = 1;
 
-        cy.checkErrorSummaryListHeading();
-        partials.errorSummaryListItems().should('have.length', 1);
-
-        const expectedMessage = String(ERROR_MESSAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY[FIELD_ID].IS_EMPTY);
-
-        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
-
-        cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
-      });
-
-      it('should focus on input when clicking summary error message', () => {
-        submitButton().click();
-
-        partials.errorSummaryListItemLinks().eq(0).click();
-        singlePolicyField.input().should('have.focus');
+        cy.submitAndAssertRadioErrors(
+          singlePolicyField,
+          0,
+          expectedErrorsCount,
+          ERROR_MESSAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY[FIELD_ID].IS_EMPTY,
+        );
       });
     });
 

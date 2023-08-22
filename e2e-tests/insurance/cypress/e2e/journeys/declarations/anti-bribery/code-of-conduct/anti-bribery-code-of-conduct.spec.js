@@ -1,10 +1,7 @@
 import {
   headingCaption,
-  submitButton,
   yesRadio,
-  yesRadioInput,
   noRadio,
-  inlineErrorMessage,
 } from '../../../../../../../pages/shared';
 import { codeOfConductPage } from '../../../../../../../pages/insurance/declarations';
 import partials from '../../../../../../../partials';
@@ -87,17 +84,17 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
     });
 
     it('renders `yes` radio button', () => {
-      yesRadio().should('exist');
-
-      cy.checkText(yesRadio(), FIELD_VALUES.YES);
+      cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
 
       cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
+
+      yesRadio().input().should('exist');
     });
 
     it('renders `no` radio button', () => {
-      noRadio().should('exist');
+      noRadio().input().should('exist');
 
-      cy.checkText(noRadio(), FIELD_VALUES.NO);
+      cy.checkText(noRadio().label(), FIELD_VALUES.NO);
 
       cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
@@ -114,23 +111,14 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
       });
 
       it('should render a validation error', () => {
-        submitButton().click();
+        const expectedErrorsCount = 1;
 
-        cy.checkErrorSummaryListHeading();
-        partials.errorSummaryListItems().should('have.length', 1);
-
-        const expectedMessage = String(ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
-
-        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
-
-        cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
-      });
-
-      it('should focus on input when clicking summary error message', () => {
-        submitButton().click();
-
-        partials.errorSummaryListItemLinks().eq(0).click();
-        yesRadioInput().should('have.focus');
+        cy.submitAndAssertRadioErrors(
+          yesRadio(FIELD_ID),
+          0,
+          expectedErrorsCount,
+          ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
+        );
       });
     });
   });

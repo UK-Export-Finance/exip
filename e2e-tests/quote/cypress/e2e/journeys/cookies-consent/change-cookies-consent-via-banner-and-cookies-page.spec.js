@@ -50,7 +50,7 @@ context('Cookies consent - change via banner and cookies page', () => {
     });
 
     it('should allow user to immediately change their answer to `reject` and have scripts & cookies changed via the cookies page', () => {
-      cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput().click();
+      cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].reject.input().click();
       submitButton().click();
 
       cy.checkAnalyticsScriptsAreNotRendered();
@@ -58,7 +58,7 @@ context('Cookies consent - change via banner and cookies page', () => {
     });
 
     it('should NOT render the cookie consent banner when going to another page', () => {
-      cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].rejectInput().click();
+      cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].reject.input().click();
       submitButton().click();
 
       cy.navigateToUrl(BUYER_COUNTRY);
@@ -101,7 +101,7 @@ context('Cookies consent - change via banner and cookies page', () => {
     });
 
     it('should allow user to immediately change their answer to `approve` and have scripts & cookies changed via the cookies page', () => {
-      cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].acceptInput().click();
+      cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].accept.input().click();
       submitButton().click();
 
       cy.checkAnalyticsScriptsAreRendered();

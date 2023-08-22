@@ -6,7 +6,7 @@ const yourContactPage = {
     hint: () => cy.get(`[data-cy="${field}-hint"]`),
     input: () => cy.get(`[data-cy="${field}"]`),
     details: () => cy.get(`[data-cy="${field}"]`),
-    errorMessage: () => cy.get(`[data-cy="${field}-error"]`),
+    errorMessage: () => cy.get(`[data-cy="${field}-error-message"]`),
   }),
 };
 
