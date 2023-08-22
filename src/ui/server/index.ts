@@ -124,7 +124,7 @@ if (process.env.NODE_ENV !== 'production') {
 app1.use('/quote', requiredQuoteEligibilityDataProvided);
 app1.use('/insurance/eligibility', requiredInsuranceEligibilityDataProvided);
 app1.use('/insurance/:referenceNumber/*', getApplication);
-app1.use('/insurance/:referenceNumber/*', applicationAccess);
+// app1.use('/insurance/:referenceNumber/*', applicationAccess);
 app1.use('/insurance/:referenceNumber/*', applicationStatus);
 app1.use('/', userSession);
 
