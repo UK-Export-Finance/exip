@@ -34,6 +34,7 @@ interface ResponseLocals {
 
 interface RequestParams {
   referenceNumber?: string;
+  pageNumber?: string;
 }
 
 interface RequestQuery {

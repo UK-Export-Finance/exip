@@ -54,6 +54,7 @@ import {
   SingleInputPageVariablesInput,
   SingleInputPageVariables,
 } from './page-variables';
+import { PaginationItem } from './pagination';
 import { InsuranceFeedbackVariables } from './feedback';
 import { SanitiseValueObjParams } from './sanitise-value';
 
@@ -92,6 +93,7 @@ export {
   Next,
   PageContentStrings,
   PageVariablesContentStrings,
+  PaginationItem,
   PricingGrid,
   PricingGridMonth,
   PricingGridRate,

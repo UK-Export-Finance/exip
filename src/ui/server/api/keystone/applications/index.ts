@@ -1,13 +1,18 @@
 import { ApolloResponse } from '../../../../types';
 import apollo from '../../../graphql/apollo';
 import getApplicationsQuery from '../../../graphql/queries/applications';
+import { MAX_APPLICATIONS_PER_PAGE } from '../../../constants';
 
 const applications = {
-  getAll: async (accountId: string) => {
+  getAll: async (accountId: string, skip: number) => {
     try {
       console.info('Getting all applications');
 
-      const variables = { accountId };
+      const variables = {
+        accountId,
+        take: MAX_APPLICATIONS_PER_PAGE,
+        skip,
+      };
 
       const response = (await apollo('GET', getApplicationsQuery, variables)) as ApolloResponse;
 
@@ -20,7 +25,14 @@ const applications = {
       }
 
       if (response?.data?.applications) {
-        return response.data.applications;
+        const { applications: applicationsData, applicationsCount } = response.data;
+
+        const mappedResponse = {
+          applications: applicationsData,
+          totalApplications: applicationsCount,
+        };
+
+        return mappedResponse;
       }
 
       console.error('Error with GraphQL getApplicationsQuery %O', response);

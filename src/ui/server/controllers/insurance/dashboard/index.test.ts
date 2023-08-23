@@ -3,6 +3,7 @@ import { PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES, APPLICATION } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import { getSkipCount, getPaginationNumbers, generatePaginationItems, generateNextPreviousLinks } from '../../../helpers/pagination';
 import api from '../../../api';
 import mapApplications from '../../../helpers/mappings/map-applications';
 import { Request, Response } from '../../../../types';
@@ -21,11 +22,20 @@ describe('controllers/insurance/dashboard', () => {
   let req: Request;
   let res: Response;
 
-  let getApplicationsSpy = jest.fn(() => Promise.resolve(mockApplications));
+
+  const getApplicationsResponse = {
+    applications: mockApplications,
+    totalApplications: 10,
+  };
+
+  let getApplicationsSpy = jest.fn(() =>
+    Promise.resolve(getApplicationsResponse),
+  );
 
   beforeEach(() => {
     req = mockReq();
     req.session.user = mockAccount;
+    req.params.pageNumber = '100';
 
     res = mockRes();
 
@@ -39,15 +49,49 @@ describe('controllers/insurance/dashboard', () => {
   });
 
   describe('get', () => {
-    it('should call api.keystone.applications.getAll with the user session ID', async () => {
-      await get(req, res);
+    describe('when there is no req.params.pageNumber', () => {
+      it('should call api.keystone.applications.getAll with the user session ID and a default skip count', async () => {
+        delete req.params.pageNumber;
 
-      expect(getApplicationsSpy).toHaveBeenCalledTimes(1);
-      expect(getApplicationsSpy).toHaveBeenCalledWith(req.session.user?.id);
+        await get(req, res);
+
+        expect(getApplicationsSpy).toHaveBeenCalledTimes(1);
+
+        const expectedSkip = getSkipCount(1);
+
+        expect(getApplicationsSpy).toHaveBeenCalledWith(req.session.user?.id, expectedSkip);
+      });
+    });
+
+    describe('when there is a req.params.pageNumber', () => {
+      it('should call api.keystone.applications.getAll with the user session ID and a skip count frmo params', async () => {
+        req.params.pageNumber = '100';
+
+        await get(req, res);
+
+        expect(getApplicationsSpy).toHaveBeenCalledTimes(1);
+
+        const expectedSkip = getSkipCount(Number(req.params.pageNumber));
+
+        expect(getApplicationsSpy).toHaveBeenCalledWith(req.session.user?.id, expectedSkip);
+      });
     });
 
     it('should render template', async () => {
+      req.params.pageNumber = '100';
+
+      const pageNumberParam = Number(req.params.pageNumber);
+
       await get(req, res);
+
+      const { totalPages, previousPage, nextPage, lastPage } = getPaginationNumbers(
+        pageNumberParam,
+        getApplicationsResponse.totalApplications,
+      );
+
+      const paginationItems = generatePaginationItems(pageNumberParam, totalPages, previousPage, nextPage, lastPage);
+
+      const { next, previous } = generateNextPreviousLinks(totalPages, pageNumberParam);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
@@ -61,6 +105,9 @@ describe('controllers/insurance/dashboard', () => {
           ALL_SECTIONS,
         },
         SUBMITTED_STATUS: APPLICATION.STATUS.SUBMITTED,
+        paginationItems,
+        PREVIOUS: previous,
+        NEXT: next,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

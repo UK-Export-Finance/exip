@@ -1,5 +1,6 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 {% import '../components/dashboard-table.njk' as dashboardTable %}
 
 {% block pageTitle %}
@@ -28,6 +29,12 @@
       submittedStatus: SUBMITTED_STATUS
     }) }}
 
+    {{ govukPagination({
+      previous: PREVIOUS,
+      next: NEXT, 
+      items: paginationItems
+    }) }}
+
     {% else %}
 
     <p class="govuk-body" data-cy="no-applications">{{ CONTENT_STRINGS.NO_APPLICATIONS }}</p>
@@ -39,5 +46,6 @@
 
     <a class="govuk-button govuk-button--secondary" href="{{ CONTENT_STRINGS.GET_A_QUOTE.HREF }}" data-cy="get-a-quote-button">{{ CONTENT_STRINGS.GET_A_QUOTE.TEXT }}</a>
   </div>
+
 
 {% endblock %}
