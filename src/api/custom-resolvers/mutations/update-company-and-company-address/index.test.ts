@@ -17,9 +17,9 @@ describe('custom-resolvers/update-company-and-company-address', () => {
     const dateOfCreation = new Date('11 23 2022');
     const financialYearEndDate = new Date('11 23 2022');
 
-    const variables = (company, companyAddress) => ({
-      companyId: company.id,
-      companyAddressId: companyAddress.id,
+    const variables = (providedCompany, providedCompanyAddress) => ({
+      companyId: providedCompany.id,
+      companyAddressId: providedCompanyAddress.id,
       data: {
         address: {
           ...mockCompany.registeredOfficeAddress,
@@ -117,9 +117,9 @@ describe('custom-resolvers/update-company-and-company-address', () => {
     const dateOfCreation = new Date('11 23 2022');
     const financialYearEndDate = new Date('11 23 2022');
 
-    const variables = (company, companyAddress) => ({
-      companyId: company.id,
-      companyAddressId: companyAddress.id,
+    const variables = (providedCompany, providedCompanyAddress) => ({
+      companyId: providedCompany.id,
+      companyAddressId: providedCompanyAddress.id,
       data: {
         address: {
           ...mockCompany.registeredOfficeAddress,
