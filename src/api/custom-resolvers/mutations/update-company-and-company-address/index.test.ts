@@ -49,7 +49,7 @@ describe('custom-resolvers/update-company-and-company-address', () => {
       });
     });
 
-    it('should create company and companyAddress and companySicCodes when a company is passed', async () => {
+    it('should create company, companyAddress and companySicCodes when a company is passed', async () => {
       const companyResponse = await companyHelpers.getCompany(context, company.id);
       const companyAddressResponse = await companyHelpers.getCompanyAddress(context, companyAddress.id);
       companySicCode = await companyHelpers.getCompanySicCode(context, company.id);
@@ -69,7 +69,7 @@ describe('custom-resolvers/update-company-and-company-address', () => {
       expect(companySicCode[0].industrySectorName).toEqual(industrySectorNames[0]);
     });
 
-    it('should remove old sic codes when oldSicCodes is populated', async () => {
+    it('should remove old sic codes when oldSicCodes variable is populated', async () => {
       companySicCode = await companyHelpers.getCompanySicCode(context, company.id);
 
       const sicCode = '000000';
