@@ -17,13 +17,15 @@ const {
  */
 const completeSignInAndGoToApplication = (email = mockAccount[EMAIL]) => {
   // complete sign in and go to dashboard
-  completeInsuranceEligibilitySignInAndGoToDashboard(email);
+  // const bla = completeInsuranceEligibilitySignInAndGoToDashboard(email);
 
-  // go to the newly created application
-  insurancePages.dashboardPage.table.body.lastRow.referenceNumberLink().click();
+  completeInsuranceEligibilitySignInAndGoToDashboard(email).then(({ accountId }) => {
+    // go to the newly created application
+    insurancePages.dashboardPage.table.body.lastRow.referenceNumberLink().click();
 
-  // get the reference number and return for consumption in the test
-  cy.getReferenceNumber().then((referenceNumber) => referenceNumber);
+    // get the reference number and return for consumption in the test
+    cy.getReferenceNumber().then((referenceNumber) => ({ accountId, referenceNumber }));
+  });
 };
 
 export default completeSignInAndGoToApplication;

@@ -3,7 +3,7 @@ import { PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES, APPLICATION } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
-import { getSkipCount, getPaginationNumbers, generatePaginationItems, generateNextPreviousLinks } from '../../../helpers/pagination';
+import { getSkipCount, generatePaginationItems } from '../../../helpers/pagination';
 import api from '../../../api';
 import mapApplications from '../../../helpers/mappings/map-applications';
 import { Request, Response } from '../../../../types';
@@ -22,15 +22,12 @@ describe('controllers/insurance/dashboard', () => {
   let req: Request;
   let res: Response;
 
-
   const getApplicationsResponse = {
     applications: mockApplications,
     totalApplications: 10,
   };
 
-  let getApplicationsSpy = jest.fn(() =>
-    Promise.resolve(getApplicationsResponse),
-  );
+  let getApplicationsSpy = jest.fn(() => Promise.resolve(getApplicationsResponse));
 
   beforeEach(() => {
     req = mockReq();
@@ -84,14 +81,7 @@ describe('controllers/insurance/dashboard', () => {
 
       await get(req, res);
 
-      const { totalPages, previousPage, nextPage, lastPage } = getPaginationNumbers(
-        pageNumberParam,
-        getApplicationsResponse.totalApplications,
-      );
-
-      const paginationItems = generatePaginationItems(pageNumberParam, totalPages, previousPage, nextPage, lastPage);
-
-      const { next, previous } = generateNextPreviousLinks(totalPages, pageNumberParam);
+      const paginationItems = generatePaginationItems(getApplicationsResponse.totalApplications);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
@@ -105,9 +95,8 @@ describe('controllers/insurance/dashboard', () => {
           ALL_SECTIONS,
         },
         SUBMITTED_STATUS: APPLICATION.STATUS.SUBMITTED,
-        paginationItems,
-        PREVIOUS: previous,
-        NEXT: next,
+        currentPageNumber: pageNumberParam,
+        pages: paginationItems,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

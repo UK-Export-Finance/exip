@@ -308,7 +308,7 @@ var CUSTOM_RESOLVERS = [
   "createFeedbackAndSendEmail"
 ];
 if (isDevEnvironment) {
-  CUSTOM_RESOLVERS.push("addAndGetOTP", "deleteAnAccount", "getAccountPasswordResetToken");
+  CUSTOM_RESOLVERS.push("createApplications", "addAndGetOTP", "deleteAnAccount", "getAccountPasswordResetToken");
 }
 var ALLOWED_GRAPHQL_RESOLVERS = [...DEFAULT_RESOLVERS, ...CUSTOM_RESOLVERS];
 

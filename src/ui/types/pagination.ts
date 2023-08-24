@@ -1,4 +1,4 @@
-interface PaginationItem  {
+interface PaginationItem {
   number?: number;
   current?: boolean;
   ellipsis?: boolean;

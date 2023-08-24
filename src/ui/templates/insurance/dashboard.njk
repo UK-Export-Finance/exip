@@ -1,7 +1,7 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "govuk/components/pagination/macro.njk" import govukPagination %}
 {% import '../components/dashboard-table.njk' as dashboardTable %}
+{% import '../components/pagination.njk' as pagination %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -29,10 +29,10 @@
       submittedStatus: SUBMITTED_STATUS
     }) }}
 
-    {{ govukPagination({
-      previous: PREVIOUS,
-      next: NEXT, 
-      items: paginationItems
+    {{ pagination.render({
+      currentPageNumber: currentPageNumber,
+      totalPages: pages.length,
+      pages: pages
     }) }}
 
     {% else %}

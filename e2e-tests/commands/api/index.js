@@ -20,6 +20,17 @@ const queryStrings = {
       }
     }
   `,
+  createApplications: () => gql`
+    mutation createApplications($data: [ApplicationCreateInput!]!) {
+      createApplications(data: $data) {
+        id
+        referenceNumber
+        owner {
+          id
+        }
+      }
+    }
+  `,
   deleteAnAccount: () => gql`
     mutation deleteAnAccount($email: String!)  {
       deleteAnAccount(email: $email) {
@@ -151,6 +162,21 @@ const createAnAccount = (urlOrigin, firstName, lastName, email, password) =>
     },
     context: APOLLO_CONTEXT,
   }).then((response) => response.data.createAnAccount);
+
+/**
+  * createApplications
+  * Create multiple applications
+  * @param {Array} Array of applications
+  * @returns {Array} Created applications
+  */
+const createApplications = (applications) =>
+  apollo.query({
+    query: queryStrings.createApplications(),
+    variables: {
+      data: applications,
+    },
+    context: APOLLO_CONTEXT,
+  }).then((response) => response.data.createApplications);
 
 /**
  * getAccountByEmail
@@ -427,6 +453,7 @@ const declarations = {
 
 const api = {
   createAnAccount,
+  createApplications,
   getAccountByEmail,
   updateAccount,
   deleteAnAccount,
