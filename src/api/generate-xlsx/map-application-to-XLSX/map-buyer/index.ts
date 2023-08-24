@@ -3,6 +3,7 @@ import { XLSX } from '../../../content-strings';
 import { YOUR_BUYER_FIELDS } from '../../../content-strings/fields/insurance/your-buyer';
 import xlsxRow from '../helpers/xlsx-row';
 import NEW_LINE from '../helpers/xlsx-new-line';
+import mapYesNoField from '../helpers/map-yes-no-field';
 import { Application } from '../../../types';
 
 const CONTENT_STRINGS = {
@@ -31,9 +32,9 @@ const mapBuyer = (application: Application) => {
     xlsxRow(XLSX.FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
     xlsxRow(String(CONTENT_STRINGS[WEBSITE].SUMMARY?.TITLE), buyer[WEBSITE]),
     xlsxRow(XLSX.FIELDS[FIRST_NAME], `${buyer[FIRST_NAME]} ${buyer[LAST_NAME]} ${NEW_LINE}${buyer[POSITION]} ${NEW_LINE}${buyer[EMAIL]}`),
-    xlsxRow(String(CONTENT_STRINGS[CAN_CONTACT_BUYER].SUMMARY?.TITLE), buyer[CAN_CONTACT_BUYER]),
-    xlsxRow(String(CONTENT_STRINGS[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), buyer[CONNECTED_WITH_BUYER]),
-    xlsxRow(String(CONTENT_STRINGS[TRADED_WITH_BUYER].SUMMARY?.TITLE), buyer[TRADED_WITH_BUYER]),
+    xlsxRow(String(CONTENT_STRINGS[CAN_CONTACT_BUYER].SUMMARY?.TITLE), mapYesNoField(buyer[CAN_CONTACT_BUYER])),
+    xlsxRow(String(CONTENT_STRINGS[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), mapYesNoField(buyer[CONNECTED_WITH_BUYER])),
+    xlsxRow(String(CONTENT_STRINGS[TRADED_WITH_BUYER].SUMMARY?.TITLE), mapYesNoField(buyer[TRADED_WITH_BUYER])),
   ];
 
   return mapped;

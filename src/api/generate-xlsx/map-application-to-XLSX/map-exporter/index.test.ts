@@ -82,7 +82,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter', () => {
 
         const { broker } = mockApplicationNoBroker;
 
-        const expected = [xlsxRow(XLSX.FIELDS[USING_BROKER], broker[USING_BROKER])];
+        const expected = [xlsxRow(XLSX.FIELDS[USING_BROKER], mapYesNoField(broker[USING_BROKER]))];
 
         expect(result).toEqual(expected);
       });

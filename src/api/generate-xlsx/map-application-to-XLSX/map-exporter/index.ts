@@ -52,7 +52,7 @@ export const mapSicCodes = (sicCodes: Array<ApplicationCompanySicCode>) => {
 export const mapBroker = (application: Application) => {
   const { broker } = application;
 
-  let mapped = [xlsxRow(XLSX.FIELDS[USING_BROKER], broker[USING_BROKER])];
+  let mapped = [xlsxRow(XLSX.FIELDS[USING_BROKER], mapYesNoField(broker[USING_BROKER]))];
 
   if (broker[USING_BROKER]) {
     const addressAnswer = {
