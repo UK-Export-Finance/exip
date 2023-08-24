@@ -19,6 +19,15 @@ const updateCompanyAndCompanyAddress = async (
     console.info('Updating application company and company address for %s', variables.companyId);
     const { address, sicCodes, industrySectorNames, oldSicCodes, ...company } = variables.data;
 
+    /**
+     * set financialYearEndDate to null if it is not part of company so previous financialYearEndDate is removed
+     * if companyNumber to ensure it is on companies house number submit
+     * if no financialYear end date
+     */
+    if (company?.companyNumber && !company?.financialYearEndDate) {
+      company.financialYearEndDate = null;
+    }
+
     const updatedCompany = await context.db.Company.updateOne({
       where: { id: variables.companyId },
       data: company,

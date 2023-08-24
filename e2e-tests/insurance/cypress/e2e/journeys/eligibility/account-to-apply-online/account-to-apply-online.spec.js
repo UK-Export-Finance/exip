@@ -1,7 +1,6 @@
 import {
-  submitButton, inlineErrorMessage, yesRadioInput, yesRadio, yesNoRadioHint, noRadio,
+  submitButton, yesRadioInput, yesRadio, yesNoRadioHint, noRadio,
 } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import {
   ERROR_MESSAGES,
   FIELDS,
@@ -55,7 +54,9 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
     });
 
     it('renders a `yes` radio button with a hint', () => {
-      cy.checkText(yesRadio(), FIELD_VALUES.YES);
+      yesRadio().input().should('exist');
+
+      cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
 
       cy.checkText(yesNoRadioHint(), FIELDS[FIELD_ID].HINT);
 
@@ -63,7 +64,7 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
     });
 
     it('renders a `no` radio button', () => {
-      cy.checkText(noRadio(), FIELD_VALUES.NO);
+      cy.checkText(noRadio().label(), FIELD_VALUES.NO);
 
       cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
@@ -78,19 +79,14 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
       });
 
       it('should render validation errors', () => {
-        cy.checkErrorSummaryListHeading();
-        partials.errorSummaryListItems().should('have.length', 1);
+        const expectedErrorsCount = 1;
 
-        const expectedMessage = String(ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY);
-
-        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
-
-        cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
-      });
-
-      it('should focus on input when clicking summary error message', () => {
-        partials.errorSummaryListItemLinks().eq(0).click();
-        yesRadioInput().should('have.focus');
+        cy.submitAndAssertRadioErrors(
+          yesRadio(FIELD_ID),
+          0,
+          expectedErrorsCount,
+          ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY,
+        );
       });
     });
 

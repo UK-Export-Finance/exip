@@ -3,10 +3,11 @@ import accessibleAutocomplete from 'accessible-autocomplete';
 const init = () => {
   window.accessibleAutocomplete = accessibleAutocomplete;
 
-  var element = document.getElementById('buyerCountry');
+  var buyerCountry = document.getElementById('buyerCountry');
+  var finalDestinationCountryCode = document.getElementById('finalDestinationCountryCode');
 
   accessibleAutocomplete.enhanceSelectElement({
-    selectElement: element,
+    selectElement: buyerCountry || finalDestinationCountryCode,
     defaultValue: '',
   });
 

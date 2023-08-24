@@ -140,7 +140,7 @@ const application = {
     [TOTAL_SALES_TO_BUYER]: '1000',
     [MAXIMUM_BUYER_WILL_OWE]: '500',
     [DESCRIPTION]: 'Mock description',
-    [FINAL_DESTINATION]: 'DZA',
+    [FINAL_DESTINATION]: mockCountries[1].isoCode,
   },
   EXPORTER_COMPANY: {
     [COMPANY_NUMBER]: COMPANIES_HOUSE_NUMBER,

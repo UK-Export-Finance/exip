@@ -1,5 +1,5 @@
 import {
-  backLink, buyerCountryPage, submitButton, summaryList,
+  backLink, countryInput, submitButton, summaryList,
 } from '../../../../../../pages/shared';
 import {
   policyTypePage,
@@ -14,6 +14,7 @@ const {
     CREDIT_PERIOD,
     MAX_AMOUNT_OWED,
     PERCENTAGE_OF_COVER,
+    BUYER_COUNTRY,
   },
   POLICY_TYPE,
   QUOTE,
@@ -214,8 +215,8 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      cy.keyboardInput(buyerCountryPage.input(), 'Bahrain');
-      const results = buyerCountryPage.results();
+      cy.keyboardInput(countryInput.field(BUYER_COUNTRY).input(), 'Bahrain');
+      const results = countryInput.field(BUYER_COUNTRY).results();
       results.first().click();
 
       submitButton().click();
@@ -226,8 +227,8 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it('renders the new answer in the quote', () => {
-      cy.keyboardInput(buyerCountryPage.input(), 'Bahrain');
-      const results = buyerCountryPage.results();
+      cy.keyboardInput(countryInput.field(BUYER_COUNTRY).input(), 'Bahrain');
+      const results = countryInput.field(BUYER_COUNTRY).results();
       results.first().click();
 
       // form submit

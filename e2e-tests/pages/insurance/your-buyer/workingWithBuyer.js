@@ -18,6 +18,7 @@ const workingWithBuyer = {
   },
   [TRADED_WITH_BUYER]: {
     label: () => cy.get(`[data-cy="${TRADED_WITH_BUYER}-label"]`),
+    hint: () => cy.get(`[data-cy="${TRADED_WITH_BUYER}-hint"]`),
     yesRadioInput: () => yesRadioInput().eq(1),
     noRadioInput: () => noRadioInput().eq(1),
     details: () => cy.get(`[data-cy="${TRADED_WITH_BUYER}-details"]`),

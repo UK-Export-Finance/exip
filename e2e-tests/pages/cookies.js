@@ -36,11 +36,15 @@ export const cookiesPage = {
       item2: () => cy.get('[data-cy="analytics-info-list"] li').eq(1),
       item3: () => cy.get('[data-cy="analytics-info-list"] li').eq(2),
     },
-    acceptInput: () => cy.get('[data-cy="accept-input"]'),
-    acceptLabel: () => cy.get('[data-cy="accept-label"]'),
-    rejectInput: () => cy.get('[data-cy="reject-input"]'),
-    rejectLabel: () => cy.get('[data-cy="reject-label"]'),
-    errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.OPTIONAL_COOKIES}-error-message"]`),
-    submitButton: () => cy.get('[data-cy="submit-button"]'),
+    accept: {
+      input: () => cy.get('[data-cy="accept-input"]'),
+      label: () => cy.get('[data-cy="accept-label"]'),
+      errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.OPTIONAL_COOKIES}-error-message"]`),
+    },
+    reject: {
+      input: () => cy.get('[data-cy="reject-input"]'),
+      label: () => cy.get('[data-cy="reject-label"]'),
+      errorMessage: () => cy.get(`[data-cy="${FIELD_IDS.OPTIONAL_COOKIES}-error-message"]`),
+    },
   },
 };

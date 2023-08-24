@@ -1,5 +1,5 @@
 import {
-  backLink, buyerCountryPage, submitButton, summaryList,
+  backLink, countryInput, submitButton, summaryList,
 } from '../../../../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
@@ -9,6 +9,7 @@ const {
   ELIGIBILITY: {
     MAX_AMOUNT_OWED,
     PERCENTAGE_OF_COVER,
+    BUYER_COUNTRY,
   },
   QUOTE,
 } = FIELD_IDS;
@@ -153,8 +154,8 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      cy.keyboardInput(buyerCountryPage.input(), 'Brazil');
-      const results = buyerCountryPage.results();
+      cy.keyboardInput(countryInput.field(BUYER_COUNTRY).input(), 'Brazil');
+      const results = countryInput.field(BUYER_COUNTRY).results();
       results.first().click();
 
       submitButton().click();
@@ -165,8 +166,8 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it('renders the new answers in the quote', () => {
-      cy.keyboardInput(buyerCountryPage.input(), 'Brazil');
-      const results = buyerCountryPage.results();
+      cy.keyboardInput(countryInput.field(BUYER_COUNTRY).input(), 'Brazil');
+      const results = countryInput.field(BUYER_COUNTRY).results();
       results.first().click();
 
       // form submit

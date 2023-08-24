@@ -1,5 +1,6 @@
-import { submitButton } from '../../../../../../../pages/shared';
+import { aboutGoodsOrServicesPage } from '../../../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../../../partials';
+import { countryInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 
@@ -51,21 +52,26 @@ context('Insurance - Policy and exports - About goods or services page - form va
   });
 
   it('should render validation errors for all required fields', () => {
-    submitButton().click();
+    const expectedErrorsCount = 2;
 
-    cy.checkErrorSummaryListHeading();
-
-    const TOTAL_REQUIRED_FIELDS = 2;
-    partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
-
-    cy.checkText(
-      partials.errorSummaryListItems().eq(0),
+    // description
+    cy.submitAndAssertFieldErrors(
+      aboutGoodsOrServicesPage[DESCRIPTION],
+      null,
+      0,
+      expectedErrorsCount,
       ABOUT_ERROR_MESSAGES[DESCRIPTION].IS_EMPTY,
+      false,
     );
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
+    // final destination
+    cy.submitAndAssertFieldErrors(
+      countryInput.field(FINAL_DESTINATION),
+      null,
+      1,
+      expectedErrorsCount,
       ABOUT_ERROR_MESSAGES[FINAL_DESTINATION].IS_EMPTY,
+      false,
     );
   });
 });

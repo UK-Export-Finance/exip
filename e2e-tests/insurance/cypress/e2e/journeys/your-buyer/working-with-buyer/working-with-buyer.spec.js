@@ -92,14 +92,17 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
       cy.checkAriaLabel(field.noRadioInput(), `${labelCopy} No`);
     });
 
-    it(`renders an ${TRADED_WITH_BUYER} label, radio buttons and details section`, () => {
+    it(`renders an ${TRADED_WITH_BUYER} label, hint, radio buttons and details section`, () => {
       const fieldId = TRADED_WITH_BUYER;
       const field = workingWithBuyerPage[fieldId];
 
       const labelCopy = FIELDS.WORKING_WITH_BUYER[fieldId].LABEL;
+      const hintCopy = FIELDS.WORKING_WITH_BUYER[fieldId].HINT;
 
       field.label().should('exist');
       cy.checkText(field.label(), labelCopy);
+
+      cy.checkText(field.hint(), hintCopy);
 
       cy.checkAriaLabel(field.yesRadioInput(), `${labelCopy} Yes`);
 

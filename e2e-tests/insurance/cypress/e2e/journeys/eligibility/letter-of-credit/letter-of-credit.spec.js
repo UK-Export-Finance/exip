@@ -1,9 +1,9 @@
 import {
-  yesRadio, yesRadioInput, noRadio, noRadioInput, inlineErrorMessage, submitButton,
+  yesRadio, noRadio, noRadioInput, submitButton,
 } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
+import { ROUTES, FIELD_VALUES } from '../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import {
   completeStartForm,
@@ -16,6 +16,10 @@ import {
 } from '../../../../../../commands/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT;
+
+const {
+  ELIGIBILITY: { LETTER_OF_CREDIT: FIELD_ID },
+} = INSURANCE_FIELD_IDS;
 
 context('Insurance - Eligibility - Letter of credit page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is paid via letter of credit', () => {
   let url;
@@ -56,17 +60,17 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
     });
 
     it('renders `yes` radio button', () => {
-      yesRadio().should('exist');
+      yesRadio().input().should('exist');
 
-      cy.checkText(yesRadio(), FIELD_VALUES.YES);
+      cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
 
       cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
 
     it('renders `no` radio button', () => {
-      noRadio().should('exist');
+      noRadio().input().should('exist');
 
-      cy.checkText(noRadio(), FIELD_VALUES.NO);
+      cy.checkText(noRadio().label(), FIELD_VALUES.NO);
 
       cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
@@ -81,19 +85,14 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
       });
 
       it('should render validation errors', () => {
-        cy.checkErrorSummaryListHeading();
-        partials.errorSummaryListItems().should('have.length', 1);
+        const expectedErrorsCount = 1;
 
-        const expectedMessage = String(ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_IDS.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT].IS_EMPTY);
-
-        cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
-
-        cy.checkText(inlineErrorMessage(), `Error: ${expectedMessage}`);
-      });
-
-      it('should focus on input when clicking summary error message', () => {
-        partials.errorSummaryListItemLinks().eq(0).click();
-        yesRadioInput().should('have.focus');
+        cy.submitAndAssertRadioErrors(
+          yesRadio(FIELD_ID),
+          0,
+          expectedErrorsCount,
+          ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY,
+        );
       });
     });
 
@@ -101,7 +100,7 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        noRadio().click();
+        noRadio().input().click();
         submitButton().click();
       });
 

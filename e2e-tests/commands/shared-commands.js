@@ -58,6 +58,9 @@ Cypress.Commands.add('checkLink', require('./check-link'));
 Cypress.Commands.add('getReferenceNumber', require('./get-reference-number'));
 Cypress.Commands.add('keyboardInput', require('./keyboard-input'));
 
+Cypress.Commands.add('submitAndAssertRadioErrors', require('./submit-and-assert-radio-errors'));
+Cypress.Commands.add('submitAndAssertFieldErrors', require('./submit-and-assert-field-errors'));
+
 Cypress.Commands.add('assertPaginationItemLink', require('./pagination/assert-pagination-item-link'));
 Cypress.Commands.add('assertPaginationNextLink', require('./pagination/assert-pagination-next-link'));
 Cypress.Commands.add('assertPaginationPreviousLink', require('./pagination/assert-pagination-previous-link'));

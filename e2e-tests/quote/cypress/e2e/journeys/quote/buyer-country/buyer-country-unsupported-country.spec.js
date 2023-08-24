@@ -1,8 +1,8 @@
 import {
-  backLink, buyerCountryPage, cannotApplyPage, submitButton,
+  backLink, countryInput, cannotApplyPage, submitButton,
 } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
-import { ROUTES } from '../../../../../../constants';
+import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { COUNTRY_UNSUPPORTRED } from '../../../../../../fixtures/countries';
 
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
@@ -10,6 +10,8 @@ const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 const {
   QUOTE: { BUYER_COUNTRY, CANNOT_APPLY },
 } = ROUTES;
+
+const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -26,9 +28,9 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
 
     cy.navigateToUrl(url);
 
-    cy.keyboardInput(buyerCountryPage.input(), COUNTRY_UNSUPPORTRED.name);
+    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_UNSUPPORTRED.name);
 
-    const results = buyerCountryPage.results();
+    const results = countryInput.field(FIELD_ID).results();
     results.first().click();
 
     submitButton().click();
@@ -59,8 +61,8 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
 
     const expectedValue = COUNTRY_UNSUPPORTRED.name;
 
-    cy.checkValue(buyerCountryPage, expectedValue);
+    cy.checkValue(countryInput.field(FIELD_ID), expectedValue);
 
-    cy.checkText(buyerCountryPage.results(), expectedValue);
+    cy.checkText(countryInput.field(FIELD_ID).results(), expectedValue);
   });
 });

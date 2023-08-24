@@ -170,7 +170,12 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
           const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
 
-          cy.submitAndAssertRadioErrors(field, errorIndex, numberOfExpectedErrors, errorMessage);
+          const radioField = {
+            ...field,
+            input: field.yesRadioInput,
+          };
+
+          cy.submitAndAssertRadioErrors(radioField, errorIndex, numberOfExpectedErrors, errorMessage);
         });
       });
 

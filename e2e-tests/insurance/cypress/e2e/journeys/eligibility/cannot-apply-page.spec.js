@@ -1,10 +1,11 @@
 import {
-  buyerCountryPage,
+  countryInput,
   cannotApplyPage,
   submitButton,
 } from '../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
+import { FIELD_IDS } from '../../../../../constants';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../commands/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
@@ -13,6 +14,8 @@ const {
   START,
   ELIGIBILITY: { BUYER_COUNTRY, CANNOT_APPLY },
 } = INSURANCE_ROUTES;
+
+const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
 const COUNTRY_NAME_UNSUPPORTED = 'France';
 
@@ -25,8 +28,8 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
     completeStartForm();
     completeCheckIfEligibleForm();
 
-    cy.keyboardInput(buyerCountryPage.input(), COUNTRY_NAME_UNSUPPORTED);
-    const results = buyerCountryPage.results();
+    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_NAME_UNSUPPORTED);
+    const results = countryInput.field(FIELD_ID).results();
     results.first().click();
 
     submitButton().click();

@@ -55,14 +55,14 @@
         {% set class = "govuk-form-group" %}
 
         {% if validationErrors.errorList[FIELD_ID] %}
-          {% set class = "govuk-form-group govuk-form-group--error" %}
+          {% set class = "govuk-form-group govuk-form-group--error-message" %}
         {% endif %}
 
         <div class="{{ class }}">
           {{ govukErrorMessage({
             text: validationErrors.errorList[FIELD_ID].text,
             attributes: {
-              "data-cy": "inline-error-message"
+              "data-cy": FIELD_ID + "-error-message"
             }
           }) }}
 

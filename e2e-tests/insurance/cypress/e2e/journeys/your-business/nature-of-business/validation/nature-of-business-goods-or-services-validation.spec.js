@@ -51,29 +51,27 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
   const fieldId = GOODS_OR_SERVICES;
   const field = natureOfBusiness[fieldId];
+  const expectedErrorsCount = 4;
 
   describe(`when ${GOODS_OR_SERVICES} is left empty`, () => {
-    beforeEach(() => {
-      field.input().clear();
-      submitButton().click();
-    });
-
-    const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].IS_EMPTY;
-
     it('should display validation errors', () => {
-      cy.checkErrorSummaryListHeading();
+      const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].IS_EMPTY;
 
-      partials.errorSummaryListItems().should('have.length', 4);
-      cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
+      cy.submitAndAssertFieldErrors(
+        field,
+        null,
+        0,
+        expectedErrorsCount,
+        errorMessage,
+        true,
+      );
     });
 
     it(`should focus to the ${GOODS_OR_SERVICES} section when clicking the error`, () => {
+      submitButton().click();
+
       partials.errorSummaryListItemLinks().first().click();
       field.input().should('have.focus');
-    });
-
-    it(`should display the validation error for ${GOODS_OR_SERVICES}`, () => {
-      cy.checkText(field.error(), `Error: ${errorMessage}`);
     });
   });
 
@@ -86,14 +84,16 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].ABOVE_MAXIMUM;
 
     it(`should display validation errors if ${GOODS_OR_SERVICES} left empty`, () => {
-      cy.checkErrorSummaryListHeading();
-      partials.errorSummaryListItems().should('have.length', 4);
+      const submittedValue = 'a'.repeat(MAXIMUM + 1);
 
-      cy.checkText(partials.errorSummaryListItems().first(), errorMessage);
-    });
-
-    it(`should display the validation error for ${GOODS_OR_SERVICES}`, () => {
-      cy.checkText(field.error(), `Error: ${errorMessage}`);
+      cy.submitAndAssertFieldErrors(
+        field,
+        submittedValue,
+        0,
+        expectedErrorsCount,
+        errorMessage,
+        true,
+      );
     });
   });
 

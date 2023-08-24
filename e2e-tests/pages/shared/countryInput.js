@@ -1,11 +1,12 @@
-const feedbackPage = {
+const countryInput = {
   field: (fieldId) => ({
-    heading: () => cy.get(`[data-cy="${fieldId}-heading"]`),
     label: () => cy.get(`[data-cy="${fieldId}-label"]`),
     hint: () => cy.get(`[data-cy="${fieldId}-hint"]`),
-    input: () => cy.get(`[data-cy="${fieldId}"]`),
+    input: () => cy.get(`#${fieldId}`),
+    results: () => cy.get(`#${fieldId} + ul li`),
+    noResults: () => cy.get('.autocomplete__option--no-results'),
     errorMessage: () => cy.get(`[data-cy="${fieldId}-error-message"]`),
   }),
 };
 
-export default feedbackPage;
+export default countryInput;

@@ -3023,6 +3023,9 @@ var updateCompanyAndCompanyAddress = async (root, variables, context) => {
   try {
     console.info("Updating application company and company address for %s", variables.companyId);
     const { address, sicCodes, industrySectorNames, oldSicCodes, ...company } = variables.data;
+    if (company?.companyNumber && !company?.financialYearEndDate) {
+      company.financialYearEndDate = null;
+    }
     const updatedCompany = await context.db.Company.updateOne({
       where: { id: variables.companyId },
       data: company
