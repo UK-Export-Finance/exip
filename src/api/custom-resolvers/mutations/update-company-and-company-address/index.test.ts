@@ -12,7 +12,7 @@ describe('custom-resolvers/update-company-and-company-address', () => {
 
   const { companyName, companyNumber, sicCodes } = mockCompany;
 
-  describe('Company house number response update', () => {
+  describe('Company house number update', () => {
     const industrySectorNames = ['test'];
     const dateOfCreation = new Date('11 23 2022');
     const financialYearEndDate = new Date('11 23 2022');
@@ -112,7 +112,7 @@ describe('custom-resolvers/update-company-and-company-address', () => {
     });
   });
 
-  describe('Company details page update', () => {
+  describe('Company details update', () => {
     const industrySectorNames = ['test'];
     const dateOfCreation = new Date('11 23 2022');
     const financialYearEndDate = new Date('11 23 2022');
