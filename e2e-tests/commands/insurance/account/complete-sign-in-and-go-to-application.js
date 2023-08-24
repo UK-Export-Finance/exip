@@ -17,8 +17,6 @@ const {
  */
 const completeSignInAndGoToApplication = (email = mockAccount[EMAIL]) => {
   // complete sign in and go to dashboard
-  // const bla = completeInsuranceEligibilitySignInAndGoToDashboard(email);
-
   completeInsuranceEligibilitySignInAndGoToDashboard(email).then(({ accountId }) => {
     // go to the newly created application
     insurancePages.dashboardPage.table.body.lastRow.referenceNumberLink().click();
