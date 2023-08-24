@@ -440,6 +440,11 @@ interface TestHelperAccountCreate {
   deleteAccounts?: boolean;
 }
 
+interface TestHelperCreate {
+  context: Context;
+  companyId?: string;
+}
+
 interface XLSXTitleRowIndexes {
   HEADER: number;
   KEY_INFORMATION: number;
@@ -509,6 +514,7 @@ export {
   SubmitApplicationVariables,
   SuccessResponse,
   TestHelperAccountCreate,
+  TestHelperCreate,
   UpdateCompanyAndCompanyAddressVariables,
   XLSXTitleRowIndexes,
   XLSXRowIndexes,
