@@ -7,7 +7,7 @@ type MockFormBody = {
   lastName?: string;
 };
 
-describe('server/helpers/combine-validation-rules', () => {
+describe('server/helpers/combine-validation-rules ', () => {
   const mockRuleFirstName = (formData: MockFormBody, errors: ValidationErrors): ValidationErrors => {
     if (!formData.firstName) {
       return generateValidationErrors('firstName', 'Enter first name', errors);
