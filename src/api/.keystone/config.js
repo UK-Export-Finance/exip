@@ -3889,6 +3889,18 @@ var mapExporterAddress = (address) => {
 };
 var map_address_default = mapExporterAddress;
 
+// generate-xlsx/map-application-to-XLSX/helpers/map-yes-no-field/index.ts
+var mapYesNoField = (answer) => {
+  if (answer === false) {
+    return "No";
+  }
+  if (answer === true) {
+    return "Yes";
+  }
+  return DEFAULT.EMPTY;
+};
+var map_yes_no_field_default = mapYesNoField;
+
 // generate-xlsx/map-application-to-XLSX/map-exporter/index.ts
 var CONTENT_STRINGS3 = {
   ...FIELDS.COMPANY_DETAILS,
@@ -3937,8 +3949,8 @@ var mapExporter = (application2) => {
     xlsx_row_default(XLSX.FIELDS[COMPANY_NAME2], company[COMPANY_NAME2]),
     xlsx_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
     xlsx_row_default(XLSX.FIELDS[COMPANY_ADDRESS2], map_address_default(company[COMPANY_ADDRESS2])),
-    xlsx_row_default(CONTENT_STRINGS3[TRADING_NAME2].SUMMARY?.TITLE, company[TRADING_NAME2]),
-    xlsx_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, company[TRADING_ADDRESS2]),
+    xlsx_row_default(CONTENT_STRINGS3[TRADING_NAME2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_NAME2])),
+    xlsx_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_ADDRESS2])),
     xlsx_row_default(XLSX.FIELDS[COMPANY_SIC2], mapSicCodes2(companySicCodes)),
     xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM")),
     xlsx_row_default(XLSX.FIELDS[WEBSITE3], company[WEBSITE3]),
@@ -3982,18 +3994,6 @@ var mapBuyer = (application2) => {
   return mapped;
 };
 var map_buyer_default = mapBuyer;
-
-// generate-xlsx/map-application-to-XLSX/helpers/map-yes-no-field/index.ts
-var mapYesNoField = (answer) => {
-  if (answer === false) {
-    return "No";
-  }
-  if (answer === true) {
-    return "Yes";
-  }
-  return DEFAULT.EMPTY;
-};
-var map_yes_no_field_default = mapYesNoField;
 
 // generate-xlsx/map-application-to-XLSX/map-eligibility/index.ts
 var {
