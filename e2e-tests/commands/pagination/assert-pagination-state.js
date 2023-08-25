@@ -4,8 +4,13 @@ import assertActivePaginationLink from './assert-active-pagination-link';
 import assertPaginationNextLink from './assert-pagination-next-link';
 import assertPaginationPreviousLink from './assert-pagination-previous-link';
 import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
+import { PAGES, ORGANISATION } from '../../content-strings';
 
 const { DASHBOARD_PAGE } = INSURANCE_ROUTES;
+
+const {
+  INSURANCE: { DASHBOARD: { PAGE_TITLE } },
+} = PAGES;
 
 const baseUrl = Cypress.config('baseUrl');
 const defaultDashboardUrl = `${baseUrl}${DASHBOARD_PAGE}`;
@@ -14,6 +19,7 @@ const defaultDashboardUrl = `${baseUrl}${DASHBOARD_PAGE}`;
  * assertPaginationState
  * Check various aspects relating to pagination depending on the provided params.
  * 1) URL should match.
+ * 2) Page title should contain "page X of Y" if the total amount of pages if greater than 1.
  * 2) Active item/link should match the provided page number.
  * 3) Next link should match the provided page number + 1.
  * 3) Previous link should match the provided page number - 1.
@@ -36,6 +42,16 @@ const assertPaginationState = ({
     assertUrl(expectedUrl);
   } else {
     assertUrl(`${defaultDashboardUrl}/${expectedPageNumber}`);
+  }
+
+  if (totalPages > 1) {
+    const expectedTitle = `${PAGE_TITLE} (Page ${expectedPageNumber} of ${totalPages}) - ${ORGANISATION}`;
+
+    cy.title().should('eq', expectedTitle);
+  } else {
+    const expectedTitle = `${PAGE_TITLE} - ${ORGANISATION}`;
+
+    cy.title().should('eq', expectedTitle);
   }
 
   const linkIndex = index || index === 0 ? index : expectedPageNumber;
