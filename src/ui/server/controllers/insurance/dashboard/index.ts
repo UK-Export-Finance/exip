@@ -2,6 +2,7 @@ import { ROUTES, TEMPLATES, APPLICATION } from '../../../constants';
 import { PAGES } from '../../../content-strings';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import { isNumber } from '../../../helpers/number';
 import { getSkipCount, generatePaginationItems } from '../../../helpers/pagination';
 import api from '../../../api';
 import mapApplications from '../../../helpers/mappings/map-applications';
@@ -21,12 +22,11 @@ const {
  * @returns {Express.Response.render} Dashboard page
  */
 export const get = async (req: Request, res: Response) => {
-  // TODO: what if pageNumber is not a number?
   const { pageNumber: pageNumberParam } = req.params;
 
   let currentPageNumber = 1;
 
-  if (pageNumberParam) {
+  if (pageNumberParam && isNumber(pageNumberParam)) {
     currentPageNumber = Number(pageNumberParam);
   }
 

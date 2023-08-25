@@ -72,6 +72,20 @@ describe('controllers/insurance/dashboard', () => {
 
         expect(getApplicationsSpy).toHaveBeenCalledWith(req.session.user?.id, expectedSkip);
       });
+
+      describe('when req.params.pageNumber is not a number', () => {
+        it('should call api.keystone.applications.getAll with the user session ID and a default skip count', async () => {
+          req.params.pageNumber = 'not-a-number';
+
+          await get(req, res);
+
+          expect(getApplicationsSpy).toHaveBeenCalledTimes(1);
+
+          const expectedSkip = getSkipCount(1);
+
+          expect(getApplicationsSpy).toHaveBeenCalledWith(req.session.user?.id, expectedSkip);
+        });
+      });
     });
 
     it('should render template', async () => {
