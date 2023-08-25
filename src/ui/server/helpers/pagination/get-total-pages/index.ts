@@ -12,7 +12,7 @@ export const getTotalPages = (totalApplications: number) => {
   let totalPages = 1;
 
   if (totalApplications > MAX_APPLICATIONS_PER_PAGE) {
-    totalPages = Math.round(totalApplications / MAX_APPLICATIONS_PER_PAGE) + 1;
+    totalPages = Math.round(totalApplications / MAX_APPLICATIONS_PER_PAGE);
   }
 
   return totalPages;
