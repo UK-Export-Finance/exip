@@ -29,11 +29,13 @@
       submittedStatus: SUBMITTED_STATUS
     }) }}
 
-    {{ pagination.render({
-      currentPageNumber: currentPageNumber,
-      totalPages: pages.length,
-      pages: pages
-    }) }}
+    {% if pages.length %}
+      {{ pagination.render({
+        currentPageNumber: currentPageNumber,
+        totalPages: pages.length,
+        pages: pages
+      }) }}
+    {% endif %}
 
     {% else %}
 

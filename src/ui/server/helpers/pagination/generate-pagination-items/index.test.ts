@@ -1,10 +1,11 @@
 import generatePaginationItems from '.';
 import getTotalPages from '../get-total-pages';
+import { MAX_APPLICATIONS_PER_PAGE } from '../../../constants';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 
 const { DASHBOARD_PAGE } = INSURANCE_ROUTES;
 
-const mockTotalApplications = 100;
+let mockTotalApplications = 100;
 
 describe('server/helpers/pagination/generate-pagination-items', () => {
   it('should return an array of pagination items', () => {
@@ -19,5 +20,15 @@ describe('server/helpers/pagination/generate-pagination-items', () => {
     });
 
     expect(result).toEqual(expected);
+  });
+
+  describe('when pagesToCreate is not greater than 1', () => {
+    it('should return an empty array', () => {
+      mockTotalApplications = MAX_APPLICATIONS_PER_PAGE;
+
+      const result = generatePaginationItems(mockTotalApplications);
+
+      expect(result).toEqual([]);
+    });
   });
 });

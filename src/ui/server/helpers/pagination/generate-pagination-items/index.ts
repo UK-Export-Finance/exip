@@ -12,17 +12,21 @@ const { DASHBOARD_PAGE } = INSURANCE_ROUTES;
 export const generatePaginationItems = (totalApplications: number) => {
   const pagesToCreate = getTotalPages(totalApplications);
 
-  /**
-   * Generate an array of all pages
-   * with a URL for each page
-   */
-  const paginationItems = [...Array(pagesToCreate)].map((x, index) => {
-    const pageNumber = index + 1;
+  if (pagesToCreate > 1) {
+    /**
+     * Generate an array of all pages
+     * with a URL for each page
+     */
+    const paginationItems = [...Array(pagesToCreate)].map((x, index) => {
+      const pageNumber = index + 1;
 
-    return { url: `${DASHBOARD_PAGE}/${pageNumber}` };
-  });
+      return { url: `${DASHBOARD_PAGE}/${pageNumber}` };
+    });
 
-  return paginationItems;
+    return paginationItems;
+  }
+
+  return [];
 };
 
 export default generatePaginationItems;
