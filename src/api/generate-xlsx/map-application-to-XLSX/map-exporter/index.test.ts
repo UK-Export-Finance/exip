@@ -58,7 +58,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter', () => {
         };
 
         const expected = [
-          xlsxRow(XLSX.FIELDS[USING_BROKER], broker[USING_BROKER]),
+          xlsxRow(XLSX.FIELDS[USING_BROKER], mapYesNoField(broker[USING_BROKER])),
           xlsxRow(XLSX.FIELDS[BROKER_NAME], broker[BROKER_NAME]),
           xlsxRow(XLSX.FIELDS[ADDRESS_LINE_1], `${expectedAddressAnswer.lineOneAndTwo}${expectedAddressAnswer.other}`),
           xlsxRow(XLSX.FIELDS[EMAIL], broker[EMAIL]),
