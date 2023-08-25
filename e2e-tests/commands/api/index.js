@@ -386,7 +386,7 @@ const deleteApplications = async (applications) => {
     const responseBody = await apollo.query({
       query: queryStrings.deleteApplications(),
       variables: {
-        where: applications
+        where: applications,
       },
       context: APOLLO_CONTEXT,
     }).then((response) => response.data);
