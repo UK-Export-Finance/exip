@@ -21,7 +21,7 @@
 
   {% if validationErrors.summary %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
       errorList: validationErrors.summary
     }) }}
   {% endif %}
@@ -108,7 +108,7 @@
             errorMessage: validationErrors.errorList[FIELD.OPTIONS.SINGLE.ID] and {
               text: validationErrors.errorList[FIELD.OPTIONS.SINGLE.ID].text,
               attributes: {
-                "data-cy": "inline-error-message"
+                "data-cy": FIELD.ID + "-error-message"
               }
             }
           }) }}

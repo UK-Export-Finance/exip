@@ -8,6 +8,7 @@ type ErrorMessage = {
 const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP, GBP_CURRENCY_CODE, 0);
 
 export const ERROR_MESSAGES = {
+  THERE_IS_A_PROBLEM: 'There is a problem',
   ELIGIBILITY: {
     [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: 'Select where your buyer is based',
     [FIELD_IDS.ELIGIBILITY.VALID_BUYER_BODY]: 'Select if your buyer is a government or public sector body',
@@ -42,7 +43,7 @@ export const ERROR_MESSAGES = {
       IS_EMPTY: 'Select the percentage of cover you need',
     },
     [FIELD_IDS.POLICY_TYPE]: 'Select whether you need a single or multiple contract policy',
-    [FIELD_IDS.SINGLE_POLICY_LENGTH]: {
+    [FIELD_IDS.POLICY_LENGTH]: {
       NOT_A_NUMBER: 'Policy length must be a number',
       NOT_A_WHOLE_NUMBER: 'Policy length must be a whole number, like 10 - you cannot enter decimal points',
       BELOW_MINIMUM: 'Policy length must be 1 month or more',
@@ -92,8 +93,8 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Enter the position at company of the exporter contact',
         },
       },
-      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.INPUT]: {
-        INCORRECT_FORMAT: 'Enter your Companies House registration number in the correct format, like 8989898 or SC907816',
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER]: {
+        INCORRECT_FORMAT: 'Enter your Companies House registration number in the correct format - for example, 8989898 or SC907816',
         NOT_FOUND: 'The number you entered does not match any company in Companies House - try again',
         TECHNICAL_ISSUES: 'Due to technical issues, you cannot search for your Companies House registration number right now - try again in few minutes',
       },

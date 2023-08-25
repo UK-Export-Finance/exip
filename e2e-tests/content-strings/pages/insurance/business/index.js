@@ -2,11 +2,16 @@ const SHARED = {
   HEADING_CAPTION: 'Your business',
 };
 
+export const COMPANIES_HOUSE_NUMBER = {
+  ...SHARED,
+  PAGE_TITLE: 'Enter your Companies House registration number (CRN)',
+  NO_COMPANIES_HOUSE_NUMBER: 'I do not have a UK Companies House registration number',
+};
+
 export const COMPANY_DETAILS = {
   ...SHARED,
   PAGE_TITLE: 'Your company details',
   TABLE_NAME: 'Your company',
-  NO_COMPANY_HOUSE_NUMER: 'I do not have a UK Companies House registration number',
 };
 
 export const COMPANIES_HOUSE_UNAVAILABLE = {
@@ -25,7 +30,7 @@ export const CONTACT = {
   ...SHARED,
   PAGE_TITLE: 'Your contact details',
   CONTACT_DETAILS: {
-    LABEL: 'Contact details',
+    LEGEND: 'Contact details',
     HINT: 'This will be the name on the contract policy',
   },
 };

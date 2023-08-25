@@ -1,5 +1,5 @@
 import { FIELD_IDS, generatePageVariables, TEMPLATE, get, post } from '.';
-import { BUTTONS, COOKIES_CONSENT, FIELDS, QUOTE_FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT, HEADER } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, ERROR_MESSAGES, FIELDS, QUOTE_FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT, HEADER } from '../../../content-strings';
 import { FIELD_IDS as ALL_FIELD_IDS, FIELD_VALUES, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
@@ -20,6 +20,8 @@ const {
   POLICY_LENGTH,
 } = ALL_FIELD_IDS;
 
+const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
+
 const { START: quoteStart } = ROUTES.QUOTE;
 
 describe('controllers/quote/tell-us-about-your-policy', () => {
@@ -34,7 +36,6 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     [BUYER_COUNTRY]: mockSession.submittedData.quoteEligibility[BUYER_COUNTRY],
     [CONTRACT_VALUE]: mockSession.submittedData.quoteEligibility[CONTRACT_VALUE],
     [POLICY_TYPE]: mockSession.submittedData.quoteEligibility[POLICY_TYPE],
-    [POLICY_LENGTH]: mockSession.submittedData.quoteEligibility[POLICY_LENGTH],
   };
 
   beforeEach(() => {
@@ -52,7 +53,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER];
+      const expected = [AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_LENGTH];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -69,6 +70,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           CONTENT_STRINGS: {
             BUTTONS,
             COOKIES_CONSENT,
+            ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
             HEADER,
             FOOTER: QUOTE_FOOTER,
             LINKS,
@@ -80,6 +82,10 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
           },
           FIELDS: {
+            POLICY_LENGTH: {
+              ID: POLICY_LENGTH,
+              ...FIELDS[POLICY_LENGTH],
+            },
             AMOUNT_CURRENCY: {
               ID: AMOUNT_CURRENCY,
             },
@@ -125,6 +131,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           CONTENT_STRINGS: {
             BUTTONS,
             COOKIES_CONSENT,
+            ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
             HEADER,
             FOOTER: QUOTE_FOOTER,
             LINKS,
@@ -185,6 +192,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             PRODUCT: {
               DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
             },
+            ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
             HEADER,
             FOOTER: QUOTE_FOOTER,
             LINKS,
@@ -515,7 +523,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       const validBody = {
         [CURRENCY]: mockAnswers[CURRENCY],
         [CONTRACT_VALUE]: '10',
-        [POLICY_LENGTH]: '40',
+        [POLICY_LENGTH]: '5',
         [PERCENTAGE_OF_COVER]: '95',
       };
 
@@ -526,12 +534,11 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       it('should update the session with submitted data, popluated with full currency object from constructPayload function', async () => {
         await post(req, res);
 
-        const payload = constructPayload(req.body, FIELD_IDS);
+        const payload = constructPayload(validBody, FIELD_IDS);
 
         const expectedPopulatedData = {
           ...payload,
           [CURRENCY]: getCurrencyByCode(mockCurrencies, validBody[CURRENCY]),
-          [PERCENTAGE_OF_COVER]: validBody[PERCENTAGE_OF_COVER],
         };
 
         const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);

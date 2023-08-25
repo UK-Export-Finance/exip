@@ -1,49 +1,18 @@
-import { mapPolicyType, mapPercentageOfCover, mapAnswersToContent } from './map-answers-to-content';
+import { mapPercentageOfCover, mapAnswersToContent } from './map-answers-to-content';
 import mapCountry from './map-country';
 import mapCost from './map-cost';
 import mapMonthString from './map-month-string';
 import mapPolicyLength from './map-policy-length';
-import { FIELD_IDS, FIELD_VALUES } from '../../constants';
+import { FIELD_IDS } from '../../constants';
 import { SUMMARY_ANSWERS } from '../../content-strings';
 import { mockAnswers } from '../../test-mocks';
 
 const {
   ELIGIBILITY: { BUYER_COUNTRY, CREDIT_PERIOD, PERCENTAGE_OF_COVER, HAS_MINIMUM_UK_GOODS_OR_SERVICES, VALID_EXPORTER_LOCATION },
-  MULTIPLE_POLICY_TYPE,
   POLICY_TYPE,
-  SINGLE_POLICY_TYPE,
 } = FIELD_IDS;
 
 describe('server/helpers/map-answers-to-content', () => {
-  describe('mapPolicyType', () => {
-    describe('when policy type is single', () => {
-      it(`should return an object with ${SINGLE_POLICY_TYPE}`, () => {
-        const mockAnswer = FIELD_VALUES.POLICY_TYPE.SINGLE;
-        const result = mapPolicyType(mockAnswer);
-
-        const expected = {
-          [SINGLE_POLICY_TYPE]: mockAnswer,
-        };
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when policy type is single', () => {
-      it(`should return an object with ${MULTIPLE_POLICY_TYPE}`, () => {
-        const mockAnswer = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
-
-        const result = mapPolicyType(mockAnswer);
-
-        const expected = {
-          [MULTIPLE_POLICY_TYPE]: mockAnswer,
-        };
-
-        expect(result).toEqual(expected);
-      });
-    });
-  });
-
   describe('mapPercentageOfCover', () => {
     it('should return a string with percentage symbol', () => {
       const mockAnswer = mockAnswers[PERCENTAGE_OF_COVER];
@@ -64,8 +33,8 @@ describe('server/helpers/map-answers-to-content', () => {
         [VALID_EXPORTER_LOCATION]: SUMMARY_ANSWERS[VALID_EXPORTER_LOCATION],
         [BUYER_COUNTRY]: mapCountry(mockAnswers[BUYER_COUNTRY]),
         [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: SUMMARY_ANSWERS[HAS_MINIMUM_UK_GOODS_OR_SERVICES],
+        [POLICY_TYPE]: mockAnswers[POLICY_TYPE],
         ...mapCost(mockAnswers),
-        ...mapPolicyType(mockAnswers[POLICY_TYPE]),
         ...mapPolicyLength(mockAnswers),
         [PERCENTAGE_OF_COVER]: mapPercentageOfCover(mockAnswers[PERCENTAGE_OF_COVER]),
         [CREDIT_PERIOD]: mapMonthString(mockAnswers[CREDIT_PERIOD]),

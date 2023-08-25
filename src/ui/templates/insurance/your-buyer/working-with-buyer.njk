@@ -33,7 +33,7 @@
 
   {% if validationErrors.summary %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
       errorList: validationErrors.summary
     }) }}
   {% endif %}
@@ -60,7 +60,6 @@
           errorMessage: validationErrors.errorList[FIELDS.CONNECTED_WITH_BUYER.ID],
           dataCyLegend: FIELDS.CONNECTED_WITH_BUYER.ID + '-label',
           dataCyHint: FIELDS.CONNECTED_WITH_BUYER.ID + '-hint',
-          yesNoValueString: true,
           horizontalRadios: true
         }) }}
 
@@ -69,10 +68,11 @@
           legendText: FIELDS.TRADED_WITH_BUYER.LABEL,
           legendClass: 'govuk-fieldset__legend--m',
           legendSpan: true,
+          hintText: FIELDS.TRADED_WITH_BUYER.HINT,
           submittedAnswer: submittedValues[FIELDS.TRADED_WITH_BUYER.ID] or application.buyer[FIELDS.TRADED_WITH_BUYER.ID],
           errorMessage: validationErrors.errorList[FIELDS.TRADED_WITH_BUYER.ID],
           dataCyLegend: FIELDS.TRADED_WITH_BUYER.ID + '-label',
-          yesNoValueString: true,
+          dataCyHint: FIELDS.TRADED_WITH_BUYER.ID + '-hint',
           conditionalYesHtml: tradedHTML,
           horizontalRadios: true
         }) }}

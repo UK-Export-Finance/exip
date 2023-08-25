@@ -64,7 +64,6 @@ describe('middleware/required-data-provided/quote', () => {
             VALID_EXPORTER_LOCATION,
             HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             FIELD_IDS.POLICY_TYPE,
-            FIELD_IDS.POLICY_LENGTH,
           ],
           [CHECK_YOUR_ANSWERS]: [
             FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY,
@@ -124,6 +123,7 @@ describe('middleware/required-data-provided/quote', () => {
             VALID_EXPORTER_LOCATION,
             HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             FIELD_IDS.POLICY_TYPE,
+            FIELD_IDS.POLICY_LENGTH,
             CURRENCY,
             PERCENTAGE_OF_COVER,
             CREDIT_PERIOD,
@@ -135,6 +135,7 @@ describe('middleware/required-data-provided/quote', () => {
             VALID_EXPORTER_LOCATION,
             HAS_MINIMUM_UK_GOODS_OR_SERVICES,
             FIELD_IDS.POLICY_TYPE,
+            FIELD_IDS.POLICY_LENGTH,
             CURRENCY,
             PERCENTAGE_OF_COVER,
             CREDIT_PERIOD,

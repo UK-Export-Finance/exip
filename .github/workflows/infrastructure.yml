@@ -121,7 +121,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Azure defaults ✨
-        uses: Azure/cli@v1.0.7
+        uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
             # Basic
@@ -129,7 +129,7 @@ jobs:
             az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
       - name: Resource group 🏗️
-        uses: Azure/cli@v1.0.7
+        uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
             az group create \
@@ -137,7 +137,7 @@ jobs:
             --tags ${{ env.TAGS }}
 
       - name: Plan 📝
-        uses: Azure/cli@v1.0.7
+        uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
             az appservice plan create \
@@ -147,7 +147,7 @@ jobs:
             --tags ${{ env.TAGS }}
 
       - name: Log analytics workspace 📝
-        uses: Azure/cli@v1.0.7
+        uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
             az monitor log-analytics workspace create \
@@ -160,7 +160,7 @@ jobs:
             --tags ${{ env.TAGS }}
 
       - name: Container registry 📦️
-        uses: Azure/cli@v1.0.7
+        uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
             az acr create \
@@ -171,7 +171,7 @@ jobs:
             --tags ${{ env.TAGS }}
 
       - name: Virtual network 🧵
-        uses: Azure/cli@v1.0.7
+        uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
             az network vnet create \
@@ -182,7 +182,7 @@ jobs:
             --tags ${{ env.TAGS }}
 
       - name: VNET Peer - AMI 🔀
-        uses: Azure/cli@v1.0.7
+        uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
             # Azure Managed Instance (AMI) SQL DB VNET peering
@@ -210,7 +210,7 @@ jobs:
             --query peeringState)"
 
       - name: Web app - UI 🌐
-        uses: Azure/cli@v1.0.7
+        uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
             az webapp create \
@@ -222,7 +222,7 @@ jobs:
             --tags ${{ env.TAGS }}
 
       - name: Web app - API 🌐
-        uses: Azure/cli@v1.0.7
+        uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
             az webapp create \
@@ -254,7 +254,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Azure defaults ✨
-        uses: Azure/cli@v1.0.7
+        uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
             # Basic

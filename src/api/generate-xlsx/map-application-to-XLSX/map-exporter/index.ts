@@ -1,7 +1,7 @@
 import FIELD_IDS from '../../../constants/field-ids/insurance/business';
 import { XLSX } from '../../../content-strings';
 import { FIELDS } from '../../../content-strings/fields/insurance/your-business';
-import { ANSWERS, GBP_CURRENCY_CODE } from '../../../constants';
+import { GBP_CURRENCY_CODE } from '../../../constants';
 import xlsxRow from '../helpers/xlsx-row';
 import mapExporterAddress from './map-address';
 import formatDate from '../../../helpers/format-date';
@@ -53,7 +53,7 @@ export const mapBroker = (application: Application) => {
 
   let mapped = [xlsxRow(XLSX.FIELDS[USING_BROKER], broker[USING_BROKER])];
 
-  if (broker[USING_BROKER] === ANSWERS.YES) {
+  if (broker[USING_BROKER]) {
     const addressAnswer = {
       lineOneAndTwo: `${broker[ADDRESS_LINE_1]} ${NEW_LINE}${broker[ADDRESS_LINE_2]}`,
       other: `${NEW_LINE}${broker[TOWN]} ${NEW_LINE}${broker[COUNTY]} ${NEW_LINE}${broker[POSTCODE]}`,

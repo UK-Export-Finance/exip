@@ -7,7 +7,7 @@ import { FIELD_IDS } from '../../../../../constants';
 
 const {
   EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { INPUT, COMPANY_NUMBER },
+    COMPANY_HOUSE: { COMPANY_NUMBER },
     YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
   },
 } = FIELD_IDS.INSURANCE;
@@ -17,7 +17,6 @@ describe('controllers/insurance/business/map-and-save/company-details', () => {
 
   let mockFormBody = {
     _csrf: '1234',
-    [INPUT]: '12345',
     [TRADING_NAME]: 'true',
     [TRADING_ADDRESS]: 'false',
     [PHONE_NUMBER]: '*99',

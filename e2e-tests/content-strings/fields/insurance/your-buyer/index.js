@@ -35,7 +35,7 @@ export const YOUR_BUYER_FIELDS = {
       },
     },
     [COMPANY_OR_ORGANISATION.FIRST_NAME]: {
-      HEADING: "Enter details for your contact at the buyer's company or organisation",
+      LEGEND: "Enter details for your contact at the buyer's company or organisation",
       HINT: 'We will not contact them without your permission',
       LABEL: 'First name',
       SUMMARY: {
@@ -70,6 +70,7 @@ export const YOUR_BUYER_FIELDS = {
     [WORKING_WITH_BUYER.TRADED_WITH_BUYER]: {
       LABEL: 'Have you traded with this buyer before?',
       DETAILS: 'We will email you after you submit your application to request your trading history with the buyer.',
+      HINT: 'If yes, we will request a copy of your trading history once the application has been submitted.',
       SUMMARY: {
         TITLE: 'Have you traded with this buyer before?',
       },

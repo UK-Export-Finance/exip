@@ -172,7 +172,7 @@ model Broker {
   id                      String        @id @default(cuid())
   application             Application?  @relation("Broker_application", fields: [applicationId], references: [id])
   applicationId           String?       @map("application")
-  isUsingBroker           String?
+  isUsingBroker           Boolean?
   name                    String        @default("")
   addressLine1            String        @default("")
   addressLine2            String        @default("")
@@ -199,21 +199,21 @@ model CompanyAddress {
 }
 
 model Company {
-  id                        String           @id @default(cuid())
-  application               Application?     @relation("Company_application", fields: [applicationId], references: [id])
-  applicationId             String?          @map("application")
-  registeredOfficeAddress   CompanyAddress?  @relation("Company_registeredOfficeAddress", fields: [registeredOfficeAddressId], references: [id])
-  registeredOfficeAddressId String?          @unique @map("registeredOfficeAddress")
-  sicCodes                  CompanySicCode[] @relation("CompanySicCode_company")
-  companyName               String           @default("")
-  companyNumber             String           @default("")
-  dateOfCreation            DateTime?
-  hasTradingAddress         String?
-  hasTradingName            String?
-  companyWebsite            String           @default("")
-  phoneNumber               String           @default("")
-  financialYearEndDate      DateTime?
-  from_Application_company  Application[]    @relation("Application_company")
+  id                         String           @id @default(cuid())
+  application                Application?     @relation("Company_application", fields: [applicationId], references: [id])
+  applicationId              String?          @map("application")
+  registeredOfficeAddress    CompanyAddress?  @relation("Company_registeredOfficeAddress", fields: [registeredOfficeAddressId], references: [id])
+  registeredOfficeAddressId  String?          @unique @map("registeredOfficeAddress")
+  sicCodes                   CompanySicCode[] @relation("CompanySicCode_company")
+  companyName                String           @default("")
+  companyNumber              String           @default("")
+  dateOfCreation             DateTime?
+  hasDifferentTradingAddress Boolean?
+  hasDifferentTradingName    Boolean?
+  companyWebsite             String           @default("")
+  phoneNumber                String           @default("")
+  financialYearEndDate       DateTime?
+  from_Application_company   Application[]    @relation("Application_company")
 
   @@index([applicationId])
 }
@@ -242,9 +242,9 @@ model Buyer {
   contactLastName              String        @default("")
   contactPosition              String        @default("")
   contactEmail                 String        @default("")
-  canContactBuyer              String?
-  exporterIsConnectedWithBuyer String?
-  exporterHasTradedWithBuyer   String?
+  canContactBuyer              Boolean?
+  exporterIsConnectedWithBuyer Boolean?
+  exporterHasTradedWithBuyer   Boolean?
   from_Application_buyer       Application[] @relation("Application_buyer")
 
   @@index([applicationId])
@@ -283,10 +283,10 @@ model SectionReview {
   id                             String        @id @default(cuid())
   application                    Application?  @relation("SectionReview_application", fields: [applicationId], references: [id])
   applicationId                  String?       @map("application")
-  eligibility                    Boolean       @default(false)
-  policyAndExport                Boolean       @default(false)
-  business                       Boolean       @default(false)
-  buyer                          Boolean       @default(false)
+  eligibility                    Boolean?
+  policyAndExport                Boolean?
+  business                       Boolean?
+  buyer                          Boolean?
   from_Application_sectionReview Application[] @relation("Application_sectionReview")
 
   @@index([applicationId])
@@ -302,12 +302,12 @@ model Declaration {
   confirmationAndAcknowledgementsId      String?                                    @map("confirmationAndAcknowledgements")
   howDataWillBeUsed                      DeclarationHowDataWillBeUsed?              @relation("Declaration_howDataWillBeUsed", fields: [howDataWillBeUsedId], references: [id])
   howDataWillBeUsedId                    String?                                    @map("howDataWillBeUsed")
-  agreeToConfidentiality                 Boolean                                    @default(false)
-  agreeToAntiBribery                     Boolean                                    @default(false)
-  hasAntiBriberyCodeOfConduct            String?
-  willExportWithAntiBriberyCodeOfConduct String?
-  agreeToConfirmationAndAcknowledgements Boolean                                    @default(false)
-  agreeHowDataWillBeUsed                 Boolean                                    @default(false)
+  agreeToConfidentiality                 Boolean?
+  agreeToAntiBribery                     Boolean?
+  hasAntiBriberyCodeOfConduct            Boolean?
+  willExportWithAntiBriberyCodeOfConduct Boolean?
+  agreeToConfirmationAndAcknowledgements Boolean?
+  agreeHowDataWillBeUsed                 Boolean?
   from_Application_declaration           Application[]                              @relation("Application_declaration")
 
   @@index([applicationId])

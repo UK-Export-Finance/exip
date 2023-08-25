@@ -1,6 +1,13 @@
+import { APPLICATION } from '../../constants/application';
+import { ELIGIBILITY } from '../../constants/eligibility';
 import { FIELD_IDS } from '../../constants/field-ids';
 import { FIELD_VALUES } from '../../constants/field-values';
 import { LINKS } from '../links';
+
+const { MAX_COVER_PERIOD_YEARS } = ELIGIBILITY;
+const {
+  POLICY_AND_EXPORT: { TOTAL_MONTHS_OF_COVER },
+} = APPLICATION;
 
 export const FIELDS = {
   [FIELD_IDS.OPTIONAL_COOKIES]: {
@@ -105,17 +112,26 @@ export const FIELDS = {
         ID: FIELD_IDS.SINGLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.SINGLE,
         TEXT: 'Single contract policy',
-        HINT: 'This covers a single export contract with a single buyer for one or more shipments. You need to pay before the policy starts.',
+        HINT: [
+          'Covers a single contract with a buyer, for one or more shipments',
+          `Cover for up to ${MAX_COVER_PERIOD_YEARS} years`,
+          'Best for a one off- project, when you know the exact value of your export contract now',
+          'You pay for the insurance before the policy starts',
+        ],
       },
       MULTIPLE: {
         ID: FIELD_IDS.MULTIPLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
-        TEXT: 'Multiple contract policy (also known as a revolving policy)',
-        HINT: "This covers multiple export contracts with the same buyer for a policy period of 12 months. You do not need to pay before the policy starts. You'll pay each time you declare a new export sale.",
+        TEXT: 'Multiple contract policy',
+        HINT: [
+          `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
+          "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
+          'You only pay for your insurance each time you declare a new contract or sale - no need to pay before the policy starts',
+        ],
         INSET: [
           [
             {
-              text: 'If you need a policy of over 12 months',
+              text: `If you need a policy of over ${TOTAL_MONTHS_OF_COVER} months`,
             },
             {
               text: 'fill in this form',
@@ -132,37 +148,9 @@ export const FIELDS = {
       TITLE: 'Policy type',
     },
   },
-  [FIELD_IDS.SINGLE_POLICY_TYPE]: {
-    SUMMARY: {
-      TITLE: 'Policy type',
-    },
-  },
-  [FIELD_IDS.MULTIPLE_POLICY_TYPE]: {
-    SUMMARY: {
-      TITLE: 'Policy type',
-    },
-  },
-  [FIELD_IDS.SINGLE_POLICY_LENGTH]: {
+  [FIELD_IDS.POLICY_LENGTH]: {
     LABEL: 'How long do you need the policy for?',
-    HINT: [
-      [
-        {
-          text: 'You can get an online quote for up to 22 months. For over 22 months',
-        },
-        {
-          text: 'fill in this form',
-          href: LINKS.EXTERNAL.NBI_FORM,
-        },
-        {
-          text: ' and email it to UKEF.',
-        },
-      ],
-    ],
-    SUMMARY: {
-      TITLE: 'Policy length',
-    },
-  },
-  [FIELD_IDS.MULTIPLE_POLICY_LENGTH]: {
+    HINT: 'You can get an online quote for up to 22 months.',
     SUMMARY: {
       TITLE: 'Policy length',
     },

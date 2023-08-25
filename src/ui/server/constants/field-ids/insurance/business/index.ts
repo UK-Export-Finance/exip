@@ -1,8 +1,8 @@
 const EXPORTER_BUSINESS = {
   BUSINESS: 'business',
+  COMPANIES_HOUSE_NUMBER: 'companiesHouseNumber',
   COMPANY_HOUSE: {
     SEARCH: 'companiesHouseSearch',
-    INPUT: 'companiesHouseNumber',
     COMPANY_NAME: 'companyName',
     COMPANY_ADDRESS: 'registeredOfficeAddress',
     COMPANY_NUMBER: 'companyNumber',
@@ -31,8 +31,8 @@ const EXPORTER_BUSINESS = {
   },
   YOUR_COMPANY: {
     YOUR_BUSINESS: 'yourBusiness',
-    TRADING_ADDRESS: 'hasTradingAddress',
-    TRADING_NAME: 'hasTradingName',
+    TRADING_ADDRESS: 'hasDifferentTradingAddress',
+    TRADING_NAME: 'hasDifferentTradingName',
     WEBSITE: 'companyWebsite',
     PHONE_NUMBER: 'phoneNumber',
   },
@@ -48,7 +48,7 @@ const EXPORTER_BUSINESS = {
     PERCENTAGE_TURNOVER: 'exportsTurnoverPercentage',
   },
   BROKER: {
-    HEADING: 'broker',
+    LEGEND: 'broker',
     USING_BROKER: 'isUsingBroker',
     NAME: 'name',
     ADDRESS_LINE_1: 'addressLine1',

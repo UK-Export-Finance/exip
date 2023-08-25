@@ -9,7 +9,6 @@ import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from '../../../../../test-mocks';
 
 const {
-  COMPANY_HOUSE: { INPUT },
   YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
 } = BUSINESS_FIELD_IDS;
 
@@ -66,7 +65,6 @@ describe('controllers/insurance/business/companies-details', () => {
 
     describe('when there are no validation errors', () => {
       const body = {
-        [INPUT]: '8989898',
         [TRADING_NAME]: 'true',
         [TRADING_ADDRESS]: 'false',
         [PHONE_NUMBER]: VALID_PHONE_NUMBERS.MOBILE,
@@ -89,12 +87,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
         expect(updateMapAndSave).toHaveBeenCalledTimes(1);
 
-        const updateBody = {
-          ...payload,
-          ...mockCompany,
-        };
-
-        expect(updateMapAndSave).toHaveBeenCalledWith(updateBody, mockApplication, {});
+        expect(updateMapAndSave).toHaveBeenCalledWith(payload, mockApplication, false);
       });
     });
 

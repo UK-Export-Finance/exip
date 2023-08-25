@@ -22,7 +22,7 @@
 
   {% if validationErrors.summary %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
       errorList: validationErrors.summary
     }) }}
   {% endif %}
@@ -124,5 +124,7 @@
     </div>
 
   </form>
+
+  <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript"></script>
 
 {% endblock %}

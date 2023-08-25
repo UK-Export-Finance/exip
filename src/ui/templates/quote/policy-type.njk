@@ -1,10 +1,8 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% import '../components/details-text.njk' as detailsText %}
-{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
 {% import '../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
@@ -23,7 +21,7 @@
 
   {% if validationErrors.summary %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
       errorList: validationErrors.summary
     }) }}
   {% endif %}
@@ -35,63 +33,29 @@
 
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
+        {% set singlePolicyHintHtml %}
+          <ul>
+            {% for item in FIELDS.POLICY_TYPE.OPTIONS.SINGLE.HINT %}
+              <li class="govuk-!-margin-bottom-5" data-cy="{{ FIELDS.POLICY_TYPE.OPTIONS.SINGLE.ID }}-hint-list-item-{{ loop.index }}">{{ item }} </li>
+            {% endfor %}
+          </ul>
+        {% endset %}
+
         {% set singlePolicyLengthHintHtml %}
-          <div data-cy="{{ FIELDS.SINGLE_POLICY_LENGTH.ID }}-hint">
-            {{detailsText.render({
-              items: FIELDS.SINGLE_POLICY_LENGTH.HINT
-            }) }}
-          </div>
-        {% endset %}
-
-        {% set singlePolicyLengthHtml %}
-          {{ govukInput({
-            label: {
-              text: FIELDS.SINGLE_POLICY_LENGTH.LABEL,
-              attributes: {
-                id: FIELDS.SINGLE_POLICY_LENGTH.ID + '-label',
-                'data-cy': FIELDS.SINGLE_POLICY_LENGTH.ID + '-label'
-              }
-            },
-            hint: {
-              html: singlePolicyLengthHintHtml
-            },
-            classes: "govuk-input--width-4 govuk-!-margin-bottom-4",
-            attributes: {
-              'data-cy': FIELDS.SINGLE_POLICY_LENGTH.ID + '-input'
-            },
-            id: FIELDS.SINGLE_POLICY_LENGTH.ID,
-            name: FIELDS.SINGLE_POLICY_LENGTH.ID,
-            inputmode: "numeric",
-            pattern: "[0-9]*",
-            suffix: {
-              text: "months"
-            },
-            spellcheck: false,
-            errorMessage: validationErrors.errorList[FIELDS.SINGLE_POLICY_LENGTH.ID]and {
-              text: validationErrors.errorList[FIELDS.SINGLE_POLICY_LENGTH.ID].text,
-              attributes: {
-                "data-cy": FIELDS.SINGLE_POLICY_LENGTH.ID + "-error-message"
-              }
-            },
-            value: submittedValues[FIELDS.POLICY_LENGTH.ID]
-          }) }}
-        {% endset %}
-
-        {% set multiplePolicyTypeInsetHtml %}
-          <div data-cy="multiple-policy-inset">
+          <div data-cy="{{ FIELDS.POLICY_LENGTH.ID }}-hint">
             {{ detailsText.render({
-              items: FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.INSET
+              items: FIELDS.POLICY_LENGTH.HINT
             }) }}
           </div>
         {% endset %}
 
-        {% if validationErrors.errorList[FIELDS.POLICY_TYPE.ID] %}
-          {% set validationError = validationErrors.errorList[FIELDS.POLICY_TYPE.ID] %}
-        {% endif %}
-
-        {% if validationErrors.errorList[FIELDS.SINGLE_POLICY_TYPE.ID] %}
-          {% set validationError = validationErrors.errorList[FIELDS.SINGLE_POLICY_TYPE.ID] %}
-        {% endif %}
+        {% set multiplePolicyHintHtml %}
+          <ul>
+            {% for item in FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.HINT %}
+              <li class="govuk-!-margin-bottom-5" data-cy="{{ FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.ID }}-hint-list-item-{{ loop.index }}">{{ item }} </li>
+            {% endfor %}
+          </ul>
+        {% endset %}
 
         {{ govukRadios({
           idPrefix: FIELDS.POLICY_TYPE.ID,
@@ -108,41 +72,36 @@
               value: FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE,
               text: FIELDS.POLICY_TYPE.OPTIONS.SINGLE.TEXT,
               label: {
+                classes: 'govuk-heading-m govuk-!-font-weight-bold govuk-!-font-size-24',
                 attributes: {
-                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE + '-label'
+                  'data-cy': FIELDS.POLICY_TYPE.OPTIONS.SINGLE.ID + '-label'
                 }
               },
               hint: {
-                text: FIELDS.POLICY_TYPE.OPTIONS.SINGLE.HINT,
-                attributes: {
-                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE + '-hint'
-                }
+                html: singlePolicyHintHtml,
+                classes: 'govuk-!-padding-left-0 govuk-!-margin-bottom-8'
               },
               attributes: {
-                'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE + '-input'
+                'data-cy': FIELDS.POLICY_TYPE.OPTIONS.SINGLE.ID + '-input'
               },
-              checked: submittedValues[FIELDS.POLICY_TYPE.ID] === FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE,
-              conditional: {
-                html: singlePolicyLengthHtml
-              }
+              checked: submittedValues[FIELDS.POLICY_TYPE.ID] === FIELDS.POLICY_TYPE.OPTIONS.SINGLE.VALUE
             },
             {
               id: FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.ID,
               value: FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.VALUE,
               text: FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.TEXT,
               label: {
+                classes: 'govuk-heading-m govuk-!-font-weight-bold govuk-!-font-size-24',
                 attributes: {
-                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.VALUE + '-label'
+                  'data-cy': FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.ID + '-label'
                 }
               },
               hint: {
-                text: FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.HINT,
-                attributes: {
-                  'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.VALUE + '-hint'
-                }
+                html: multiplePolicyHintHtml,
+                classes: 'govuk-!-padding-left-0'
               },
               attributes: {
-                'data-cy': FIELDS.POLICY_TYPE.ID + '-' + FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.VALUE + '-input'
+                'data-cy': FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.ID + '-input'
               },
               checked: submittedValues[FIELDS.POLICY_TYPE.ID] === FIELDS.POLICY_TYPE.OPTIONS.MULTIPLE.VALUE,
               conditional: {

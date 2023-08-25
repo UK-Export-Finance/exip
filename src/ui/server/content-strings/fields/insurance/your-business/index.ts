@@ -1,19 +1,26 @@
 import { FIELD_IDS } from '../../../../constants';
+import { LINKS } from '../../..';
 
 const { EXPORTER_BUSINESS, ACCOUNT } = FIELD_IDS.INSURANCE;
 
 const {
+  COMPANIES_HOUSE_NUMBER,
   COMPANY_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS },
   CONTACT: { POSITION, COMPANY_NAME: CONTACT_COMPANY_NAME, NAME: CONTACT_NAME },
   YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
   TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-  BROKER: { HEADING, USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN, EMAIL },
+  BROKER: { LEGEND, USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN, EMAIL },
 } = EXPORTER_BUSINESS;
 
 const { EMAIL: ACCOUNT_EMAIL } = ACCOUNT;
 
 export const FIELDS = {
+  COMPANIES_HOUSE_NUMBER: {
+    [COMPANIES_HOUSE_NUMBER]: {
+      HINT: `<p>For example, 8989898 or SC907816. You'll find it on your incorporation certificate or on the <a class="govuk-link" href="${LINKS.EXTERNAL.COMPANIES_HOUSE}">Companies House website</a>.</p>`,
+    },
+  },
   COMPANY_DETAILS: {
     [COMPANY_NUMBER]: {
       SUMMARY: {
@@ -106,7 +113,7 @@ export const FIELDS = {
       },
     },
     [EMPLOYEES_UK]: {
-      HEADING: 'How many employees do you have?',
+      LEGEND: 'How many employees do you have?',
       LABEL: 'In the UK',
       SUMMARY: {
         TITLE: 'UK employees',
@@ -126,7 +133,7 @@ export const FIELDS = {
       DATE_FORMAT: 'd MMMM',
     },
     [ESTIMATED_ANNUAL_TURNOVER]: {
-      HEADING: 'Estimated annual turnover for this current financial year',
+      LEGEND: 'Estimated annual turnover for this current financial year',
       LABEL: 'Estimate this to the nearest pound. Do not use decimal points.',
       PREFIX: '£',
       SUMMARY: {
@@ -142,8 +149,8 @@ export const FIELDS = {
     },
   },
   BROKER: {
-    [HEADING]: {
-      HEADING: 'Enter contact details for your broker',
+    [LEGEND]: {
+      LEGEND: 'Enter contact details for your broker',
     },
     [USING_BROKER]: {
       SUMMARY: {

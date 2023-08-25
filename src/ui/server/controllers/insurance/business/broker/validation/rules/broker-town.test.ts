@@ -1,5 +1,4 @@
 import brokerTown from './broker-town';
-import { FIELD_VALUES } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
 import { RequestBody } from '../../../../../../../types';
@@ -23,7 +22,7 @@ describe('controllers/insurance/business/broker/validation/rules/brokerTown', ()
   } as RequestBody;
 
   it('should return the result of emptyFieldValidation', () => {
-    mockBody[USING_BROKER] = FIELD_VALUES.YES;
+    mockBody[USING_BROKER] = true;
 
     const response = brokerTown(mockBody, mockErrors);
 
@@ -32,8 +31,8 @@ describe('controllers/insurance/business/broker/validation/rules/brokerTown', ()
     expect(response).toEqual(expected);
   });
 
-  it(`should return the mockErrors if using broker is "${FIELD_VALUES.NO}"`, () => {
-    mockBody[USING_BROKER] = FIELD_VALUES.NO;
+  it('should return the mockErrors if using broker is false', () => {
+    mockBody[USING_BROKER] = false;
 
     const response = brokerTown(mockBody, mockErrors);
 

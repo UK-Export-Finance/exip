@@ -1,13 +1,15 @@
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../../constants';
-import generateValidationErrors from '../../../../../../../helpers/validation';
+import emptyFieldValidation from '../../../../../../../shared-validation/empty-field';
 import { RequestBody } from '../../../../../../../../types';
 
 const {
-  YOUR_COMPANY: { TRADING_NAME },
+  YOUR_COMPANY: { TRADING_NAME: FIELD_ID },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
+
+const ERROR_MESSAGE = EXPORTER_BUSINESS[FIELD_ID];
 
 /**
  * validates tradingName in company details response body
@@ -16,16 +18,6 @@ const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
  * @param {Object} errors errorList
  * @returns {object} object containing errors or blank object
  */
-const tradingName = (responseBody: RequestBody, errors: object) => {
-  let updatedErrors = errors;
-
-  // if no tradingName in response
-  if (!responseBody[TRADING_NAME]) {
-    const errorMessage = EXPORTER_BUSINESS[TRADING_NAME].IS_EMPTY;
-    updatedErrors = generateValidationErrors(TRADING_NAME, errorMessage, errors);
-  }
-
-  return updatedErrors;
-};
+const tradingName = (responseBody: RequestBody, errors: object) => emptyFieldValidation(responseBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
 
 export default tradingName;

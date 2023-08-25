@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ACCOUNT, ANSWERS, FIELD_IDS } from '../constants';
+import { ACCOUNT, FIELD_IDS } from '../constants';
 import encryptPassword from '../helpers/encrypt-password';
 import application from './mock-application';
 import companySicCode from './mock-company-sic-code';
@@ -43,14 +43,14 @@ export const mockCompanySicCode = companySicCode;
 
 export const mockBuyer = {
   companyOrOrganisationName: 'Mock buyer',
-  exporterIsConnectedWithBuyer: ANSWERS.YES,
+  exporterIsConnectedWithBuyer: true,
 };
 
 export const mockApplicationDeclaration = {
   agreeToConfidentiality: true,
   agreeToAntiBribery: true,
-  hasAntiBriberyCodeOfConduct: ANSWERS.YES,
-  willExportWithAntiBriberyCodeOfConduct: ANSWERS.YES,
+  hasAntiBriberyCodeOfConduct: true,
+  willExportWithAntiBriberyCodeOfConduct: true,
   agreeToConfirmationAndAcknowledgements: true,
   agreeHowDataWillBeUsed: true,
 };

@@ -870,7 +870,7 @@ input BusinessContactDetailCreateInput {
 type Broker {
   id: ID!
   application: Application
-  isUsingBroker: String
+  isUsingBroker: Boolean
   name: String
   addressLine1: String
   addressLine2: String
@@ -890,7 +890,6 @@ input BrokerWhereInput {
   NOT: [BrokerWhereInput!]
   id: IDFilter
   application: ApplicationWhereInput
-  isUsingBroker: StringNullableFilter
   name: StringFilter
   addressLine1: StringFilter
   addressLine2: StringFilter
@@ -902,7 +901,6 @@ input BrokerWhereInput {
 
 input BrokerOrderByInput {
   id: OrderDirection
-  isUsingBroker: OrderDirection
   name: OrderDirection
   addressLine1: OrderDirection
   addressLine2: OrderDirection
@@ -914,7 +912,7 @@ input BrokerOrderByInput {
 
 input BrokerUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
-  isUsingBroker: String
+  isUsingBroker: Boolean
   name: String
   addressLine1: String
   addressLine2: String
@@ -931,7 +929,7 @@ input BrokerUpdateArgs {
 
 input BrokerCreateInput {
   application: ApplicationRelateToOneForCreateInput
-  isUsingBroker: String
+  isUsingBroker: Boolean
   name: String
   addressLine1: String
   addressLine2: String
@@ -1024,8 +1022,8 @@ type Company {
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: String
-  hasTradingName: String
+  hasDifferentTradingAddress: Boolean
+  hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String
   financialYearEndDate: DateTime
@@ -1046,8 +1044,6 @@ input CompanyWhereInput {
   companyName: StringFilter
   companyNumber: StringFilter
   dateOfCreation: DateTimeNullableFilter
-  hasTradingAddress: StringNullableFilter
-  hasTradingName: StringNullableFilter
   companyWebsite: StringFilter
   phoneNumber: StringFilter
   financialYearEndDate: DateTimeNullableFilter
@@ -1064,8 +1060,6 @@ input CompanyOrderByInput {
   companyName: OrderDirection
   companyNumber: OrderDirection
   dateOfCreation: OrderDirection
-  hasTradingAddress: OrderDirection
-  hasTradingName: OrderDirection
   companyWebsite: OrderDirection
   phoneNumber: OrderDirection
   financialYearEndDate: OrderDirection
@@ -1078,8 +1072,8 @@ input CompanyUpdateInput {
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: String
-  hasTradingName: String
+  hasDifferentTradingAddress: Boolean
+  hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String
   financialYearEndDate: DateTime
@@ -1110,8 +1104,8 @@ input CompanyCreateInput {
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: String
-  hasTradingName: String
+  hasDifferentTradingAddress: Boolean
+  hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String
   financialYearEndDate: DateTime
@@ -1183,9 +1177,9 @@ type Buyer {
   contactLastName: String
   contactPosition: String
   contactEmail: String
-  canContactBuyer: String
-  exporterIsConnectedWithBuyer: String
-  exporterHasTradedWithBuyer: String
+  canContactBuyer: Boolean
+  exporterIsConnectedWithBuyer: Boolean
+  exporterHasTradedWithBuyer: Boolean
 }
 
 input BuyerWhereUniqueInput {
@@ -1207,9 +1201,6 @@ input BuyerWhereInput {
   contactLastName: StringFilter
   contactPosition: StringFilter
   contactEmail: StringFilter
-  canContactBuyer: StringNullableFilter
-  exporterIsConnectedWithBuyer: StringNullableFilter
-  exporterHasTradedWithBuyer: StringNullableFilter
 }
 
 input BuyerOrderByInput {
@@ -1222,9 +1213,6 @@ input BuyerOrderByInput {
   contactLastName: OrderDirection
   contactPosition: OrderDirection
   contactEmail: OrderDirection
-  canContactBuyer: OrderDirection
-  exporterIsConnectedWithBuyer: OrderDirection
-  exporterHasTradedWithBuyer: OrderDirection
 }
 
 input BuyerUpdateInput {
@@ -1238,9 +1226,9 @@ input BuyerUpdateInput {
   contactLastName: String
   contactPosition: String
   contactEmail: String
-  canContactBuyer: String
-  exporterIsConnectedWithBuyer: String
-  exporterHasTradedWithBuyer: String
+  canContactBuyer: Boolean
+  exporterIsConnectedWithBuyer: Boolean
+  exporterHasTradedWithBuyer: Boolean
 }
 
 input CountryRelateToOneForUpdateInput {
@@ -1265,9 +1253,9 @@ input BuyerCreateInput {
   contactLastName: String
   contactPosition: String
   contactEmail: String
-  canContactBuyer: String
-  exporterIsConnectedWithBuyer: String
-  exporterHasTradedWithBuyer: String
+  canContactBuyer: Boolean
+  exporterIsConnectedWithBuyer: Boolean
+  exporterHasTradedWithBuyer: Boolean
 }
 
 input CountryRelateToOneForCreateInput {
@@ -1412,18 +1400,10 @@ input SectionReviewWhereInput {
   NOT: [SectionReviewWhereInput!]
   id: IDFilter
   application: ApplicationWhereInput
-  eligibility: BooleanFilter
-  policyAndExport: BooleanFilter
-  business: BooleanFilter
-  buyer: BooleanFilter
 }
 
 input SectionReviewOrderByInput {
   id: OrderDirection
-  eligibility: OrderDirection
-  policyAndExport: OrderDirection
-  business: OrderDirection
-  buyer: OrderDirection
 }
 
 input SectionReviewUpdateInput {
@@ -1455,8 +1435,8 @@ type Declaration {
   howDataWillBeUsed: DeclarationHowDataWillBeUsed
   agreeToConfidentiality: Boolean
   agreeToAntiBribery: Boolean
-  hasAntiBriberyCodeOfConduct: String
-  willExportWithAntiBriberyCodeOfConduct: String
+  hasAntiBriberyCodeOfConduct: Boolean
+  willExportWithAntiBriberyCodeOfConduct: Boolean
   agreeToConfirmationAndAcknowledgements: Boolean
   agreeHowDataWillBeUsed: Boolean
 }
@@ -1474,22 +1454,10 @@ input DeclarationWhereInput {
   antiBribery: DeclarationAntiBriberyWhereInput
   confirmationAndAcknowledgements: DeclarationConfirmationAndAcknowledgementWhereInput
   howDataWillBeUsed: DeclarationHowDataWillBeUsedWhereInput
-  agreeToConfidentiality: BooleanFilter
-  agreeToAntiBribery: BooleanFilter
-  hasAntiBriberyCodeOfConduct: StringNullableFilter
-  willExportWithAntiBriberyCodeOfConduct: StringNullableFilter
-  agreeToConfirmationAndAcknowledgements: BooleanFilter
-  agreeHowDataWillBeUsed: BooleanFilter
 }
 
 input DeclarationOrderByInput {
   id: OrderDirection
-  agreeToConfidentiality: OrderDirection
-  agreeToAntiBribery: OrderDirection
-  hasAntiBriberyCodeOfConduct: OrderDirection
-  willExportWithAntiBriberyCodeOfConduct: OrderDirection
-  agreeToConfirmationAndAcknowledgements: OrderDirection
-  agreeHowDataWillBeUsed: OrderDirection
 }
 
 input DeclarationUpdateInput {
@@ -1499,8 +1467,8 @@ input DeclarationUpdateInput {
   howDataWillBeUsed: DeclarationHowDataWillBeUsedRelateToOneForUpdateInput
   agreeToConfidentiality: Boolean
   agreeToAntiBribery: Boolean
-  hasAntiBriberyCodeOfConduct: String
-  willExportWithAntiBriberyCodeOfConduct: String
+  hasAntiBriberyCodeOfConduct: Boolean
+  willExportWithAntiBriberyCodeOfConduct: Boolean
   agreeToConfirmationAndAcknowledgements: Boolean
   agreeHowDataWillBeUsed: Boolean
 }
@@ -1535,8 +1503,8 @@ input DeclarationCreateInput {
   howDataWillBeUsed: DeclarationHowDataWillBeUsedRelateToOneForCreateInput
   agreeToConfidentiality: Boolean
   agreeToAntiBribery: Boolean
-  hasAntiBriberyCodeOfConduct: String
-  willExportWithAntiBriberyCodeOfConduct: String
+  hasAntiBriberyCodeOfConduct: Boolean
+  willExportWithAntiBriberyCodeOfConduct: Boolean
   agreeToConfirmationAndAcknowledgements: Boolean
   agreeHowDataWillBeUsed: Boolean
 }
@@ -2319,8 +2287,8 @@ type CompanyAndCompanyAddress {
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: String
-  hasTradingName: String
+  hasDifferentTradingAddress: Boolean
+  hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String
 }
@@ -2332,8 +2300,8 @@ input CompanyAndCompanyAddressInput {
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
-  hasTradingAddress: String
-  hasTradingName: String
+  hasDifferentTradingAddress: Boolean
+  hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String
   financialYearEndDate: DateTime

@@ -1,5 +1,4 @@
 import brokerPostcode from './broker-postcode';
-import { FIELD_VALUES } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
 import { RequestBody } from '../../../../../../../types';
@@ -22,9 +21,9 @@ describe('controllers/insurance/business/broker/validation/rules/broker-postcode
     [POSTCODE]: '',
   } as RequestBody;
 
-  describe(`when using broker is "${FIELD_VALUES.YES}"`, () => {
+  describe('when using broker is true', () => {
     it('should return the result of emptyFieldValidation', () => {
-      mockBody[USING_BROKER] = FIELD_VALUES.YES;
+      mockBody[USING_BROKER] = true;
 
       const response = brokerPostcode(mockBody, mockErrors);
 
@@ -34,9 +33,9 @@ describe('controllers/insurance/business/broker/validation/rules/broker-postcode
     });
   });
 
-  describe(`when using broker is "${FIELD_VALUES.NO}"`, () => {
+  describe('when using broker is false', () => {
     it('should return the provided errors object', () => {
-      mockBody[USING_BROKER] = FIELD_VALUES.NO;
+      mockBody[USING_BROKER] = false;
 
       const response = brokerPostcode(mockBody, mockErrors);
 

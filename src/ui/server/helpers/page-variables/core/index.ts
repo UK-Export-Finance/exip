@@ -1,6 +1,7 @@
 import {
   BUTTONS,
   COOKIES_CONSENT,
+  ERROR_MESSAGES,
   HEADER,
   QUOTE_FOOTER,
   INSURANCE_FOOTER,
@@ -11,6 +12,8 @@ import {
 import { CorePageVariablesInput, CorePageVariables } from '../../../../types';
 import { ROUTES } from '../../../constants';
 import isInsuranceRoute from '../../is-insurance-route';
+
+const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
 
 /**
  * corePageVariables
@@ -38,7 +41,10 @@ const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_
     PRODUCT = { DESCRIPTION: PRODUCT_CONTENT_STRINGS.DESCRIPTION.GENERIC };
   }
 
-  // if is an insurance route, then sets footer, product and start route to be insurance ones
+  /**
+   * If the route is an insurance route,
+   * this sets the footer, product and start route to be insurance ones
+   */
   if (insuranceRoute) {
     FOOTER = INSURANCE_FOOTER;
     PRODUCT = { DESCRIPTION: PRODUCT_CONTENT_STRINGS.DESCRIPTION.APPLICATION };
@@ -51,6 +57,7 @@ const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_
       ...PAGE_CONTENT_STRINGS,
       BUTTONS,
       COOKIES_CONSENT,
+      ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
       HEADER,
       FOOTER,
       LINKS,

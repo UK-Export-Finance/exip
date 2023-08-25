@@ -6,6 +6,7 @@ interface PageContentStrings {
 interface PageVariablesContentStrings {
   BUTTONS: object;
   COOKIES_CONSENT: object;
+  ERROR_MESSAGES: object;
   HEADER: object;
   FOOTER: object;
   LINKS: object;

@@ -1,4 +1,3 @@
-import { FIELD_VALUES } from '../../../constants';
 import FIELD_IDS from '../../../constants/field-ids/insurance';
 
 const {
@@ -6,9 +5,8 @@ const {
 } = FIELD_IDS;
 
 const {
-  COMPANY_ADDRESS,
   SEARCH,
-  INPUT,
+  COMPANY_ADDRESS,
   REGISTED_OFFICE_ADDRESS,
   COMPANY_SIC,
   COMPANY_INCORPORATED,
@@ -28,11 +26,11 @@ const { USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL } = BROKER;
 /**
  * getBrokerTasks
  * Get broker section tasks depending on the isUsingBroker field
- * @param {String} Application "Is using broker" flag
+ * @param {Boolean} Application "Is using broker" flag
  * @returns {Array} Array of tasks
  */
-export const getBrokerTasks = (isUsingBroker?: string): Array<string> => {
-  if (isUsingBroker && isUsingBroker === FIELD_VALUES.YES) {
+export const getBrokerTasks = (isUsingBroker?: boolean): Array<string> => {
+  if (isUsingBroker) {
     return [NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL];
   }
 
@@ -41,10 +39,10 @@ export const getBrokerTasks = (isUsingBroker?: string): Array<string> => {
 
 /**
  * Required fields for the insurance - business section
- * @param {String} Is using broker
+ * @param {Boolean} Is using broker
  * @returns {Array} Required field IDs
  */
-const requiredFields = (isUsingBroker?: string): Array<string> => {
+const requiredFields = (isUsingBroker?: boolean): Array<string> => {
   let fields = {
     ...YOUR_COMPANY_FIELDS,
     ...COMPANIES_HOUSE_FIELDS,

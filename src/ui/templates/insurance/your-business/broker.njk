@@ -17,7 +17,7 @@
 {% set brokerHTML %}
   {% call govukFieldset({
       legend: {
-        html: fieldsetLegend.render({ id: FIELDS.HEADING.ID, legendText: FIELDS.HEADING.HEADING }),
+        html: fieldsetLegend.render({ id: FIELDS.LEGEND.ID, legendText: FIELDS.LEGEND.LEGEND }),
         isPageHeading: false
       }
   }) %}
@@ -41,7 +41,7 @@
       errorMessage: validationErrors.errorList[FIELDS.NAME.ID] and {
         text: validationErrors.errorList[FIELDS.NAME.ID].text,
         attributes: {
-          "data-cy": FIELDS.NAME.ID + "-error"
+          "data-cy": FIELDS.NAME.ID + "-error-message"
         }
       }
     }) }}
@@ -76,7 +76,7 @@
       errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID] and {
         text: validationErrors.errorList[FIELDS.EMAIL.ID].text,
         attributes: {
-          "data-cy": FIELDS.EMAIL.ID + "-error"
+          "data-cy": FIELDS.EMAIL.ID + "-error-message"
         }
       }
     }) }}
@@ -95,7 +95,7 @@
 
   {% if validationErrors.summary %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
       errorList: validationErrors.summary,
       attributes: {
         'data-cy': 'error-summary'
@@ -120,7 +120,6 @@
           legendClass: 'govuk-fieldset__legend--xl',
           submittedAnswer: submittedValues[FIELDS.USING_BROKER.ID] or application.broker[FIELDS.USING_BROKER.ID],
           errorMessage: validationErrors.errorList[FIELDS.USING_BROKER.ID],
-          yesNoValueString: true,
           conditionalYesHtml: brokerHTML,
           horizontalRadios: true
         }) }}

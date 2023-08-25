@@ -1,6 +1,7 @@
 type TellUsAboutPolicyPageVariablesContentStrings = {
   BUTTONS: object;
   COOKIES_CONSENT: object;
+  ERROR_MESSAGES: object;
   FOOTER: object;
   LINKS: object;
   PHASE_BANNER: object;
@@ -10,6 +11,7 @@ type TellUsAboutPolicyPageVariablesContentStrings = {
 };
 
 type TellUsAboutPolicyPageVariablesFields = {
+  POLICY_LENGTH?: object;
   AMOUNT_CURRENCY: object;
   CONTRACT_VALUE?: object;
   CREDIT_PERIOD?: object;

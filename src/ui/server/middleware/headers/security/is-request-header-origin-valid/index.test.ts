@@ -12,7 +12,7 @@ describe('middleware/headers/security/is-request-header-origin-valid', () => {
 
   describe('when the provided request header matches the origin', () => {
     it('should return true', () => {
-      const mockRequestHeader = `https://${req.hostname}.com`;
+      const mockRequestHeader = `https://${req.hostname}`;
 
       const result = isRequestHeaderOriginValid(mockOrigin, mockRequestHeader);
 

@@ -9,6 +9,7 @@ import mapPercentage from '../map-percentage';
 
 const {
   ELIGIBILITY: { BUYER_COUNTRY, CURRENCY, PERCENTAGE_OF_COVER },
+  POLICY_TYPE,
   QUOTE,
 } = FIELD_IDS;
 
@@ -27,6 +28,7 @@ describe('server/helpers/map-quote-to-content', () => {
         [ESTIMATED_COST]: formatCurrency(mockQuote[ESTIMATED_COST], mockQuote[CURRENCY].isoCode, 2),
         ...mapPolicyLength(mockQuote),
         [BUYER_LOCATION]: mapCountry(mockQuote[BUYER_COUNTRY]),
+        [POLICY_TYPE]: mockQuote[POLICY_TYPE],
       };
 
       expect(result).toEqual(expected);

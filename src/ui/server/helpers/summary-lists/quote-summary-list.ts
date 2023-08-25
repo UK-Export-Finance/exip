@@ -1,15 +1,15 @@
 import { QUOTE_TITLES } from '../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../constants';
+import { isSinglePolicyType, isMultiPolicyType } from '../policy-type';
 import fieldGroupItem from './generate-field-group-item';
 import generateSummaryListRows from './generate-summary-list-rows';
 import { SummaryListItemData, QuoteContent } from '../../../types';
 
 const {
   ELIGIBILITY: { BUYER_COUNTRY, CONTRACT_VALUE, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
-  MULTIPLE_POLICY_LENGTH,
   POLICY_LENGTH,
+  POLICY_TYPE,
   QUOTE,
-  SINGLE_POLICY_LENGTH,
 } = FIELD_IDS;
 
 const { BUYER_LOCATION, ESTIMATED_COST, INSURED_FOR, PREMIUM_RATE_PERCENTAGE } = QUOTE;
@@ -25,7 +25,12 @@ const { BUYER_LOCATION, ESTIMATED_COST, INSURED_FOR, PREMIUM_RATE_PERCENTAGE } =
 const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
   let fields = [] as Array<SummaryListItemData>;
 
-  if (quote[SINGLE_POLICY_LENGTH]) {
+  const policyType = quote[POLICY_TYPE];
+
+  const isSinglePolicy = isSinglePolicyType(policyType);
+  const isMultiplePolcy = isMultiPolicyType(policyType);
+
+  if (isSinglePolicy) {
     fields = [
       fieldGroupItem({
         field: { id: CONTRACT_VALUE, title: QUOTE_TITLES[CONTRACT_VALUE] },
@@ -36,7 +41,7 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
     ];
   }
 
-  if (quote[MULTIPLE_POLICY_LENGTH]) {
+  if (isMultiplePolcy) {
     fields = [
       fieldGroupItem({
         field: { id: MAX_AMOUNT_OWED, title: QUOTE_TITLES[MAX_AMOUNT_OWED] },
@@ -57,7 +62,7 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
     }),
   ];
 
-  if (quote[SINGLE_POLICY_LENGTH]) {
+  if (isSinglePolicy) {
     fields = [
       ...fields,
       fieldGroupItem({
@@ -67,7 +72,7 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
     ];
   }
 
-  if (quote[MULTIPLE_POLICY_LENGTH]) {
+  if (isMultiplePolcy) {
     fields = [
       ...fields,
       fieldGroupItem({
@@ -89,27 +94,15 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
     }),
   ];
 
-  if (quote[SINGLE_POLICY_LENGTH]) {
-    fields = [
-      ...fields,
-      fieldGroupItem({
-        field: { id: SINGLE_POLICY_LENGTH, title: QUOTE_TITLES[POLICY_LENGTH] },
-        data: quote,
-        renderChangeLink: true,
-        href: `${ROUTES.QUOTE.POLICY_TYPE_CHANGE}#${SINGLE_POLICY_LENGTH}-label`,
-      }),
-    ];
-  }
-
-  if (quote[MULTIPLE_POLICY_LENGTH]) {
-    fields = [
-      ...fields,
-      fieldGroupItem({
-        field: { id: MULTIPLE_POLICY_LENGTH, title: QUOTE_TITLES[POLICY_LENGTH] },
-        data: quote,
-      }),
-    ];
-  }
+  fields = [
+    ...fields,
+    fieldGroupItem({
+      field: { id: POLICY_LENGTH, title: QUOTE_TITLES[POLICY_LENGTH] },
+      data: quote,
+      renderChangeLink: isSinglePolicy,
+      href: `${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${POLICY_LENGTH}-label`,
+    }),
+  ];
 
   fields = [
     ...fields,

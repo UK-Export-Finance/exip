@@ -30,7 +30,7 @@
 
   {% if validationErrors.summary %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
       errorList: validationErrors.summary
     }) }}
   {% endif %}
@@ -152,7 +152,7 @@
 
         {% call govukFieldset({
           legend: {
-            html: fieldsetLegend.render({ id: FIELDS.FIRST_NAME.ID, legendText: FIELDS.FIRST_NAME.HEADING }),
+            html: fieldsetLegend.render({ id: FIELDS.FIRST_NAME.ID, legendText: FIELDS.FIRST_NAME.LEGEND }),
             isPageHeading: false
           }
         }) %}
@@ -271,8 +271,7 @@
           hintText: FIELDS.CAN_CONTACT_BUYER.HINT,
           submittedAnswer: submittedValues[FIELDS.CAN_CONTACT_BUYER.ID] or application.buyer[FIELDS.CAN_CONTACT_BUYER.ID],
           errorMessage: validationErrors.errorList[FIELDS.CAN_CONTACT_BUYER.ID],
-          dataCyLegend: FIELDS.CAN_CONTACT_BUYER.ID + '-label',
-          yesNoValueString: true
+          dataCyLegend: FIELDS.CAN_CONTACT_BUYER.ID + '-label'
         }) }}
       </div>
 

@@ -1,6 +1,7 @@
-import { BUTTONS, COOKIES_CONSENT, FIELDS, QUOTE_FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT, HEADER } from '../../../content-strings';
+import { BUTTONS, COOKIES_CONSENT, ERROR_MESSAGES, FIELDS, QUOTE_FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT, HEADER } from '../../../content-strings';
 import { FIELD_IDS as ALL_FIELD_IDS, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
+import { objectHasProperty } from '../../../helpers/object';
 import { isPopulatedArray } from '../../../helpers/array';
 import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
@@ -17,17 +18,21 @@ import { Request, Response, SelectOption, TellUsAboutPolicyPageVariables } from 
 const {
   ELIGIBILITY: { AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
   POLICY_TYPE,
+  POLICY_LENGTH,
 } = ALL_FIELD_IDS;
+
+const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
 
 const { START: quoteStart } = ROUTES.QUOTE;
 
-export const FIELD_IDS = [AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER];
+export const FIELD_IDS = [AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_LENGTH];
 
 const generatePageVariables = (policyType: string, ORIGINAL_URL: string) => {
   const pageVariables: TellUsAboutPolicyPageVariables = {
     CONTENT_STRINGS: {
       BUTTONS,
       COOKIES_CONSENT,
+      ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
       LINKS,
       PHASE_BANNER,
       HEADER,
@@ -58,6 +63,11 @@ const generatePageVariables = (policyType: string, ORIGINAL_URL: string) => {
 
   if (isSinglePolicyType(policyType)) {
     pageVariables.CONTENT_STRINGS.PAGE_TITLE = TELL_US_ABOUT_YOUR_POLICY.SINGLE_POLICY_PAGE_TITLE;
+
+    pageVariables.FIELDS.POLICY_LENGTH = {
+      ID: POLICY_LENGTH,
+      ...FIELDS[POLICY_LENGTH],
+    };
 
     pageVariables.FIELDS.AMOUNT_CURRENCY = {
       ID: AMOUNT_CURRENCY,
@@ -114,7 +124,8 @@ const get = async (req: Request, res: Response) => {
     }
 
     let mappedCurrencies;
-    if (submittedData?.quoteEligibility && submittedData.quoteEligibility[CURRENCY]) {
+
+    if (objectHasProperty(submittedData.quoteEligibility, CURRENCY)) {
       mappedCurrencies = mapCurrencies(currencies, submittedData.quoteEligibility[CURRENCY].isoCode);
     } else {
       mappedCurrencies = mapCurrencies(currencies);
@@ -122,7 +133,7 @@ const get = async (req: Request, res: Response) => {
 
     let mappedPercentageOfCover;
 
-    if (submittedData?.quoteEligibility && submittedData.quoteEligibility[PERCENTAGE_OF_COVER]) {
+    if (objectHasProperty(submittedData.quoteEligibility, PERCENTAGE_OF_COVER)) {
       mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER, Number(submittedData.quoteEligibility[PERCENTAGE_OF_COVER]));
     } else {
       mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER);
@@ -131,7 +142,7 @@ const get = async (req: Request, res: Response) => {
     const creditPeriodOptions = FIELDS[CREDIT_PERIOD].OPTIONS as Array<SelectOption>;
     let mappedCreditPeriod;
 
-    if (submittedData?.quoteEligibility && submittedData.quoteEligibility[CREDIT_PERIOD]) {
+    if (objectHasProperty(submittedData.quoteEligibility, CREDIT_PERIOD)) {
       mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions, String(submittedData.quoteEligibility[CREDIT_PERIOD]));
     } else {
       mappedCreditPeriod = mapCreditPeriod(creditPeriodOptions);

@@ -63,7 +63,7 @@ describe('server/helpers/get-submitted-fields', () => {
       expect(result).toEqual(expected);
     });
 
-    describe('when no fields are provided', () => {
+    describe('when fields is not populated', () => {
       it('should return empty array', () => {
         const result = getSubmittedFields([], mockApplicationFlat);
 

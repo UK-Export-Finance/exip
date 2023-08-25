@@ -5,7 +5,6 @@ import { RequestBody, SubmittedDataQuoteEligibility } from '../../../../types';
 
 const {
   ELIGIBILITY: { CREDIT_PERIOD, CONTRACT_VALUE, MAX_AMOUNT_OWED },
-  MULTIPLE_POLICY_LENGTH,
   POLICY_LENGTH,
   POLICY_TYPE,
 } = FIELD_IDS;
@@ -37,7 +36,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
         const mockFormData = {
           mock: '1',
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
-          [MULTIPLE_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,
+          [POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,
         } as SubmittedDataQuoteEligibility;
 
         const result = mapSubmittedData(mockFormData);
@@ -81,7 +80,7 @@ describe('server/helpers/update-submitted-data/quote', () => {
       it('should return policy length field with only multiple specific fields and default multiple policy length', () => {
         const mockFormData = {
           [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
-          [MULTIPLE_POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,
+          [POLICY_LENGTH]: FIELD_VALUES.POLICY_LENGTH.MULTIPLE,
           [MAX_AMOUNT_OWED]: 200,
         } as SubmittedDataQuoteEligibility;
 

@@ -26,7 +26,7 @@
 
   {% if validationErrors.summary %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
       errorList: validationErrors.summary,
       attributes: {
         'data-cy': 'error-summary'
@@ -45,52 +45,6 @@
         <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
       </div>
 
-      <div class="govuk-grid-column-three-quarters-from-desktop">
-        <div class="companies-house-search">
-
-          {{ govukInput({
-            label: {
-              text: CONTENT_STRINGS.CRN_HEADING,
-              classes: "govuk-label--m",
-              isPageHeading: false,
-              attributes: {
-                id: FIELDS.COMPANY_HOUSE.SEARCH + '-label',
-                "data-cy": FIELDS.COMPANY_HOUSE.SEARCH + "-label"
-              }
-            },
-            hint: {
-              html: CONTENT_STRINGS.CRN_HINT,
-              attributes: {
-                "data-cy": FIELDS.COMPANY_HOUSE.SEARCH + "-hint"
-              }
-            },
-            attributes: {
-              "data-cy": FIELDS.COMPANY_HOUSE.SEARCH
-            },
-            id: FIELDS.COMPANY_HOUSE.INPUT,
-            name: FIELDS.COMPANY_HOUSE.INPUT,
-            value: submittedValues[FIELDS.COMPANY_HOUSE.INPUT],
-            errorMessage: validationErrors.errorList[FIELDS.COMPANY_HOUSE.INPUT] and {
-              text: validationErrors.errorList[FIELDS.COMPANY_HOUSE.INPUT].text,
-              attributes: {
-                "data-cy": FIELDS.COMPANY_HOUSE.SEARCH + "-error"
-              }
-            }
-          }) }}
-
-          {{ govukButton({
-            text: CONTENT_STRINGS.BUTTONS.SEARCH,
-            classes: "govuk-button--secondary",
-            attributes: {
-              'data-cy': FIELDS.COMPANY_HOUSE.SEARCH + '-button',
-              'formaction': POST_ROUTES.COMPANIES_HOUSE
-            }
-          }) }}
-        </div>
-
-        <p class="govuk-!-margin-bottom-6"><a class="govuk-link" href="{{POST_ROUTES.NO_COMPANIES_HOUSE_NUMBER}}" data-cy="do-not-have-number">{{CONTENT_STRINGS.NO_COMPANY_HOUSE_NUMER}}</a></p>
-      </div>
-
       {% if SUMMARY_LIST %}
         <div class="govuk-grid-column-three-quarters-from-desktop">
           <h3 class="govuk-fieldset__legend--m" data-cy="{{FIELDS.YOUR_COMPANY.YOUR_BUSINESS}}-heading">{{CONTENT_STRINGS.YOUR_BUSINESS_HEADING}}</h3>
@@ -102,8 +56,11 @@
               'data-cy':  FIELDS.COMPANY_HOUSE.SEARCH + '-summary-list'
             }
           }) }}
+
+          <p class="govuk-!-margin-bottom-6"><a class="govuk-link" href="{{DIFFERENT_COMPANIES_HOUSE_NUMBER}}" data-cy="different-companies-house-number">{{CONTENT_STRINGS.DIFFERENT_COMPANIES_HOUSE_NUMBER}}</a></p>
         </div>
       {% endif %}
+
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
         {{ yesNoRadioButtons.render({
@@ -113,8 +70,7 @@
           legendSpan: true,
           submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.TRADING_NAME],
           errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.TRADING_NAME],
-          dataCyLegend: FIELDS.YOUR_COMPANY.TRADING_NAME + '-legend',
-          yesNoValueString: true
+          dataCyLegend: FIELDS.YOUR_COMPANY.TRADING_NAME + '-legend'
         }) }}
       </div>
 
@@ -126,8 +82,7 @@
             legendSpan: true,
             submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
             errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
-            dataCyLegend: FIELDS.YOUR_COMPANY.TRADING_ADDRESS + '-legend',
-            yesNoValueString: true
+            dataCyLegend: FIELDS.YOUR_COMPANY.TRADING_ADDRESS + '-legend'
           }) }}
       </div>
 
@@ -153,7 +108,7 @@
           errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.WEBSITE] and {
             text: validationErrors.errorList[FIELDS.YOUR_COMPANY.WEBSITE].text,
             attributes: {
-              "data-cy": FIELDS.YOUR_COMPANY.WEBSITE + "-error"
+              "data-cy": FIELDS.YOUR_COMPANY.WEBSITE + "-error-message"
             }
           }
         }) }}
@@ -189,7 +144,7 @@
            errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.PHONE_NUMBER] and {
             text: validationErrors.errorList[FIELDS.YOUR_COMPANY.PHONE_NUMBER].text,
             attributes: {
-              "data-cy": FIELDS.YOUR_COMPANY.PHONE_NUMBER + "-error"
+              "data-cy": FIELDS.YOUR_COMPANY.PHONE_NUMBER + "-error-message"
             }
           }
         }) }}
@@ -198,8 +153,7 @@
       <div class="govuk-grid-column-three-quarters-from-desktop">
         <div class="govuk-button-group">
           {{ submitButton.render({
-            text: CONTENT_STRINGS.BUTTONS.CONTINUE,
-            formaction : POST_ROUTES.COMPANY_DETAILS
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE
           }) }}
 
           {{ govukButton({
@@ -207,7 +161,7 @@
             classes: "govuk-button--secondary",
             attributes: {
               'data-cy': 'save-and-back-button',
-              formaction : POST_ROUTES.SAVE_AND_BACK_URL
+              formaction : SAVE_AND_BACK_URL
             }
           }) }}
         </div>

@@ -5,7 +5,7 @@ const { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, SECURITY_CODE } = ACCOUNT;
 
 const PASSWORD_HINT = {
   INTRO: 'Your password must contain at least 14 characters and have:',
-  RULES: ['an uppercase letter', 'a lowercase letter', 'a number', 'a special character'],
+  RULES: ['an uppercase letter', 'a lowercase letter', 'a number', 'a special character (for example @%!?*)'],
 };
 
 export const ACCOUNT_FIELDS = {

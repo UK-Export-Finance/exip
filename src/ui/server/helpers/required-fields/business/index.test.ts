@@ -1,6 +1,5 @@
 import requiredFields, { getBrokerTasks } from '.';
 import FIELD_IDS from '../../../constants/field-ids/insurance';
-import { FIELD_VALUES } from '../../../constants';
 import { mockApplication } from '../../../test-mocks';
 
 const {
@@ -8,9 +7,8 @@ const {
 } = FIELD_IDS;
 
 const {
-  COMPANY_ADDRESS,
   SEARCH,
-  INPUT,
+  COMPANY_ADDRESS,
   REGISTED_OFFICE_ADDRESS,
   COMPANY_SIC,
   COMPANY_INCORPORATED,
@@ -27,9 +25,11 @@ const { USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL } = BROKER;
 
 describe('server/helpers/required-fields/business', () => {
   describe('getBrokerTasks', () => {
-    describe(`when isUsingBroker is "${FIELD_VALUES.YES}"`, () => {
+    describe('when isUsingBroker is true', () => {
       it('should return multiple field ids in an array', () => {
-        const result = getBrokerTasks(FIELD_VALUES.YES);
+        const isUsingBroker = true;
+
+        const result = getBrokerTasks(isUsingBroker);
 
         const expected = [NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL];
 
@@ -45,9 +45,11 @@ describe('server/helpers/required-fields/business', () => {
       });
     });
 
-    describe(`when isUsingBroker is "${FIELD_VALUES.NO}"`, () => {
+    describe('when isUsingBroker is false', () => {
       it('should return an empty array', () => {
-        const result = getBrokerTasks(FIELD_VALUES.NO);
+        const isUsingBroker = false;
+
+        const result = getBrokerTasks(isUsingBroker);
 
         expect(result).toEqual([]);
       });

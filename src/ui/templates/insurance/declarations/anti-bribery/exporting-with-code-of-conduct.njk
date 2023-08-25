@@ -22,7 +22,7 @@
 
   {% if validationErrors.summary %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
       errorList: validationErrors.summary
     }) }}
   {% endif %}
@@ -39,8 +39,7 @@
       legendClass: 'govuk-heading-xl',
       submittedAnswer: application.declaration[FIELD.ID],
       errorMessage: validationErrors.errorList[FIELD.ID],
-      horizontalRadios: true,
-      yesNoValueString: true
+      horizontalRadios: true
     }) }}
 
     <div class="govuk-button-group">

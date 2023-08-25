@@ -6,12 +6,13 @@ import { mockApplication } from '../../../../../test-mocks';
 import getSicCodeIDsFromApplication from '../../../../../helpers/get-sic-code-ids-from-application';
 
 const {
-  COMPANY_HOUSE: { INPUT, COMPANY_INCORPORATED },
+  COMPANIES_HOUSE_NUMBER,
+  COMPANY_HOUSE: { COMPANY_INCORPORATED },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 describe('controllers/insurance/business/company-details/map-submitted-data', () => {
-  describe(`when ${INPUT} success,and __typename fields are provided`, () => {
-    it(`should return the formBody without ${INPUT} success,and __typename fields and change null fields in address to empty strings`, () => {
+  describe(`when ${COMPANIES_HOUSE_NUMBER} success,and __typename fields are provided`, () => {
+    it(`should return the formBody without ${COMPANIES_HOUSE_NUMBER} success,and __typename fields and change null fields in address to empty strings`, () => {
       const response = mapSubmittedData(mockBody, mockApplication);
 
       const expected = {
@@ -37,12 +38,12 @@ describe('controllers/insurance/business/company-details/map-submitted-data', ()
     });
   });
 
-  describe(`when ${INPUT} success, and __typename fields are not provided`, () => {
+  describe(`when ${COMPANIES_HOUSE_NUMBER} success, and __typename fields are not provided`, () => {
     const mockBodyWithoutFields = {
       ...mockBody,
     } as RequestBody;
 
-    delete mockBodyWithoutFields[INPUT];
+    delete mockBodyWithoutFields[COMPANIES_HOUSE_NUMBER];
     // eslint-disable-next-line no-underscore-dangle
     delete mockBodyWithoutFields.__typename;
     delete mockBodyWithoutFields.registeredOfficeAddress;
@@ -53,7 +54,7 @@ describe('controllers/insurance/business/company-details/map-submitted-data', ()
     delete mockBodyWithoutFields.sicCodes;
     delete mockBodyWithoutFields.industrySectorNames;
 
-    it(`should return the formBody without ${INPUT} success,and __typename fields and add an empty address object`, () => {
+    it(`should return the formBody without ${COMPANIES_HOUSE_NUMBER} success,and __typename fields and add an empty address object`, () => {
       const response = mapSubmittedData(mockBodyWithoutFields, mockApplication);
 
       const { _csrf, ...expectedBody } = mockBodyWithoutFields;

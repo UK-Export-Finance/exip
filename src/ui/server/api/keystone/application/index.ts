@@ -1,4 +1,3 @@
-import { ApolloResponse, InsuranceSubmittedBuyer, SubmittedDataInsuranceEligibility } from '../../../../types';
 import apollo from '../../../graphql/apollo';
 import countries from '../countries';
 import eligibility from './eligibility';
@@ -14,6 +13,7 @@ import updateBrokerMutation from '../../../graphql/mutations/update-application/
 import updateBuyerMutation from '../../../graphql/mutations/update-application/buyer';
 import submitApplicationMutation from '../../../graphql/mutations/submit-application';
 import updateApplicationSectionReviewMutation from '../../../graphql/mutations/update-application/section-review';
+import { ApolloResponse, ApplicationBuyerApiInput, ApplicationBuyerUiInput, SubmittedDataInsuranceEligibility } from '../../../../types';
 
 const createInitialApplication = async (accountId: string) => {
   try {
@@ -271,21 +271,17 @@ const application = {
         throw new Error('Updating application company');
       }
     },
-    buyer: async (id: string, update: InsuranceSubmittedBuyer) => {
+    buyer: async (id: string, update: ApplicationBuyerUiInput) => {
       try {
         console.info('Updating application buyer');
 
-        const buyerCountryCode = update.country;
+        const { country: buyerCountryCode, ...fields } = update;
 
-        const data = {
-          ...update,
-        };
+        const data = fields as ApplicationBuyerApiInput;
 
         if (buyerCountryCode) {
           const buyerCountry = await countries.get(buyerCountryCode);
 
-          // ts-ignore required here to be able to reassign country to connect from string
-          // @ts-ignore
           data.country = {
             connect: { id: buyerCountry.id },
           };

@@ -1,7 +1,7 @@
 import createPrepareApplicationTasks from './prepare-application';
 import { TaskListData } from '../../../../types';
 import createInitialChecksTasks from './initial-checks';
-import { GROUP_IDS, TASK_IDS, ROUTES, FIELD_VALUES } from '../../../constants';
+import { GROUP_IDS, TASK_IDS, ROUTES } from '../../../constants';
 import { TASKS } from '../../../content-strings';
 import { getAllTasksFieldsInAGroup } from '../task-helpers';
 import policyAndExportsRequiredFields from '../../required-fields/policy-and-exports';
@@ -20,7 +20,7 @@ describe('server/helpers/task-list/prepare-application', () => {
 
   describe('createPrepareApplicationTasks', () => {
     const initialChecksTasks = createInitialChecksTasks();
-    const isUsingBroker = FIELD_VALUES.YES;
+    const isUsingBroker = true;
 
     const previousGroups = [
       {
@@ -44,7 +44,7 @@ describe('server/helpers/task-list/prepare-application', () => {
       };
 
       const EXPORTER_BUSINESS = {
-        href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${EXPORTER_BUSINESS_ROUTES.COMPANY_DETAILS}`,
+        href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${EXPORTER_BUSINESS_ROUTES.COMPANIES_HOUSE_NUMBER_ROOT}`,
         title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
         id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
         fields: businessRequiredFields(isUsingBroker),

@@ -10,7 +10,7 @@ import { updateSubmittedData } from '../../../helpers/update-submitted-data/quot
 import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
 
-const { MULTIPLE_POLICY_TYPE, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH, SINGLE_POLICY_TYPE } = SHARED_FIELD_IDS;
+const { MULTIPLE_POLICY_TYPE, POLICY_TYPE, SINGLE_POLICY_TYPE } = SHARED_FIELD_IDS;
 
 describe('controllers/quote/policy-type', () => {
   let req: Request;
@@ -27,7 +27,7 @@ describe('controllers/quote/policy-type', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [POLICY_TYPE, SINGLE_POLICY_LENGTH, MULTIPLE_POLICY_TYPE];
+      const expected = [POLICY_TYPE, MULTIPLE_POLICY_TYPE];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -41,10 +41,6 @@ describe('controllers/quote/policy-type', () => {
             ID: MULTIPLE_POLICY_TYPE,
             ...FIELDS[POLICY_TYPE],
           },
-          POLICY_LENGTH: {
-            ID: POLICY_LENGTH,
-            ...FIELDS[POLICY_LENGTH],
-          },
           POLICY_TYPE: {
             ID: POLICY_TYPE,
             ...FIELDS[POLICY_TYPE],
@@ -52,10 +48,6 @@ describe('controllers/quote/policy-type', () => {
           SINGLE_POLICY_TYPE: {
             ID: SINGLE_POLICY_TYPE,
             ...FIELDS[POLICY_TYPE],
-          },
-          SINGLE_POLICY_LENGTH: {
-            ID: SINGLE_POLICY_LENGTH,
-            ...FIELDS[SINGLE_POLICY_LENGTH],
           },
         },
       };
@@ -102,7 +94,6 @@ describe('controllers/quote/policy-type', () => {
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [POLICY_LENGTH]: '40',
         [POLICY_TYPE]: 'mock',
       };
 
