@@ -29,6 +29,7 @@ Cypress.Commands.add('createApplications', require('../../../commands/insurance/
 
 Cypress.Commands.add('deleteAccount', require('../../../commands/insurance/account/delete-account'));
 Cypress.Commands.add('deleteApplication', require('../../../commands/insurance/delete-application'));
+Cypress.Commands.add('deleteApplications', require('../../../commands/insurance/delete-applications'));
 
 Cypress.Commands.add('createAnAccountAndBecomeBlocked', require('../../../commands/insurance/account/create-an-account-and-become-blocked'));
 

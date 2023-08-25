@@ -24,10 +24,6 @@ const queryStrings = {
     mutation createApplications($data: [ApplicationCreateInput!]!) {
       createApplications(data: $data) {
         id
-        referenceNumber
-        owner {
-          id
-        }
       }
     }
   `,
@@ -90,6 +86,13 @@ const queryStrings = {
     mutation deleteApplicationByReferenceNumber($referenceNumber: Int!)  {
       deleteApplicationByReferenceNumber(referenceNumber: $referenceNumber) {
         success
+      }
+    }
+  `,
+  deleteApplications: () => gql`
+    mutation DeleteApplications($where: [ApplicationWhereUniqueInput!]!) {
+      deleteApplications(where: $where) {
+        id
       }
     }
   `,
@@ -372,6 +375,30 @@ const deleteApplicationByReferenceNumber = async (referenceNumber) => {
   }
 };
 
+/**
+ * deleteApplications
+ * Delete applications by ID
+ * @param {Array} Application objects with ID
+ * @returns {Object}
+ */
+const deleteApplications = async (applications) => {
+  try {
+    const responseBody = await apollo.query({
+      query: queryStrings.deleteApplications(),
+      variables: {
+        where: applications
+      },
+      context: APOLLO_CONTEXT,
+    }).then((response) => response.data);
+
+    return responseBody;
+  } catch (err) {
+    console.error(err);
+
+    return err;
+  }
+};
+
 const declarations = {
   /**
    * getLatestConfidentiality
@@ -461,6 +488,7 @@ const api = {
   getAccountPasswordResetToken,
   getApplicationByReferenceNumber,
   deleteApplicationByReferenceNumber,
+  deleteApplications,
   declarations,
 };
 

@@ -10,12 +10,14 @@ const totalApplications = MAX_APPLICATIONS_PER_PAGE * 2;
 const totalPages = totalApplications / MAX_APPLICATIONS_PER_PAGE;
 
 context(`Insurance - Dashboard - pagination - ${totalApplications} applications`, () => {
-  let referenceNumber;
+  let applications;
   const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
   before(() => {
     cy.completeSignInAndGoToDashboard().then(({ accountId }) => {
-      cy.createApplications(accountId, totalApplications);
+      cy.createApplications(accountId, totalApplications).then((createdApplications) => {
+        applications = createdApplications;
+      });
 
       cy.navigateToUrl(dashboardUrl);
     });
@@ -26,8 +28,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
   });
 
   after(() => {
-    // TODO delete applications
-    cy.deleteApplication(referenceNumber);
+    cy.deleteApplications(applications);
   });
 
   describe('page tests', () => {

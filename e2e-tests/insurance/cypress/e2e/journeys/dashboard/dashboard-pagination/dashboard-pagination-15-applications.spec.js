@@ -7,13 +7,16 @@ const baseUrl = Cypress.config('baseUrl');
 
 const totalApplications = MAX_APPLICATIONS_PER_PAGE;
 
+const dashboardUrl = `${baseUrl}${DASHBOARD}`;
+
 context(`Insurance - Dashboard - pagination - ${totalApplications} applications`, () => {
-  let referenceNumber;
-  const dashboardUrl = `${baseUrl}${DASHBOARD}`;
+  let applications;
 
   before(() => {
     cy.completeSignInAndGoToDashboard().then(({ accountId }) => {
-      cy.createApplications(accountId, totalApplications);
+      cy.createApplications(accountId, totalApplications).then((createdApplications) => {
+        applications = createdApplications;
+      });
 
       cy.navigateToUrl(dashboardUrl);
     });
@@ -24,8 +27,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
   });
 
   after(() => {
-    // TODO delete applications
-    cy.deleteApplication(referenceNumber);
+    cy.deleteApplications(applications);
   });
 
   it(`should NOT render pagination list items because there are no more than ${MAX_APPLICATIONS_PER_PAGE} applications`, () => {

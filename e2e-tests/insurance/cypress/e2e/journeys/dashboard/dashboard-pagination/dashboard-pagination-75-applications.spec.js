@@ -10,6 +10,8 @@ const baseUrl = Cypress.config('baseUrl');
 const totalApplications = MAX_APPLICATIONS_PER_PAGE * 5;
 const totalPages = totalApplications / MAX_APPLICATIONS_PER_PAGE;
 
+const dashboardUrl = `${baseUrl}${DASHBOARD}`;
+
 const assertFullyPopulatedPageLinks = () => {
   pagination.listItems().should('have.length', 5);
 
@@ -21,18 +23,15 @@ const assertFullyPopulatedPageLinks = () => {
 };
 
 context(`Insurance - Dashboard - pagination - ${totalApplications} applications`, () => {
-  let referenceNumber;
-  const dashboardUrl = `${baseUrl}${DASHBOARD}`;
+  let applications;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ refNumber, accountId }) => {
-      referenceNumber = refNumber;
+    cy.completeSignInAndGoToDashboard().then(({ accountId }) => {
+      cy.createApplications(accountId, totalApplications).then((createdApplications) => {
+        applications = createdApplications;
+      });
 
-      cy.createApplications(accountId, totalApplications);
-
-      header.navigation.applications().click();
-
-      cy.assertUrl(dashboardUrl);
+      cy.navigateToUrl(dashboardUrl);
     });
   });
 
@@ -41,8 +40,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
   });
 
   after(() => {
-    // TODO delete applications
-    cy.deleteApplication(referenceNumber);
+    cy.deleteApplications(applications);
   });
 
   describe('page tests', () => {
