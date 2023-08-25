@@ -9,6 +9,7 @@ import formatDate from '../../../helpers/format-date';
 import formatCurrency from '../helpers/format-currency';
 import NEW_LINE from '../helpers/xlsx-new-line';
 import { mockApplication } from '../../../test-mocks';
+import mapYesNoField from '../helpers/map-yes-no-field';
 
 const CONTENT_STRINGS = {
   ...FIELDS.COMPANY_DETAILS,
@@ -57,7 +58,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter', () => {
         };
 
         const expected = [
-          xlsxRow(XLSX.FIELDS[USING_BROKER], broker[USING_BROKER]),
+          xlsxRow(XLSX.FIELDS[USING_BROKER], mapYesNoField(broker[USING_BROKER])),
           xlsxRow(XLSX.FIELDS[BROKER_NAME], broker[BROKER_NAME]),
           xlsxRow(XLSX.FIELDS[ADDRESS_LINE_1], `${expectedAddressAnswer.lineOneAndTwo}${expectedAddressAnswer.other}`),
           xlsxRow(XLSX.FIELDS[EMAIL], broker[EMAIL]),
@@ -81,7 +82,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter', () => {
 
         const { broker } = mockApplicationNoBroker;
 
-        const expected = [xlsxRow(XLSX.FIELDS[USING_BROKER], broker[USING_BROKER])];
+        const expected = [xlsxRow(XLSX.FIELDS[USING_BROKER], mapYesNoField(broker[USING_BROKER]))];
 
         expect(result).toEqual(expected);
       });
@@ -104,8 +105,8 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter', () => {
 
         xlsxRow(XLSX.FIELDS[COMPANY_ADDRESS], mapExporterAddress(company[COMPANY_ADDRESS])),
 
-        xlsxRow(CONTENT_STRINGS[TRADING_NAME].SUMMARY?.TITLE, company[TRADING_NAME]),
-        xlsxRow(CONTENT_STRINGS[TRADING_ADDRESS].SUMMARY?.TITLE, company[TRADING_ADDRESS]),
+        xlsxRow(CONTENT_STRINGS[TRADING_NAME].SUMMARY?.TITLE, mapYesNoField(company[TRADING_NAME])),
+        xlsxRow(CONTENT_STRINGS[TRADING_ADDRESS].SUMMARY?.TITLE, mapYesNoField(company[TRADING_ADDRESS])),
 
         xlsxRow(XLSX.FIELDS[COMPANY_SIC], mapSicCodes(companySicCodes)),
 
