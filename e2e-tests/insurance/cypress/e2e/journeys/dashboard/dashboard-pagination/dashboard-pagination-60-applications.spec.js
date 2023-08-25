@@ -2,15 +2,15 @@ import header from '../../../../../../partials/header';
 import pagination from '../../../../../../partials/pagination';
 import { MAX_APPLICATIONS_PER_PAGE } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { BUTTONS } from '../../../../../../content-strings';
 
-const { DASHBOARD, DASHBOARD_PAGE } = INSURANCE_ROUTES;
+const { DASHBOARD } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
 const totalApplications = MAX_APPLICATIONS_PER_PAGE * 4;
+const totalPages = totalApplications / MAX_APPLICATIONS_PER_PAGE;
 
-context(`Insurance - Dashboard - pagination - ${totalApplications} items`, () => {
+context(`Insurance - Dashboard - pagination - ${totalApplications} applications`, () => {
   let referenceNumber;
   const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
@@ -45,59 +45,48 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} items`, () =>
 
       cy.assertPaginationItemLink({ index: 0 });
       cy.assertPaginationItemLink({ index: 1 });
-      cy.assertPaginationItemLink({ index: 2, pageNumber: 5 });
+      cy.assertPaginationItemLink({ index: 2 });
+      cy.assertPaginationItemLink({ index: 3 });
     });
 
-    it('should NOT render a `previous` pagination link', () => {
-      pagination.previousLink().should('not.exist');
-    });
-
-    it('should render a `next` pagination link', () => {
-      cy.assertPaginationNextLink(2);
+    it('should have the correct pagination state', () => {
+      cy.assertPaginationState({
+        totalPages,
+        index: 0,
+        expectedPageNumber: 1,
+        previousLinkShouldExist: false,
+        expectedUrl: `${baseUrl}${DASHBOARD}`,
+      });
     });
   });
 
-  describe('when clicking on the `next` pagination link', () => {
+  describe('when clicking on page 4 pagination link', () => {
+    it('should have the correct pagination state', () => {
+      cy.navigateToUrl(dashboardUrl);
+
+      pagination.listItemLink(3).click();
+
+      cy.assertPaginationState({
+        totalPages,
+        expectedPageNumber: 4,
+        nextLinkShouldExist: false,
+      });
+    });
+  });
+
+  describe('when clicking on the `previous` pagination link after clicking on page 4 pagination link', () => {
     beforeEach(() => {
       cy.navigateToUrl(dashboardUrl);
 
-      pagination.nextLink().click();
-    });
-
-    it(`should redirect to ${DASHBOARD_PAGE}/2`, () => {
-      const expectedUrl = `${baseUrl}${DASHBOARD_PAGE}/2`;
-
-      cy.assertUrl(expectedUrl);
-    });
-
-    it('should render a `next` pagination link', () => {
-      cy.assertPaginationNextLink(3);
-    });
-
-    it('should render a `previous` pagination link', () => {
-      cy.assertPaginationPreviousLink(1);
-    });
-
-    it(`should redirect to ${DASHBOARD_PAGE}/1 when clicking the 'previous' link`, () => {
+      pagination.listItemLink(3).click();
       pagination.previousLink().click();
-
-      const expectedUrl = `${baseUrl}${DASHBOARD_PAGE}/1`;
-
-      cy.assertUrl(expectedUrl);
-    });
-  });
-
-  describe(`when clicking on the next page's pagination link`, () => {
-    beforeEach(() => {
-      cy.navigateToUrl(dashboardUrl);
-
-      pagination.listItemLink(1).click();
     });
 
-    it(`should redirect to ${DASHBOARD_PAGE}/2`, () => {
-      const expectedUrl = `${baseUrl}${DASHBOARD_PAGE}/2`;
-
-      cy.assertUrl(expectedUrl);
+    it('should have the correct pagination state', () => {
+      cy.assertPaginationState({
+        totalPages,
+        expectedPageNumber: 3,
+      });
     });
   });
 });

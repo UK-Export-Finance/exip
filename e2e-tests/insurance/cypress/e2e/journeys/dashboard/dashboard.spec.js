@@ -181,9 +181,7 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
     });
 
     it('should NOT render pagination list items because there is only 1 application', () => {
-      pagination.listItems().should('have.length', 0);
-      pagination.previousLink().should('not.exist');
-      pagination.nextLink().should('not.exist');
+      cy.assertPaginationDoesNotExist();
     });
 
     describe('`start new application` button', () => {
