@@ -70,7 +70,7 @@
     "postcode-validator": "^3.8.14",
     "ts-node": "^10.9.1",
     "tslib": "^2.6.1",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.22.9",
