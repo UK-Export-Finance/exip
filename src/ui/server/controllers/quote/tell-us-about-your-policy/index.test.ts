@@ -1,9 +1,10 @@
 import { FIELD_IDS, generatePageVariables, TEMPLATE, get, post } from '.';
-import { BUTTONS, COOKIES_CONSENT, ERROR_MESSAGES, FIELDS, QUOTE_FOOTER, LINKS, PAGES, PHASE_BANNER, PRODUCT, HEADER } from '../../../content-strings';
+import { FIELDS, PAGES } from '../../../content-strings';
 import { FIELD_IDS as ALL_FIELD_IDS, FIELD_VALUES, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import corePageVariables from '../../../helpers/page-variables/core';
 import constructPayload from '../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import getCurrencyByCode from '../../../helpers/get-currency-by-code';
@@ -12,17 +13,13 @@ import mapCreditPeriod from '../../../helpers/mappings/map-credit-period';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { isSinglePolicyType, isMultiPolicyType } from '../../../helpers/policy-type';
 import { mockReq, mockRes, mockAnswers, mockCurrencies, mockSession } from '../../../test-mocks';
-import { Request, Response, SelectOption, TellUsAboutPolicyPageVariables } from '../../../../types';
+import { Request, Response, SelectOption } from '../../../../types';
 
 const {
   ELIGIBILITY: { BUYER_COUNTRY, AMOUNT_CURRENCY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
   POLICY_TYPE,
   POLICY_LENGTH,
 } = ALL_FIELD_IDS;
-
-const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
-
-const { START: quoteStart } = ROUTES.QUOTE;
 
 describe('controllers/quote/tell-us-about-your-policy', () => {
   let req: Request;
@@ -62,32 +59,14 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
   describe('generatePageVariables', () => {
     describe('when policy type is single', () => {
       it('should return page variables with single policy strings', () => {
-        const mockPolicyType = FIELD_VALUES.POLICY_TYPE.SINGLE;
-
-        const result = generatePageVariables(mockPolicyType, '/');
+        const result = generatePageVariables(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
         const expected = {
-          CONTENT_STRINGS: {
-            BUTTONS,
-            COOKIES_CONSENT,
-            ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
-            HEADER,
-            FOOTER: QUOTE_FOOTER,
-            LINKS,
-            PHASE_BANNER,
-            PAGE_TITLE: PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY.SINGLE_POLICY_PAGE_TITLE,
-            PRODUCT: {
-              DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
-            },
-            ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
-          },
+          PAGE_TITLE: PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY.SINGLE_POLICY_PAGE_TITLE,
           FIELDS: {
-            POLICY_LENGTH: {
-              ID: POLICY_LENGTH,
-              ...FIELDS[POLICY_LENGTH],
-            },
             AMOUNT_CURRENCY: {
               ID: AMOUNT_CURRENCY,
+              ...FIELDS[AMOUNT_CURRENCY].SINGLE_POLICY,
             },
             CURRENCY: {
               ID: CURRENCY,
@@ -95,26 +74,19 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             },
             PERCENTAGE_OF_COVER: {
               ID: PERCENTAGE_OF_COVER,
+              ...FIELDS[PERCENTAGE_OF_COVER].SINGLE_POLICY,
             },
+            POLICY_LENGTH: {
+              ID: POLICY_LENGTH,
+              ...FIELDS[POLICY_LENGTH],
+            },
+            CONTRACT_VALUE: {
+              ID: CONTRACT_VALUE,
+              ...FIELDS[CONTRACT_VALUE],
+            },
+            MAX_AMOUNT_OWED: {},
+            CREDIT_PERIOD: {},
           },
-          START_ROUTE: quoteStart,
-          FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
-          ORIGINAL_URL: '/',
-        } as TellUsAboutPolicyPageVariables;
-
-        expected.FIELDS.AMOUNT_CURRENCY = {
-          ID: AMOUNT_CURRENCY,
-          ...FIELDS[AMOUNT_CURRENCY].SINGLE_POLICY,
-        };
-
-        expected.FIELDS.CONTRACT_VALUE = {
-          ID: CONTRACT_VALUE,
-          ...FIELDS[CONTRACT_VALUE],
-        };
-
-        expected.FIELDS.PERCENTAGE_OF_COVER = {
-          ID: PERCENTAGE_OF_COVER,
-          ...FIELDS[PERCENTAGE_OF_COVER].SINGLE_POLICY,
         };
 
         expect(result).toEqual(expected);
@@ -123,28 +95,14 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
     describe('when policy type is multiple', () => {
       it('should return page variables with multiple policy strings', () => {
-        const mockPolicyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
-
-        const result = generatePageVariables(mockPolicyType, '/');
+        const result = generatePageVariables(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
         const expected = {
-          CONTENT_STRINGS: {
-            BUTTONS,
-            COOKIES_CONSENT,
-            ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
-            HEADER,
-            FOOTER: QUOTE_FOOTER,
-            LINKS,
-            PHASE_BANNER,
-            PAGE_TITLE: PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY.MULTIPLE_POLICY_PAGE_TITLE,
-            PRODUCT: {
-              DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
-            },
-            ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
-          },
+          PAGE_TITLE: PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY.MULTIPLE_POLICY_PAGE_TITLE,
           FIELDS: {
             AMOUNT_CURRENCY: {
               ID: AMOUNT_CURRENCY,
+              ...FIELDS[AMOUNT_CURRENCY].MULTIPLE_POLICY,
             },
             CURRENCY: {
               ID: CURRENCY,
@@ -152,31 +110,19 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             },
             PERCENTAGE_OF_COVER: {
               ID: PERCENTAGE_OF_COVER,
+              ...FIELDS[PERCENTAGE_OF_COVER].MULTIPLE_POLICY,
+            },
+            POLICY_LENGTH: {},
+            CONTRACT_VALUE: {},
+            MAX_AMOUNT_OWED: {
+              ID: MAX_AMOUNT_OWED,
+              ...FIELDS[MAX_AMOUNT_OWED],
+            },
+            CREDIT_PERIOD: {
+              ID: CREDIT_PERIOD,
+              ...FIELDS[CREDIT_PERIOD],
             },
           },
-          START_ROUTE: quoteStart,
-          FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
-          ORIGINAL_URL: '/',
-        } as TellUsAboutPolicyPageVariables;
-
-        expected.FIELDS.AMOUNT_CURRENCY = {
-          ID: AMOUNT_CURRENCY,
-          ...FIELDS[AMOUNT_CURRENCY].MULTIPLE_POLICY,
-        };
-
-        expected.FIELDS.MAX_AMOUNT_OWED = {
-          ID: MAX_AMOUNT_OWED,
-          ...FIELDS[MAX_AMOUNT_OWED],
-        };
-
-        expected.FIELDS.PERCENTAGE_OF_COVER = {
-          ID: PERCENTAGE_OF_COVER,
-          ...FIELDS[PERCENTAGE_OF_COVER].MULTIPLE_POLICY,
-        };
-
-        expected.FIELDS.CREDIT_PERIOD = {
-          ID: CREDIT_PERIOD,
-          ...FIELDS[CREDIT_PERIOD],
         };
 
         expect(result).toEqual(expected);
@@ -185,37 +131,22 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
     describe('when policy type is not recognised', () => {
       it('should return base page variables', () => {
-        const result = generatePageVariables('', '/');
+        const result = generatePageVariables('');
 
         const expected = {
-          CONTENT_STRINGS: {
-            PRODUCT: {
-              DESCRIPTION: PRODUCT.DESCRIPTION.QUOTE,
-            },
-            ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
-            HEADER,
-            FOOTER: QUOTE_FOOTER,
-            LINKS,
-            PHASE_BANNER,
-            BUTTONS,
-            COOKIES_CONSENT,
-            ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
-          },
+          PAGE_TITLE: '',
           FIELDS: {
-            AMOUNT_CURRENCY: {
-              ID: AMOUNT_CURRENCY,
-            },
+            AMOUNT_CURRENCY: {},
             CURRENCY: {
               ID: CURRENCY,
               ...FIELDS[CURRENCY],
             },
-            PERCENTAGE_OF_COVER: {
-              ID: PERCENTAGE_OF_COVER,
-            },
+            PERCENTAGE_OF_COVER: {},
+            POLICY_LENGTH: {},
+            CONTRACT_VALUE: {},
+            MAX_AMOUNT_OWED: {},
+            CREDIT_PERIOD: {},
           },
-          START_ROUTE: quoteStart,
-          FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
-          ORIGINAL_URL: '/',
         };
 
         expect(result).toEqual(expected);
@@ -253,14 +184,24 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     it('should render template', async () => {
       await get(req, res);
 
+      const policyType = req.session.submittedData.quoteEligibility[POLICY_TYPE];
+
+      const PAGE_VARIABLES = generatePageVariables(policyType);
+
       const expectedCurrencies = mapCurrencies(mockCurrencies);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
         userName: getUserNameFromSession(req.session.user),
-        ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE], req.originalUrl),
-        BACK_LINK: req.headers.referer,
-        isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
-        isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+        ...corePageVariables({
+          PAGE_CONTENT_STRINGS: {
+            ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
+            PAGE_TITLE: PAGE_VARIABLES.PAGE_TITLE,
+          },
+          BACK_LINK: req.headers.referer,
+        }),
+        ...generatePageVariables(policyType),
+        isSinglePolicyType: isSinglePolicyType(policyType),
+        isMultiPolicyType: isMultiPolicyType(policyType),
         currencies: expectedCurrencies,
         percentageOfCover: mappedPercentageOfCover,
         creditPeriod: mappedCreditPeriod,
@@ -278,14 +219,25 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       it('should render template with currencies mapped to submitted currency and submittedValues', async () => {
         await get(req, res);
 
+        const policyType = req.session.submittedData.quoteEligibility[POLICY_TYPE];
+
+        const PAGE_VARIABLES = generatePageVariables(policyType);
+
         const expectedCurrencies = mapCurrencies(mockCurrencies, req.session.submittedData.quoteEligibility[CURRENCY].isoCode);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
           userName: getUserNameFromSession(req.session.user),
-          ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE], req.originalUrl),
+          ...corePageVariables({
+            PAGE_CONTENT_STRINGS: {
+              ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
+              PAGE_TITLE: PAGE_VARIABLES.PAGE_TITLE,
+            },
+            BACK_LINK: req.headers.referer,
+          }),
+          ...generatePageVariables(policyType),
           BACK_LINK: req.headers.referer,
-          isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
-          isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+          isSinglePolicyType: isSinglePolicyType(policyType),
+          isMultiPolicyType: isMultiPolicyType(policyType),
           currencies: expectedCurrencies,
           percentageOfCover: mappedPercentageOfCover,
           creditPeriod: mappedCreditPeriod,
@@ -304,16 +256,26 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       it('should render template with percentage of cover mapped to submitted percentage and submittedValues', async () => {
         await get(req, res);
 
+        const policyType = req.session.submittedData.quoteEligibility[POLICY_TYPE];
+
+        const PAGE_VARIABLES = generatePageVariables(policyType);
+
         const expectedCurrencies = mapCurrencies(mockCurrencies, req.session.submittedData.quoteEligibility[CURRENCY].isoCode);
 
         const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.session.submittedData.quoteEligibility[PERCENTAGE_OF_COVER]);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
           userName: getUserNameFromSession(req.session.user),
-          ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE], req.originalUrl),
-          BACK_LINK: req.headers.referer,
-          isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
-          isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+          ...corePageVariables({
+            PAGE_CONTENT_STRINGS: {
+              ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
+              PAGE_TITLE: PAGE_VARIABLES.PAGE_TITLE,
+            },
+            BACK_LINK: req.headers.referer,
+          }),
+          ...generatePageVariables(policyType),
+          isSinglePolicyType: isSinglePolicyType(policyType),
+          isMultiPolicyType: isMultiPolicyType(policyType),
           currencies: expectedCurrencies,
           percentageOfCover: mappedPercentageOfCoverWithSelected,
           creditPeriod: mappedCreditPeriod,
@@ -332,6 +294,10 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       it('should render template with credit period mapped to submitted credit period and submittedValues', async () => {
         await get(req, res);
 
+        const policyType = req.session.submittedData.quoteEligibility[POLICY_TYPE];
+
+        const PAGE_VARIABLES = generatePageVariables(policyType);
+
         const expectedCurrencies = mapCurrencies(mockCurrencies, req.session.submittedData.quoteEligibility[CURRENCY].isoCode);
 
         const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.session.submittedData.quoteEligibility[PERCENTAGE_OF_COVER]);
@@ -340,10 +306,17 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
           userName: getUserNameFromSession(req.session.user),
-          ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE], req.originalUrl),
+          ...corePageVariables({
+            PAGE_CONTENT_STRINGS: {
+              ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
+              PAGE_TITLE: PAGE_VARIABLES.PAGE_TITLE,
+            },
+            BACK_LINK: req.headers.referer,
+          }),
+          ...generatePageVariables(policyType),
           BACK_LINK: req.headers.referer,
-          isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
-          isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+          isSinglePolicyType: isSinglePolicyType(policyType),
+          isMultiPolicyType: isMultiPolicyType(policyType),
           currencies: expectedCurrencies,
           percentageOfCover: mappedPercentageOfCoverWithSelected,
           creditPeriod: mappedCreditPeriodWithSelected,
@@ -407,14 +380,24 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       it('should render template with validation errors and submitted values from constructPayload function', async () => {
         await post(req, res);
 
+        const policyType = req.session.submittedData.quoteEligibility[POLICY_TYPE];
+
+        const PAGE_VARIABLES = generatePageVariables(policyType);
+
         const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
           userName: getUserNameFromSession(req.session.user),
-          ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE], req.originalUrl),
-          BACK_LINK: req.headers.referer,
-          isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
-          isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+          ...corePageVariables({
+            PAGE_CONTENT_STRINGS: {
+              ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
+              PAGE_TITLE: PAGE_VARIABLES.PAGE_TITLE,
+            },
+            BACK_LINK: req.headers.referer,
+          }),
+          ...generatePageVariables(policyType),
+          isSinglePolicyType: isSinglePolicyType(policyType),
+          isMultiPolicyType: isMultiPolicyType(policyType),
           currencies: mapCurrencies(mockCurrencies),
           validationErrors: generateValidationErrors({
             ...req.session.submittedData.quoteEligibility,
@@ -438,14 +421,24 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         it('should render template with mapped submitted currency from constructPayload function', async () => {
           await post(req, res);
 
+          const policyType = req.session.submittedData.quoteEligibility[POLICY_TYPE];
+
+          const PAGE_VARIABLES = generatePageVariables(policyType);
+
           const payload = constructPayload(req.body, FIELD_IDS);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
             userName: getUserNameFromSession(req.session.user),
-            ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE], req.originalUrl),
-            BACK_LINK: req.headers.referer,
-            isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
-            isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+            ...corePageVariables({
+              PAGE_CONTENT_STRINGS: {
+                ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
+                PAGE_TITLE: PAGE_VARIABLES.PAGE_TITLE,
+              },
+              BACK_LINK: req.headers.referer,
+            }),
+            ...generatePageVariables(policyType),
+            isSinglePolicyType: isSinglePolicyType(policyType),
+            isMultiPolicyType: isMultiPolicyType(policyType),
             currencies: mapCurrencies(mockCurrencies, payload[CURRENCY]),
             validationErrors: generateValidationErrors({
               ...req.session.submittedData.quoteEligibility,
@@ -466,14 +459,24 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         it('should render template with mapped submitted percentage from constructPayload function', async () => {
           await post(req, res);
 
+          const policyType = req.session.submittedData.quoteEligibility[POLICY_TYPE];
+
+          const PAGE_VARIABLES = generatePageVariables(policyType);
+
           const payload = constructPayload(req.body, FIELD_IDS);
 
           const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.body[PERCENTAGE_OF_COVER]);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
             userName: getUserNameFromSession(req.session.user),
-            ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE], req.originalUrl),
-            BACK_LINK: req.headers.referer,
+            ...corePageVariables({
+              PAGE_CONTENT_STRINGS: {
+                ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
+                PAGE_TITLE: PAGE_VARIABLES.PAGE_TITLE,
+              },
+              BACK_LINK: req.headers.referer,
+            }),
+            ...generatePageVariables(policyType),
             isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             currencies: mapCurrencies(mockCurrencies, payload[CURRENCY]),
@@ -496,16 +499,26 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         it('should render template with mapped submitted credit period from constructPayload function', async () => {
           await post(req, res);
 
+          const policyType = req.session.submittedData.quoteEligibility[POLICY_TYPE];
+
+          const PAGE_VARIABLES = generatePageVariables(policyType);
+
           const payload = constructPayload(req.body, FIELD_IDS);
 
           const mappedCreditPeriodWithSelected = mapCreditPeriod(creditPeriodOptions, String(req.session.submittedData.quoteEligibility[CREDIT_PERIOD]));
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
             userName: getUserNameFromSession(req.session.user),
-            ...generatePageVariables(req.session.submittedData.quoteEligibility[POLICY_TYPE], req.originalUrl),
-            BACK_LINK: req.headers.referer,
-            isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
-            isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+            ...corePageVariables({
+              PAGE_CONTENT_STRINGS: {
+                ...PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY,
+                PAGE_TITLE: PAGE_VARIABLES.PAGE_TITLE,
+              },
+              BACK_LINK: req.headers.referer,
+            }),
+            ...generatePageVariables(policyType),
+            isSinglePolicyType: isSinglePolicyType(policyType),
+            isMultiPolicyType: isMultiPolicyType(policyType),
             currencies: mapCurrencies(mockCurrencies, payload[CURRENCY]),
             validationErrors: generateValidationErrors({
               ...req.session.submittedData.quoteEligibility,

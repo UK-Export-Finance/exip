@@ -20,12 +20,4 @@ type TellUsAboutPolicyPageVariablesFields = {
   MAX_AMOUNT_OWED?: object;
 };
 
-interface TellUsAboutPolicyPageVariables {
-  CONTENT_STRINGS: TellUsAboutPolicyPageVariablesContentStrings;
-  FIELDS: TellUsAboutPolicyPageVariablesFields;
-  START_ROUTE: string;
-  FEEDBACK_ROUTE: string;
-  ORIGINAL_URL?: string;
-}
-
-export { TellUsAboutPolicyPageVariablesContentStrings, TellUsAboutPolicyPageVariablesFields, TellUsAboutPolicyPageVariables };
+export { TellUsAboutPolicyPageVariablesContentStrings, TellUsAboutPolicyPageVariablesFields };
