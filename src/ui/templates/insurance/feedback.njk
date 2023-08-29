@@ -15,7 +15,7 @@
     text: CONTENT_STRINGS.LINKS.BACK,
     href: BACK_LINK,
     attributes: {
-      "data-cy": "back-link"
+      "data-cy": DATA.CY.BACK_LINK
     }
   }) }}
 
@@ -33,7 +33,7 @@
     <legend class="govuk-fieldset__legend " data-cy="{{ FIELDS.SATISFACTION.ID }}-label">{{ FIELDS.SATISFACTION.LABEL }}</legend>
   {% endset %}
 
-  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+  <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
   <div class="govuk-grid-row">
     <form method="POST" id="form" novalidate>
