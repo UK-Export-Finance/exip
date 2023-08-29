@@ -1,0 +1,21 @@
+introspection:
+  removeTrailingPeriodFromDescriptions: false
+  schemaFile: ./schema.graphql
+  queryNameStrategy: capitalizeFirst
+  fieldExpansionDepth: 2
+  spectaqlDirective:
+    enable: true
+
+extensions:
+  graphqlScalarExamples: true
+
+info:
+  title: EXIPS GraphQL API Reference
+  description: Export Insurance Policies
+
+servers:
+  - url: https://app-exip-api-staging-001.azurewebsites.net/api/graphql
+    description: Staging
+    headers:
+      - name: x-api-key
+        example: ExampleKey
