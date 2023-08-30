@@ -11,7 +11,8 @@ const {
 const {
   INSURANCE: {
     START,
-    DASHBOARD,
+    ALL_SECTIONS,
+    ROOT,
   },
 } = ROUTES;
 
@@ -47,9 +48,10 @@ const completeInsuranceEligibilitySignInAndGoToDashboard = (emailAddress) => {
       // submit the OTP security code
       submitButton().click();
 
-      // assert we are on the dashboard
-      const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
-      cy.assertUrl(expectedUrl);
+      cy.getReferenceNumber().then((referenceNumber) => {
+        const expectedUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+        cy.assertUrl(expectedUrl);
+      });
     });
   });
 };

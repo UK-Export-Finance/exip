@@ -1,11 +1,14 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
 import { ROUTES } from '../../../../../constants';
+import header from '../../../../../partials/header';
 
 const { table } = dashboardPage;
 
 const {
   DASHBOARD,
   START,
+  ALL_SECTIONS,
+  ROOT,
   ACCOUNT: {
     SIGN_IN: { ENTER_CODE },
   },
@@ -58,6 +61,14 @@ context('Insurance - Account - When answering eligibility answers, creating an a
     });
 
     it(`should redirect to ${dashboardUrl} and have one application in the table`, () => {
+      cy.getReferenceNumber().then((refNumber) => {
+        const expectedUrl = `${baseUrl}${ROOT}/${refNumber}${ALL_SECTIONS}`;
+        cy.assertUrl(expectedUrl);
+      });
+
+      // go back to the dashboard
+      header.navigation.applications().click();
+
       cy.assertUrl(dashboardUrl);
 
       table.body.rows().should('have.length', 1);

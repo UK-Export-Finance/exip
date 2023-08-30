@@ -10,7 +10,7 @@ import generateValidationErrors from './validation';
 import securityCodeValidationErrors from './validation/rules/security-code';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockAccount, mockApplication, mockSession } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockAccount, mockApplication, mockSession, mockApplications } from '../../../../../test-mocks';
 
 const {
   ACCOUNT: { SECURITY_CODE },
@@ -22,6 +22,8 @@ const {
       SIGN_IN: { ROOT: SIGN_IN_ROOT },
     },
     DASHBOARD,
+    INSURANCE_ROOT,
+    ALL_SECTIONS,
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
@@ -156,12 +158,15 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
 
     let createApplicationSpy = jest.fn(() => Promise.resolve(mockCreateApplicationResponse));
 
+    let getApplicationsSpy = jest.fn(() => Promise.resolve(mockApplications));
+
     const validBody = {
       [SECURITY_CODE]: '123456',
     };
 
     beforeEach(() => {
       api.keystone.account.verifyAccountSignInCode = verifyAccountSignInCodeSpy;
+      api.keystone.applications.getAll = getApplicationsSpy;
       api.keystone.application.create = createApplicationSpy;
     });
 
@@ -231,10 +236,27 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
         expect(req.session.user).toEqual(expected);
       });
 
-      it(`should redirect to ${DASHBOARD}`, async () => {
+      it(`should redirect to ${DASHBOARD} when there is more than 1 applications for the user`, async () => {
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(DASHBOARD);
+      });
+
+      it(`should redirect to ${DASHBOARD} when there are no applications for the user`, async () => {
+        getApplicationsSpy = jest.fn(() => Promise.resolve([]));
+        api.keystone.applications.getAll = getApplicationsSpy;
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(DASHBOARD);
+      });
+
+      it('should redirect to an application when there is only 1 application for the user', async () => {
+        getApplicationsSpy = jest.fn(() => Promise.resolve([mockApplications[0]]));
+        api.keystone.applications.getAll = getApplicationsSpy;
+
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${mockApplications[0].referenceNumber}${ALL_SECTIONS}`);
       });
 
       describe('when there are eligibility answers in the session', () => {
@@ -246,6 +268,8 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
               insuranceEligibility: mockSession.submittedData.insuranceEligibility,
             },
           };
+
+          api.keystone.applications.getAll = () => Promise.resolve(mockApplications);
         });
 
         it('should wipe req.session.submittedData.insuranceEligibility', async () => {
@@ -350,6 +374,22 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
           req.body = validBody;
 
           createApplicationSpy = jest.fn(() => Promise.reject());
+          api.keystone.application.create = createApplicationSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get all application API call fails', () => {
+        beforeEach(() => {
+          req.body = validBody;
+
+          api.keystone.account.verifyAccountSignInCode = verifyAccountSignInCodeSpy;
+          api.keystone.applications.getAll = () => Promise.reject();
           api.keystone.application.create = createApplicationSpy;
         });
 
