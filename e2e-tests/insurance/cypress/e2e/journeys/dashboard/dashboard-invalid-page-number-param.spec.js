@@ -4,7 +4,7 @@ import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 const { table } = dashboardPage;
 const { DASHBOARD_PAGE } = INSURANCE_ROUTES;
 
-context('Insurance - Dashboard - visit with 1 existing application and an invalid page nubmer param', () => {
+context('Insurance - Dashboard - visit with 1 existing application and an invalid page number param', () => {
   const baseUrl = Cypress.config('baseUrl');
 
   let referenceNumber;
