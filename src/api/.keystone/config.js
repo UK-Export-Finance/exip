@@ -4513,7 +4513,7 @@ var isProdEnvironment = NODE_ENV2 === "production";
 var keystone_default = withAuth(
   (0, import_core3.config)({
     server: {
-      port: 4001,
+      port: 5001,
       extendExpressApp: (app) => {
         app.use(check_api_key_default);
         if (NODE_ENV2 === "production") {
