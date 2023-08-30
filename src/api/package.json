@@ -10,8 +10,8 @@
   "scripts": {
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",
-    "dev": "keystone dev",
-    "start": "NODE_ENV=production keystone start",
+    "dev": "keystone dev  --no-ui",
+    "start": "NODE_ENV=production keystone start --no-ui",
     "build": "NODE_ENV=production keystone build",
     "test": "jest --runInBand --testTimeout=60000 --coverage"
   },

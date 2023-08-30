@@ -32,7 +32,6 @@ const isProdEnvironment = NODE_ENV === 'production';
  * - Server port
  * - Database provider, URL, logging
  * - GraphQL playground and apollo configuration
- * - KeystoneJS admin UI/CMS configuration (via withAuth function)
  * - KeystoneJS admin UI/CMS session configuration
  * - KeystoneJS lists schema (API and DB fields/operations that will be automatically generated)
  * - KeystoneJS custom schema (custom GraphQL operations defined outside of the supported lists schema)
@@ -46,7 +45,7 @@ export default withAuth(
       extendExpressApp: (app) => {
         app.use(checkApiKey);
 
-        if (NODE_ENV === 'production') {
+        if (isProdEnvironment) {
           app.use(rateLimiter);
         }
       },
@@ -62,10 +61,6 @@ export default withAuth(
         introspection: isDevEnvironment,
         plugins: apolloPlugins,
       },
-    },
-    ui: {
-      isDisabled: isProdEnvironment,
-      isAccessAllowed: (context) => !!context.session?.data,
     },
     lists,
     session,
