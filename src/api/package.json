@@ -11,8 +11,8 @@
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",
     "dev": "keystone dev",
-    "start": "keystone start",
-    "build": "keystone build",
+    "start": "NODE_ENV=production keystone start",
+    "build": "NODE_ENV=production keystone build",
     "test": "jest --runInBand --testTimeout=60000 --coverage"
   },
   "repository": {
