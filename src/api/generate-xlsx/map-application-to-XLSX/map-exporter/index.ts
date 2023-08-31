@@ -79,6 +79,12 @@ export const mapBroker = (application: Application) => {
  */
 const mapExporter = (application: Application) => {
   const { company, companySicCodes, business } = application;
+  let financialYearEndDate = '';
+
+  // financial year end date should only be populated if it exists
+  if (company[FINANCIAL_YEAR_END_DATE]) {
+    financialYearEndDate = formatDate(company[FINANCIAL_YEAR_END_DATE], 'd MMMM');
+  }
 
   const mapped = [
     xlsxRow(XLSX.SECTION_TITLES.EXPORTER_BUSINESS, ''),
@@ -95,7 +101,7 @@ const mapExporter = (application: Application) => {
 
     xlsxRow(XLSX.FIELDS[COMPANY_SIC], mapSicCodes(companySicCodes)),
 
-    xlsxRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, formatDate(company[FINANCIAL_YEAR_END_DATE], 'd MMMM')),
+    xlsxRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, financialYearEndDate),
     xlsxRow(XLSX.FIELDS[WEBSITE], company[WEBSITE]),
     xlsxRow(XLSX.FIELDS[PHONE_NUMBER], company[PHONE_NUMBER]),
 

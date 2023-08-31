@@ -12,15 +12,6 @@
   {{ CONTENT_STRINGS.PAGE_TITLE }}
 {% endblock %}
 
-{% set tradedHTML %}
-  {{ govukHint({
-  text: FIELDS.TRADED_WITH_BUYER.DETAILS,
-  attributes: {
-  "data-cy": FIELDS.TRADED_WITH_BUYER.ID + "-details"
-  }
-}) }}
-{% endset %}
-
 {% block content %}
 
   {{ govukBackLink({
@@ -73,7 +64,6 @@
           errorMessage: validationErrors.errorList[FIELDS.TRADED_WITH_BUYER.ID],
           dataCyLegend: FIELDS.TRADED_WITH_BUYER.ID + '-label',
           dataCyHint: FIELDS.TRADED_WITH_BUYER.ID + '-hint',
-          conditionalYesHtml: tradedHTML,
           horizontalRadios: true
         }) }}
 

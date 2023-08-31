@@ -128,5 +128,49 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter', () => {
 
       expect(result).toEqual(expected);
     });
+    describe('when financial year end date does not exist', () => {
+      it('should return an array of mapped exporter fields with financialYearEndDate as an empty string', () => {
+        const noFinancialYearEndDateApplication = mockApplication;
+
+        noFinancialYearEndDateApplication.company[FINANCIAL_YEAR_END_DATE] = null;
+
+        const result = mapExporter(noFinancialYearEndDateApplication);
+
+        const { company, companySicCodes, business } = noFinancialYearEndDateApplication;
+
+        const expected = [
+          xlsxRow(XLSX.SECTION_TITLES.EXPORTER_BUSINESS, ''),
+
+          // company fields
+          xlsxRow(CONTENT_STRINGS[COMPANY_NUMBER].SUMMARY?.TITLE, company[COMPANY_NUMBER]),
+          xlsxRow(XLSX.FIELDS[COMPANY_NAME], company[COMPANY_NAME]),
+          xlsxRow(CONTENT_STRINGS[COMPANY_INCORPORATED].SUMMARY?.TITLE, formatDate(company[COMPANY_INCORPORATED], 'dd-MMM-yy')),
+
+          xlsxRow(XLSX.FIELDS[COMPANY_ADDRESS], mapExporterAddress(company[COMPANY_ADDRESS])),
+
+          xlsxRow(CONTENT_STRINGS[TRADING_NAME].SUMMARY?.TITLE, mapYesNoField(company[TRADING_NAME])),
+          xlsxRow(CONTENT_STRINGS[TRADING_ADDRESS].SUMMARY?.TITLE, mapYesNoField(company[TRADING_ADDRESS])),
+
+          xlsxRow(XLSX.FIELDS[COMPANY_SIC], mapSicCodes(companySicCodes)),
+
+          xlsxRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, ''),
+          xlsxRow(XLSX.FIELDS[WEBSITE], company[WEBSITE]),
+          xlsxRow(XLSX.FIELDS[PHONE_NUMBER], company[PHONE_NUMBER]),
+
+          // business fields
+          xlsxRow(XLSX.FIELDS[GOODS_OR_SERVICES], business[GOODS_OR_SERVICES]),
+          xlsxRow(XLSX.FIELDS[YEARS_EXPORTING], business[YEARS_EXPORTING]),
+          xlsxRow(XLSX.FIELDS[EMPLOYEES_UK], business[EMPLOYEES_UK]),
+          xlsxRow(XLSX.FIELDS[EMPLOYEES_INTERNATIONAL], business[EMPLOYEES_INTERNATIONAL]),
+          xlsxRow(XLSX.FIELDS[ESTIMATED_ANNUAL_TURNOVER], formatCurrency(business[ESTIMATED_ANNUAL_TURNOVER], GBP_CURRENCY_CODE)),
+          xlsxRow(CONTENT_STRINGS[PERCENTAGE_TURNOVER].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER]}%`),
+
+          // broker fields
+          ...mapBroker(mockApplication),
+        ];
+
+        expect(result).toEqual(expected);
+      });
+    });
   });
 });
