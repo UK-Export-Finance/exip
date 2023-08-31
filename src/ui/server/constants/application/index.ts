@@ -7,7 +7,7 @@ export const APPLICATION = {
   },
   SUBMISSION_DEADLINE_IN_MONTHS: 1,
   STATUS: {
-    DRAFT: 'Draft',
+    IN_PROGRESS: 'In progress',
     SUBMITTED: 'Submitted to UKEF',
   },
   POLICY_TYPE: {

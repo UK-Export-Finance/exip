@@ -60,8 +60,8 @@ describe('custom-resolvers/submit-application', () => {
     expect(submittedApplication.status).toEqual(APPLICATION.STATUS.SUBMITTED);
   });
 
-  it(`should add a previous status of ${APPLICATION.STATUS.DRAFT}`, () => {
-    expect(submittedApplication.previousStatus).toEqual(APPLICATION.STATUS.DRAFT);
+  it(`should add a previous status of ${APPLICATION.STATUS.IN_PROGRESS}`, () => {
+    expect(submittedApplication.previousStatus).toEqual(APPLICATION.STATUS.IN_PROGRESS);
   });
 
   it('should add a submissionDate', () => {

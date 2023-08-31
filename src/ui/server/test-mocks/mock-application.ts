@@ -127,7 +127,7 @@ const mockApplication = {
     ...mockEligibility,
     id: 'clav8by1g0000kgoq5a2afr1z',
   },
-  status: APPLICATION.STATUS.DRAFT,
+  status: APPLICATION.STATUS.IN_PROGRESS,
   owner: mockOwner,
   policyAndExport: mockSinglePolicyAndExport,
   company: mockCompany,

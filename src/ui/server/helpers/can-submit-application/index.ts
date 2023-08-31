@@ -6,7 +6,7 @@ import { Application } from '../../../types';
 
 /**
  * canSubmitApplication
- * Check if the application is complete, has a draft status and is submitting before the submission deadline
+ * Check if the application is complete, has an "in progress" status and is submitting before the submission deadline
  * @param {Object} Application
  * @returns {Boolean}
  */
@@ -17,14 +17,14 @@ const canSubmitApplication = (application: Application): boolean => {
   const flatApplicationData = flattenApplicationData(application);
   const isComplete = applicationIsComplete(flatApplicationData);
 
-  // check the application status is draft
-  const hasDraftStatus = status === APPLICATION.STATUS.DRAFT;
+  // check the application status is in progress
+  const isInProgress = status === APPLICATION.STATUS.IN_PROGRESS;
 
   // check the current date vs submission deadline
   const now = new Date();
   const validSubmissionDate = isAfter(new Date(submissionDeadline), now);
 
-  if (isComplete && hasDraftStatus && validSubmissionDate) {
+  if (isComplete && isInProgress && validSubmissionDate) {
     return true;
   }
 

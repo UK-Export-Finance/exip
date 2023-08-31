@@ -365,7 +365,7 @@ var APPLICATION = {
     MAXIMUM_BUYER_CAN_OWE: LATEST_VERSION.MAXIMUM_BUYER_CAN_OWE
   },
   STATUS: {
-    DRAFT: "Draft",
+    IN_PROGRESS: "In progress",
     SUBMITTED: "Submitted to UKEF"
   }
 };
@@ -838,7 +838,7 @@ var lists = {
             modifiedData.updatedAt = now;
             modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
             modifiedData.submissionType = APPLICATION.SUBMISSION_TYPE.MIA;
-            modifiedData.status = APPLICATION.STATUS.DRAFT;
+            modifiedData.status = APPLICATION.STATUS.IN_PROGRESS;
             return modifiedData;
           } catch (err) {
             console.error("Error adding default data to a new application. %O", err);
@@ -4137,14 +4137,14 @@ var submitApplication = async (root, variables, context) => {
       where: { id: variables.applicationId }
     });
     if (application2) {
-      const hasDraftStatus = application2.status === APPLICATION.STATUS.DRAFT;
+      const isInProgress = application2.status === APPLICATION.STATUS.IN_PROGRESS;
       const now = /* @__PURE__ */ new Date();
       const validSubmissionDate = (0, import_date_fns8.isAfter)(new Date(application2.submissionDeadline), now);
-      const canSubmit = hasDraftStatus && validSubmissionDate;
+      const canSubmit = isInProgress && validSubmissionDate;
       if (canSubmit) {
         const update = {
           status: APPLICATION.STATUS.SUBMITTED,
-          previousStatus: APPLICATION.STATUS.DRAFT,
+          previousStatus: APPLICATION.STATUS.IN_PROGRESS,
           submissionDate: now
         };
         const updatedApplication = await context.db.Application.updateOne({

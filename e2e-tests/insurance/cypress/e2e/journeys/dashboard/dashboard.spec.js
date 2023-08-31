@@ -110,10 +110,10 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
         cy.navigateToUrl(dashboardUrl);
       });
 
-      it(`should render 'status' cell with ${APPLICATION.STATUS.DRAFT}`, () => {
+      it(`should render 'status' cell with ${APPLICATION.STATUS.IN_PROGRESS}`, () => {
         const cell = table.body.row(referenceNumber).status();
 
-        const expected = APPLICATION.STATUS.DRAFT;
+        const expected = APPLICATION.STATUS.IN_PROGRESS;
 
         cy.checkText(cell, expected);
       });
