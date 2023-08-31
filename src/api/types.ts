@@ -251,7 +251,7 @@ interface Currency {
   isoCode: string;
 }
 
-interface NotifyPeronsalisation {
+interface NotifyPersonalisation {
   linkToFile?: string;
 }
 
@@ -509,7 +509,7 @@ export {
   GetCompaniesHouseInformationVariables,
   GetAccountPasswordResetTokenVariables,
   AccountPasswordResetTokenResponse,
-  NotifyPeronsalisation,
+  NotifyPersonalisation,
   InsuranceFeedbackVariables,
   IndustrySector,
   SicCode,
