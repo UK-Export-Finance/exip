@@ -121,6 +121,7 @@ describe('custom-resolvers/account-password-reset', () => {
         data: {
           isBlocked: true,
         },
+        query: 'id isBlocked',
       })) as Account;
 
       result = await accountPasswordReset({}, variables, context);

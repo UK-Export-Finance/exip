@@ -21,24 +21,26 @@ const deleteApplicationByReferenceNumber = async (
 
     const { referenceNumber } = variables;
 
-    const application = (await context.db.Application.findMany({
+    const applications = (await context.db.Application.findMany({
       where: {
         referenceNumber: { equals: referenceNumber },
       },
     })) as Application;
 
-    const [{ id }] = application;
+    if (applications.length) {
+      const [{ id }] = applications;
 
-    const deleteResponse = await context.db.Application.deleteOne({
-      where: {
-        id,
-      },
-    });
+      const deleteResponse = await context.db.Application.deleteOne({
+        where: {
+          id,
+        },
+      });
 
-    if (deleteResponse.id) {
-      return {
-        success: true,
-      };
+      if (deleteResponse?.id) {
+        return {
+          success: true,
+        };
+      }
     }
 
     return {
