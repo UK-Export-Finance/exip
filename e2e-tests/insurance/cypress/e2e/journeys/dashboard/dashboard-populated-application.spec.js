@@ -61,9 +61,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.navigateToUrl(url);
 
       // go to application
-      const referenceNumberLink = table.body.row(referenceNumber).submittedLink();
-
-      referenceNumberLink.click();
+      table.body.row(submittedLink).submittedLink().click();
 
       // go to the 'your buyer' section via task list
       const task = taskList.prepareApplication.tasks.buyer;
@@ -100,9 +98,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.navigateToUrl(url);
 
       // go to application
-      const referenceNumberLink = table.body.row(referenceNumber).submittedLink();
-
-      referenceNumberLink.click();
+      table.body.row(referenceNumber).submittedLink().click();
 
       // go to the 'policy and exports' section via task list
       const task = taskList.prepareApplication.tasks.policyTypeAndExports;
@@ -132,9 +128,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.navigateToUrl(url);
 
       // go to application
-      const referenceNumberLink = table.body.row(referenceNumber).submittedLink();
-
-      referenceNumberLink.click();
+      table.body.row(referenceNumber).submittedLink().click();
 
       // go to the 'policy and exports' section via task list
       const task = taskList.prepareApplication.tasks.policyTypeAndExports;

@@ -18,7 +18,6 @@ const dashboardPage = {
         buyerLocation: () => cy.get(`[data-cy="ref-${referenceNumber}-buyerLocation"]`),
         buyerName: () => cy.get(`[data-cy="ref-${referenceNumber}-buyerName"]`),
         value: () => cy.get(`[data-cy="ref-${referenceNumber}-value"]`),
-        // referenceNumber: () => cy.get(`[data-cy="ref-${referenceNumber}-referenceNumber"]`),
         referenceNumber: () => cy.get('[data-cy="ref-referenceNumber"]'),
         submitted: () => cy.get(`[data-cy="ref-${referenceNumber}-submitted"]`),
         submittedLink: () => cy.get(`[data-cy="ref-${referenceNumber}-submitted-link"]`),
