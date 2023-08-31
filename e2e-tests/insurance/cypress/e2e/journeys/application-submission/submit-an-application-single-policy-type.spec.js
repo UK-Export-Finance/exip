@@ -57,7 +57,7 @@ context('Insurance - submit an application - As an Exporter, I want to submit my
     });
 
     it('should not render a link for the application number', () => {
-      table.body.row(referenceNumber).referenceNumberLink().should('not.exist');
+      table.body.row(referenceNumber).submittedLink().should('not.exist');
 
       cy.checkText(table.body.row(referenceNumber).referenceNumberText(), referenceNumber);
     });

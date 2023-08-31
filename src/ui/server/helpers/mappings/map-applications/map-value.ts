@@ -16,12 +16,12 @@ const {
 } = FIELD_IDS.INSURANCE;
 
 /**
- * mapInsuredFor
- * Map an application's "insured for" depending on the policy type, for display in the dashboard
+ * mapValue
+ * Map an application's "insurance value" depending on the policy type, for display in the dashboard
  * @param {Object} Application
  * @returns {String} Formatted insured amount or empty dash
  */
-const mapInsuredFor = (application: Application) => {
+const mapValue = (application: Application) => {
   const { policyAndExport } = application;
 
   const policyType = policyAndExport[POLICY_TYPE];
@@ -37,4 +37,4 @@ const mapInsuredFor = (application: Application) => {
   return DEFAULT.EMPTY;
 };
 
-export default mapInsuredFor;
+export default mapValue;

@@ -20,7 +20,7 @@ const completeSignInAndGoToApplication = (email = mockAccount[EMAIL]) => {
   completeInsuranceEligibilitySignInAndGoToDashboard(email);
 
   // go to the newly created application
-  insurancePages.dashboardPage.table.body.lastRow.referenceNumberLink().click();
+  insurancePages.dashboardPage.table.body.lastRow.submittedLink().click();
 
   // get the reference number and return for consumption in the test
   cy.getReferenceNumber().then((referenceNumber) => referenceNumber);

@@ -61,7 +61,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.navigateToUrl(url);
 
       // go to application
-      const referenceNumberLink = table.body.row(referenceNumber).referenceNumberLink();
+      const referenceNumberLink = table.body.row(referenceNumber).submittedLink();
 
       referenceNumberLink.click();
 
@@ -100,7 +100,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.navigateToUrl(url);
 
       // go to application
-      const referenceNumberLink = table.body.row(referenceNumber).referenceNumberLink();
+      const referenceNumberLink = table.body.row(referenceNumber).submittedLink();
 
       referenceNumberLink.click();
 
@@ -116,10 +116,10 @@ context('Insurance - Dashboard - populated application', () => {
       cy.completeAndSubmitSingleContractPolicyForm({});
     });
 
-    it(`should render a formatted value of ${TOTAL_CONTRACT_VALUE} in the ${TABLE_HEADERS.INSURED_FOR} cell`, () => {
+    it(`should render a formatted value of ${TOTAL_CONTRACT_VALUE} in the ${TABLE_HEADERS.VALUE} cell`, () => {
       partials.header.navigation.applications().click();
 
-      const cell = table.body.row(referenceNumber).insuredFor();
+      const cell = table.body.row(referenceNumber).value();
 
       const expected = formatCurrency(application.POLICY_AND_EXPORTS[TOTAL_CONTRACT_VALUE]);
 
@@ -132,7 +132,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.navigateToUrl(url);
 
       // go to application
-      const referenceNumberLink = table.body.row(referenceNumber).referenceNumberLink();
+      const referenceNumberLink = table.body.row(referenceNumber).submittedLink();
 
       referenceNumberLink.click();
 
@@ -148,10 +148,10 @@ context('Insurance - Dashboard - populated application', () => {
       cy.completeAndSubmitMultipleContractPolicyForm({});
     });
 
-    it(`should render a formatted value of ${MAXIMUM_BUYER_WILL_OWE} in the ${TABLE_HEADERS.INSURED_FOR} cell`, () => {
+    it(`should render a formatted value of ${MAXIMUM_BUYER_WILL_OWE} in the ${TABLE_HEADERS.VALUE} cell`, () => {
       partials.header.navigation.applications().click();
 
-      const cell = table.body.row(referenceNumber).insuredFor();
+      const cell = table.body.row(referenceNumber).value();
 
       const expected = formatCurrency(application.POLICY_AND_EXPORTS[MAXIMUM_BUYER_WILL_OWE]);
 

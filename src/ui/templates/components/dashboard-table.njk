@@ -12,11 +12,11 @@
     <thead>
         <tr>
           <th class="govuk-table__header" data-cy="header-status">{{ tableHeaders.STATUS }}</th>
-          <th class="govuk-table__header" data-cy="header-lastUpdated">{{ tableHeaders.LAST_UPDATED }}</th>
-          <th class="govuk-table__header" data-cy="header-referenceNumebr">{{ tableHeaders.REFERENCE_NUMBER }}</th>
           <th class="govuk-table__header" data-cy="header-buyerLocation">{{ tableHeaders.BUYER_LOCATION }}</th>
           <th class="govuk-table__header" data-cy="header-buyerName">{{ tableHeaders.BUYER_NAME }}</th>
-          <th class="govuk-table__header" data-cy="header-insuredFor">{{ tableHeaders.INSURED_FOR }}</th>
+          <th class="govuk-table__header" data-cy="header-insuredFor">{{ tableHeaders.VALUE }}</th>
+          <th class="govuk-table__header" data-cy="header-referenceNumber">{{ tableHeaders.REFERENCE_NUMBER }}</th>
+          <th class="govuk-table__header" data-cy="header-submitted">{{ tableHeaders.SUBMITTED }}</th>
         </tr>
     </thead>
 
@@ -35,28 +35,35 @@
             }) }}
           </td>
 
-          <td class="govuk-table__cell" data-cy="{{ refString + refNumber + '-lastUpdated' }}">{{ application.lastUpdated }} </td>
+          <td class="govuk-table__cell" data-cy="{{ refString + refNumber + '-buyerLocation' }}">{{ application.buyerLocation }} </td>
+          <td class="govuk-table__cell" data-cy="{{ refString + refNumber + '-buyerName' }}">{{ application.buyerName }} </td>
+
+          <td class="govuk-table__cell" data-cy="{{ refString + refNumber + '-value' }}">{{ application.value }}</td>
+
+          <td class="govuk-table__cell">
+            <p
+              class="govuk-body govuk-!-margin-bottom-0"
+              data-cy="{{ refString + 'referenceNumber' }}"
+            >{{ application.referenceNumber }}
+            </p>
+          </td>
 
           <td class="govuk-table__cell">
             {% if application.status == submittedStatus %}
               <p
-                class="govuk-body"
-                data-cy="{{ refString + refNumber + '-referenceNumber' }}"
-              >{{ application.referenceNumber }}
+                class="govuk-body govuk-!-margin-bottom-0"
+                data-cy="{{ refString + refNumber + '-submitted' }}"
+              >{{ application.submitted }}
               </p>
             {% else %}
               <a
                 class="govuk-link"
                 href="{{ insuranceRoute }}/{{ application.referenceNumber }}{{ allSectionsRoute }}"
-                data-cy="{{ refString + refNumber + '-referenceNumber-link' }}"
-              >{{ application.referenceNumber }}
+                data-cy="{{ refString + refNumber + '-submitted-link' }}"
+              >{{ application.submitted }}
               </a>
             {% endif %}
           </td>
-
-          <td class="govuk-table__cell" data-cy="{{ refString + refNumber + '-buyerLocation' }}">{{ application.buyerLocation }} </td>
-          <td class="govuk-table__cell" data-cy="{{ refString + refNumber + '-buyerName' }}">{{ application.buyerName }} </td>
-          <td class="govuk-table__cell" data-cy="{{ refString + refNumber + '-insuredFor' }}">{{ application.insuredFor }}</td>
         </tr>
       {% endfor %}
     </tbody>

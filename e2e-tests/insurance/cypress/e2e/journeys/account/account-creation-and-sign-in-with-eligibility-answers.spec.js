@@ -62,7 +62,7 @@ context('Insurance - Account - When answering eligibility answers, creating an a
 
       table.body.rows().should('have.length', 1);
 
-      table.body.firstRow.referenceNumberLink().invoke('text').then((refNumber) => {
+      table.body.firstRow.submittedLink().invoke('text').then((refNumber) => {
         referenceNumber = refNumber;
       });
     });
