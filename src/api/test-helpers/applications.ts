@@ -13,7 +13,7 @@ const create = async ({ context, data }: TestHelperApplicationCreate) => {
 
     const application = (await context.query.Application.createOne({
       data,
-      query: 'id referenceNumber',
+      query: 'id referenceNumber updatedAt',
     })) as Application;
 
     return application;
