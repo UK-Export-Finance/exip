@@ -231,7 +231,6 @@ const post = async (req: Request, res: Response) => {
           ORIGINAL_URL: req.originalUrl,
         }),
         ...generatePageVariables(policyType),
-        BACK_LINK: req.headers.referer,
         isSinglePolicyType: isSinglePolicyType(policyType),
         isMultiPolicyType: isMultiPolicyType(policyType),
         currencies: mappedCurrencies,
