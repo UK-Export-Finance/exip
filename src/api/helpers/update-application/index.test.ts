@@ -5,6 +5,7 @@ import updateApplication from '.';
 import baseConfig from '../../keystone';
 import { Application } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
+import applications from '../../test-helpers/applications';
 
 const dbUrl = String(process.env.DATABASE_URL);
 const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
@@ -18,10 +19,9 @@ describe('helpers/update-application', () => {
 
   beforeEach(async () => {
     // create a new application
-    application = (await context.query.Application.createOne({
-      data: {},
-      query: 'id updatedAt',
-    })) as Application;
+    const applicationData = {};
+
+    application = (await applications.create({ context, data: applicationData })) as Application;
   });
 
   it('should update the updatedAt timestamp', async () => {

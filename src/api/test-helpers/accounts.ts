@@ -1,4 +1,5 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
+import authRetries from './auth-retries';
 import { mockAccount } from '../test-mocks';
 import { Account, TestHelperAccountCreate } from '../types';
 
@@ -11,6 +12,8 @@ import { Account, TestHelperAccountCreate } from '../types';
 const deleteAll = async (context: Context) => {
   try {
     console.info('Getting and deleting accounts (test helpers)');
+
+    await authRetries.deleteAll(context);
 
     const accounts = await context.query.Account.findMany();
 
