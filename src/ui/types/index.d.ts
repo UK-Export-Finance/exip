@@ -38,11 +38,6 @@ import {
 } from './submitted-data';
 import { SummaryListItem, SummaryListItemData, SummaryListItemDataInput, SummaryListItemDataInputField, SummaryListItemDataFieldSummary } from './summary-list';
 import { TaskList, TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask } from './task-list';
-import {
-  TellUsAboutPolicyPageVariablesContentStrings,
-  TellUsAboutPolicyPageVariablesFields,
-  TellUsAboutPolicyPageVariables,
-} from './pages/tell-us-about-your-policy';
 import { ValidationErrors } from './validation-errors';
 import {
   CorePageVariablesInitialInput,
@@ -124,8 +119,5 @@ export {
   TaskListDataGroup,
   TaskListGroup,
   TaskListTask,
-  TellUsAboutPolicyPageVariablesContentStrings,
-  TellUsAboutPolicyPageVariablesFields,
-  TellUsAboutPolicyPageVariables,
   ValidationErrors,
 };
