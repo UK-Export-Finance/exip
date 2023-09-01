@@ -19,7 +19,7 @@ context('Insurance - Account - Sign in - I want to go straight to my application
   describe('when there are no applications', () => {
     it('should redirect to the dashboard', () => {
       cy.completeSignInAndGoToDashboard({});
-      // signs out for next
+      // sign out for next test
       header.navigation.signOut().click();
     });
   });
@@ -28,7 +28,7 @@ context('Insurance - Account - Sign in - I want to go straight to my application
     it('should redirect to the application directly', () => {
       // creates new application and account
       cy.completeSignInAndGoToApplication().then((referenceNumber) => {
-        // sign out from application
+        // sign out for next test
         header.navigation.signOut().click();
 
         // sign in again and complete OTP (without creating account)
@@ -52,7 +52,7 @@ context('Insurance - Account - Sign in - I want to go straight to my application
         // complete eligibility questions
         cy.submitInsuranceEligibilityAnswersHappyPath();
 
-        // signs out from application
+        // sign out for next test
         header.navigation.signOut().click();
 
         // sign in again and check it redirects to dashboard
