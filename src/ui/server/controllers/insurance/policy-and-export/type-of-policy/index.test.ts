@@ -182,10 +182,22 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         };
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+      it('should render template with validation errors from constructPayload function', async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        const expectedVariables = {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(refNumber),
+          userName: getUserNameFromSession(req.session.user),
+          validationErrors: generateValidationErrors(payload),
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });
     });
 

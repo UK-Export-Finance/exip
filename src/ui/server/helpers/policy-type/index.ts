@@ -16,4 +16,12 @@ const isSinglePolicyType = (policyType: string) => policyType === FIELD_VALUES.P
  */
 const isMultiPolicyType = (policyType: string) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
-export { isSinglePolicyType, isMultiPolicyType };
+/**
+ * isValidPolicyType
+ * Check if a policy type is 'Single contract policy' or 'Multiple contract policy'
+ * @param {String} Policy type
+ * @returns {Boolean}
+ */
+const isValidPolicyType = (policyType: string) => isSinglePolicyType(policyType) || isMultiPolicyType(policyType);
+
+export { isSinglePolicyType, isMultiPolicyType, isValidPolicyType };

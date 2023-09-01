@@ -16,11 +16,25 @@ describe('controllers/quote/policy-type/validation/rules/policy-type', () => {
     errorList: {},
   };
 
-  it('should return the result of emptyFieldValidation', () => {
-    const result = rule(mockBody, mockErrors);
+  describe('when a value is not a valid policy type', () => {
+    it('should return the result of emptyFieldValidation', () => {
+      mockBody[FIELD_ID] = 'random-string';
 
-    const expected = emptyFieldValidation(mockBody, FIELD_ID, ERROR_MESSAGE, mockErrors);
+      const result = rule(mockBody, mockErrors);
 
-    expect(result).toEqual(expected);
+      const expected = emptyFieldValidation(mockBody, FIELD_ID, ERROR_MESSAGE, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when a value is not provided', () => {
+    it('should return the result of emptyFieldValidation', () => {
+      const result = rule(mockBody, mockErrors);
+
+      const expected = emptyFieldValidation(mockBody, FIELD_ID, ERROR_MESSAGE, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
   });
 });
