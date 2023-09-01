@@ -11,9 +11,9 @@ const baseUrl = Cypress.config('baseUrl');
  * 1) Complete and submit the "account sign in" form
  * 2) Add a new OTP/security code and get it directly from the API
  * 3) Complete and submit the "enter security code" form
- * 4) Check we are on the dashbooard or all sections if one application
- * @param {String} referenceNumber
- * @return {Boolean} shouldRedirectToApplication - if should redirect to application or dashboard
+ * 4) Check url - if on the dashboard or application all sections (if only one application, then should go directly to application)
+ * @param {Number} referenceNumber
+ * @param {Boolean} shouldRedirectToApplication - if should redirect to application or dashboard
  */
 const completeSignInAndOTP = ({ referenceNumber, shouldRedirectToApplication = false }) => {
   // sign in to the account. Behind the scenes, an application is created at this point.

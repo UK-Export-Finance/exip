@@ -41,7 +41,7 @@ context('Insurance - Account - Sign in - I want to go straight to my application
   });
 
   describe('when there is more than one application', () => {
-    it('should redirect to the application directly', () => {
+    it('should redirect to the dashboard', () => {
       // creates account and application
       cy.completeSignInAndGoToApplication().then(() => {
         // go to all applications for user

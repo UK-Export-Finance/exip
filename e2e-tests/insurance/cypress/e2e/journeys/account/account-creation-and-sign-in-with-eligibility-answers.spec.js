@@ -60,7 +60,7 @@ context('Insurance - Account - When answering eligibility answers, creating an a
       });
     });
 
-    it(`should redirect to ${dashboardUrl} and have one application in the table`, () => {
+    it('should redirect to the application and when navigating back to dashboard, it should have one application in the table', () => {
       cy.getReferenceNumber().then((refNumber) => {
         const expectedUrl = `${baseUrl}${ROOT}/${refNumber}${ALL_SECTIONS}`;
         cy.assertUrl(expectedUrl);
