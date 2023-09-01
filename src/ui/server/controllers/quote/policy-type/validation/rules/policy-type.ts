@@ -18,7 +18,7 @@ const policyTypeRules = (formBody: RequestBody, errors: object) => {
   const value = formBody[FIELD_ID];
 
   if (!isValidPolicyType(value)) {
-    return emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE, errors);
+    return emptyFieldValidation({}, FIELD_ID, ERROR_MESSAGE, errors);
   }
 
   return emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE, errors);

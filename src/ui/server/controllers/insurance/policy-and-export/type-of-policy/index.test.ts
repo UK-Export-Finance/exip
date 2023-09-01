@@ -163,18 +163,6 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
       });
     });
 
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
-
     describe('when the submitted answer is not a recognised policy type', () => {
       beforeEach(() => {
         req.body = {
@@ -198,6 +186,18 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
+    });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        res.locals = { csrfToken: '1234' };
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
 
