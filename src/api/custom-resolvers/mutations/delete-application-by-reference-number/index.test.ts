@@ -5,7 +5,7 @@ import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
 const context = getKeystoneContext();
 
-describe('custom-resolvers/delete-application-by-reference-number', () => {
+describe('custom-resolvers/mutations/delete-application-by-reference-number', () => {
   let application: Application;
   let result: SuccessResponse;
 
