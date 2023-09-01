@@ -7,6 +7,7 @@ import { createFullApplication } from '../../../test-helpers';
 import { mockSendEmailResponse } from '../../../test-mocks';
 import { Application, SubmitApplicationVariables, SuccessResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
+import applications from '../../../test-helpers/applications';
 
 const context = getKeystoneContext();
 
@@ -102,10 +103,9 @@ describe('custom-resolvers/submit-application', () => {
   describe('when an application is not found', () => {
     it('should return success=false', async () => {
       // create a new application so we can get a valid ID format
-      const newApplication = (await context.query.Application.createOne({
-        query: 'id',
-        data: {},
-      })) as Application;
+      const applicationData = {};
+
+      const newApplication = (await applications.create({ context, data: applicationData })) as Application;
 
       variables = {
         applicationId: newApplication.id,

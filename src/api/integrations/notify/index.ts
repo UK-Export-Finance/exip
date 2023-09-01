@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 // @ts-ignore
 import { NotifyClient } from 'notifications-node-client';
-import { NotifyPeronsalisation } from '../../types';
+import { NotifyPersonalisation } from '../../types';
 
 dotenv.config();
 
@@ -22,7 +22,7 @@ const notify = {
     try {
       console.info('Calling Notify API. templateId: %s', templateId);
 
-      const personalisation = variables as NotifyPeronsalisation;
+      const personalisation = variables as NotifyPersonalisation;
 
       if (file) {
         personalisation.linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true });

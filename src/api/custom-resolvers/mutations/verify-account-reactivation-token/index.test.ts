@@ -3,6 +3,7 @@ import verifyAccountReactivationToken from '.';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
 import { ACCOUNT, FIELD_IDS, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
 import accounts from '../../../test-helpers/accounts';
+import authRetries from '../../../test-helpers/auth-retries';
 import { mockAccount } from '../../../test-mocks';
 import { Account, SuccessResponse, VerifyAccountReactivationTokenVariables } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
@@ -39,13 +40,6 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
   beforeEach(async () => {
     await accounts.deleteAll(context);
 
-    // wipe the AuthenticationRetry table so we have a clean slate.
-    let retries = await context.query.AuthenticationRetry.findMany();
-
-    await context.query.AuthenticationRetry.deleteMany({
-      where: retries,
-    });
-
     /**
      * Create an account that:
      * - is unverified
@@ -76,7 +70,7 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
     await createAuthenticationRetryEntry(context, account.id);
 
     // get the latest retries to ensure we have a retry entry
-    retries = await context.query.AuthenticationRetry.findMany();
+    const retries = await authRetries.findAll(context);
 
     expect(retries.length).toEqual(1);
 
@@ -113,7 +107,7 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
   });
 
   test('should remove all entries for the account in the AuthenticationRetry table', async () => {
-    const retries = await context.query.AuthenticationRetry.findMany();
+    const retries = await authRetries.findAll(context);
 
     expect(retries.length).toEqual(0);
   });
