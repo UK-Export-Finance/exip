@@ -34,6 +34,7 @@ insuranceRouter.get(INSURANCE_ROUTES.APPLY_OFFLINE, applyOfflineGet);
 insuranceRouter.get(INSURANCE_ROUTES.SPEAK_TO_UKEF_EFM, speakToUkefEfmGet);
 
 insuranceRouter.get(INSURANCE_ROUTES.DASHBOARD, dashboardGet);
+insuranceRouter.get(`${INSURANCE_ROUTES.DASHBOARD}/page/:pageNumber`, dashboardGet);
 
 insuranceRouter.get(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.ALL_SECTIONS}`, allSectionsGet);
 

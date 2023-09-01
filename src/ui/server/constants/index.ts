@@ -19,3 +19,5 @@ export const INSURANCE = 'Insurance';
 export const QUOTE = 'Quote';
 export const SERVICE_NAME = 'EXIP';
 export const SECURE_OPTION_COOKIE = '__Secure-optionalCookies';
+
+export const MAX_APPLICATIONS_PER_PAGE = 15;

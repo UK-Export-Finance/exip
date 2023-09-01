@@ -20,46 +20,10 @@ describe('helpers/create-authentication-entry', () => {
   let result;
 
   beforeAll(async () => {
-    // wipe the table so we have a clean slate.
-    const entries = await context.query.Authentication.findMany();
-
-    await context.query.Authentication.deleteMany({
-      where: entries,
-    });
-
-    expect(entries.length).toEqual(0);
-
     account = await accounts.create({ context });
-
-    const authEntry = {
-      account: {
-        connect: {
-          id: account.id,
-        },
-      },
-      salt: mockAccount.salt,
-      hash: mockAccount.hash,
-    };
-
-    result = await createAuthenticationEntry(context, authEntry);
   });
 
-  afterAll(async () => {
-    // wipe the table so we have a clean slate.
-    const entries = await context.query.Authentication.findMany();
-
-    await context.query.Authentication.deleteMany({
-      where: entries,
-    });
-  });
-
-  test('it should create a new entry', async () => {
-    const entries = await context.query.Authentication.findMany();
-
-    expect(entries.length).toEqual(1);
-  });
-
-  test('it should return the entry with a timestamp', async () => {
+  test('it should create a new entry and return the entry with a timestamp', async () => {
     const authEntry = {
       account: {
         connect: {

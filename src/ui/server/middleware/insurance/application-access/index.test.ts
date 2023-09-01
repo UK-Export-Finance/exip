@@ -9,6 +9,7 @@ const {
   ELIGIBILITY,
   ACCOUNT,
   DASHBOARD,
+  DASHBOARD_PAGE,
   NO_ACCESS_TO_APPLICATION,
   ALL_SECTIONS,
   NO_ACCESS_APPLICATION_SUBMITTED,
@@ -42,6 +43,7 @@ describe('middleware/insurance/application-access', () => {
         ...Object.values(ACCOUNT.SUSPENDED),
         ACCOUNT.REACTIVATED_ROOT,
         DASHBOARD,
+        DASHBOARD_PAGE,
         NO_ACCESS_TO_APPLICATION,
         NO_ACCESS_APPLICATION_SUBMITTED,
         COOKIES,
@@ -62,6 +64,19 @@ describe('middleware/insurance/application-access', () => {
       await applicationAccessMiddleware(req, res, next);
 
       expect(nextSpy).toHaveBeenCalledTimes(1);
+    });
+
+    describe(`when the route includes ${DASHBOARD_PAGE}`, () => {
+      beforeEach(() => {
+        req.baseUrl = `${DASHBOARD_PAGE}/10`;
+        next = nextSpy;
+      });
+
+      it('should call next()', async () => {
+        await applicationAccessMiddleware(req, res, next);
+
+        expect(nextSpy).toHaveBeenCalledTimes(1);
+      });
     });
   });
 

@@ -3,6 +3,7 @@ import customerServiceContactDetails from './customerServiceContactDetails';
 import footer from './footer';
 import header from './header';
 import insurancePartials from './insurance';
+import pagination from './pagination';
 import phaseBanner from './phaseBanner';
 import ukGoodsOrServicesCalculateDescription from './ukGoodsOrServicesCalculateDescription';
 import ukGoodsOrServicesDescription from './ukGoodsAndServicesDescription';
@@ -19,8 +20,9 @@ const partials = {
   header,
   headingCaption: () => cy.get('[data-cy="heading-caption'),
   insurancePartials,
-  skipLink: () => cy.get('[data-cy="skip-link"]'),
+  pagination,
   phaseBanner,
+  skipLink: () => cy.get('[data-cy="skip-link"]'),
   ukGoodsOrServicesDescription,
   yourBusinessSummaryList,
 };
