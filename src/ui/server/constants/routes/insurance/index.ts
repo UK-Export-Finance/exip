@@ -36,6 +36,7 @@ export const INSURANCE_ROUTES = {
   NO_ACCESS_APPLICATION_SUBMITTED: `${INSURANCE_ROOT}/no-access-application-submitted`,
   ACCOUNT,
   DASHBOARD: `${INSURANCE_ROOT}/dashboard`,
+  DASHBOARD_PAGE: `${INSURANCE_ROOT}/dashboard/page`,
   ALL_SECTIONS: '/all-sections',
   POLICY_AND_EXPORTS,
   EXPORTER_BUSINESS,

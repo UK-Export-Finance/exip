@@ -9,6 +9,7 @@ Cypress.Commands.add('login', require('./login'));
 Cypress.Commands.add('checkPhaseBanner', require('./check-phase-banner'));
 Cypress.Commands.add('navigateToUrl', require('./navigate-to-url'));
 Cypress.Commands.add('assertUrl', require('./assert-url'));
+Cypress.Commands.add('clickLinkAndAssertUrl', require('./click-link-and-assert-url'));
 Cypress.Commands.add('clickBackLink', require('./click-back-link'));
 
 Cypress.Commands.add('corePageChecks', require('./core-page-checks'));
@@ -60,3 +61,11 @@ Cypress.Commands.add('keyboardInput', require('./keyboard-input'));
 
 Cypress.Commands.add('submitAndAssertRadioErrors', require('./submit-and-assert-radio-errors'));
 Cypress.Commands.add('submitAndAssertFieldErrors', require('./submit-and-assert-field-errors'));
+
+Cypress.Commands.add('assertPaginationDoesNotExist', require('./pagination/assert-pagination-does-not-exist'));
+Cypress.Commands.add('assertPaginationItemLink', require('./pagination/assert-pagination-item-link'));
+Cypress.Commands.add('assertPaginationItemEllipsis', require('./pagination/assert-pagination-item-ellipsis'));
+Cypress.Commands.add('assertPaginationNextLink', require('./pagination/assert-pagination-next-link'));
+Cypress.Commands.add('assertPaginationPreviousLink', require('./pagination/assert-pagination-previous-link'));
+Cypress.Commands.add('assertActivePaginationLink', require('./pagination/assert-active-pagination-link'));
+Cypress.Commands.add('assertPaginationState', require('./pagination/assert-pagination-state'));

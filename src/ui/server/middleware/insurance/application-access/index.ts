@@ -1,7 +1,8 @@
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { Next, Request, Response } from '../../../../types';
 
-const { PAGE_NOT_FOUND, ELIGIBILITY, ACCOUNT, DASHBOARD, NO_ACCESS_TO_APPLICATION, NO_ACCESS_APPLICATION_SUBMITTED, COOKIES, COOKIES_SAVED } = INSURANCE_ROUTES;
+const { PAGE_NOT_FOUND, ELIGIBILITY, ACCOUNT, NO_ACCESS_TO_APPLICATION, NO_ACCESS_APPLICATION_SUBMITTED, COOKIES, COOKIES_SAVED } = INSURANCE_ROUTES;
+const { DASHBOARD, DASHBOARD_PAGE } = INSURANCE_ROUTES;
 
 export const IRRELEVANT_ROUTES = [
   PAGE_NOT_FOUND,
@@ -12,6 +13,7 @@ export const IRRELEVANT_ROUTES = [
   ...Object.values(ACCOUNT.SUSPENDED),
   ACCOUNT.REACTIVATED_ROOT,
   DASHBOARD,
+  DASHBOARD_PAGE,
   NO_ACCESS_TO_APPLICATION,
   NO_ACCESS_APPLICATION_SUBMITTED,
   COOKIES,
@@ -21,7 +23,12 @@ export const IRRELEVANT_ROUTES = [
 export const applicationAccessMiddleware = async (req: Request, res: Response, next: Next) => {
   const { baseUrl: url } = req;
 
-  const isIrrelevantRoute = (route: string) => IRRELEVANT_ROUTES.includes(route);
+  /**
+   * No need to check individual application access if:
+   * 1) The route is in IRRELEVANT_ROUTES.
+   * 2) The route contains DASHBOARD_PAGE.
+   */
+  const isIrrelevantRoute = (route: string) => IRRELEVANT_ROUTES.includes(route) || url.includes(DASHBOARD_PAGE);
 
   if (isIrrelevantRoute(url)) {
     return next();

@@ -48,7 +48,7 @@ context('Insurance - Name fields - Header and page fields should render special 
       ...mockAccountSpecialCharacters,
       nameFirst: mockAccountSpecialCharacters[FIRST_NAME],
       nameLast: mockAccountSpecialCharacters[LAST_NAME],
-    }).then((verifyAccountUrl) => {
+    }).then(({ verifyAccountUrl }) => {
       // verify the account by navigating to the "verify account" page
       cy.navigateToUrl(verifyAccountUrl);
 

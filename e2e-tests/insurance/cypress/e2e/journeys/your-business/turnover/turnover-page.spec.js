@@ -36,7 +36,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
   let brokerUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((refNumber) => {
+    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();

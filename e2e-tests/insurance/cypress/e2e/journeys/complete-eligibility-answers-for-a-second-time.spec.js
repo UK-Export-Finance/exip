@@ -28,7 +28,7 @@ context('Insurance - Eligibility - start and complete for a second time after cr
   before(() => {
     cy.deleteAccount();
 
-    cy.completeSignInAndGoToApplication().then((refNumber) => {
+    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       partials.header.navigation.applications().click();

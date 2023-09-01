@@ -5,6 +5,7 @@ import getAuthenticationRetriesByAccountId from '.';
 import createAuthenticationRetryEntry from '../create-authentication-retry-entry';
 import baseConfig from '../../keystone';
 import accounts from '../../test-helpers/accounts';
+import authRetries from '../../test-helpers/auth-retries';
 import { mockAccount } from '../../test-mocks';
 import { Account } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
@@ -21,11 +22,7 @@ describe('helpers/get-authentication-retries-by-account-id', () => {
 
   beforeEach(async () => {
     // wipe the table so we have a clean slate.
-    const authRetries = await context.query.AuthenticationRetry.findMany();
-
-    await context.query.AuthenticationRetry.deleteMany({
-      where: authRetries,
-    });
+    await authRetries.deleteAll(context);
 
     const unblockedAccount = {
       ...mockAccount,
