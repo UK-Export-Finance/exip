@@ -3,6 +3,7 @@ import verifyAccountEmailAddress from '.';
 import { ACCOUNT, FIELD_IDS, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
 import encryptPassword from '../../../helpers/encrypt-password';
 import accounts from '../../../test-helpers/accounts';
+import authRetries from '../../../test-helpers/auth-retries';
 import { mockAccount } from '../../../test-mocks';
 import { Account, VerifyEmailAddressResponse, VerifyEmailAddressVariables } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
@@ -38,6 +39,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
   });
 
   beforeEach(async () => {
+    await authRetries.deleteAll(context);
     await accounts.deleteAll(context);
 
     /**
@@ -96,7 +98,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
   });
 
   test('should remove all entries for the account in the AuthenticationRetry table', async () => {
-    const retries = await context.query.AuthenticationRetry.findMany();
+    const retries = await authRetries.findAll(context);
 
     expect(retries.length).toEqual(0);
   });

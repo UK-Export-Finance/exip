@@ -1,4 +1,4 @@
-import { AccountUpdateInput, CompanyUpdateInput, Context } from '.keystone/types'; // eslint-disable-line
+import { ApplicationCreateInput, AccountUpdateInput, CompanyUpdateInput, Context } from '.keystone/types'; // eslint-disable-line
 
 interface SuccessResponse {
   success: boolean;
@@ -251,7 +251,7 @@ interface Currency {
   isoCode: string;
 }
 
-interface NotifyPeronsalisation {
+interface NotifyPersonalisation {
   linkToFile?: string;
 }
 
@@ -434,15 +434,18 @@ interface IndustrySector {
   ukefIndustryName: string;
 }
 
-interface TestHelperAccountCreate {
+interface TestHelperCreate {
   context: Context;
+  companyId?: string;
+}
+
+interface TestHelperAccountCreate extends TestHelperCreate {
   data?: Account;
   deleteAccounts?: boolean;
 }
 
-interface TestHelperCreate {
-  context: Context;
-  companyId?: string;
+interface TestHelperApplicationCreate extends TestHelperCreate {
+  data: ApplicationCreateInput;
 }
 
 interface XLSXTitleRowIndexes {
@@ -506,7 +509,7 @@ export {
   GetCompaniesHouseInformationVariables,
   GetAccountPasswordResetTokenVariables,
   AccountPasswordResetTokenResponse,
-  NotifyPeronsalisation,
+  NotifyPersonalisation,
   InsuranceFeedbackVariables,
   IndustrySector,
   SicCode,
@@ -514,6 +517,7 @@ export {
   SubmitApplicationVariables,
   SuccessResponse,
   TestHelperAccountCreate,
+  TestHelperApplicationCreate,
   TestHelperCreate,
   UpdateCompanyAndCompanyAddressVariables,
   XLSXTitleRowIndexes,

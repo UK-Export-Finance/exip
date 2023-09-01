@@ -4,7 +4,8 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import deleteAuthenticationRetries from '.';
 import baseConfig from '../../keystone';
 import accounts from '../../test-helpers/accounts';
-import { Account, ApplicationRelationship } from '../../types';
+import authRetries from '../../test-helpers/auth-retries';
+import { Account } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
 const dbUrl = String(process.env.DATABASE_URL);
@@ -16,7 +17,6 @@ const context = getContext(config, PrismaModule) as Context;
 
 describe('helpers/delete-authentication-retries', () => {
   let account: Account;
-  let retries: Array<ApplicationRelationship>;
 
   afterAll(() => {
     jest.resetAllMocks();
@@ -24,11 +24,7 @@ describe('helpers/delete-authentication-retries', () => {
 
   beforeAll(async () => {
     // wipe the AuthenticationRetry table so we have a clean slate.
-    retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
-
-    await context.query.AuthenticationRetry.deleteMany({
-      where: retries,
-    });
+    await authRetries.deleteAll(context);
 
     account = await accounts.create({ context });
 
@@ -49,7 +45,7 @@ describe('helpers/delete-authentication-retries', () => {
 
   test(`it should wipe the account's retry entires`, async () => {
     // check initial retries count
-    retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+    let retries = await authRetries.findAll(context);
 
     expect(retries.length).toEqual(2);
 
@@ -57,7 +53,7 @@ describe('helpers/delete-authentication-retries', () => {
     await deleteAuthenticationRetries(context, account.id);
 
     // get the latest retries to check they have been deleted
-    retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+    retries = await authRetries.findAll(context);
 
     expect(retries.length).toEqual(0);
   });

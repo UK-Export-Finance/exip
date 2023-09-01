@@ -4,6 +4,7 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import createAuthenticationRetryEntry from '.';
 import baseConfig from '../../keystone';
 import accounts from '../../test-helpers/accounts';
+import authRetries from '../../test-helpers/auth-retries';
 import { Account } from '../../types';
 import { Context } from '.keystone/types'; // eslint-disable-line
 
@@ -21,19 +22,11 @@ describe('helpers/create-authentication-retry-entry', () => {
     account = await accounts.create({ context });
 
     // wipe the AuthenticationRetry table so we have a clean slate.
-    const retries = await context.query.AuthenticationRetry.findMany();
-
-    await context.query.AuthenticationRetry.deleteMany({
-      where: retries,
-    });
+    await authRetries.deleteAll(context);
   });
 
   afterAll(async () => {
-    const retries = await context.query.AuthenticationRetry.findMany();
-
-    await context.query.AuthenticationRetry.deleteMany({
-      where: retries,
-    });
+    await authRetries.deleteAll(context);
   });
 
   it('should create a new AuthenticationRetry entry associated with the provided account ID', async () => {

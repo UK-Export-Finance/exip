@@ -226,18 +226,83 @@ describe('emails/send-email-application-submitted', () => {
   });
 
   describe('error handling', () => {
-    beforeEach(() => {
-      sendEmail.application.submittedEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
+    describe('when sendEmail.application.submittedEmail returns success=false', () => {
+      beforeEach(() => {
+        sendEmail.application.submittedEmail = jest.fn(() =>
+          Promise.resolve({
+            ...mockSendEmailResponse,
+            success: false,
+          }),
+        );
+      });
+
+      test('should throw an error', async () => {
+        try {
+          await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
+        } catch (err) {
+          const expected = new Error('Sending application submitted emails Error: Sending application submitted email to owner/account');
+
+          expect(err).toEqual(expected);
+        }
+      });
     });
 
-    test('should throw an error', async () => {
-      try {
-        await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
-      } catch (err) {
-        const expected = new Error(`Sending application submitted emails ${mockSendEmailResponse}`);
+    describe('when sendEmail.application.underwritingTeam returns success=false', () => {
+      beforeEach(() => {
+        sendEmail.application.underwritingTeam = jest.fn(() =>
+          Promise.resolve({
+            ...mockSendEmailResponse,
+            success: false,
+          }),
+        );
+      });
 
-        expect(err).toEqual(expected);
-      }
+      test('should throw an error', async () => {
+        try {
+          await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
+        } catch (err) {
+          const expected = new Error('Sending application submitted emails Error: Sending application submitted email to underwriting team');
+
+          expect(err).toEqual(expected);
+        }
+      });
+    });
+
+    describe('when sendEmail.documentsEmail returns success=false', () => {
+      beforeEach(() => {
+        sendEmail.documentsEmail = jest.fn(() =>
+          Promise.resolve({
+            ...mockSendEmailResponse,
+            success: false,
+          }),
+        );
+      });
+
+      test('should throw an error', async () => {
+        try {
+          await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
+        } catch (err) {
+          const expected = new Error(`Sending application submitted emails Error: Sending application documents emails ${mockSendEmailResponse}`);
+
+          expect(err).toEqual(expected);
+        }
+      });
+    });
+
+    describe('when sendEmail.application.submittedEmail fails', () => {
+      beforeEach(() => {
+        sendEmail.application.submittedEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
+      });
+
+      test('should throw an error', async () => {
+        try {
+          await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
+        } catch (err) {
+          const expected = new Error(`Sending application submitted emails ${mockSendEmailResponse}`);
+
+          expect(err).toEqual(expected);
+        }
+      });
     });
   });
 });

@@ -4,8 +4,9 @@ import createAuthenticationRetryEntry from '../../../helpers/create-authenticati
 import { ACCOUNT, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
 import accounts from '../../../test-helpers/accounts';
 import { mockAccount } from '../../../test-mocks';
-import { Account, AccountPasswordResetVariables, ApplicationRelationship, SuccessResponse } from '../../../types';
+import { Account, AccountPasswordResetVariables, SuccessResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
+import authRetries from '../../../test-helpers/auth-retries';
 
 const context = getKeystoneContext();
 
@@ -22,28 +23,16 @@ describe('custom-resolvers/account-password-reset', () => {
   let account: Account;
   let result: SuccessResponse;
   let variables: AccountPasswordResetVariables;
-  let authRetries;
 
   beforeEach(async () => {
     await accounts.deleteAll(context);
 
-    // wipe the AuthenticationRetry table so we have a clean slate.
-    authRetries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
-
-    await context.query.AuthenticationRetry.deleteMany({
-      where: authRetries,
-    });
-
     // wipe the Authentication table so we have a clean slate.
-    let authEntries = await context.query.Authentication.findMany();
+    const authEntries = await context.query.Authentication.findMany();
 
     await context.query.Authentication.deleteMany({
       where: authEntries,
     });
-
-    authEntries = await context.query.Authentication.findMany();
-
-    expect(authEntries.length).toEqual(0);
 
     account = await accounts.create({ context });
 
@@ -51,9 +40,9 @@ describe('custom-resolvers/account-password-reset', () => {
     await createAuthenticationRetryEntry(context, account.id);
 
     // get the latest AuthenticationRetry entries
-    authRetries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+    const retries = await authRetries.findAll(context);
 
-    expect(authRetries.length).toEqual(1);
+    expect(retries.length).toEqual(1);
 
     variables = {
       token: String(mockAccount.passwordResetHash),
@@ -68,11 +57,7 @@ describe('custom-resolvers/account-password-reset', () => {
   afterAll(async () => {
     jest.resetAllMocks();
 
-    const entries = await context.query.Authentication.findMany();
-
-    await context.query.Authentication.deleteMany({
-      where: entries,
-    });
+    await authRetries.deleteAll(context);
   });
 
   test('it should return success=true', () => {
@@ -85,9 +70,9 @@ describe('custom-resolvers/account-password-reset', () => {
 
   test(`it should wipe the account's retry entires`, async () => {
     // get the latest retries
-    authRetries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+    const retries = await authRetries.findAll(context);
 
-    expect(authRetries.length).toEqual(0);
+    expect(retries.length).toEqual(0);
   });
 
   test('it should add an authentication entry', async () => {
@@ -121,6 +106,7 @@ describe('custom-resolvers/account-password-reset', () => {
         data: {
           isBlocked: true,
         },
+        query: 'id isBlocked',
       })) as Account;
 
       result = await accountPasswordReset({}, variables, context);
@@ -201,7 +187,6 @@ describe('custom-resolvers/account-password-reset', () => {
   describe('when the provided password matches the existing account password', () => {
     test('it should return success=false and hasBeenUsedBefore=true', async () => {
       // update the account to have default test password (MOCK_ACCOUNT_PASSWORD)
-
       await context.query.Account.updateOne({
         where: { id: account.id },
         data: mockAccount,

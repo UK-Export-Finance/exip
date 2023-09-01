@@ -4,8 +4,8 @@ import { CompaniesHouseAPIResponse } from '../../types';
 
 dotenv.config();
 
-const username: any = process.env.COMPANIES_HOUSE_API_KEY;
-const companiesHouseURL: any = process.env.COMPANIES_HOUSE_API_URL;
+const username = String(process.env.COMPANIES_HOUSE_API_KEY);
+const companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
 
 /**
  * companiesHouse
@@ -34,8 +34,8 @@ const companiesHouse = {
       }
 
       return {
-        data: response.data,
         success: true,
+        data: response.data,
       };
     } catch (err) {
       console.error('Error calling Companies House API %O', err);

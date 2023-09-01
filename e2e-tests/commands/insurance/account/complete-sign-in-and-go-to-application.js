@@ -16,10 +16,10 @@ const {
  */
 const completeSignInAndGoToApplication = (email = mockAccount[EMAIL]) => {
   // complete sign in and go to dashboard
-  completeInsuranceEligibilitySignInAndGoToDashboard(email);
-
-  // get the reference number and return for consumption in the test
-  cy.getReferenceNumber().then((referenceNumber) => referenceNumber);
+  completeInsuranceEligibilitySignInAndGoToDashboard(email).then(({ accountId }) => {
+    // get the reference number and return for consumption in the test
+    cy.getReferenceNumber().then((referenceNumber) => ({ accountId, referenceNumber }));
+  });
 };
 
 export default completeSignInAndGoToApplication;

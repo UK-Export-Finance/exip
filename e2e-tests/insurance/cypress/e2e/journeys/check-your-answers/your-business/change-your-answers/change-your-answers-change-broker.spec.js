@@ -53,7 +53,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((refNumber) => {
+    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ usingBroker: true });

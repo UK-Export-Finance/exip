@@ -47,7 +47,7 @@ context('Insurance - Check your answers - Business contact - Your business - Sum
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((refNumber) => {
+    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({});

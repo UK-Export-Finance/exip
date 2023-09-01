@@ -5,7 +5,8 @@ import getAccountById from '../../../helpers/get-account-by-id';
 import generate from '../../../helpers/generate-otp';
 import generateOTPAndUpdateAccount from '../../../helpers/generate-otp-and-update-account';
 import accounts from '../../../test-helpers/accounts';
-import { Account, ApplicationRelationship, VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../../../types';
+import authRetries from '../../../test-helpers/auth-retries';
+import { Account, VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
 const context = getKeystoneContext();
@@ -19,7 +20,6 @@ const {
 describe('custom-resolvers/verify-account-sign-in-code', () => {
   let account: Account;
   let updatedAccount: Account;
-  let retries: Array<ApplicationRelationship>;
   let variables: VerifyAccountSignInCodeVariables;
   let result: VerifyAccountSignInCodeResponse;
 
@@ -36,12 +36,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
   beforeEach(async () => {
     account = await accounts.create({ context });
 
-    // wipe the AuthenticationRetry table so we have a clean slate.
-    retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
-
-    await context.query.AuthenticationRetry.deleteMany({
-      where: retries,
-    });
+    await authRetries.deleteAll(context);
 
     // generate OTP and update the account
     const { securityCode } = await generateOTPAndUpdateAccount(context, account.id);
@@ -78,8 +73,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
   });
 
   test(`it should wipe the account's retry entires`, async () => {
-    // get the latest retries
-    retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+    const retries = await authRetries.findAll(context);
 
     expect(retries.length).toEqual(0);
   });
