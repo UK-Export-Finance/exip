@@ -19,7 +19,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context.skip('Tell us about your multiple policy page - Signed in', () => {
+context('Tell us about your multiple policy page - Signed in', () => {
   const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
   before(() => {
