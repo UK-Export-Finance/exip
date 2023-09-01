@@ -19,7 +19,7 @@ context('Insurance - Check your answers - Policy and exports page - Save and bac
   let allSectionsUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((refNumber) => {
+    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({});
