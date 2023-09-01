@@ -57,7 +57,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
   let referenceNumber;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((refNumber) => {
+    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
       cy.completePrepareApplicationSinglePolicyType({});
 

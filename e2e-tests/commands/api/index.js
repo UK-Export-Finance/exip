@@ -20,6 +20,13 @@ const queryStrings = {
       }
     }
   `,
+  createApplications: () => gql`
+    mutation createApplications($data: [ApplicationCreateInput!]!) {
+      createApplications(data: $data) {
+        id
+      }
+    }
+  `,
   deleteAnAccount: () => gql`
     mutation deleteAnAccount($email: String!)  {
       deleteAnAccount(email: $email) {
@@ -79,6 +86,13 @@ const queryStrings = {
     mutation deleteApplicationByReferenceNumber($referenceNumber: Int!)  {
       deleteApplicationByReferenceNumber(referenceNumber: $referenceNumber) {
         success
+      }
+    }
+  `,
+  deleteApplications: () => gql`
+    mutation DeleteApplications($where: [ApplicationWhereUniqueInput!]!) {
+      deleteApplications(where: $where) {
+        id
       }
     }
   `,
@@ -151,6 +165,21 @@ const createAnAccount = (urlOrigin, firstName, lastName, email, password) =>
     },
     context: APOLLO_CONTEXT,
   }).then((response) => response.data.createAnAccount);
+
+/**
+  * createApplications
+  * Create multiple applications
+  * @param {Array} Array of applications
+  * @returns {Array} Created applications
+  */
+const createApplications = (applications) =>
+  apollo.query({
+    query: queryStrings.createApplications(),
+    variables: {
+      data: applications,
+    },
+    context: APOLLO_CONTEXT,
+  }).then((response) => response.data.createApplications);
 
 /**
  * getAccountByEmail
@@ -346,6 +375,30 @@ const deleteApplicationByReferenceNumber = async (referenceNumber) => {
   }
 };
 
+/**
+ * deleteApplications
+ * Delete applications by ID
+ * @param {Array} Application objects with ID
+ * @returns {Object}
+ */
+const deleteApplications = async (applications) => {
+  try {
+    const responseBody = await apollo.query({
+      query: queryStrings.deleteApplications(),
+      variables: {
+        where: applications,
+      },
+      context: APOLLO_CONTEXT,
+    }).then((response) => response.data);
+
+    return responseBody;
+  } catch (err) {
+    console.error(err);
+
+    return err;
+  }
+};
+
 const declarations = {
   /**
    * getLatestConfidentiality
@@ -427,6 +480,7 @@ const declarations = {
 
 const api = {
   createAnAccount,
+  createApplications,
   getAccountByEmail,
   updateAccount,
   deleteAnAccount,
@@ -434,6 +488,7 @@ const api = {
   getAccountPasswordResetToken,
   getApplicationByReferenceNumber,
   deleteApplicationByReferenceNumber,
+  deleteApplications,
   declarations,
 };
 

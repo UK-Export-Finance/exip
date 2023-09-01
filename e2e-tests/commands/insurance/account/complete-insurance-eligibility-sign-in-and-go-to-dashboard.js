@@ -33,7 +33,7 @@ const completeInsuranceEligibilitySignInAndGoToDashboard = (emailAddress) => {
   cy.submitInsuranceEligibilityAnswersHappyPath();
 
   // create an account
-  return cy.createAccount({ emailAddress }).then((verifyAccountUrl) => {
+  return cy.createAccount({ emailAddress }).then(({ accountId, verifyAccountUrl }) => {
     // verify the account by navigating to the "verify account" page
     cy.navigateToUrl(verifyAccountUrl);
 
@@ -49,8 +49,11 @@ const completeInsuranceEligibilitySignInAndGoToDashboard = (emailAddress) => {
 
       // assert we are on the dashboard
       const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+
       cy.assertUrl(expectedUrl);
-    });
+    }).then(() => ({
+      accountId, verifyAccountUrl,
+    }));
   });
 };
 

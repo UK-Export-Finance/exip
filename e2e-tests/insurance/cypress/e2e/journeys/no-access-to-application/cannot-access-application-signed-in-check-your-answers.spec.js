@@ -27,7 +27,7 @@ context('Insurance - no access to application page - signed in - check your answ
     cy.saveSession();
 
     // sign into an account, create an application.
-    cy.completeSignInAndGoToApplication().then((refNumber) => {
+    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
       firstApplicationReferenceNumber = refNumber;
 
       referenceNumbers = [refNumber];

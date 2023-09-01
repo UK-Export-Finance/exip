@@ -32,13 +32,13 @@ const createAccount = ({
   accountPassword = password,
 }) =>
   deleteAccount(emailAddress).then(() =>
-    api.createAnAccount(urlOrigin, nameFirst, nameLast, emailAddress, accountPassword).then((createdExporter) => createdExporter)
+    api.createAnAccount(urlOrigin, nameFirst, nameLast, emailAddress, accountPassword).then((createdAccount) => createdAccount)
       .then((createdAccount) => {
-        const { verificationHash } = createdAccount;
+        const { id: accountId, verificationHash } = createdAccount;
 
-        const url = `${urlOrigin}${VERIFY_EMAIL}?token=${verificationHash}`;
+        const verifyAccountUrl = `${urlOrigin}${VERIFY_EMAIL}?token=${verificationHash}`;
 
-        return url;
+        return { accountId, verifyAccountUrl };
       }));
 
 export default createAccount;
