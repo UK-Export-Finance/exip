@@ -158,7 +158,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
 
     let createApplicationSpy = jest.fn(() => Promise.resolve(mockCreateApplicationResponse));
 
-    let getApplicationsSpy = jest.fn(() => Promise.resolve(mockApplications));
+    let getApplicationsSpy = jest.fn(() => Promise.resolve({ applications: mockApplications, totalApplications: 3 }));
 
     const validBody = {
       [SECURITY_CODE]: '123456',
@@ -243,7 +243,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
       });
 
       it(`should redirect to ${DASHBOARD} when there are no applications for the user`, async () => {
-        getApplicationsSpy = jest.fn(() => Promise.resolve([]));
+        getApplicationsSpy = jest.fn(() => Promise.resolve({ applications: [], totalApplications: 0 }));
         api.keystone.applications.getAll = getApplicationsSpy;
         await post(req, res);
 
@@ -251,7 +251,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
       });
 
       it('should redirect to an application when there is only 1 application for the user', async () => {
-        getApplicationsSpy = jest.fn(() => Promise.resolve([mockApplications[0]]));
+        getApplicationsSpy = jest.fn(() => Promise.resolve({ applications: [mockApplications[0]], totalApplications: 1 }));
         api.keystone.applications.getAll = getApplicationsSpy;
 
         await post(req, res);
@@ -269,7 +269,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
             },
           };
 
-          api.keystone.applications.getAll = () => Promise.resolve(mockApplications);
+          api.keystone.applications.getAll = () => Promise.resolve({ applications: mockApplications, totalApplications: 3 });
         });
 
         it('should wipe req.session.submittedData.insuranceEligibility', async () => {
