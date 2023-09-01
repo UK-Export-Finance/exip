@@ -14,8 +14,7 @@ info:
   description: Export Insurance Policies
 
 servers:
-  - url: https://app-exip-api-staging-001.azurewebsites.net/api/graphql
-    description: Staging
+  - url: https://
     headers:
       - name: x-api-key
         example: ExampleKey
