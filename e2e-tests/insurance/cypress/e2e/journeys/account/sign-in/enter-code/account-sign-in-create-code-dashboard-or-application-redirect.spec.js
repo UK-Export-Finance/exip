@@ -27,7 +27,7 @@ context('Insurance - Account - Sign in - I want to go straight to my application
   describe('when there is one application', () => {
     it('should redirect to the application directly', () => {
       // creates new application and account
-      cy.completeSignInAndGoToApplication().then((referenceNumber) => {
+      cy.completeSignInAndGoToApplication().then(({ referenceNumber }) => {
         // sign out for next test
         header.navigation.signOut().click();
 

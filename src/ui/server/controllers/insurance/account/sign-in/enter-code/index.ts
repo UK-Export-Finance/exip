@@ -157,7 +157,7 @@ export const post = async (req: Request, res: Response) => {
         }
       }
 
-      const applications = await api.keystone.applications.getAll(req.session.user.id);
+      const { applications } = await api.keystone.applications.getAll(req.session.user.id);
 
       /**
        * if there is only 1 application for the user
