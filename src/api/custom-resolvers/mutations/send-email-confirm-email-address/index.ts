@@ -1,6 +1,5 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
 import confirmEmailAddressEmail from '../../../helpers/send-email-confirm-email-address';
-import { SendExporterEmailVariables } from '../../../types';
+import { Context, SendExporterEmailVariables } from '../../../types';
 
 /**
  * sendEmailConfirmEmailAddress

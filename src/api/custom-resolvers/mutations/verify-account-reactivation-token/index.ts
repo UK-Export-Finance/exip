@@ -1,9 +1,8 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
 import { isBefore } from 'date-fns';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import { FIELD_IDS } from '../../../constants';
 import deleteAuthenticationRetries from '../../../helpers/delete-authentication-retries';
-import { Account, VerifyAccountReactivationTokenVariables, VerifyAccountReactivationTokenResponse } from '../../../types';
+import { Account, Context, VerifyAccountReactivationTokenVariables, VerifyAccountReactivationTokenResponse } from '../../../types';
 
 const {
   INSURANCE: {

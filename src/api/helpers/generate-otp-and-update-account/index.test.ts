@@ -6,8 +6,7 @@ import baseConfig from '../../keystone';
 import generate from '../generate-otp';
 import accounts from '../../test-helpers/accounts';
 import { mockOTP } from '../../test-mocks';
-import { Account, AddAndGetOtpResponse } from '../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Account, AddAndGetOtpResponse, Context } from '../../types';
 
 const dbUrl = String(process.env.DATABASE_URL);
 const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };

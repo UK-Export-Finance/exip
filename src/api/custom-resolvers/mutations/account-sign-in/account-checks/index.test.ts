@@ -11,8 +11,7 @@ import sendEmail from '../../../../emails';
 import accounts from '../../../../test-helpers/accounts';
 import authRetries from '../../../../test-helpers/auth-retries';
 import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../../../test-mocks';
-import { Account, AccountSignInResponse } from '../../../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Account, AccountSignInResponse, Context } from '../../../../types';
 
 const dbUrl = String(process.env.DATABASE_URL);
 const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };

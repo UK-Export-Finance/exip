@@ -1,4 +1,3 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
 import { Application, TestHelperApplicationCreate } from '../types';
 
 /**

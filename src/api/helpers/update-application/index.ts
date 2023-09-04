@@ -1,4 +1,4 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Context } from '../../types';
 
 /**
  * timestamp

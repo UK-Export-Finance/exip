@@ -4,8 +4,7 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import getAccountById from '.';
 import baseConfig from '../../keystone';
 import accounts from '../../test-helpers/accounts';
-import { Account } from '../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Account, Context } from '../../types';
 
 const dbUrl = String(process.env.DATABASE_URL);
 const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };

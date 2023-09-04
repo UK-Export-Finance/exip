@@ -5,8 +5,7 @@ import deleteAuthenticationRetries from '.';
 import baseConfig from '../../keystone';
 import accounts from '../../test-helpers/accounts';
 import authRetries from '../../test-helpers/auth-retries';
-import { Account } from '../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Account, Context } from '../../types';
 
 const dbUrl = String(process.env.DATABASE_URL);
 const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };

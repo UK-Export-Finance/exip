@@ -4,8 +4,7 @@ import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no
 import getCountryByField from '.';
 import baseConfig from '../../keystone';
 import mockCountries from '../../test-mocks/mock-countries';
-import { Country } from '../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Context, Country } from '../../types';
 
 const dbUrl = String(process.env.DATABASE_URL);
 const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };

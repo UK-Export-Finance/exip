@@ -1,4 +1,5 @@
-import { ApplicationCreateInput, AccountUpdateInput, CompanyUpdateInput, Context } from '.keystone/types'; // eslint-disable-line
+import Context from '@keystone-6/core/types';
+import { ApplicationCreateInput, AccountUpdateInput, CompanyUpdateInput } from '.keystone/types'; // eslint-disable-line
 
 interface SuccessResponse {
   success: boolean;
@@ -501,6 +502,7 @@ export {
   CompanyResponse,
   CompaniesHouseResponse,
   CompaniesHouseAPIResponse,
+  Context,
   Country,
   Currency,
   DeleteApplicationByReferenceNumberVariables,

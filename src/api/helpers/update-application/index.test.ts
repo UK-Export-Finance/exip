@@ -3,8 +3,7 @@ import dotenv from 'dotenv';
 import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import updateApplication from '.';
 import baseConfig from '../../keystone';
-import { Application } from '../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Application, Context } from '../../types';
 import applications from '../../test-helpers/applications';
 
 const dbUrl = String(process.env.DATABASE_URL);

@@ -8,8 +8,7 @@ import getFullNameString from '../../helpers/get-full-name-string';
 import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-application-submitted-email-template-ids';
 import formatDate from '../../helpers/format-date';
 import { createFullApplication } from '../../test-helpers';
-import { Application, ApplicationSubmissionEmailVariables } from '../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Application, ApplicationSubmissionEmailVariables, Context } from '../../types';
 import { mockSendEmailResponse } from '../../test-mocks';
 
 const dbUrl = String(process.env.DATABASE_URL);

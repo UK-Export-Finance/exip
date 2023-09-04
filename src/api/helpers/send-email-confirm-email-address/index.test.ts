@@ -7,8 +7,7 @@ import getFullNameString from '../get-full-name-string';
 import sendEmail from '../../emails';
 import accounts from '../../test-helpers/accounts';
 import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../test-mocks';
-import { Account } from '../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { Account, Context } from '../../types';
 
 const dbUrl = String(process.env.DATABASE_URL);
 const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
