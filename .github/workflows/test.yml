@@ -157,7 +157,7 @@ jobs:
         run: |
           docker-compose up --build -d
           npm ci --legacy-peer-deps --prefix ./src/api
-          npm run test --prefix ./src/api --max-old-space-size=2048
+          npm run test --prefix ./src/api
 
   # 4. E2E - Insurance
   e2e-tests-insurance:
