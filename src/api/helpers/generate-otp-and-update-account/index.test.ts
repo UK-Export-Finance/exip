@@ -1,28 +1,22 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import generateOTPAndUpdateAccount from '.';
-import baseConfig from '../../keystone';
 import generate from '../generate-otp';
 import accounts from '../../test-helpers/accounts';
+import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import { mockOTP } from '../../test-mocks';
 import { Account, AddAndGetOtpResponse, Context } from '../../types';
 
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
-
 describe('helpers/generate-otp-and-update-account', () => {
+  let context: Context;
   let account: Account;
+  let result: AddAndGetOtpResponse;
 
   jest.mock('../generate-otp');
 
   generate.otp = () => mockOTP;
 
-  let result: AddAndGetOtpResponse;
+  beforeAll(async () => {
+    context = getKeystoneContext();
+  });
 
   beforeEach(async () => {
     await accounts.deleteAll(context);

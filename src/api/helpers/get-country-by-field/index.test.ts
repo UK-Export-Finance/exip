@@ -1,25 +1,20 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import getCountryByField from '.';
-import baseConfig from '../../keystone';
+import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import mockCountries from '../../test-mocks/mock-countries';
 import { Context, Country } from '../../types';
 
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
-
 describe('helpers/get-country-by-field', () => {
-  const [mockCountry] = mockCountries;
-
+  let context: Context;
   let country: Country;
+
+  const [mockCountry] = mockCountries;
 
   const field = 'isoCode';
   const value = mockCountry.isoCode;
+
+  beforeAll(async () => {
+    context = getKeystoneContext();
+  });
 
   beforeEach(async () => {
     // wipe the table so we have a clean slate.

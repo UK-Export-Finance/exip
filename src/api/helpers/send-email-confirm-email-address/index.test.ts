@@ -1,27 +1,22 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
 import confirmEmailAddressEmail from '.';
-import baseConfig from '../../keystone';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import getFullNameString from '../get-full-name-string';
 import sendEmail from '../../emails';
 import accounts from '../../test-helpers/accounts';
+import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../test-mocks';
 import { Account, Context } from '../../types';
 
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
-
 describe('helpers/send-email-confirm-email-address', () => {
+  let context: Context;
   let account: Account;
 
   jest.mock('../../emails');
 
   let sendEmailConfirmEmailAddressSpy = jest.fn();
+
+  beforeAll(async () => {
+    context = getKeystoneContext();
+  });
 
   afterAll(() => {
     jest.resetAllMocks();

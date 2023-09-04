@@ -1,26 +1,20 @@
-import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import { DATE_ONE_MINUTE_IN_THE_PAST, DATE_24_HOURS_FROM_NOW } from '../../../../constants';
 import accountChecks from '.';
-import baseConfig from '../../../../keystone';
 import confirmEmailAddressEmail from '../../../../helpers/send-email-confirm-email-address';
 import generate from '../../../../helpers/generate-otp';
 import getFullNameString from '../../../../helpers/get-full-name-string';
 import sendEmail from '../../../../emails';
 import accounts from '../../../../test-helpers/accounts';
 import authRetries from '../../../../test-helpers/auth-retries';
+import getKeystoneContext from '../../../../test-helpers/get-keystone-context';
 import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../../../test-mocks';
 import { Account, AccountSignInResponse, Context } from '../../../../types';
 
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
 dotenv.config();
 
-const context = getContext(config, PrismaModule) as Context;
-
 describe('custom-resolvers/account-sign-in/account-checks', () => {
+  let context: Context;
   let account: Account;
 
   jest.mock('../../../../emails');
@@ -38,6 +32,10 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
     email: mockAccount.email,
     password: mockPassword,
   };
+
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
 
   afterAll(() => {
     jest.resetAllMocks();

@@ -1,20 +1,15 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import updateApplication from '.';
-import baseConfig from '../../keystone';
+import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import { Application, Context } from '../../types';
 import applications from '../../test-helpers/applications';
 
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
-
 describe('helpers/update-application', () => {
+  let context: Context;
   let application: Application;
+
+  beforeAll(async () => {
+    context = getKeystoneContext();
+  });
 
   beforeEach(async () => {
     // create a new application

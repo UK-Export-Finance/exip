@@ -1,27 +1,20 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import baseConfig from '../../keystone';
 import shouldBlockAccount from '.';
 import createAuthenticationRetryEntry from '../create-authentication-retry-entry';
 import { ACCOUNT } from '../../constants';
 import accounts from '../../test-helpers/accounts';
 import authRetries from '../../test-helpers/auth-retries';
+import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import { Account, Context } from '../../types';
-
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
 
 const { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT;
 
 describe('helpers/should-block-account', () => {
+  let context: Context;
   let account: Account;
 
   beforeAll(async () => {
+    context = getKeystoneContext();
+
     await accounts.deleteAll(context);
 
     account = await accounts.create({ context });
