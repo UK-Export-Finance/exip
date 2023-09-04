@@ -9,6 +9,5 @@ module.exports = {
     'middleware/**/*.{ts,}',
     'server/generate-quote/*.{ts,}',
   ],
-  coverageProvider: 'v8',
-  testTimeout: 60000,
+  testTimeout: 60000
 };
