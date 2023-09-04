@@ -71,3 +71,8 @@ Cypress.Commands.add('assertPaginationNextLink', require('./pagination/assert-pa
 Cypress.Commands.add('assertPaginationPreviousLink', require('./pagination/assert-pagination-previous-link'));
 Cypress.Commands.add('assertActivePaginationLink', require('./pagination/assert-active-pagination-link'));
 Cypress.Commands.add('assertPaginationState', require('./pagination/assert-pagination-state'));
+
+Cypress.Commands.add('assertSummaryListRow', require('./assert-summary-list-row'));
+Cypress.Commands.add('assertSummaryListRowKey', require('./assert-summary-list-row-key'));
+Cypress.Commands.add('assertSummaryListRowChangeLink', require('./assert-summary-list-row-change-link'));
+Cypress.Commands.add('assertSummaryListRowValue', require('./assert-summary-list-row-value'));
