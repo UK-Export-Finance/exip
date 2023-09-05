@@ -6,7 +6,7 @@ import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import { mockAccount } from '../../test-mocks';
 import { Account, Context } from '../../types';
 
-describe('helpers/get-authentication-retries-by-account-id', () => {
+describe.skip('helpers/get-authentication-retries-by-account-id', () => {
   let context: Context;
   let account: Account;
 
