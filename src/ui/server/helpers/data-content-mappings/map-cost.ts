@@ -1,5 +1,5 @@
 import { FIELD_IDS } from '../../constants';
-import { isSinglePolicyType, isMultiPolicyType } from '../policy-type';
+import { isSinglePolicyType, isMultiplePolicyType } from '../policy-type';
 import formatCurrency from '../format-currency';
 import { SubmittedDataQuoteEligibility, SubmittedDataInsuranceEligibility } from '../../../types';
 
@@ -22,7 +22,7 @@ const mapCost = (answers: SubmittedDataQuoteEligibility | SubmittedDataInsurance
     };
   }
 
-  if (isMultiPolicyType(answers[POLICY_TYPE])) {
+  if (isMultiplePolicyType(answers[POLICY_TYPE])) {
     mapped = {
       [MAX_AMOUNT_OWED]: formatCurrency(answers[MAX_AMOUNT_OWED], answers[CURRENCY].isoCode, 0),
     };

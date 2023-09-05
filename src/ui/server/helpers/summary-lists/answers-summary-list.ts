@@ -1,7 +1,7 @@
 import { FIELDS, PAGES } from '../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../constants';
 import fieldGroupItem from './generate-field-group-item';
-import { isSinglePolicyType, isMultiPolicyType } from '../policy-type';
+import { isSinglePolicyType, isMultiplePolicyType } from '../policy-type';
 import getFieldById from '../get-field-by-id';
 import generateSummaryListRows from './generate-summary-list-rows';
 import { AnswersContent, AnswersFieldGroups } from '../../../types';
@@ -89,7 +89,7 @@ const generateFieldGroups = (answers: AnswersContent) => {
     ];
   }
 
-  if (isMultiPolicyType(policyType)) {
+  if (isMultiplePolicyType(policyType)) {
     fieldGroups.POLICY_DETAILS = [
       fieldGroupItem({
         field: getFieldById(FIELDS, POLICY_TYPE),

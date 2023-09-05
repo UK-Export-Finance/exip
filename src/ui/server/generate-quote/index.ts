@@ -1,5 +1,5 @@
 import { FIELD_IDS } from '../constants';
-import { isSinglePolicyType, isMultiPolicyType } from '../helpers/policy-type';
+import { isSinglePolicyType, isMultiplePolicyType } from '../helpers/policy-type';
 import { getPremiumRate } from './get-premium-rate';
 import { getPercentageOfNumber } from '../helpers/number';
 import { Quote, SubmittedData, SubmittedDataQuoteEligibility } from '../../types';
@@ -22,7 +22,7 @@ const getContractValue = (submittedData: SubmittedDataQuoteEligibility) => {
     };
   }
 
-  if (isMultiPolicyType(submittedData[POLICY_TYPE])) {
+  if (isMultiplePolicyType(submittedData[POLICY_TYPE])) {
     return {
       [MAX_AMOUNT_OWED]: submittedData[MAX_AMOUNT_OWED],
     };
@@ -43,7 +43,7 @@ const getInsuredFor = (submittedData: SubmittedDataQuoteEligibility): number => 
     contractValue = submittedData[CONTRACT_VALUE];
   }
 
-  if (isMultiPolicyType(submittedData[POLICY_TYPE])) {
+  if (isMultiplePolicyType(submittedData[POLICY_TYPE])) {
     contractValue = submittedData[MAX_AMOUNT_OWED];
   }
 
@@ -76,7 +76,7 @@ const getTotalMonths = (policyType: string, policyLength: number, creditPeriod =
     return totalMonths;
   }
 
-  if (isMultiPolicyType(policyType)) {
+  if (isMultiplePolicyType(policyType)) {
     const totalMonths = creditPeriod + BUSINESS_BUFFER_MONTHS;
 
     return totalMonths;

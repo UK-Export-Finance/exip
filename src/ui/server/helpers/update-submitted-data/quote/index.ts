@@ -1,5 +1,5 @@
 import { FIELD_IDS, FIELD_VALUES } from '../../../constants';
-import { isSinglePolicyType, isMultiPolicyType } from '../../policy-type';
+import { isSinglePolicyType, isMultiplePolicyType } from '../../policy-type';
 import { sanitiseData } from '../../sanitise-data';
 import { RequestBody, SubmittedDataQuoteEligibility } from '../../../../types';
 import { objectHasProperty } from '../../object';
@@ -35,7 +35,7 @@ const mapSubmittedData = (submittedData: SubmittedDataQuoteEligibility): Submitt
     }
   }
 
-  if (isMultiPolicyType(submittedData[POLICY_TYPE])) {
+  if (isMultiplePolicyType(submittedData[POLICY_TYPE])) {
     delete mapped[CONTRACT_VALUE];
 
     // default policy length for a multiple policy
