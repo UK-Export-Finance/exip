@@ -3,12 +3,11 @@ import createAuthenticationRetryEntry from '../../../helpers/create-authenticati
 import accounts from '../../../test-helpers/accounts';
 import authRetries from '../../../test-helpers/auth-retries';
 import { mockAccount } from '../../../test-mocks';
-import { Account, SuccessResponse } from '../../../types';
+import { Account, Context, SuccessResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-const context = getKeystoneContext();
-
 describe('custom-resolvers/delete-an-account', () => {
+  let context: Context;
   let account: Account;
   let result: SuccessResponse;
 
@@ -17,6 +16,8 @@ describe('custom-resolvers/delete-an-account', () => {
   };
 
   beforeAll(async () => {
+    context = getKeystoneContext();
+
     await accounts.deleteAll(context);
 
     account = await accounts.create({ context });

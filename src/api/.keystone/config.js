@@ -2962,26 +2962,28 @@ var sendEmailReactivateAccountLink = async (root, variables, context) => {
 };
 var send_email_reactivate_account_link_default = sendEmailReactivateAccountLink;
 
-// custom-resolvers/mutations/delete-application-by-refrence-number/index.ts
+// custom-resolvers/mutations/delete-application-by-reference-number/index.ts
 var deleteApplicationByReferenceNumber = async (root, variables, context) => {
   try {
     console.info("Deleting application by reference number");
     const { referenceNumber } = variables;
-    const application2 = await context.db.Application.findMany({
+    const applications = await context.db.Application.findMany({
       where: {
         referenceNumber: { equals: referenceNumber }
       }
     });
-    const [{ id }] = application2;
-    const deleteResponse = await context.db.Application.deleteOne({
-      where: {
-        id
+    if (applications.length) {
+      const [{ id }] = applications;
+      const deleteResponse = await context.db.Application.deleteOne({
+        where: {
+          id
+        }
+      });
+      if (deleteResponse?.id) {
+        return {
+          success: true
+        };
       }
-    });
-    if (deleteResponse.id) {
-      return {
-        success: true
-      };
     }
     return {
       success: false
@@ -2991,7 +2993,7 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
     throw new Error(`Deleting application by reference number (DeleteApplicationByReferenceNumber mutation) ${err}`);
   }
 };
-var delete_application_by_refrence_number_default = deleteApplicationByReferenceNumber;
+var delete_application_by_reference_number_default = deleteApplicationByReferenceNumber;
 
 // helpers/map-sic-codes/index.ts
 var mapSicCodes = (company, sicCodes, industrySectorNames) => {
@@ -4301,10 +4303,11 @@ var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => {
 var import_axios = __toESM(require("axios"));
 var import_dotenv5 = __toESM(require("dotenv"));
 import_dotenv5.default.config();
+var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
 var { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
 var headers = {
   "Content-Type": "application/json",
-  [String(process.env.APIM_MDM_KEY)]: process.env.APIM_MDM_VALUE
+  [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
 };
 var getIndustrySectorNames = {
   get: async () => {
@@ -4312,7 +4315,7 @@ var getIndustrySectorNames = {
       console.info("Calling industry sector API");
       const response = await (0, import_axios.default)({
         method: "get",
-        url: `${process.env.APIM_MDM_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`,
+        url: `${APIM_MDM_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`,
         headers,
         validateStatus(status) {
           const acceptableStatus = [200, 404];
@@ -4325,14 +4328,14 @@ var getIndustrySectorNames = {
         };
       }
       return {
-        data: response.data,
-        success: true
+        success: true,
+        data: response.data
       };
     } catch (err) {
       console.error("Error calling industry sector API %O", err);
       return {
-        apiError: true,
-        success: false
+        success: false,
+        apiError: true
       };
     }
   }
@@ -4343,8 +4346,8 @@ var industry_sector_default = getIndustrySectorNames;
 var import_axios2 = __toESM(require("axios"));
 var import_dotenv6 = __toESM(require("dotenv"));
 import_dotenv6.default.config();
-var username = process.env.COMPANIES_HOUSE_API_KEY;
-var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
+var username = String(process.env.COMPANIES_HOUSE_API_KEY);
+var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
 var companiesHouse = {
   get: async (companyNumber) => {
     try {
@@ -4363,8 +4366,8 @@ var companiesHouse = {
         };
       }
       return {
-        data: response.data,
-        success: true
+        success: true,
+        data: response.data
       };
     } catch (err) {
       console.error("Error calling Companies House API %O", err);
@@ -4485,7 +4488,7 @@ var customResolvers = {
     accountPasswordReset: account_password_reset_default,
     sendEmailPasswordResetLink: send_email_password_reset_link_default,
     sendEmailReactivateAccountLink: send_email_reactivate_account_link_default,
-    deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
+    deleteApplicationByReferenceNumber: delete_application_by_reference_number_default,
     updateCompanyAndCompanyAddress: update_company_and_company_address_default,
     submitApplication: submit_application_default,
     createFeedbackAndSendEmail: create_feedback_default,

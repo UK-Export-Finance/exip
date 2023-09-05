@@ -1,5 +1,4 @@
 import { enterCodePage } from '../../../../../../../../pages/insurance/account/sign-in';
-import dashboardPage from '../../../../../../../../pages/insurance/dashboard';
 import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../../constants/routes/insurance';
@@ -8,6 +7,8 @@ const {
   START,
   ACCOUNT: { SIGN_IN: { ENTER_CODE } },
   DASHBOARD,
+  ALL_SECTIONS,
+  ROOT,
 } = ROUTES;
 
 const {
@@ -51,8 +52,6 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
   });
 
   after(() => {
-    dashboardPage.table.body.lastRow.referenceNumberLink().click();
-
     cy.getReferenceNumber().then((referenceNumber) => {
       cy.deleteApplication(referenceNumber);
     });
@@ -86,9 +85,10 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
 
       cy.completeAndSubmitEnterCodeAccountForm(validSecurityCode);
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
-
-      cy.assertUrl(expectedUrl);
+      cy.getReferenceNumber().then((referenceNumber) => {
+        const expectedUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+        cy.assertUrl(expectedUrl);
+      });
     });
   });
 });

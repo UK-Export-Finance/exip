@@ -50,6 +50,10 @@ describe('server/helpers/page-variables/core', () => {
         BACK_LINK: mock.BACK_LINK,
         START_ROUTE: insuranceStart,
         FEEDBACK_ROUTE: ROUTES.INSURANCE.FEEDBACK,
+        DATA_CY: {
+          HEADING: 'heading',
+          BACK_LINK: 'back-link',
+        },
       };
 
       expect(result).toEqual(expected);
@@ -80,6 +84,10 @@ describe('server/helpers/page-variables/core', () => {
         BACK_LINK: mock.BACK_LINK,
         START_ROUTE: insuranceStart,
         FEEDBACK_ROUTE: ROUTES.INSURANCE.FEEDBACK,
+        DATA_CY: {
+          HEADING: 'heading',
+          BACK_LINK: 'back-link',
+        },
       };
 
       expect(result).toEqual(expected);
@@ -110,6 +118,10 @@ describe('server/helpers/page-variables/core', () => {
         BACK_LINK: mock.BACK_LINK,
         START_ROUTE: quoteStart,
         FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
+        DATA_CY: {
+          HEADING: 'heading',
+          BACK_LINK: 'back-link',
+        },
       };
 
       expect(result).toEqual(expected);
@@ -141,6 +153,10 @@ describe('server/helpers/page-variables/core', () => {
         BACK_LINK: mock.BACK_LINK,
         START_ROUTE: quoteStart,
         FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
+        DATA_CY: {
+          HEADING: 'heading',
+          BACK_LINK: 'back-link',
+        },
       };
 
       expect(result).toEqual(expected);

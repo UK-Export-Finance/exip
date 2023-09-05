@@ -1,6 +1,6 @@
 # Export Insurance Policies API
 
-GraphQL API for EXIP accounts and applications. This API is built with [Keystone](https://keystonejs.com/).
+GraphQL API for EXIP accounts and applications. This API is built with [KeystoneJS](https://keystonejs.com/).
 
 ##  Prerequisite
 

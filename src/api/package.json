@@ -14,7 +14,7 @@
     "start": "keystone start",
     "build": "keystone build",
     "documentation": "npx spectaql -t ./documentation/output ./documentation/config.yml",
-    "test": "jest --runInBand --coverage --config=jest.config.js"
+    "test": "jest --runInBand --verbose --silent --coverage --config=jest.config.js"
   },
   "repository": {
     "type": "git",

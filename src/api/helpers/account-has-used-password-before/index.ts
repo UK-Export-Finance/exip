@@ -1,5 +1,5 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
 import getPasswordHash from '../get-password-hash';
+import { Context } from '../../types';
 
 /**
  * hasAccountUsedPasswordBefore

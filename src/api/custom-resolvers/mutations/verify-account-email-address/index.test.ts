@@ -5,10 +5,8 @@ import encryptPassword from '../../../helpers/encrypt-password';
 import accounts from '../../../test-helpers/accounts';
 import authRetries from '../../../test-helpers/auth-retries';
 import { mockAccount } from '../../../test-mocks';
-import { Account, VerifyEmailAddressResponse, VerifyEmailAddressVariables } from '../../../types';
+import { Account, Context, VerifyEmailAddressResponse, VerifyEmailAddressVariables } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
-
-const context = getKeystoneContext();
 
 const {
   EMAIL: { VERIFICATION_EXPIRY: EMAIL_VERIFICATION_EXPIRY },
@@ -28,11 +26,16 @@ const {
 } = FIELD_IDS;
 
 describe('custom-resolvers/verify-account-email-address', () => {
+  let context: Context;
   let account: Account;
   let verificationHash: string;
   let result: VerifyEmailAddressResponse;
 
   const variables = {} as VerifyEmailAddressVariables;
+
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
 
   afterAll(() => {
     jest.resetAllMocks();
