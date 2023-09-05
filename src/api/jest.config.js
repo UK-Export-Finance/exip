@@ -9,5 +9,6 @@ module.exports = {
     'middleware/**/*.{ts,}',
     'server/generate-quote/*.{ts,}',
   ],
-  testTimeout: 60000
+  testTimeout: 60000,
+  workerIdleMemoryLimit: '512MB'
 };
