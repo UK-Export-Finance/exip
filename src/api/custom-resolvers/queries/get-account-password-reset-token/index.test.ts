@@ -2,16 +2,15 @@ import getAccountPasswordResetToken from '.';
 import { FIELD_IDS } from '../../../constants';
 import accounts from '../../../test-helpers/accounts';
 import { mockAccount } from '../../../test-mocks';
-import { Account, AddAndGetOtpResponse } from '../../../types';
+import { Account, AddAndGetOtpResponse, Context } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
-
-const context = getKeystoneContext();
 
 const {
   ACCOUNT: { PASSWORD_RESET_HASH },
 } = FIELD_IDS.INSURANCE;
 
 describe('custom-resolvers/get-account-password-reset-token', () => {
+  let context: Context;
   let account: Account;
 
   const variables = {
@@ -19,6 +18,10 @@ describe('custom-resolvers/get-account-password-reset-token', () => {
   };
 
   let result: AddAndGetOtpResponse;
+
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
 
   beforeEach(async () => {
     await accounts.deleteAll(context);

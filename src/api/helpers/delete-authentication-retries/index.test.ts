@@ -1,34 +1,22 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import deleteAuthenticationRetries from '.';
-import baseConfig from '../../keystone';
 import accounts from '../../test-helpers/accounts';
-import { Account, ApplicationRelationship } from '../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
-
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
+import authRetries from '../../test-helpers/auth-retries';
+import getKeystoneContext from '../../test-helpers/get-keystone-context';
+import { Account, Context } from '../../types';
 
 describe('helpers/delete-authentication-retries', () => {
+  let context: Context;
   let account: Account;
-  let retries: Array<ApplicationRelationship>;
 
   afterAll(() => {
     jest.resetAllMocks();
   });
 
   beforeAll(async () => {
-    // wipe the AuthenticationRetry table so we have a clean slate.
-    retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+    context = getKeystoneContext();
 
-    await context.query.AuthenticationRetry.deleteMany({
-      where: retries,
-    });
+    // wipe the AuthenticationRetry table so we have a clean slate.
+    await authRetries.deleteAll(context);
 
     account = await accounts.create({ context });
 
@@ -49,7 +37,7 @@ describe('helpers/delete-authentication-retries', () => {
 
   test(`it should wipe the account's retry entires`, async () => {
     // check initial retries count
-    retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+    let retries = await authRetries.findAll(context);
 
     expect(retries.length).toEqual(2);
 
@@ -57,7 +45,7 @@ describe('helpers/delete-authentication-retries', () => {
     await deleteAuthenticationRetries(context, account.id);
 
     // get the latest retries to check they have been deleted
-    retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+    retries = await authRetries.findAll(context);
 
     expect(retries.length).toEqual(0);
   });

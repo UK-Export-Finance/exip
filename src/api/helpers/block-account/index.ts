@@ -1,5 +1,4 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
-import { Account } from '../../types';
+import { Account, Context } from '../../types';
 /**
  * blockAccount
  * Update an account to have a true isBlocked property/flag

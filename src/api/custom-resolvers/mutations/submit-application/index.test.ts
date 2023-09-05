@@ -5,12 +5,12 @@ import { APPLICATION, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
 import getPopulatedApplication from '../../../helpers/get-populated-application';
 import { createFullApplication } from '../../../test-helpers';
 import { mockSendEmailResponse } from '../../../test-mocks';
-import { Application, SubmitApplicationVariables, SuccessResponse } from '../../../types';
+import { Application, Context, SubmitApplicationVariables, SuccessResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
-
-const context = getKeystoneContext();
+import applications from '../../../test-helpers/applications';
 
 describe('custom-resolvers/submit-application', () => {
+  let context: Context;
   let submittedApplication: Application;
   let variables: SubmitApplicationVariables;
   let result: SuccessResponse;
@@ -23,6 +23,10 @@ describe('custom-resolvers/submit-application', () => {
 
   const mockGenerateXLSXResponse = '/mock-path-to-xlsx';
   const now = new Date();
+
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
 
   beforeEach(async () => {
     jest.resetAllMocks();
@@ -102,10 +106,9 @@ describe('custom-resolvers/submit-application', () => {
   describe('when an application is not found', () => {
     it('should return success=false', async () => {
       // create a new application so we can get a valid ID format
-      const newApplication = (await context.query.Application.createOne({
-        query: 'id',
-        data: {},
-      })) as Application;
+      const applicationData = {};
+
+      const newApplication = (await applications.create({ context, data: applicationData })) as Application;
 
       variables = {
         applicationId: newApplication.id,
