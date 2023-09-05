@@ -10,13 +10,11 @@ import { LINKS, DEFAULT } from '../content-strings';
  * @param {String} expectedChangeLinkText expected change link text - either add/change or should not exist
  */
 const assertSummaryListRow = (summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText) => {
-  const row = summaryList.field(fieldId);
-
   cy.assertSummaryListRowKey(summaryList, fieldId, expectedKey);
 
   /**
-   * if value exists then checkText
-   * else check if dash
+   * if value exists then check the value
+   * else, check for default empty string
    */
   if (expectedValue) {
     cy.assertSummaryListRowValue(summaryList, fieldId, expectedValue);
@@ -25,24 +23,20 @@ const assertSummaryListRow = (summaryList, fieldId, expectedKey, expectedValue, 
   }
 
   /**
-   * if change link text, if there is an expected value, then should contain change
-   * else if no expected value, should say add
-   * if no expectedChangeLinkText, then should not have changeLink
+   * expectedText for changelink can either be change, add or not exist
+   * If there is a value for the summaryList row and expectedChangeLinkText, then text should contain change
+   * If there is no value for the summaryList row but expectedChangeLinkText, then text should contain add
+   * If there is neither, then the expectedText should be undefined
    */
-  if (expectedChangeLinkText) {
-    if (expectedValue) {
-      cy.assertSummaryListRowChangeLink(summaryList, fieldId, `${LINKS.CHANGE} ${expectedChangeLinkText}`);
+  let expectedText;
 
-      cy.checkText(
-        row.changeLink(),
-        `${LINKS.CHANGE} ${expectedChangeLinkText}`,
-      );
-    } else {
-      cy.assertSummaryListRowChangeLink(summaryList, fieldId, `${LINKS.ADD} ${expectedChangeLinkText}`);
-    }
-  } else {
-    cy.assertSummaryListRowChangeLink(summaryList, fieldId);
+  if (expectedValue && expectedChangeLinkText) {
+    expectedText = `${LINKS.CHANGE} ${expectedChangeLinkText}`;
+  } else if (expectedChangeLinkText) {
+    expectedText = `${LINKS.ADD} ${expectedChangeLinkText}`;
   }
+
+  cy.assertSummaryListRowChangeLink(summaryList, fieldId, expectedText);
 };
 
 export default assertSummaryListRow;
