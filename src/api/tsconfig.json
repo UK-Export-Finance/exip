@@ -33,6 +33,6 @@
     "allowJs": true,
     "importHelpers": true
   },
-  "include": ["**/*.ts", ".eslintrc.js"],
+  "include": ["**/*.ts", "**/*.tsx", ".eslintrc.js", "babel.config.js", "jest.config.js"],
   "exclude": ["node_modules", "logs"]
 }

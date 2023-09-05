@@ -20,7 +20,7 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF e
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((refNumber) => {
+    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
       referenceNumbers = [refNumber];
 
       firstReferenceNumber = refNumber;
@@ -69,7 +69,7 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF e
       header.navigation.signOut().click();
 
       // sign into a different accont
-      cy.completeSignInAndGoToApplication(secondAccountEmail).then((refNumber) => {
+      cy.completeSignInAndGoToApplication(secondAccountEmail).then(({ referenceNumber: refNumber }) => {
         referenceNumbers = [...referenceNumbers, refNumber];
 
         secondReferenceNumber = refNumber;

@@ -13,7 +13,7 @@ const {
  * 5) Complete and submit the "enter security code" form
  * 6) Check we are on the dashbooard
  */
-const completeSignInAndGoToDashboard = () => cy.createAccount({}).then((verifyAccountUrl) => {
+const completeSignInAndGoToDashboard = () => cy.createAccount({}).then(({ accountId, verifyAccountUrl }) => {
   // verify the account by navigating to the "verify account" page
   cy.navigateToUrl(verifyAccountUrl);
 
@@ -21,14 +21,16 @@ const completeSignInAndGoToDashboard = () => cy.createAccount({}).then((verifyAc
   cy.completeAndSubmitSignInAccountForm({});
 
   // get the OTP security code
-  cy.accountAddAndGetOTP().then((securityCode) => {
+  return cy.accountAddAndGetOTP().then((securityCode) => {
     // submit the OTP security code
     cy.completeAndSubmitEnterCodeAccountForm(securityCode);
 
     // assert we are on the dashboard
     const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
     cy.assertUrl(expectedUrl);
-  });
+  }).then(() => ({
+    accountId,
+  }));
 });
 
 export default completeSignInAndGoToDashboard;

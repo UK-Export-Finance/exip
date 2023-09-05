@@ -21,13 +21,14 @@ describe('routes/insurance', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(106);
+    expect(get).toHaveBeenCalledTimes(107);
     expect(post).toHaveBeenCalledTimes(96);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.START, startGet);
     expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.START, startPost);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.DASHBOARD, dashboardGet);
+    expect(get).toHaveBeenCalledWith(`${INSURANCE_ROUTES.DASHBOARD_PAGE}/:pageNumber`, dashboardGet);
 
     expect(get).toHaveBeenCalledWith(`${INSURANCE_ROOT}/:referenceNumber${INSURANCE_ROUTES.ALL_SECTIONS}`, allSectionsGet);
 

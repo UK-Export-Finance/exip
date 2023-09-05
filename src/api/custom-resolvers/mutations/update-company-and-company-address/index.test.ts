@@ -2,15 +2,19 @@ import updateCompanyAndCompanyAddress from '.';
 import mockCompany from '../../../test-mocks/mock-company';
 import companyHelpers from '../../../test-helpers/company';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
-
-const context = getKeystoneContext();
+import { Context } from '../../../types';
 
 describe('custom-resolvers/update-company-and-company-address', () => {
+  let context: Context;
   let company;
   let companySicCode;
   let companyAddress;
 
   const { companyName, companyNumber, sicCodes } = mockCompany;
+
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
 
   describe('Company house number update', () => {
     const industrySectorNames = ['test'];

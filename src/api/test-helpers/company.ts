@@ -1,5 +1,4 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
-import { ApplicationCompany, ApplicationCompanyAddress, TestHelperCreate } from '../types';
+import { ApplicationCompany, ApplicationCompanyAddress, Context, TestHelperCreate } from '../types';
 
 /**
  * create company test helper

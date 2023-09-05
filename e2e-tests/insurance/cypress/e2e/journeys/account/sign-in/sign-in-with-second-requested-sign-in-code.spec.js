@@ -1,5 +1,4 @@
 import { enterCodePage } from '../../../../../../pages/insurance/account/sign-in';
-import dashboardPage from '../../../../../../pages/insurance/dashboard';
 import accountFormFields from '../../../../../../partials/insurance/accountFormFields';
 import { submitButton } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
@@ -11,7 +10,8 @@ const {
   ACCOUNT: {
     SIGN_IN: { ROOT: SIGN_IN_ROOT, ENTER_CODE, REQUEST_NEW_CODE },
   },
-  DASHBOARD,
+  ROOT,
+  ALL_SECTIONS,
 } = ROUTES;
 
 const {
@@ -71,14 +71,16 @@ context('Insurance - Account - Sign in - I want to enter the new security code s
       });
     });
 
-    it(`should redirect to ${DASHBOARD}`, () => {
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), validSecurityCode);
 
       submitButton().click();
 
-      const expectedUrl = `${baseUrl}${DASHBOARD}`;
+      cy.getReferenceNumber().then((referenceNumber) => {
+        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.assertUrl(expectedUrl);
+        cy.assertUrl(expectedUrl);
+      });
     });
   });
 });

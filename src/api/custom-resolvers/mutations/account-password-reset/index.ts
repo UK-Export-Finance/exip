@@ -1,4 +1,3 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
 import { isAfter } from 'date-fns';
 import { FIELD_IDS } from '../../../constants';
 import getAccountByField from '../../../helpers/get-account-by-field';
@@ -7,7 +6,7 @@ import hasAccountUsedPasswordBefore from '../../../helpers/account-has-used-pass
 import getPasswordHash from '../../../helpers/get-password-hash';
 import deleteAuthenticationRetries from '../../../helpers/delete-authentication-retries';
 import createAuthenticationEntry from '../../../helpers/create-authentication-entry';
-import { Account, AccountPasswordResetVariables } from '../../../types';
+import { Account, AccountPasswordResetVariables, Context } from '../../../types';
 
 const accountPasswordReset = async (root: any, variables: AccountPasswordResetVariables, context: Context) => {
   console.info('Resetting account password');

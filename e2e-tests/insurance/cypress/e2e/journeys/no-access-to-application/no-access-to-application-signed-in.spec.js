@@ -17,7 +17,7 @@ context('Insurance - no access to application page - signed in', () => {
     cy.saveSession();
 
     // sign into an account, create an application.
-    cy.completeSignInAndGoToApplication().then((refNumber) => {
+    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
       referenceNumbers = [refNumber];
 
       firstApplicationUrl = `${Cypress.config('baseUrl')}${ROOT}/${refNumber}${ALL_SECTIONS}`;

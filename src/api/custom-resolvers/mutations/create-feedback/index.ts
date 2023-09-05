@@ -1,6 +1,5 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
 import sendEmail from '../../../emails';
-import { InsuranceFeedbackVariables } from '../../../types';
+import { Context, InsuranceFeedbackVariables } from '../../../types';
 
 /**
  * creates feedback in database and sends email

@@ -1,25 +1,18 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
 import { addMonths } from 'date-fns';
-import baseConfig from './keystone';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import { APPLICATION } from './constants';
 import updateApplication from './helpers/update-application';
 import accounts from './test-helpers/accounts';
+import getKeystoneContext from './test-helpers/get-keystone-context';
 import { mockAccount } from './test-mocks';
-import { Application, Account } from './types';
-
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule);
+import { Application, Account, Context } from './types';
 
 describe('Create an Application', () => {
+  let context: Context;
   let application: Application;
 
   beforeAll(async () => {
+    context = getKeystoneContext();
+
     application = (await context.query.Application.createOne({
       data: {},
       query:
@@ -248,10 +241,13 @@ describe('Create an Application', () => {
 });
 
 describe('Account', () => {
+  let context: Context;
   let account: Account;
 
   describe('create', () => {
     beforeAll(async () => {
+      context = getKeystoneContext();
+
       await accounts.create({ context });
     });
 
@@ -295,11 +291,14 @@ describe('Account', () => {
 });
 
 describe('Application timestamp updates', () => {
-  const updateApplicationTimestampSpy = jest.fn();
-
+  let context: Context;
   let application: Application;
 
+  const updateApplicationTimestampSpy = jest.fn();
+
   beforeAll(async () => {
+    context = getKeystoneContext();
+
     application = (await context.query.Application.createOne({
       data: {},
       query:

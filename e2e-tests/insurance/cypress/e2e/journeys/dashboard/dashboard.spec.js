@@ -36,7 +36,7 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
   const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((refNumber) => {
+    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       header.navigation.applications().click();
@@ -153,6 +153,10 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
 
         cy.checkLink(element, expected.href, expected.text);
       });
+    });
+
+    it('should NOT render pagination list items because there is only 1 application', () => {
+      cy.assertPaginationDoesNotExist();
     });
 
     describe('`start new application` button', () => {
