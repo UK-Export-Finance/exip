@@ -61,7 +61,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.navigateToUrl(url);
 
       // go to application
-      table.body.row(submittedLink).submittedLink().click();
+      table.body.row(referenceNumber).submittedLink().click();
 
       // go to the 'your buyer' section via task list
       const task = taskList.prepareApplication.tasks.buyer;
