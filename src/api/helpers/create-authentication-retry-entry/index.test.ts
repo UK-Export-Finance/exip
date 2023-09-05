@@ -1,24 +1,16 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import createAuthenticationRetryEntry from '.';
-import baseConfig from '../../keystone';
 import accounts from '../../test-helpers/accounts';
 import authRetries from '../../test-helpers/auth-retries';
-import { Account } from '../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
-
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
+import getKeystoneContext from '../../test-helpers/get-keystone-context';
+import { Account, Context } from '../../types';
 
 describe('helpers/create-authentication-retry-entry', () => {
+  let context: Context;
   let account: Account;
 
   beforeAll(async () => {
+    context = getKeystoneContext();
+
     account = await accounts.create({ context });
 
     // wipe the AuthenticationRetry table so we have a clean slate.

@@ -5,10 +5,8 @@ import { ACCOUNT, FIELD_IDS, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../consta
 import accounts from '../../../test-helpers/accounts';
 import authRetries from '../../../test-helpers/auth-retries';
 import { mockAccount } from '../../../test-mocks';
-import { Account, SuccessResponse, VerifyAccountReactivationTokenVariables } from '../../../types';
+import { Account, Context, SuccessResponse, VerifyAccountReactivationTokenVariables } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
-
-const context = getKeystoneContext();
 
 const {
   ENCRYPTION: {
@@ -27,11 +25,16 @@ const {
 } = FIELD_IDS;
 
 describe('custom-resolvers/verify-account-reactivation-token', () => {
+  let context: Context;
   let account: Account;
   let reactivationHash: string;
   let result: SuccessResponse;
 
   const variables = {} as VerifyAccountReactivationTokenVariables;
+
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
 
   afterAll(() => {
     jest.resetAllMocks();
