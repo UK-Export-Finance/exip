@@ -6,10 +6,8 @@ import generate from '../../../helpers/generate-otp';
 import generateOTPAndUpdateAccount from '../../../helpers/generate-otp-and-update-account';
 import accounts from '../../../test-helpers/accounts';
 import authRetries from '../../../test-helpers/auth-retries';
-import { Account, VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../../../types';
+import { Account, Context, VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
-
-const context = getKeystoneContext();
 
 const {
   JWT: {
@@ -18,6 +16,7 @@ const {
 } = ACCOUNT;
 
 describe('custom-resolvers/verify-account-sign-in-code', () => {
+  let context: Context;
   let account: Account;
   let updatedAccount: Account;
   let variables: VerifyAccountSignInCodeVariables;
@@ -32,6 +31,10 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
   };
 
   create.JWT = () => mockJWT;
+
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
 
   beforeEach(async () => {
     account = await accounts.create({ context });

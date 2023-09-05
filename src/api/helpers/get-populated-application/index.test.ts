@@ -1,24 +1,18 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import { Context, Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import baseConfig from '../../keystone';
+import { Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
 import getPopulatedApplication, { generateErrorMessage } from '.';
-import { createFullApplication } from '../../test-helpers';
+import { createFullApplication, getKeystoneContext } from '../../test-helpers';
 import mockCountries from '../../test-mocks/mock-countries';
-import { Application } from '../../types';
+import { Application, Context } from '../../types';
 import mockApplication from '../../test-mocks/mock-application';
 
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
-
 describe('api/helpers/get-populated-application', () => {
+  let context: Context;
   let applicationIds: KeystoneApplication;
   let application: Application;
+
+  beforeAll(async () => {
+    context = getKeystoneContext();
+  });
 
   beforeEach(async () => {
     application = await createFullApplication(context);

@@ -1,4 +1,3 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
 import crypto from 'crypto';
 import { ACCOUNT } from '../../../constants';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
@@ -6,7 +5,7 @@ import getAccountByField from '../../../helpers/get-account-by-field';
 import encryptPassword from '../../../helpers/encrypt-password';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
-import { AccountCreationVariables } from '../../../types';
+import { AccountCreationVariables, Context } from '../../../types';
 
 const { EMAIL, ENCRYPTION } = ACCOUNT;
 

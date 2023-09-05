@@ -13,7 +13,7 @@ const DB_URL = String(process.env.DATABASE_URL);
  * @param {Object} KeystoneJS context API
  * @returns {Object} KeystoneJS context API
  */
-const getKeystoneContext = () => {
+export const getKeystoneContext = () => {
   const config = { ...baseConfig, db: { ...baseConfig.db, url: DB_URL } };
 
   const context = getContext(config, PrismaModule);

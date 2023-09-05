@@ -1,6 +1,5 @@
 import { summaryList } from '../../pages/shared';
 import { FIELD_IDS, FIELD_VALUES } from '../../constants';
-import { LINKS } from '../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../content-strings/fields/insurance/policy-and-exports';
 import application from '../../fixtures/application';
 import countries from '../../fixtures/countries';
@@ -28,25 +27,6 @@ const {
   },
 } = FIELD_IDS;
 
-const assertRow = (fieldId, expectedKey, expectedValue, expectedChangeLinkText) => {
-  const row = summaryList.field(fieldId);
-
-  cy.checkText(
-    row.key(),
-    expectedKey,
-  );
-
-  cy.checkText(
-    row.value(),
-    expectedValue,
-  );
-
-  cy.checkText(
-    row.changeLink(),
-    `${LINKS.CHANGE} ${expectedChangeLinkText}`,
-  );
-};
-
 const checkPolicyAndExportsSummaryList = ({
   [REQUESTED_START_DATE]: () => {
     const fieldId = REQUESTED_START_DATE;
@@ -58,7 +38,7 @@ const checkPolicyAndExportsSummaryList = ({
 
     const expectedChangeLinkText = FIELDS.CONTRACT_POLICY[fieldId].SUMMARY.TITLE;
 
-    assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [CREDIT_PERIOD_WITH_BUYER]: () => {
     const fieldId = CREDIT_PERIOD_WITH_BUYER;
@@ -67,7 +47,7 @@ const checkPolicyAndExportsSummaryList = ({
 
     const expectedChangeLinkText = FIELDS.CONTRACT_POLICY[fieldId].SUMMARY.TITLE;
 
-    assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [POLICY_CURRENCY_CODE]: () => {
     const fieldId = POLICY_CURRENCY_CODE;
@@ -79,7 +59,7 @@ const checkPolicyAndExportsSummaryList = ({
 
     const expectedChangeLinkText = FIELDS.CONTRACT_POLICY[fieldId].SUMMARY.TITLE;
 
-    assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [DESCRIPTION]: () => {
     const fieldId = DESCRIPTION;
@@ -89,7 +69,7 @@ const checkPolicyAndExportsSummaryList = ({
 
     const expectedChangeLinkText = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].SUMMARY.TITLE;
 
-    assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [FINAL_DESTINATION]: () => {
     const fieldId = FINAL_DESTINATION;
@@ -101,7 +81,7 @@ const checkPolicyAndExportsSummaryList = ({
 
     const expectedChangeLinkText = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].SUMMARY.TITLE;
 
-    assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   singleContractPolicy: {
     [POLICY_TYPE]: () => {
@@ -111,7 +91,7 @@ const checkPolicyAndExportsSummaryList = ({
 
       const expectedChangeLinkText = FIELDS[fieldId].SUMMARY.TITLE;
 
-      assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
     [CONTRACT_COMPLETION_DATE]: () => {
       const fieldId = CONTRACT_COMPLETION_DATE;
@@ -124,7 +104,7 @@ const checkPolicyAndExportsSummaryList = ({
 
       const expectedChangeLinkText = FIELDS.CONTRACT_POLICY.SINGLE[fieldId].SUMMARY.TITLE;
 
-      assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
     [TOTAL_CONTRACT_VALUE]: () => {
       const fieldId = TOTAL_CONTRACT_VALUE;
@@ -133,7 +113,7 @@ const checkPolicyAndExportsSummaryList = ({
 
       const expectedChangeLinkText = FIELDS.CONTRACT_POLICY.SINGLE[fieldId].SUMMARY.TITLE;
 
-      assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
   },
   multipleContractPolicy: {
@@ -144,7 +124,7 @@ const checkPolicyAndExportsSummaryList = ({
 
       const expectedChangeLinkText = FIELDS[fieldId].SUMMARY.TITLE;
 
-      assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
     [TOTAL_MONTHS_OF_COVER]: () => {
       const fieldId = TOTAL_MONTHS_OF_COVER;
@@ -154,7 +134,7 @@ const checkPolicyAndExportsSummaryList = ({
 
       const expectedChangeLinkText = FIELDS.CONTRACT_POLICY.MULTIPLE[fieldId].SUMMARY.TITLE;
 
-      assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
     [TOTAL_SALES_TO_BUYER]: () => {
       const fieldId = TOTAL_SALES_TO_BUYER;
@@ -164,7 +144,7 @@ const checkPolicyAndExportsSummaryList = ({
 
       const expectedChangeLinkText = FIELDS.CONTRACT_POLICY.MULTIPLE[fieldId].SUMMARY.TITLE;
 
-      assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
     [MAXIMUM_BUYER_WILL_OWE]: () => {
       const fieldId = MAXIMUM_BUYER_WILL_OWE;
@@ -174,7 +154,7 @@ const checkPolicyAndExportsSummaryList = ({
 
       const expectedChangeLinkText = FIELDS.CONTRACT_POLICY.MULTIPLE[fieldId].SUMMARY.TITLE;
 
-      assertRow(fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
   },
 });

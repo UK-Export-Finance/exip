@@ -10,4 +10,5 @@ module.exports = {
     'server/generate-quote/*.{ts,}',
   ],
   testTimeout: 60000,
+  workerIdleMemoryLimit: '512MB'
 };

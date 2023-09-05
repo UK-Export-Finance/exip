@@ -7,16 +7,15 @@ import accountChecks from './account-checks';
 import accounts from '../../../test-helpers/accounts';
 import authRetries from '../../../test-helpers/auth-retries';
 import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../../test-mocks';
-import { Account, AccountSignInResponse } from '../../../types';
+import { Account, AccountSignInResponse, Context } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
-
-const context = getKeystoneContext();
 
 const { PASSWORD } = FIELD_IDS.INSURANCE.ACCOUNT;
 
 const { MAX_AUTH_RETRIES } = ACCOUNT;
 
 describe('custom-resolvers/account-sign-in', () => {
+  let context: Context;
   let account: Account;
 
   generate.otp = () => mockOTP;
@@ -30,6 +29,10 @@ describe('custom-resolvers/account-sign-in', () => {
     email: mockAccount.email,
     password: mockPassword,
   };
+
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
 
   afterAll(() => {
     jest.resetAllMocks();

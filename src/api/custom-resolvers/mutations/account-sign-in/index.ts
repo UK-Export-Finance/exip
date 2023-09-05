@@ -1,4 +1,3 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
 import { FIELD_IDS } from '../../../constants';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import isValidAccountPassword from '../../../helpers/is-valid-account-password';
@@ -6,7 +5,7 @@ import createAuthenticationRetryEntry from '../../../helpers/create-authenticati
 import shouldBlockAccount from '../../../helpers/should-block-account';
 import blockAccount from '../../../helpers/block-account';
 import accountChecks from './account-checks';
-import { Account, AccountSignInVariables, AccountSignInResponse } from '../../../types';
+import { Account, AccountSignInVariables, AccountSignInResponse, Context } from '../../../types';
 
 /**
  * accountSignIn
