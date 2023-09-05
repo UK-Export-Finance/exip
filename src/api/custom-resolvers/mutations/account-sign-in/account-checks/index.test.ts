@@ -1,28 +1,21 @@
-import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import { DATE_ONE_MINUTE_IN_THE_PAST, DATE_24_HOURS_FROM_NOW } from '../../../../constants';
 import accountChecks from '.';
-import baseConfig from '../../../../keystone';
 import confirmEmailAddressEmail from '../../../../helpers/send-email-confirm-email-address';
 import generate from '../../../../helpers/generate-otp';
 import getFullNameString from '../../../../helpers/get-full-name-string';
 import sendEmail from '../../../../emails';
 import accounts from '../../../../test-helpers/accounts';
+import authRetries from '../../../../test-helpers/auth-retries';
+import getKeystoneContext from '../../../../test-helpers/get-keystone-context';
 import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../../../test-mocks';
-import { Account, AccountSignInResponse, ApplicationRelationship } from '../../../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
-
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
+import { Account, AccountSignInResponse, Context } from '../../../../types';
 
 dotenv.config();
 
-const context = getContext(config, PrismaModule) as Context;
-
 describe('custom-resolvers/account-sign-in/account-checks', () => {
+  let context: Context;
   let account: Account;
-  let retries: Array<ApplicationRelationship>;
 
   jest.mock('../../../../emails');
   jest.mock('../../../../helpers/generate-otp');
@@ -40,21 +33,18 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
     password: mockPassword,
   };
 
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
+
   afterAll(() => {
     jest.resetAllMocks();
   });
 
   let result: AccountSignInResponse;
 
-  beforeAll(async () => {
+  beforeEach(async () => {
     await accounts.deleteAll(context);
-
-    // wipe the AuthenticationRetry table so we have a clean slate.
-    retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
-
-    await context.query.AuthenticationRetry.deleteMany({
-      where: retries,
-    });
 
     // create an account
     account = await accounts.create({ context });
@@ -154,11 +144,7 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
         jest.resetAllMocks();
 
         // wipe the AuthenticationRetry table so we have a clean slate.
-        retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
-
-        await context.query.AuthenticationRetry.deleteMany({
-          where: retries,
-        });
+        await authRetries.deleteAll(context);
 
         const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
 

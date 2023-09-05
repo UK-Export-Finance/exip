@@ -2,12 +2,11 @@ import addAndGetOTP from '.';
 import generate from '../../../helpers/generate-otp';
 import accounts from '../../../test-helpers/accounts';
 import { mockAccount, mockOTP } from '../../../test-mocks';
-import { Account, AddAndGetOtpResponse } from '../../../types';
+import { Account, AddAndGetOtpResponse, Context } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-const context = getKeystoneContext();
-
 describe('custom-resolvers/add-and-get-OTP', () => {
+  let context: Context;
   let account: Account;
 
   jest.mock('../../../helpers/generate-otp');
@@ -19,6 +18,10 @@ describe('custom-resolvers/add-and-get-OTP', () => {
   };
 
   let result: AddAndGetOtpResponse;
+
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
 
   beforeEach(async () => {
     await accounts.deleteAll(context);

@@ -20,7 +20,9 @@ const {
     ACCOUNT: {
       SIGN_IN: { ROOT: SIGN_IN_ROOT },
     },
+    INSURANCE_ROOT,
     DASHBOARD,
+    ALL_SECTIONS,
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
@@ -153,6 +155,17 @@ export const post = async (req: Request, res: Response) => {
           console.error('Error creating application');
           return res.redirect(PROBLEM_WITH_SERVICE);
         }
+      }
+
+      const { applications } = await api.keystone.applications.getAll(req.session.user.id);
+
+      /**
+       * if there is only 1 application for the user
+       * then redirect straight to that application's all sections section
+       */
+      if (applications && applications.length === 1) {
+        const referenceNumber = applications[0]?.referenceNumber;
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       }
 
       // otherwise, redirect to the next part of the flow - dashboard

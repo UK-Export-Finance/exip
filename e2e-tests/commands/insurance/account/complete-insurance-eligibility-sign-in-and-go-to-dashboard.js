@@ -11,7 +11,8 @@ const {
 const {
   INSURANCE: {
     START,
-    DASHBOARD,
+    ALL_SECTIONS,
+    ROOT,
   },
 } = ROUTES;
 
@@ -23,7 +24,7 @@ const {
  * 5) Complete and submit the "account sign in" form
  * 6) Add a new OTP/security code and get it directly from the API
  * 7) Complete and submit the "enter security code" form
- * 8) Check we are on the dashbooard
+ * 8) Check we are on the application
  * @param {String} Account email address
  */
 const completeInsuranceEligibilitySignInAndGoToDashboard = (emailAddress) => {
@@ -33,7 +34,7 @@ const completeInsuranceEligibilitySignInAndGoToDashboard = (emailAddress) => {
   cy.submitInsuranceEligibilityAnswersHappyPath();
 
   // create an account
-  return cy.createAccount({ emailAddress }).then((verifyAccountUrl) => {
+  return cy.createAccount({ emailAddress }).then(({ accountId, verifyAccountUrl }) => {
     // verify the account by navigating to the "verify account" page
     cy.navigateToUrl(verifyAccountUrl);
 
@@ -47,10 +48,13 @@ const completeInsuranceEligibilitySignInAndGoToDashboard = (emailAddress) => {
       // submit the OTP security code
       submitButton().click();
 
-      // assert we are on the dashboard
-      const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
-      cy.assertUrl(expectedUrl);
-    });
+      cy.getReferenceNumber().then((referenceNumber) => {
+        const expectedUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+        cy.assertUrl(expectedUrl);
+      });
+    }).then(() => ({
+      accountId, verifyAccountUrl,
+    }));
   });
 };
 

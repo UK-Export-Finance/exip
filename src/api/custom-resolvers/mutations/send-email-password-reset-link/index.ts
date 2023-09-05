@@ -1,4 +1,3 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
 import crypto from 'crypto';
 import { ACCOUNT, FIELD_IDS } from '../../../constants';
 import getAccountByField from '../../../helpers/get-account-by-field';
@@ -7,7 +6,7 @@ import shouldBlockAccount from '../../../helpers/should-block-account';
 import blockAccount from '../../../helpers/block-account';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
-import { AccountSendEmailPasswordResetLinkVariables, Account, AccountSendEmailPasswordResetLinkResponse } from '../../../types';
+import { AccountSendEmailPasswordResetLinkVariables, Account, AccountSendEmailPasswordResetLinkResponse, Context } from '../../../types';
 
 const {
   ENCRYPTION: {

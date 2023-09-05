@@ -6,6 +6,8 @@ export const BUTTONS = {
   CONFIRM_AND_CONTINUE: 'Confirm and continue',
   CONTINUE_TO_SIGN_IN: 'Continue to sign in',
   GET_A_QUOTE_FOR_INSURANCE: 'Get a quote for export insurance',
+  NEXT: 'Next',
+  PREVIOUS: 'Previous',
   REACTIVATE_ACCOUNT: 'Reactivate account',
   RETURN_TO_EXISTING_APPLICATION: 'Return to my existing application',
   RETURN_TO_SERVICE: 'Return to service',

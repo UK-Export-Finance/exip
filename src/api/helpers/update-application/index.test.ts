@@ -1,27 +1,21 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import updateApplication from '.';
-import baseConfig from '../../keystone';
-import { Application } from '../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
-
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
+import getKeystoneContext from '../../test-helpers/get-keystone-context';
+import { Application, Context } from '../../types';
+import applications from '../../test-helpers/applications';
 
 describe('helpers/update-application', () => {
+  let context: Context;
   let application: Application;
+
+  beforeAll(async () => {
+    context = getKeystoneContext();
+  });
 
   beforeEach(async () => {
     // create a new application
-    application = (await context.query.Application.createOne({
-      data: {},
-      query: 'id updatedAt',
-    })) as Application;
+    const applicationData = {};
+
+    application = (await applications.create({ context, data: applicationData })) as Application;
   });
 
   it('should update the updatedAt timestamp', async () => {

@@ -3,23 +3,25 @@ import verifyAccountPasswordResetToken from '.';
 import { FIELD_IDS } from '../../../constants';
 import accounts from '../../../test-helpers/accounts';
 import { mockAccount } from '../../../test-mocks';
-import { Account, AddAndGetOtpResponse } from '../../../types';
+import { Account, AddAndGetOtpResponse, Context } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
-
-const context = getKeystoneContext();
 
 const {
   ACCOUNT: { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY },
 } = FIELD_IDS.INSURANCE;
 
 describe('custom-resolvers/verify-account-password-reset-token', () => {
+  let context: Context;
   let account: Account;
+  let result: AddAndGetOtpResponse;
 
   const variables = {
     token: mockAccount[PASSWORD_RESET_HASH],
   };
 
-  let result: AddAndGetOtpResponse;
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
 
   beforeEach(async () => {
     await accounts.deleteAll(context);
