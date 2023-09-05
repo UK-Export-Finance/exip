@@ -2995,6 +2995,9 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 };
 var delete_application_by_reference_number_default = deleteApplicationByReferenceNumber;
 
+// types.ts
+var import_types2 = __toESM(require("@keystone-6/core/types"));
+
 // helpers/map-sic-codes/index.ts
 var mapSicCodes = (company, sicCodes, industrySectorNames) => {
   const mapped = [];
@@ -3944,7 +3947,7 @@ var mapBroker = (application2) => {
 };
 var mapExporter = (application2) => {
   const { company, companySicCodes, business } = application2;
-  let financialYearEndDate = "";
+  let financialYearEndDate = "No data from Companies House";
   if (company[FINANCIAL_YEAR_END_DATE2]) {
     financialYearEndDate = format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM");
   }

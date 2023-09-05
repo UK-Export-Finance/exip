@@ -79,7 +79,7 @@ export const mapBroker = (application: Application) => {
  */
 const mapExporter = (application: Application) => {
   const { company, companySicCodes, business } = application;
-  let financialYearEndDate = '';
+  let financialYearEndDate = 'No data from Companies House';
 
   // financial year end date should only be populated if it exists
   if (company[FINANCIAL_YEAR_END_DATE]) {

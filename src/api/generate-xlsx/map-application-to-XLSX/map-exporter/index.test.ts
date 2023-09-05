@@ -143,7 +143,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter', () => {
 
         const { company, companySicCodes, business } = noFinancialYearEndDateApplication;
 
-        const financialYearEndDate = '';
+        const financialYearEndDate = 'No data from Companies House';
 
         const expected = expectedMapExporterArray(company, companySicCodes, business, financialYearEndDate);
 
