@@ -4,10 +4,8 @@ import sendEmail from '../../../emails';
 import { ACCOUNT, DATE_24_HOURS_FROM_NOW } from '../../../constants';
 import accounts from '../../../test-helpers/accounts';
 import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../../test-mocks';
-import { Account, SuccessResponse, AccountSendEmailReactivateLinkVariables } from '../../../types';
+import { Account, Context, SuccessResponse, AccountSendEmailReactivateLinkVariables } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
-
-const context = getKeystoneContext();
 
 const {
   ENCRYPTION: {
@@ -18,6 +16,7 @@ const {
 } = ACCOUNT;
 
 describe('custom-resolvers/send-email-reactivate-account-link', () => {
+  let context: Context;
   let account: Account;
   let result: SuccessResponse;
 
@@ -28,6 +27,10 @@ describe('custom-resolvers/send-email-reactivate-account-link', () => {
   const variables = {
     urlOrigin: mockUrlOrigin,
   } as AccountSendEmailReactivateLinkVariables;
+
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
 
   afterAll(() => {
     jest.resetAllMocks();

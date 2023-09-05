@@ -4,10 +4,8 @@ import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
 import accounts from '../../../test-helpers/accounts';
 import { mockAccount, mockSendEmailResponse } from '../../../test-mocks';
-import { Account } from '../../../types';
+import { Account, Context } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
-
-const context = getKeystoneContext();
 
 const { ENCRYPTION } = ACCOUNT;
 
@@ -19,6 +17,7 @@ const {
 } = ENCRYPTION;
 
 describe('custom-resolvers/create-an-account', () => {
+  let context: Context;
   let account: Account;
 
   jest.mock('../../../emails');
@@ -34,6 +33,10 @@ describe('custom-resolvers/create-an-account', () => {
     email: mockAccount.email,
     password: mockPassword,
   };
+
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
 
   afterAll(() => {
     jest.resetAllMocks();

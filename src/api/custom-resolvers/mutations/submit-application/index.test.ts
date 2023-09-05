@@ -5,13 +5,12 @@ import { APPLICATION, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
 import getPopulatedApplication from '../../../helpers/get-populated-application';
 import { createFullApplication } from '../../../test-helpers';
 import { mockSendEmailResponse } from '../../../test-mocks';
-import { Application, SubmitApplicationVariables, SuccessResponse } from '../../../types';
+import { Application, Context, SubmitApplicationVariables, SuccessResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 import applications from '../../../test-helpers/applications';
 
-const context = getKeystoneContext();
-
 describe('custom-resolvers/submit-application', () => {
+  let context: Context;
   let submittedApplication: Application;
   let variables: SubmitApplicationVariables;
   let result: SuccessResponse;
@@ -24,6 +23,10 @@ describe('custom-resolvers/submit-application', () => {
 
   const mockGenerateXLSXResponse = '/mock-path-to-xlsx';
   const now = new Date();
+
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
 
   beforeEach(async () => {
     jest.resetAllMocks();

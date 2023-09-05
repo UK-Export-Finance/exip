@@ -1,8 +1,7 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
 import { isAfter } from 'date-fns';
 import { FIELD_IDS } from '../../../constants';
 import getAccountByField from '../../../helpers/get-account-by-field';
-import { VerifyAccountPasswordResetTokenVariables, AccountPasswordResetTokenResponse } from '../../../types';
+import { Context, AccountPasswordResetTokenResponse, VerifyAccountPasswordResetTokenVariables } from '../../../types';
 
 const {
   ACCOUNT: { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY },

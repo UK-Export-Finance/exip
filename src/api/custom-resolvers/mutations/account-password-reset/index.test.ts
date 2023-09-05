@@ -4,11 +4,9 @@ import createAuthenticationRetryEntry from '../../../helpers/create-authenticati
 import { ACCOUNT, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
 import accounts from '../../../test-helpers/accounts';
 import { mockAccount } from '../../../test-mocks';
-import { Account, AccountPasswordResetVariables, SuccessResponse } from '../../../types';
+import { Account, AccountPasswordResetVariables, Context, SuccessResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 import authRetries from '../../../test-helpers/auth-retries';
-
-const context = getKeystoneContext();
 
 const { ENCRYPTION } = ACCOUNT;
 
@@ -20,9 +18,14 @@ const {
 } = ENCRYPTION;
 
 describe('custom-resolvers/account-password-reset', () => {
+  let context: Context;
   let account: Account;
   let result: SuccessResponse;
   let variables: AccountPasswordResetVariables;
+
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
 
   beforeEach(async () => {
     await accounts.deleteAll(context);

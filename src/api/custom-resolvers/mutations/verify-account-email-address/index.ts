@@ -1,8 +1,7 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
 import { isBefore } from 'date-fns';
 import { FIELD_IDS } from '../../../constants';
 import getAccountByField from '../../../helpers/get-account-by-field';
-import { VerifyEmailAddressVariables, VerifyEmailAddressResponse } from '../../../types';
+import { Context, VerifyEmailAddressVariables, VerifyEmailAddressResponse } from '../../../types';
 
 const {
   INSURANCE: {
