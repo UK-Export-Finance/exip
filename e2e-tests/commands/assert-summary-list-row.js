@@ -36,7 +36,7 @@ const assertSummaryListRow = (summaryList, fieldId, expectedKey, expectedValue, 
     expectedText = `${LINKS.ADD} ${expectedChangeLinkText}`;
   }
 
-  cy.assertSummaryListRowChangeLink(summaryList, fieldId, expectedText);
+  cy.assertSummaryListRowChangeText(summaryList, fieldId, expectedText);
 };
 
 export default assertSummaryListRow;

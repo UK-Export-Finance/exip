@@ -1,11 +1,11 @@
 /**
- * assertSummaryListRowChangeLink
+ * assertSummaryListRowChangeText
  * Assert a summary list change link text.
  * @param {Object} Summary list cypress selectors from pages/partials.
  * @param {String} Field ID in the summary list to assert
  * @param {String} expectedChangeLinkText text for the change link
  */
-const assertSummaryListRowChangeLink = (summaryList, fieldId, expectedChangeLinkText) => {
+const assertSummaryListRowChangeText = (summaryList, fieldId, expectedChangeLinkText) => {
   if (expectedChangeLinkText) {
     cy.checkText(
       summaryList.field(fieldId).changeLink(),
@@ -16,4 +16,4 @@ const assertSummaryListRowChangeLink = (summaryList, fieldId, expectedChangeLink
   }
 };
 
-export default assertSummaryListRowChangeLink;
+export default assertSummaryListRowChangeText;
