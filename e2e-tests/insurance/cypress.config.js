@@ -1,6 +1,7 @@
 const { defineConfig } = require('cypress');
 const { lighthouse, prepareAudit } = require('@cypress-audit/lighthouse');
 const { pa11y } = require('@cypress-audit/pa11y');
+const cypressSplit = require('cypress-split');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -44,6 +45,10 @@ const cypressConfig = defineConfig({
         // pa11y: pa11y(console.log.bind(console)),
         pa11y: pa11y(),
       });
+
+      cypressSplit(on, config);
+      // IMPORTANT: return the config object
+      return config;
     },
   },
 });
