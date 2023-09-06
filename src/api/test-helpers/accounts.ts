@@ -1,7 +1,6 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
 import authRetries from './auth-retries';
 import { mockAccount } from '../test-mocks';
-import { Account, TestHelperAccountCreate } from '../types';
+import { Account, Context, TestHelperAccountCreate } from '../types';
 
 /**
  * deleteAll test helper

@@ -1,6 +1,6 @@
 import { FIELD_IDS, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { FIELDS, PAGES } from '../../../content-strings';
-import { ROUTES, TEMPLATES } from '../../../constants';
+import { FIELD_VALUES, ROUTES, TEMPLATES } from '../../../constants';
 import SHARED_FIELD_IDS from '../../../constants/field-ids/shared';
 import corePageVariables from '../../../helpers/page-variables/core/quote';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
@@ -90,11 +90,33 @@ describe('controllers/quote/policy-type', () => {
           submittedValues: payload,
         });
       });
+
+      describe('when the submitted answer is not a recognised policy type', () => {
+        beforeEach(() => {
+          req.body = {
+            [POLICY_TYPE]: 'Unrecognised policy type',
+          };
+        });
+
+        it('should render template with validation errors from constructPayload function', async () => {
+          post(req, res);
+
+          const payload = constructPayload(req.body, FIELD_IDS);
+
+          expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+            ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
+            userName: getUserNameFromSession(req.session.user),
+            ...PAGE_VARIABLES,
+            validationErrors: generateValidationErrors(payload),
+            submittedValues: payload,
+          });
+        });
+      });
     });
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [POLICY_TYPE]: 'mock',
+        [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
       };
 
       beforeEach(() => {
@@ -106,7 +128,11 @@ describe('controllers/quote/policy-type', () => {
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        const expected = updateSubmittedData(payload, req.session.submittedData.quoteEligibility);
+        const populatedData = {
+          [POLICY_TYPE]: payload[POLICY_TYPE],
+        };
+
+        const expected = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
         expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });

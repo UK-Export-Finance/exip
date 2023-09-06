@@ -163,23 +163,35 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
       });
     });
 
-    describe('when there is no application', () => {
-      beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
-      });
-
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      });
-    });
-
     describe('when the submitted answer is not a recognised policy type', () => {
       beforeEach(() => {
         req.body = {
           [FIELD_ID]: 'Unrecognised policy type',
         };
+      });
+
+      it('should render template with validation errors from constructPayload function', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        const expectedVariables = {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(refNumber),
+          userName: getUserNameFromSession(req.session.user),
+          validationErrors: generateValidationErrors(payload),
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
+    });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        res.locals = { csrfToken: '1234' };
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

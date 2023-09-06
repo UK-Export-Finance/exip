@@ -1,5 +1,5 @@
 import POLICY_AND_EXPORTS_FIELD_IDS, { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy-and-exports';
-import { isSinglePolicyType, isMultiPolicyType } from '../../policy-type';
+import { isSinglePolicyType, isMultiplePolicyType } from '../../policy-type';
 
 const { REQUESTED_START_DATE, CREDIT_PERIOD_WITH_BUYER, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 
@@ -24,7 +24,7 @@ export const getContractPolicyTasks = (policyType?: string): object => {
     };
   }
 
-  if (policyType && isMultiPolicyType(policyType)) {
+  if (policyType && isMultiplePolicyType(policyType)) {
     return MULTIPLE;
   }
 

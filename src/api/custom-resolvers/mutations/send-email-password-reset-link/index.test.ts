@@ -7,10 +7,8 @@ import accounts from '../../../test-helpers/accounts';
 import authRetries from '../../../test-helpers/auth-retries';
 import { get30minutesFromNow } from '../../../helpers/date';
 import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../../test-mocks';
-import { Account, SuccessResponse } from '../../../types';
+import { Account, Context, SuccessResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
-
-const context = getKeystoneContext();
 
 const {
   ENCRYPTION: {
@@ -22,6 +20,7 @@ const {
 } = ACCOUNT;
 
 describe('custom-resolvers/send-email-password-reset-link', () => {
+  let context: Context;
   let account: Account;
   let result: SuccessResponse;
 
@@ -33,6 +32,10 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     urlOrigin: mockUrlOrigin,
     email: mockAccount.email,
   };
+
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
 
   afterAll(() => {
     jest.resetAllMocks();

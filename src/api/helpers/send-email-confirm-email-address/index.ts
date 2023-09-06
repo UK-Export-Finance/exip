@@ -1,8 +1,7 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
 import getAccountById from '../get-account-by-id';
 import getFullNameString from '../get-full-name-string';
 import sendEmail from '../../emails';
-import { SuccessResponse } from '../../types';
+import { Context, SuccessResponse } from '../../types';
 
 /**
  * confirmEmailAddressEmail.send

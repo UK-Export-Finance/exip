@@ -2,19 +2,21 @@ import { format } from 'date-fns';
 import createInsuranceFeedbackAndEmail from '.';
 import sendEmail from '../../../emails';
 import { mockInsuranceFeedback, mockSendEmailResponse } from '../../../test-mocks';
-import { Feedback } from '../../../types';
+import { Context, Feedback } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-const context = getKeystoneContext();
-
 describe('custom-resolvers/create-feedback', () => {
-  const variables = mockInsuranceFeedback;
-
+  let context: Context;
   let feedbackResponse: Feedback;
+  const variables = mockInsuranceFeedback;
 
   jest.mock('../../../emails');
 
   let sendInsuranceFeedbackEmailSpy = jest.fn();
+
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
 
   afterAll(() => {
     jest.resetAllMocks();

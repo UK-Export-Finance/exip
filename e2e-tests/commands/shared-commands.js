@@ -42,6 +42,8 @@ Cypress.Commands.add('completeSignInAndGoToApplication', require('./insurance/ac
 
 Cypress.Commands.add('completeAndSubmitSignInAccountForm', require('./insurance/account/complete-and-submit-sign-in-account-form'));
 
+Cypress.Commands.add('completeSignInAndOTP', require('./insurance/account/complete-sign-in-and-otp'));
+
 Cypress.Commands.add('accountAddAndGetOTP', require('./insurance/account/add-and-get-OTP'));
 
 Cypress.Commands.add('assertCustomerServiceContactDetailsContent', require('./assert-customer-service-contact-details-content'));
@@ -69,3 +71,8 @@ Cypress.Commands.add('assertPaginationNextLink', require('./pagination/assert-pa
 Cypress.Commands.add('assertPaginationPreviousLink', require('./pagination/assert-pagination-previous-link'));
 Cypress.Commands.add('assertActivePaginationLink', require('./pagination/assert-active-pagination-link'));
 Cypress.Commands.add('assertPaginationState', require('./pagination/assert-pagination-state'));
+
+Cypress.Commands.add('assertSummaryListRow', require('./assert-summary-list-row'));
+Cypress.Commands.add('assertSummaryListRowKey', require('./assert-summary-list-row-key'));
+Cypress.Commands.add('assertSummaryListRowChangeText', require('./assert-summary-list-row-change-text'));
+Cypress.Commands.add('assertSummaryListRowValue', require('./assert-summary-list-row-value'));

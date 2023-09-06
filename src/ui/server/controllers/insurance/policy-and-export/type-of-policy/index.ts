@@ -7,7 +7,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { objectHasKeysAndValues } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
-import { isMultiPolicyType, isSinglePolicyType } from '../../../../helpers/policy-type';
+import { isMultiplePolicyType, isSinglePolicyType } from '../../../../helpers/policy-type';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapAndSave from '../map-and-save';
 import { Request, Response } from '../../../../../types';
@@ -105,7 +105,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`);
     }
 
-    if (isMultiPolicyType(payload[FIELD_ID])) {
+    if (isMultiplePolicyType(payload[FIELD_ID])) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`);
     }
 

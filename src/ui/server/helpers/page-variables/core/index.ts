@@ -67,6 +67,10 @@ const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_
     BACK_LINK,
     START_ROUTE,
     FEEDBACK_ROUTE,
+    DATA_CY: {
+      HEADING: 'heading',
+      BACK_LINK: 'back-link',
+    },
   };
 };
 

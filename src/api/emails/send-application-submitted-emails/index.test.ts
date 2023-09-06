@@ -1,25 +1,17 @@
-import { getContext } from '@keystone-6/core/context';
 import dotenv from 'dotenv';
 import sendApplicationSubmittedEmails from '.';
-import baseConfig from '../../keystone';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import sendEmail from '../index';
 import getFullNameString from '../../helpers/get-full-name-string';
 import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-application-submitted-email-template-ids';
 import formatDate from '../../helpers/format-date';
-import { createFullApplication } from '../../test-helpers';
-import { Application, ApplicationSubmissionEmailVariables } from '../../types';
-import { Context } from '.keystone/types'; // eslint-disable-line
+import { createFullApplication, getKeystoneContext } from '../../test-helpers';
+import { Application, ApplicationSubmissionEmailVariables, Context } from '../../types';
 import { mockSendEmailResponse } from '../../test-mocks';
-
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
 
 dotenv.config();
 
-const context = getContext(config, PrismaModule) as Context;
-
 describe('emails/send-email-application-submitted', () => {
+  let context: Context;
   let application: Application;
   const mockXlsxPath = '/path-to-xlsx';
 
@@ -28,6 +20,10 @@ describe('emails/send-email-application-submitted', () => {
   let applicationSubmittedEmailSpy = jest.fn();
   let underwritingTeamEmailSpy = jest.fn();
   let documentsEmailSpy = jest.fn();
+
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
 
   afterAll(() => {
     jest.resetAllMocks();

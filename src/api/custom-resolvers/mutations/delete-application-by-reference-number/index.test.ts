@@ -1,11 +1,10 @@
 import deleteApplicationByReferenceNumber from '.';
 import applications from '../../../test-helpers/applications';
-import { Application, SuccessResponse } from '../../../types';
+import { Application, Context, SuccessResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-const context = getKeystoneContext();
-
-describe('custom-resolvers/mutations/delete-application-by-reference-number', () => {
+describe('custom-resolvers/delete-application-by-reference-number', () => {
+  let context: Context;
   let application: Application;
   let result: SuccessResponse;
 
@@ -14,6 +13,8 @@ describe('custom-resolvers/mutations/delete-application-by-reference-number', ()
   };
 
   beforeAll(async () => {
+    context = getKeystoneContext();
+
     application = (await applications.create({
       context,
       data: {},
