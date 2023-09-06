@@ -196,7 +196,6 @@ jobs:
           install: false
           browser: chrome
           project: ./e2e-tests/insurance
-          config: video=false
           # record, parallel and group should be commented out when we run out of tests in cypress
           # essential to be commented out for cypress-split to run
           # allows us to run e2e tests in parallel without cypress cloud
@@ -262,7 +261,6 @@ jobs:
           browser: chrome
           group: 'EXIP-E2E-QUOTE'
           project: ./e2e-tests/quote
-          config: video=false
         env:
           TZ: Europe/London
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
@@ -317,7 +315,6 @@ jobs:
           browser: chrome
           group: 'EXIP-E2E-SWITCH-BETWEEN-SERVICES'
           project: ./e2e-tests/switch-between-services
-          config: video=false
         env:
           TZ: Europe/London
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
