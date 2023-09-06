@@ -4,7 +4,6 @@ const applicationsQuery = gql`
   query ($accountId: ID!, $take: Int!, $skip: Int!) {
     applications(where: { owner: { id: { equals: $accountId } } }, orderBy: { updatedAt: desc }, take: $take, skip: $skip) {
       status
-      updatedAt
       referenceNumber
       buyer {
         country {
@@ -17,6 +16,7 @@ const applicationsQuery = gql`
         totalValueOfContract
         maximumBuyerWillOwe
       }
+      submissionDate
     }
     applicationsCount(where: { owner: { id: { equals: $accountId } } })
   }
