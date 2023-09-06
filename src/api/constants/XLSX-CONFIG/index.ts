@@ -1,5 +1,5 @@
 import FIELD_IDS from '../field-ids/insurance';
-import { isMultiPolicyType } from '../../helpers/policy-type';
+import { isMultiplePolicyType } from '../../helpers/policy-type';
 import { ANSWERS } from '../answers';
 import { Application, XLSXTitleRowIndexes, XLSXRowIndexes } from '../../types';
 
@@ -47,7 +47,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   let isMultiplePolicy = false;
   let isUsingBroker = false;
 
-  if (isMultiPolicyType(policyType)) {
+  if (isMultiplePolicyType(policyType)) {
     isMultiplePolicy = true;
   }
 

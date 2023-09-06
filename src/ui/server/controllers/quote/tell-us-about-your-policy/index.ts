@@ -13,7 +13,7 @@ import mapPercentageOfCover from '../../../helpers/mappings/map-percentage-of-co
 import mapCreditPeriod from '../../../helpers/mappings/map-credit-period';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import isChangeRoute from '../../../helpers/is-change-route';
-import { isSinglePolicyType, isMultiPolicyType } from '../../../helpers/policy-type';
+import { isSinglePolicyType, isMultiplePolicyType } from '../../../helpers/policy-type';
 import { Request, Response, SelectOption } from '../../../../types';
 
 const {
@@ -73,7 +73,7 @@ const generatePageVariables = (policyType: string) => {
     };
   }
 
-  if (isMultiPolicyType(policyType)) {
+  if (isMultiplePolicyType(policyType)) {
     pageVariables.PAGE_TITLE = TELL_US_ABOUT_YOUR_POLICY.MULTIPLE_POLICY_PAGE_TITLE;
 
     pageVariables.FIELDS.AMOUNT_CURRENCY = {
@@ -152,7 +152,7 @@ const get = async (req: Request, res: Response) => {
       }),
       ...generatePageVariables(policyType),
       isSinglePolicyType: isSinglePolicyType(policyType),
-      isMultiPolicyType: isMultiPolicyType(policyType),
+      isMultiplePolicyType: isMultiplePolicyType(policyType),
       currencies: mappedCurrencies,
       percentageOfCover: mappedPercentageOfCover,
       creditPeriod: mappedCreditPeriod,
@@ -232,7 +232,7 @@ const post = async (req: Request, res: Response) => {
         }),
         ...generatePageVariables(policyType),
         isSinglePolicyType: isSinglePolicyType(policyType),
-        isMultiPolicyType: isMultiPolicyType(policyType),
+        isMultiplePolicyType: isMultiplePolicyType(policyType),
         currencies: mappedCurrencies,
         validationErrors,
         percentageOfCover: mappedPercentageOfCover,

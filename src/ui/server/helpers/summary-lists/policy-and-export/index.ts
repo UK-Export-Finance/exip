@@ -1,6 +1,6 @@
 import FIELD_IDS from '../../../constants/field-ids/insurance/policy-and-exports';
 import generateSummaryListRows from '../generate-summary-list-rows';
-import { isSinglePolicyType, isMultiPolicyType } from '../../policy-type';
+import { isSinglePolicyType, isMultiplePolicyType } from '../../policy-type';
 import generatePolicyAndDateFields from './policy-and-date-fields';
 import generateCreditPeriodAndCurrencyFields from './credit-period-and-currency-fields';
 import generateAboutGoodsOrServicesFields from './about-goods-or-services-fields';
@@ -32,7 +32,7 @@ const generateFields = (
     fields = [...fields, ...generateSingleContractPolicyFields(answers, referenceNumber, checkAndChange)];
   }
 
-  if (isMultiPolicyType(answers[POLICY_TYPE])) {
+  if (isMultiplePolicyType(answers[POLICY_TYPE])) {
     fields = [...fields, ...generateMultipleContractPolicyFields(answers, referenceNumber, checkAndChange)];
   }
 

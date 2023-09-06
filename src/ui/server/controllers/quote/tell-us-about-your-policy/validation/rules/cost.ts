@@ -1,6 +1,6 @@
 import { FIELD_IDS } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
-import { isSinglePolicyType, isMultiPolicyType } from '../../../../../helpers/policy-type';
+import { isSinglePolicyType, isMultiplePolicyType } from '../../../../../helpers/policy-type';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { objectHasProperty } from '../../../../../helpers/object';
 import { numberHasDecimal } from '../../../../../helpers/number';
@@ -33,7 +33,7 @@ const costRules = (formBody: RequestBody, errors: object) => {
     fieldId = CONTRACT_VALUE;
   }
 
-  if (isMultiPolicyType(formBody[POLICY_TYPE])) {
+  if (isMultiplePolicyType(formBody[POLICY_TYPE])) {
     fieldId = MAX_AMOUNT_OWED;
   }
 

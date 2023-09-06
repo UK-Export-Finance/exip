@@ -1,6 +1,6 @@
 import { FIELD_IDS, GBP_CURRENCY_CODE } from '../../../constants';
 import { DEFAULT } from '../../../content-strings';
-import { isSinglePolicyType, isMultiPolicyType } from '../../policy-type';
+import { isSinglePolicyType, isMultiplePolicyType } from '../../policy-type';
 import formatCurrency from '../../format-currency';
 import { objectHasProperty } from '../../object';
 import { Application } from '../../../../types';
@@ -30,7 +30,7 @@ const mapValue = (application: Application) => {
     return formatCurrency(policyAndExport[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE);
   }
 
-  if (isMultiPolicyType(policyType) && objectHasProperty(policyAndExport, MAXIMUM_BUYER_WILL_OWE)) {
+  if (isMultiplePolicyType(policyType) && objectHasProperty(policyAndExport, MAXIMUM_BUYER_WILL_OWE)) {
     return formatCurrency(policyAndExport[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE);
   }
 
