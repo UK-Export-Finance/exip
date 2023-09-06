@@ -27,20 +27,20 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
     })) as Application;
 
     if (application) {
-      const hasDraftStatus = application.status === APPLICATION.STATUS.DRAFT;
+      const isInProgress = application.status === APPLICATION.STATUS.IN_PROGRESS;
 
       const now = new Date();
 
       // check the current date vs submission deadline
       const validSubmissionDate = isAfter(new Date(application.submissionDeadline), now);
 
-      const canSubmit = hasDraftStatus && validSubmissionDate;
+      const canSubmit = isInProgress && validSubmissionDate;
 
       if (canSubmit) {
         // change the status and add submission date
         const update = {
           status: APPLICATION.STATUS.SUBMITTED,
-          previousStatus: APPLICATION.STATUS.DRAFT,
+          previousStatus: APPLICATION.STATUS.IN_PROGRESS,
           submissionDate: now,
         };
 

@@ -1,4 +1,4 @@
-import mapInsuredFor from './map-insured-for';
+import mapInsuredFor from './map-value';
 import { FIELD_IDS, GBP_CURRENCY_CODE } from '../../../constants';
 import { DEFAULT } from '../../../content-strings';
 import formatCurrency from '../../format-currency';
@@ -13,7 +13,7 @@ const {
   },
 } = FIELD_IDS.INSURANCE;
 
-describe('server/helpers/mappings/map-applications/map-insured-for', () => {
+describe('server/helpers/mappings/map-applications/map-value', () => {
   describe('when the policy type is single policy type', () => {
     it(`should return formatted ${TOTAL_CONTRACT_VALUE}`, () => {
       const singlePolicyApplication = {

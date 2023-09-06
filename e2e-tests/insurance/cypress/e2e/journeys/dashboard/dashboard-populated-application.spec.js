@@ -61,9 +61,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.navigateToUrl(url);
 
       // go to application
-      const referenceNumberLink = table.body.row(referenceNumber).referenceNumberLink();
-
-      referenceNumberLink.click();
+      table.body.row(referenceNumber).submittedLink().click();
 
       // go to the 'your buyer' section via task list
       const task = taskList.prepareApplication.tasks.buyer;
@@ -100,9 +98,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.navigateToUrl(url);
 
       // go to application
-      const referenceNumberLink = table.body.row(referenceNumber).referenceNumberLink();
-
-      referenceNumberLink.click();
+      table.body.row(referenceNumber).submittedLink().click();
 
       // go to the 'policy and exports' section via task list
       const task = taskList.prepareApplication.tasks.policyTypeAndExports;
@@ -116,10 +112,10 @@ context('Insurance - Dashboard - populated application', () => {
       cy.completeAndSubmitSingleContractPolicyForm({});
     });
 
-    it(`should render a formatted value of ${TOTAL_CONTRACT_VALUE} in the ${TABLE_HEADERS.INSURED_FOR} cell`, () => {
+    it(`should render a formatted value of ${TOTAL_CONTRACT_VALUE} in the ${TABLE_HEADERS.VALUE} cell`, () => {
       partials.header.navigation.applications().click();
 
-      const cell = table.body.row(referenceNumber).insuredFor();
+      const cell = table.body.row(referenceNumber).value();
 
       const expected = formatCurrency(application.POLICY_AND_EXPORTS[TOTAL_CONTRACT_VALUE]);
 
@@ -132,9 +128,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.navigateToUrl(url);
 
       // go to application
-      const referenceNumberLink = table.body.row(referenceNumber).referenceNumberLink();
-
-      referenceNumberLink.click();
+      table.body.row(referenceNumber).submittedLink().click();
 
       // go to the 'policy and exports' section via task list
       const task = taskList.prepareApplication.tasks.policyTypeAndExports;
@@ -148,10 +142,10 @@ context('Insurance - Dashboard - populated application', () => {
       cy.completeAndSubmitMultipleContractPolicyForm({});
     });
 
-    it(`should render a formatted value of ${MAXIMUM_BUYER_WILL_OWE} in the ${TABLE_HEADERS.INSURED_FOR} cell`, () => {
+    it(`should render a formatted value of ${MAXIMUM_BUYER_WILL_OWE} in the ${TABLE_HEADERS.VALUE} cell`, () => {
       partials.header.navigation.applications().click();
 
-      const cell = table.body.row(referenceNumber).insuredFor();
+      const cell = table.body.row(referenceNumber).value();
 
       const expected = formatCurrency(application.POLICY_AND_EXPORTS[MAXIMUM_BUYER_WILL_OWE]);
 

@@ -189,7 +189,7 @@ export const lists = {
             modifiedData.submissionType = APPLICATION.SUBMISSION_TYPE.MIA;
 
             // add default status
-            modifiedData.status = APPLICATION.STATUS.DRAFT;
+            modifiedData.status = APPLICATION.STATUS.IN_PROGRESS;
 
             return modifiedData;
           } catch (err) {

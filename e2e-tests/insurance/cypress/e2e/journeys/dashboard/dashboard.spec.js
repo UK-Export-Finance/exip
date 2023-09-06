@@ -3,7 +3,6 @@ import header from '../../../../../partials/header';
 import { DEFAULT, PAGES, BUTTONS } from '../../../../../content-strings';
 import { APPLICATION, ROUTES } from '../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insurance';
-import { formatDate } from '../../../../../helpers/date';
 import application from '../../../../../fixtures/application';
 
 const { table } = dashboardPage;
@@ -30,9 +29,9 @@ const CONTENT_STRINGS = PAGES.INSURANCE.DASHBOARD;
 
 const { TABLE_HEADERS } = CONTENT_STRINGS;
 
-context('Insurance - Dashboard - new application - As an Exporter, I want to access my UKEF export insurance application from my dashboard, So that I can easily complete my application', () => {
-  const baseUrl = Cypress.config('baseUrl');
+const baseUrl = Cypress.config('baseUrl');
 
+context('Insurance - Dashboard - new application - As an Exporter, I want to access my UKEF export insurance application from my dashboard, So that I can easily complete my application', () => {
   let referenceNumber;
   const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
@@ -75,18 +74,6 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
         cy.checkText(table.headers.status(), expected);
       });
 
-      it(`should render ${TABLE_HEADERS.LAST_UPDATED}`, () => {
-        const expected = TABLE_HEADERS.LAST_UPDATED;
-
-        cy.checkText(table.headers.lastUpdated(), expected);
-      });
-
-      it(`should render ${TABLE_HEADERS.REFERENCE_NUMBER} cell`, () => {
-        const expected = TABLE_HEADERS.REFERENCE_NUMBER;
-
-        cy.checkText(table.headers.referenceNumber(), expected);
-      });
-
       it(`should render ${TABLE_HEADERS.BUYER_LOCATION} cell`, () => {
         const expected = TABLE_HEADERS.BUYER_LOCATION;
 
@@ -99,10 +86,22 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
         cy.checkText(table.headers.buyerName(), expected);
       });
 
-      it(`should render ${TABLE_HEADERS.INSURED_FOR} cell`, () => {
-        const expected = TABLE_HEADERS.INSURED_FOR;
+      it(`should render ${TABLE_HEADERS.VALUE} cell`, () => {
+        const expected = TABLE_HEADERS.VALUE;
 
         cy.checkText(table.headers.insuredFor(), expected);
+      });
+
+      it(`should render ${TABLE_HEADERS.REFERENCE_NUMBER} cell`, () => {
+        const expected = TABLE_HEADERS.REFERENCE_NUMBER;
+
+        cy.checkText(table.headers.referenceNumber(), expected);
+      });
+
+      it(`should render ${TABLE_HEADERS.SUBMITTED} cell`, () => {
+        const expected = TABLE_HEADERS.SUBMITTED;
+
+        cy.checkText(table.headers.submitted(), expected);
       });
     });
 
@@ -111,56 +110,15 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
         cy.navigateToUrl(dashboardUrl);
       });
 
-      it(`should render 'status' cell with ${APPLICATION.STATUS.DRAFT}`, () => {
+      it(`should render 'status' cell with ${APPLICATION.STATUS.IN_PROGRESS}`, () => {
         const cell = table.body.row(referenceNumber).status();
 
-        const expected = APPLICATION.STATUS.DRAFT;
+        const expected = APPLICATION.STATUS.IN_PROGRESS;
 
         cy.checkText(cell, expected);
       });
 
-      it(`should render formatted ${TABLE_HEADERS.LAST_UPDATED} cell with today's date`, () => {
-        const cell = table.body.row(referenceNumber).lastUpdated();
-
-        const now = new Date();
-
-        const expected = formatDate(now);
-
-        cy.checkText(cell, expected);
-      });
-
-      describe(`${TABLE_HEADERS.REFERENCE_NUMBER}`, () => {
-        let expectedUrl;
-
-        beforeEach(() => {
-          cy.navigateToUrl(dashboardUrl);
-
-          expectedUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-        });
-
-        it('should render a link to the application', () => {
-          const applicationLink = table.body.row(referenceNumber).referenceNumberLink();
-
-          const expected = {
-            href: expectedUrl,
-            text: referenceNumber,
-          };
-
-          cy.checkLink(applicationLink, expected.href, expected.text);
-        });
-
-        it('should redirect to the application', () => {
-          const applicationLink = table.body.row(referenceNumber).referenceNumberLink();
-
-          applicationLink.click();
-
-          const expected = `${baseUrl}${expectedUrl}`;
-
-          cy.assertUrl(expected);
-        });
-      });
-
-      it(`should render empty ${TABLE_HEADERS.BUYER_LOCATION} cell`, () => {
+      it(`should render ${TABLE_HEADERS.BUYER_LOCATION} cell`, () => {
         const cell = table.body.row(referenceNumber).buyerLocation();
 
         const expected = application.BUYER[COUNTRY];
@@ -173,10 +131,27 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
         cy.checkText(cell, DEFAULT.EMPTY);
       });
 
-      it(`should render empty ${TABLE_HEADERS.INSURED_FOR} cell`, () => {
-        const cell = table.body.row(referenceNumber).insuredFor();
+      it(`should render empty ${TABLE_HEADERS.VALUE} cell`, () => {
+        const cell = table.body.row(referenceNumber).value();
 
         cy.checkText(cell, DEFAULT.EMPTY);
+      });
+
+      it(`should render empty ${TABLE_HEADERS.REFERENCE_NUMBER} cell`, () => {
+        const cell = table.body.row(referenceNumber).referenceNumber();
+
+        cy.checkText(cell, referenceNumber);
+      });
+
+      it(`should render ${TABLE_HEADERS.SUBMITTED} cell '${BUTTONS.CONTINUE}' link`, () => {
+        const element = table.body.row(referenceNumber).submittedLink();
+
+        const expected = {
+          href: `${ROOT}/${referenceNumber}${ALL_SECTIONS}`,
+          text: BUTTONS.CONTINUE,
+        };
+
+        cy.checkLink(element, expected.href, expected.text);
       });
     });
 
@@ -201,16 +176,6 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
 
         cy.checkLink(element, expected.href, expected.text);
       });
-
-      it(`should redirect to ${expectedUrl}`, () => {
-        const element = dashboardPage.startNewApplicationButton();
-
-        element.click();
-
-        const expected = `${baseUrl}${expectedUrl}`;
-
-        cy.assertUrl(expected);
-      });
     });
 
     describe('`get a quote` button', () => {
@@ -229,16 +194,6 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
         };
 
         cy.checkLink(element, expected.href, expected.text);
-      });
-
-      it(`should redirect to ${QUOTE.BUYER_COUNTRY}`, () => {
-        const element = dashboardPage.getAQuoteButton();
-
-        element.click();
-
-        const expected = `${baseUrl}${QUOTE.BUYER_COUNTRY}`;
-
-        cy.assertUrl(expected);
       });
     });
   });

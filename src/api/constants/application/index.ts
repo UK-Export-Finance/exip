@@ -31,7 +31,7 @@ export const APPLICATION = {
     MAXIMUM_BUYER_CAN_OWE: LATEST_VERSION.MAXIMUM_BUYER_CAN_OWE,
   },
   STATUS: {
-    DRAFT: 'Draft',
+    IN_PROGRESS: 'In progress',
     SUBMITTED: 'Submitted to UKEF',
   },
 };
