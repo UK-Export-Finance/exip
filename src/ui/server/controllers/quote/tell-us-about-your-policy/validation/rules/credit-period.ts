@@ -1,7 +1,7 @@
 import { FIELD_IDS } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
-import { isMultiPolicyType } from '../../../../../helpers/policy-type';
+import { isMultiplePolicyType } from '../../../../../helpers/policy-type';
 import { objectHasProperty } from '../../../../../helpers/object';
 import { RequestBody } from '../../../../../../types';
 
@@ -16,7 +16,7 @@ const MAXIMUM = 2;
 const creditPeriodRules = (formBody: RequestBody, errors: object) => {
   let updatedErrors = errors;
 
-  if (isMultiPolicyType(formBody[POLICY_TYPE])) {
+  if (isMultiplePolicyType(formBody[POLICY_TYPE])) {
     if (!objectHasProperty(formBody, CREDIT_PERIOD)) {
       updatedErrors = generateValidationErrors(CREDIT_PERIOD, ERROR_MESSAGES.ELIGIBILITY[CREDIT_PERIOD].IS_EMPTY, errors);
 

@@ -1,6 +1,6 @@
 import { QUOTE_TITLES } from '../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../constants';
-import { isSinglePolicyType, isMultiPolicyType } from '../policy-type';
+import { isSinglePolicyType, isMultiplePolicyType } from '../policy-type';
 import fieldGroupItem from './generate-field-group-item';
 import generateSummaryListRows from './generate-summary-list-rows';
 import { SummaryListItemData, QuoteContent } from '../../../types';
@@ -28,7 +28,7 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
   const policyType = quote[POLICY_TYPE];
 
   const isSinglePolicy = isSinglePolicyType(policyType);
-  const isMultiplePolcy = isMultiPolicyType(policyType);
+  const isMultiplePolcy = isMultiplePolicyType(policyType);
 
   if (isSinglePolicy) {
     fields = [

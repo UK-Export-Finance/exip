@@ -75,8 +75,8 @@ describe('Create an Application', () => {
     expect(application.submissionType).toEqual(APPLICATION.SUBMISSION_TYPE.MIA);
   });
 
-  test(`it should have a status of ${APPLICATION.STATUS.DRAFT}`, () => {
-    expect(application.status).toEqual(APPLICATION.STATUS.DRAFT);
+  test(`it should have a status of ${APPLICATION.STATUS.IN_PROGRESS}`, () => {
+    expect(application.status).toEqual(APPLICATION.STATUS.IN_PROGRESS);
   });
 
   test('it should have a reference number', () => {

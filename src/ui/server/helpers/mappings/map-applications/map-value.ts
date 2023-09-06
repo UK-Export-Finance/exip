@@ -1,6 +1,6 @@
 import { FIELD_IDS, GBP_CURRENCY_CODE } from '../../../constants';
 import { DEFAULT } from '../../../content-strings';
-import { isSinglePolicyType, isMultiPolicyType } from '../../policy-type';
+import { isSinglePolicyType, isMultiplePolicyType } from '../../policy-type';
 import formatCurrency from '../../format-currency';
 import { objectHasProperty } from '../../object';
 import { Application } from '../../../../types';
@@ -16,12 +16,12 @@ const {
 } = FIELD_IDS.INSURANCE;
 
 /**
- * mapInsuredFor
- * Map an application's "insured for" depending on the policy type, for display in the dashboard
+ * mapValue
+ * Map an application's "insurance value" depending on the policy type, for display in the dashboard
  * @param {Object} Application
  * @returns {String} Formatted insured amount or empty dash
  */
-const mapInsuredFor = (application: Application) => {
+const mapValue = (application: Application) => {
   const { policyAndExport } = application;
 
   const policyType = policyAndExport[POLICY_TYPE];
@@ -30,11 +30,11 @@ const mapInsuredFor = (application: Application) => {
     return formatCurrency(policyAndExport[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE);
   }
 
-  if (isMultiPolicyType(policyType) && objectHasProperty(policyAndExport, MAXIMUM_BUYER_WILL_OWE)) {
+  if (isMultiplePolicyType(policyType) && objectHasProperty(policyAndExport, MAXIMUM_BUYER_WILL_OWE)) {
     return formatCurrency(policyAndExport[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE);
   }
 
   return DEFAULT.EMPTY;
 };
 
-export default mapInsuredFor;
+export default mapValue;

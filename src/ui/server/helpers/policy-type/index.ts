@@ -9,11 +9,19 @@ import { FIELD_VALUES } from '../../constants';
 const isSinglePolicyType = (policyType: string) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
 
 /**
- * isMultiPolicyType
+ * isMultiplePolicyType
  * Check if a policy type is 'Multiple contract policy'
  * @param {String} Policy type
  * @returns {Boolean}
  */
-const isMultiPolicyType = (policyType: string) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+const isMultiplePolicyType = (policyType: string) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
-export { isSinglePolicyType, isMultiPolicyType };
+/**
+ * isValidPolicyType
+ * Check if a policy type is 'Single contract policy' or 'Multiple contract policy'
+ * @param {String} Policy type
+ * @returns {Boolean}
+ */
+const isValidPolicyType = (policyType: string) => isSinglePolicyType(policyType) || isMultiplePolicyType(policyType);
+
+export { isSinglePolicyType, isMultiplePolicyType, isValidPolicyType };

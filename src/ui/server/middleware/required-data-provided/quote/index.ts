@@ -1,7 +1,7 @@
 import { FIELD_IDS, ROUTES } from '../../../constants';
 import { Request, RequiredDataStateQuoteEligibility, Response, SubmittedDataQuoteEligibility } from '../../../../types';
 import { getRoutesAsArray, routeIsKnown, hasRequiredData } from '../helpers';
-import { isSinglePolicyType, isMultiPolicyType } from '../../../helpers/policy-type';
+import { isSinglePolicyType, isMultiplePolicyType } from '../../../helpers/policy-type';
 
 const {
   START,
@@ -68,7 +68,7 @@ export const allRequiredData = (submittedData: SubmittedDataQuoteEligibility): R
     requiredDataState[CHECK_YOUR_ANSWERS] = [...requiredDataState[CHECK_YOUR_ANSWERS], CONTRACT_VALUE];
   }
 
-  if (isMultiPolicyType(submittedData[FIELD_IDS.POLICY_TYPE])) {
+  if (isMultiplePolicyType(submittedData[FIELD_IDS.POLICY_TYPE])) {
     requiredDataState[CHECK_YOUR_ANSWERS] = [...requiredDataState[CHECK_YOUR_ANSWERS], CREDIT_PERIOD, MAX_AMOUNT_OWED];
   }
 
