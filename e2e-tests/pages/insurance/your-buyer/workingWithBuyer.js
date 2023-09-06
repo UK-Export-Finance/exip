@@ -21,7 +21,6 @@ const workingWithBuyer = {
     hint: () => cy.get(`[data-cy="${TRADED_WITH_BUYER}-hint"]`),
     yesRadioInput: () => yesRadioInput().eq(1),
     noRadioInput: () => noRadioInput().eq(1),
-    details: () => cy.get(`[data-cy="${TRADED_WITH_BUYER}-details"]`),
     errorMessage: () => cy.get(`[data-cy="${TRADED_WITH_BUYER}-error-message"]`),
   },
 };
