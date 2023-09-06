@@ -2,7 +2,7 @@ import FIELD_IDS from '../../../constants/field-ids/insurance';
 import { XLSX } from '../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS } from '../../../content-strings/fields/insurance';
 import { GBP_CURRENCY_CODE } from '../../../constants';
-import { isSinglePolicyType, isMultiPolicyType } from '../../../helpers/policy-type';
+import { isSinglePolicyType, isMultiplePolicyType } from '../../../helpers/policy-type';
 import xlsxRow from '../helpers/xlsx-row';
 import formatDate from '../../../helpers/format-date';
 import formatCurrency from '../helpers/format-currency';
@@ -91,7 +91,7 @@ const mapPolicyAndExport = (application: Application) => {
     mapped = [...mapped, ...mapSinglePolicyFields(application)];
   }
 
-  if (isMultiPolicyType(policyType)) {
+  if (isMultiplePolicyType(policyType)) {
     mapped = [...mapped, ...mapMultiplePolicyFields(application)];
   }
 

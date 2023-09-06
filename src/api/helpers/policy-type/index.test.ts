@@ -1,4 +1,4 @@
-import { isSinglePolicyType, isMultiPolicyType } from '.';
+import { isSinglePolicyType, isMultiplePolicyType } from '.';
 import { FIELD_VALUES } from '../../constants';
 
 describe('api/generate-xlsx/map-application-to-xlsx/helpers/policy-type', () => {
@@ -20,10 +20,10 @@ describe('api/generate-xlsx/map-application-to-xlsx/helpers/policy-type', () => 
     });
   });
 
-  describe('isMultiPolicyType', () => {
+  describe('isMultiplePolicyType', () => {
     describe('when policy type is multiple', () => {
       it('should return true', () => {
-        const result = isMultiPolicyType(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+        const result = isMultiplePolicyType(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
         expect(result).toEqual(true);
       });
@@ -31,7 +31,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/helpers/policy-type', () => 
 
     describe('when policy type is NOT multi', () => {
       it('should return false', () => {
-        const result = isMultiPolicyType(FIELD_VALUES.POLICY_TYPE.SINGLE);
+        const result = isMultiplePolicyType(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
         expect(result).toEqual(false);
       });

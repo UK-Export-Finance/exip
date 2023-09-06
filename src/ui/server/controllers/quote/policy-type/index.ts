@@ -5,7 +5,6 @@ import corePageVariables from '../../../helpers/page-variables/core/quote';
 import generateValidationErrors from './validation';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../helpers/construct-payload';
-import { isSinglePolicyType } from '../../../helpers/policy-type';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
 
@@ -55,13 +54,9 @@ export const post = (req: Request, res: Response) => {
     });
   }
 
-  let populatedData = payload;
-
-  if (isSinglePolicyType(payload[POLICY_TYPE])) {
-    populatedData = {
-      [POLICY_TYPE]: payload[POLICY_TYPE],
-    };
-  }
+  const populatedData = {
+    [POLICY_TYPE]: payload[POLICY_TYPE],
+  };
 
   req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
