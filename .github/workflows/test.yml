@@ -197,7 +197,7 @@ jobs:
           # record: true
           # parallel: true
           browser: chrome
-          group: 'EXIP-E2E-INSURANCE'
+          # group: 'EXIP-E2E-INSURANCE'
           project: ./e2e-tests/insurance
           config: video=false
         env:
