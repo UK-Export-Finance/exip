@@ -4156,15 +4156,17 @@ var submitApplication = async (root, variables, context) => {
       where: { id: variables.applicationId }
     });
     if (application2) {
-      const isInProgress = application2.status === APPLICATION.STATUS.IN_PROGRESS;
+      const { status, submissionDeadline, submissionCount } = application2;
+      const isInProgress = status === APPLICATION.STATUS.IN_PROGRESS;
       const now = /* @__PURE__ */ new Date();
-      const validSubmissionDate = (0, import_date_fns8.isAfter)(new Date(application2.submissionDeadline), now);
-      const canSubmit = isInProgress && validSubmissionDate;
+      const validSubmissionDate = (0, import_date_fns8.isAfter)(new Date(submissionDeadline), now);
+      const canSubmit = isInProgress && validSubmissionDate && submissionCount === 0;
       if (canSubmit) {
         const update = {
           status: APPLICATION.STATUS.SUBMITTED,
           previousStatus: APPLICATION.STATUS.IN_PROGRESS,
-          submissionDate: now
+          submissionDate: now,
+          submissionCount: submissionCount + 1
         };
         const updatedApplication = await context.db.Application.updateOne({
           where: { id: application2.id },
