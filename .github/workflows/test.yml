@@ -194,7 +194,7 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           install: false
-          record: true
+          # record: true
           # parallel: true
           browser: chrome
           group: 'EXIP-E2E-INSURANCE'
@@ -202,7 +202,7 @@ jobs:
           config: video=false
         env:
           TZ: Europe/London
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          # CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           API_KEY: ${{ secrets.API_KEY }}
           GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
