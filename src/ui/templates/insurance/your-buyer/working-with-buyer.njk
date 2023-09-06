@@ -4,22 +4,12 @@
 {% from 'govuk/components/label/macro.njk' import govukLabel %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
 {% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
-{% from "govuk/components/hint/macro.njk" import govukHint %}
 {% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
 {% import '../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
 {% endblock %}
-
-{% set tradedHTML %}
-  {{ govukHint({
-  text: FIELDS.TRADED_WITH_BUYER.DETAILS,
-  attributes: {
-  "data-cy": FIELDS.TRADED_WITH_BUYER.ID + "-details"
-  }
-}) }}
-{% endset %}
 
 {% block content %}
 
@@ -73,7 +63,6 @@
           errorMessage: validationErrors.errorList[FIELDS.TRADED_WITH_BUYER.ID],
           dataCyLegend: FIELDS.TRADED_WITH_BUYER.ID + '-label',
           dataCyHint: FIELDS.TRADED_WITH_BUYER.ID + '-hint',
-          conditionalYesHtml: tradedHTML,
           horizontalRadios: true
         }) }}
 

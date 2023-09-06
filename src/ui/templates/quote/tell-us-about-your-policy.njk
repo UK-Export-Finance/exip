@@ -156,7 +156,7 @@
           }) }}
         {% endif %}
 
-        {% if isMultiPolicyType %}
+        {% if isMultiplePolicyType %}
           {{ govukInput({
             label: {
               text: FIELDS.MAX_AMOUNT_OWED.LABEL,
@@ -220,7 +220,7 @@
         }
       }) }}
 
-      {% if isMultiPolicyType %}
+      {% if isMultiplePolicyType %}
 
         {% set creditPeriodHintHtml %}
           <div class="govuk-grid-row">

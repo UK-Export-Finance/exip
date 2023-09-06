@@ -10,7 +10,7 @@ const {
 
 /**
  * applicationIsComplete
- * Check if the application is complete and has a draft status
+ * Check if the application is complete
  * @param {Object} Application
  * @returns {Boolean}
  */

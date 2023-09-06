@@ -69,11 +69,11 @@ context('Insurance - Dashboard - new application', () => {
       let firstReferenceNumber;
       let lastReferenceNumber;
 
-      table.body.firstRow.referenceNumberLink().invoke('text').then((text) => {
+      table.body.firstRow.referenceNumber().invoke('text').then((text) => {
         firstReferenceNumber = Number(text);
       });
 
-      table.body.lastRow.referenceNumberLink().invoke('text').then((text) => {
+      table.body.lastRow.referenceNumber().invoke('text').then((text) => {
         lastReferenceNumber = Number(text);
 
         expect(firstReferenceNumber).to.be.greaterThan(lastReferenceNumber);

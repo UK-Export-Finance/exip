@@ -65,7 +65,7 @@ describe('controllers/insurance/application-submitted', () => {
           csrfToken: '1234',
           application: {
             ...mockApplication,
-            status: APPLICATION.STATUS.DRAFT,
+            status: APPLICATION.STATUS.IN_PROGRESS,
           },
         };
       });

@@ -16,11 +16,14 @@ context('Insurance - Account - Sign in - I want to go straight to my application
     cy.saveSession();
   });
 
+  afterEach(() => {
+    // sign out for next test
+    header.navigation.signOut().click();
+  });
+
   describe('when there are no applications', () => {
     it('should redirect to the dashboard', () => {
       cy.completeSignInAndGoToDashboard({});
-      // sign out for next test
-      header.navigation.signOut().click();
     });
   });
 
@@ -33,9 +36,6 @@ context('Insurance - Account - Sign in - I want to go straight to my application
 
         // sign in again and complete OTP (without creating account)
         cy.completeSignInAndOTP({ referenceNumber, shouldRedirectToApplication: true });
-
-        // sign out for next test
-        header.navigation.signOut().click();
       });
     });
   });

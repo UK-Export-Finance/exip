@@ -1,7 +1,7 @@
-import { DEFAULT } from '../../../content-strings';
+import { BUTTONS, DEFAULT } from '../../../content-strings';
 import formatDate from '../../date/format-date';
 import replaceCharacterCodesWithCharacters from '../../replace-character-codes-with-characters';
-import mapInsuredFor from './map-insured-for';
+import mapValue from './map-value';
 import { Application } from '../../../../types';
 
 /**
@@ -11,15 +11,15 @@ import { Application } from '../../../../types';
  * @returns {Object} Mapped application
  */
 export const mapApplication = (application: Application) => {
-  const { status, updatedAt, referenceNumber, buyer } = application;
+  const { status, submissionDate, referenceNumber, buyer } = application;
 
   const mapped = {
     status,
-    lastUpdated: formatDate(new Date(updatedAt)),
     referenceNumber,
     buyerLocation: buyer.country?.name ? buyer.country.name : DEFAULT.EMPTY,
     buyerName: replaceCharacterCodesWithCharacters(buyer.companyOrOrganisationName) || DEFAULT.EMPTY,
-    insuredFor: mapInsuredFor(application),
+    value: mapValue(application),
+    submitted: submissionDate ? formatDate(new Date(submissionDate)) : BUTTONS.CONTINUE,
   };
 
   return mapped;

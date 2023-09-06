@@ -11,7 +11,7 @@ import getCurrencyByCode from '../../../helpers/get-currency-by-code';
 import mapPercentageOfCover from '../../../helpers/mappings/map-percentage-of-cover';
 import mapCreditPeriod from '../../../helpers/mappings/map-credit-period';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
-import { isSinglePolicyType, isMultiPolicyType } from '../../../helpers/policy-type';
+import { isSinglePolicyType, isMultiplePolicyType } from '../../../helpers/policy-type';
 import { mockReq, mockRes, mockAnswers, mockCurrencies, mockSession } from '../../../test-mocks';
 import { Request, Response, SelectOption } from '../../../../types';
 
@@ -202,7 +202,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         }),
         ...generatePageVariables(policyType),
         isSinglePolicyType: isSinglePolicyType(policyType),
-        isMultiPolicyType: isMultiPolicyType(policyType),
+        isMultiplePolicyType: isMultiplePolicyType(policyType),
         currencies: expectedCurrencies,
         percentageOfCover: mappedPercentageOfCover,
         creditPeriod: mappedCreditPeriod,
@@ -239,7 +239,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           ...generatePageVariables(policyType),
           BACK_LINK: req.headers.referer,
           isSinglePolicyType: isSinglePolicyType(policyType),
-          isMultiPolicyType: isMultiPolicyType(policyType),
+          isMultiplePolicyType: isMultiplePolicyType(policyType),
           currencies: expectedCurrencies,
           percentageOfCover: mappedPercentageOfCover,
           creditPeriod: mappedCreditPeriod,
@@ -278,7 +278,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           }),
           ...generatePageVariables(policyType),
           isSinglePolicyType: isSinglePolicyType(policyType),
-          isMultiPolicyType: isMultiPolicyType(policyType),
+          isMultiplePolicyType: isMultiplePolicyType(policyType),
           currencies: expectedCurrencies,
           percentageOfCover: mappedPercentageOfCoverWithSelected,
           creditPeriod: mappedCreditPeriod,
@@ -319,7 +319,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           }),
           ...generatePageVariables(policyType),
           isSinglePolicyType: isSinglePolicyType(policyType),
-          isMultiPolicyType: isMultiPolicyType(policyType),
+          isMultiplePolicyType: isMultiplePolicyType(policyType),
           currencies: expectedCurrencies,
           percentageOfCover: mappedPercentageOfCoverWithSelected,
           creditPeriod: mappedCreditPeriodWithSelected,
@@ -401,7 +401,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           }),
           ...generatePageVariables(policyType),
           isSinglePolicyType: isSinglePolicyType(policyType),
-          isMultiPolicyType: isMultiPolicyType(policyType),
+          isMultiplePolicyType: isMultiplePolicyType(policyType),
           currencies: mapCurrencies(mockCurrencies),
           validationErrors: generateValidationErrors({
             ...req.session.submittedData.quoteEligibility,
@@ -443,7 +443,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             }),
             ...generatePageVariables(policyType),
             isSinglePolicyType: isSinglePolicyType(policyType),
-            isMultiPolicyType: isMultiPolicyType(policyType),
+            isMultiplePolicyType: isMultiplePolicyType(policyType),
             currencies: mapCurrencies(mockCurrencies, payload[CURRENCY]),
             validationErrors: generateValidationErrors({
               ...req.session.submittedData.quoteEligibility,
@@ -484,7 +484,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             }),
             ...generatePageVariables(policyType),
             isSinglePolicyType: isSinglePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
-            isMultiPolicyType: isMultiPolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
+            isMultiplePolicyType: isMultiplePolicyType(req.session.submittedData.quoteEligibility[POLICY_TYPE]),
             currencies: mapCurrencies(mockCurrencies, payload[CURRENCY]),
             validationErrors: generateValidationErrors({
               ...req.session.submittedData.quoteEligibility,
@@ -525,7 +525,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
             }),
             ...generatePageVariables(policyType),
             isSinglePolicyType: isSinglePolicyType(policyType),
-            isMultiPolicyType: isMultiPolicyType(policyType),
+            isMultiplePolicyType: isMultiplePolicyType(policyType),
             currencies: mapCurrencies(mockCurrencies, payload[CURRENCY]),
             validationErrors: generateValidationErrors({
               ...req.session.submittedData.quoteEligibility,

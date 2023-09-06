@@ -1,8 +1,8 @@
 import { mapApplication, mapApplications } from '.';
-import { DEFAULT } from '../../../content-strings';
+import { BUTTONS, DEFAULT } from '../../../content-strings';
 import formatDate from '../../date/format-date';
 import replaceCharacterCodesWithCharacters from '../../replace-character-codes-with-characters';
-import mapInsuredFor from './map-insured-for';
+import mapValue from './map-value';
 import { mockApplication, mockApplications } from '../../../test-mocks';
 
 describe('server/helpers/mappings/map-applications', () => {
@@ -10,15 +10,15 @@ describe('server/helpers/mappings/map-applications', () => {
     it('should return a mapped application', () => {
       const result = mapApplication(mockApplication);
 
-      const { status, updatedAt, referenceNumber, buyer } = mockApplication;
+      const { status, submissionDate, referenceNumber, buyer } = mockApplication;
 
       const expected = {
         status,
-        lastUpdated: formatDate(new Date(updatedAt)),
         referenceNumber,
-        buyerLocation: buyer?.country?.name ?? DEFAULT.EMPTY,
+        buyerLocation: buyer.country.name,
         buyerName: replaceCharacterCodesWithCharacters(buyer.companyOrOrganisationName),
-        insuredFor: mapInsuredFor(mockApplication),
+        value: mapValue(mockApplication),
+        submitted: formatDate(new Date(submissionDate)),
       };
 
       expect(result).toEqual(expected);
@@ -55,6 +55,19 @@ describe('server/helpers/mappings/map-applications', () => {
         const expected = DEFAULT.EMPTY;
 
         expect(result.buyerName).toEqual(expected);
+      });
+    });
+
+    describe('when application.submissionDate does not exist', () => {
+      it('should return submitted as default empty string', () => {
+        const result = mapApplication({
+          ...mockApplication,
+          submissionDate: '',
+        });
+
+        const expected = BUTTONS.CONTINUE;
+
+        expect(result.submitted).toEqual(expected);
       });
     });
   });

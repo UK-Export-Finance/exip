@@ -2,7 +2,6 @@ import { FIELD_IDS } from '../../constants';
 import { summaryList } from '../../pages/shared';
 import { FIELDS_ELIGIBILITY as FIELDS } from '../../content-strings/fields/insurance/eligibility';
 import application from '../../fixtures/application';
-import { LINKS, DEFAULT } from '../../content-strings';
 import getSummaryListField from './get-summary-list-field';
 
 const {
@@ -17,52 +16,6 @@ const {
   VALID_EXPORTER_LOCATION,
 } = FIELD_IDS.INSURANCE.ELIGIBILITY;
 
-const assertRow = (fieldId, expectedKey, expectedValue, expectedChangeLinkText) => {
-  const row = summaryList.field(fieldId);
-
-  cy.checkText(
-    row.key(),
-    expectedKey,
-  );
-
-  /**
-   * if value exists then checkText
-   * else check if dash
-   */
-  if (expectedValue) {
-    cy.checkText(
-      row.value(),
-      expectedValue,
-    );
-  } else {
-    cy.checkText(
-      row.value(),
-      DEFAULT.EMPTY,
-    );
-  }
-
-  /**
-   * if change link text, if there is an expected value, then should contain change
-   * else if no expected value, should say add
-   * if no expectedChangeLinkText, then should not have changeLink
-   */
-  if (expectedChangeLinkText) {
-    if (expectedValue) {
-      cy.checkText(
-        row.changeLink(),
-        `${LINKS.CHANGE} ${expectedChangeLinkText}`,
-      );
-    } else {
-      cy.checkText(
-        row.changeLink(),
-        `${LINKS.ADD} ${expectedChangeLinkText}`,
-      );
-    }
-  } else {
-    row.changeLink().should('not.exist');
-  }
-};
-
 const checkYourAnswersEligibilitySummaryList = ({
   [BUYER_COUNTRY]: () => {
     const fieldId = BUYER_COUNTRY;
@@ -70,7 +23,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.ELIGIBILITY[fieldId];
 
-    assertRow(fieldId, expectedKey, expectedValue);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
   [VALID_EXPORTER_LOCATION]: () => {
     const fieldId = VALID_EXPORTER_LOCATION;
@@ -78,7 +31,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.ELIGIBILITY[fieldId];
 
-    assertRow(fieldId, expectedKey, expectedValue);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: () => {
     const fieldId = HAS_MINIMUM_UK_GOODS_OR_SERVICES;
@@ -86,7 +39,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.ELIGIBILITY[fieldId];
 
-    assertRow(fieldId, expectedKey, expectedValue);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
   [WANT_COVER_OVER_MAX_AMOUNT]: () => {
     const fieldId = WANT_COVER_OVER_MAX_AMOUNT;
@@ -94,7 +47,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.ELIGIBILITY[fieldId];
 
-    assertRow(fieldId, expectedKey, expectedValue);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
   [WANT_COVER_OVER_MAX_PERIOD]: () => {
     const fieldId = WANT_COVER_OVER_MAX_PERIOD;
@@ -102,7 +55,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.ELIGIBILITY[fieldId];
 
-    assertRow(fieldId, expectedKey, expectedValue);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
   [OTHER_PARTIES_INVOLVED]: () => {
     const fieldId = OTHER_PARTIES_INVOLVED;
@@ -110,7 +63,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.ELIGIBILITY[fieldId];
 
-    assertRow(fieldId, expectedKey, expectedValue);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
   [LETTER_OF_CREDIT]: () => {
     const fieldId = LETTER_OF_CREDIT;
@@ -118,7 +71,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.ELIGIBILITY[fieldId];
 
-    assertRow(fieldId, expectedKey, expectedValue);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
   [PRE_CREDIT_PERIOD]: () => {
     const fieldId = PRE_CREDIT_PERIOD;
@@ -126,7 +79,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.ELIGIBILITY[fieldId];
 
-    assertRow(fieldId, expectedKey, expectedValue);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
   [COMPANIES_HOUSE_NUMBER]: () => {
     const fieldId = COMPANIES_HOUSE_NUMBER;
@@ -134,7 +87,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.ELIGIBILITY[fieldId];
 
-    assertRow(fieldId, expectedKey, expectedValue);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
 });
 

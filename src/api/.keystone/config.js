@@ -365,7 +365,7 @@ var APPLICATION = {
     MAXIMUM_BUYER_CAN_OWE: LATEST_VERSION.MAXIMUM_BUYER_CAN_OWE
   },
   STATUS: {
-    DRAFT: "Draft",
+    IN_PROGRESS: "In progress",
     SUBMITTED: "Submitted to UKEF"
   }
 };
@@ -838,7 +838,7 @@ var lists = {
             modifiedData.updatedAt = now;
             modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
             modifiedData.submissionType = APPLICATION.SUBMISSION_TYPE.MIA;
-            modifiedData.status = APPLICATION.STATUS.DRAFT;
+            modifiedData.status = APPLICATION.STATUS.IN_PROGRESS;
             return modifiedData;
           } catch (err) {
             console.error("Error adding default data to a new application. %O", err);
@@ -2995,6 +2995,9 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 };
 var delete_application_by_reference_number_default = deleteApplicationByReferenceNumber;
 
+// types.ts
+var import_types2 = __toESM(require("@keystone-6/core/types"));
+
 // helpers/map-sic-codes/index.ts
 var mapSicCodes = (company, sicCodes, industrySectorNames) => {
   const mapped = [];
@@ -3944,6 +3947,10 @@ var mapBroker = (application2) => {
 };
 var mapExporter = (application2) => {
   const { company, companySicCodes, business } = application2;
+  let financialYearEndDate = "No data from Companies House";
+  if (company[FINANCIAL_YEAR_END_DATE2]) {
+    financialYearEndDate = format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM");
+  }
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.EXPORTER_BUSINESS, ""),
     // company fields
@@ -3954,7 +3961,7 @@ var mapExporter = (application2) => {
     xlsx_row_default(CONTENT_STRINGS3[TRADING_NAME2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_NAME2])),
     xlsx_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_ADDRESS2])),
     xlsx_row_default(XLSX.FIELDS[COMPANY_SIC2], mapSicCodes2(companySicCodes)),
-    xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM")),
+    xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, financialYearEndDate),
     xlsx_row_default(XLSX.FIELDS[WEBSITE3], company[WEBSITE3]),
     xlsx_row_default(XLSX.FIELDS[PHONE_NUMBER3], company[PHONE_NUMBER3]),
     // business fields
@@ -4139,14 +4146,14 @@ var submitApplication = async (root, variables, context) => {
       where: { id: variables.applicationId }
     });
     if (application2) {
-      const hasDraftStatus = application2.status === APPLICATION.STATUS.DRAFT;
+      const isInProgress = application2.status === APPLICATION.STATUS.IN_PROGRESS;
       const now = /* @__PURE__ */ new Date();
       const validSubmissionDate = (0, import_date_fns8.isAfter)(new Date(application2.submissionDeadline), now);
-      const canSubmit = hasDraftStatus && validSubmissionDate;
+      const canSubmit = isInProgress && validSubmissionDate;
       if (canSubmit) {
         const update = {
           status: APPLICATION.STATUS.SUBMITTED,
-          previousStatus: APPLICATION.STATUS.DRAFT,
+          previousStatus: APPLICATION.STATUS.IN_PROGRESS,
           submissionDate: now
         };
         const updatedApplication = await context.db.Application.updateOne({
