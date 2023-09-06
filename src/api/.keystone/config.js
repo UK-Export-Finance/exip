@@ -2995,6 +2995,9 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 };
 var delete_application_by_reference_number_default = deleteApplicationByReferenceNumber;
 
+// types.ts
+var import_types2 = __toESM(require("@keystone-6/core/types"));
+
 // helpers/map-sic-codes/index.ts
 var mapSicCodes = (company, sicCodes, industrySectorNames) => {
   const mapped = [];
@@ -3944,6 +3947,10 @@ var mapBroker = (application2) => {
 };
 var mapExporter = (application2) => {
   const { company, companySicCodes, business } = application2;
+  let financialYearEndDate = "No data from Companies House";
+  if (company[FINANCIAL_YEAR_END_DATE2]) {
+    financialYearEndDate = format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM");
+  }
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.EXPORTER_BUSINESS, ""),
     // company fields
@@ -3954,7 +3961,7 @@ var mapExporter = (application2) => {
     xlsx_row_default(CONTENT_STRINGS3[TRADING_NAME2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_NAME2])),
     xlsx_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_ADDRESS2])),
     xlsx_row_default(XLSX.FIELDS[COMPANY_SIC2], mapSicCodes2(companySicCodes)),
-    xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM")),
+    xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, financialYearEndDate),
     xlsx_row_default(XLSX.FIELDS[WEBSITE3], company[WEBSITE3]),
     xlsx_row_default(XLSX.FIELDS[PHONE_NUMBER3], company[PHONE_NUMBER3]),
     // business fields
