@@ -348,10 +348,12 @@ var latest_default = LATEST_VERSION_NUMBER;
 var LATEST_VERSION = get_application_definition_default(latest_default);
 var APPLICATION = {
   LATEST_VERSION,
+  DEAL_TYPE: "EXIP",
+  SUBMISSION_COUNT_DEFAULT: 0,
+  SUBMISSION_DEADLINE_IN_MONTHS: 1,
   SUBMISSION_TYPE: {
     MIA: "Manual Inclusion Application"
   },
-  SUBMISSION_DEADLINE_IN_MONTHS: 1,
   POLICY_TYPE: {
     SINGLE: "Single contract policy",
     MULTIPLE: "Multiple contract policy"
@@ -392,7 +394,7 @@ var FIELD_VALUES = {
 
 // helpers/policy-type/index.ts
 var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
-var isMultiPolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 // constants/XLSX-CONFIG/index.ts
 var {
@@ -425,7 +427,7 @@ var XLSX_ROW_INDEXES = (application2) => {
   const policyType = policyAndExport[POLICY_TYPE2];
   let isMultiplePolicy = false;
   let isUsingBroker = false;
-  if (isMultiPolicyType(policyType)) {
+  if (isMultiplePolicyType(policyType)) {
     isMultiplePolicy = true;
   }
   if (broker[USING_BROKER] === ANSWERS.YES) {
@@ -715,8 +717,12 @@ var lists = {
       referenceNumber: (0, import_fields.integer)({
         isIndexed: true
       }),
-      submissionDeadline: (0, import_fields.timestamp)(),
+      submissionCount: (0, import_fields.integer)({
+        defaultValue: APPLICATION.SUBMISSION_COUNT_DEFAULT,
+        validation: { isRequired: true }
+      }),
       submissionDate: (0, import_fields.timestamp)(),
+      submissionDeadline: (0, import_fields.timestamp)(),
       submissionType: (0, import_fields.select)({
         options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA
@@ -738,6 +744,10 @@ var lists = {
       declaration: (0, import_fields.relationship)({ ref: "Declaration" }),
       version: (0, import_fields.text)({
         defaultValue: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
+        validation: { isRequired: true }
+      }),
+      dealType: (0, import_fields.text)({
+        defaultValue: APPLICATION.DEAL_TYPE,
         validation: { isRequired: true }
       })
     },
@@ -3870,7 +3880,7 @@ var mapPolicyAndExport = (application2) => {
   if (isSinglePolicyType(policyType)) {
     mapped = [...mapped, ...mapSinglePolicyFields(application2)];
   }
-  if (isMultiPolicyType(policyType)) {
+  if (isMultiplePolicyType(policyType)) {
     mapped = [...mapped, ...mapMultiplePolicyFields(application2)];
   }
   mapped = [...mapped, ...mapPolicyAndExportOutro(application2)];

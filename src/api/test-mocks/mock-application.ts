@@ -129,6 +129,8 @@ const mockApplication = {
   referenceNumber: 10001,
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
+  dealType: APPLICATION.DEAL_TYPE,
+  submissionCount: 1,
   submissionDate: new Date(),
   submissionDeadline: addMonths(new Date(), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS).toISOString(),
   submissionType: 'Manual Inclusion Application',

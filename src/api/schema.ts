@@ -28,8 +28,12 @@ export const lists = {
       referenceNumber: integer({
         isIndexed: true,
       }),
-      submissionDeadline: timestamp(),
+      submissionCount: integer({
+        defaultValue: APPLICATION.SUBMISSION_COUNT_DEFAULT,
+        validation: { isRequired: true },
+      }),
       submissionDate: timestamp(),
+      submissionDeadline: timestamp(),
       submissionType: select({
         options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA,
@@ -51,6 +55,10 @@ export const lists = {
       declaration: relationship({ ref: 'Declaration' }),
       version: text({
         defaultValue: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
+        validation: { isRequired: true },
+      }),
+      dealType: text({
+        defaultValue: APPLICATION.DEAL_TYPE,
         validation: { isRequired: true },
       }),
     },

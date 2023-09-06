@@ -26,8 +26,9 @@ model Application {
   eligibility                      Eligibility?      @relation("Application_eligibility", fields: [eligibilityId], references: [id])
   eligibilityId                    String?           @map("eligibility")
   referenceNumber                  Int?
-  submissionDeadline               DateTime?
+  submissionCount                  Int               @default(0)
   submissionDate                   DateTime?
+  submissionDeadline               DateTime?
   submissionType                   String?           @default("Manual Inclusion Application")
   status                           String            @default("")
   previousStatus                   String            @default("")
@@ -48,6 +49,7 @@ model Application {
   declaration                      Declaration?      @relation("Application_declaration", fields: [declarationId], references: [id])
   declarationId                    String?           @map("declaration")
   version                          String            @default("1")
+  dealType                         String            @default("EXIP")
   from_ReferenceNumber_application ReferenceNumber[] @relation("ReferenceNumber_application")
   from_PolicyAndExport_application PolicyAndExport[] @relation("PolicyAndExport_application")
   from_Account_applications        Account[]         @relation("Account_applications")

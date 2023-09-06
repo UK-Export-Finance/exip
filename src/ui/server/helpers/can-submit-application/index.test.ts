@@ -50,4 +50,17 @@ describe('server/helpers/can-submit-application', () => {
       expect(result).toEqual(false);
     });
   });
+
+  describe('when an application has a submissionCount that is greater than 0', () => {
+    const mockApplicationSubmitted = {
+      ...mockApplication,
+      submissionCount: 1,
+    };
+
+    it('should return false', () => {
+      const result = canSubmitApplication(mockApplicationSubmitted);
+
+      expect(result).toEqual(false);
+    });
+  });
 });
