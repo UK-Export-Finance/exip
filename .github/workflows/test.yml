@@ -168,7 +168,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix:
         machines: [1, 2, 3, 4, 5, 6, 7, 8]
 
@@ -194,12 +194,15 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           install: false
-          # record: true
-          # parallel: true
           browser: chrome
-          # group: 'EXIP-E2E-INSURANCE'
           project: ./e2e-tests/insurance
           config: video=false
+          # record, parallel and group should be commented out when we run out of tests in cypress
+          # essential to be commented out for cypress-split to run
+          # allows us to run e2e tests in parallel without cypress cloud
+          # record: true
+          # parallel: true
+          # group: 'EXIP-E2E-INSURANCE'
         env:
           TZ: Europe/London
           # CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
@@ -208,9 +211,9 @@ jobs:
           GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
           GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+          # SPLIT, SPLIT-INDEX and DEBUG should be commented out when we have available tests in cypress cloud
           SPLIT: ${{ strategy.job-total }}
           SPLIT_INDEX: ${{ strategy.job-index }}
-          DEBUG: cypress-split
 
       - name: Screenshots
         if: ${{ failure() }}

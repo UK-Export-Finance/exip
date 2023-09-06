@@ -1,6 +1,7 @@
 const { defineConfig } = require('cypress');
 const { lighthouse, prepareAudit } = require('@cypress-audit/lighthouse');
 const { pa11y } = require('@cypress-audit/pa11y');
+// temporary for when there is no cypress cloud tests available.
 const cypressSplit = require('cypress-split');
 const dotenv = require('dotenv');
 
@@ -46,6 +47,11 @@ const cypressConfig = defineConfig({
         pa11y: pa11y(),
       });
 
+      /**
+       * this enables us to run e2e tests in parallel without cypress cloud
+       * can be commented out when we have enough tests available in cypress cloud
+       * return config should also be commented out
+       */
       cypressSplit(on, config);
       // IMPORTANT: return the config object
       return config;
