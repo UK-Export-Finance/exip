@@ -199,7 +199,6 @@ jobs:
           browser: chrome
           group: 'EXIP-E2E-INSURANCE'
           project: ./e2e-tests/insurance
-          config: video=false
         env:
           TZ: Europe/London
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
@@ -256,7 +255,6 @@ jobs:
           browser: chrome
           group: 'EXIP-E2E-QUOTE'
           project: ./e2e-tests/quote
-          config: video=false
         env:
           TZ: Europe/London
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
@@ -311,7 +309,6 @@ jobs:
           browser: chrome
           group: 'EXIP-E2E-SWITCH-BETWEEN-SERVICES'
           project: ./e2e-tests/switch-between-services
-          config: video=false
         env:
           TZ: Europe/London
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
