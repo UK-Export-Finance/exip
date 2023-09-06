@@ -219,6 +219,13 @@ jobs:
           name: screenshots
           path: './cypress/screenshots'
 
+      - name: Results
+        uses: actions/upload-artifact@main
+        with:
+          path: |
+            cypress/results
+            coverage
+
   # 5. E2E - Quote
   e2e-tests-quote:
     name: E2E Quote 👷

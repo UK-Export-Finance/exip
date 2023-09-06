@@ -76,7 +76,7 @@ context('Insurance - Feedback - As an exporter I want to give feedback on the UK
 
       cy.checkText(field.label(), FIELDS[IMPROVEMENT].LABEL);
       cy.checkText(field.hint(), FIELDS[IMPROVEMENT].HINT);
-      field.input().should('exist');
+      field.input().should('not.exist');
     });
 
     it(`should render the ${OTHER_COMMENTS} section`, () => {
