@@ -12,7 +12,7 @@ context('Insurance - Dashboard - new application', () => {
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then((refNumber) => {
+    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       url = `${baseUrl}${DASHBOARD}`;
@@ -69,11 +69,11 @@ context('Insurance - Dashboard - new application', () => {
       let firstReferenceNumber;
       let lastReferenceNumber;
 
-      table.body.firstRow.referenceNumberLink().invoke('text').then((text) => {
+      table.body.firstRow.referenceNumber().invoke('text').then((text) => {
         firstReferenceNumber = Number(text);
       });
 
-      table.body.lastRow.referenceNumberLink().invoke('text').then((text) => {
+      table.body.lastRow.referenceNumber().invoke('text').then((text) => {
         lastReferenceNumber = Number(text);
 
         expect(firstReferenceNumber).to.be.greaterThan(lastReferenceNumber);

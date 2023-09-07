@@ -1,28 +1,20 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
-import baseConfig from '../../keystone';
 import shouldBlockAccount from '.';
 import createAuthenticationRetryEntry from '../create-authentication-retry-entry';
 import { ACCOUNT } from '../../constants';
 import accounts from '../../test-helpers/accounts';
-import { Account, ApplicationRelationship } from '../../types';
-
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule) as Context;
+import authRetries from '../../test-helpers/auth-retries';
+import getKeystoneContext from '../../test-helpers/get-keystone-context';
+import { Account, Context } from '../../types';
 
 const { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT;
 
 describe('helpers/should-block-account', () => {
+  let context: Context;
   let account: Account;
-  let retries: Array<ApplicationRelationship>;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
+    context = getKeystoneContext();
+
     await accounts.deleteAll(context);
 
     account = await accounts.create({ context });
@@ -31,18 +23,12 @@ describe('helpers/should-block-account', () => {
   describe(`when the account has ${MAX_AUTH_RETRIES} entries in the AuthenticationRetry table that are within MAX_AUTH_RETRIES_TIMEFRAME`, () => {
     beforeEach(async () => {
       // wipe the AuthenticationRetry table so we have a clean slate.
-      retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
-
-      await context.query.AuthenticationRetry.deleteMany({
-        where: retries,
-      });
+      await authRetries.deleteAll(context);
 
       // generate an array of promises to create retry entries
       const entriesToCreate = [...Array(MAX_AUTH_RETRIES)].map(async () => createAuthenticationRetryEntry(context, account.id));
 
       await Promise.all(entriesToCreate);
-
-      retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
     });
 
     it('should return true', async () => {
@@ -54,6 +40,8 @@ describe('helpers/should-block-account', () => {
 
   describe(`when the account does NOT have ${MAX_AUTH_RETRIES} entries in the AuthenticationRetry table`, () => {
     beforeEach(async () => {
+      const retries = await authRetries.findAll(context);
+
       // delete the last retry entry
       const lastRetry = retries[retries.length - 1];
 
@@ -74,11 +62,7 @@ describe('helpers/should-block-account', () => {
   describe(`when the account has ${MAX_AUTH_RETRIES} entries in the AuthenticationRetry table that are outside of the timeframe`, () => {
     beforeEach(async () => {
       // wipe the AuthenticationRetry table so we have a clean slate.
-      retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
-
-      await context.query.AuthenticationRetry.deleteMany({
-        where: retries,
-      });
+      await authRetries.deleteAll(context);
 
       const timeframe = new Date(MAX_AUTH_RETRIES_TIMEFRAME);
 

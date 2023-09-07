@@ -16,7 +16,7 @@ export const APPLICATION = {
     MAXIMUM_BUYER_CAN_OWE: 500000,
   },
   STATUS: {
-    DRAFT: 'Draft',
+    IN_PROGRESS: 'In progress',
     SUBMITTED: 'Submitted to UKEF',
   },
 };

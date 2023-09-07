@@ -5,19 +5,18 @@ import generate from '../../../helpers/generate-otp';
 import sendEmail from '../../../emails';
 import accountChecks from './account-checks';
 import accounts from '../../../test-helpers/accounts';
+import authRetries from '../../../test-helpers/auth-retries';
 import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../../test-mocks';
-import { Account, AccountSignInResponse, ApplicationRelationship } from '../../../types';
+import { Account, AccountSignInResponse, Context } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
-
-const context = getKeystoneContext();
 
 const { PASSWORD } = FIELD_IDS.INSURANCE.ACCOUNT;
 
 const { MAX_AUTH_RETRIES } = ACCOUNT;
 
 describe('custom-resolvers/account-sign-in', () => {
+  let context: Context;
   let account: Account;
-  let retries: Array<ApplicationRelationship>;
 
   generate.otp = () => mockOTP;
 
@@ -31,6 +30,10 @@ describe('custom-resolvers/account-sign-in', () => {
     password: mockPassword,
   };
 
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
+
   afterAll(() => {
     jest.resetAllMocks();
   });
@@ -41,23 +44,14 @@ describe('custom-resolvers/account-sign-in', () => {
     await accounts.deleteAll(context);
 
     // wipe the AuthenticationRetry table so we have a clean slate.
-    retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
-
-    await context.query.AuthenticationRetry.deleteMany({
-      where: retries,
-    });
+    await authRetries.deleteAll(context);
   });
 
   describe('when the provided password is valid and the account is found and verified', () => {
     beforeEach(async () => {
       await accounts.deleteAll(context);
 
-      // wipe the AuthenticationRetry table so we have a clean slate.
-      retries = await context.query.AuthenticationRetry.findMany();
-
-      await context.query.AuthenticationRetry.deleteMany({
-        where: retries,
-      });
+      await authRetries.deleteAll(context);
 
       account = await accounts.create({ context });
 
@@ -73,7 +67,7 @@ describe('custom-resolvers/account-sign-in', () => {
     });
 
     test('it should NOT add an authentication retry entry', async () => {
-      retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+      const retries = await authRetries.findAll(context);
 
       expect(retries.length).toEqual(0);
     });
@@ -91,11 +85,7 @@ describe('custom-resolvers/account-sign-in', () => {
       await accounts.deleteAll(context);
 
       // wipe the AuthenticationRetry table so we have a clean slate.
-      retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
-
-      await context.query.AuthenticationRetry.deleteMany({
-        where: retries,
-      });
+      await authRetries.deleteAll(context);
 
       account = await accounts.create({ context });
 
@@ -118,7 +108,7 @@ describe('custom-resolvers/account-sign-in', () => {
 
     test('it should add an authentication retry entry', async () => {
       // get the latest retries
-      retries = (await context.query.AuthenticationRetry.findMany()) as Array<ApplicationRelationship>;
+      const retries = await authRetries.findAll(context);
 
       expect(retries.length).toEqual(1);
     });
@@ -136,11 +126,7 @@ describe('custom-resolvers/account-sign-in', () => {
         account = await accounts.create({ context, data: unblockedAccount });
 
         // wipe the AuthenticationRetry table so we have a clean slate.
-        retries = await context.query.AuthenticationRetry.findMany();
-
-        await context.query.AuthenticationRetry.deleteMany({
-          where: retries,
-        });
+        await authRetries.deleteAll(context);
 
         // generate an array of promises to create retry entries
         const entriesToCreate = [...Array(MAX_AUTH_RETRIES)].map(async () => createAuthenticationRetryEntry(context, account.id));

@@ -14,10 +14,12 @@ const LATEST_VERSION = getApplicationDefinition(LATEST_VERSION_NUMBER);
  */
 export const APPLICATION = {
   LATEST_VERSION,
+  DEAL_TYPE: 'EXIP',
+  SUBMISSION_COUNT_DEFAULT: 0,
+  SUBMISSION_DEADLINE_IN_MONTHS: 1,
   SUBMISSION_TYPE: {
     MIA: 'Manual Inclusion Application',
   },
-  SUBMISSION_DEADLINE_IN_MONTHS: 1,
   POLICY_TYPE: {
     SINGLE: 'Single contract policy',
     MULTIPLE: 'Multiple contract policy',
@@ -31,7 +33,7 @@ export const APPLICATION = {
     MAXIMUM_BUYER_CAN_OWE: LATEST_VERSION.MAXIMUM_BUYER_CAN_OWE,
   },
   STATUS: {
-    DRAFT: 'Draft',
+    IN_PROGRESS: 'In progress',
     SUBMITTED: 'Submitted to UKEF',
   },
 };

@@ -5,15 +5,16 @@ import { APPLICATION, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
 import getPopulatedApplication from '../../../helpers/get-populated-application';
 import { createFullApplication } from '../../../test-helpers';
 import { mockSendEmailResponse } from '../../../test-mocks';
-import { Application, SubmitApplicationVariables, SuccessResponse } from '../../../types';
+import { Application, Context, SubmitApplicationVariables, SuccessResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
-
-const context = getKeystoneContext();
+import applications from '../../../test-helpers/applications';
 
 describe('custom-resolvers/submit-application', () => {
+  let context: Context;
   let submittedApplication: Application;
   let variables: SubmitApplicationVariables;
   let result: SuccessResponse;
+  let application: Application;
 
   jest.mock('../../../generate-xlsx');
   jest.mock('../../../emails/send-application-submitted-emails');
@@ -23,6 +24,10 @@ describe('custom-resolvers/submit-application', () => {
 
   const mockGenerateXLSXResponse = '/mock-path-to-xlsx';
   const now = new Date();
+
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
 
   beforeEach(async () => {
     jest.resetAllMocks();
@@ -35,7 +40,7 @@ describe('custom-resolvers/submit-application', () => {
 
     generate.XLSX = generateXLSXSpy;
 
-    const application = await createFullApplication(context);
+    application = await createFullApplication(context);
 
     variables = {
       applicationId: application.id,
@@ -48,7 +53,7 @@ describe('custom-resolvers/submit-application', () => {
       where: {
         id: application.id,
       },
-      query: 'id status previousStatus submissionDate',
+      query: 'id status previousStatus submissionDate submissionCount',
     })) as Application;
   });
 
@@ -60,8 +65,8 @@ describe('custom-resolvers/submit-application', () => {
     expect(submittedApplication.status).toEqual(APPLICATION.STATUS.SUBMITTED);
   });
 
-  it(`should add a previous status of ${APPLICATION.STATUS.DRAFT}`, () => {
-    expect(submittedApplication.previousStatus).toEqual(APPLICATION.STATUS.DRAFT);
+  it(`should add a previous status of ${APPLICATION.STATUS.IN_PROGRESS}`, () => {
+    expect(submittedApplication.previousStatus).toEqual(APPLICATION.STATUS.IN_PROGRESS);
   });
 
   it('should add a submissionDate', () => {
@@ -72,6 +77,14 @@ describe('custom-resolvers/submit-application', () => {
     const expectedDay = now.getDay();
 
     expect(submissionDateDay).toEqual(expectedDay);
+  });
+
+  it('should update the submissionCount', () => {
+    const initialCount = application.submissionCount;
+
+    const expectedCount = initialCount + 1;
+
+    expect(submittedApplication.submissionCount).toEqual(expectedCount);
   });
 
   describe('XLSX generation and emails', () => {
@@ -102,10 +115,9 @@ describe('custom-resolvers/submit-application', () => {
   describe('when an application is not found', () => {
     it('should return success=false', async () => {
       // create a new application so we can get a valid ID format
-      const newApplication = (await context.query.Application.createOne({
-        query: 'id',
-        data: {},
-      })) as Application;
+      const applicationData = {};
+
+      const newApplication = (await applications.create({ context, data: applicationData })) as Application;
 
       variables = {
         applicationId: newApplication.id,
@@ -157,6 +169,18 @@ describe('custom-resolvers/submit-application', () => {
 
       variables = {
         applicationId: newApplication.id,
+      };
+
+      result = await submitApplication({}, variables, context);
+
+      expect(result.success).toEqual(false);
+    });
+  });
+
+  describe('when an application has a count that is NOT 0', () => {
+    it('should return success=false', async () => {
+      variables = {
+        applicationId: submittedApplication.id,
       };
 
       result = await submitApplication({}, variables, context);

@@ -1,6 +1,6 @@
 # Export Insurance Policies API
 
-CRUD API for EXIP applications. This API is built with [keystone](https://keystonejs.com/).
+CRUD API for EXIP applications. This API is built with [KeystoneJS](https://keystonejs.com/).
 
 ##  Prerequisite
 

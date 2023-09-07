@@ -14,6 +14,11 @@ interface PageVariablesContentStrings {
   PRODUCT: object;
 }
 
+interface PageVariablesDataCy {
+  HEADING: string;
+  BACK_LINK: string;
+}
+
 interface CorePageVariablesInitialInput {
   PAGE_CONTENT_STRINGS: PageContentStrings;
   BACK_LINK?: string;
@@ -32,6 +37,7 @@ interface CorePageVariables {
   BACK_LINK?: string;
   START_ROUTE?: string;
   FEEDBACK_ROUTE?: string;
+  DATA_CY: PageVariablesDataCy;
 }
 
 interface SingleInputPageVariablesInitialInput {

@@ -4,7 +4,6 @@
 {% from 'govuk/components/label/macro.njk' import govukLabel %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
 {% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
-{% from "govuk/components/hint/macro.njk" import govukHint %}
 {% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
 {% import '../../components/submit-button.njk' as submitButton %}
 
@@ -12,22 +11,13 @@
   {{ CONTENT_STRINGS.PAGE_TITLE }}
 {% endblock %}
 
-{% set tradedHTML %}
-  {{ govukHint({
-  text: FIELDS.TRADED_WITH_BUYER.DETAILS,
-  attributes: {
-  "data-cy": FIELDS.TRADED_WITH_BUYER.ID + "-details"
-  }
-}) }}
-{% endset %}
-
 {% block content %}
 
   {{ govukBackLink({
     text: CONTENT_STRINGS.LINKS.BACK,
     href: BACK_LINK,
     attributes: {
-      "data-cy": "back-link"
+      "data-cy": DATA_CY.BACK_LINK
     }
   }) }}
 
@@ -41,7 +31,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full-from-desktop">
       <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
-      <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+      <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
     </div>
   </div>
 
@@ -73,7 +63,6 @@
           errorMessage: validationErrors.errorList[FIELDS.TRADED_WITH_BUYER.ID],
           dataCyLegend: FIELDS.TRADED_WITH_BUYER.ID + '-label',
           dataCyHint: FIELDS.TRADED_WITH_BUYER.ID + '-hint',
-          conditionalYesHtml: tradedHTML,
           horizontalRadios: true
         }) }}
 

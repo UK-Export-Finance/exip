@@ -1,5 +1,5 @@
 import { ROUTES } from '../../../../constants';
-import { isSinglePolicyType, isMultiPolicyType } from '../../../policy-type';
+import { isSinglePolicyType, isMultiplePolicyType } from '../../../policy-type';
 import generateChangeLink from '../../../generate-change-link';
 
 const {
@@ -29,7 +29,7 @@ const changeLink = (policyType: string, referenceNumber: number, fieldId: string
     };
   }
 
-  if (isMultiPolicyType(policyType)) {
+  if (isMultiplePolicyType(policyType)) {
     return {
       renderChangeLink: true,
       href: generateChangeLink(

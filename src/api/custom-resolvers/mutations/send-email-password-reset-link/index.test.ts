@@ -4,12 +4,11 @@ import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
 import { ACCOUNT } from '../../../constants';
 import accounts from '../../../test-helpers/accounts';
+import authRetries from '../../../test-helpers/auth-retries';
 import { get30minutesFromNow } from '../../../helpers/date';
 import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../../test-mocks';
-import { Account, SuccessResponse } from '../../../types';
+import { Account, Context, SuccessResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
-
-const context = getKeystoneContext();
 
 const {
   ENCRYPTION: {
@@ -21,6 +20,7 @@ const {
 } = ACCOUNT;
 
 describe('custom-resolvers/send-email-password-reset-link', () => {
+  let context: Context;
   let account: Account;
   let result: SuccessResponse;
 
@@ -33,19 +33,16 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     email: mockAccount.email,
   };
 
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
+
   afterAll(() => {
     jest.resetAllMocks();
   });
 
   beforeEach(async () => {
     await accounts.deleteAll(context);
-
-    // wipe the AuthenticationRetry table so we have a clean slate.
-    const retries = await context.query.AuthenticationRetry.findMany();
-
-    await context.query.AuthenticationRetry.deleteMany({
-      where: retries,
-    });
 
     account = await accounts.create({ context });
 
@@ -106,19 +103,15 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
 
   it('should create a new entry in the AuthenticationRetry table', async () => {
     // wipe the AuthenticationRetry table so we have a clean slate.
-    let retries = await context.query.AuthenticationRetry.findMany();
+    await authRetries.deleteAll(context);
 
-    await context.query.AuthenticationRetry.deleteMany({
-      where: retries,
-    });
-
-    retries = await context.query.AuthenticationRetry.findMany();
+    let retries = await authRetries.findAll(context);
 
     expect(retries.length).toEqual(0);
 
     await sendEmailPasswordResetLink({}, variables, context);
 
-    retries = await context.query.AuthenticationRetry.findMany();
+    retries = await authRetries.findAll(context);
 
     expect(retries.length).toEqual(1);
   });
@@ -155,12 +148,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
 
   describe(`when the account has ${MAX_AUTH_RETRIES} entries in the AuthenticationRetry table`, () => {
     beforeEach(async () => {
-      // wipe the AuthenticationRetry table so we have a clean slate.
-      const retries = await context.query.AuthenticationRetry.findMany();
-
-      await context.query.AuthenticationRetry.deleteMany({
-        where: retries,
-      });
+      await authRetries.deleteAll(context);
 
       // generate an array of promises to create retry entries
       const entriesToCreate = [...Array(MAX_AUTH_RETRIES)].map(async () => createAuthenticationRetryEntry(context, account.id));

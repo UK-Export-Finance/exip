@@ -1,29 +1,22 @@
-import { getContext } from '@keystone-6/core/context';
-import dotenv from 'dotenv';
 import { addMonths } from 'date-fns';
-import baseConfig from './keystone';
-import * as PrismaModule from '.prisma/client'; // eslint-disable-line import/no-extraneous-dependencies
 import { APPLICATION } from './constants';
 import updateApplication from './helpers/update-application';
 import accounts from './test-helpers/accounts';
+import getKeystoneContext from './test-helpers/get-keystone-context';
 import { mockAccount } from './test-mocks';
-import { Application, Account } from './types';
-
-const dbUrl = String(process.env.DATABASE_URL);
-const config = { ...baseConfig, db: { ...baseConfig.db, url: dbUrl } };
-
-dotenv.config();
-
-const context = getContext(config, PrismaModule);
+import { Application, Account, Context } from './types';
 
 describe('Create an Application', () => {
+  let context: Context;
   let application: Application;
 
   beforeAll(async () => {
+    context = getKeystoneContext();
+
     application = (await context.query.Application.createOne({
       data: {},
       query:
-        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status previousStatus version eligibility { id } policyAndExport { id } owner { id } company { id } business { id businessContactDetail { id } } broker { id } buyer { id } sectionReview { id } declaration { id }',
+        'id createdAt updatedAt referenceNumber dealType submissionCount submissionDeadline submissionType status previousStatus version eligibility { id } policyAndExport { id } owner { id } company { id } business { id businessContactDetail { id } } broker { id } buyer { id } sectionReview { id } declaration { id }',
     })) as Application;
   });
 
@@ -60,6 +53,18 @@ describe('Create an Application', () => {
     expect(application.version).toEqual(expected);
   });
 
+  test('it should have the deal type', () => {
+    const expected = APPLICATION.DEAL_TYPE;
+
+    expect(application.dealType).toEqual(expected);
+  });
+
+  test('it should have a default submission count', () => {
+    const expected = APPLICATION.SUBMISSION_COUNT_DEFAULT;
+
+    expect(application.submissionCount).toEqual(expected);
+  });
+
   test('it should have a submission deadline date', () => {
     const submissionDeadlineDay = new Date(application.submissionDeadline).getDate();
     const submissionDeadlineMonth = new Date(application.submissionDeadline).getMonth();
@@ -82,8 +87,8 @@ describe('Create an Application', () => {
     expect(application.submissionType).toEqual(APPLICATION.SUBMISSION_TYPE.MIA);
   });
 
-  test(`it should have a status of ${APPLICATION.STATUS.DRAFT}`, () => {
-    expect(application.status).toEqual(APPLICATION.STATUS.DRAFT);
+  test(`it should have a status of ${APPLICATION.STATUS.IN_PROGRESS}`, () => {
+    expect(application.status).toEqual(APPLICATION.STATUS.IN_PROGRESS);
   });
 
   test('it should have a reference number', () => {
@@ -248,10 +253,13 @@ describe('Create an Application', () => {
 });
 
 describe('Account', () => {
+  let context: Context;
   let account: Account;
 
   describe('create', () => {
     beforeAll(async () => {
+      context = getKeystoneContext();
+
       await accounts.create({ context });
     });
 
@@ -295,11 +303,14 @@ describe('Account', () => {
 });
 
 describe('Application timestamp updates', () => {
-  const updateApplicationTimestampSpy = jest.fn();
-
+  let context: Context;
   let application: Application;
 
+  const updateApplicationTimestampSpy = jest.fn();
+
   beforeAll(async () => {
+    context = getKeystoneContext();
+
     application = (await context.query.Application.createOne({
       data: {},
       query:

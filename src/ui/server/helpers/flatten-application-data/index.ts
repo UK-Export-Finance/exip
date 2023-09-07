@@ -16,6 +16,8 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
     referenceNumber: application.referenceNumber,
     createdAt: application.createdAt,
     updatedAt: application.updatedAt,
+    dealType: application.dealType,
+    submissionCount: application.submissionCount,
     submissionDeadline: application.submissionDeadline,
     submissionType: application.submissionType,
     submissionDate: application.submissionDate,

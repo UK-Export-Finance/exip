@@ -71,13 +71,13 @@ Navigate to to the E2E tests directory `/e2e-tests` and execute any of the follo
 #### **Run the entire E2E test suite**
 
 ```shell
-npx cypress run --config video=false
+npx cypress run
 ```
 
 #### **Run a single E2E test**
 
 ```shell
-npx cypress run --spec "cypress/e2e/journeys/example.spec.js" --config video=false
+npx cypress run --spec "cypress/e2e/journeys/example.spec.js"
 ```
 
 #### **For live debugging, open the GUI and select the test**

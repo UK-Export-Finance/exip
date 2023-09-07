@@ -18,11 +18,11 @@ const DASHBOARD = {
   PAGE_TITLE: 'Your applications',
   TABLE_HEADERS: {
     STATUS: 'Status',
-    LAST_UPDATED: 'Last updated',
-    REFERENCE_NUMBER: 'Reference number',
     BUYER_LOCATION: 'Buyer location',
     BUYER_NAME: 'Buyer name',
-    INSURED_FOR: 'Insured for',
+    VALUE: 'Value',
+    REFERENCE_NUMBER: 'Reference number',
+    SUBMITTED: 'Submitted',
   },
   NO_APPLICATIONS: 'You have no applications currently.',
   START_NEW_APPLICATION: {

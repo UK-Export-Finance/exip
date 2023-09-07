@@ -2,6 +2,8 @@ import { ROUTES, TEMPLATES, APPLICATION } from '../../../constants';
 import { PAGES } from '../../../content-strings';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import { isNumber } from '../../../helpers/number';
+import { getSkipCount, generatePaginationItems } from '../../../helpers/pagination';
 import api from '../../../api';
 import mapApplications from '../../../helpers/mappings/map-applications';
 import { Request, Response } from '../../../../types';
@@ -20,12 +22,24 @@ const {
  * @returns {Express.Response.render} Dashboard page
  */
 export const get = async (req: Request, res: Response) => {
+  const { pageNumber: pageNumberParam } = req.params;
+
+  let currentPageNumber = 1;
+
+  if (pageNumberParam && isNumber(pageNumberParam)) {
+    currentPageNumber = Number(pageNumberParam);
+  }
+
   if (!req.session.user?.id) {
     return res.redirect(ACCOUNT.SIGN_IN.ROOT);
   }
 
   try {
-    const applications = await api.keystone.applications.getAll(req.session.user.id);
+    const skip = getSkipCount(currentPageNumber);
+
+    const { applications, totalApplications } = await api.keystone.applications.getAll(req.session.user.id, skip);
+
+    const paginationItems = generatePaginationItems(totalApplications);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -39,6 +53,8 @@ export const get = async (req: Request, res: Response) => {
         ALL_SECTIONS,
       },
       SUBMITTED_STATUS: APPLICATION.STATUS.SUBMITTED,
+      currentPageNumber,
+      pages: paginationItems,
     });
   } catch (err) {
     console.error("Error getting applications and rendering 'dashboard' page %O", err);

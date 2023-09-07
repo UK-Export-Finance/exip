@@ -5,9 +5,11 @@ import { EXTERNAL_API_ENDPOINTS } from '../../constants';
 dotenv.config();
 
 const { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
+const { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
+
 const headers = {
   'Content-Type': 'application/json',
-  [String(process.env.APIM_MDM_KEY)]: process.env.APIM_MDM_VALUE,
+  [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
 };
 
 /**
@@ -22,7 +24,7 @@ const getIndustrySectorNames = {
 
       const response = await axios({
         method: 'get',
-        url: `${process.env.APIM_MDM_URL}${APIM_MDM.INDUSTRY_SECTORS}`,
+        url: `${APIM_MDM_URL}${APIM_MDM.INDUSTRY_SECTORS}`,
         headers,
         validateStatus(status) {
           const acceptableStatus = [200, 404];
@@ -38,14 +40,14 @@ const getIndustrySectorNames = {
       }
 
       return {
-        data: response.data,
         success: true,
+        data: response.data,
       };
     } catch (err) {
       console.error('Error calling industry sector API %O', err);
       return {
-        apiError: true,
         success: false,
+        apiError: true,
       };
     }
   },

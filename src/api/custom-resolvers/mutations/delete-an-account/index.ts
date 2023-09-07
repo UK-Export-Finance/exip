@@ -1,7 +1,6 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
 import getAccountByField from '../../../helpers/get-account-by-field';
 import getAuthenticationRetriesByAccountId from '../../../helpers/get-authentication-retries-by-account-id';
-import { Account, AccountDeletionVariables } from '../../../types';
+import { Account, AccountDeletionVariables, Context } from '../../../types';
 
 /**
  * deleteAnAccount

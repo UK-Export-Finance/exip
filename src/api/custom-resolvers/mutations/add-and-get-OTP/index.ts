@@ -1,8 +1,7 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
 import { FIELD_IDS } from '../../../constants';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import generateOTPAndUpdateAccount from '../../../helpers/generate-otp-and-update-account';
-import { AddOtpToAccountVariables, AddAndGetOtpResponse } from '../../../types';
+import { AddOtpToAccountVariables, AddAndGetOtpResponse, Context } from '../../../types';
 
 /**
  * addAndGetOTP

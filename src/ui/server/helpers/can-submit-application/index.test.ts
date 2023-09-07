@@ -23,14 +23,14 @@ describe('server/helpers/can-submit-application', () => {
     });
   });
 
-  describe(`when an application does not have a ${APPLICATION.STATUS.DRAFT} status`, () => {
-    const mockApplicationNotDraft = {
+  describe(`when an application does not have a ${APPLICATION.STATUS.IN_PROGRESS} status`, () => {
+    const mockApplicationSubmitted = {
       ...mockApplication,
       status: APPLICATION.STATUS.SUBMITTED,
     };
 
     it('should return false', () => {
-      const result = canSubmitApplication(mockApplicationNotDraft);
+      const result = canSubmitApplication(mockApplicationSubmitted);
 
       expect(result).toEqual(false);
     });
@@ -46,6 +46,19 @@ describe('server/helpers/can-submit-application', () => {
 
     it('should return false', () => {
       const result = canSubmitApplication(mockApplicationDeadlinePassed);
+
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('when an application has a submissionCount that is greater than 0', () => {
+    const mockApplicationSubmitted = {
+      ...mockApplication,
+      submissionCount: 1,
+    };
+
+    it('should return false', () => {
+      const result = canSubmitApplication(mockApplicationSubmitted);
 
       expect(result).toEqual(false);
     });

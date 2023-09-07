@@ -6,25 +6,33 @@ import { Application } from '../../../types';
 
 /**
  * canSubmitApplication
- * Check if the application is complete, has a draft status and is submitting before the submission deadline
+ * Check if the application is:
+ * - Complete
+ * - Has a draft status
+ * - Is submitting before the submission deadline
+ * - Has not been submitted before
  * @param {Object} Application
  * @returns {Boolean}
  */
 const canSubmitApplication = (application: Application): boolean => {
-  const { status, submissionDeadline } = application;
+  const { status, submissionCount, submissionDeadline } = application;
 
   // check the application is complete
   const flatApplicationData = flattenApplicationData(application);
+
   const isComplete = applicationIsComplete(flatApplicationData);
 
-  // check the application status is draft
-  const hasDraftStatus = status === APPLICATION.STATUS.DRAFT;
+  // check the application status is in progress
+  const isInProgress = status === APPLICATION.STATUS.IN_PROGRESS;
 
-  // check the current date vs submission deadline
+  // check that the current date is before the submission deadline
   const now = new Date();
   const validSubmissionDate = isAfter(new Date(submissionDeadline), now);
 
-  if (isComplete && hasDraftStatus && validSubmissionDate) {
+  // check that it has not been submitted before
+  const isFirstSubmission = submissionCount === 0;
+
+  if (isComplete && isInProgress && validSubmissionDate && isFirstSubmission) {
     return true;
   }
 

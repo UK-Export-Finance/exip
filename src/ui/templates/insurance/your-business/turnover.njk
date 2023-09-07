@@ -18,7 +18,7 @@
     text: CONTENT_STRINGS.LINKS.BACK,
     href: BACK_LINK,
     attributes: {
-      "data-cy": "back-link"
+      "data-cy": DATA_CY.BACK_LINK
     }
   }) }}
 
@@ -40,7 +40,7 @@
         <span class="govuk-caption-xl" data-cy="heading-caption">
           {{CONTENT_STRINGS.HEADING_CAPTION}}
         </span>
-        <h1 class="govuk-heading-xl" data-cy="heading">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+        <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
       </div>
 
       {% if application.company[FIELDS.FINANCIAL_YEAR_END_DATE.ID] %}

@@ -9,6 +9,8 @@ const applicationQuery = gql`
         version
         createdAt
         updatedAt
+        dealType
+        submissionCount
         submissionDeadline
         submissionType
         submissionDate

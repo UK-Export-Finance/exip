@@ -308,7 +308,7 @@ var CUSTOM_RESOLVERS = [
   "createFeedbackAndSendEmail"
 ];
 if (isDevEnvironment) {
-  CUSTOM_RESOLVERS.push("addAndGetOTP", "deleteAnAccount", "getAccountPasswordResetToken");
+  CUSTOM_RESOLVERS.push("addAndGetOTP", "createApplications", "deleteAnAccount", "deleteApplications", "getAccountPasswordResetToken");
 }
 var ALLOWED_GRAPHQL_RESOLVERS = [...DEFAULT_RESOLVERS, ...CUSTOM_RESOLVERS];
 
@@ -348,10 +348,12 @@ var latest_default = LATEST_VERSION_NUMBER;
 var LATEST_VERSION = get_application_definition_default(latest_default);
 var APPLICATION = {
   LATEST_VERSION,
+  DEAL_TYPE: "EXIP",
+  SUBMISSION_COUNT_DEFAULT: 0,
+  SUBMISSION_DEADLINE_IN_MONTHS: 1,
   SUBMISSION_TYPE: {
     MIA: "Manual Inclusion Application"
   },
-  SUBMISSION_DEADLINE_IN_MONTHS: 1,
   POLICY_TYPE: {
     SINGLE: "Single contract policy",
     MULTIPLE: "Multiple contract policy"
@@ -365,7 +367,7 @@ var APPLICATION = {
     MAXIMUM_BUYER_CAN_OWE: LATEST_VERSION.MAXIMUM_BUYER_CAN_OWE
   },
   STATUS: {
-    DRAFT: "Draft",
+    IN_PROGRESS: "In progress",
     SUBMITTED: "Submitted to UKEF"
   }
 };
@@ -392,7 +394,7 @@ var FIELD_VALUES = {
 
 // helpers/policy-type/index.ts
 var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
-var isMultiPolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 // constants/XLSX-CONFIG/index.ts
 var {
@@ -425,7 +427,7 @@ var XLSX_ROW_INDEXES = (application2) => {
   const policyType = policyAndExport[POLICY_TYPE2];
   let isMultiplePolicy = false;
   let isUsingBroker = false;
-  if (isMultiPolicyType(policyType)) {
+  if (isMultiplePolicyType(policyType)) {
     isMultiplePolicy = true;
   }
   if (broker[USING_BROKER] === ANSWERS.YES) {
@@ -715,8 +717,12 @@ var lists = {
       referenceNumber: (0, import_fields.integer)({
         isIndexed: true
       }),
-      submissionDeadline: (0, import_fields.timestamp)(),
+      submissionCount: (0, import_fields.integer)({
+        defaultValue: APPLICATION.SUBMISSION_COUNT_DEFAULT,
+        validation: { isRequired: true }
+      }),
       submissionDate: (0, import_fields.timestamp)(),
+      submissionDeadline: (0, import_fields.timestamp)(),
       submissionType: (0, import_fields.select)({
         options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA
@@ -739,6 +745,11 @@ var lists = {
       version: (0, import_fields.text)({
         defaultValue: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
         validation: { isRequired: true }
+      }),
+      dealType: (0, import_fields.text)({
+        defaultValue: APPLICATION.DEAL_TYPE,
+        validation: { isRequired: true },
+        db: { nativeType: "VarChar(4)" }
       })
     },
     hooks: {
@@ -838,7 +849,7 @@ var lists = {
             modifiedData.updatedAt = now;
             modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
             modifiedData.submissionType = APPLICATION.SUBMISSION_TYPE.MIA;
-            modifiedData.status = APPLICATION.STATUS.DRAFT;
+            modifiedData.status = APPLICATION.STATUS.IN_PROGRESS;
             return modifiedData;
           } catch (err) {
             console.error("Error adding default data to a new application. %O", err);
@@ -2962,26 +2973,28 @@ var sendEmailReactivateAccountLink = async (root, variables, context) => {
 };
 var send_email_reactivate_account_link_default = sendEmailReactivateAccountLink;
 
-// custom-resolvers/mutations/delete-application-by-refrence-number/index.ts
+// custom-resolvers/mutations/delete-application-by-reference-number/index.ts
 var deleteApplicationByReferenceNumber = async (root, variables, context) => {
   try {
     console.info("Deleting application by reference number");
     const { referenceNumber } = variables;
-    const application2 = await context.db.Application.findMany({
+    const applications = await context.db.Application.findMany({
       where: {
         referenceNumber: { equals: referenceNumber }
       }
     });
-    const [{ id }] = application2;
-    const deleteResponse = await context.db.Application.deleteOne({
-      where: {
-        id
+    if (applications.length) {
+      const [{ id }] = applications;
+      const deleteResponse = await context.db.Application.deleteOne({
+        where: {
+          id
+        }
+      });
+      if (deleteResponse?.id) {
+        return {
+          success: true
+        };
       }
-    });
-    if (deleteResponse.id) {
-      return {
-        success: true
-      };
     }
     return {
       success: false
@@ -2991,7 +3004,10 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
     throw new Error(`Deleting application by reference number (DeleteApplicationByReferenceNumber mutation) ${err}`);
   }
 };
-var delete_application_by_refrence_number_default = deleteApplicationByReferenceNumber;
+var delete_application_by_reference_number_default = deleteApplicationByReferenceNumber;
+
+// types.ts
+var import_types2 = __toESM(require("@keystone-6/core/types"));
 
 // helpers/map-sic-codes/index.ts
 var mapSicCodes = (company, sicCodes, industrySectorNames) => {
@@ -3865,7 +3881,7 @@ var mapPolicyAndExport = (application2) => {
   if (isSinglePolicyType(policyType)) {
     mapped = [...mapped, ...mapSinglePolicyFields(application2)];
   }
-  if (isMultiPolicyType(policyType)) {
+  if (isMultiplePolicyType(policyType)) {
     mapped = [...mapped, ...mapMultiplePolicyFields(application2)];
   }
   mapped = [...mapped, ...mapPolicyAndExportOutro(application2)];
@@ -3942,6 +3958,10 @@ var mapBroker = (application2) => {
 };
 var mapExporter = (application2) => {
   const { company, companySicCodes, business } = application2;
+  let financialYearEndDate = "No data from Companies House";
+  if (company[FINANCIAL_YEAR_END_DATE2]) {
+    financialYearEndDate = format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM");
+  }
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.EXPORTER_BUSINESS, ""),
     // company fields
@@ -3952,7 +3972,7 @@ var mapExporter = (application2) => {
     xlsx_row_default(CONTENT_STRINGS3[TRADING_NAME2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_NAME2])),
     xlsx_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_ADDRESS2])),
     xlsx_row_default(XLSX.FIELDS[COMPANY_SIC2], mapSicCodes2(companySicCodes)),
-    xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM")),
+    xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, financialYearEndDate),
     xlsx_row_default(XLSX.FIELDS[WEBSITE3], company[WEBSITE3]),
     xlsx_row_default(XLSX.FIELDS[PHONE_NUMBER3], company[PHONE_NUMBER3]),
     // business fields
@@ -4137,15 +4157,18 @@ var submitApplication = async (root, variables, context) => {
       where: { id: variables.applicationId }
     });
     if (application2) {
-      const hasDraftStatus = application2.status === APPLICATION.STATUS.DRAFT;
+      const { status, submissionDeadline, submissionCount } = application2;
+      const isInProgress = status === APPLICATION.STATUS.IN_PROGRESS;
       const now = /* @__PURE__ */ new Date();
-      const validSubmissionDate = (0, import_date_fns8.isAfter)(new Date(application2.submissionDeadline), now);
-      const canSubmit = hasDraftStatus && validSubmissionDate;
+      const validSubmissionDate = (0, import_date_fns8.isAfter)(new Date(submissionDeadline), now);
+      const isFirstSubmission = submissionCount === 0;
+      const canSubmit = isInProgress && validSubmissionDate && isFirstSubmission;
       if (canSubmit) {
         const update = {
           status: APPLICATION.STATUS.SUBMITTED,
-          previousStatus: APPLICATION.STATUS.DRAFT,
-          submissionDate: now
+          previousStatus: APPLICATION.STATUS.IN_PROGRESS,
+          submissionDate: now,
+          submissionCount: submissionCount + 1
         };
         const updatedApplication = await context.db.Application.updateOne({
           where: { id: application2.id },
@@ -4301,10 +4324,15 @@ var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => {
 var import_axios = __toESM(require("axios"));
 var import_dotenv5 = __toESM(require("dotenv"));
 import_dotenv5.default.config();
+<<<<<<< HEAD
 var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
+=======
+var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
+var { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
+>>>>>>> main-application
 var headers = {
   "Content-Type": "application/json",
-  [String(process.env.APIM_MDM_KEY)]: process.env.APIM_MDM_VALUE
+  [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
 };
 var getIndustrySectorNames = {
   get: async () => {
@@ -4312,7 +4340,11 @@ var getIndustrySectorNames = {
       console.info("Calling industry sector API");
       const response = await (0, import_axios.default)({
         method: "get",
+<<<<<<< HEAD
         url: `${process.env.APIM_MDM_URL}${APIM_MDM.INDUSTRY_SECTORS}`,
+=======
+        url: `${APIM_MDM_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`,
+>>>>>>> main-application
         headers,
         validateStatus(status) {
           const acceptableStatus = [200, 404];
@@ -4325,14 +4357,14 @@ var getIndustrySectorNames = {
         };
       }
       return {
-        data: response.data,
-        success: true
+        success: true,
+        data: response.data
       };
     } catch (err) {
       console.error("Error calling industry sector API %O", err);
       return {
-        apiError: true,
-        success: false
+        success: false,
+        apiError: true
       };
     }
   }
@@ -4343,8 +4375,8 @@ var industry_sector_default = getIndustrySectorNames;
 var import_axios2 = __toESM(require("axios"));
 var import_dotenv6 = __toESM(require("dotenv"));
 import_dotenv6.default.config();
-var username = process.env.COMPANIES_HOUSE_API_KEY;
-var companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
+var username = String(process.env.COMPANIES_HOUSE_API_KEY);
+var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
 var companiesHouse = {
   get: async (companyNumber) => {
     try {
@@ -4363,8 +4395,8 @@ var companiesHouse = {
         };
       }
       return {
-        data: response.data,
-        success: true
+        success: true,
+        data: response.data
       };
     } catch (err) {
       console.error("Error calling Companies House API %O", err);
@@ -4485,7 +4517,7 @@ var customResolvers = {
     accountPasswordReset: account_password_reset_default,
     sendEmailPasswordResetLink: send_email_password_reset_link_default,
     sendEmailReactivateAccountLink: send_email_reactivate_account_link_default,
-    deleteApplicationByReferenceNumber: delete_application_by_refrence_number_default,
+    deleteApplicationByReferenceNumber: delete_application_by_reference_number_default,
     updateCompanyAndCompanyAddress: update_company_and_company_address_default,
     submitApplication: submit_application_default,
     createFeedbackAndSendEmail: create_feedback_default,

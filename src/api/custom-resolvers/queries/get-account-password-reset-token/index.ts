@@ -1,7 +1,6 @@
-import { Context } from '.keystone/types'; // eslint-disable-line
 import { FIELD_IDS } from '../../../constants';
 import getAccountByField from '../../../helpers/get-account-by-field';
-import { GetAccountPasswordResetTokenVariables, AccountPasswordResetTokenResponse } from '../../../types';
+import { AccountPasswordResetTokenResponse, Context, GetAccountPasswordResetTokenVariables } from '../../../types';
 
 /**
  * getAccountPasswordResetToken

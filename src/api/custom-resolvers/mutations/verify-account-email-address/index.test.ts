@@ -3,11 +3,10 @@ import verifyAccountEmailAddress from '.';
 import { ACCOUNT, FIELD_IDS, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
 import encryptPassword from '../../../helpers/encrypt-password';
 import accounts from '../../../test-helpers/accounts';
+import authRetries from '../../../test-helpers/auth-retries';
 import { mockAccount } from '../../../test-mocks';
-import { Account, VerifyEmailAddressResponse, VerifyEmailAddressVariables } from '../../../types';
+import { Account, Context, VerifyEmailAddressResponse, VerifyEmailAddressVariables } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
-
-const context = getKeystoneContext();
 
 const {
   EMAIL: { VERIFICATION_EXPIRY: EMAIL_VERIFICATION_EXPIRY },
@@ -27,17 +26,23 @@ const {
 } = FIELD_IDS;
 
 describe('custom-resolvers/verify-account-email-address', () => {
+  let context: Context;
   let account: Account;
   let verificationHash: string;
   let result: VerifyEmailAddressResponse;
 
   const variables = {} as VerifyEmailAddressVariables;
 
+  beforeAll(() => {
+    context = getKeystoneContext();
+  });
+
   afterAll(() => {
     jest.resetAllMocks();
   });
 
   beforeEach(async () => {
+    await authRetries.deleteAll(context);
     await accounts.deleteAll(context);
 
     /**
@@ -96,7 +101,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
   });
 
   test('should remove all entries for the account in the AuthenticationRetry table', async () => {
-    const retries = await context.query.AuthenticationRetry.findMany();
+    const retries = await authRetries.findAll(context);
 
     expect(retries.length).toEqual(0);
   });
