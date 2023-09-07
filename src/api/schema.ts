@@ -144,17 +144,6 @@ export const lists = {
               },
             };
 
-            // generate and attach a new 'buyer' relationship
-            // const { id: buyerId } = await context.db.Buyer.createOne({
-            //   data: {},
-            // });
-
-            // modifiedData.buyer = {
-            //   connect: {
-            //     id: buyerId,
-            //   },
-            // };
-
             // generate and attach a new 'sectionReview' relationship
             const { id: sectionReviewId } = await context.db.SectionReview.createOne({
               data: {},

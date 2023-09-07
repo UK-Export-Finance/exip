@@ -9,7 +9,7 @@ import { CreateAnApplicationVariables, Context } from '../../../types';
  * 2) Create a new application with owner relationship.
  * 3) Create eligibility relationship with the country and application.
  * 4) Create buyer relationship with the country and application.
- * 5) Update the application with buyer and eligibility ID.s
+ * 5) Update the application with buyer and eligibility IDs.
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the CreateAnApplication mutation
  * @param {Object} KeystoneJS context API
