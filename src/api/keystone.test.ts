@@ -16,7 +16,7 @@ describe('Create an Application', () => {
     application = (await context.query.Application.createOne({
       data: {},
       query:
-        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status previousStatus version eligibility { id } policyAndExport { id } owner { id } company { id } business { id businessContactDetail { id } } broker { id } buyer { id } sectionReview { id } declaration { id }',
+        'id createdAt updatedAt referenceNumber dealType submissionCount submissionDeadline submissionType status previousStatus version eligibility { id } policyAndExport { id } owner { id } company { id } business { id businessContactDetail { id } } broker { id } buyer { id } sectionReview { id } declaration { id }',
     })) as Application;
   });
 
@@ -51,6 +51,18 @@ describe('Create an Application', () => {
     const expected = APPLICATION.LATEST_VERSION.VERSION_NUMBER;
 
     expect(application.version).toEqual(expected);
+  });
+
+  test('it should have the deal type', () => {
+    const expected = APPLICATION.DEAL_TYPE;
+
+    expect(application.dealType).toEqual(expected);
+  });
+
+  test('it should have a default submission count', () => {
+    const expected = APPLICATION.SUBMISSION_COUNT_DEFAULT;
+
+    expect(application.submissionCount).toEqual(expected);
   });
 
   test('it should have a submission deadline date', () => {

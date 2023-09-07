@@ -27,14 +27,18 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
     })) as Application;
 
     if (application) {
-      const isInProgress = application.status === APPLICATION.STATUS.IN_PROGRESS;
+      const { status, submissionDeadline, submissionCount } = application;
+
+      const isInProgress = status === APPLICATION.STATUS.IN_PROGRESS;
 
       const now = new Date();
 
       // check the current date vs submission deadline
-      const validSubmissionDate = isAfter(new Date(application.submissionDeadline), now);
+      const validSubmissionDate = isAfter(new Date(submissionDeadline), now);
 
-      const canSubmit = isInProgress && validSubmissionDate;
+      const isFirstSubmission = submissionCount === 0;
+
+      const canSubmit = isInProgress && validSubmissionDate && isFirstSubmission;
 
       if (canSubmit) {
         // change the status and add submission date
@@ -42,6 +46,7 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
           status: APPLICATION.STATUS.SUBMITTED,
           previousStatus: APPLICATION.STATUS.IN_PROGRESS,
           submissionDate: now,
+          submissionCount: submissionCount + 1,
         };
 
         const updatedApplication = await context.db.Application.updateOne({
