@@ -135,7 +135,7 @@ CREATE TABLE `Application` (
 	`sectionReview` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`owner` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`version` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
-	`dealType` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'EXIP',
+	`dealType` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'EXIP',
   PRIMARY KEY (`id`),
   KEY `Application_eligibility_idx` (`eligibility`),
   KEY `Application_referenceNumber_idx` (`referenceNumber`),

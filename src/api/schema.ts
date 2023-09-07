@@ -60,6 +60,7 @@ export const lists = {
       dealType: text({
         defaultValue: APPLICATION.DEAL_TYPE,
         validation: { isRequired: true },
+        db: { nativeType: 'VarChar(4)' },
       }),
     },
     hooks: {

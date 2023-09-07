@@ -49,7 +49,7 @@ model Application {
   declaration                      Declaration?      @relation("Application_declaration", fields: [declarationId], references: [id])
   declarationId                    String?           @map("declaration")
   version                          String            @default("1")
-  dealType                         String            @default("EXIP")
+  dealType                         String            @default("EXIP") @mysql.VarChar(4)
   from_ReferenceNumber_application ReferenceNumber[] @relation("ReferenceNumber_application")
   from_PolicyAndExport_application PolicyAndExport[] @relation("PolicyAndExport_application")
   from_Account_applications        Account[]         @relation("Account_applications")
