@@ -4540,7 +4540,7 @@ var keystone_default = withAuth(
       port: 5001,
       extendExpressApp: (app) => {
         app.use(check_api_key_default);
-        if (NODE_ENV2 === "production") {
+        if (isProdEnvironment) {
           app.use(rate_limiter_default);
         }
       }
@@ -4556,10 +4556,6 @@ var keystone_default = withAuth(
         introspection: isDevEnvironment2,
         plugins: apollo_plugins_default
       }
-    },
-    ui: {
-      isDisabled: isProdEnvironment,
-      isAccessAllowed: (context) => !!context.session?.data
     },
     lists,
     session,
