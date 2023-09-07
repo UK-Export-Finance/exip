@@ -4,6 +4,7 @@ import { ROUTES, TEMPLATES } from '../../../../constants';
 import corePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
+import mapEligibilityAnswers from '../../../../helpers/map-eligibility-answers';
 import api from '../../../../api';
 import { mockAccount, mockApplication, mockSession, mockReq, mockRes } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
@@ -85,15 +86,17 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
       });
 
       it('should call api.keystone.application.create', async () => {
-        const eligibilityAnswers = req.session.submittedData.insuranceEligibility;
+        const answers = req.session.submittedData.insuranceEligibility;
 
         await post(req, res);
 
         expect(createApplicationSpy).toHaveBeenCalledTimes(1);
 
-        const sanitisedData = sanitiseData(eligibilityAnswers);
+        const sanitisedData = sanitiseData(answers);
 
-        expect(createApplicationSpy).toHaveBeenCalledWith(sanitisedData, mockAccount.id);
+        const eligibilityAnswers = mapEligibilityAnswers(sanitisedData);
+
+        expect(createApplicationSpy).toHaveBeenCalledWith(eligibilityAnswers, mockAccount.id);
       });
 
       it(`should redirect to ${ALL_SECTIONS}`, async () => {

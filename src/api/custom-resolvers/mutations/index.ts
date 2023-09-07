@@ -9,6 +9,7 @@ import addAndGetOTP from './add-and-get-OTP';
 import sendEmailPasswordResetLink from './send-email-password-reset-link';
 import accountPasswordReset from './account-password-reset';
 import sendEmailReactivateAccountLink from './send-email-reactivate-account-link';
+import createAnApplication from './create-an-application';
 import deleteApplicationByReferenceNumber from './delete-application-by-reference-number';
 import updateCompanyAndCompanyAddress from './update-company-and-company-address';
 import submitApplication from './submit-application';
@@ -27,6 +28,7 @@ export {
   sendEmailPasswordResetLink,
   accountPasswordReset,
   sendEmailReactivateAccountLink,
+  createAnApplication,
   deleteApplicationByReferenceNumber,
   updateCompanyAndCompanyAddress,
   submitApplication,

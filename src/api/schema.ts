@@ -69,17 +69,6 @@ export const lists = {
 
             modifiedData.referenceNumber = newReferenceNumber;
 
-            // generate and attach eligibility relationship with empty answers
-            const { id: eligibilityId } = await context.db.Eligibility.createOne({
-              data: {},
-            });
-
-            modifiedData.eligibility = {
-              connect: {
-                id: eligibilityId,
-              },
-            };
-
             // generate and attach a new 'policy and export' relationship
             const { id: policyAndExportId } = await context.db.PolicyAndExport.createOne({
               data: {},
@@ -147,15 +136,15 @@ export const lists = {
             };
 
             // generate and attach a new 'buyer' relationship
-            const { id: buyerId } = await context.db.Buyer.createOne({
-              data: {},
-            });
+            // const { id: buyerId } = await context.db.Buyer.createOne({
+            //   data: {},
+            // });
 
-            modifiedData.buyer = {
-              connect: {
-                id: buyerId,
-              },
-            };
+            // modifiedData.buyer = {
+            //   connect: {
+            //     id: buyerId,
+            //   },
+            // };
 
             // generate and attach a new 'sectionReview' relationship
             const { id: sectionReviewId } = await context.db.SectionReview.createOne({
@@ -208,25 +197,13 @@ export const lists = {
 
             const applicationId = item.id;
 
-            const { referenceNumber, eligibilityId } = item;
+            const { referenceNumber } = item;
 
-            const { policyAndExportId, companyId, businessId, brokerId, buyerId, sectionReviewId, declarationId } = item;
+            const { policyAndExportId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-              },
-            });
-
-            // add the application ID to the eligibility entry.
-            await context.db.Eligibility.updateOne({
-              where: { id: eligibilityId },
               data: {
                 application: {
                   connect: {
@@ -275,18 +252,6 @@ export const lists = {
             // add the application ID to the broker entry.
             await context.db.Broker.updateOne({
               where: { id: brokerId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-              },
-            });
-
-            // add the application ID to the buyer entry.
-            await context.db.Buyer.updateOne({
-              where: { id: buyerId },
               data: {
                 application: {
                   connect: {

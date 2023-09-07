@@ -79,6 +79,7 @@ var shared_default = SHARED;
 // constants/field-ids/shared-eligibility/index.ts
 var SHARED_ELIGIBILITY = {
   BUYER_COUNTRY: "buyerCountry",
+  BUYER_COUNTRY_ISO_CODE: "buyerCountryIsoCode",
   HAS_MINIMUM_UK_GOODS_OR_SERVICES: "hasMinimumUkGoodsOrServices",
   VALID_EXPORTER_LOCATION: "validExporterLocation"
 };
@@ -265,7 +266,6 @@ var { NODE_ENV } = process.env;
 var isDevEnvironment = NODE_ENV === "development";
 var DEFAULT_RESOLVERS = [
   // application
-  "createApplication",
   "updateBroker",
   "updateBusinessContactDetail",
   "updateBusiness",
@@ -297,6 +297,7 @@ var CUSTOM_RESOLVERS = [
   "verifyAccountReactivationToken",
   "verifyAccountSignInCode",
   // application
+  "createAnApplication",
   "declarationAntiBriberies",
   "declarationConfirmationAndAcknowledgements",
   "declarationHowDataWillBeUsed",
@@ -392,7 +393,7 @@ var FIELD_VALUES = {
 
 // helpers/policy-type/index.ts
 var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
-var isMultiPolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 // constants/XLSX-CONFIG/index.ts
 var {
@@ -425,7 +426,7 @@ var XLSX_ROW_INDEXES = (application2) => {
   const policyType = policyAndExport[POLICY_TYPE2];
   let isMultiplePolicy = false;
   let isUsingBroker = false;
-  if (isMultiPolicyType(policyType)) {
+  if (isMultiplePolicyType(policyType)) {
     isMultiplePolicy = true;
   }
   if (broker[USING_BROKER] === ANSWERS.YES) {
@@ -751,14 +752,6 @@ var lists = {
               data: {}
             });
             modifiedData.referenceNumber = newReferenceNumber;
-            const { id: eligibilityId } = await context.db.Eligibility.createOne({
-              data: {}
-            });
-            modifiedData.eligibility = {
-              connect: {
-                id: eligibilityId
-              }
-            };
             const { id: policyAndExportId } = await context.db.PolicyAndExport.createOne({
               data: {}
             });
@@ -809,14 +802,6 @@ var lists = {
                 id: brokerId
               }
             };
-            const { id: buyerId } = await context.db.Buyer.createOne({
-              data: {}
-            });
-            modifiedData.buyer = {
-              connect: {
-                id: buyerId
-              }
-            };
             const { id: sectionReviewId } = await context.db.SectionReview.createOne({
               data: {}
             });
@@ -852,20 +837,10 @@ var lists = {
           try {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
-            const { referenceNumber, eligibilityId } = item;
-            const { policyAndExportId, companyId, businessId, brokerId, buyerId, sectionReviewId, declarationId } = item;
+            const { referenceNumber } = item;
+            const { policyAndExportId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
-            await context.db.Eligibility.updateOne({
-              where: { id: eligibilityId },
               data: {
                 application: {
                   connect: {
@@ -906,16 +881,6 @@ var lists = {
             });
             await context.db.Broker.updateOne({
               where: { id: brokerId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
-            await context.db.Buyer.updateOne({
-              where: { id: buyerId },
               data: {
                 application: {
                   connect: {
@@ -1590,6 +1555,23 @@ var typeDefs = `
     email: String
   }
 
+  input ApplicationEligibility {
+    buyerCountryIsoCode: String!
+    hasCompaniesHouseNumber: Boolean!
+    otherPartiesInvolved: Boolean!
+    paidByLetterOfCredit: Boolean!
+    needPreCreditPeriodCover: Boolean!
+    wantCoverOverMaxAmount: Boolean!
+    wantCoverOverMaxPeriod: Boolean!
+    validExporterLocation: Boolean!
+    hasMinimumUkGoodsOrServices: Boolean!
+  }
+
+  type CreateAnApplicationResponse {
+    success: Boolean!
+    id: String
+  }
+
   type Mutation {
     """ create an account """
     createAnAccount(
@@ -1599,6 +1581,12 @@ var typeDefs = `
       email: String!
       password: String!
     ): CreateAnAccountResponse
+
+    """ create an application """
+    createAnApplication(
+      accountId: String!
+      eligibilityAnswers: ApplicationEligibility!
+    ): CreateAnApplicationResponse
 
     """ delete an account """
     deleteAnAccount(
@@ -2962,6 +2950,94 @@ var sendEmailReactivateAccountLink = async (root, variables, context) => {
 };
 var send_email_reactivate_account_link_default = sendEmailReactivateAccountLink;
 
+// helpers/get-country-by-field/index.ts
+var getCountryByField = async (context, field, value) => {
+  try {
+    console.info("Getting country by field/value");
+    const countriesArray = await context.db.Country.findMany({
+      where: {
+        [field]: { equals: value }
+      },
+      take: 1
+    });
+    if (!countriesArray?.length || !countriesArray[0]) {
+      console.info("Getting country by field - no country exists with the provided field/value");
+      return false;
+    }
+    const country = countriesArray[0];
+    return country;
+  } catch (err) {
+    console.error("Error getting country by field/value %O", err);
+    throw new Error(`Getting country by field/value ${err}`);
+  }
+};
+var get_country_by_field_default = getCountryByField;
+
+// custom-resolvers/mutations/create-an-application/index.ts
+var createAnApplication = async (root, variables, context) => {
+  console.info("Creating application for ", variables.accountId);
+  try {
+    const { accountId, eligibilityAnswers } = variables;
+    const account = await get_account_by_id_default(context, accountId);
+    if (!account) {
+      return {
+        success: false
+      };
+    }
+    const { buyerCountryIsoCode, ...otherEligibilityAnswers } = eligibilityAnswers;
+    const country = await get_country_by_field_default(context, "isoCode", buyerCountryIsoCode);
+    const application2 = await context.db.Application.createOne({
+      data: {
+        owner: {
+          connect: { id: accountId }
+        }
+      }
+    });
+    const eligibility = await context.db.Eligibility.createOne({
+      data: {
+        ...otherEligibilityAnswers,
+        buyerCountry: {
+          connect: { id: country.id }
+        },
+        application: {
+          connect: { id: application2.id }
+        }
+      }
+    });
+    const buyer = await context.db.Buyer.createOne({
+      data: {
+        country: {
+          connect: { id: country.id }
+        },
+        application: {
+          connect: { id: application2.id }
+        }
+      }
+    });
+    const updatedApplication = await context.db.Application.updateOne({
+      where: {
+        id: application2.id
+      },
+      data: {
+        buyer: {
+          connect: { id: buyer.id }
+        },
+        eligibility: {
+          connect: { id: eligibility.id }
+        }
+      }
+    });
+    return {
+      ...updatedApplication,
+      success: true
+    };
+  } catch (err) {
+    console.error("Error creating application %O", err);
+    throw new Error(`Creating application ${err}`);
+  }
+};
+var create_an_application_default = createAnApplication;
+
 // custom-resolvers/mutations/delete-application-by-reference-number/index.ts
 var deleteApplicationByReferenceNumber = async (root, variables, context) => {
   try {
@@ -3062,29 +3138,6 @@ var update_company_and_company_address_default = updateCompanyAndCompanyAddress;
 
 // custom-resolvers/mutations/submit-application/index.ts
 var import_date_fns8 = require("date-fns");
-
-// helpers/get-country-by-field/index.ts
-var getCountryByField = async (context, field, value) => {
-  try {
-    console.info("Getting country by field/value");
-    const countriesArray = await context.db.Country.findMany({
-      where: {
-        [field]: { equals: value }
-      },
-      take: 1
-    });
-    if (!countriesArray?.length || !countriesArray[0]) {
-      console.info("Getting country by field - no country exists with the provided field/value");
-      return false;
-    }
-    const country = countriesArray[0];
-    return country;
-  } catch (err) {
-    console.error("Error getting country by field/value %O", err);
-    throw new Error(`Getting country by field/value ${err}`);
-  }
-};
-var get_country_by_field_default = getCountryByField;
 
 // helpers/get-populated-application/index.ts
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
@@ -3870,7 +3923,7 @@ var mapPolicyAndExport = (application2) => {
   if (isSinglePolicyType(policyType)) {
     mapped = [...mapped, ...mapSinglePolicyFields(application2)];
   }
-  if (isMultiPolicyType(policyType)) {
+  if (isMultiplePolicyType(policyType)) {
     mapped = [...mapped, ...mapMultiplePolicyFields(application2)];
   }
   mapped = [...mapped, ...mapPolicyAndExportOutro(application2)];
@@ -4495,6 +4548,7 @@ var customResolvers = {
     accountPasswordReset: account_password_reset_default,
     sendEmailPasswordResetLink: send_email_password_reset_link_default,
     sendEmailReactivateAccountLink: send_email_reactivate_account_link_default,
+    createAnApplication: create_an_application_default,
     deleteApplicationByReferenceNumber: delete_application_by_reference_number_default,
     updateCompanyAndCompanyAddress: update_company_and_company_address_default,
     submitApplication: submit_application_default,

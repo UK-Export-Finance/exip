@@ -10,7 +10,6 @@ const isDevEnvironment = NODE_ENV === 'development';
  */
 const DEFAULT_RESOLVERS = [
   // application
-  'createApplication',
   'updateBroker',
   'updateBusinessContactDetail',
   'updateBusiness',
@@ -50,6 +49,7 @@ const CUSTOM_RESOLVERS = [
   'verifyAccountSignInCode',
 
   // application
+  'createAnApplication',
   'declarationAntiBriberies',
   'declarationConfirmationAndAcknowledgements',
   'declarationHowDataWillBeUsed',

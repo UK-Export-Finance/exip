@@ -10,6 +10,7 @@ import generateAccountAlreadyExistsValidationErrors from './validation/account-a
 import saveData from './save-data';
 import canCreateAnApplication from '../../../../../helpers/can-create-an-application';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
+import mapEligibilityAnswers from '../../../../../helpers/map-eligibility-answers';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 
@@ -153,7 +154,9 @@ export const post = async (req: Request, res: Response) => {
      * 4) Redirect to the next part of the flow - "confirm email"
      */
     if (canCreateAnApplication(req.session)) {
-      const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
+      const sanitisedData = sanitiseData(req.session.submittedData.insuranceEligibility);
+
+      const eligibilityAnswers = mapEligibilityAnswers(sanitisedData);
 
       req.session.submittedData.insuranceEligibility = {};
 

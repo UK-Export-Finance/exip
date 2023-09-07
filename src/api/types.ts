@@ -33,13 +33,18 @@ interface Country extends ApplicationRelationship {
 }
 
 interface ApplicationEligibility extends ApplicationRelationship {
-  buyerCountry: Country;
+  buyerCountryIsoCode: string;
   hasCompaniesHouseNumber: boolean;
   otherPartiesInvolved: boolean;
   paidByLetterOfCredit: boolean;
   needPreCreditPeriodCover: boolean;
   wantCoverOverMaxAmount: boolean;
   wantCoverOverMaxPeriod: boolean;
+}
+
+interface CreateAnApplicationVariables {
+  accountId: string;
+  eligibilityAnswers: ApplicationEligibility;
 }
 
 interface ApplicationOwner extends ApplicationRelationship {
@@ -449,6 +454,11 @@ interface TestHelperApplicationCreate extends TestHelperCreate {
   data: ApplicationCreateInput;
 }
 
+interface TestHelperApplicationGet {
+  context: Context;
+  applicationId: string;
+}
+
 interface XLSXTitleRowIndexes {
   HEADER: number;
   KEY_INFORMATION: number;
@@ -504,6 +514,7 @@ export {
   CompaniesHouseAPIResponse,
   Context,
   Country,
+  CreateAnApplicationVariables,
   Currency,
   DeleteApplicationByReferenceNumberVariables,
   EmailResponse,
@@ -520,6 +531,7 @@ export {
   SuccessResponse,
   TestHelperAccountCreate,
   TestHelperApplicationCreate,
+  TestHelperApplicationGet,
   TestHelperCreate,
   UpdateCompanyAndCompanyAddressVariables,
   XLSXTitleRowIndexes,
