@@ -30,9 +30,9 @@ const canSubmitApplication = (application: Application): boolean => {
   const validSubmissionDate = isAfter(new Date(submissionDeadline), now);
 
   // check that it has not been submitted before
-  const zeroSubmissionCount = submissionCount === 0;
+  const isFirstSubmission = submissionCount === 0;
 
-  if (isComplete && isInProgress && validSubmissionDate && zeroSubmissionCount) {
+  if (isComplete && isInProgress && validSubmissionDate && isFirstSubmission) {
     return true;
   }
 
