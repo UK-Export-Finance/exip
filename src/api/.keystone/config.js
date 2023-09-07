@@ -4324,12 +4324,8 @@ var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => {
 var import_axios = __toESM(require("axios"));
 var import_dotenv5 = __toESM(require("dotenv"));
 import_dotenv5.default.config();
-<<<<<<< HEAD
 var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
-=======
 var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
-var { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
->>>>>>> main-application
 var headers = {
   "Content-Type": "application/json",
   [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
@@ -4340,11 +4336,7 @@ var getIndustrySectorNames = {
       console.info("Calling industry sector API");
       const response = await (0, import_axios.default)({
         method: "get",
-<<<<<<< HEAD
-        url: `${process.env.APIM_MDM_URL}${APIM_MDM.INDUSTRY_SECTORS}`,
-=======
-        url: `${APIM_MDM_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`,
->>>>>>> main-application
+        url: `${APIM_MDM_URL}${APIM_MDM.INDUSTRY_SECTORS}`,
         headers,
         validateStatus(status) {
           const acceptableStatus = [200, 404];
