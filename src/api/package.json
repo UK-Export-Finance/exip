@@ -11,8 +11,8 @@
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",
     "dev": "keystone dev  --no-ui",
-    "start": "NODE_ENV=production keystone start --no-ui",
-    "build": "NODE_ENV=production keystone build",
+    "start": "keystone start --no-ui",
+    "build": "keystone build",
     "test": "jest --runInBand --verbose --silent --coverage --config=jest.config.js"
   },
   "repository": {
