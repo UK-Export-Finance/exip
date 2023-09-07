@@ -349,10 +349,12 @@ var latest_default = LATEST_VERSION_NUMBER;
 var LATEST_VERSION = get_application_definition_default(latest_default);
 var APPLICATION = {
   LATEST_VERSION,
+  DEAL_TYPE: "EXIP",
+  SUBMISSION_COUNT_DEFAULT: 0,
+  SUBMISSION_DEADLINE_IN_MONTHS: 1,
   SUBMISSION_TYPE: {
     MIA: "Manual Inclusion Application"
   },
-  SUBMISSION_DEADLINE_IN_MONTHS: 1,
   POLICY_TYPE: {
     SINGLE: "Single contract policy",
     MULTIPLE: "Multiple contract policy"
@@ -716,8 +718,12 @@ var lists = {
       referenceNumber: (0, import_fields.integer)({
         isIndexed: true
       }),
-      submissionDeadline: (0, import_fields.timestamp)(),
+      submissionCount: (0, import_fields.integer)({
+        defaultValue: APPLICATION.SUBMISSION_COUNT_DEFAULT,
+        validation: { isRequired: true }
+      }),
       submissionDate: (0, import_fields.timestamp)(),
+      submissionDeadline: (0, import_fields.timestamp)(),
       submissionType: (0, import_fields.select)({
         options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
         defaultValue: APPLICATION.SUBMISSION_TYPE.MIA
@@ -740,6 +746,11 @@ var lists = {
       version: (0, import_fields.text)({
         defaultValue: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
         validation: { isRequired: true }
+      }),
+      dealType: (0, import_fields.text)({
+        defaultValue: APPLICATION.DEAL_TYPE,
+        validation: { isRequired: true },
+        db: { nativeType: "VarChar(4)" }
       })
     },
     hooks: {
@@ -4199,15 +4210,18 @@ var submitApplication = async (root, variables, context) => {
       where: { id: variables.applicationId }
     });
     if (application2) {
-      const isInProgress = application2.status === APPLICATION.STATUS.IN_PROGRESS;
+      const { status, submissionDeadline, submissionCount } = application2;
+      const isInProgress = status === APPLICATION.STATUS.IN_PROGRESS;
       const now = /* @__PURE__ */ new Date();
-      const validSubmissionDate = (0, import_date_fns8.isAfter)(new Date(application2.submissionDeadline), now);
-      const canSubmit = isInProgress && validSubmissionDate;
+      const validSubmissionDate = (0, import_date_fns8.isAfter)(new Date(submissionDeadline), now);
+      const isFirstSubmission = submissionCount === 0;
+      const canSubmit = isInProgress && validSubmissionDate && isFirstSubmission;
       if (canSubmit) {
         const update = {
           status: APPLICATION.STATUS.SUBMITTED,
           previousStatus: APPLICATION.STATUS.IN_PROGRESS,
-          submissionDate: now
+          submissionDate: now,
+          submissionCount: submissionCount + 1
         };
         const updatedApplication = await context.db.Application.updateOne({
           where: { id: application2.id },
@@ -4580,7 +4594,7 @@ var keystone_default = withAuth(
       port: 5001,
       extendExpressApp: (app) => {
         app.use(check_api_key_default);
-        if (NODE_ENV2 === "production") {
+        if (isProdEnvironment) {
           app.use(rate_limiter_default);
         }
       }
@@ -4596,10 +4610,6 @@ var keystone_default = withAuth(
         introspection: isDevEnvironment2,
         plugins: apollo_plugins_default
       }
-    },
-    ui: {
-      isDisabled: isProdEnvironment,
-      isAccessAllowed: (context) => !!context.session?.data
     },
     lists,
     session,
