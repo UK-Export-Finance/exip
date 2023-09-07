@@ -130,7 +130,11 @@ export const POLICY_AND_EXPORTS_FIELDS = {
       LABEL: "Describe the goods or services you want to insure and explain how they'll be used by the buyer",
       HINT: {
         INTRO: 'For example:',
-        LIST: ['clothing items for retail sale', 'construction materials to build commercial property', 'educational services such as teacher training'],
+        LIST: [
+          'fast moving consumer goods, like vegan protein bars',
+          'construction materials to build commercial property',
+          'educational services such as teacher training',
+        ],
       },
       MAXIMUM: 1000,
       SUMMARY: {
