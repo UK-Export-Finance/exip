@@ -1,5 +1,6 @@
 import getAccountById from '../../../helpers/get-account-by-id';
 import getCountryByField from '../../../helpers/get-country-by-field';
+import createABuyer from '../../../helpers/create-a-buyer';
 import { CreateAnApplicationVariables, Context } from '../../../types';
 
 /**
@@ -77,16 +78,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
      * 1) The country
      * 2) The application
      */
-    const buyer = await context.db.Buyer.createOne({
-      data: {
-        country: {
-          connect: { id: country.id },
-        },
-        application: {
-          connect: { id: application.id },
-        },
-      },
-    });
+    const buyer = await createABuyer(context, country.id, application.id);
 
     /**
      * Update the application with relationships for:

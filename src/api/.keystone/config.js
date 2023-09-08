@@ -2985,6 +2985,28 @@ var getCountryByField = async (context, field, value) => {
 };
 var get_country_by_field_default = getCountryByField;
 
+// helpers/create-a-buyer/index.ts
+var createABuyer = async (context, countryId, applicationId) => {
+  console.info("Creating a buyer for ", applicationId);
+  try {
+    const buyer = await context.db.Buyer.createOne({
+      data: {
+        country: {
+          connect: { id: countryId }
+        },
+        application: {
+          connect: { id: applicationId }
+        }
+      }
+    });
+    return buyer;
+  } catch (err) {
+    console.error("Error creating a buyer %O", err);
+    throw new Error(`Creating a buyer ${err}`);
+  }
+};
+var create_a_buyer_default = createABuyer;
+
 // custom-resolvers/mutations/create-an-application/index.ts
 var createAnApplication = async (root, variables, context) => {
   console.info("Creating application for ", variables.accountId);
@@ -3016,16 +3038,7 @@ var createAnApplication = async (root, variables, context) => {
         }
       }
     });
-    const buyer = await context.db.Buyer.createOne({
-      data: {
-        country: {
-          connect: { id: country.id }
-        },
-        application: {
-          connect: { id: application2.id }
-        }
-      }
-    });
+    const buyer = await create_a_buyer_default(context, country.id, application2.id);
     const updatedApplication = await context.db.Application.updateOne({
       where: {
         id: application2.id

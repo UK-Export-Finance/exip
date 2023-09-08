@@ -1,5 +1,6 @@
 import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import accounts from './accounts';
+import createABuyer from '../helpers/create-a-buyer';
 import { mockApplicationEligibility, mockSinglePolicyAndExport, mockBusiness, mockBusinessContactDetail } from '../test-mocks/mock-application';
 import { mockCompany, mockCompanySicCode, mockApplicationDeclaration } from '../test-mocks';
 import mockCountries from '../test-mocks/mock-countries';
@@ -61,16 +62,7 @@ export const createFullApplication = async (context: Context) => {
   });
 
   // create buyer and associate with the application.
-  const buyer = await context.db.Buyer.createOne({
-    data: {
-      country: {
-        connect: { id: country.id },
-      },
-      application: {
-        connect: { id: application.id },
-      },
-    },
-  });
+  const buyer = await createABuyer(context, country.id, application.id);
 
   // update the application with eligibility and buyer IDs.
   await context.db.Application.updateOne({
