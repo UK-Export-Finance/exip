@@ -3,6 +3,8 @@ import { APPLICATION } from './constants';
 import updateApplication from './helpers/update-application';
 import accounts from './test-helpers/accounts';
 import getKeystoneContext from './test-helpers/get-keystone-context';
+import applications from './test-helpers/applications';
+import buyers from './test-helpers/buyers';
 import { mockAccount } from './test-mocks';
 import { Application, Account, Context } from './types';
 
@@ -13,11 +15,35 @@ describe('Create an Application', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await context.query.Application.createOne({
-      data: {},
-      query:
-        'id createdAt updatedAt referenceNumber dealType submissionCount submissionDeadline submissionType status previousStatus version eligibility { id } policyAndExport { id } owner { id } company { id } business { id businessContactDetail { id } } broker { id } buyer { id } sectionReview { id } declaration { id }',
-    })) as Application;
+    application = (await applications.create({ context, data: {} })) as Application;
+
+    // create buyer and associate with the application.
+    const buyer = await buyers.create({
+      context,
+      data: {
+        application: {
+          connect: { id: application.id },
+        },
+      },
+    });
+
+    // update the application with buyer ID.
+    await applications.update({
+      context,
+      applicationId: application.id,
+      data: {
+        buyer: {
+          connect: { id: buyer.id },
+        },
+      },
+    });
+
+    application = {
+      ...application,
+      buyer: {
+        id: buyer.id,
+      },
+    };
   });
 
   test('it should have an ID', () => {
@@ -121,11 +147,6 @@ describe('Create an Application', () => {
     expect(typeof application.broker.id).toEqual('string');
   });
 
-  test('it should have a buyer id', () => {
-    expect(application.buyer).toBeDefined();
-    expect(typeof application.buyer.id).toEqual('string');
-  });
-
   test('it should have a sectionReview id', () => {
     expect(application.sectionReview).toBeDefined();
     expect(typeof application.sectionReview.id).toEqual('string');
@@ -134,15 +155,6 @@ describe('Create an Application', () => {
   test('it should have a declaration id', () => {
     expect(application.declaration).toBeDefined();
     expect(typeof application.declaration.id).toEqual('string');
-  });
-
-  test('it should have generated an eligibility entry and add the ID to the application', async () => {
-    const allEligibilityEntires = await context.query.Eligibility.findMany();
-    const lastEligibilityEntry = allEligibilityEntires[allEligibilityEntires.length - 1];
-
-    const expected = lastEligibilityEntry.id;
-
-    expect(application.eligibility.id).toEqual(expected);
   });
 
   test('it should add the application ID to the reference number entry', async () => {
@@ -216,17 +228,6 @@ describe('Create an Application', () => {
     });
 
     expect(companyAddress.company.id).toEqual(application.company.id);
-  });
-
-  test('it should add the application ID to the buyer entry', async () => {
-    const buyer = await context.query.Buyer.findOne({
-      where: {
-        id: application.buyer.id,
-      },
-      query: 'id application { id }',
-    });
-
-    expect(buyer.application.id).toEqual(application.id);
   });
 
   test('it should add the application ID to the sectionReview entry', async () => {
@@ -311,11 +312,35 @@ describe('Application timestamp updates', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await context.query.Application.createOne({
-      data: {},
-      query:
-        'id createdAt updatedAt referenceNumber submissionDeadline submissionType status previousStatus eligibility { id } policyAndExport { id } owner { id } company { id } business { id } broker { id } buyer { id } sectionReview { id } declaration { id }',
-    })) as Application;
+    application = (await applications.create({ context, data: {} })) as Application;
+
+    // create buyer and associate with the application.
+    const buyer = await buyers.create({
+      context,
+      data: {
+        application: {
+          connect: { id: application.id },
+        },
+      },
+    });
+
+    // update the application with buyer ID.
+    await applications.update({
+      context,
+      applicationId: application.id,
+      data: {
+        buyer: {
+          connect: { id: buyer.id },
+        },
+      },
+    });
+
+    application = {
+      ...application,
+      buyer: {
+        id: buyer.id,
+      },
+    };
   });
 
   beforeEach(() => {

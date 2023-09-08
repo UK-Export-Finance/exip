@@ -1,5 +1,5 @@
 import Context from '@keystone-6/core/types';
-import { ApplicationCreateInput, AccountUpdateInput, CompanyUpdateInput } from '.keystone/types'; // eslint-disable-line
+import { ApplicationCreateInput, AccountUpdateInput, BuyerCreateInput, CompanyUpdateInput } from '.keystone/types'; // eslint-disable-line
 
 interface SuccessResponse {
   success: boolean;
@@ -461,6 +461,16 @@ interface TestHelperApplicationGet {
   applicationId: string;
 }
 
+interface TestHelperApplicationUpdate {
+  context: Context;
+  applicationId: string;
+  data: object;
+}
+
+interface TestHelperBuyerCreate extends TestHelperCreate {
+  data: BuyerCreateInput;
+}
+
 interface XLSXTitleRowIndexes {
   HEADER: number;
   KEY_INFORMATION: number;
@@ -506,6 +516,7 @@ export {
   ApplicationCompany,
   ApplicationCompanySicCode,
   ApplicationOwner,
+  ApplicationPolicyAndExport,
   ApplicationRelationship,
   ApplicationSubmissionEmailVariables,
   ApplicationVersion,
@@ -534,6 +545,8 @@ export {
   TestHelperAccountCreate,
   TestHelperApplicationCreate,
   TestHelperApplicationGet,
+  TestHelperApplicationUpdate,
+  TestHelperBuyerCreate,
   TestHelperCreate,
   UpdateCompanyAndCompanyAddressVariables,
   XLSXTitleRowIndexes,

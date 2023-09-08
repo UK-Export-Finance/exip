@@ -1,41 +1,16 @@
 import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import accounts from './accounts';
 import { mockApplicationEligibility, mockSinglePolicyAndExport, mockBusiness, mockBusinessContactDetail } from '../test-mocks/mock-application';
-import { mockBuyer, mockCompany, mockCompanySicCode, mockApplicationDeclaration } from '../test-mocks';
+import { mockCompany, mockCompanySicCode, mockApplicationDeclaration } from '../test-mocks';
 import mockCountries from '../test-mocks/mock-countries';
 import {
-  ApplicationBuyer,
   ApplicationCompany,
   ApplicationCompanySicCode,
   ApplicationDeclaration,
   ApplicationBusiness,
   ApplicationBusinessContactDetail,
+  ApplicationPolicyAndExport,
 } from '../types';
-
-/**
- * updateBuyer
- * @param {Object} KeystoneJS context API
- * @param {String} Buyer ID
- * @returns {Object} Buyer
- */
-export const updateBuyer = async (context: Context, buyerId: string, countryId: string): Promise<ApplicationBuyer> => {
-  const buyer = (await context.query.Buyer.updateOne({
-    where: {
-      id: buyerId,
-    },
-    data: {
-      ...mockBuyer,
-      country: {
-        connect: {
-          id: countryId,
-        },
-      },
-    },
-    query: 'id exporterIsConnectedWithBuyer country { name isoCode }',
-  })) as ApplicationBuyer;
-
-  return buyer;
-};
 
 /**
  * createFullApplication
@@ -44,12 +19,14 @@ export const updateBuyer = async (context: Context, buyerId: string, countryId: 
  * @returns {Object} Application
  */
 export const createFullApplication = async (context: Context) => {
+  const { buyerCountry, ...otherEligibilityAnswers } = mockApplicationEligibility;
+
   const countries = await context.query.Country.createMany({
     data: mockCountries,
     query: 'id isoCode name',
   });
 
-  const country = countries.find((c) => c.isoCode === mockApplicationEligibility.buyerCountry.isoCode);
+  const country = countries.find((c) => c.isoCode === buyerCountry.isoCode);
 
   if (!country) {
     throw new Error('No country found from mock country ISO code');
@@ -60,7 +37,7 @@ export const createFullApplication = async (context: Context) => {
   // create a new application
   const application = (await context.query.Application.createOne({
     query:
-      'id referenceNumber submissionCount eligibility { id } policyAndExport { id requestedStartDate } owner { id } company { id } business { id } broker { id } buyer { id } declaration { id }',
+      'id referenceNumber submissionCount policyAndExport { id requestedStartDate } owner { id } company { id } business { id } broker { id } declaration { id }',
     data: {
       owner: {
         connect: {
@@ -70,21 +47,43 @@ export const createFullApplication = async (context: Context) => {
     },
   })) as Application;
 
-  // update the eligibility so we have a full data set.
-  (await context.query.Eligibility.updateOne({
-    where: {
-      id: application.eligibility.id,
-    },
+  // create eligibility and associate with the application.
+  const eligibility = await context.db.Eligibility.createOne({
     data: {
-      ...mockApplicationEligibility,
+      ...otherEligibilityAnswers,
       buyerCountry: {
-        connect: {
-          id: country.id,
-        },
+        connect: { id: country.id },
+      },
+      application: {
+        connect: { id: application.id },
       },
     },
-    query: 'id',
-  })) as ApplicationDeclaration;
+  });
+
+  // create buyer and associate with the application.
+  const buyer = await context.db.Buyer.createOne({
+    data: {
+      country: {
+        connect: { id: country.id },
+      },
+      application: {
+        connect: { id: application.id },
+      },
+    },
+  });
+
+  // update the application with eligibility and buyer IDs.
+  await context.db.Application.updateOne({
+    where: { id: application.id },
+    data: {
+      eligibility: {
+        connect: { id: eligibility.id },
+      },
+      buyer: {
+        connect: { id: buyer.id },
+      },
+    },
+  });
 
   // update the policy and export so we have a full data set.
   (await context.query.PolicyAndExport.updateOne({
@@ -93,13 +92,10 @@ export const createFullApplication = async (context: Context) => {
     },
     data: {
       ...mockSinglePolicyAndExport,
-      finalDestinationCountryCode: country.isoCode,
+      finalDestinationCountryCode: buyerCountry.isoCode,
     },
     query: 'id',
-  })) as ApplicationDeclaration;
-
-  // update the buyer so there is a name
-  const buyer = await updateBuyer(context, application.buyer.id, countries[0].id);
+  })) as ApplicationPolicyAndExport;
 
   // update the company so we have a company name
   const company = (await context.query.Company.updateOne({
@@ -156,11 +152,12 @@ export const createFullApplication = async (context: Context) => {
     ...application,
     companySicCodes,
     owner: account,
-    company,
-    buyer,
-    declaration,
     business,
     businessContactDetail,
+    buyer,
+    company,
+    declaration,
+    eligibility,
   };
 };
 
