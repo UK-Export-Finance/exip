@@ -11,6 +11,8 @@ type ApplicationCore = {
   referenceNumber: number;
   createdAt: string;
   updatedAt: string;
+  dealType: string;
+  submissionCount: number;
   submissionDeadline: string;
   submissionType: string;
   submissionDate?: string;

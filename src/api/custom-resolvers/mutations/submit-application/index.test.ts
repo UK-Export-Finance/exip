@@ -14,6 +14,7 @@ describe('custom-resolvers/submit-application', () => {
   let submittedApplication: Application;
   let variables: SubmitApplicationVariables;
   let result: SuccessResponse;
+  let application: Application;
 
   jest.mock('../../../generate-xlsx');
   jest.mock('../../../emails/send-application-submitted-emails');
@@ -39,7 +40,7 @@ describe('custom-resolvers/submit-application', () => {
 
     generate.XLSX = generateXLSXSpy;
 
-    const application = await createFullApplication(context);
+    application = await createFullApplication(context);
 
     variables = {
       applicationId: application.id,
@@ -52,7 +53,7 @@ describe('custom-resolvers/submit-application', () => {
       where: {
         id: application.id,
       },
-      query: 'id status previousStatus submissionDate',
+      query: 'id status previousStatus submissionDate submissionCount',
     })) as Application;
   });
 
@@ -76,6 +77,14 @@ describe('custom-resolvers/submit-application', () => {
     const expectedDay = now.getDay();
 
     expect(submissionDateDay).toEqual(expectedDay);
+  });
+
+  it('should update the submissionCount', () => {
+    const initialCount = application.submissionCount;
+
+    const expectedCount = initialCount + 1;
+
+    expect(submittedApplication.submissionCount).toEqual(expectedCount);
   });
 
   describe('XLSX generation and emails', () => {
@@ -160,6 +169,18 @@ describe('custom-resolvers/submit-application', () => {
 
       variables = {
         applicationId: newApplication.id,
+      };
+
+      result = await submitApplication({}, variables, context);
+
+      expect(result.success).toEqual(false);
+    });
+  });
+
+  describe('when an application has a count that is NOT 0', () => {
+    it('should return success=false', async () => {
+      variables = {
+        applicationId: submittedApplication.id,
       };
 
       result = await submitApplication({}, variables, context);

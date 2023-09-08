@@ -68,8 +68,9 @@ type Application {
   updatedAt: DateTime
   eligibility: Eligibility
   referenceNumber: Int
-  submissionDeadline: DateTime
+  submissionCount: Int
   submissionDate: DateTime
+  submissionDeadline: DateTime
   submissionType: String
   status: String
   previousStatus: String
@@ -82,6 +83,7 @@ type Application {
   sectionReview: SectionReview
   declaration: Declaration
   version: String
+  dealType: String
 }
 
 scalar DateTime @specifiedBy(url: "https://datatracker.ietf.org/doc/html/rfc3339#section-5.6")
@@ -99,8 +101,9 @@ input ApplicationWhereInput {
   updatedAt: DateTimeNullableFilter
   eligibility: EligibilityWhereInput
   referenceNumber: IntNullableFilter
-  submissionDeadline: DateTimeNullableFilter
+  submissionCount: IntFilter
   submissionDate: DateTimeNullableFilter
+  submissionDeadline: DateTimeNullableFilter
   submissionType: StringNullableFilter
   status: StringFilter
   previousStatus: StringFilter
@@ -113,6 +116,7 @@ input ApplicationWhereInput {
   sectionReview: SectionReviewWhereInput
   declaration: DeclarationWhereInput
   version: StringFilter
+  dealType: StringFilter
 }
 
 input DateTimeNullableFilter {
@@ -135,6 +139,17 @@ input IntNullableFilter {
   gt: Int
   gte: Int
   not: IntNullableFilter
+}
+
+input IntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: IntFilter
 }
 
 input StringNullableFilter {
@@ -184,12 +199,14 @@ input ApplicationOrderByInput {
   createdAt: OrderDirection
   updatedAt: OrderDirection
   referenceNumber: OrderDirection
-  submissionDeadline: OrderDirection
+  submissionCount: OrderDirection
   submissionDate: OrderDirection
+  submissionDeadline: OrderDirection
   submissionType: OrderDirection
   status: OrderDirection
   previousStatus: OrderDirection
   version: OrderDirection
+  dealType: OrderDirection
 }
 
 input ApplicationUpdateInput {
@@ -197,8 +214,9 @@ input ApplicationUpdateInput {
   updatedAt: DateTime
   eligibility: EligibilityRelateToOneForUpdateInput
   referenceNumber: Int
-  submissionDeadline: DateTime
+  submissionCount: Int
   submissionDate: DateTime
+  submissionDeadline: DateTime
   submissionType: String
   status: String
   previousStatus: String
@@ -211,6 +229,7 @@ input ApplicationUpdateInput {
   sectionReview: SectionReviewRelateToOneForUpdateInput
   declaration: DeclarationRelateToOneForUpdateInput
   version: String
+  dealType: String
 }
 
 input EligibilityRelateToOneForUpdateInput {
@@ -277,8 +296,9 @@ input ApplicationCreateInput {
   updatedAt: DateTime
   eligibility: EligibilityRelateToOneForCreateInput
   referenceNumber: Int
-  submissionDeadline: DateTime
+  submissionCount: Int
   submissionDate: DateTime
+  submissionDeadline: DateTime
   submissionType: String
   status: String
   previousStatus: String
@@ -291,6 +311,7 @@ input ApplicationCreateInput {
   sectionReview: SectionReviewRelateToOneForCreateInput
   declaration: DeclarationRelateToOneForCreateInput
   version: String
+  dealType: String
 }
 
 input EligibilityRelateToOneForCreateInput {

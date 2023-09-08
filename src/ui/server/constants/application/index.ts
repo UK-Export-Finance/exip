@@ -2,10 +2,12 @@ import LATEST_VERSION_NUMBER from './versions/latest';
 
 export const APPLICATION = {
   LATEST_VERSION: { LATEST_VERSION_NUMBER },
+  DEAL_TYPE: 'EXIP',
+  SUBMISSION_COUNT_DEFAULT: 0,
+  SUBMISSION_DEADLINE_IN_MONTHS: 1,
   SUBMISSION_TYPE: {
     MIA: 'Manual Inclusion Application',
   },
-  SUBMISSION_DEADLINE_IN_MONTHS: 1,
   STATUS: {
     IN_PROGRESS: 'In progress',
     SUBMITTED: 'Submitted to UKEF',
