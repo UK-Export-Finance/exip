@@ -2413,4 +2413,5 @@ input ApplicationEligibility {
 type CreateAnApplicationResponse {
   success: Boolean!
   id: String
+  referenceNumber: Int
 }

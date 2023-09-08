@@ -31,6 +31,24 @@ describe('custom-resolvers/create-an-application', () => {
     expect(result.success).toEqual(true);
   });
 
+  test('it should return an ID', async () => {
+    result = await createAnApplication({}, variables, context);
+
+    const createdApplication = await applications.get({ context, applicationId: result.id });
+
+    expect(result.id).toEqual(createdApplication.id);
+  });
+
+  test('it should return a reference number', async () => {
+    result = await createAnApplication({}, variables, context);
+
+    const createdApplication = await applications.get({ context, applicationId: result.id });
+
+    const expected = createdApplication.referenceNumber;
+
+    expect(result.referenceNumber).toEqual(expected);
+  });
+
   test('it should create buyer and eligibility relationships', async () => {
     result = await createAnApplication({}, variables, context);
 

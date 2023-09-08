@@ -1581,6 +1581,7 @@ var typeDefs = `
   type CreateAnApplicationResponse {
     success: Boolean!
     id: String
+    referenceNumber: Int
   }
 
   type Mutation {
