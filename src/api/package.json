@@ -6,20 +6,20 @@
   "bugs": {
     "url": "https://github.com/UK-Export-Finance/exip/issues"
   },
-  "scripts": {
-    "lint": "eslint ./",
-    "lint:fix": "eslint ./ --fix",
-    "dev": "keystone dev  --no-ui",
-    "start": "keystone start --no-ui",
-    "build": "keystone build",
-    "test": "jest --runInBand --verbose --silent --coverage --config=jest.config.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/UK-Export-Finance/exip.git"
   },
   "license": "MIT",
   "author": "UK Export Finance",
+  "scripts": {
+    "build": "keystone build",
+    "dev": "keystone dev  --no-ui",
+    "lint": "eslint ./",
+    "lint:fix": "eslint ./ --fix",
+    "start": "keystone start --no-ui",
+    "test": "jest --runInBand --verbose --silent --coverage --config=jest.config.js"
+  },
   "lint-staged": {
     "package.json": "sort-package-json",
     "*.js": "eslint --fix",
