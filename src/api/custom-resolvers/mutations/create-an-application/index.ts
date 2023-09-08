@@ -1,5 +1,6 @@
 import getAccountById from '../../../helpers/get-account-by-id';
 import getCountryByField from '../../../helpers/get-country-by-field';
+import createAnEligibility from '../../../helpers/create-an-eligibility';
 import createABuyer from '../../../helpers/create-a-buyer';
 import { CreateAnApplicationVariables, Context } from '../../../types';
 
@@ -61,17 +62,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
      * 1) The buyer country
      * 2) The application
      */
-    const eligibility = await context.db.Eligibility.createOne({
-      data: {
-        ...otherEligibilityAnswers,
-        buyerCountry: {
-          connect: { id: country.id },
-        },
-        application: {
-          connect: { id: application.id },
-        },
-      },
-    });
+    const eligibility = await createAnEligibility(context, country.id, application.id, otherEligibilityAnswers);
 
     /**
      * Create buyer and relationships for:
