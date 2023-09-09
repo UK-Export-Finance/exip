@@ -23,7 +23,7 @@
     "update:all": "npm update --save --legacy-peer-deps && npm update --save --legacy-peer-deps --prefix ./src/ui && npm update --save --legacy-peer-deps --prefix ./src/api && npm update --save --legacy-peer-deps --prefix ./generate-exip-pricing-grid"
   },
   "lint-staged": {
-    "package.json": "sort-package-json",
+    "*package.json": "sort-package-json",
     "*.js": "eslint --fix",
     "*.ts": "eslint --fix",
     "*": [
@@ -54,7 +54,7 @@
     "@types/node": "^20.6.0",
     "@typescript-eslint/eslint-plugin": "^6.6.0",
     "@typescript-eslint/parser": "^6.6.0",
-    "cspell": "^6.31.3",
+    "cspell": "^7.3.3",
     "eslint": "^8.49.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -68,7 +68,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "husky": "^8.0.3",
     "jest": "^29.6.4",
-    "lint-staged": "^13.3.0",
+    "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
     "sort-package-json": "^2.5.1",
     "ts-jest": "^29.1.1",
