@@ -191,7 +191,7 @@ jobs:
       - name: Execute
         uses: cypress-io/github-action@v6
         with:
-          wait-on: ${{ secrets.API_URL_LOCAL }}
+          wait-on: ${{ vars.UI_URL }}
           install: false
           record: true
           tag: machine-${{ matrix.machines }}
@@ -247,7 +247,7 @@ jobs:
       - name: Execute
         uses: cypress-io/github-action@v6
         with:
-          wait-on: ${{ secrets.API_URL_LOCAL }}
+          wait-on: ${{ vars.UI_URL }}
           install: false
           record: true
           tag: machine-${{ matrix.machines }}
@@ -303,7 +303,7 @@ jobs:
       - name: Execute
         uses: cypress-io/github-action@v6
         with:
-          wait-on: ${{ secrets.API_URL_LOCAL }}
+          wait-on: ${{ vars.UI_URL }}
           install: false
           record: true
           tag: machine-${{ matrix.machines }}
