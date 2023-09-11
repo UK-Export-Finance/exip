@@ -5,6 +5,7 @@ import insuranceCorePageVariables from '../../../../../helpers/page-variables/co
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../../helpers/construct-payload';
 import { sanitiseData, sanitiseValue } from '../../../../../helpers/sanitise-data';
+import mapEligibilityAnswers from '../../../../../helpers/map-eligibility-answers';
 import generateValidationErrors from './validation';
 import securityCodeValidationErrors from './validation/rules/security-code';
 import canCreateAnApplication from '../../../../../helpers/can-create-an-application';
@@ -145,7 +146,9 @@ export const post = async (req: Request, res: Response) => {
        * 4) Redirect to the next part of the flow - "dashboard"
        */
       if (canCreateAnApplication(req.session)) {
-        const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
+        const sanitisedData = sanitiseData(req.session.submittedData.insuranceEligibility);
+
+        const eligibilityAnswers = mapEligibilityAnswers(sanitisedData);
 
         req.session.submittedData.insuranceEligibility = {};
 

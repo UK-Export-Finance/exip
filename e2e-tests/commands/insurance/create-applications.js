@@ -4,13 +4,19 @@ import api from '../api';
  * mockApplication
  * Create a mock application
  * @param {String} Account ID for the application owner
+ * @param {String} Buyer ID for the application
  * @returns {Object} Application
  */
-const mockApplication = (accountId) => ({
+const mockApplication = (accountId, buyerId) => ({
   referenceNumber: 123,
   owner: {
     connect: {
       id: accountId,
+    },
+  },
+  buyer: {
+    connect: {
+      id: buyerId,
     },
   },
 });
@@ -22,8 +28,8 @@ const mockApplication = (accountId) => ({
  * @param {Number} Amount of applications to create
  * @returns {Array} Applications
  */
-const mockApplications = (accountId, count) => {
-  const mocks = new Array(count).fill(mockApplication(accountId));
+const mockApplications = (accountId, countryId, count) => {
+  const mocks = new Array(count).fill(mockApplication(accountId, countryId));
 
   return mocks;
 };
@@ -31,6 +37,10 @@ const mockApplications = (accountId, count) => {
 /**
  * createApplications
  * Create multiple applications directly via the API
+ * 1) Get a country
+ * 2) Create a buyer with country ID
+ * 3) Generate mock applications with owner and buyer relationships
+ * 4) Create applications
  * @param {String} Account ID for the application owner
  * @param {Number} Amount of applications to create
  * @returns {Array} Created applications
@@ -38,9 +48,12 @@ const mockApplications = (accountId, count) => {
 const createApplications = (accountId, count) => {
   if (accountId && count) {
     try {
-      const data = mockApplications(accountId, count);
+      return api.getACountry().then((country) =>
+        api.createBuyer(country.id).then((buyer) => {
+          const applicationsData = mockApplications(accountId, buyer.id, count);
 
-      return api.createApplications(data).then((applications) => applications);
+          return api.createApplications(applicationsData).then((applications) => applications);
+        }));
     } catch (err) {
       console.error('Creating applications', err);
 

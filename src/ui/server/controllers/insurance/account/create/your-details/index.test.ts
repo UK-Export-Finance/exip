@@ -10,6 +10,7 @@ import generateValidationErrors from './validation';
 import generateAccountAlreadyExistsValidationErrors from './validation/account-already-exists';
 import saveData from './save-data';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
+import mapEligibilityAnswers from '../../../../../helpers/map-eligibility-answers';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockAccount, mockApplication, mockSession } from '../../../../../test-mocks';
@@ -191,7 +192,9 @@ describe('controllers/insurance/account/create/your-details', () => {
         });
 
         it('should call api.keystone.application.create', async () => {
-          const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
+          const sanitisedData = sanitiseData(req.session.submittedData.insuranceEligibility);
+
+          const eligibilityAnswers = mapEligibilityAnswers(sanitisedData);
 
           await post(req, res);
 

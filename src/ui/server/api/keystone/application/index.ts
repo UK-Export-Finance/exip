@@ -1,9 +1,8 @@
 import apollo from '../../../graphql/apollo';
 import countries from '../countries';
 import eligibility from './eligibility';
-import buyer from './buyer';
 import declarations from './declarations';
-import createApplicationMutation from '../../../graphql/mutations/create-application';
+import createAnApplicationMutation from '../../../graphql/mutations/create-an-application';
 import getApplicationQuery from '../../../graphql/queries/application';
 import updateApplicationPolicyAndExportMutation from '../../../graphql/mutations/update-application/policy-and-export';
 import updateApplicationCompanyMutation from '../../../graphql/mutations/update-application/company';
@@ -15,78 +14,35 @@ import submitApplicationMutation from '../../../graphql/mutations/submit-applica
 import updateApplicationSectionReviewMutation from '../../../graphql/mutations/update-application/section-review';
 import { ApolloResponse, ApplicationBuyerApiInput, ApplicationBuyerUiInput, SubmittedDataInsuranceEligibility } from '../../../../types';
 
-const createInitialApplication = async (accountId: string) => {
-  try {
-    console.info('Creating empty application');
-
-    let variables = {};
-
-    if (accountId) {
-      variables = {
-        data: {
-          owner: {
-            connect: { id: accountId },
-          },
-        },
-      };
-    }
-
-    const response = (await apollo('POST', createApplicationMutation, variables)) as ApolloResponse;
-
-    if (response.errors) {
-      console.error('GraphQL error creating empty application %O', response.errors);
-    }
-
-    if (response?.networkError?.result?.errors) {
-      console.error('GraphQL network error creating empty application %O', response.networkError.result.errors);
-    }
-
-    if (response?.data?.createApplication) {
-      return response.data.createApplication;
-    }
-
-    console.error('Error with GraphQL createApplicationMutation %O', response);
-    throw new Error('Creating empty application');
-  } catch (err) {
-    console.error('Error creating empty application %O', err);
-    throw new Error('Creating empty application');
-  }
-};
-
 const application = {
   create: async (eligibilityAnswers: SubmittedDataInsuranceEligibility, accountId: string) => {
     try {
-      console.info('Creating application with relationships');
+      console.info('Creating application');
 
-      const buyerCountryIsoCode = eligibilityAnswers.buyerCountry?.isoCode;
+      const variables = {
+        accountId,
+        eligibilityAnswers,
+      };
 
-      if (buyerCountryIsoCode) {
-        const newApplication = await createInitialApplication(accountId);
+      const response = (await apollo('POST', createAnApplicationMutation, variables)) as ApolloResponse;
 
-        const { id: eligibilityId } = newApplication.eligibility;
-        const { id: buyerId } = newApplication.buyer;
-
-        const buyerCountry = await countries.get(buyerCountryIsoCode);
-
-        await eligibility.update(eligibilityId, {
-          ...eligibilityAnswers,
-          buyerCountry: {
-            connect: { id: buyerCountry.id },
-          },
-        });
-
-        // update the buyer country on application creation using the eligiblity country
-        await buyer.update(buyerId, {
-          country: {
-            connect: { id: buyerCountry.id },
-          },
-        });
-
-        return newApplication;
+      if (response.errors) {
+        console.error('GraphQL error creating application %O', response.errors);
       }
+
+      if (response?.networkError?.result?.errors) {
+        console.error('GraphQL network error creating application %O', response.networkError.result.errors);
+      }
+
+      if (response?.data?.createAnApplication?.success) {
+        return response.data.createAnApplication;
+      }
+
+      console.error('Error with GraphQL createApplicationMutation %O', response);
+      throw new Error('Creating application');
     } catch (err) {
-      console.error('Error creating application with relationships %O', err);
-      throw new Error('Creating application with relationships');
+      console.error('Error creating application %O', err);
+      throw new Error('Creating application');
     }
   },
   get: async (referenceNumber: number) => {

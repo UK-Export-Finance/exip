@@ -5,6 +5,7 @@ module.exports = {
     'custom-resolvers/**/*.{ts,}',
     'emails/**/*.{ts,}',
     'generate-xlsx/**/*.{ts,}',
+    'helpers/**/*.{ts,}',
     'integrations/**/*.{ts,}',
     'middleware/**/*.{ts,}',
     'server/generate-quote/*.{ts,}',

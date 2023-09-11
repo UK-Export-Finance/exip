@@ -46,6 +46,21 @@ export const mockBuyer = {
   exporterIsConnectedWithBuyer: true,
 };
 
+export const mockCountries = [
+  {
+    name: 'Abu Dhabi',
+    isoCode: 'XAD',
+  },
+  {
+    name: 'Algeria',
+    isoCode: 'DZA',
+  },
+  {
+    name: 'Greenland',
+    isoCode: 'GRL',
+  },
+];
+
 export const mockApplicationDeclaration = {
   agreeToConfidentiality: true,
   agreeToAntiBribery: true,
