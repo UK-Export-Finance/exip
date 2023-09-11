@@ -6,6 +6,7 @@ import insuranceCorePageVariables from '../../../../../helpers/page-variables/co
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../../helpers/construct-payload';
 import { sanitiseData, sanitiseValue } from '../../../../../helpers/sanitise-data';
+import mapEligibilityAnswers from '../../../../../helpers/map-eligibility-answers';
 import generateValidationErrors from './validation';
 import securityCodeValidationErrors from './validation/rules/security-code';
 import api from '../../../../../api';
@@ -279,7 +280,9 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
         });
 
         it('should call api.keystone.application.create', async () => {
-          const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
+          const sanitisedData = sanitiseData(req.session.submittedData.insuranceEligibility);
+
+          const eligibilityAnswers = mapEligibilityAnswers(sanitisedData);
 
           await post(req, res);
 

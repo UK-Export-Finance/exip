@@ -20,6 +20,13 @@ const queryStrings = {
       }
     }
   `,
+  createBuyer: () => gql`
+    mutation createBuyer($data: BuyerCreateInput!) {
+      createBuyer(data: $data) {
+        id
+      }
+    }
+  `,
   createApplications: () => gql`
     mutation createApplications($data: [ApplicationCreateInput!]!) {
       createApplications(data: $data) {
@@ -90,9 +97,17 @@ const queryStrings = {
     }
   `,
   deleteApplications: () => gql`
-    mutation DeleteApplications($where: [ApplicationWhereUniqueInput!]!) {
+    mutation deleteApplications($where: [ApplicationWhereUniqueInput!]!) {
       deleteApplications(where: $where) {
         id
+      }
+    }
+  `,
+  getCountries: () => gql`
+    query countries {
+      countries {
+        id
+        isoCode
       }
     }
   `,
@@ -165,6 +180,27 @@ const createAnAccount = (urlOrigin, firstName, lastName, email, password) =>
     },
     context: APOLLO_CONTEXT,
   }).then((response) => response.data.createAnAccount);
+
+/**
+ * createBuyer
+ * Create a buyer with a country relationship
+ * @param {String} Country ID
+ * @returns {Object} Buyer
+ */
+const createBuyer = (countryId) =>
+  apollo.query({
+    query: queryStrings.createBuyer(),
+    variables: {
+      data: {
+        country: {
+          connect: {
+            id: countryId,
+          },
+        },
+      },
+    },
+    context: APOLLO_CONTEXT,
+  }).then((response) => response.data.createBuyer);
 
 /**
   * createApplications
@@ -399,6 +435,26 @@ const deleteApplications = async (applications) => {
   }
 };
 
+/**
+ * getACountry
+ * Get a country
+ * @returns {Object} Country
+ */
+const getACountry = async () => {
+  try {
+    const responseBody = await apollo.query({
+      query: queryStrings.getCountries(),
+      context: APOLLO_CONTEXT,
+    }).then((response) => response.data.countries[0]);
+
+    return responseBody;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error('Getting a country ', { err });
+  }
+};
+
 const declarations = {
   /**
    * getLatestConfidentiality
@@ -480,6 +536,7 @@ const declarations = {
 
 const api = {
   createAnAccount,
+  createBuyer,
   createApplications,
   getAccountByEmail,
   updateAccount,
@@ -489,6 +546,7 @@ const api = {
   getApplicationByReferenceNumber,
   deleteApplicationByReferenceNumber,
   deleteApplications,
+  getACountry,
   declarations,
 };
 
