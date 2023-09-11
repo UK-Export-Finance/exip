@@ -11,15 +11,15 @@ on:
   pull_request:
     branches: [main-application]
     paths:
-      - '.github/workflows/test.yml'
-      - 'src/**'
-      - 'e2e-tests/**'
-      - 'generate-exip-pricing-grid/**'
-      - 'package*.json'
+      - ".github/workflows/test.yml"
+      - "src/**"
+      - "e2e-tests/**"
+      - "generate-exip-pricing-grid/**"
+      - "package*.json"
 
 env:
-  environment: 'qa'
-  timezone: 'Europe/London'
+  environment: "qa"
+  timezone: "Europe/London"
   NODE_ENV: ${{ secrets.NODE_ENV }}
   DATABASE_PORT: ${{ vars.DATABASE_PORT }}
   API_PORT: ${{ vars.API_PORT }}
@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
 
     concurrency:
-      group: unit-tests-${{ github.workflow }}-${{ github.run_id }}
+      group: unit-tests-${{ github.workflow }}-${{ github.workflow_id }}
       cancel-in-progress: true
 
     steps:
@@ -111,7 +111,7 @@ jobs:
     runs-on: ubuntu-latest
 
     concurrency:
-      group: api-tests-${{ github.workflow }}-${{ github.run_id }}
+      group: api-tests-${{ github.workflow }}-${{ github.workflow_id }}
       cancel-in-progress: true
 
     steps:
@@ -162,69 +162,18 @@ jobs:
   # 4. E2E - Insurance
   e2e-tests-insurance:
     name: E2E Insurance 👷
-    needs: setup
+    needs: [setup, unit-tests, api-tests]
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: true
-      matrix:
-        machines: [1, 2, 3, 4, 5, 6, 7, 8]
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Timezone
-        uses: szenius/set-timezone@v1.2
-        with:
-          timezoneLinux: ${{ needs.setup.outputs.timezone }}
-
-      - name: Dependencies
-        working-directory: ./
-        run: npm ci --legacy-peer-deps
-
-      - name: Docker
-        run: docker-compose up --build -d
-
-      - name: 30s Sleep
-        run: sleep 30s
-
-      - name: Execute
-        uses: cypress-io/github-action@v5
-        with:
-          install: false
-          record: true
-          parallel: true
-          browser: chrome
-          group: 'EXIP-E2E-INSURANCE'
-          project: ./e2e-tests/insurance
-        env:
-          TZ: Europe/London
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          API_KEY: ${{ secrets.API_KEY }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
-          MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
-
-      - name: Screenshots
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@main
-        with:
-          name: screenshots
-          path: './cypress/screenshots'
-
-  # 5. E2E - Quote
-  e2e-tests-quote:
-    name: E2E Quote 👷
-    needs: setup
-    environment:
-      name: ${{ needs.setup.outputs.environment }}
-    runs-on: ubuntu-latest
+    concurrency:
+      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.workflow_id }}
+      cancel-in-progress: true
 
     strategy:
       fail-fast: true
+      # Single dimension matrix - 4 jobs
       matrix:
         machines: [1, 2, 3, 4]
 
@@ -247,17 +196,19 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           install: false
           record: true
+          tag: machine-${{ matrix.machines }}
           parallel: true
           browser: chrome
-          group: 'EXIP-E2E-QUOTE'
-          project: ./e2e-tests/quote
+          auto-cancel-after-failures: 1
+          group: "EXIP-E2E-INSURANCE"
+          project: ./e2e-tests/insurance
         env:
           TZ: Europe/London
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           API_KEY: ${{ secrets.API_KEY }}
           GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
@@ -269,18 +220,21 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: screenshots
-          path: './cypress/screenshots'
+          path: "./cypress/screenshots"
 
-  # 6. E2E - Switch between services
-  e2e-tests-switch-between-services:
-    name: E2E Switch between services 👷
-    needs: setup
+  # 5. E2E - Quote
+  e2e-tests-quote:
+    name: E2E Quote 👷
+    needs: [setup, unit-tests, api-tests, e2e-tests-insurance]
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: true
+      # Single dimension matrix - 4 jobs
+      matrix:
+        machines: [1, 2, 3, 4]
 
     steps:
       - uses: actions/checkout@v4
@@ -301,17 +255,19 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           install: false
           record: true
+          tag: machine-${{ matrix.machines }}
           parallel: true
+          auto-cancel-after-failures: 1
           browser: chrome
-          group: 'EXIP-E2E-SWITCH-BETWEEN-SERVICES'
-          project: ./e2e-tests/switch-between-services
+          group: "EXIP-E2E-QUOTE"
+          project: ./e2e-tests/quote
         env:
           TZ: Europe/London
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           API_KEY: ${{ secrets.API_KEY }}
           GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
@@ -323,4 +279,63 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: screenshots
-          path: './cypress/screenshots'
+          path: "./cypress/screenshots"
+
+  # 6. E2E - Switch between services
+  e2e-tests-switch-between-services:
+    name: E2E Switch between services 👷
+    needs: [setup, unit-tests, api-tests, e2e-tests-insurance, e2e-tests-quote]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+      # Single dimension matrix - 4 jobs
+      matrix:
+        machines: [1, 2, 3, 4]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Timezone
+        uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Dependencies
+        working-directory: ./
+        run: npm ci --legacy-peer-deps
+
+      - name: Docker
+        run: docker-compose up --build -d
+
+      - name: 30s Sleep
+        run: sleep 30s
+
+      - name: Execute
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          record: true
+          tag: machine-${{ matrix.machines }}
+          parallel: true
+          auto-cancel-after-failures: 1
+          browser: chrome
+          group: "EXIP-E2E-SWITCH-BETWEEN-SERVICES"
+          project: ./e2e-tests/switch-between-services
+        env:
+          TZ: Europe/London
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          API_KEY: ${{ secrets.API_KEY }}
+          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
+          GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
+          MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+
+      - name: Screenshots
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@main
+        with:
+          name: screenshots
+          path: "./cypress/screenshots"
