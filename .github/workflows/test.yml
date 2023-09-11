@@ -203,7 +203,6 @@ jobs:
           tag: machine-${{ matrix.machines }}
           parallel: true
           browser: chrome
-          auto-cancel-after-failures: 1
           group: "EXIP-E2E-INSURANCE"
           project: ./e2e-tests/insurance
         env:
@@ -265,7 +264,6 @@ jobs:
           record: true
           tag: machine-${{ matrix.machines }}
           parallel: true
-          auto-cancel-after-failures: 1
           browser: chrome
           group: "EXIP-E2E-QUOTE"
           project: ./e2e-tests/quote
@@ -328,7 +326,6 @@ jobs:
           record: true
           tag: machine-${{ matrix.machines }}
           parallel: true
-          auto-cancel-after-failures: 1
           browser: chrome
           group: "EXIP-E2E-SWITCH-BETWEEN-SERVICES"
           project: ./e2e-tests/switch-between-services
