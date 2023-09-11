@@ -2,7 +2,7 @@
 
 User interface to check if a UK based exporter can apply for export insurance and/or get a premium quote.
 
-## Directory Structure 
+## Directory Structure
 
 - **Dockerfile**: This file defines the Docker image that will be used to run the application.
 - **README.md**: This file provides a brief overview of the application.
