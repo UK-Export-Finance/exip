@@ -309,7 +309,7 @@ var CUSTOM_RESOLVERS = [
   "createFeedbackAndSendEmail"
 ];
 if (isDevEnvironment) {
-  CUSTOM_RESOLVERS.push("addAndGetOTP", "createApplications", "deleteAnAccount", "deleteApplications", "getAccountPasswordResetToken");
+  CUSTOM_RESOLVERS.push("addAndGetOTP", "createApplications", "createBuyer", "deleteAnAccount", "deleteApplications", "getAccountPasswordResetToken");
 }
 var ALLOWED_GRAPHQL_RESOLVERS = [...DEFAULT_RESOLVERS, ...CUSTOM_RESOLVERS];
 
@@ -2985,6 +2985,29 @@ var getCountryByField = async (context, field, value) => {
 };
 var get_country_by_field_default = getCountryByField;
 
+// helpers/create-an-eligibility/index.ts
+var createAnEligibility = async (context, countryId, applicationId, data) => {
+  console.info("Creating an eligibility for ", applicationId);
+  try {
+    const eligibility = await context.db.Eligibility.createOne({
+      data: {
+        buyerCountry: {
+          connect: { id: countryId }
+        },
+        application: {
+          connect: { id: applicationId }
+        },
+        ...data
+      }
+    });
+    return eligibility;
+  } catch (err) {
+    console.error("Error creating an eligibility %O", err);
+    throw new Error(`Creating an eligibility ${err}`);
+  }
+};
+var create_an_eligibility_default = createAnEligibility;
+
 // helpers/create-a-buyer/index.ts
 var createABuyer = async (context, countryId, applicationId) => {
   console.info("Creating a buyer for ", applicationId);
@@ -3027,17 +3050,7 @@ var createAnApplication = async (root, variables, context) => {
         }
       }
     });
-    const eligibility = await context.db.Eligibility.createOne({
-      data: {
-        ...otherEligibilityAnswers,
-        buyerCountry: {
-          connect: { id: country.id }
-        },
-        application: {
-          connect: { id: application2.id }
-        }
-      }
-    });
+    const eligibility = await create_an_eligibility_default(context, country.id, application2.id, otherEligibilityAnswers);
     const buyer = await create_a_buyer_default(context, country.id, application2.id);
     const updatedApplication = await context.db.Application.updateOne({
       where: {

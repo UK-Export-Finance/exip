@@ -67,7 +67,7 @@ const CUSTOM_RESOLVERS = [
  * These are only used for testing purposes.
  */
 if (isDevEnvironment) {
-  CUSTOM_RESOLVERS.push('addAndGetOTP', 'createApplications', 'deleteAnAccount', 'deleteApplications', 'getAccountPasswordResetToken');
+  CUSTOM_RESOLVERS.push('addAndGetOTP', 'createApplications', 'createBuyer', 'deleteAnAccount', 'deleteApplications', 'getAccountPasswordResetToken');
 }
 
 /**
