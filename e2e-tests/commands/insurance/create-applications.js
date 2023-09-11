@@ -4,6 +4,7 @@ import api from '../api';
  * mockApplication
  * Create a mock application
  * @param {String} Account ID for the application owner
+ * @param {String} Buyer ID for the application
  * @returns {Object} Application
  */
 const mockApplication = (accountId, buyerId) => ({
