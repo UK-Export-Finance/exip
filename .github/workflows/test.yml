@@ -173,10 +173,6 @@ jobs:
       matrix:
         machines: [1, 2, 3, 4]
 
-    concurrency:
-      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.workflow_id }}-machine-${{ matrix.machines }}
-      cancel-in-progress: true
-
     steps:
       - uses: actions/checkout@v4
 
@@ -191,13 +187,11 @@ jobs:
 
       - name: Docker
         run: docker-compose up --build -d
-
-      - name: 30s Sleep
-        run: sleep 30s
-
+  
       - name: Execute
         uses: cypress-io/github-action@v6
         with:
+          wait-on: ${{ secrets.API_URL_LOCAL }}
           install: false
           record: true
           tag: machine-${{ matrix.machines }}
@@ -235,10 +229,6 @@ jobs:
       matrix:
         machines: [1, 2, 3, 4]
 
-    concurrency:
-      group: e2e-tests-quote-${{ github.workflow }}-${{ github.workflow_id }}-machine-${{ matrix.machines }}
-      cancel-in-progress: true
-
     steps:
       - uses: actions/checkout@v4
 
@@ -254,12 +244,10 @@ jobs:
       - name: Docker
         run: docker-compose up --build -d
 
-      - name: 30s Sleep
-        run: sleep 30s
-
       - name: Execute
         uses: cypress-io/github-action@v6
         with:
+          wait-on: ${{ secrets.API_URL_LOCAL }}
           install: false
           record: true
           tag: machine-${{ matrix.machines }}
@@ -297,10 +285,6 @@ jobs:
       matrix:
         machines: [1, 2, 3, 4]
 
-    concurrency:
-      group: e2e-tests-switch-${{ github.workflow }}-${{ github.workflow_id }}-machine-${{ matrix.machines }}
-      cancel-in-progress: true
-
     steps:
       - uses: actions/checkout@v4
 
@@ -316,12 +300,10 @@ jobs:
       - name: Docker
         run: docker-compose up --build -d
 
-      - name: 30s Sleep
-        run: sleep 30s
-
       - name: Execute
         uses: cypress-io/github-action@v6
         with:
+          wait-on: ${{ secrets.API_URL_LOCAL }}
           install: false
           record: true
           tag: machine-${{ matrix.machines }}

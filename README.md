@@ -1,9 +1,9 @@
 # Export Insurance Policies (EXIP) :briefcase:
 Welcome to the Export Insurance Policies repository! This repository houses the code for the UK Export Finance (UKEF) EXIP service, a public-facing application that offers various features to exporters:
 
-- Obtain a quote for export insurance coverage with UKEF.
+- Obtain a quote for Export Insurance Policies (EXIP) from UKEF.
 - Create and log in to an EXIP account.
-- Create an application for export insurance coverage and submit it to UKEF.
+- Create an application for Export Insurance Policies (EXIP) and submit it to UKEF.
 
 The repository is based on the [template-typescript-package](https://github.com/UK-Export-Finance/template-typescript-package).
 
@@ -163,9 +163,7 @@ Middleware fetches the application from the API when a page is loaded. This midd
 
 ### When a User Submits a Form in the Application Flow :computer:
 
-When a user submits
-
- a form, the following process occurs:
+When a user submits a form, the following process occurs:
 
 1. The UI's POST controller checks for validation errors.
 
@@ -208,6 +206,24 @@ Field IDs are stored in [constants](https://github.com/UK-Export-Finance/exip/bl
 
 To maintain consistency and avoid repetition, a common pattern is followed for controllers. Page variables and templates are defined separately. Additionally, page variable functions are used to achieve DRY (Don't Repeat Yourself) code and facilitate testing.
 
+Each page and field has content specific to that page or field. We keep these in their own files, separated from the code itself for several reasons:
+
+- To avoid having content is hard coded in the templates
+- To avoid referencing a field ID or value by hard coding it in logic or tests
+- Enforces a single source of truth
+- Provides us with an easy way to change or rename content - change it one single place
+- Provides us with an opportunity in the future to extract the content into Keystone and allow designers to edit the content themselves
+
+We have the same approach for content that is used throughout, for example buttons, links, components that are used in multiple places etc.
+
+The files can be found  here:
+
+- [global content strings](https://github.com/UK-Export-Finance/exip/tree/main-application/src/ui/server/content-strings) (buttons, links etc)
+- [page content strings](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/content-strings/pages/index.ts)
+- [field content strings](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/content-strings/fields/index.ts)
+
+Note: field IDs are in [constants](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/constants) because an ID is not a content string.
+
 Here's a simplified example of how it works:
 
 ```js
@@ -237,6 +253,67 @@ export const get = (req: Request, res: Response) =>
 ```
 
 A more complete example with validation handling and a POST request can be found [here](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/controllers/insurance/policy-and-export/type-of-policy/index.ts).
+
+### Quote tool controllers
+
+Use [quoteCorePageVariables](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/helpers/page-variables/core/quote/index.ts). Example usage:
+
+```js
+const get = (req: Request, res: Response) =>
+  res.render('template.njk', {
+    ...quoteCorePageVariables({ PAGE_CONTENT_STRINGS: PAGES.EXAMPLE, BACK_LINK: req.headers.referer }),
+    EXIT_REASON,
+  });
+```
+
+### Insurance controllers
+
+Use [insuranceCorePageVariables](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/helpers/page-variables/core/insurance/index.ts). Example usage:
+
+```js
+const get = (req: Request, res: Response) =>
+  res.render('template.njk', {
+    ...insuranceCorePageVariables({ PAGE_CONTENT_STRINGS: PAGES.EXAMPLE, BACK_LINK: req.headers.referer }),
+    EXIT_REASON,
+  });
+```
+
+### Single input pages
+
+In the eligibility flows, there are lot of "yes or no" question pages with single radio button selection. The main difference between each of these pages is the field itself - e.g the title, id and hint. Therefore we also have a special page variables function, [singleInputPageVariables](https://github.com/UK-Export-Finance/exip/tree/main-application/src/ui/server/helpers/page-variables/single-input) that is exactly the same as the others, except that it can consume a field ID and automatically adds any hints or labels defined for the field ID. Example usage:
+
+```js
+const get = (req: Request, res: Response) =>
+  res.render(
+    TEMPLATES.PROBLEM_WITH_SERVICE,
+    ...singleInputPageVariables({
+      {
+        FIELD_ID: 'fieldA'
+        PAGE_CONTENT_STRINGS: PAGES.EXAMPLE,
+      },
+      BACK_LINK: req.headers.referer,
+    }),
+  );
+```
+
+### Generic pages
+
+For controllers/pages that are not part of the Quote tool or Insurance, e.g "problem with this service", use [corePageVariables](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/helpers/page-variables/core/index.ts). Example usage:
+
+```js
+const get = (req: Request, res: Response) =>
+  res.render(
+    TEMPLATES.PROBLEM_WITH_SERVICE,
+    corePageVariables({
+      PAGE_CONTENT_STRINGS: PAGES.EXAMPLE,
+      BACK_LINK: req.headers.referer,
+      PRODUCT: { DESCRIPTION: PRODUCT.DESCRIPTION.GENERIC },
+      START_ROUTE: '/',
+    }),
+  );
+```
+
+Note: `corePageVariables` is actually consumed by all other page variable functions.
 
 ## Git Workflow :octocat:
 
