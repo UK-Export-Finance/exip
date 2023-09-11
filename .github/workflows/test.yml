@@ -167,15 +167,15 @@ jobs:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
-    concurrency:
-      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.workflow_id }}
-      cancel-in-progress: true
-
     strategy:
       fail-fast: true
       # Single dimension matrix - 4 jobs
       matrix:
         machines: [1, 2, 3, 4]
+
+    concurrency:
+      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.workflow_id }}-machine-${{ matrix.machines }}
+      cancel-in-progress: true
 
     steps:
       - uses: actions/checkout@v4
@@ -236,6 +236,10 @@ jobs:
       matrix:
         machines: [1, 2, 3, 4]
 
+    concurrency:
+      group: e2e-tests-quote-${{ github.workflow }}-${{ github.workflow_id }}-machine-${{ matrix.machines }}
+      cancel-in-progress: true
+
     steps:
       - uses: actions/checkout@v4
 
@@ -294,6 +298,10 @@ jobs:
       # Single dimension matrix - 4 jobs
       matrix:
         machines: [1, 2, 3, 4]
+
+    concurrency:
+      group: e2e-tests-switch-${{ github.workflow }}-${{ github.workflow_id }}-machine-${{ matrix.machines }}
+      cancel-in-progress: true
 
     steps:
       - uses: actions/checkout@v4
