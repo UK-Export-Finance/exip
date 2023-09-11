@@ -187,19 +187,22 @@ jobs:
 
       - name: Docker
         run: docker-compose up --build -d
-  
+
+      - name: Wait
+        run: sleep 30
+
       - name: Execute
         uses: cypress-io/github-action@v6
         with:
           install: false
           record: true
-          tag: machine-${{ matrix.machines }}
           parallel: true
+          tag: \#${{ matrix.machines }}
           browser: chrome
-          group: "EXIP-E2E-INSURANCE"
+          group: "Insurance"
           project: ./e2e-tests/insurance
         env:
-          TZ: Europe/London
+          TZ: ${{ env.timezone }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           API_KEY: ${{ secrets.API_KEY }}
@@ -243,18 +246,21 @@ jobs:
       - name: Docker
         run: docker-compose up --build -d
 
+      - name: Wait
+        run: sleep 30
+
       - name: Execute
         uses: cypress-io/github-action@v6
         with:
           install: false
           record: true
-          tag: machine-${{ matrix.machines }}
           parallel: true
+          tag: \#${{ matrix.machines }}
           browser: chrome
-          group: "EXIP-E2E-QUOTE"
+          group: "Quote"
           project: ./e2e-tests/quote
         env:
-          TZ: Europe/London
+          TZ: ${{ env.timezone }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           API_KEY: ${{ secrets.API_KEY }}
@@ -298,18 +304,21 @@ jobs:
       - name: Docker
         run: docker-compose up --build -d
 
+      - name: Wait
+        run: sleep 30
+
       - name: Execute
         uses: cypress-io/github-action@v6
         with:
           install: false
           record: true
-          tag: machine-${{ matrix.machines }}
           parallel: true
+          tag: \#${{ matrix.machines }}
           browser: chrome
-          group: "EXIP-E2E-SWITCH-BETWEEN-SERVICES"
+          group: "Services"
           project: ./e2e-tests/switch-between-services
         env:
-          TZ: Europe/London
+          TZ: ${{ env.timezone }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           API_KEY: ${{ secrets.API_KEY }}
