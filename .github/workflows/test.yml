@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
 
     concurrency:
-      group: unit-tests-${{ github.workflow }}-${{ github.run_id }}
+      group: unit-tests-${{ github.workflow }}-${{ github.workflow_ref }}
       cancel-in-progress: true
 
     steps:
@@ -111,7 +111,7 @@ jobs:
     runs-on: ubuntu-latest
 
     concurrency:
-      group: api-tests-${{ github.workflow }}-${{ github.run_id }}
+      group: api-tests-${{ github.workflow }}-${{ github.workflow_ref }}
       cancel-in-progress: true
 
     steps:
@@ -174,7 +174,7 @@ jobs:
         machines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     concurrency:
-      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.run_id }}-${{ matrix.machines }}
+      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.machines }}
       cancel-in-progress: true
 
     steps:
@@ -201,7 +201,7 @@ jobs:
           install: false
           record: true
           parallel: true
-          tag: \#${{ matrix.machines }}
+          tag: machine${{ matrix.machines }}
           browser: chrome
           group: "Insurance"
           project: ./e2e-tests/insurance
@@ -237,7 +237,7 @@ jobs:
         machines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     concurrency:
-      group: e2e-tests-quote-${{ github.workflow }}-${{ github.run_id }}-${{ matrix.machines }}
+      group: e2e-tests-quote-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.machines }}
       cancel-in-progress: true
 
     steps:
@@ -264,7 +264,7 @@ jobs:
           install: false
           record: true
           parallel: true
-          tag: \#${{ matrix.machines }}
+          tag: machine${{ matrix.machines }}
           browser: chrome
           group: "Quote"
           project: ./e2e-tests/quote
@@ -300,7 +300,7 @@ jobs:
         machines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     concurrency:
-      group: e2e-tests-switch-${{ github.workflow }}-${{ github.run_id }}-${{ matrix.machines }}
+      group: e2e-tests-switch-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.machines }}
       cancel-in-progress: true
 
     steps:
@@ -327,7 +327,7 @@ jobs:
           install: false
           record: true
           parallel: true
-          tag: \#${{ matrix.machines }}
+          tag: machine${{ matrix.machines }}
           browser: chrome
           group: "Services"
           project: ./e2e-tests/switch-between-services
