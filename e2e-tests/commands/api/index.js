@@ -63,6 +63,13 @@ const queryStrings = {
       }
     }
   `,
+  updateCompanyAndCompanyAddress: () => gql`
+    mutation ($companyId: ID!, $companyAddressId: ID!, $data: CompanyAndCompanyAddressInput!) {
+      updateCompanyAndCompanyAddress(companyId: $companyId, companyAddressId: $companyAddressId, data: $data) {
+        id
+      }
+    }
+  `,
   addAndGetOTP: () => gql`
     mutation addAndGetOTP($email: String!) {
       addAndGetOTP(email: $email) {
@@ -79,7 +86,7 @@ const queryStrings = {
       }
     }
   `,
-  getApplicationByReferenceNumber: (referenceNumber) => `
+  getApplicationByReferenceNumber: (referenceNumber) => gql`
     {
       applications (
       orderBy: { updatedAt: desc }
@@ -87,6 +94,12 @@ const queryStrings = {
       take: 1
     ) {
       id
+      company {
+        id
+        registeredOfficeAddress {
+          id
+        }
+      }
     }
   }`,
   deleteApplicationByReferenceNumber: () => gql`
@@ -274,6 +287,34 @@ const updateAccount = async (id, updateObj) => {
 };
 
 /**
+ * updateCompanyAndCompanyAddress
+ * Update an company and the companies address
+ * @param {String} Company ID
+ * @param {String} Company address ID
+ * @param {String} Company address ID
+ * @returns {Object} Updated company and company address
+ */
+const updateCompanyAndCompanyAddress = async (companyId, companyAddressId, updateObj) => {
+  try {
+    const responseBody = await apollo.query({
+      query: queryStrings.updateCompanyAndCompanyAddress(),
+      variables: {
+        companyId,
+        companyAddressId,
+        data: updateObj,
+      },
+      context: APOLLO_CONTEXT,
+    }).then((response) => response.data.updateCompanyAndCompanyAddress);
+
+    return responseBody;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error('Updating account', { err });
+  }
+};
+
+/**
  * deleteAnAccount
  * Delete an account by email address
  * @param {String} Account email address
@@ -366,22 +407,12 @@ const getAccountPasswordResetToken = async () => {
  */
 const getApplicationByReferenceNumber = async (referenceNumber) => {
   try {
-    const baseUrl = Cypress.config('apiUrl');
-    const url = `${baseUrl}?query=${queryStrings.getApplicationByReferenceNumber(referenceNumber)}`;
+    const responseBody = await apollo.query({
+      query: queryStrings.getApplicationByReferenceNumber(referenceNumber),
+      context: APOLLO_CONTEXT,
+    }).then((response) => response.data.applications[0]);
 
-    const response = await cy.request({
-      headers: {
-        'content-type': 'application/json',
-        'x-api-key': Cypress.env('API_KEY'),
-      },
-      url,
-    });
-
-    if (!response?.body?.data) {
-      throw new Error(`Getting application by reference number ${referenceNumber}`, { response });
-    }
-
-    return response;
+    return responseBody;
   } catch (err) {
     console.error(err);
 
@@ -540,6 +571,7 @@ const api = {
   createApplications,
   getAccountByEmail,
   updateAccount,
+  updateCompanyAndCompanyAddress,
   deleteAnAccount,
   addAndGetOTP,
   getAccountPasswordResetToken,
