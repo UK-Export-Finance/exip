@@ -1,5 +1,5 @@
 import Context from '@keystone-6/core/types';
-import { ApplicationCreateInput, AccountUpdateInput, CompanyUpdateInput } from '.keystone/types'; // eslint-disable-line
+import { ApplicationCreateInput, AccountUpdateInput, BuyerCreateInput, CompanyUpdateInput } from '.keystone/types'; // eslint-disable-line
 
 interface SuccessResponse {
   success: boolean;
@@ -33,13 +33,18 @@ interface Country extends ApplicationRelationship {
 }
 
 interface ApplicationEligibility extends ApplicationRelationship {
-  buyerCountry: Country;
+  buyerCountryIsoCode: string;
   hasCompaniesHouseNumber: boolean;
   otherPartiesInvolved: boolean;
   paidByLetterOfCredit: boolean;
   needPreCreditPeriodCover: boolean;
   wantCoverOverMaxAmount: boolean;
   wantCoverOverMaxPeriod: boolean;
+}
+
+interface CreateAnApplicationVariables {
+  accountId: string;
+  eligibilityAnswers: ApplicationEligibility;
 }
 
 interface ApplicationOwner extends ApplicationRelationship {
@@ -451,6 +456,21 @@ interface TestHelperApplicationCreate extends TestHelperCreate {
   data: ApplicationCreateInput;
 }
 
+interface TestHelperApplicationGet {
+  context: Context;
+  applicationId: string;
+}
+
+interface TestHelperApplicationUpdate {
+  context: Context;
+  applicationId: string;
+  data: object;
+}
+
+interface TestHelperBuyerCreate extends TestHelperCreate {
+  data: BuyerCreateInput;
+}
+
 interface XLSXTitleRowIndexes {
   HEADER: number;
   KEY_INFORMATION: number;
@@ -496,6 +516,7 @@ export {
   ApplicationCompany,
   ApplicationCompanySicCode,
   ApplicationOwner,
+  ApplicationPolicyAndExport,
   ApplicationRelationship,
   ApplicationSubmissionEmailVariables,
   ApplicationVersion,
@@ -506,6 +527,7 @@ export {
   CompaniesHouseAPIResponse,
   Context,
   Country,
+  CreateAnApplicationVariables,
   Currency,
   DeleteApplicationByReferenceNumberVariables,
   EmailResponse,
@@ -522,6 +544,9 @@ export {
   SuccessResponse,
   TestHelperAccountCreate,
   TestHelperApplicationCreate,
+  TestHelperApplicationGet,
+  TestHelperApplicationUpdate,
+  TestHelperBuyerCreate,
   TestHelperCreate,
   UpdateCompanyAndCompanyAddressVariables,
   XLSXTitleRowIndexes,

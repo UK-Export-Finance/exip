@@ -1982,6 +1982,9 @@ type Mutation {
   """ create an account """
   createAnAccount(urlOrigin: String!, firstName: String!, lastName: String!, email: String!, password: String!): CreateAnAccountResponse
 
+  """ create an application """
+  createAnApplication(accountId: String!, eligibilityAnswers: ApplicationEligibility!): CreateAnApplicationResponse
+
   """ delete an account """
   deleteAnAccount(email: String!): SuccessResponse
 
@@ -2393,4 +2396,22 @@ type AccountSendEmailReactivateAccountLinkResponse {
   success: Boolean!
   accountId: String!
   email: String
+}
+
+input ApplicationEligibility {
+  buyerCountryIsoCode: String!
+  hasCompaniesHouseNumber: Boolean!
+  otherPartiesInvolved: Boolean!
+  paidByLetterOfCredit: Boolean!
+  needPreCreditPeriodCover: Boolean!
+  wantCoverOverMaxAmount: Boolean!
+  wantCoverOverMaxPeriod: Boolean!
+  validExporterLocation: Boolean!
+  hasMinimumUkGoodsOrServices: Boolean!
+}
+
+type CreateAnApplicationResponse {
+  success: Boolean!
+  id: String
+  referenceNumber: Int
 }

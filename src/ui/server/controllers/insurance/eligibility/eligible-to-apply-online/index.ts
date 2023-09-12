@@ -4,6 +4,7 @@ import corePageVariables from '../../../../helpers/page-variables/core/insurance
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import canCreateAnApplication from '../../../../helpers/can-create-an-application';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
+import mapEligibilityAnswers from '../../../../helpers/map-eligibility-answers';
 import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
 
@@ -37,7 +38,9 @@ export const post = async (req: Request, res: Response) => {
      */
     if (req.session.user) {
       if (canCreateAnApplication(req.session)) {
-        const eligibilityAnswers = sanitiseData(req.session.submittedData.insuranceEligibility);
+        const sanitisedData = sanitiseData(req.session.submittedData.insuranceEligibility);
+
+        const eligibilityAnswers = mapEligibilityAnswers(sanitisedData);
 
         req.session.submittedData.insuranceEligibility = {};
 

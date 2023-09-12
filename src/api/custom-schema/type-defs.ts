@@ -172,6 +172,24 @@ const typeDefs = `
     email: String
   }
 
+  input ApplicationEligibility {
+    buyerCountryIsoCode: String!
+    hasCompaniesHouseNumber: Boolean!
+    otherPartiesInvolved: Boolean!
+    paidByLetterOfCredit: Boolean!
+    needPreCreditPeriodCover: Boolean!
+    wantCoverOverMaxAmount: Boolean!
+    wantCoverOverMaxPeriod: Boolean!
+    validExporterLocation: Boolean!
+    hasMinimumUkGoodsOrServices: Boolean!
+  }
+
+  type CreateAnApplicationResponse {
+    success: Boolean!
+    id: String
+    referenceNumber: Int
+  }
+
   type Mutation {
     """ create an account """
     createAnAccount(
@@ -181,6 +199,12 @@ const typeDefs = `
       email: String!
       password: String!
     ): CreateAnAccountResponse
+
+    """ create an application """
+    createAnApplication(
+      accountId: String!
+      eligibilityAnswers: ApplicationEligibility!
+    ): CreateAnApplicationResponse
 
     """ delete an account """
     deleteAnAccount(

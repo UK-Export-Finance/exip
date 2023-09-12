@@ -9,6 +9,7 @@ import mockCurrencies from './mock-currencies';
 import mockCompany from './mock-company';
 import mockApplication, { mockBusiness } from './mock-application';
 import mockApplications from './mock-applications';
+import mockEligibility from './mock-eligibility';
 import mockUrlOrigin from './mock-url-origin';
 import mockPhoneNumbers from './mock-phone-numbers';
 import mockSicCodes from './mock-sic-codes';
@@ -77,14 +78,15 @@ export {
   mockBroker,
   mockBusiness,
   mockBusinessContact,
+  mockBusinessNatureOfBusiness,
+  mockBusinessTurnover,
   mockBuyer,
   mockCisCountries,
   mockCountries,
   mockCompany,
   mockCurrencies,
   mockDeclarations,
-  mockBusinessNatureOfBusiness,
-  mockBusinessTurnover,
+  mockEligibility,
   mockInsuranceFeedback,
   mockNext,
   mockUrlOrigin,
