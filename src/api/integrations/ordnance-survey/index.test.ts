@@ -1,6 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import mockOrdnanceSurveyResponse from '../../test-mocks/mock-ordnance-survey-response';
+import { MOCK_OS_ADDRESS_INPUT } from '../../test-mocks/mock-os-address-input';
 import ordnanceSurvey from '.';
 import { ORDNANCE_SURVEY_QUERY_URL } from '../../constants';
 
@@ -8,7 +9,8 @@ const ordnanceSurveyBaseUrl = process.env.ORDNANCE_SURVEY_API_URL;
 const ordnanceSurveyApiKey = process.env.ORDNANCE_SURVEY_API_KEY;
 
 describe('integrations/ordnance-survey', () => {
-  const postcode = 'SW1A2AA';
+  const { postcode } = MOCK_OS_ADDRESS_INPUT;
+  const url = `${ordnanceSurveyBaseUrl}/${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ordnanceSurveyApiKey}`;
 
   describe('when a successful request is made', () => {
     test('it should return success=true and data', async () => {
@@ -16,7 +18,7 @@ describe('integrations/ordnance-survey', () => {
 
       const mockResponse = mockOrdnanceSurveyResponse;
 
-      mock.onGet(`${ordnanceSurveyBaseUrl}/${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ordnanceSurveyApiKey}`).reply(200, mockResponse);
+      mock.onGet(url).reply(200, mockResponse);
 
       const result = await ordnanceSurvey.get(postcode);
 
@@ -33,7 +35,7 @@ describe('integrations/ordnance-survey', () => {
     test('it should return success=false', async () => {
       const mock = new MockAdapter(axios);
 
-      mock.onGet(`${ordnanceSurveyBaseUrl}/${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ordnanceSurveyApiKey}`).reply(200);
+      mock.onGet(url).reply(200);
 
       const result = await ordnanceSurvey.get(postcode);
 
@@ -49,7 +51,7 @@ describe('integrations/ordnance-survey', () => {
     test('it should throw an error', async () => {
       const mock = new MockAdapter(axios);
 
-      mock.onGet(`${ordnanceSurveyBaseUrl}/${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ordnanceSurveyApiKey}`).reply(500);
+      mock.onGet(url).reply(500);
 
       try {
         await ordnanceSurvey.get(postcode);

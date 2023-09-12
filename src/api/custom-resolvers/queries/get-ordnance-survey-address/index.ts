@@ -2,6 +2,7 @@ import { OrdnanceSurveyVariables } from '../../../types';
 import ordnanceSurvey from '../../../integrations/ordnance-survey';
 import { isValidPostcode } from '../../../helpers/is-valid-postcode';
 import mapAndFilterAddress from '../../../helpers/map-and-filter-address';
+import removeWhiteSpace from '../../../helpers/remove-white-space';
 
 /**
  * getOrdnanceSurveyAddress
@@ -19,7 +20,7 @@ const getOrdnanceSurveyAddress = async (root: any, variables: OrdnanceSurveyVari
 
     console.info('Getting Ordnance Survey address for postcode: %s, houseNumber: %s', postcode, houseNumber);
 
-    const noWhitespacePostcode = postcode.replace(' ', '');
+    const noWhitespacePostcode = removeWhiteSpace(postcode);
 
     // if not valid postcode then returns success false and additional flag
     if (!isValidPostcode(noWhitespacePostcode)) {

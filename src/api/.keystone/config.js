@@ -600,9 +600,6 @@ var DATE_FORMAT = {
   HOURS_AND_MINUTES: "HH:mm"
 };
 var ORDNANCE_SURVEY_QUERY_URL = "search/places/v1/postcode?postcode=";
-var REGEX = {
-  POSTCODE: /^[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]?[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}$/
-};
 
 // helpers/update-application/index.ts
 var timestamp = async (context, applicationId) => {
@@ -4542,8 +4539,8 @@ var ordnanceSurvey = {
 var ordnance_survey_default = ordnanceSurvey;
 
 // helpers/is-valid-postcode/index.ts
-var postCodeRegex = REGEX.POSTCODE;
-var isValidPostcode = (postcode) => postCodeRegex.test(postcode);
+var import_postcode_validator = require("postcode-validator");
+var isValidPostcode = (postcode) => (0, import_postcode_validator.postcodeValidator)(postcode, "GB");
 
 // helpers/map-and-filter-address/index.ts
 var mapAndFilterAddress = (house, ordnanceSurveyResponse) => {
@@ -4565,12 +4562,16 @@ var mapAndFilterAddress = (house, ordnanceSurveyResponse) => {
 };
 var map_and_filter_address_default = mapAndFilterAddress;
 
+// helpers/remove-white-space/index.ts
+var removeWhiteSpace = (string) => string.replace(" ", "");
+var remove_white_space_default = removeWhiteSpace;
+
 // custom-resolvers/queries/get-ordnance-survey-address/index.ts
 var getOrdnanceSurveyAddress = async (root, variables) => {
   try {
     const { postcode, houseNumber } = variables;
     console.info("Getting Ordnance Survey address for postcode: %s, houseNumber: %s", postcode, houseNumber);
-    const noWhitespacePostcode = postcode.replace(" ", "");
+    const noWhitespacePostcode = remove_white_space_default(postcode);
     if (!isValidPostcode(noWhitespacePostcode)) {
       console.error("Invalid postcode: %s", postcode);
       return {

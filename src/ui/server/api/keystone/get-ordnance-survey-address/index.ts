@@ -2,6 +2,12 @@ import { ApolloResponse } from '../../../../types';
 import apollo from '../../../graphql/apollo';
 import ordnanceSurveyAddressQuery from '../../../graphql/queries/ordnance-survey-address';
 
+/**
+ * keystone GraphQL API call for ordnance survey address
+ * returns address or errors
+ * @param {String} postcode
+ * @param {String} houseNumber
+ */
 const getOrdnanceSurveyAddress = async (postcode: string, houseNumber: string) => {
   try {
     const queryParams = {

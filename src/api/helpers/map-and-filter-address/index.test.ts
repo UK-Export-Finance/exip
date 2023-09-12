@@ -1,5 +1,14 @@
 import mapAndFilterAddress from '.';
 import mockOrdnanceSurveyResponse from '../../test-mocks/mock-ordnance-survey-response';
+import { OrdnanceSurveyAddress } from '../../types';
+
+const generateAddress = (address: OrdnanceSurveyAddress) => ({
+  addressLine1: `${address.ORGANISATION_NAME || ''} ${address.BUILDING_NAME || ''} ${address.BUILDING_NUMBER || ''} ${address.THOROUGHFARE_NAME || ''}`.trim(),
+  addressLine2: undefined,
+  town: address.POST_TOWN || undefined,
+  county: undefined,
+  postalCode: address.POSTCODE,
+});
 
 describe('mapAndFilterAddress', () => {
   const ordnanceSurveyResponse = mockOrdnanceSurveyResponse.results;
@@ -10,15 +19,7 @@ describe('mapAndFilterAddress', () => {
 
       const result = mapAndFilterAddress(address.BUILDING_NUMBER, ordnanceSurveyResponse);
 
-      const expected = [
-        {
-          addressLine1: `${address.ORGANISATION_NAME || ''}  ${address.BUILDING_NUMBER || ''} ${address.THOROUGHFARE_NAME || ''}`.trim(),
-          addressLine2: undefined,
-          town: address.POST_TOWN || undefined,
-          county: undefined,
-          postalCode: address.POSTCODE,
-        },
-      ];
+      const expected = [generateAddress(address)];
 
       expect(result).toEqual(expected);
     });
@@ -28,17 +29,7 @@ describe('mapAndFilterAddress', () => {
 
       const result = mapAndFilterAddress('TEST', ordnanceSurveyResponse);
 
-      const expected = [
-        {
-          addressLine1: `${address.ORGANISATION_NAME || ''} ${address.BUILDING_NAME || ''} ${address.BUILDING_NUMBER || ''} ${
-            address.THOROUGHFARE_NAME || ''
-          }`.trim(),
-          addressLine2: undefined,
-          town: address.POST_TOWN || undefined,
-          county: undefined,
-          postalCode: address.POSTCODE,
-        },
-      ];
+      const expected = [generateAddress(address)];
 
       expect(result).toEqual(expected);
     });

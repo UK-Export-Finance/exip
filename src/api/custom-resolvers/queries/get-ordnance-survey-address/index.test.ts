@@ -2,6 +2,7 @@ import getOrdnanceSurveyAddress from '.';
 import ordnanceSurvey from '../../../integrations/ordnance-survey';
 import mapAndFilterAddress from '../../../helpers/map-and-filter-address';
 import mockOrdnanceSurveyResponse from '../../../test-mocks/mock-ordnance-survey-response';
+import { MOCK_OS_ADDRESS_INPUT } from '../../../test-mocks/mock-os-address-input';
 import { OrdnanceSurveyResponse } from '../../../types';
 
 describe('getOrdnanceSurveyAddress', () => {
@@ -11,13 +12,15 @@ describe('getOrdnanceSurveyAddress', () => {
     jest.resetAllMocks();
   });
 
+  const { postcode, houseNumber } = MOCK_OS_ADDRESS_INPUT;
+
   describe('when ordnance survey API returns success as false', () => {
     beforeEach(() => {
       ordnanceSurvey.get = jest.fn(() => Promise.resolve({ success: false }));
     });
 
     it('should return object containing success as false', async () => {
-      const response = await getOrdnanceSurveyAddress({}, { postcode: 'SW1A 2AA', houseNumber: '10' });
+      const response = await getOrdnanceSurveyAddress({}, { postcode, houseNumber });
 
       const expected = { success: false };
 
@@ -31,7 +34,7 @@ describe('getOrdnanceSurveyAddress', () => {
     });
 
     it('should return object containing success as false', async () => {
-      const response = await getOrdnanceSurveyAddress({}, { postcode: 'SW1A 2AA', houseNumber: '10' });
+      const response = await getOrdnanceSurveyAddress({}, { postcode, houseNumber });
 
       const expected = { success: false };
 
@@ -45,7 +48,7 @@ describe('getOrdnanceSurveyAddress', () => {
     });
 
     it('should return object containing success as false and apiError as true', async () => {
-      const response = await getOrdnanceSurveyAddress({}, { postcode: 'SW1A 2AA', houseNumber: '10' });
+      const response = await getOrdnanceSurveyAddress({}, { postcode, houseNumber });
 
       const expected = { success: false, apiError: true };
 
@@ -55,7 +58,7 @@ describe('getOrdnanceSurveyAddress', () => {
 
   describe('when the postcode is invalid', () => {
     it('should return object containing success as false and invalidPostcode as true', async () => {
-      const response = await getOrdnanceSurveyAddress({}, { postcode: 'S', houseNumber: '10' });
+      const response = await getOrdnanceSurveyAddress({}, { postcode: 'S', houseNumber });
 
       const expected = { success: false, invalidPostcode: true };
 
@@ -70,7 +73,7 @@ describe('getOrdnanceSurveyAddress', () => {
     });
 
     it('should return object containing success as true and the mapped address', async () => {
-      const response = await getOrdnanceSurveyAddress({}, { postcode: 'SW1A 2AA', houseNumber: '10' });
+      const response = await getOrdnanceSurveyAddress({}, { postcode, houseNumber });
 
       const expected = { success: true, addresses: mapAndFilterAddress('10', mockOrdnanceSurveyResponse.results) };
 
@@ -78,7 +81,7 @@ describe('getOrdnanceSurveyAddress', () => {
     });
 
     it('should return object containing success as false and noAddressesFound as true when house number not found', async () => {
-      const response = await getOrdnanceSurveyAddress({}, { postcode: 'SW1A 2AA', houseNumber: 'A' });
+      const response = await getOrdnanceSurveyAddress({}, { postcode, houseNumber: 'A' });
 
       const expected = { success: false, noAddressesFound: true };
 

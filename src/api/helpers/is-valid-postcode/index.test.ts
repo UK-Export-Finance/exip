@@ -1,5 +1,5 @@
 import { isValidPostcode } from '.';
-import { INVALID_POSTCODES, VALID_POSTCODES } from '../../test-mocks';
+import { INVALID_POSTCODES, VALID_POSTCODES } from '../../test-mocks/mock-postcodes';
 
 describe('isValidPostcode', () => {
   describe('valid postcode', () => {
