@@ -162,16 +162,15 @@ jobs:
   # 4. E2E - Insurance
   e2e-tests-insurance:
     name: E2E Insurance 👷
-    needs: [setup, unit-tests, api-tests]
+    needs: setup
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: false
-      # Single dimension matrix - 4 jobs
+      fail-fast: true
       matrix:
-        machines: [1, 2, 3, 4]
+        machines: [1, 2, 3, 4, 5, 6, 7, 8]
 
     steps:
       - uses: actions/checkout@v4
@@ -188,7 +187,7 @@ jobs:
       - name: Docker
         run: docker-compose up --build -d
 
-      - name: Wait
+      - name: 30s Sleep
         run: sleep 30s
 
       - name: Execute
@@ -197,13 +196,12 @@ jobs:
           install: false
           record: true
           parallel: true
-          tag: \#${{ matrix.machines }}
           browser: chrome
-          group: "Insurance"
+          group: "EXIP-E2E-INSURANCE"
           project: ./e2e-tests/insurance
         env:
-          TZ: ${{ env.timezone }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
+          TZ: Europe/London
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           API_KEY: ${{ secrets.API_KEY }}
           GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
@@ -220,14 +218,13 @@ jobs:
   # 5. E2E - Quote
   e2e-tests-quote:
     name: E2E Quote 👷
-    needs: [setup, unit-tests, api-tests, e2e-tests-insurance]
+    needs: setup
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: false
-      # Single dimension matrix - 4 jobs
+      fail-fast: true
       matrix:
         machines: [1, 2, 3, 4]
 
@@ -246,7 +243,7 @@ jobs:
       - name: Docker
         run: docker-compose up --build -d
 
-      - name: Wait
+      - name: 30s Sleep
         run: sleep 30s
 
       - name: Execute
@@ -255,13 +252,12 @@ jobs:
           install: false
           record: true
           parallel: true
-          tag: \#${{ matrix.machines }}
           browser: chrome
-          group: "Quote"
+          group: "EXIP-E2E-QUOTE"
           project: ./e2e-tests/quote
         env:
-          TZ: ${{ env.timezone }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
+          TZ: Europe/London
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           API_KEY: ${{ secrets.API_KEY }}
           GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
@@ -278,16 +274,13 @@ jobs:
   # 6. E2E - Switch between services
   e2e-tests-switch-between-services:
     name: E2E Switch between services 👷
-    needs: [setup, unit-tests, api-tests, e2e-tests-insurance, e2e-tests-quote]
+    needs: setup
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: false
-      # Single dimension matrix - 4 jobs
-      matrix:
-        machines: [1, 2, 3, 4]
+      fail-fast: true
 
     steps:
       - uses: actions/checkout@v4
@@ -304,7 +297,7 @@ jobs:
       - name: Docker
         run: docker-compose up --build -d
 
-      - name: Wait
+      - name: 30s Sleep
         run: sleep 30s
 
       - name: Execute
@@ -313,13 +306,12 @@ jobs:
           install: false
           record: true
           parallel: true
-          tag: \#${{ matrix.machines }}
           browser: chrome
-          group: "Services"
+          group: "EXIP-E2E-SWITCH-BETWEEN-SERVICES"
           project: ./e2e-tests/switch-between-services
         env:
-          TZ: ${{ env.timezone }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
+          TZ: Europe/London
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           API_KEY: ${{ secrets.API_KEY }}
           GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
