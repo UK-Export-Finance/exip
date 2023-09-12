@@ -16,7 +16,7 @@ import {
   createFeedbackAndSendEmail,
   verifyAccountReactivationToken,
 } from './mutations';
-import { getCompaniesHouseInformation, getAccountPasswordResetToken, verifyAccountPasswordResetToken } from './queries';
+import { getCompaniesHouseInformation, getAccountPasswordResetToken, verifyAccountPasswordResetToken, getOrdnanceSurveyAddress } from './queries';
 
 /**
  * customResolvers
@@ -48,6 +48,7 @@ const customResolvers = {
     getCompaniesHouseInformation,
     getAccountPasswordResetToken,
     verifyAccountPasswordResetToken,
+    getOrdnanceSurveyAddress,
   },
 };
 

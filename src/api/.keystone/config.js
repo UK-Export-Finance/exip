@@ -392,7 +392,7 @@ var FIELD_VALUES = {
 
 // helpers/policy-type/index.ts
 var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
-var isMultiPolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 // constants/XLSX-CONFIG/index.ts
 var {
@@ -425,7 +425,7 @@ var XLSX_ROW_INDEXES = (application2) => {
   const policyType = policyAndExport[POLICY_TYPE2];
   let isMultiplePolicy = false;
   let isUsingBroker = false;
-  if (isMultiPolicyType(policyType)) {
+  if (isMultiplePolicyType(policyType)) {
     isMultiplePolicy = true;
   }
   if (broker[USING_BROKER] === ANSWERS.YES) {
@@ -598,6 +598,10 @@ var ACCEPTED_FILE_TYPES = [".xlsx"];
 var DATE_FORMAT = {
   DEFAULT: "d MMMM yyyy",
   HOURS_AND_MINUTES: "HH:mm"
+};
+var ORDNANCE_SURVEY_QUERY_URL = "search/places/v1/postcode?postcode=";
+var REGEX = {
+  POSTCODE: /^[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]?[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}$/
 };
 
 // helpers/update-application/index.ts
@@ -1524,6 +1528,22 @@ var typeDefs = `
     oldSicCodes: [OldSicCodes]
   }
 
+  type Address {
+    addressLine1: String
+    addressLine2: String
+    town: String
+    county: String
+    postalCode: String
+  }
+
+  type OrdnanceSurveyResponse {
+    success: Boolean
+    addresses: [Address]
+    apiError: Boolean
+    noAddressesFound: Boolean
+    invalidPostcode: Boolean
+  }
+
   type EmailResponse {
     success: Boolean
     emailRecipient: String
@@ -1711,6 +1731,12 @@ var typeDefs = `
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
+
+    """ get ordnance survey address """
+    getOrdnanceSurveyAddress(
+      postcode: String!
+      houseNumber: String!
+    ): OrdnanceSurveyResponse
   }
 `;
 var type_defs_default = typeDefs;
@@ -3870,7 +3896,7 @@ var mapPolicyAndExport = (application2) => {
   if (isSinglePolicyType(policyType)) {
     mapped = [...mapped, ...mapSinglePolicyFields(application2)];
   }
-  if (isMultiPolicyType(policyType)) {
+  if (isMultiplePolicyType(policyType)) {
     mapped = [...mapped, ...mapMultiplePolicyFields(application2)];
   }
   mapped = [...mapped, ...mapPolicyAndExportOutro(application2)];
@@ -4481,6 +4507,104 @@ var verifyAccountPasswordResetToken = async (root, variables, context) => {
 };
 var verify_account_password_reset_token_default = verifyAccountPasswordResetToken;
 
+// integrations/ordnance-survey/index.ts
+var import_axios3 = __toESM(require("axios"));
+var import_dotenv7 = __toESM(require("dotenv"));
+import_dotenv7.default.config();
+var ordnanceSurveyBaseUrl = process.env.ORDNANCE_SURVEY_API_URL;
+var ordnanceSurveyApiKey = process.env.ORDNANCE_SURVEY_API_KEY;
+var ordnanceSurvey = {
+  get: async (postcode) => {
+    try {
+      const response = await (0, import_axios3.default)({
+        method: "get",
+        url: `${ordnanceSurveyBaseUrl}/${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ordnanceSurveyApiKey}`,
+        validateStatus(status) {
+          const acceptableStatus = [200, 404];
+          return acceptableStatus.includes(status);
+        }
+      });
+      if (!response.data || response.status !== 200) {
+        return {
+          success: false
+        };
+      }
+      return {
+        success: true,
+        data: response.data.results
+      };
+    } catch (err) {
+      console.error("Error calling Ordnance Survey API %O", err);
+      throw new Error(`Calling Ordnance Survey API. Unable to search for address ${err}`);
+    }
+  }
+};
+var ordnance_survey_default = ordnanceSurvey;
+
+// helpers/is-valid-postcode/index.ts
+var postCodeRegex = REGEX.POSTCODE;
+var isValidPostcode = (postcode) => postCodeRegex.test(postcode);
+
+// helpers/map-and-filter-address/index.ts
+var mapAndFilterAddress = (house, ordnanceSurveyResponse) => {
+  const filtered = ordnanceSurveyResponse.filter((eachAddress) => eachAddress.DPA.BUILDING_NUMBER === house || eachAddress.DPA.BUILDING_NAME === house);
+  if (!filtered.length) {
+    return [];
+  }
+  const mappedFilteredAddresses = [];
+  filtered.forEach((address) => {
+    mappedFilteredAddresses.push({
+      addressLine1: `${address.DPA.ORGANISATION_NAME || ""} ${address.DPA.BUILDING_NAME || ""} ${address.DPA.BUILDING_NUMBER || ""} ${address.DPA.THOROUGHFARE_NAME || ""}`.trim(),
+      addressLine2: address.DPA.DEPENDENT_LOCALITY || void 0,
+      town: address.DPA.POST_TOWN || void 0,
+      county: void 0,
+      postalCode: address.DPA.POSTCODE
+    });
+  });
+  return mappedFilteredAddresses;
+};
+var map_and_filter_address_default = mapAndFilterAddress;
+
+// custom-resolvers/queries/get-ordnance-survey-address/index.ts
+var getOrdnanceSurveyAddress = async (root, variables) => {
+  try {
+    const { postcode, houseNumber } = variables;
+    console.info("Getting Ordnance Survey address for postcode: %s, houseNumber: %s", postcode, houseNumber);
+    const noWhitespacePostcode = postcode.replace(" ", "");
+    if (!isValidPostcode(noWhitespacePostcode)) {
+      console.error("Invalid postcode: %s", postcode);
+      return {
+        success: false,
+        invalidPostcode: true
+      };
+    }
+    const response = await ordnance_survey_default.get(postcode);
+    if (!response.success || !response.data) {
+      return {
+        success: false
+      };
+    }
+    const mappedAddresses = map_and_filter_address_default(houseNumber, response.data);
+    if (!mappedAddresses.length) {
+      return {
+        success: false,
+        noAddressesFound: true
+      };
+    }
+    return {
+      addresses: mappedAddresses,
+      success: true
+    };
+  } catch (err) {
+    console.error("Error getting ordnance survey address results %O", err);
+    return {
+      apiError: true,
+      success: false
+    };
+  }
+};
+var get_ordnance_survey_address_default = getOrdnanceSurveyAddress;
+
 // custom-resolvers/index.ts
 var customResolvers = {
   Mutation: {
@@ -4504,7 +4628,8 @@ var customResolvers = {
   Query: {
     getCompaniesHouseInformation: get_companies_house_information_default,
     getAccountPasswordResetToken: get_account_password_reset_token_default,
-    verifyAccountPasswordResetToken: verify_account_password_reset_token_default
+    verifyAccountPasswordResetToken: verify_account_password_reset_token_default,
+    getOrdnanceSurveyAddress: get_ordnance_survey_address_default
   }
 };
 var custom_resolvers_default = customResolvers;

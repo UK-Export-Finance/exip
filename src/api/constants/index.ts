@@ -198,3 +198,9 @@ export const DATE_FORMAT = {
   DEFAULT: 'd MMMM yyyy',
   HOURS_AND_MINUTES: 'HH:mm',
 };
+
+export const ORDNANCE_SURVEY_QUERY_URL = 'search/places/v1/postcode?postcode=';
+
+export const REGEX = {
+  POSTCODE: /^[A-Za-z]{1,2}[0-9Rr][0-9A-Za-z]?[0-9][ABD-HJLNP-UW-Zabd-hjlnp-uw-z]{2}$/,
+};

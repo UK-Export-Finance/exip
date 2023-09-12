@@ -106,6 +106,22 @@ const typeDefs = `
     oldSicCodes: [OldSicCodes]
   }
 
+  type Address {
+    addressLine1: String
+    addressLine2: String
+    town: String
+    county: String
+    postalCode: String
+  }
+
+  type OrdnanceSurveyResponse {
+    success: Boolean
+    addresses: [Address]
+    apiError: Boolean
+    noAddressesFound: Boolean
+    invalidPostcode: Boolean
+  }
+
   type EmailResponse {
     success: Boolean
     emailRecipient: String
@@ -293,6 +309,12 @@ const typeDefs = `
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
+
+    """ get ordnance survey address """
+    getOrdnanceSurveyAddress(
+      postcode: String!
+      houseNumber: String!
+    ): OrdnanceSurveyResponse
   }
 `;
 

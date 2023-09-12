@@ -239,6 +239,38 @@ interface GetCompaniesHouseInformationVariables {
   companiesHouseNumber: string;
 }
 
+interface Address {
+  addressLine1: string;
+  addressLine2?: string;
+  town?: string;
+  county?: string;
+  postalCode: string;
+}
+
+interface OrdnanceSurveyAddress {
+  ADDRESS: string;
+  BUILDING_NUMBER: string;
+  BUILDING_NAME?: string;
+  POST_TOWN: string;
+  POSTCODE: string;
+  DEPENDENT_LOCALITY?: string;
+  ORGANISATION_NAME?: string;
+  THOROUGHFARE_NAME?: string;
+}
+
+interface OrdnanceSurveyResponse {
+  DPA: OrdnanceSurveyAddress;
+}
+
+interface OrdnanceSurveyAPIResponse extends SuccessResponse {
+  data?: Array<OrdnanceSurveyResponse>;
+}
+
+interface OrdnanceSurveyVariables {
+  postcode: string;
+  houseNumber: string;
+}
+
 interface ConnectId {
   id: string;
 }
@@ -485,6 +517,7 @@ export {
   AccountPasswordResetVariables,
   AddOtpToAccountVariables,
   AddAndGetOtpResponse,
+  Address,
   Application,
   ApplicationBuyer,
   ApplicationBusiness,
@@ -514,6 +547,10 @@ export {
   NotifyPersonalisation,
   InsuranceFeedbackVariables,
   IndustrySector,
+  OrdnanceSurveyAddress,
+  OrdnanceSurveyAPIResponse,
+  OrdnanceSurveyResponse,
+  OrdnanceSurveyVariables,
   SicCode,
   SendExporterEmailVariables,
   SubmitApplicationVariables,
