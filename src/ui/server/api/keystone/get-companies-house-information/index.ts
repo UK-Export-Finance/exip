@@ -1,6 +1,6 @@
 import { ApolloResponse } from '../../../../types';
 import apollo from '../../../graphql/apollo';
-import companiesHouseQuery from '../../../graphql/queries/companies-house';
+import getCompaniesHouseInformationQuery from '../../../graphql/queries/companies-house';
 
 const getCompaniesHouseInformation = async (companiesHouseNumber: string) => {
   try {
@@ -8,8 +8,7 @@ const getCompaniesHouseInformation = async (companiesHouseNumber: string) => {
       companiesHouseNumber,
     };
 
-    const query = companiesHouseQuery;
-    const response = (await apollo('GET', query, queryParams)) as ApolloResponse;
+    const response = (await apollo('GET', getCompaniesHouseInformationQuery, queryParams)) as ApolloResponse;
 
     if (response.errors) {
       console.error('GraphQL network error querying companies house information %O', response.errors);
@@ -23,7 +22,7 @@ const getCompaniesHouseInformation = async (companiesHouseNumber: string) => {
       return response.data.getCompaniesHouseInformation;
     }
 
-    console.error('Error with GraphQL companiesHouseQuery %O', response);
+    console.error('Error with GraphQL getCompaniesHouseInformation %O', response);
     throw new Error('Getting Companies house information');
   } catch (err) {
     console.error('Error getting companies house information %O', err);
