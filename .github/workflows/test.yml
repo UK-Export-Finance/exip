@@ -173,10 +173,6 @@ jobs:
       matrix:
         machines: [1, 2, 3, 4]
 
-    concurrency:
-      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.run_id }}-${{ matrix.machines }}
-      cancel-in-progress: true
-
     steps:
       - uses: actions/checkout@v4
 
@@ -235,10 +231,6 @@ jobs:
       matrix:
         machines: [1, 2, 3, 4]
 
-    concurrency:
-      group: e2e-tests-quote-${{ github.workflow }}-${{ github.run_id }}-${{ matrix.machines }}
-      cancel-in-progress: true
-
     steps:
       - uses: actions/checkout@v4
 
@@ -296,10 +288,6 @@ jobs:
       # Single dimension matrix - 4 jobs
       matrix:
         machines: [1, 2, 3, 4]
-
-    concurrency:
-      group: e2e-tests-services-${{ github.workflow }}-${{ github.run_id }}-${{ matrix.machines }}
-      cancel-in-progress: true
 
     steps:
       - uses: actions/checkout@v4
