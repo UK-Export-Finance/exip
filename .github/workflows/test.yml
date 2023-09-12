@@ -232,9 +232,9 @@ jobs:
 
     strategy:
       fail-fast: true
-      # Single dimension matrix - 10 jobs
+      # Single dimension matrix - 4 jobs
       matrix:
-        machines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        machines: [1, 2, 3, 4]
 
     concurrency:
       group: e2e-tests-quote-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.machines }}
@@ -295,9 +295,9 @@ jobs:
 
     strategy:
       fail-fast: true
-      # Single dimension matrix - 10 jobs
+      # Single dimension matrix - 1 job
       matrix:
-        machines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        machines: [1]
 
     concurrency:
       group: e2e-tests-switch-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.machines }}
