@@ -196,11 +196,12 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v5
         with:
           install: false
           record: true
           parallel: true
+          tag: insurance#${{ matrix.machines }}
           browser: chrome
           group: "insurance"
           project: ./e2e-tests/insurance
@@ -258,11 +259,12 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v5
         with:
           install: false
           record: true
           parallel: true
+          tag: quote#${{ matrix.machines }}
           browser: chrome
           group: "quote"
           project: ./e2e-tests/quote
@@ -320,11 +322,12 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v5
         with:
           install: false
           record: true
           parallel: true
+          tag: switch#${{ matrix.machines }}
           browser: chrome
           group: "switch-between-services"
           project: ./e2e-tests/switch-between-services
