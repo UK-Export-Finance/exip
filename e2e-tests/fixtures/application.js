@@ -48,8 +48,8 @@ const {
       },
       YOUR_COMPANY: {
         ADDRESS: YOUR_COMPANY_ADDRESS,
-        TRADING_ADDRESS,
-        TRADING_NAME,
+        // TRADING_ADDRESS,
+        // TRADING_NAME,
       },
       NATURE_OF_YOUR_BUSINESS: {
         GOODS_OR_SERVICES,
@@ -161,8 +161,8 @@ const application = {
     [COMPANY_SIC]: [sicCodes[0].code],
     [INDUSTRY_SECTOR_NAMES]: [sicCodes[0][INDUSTRY_SECTOR_NAME]],
     [FINANCIAL_YEAR_END_DATE]: '2023-07-31T00:00:00.000Z',
-    [TRADING_NAME]: true,
-    [TRADING_ADDRESS]: true,
+    // [TRADING_NAME]: true,
+    // [TRADING_ADDRESS]: true,
   },
   EXPORTER_BUSINESS: {
     [GOODS_OR_SERVICES]: 'abc',

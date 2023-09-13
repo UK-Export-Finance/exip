@@ -22,6 +22,7 @@ const {
         FINANCIAL_YEAR_END_DATE,
       },
       YOUR_COMPANY: {
+        ADDRESS: YOUR_COMPANY_ADDRESS,
         TRADING_ADDRESS,
         TRADING_NAME,
         WEBSITE,
@@ -85,11 +86,11 @@ const checkYourBusinessSummaryList = ({
     );
 
     // as html, cannot use checkText so checking contains following fields
-    row.value().contains(application.EXPORTER_COMPANY[fieldId].addressLine1);
-    row.value().contains(application.EXPORTER_COMPANY[fieldId].addressLine2);
-    row.value().contains(application.EXPORTER_COMPANY[fieldId].locality);
-    row.value().contains(application.EXPORTER_COMPANY[fieldId].region);
-    row.value().contains(application.EXPORTER_COMPANY[fieldId].postalCode);
+    row.value().contains(application.EXPORTER_COMPANY[YOUR_COMPANY_ADDRESS].addressLine1);
+    row.value().contains(application.EXPORTER_COMPANY[YOUR_COMPANY_ADDRESS].addressLine2);
+    row.value().contains(application.EXPORTER_COMPANY[YOUR_COMPANY_ADDRESS].locality);
+    row.value().contains(application.EXPORTER_COMPANY[YOUR_COMPANY_ADDRESS].region);
+    row.value().contains(application.EXPORTER_COMPANY[YOUR_COMPANY_ADDRESS].postalCode);
 
     row.changeLink().should('not.exist');
   },

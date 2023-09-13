@@ -73,7 +73,7 @@ context('Insurance - Your business - Companies house number page', () => {
 
       const companyNumber = COMPANIES_HOUSE_NUMBER;
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ companyNumber });
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companyNumber });
     });
 
     it('should display the companies house details summary list', () => {
@@ -116,7 +116,7 @@ context('Insurance - Your business - Companies house number page', () => {
 
       const companyNumber = COMPANIES_HOUSE_NUMBER_NO_SIC_CODE;
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ companyNumber });
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companyNumber });
     });
 
     it(`should display the companies house details with a "${DEFAULT.EMPTY}" for sic code`, () => {
@@ -140,7 +140,7 @@ context('Insurance - Your business - Companies house number page', () => {
 
       const companyNumber = COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES;
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ companyNumber });
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companyNumber });
     });
 
     it('should display all the sic codes in the summary list', () => {
