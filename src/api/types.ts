@@ -179,13 +179,15 @@ interface DeleteApplicationByReferenceNumberVariables {
   referenceNumber: number;
 }
 
-interface MappedCompaniesHouseAddress {
+interface Address {
   careOf?: string;
   premises?: string;
   addressLine1?: string;
   addressLine2?: string;
   locality?: string;
+  town?: string;
   region?: string;
+  county?: string;
   postalCode?: string;
   country?: string;
 }
@@ -225,7 +227,7 @@ interface CompaniesHouseAPIResponse extends SuccessResponse {
 
 interface MappedCompaniesHouseResponse {
   companyName: string;
-  registeredOfficeAddress: MappedCompaniesHouseAddress;
+  registeredOfficeAddress: Address;
   companyNumber: string;
   dateOfCreation: string;
   sicCodes: Array<string>;
@@ -237,14 +239,6 @@ interface EmailResponse extends SuccessResponse {
 
 interface GetCompaniesHouseInformationVariables {
   companiesHouseNumber: string;
-}
-
-interface Address {
-  addressLine1: string;
-  addressLine2?: string;
-  town?: string;
-  county?: string;
-  postalCode: string;
 }
 
 interface OrdnanceSurveyAddress {

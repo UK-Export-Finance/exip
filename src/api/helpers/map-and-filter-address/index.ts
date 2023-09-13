@@ -22,11 +22,11 @@ const mapAndFilterAddress = (house: string, ordnanceSurveyResponse: Array<Ordnan
 
   filtered.forEach((address) => {
     mappedFilteredAddresses.push({
-      addressLine1: `${address.DPA.ORGANISATION_NAME || ''} ${address.DPA.BUILDING_NAME || ''} ${address.DPA.BUILDING_NUMBER || ''} ${
-        address.DPA.THOROUGHFARE_NAME || ''
+      addressLine1: `${address.DPA.ORGANISATION_NAME ?? ''} ${address.DPA.BUILDING_NAME ?? ''} ${address.DPA.BUILDING_NUMBER ?? ''} ${
+        address.DPA.THOROUGHFARE_NAME ?? ''
       }`.trim(),
-      addressLine2: address.DPA.DEPENDENT_LOCALITY || undefined,
-      town: address.DPA.POST_TOWN || undefined,
+      addressLine2: address.DPA.DEPENDENT_LOCALITY ?? undefined,
+      town: address.DPA.POST_TOWN ?? undefined,
       county: undefined,
       postalCode: address.DPA.POSTCODE,
     });

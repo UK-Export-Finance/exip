@@ -2246,17 +2246,6 @@ type CreateAnAccountResponse {
   verificationHash: String
 }
 
-type CompaniesHouseExporterCompanyAddress {
-  addressLine1: String
-  addressLine2: String
-  careOf: String
-  locality: String
-  region: String
-  postalCode: String
-  country: String
-  premises: String
-}
-
 type CompaniesHouseResponse {
   companyName: String
   registeredOfficeAddress: CompanyAddress
@@ -2269,16 +2258,31 @@ type CompaniesHouseResponse {
   apiError: Boolean
 }
 
-input OldSicCodes {
-  id: String
-}
-
-input CompanyAddressInput {
+type Address {
   addressLine1: String
   addressLine2: String
   careOf: String
   locality: String
   region: String
+  county: String
+  town: String
+  postalCode: String
+  country: String
+  premises: String
+}
+
+input OldSicCodes {
+  id: String
+}
+
+input AddressInput {
+  addressLine1: String
+  addressLine2: String
+  careOf: String
+  locality: String
+  region: String
+  county: String
+  town: String
   postalCode: String
   country: String
   premises: String
@@ -2286,7 +2290,7 @@ input CompanyAddressInput {
 
 type CompanyAndCompanyAddress {
   id: ID
-  registeredOfficeAddress: CompanyAddress
+  registeredOfficeAddress: Address
   companyName: String
   companyNumber: String
   dateOfCreation: DateTime
@@ -2297,7 +2301,7 @@ type CompanyAndCompanyAddress {
 }
 
 input CompanyAndCompanyAddressInput {
-  address: CompanyAddressInput
+  address: AddressInput
   sicCodes: [String]
   industrySectorNames: [String]
   companyName: String
@@ -2309,14 +2313,6 @@ input CompanyAndCompanyAddressInput {
   phoneNumber: String
   financialYearEndDate: DateTime
   oldSicCodes: [OldSicCodes]
-}
-
-type Address {
-  addressLine1: String
-  addressLine2: String
-  town: String
-  county: String
-  postalCode: String
 }
 
 type OrdnanceSurveyResponse {

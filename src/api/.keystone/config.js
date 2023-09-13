@@ -1448,18 +1448,6 @@ var typeDefs = `
     verificationHash: String
   }
 
-  # fields from registered_office_address object
-  type CompaniesHouseExporterCompanyAddress {
-    addressLine1: String
-    addressLine2: String
-    careOf: String
-    locality: String
-    region: String
-    postalCode: String
-    country: String
-    premises: String
-  }
-
   type CompaniesHouseResponse {
     companyName: String
     registeredOfficeAddress: CompanyAddress
@@ -1472,12 +1460,14 @@ var typeDefs = `
     apiError: Boolean
   }
 
-  type CompanyAddress {
+  type Address {
     addressLine1: String
     addressLine2: String
     careOf: String
     locality: String
     region: String
+    county: String
+    town: String
     postalCode: String
     country: String
     premises: String
@@ -1487,12 +1477,14 @@ var typeDefs = `
     id: String
   }
 
-  input CompanyAddressInput {
+  input AddressInput {
     addressLine1: String
     addressLine2: String
     careOf: String
     locality: String
     region: String
+    county: String
+    town: String
     postalCode: String
     country: String
     premises: String
@@ -1500,7 +1492,7 @@ var typeDefs = `
 
   type CompanyAndCompanyAddress {
     id: ID
-    registeredOfficeAddress: CompanyAddress
+    registeredOfficeAddress: Address
     companyName: String
     companyNumber: String
     dateOfCreation: DateTime
@@ -1511,7 +1503,7 @@ var typeDefs = `
   }
 
   input CompanyAndCompanyAddressInput {
-    address: CompanyAddressInput
+    address: AddressInput
     sicCodes: [String]
     industrySectorNames: [String]
     companyName: String
@@ -1523,14 +1515,6 @@ var typeDefs = `
     phoneNumber: String
     financialYearEndDate: DateTime
     oldSicCodes: [OldSicCodes]
-  }
-
-  type Address {
-    addressLine1: String
-    addressLine2: String
-    town: String
-    county: String
-    postalCode: String
   }
 
   type OrdnanceSurveyResponse {
@@ -4551,9 +4535,9 @@ var mapAndFilterAddress = (house, ordnanceSurveyResponse) => {
   const mappedFilteredAddresses = [];
   filtered.forEach((address) => {
     mappedFilteredAddresses.push({
-      addressLine1: `${address.DPA.ORGANISATION_NAME || ""} ${address.DPA.BUILDING_NAME || ""} ${address.DPA.BUILDING_NUMBER || ""} ${address.DPA.THOROUGHFARE_NAME || ""}`.trim(),
-      addressLine2: address.DPA.DEPENDENT_LOCALITY || void 0,
-      town: address.DPA.POST_TOWN || void 0,
+      addressLine1: `${address.DPA.ORGANISATION_NAME ?? ""} ${address.DPA.BUILDING_NAME ?? ""} ${address.DPA.BUILDING_NUMBER ?? ""} ${address.DPA.THOROUGHFARE_NAME ?? ""}`.trim(),
+      addressLine2: address.DPA.DEPENDENT_LOCALITY ?? void 0,
+      town: address.DPA.POST_TOWN ?? void 0,
       county: void 0,
       postalCode: address.DPA.POSTCODE
     });

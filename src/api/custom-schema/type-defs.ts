@@ -29,18 +29,6 @@ const typeDefs = `
     verificationHash: String
   }
 
-  # fields from registered_office_address object
-  type CompaniesHouseExporterCompanyAddress {
-    addressLine1: String
-    addressLine2: String
-    careOf: String
-    locality: String
-    region: String
-    postalCode: String
-    country: String
-    premises: String
-  }
-
   type CompaniesHouseResponse {
     companyName: String
     registeredOfficeAddress: CompanyAddress
@@ -53,12 +41,14 @@ const typeDefs = `
     apiError: Boolean
   }
 
-  type CompanyAddress {
+  type Address {
     addressLine1: String
     addressLine2: String
     careOf: String
     locality: String
     region: String
+    county: String
+    town: String
     postalCode: String
     country: String
     premises: String
@@ -68,12 +58,14 @@ const typeDefs = `
     id: String
   }
 
-  input CompanyAddressInput {
+  input AddressInput {
     addressLine1: String
     addressLine2: String
     careOf: String
     locality: String
     region: String
+    county: String
+    town: String
     postalCode: String
     country: String
     premises: String
@@ -81,7 +73,7 @@ const typeDefs = `
 
   type CompanyAndCompanyAddress {
     id: ID
-    registeredOfficeAddress: CompanyAddress
+    registeredOfficeAddress: Address
     companyName: String
     companyNumber: String
     dateOfCreation: DateTime
@@ -92,7 +84,7 @@ const typeDefs = `
   }
 
   input CompanyAndCompanyAddressInput {
-    address: CompanyAddressInput
+    address: AddressInput
     sicCodes: [String]
     industrySectorNames: [String]
     companyName: String
@@ -104,14 +96,6 @@ const typeDefs = `
     phoneNumber: String
     financialYearEndDate: DateTime
     oldSicCodes: [OldSicCodes]
-  }
-
-  type Address {
-    addressLine1: String
-    addressLine2: String
-    town: String
-    county: String
-    postalCode: String
   }
 
   type OrdnanceSurveyResponse {
