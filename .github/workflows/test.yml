@@ -201,9 +201,9 @@ jobs:
           install: false
           record: true
           parallel: true
-          tag: machine${{ matrix.machines }}
+          tag: insurance#${{ matrix.machines }}
           browser: chrome
-          group: "Insurance"
+          group: "insurance"
           project: ./e2e-tests/insurance
         env:
           TZ: ${{ env.timezone }}
@@ -264,9 +264,9 @@ jobs:
           install: false
           record: true
           parallel: true
-          tag: machine${{ matrix.machines }}
+          tag: quote#${{ matrix.machines }}
           browser: chrome
-          group: "Quote"
+          group: "quote"
           project: ./e2e-tests/quote
         env:
           TZ: ${{ env.timezone }}
@@ -327,9 +327,9 @@ jobs:
           install: false
           record: true
           parallel: true
-          tag: machine${{ matrix.machines }}
+          tag: switch#${{ matrix.machines }}
           browser: chrome
-          group: "Services"
+          group: "switch-between-services"
           project: ./e2e-tests/switch-between-services
         env:
           TZ: ${{ env.timezone }}
