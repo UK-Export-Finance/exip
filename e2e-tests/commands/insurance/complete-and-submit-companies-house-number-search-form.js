@@ -4,11 +4,14 @@ import { COMPANIES_HOUSE_NUMBER } from '../../constants';
 
 /**
  * completeAndSubmitCompaniesHouseSearchForm
- * completes the companies house search form and presses the search button
- * @param {Object} companyHouseNumberVariables
+ * Complete and submit the companies house search form
+ * @param {String} Application reference number
+ * @param {String} Companies house number
  */
-const completeAndSubmitCompaniesHouseSearchForm = ({ companiesHouseNumber: companiesHouseNumberValue = COMPANIES_HOUSE_NUMBER }) => {
-  cy.keyboardInput(companiesHouseNumber.input(), companiesHouseNumberValue);
+const completeAndSubmitCompaniesHouseSearchForm = ({ referenceNumber, companyNumber = COMPANIES_HOUSE_NUMBER }) => {
+  cy.interceptCompaniesHousePost({ referenceNumber });
+
+  cy.keyboardInput(companiesHouseNumber.input(), companyNumber);
   submitButton().click();
 };
 

@@ -24,19 +24,31 @@ const completeSignInAndSubmitAnApplication = ({
   exportingWithCodeOfConduct,
   policyAndExportsMaximumValue = false,
 }) => {
-  completeSignInAndGoToApplication();
+  completeSignInAndGoToApplication().then(({ referenceNumber }) => {
+    cy.interceptCompaniesHousePost({ referenceNumber });
 
-  if (policyType === APPLICATION.POLICY_TYPE.MULTIPLE) {
-    cy.completePrepareApplicationMultiplePolicyType({ exporterHasTradedWithBuyer, useDifferentContactEmail, policyAndExportsMaximumValue });
-  } else {
-    cy.completePrepareApplicationSinglePolicyType({ exporterHasTradedWithBuyer, useDifferentContactEmail, policyAndExportsMaximumValue });
-  }
+    if (policyType === APPLICATION.POLICY_TYPE.MULTIPLE) {
+      cy.completePrepareApplicationMultiplePolicyType({
+        exporterHasTradedWithBuyer,
+        useDifferentContactEmail,
+        policyAndExportsMaximumValue,
+        referenceNumber,
+      });
+    } else {
+      cy.completePrepareApplicationSinglePolicyType({
+        exporterHasTradedWithBuyer,
+        useDifferentContactEmail,
+        policyAndExportsMaximumValue,
+        referenceNumber,
+      });
+    }
 
-  cy.completeAndSubmitCheckYourAnswers();
+    cy.completeAndSubmitCheckYourAnswers();
 
-  cy.completeAndSubmitDeclarations({ hasAntiBriberyCodeOfConduct, exportingWithCodeOfConduct });
+    cy.completeAndSubmitDeclarations({ hasAntiBriberyCodeOfConduct, exportingWithCodeOfConduct });
 
-  return cy.getReferenceNumber().then((referenceNumber) => referenceNumber);
+    return cy.getReferenceNumber().then((refNumber) => refNumber);
+  });
 };
 
 export default completeSignInAndSubmitAnApplication;

@@ -14,12 +14,13 @@ const {
  * @param {String} Account email address
  * @return {String} Application reference number
  */
-const completeSignInAndGoToApplication = (email = mockAccount[EMAIL]) => {
+// const completeSignInAndGoToApplication = (email = mockAccount[EMAIL]) => {
+const completeSignInAndGoToApplication = (email = mockAccount[EMAIL]) =>
   // complete sign in and go to dashboard
   completeInsuranceEligibilitySignInAndGoToDashboard(email).then(({ accountId }) => {
     // get the reference number and return for consumption in the test
     cy.getReferenceNumber().then((referenceNumber) => ({ accountId, referenceNumber }));
   });
-};
+// };
 
 export default completeSignInAndGoToApplication;

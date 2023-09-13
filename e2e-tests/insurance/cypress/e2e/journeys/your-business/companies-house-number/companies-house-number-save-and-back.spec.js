@@ -1,6 +1,6 @@
 import { companiesHouseNumber, companyDetails } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
-import { ROUTES, COMPANIES_HOUSE_NUMBER } from '../../../../../../constants';
+import { ROUTES, COMPANIES_HOUSE_NUMBER, COMPANIES_HOUSE_NUMBER_TOO_SHORT } from '../../../../../../constants';
 import { saveAndBackButton } from '../../../../../../pages/shared';
 
 const { ROOT } = ROUTES.INSURANCE;
@@ -39,6 +39,7 @@ context('Insurance - Your business - Companies house number page validation', ()
   describe('When no details are entered', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
+
       saveAndBackButton().click();
 
       cy.navigateToUrl(url);
@@ -53,7 +54,11 @@ context('Insurance - Your business - Companies house number page validation', ()
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(companiesHouseNumber.input(), '123');
+      const companyNumber = COMPANIES_HOUSE_NUMBER_TOO_SHORT;
+
+      cy.interceptCompaniesHousePost({ referenceNumber, companyNumber });
+
+      cy.keyboardInput(companiesHouseNumber.input(), companyNumber);
       saveAndBackButton().click();
 
       cy.navigateToUrl(url);
@@ -68,7 +73,11 @@ context('Insurance - Your business - Companies house number page validation', ()
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(companiesHouseNumber.input(), COMPANIES_HOUSE_NUMBER);
+      const companyNumber = COMPANIES_HOUSE_NUMBER;
+
+      cy.interceptCompaniesHousePost({ referenceNumber, companyNumber });
+
+      cy.keyboardInput(companiesHouseNumber.input(), companyNumber);
       saveAndBackButton().click();
 
       cy.navigateToUrl(url);

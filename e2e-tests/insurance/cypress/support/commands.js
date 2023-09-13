@@ -84,3 +84,5 @@ Cypress.Commands.add('assertConfirmEmailPageContent', require('../../../commands
 Cypress.Commands.add('assertSubmitAndSaveButtons', require('../../../commands/insurance/assert-submit-and-save-buttons'));
 
 Cypress.Commands.add('assertUncheckedYesNoRadios', require('../../../commands/assert-unchecked-yes-no-radios'));
+
+Cypress.Commands.add('interceptCompaniesHousePost', require('../../../commands/intercept/companies-house-post'));

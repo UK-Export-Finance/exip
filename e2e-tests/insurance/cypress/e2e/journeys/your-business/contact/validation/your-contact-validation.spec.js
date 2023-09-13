@@ -36,7 +36,7 @@ describe('Insurance - Your business - Contact page - form validation', () => {
 
       task.link().click();
 
-      cy.completeCompaniesHouseNumberForm({});
+      cy.completeAndSubmitCompaniesHouseSearchForm({});
       cy.completeAndSubmitCompanyDetails();
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CONTACT}`;

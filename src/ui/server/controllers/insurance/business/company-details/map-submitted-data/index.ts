@@ -1,14 +1,15 @@
 import { RequestBody, Application } from '../../../../../../types';
 import { objectHasProperty } from '../../../../../helpers/object';
-import { FIELD_IDS } from '../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import getSicCodeIDsFromApplication from '../../../../../helpers/get-sic-code-ids-from-application';
 
 const {
   EXPORTER_BUSINESS: {
     COMPANIES_HOUSE_NUMBER,
-    COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_INCORPORATED },
+    COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_INCORPORATED, OLD_SIC_CODES },
+    YOUR_COMPANY: { ADDRESS },
   },
-} = FIELD_IDS.INSURANCE;
+} = INSURANCE_FIELD_IDS;
 
 /**
  * maps companyDetails formBody and returns fields in correct format
@@ -25,7 +26,7 @@ const mapSubmittedData = (formBody: RequestBody, application: Application): obje
     const { registeredOfficeAddress } = populatedData;
 
     // populates companyAddress for db with value or empty string if null
-    populatedData.address = {
+    populatedData[ADDRESS] = {
       addressLine1: registeredOfficeAddress.addressLine1 ?? '',
       addressLine2: registeredOfficeAddress.addressLine2 ?? '',
       careOf: registeredOfficeAddress.careOf ?? '',
@@ -42,7 +43,7 @@ const mapSubmittedData = (formBody: RequestBody, application: Application): obje
   // only delete existing sic codes if company has been inputted
   if (objectHasProperty(populatedData, COMPANIES_HOUSE_NUMBER)) {
     // generates array of objects for sic codes to delete from existing application
-    populatedData.oldSicCodes = [...getSicCodeIDsFromApplication(application)];
+    populatedData[OLD_SIC_CODES] = [...getSicCodeIDsFromApplication(application)];
   }
 
   // convert and populate company number and delete the companies house input field

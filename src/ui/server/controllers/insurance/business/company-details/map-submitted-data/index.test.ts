@@ -1,14 +1,17 @@
 import { RequestBody } from '../../../../../../types';
-import { FIELD_IDS } from '../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import mapSubmittedData from '.';
 import { mockBody } from './mocks';
 import { mockApplication } from '../../../../../test-mocks';
 import getSicCodeIDsFromApplication from '../../../../../helpers/get-sic-code-ids-from-application';
 
 const {
-  COMPANIES_HOUSE_NUMBER,
-  COMPANY_HOUSE: { COMPANY_INCORPORATED },
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+  EXPORTER_BUSINESS: {
+    COMPANIES_HOUSE_NUMBER,
+    COMPANY_HOUSE: { COMPANY_INCORPORATED, OLD_SIC_CODES },
+    YOUR_COMPANY: { ADDRESS },
+  },
+} = INSURANCE_FIELD_IDS;
 
 describe('controllers/insurance/business/company-details/map-submitted-data', () => {
   describe(`when ${COMPANIES_HOUSE_NUMBER} success,and __typename fields are provided`, () => {
@@ -19,7 +22,7 @@ describe('controllers/insurance/business/company-details/map-submitted-data', ()
         companyName: mockBody.companyName,
         companyNumber: mockBody.companyNumber.toString(),
         dateOfCreation: new Date(mockBody[COMPANY_INCORPORATED]).toISOString(),
-        address: {
+        [ADDRESS]: {
           careOf: '',
           premises: '',
           addressLine1: mockBody.registeredOfficeAddress.addressLine1,
@@ -31,7 +34,7 @@ describe('controllers/insurance/business/company-details/map-submitted-data', ()
         },
         sicCodes: mockBody.sicCodes,
         industrySectorNames: mockBody.industrySectorNames,
-        oldSicCodes: getSicCodeIDsFromApplication(mockApplication),
+        [OLD_SIC_CODES]: getSicCodeIDsFromApplication(mockApplication),
       };
 
       expect(response).toEqual(expected);

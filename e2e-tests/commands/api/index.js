@@ -99,6 +99,9 @@ const queryStrings = {
         registeredOfficeAddress {
           id
         }
+        sicCodes {
+          id
+        }
       }
     }
   }`,
