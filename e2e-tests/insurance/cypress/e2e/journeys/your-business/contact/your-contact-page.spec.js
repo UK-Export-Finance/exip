@@ -46,7 +46,7 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
 
       task.link().click();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CONTACT}`;

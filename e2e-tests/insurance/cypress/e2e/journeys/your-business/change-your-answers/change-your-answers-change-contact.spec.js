@@ -35,7 +35,7 @@ context('Insurance - Your business - Change your answers - Contact- As an export
 
       task.link().click();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();

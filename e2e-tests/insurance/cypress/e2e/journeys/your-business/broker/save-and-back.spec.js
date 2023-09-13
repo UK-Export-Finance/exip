@@ -42,7 +42,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
       task.link().click();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();

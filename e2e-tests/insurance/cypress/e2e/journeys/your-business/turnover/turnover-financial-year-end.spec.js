@@ -40,7 +40,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
 
       task.link().click();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
@@ -77,7 +77,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} does not ex
 
       task.link().click();
 
-      cy.completeCompaniesHouseNumberForm({ companiesHouseNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE });
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companiesHouseNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE });
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
@@ -115,7 +115,7 @@ context(`Insurance - Your business - Turnover page - submitting a company with $
 
       task.link().click();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
@@ -148,7 +148,7 @@ context(`Insurance - Your business - Turnover page - submitting a company with $
 
     cy.navigateToUrl(url);
 
-    cy.completeCompaniesHouseNumberForm({ companiesHouseNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE });
+    cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companiesHouseNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE });
     cy.completeAndSubmitCompanyDetails();
     cy.completeAndSubmitYourContact({});
     cy.completeAndSubmitNatureOfYourBusiness();

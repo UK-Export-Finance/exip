@@ -47,7 +47,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
 
       task.link().click();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({});
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
