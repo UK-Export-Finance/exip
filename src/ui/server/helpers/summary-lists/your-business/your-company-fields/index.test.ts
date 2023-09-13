@@ -10,6 +10,7 @@ import mapYesNoField from '../../../mappings/map-yes-no-field';
 import mapSicCodes from '../map-sic-codes';
 import generateChangeLink from '../../../generate-change-link';
 import mockApplication, { mockCompany } from '../../../../test-mocks/mock-application';
+import { DEFAULT } from '../../../../content-strings';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
@@ -77,7 +78,7 @@ describe('server/helpers/summary-lists/your-business/your-company-fields', () =>
         data: mockAnswers,
         renderChangeLink: false,
       },
-      formatDate(mockAnswers[FINANCIAL_YEAR_END_DATE], DATE_FORMAT),
+      mockAnswers[FINANCIAL_YEAR_END_DATE] ? formatDate(mockAnswers[FINANCIAL_YEAR_END_DATE], DATE_FORMAT) : DEFAULT.EMPTY,
     ),
     fieldGroupItem(
       {
