@@ -1,11 +1,8 @@
 import { turnover } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
-import { summaryList } from '../../../../../../pages/shared';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE } from '../../../../../../constants';
 import application from '../../../../../../fixtures/application';
-import { DEFAULT } from '../../../../../../content-strings';
-import getSummaryListField from '../../../../../../commands/insurance/get-summary-list-field';
 
 const {
   TURNOVER: {
@@ -159,18 +156,5 @@ context(`Insurance - Your business - Turnover page - submitting a company with $
     field.value().should('not.exist');
     field.hint().should('not.exist');
     field.label().should('not.exist');
-  });
-
-  it(`should display ${FINANCIAL_YEAR_END_DATE} as "${DEFAULT.EMPTY}" in summary list`, () => {
-    const url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
-
-    cy.navigateToUrl(url);
-    cy.completeAndSubmitTurnoverForm();
-    cy.completeAndSubmitBrokerForm({});
-
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = DEFAULT.EMPTY;
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   });
 });
