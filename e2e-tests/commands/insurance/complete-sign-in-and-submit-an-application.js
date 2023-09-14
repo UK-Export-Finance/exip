@@ -25,8 +25,6 @@ const completeSignInAndSubmitAnApplication = ({
   policyAndExportsMaximumValue = false,
 }) => {
   completeSignInAndGoToApplication().then(({ referenceNumber }) => {
-    cy.interceptCompaniesHousePost({ referenceNumber });
-
     if (policyType === APPLICATION.POLICY_TYPE.MULTIPLE) {
       cy.completePrepareApplicationMultiplePolicyType({
         exporterHasTradedWithBuyer,
