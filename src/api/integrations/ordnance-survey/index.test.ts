@@ -5,12 +5,11 @@ import { MOCK_OS_ADDRESS_INPUT } from '../../test-mocks/mock-os-address-input';
 import ordnanceSurvey from '.';
 import { ORDNANCE_SURVEY_QUERY_URL } from '../../constants';
 
-const ordnanceSurveyBaseUrl = process.env.ORDNANCE_SURVEY_API_URL;
-const ordnanceSurveyApiKey = process.env.ORDNANCE_SURVEY_API_KEY;
+const { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
 
 describe('integrations/ordnance-survey', () => {
   const { postcode } = MOCK_OS_ADDRESS_INPUT;
-  const url = `${ordnanceSurveyBaseUrl}/${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ordnanceSurveyApiKey}`;
+  const url = `${ORDNANCE_SURVEY_API_URL}/${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`;
 
   describe('when a successful request is made', () => {
     test('it should return success=true and data', async () => {

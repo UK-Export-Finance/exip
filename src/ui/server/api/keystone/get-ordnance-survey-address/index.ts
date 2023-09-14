@@ -15,8 +15,7 @@ const getOrdnanceSurveyAddress = async (postcode: string, houseNumber: string) =
       houseNumber,
     };
 
-    const query = ordnanceSurveyAddressQuery;
-    const response = (await apollo('GET', query, queryParams)) as ApolloResponse;
+    const response = (await apollo('GET', ordnanceSurveyAddressQuery, queryParams)) as ApolloResponse;
 
     if (response.errors) {
       console.error('GraphQL network error querying ordnance survey address %O', response.errors);

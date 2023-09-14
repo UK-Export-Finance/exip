@@ -1,4 +1,5 @@
 import { OrdnanceSurveyResponse, Address } from '../../types';
+import mapAddress from '../map-address';
 
 /**
  * mapAndFilterAddress
@@ -21,15 +22,7 @@ const mapAndFilterAddress = (house: string, ordnanceSurveyResponse: Array<Ordnan
   const mappedFilteredAddresses = [] as Array<Address>;
 
   filtered.forEach((address) => {
-    mappedFilteredAddresses.push({
-      addressLine1: `${address.DPA.ORGANISATION_NAME ?? ''} ${address.DPA.BUILDING_NAME ?? ''} ${address.DPA.BUILDING_NUMBER ?? ''} ${
-        address.DPA.THOROUGHFARE_NAME ?? ''
-      }`.trim(),
-      addressLine2: address.DPA.DEPENDENT_LOCALITY ?? undefined,
-      town: address.DPA.POST_TOWN ?? undefined,
-      county: undefined,
-      postalCode: address.DPA.POSTCODE,
-    });
+    mappedFilteredAddresses.push(mapAddress(address));
   });
 
   return mappedFilteredAddresses;
