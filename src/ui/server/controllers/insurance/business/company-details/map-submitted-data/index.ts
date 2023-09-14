@@ -6,7 +6,12 @@ import getSicCodeIDsFromApplication from '../../../../../helpers/get-sic-code-id
 const {
   EXPORTER_BUSINESS: {
     COMPANIES_HOUSE_NUMBER,
-    COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_INCORPORATED, OLD_SIC_CODES },
+    COMPANY_HOUSE: {
+      COMPANY_NUMBER,
+      COMPANY_INCORPORATED,
+      OLD_SIC_CODES,
+      REGISTED_OFFICE_ADDRESS: { ADDRESS_LINE_1, ADDRESS_LINE_2, CARE_OF, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PREMISES },
+    },
     YOUR_COMPANY: { ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
@@ -27,14 +32,14 @@ const mapSubmittedData = (formBody: RequestBody, application: Application): obje
 
     // populates companyAddress for db with value or empty string if null
     populatedData[ADDRESS] = {
-      addressLine1: registeredOfficeAddress.addressLine1 ?? '',
-      addressLine2: registeredOfficeAddress.addressLine2 ?? '',
-      careOf: registeredOfficeAddress.careOf ?? '',
-      locality: registeredOfficeAddress.locality ?? '',
-      region: registeredOfficeAddress.region ?? '',
-      postalCode: registeredOfficeAddress.postalCode ?? '',
-      country: registeredOfficeAddress.country ?? '',
-      premises: registeredOfficeAddress.premises ?? '',
+      [ADDRESS_LINE_1]: registeredOfficeAddress[ADDRESS_LINE_1] ?? '',
+      [ADDRESS_LINE_2]: registeredOfficeAddress[ADDRESS_LINE_2] ?? '',
+      [CARE_OF]: registeredOfficeAddress[CARE_OF] ?? '',
+      [LOCALITY]: registeredOfficeAddress[LOCALITY] ?? '',
+      [REGION]: registeredOfficeAddress[REGION] ?? '',
+      [POSTAL_CODE]: registeredOfficeAddress[POSTAL_CODE] ?? '',
+      [COUNTRY]: registeredOfficeAddress[COUNTRY] ?? '',
+      [PREMISES]: registeredOfficeAddress[PREMISES] ?? '',
     };
     // removes registeredOfficeAddress as not required for database
     delete populatedData.registeredOfficeAddress;

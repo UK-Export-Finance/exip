@@ -8,7 +8,11 @@ import getSicCodeIDsFromApplication from '../../../../../helpers/get-sic-code-id
 const {
   EXPORTER_BUSINESS: {
     COMPANIES_HOUSE_NUMBER,
-    COMPANY_HOUSE: { COMPANY_INCORPORATED, OLD_SIC_CODES },
+    COMPANY_HOUSE: {
+      COMPANY_INCORPORATED,
+      OLD_SIC_CODES,
+      REGISTED_OFFICE_ADDRESS: { ADDRESS_LINE_1, ADDRESS_LINE_2, CARE_OF, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PREMISES },
+    },
     YOUR_COMPANY: { ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
@@ -23,14 +27,14 @@ describe('controllers/insurance/business/company-details/map-submitted-data', ()
         companyNumber: mockBody.companyNumber.toString(),
         dateOfCreation: new Date(mockBody[COMPANY_INCORPORATED]).toISOString(),
         [ADDRESS]: {
-          careOf: '',
-          premises: '',
-          addressLine1: mockBody.registeredOfficeAddress.addressLine1,
-          addressLine2: '',
-          locality: mockBody.registeredOfficeAddress.locality,
-          region: mockBody.registeredOfficeAddress.region,
-          postalCode: mockBody.registeredOfficeAddress.postalCode,
-          country: '',
+          [CARE_OF]: '',
+          [PREMISES]: '',
+          [ADDRESS_LINE_1]: mockBody.registeredOfficeAddress[ADDRESS_LINE_1],
+          [ADDRESS_LINE_2]: '',
+          [LOCALITY]: mockBody.registeredOfficeAddress[LOCALITY],
+          [REGION]: mockBody.registeredOfficeAddress[REGION],
+          [POSTAL_CODE]: mockBody.registeredOfficeAddress[POSTAL_CODE],
+          [COUNTRY]: '',
         },
         sicCodes: mockBody.sicCodes,
         industrySectorNames: mockBody.industrySectorNames,
