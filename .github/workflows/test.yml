@@ -224,7 +224,7 @@ jobs:
   # 5. E2E - Quote
   e2e-tests-quote:
     name: E2E Quote 👷
-    needs: [setup, unit-tests, api-tests, e2e-tests-insurance]
+    needs: [setup, unit-tests, api-tests]
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
@@ -286,7 +286,7 @@ jobs:
   # 6. E2E - Switch between services
   e2e-tests-switch-between-services:
     name: E2E Switch between services 👷
-    needs: [setup, unit-tests, api-tests, e2e-tests-insurance, e2e-tests-quote]
+    needs: [setup, unit-tests, api-tests, e2e-tests-quote]
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
