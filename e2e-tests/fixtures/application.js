@@ -48,8 +48,6 @@ const {
       },
       YOUR_COMPANY: {
         ADDRESS: YOUR_COMPANY_ADDRESS,
-        // TRADING_ADDRESS,
-        // TRADING_NAME,
       },
       NATURE_OF_YOUR_BUSINESS: {
         GOODS_OR_SERVICES,

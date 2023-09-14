@@ -1,7 +1,7 @@
 import { companiesHouseNumber, companyDetails } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
 import { ROUTES, COMPANIES_HOUSE_NUMBER, COMPANIES_HOUSE_NUMBER_TOO_SHORT } from '../../../../../../constants';
-import { saveAndBackButton } from '../../../../../../pages/shared';
+import { saveAndBackButton, summaryList } from '../../../../../../pages/shared';
 
 const { ROOT } = ROUTES.INSURANCE;
 
@@ -88,7 +88,7 @@ context('Insurance - Your business - Companies house number page validation', ()
 
       cy.navigateToUrl(companyDetailsUrl);
 
-      companyDetails.yourBusinessSummaryList().should('exist');
+      companyDetails.companiesHouseSummaryList().should('exist');
     });
   });
 });

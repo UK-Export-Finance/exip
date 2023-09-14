@@ -6,7 +6,7 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const sicCodes = [
+const mockSicCodes = [
   {
     code: '64999',
     [INDUSTRY_SECTOR_NAME]: 'Financial intermediation not elsewhere classified',
@@ -29,4 +29,4 @@ const sicCodes = [
   },
 ];
 
-export default sicCodes;
+export default mockSicCodes;

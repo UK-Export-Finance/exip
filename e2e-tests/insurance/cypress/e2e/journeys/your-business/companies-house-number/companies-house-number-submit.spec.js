@@ -1,6 +1,7 @@
 import { format } from 'date-fns';
 import { companyDetails } from '../../../../../../pages/your-business';
-import partials from '../../../../../../partials';
+import partials from '../../../../../../partials/insurance';
+import { summaryList } from '../../../../../../pages/shared';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import {
   ROUTES, COMPANIES_HOUSE_NUMBER, COMPANIES_HOUSE_NUMBER_NO_SIC_CODE, COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES, DATE_FORMAT,
@@ -30,12 +31,7 @@ const {
 
 const SUMMARY_LIST_FIELDS = FIELDS[SUMMARY_LIST];
 
-// TODO: move yourBusinessSummaryList into insurance, or replace with generic summary list selectors
-
-const {
-  insurancePartials: { taskList },
-  yourBusinessSummaryList: summaryList,
-} = partials;
+const { taskList } = partials;
 
 const task = taskList.prepareApplication.tasks.business;
 
@@ -81,32 +77,32 @@ context('Insurance - Your business - Companies house number page', () => {
 
       cy.checkText(companyDetails.yourBusinessHeading(), SUMMARY_LIST_FIELDS.LABEL);
 
-      cy.checkText(summaryList[COMPANY_NUMBER].key(), SUMMARY_LIST_FIELDS.COMPANY_NUMBER.text);
+      cy.checkText(summaryList.field(COMPANY_NUMBER).key(), SUMMARY_LIST_FIELDS.COMPANY_NUMBER.text);
 
-      cy.checkText(summaryList[COMPANY_NUMBER].value(), COMPANIES_HOUSE_NUMBER);
+      cy.checkText(summaryList.field(COMPANY_NUMBER).value(), COMPANIES_HOUSE_NUMBER);
 
-      cy.checkText(summaryList[COMPANY_NAME].key(), SUMMARY_LIST_FIELDS.COMPANY_NAME.text);
+      cy.checkText(summaryList.field(COMPANY_NAME).key(), SUMMARY_LIST_FIELDS.COMPANY_NAME.text);
 
-      cy.checkText(summaryList[COMPANY_NAME].value(), application.EXPORTER_COMPANY[COMPANY_NAME]);
+      cy.checkText(summaryList.field(COMPANY_NAME).value(), application.EXPORTER_COMPANY[COMPANY_NAME]);
 
-      cy.checkText(summaryList[COMPANY_ADDRESS].key(), SUMMARY_LIST_FIELDS.COMPANY_ADDRESS.text);
+      cy.checkText(summaryList.field(COMPANY_ADDRESS).key(), SUMMARY_LIST_FIELDS.COMPANY_ADDRESS.text);
 
-      summaryList[COMPANY_ADDRESS].value().contains(application.EXPORTER_COMPANY[ADDRESS].addressLine1);
-      summaryList[COMPANY_ADDRESS].value().contains(application.EXPORTER_COMPANY[ADDRESS].locality);
-      summaryList[COMPANY_ADDRESS].value().contains(application.EXPORTER_COMPANY[ADDRESS].region);
-      summaryList[COMPANY_ADDRESS].value().contains(application.EXPORTER_COMPANY[ADDRESS].postalCode);
+      summaryList.field(COMPANY_ADDRESS).value().contains(application.EXPORTER_COMPANY[ADDRESS].addressLine1);
+      summaryList.field(COMPANY_ADDRESS).value().contains(application.EXPORTER_COMPANY[ADDRESS].locality);
+      summaryList.field(COMPANY_ADDRESS).value().contains(application.EXPORTER_COMPANY[ADDRESS].region);
+      summaryList.field(COMPANY_ADDRESS).value().contains(application.EXPORTER_COMPANY[ADDRESS].postalCode);
 
-      cy.checkText(summaryList[COMPANY_INCORPORATED].key(), SUMMARY_LIST_FIELDS.COMPANY_INCORPORATED.text);
+      cy.checkText(summaryList.field(COMPANY_INCORPORATED).key(), SUMMARY_LIST_FIELDS.COMPANY_INCORPORATED.text);
 
       const timestamp = application.EXPORTER_COMPANY[COMPANY_INCORPORATED];
       const expectedDate = format(new Date(timestamp), DATE_FORMAT.DEFAULT);
 
-      cy.checkText(summaryList[COMPANY_INCORPORATED].value(), expectedDate);
+      cy.checkText(summaryList.field(COMPANY_INCORPORATED).value(), expectedDate);
 
-      cy.checkText(summaryList[COMPANY_SIC].key(), SUMMARY_LIST_FIELDS.COMPANY_SIC.text);
+      cy.checkText(summaryList.field(COMPANY_SIC).key(), SUMMARY_LIST_FIELDS.COMPANY_SIC.text);
 
       const expectedSicCodeText = `${application.EXPORTER_COMPANY[COMPANY_SIC][0]} - ${application.EXPORTER_COMPANY[INDUSTRY_SECTOR_NAMES][0]}`;
-      cy.checkText(summaryList[COMPANY_SIC].value(), expectedSicCodeText);
+      cy.checkText(summaryList.field(COMPANY_SIC).value(), expectedSicCodeText);
     });
   });
 
@@ -124,13 +120,13 @@ context('Insurance - Your business - Companies house number page', () => {
 
       cy.checkText(companyDetails.yourBusinessHeading(), SUMMARY_LIST_FIELDS.LABEL);
 
-      cy.checkText(summaryList[COMPANY_NUMBER].key(), SUMMARY_LIST_FIELDS.COMPANY_NUMBER.text);
+      cy.checkText(summaryList.field(COMPANY_NUMBER).key(), SUMMARY_LIST_FIELDS.COMPANY_NUMBER.text);
 
-      cy.checkText(summaryList[COMPANY_NUMBER].value(), COMPANIES_HOUSE_NUMBER_NO_SIC_CODE);
+      cy.checkText(summaryList.field(COMPANY_NUMBER).value(), COMPANIES_HOUSE_NUMBER_NO_SIC_CODE);
 
-      cy.checkText(summaryList[COMPANY_SIC].key(), SUMMARY_LIST_FIELDS.COMPANY_SIC.text);
+      cy.checkText(summaryList.field(COMPANY_SIC).key(), SUMMARY_LIST_FIELDS.COMPANY_SIC.text);
 
-      cy.checkText(summaryList[COMPANY_SIC].value(), DEFAULT.EMPTY);
+      cy.checkText(summaryList.field(COMPANY_SIC).value(), DEFAULT.EMPTY);
     });
   });
 
@@ -155,10 +151,10 @@ context('Insurance - Your business - Companies house number page', () => {
         `${sicCodes[4].code} - ${sicCodes[4][INDUSTRY_SECTOR_NAME]}`,
       ];
 
-      summaryList[COMPANY_SIC].value().contains(expectedSicCodes[0]);
-      summaryList[COMPANY_SIC].value().contains(expectedSicCodes[1]);
-      summaryList[COMPANY_SIC].value().contains(expectedSicCodes[2]);
-      summaryList[COMPANY_SIC].value().contains(expectedSicCodes[3]);
+      summaryList.field(COMPANY_SIC).value().contains(expectedSicCodes[0]);
+      summaryList.field(COMPANY_SIC).value().contains(expectedSicCodes[1]);
+      summaryList.field(COMPANY_SIC).value().contains(expectedSicCodes[2]);
+      summaryList.field(COMPANY_SIC).value().contains(expectedSicCodes[3]);
     });
   });
 });

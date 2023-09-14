@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import { companyDetails } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
-import { saveAndBackButton, yesRadioInput, noRadioInput } from '../../../../../../pages/shared';
+import { saveAndBackButton, summaryList, yesRadioInput, noRadioInput } from '../../../../../../pages/shared';
 import { PAGES, BUTTONS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import {
@@ -88,37 +88,37 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     });
 
     it('should display the companies house summary list', () => {
-      companyDetails.yourBusinessSummaryList().should('exist');
+      companyDetails.companiesHouseSummaryList().should('exist');
 
       cy.checkText(companyDetails.yourBusinessHeading(), SUMMARY_LIST_FIELDS.LABEL);
 
-      cy.checkText(partials.yourBusinessSummaryList[COMPANY_NUMBER].key(), SUMMARY_LIST_FIELDS.COMPANY_NUMBER.text);
+      cy.checkText(summaryList.field(COMPANY_NUMBER).key(), SUMMARY_LIST_FIELDS.COMPANY_NUMBER.text);
 
-      cy.checkText(partials.yourBusinessSummaryList[COMPANY_NUMBER].value(), COMPANIES_HOUSE_NUMBER);
+      cy.checkText(summaryList.field(COMPANY_NUMBER).value(), COMPANIES_HOUSE_NUMBER);
 
-      cy.checkText(partials.yourBusinessSummaryList[COMPANY_NAME].key(), SUMMARY_LIST_FIELDS.COMPANY_NAME.text);
+      cy.checkText(summaryList.field(COMPANY_NAME).key(), SUMMARY_LIST_FIELDS.COMPANY_NAME.text);
 
-      cy.checkText(partials.yourBusinessSummaryList[COMPANY_NAME].value(), application.EXPORTER_COMPANY[COMPANY_NAME]);
+      cy.checkText(summaryList.field(COMPANY_NAME).value(), application.EXPORTER_COMPANY[COMPANY_NAME]);
 
-      cy.checkText(partials.yourBusinessSummaryList[COMPANY_ADDRESS].key(), SUMMARY_LIST_FIELDS.COMPANY_ADDRESS.text);
+      cy.checkText(summaryList.field(COMPANY_ADDRESS).key(), SUMMARY_LIST_FIELDS.COMPANY_ADDRESS.text);
 
-      partials.yourBusinessSummaryList[COMPANY_ADDRESS].value().contains(application.EXPORTER_COMPANY[YOUR_COMPANY_ADDRESS].addressLine1);
-      partials.yourBusinessSummaryList[COMPANY_ADDRESS].value().contains(application.EXPORTER_COMPANY[YOUR_COMPANY_ADDRESS].locality);
-      partials.yourBusinessSummaryList[COMPANY_ADDRESS].value().contains(application.EXPORTER_COMPANY[YOUR_COMPANY_ADDRESS].region);
-      partials.yourBusinessSummaryList[COMPANY_ADDRESS].value().contains(application.EXPORTER_COMPANY[YOUR_COMPANY_ADDRESS].postalCode);
+      summaryList.field(COMPANY_ADDRESS).value().contains(application.EXPORTER_COMPANY[YOUR_COMPANY_ADDRESS].addressLine1);
+      summaryList.field(COMPANY_ADDRESS).value().contains(application.EXPORTER_COMPANY[YOUR_COMPANY_ADDRESS].locality);
+      summaryList.field(COMPANY_ADDRESS).value().contains(application.EXPORTER_COMPANY[YOUR_COMPANY_ADDRESS].region);
+      summaryList.field(COMPANY_ADDRESS).value().contains(application.EXPORTER_COMPANY[YOUR_COMPANY_ADDRESS].postalCode);
 
-      cy.checkText(partials.yourBusinessSummaryList[COMPANY_INCORPORATED].key(), SUMMARY_LIST_FIELDS.COMPANY_INCORPORATED.text);
+      cy.checkText(summaryList.field(COMPANY_INCORPORATED).key(), SUMMARY_LIST_FIELDS.COMPANY_INCORPORATED.text);
 
       const timestamp = application.EXPORTER_COMPANY[COMPANY_INCORPORATED];
       const expectedDate = format(new Date(timestamp), DATE_FORMAT.DEFAULT);
 
-      cy.checkText(partials.yourBusinessSummaryList[COMPANY_INCORPORATED].value(), expectedDate);
+      cy.checkText(summaryList.field(COMPANY_INCORPORATED).value(), expectedDate);
 
-      cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].key(), SUMMARY_LIST_FIELDS.COMPANY_SIC.text);
+      cy.checkText(summaryList.field(COMPANY_SIC).key(), SUMMARY_LIST_FIELDS.COMPANY_SIC.text);
 
       const expectedSicCodeValue = `${application.EXPORTER_COMPANY[COMPANY_SIC][0]} - ${application.EXPORTER_COMPANY[INDUSTRY_SECTOR_NAMES][0]}`;
 
-      cy.checkText(partials.yourBusinessSummaryList[COMPANY_SIC].value(), expectedSicCodeValue);
+      cy.checkText(summaryList.field(COMPANY_SIC).value(), expectedSicCodeValue);
     });
 
     it('should display the trading name radios', () => {

@@ -7,6 +7,7 @@ import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
 import mockApplication from '../../fixtures/application';
 import mockSicCodes from '../../fixtures/sic-codes';
+import mockCompanies from '../../fixtures/companies';
 
 const {
   EXPORTER_BUSINESS: {
@@ -15,34 +16,6 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 const baseCompany = mockApplication.EXPORTER_COMPANY;
-
-const mockCompanies = {
-  [COMPANIES_HOUSE_NUMBER]: {
-    ...baseCompany,
-    companyNumber: COMPANIES_HOUSE_NUMBER,
-  },
-  [COMPANIES_HOUSE_NUMBER_NO_SIC_CODE]: {
-    ...baseCompany,
-    companyNumber: COMPANIES_HOUSE_NUMBER_NO_SIC_CODE,
-    sicCodes: [],
-  },
-  [COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES]: {
-    ...baseCompany,
-    companyNumber: COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES,
-    sicCodes: [
-      mockSicCodes[1].code,
-      mockSicCodes[2].code,
-      mockSicCodes[3].code,
-      mockSicCodes[4].code,
-    ],
-    industrySectorNames: [
-      mockSicCodes[1][INDUSTRY_SECTOR_NAME],
-      mockSicCodes[2][INDUSTRY_SECTOR_NAME],
-      mockSicCodes[3][INDUSTRY_SECTOR_NAME],
-      mockSicCodes[4][INDUSTRY_SECTOR_NAME],
-    ],
-  },
-};
 
 const {
   ROOT,
@@ -64,13 +37,12 @@ const baseUrl = Cypress.config('baseUrl');
  * 4) When the route is intercepted, call our API and manually update the application's company and company address.
  * 5) Return a redirect to the "company details" route, as per the user journey. This page displays the company data stored in the database.
  * @param {String} Application reference number
- * @param {String} Company number
+ * @param {String} Company number - defaults to COMPANIES_HOUSE_NUMBER
  */
-// const interceptCompaniesHousePost = ({ referenceNumber, companyNumber }) => {
 const interceptCompaniesHousePost = ({ referenceNumber, companyNumber = COMPANIES_HOUSE_NUMBER }) => {
   let companyId;
   let companyAddressId;
-  let companySicCodes;
+  let companySicCodeIds;
 
   /**
    * Get the application.
@@ -86,7 +58,7 @@ const interceptCompaniesHousePost = ({ referenceNumber, companyNumber = COMPANIE
 
     companyId = application.company.id;
     companyAddressId = registeredOfficeAddress.id;
-    companySicCodes = sicCodes.map((sicCode) => ({ id: sicCode.id }));
+    companySicCodeIds = sicCodes.map((sicCode) => ({ id: sicCode.id }));
   });
 
   /**
@@ -106,7 +78,7 @@ const interceptCompaniesHousePost = ({ referenceNumber, companyNumber = COMPANIE
     const updateObj = mockCompanies[companyNumber];
 
     if (updateObj) {
-      updateObj.oldSicCodes = companySicCodes;
+      updateObj.oldSicCodes = companySicCodeIds;
 
       return api.updateCompanyAndCompanyAddress(
         companyId,

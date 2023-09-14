@@ -7,7 +7,6 @@ import pagination from './pagination';
 import phaseBanner from './phaseBanner';
 import ukGoodsOrServicesCalculateDescription from './ukGoodsOrServicesCalculateDescription';
 import ukGoodsOrServicesDescription from './ukGoodsAndServicesDescription';
-import yourBusinessSummaryList from './yourBusinessSummaryList';
 
 const partials = {
   ukGoodsOrServicesCalculateDescription,
@@ -24,7 +23,6 @@ const partials = {
   phaseBanner,
   skipLink: () => cy.get('[data-cy="skip-link"]'),
   ukGoodsOrServicesDescription,
-  yourBusinessSummaryList,
 };
 
 export default partials;
