@@ -1,7 +1,12 @@
 import { format } from 'date-fns';
 import { companyDetails } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
-import { saveAndBackButton, summaryList, yesRadioInput, noRadioInput } from '../../../../../../pages/shared';
+import {
+  saveAndBackButton,
+  summaryList,
+  yesRadioInput,
+  noRadioInput,
+} from '../../../../../../pages/shared';
 import { PAGES, BUTTONS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import {

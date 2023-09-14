@@ -1,21 +1,9 @@
 import api from '../api';
 import {
-  COMPANIES_HOUSE_NUMBER, COMPANIES_HOUSE_NUMBER_NO_SIC_CODE, COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES,
+  COMPANIES_HOUSE_NUMBER,
 } from '../../constants/examples';
-
-import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
-import mockApplication from '../../fixtures/application';
-import mockSicCodes from '../../fixtures/sic-codes';
 import mockCompanies from '../../fixtures/companies';
-
-const {
-  EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { INDUSTRY_SECTOR_NAME },
-  },
-} = INSURANCE_FIELD_IDS;
-
-const baseCompany = mockApplication.EXPORTER_COMPANY;
 
 const {
   ROOT,

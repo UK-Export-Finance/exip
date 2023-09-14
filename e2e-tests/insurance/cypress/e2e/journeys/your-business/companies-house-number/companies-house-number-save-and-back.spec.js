@@ -1,7 +1,7 @@
 import { companiesHouseNumber, companyDetails } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
 import { ROUTES, COMPANIES_HOUSE_NUMBER, COMPANIES_HOUSE_NUMBER_TOO_SHORT } from '../../../../../../constants';
-import { saveAndBackButton, summaryList } from '../../../../../../pages/shared';
+import { saveAndBackButton } from '../../../../../../pages/shared';
 
 const { ROOT } = ROUTES.INSURANCE;
 

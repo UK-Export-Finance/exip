@@ -108,7 +108,6 @@ context('Insurance - Your business - Companies house number page validation', ()
     });
   });
 
-  // TODO: intercept is called, but the POST is not intercepted. Companies house is still called
   describe('when the companies house number is not found', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
