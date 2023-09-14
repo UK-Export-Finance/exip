@@ -149,10 +149,10 @@ context('Insurance - Your business - Companies house number page', () => {
       cy.checkText(companyDetails.yourBusinessHeading(), SUMMARY_LIST_FIELDS.LABEL);
 
       const expectedSicCodes = [
-        `${sicCodes[1].code} -  ${sicCodes[1][INDUSTRY_SECTOR_NAME]}`,
-        `${sicCodes[2].code} -  ${sicCodes[2][INDUSTRY_SECTOR_NAME]}`,
-        `${sicCodes[3].code} -  ${sicCodes[3][INDUSTRY_SECTOR_NAME]}`,
-        `${sicCodes[4].code} -  ${sicCodes[4][INDUSTRY_SECTOR_NAME]}`,
+        `${sicCodes[1].code} - ${sicCodes[1][INDUSTRY_SECTOR_NAME]}`,
+        `${sicCodes[2].code} - ${sicCodes[2][INDUSTRY_SECTOR_NAME]}`,
+        `${sicCodes[3].code} - ${sicCodes[3][INDUSTRY_SECTOR_NAME]}`,
+        `${sicCodes[4].code} - ${sicCodes[4][INDUSTRY_SECTOR_NAME]}`,
       ];
 
       summaryList[COMPANY_SIC].value().contains(expectedSicCodes[0]);

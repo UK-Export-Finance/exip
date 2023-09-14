@@ -1,7 +1,8 @@
 import { summaryList } from '../../pages/shared';
 import getSummaryListField from './get-summary-list-field';
-import { FIELD_IDS } from '../../constants';
+import { FIELD_IDS, FIELD_VALUES } from '../../constants';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../content-strings/fields/insurance/business';
+import { formatDate } from '../../helpers/date';
 import application from '../../fixtures/application';
 
 const {
@@ -18,13 +19,13 @@ const {
         COMPANY_ADDRESS,
         COMPANY_INCORPORATED,
         COMPANY_SIC,
-        INDUSTRY_SECTOR_NAME,
+        INDUSTRY_SECTOR_NAMES,
         FINANCIAL_YEAR_END_DATE,
       },
       YOUR_COMPANY: {
         ADDRESS: YOUR_COMPANY_ADDRESS,
-        TRADING_ADDRESS,
         TRADING_NAME,
+        TRADING_ADDRESS,
         WEBSITE,
         PHONE_NUMBER,
       },
@@ -98,7 +99,9 @@ const checkYourBusinessSummaryList = ({
     const fieldId = COMPANY_INCORPORATED;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.EXPORTER_COMPANY[fieldId];
+
+    const timestamp = application.EXPORTER_COMPANY[fieldId];
+    const expectedValue = formatDate(timestamp);
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
@@ -106,7 +109,13 @@ const checkYourBusinessSummaryList = ({
     const fieldId = COMPANY_SIC;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = `${application.EXPORTER_COMPANY[fieldId][0]} - ${application.EXPORTER_COMPANY[INDUSTRY_SECTOR_NAME][0]}`;
+
+    const values = application.EXPORTER_COMPANY;
+
+    const [sicCode] = values[fieldId];
+    const [industrySectorName] = values[INDUSTRY_SECTOR_NAMES];
+
+    const expectedValue = `${sicCode} - ${industrySectorName}`;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
@@ -114,7 +123,10 @@ const checkYourBusinessSummaryList = ({
     const fieldId = FINANCIAL_YEAR_END_DATE;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.EXPORTER_COMPANY[fieldId];
+
+    const timestamp = application.EXPORTER_COMPANY[fieldId];
+
+    const expectedValue = formatDate(timestamp);
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
@@ -122,7 +134,7 @@ const checkYourBusinessSummaryList = ({
     const fieldId = TRADING_NAME;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.EXPORTER_COMPANY[fieldId];
+    const expectedValue = FIELD_VALUES.YES;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
@@ -130,7 +142,8 @@ const checkYourBusinessSummaryList = ({
     const fieldId = TRADING_ADDRESS;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.EXPORTER_COMPANY[fieldId];
+
+    const expectedValue = FIELD_VALUES.YES;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },

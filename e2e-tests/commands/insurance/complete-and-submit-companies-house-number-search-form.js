@@ -9,7 +9,7 @@ import { COMPANIES_HOUSE_NUMBER } from '../../constants';
  * @param {String} Companies house number
  */
 const completeAndSubmitCompaniesHouseSearchForm = ({ referenceNumber, companyNumber = COMPANIES_HOUSE_NUMBER }) => {
-  cy.interceptCompaniesHousePost({ referenceNumber });
+  cy.interceptCompaniesHousePost({ referenceNumber, companyNumber });
 
   cy.keyboardInput(companiesHouseNumber.input(), companyNumber);
   submitButton().click();

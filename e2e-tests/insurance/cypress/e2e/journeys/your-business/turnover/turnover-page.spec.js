@@ -5,6 +5,7 @@ import { PAGES, BUTTONS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { ROUTES } from '../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/business';
+import { formatDate } from '../../../../../../helpers/date';
 import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER;
@@ -29,6 +30,13 @@ const {
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
+
+const financialYearEnd = {
+  content: FIELDS.TURNOVER[FINANCIAL_YEAR_END_DATE],
+  timestamp: application.EXPORTER_COMPANY[FINANCIAL_YEAR_END_DATE],
+};
+
+financialYearEnd.expectedValue = formatDate(financialYearEnd.timestamp, financialYearEnd.content.DATE_FORMAT);
 
 context('Insurance - Your business - Turnover page - As an Exporter I want to enter the I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
   let referenceNumber;
@@ -82,12 +90,11 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       const fieldId = FINANCIAL_YEAR_END_DATE;
       const field = turnover[fieldId];
 
-      field.value().should('exist');
-      cy.checkText(field.value(), application.EXPORTER_COMPANY[fieldId]);
+      cy.checkText(field.value(), financialYearEnd.expectedValue);
 
-      cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
+      cy.checkText(field.label(), financialYearEnd.content.LABEL);
 
-      field.hint().contains(FIELDS.TURNOVER[fieldId].HINT);
+      field.hint().contains(financialYearEnd.content.HINT);
     });
 
     it('should display turnover fieldset legend', () => {
@@ -138,7 +145,8 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
     it('should have the submitted values', () => {
       cy.navigateToUrl(url);
 
-      cy.checkText(turnover[FINANCIAL_YEAR_END_DATE].value(), application.EXPORTER_COMPANY[FINANCIAL_YEAR_END_DATE]);
+      cy.checkText(turnover[FINANCIAL_YEAR_END_DATE].value(), financialYearEnd.expectedValue);
+
       turnover[ESTIMATED_ANNUAL_TURNOVER].input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
       turnover[PERCENTAGE_TURNOVER].input().should('have.value', application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
     });

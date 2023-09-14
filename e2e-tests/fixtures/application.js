@@ -161,8 +161,6 @@ const application = {
     [COMPANY_SIC]: [sicCodes[0].code],
     [INDUSTRY_SECTOR_NAMES]: [sicCodes[0][INDUSTRY_SECTOR_NAME]],
     [FINANCIAL_YEAR_END_DATE]: '2023-07-31T00:00:00.000Z',
-    // [TRADING_NAME]: true,
-    // [TRADING_ADDRESS]: true,
   },
   EXPORTER_BUSINESS: {
     [GOODS_OR_SERVICES]: 'abc',
