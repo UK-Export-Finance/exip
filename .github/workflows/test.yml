@@ -201,7 +201,8 @@ jobs:
   #         install: false
   #         record: true
   #         parallel: true
-  #         tag: insurance#${{ matrix.machines }}
+  #         group: "Insurance"
+  #         tag: "Machine #${{ matrix.machines }}"
   #         browser: chrome
   #         project: ./e2e-tests/insurance
   #       env:
@@ -262,8 +263,9 @@ jobs:
         with:
           install: false
           record: true
-          parallel: false
-          tag: quote#${{ matrix.machines }}
+          parallel: true
+          group: "Quote"
+          tag: "Machine ${{ matrix.machines }}"
           browser: chrome
           project: ./e2e-tests/quote
         env:
@@ -315,6 +317,7 @@ jobs:
           install: false
           record: true
           parallel: false
+          group: "Switch services"
           browser: chrome
           project: ./e2e-tests/switch-between-services
         env:
