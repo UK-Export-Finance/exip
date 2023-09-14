@@ -262,7 +262,7 @@ jobs:
         with:
           install: false
           record: true
-          parallel: true
+          parallel: false
           tag: quote#${{ matrix.machines }}
           browser: chrome
           project: ./e2e-tests/quote
@@ -291,16 +291,6 @@ jobs:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: true
-      # Single dimension matrix - 1 job
-      matrix:
-        machines: [1]
-
-    concurrency:
-      group: e2e-tests-switch-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.machines }}
-      cancel-in-progress: true
-
     steps:
       - uses: actions/checkout@v4
 
@@ -324,8 +314,7 @@ jobs:
         with:
           install: false
           record: true
-          parallel: true
-          tag: switch#${{ matrix.machines }}
+          parallel: false
           browser: chrome
           project: ./e2e-tests/switch-between-services
         env:
