@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
 
     concurrency:
-      group: unit-tests-${{ github.workflow }}-${{ github.run_id }}
+      group: unit-tests-${{ github.workflow }}-${{ github.workflow_ref }}
       cancel-in-progress: true
 
     steps:
@@ -111,7 +111,7 @@ jobs:
     runs-on: ubuntu-latest
 
     concurrency:
-      group: api-tests-${{ github.workflow }}-${{ github.run_id }}
+      group: api-tests-${{ github.workflow }}-${{ github.workflow_ref }}
       cancel-in-progress: true
 
     steps:
@@ -168,13 +168,13 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: false
-      # Single dimension matrix - 4 jobs
+      fail-fast: true
+      # Single dimension matrix - 10 jobs
       matrix:
-        machines: [1, 2, 3, 4]
+        machines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     concurrency:
-      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.run_id }}-${{ matrix.machines }}
+      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.machines }}
       cancel-in-progress: true
 
     steps:
@@ -196,17 +196,18 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           install: false
           record: true
           parallel: true
-          tag: \#${{ matrix.machines }}
-          browser: chrome
           group: "Insurance"
+          tag: "Machine #${{ matrix.machines }}"
+          browser: chrome
           project: ./e2e-tests/insurance
         env:
           TZ: ${{ env.timezone }}
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           API_KEY: ${{ secrets.API_KEY }}
@@ -230,10 +231,14 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: false
-      # Single dimension matrix - 4 jobs
+      fail-fast: true
+      # Single dimension matrix - 10 jobs
       matrix:
-        machines: [1, 2, 3, 4]
+        machines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+    concurrency:
+      group: e2e-tests-quote-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.machines }}
+      cancel-in-progress: true
 
     concurrency:
       group: e2e-tests-quote-${{ github.workflow }}-${{ github.run_id }}-${{ matrix.machines }}
@@ -258,17 +263,18 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           install: false
           record: true
           parallel: true
-          tag: \#${{ matrix.machines }}
-          browser: chrome
           group: "Quote"
+          tag: "Machine ${{ matrix.machines }}"
+          browser: chrome
           project: ./e2e-tests/quote
         env:
           TZ: ${{ env.timezone }}
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           API_KEY: ${{ secrets.API_KEY }}
@@ -291,16 +297,6 @@ jobs:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: false
-      # Single dimension matrix - 4 jobs
-      matrix:
-        machines: [1, 2, 3, 4]
-
-    concurrency:
-      group: e2e-tests-switch-${{ github.workflow }}-${{ github.run_id }}-${{ matrix.machines }}
-      cancel-in-progress: true
-
     steps:
       - uses: actions/checkout@v4
 
@@ -320,17 +316,17 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           install: false
           record: true
-          parallel: true
-          tag: \#${{ matrix.machines }}
+          parallel: false
+          group: "Switch services"
           browser: chrome
-          group: "Services"
           project: ./e2e-tests/switch-between-services
         env:
           TZ: ${{ env.timezone }}
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           API_KEY: ${{ secrets.API_KEY }}
