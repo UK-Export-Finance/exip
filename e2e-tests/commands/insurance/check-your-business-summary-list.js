@@ -58,6 +58,12 @@ const {
   },
 } = FIELD_IDS;
 
+const {
+  TURNOVER: {
+    [FINANCIAL_YEAR_END_DATE]: { DATE_FORMAT },
+  },
+} = FIELDS;
+
 const checkYourBusinessSummaryList = ({
   [COMPANY_NUMBER]: () => {
     const fieldId = COMPANY_NUMBER;
@@ -126,7 +132,7 @@ const checkYourBusinessSummaryList = ({
 
     const timestamp = application.EXPORTER_COMPANY[fieldId];
 
-    const expectedValue = formatDate(timestamp);
+    const expectedValue = formatDate(timestamp, DATE_FORMAT);
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
