@@ -240,10 +240,6 @@ jobs:
       group: e2e-tests-quote-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.machines }}
       cancel-in-progress: true
 
-    concurrency:
-      group: e2e-tests-quote-${{ github.workflow }}-${{ github.run_id }}-${{ matrix.machines }}
-      cancel-in-progress: true
-
     steps:
       - uses: actions/checkout@v4
 
