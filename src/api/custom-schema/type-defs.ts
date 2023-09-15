@@ -65,7 +65,7 @@ const typeDefs = `
     id: String
   }
 
-  input CompanyAddressInput  {
+  input CompanyAddressInput {
     addressLine1: String
     addressLine2: String
     careOf: String
