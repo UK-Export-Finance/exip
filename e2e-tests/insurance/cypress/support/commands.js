@@ -72,6 +72,7 @@ Cypress.Commands.add('completeAndSubmitDeclarations', require('../../../commands
 Cypress.Commands.add('completeSignInAndSubmitAnApplication', require('../../../commands/insurance/complete-sign-in-and-submit-an-application'));
 
 Cypress.Commands.add('assertAllSectionsUrl', require('../../../commands/insurance/assert-all-sections-url'));
+Cypress.Commands.add('assertApplicationSubmittedUrl', require('../../../commands/insurance/assert-application-submitted-url'));
 
 Cypress.Commands.add('assertChangeAnswersPageUrl', require('../../../commands/insurance/assert-change-answers-page-url'));
 Cypress.Commands.add('assertSummaryListRowValue', require('../../../commands/assert-summary-list-row-value'));

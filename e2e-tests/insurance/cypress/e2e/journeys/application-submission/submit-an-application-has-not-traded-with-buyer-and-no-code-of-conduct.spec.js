@@ -1,15 +1,9 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
-const {
-  ROOT: INSURANCE_ROOT,
-  APPLICATION_SUBMITTED,
-} = INSURANCE_ROUTES;
-
-const baseUrl = Cypress.config('baseUrl');
+const { APPLICATION_SUBMITTED } = INSURANCE_ROUTES;
 
 context('Insurance - submit an application, no broker, no `have traded with buyer before` and no `have code of conduct` declaration', () => {
   let referenceNumber;
-  let url;
 
   before(() => {
     cy.createAccount({});
@@ -32,8 +26,6 @@ context('Insurance - submit an application, no broker, no `have traded with buye
   });
 
   it(`should successfully submit the application and redirect to ${APPLICATION_SUBMITTED}`, () => {
-    url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
-
-    cy.assertUrl(url);
+    cy.assertApplicationSubmittedUrl(referenceNumber);
   });
 });

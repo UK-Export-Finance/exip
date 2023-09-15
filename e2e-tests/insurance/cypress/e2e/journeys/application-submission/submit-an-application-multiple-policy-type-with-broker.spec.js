@@ -1,16 +1,10 @@
 import { APPLICATION } from '../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
-const {
-  ROOT: INSURANCE_ROOT,
-  APPLICATION_SUBMITTED,
-} = INSURANCE_ROUTES;
-
-const baseUrl = Cypress.config('baseUrl');
+const { APPLICATION_SUBMITTED } = INSURANCE_ROUTES;
 
 context('Insurance - submit an application - Multiple policy type with a broker - As an Exporter, I want to submit my completed export insurance application, So that UKEF can process and make a decision on my application', () => {
   let referenceNumber;
-  let url;
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
@@ -18,10 +12,6 @@ context('Insurance - submit an application - Multiple policy type with a broker 
       usingBroker: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;
-
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
-
-      cy.assertUrl(url);
     });
   });
 
@@ -34,8 +24,6 @@ context('Insurance - submit an application - Multiple policy type with a broker 
   });
 
   it(`should redirect to ${APPLICATION_SUBMITTED}`, () => {
-    const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
-
-    cy.assertUrl(expectedUrl);
+    cy.assertApplicationSubmittedUrl(referenceNumber);
   });
 });
