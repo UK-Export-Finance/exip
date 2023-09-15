@@ -34,7 +34,7 @@ const completePrepareApplicationMultiplePolicyType = ({
   cy.completeAndSubmitYourContact({ useDifferentContactEmail });
   cy.completeAndSubmitNatureOfYourBusiness();
   cy.completeAndSubmitTurnoverForm();
-  cy.completeAndSubmitBrokerForm({});
+  cy.completeAndSubmitBrokerForm({ usingBroker });
 
   submitButton().click();
 
