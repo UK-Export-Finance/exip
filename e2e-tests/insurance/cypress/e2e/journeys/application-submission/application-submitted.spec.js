@@ -12,6 +12,8 @@ const {
   FEEDBACK,
 } = INSURANCE_ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - application submitted page', () => {
   let referenceNumber;
   let url;
@@ -20,7 +22,7 @@ context('Insurance - application submitted page', () => {
     cy.completeSignInAndSubmitAnApplication({}).then((refNumber) => {
       referenceNumber = refNumber;
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
 
       cy.assertUrl(url);
     });
@@ -123,7 +125,7 @@ context('Insurance - application submitted page', () => {
         it(`should redirect to ${BUYER_COUNTRY}`, () => {
           selector().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${BUYER_COUNTRY}`;
+          const expectedUrl = `${baseUrl}${BUYER_COUNTRY}`;
           cy.assertUrl(expectedUrl);
         });
       });

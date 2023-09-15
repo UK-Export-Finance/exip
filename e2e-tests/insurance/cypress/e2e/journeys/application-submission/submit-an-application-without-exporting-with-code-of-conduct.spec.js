@@ -5,7 +5,9 @@ const {
   APPLICATION_SUBMITTED,
 } = INSURANCE_ROUTES;
 
-context('Insurance - submit an application without `exporting with code of conduct` declaration', () => {
+const baseUrl = Cypress.config('baseUrl');
+
+context('Insurance - submit an application - Single policy type, without `exporting with code of conduct` declaration', () => {
   let referenceNumber;
   let url;
 
@@ -24,7 +26,7 @@ context('Insurance - submit an application without `exporting with code of condu
   });
 
   it(`should successfully submit the application and redirect to ${APPLICATION_SUBMITTED}`, () => {
-    url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
+    url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
 
     cy.assertUrl(url);
   });

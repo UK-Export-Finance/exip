@@ -13,14 +13,14 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - submit an application - Single policy type, no broker - As an Exporter, I want to submit my completed export insurance application, So that UKEF can process and make a decision on my application', () => {
+context('Insurance - submit an application - Single policy type with a broker - As an Exporter, I want to submit my completed export insurance application, So that UKEF can process and make a decision on my application', () => {
   let referenceNumber;
   let url;
 
   const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
   before(() => {
-    cy.completeSignInAndSubmitAnApplication({}).then((refNumber) => {
+    cy.completeSignInAndSubmitAnApplication({ usingBroker: true }).then((refNumber) => {
       referenceNumber = refNumber;
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;

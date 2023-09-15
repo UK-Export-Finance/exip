@@ -5,7 +5,9 @@ const {
   APPLICATION_SUBMITTED,
 } = INSURANCE_ROUTES;
 
-context('Insurance - submit an application without `have traded with buyer before` and no `have code of conduct` declaration', () => {
+const baseUrl = Cypress.config('baseUrl');
+
+context('Insurance - submit an application, no broker, no `have traded with buyer before` and no `have code of conduct` declaration', () => {
   let referenceNumber;
   let url;
 
@@ -30,7 +32,7 @@ context('Insurance - submit an application without `have traded with buyer befor
   });
 
   it(`should successfully submit the application and redirect to ${APPLICATION_SUBMITTED}`, () => {
-    url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
+    url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
 
     cy.assertUrl(url);
   });
