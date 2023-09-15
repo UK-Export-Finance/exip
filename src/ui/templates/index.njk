@@ -16,17 +16,17 @@
     <link rel="apple-touch-icon" href="/assets/images/govuk-apple-touch-icon.png">
 
     <link rel="stylesheet" href="/assets/css/styles.css" />
-    <!--[if IE 8]>
-      <link rel="stylesheet" href="/govuk-frontend-ie8-3.5.0.min.css">
-    <![endif]-->
 
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="" />
+    <meta property="og:description" content="" />
     <meta property="og:image" content="/assets/images/govuk-opengraph-image.png">
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
   </head>
 
   <body class="govuk-template__body govuk-body">
-
-    <script src="/assets/js/jsEnabled.js" type="text/javascript"></script>
-
     {% include "partials/skip-link.njk" %}
 
     {% include "partials/cookies-banner.njk" %}
@@ -45,14 +45,20 @@
 
     {% include "partials/footer.njk" %}
 
-    <script src="/assets/js/govukFrontend.js" type="text/javascript"></script>
-    <script src="/assets/js/cookies.js" type="text/javascript"></script>
-    <script src="/assets/js/formSubmission.js" type="text/javascript"></script>
 
-    {% if cookieConsent %}
-      <script async src="https://www.googletagmanager.com/gtag/js?id={{ googleAnalyticsId }}"></script>
-      <script>window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', '{{ googleAnalyticsId }}');</script>
-    {% endif %}
+      {%block scripts %}
+      <script src="/assets/js/jsEnabled.js" type="text/javascript" integrity="sha512-LUW2MMgLIyJzPPvhODhZMciLaqLNgBGrSMMj6zOJsH+7uSahGknt3c+VSzyUYlSnngNXZwvvNA7kc+Zvx0Mh9A==" crossorigin="anonymous"></script>
+      <script src="/assets/js/govukFrontend.js" type="text/javascript" integrity="sha512-EdyNYxz0W40gqYt1R48s+ye7mW0p7SwUTnkyUcMJ0eGRsucWodRmVpC5+QAtUBZSYeOMeWumRLnqJZ2zzkDRqg==" crossorigin="anonymous"></script>
+      <script src="/assets/js/formSubmission.js" type="text/javascript" integrity="sha512-uyTmQxJNGlnB71lDj1CCOUhKJLch3djXW1Av0BOT4g7K7riFXsDbyUmhNkhUrtpbdFICkh3lFxmviTlOKNTh7w==" crossorigin="anonymous"></script>
+      <script src="/assets/js/mojFrontend.js" type="text/javascript" integrity="sha512-Ou5NaBw3i2mTX9wG4T5qe8iVVv6Y/67xtvY1ByVY3fYf82Mc2vLGaXfs2z89f9IJ6GCKC64Cv+oRKKYWszDi5Q==" crossorigin="anonymous"></script>
+      <script src="/assets/js/cookies.js" type="text/javascript" integrity="sha512-1MU/q7OlnUX2SMKAZWls7I/EfPiitbX+ym3Dzj+f5r4qI+nQKF3Q6LZk3LRk3cqO726dQBlwhhEcJW455LM69w==" crossorigin="anonymous"></script>
+
+      {# {% if cookieConsent %} #}
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ googleAnalyticsId }}"></script>
+        <script src="/assets/js/googleAnalytics.js" type="text/javascript" data-campaign="{{ googleAnalyticsId }}" integrity="sha512-EiZ7aXrH6dgeg6B1KIkNnkTdg/12270bhonXlSgS8gItLqhW/OIAmAkgPbPSDc4moyO0Eioo78TI5m5cgG69AQ==" crossorigin="anonymous"></script>
+      {# {% endif %} #}
+    {%endblock%}
+
 
   </body>
 </html>
