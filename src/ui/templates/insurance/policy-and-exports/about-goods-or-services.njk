@@ -45,13 +45,13 @@
 
         {% set descriptionHintHtml %}
 
-          <p class="govuk-hint" data-cy="{{ FIELDS.DESCRIPTION.ID }}-hint-intro">{{ FIELDS.DESCRIPTION.HINT.INTRO }}</p>
+        <p class="govuk-hint" data-cy="{{ FIELDS.DESCRIPTION.ID }}-hint-intro">{{ FIELDS.DESCRIPTION.HINT.INTRO }}</p>
 
-          <ul class="govuk-list govuk-list--bullet">
-            {% for item in FIELDS.DESCRIPTION.HINT.LIST %}
-              <li class="govuk-hint" data-cy="{{ FIELDS.DESCRIPTION.ID }}-hint-list-item-{{ loop.index }}">{{ item }}</li>
-            {% endfor %}
-          </ul>
+        <ul class="govuk-list govuk-list--bullet">
+          {% for item in FIELDS.DESCRIPTION.HINT.LIST %}
+            <li class="govuk-hint" data-cy="{{ FIELDS.DESCRIPTION.ID }}-hint-list-item-{{ loop.index }}">{{ item }}</li>
+          {% endfor %}
+        </ul>
         {% endset %}
 
         {{ govukCharacterCount({
@@ -125,6 +125,8 @@
 
   </form>
 
-  <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript" integrity="sha512-Y98fJqTDpxfo1b4+WVq2QXK1dXFAHqsLOVCx5TrKVDA5DxYxUWg9F1DQ52R6IgZQ/mVRuj8vTSagcsWDqKCcTw==" crossorigin="anonymous"></script>
+{% endblock %}
 
+{% block scripts %}
+  <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript" integrity="sha512-Y98fJqTDpxfo1b4+WVq2QXK1dXFAHqsLOVCx5TrKVDA5DxYxUWg9F1DQ52R6IgZQ/mVRuj8vTSagcsWDqKCcTw==" crossorigin="anonymous"></script>
 {% endblock %}

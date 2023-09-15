@@ -33,8 +33,8 @@
       <div class="govuk-grid-column-three-quarters-from-desktop">
 
         {% set html %}
-          <h3 class="govuk-notification-banner__heading" data-cy="success-banner-heading">{{ CONTENT_STRINGS.SUCCESS_BANNER.HEADING }}</h3>
-          <p class="govuk-heading-m" data-cy="success-banner-continue">{{ CONTENT_STRINGS.SUCCESS_BANNER.SIGN_IN_TO_CONTINUE }}</p>
+        <h3 class="govuk-notification-banner__heading" data-cy="success-banner-heading">{{ CONTENT_STRINGS.SUCCESS_BANNER.HEADING }}</h3>
+        <p class="govuk-heading-m" data-cy="success-banner-continue">{{ CONTENT_STRINGS.SUCCESS_BANNER.SIGN_IN_TO_CONTINUE }}</p>
         {% endset %}
 
         {{ govukNotificationBanner({
@@ -54,7 +54,7 @@
       <div class="govuk-grid-column-three-quarters-from-desktop">
 
         {% set html %}
-          <p class="govuk-notification-banner__heading" data-cy="important-banner-heading">{{ CONTENT_STRINGS.IMPORTANT_BANNER.SUCCESSFULLY_SIGNED_OUT }}</p>
+        <p class="govuk-notification-banner__heading" data-cy="important-banner-heading">{{ CONTENT_STRINGS.IMPORTANT_BANNER.SUCCESSFULLY_SIGNED_OUT }}</p>
         {% endset %}
 
         {{ govukNotificationBanner({
@@ -150,4 +150,8 @@
 
   </form>
 
+{% endblock %}
+
+{% block scripts %}
+  <script src="/assets/js/mojFrontend.js" type="text/javascript" integrity="sha512-Ou5NaBw3i2mTX9wG4T5qe8iVVv6Y/67xtvY1ByVY3fYf82Mc2vLGaXfs2z89f9IJ6GCKC64Cv+oRKKYWszDi5Q==" crossorigin="anonymous"></script>
 {% endblock %}

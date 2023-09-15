@@ -93,7 +93,4 @@ const init = () => {
 };
 
 // Call init when element is loaded
-cookieBanner.addEventListener('load', () => {
-  console.log('Loaded cookie');
-  init();
-});
+cookieBanner.addEventListener('load', () => init());
