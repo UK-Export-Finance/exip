@@ -34,8 +34,6 @@ const completeAndSubmitCompanyOrOrganisationForm = ({
   cy.keyboardInput(companyOrOrganisationPage[EMAIL].input(), BUYER[EMAIL]);
   companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().click();
 
-  // when running all the E2E tests, we seem to be temporarily blocked from companies house as it is called alot of times.
-  cy.wait(10000); // eslint-disable-line cypress/no-unnecessary-waiting
   submitButton().click();
 };
 

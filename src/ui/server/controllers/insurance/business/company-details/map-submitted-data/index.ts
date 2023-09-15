@@ -1,14 +1,20 @@
 import { RequestBody, Application } from '../../../../../../types';
 import { objectHasProperty } from '../../../../../helpers/object';
-import { FIELD_IDS } from '../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import getSicCodeIDsFromApplication from '../../../../../helpers/get-sic-code-ids-from-application';
 
 const {
   EXPORTER_BUSINESS: {
     COMPANIES_HOUSE_NUMBER,
-    COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_INCORPORATED },
+    COMPANY_HOUSE: {
+      COMPANY_NUMBER,
+      COMPANY_INCORPORATED,
+      OLD_SIC_CODES,
+      REGISTED_OFFICE_ADDRESS: { ADDRESS_LINE_1, ADDRESS_LINE_2, CARE_OF, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PREMISES },
+    },
+    YOUR_COMPANY: { ADDRESS },
   },
-} = FIELD_IDS.INSURANCE;
+} = INSURANCE_FIELD_IDS;
 
 /**
  * maps companyDetails formBody and returns fields in correct format
@@ -25,15 +31,15 @@ const mapSubmittedData = (formBody: RequestBody, application: Application): obje
     const { registeredOfficeAddress } = populatedData;
 
     // populates companyAddress for db with value or empty string if null
-    populatedData.address = {
-      addressLine1: registeredOfficeAddress.addressLine1 ?? '',
-      addressLine2: registeredOfficeAddress.addressLine2 ?? '',
-      careOf: registeredOfficeAddress.careOf ?? '',
-      locality: registeredOfficeAddress.locality ?? '',
-      region: registeredOfficeAddress.region ?? '',
-      postalCode: registeredOfficeAddress.postalCode ?? '',
-      country: registeredOfficeAddress.country ?? '',
-      premises: registeredOfficeAddress.premises ?? '',
+    populatedData[ADDRESS] = {
+      [ADDRESS_LINE_1]: registeredOfficeAddress[ADDRESS_LINE_1] ?? '',
+      [ADDRESS_LINE_2]: registeredOfficeAddress[ADDRESS_LINE_2] ?? '',
+      [CARE_OF]: registeredOfficeAddress[CARE_OF] ?? '',
+      [LOCALITY]: registeredOfficeAddress[LOCALITY] ?? '',
+      [REGION]: registeredOfficeAddress[REGION] ?? '',
+      [POSTAL_CODE]: registeredOfficeAddress[POSTAL_CODE] ?? '',
+      [COUNTRY]: registeredOfficeAddress[COUNTRY] ?? '',
+      [PREMISES]: registeredOfficeAddress[PREMISES] ?? '',
     };
     // removes registeredOfficeAddress as not required for database
     delete populatedData.registeredOfficeAddress;
@@ -42,7 +48,7 @@ const mapSubmittedData = (formBody: RequestBody, application: Application): obje
   // only delete existing sic codes if company has been inputted
   if (objectHasProperty(populatedData, COMPANIES_HOUSE_NUMBER)) {
     // generates array of objects for sic codes to delete from existing application
-    populatedData.oldSicCodes = [...getSicCodeIDsFromApplication(application)];
+    populatedData[OLD_SIC_CODES] = [...getSicCodeIDsFromApplication(application)];
   }
 
   // convert and populate company number and delete the companies house input field

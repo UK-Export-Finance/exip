@@ -131,6 +131,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.FINANCIAL_YEAR_END_DATE]: {
       LABEL: 'Your financial year end date',
       HINT: 'This information comes from Companies House',
+      DATE_FORMAT: 'd MMMM',
     },
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.ESTIMATED_ANNUAL_TURNOVER]: {
       LEGEND: 'Estimated annual turnover for this current financial year',

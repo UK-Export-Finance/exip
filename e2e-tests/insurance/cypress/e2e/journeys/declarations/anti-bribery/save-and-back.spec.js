@@ -30,7 +30,7 @@ context('Insurance - Declarations - Anti-bribery page - Save and go back', () =>
     cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({});
+      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
       // go to the page we want to test.
       task.link().click();
