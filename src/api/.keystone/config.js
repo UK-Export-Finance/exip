@@ -599,7 +599,7 @@ var DATE_FORMAT = {
   DEFAULT: "d MMMM yyyy",
   HOURS_AND_MINUTES: "HH:mm"
 };
-var ORDNANCE_SURVEY_QUERY_URL = "search/places/v1/postcode?postcode=";
+var ORDNANCE_SURVEY_QUERY_URL = "/search/places/v1/postcode?postcode=";
 
 // helpers/update-application/index.ts
 var timestamp = async (context, applicationId) => {
@@ -1460,39 +1460,53 @@ var typeDefs = `
     apiError: Boolean
   }
 
-  type Address {
+  type CompanyAddress {
     addressLine1: String
     addressLine2: String
-    careOf: String
-    locality: String
-    region: String
-    county: String
-    town: String
     postalCode: String
     country: String
+    locality: String
+    region: String
+    careOf: String
     premises: String
+  }
+
+  type OrdnanceSurveyAddress {
+    addressLine1: String
+    addressLine2: String
+    postalCode: String
+    country: String
+    county: String
+    town: String
   }
 
   input OldSicCodes {
     id: String
   }
 
-  input AddressInput {
+  input CompanyAddressInput  {
     addressLine1: String
     addressLine2: String
     careOf: String
     locality: String
     region: String
-    county: String
-    town: String
     postalCode: String
     country: String
     premises: String
   }
 
+  input OrdnanceAddressInput  {
+    addressLine1: String
+    addressLine2: String
+    postalCode: String
+    country: String
+    county: String
+    town: String
+  }
+
   type CompanyAndCompanyAddress {
     id: ID
-    registeredOfficeAddress: Address
+    registeredOfficeAddress: CompanyAddress
     companyName: String
     companyNumber: String
     dateOfCreation: DateTime
@@ -1503,7 +1517,7 @@ var typeDefs = `
   }
 
   input CompanyAndCompanyAddressInput {
-    address: AddressInput
+    address: CompanyAddressInput
     sicCodes: [String]
     industrySectorNames: [String]
     companyName: String
@@ -1519,7 +1533,7 @@ var typeDefs = `
 
   type OrdnanceSurveyResponse {
     success: Boolean
-    addresses: [Address]
+    addresses: [OrdnanceSurveyAddress]
     apiError: Boolean
     noAddressesFound: Boolean
     invalidPostcode: Boolean
@@ -4492,20 +4506,19 @@ var verify_account_password_reset_token_default = verifyAccountPasswordResetToke
 var import_axios3 = __toESM(require("axios"));
 var import_dotenv7 = __toESM(require("dotenv"));
 import_dotenv7.default.config();
-var ordnanceSurveyBaseUrl = process.env.ORDNANCE_SURVEY_API_URL;
-var ordnanceSurveyApiKey = process.env.ORDNANCE_SURVEY_API_KEY;
+var { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
 var ordnanceSurvey = {
   get: async (postcode) => {
     try {
       const response = await (0, import_axios3.default)({
         method: "get",
-        url: `${ordnanceSurveyBaseUrl}/${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ordnanceSurveyApiKey}`,
+        url: `${ORDNANCE_SURVEY_API_URL}${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`,
         validateStatus(status) {
           const acceptableStatus = [200, 404];
           return acceptableStatus.includes(status);
         }
       });
-      if (!response.data || response.status !== 200) {
+      if (!response?.data?.results || response.status !== 200) {
         return {
           success: false
         };
@@ -4526,6 +4539,16 @@ var ordnance_survey_default = ordnanceSurvey;
 var import_postcode_validator = require("postcode-validator");
 var isValidPostcode = (postcode) => (0, import_postcode_validator.postcodeValidator)(postcode, "GB");
 
+// helpers/map-address/index.ts
+var mapAddress = (address) => ({
+  addressLine1: `${address.DPA.ORGANISATION_NAME ?? ""} ${address.DPA.BUILDING_NAME ?? ""} ${address.DPA.BUILDING_NUMBER ?? ""} ${address.DPA.THOROUGHFARE_NAME ?? ""}`.trim(),
+  addressLine2: address.DPA.DEPENDENT_LOCALITY,
+  town: address.DPA.POST_TOWN,
+  county: void 0,
+  postalCode: address.DPA.POSTCODE
+});
+var map_address_default2 = mapAddress;
+
 // helpers/map-and-filter-address/index.ts
 var mapAndFilterAddress = (house, ordnanceSurveyResponse) => {
   const filtered = ordnanceSurveyResponse.filter((eachAddress) => eachAddress.DPA.BUILDING_NUMBER === house || eachAddress.DPA.BUILDING_NAME === house);
@@ -4534,13 +4557,7 @@ var mapAndFilterAddress = (house, ordnanceSurveyResponse) => {
   }
   const mappedFilteredAddresses = [];
   filtered.forEach((address) => {
-    mappedFilteredAddresses.push({
-      addressLine1: `${address.DPA.ORGANISATION_NAME ?? ""} ${address.DPA.BUILDING_NAME ?? ""} ${address.DPA.BUILDING_NUMBER ?? ""} ${address.DPA.THOROUGHFARE_NAME ?? ""}`.trim(),
-      addressLine2: address.DPA.DEPENDENT_LOCALITY ?? void 0,
-      town: address.DPA.POST_TOWN ?? void 0,
-      county: void 0,
-      postalCode: address.DPA.POSTCODE
-    });
+    mappedFilteredAddresses.push(map_address_default2(address));
   });
   return mappedFilteredAddresses;
 };

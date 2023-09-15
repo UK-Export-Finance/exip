@@ -41,39 +41,53 @@ const typeDefs = `
     apiError: Boolean
   }
 
-  type Address {
+  type CompanyAddress {
     addressLine1: String
     addressLine2: String
-    careOf: String
-    locality: String
-    region: String
-    county: String
-    town: String
     postalCode: String
     country: String
+    locality: String
+    region: String
+    careOf: String
     premises: String
+  }
+
+  type OrdnanceSurveyAddress {
+    addressLine1: String
+    addressLine2: String
+    postalCode: String
+    country: String
+    county: String
+    town: String
   }
 
   input OldSicCodes {
     id: String
   }
 
-  input AddressInput {
+  input CompanyAddressInput  {
     addressLine1: String
     addressLine2: String
     careOf: String
     locality: String
     region: String
-    county: String
-    town: String
     postalCode: String
     country: String
     premises: String
   }
 
+  input OrdnanceAddressInput  {
+    addressLine1: String
+    addressLine2: String
+    postalCode: String
+    country: String
+    county: String
+    town: String
+  }
+
   type CompanyAndCompanyAddress {
     id: ID
-    registeredOfficeAddress: Address
+    registeredOfficeAddress: CompanyAddress
     companyName: String
     companyNumber: String
     dateOfCreation: DateTime
@@ -84,7 +98,7 @@ const typeDefs = `
   }
 
   input CompanyAndCompanyAddressInput {
-    address: AddressInput
+    address: CompanyAddressInput
     sicCodes: [String]
     industrySectorNames: [String]
     companyName: String
@@ -100,7 +114,7 @@ const typeDefs = `
 
   type OrdnanceSurveyResponse {
     success: Boolean
-    addresses: [Address]
+    addresses: [OrdnanceSurveyAddress]
     apiError: Boolean
     noAddressesFound: Boolean
     invalidPostcode: Boolean
