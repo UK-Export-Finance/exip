@@ -18,7 +18,7 @@ const ordnanceSurvey = {
     try {
       const response = await axios({
         method: 'get',
-        url: `${ORDNANCE_SURVEY_API_URL}/${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`,
+        url: `${ORDNANCE_SURVEY_API_URL}${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`,
         validateStatus(status) {
           const acceptableStatus = [200, 404];
           return acceptableStatus.includes(status);
@@ -26,7 +26,7 @@ const ordnanceSurvey = {
       });
 
       // if no data in response or status is not 200 then return success as false
-      if (!response.data || !response.data.results || response.status !== 200) {
+      if (!response?.data?.results || response.status !== 200) {
         return {
           success: false,
         };

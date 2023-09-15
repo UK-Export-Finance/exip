@@ -9,7 +9,7 @@ const { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
 
 describe('integrations/ordnance-survey', () => {
   const { postcode } = MOCK_OS_ADDRESS_INPUT;
-  const url = `${ORDNANCE_SURVEY_API_URL}/${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`;
+  const url = `${ORDNANCE_SURVEY_API_URL}${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`;
 
   describe('when a successful request is made', () => {
     test('it should return success=true and data', async () => {

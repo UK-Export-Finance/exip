@@ -184,12 +184,18 @@ interface Address {
   premises?: string;
   addressLine1?: string;
   addressLine2?: string;
-  locality?: string;
-  town?: string;
-  region?: string;
-  county?: string;
   postalCode?: string;
   country?: string;
+}
+
+interface MappedCompaniesHouseAddress extends Address {
+  locality?: string;
+  region?: string;
+}
+
+interface MappedOrdnanceSurveyAddress extends Address {
+  town?: string;
+  county?: string;
 }
 
 interface CompaniesHouseAccountReferenceDate {
@@ -227,7 +233,7 @@ interface CompaniesHouseAPIResponse extends SuccessResponse {
 
 interface MappedCompaniesHouseResponse {
   companyName: string;
-  registeredOfficeAddress: Address;
+  registeredOfficeAddress: MappedCompaniesHouseAddress;
   companyNumber: string;
   dateOfCreation: string;
   sicCodes: Array<string>;
@@ -541,6 +547,8 @@ export {
   NotifyPersonalisation,
   InsuranceFeedbackVariables,
   IndustrySector,
+  MappedCompaniesHouseAddress,
+  MappedOrdnanceSurveyAddress,
   OrdnanceSurveyAddress,
   OrdnanceSurveyAPIResponse,
   OrdnanceSurveyResponse,
