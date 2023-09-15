@@ -22,6 +22,8 @@ context('Insurance - application submitted page', () => {
     cy.completeSignInAndSubmitAnApplication({}).then((refNumber) => {
       referenceNumber = refNumber;
 
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
+
       cy.assertApplicationSubmittedUrl(referenceNumber);
     });
   });
