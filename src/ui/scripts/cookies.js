@@ -73,7 +73,6 @@ const init = () => {
     });
   }
 
-
   if (changeCookiesSubmitButton) {
     changeCookiesSubmitButton.addEventListener('click', function (event) {
       const checkbox = document.querySelector('input[name="optionalCookies"]:checked');

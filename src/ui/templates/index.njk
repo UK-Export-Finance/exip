@@ -53,10 +53,10 @@
       <script src="/assets/js/mojFrontend.js" type="text/javascript" integrity="sha512-Ou5NaBw3i2mTX9wG4T5qe8iVVv6Y/67xtvY1ByVY3fYf82Mc2vLGaXfs2z89f9IJ6GCKC64Cv+oRKKYWszDi5Q==" crossorigin="anonymous"></script>
       <script src="/assets/js/cookies.js" type="text/javascript" integrity="sha512-1MU/q7OlnUX2SMKAZWls7I/EfPiitbX+ym3Dzj+f5r4qI+nQKF3Q6LZk3LRk3cqO726dQBlwhhEcJW455LM69w==" crossorigin="anonymous"></script>
 
-      {# {% if cookieConsent %} #}
+      {% if cookieConsent %}
         <script async src="https://www.googletagmanager.com/gtag/js?id={{ googleAnalyticsId }}"></script>
         <script src="/assets/js/googleAnalytics.js" type="text/javascript" data-campaign="{{ googleAnalyticsId }}" integrity="sha512-EiZ7aXrH6dgeg6B1KIkNnkTdg/12270bhonXlSgS8gItLqhW/OIAmAkgPbPSDc4moyO0Eioo78TI5m5cgG69AQ==" crossorigin="anonymous"></script>
-      {# {% endif %} #}
+      {% endif %}
     {%endblock%}
 
 

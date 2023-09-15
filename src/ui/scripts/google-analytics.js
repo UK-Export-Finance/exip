@@ -7,4 +7,3 @@ function gtag() {
 }
 gtag('js', new Date());
 gtag('config', id);
-

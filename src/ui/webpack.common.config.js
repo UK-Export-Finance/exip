@@ -11,7 +11,7 @@ module.exports = {
     accessibleAutocomplete: './scripts/accessible-autocomplete.js',
     cookies: './scripts/cookies.js',
     formSubmission: './scripts/form-submission.js',
-    googleAnalytics: './scripts/google-analytics.js'
+    googleAnalytics: './scripts/google-analytics.js',
   },
   output: {
     path: path.join(__dirname, 'public/js'),
