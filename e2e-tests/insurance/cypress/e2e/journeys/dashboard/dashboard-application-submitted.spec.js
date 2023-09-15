@@ -1,7 +1,7 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
 import partials from '../../../../../partials';
 import { BUTTONS, PAGES } from '../../../../../content-strings';
-import { APPLICATION, ROUTES } from '../../../../../constants';
+import { APPLICATION, DATE_FORMAT, ROUTES } from '../../../../../constants';
 import { formatDate } from '../../../../../helpers/date';
 
 const { table } = dashboardPage;
@@ -48,7 +48,7 @@ context('Insurance - Dashboard - submitted application', () => {
     const element = table.body.row(referenceNumber).submitted();
 
     const today = new Date();
-    const expectedDate = formatDate(today);
+    const expectedDate = formatDate(today, DATE_FORMAT.SHORT_MONTH);
 
     cy.checkText(element, expectedDate);
   });
