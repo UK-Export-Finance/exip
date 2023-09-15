@@ -26,29 +26,30 @@ const completeSignInAndSubmitAnApplication = ({
   policyAndExportsMaximumValue = false,
   usingBroker,
 }) => {
-  completeSignInAndGoToApplication();
+  completeSignInAndGoToApplication().then(({ referenceNumber }) => {
+    if (policyType === APPLICATION.POLICY_TYPE.MULTIPLE) {
+      cy.completePrepareApplicationMultiplePolicyType({
+        exporterHasTradedWithBuyer,
+        useDifferentContactEmail,
+        policyAndExportsMaximumValue,
+        referenceNumber,
+        usingBroker,
+      });
+    } else {
+      cy.completePrepareApplicationSinglePolicyType({
+        exporterHasTradedWithBuyer,
+        useDifferentContactEmail,
+        policyAndExportsMaximumValue,
+        referenceNumber,
+        usingBroker,
+      });
+    }
+    cy.completeAndSubmitCheckYourAnswers();
 
-  if (policyType === APPLICATION.POLICY_TYPE.MULTIPLE) {
-    cy.completePrepareApplicationMultiplePolicyType({
-      exporterHasTradedWithBuyer,
-      useDifferentContactEmail,
-      policyAndExportsMaximumValue,
-      usingBroker,
-    });
-  } else {
-    cy.completePrepareApplicationSinglePolicyType({
-      exporterHasTradedWithBuyer,
-      useDifferentContactEmail,
-      policyAndExportsMaximumValue,
-      usingBroker,
-    });
-  }
+    cy.completeAndSubmitDeclarations({ hasAntiBriberyCodeOfConduct, exportingWithCodeOfConduct });
 
-  cy.completeAndSubmitCheckYourAnswers();
-
-  cy.completeAndSubmitDeclarations({ hasAntiBriberyCodeOfConduct, exportingWithCodeOfConduct });
-
-  return cy.getReferenceNumber().then((referenceNumber) => referenceNumber);
+    return cy.getReferenceNumber().then((refNumber) => refNumber);
+  });
 };
 
 export default completeSignInAndSubmitAnApplication;

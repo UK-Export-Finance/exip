@@ -1,12 +1,21 @@
 import { companiesHouseNumber } from '../../../../../../../pages/your-business';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER as COMPANIES_HOUSE_NUMBER_VALUE } from '../../../../../../../constants';
+import {
+  ROUTES,
+  FIELD_IDS,
+  COMPANIES_HOUSE_NUMBER,
+  COMPANIES_HOUSE_NUMBER_EMPTY,
+  COMPANIES_HOUSE_NUMBER_TOO_SHORT,
+  COMPANIES_HOUSE_NUMBER_WITH_SPECIAL_CHARACTERS,
+  COMPANIES_HOUSE_NUMBER_WITH_SPACE,
+  COMPANIES_HOUSE_NUMBER_NOT_FOUND,
+} from '../../../../../../../constants';
 
 const { ROOT } = ROUTES.INSURANCE;
 
 const {
-  COMPANIES_HOUSE_NUMBER,
+  COMPANIES_HOUSE_NUMBER: FIELD_ID,
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const { taskList } = partials.insurancePartials;
@@ -19,6 +28,7 @@ context('Insurance - Your business - Companies house number page validation', ()
   let referenceNumber;
   let url;
   let companyDetailsUrl;
+  let companyNumber;
 
   const baseUrl = Cypress.config('baseUrl');
 
@@ -45,58 +55,80 @@ context('Insurance - Your business - Companies house number page validation', ()
   describe('when leaving companies house registration blank', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
+
+      companyNumber = COMPANIES_HOUSE_NUMBER_EMPTY;
+
+      cy.interceptCompaniesHousePost({ referenceNumber, companyNumber });
     });
 
     it('should display the incorrect format error', () => {
-      cy.submitAndAssertFieldErrors(companiesHouseNumber, null, 0, 1, COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_NUMBER].INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors(companiesHouseNumber, companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
     });
   });
 
   describe('when the companies house number is too short', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
+
+      companyNumber = COMPANIES_HOUSE_NUMBER_TOO_SHORT;
+
+      cy.interceptCompaniesHousePost({ referenceNumber, companyNumber });
     });
 
     it('should display the incorrect format error', () => {
-      cy.submitAndAssertFieldErrors(companiesHouseNumber, '1234', 0, 1, COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_NUMBER].INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors(companiesHouseNumber, companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
     });
   });
 
   describe('when the companies house number has special characters', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
+
+      companyNumber = COMPANIES_HOUSE_NUMBER_WITH_SPECIAL_CHARACTERS;
+
+      cy.interceptCompaniesHousePost({ referenceNumber, companyNumber });
     });
 
     it('should display the incorrect format error', () => {
-      cy.submitAndAssertFieldErrors(companiesHouseNumber, '123456!', 0, 1, COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_NUMBER].INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors(companiesHouseNumber, companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
     });
   });
 
   describe('when the companies house number has a space', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
+
+      companyNumber = COMPANIES_HOUSE_NUMBER_WITH_SPACE;
+
+      cy.interceptCompaniesHousePost({ referenceNumber, companyNumber });
     });
 
     it('should display the incorrect format error', () => {
-      cy.submitAndAssertFieldErrors(companiesHouseNumber, '123456 ', 0, 1, COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_NUMBER].INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors(companiesHouseNumber, companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
     });
   });
 
   describe('when the companies house number is not found', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
+
+      companyNumber = COMPANIES_HOUSE_NUMBER_NOT_FOUND;
+
+      cy.interceptCompaniesHousePost({ referenceNumber, companyNumber });
     });
 
     it('should display the incorrect format error', () => {
-      cy.submitAndAssertFieldErrors(companiesHouseNumber, '123456', 0, 1, COMPANY_HOUSE_ERRORS[COMPANIES_HOUSE_NUMBER].NOT_FOUND);
+      cy.submitAndAssertFieldErrors(companiesHouseNumber, companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].NOT_FOUND);
     });
   });
 
-  describe('when the companies house number is correctly entered', () => {
+  describe('when the companies house number is valid', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ companiesHouseNumber: COMPANIES_HOUSE_NUMBER_VALUE });
+      companyNumber = COMPANIES_HOUSE_NUMBER;
+
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companyNumber });
     });
 
     it('should not display errors and redirect to companies details page', () => {

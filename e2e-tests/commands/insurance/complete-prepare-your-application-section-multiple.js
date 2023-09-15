@@ -10,10 +10,17 @@ const task = taskList.prepareApplication.tasks.policyTypeAndExports;
  * completePrepareApplicationMultiplePolicyType
  * Runs through the full prepare your application journey for multiple policy type
  * @param {Object} Object with flags on how to complete specific parts of the application
+ * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
  * - useDifferentContactEmail: Should submit a different email address in the "exporter contact" details form.
  * - policyAndExportsMaximumValue: should submit an application with the maximum value of 500000
+ * - referenceNumber: Application reference number
  */
-const completePrepareApplicationMultiplePolicyType = ({ useDifferentContactEmail, policyAndExportsMaximumValue = false }) => {
+const completePrepareApplicationMultiplePolicyType = ({
+  usingBroker,
+  useDifferentContactEmail,
+  policyAndExportsMaximumValue = false,
+  referenceNumber,
+}) => {
   task.link().click();
 
   cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
@@ -22,7 +29,7 @@ const completePrepareApplicationMultiplePolicyType = ({ useDifferentContactEmail
 
   submitButton().click();
 
-  cy.completeCompaniesHouseNumberForm({});
+  cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
   cy.completeAndSubmitCompanyDetails();
   cy.completeAndSubmitYourContact({ useDifferentContactEmail });
   cy.completeAndSubmitNatureOfYourBusiness();

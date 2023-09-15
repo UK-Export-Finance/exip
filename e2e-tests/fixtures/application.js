@@ -7,6 +7,7 @@ import {
 import { GBP_CURRENCY_CODE } from './currencies';
 import mockCountries from './countries';
 import { FIELDS_ELIGIBILITY } from '../content-strings/fields/insurance/eligibility';
+import sicCodes from './sic-codes';
 
 const {
   INSURANCE: {
@@ -40,14 +41,13 @@ const {
       COMPANY_HOUSE: {
         COMPANY_SIC,
         INDUSTRY_SECTOR_NAME,
+        INDUSTRY_SECTOR_NAMES,
         COMPANY_NUMBER,
         COMPANY_NAME,
-        COMPANY_ADDRESS,
         COMPANY_INCORPORATED,
       },
       YOUR_COMPANY: {
-        TRADING_ADDRESS,
-        TRADING_NAME,
+        ADDRESS: YOUR_COMPANY_ADDRESS,
       },
       NATURE_OF_YOUR_BUSINESS: {
         GOODS_OR_SERVICES,
@@ -145,8 +145,8 @@ const application = {
   EXPORTER_COMPANY: {
     [COMPANY_NUMBER]: COMPANIES_HOUSE_NUMBER,
     [COMPANY_NAME]: 'DHG PROPERTY FINANCE LIMITED',
-    [COMPANY_INCORPORATED]: '10 April 2014',
-    [COMPANY_ADDRESS]: {
+    [COMPANY_INCORPORATED]: '2014-04-10T00:00:00.000Z',
+    [YOUR_COMPANY_ADDRESS]: {
       addressLine1: 'Unit 3 Lewis Court',
       addressLine2: 'Portmanmoor Road',
       careOf: '',
@@ -156,11 +156,9 @@ const application = {
       country: '',
       premises: '',
     },
-    [COMPANY_SIC]: ['64999'],
-    [INDUSTRY_SECTOR_NAME]: ['Financial intermediation not elsewhere classified'],
-    [FINANCIAL_YEAR_END_DATE]: '31 July',
-    [TRADING_NAME]: FIELD_VALUES.YES,
-    [TRADING_ADDRESS]: FIELD_VALUES.YES,
+    [COMPANY_SIC]: [sicCodes[0].code],
+    [INDUSTRY_SECTOR_NAMES]: [sicCodes[0][INDUSTRY_SECTOR_NAME]],
+    [FINANCIAL_YEAR_END_DATE]: '2023-07-31T00:00:00.000Z',
   },
   EXPORTER_BUSINESS: {
     [GOODS_OR_SERVICES]: 'abc',

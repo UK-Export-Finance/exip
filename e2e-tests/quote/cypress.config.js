@@ -9,7 +9,6 @@ dotenv.config();
  * Cypress configuration
  */
 const cypressConfig = defineConfig({
-  projectId: 'sefntb',
   numTestsKeptInMemory: 1,
   viewportWidth: 1920,
   viewportHeight: 1080,
