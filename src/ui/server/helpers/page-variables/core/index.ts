@@ -24,7 +24,7 @@ const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
  * @param {String} ORIGINAL_URL for the page user is on
  * @returns {Object} Common page content strings
  */
-const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_GENERIC_HEADER }: CorePageVariablesInput): CorePageVariables => {
+const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_GENERIC_HEADER, SRI }: CorePageVariablesInput): CorePageVariables => {
   /**
    * checks if rhe ORIGINAL_URL is an insurance route or not
    * if insurance - either contains insurance or is undefined
@@ -67,6 +67,7 @@ const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_
     BACK_LINK,
     START_ROUTE,
     FEEDBACK_ROUTE,
+    SRI,
     DATA_CY: {
       HEADING: 'heading',
       BACK_LINK: 'back-link',

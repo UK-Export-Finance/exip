@@ -1,4 +1,4 @@
-import { LINKS, PAGES } from '../../../content-strings';
+import { LINKS, PAGES, INTEGRITY } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { objectHasProperty } from '../../../helpers/object';
@@ -20,6 +20,7 @@ export const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 export const PAGE_VARIABLES = {
   FIELD_ID,
   PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
+  SRI: INTEGRITY.ACCESSIBILITY,
 };
 
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.BUYER_COUNTRY;

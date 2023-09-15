@@ -1,4 +1,4 @@
-import { PAGES } from '../../../../../content-strings';
+import { INTEGRITY, PAGES } from '../../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../../constants';
 import ACCOUNT_FIELD_IDS from '../../../../../constants/field-ids/insurance/account';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
@@ -80,6 +80,7 @@ export const get = (req: Request, res: Response) => {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS,
       BACK_LINK: req.headers.referer,
+      SRI: INTEGRITY.MOJ,
     }),
     ...PAGE_VARIABLES,
     userName: getUserNameFromSession(req.session.user),
@@ -103,6 +104,7 @@ export const post = async (req: Request, res: Response) => {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
+        SRI: INTEGRITY.MOJ,
       }),
       ...PAGE_VARIABLES,
       userName: getUserNameFromSession(req.session.user),
@@ -129,6 +131,7 @@ export const post = async (req: Request, res: Response) => {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
+            SRI: INTEGRITY.MOJ,
           }),
           ...PAGE_VARIABLES,
           userName: getUserNameFromSession(req.session.user),

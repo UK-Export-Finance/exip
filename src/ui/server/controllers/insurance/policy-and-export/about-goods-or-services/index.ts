@@ -1,6 +1,6 @@
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import POLICY_AND_EXPORTS_FIELD_IDS from '../../../../constants/field-ids/insurance/policy-and-exports';
-import { PAGES } from '../../../../content-strings';
+import { INTEGRITY, PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import api from '../../../../api';
 import { isPopulatedArray } from '../../../../helpers/array';
@@ -87,6 +87,7 @@ export const get = async (req: Request, res: Response) => {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
         BACK_LINK: req.headers.referer,
+        SRI: INTEGRITY.ACCESSIBILITY,
       }),
       ...pageVariables(refNumber),
       userName: getUserNameFromSession(req.session.user),
@@ -141,6 +142,7 @@ export const post = async (req: Request, res: Response) => {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
           BACK_LINK: req.headers.referer,
+          SRI: INTEGRITY.ACCESSIBILITY,
         }),
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
