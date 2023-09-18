@@ -20,7 +20,8 @@ import mockBuyer from './mock-buyer';
 import mockDeclarations from './mock-declarations';
 import { mockInsuranceFeedback } from './mock-feedback';
 import mockBusinessContact from './mock-business-contact';
-import { PRODUCT, INTEGRITY } from '../content-strings';
+import { PRODUCT } from '../content-strings';
+import { INTEGRITY } from '../constants';
 
 const { GOVUK, FORM, COOKIES, GA, MOJ, ACCESSIBILITY } = INTEGRITY;
 

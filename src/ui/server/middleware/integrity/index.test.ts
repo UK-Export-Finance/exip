@@ -1,7 +1,7 @@
 import { mockNext, mockReq, mockRes } from '../../test-mocks';
 import { Request, Response } from '../../../types';
 import { integrity } from '.';
-import { INTEGRITY } from '../../content-strings';
+import { INTEGRITY } from '../../constants';
 
 const { GOVUK, FORM, COOKIES, GA, MOJ, ACCESSIBILITY } = INTEGRITY;
 const req: Request = mockReq();

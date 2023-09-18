@@ -1,4 +1,3 @@
-export * from './integrity';
 export * from './buttons';
 export * from './contact';
 export * from './cookies-consent';
