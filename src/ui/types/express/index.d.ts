@@ -32,6 +32,13 @@ interface SRI {
   GA?: string;
 }
 
+interface MetaData {
+  url?: string;
+  title?: string;
+  description?: string;
+  organisation?: string;
+}
+
 interface ResponseLocals {
   application?: Application;
   csrfToken: string;
@@ -39,6 +46,7 @@ interface ResponseLocals {
   cookieConsentDecision?: boolean;
   cookieConsentNewDecision?: boolean;
   googleAnalyticsId?: string;
+  meta?: MetaData;
   SRI?: SRI;
 }
 

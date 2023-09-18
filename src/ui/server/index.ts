@@ -10,7 +10,7 @@ import csrf from 'csurf';
 import path from 'path';
 import flash from 'connect-flash';
 import basicAuth from 'express-basic-auth';
-import { csrf as csrfToken, cookiesConsent, security, seo, queryParams } from './middleware';
+import { meta, integrity, csrf as csrfToken, cookiesConsent, security, seo, queryParams } from './middleware';
 import { Request, Response } from '../types';
 
 import * as dotenv from 'dotenv';
@@ -34,17 +34,19 @@ import corePageVariables from './helpers/page-variables/core';
 import isQuoteRoute from './helpers/is-quote-route';
 
 // @ts-ignore
-const app1 = express();
-app1.disable('x-powered-by');
+const ui = express();
+ui.disable('x-powered-by');
 
 const PORT = process.env.PORT || 5000;
 const https = Boolean(process.env.HTTPS || 0);
 const secureCookieName = https ? '__Host-exip-session' : 'exip-session';
 
-app1.use(seo);
-app1.use(security);
-app1.use(compression());
-app1.use(queryParams);
+ui.use(meta);
+ui.use(integrity);
+ui.use(seo);
+ui.use(security);
+ui.use(compression());
+ui.use(queryParams);
 
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
@@ -54,7 +56,7 @@ const limiter = rateLimit({
 });
 
 if (process.env.NODE_ENV === 'production') {
-  app1.use(limiter);
+  ui.use(limiter);
 }
 
 const cookie = {
@@ -73,15 +75,15 @@ const sessionOptions = {
   cookie,
 };
 
-app1.use(session(sessionOptions));
+ui.use(session(sessionOptions));
 
 // @ts-ignore
-app1.use(express.json());
+ui.use(express.json());
 // @ts-ignore
-app1.use(express.urlencoded({ extended: true }));
+ui.use(express.urlencoded({ extended: true }));
 
-app1.use(cookieParser());
-app1.use(
+ui.use(cookieParser());
+ui.use(
   csrf({
     cookie: {
       ...cookie,
@@ -90,19 +92,19 @@ app1.use(
   }),
 );
 
-app1.use(cookiesConsent);
+ui.use(cookiesConsent);
 
-app1.use(csrfToken());
+ui.use(csrfToken());
 
-app1.use(flash());
+ui.use(flash());
 
 configureNunjucks({
   autoescape: true,
-  express: app1,
+  express: ui,
   noCache: true,
 });
 
-app1.use(
+ui.use(
   morgan('dev', {
     // @ts-ignore
     skip: (req) => req.url.startsWith('/assets'),
@@ -110,7 +112,7 @@ app1.use(
 );
 
 if (process.env.NODE_ENV !== 'production') {
-  app1.use(
+  ui.use(
     basicAuth({
       users: {
         // @ts-ignore
@@ -121,18 +123,18 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
-app1.use('/quote', requiredQuoteEligibilityDataProvided);
-app1.use('/insurance/eligibility', requiredInsuranceEligibilityDataProvided);
-app1.use('/insurance/:referenceNumber/*', getApplication);
-app1.use('/insurance/:referenceNumber/*', applicationAccess);
-app1.use('/insurance/:referenceNumber/*', applicationStatus);
-app1.use('/', userSession);
+ui.use('/quote', requiredQuoteEligibilityDataProvided);
+ui.use('/insurance/eligibility', requiredInsuranceEligibilityDataProvided);
+ui.use('/insurance/:referenceNumber/*', getApplication);
+ui.use('/insurance/:referenceNumber/*', applicationAccess);
+ui.use('/insurance/:referenceNumber/*', applicationStatus);
+ui.use('/', userSession);
 
-app1.use('/', rootRoute);
-app1.use('/', quoteRoutes);
-app1.use('/', insuranceRoutes);
+ui.use('/', rootRoute);
+ui.use('/', quoteRoutes);
+ui.use('/', insuranceRoutes);
 
-app1.use(
+ui.use(
   '/assets',
   // @ts-ignore
   express.static(path.join(__dirname, '..', 'node_modules', 'govuk-frontend', 'govuk', 'assets')),
@@ -148,12 +150,12 @@ const errorHandler: express.ErrorRequestHandler = (err, req, res, next) => {
 };
 /* eslint-enable no-unused-vars, prettier/prettier */
 
-app1.use(errorHandler);
+ui.use(errorHandler);
 
 const INSURANCE_PAGE_NOT_FOUND_TEMPLATE = 'insurance/page-not-found.njk';
 const PAGE_NOT_FOUND_TEMPLATE = 'page-not-found.njk';
 
-app1.get('*', (req: Request, res: Response) => {
+ui.get('*', (req: Request, res: Response) => {
   /**
    * if route contains "insurance" eg /insurance/dashboard
    * insurance page-not-found should be rendered
@@ -183,6 +185,6 @@ app1.get('*', (req: Request, res: Response) => {
   });
 });
 
-app1.listen(PORT, () => console.info('EXIP UI app listening on port %s!', PORT));
+ui.listen(PORT, () => console.info('EXIP UI app listening on port %s!', PORT));
 
 /* eslint-enable @typescript-eslint/ban-ts-comment */
