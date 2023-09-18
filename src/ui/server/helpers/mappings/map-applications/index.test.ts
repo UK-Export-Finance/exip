@@ -1,4 +1,5 @@
 import { mapApplication, mapApplications } from '.';
+import { DATE_FORMAT } from '../../../constants';
 import { BUTTONS, DEFAULT } from '../../../content-strings';
 import formatDate from '../../date/format-date';
 import replaceCharacterCodesWithCharacters from '../../replace-character-codes-with-characters';
@@ -18,7 +19,7 @@ describe('server/helpers/mappings/map-applications', () => {
         buyerLocation: buyer.country.name,
         buyerName: replaceCharacterCodesWithCharacters(buyer.companyOrOrganisationName),
         value: mapValue(mockApplication),
-        submitted: formatDate(new Date(submissionDate)),
+        submitted: formatDate(new Date(submissionDate), DATE_FORMAT.SHORT_MONTH),
       };
 
       expect(result).toEqual(expected);

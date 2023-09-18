@@ -52,8 +52,8 @@ Cypress.Commands.add('completeAndSubmitNatureOfYourBusiness', require('../../../
 Cypress.Commands.add('completeAndSubmitTurnoverForm', require('../../../commands/insurance/complete-and-submit-turnover-form'));
 Cypress.Commands.add('completeAndSubmitBrokerForm', require('../../../commands/insurance/complete-and-submit-broker-form'));
 
-Cypress.Commands.add('completePrepareApplicationSinglePolicyType', require('../../../commands/insurance/complete-prepare-your-application-section-single'));
-Cypress.Commands.add('completePrepareApplicationMultiplePolicyType', require('../../../commands/insurance/complete-prepare-your-application-section-multiple'));
+Cypress.Commands.add('completePrepareApplicationSinglePolicyType', require('../../../commands/insurance/complete-prepare-application-section-single-policy-type'));
+Cypress.Commands.add('completePrepareApplicationMultiplePolicyType', require('../../../commands/insurance/complete-prepare-application-section-multiple-policy-type'));
 
 Cypress.Commands.add('completeAndSubmitCompanyOrOrganisationForm', require('../../../commands/insurance/your-buyer/complete-and-submit-company-or-organisation-form'));
 Cypress.Commands.add('completeAndSubmitWorkingWithBuyerForm', require('../../../commands/insurance/your-buyer/complete-and-submit-working-with-buyer-form'));
@@ -72,6 +72,7 @@ Cypress.Commands.add('completeAndSubmitDeclarations', require('../../../commands
 Cypress.Commands.add('completeSignInAndSubmitAnApplication', require('../../../commands/insurance/complete-sign-in-and-submit-an-application'));
 
 Cypress.Commands.add('assertAllSectionsUrl', require('../../../commands/insurance/assert-all-sections-url'));
+Cypress.Commands.add('assertApplicationSubmittedUrl', require('../../../commands/insurance/assert-application-submitted-url'));
 
 Cypress.Commands.add('assertChangeAnswersPageUrl', require('../../../commands/insurance/assert-change-answers-page-url'));
 Cypress.Commands.add('assertSummaryListRowValue', require('../../../commands/assert-summary-list-row-value'));

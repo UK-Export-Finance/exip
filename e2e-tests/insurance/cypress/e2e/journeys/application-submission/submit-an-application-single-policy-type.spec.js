@@ -5,25 +5,17 @@ import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
 const { table } = dashboardPage;
 
-const {
-  ROOT: INSURANCE_ROOT,
-  DASHBOARD,
-  APPLICATION_SUBMITTED,
-} = INSURANCE_ROUTES;
+const { DASHBOARD, APPLICATION_SUBMITTED } = INSURANCE_ROUTES;
 
-context('Insurance - submit an application - As an Exporter, I want to submit my completed export insurance application, So that UKEF can process and make a decision on my application', () => {
+const baseUrl = Cypress.config('baseUrl');
+
+context('Insurance - submit an application - Single policy type, no broker - As an Exporter, I want to submit my completed export insurance application, So that UKEF can process and make a decision on my application', () => {
   let referenceNumber;
-  let url;
-
-  const dashboardUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+  const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({}).then((refNumber) => {
       referenceNumber = refNumber;
-
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
-
-      cy.assertUrl(url);
     });
   });
 
@@ -36,9 +28,7 @@ context('Insurance - submit an application - As an Exporter, I want to submit my
   });
 
   it(`should redirect to ${APPLICATION_SUBMITTED}`, () => {
-    const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
-
-    cy.assertUrl(expectedUrl);
+    cy.assertApplicationSubmittedUrl(referenceNumber);
   });
 
   describe('when visiting the dashboard', () => {

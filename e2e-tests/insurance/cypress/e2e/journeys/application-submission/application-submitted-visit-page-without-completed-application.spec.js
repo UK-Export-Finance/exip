@@ -6,6 +6,8 @@ const {
   APPLICATION_SUBMITTED,
 } = INSURANCE_ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - application submitted page - visit directly without a completed application', () => {
   let referenceNumber;
 
@@ -13,7 +15,7 @@ context('Insurance - application submitted page - visit directly without a compl
     cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      const url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
+      const url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
 
       cy.navigateToUrl(url);
     });
@@ -28,7 +30,7 @@ context('Insurance - application submitted page - visit directly without a compl
   });
 
   it(`should redirect to ${ALL_SECTIONS}`, () => {
-    const url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+    const url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
     cy.assertUrl(url);
   });

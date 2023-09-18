@@ -13,7 +13,8 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * - exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form. Defaults to "yes".
  * - hasAntiBriberyCodeOfConduct: Should submit "yes" in the "have a code of conduct" form. Defaults to "yes".
  * - exportingWithCodeOfConduct: Should submit "yes" in the "exporting with code of conduct" form. Defaults to "yes".
- * - policyAndExportsMaximumValue: should submit an application with the maximum value of 500000.  Defaults to "false"
+ * - policyAndExportsMaximumValue: should submit an application with the maximum value of 500000.  Defaults to false.
+ * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to false.
  * @return {String} Application reference number
  */
 const completeSignInAndSubmitAnApplication = ({
@@ -23,6 +24,7 @@ const completeSignInAndSubmitAnApplication = ({
   hasAntiBriberyCodeOfConduct,
   exportingWithCodeOfConduct,
   policyAndExportsMaximumValue = false,
+  usingBroker,
 }) => {
   completeSignInAndGoToApplication().then(({ referenceNumber }) => {
     if (policyType === APPLICATION.POLICY_TYPE.MULTIPLE) {
@@ -31,6 +33,7 @@ const completeSignInAndSubmitAnApplication = ({
         useDifferentContactEmail,
         policyAndExportsMaximumValue,
         referenceNumber,
+        usingBroker,
       });
     } else {
       cy.completePrepareApplicationSinglePolicyType({
@@ -38,9 +41,9 @@ const completeSignInAndSubmitAnApplication = ({
         useDifferentContactEmail,
         policyAndExportsMaximumValue,
         referenceNumber,
+        usingBroker,
       });
     }
-
     cy.completeAndSubmitCheckYourAnswers();
 
     cy.completeAndSubmitDeclarations({ hasAntiBriberyCodeOfConduct, exportingWithCodeOfConduct });
