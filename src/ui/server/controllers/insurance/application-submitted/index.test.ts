@@ -63,6 +63,8 @@ describe('controllers/insurance/application-submitted', () => {
       beforeEach(() => {
         res.locals = {
           csrfToken: '1234',
+          SRI: {},
+          meta: {},
           application: {
             ...mockApplication,
             status: APPLICATION.STATUS.IN_PROGRESS,

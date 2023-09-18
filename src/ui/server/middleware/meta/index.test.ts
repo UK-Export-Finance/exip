@@ -11,9 +11,9 @@ describe('middleware/meta', () => {
   it('should have all the properties in res.locals.meta object', () => {
     meta(req, res, next);
     expect(res.locals.meta).toEqual({
-      url: `${req.hostname}${req.originalUrl}`,
-      title: PRODUCT.DESCRIPTION.GENERIC,
-      organisation: PRODUCT.DESCRIPTION.ORGANISATION,
+      URL: `${req.hostname}${req.originalUrl}`,
+      TITLE: PRODUCT.DESCRIPTION.GENERIC,
+      ORGANISATION: PRODUCT.DESCRIPTION.ORGANISATION,
     });
   });
 
