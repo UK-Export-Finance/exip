@@ -162,7 +162,7 @@ jobs:
   # 4. E2E - Insurance
   e2e-tests-insurance:
     name: E2E Insurance 👷
-    needs: [setup, unit-tests, api-tests]
+    needs: [setup]
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
