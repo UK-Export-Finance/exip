@@ -173,21 +173,21 @@ jobs:
       matrix:
         spec:
           [
-            "account/",
-            "application-submission/",
-            "cannot-skip-flow/",
-            "check-your-answers/",
-            "dashboard/",
-            "declarations/",
-            "eligibility/",
-            "feedback/",
-            "no-access-application-submitted/",
-            "no-access-to-application/",
-            "policy-and-exports/",
-            "submit-name-fields-with-special-characters/",
-            "task-list/",
-            "your-business/",
-            "your-buyer/",
+            "account",
+            "application-submission",
+            "cannot-skip-flow",
+            "check-your-answers",
+            "dashboard",
+            "declarations",
+            "eligibility",
+            "feedback",
+            "no-access-application-submitted",
+            "no-access-to-application",
+            "policy-and-exports",
+            "submit-name-fields-with-special-characters",
+            "task-list",
+            "your-business",
+            "your-buyer",
           ]
 
     concurrency:
@@ -214,4 +214,4 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/insurance
-        run: npx cypress run --browser chrome --project ./ --record false --spec cypress/e2e/journeys/${{ matrix.spec }} --env TZ=${{ env.timezone }}, API_KEY:=${{ secrets.API_KEY }}, GOV_NOTIFY_EMAIL_RECIPIENT_1=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}, GOV_NOTIFY_EMAIL_RECIPIENT_2=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}, MOCK_ACCOUNT_PASSWORD=${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+        run: npx cypress run --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}/*.spec.js" --env TZ=${{ env.timezone }},API_KEY=${{ secrets.API_KEY }},GOV_NOTIFY_EMAIL_RECIPIENT_1=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }},GOV_NOTIFY_EMAIL_RECIPIENT_2=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }},MOCK_ACCOUNT_PASSWORD=${{ secrets.MOCK_ACCOUNT_PASSWORD }}
