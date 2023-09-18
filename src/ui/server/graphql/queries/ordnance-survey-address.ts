@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 const ordnanceSurveyAddressQuery = gql`
-  query ($postcode: String!, $houseNumber: String!) {
-    getOrdnanceSurveyAddress(postcode: $postcode, houseNumber: $houseNumber) {
+  query ($postcode: String!, $houseNameOrNumber: String!) {
+    getOrdnanceSurveyAddress(postcode: $postcode, houseNameOrNumber: $houseNameOrNumber) {
       success
       addresses {
         addressLine1

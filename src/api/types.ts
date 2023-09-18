@@ -268,7 +268,7 @@ interface OrdnanceSurveyAPIResponse extends SuccessResponse {
 
 interface OrdnanceSurveyVariables {
   postcode: string;
-  houseNumber: string;
+  houseNameOrNumber: string;
 }
 
 interface ConnectId {

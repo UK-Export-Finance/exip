@@ -11,7 +11,7 @@ import mapAddress from '../map-address';
  * @returns {Array<Address>} mapped addresses
  */
 const mapAndFilterAddress = (house: string, ordnanceSurveyResponse: Array<OrdnanceSurveyResponse>) => {
-  // returns array of addresses which match house number or housename
+  // returns array of addresses which match house number or house name
   const filtered = ordnanceSurveyResponse.filter((eachAddress) => eachAddress.DPA.BUILDING_NUMBER === house || eachAddress.DPA.BUILDING_NAME === house);
 
   // empty array returned if no addresses found

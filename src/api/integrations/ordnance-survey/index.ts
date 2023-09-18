@@ -9,7 +9,7 @@ const { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
 
 /**
  * ordnanceSurvey
- * makes ordnance survey API call and returns address
+ * makes Ordnance Survey API call and returns address
  * @param {String} postcode
  * @returns {OrdanceSurveyAPIResponse} OrdanceSurveyAPIResponse object
  */

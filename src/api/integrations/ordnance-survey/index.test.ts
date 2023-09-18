@@ -46,6 +46,22 @@ describe('integrations/ordnance-survey', () => {
     });
   });
 
+  describe('when response.data.results does not exist', () => {
+    test('it should return success=false', async () => {
+      const mock = new MockAdapter(axios);
+
+      mock.onGet(url).reply(200, {});
+
+      const result = await ordnanceSurvey.get(postcode);
+
+      const expected = {
+        success: false,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('when a 200 status is not returned', () => {
     test('it should throw an error', async () => {
       const mock = new MockAdapter(axios);

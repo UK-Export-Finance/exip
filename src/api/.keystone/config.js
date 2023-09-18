@@ -1727,10 +1727,10 @@ var typeDefs = `
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
 
-    """ get ordnance survey address """
+    """ get Ordnance Survey address """
     getOrdnanceSurveyAddress(
       postcode: String!
-      houseNumber: String!
+      houseNameOrNumber: String!
     ): OrdnanceSurveyResponse
   }
 `;
@@ -4570,8 +4570,8 @@ var remove_white_space_default = removeWhiteSpace;
 // custom-resolvers/queries/get-ordnance-survey-address/index.ts
 var getOrdnanceSurveyAddress = async (root, variables) => {
   try {
-    const { postcode, houseNumber } = variables;
-    console.info("Getting Ordnance Survey address for postcode: %s, houseNumber: %s", postcode, houseNumber);
+    const { postcode, houseNameOrNumber } = variables;
+    console.info("Getting Ordnance Survey address for postcode: %s, houseNameOrNumber: %s", postcode, houseNameOrNumber);
     const noWhitespacePostcode = remove_white_space_default(postcode);
     if (!isValidPostcode(noWhitespacePostcode)) {
       console.error("Invalid postcode: %s", postcode);
@@ -4586,7 +4586,7 @@ var getOrdnanceSurveyAddress = async (root, variables) => {
         success: false
       };
     }
-    const mappedAddresses = map_and_filter_address_default(houseNumber, response.data);
+    const mappedAddresses = map_and_filter_address_default(houseNameOrNumber, response.data);
     if (!mappedAddresses.length) {
       return {
         success: false,
@@ -4598,7 +4598,7 @@ var getOrdnanceSurveyAddress = async (root, variables) => {
       success: true
     };
   } catch (err) {
-    console.error("Error getting ordnance survey address results %O", err);
+    console.error("Error getting Ordnance Survey address results %O", err);
     return {
       apiError: true,
       success: false

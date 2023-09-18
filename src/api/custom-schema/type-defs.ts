@@ -308,10 +308,10 @@ const typeDefs = `
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
 
-    """ get ordnance survey address """
+    """ get Ordnance Survey address """
     getOrdnanceSurveyAddress(
       postcode: String!
-      houseNumber: String!
+      houseNameOrNumber: String!
     ): OrdnanceSurveyResponse
   }
 `;
