@@ -1,6 +1,6 @@
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import POLICY_AND_EXPORTS_FIELD_IDS from '../../../../constants/field-ids/insurance/policy-and-exports';
-import { INTEGRITY, PAGES } from '../../../../content-strings';
+import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import api from '../../../../api';
 import { isPopulatedArray } from '../../../../helpers/array';
@@ -82,11 +82,6 @@ export const get = async (req: Request, res: Response) => {
     } else {
       mappedCountries = mapCountries(countries);
     }
-    // Add SRI to the locals
-    res.locals.SRI = {
-      ...res.locals.SRI,
-      ACCESSIBILITY: INTEGRITY.ACCESSIBILITY,
-    };
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -141,11 +136,6 @@ export const post = async (req: Request, res: Response) => {
       } else {
         mappedCountries = mapCountries(countries);
       }
-      // Add SRI to the locals
-      res.locals.SRI = {
-        ...res.locals.SRI,
-        ACCESSIBILITY: INTEGRITY.ACCESSIBILITY,
-      };
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({

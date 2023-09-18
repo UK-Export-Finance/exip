@@ -1,4 +1,4 @@
-import { INTEGRITY, PAGES } from '../../../../../content-strings';
+import { PAGES } from '../../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/account';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
@@ -63,12 +63,6 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(INVALID_LINK);
     }
 
-    // Add SRI to the locals
-    res.locals.SRI = {
-      ...res.locals.SRI,
-      MOJ: INTEGRITY.MOJ,
-    };
-
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
@@ -103,12 +97,6 @@ export const post = async (req: Request, res: Response) => {
     const validationErrors = generateValidationErrors(payload);
 
     if (validationErrors) {
-      // Add SRI to the locals
-      res.locals.SRI = {
-        ...res.locals.SRI,
-        MOJ: INTEGRITY.MOJ,
-      };
-
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
@@ -132,12 +120,6 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (response.hasBeenUsedBefore) {
-      // Add SRI to the locals
-      res.locals.SRI = {
-        ...res.locals.SRI,
-        MOJ: INTEGRITY.MOJ,
-      };
-
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,

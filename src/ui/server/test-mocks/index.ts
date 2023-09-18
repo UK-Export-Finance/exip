@@ -72,11 +72,11 @@ const mockRes = () => {
       organisation: PRODUCT.DESCRIPTION.ORGANISATION,
     },
     SRI: {
-      GOVUK,
+      ACCESSIBILITY,
       MOJ,
+      GOVUK,
       FORM,
       COOKIES,
-      ACCESSIBILITY,
       GA,
     },
   };

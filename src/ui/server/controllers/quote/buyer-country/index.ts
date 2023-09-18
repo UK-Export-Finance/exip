@@ -1,4 +1,4 @@
-import { LINKS, PAGES, INTEGRITY } from '../../../content-strings';
+import { LINKS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { objectHasProperty } from '../../../helpers/object';
@@ -86,11 +86,6 @@ export const get = async (req: Request, res: Response) => {
     } else {
       mappedCountries = mapCisCountries(countries);
     }
-    // Add SRI to the locals
-    res.locals.SRI = {
-      ...res.locals.SRI,
-      ACCESSIBILITY: INTEGRITY.ACCESSIBILITY,
-    };
 
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer), ORIGINAL_URL: req.originalUrl }),
@@ -121,12 +116,6 @@ export const post = async (req: Request, res: Response) => {
     const validationErrors = generateValidationErrors(payload);
 
     if (validationErrors) {
-      // Add SRI to the locals
-      res.locals.SRI = {
-        ...res.locals.SRI,
-        ACCESSIBILITY: INTEGRITY.ACCESSIBILITY,
-      };
-
       return res.render(TEMPLATE, {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer), ORIGINAL_URL: req.originalUrl }),
         userName: getUserNameFromSession(req.session.user),

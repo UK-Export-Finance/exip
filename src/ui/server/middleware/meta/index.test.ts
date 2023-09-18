@@ -7,7 +7,7 @@ const req: Request = mockReq();
 const res: Response = mockRes();
 const next = mockNext;
 
-describe('meta-data middleware unit test cases', () => {
+describe('middleware/meta', () => {
   it('should have all the properties in res.locals.meta object', () => {
     meta(req, res, next);
     expect(res.locals.meta).toEqual({
@@ -20,14 +20,14 @@ describe('meta-data middleware unit test cases', () => {
   it('should have all meta-data properties defined', () => {
     meta(req, res, next);
 
-    expect(res.locals.meta?.url).toBeDefined();
-    expect(res.locals.meta?.title).toBeDefined();
-    expect(res.locals.meta?.organisation).toBeDefined();
+    expect(res.locals.meta?.URL).toBeDefined();
+    expect(res.locals.meta?.TITLE).toBeDefined();
+    expect(res.locals.meta?.ORGANISATION).toBeDefined();
   });
 
   it('should have meta-data title set to generic production description', () => {
     meta(req, res, next);
-    expect(res.locals.meta?.title).toEqual(PRODUCT.DESCRIPTION.GENERIC);
+    expect(res.locals.meta?.TITLE).toEqual(PRODUCT.DESCRIPTION.GENERIC);
   });
 
   it('should call next()', () => {
