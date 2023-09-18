@@ -191,7 +191,7 @@ jobs:
           ]
 
     concurrency:
-      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.machines }}
+      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
       cancel-in-progress: true
 
     steps:
