@@ -67,9 +67,9 @@ const mockRes = () => {
   res.locals = {
     csrfToken: 'mock',
     meta: {
-      url: 'mock.com/route',
-      title: PRODUCT.DESCRIPTION.GENERIC,
-      organisation: PRODUCT.DESCRIPTION.ORGANISATION,
+      URL: 'mock.com/route',
+      TITLE: PRODUCT.DESCRIPTION.GENERIC,
+      ORGANISATION: PRODUCT.DESCRIPTION.ORGANISATION,
     },
     SRI: {
       ACCESSIBILITY,
