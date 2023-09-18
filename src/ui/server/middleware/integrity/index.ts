@@ -1,5 +1,5 @@
 import { Request, Response } from '../../../types';
-import { INTEGRITY } from '../../content-strings';
+import { INTEGRITY } from '../../constants';
 
 const { GOVUK, FORM, COOKIES, GA, MOJ, ACCESSIBILITY } = INTEGRITY;
 
@@ -21,7 +21,7 @@ export const integrity = (req: Request, res: Response, next: () => void) => {
     GA,
   };
 
-  Object.assign(res.locals.SRI, SRI);
+  res.locals.SRI = SRI;
 
   next();
 };

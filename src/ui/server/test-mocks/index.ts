@@ -20,7 +20,8 @@ import mockBuyer from './mock-buyer';
 import mockDeclarations from './mock-declarations';
 import { mockInsuranceFeedback } from './mock-feedback';
 import mockBusinessContact from './mock-business-contact';
-import { PRODUCT, INTEGRITY } from '../content-strings';
+import { PRODUCT } from '../content-strings';
+import { INTEGRITY } from '../constants';
 
 const { GOVUK, FORM, COOKIES, GA, MOJ, ACCESSIBILITY } = INTEGRITY;
 
@@ -67,9 +68,9 @@ const mockRes = () => {
   res.locals = {
     csrfToken: 'mock',
     meta: {
-      url: 'mock.com/route',
-      title: PRODUCT.DESCRIPTION.GENERIC,
-      organisation: PRODUCT.DESCRIPTION.ORGANISATION,
+      URL: 'mock.com/route',
+      TITLE: PRODUCT.DESCRIPTION.GENERIC,
+      ORGANISATION: PRODUCT.DESCRIPTION.ORGANISATION,
     },
     SRI: {
       ACCESSIBILITY,

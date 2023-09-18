@@ -94,7 +94,7 @@ describe('controllers/insurance/business/contact/save-and-back', () => {
 
   describe('when there is no application', () => {
     beforeEach(() => {
-      res.locals = { csrfToken: '1234' };
+      res.locals = { csrfToken: '1234', SRI: {}, meta: {} };
     });
 
     it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
@@ -106,7 +106,7 @@ describe('controllers/insurance/business/contact/save-and-back', () => {
 
   describe('when mapAndSave.contact fails', () => {
     beforeEach(() => {
-      res.locals = { csrfToken: '1234' };
+      res.locals = { csrfToken: '1234', SRI: {}, meta: {} };
       updateMapAndSave = jest.fn(() => Promise.reject());
       mapAndSave.contact = updateMapAndSave;
     });
