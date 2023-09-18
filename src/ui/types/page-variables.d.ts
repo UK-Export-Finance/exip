@@ -25,7 +25,6 @@ interface CorePageVariablesInitialInput {
   START_ROUTE?: string;
   FEEDBACK_ROUTE?: string;
   ORIGINAL_URL?: string;
-  SRI?: string;
 }
 
 interface CorePageVariablesInput extends CorePageVariablesInitialInput {
@@ -38,7 +37,6 @@ interface CorePageVariables {
   BACK_LINK?: string;
   START_ROUTE?: string;
   FEEDBACK_ROUTE?: string;
-  SRI?: string;
   DATA_CY: PageVariablesDataCy;
 }
 
@@ -47,7 +45,6 @@ interface SingleInputPageVariablesInitialInput {
   BACK_LINK?: string;
   FIELD_ID: string;
   ORIGINAL_URL?: string;
-  SRI?: string;
 }
 
 interface SingleInputPageVariablesInput extends SingleInputPageVariablesInitialInput {

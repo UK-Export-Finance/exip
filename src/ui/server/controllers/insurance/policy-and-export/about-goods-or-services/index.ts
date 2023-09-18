@@ -82,12 +82,16 @@ export const get = async (req: Request, res: Response) => {
     } else {
       mappedCountries = mapCountries(countries);
     }
+    // Add SRI to the locals
+    res.locals.SRI = {
+      ...res.locals.SRI,
+      ACCESSIBILITY: INTEGRITY.ACCESSIBILITY,
+    };
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
         BACK_LINK: req.headers.referer,
-        SRI: INTEGRITY.ACCESSIBILITY,
       }),
       ...pageVariables(refNumber),
       userName: getUserNameFromSession(req.session.user),
@@ -137,12 +141,16 @@ export const post = async (req: Request, res: Response) => {
       } else {
         mappedCountries = mapCountries(countries);
       }
+      // Add SRI to the locals
+      res.locals.SRI = {
+        ...res.locals.SRI,
+        ACCESSIBILITY: INTEGRITY.ACCESSIBILITY,
+      };
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES,
           BACK_LINK: req.headers.referer,
-          SRI: INTEGRITY.ACCESSIBILITY,
         }),
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),

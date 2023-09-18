@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8"/>
     <title{% if pageTitleLang %} lang="{{ pageTitleLang }}"{% endif %}>
-      {% block pageTitle %}{% endblock %} - UK Export Finance</title>
+      {% block pageTitle %}{% endblock %} - {{ meta.organisation }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0b0c0c"/>
 
@@ -20,9 +20,9 @@
 
     <meta property="og:locale" content="en_GB"/>
     <meta property="og:type" content="website"/>
-    <meta property="og:title" content=""/>
-    <meta property="og:description" content=""/>
-    <meta property="og:url" content="{{ ORIGINAL_URL }}"/>
+    <meta property="og:title" content="{{ meta.title }}"/>
+    <meta property="og:description" content="{{ meta.organisation }}"/>
+    <meta property="og:url" content="{{ meta.url }}"/>
     <meta property="og:image" content="/assets/images/govuk-opengraph-image.png">
     <meta property="og:image:width" content="512"/>
     <meta property="og:image:height" content="512"/>
@@ -48,16 +48,15 @@
     {% include "partials/footer.njk" %}
 
     {%block scripts %}
-      <script src="/assets/js/jsEnabled.js" type="text/javascript" integrity="sha512-LUW2MMgLIyJzPPvhODhZMciLaqLNgBGrSMMj6zOJsH+7uSahGknt3c+VSzyUYlSnngNXZwvvNA7kc+Zvx0Mh9A==" crossorigin="anonymous"></script>
-      <script src="/assets/js/govukFrontend.js" type="text/javascript" integrity="sha512-EdyNYxz0W40gqYt1R48s+ye7mW0p7SwUTnkyUcMJ0eGRsucWodRmVpC5+QAtUBZSYeOMeWumRLnqJZ2zzkDRqg==" crossorigin="anonymous"></script>
-      <script src="/assets/js/formSubmission.js" type="text/javascript" integrity="sha512-uyTmQxJNGlnB71lDj1CCOUhKJLch3djXW1Av0BOT4g7K7riFXsDbyUmhNkhUrtpbdFICkh3lFxmviTlOKNTh7w==" crossorigin="anonymous"></script>
-      <script src="/assets/js/cookies.js" type="text/javascript" integrity="sha512-S6zh1hPKt2V2O6+h4xPshkFohuIy1/gN0y2fkWO7jAxFp1BG1Oz7qt3x4+ApvQIm2bB+i89ymgHhlBBuUUcUQg==" crossorigin="anonymous"></script>
+      <script src="/assets/js/govukFrontend.js" type="text/javascript" integrity="{{ SRI.GOVUK }}" crossorigin="anonymous"></script>
+      <script src="/assets/js/formSubmission.js" type="text/javascript" integrity="{{ SRI.FORM }}" crossorigin="anonymous"></script>
+      <script src="/assets/js/cookies.js" type="text/javascript" integrity="{{ SRI.COOKIES }}" crossorigin="anonymous"></script>
 
       {% if cookieConsent %}
         <script async src="https://www.googletagmanager.com/gtag/js?id={{ googleAnalyticsId }}"></script>
-        <script src="/assets/js/googleAnalytics.js" type="text/javascript" data-campaign="{{ googleAnalyticsId }}" integrity="sha512-EiZ7aXrH6dgeg6B1KIkNnkTdg/12270bhonXlSgS8gItLqhW/OIAmAkgPbPSDc4moyO0Eioo78TI5m5cgG69AQ==" crossorigin="anonymous"></script>
+        <script src="/assets/js/googleAnalytics.js" type="text/javascript" data-campaign="{{ googleAnalyticsId }}" integrity="{{ SRI.GA }}" crossorigin="anonymous"></script>
       {% endif %}
-      {%endblock%}
+    {%endblock%}
 
     </body>
   </html>
