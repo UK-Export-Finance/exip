@@ -45,8 +45,8 @@ interface ResponseLocals {
   cookieConsentDecision?: boolean;
   cookieConsentNewDecision?: boolean;
   googleAnalyticsId?: string;
-  meta?: MetaData;
-  SRI?: SRI;
+  meta: MetaData;
+  SRI: SRI;
 }
 
 interface RequestParams {
