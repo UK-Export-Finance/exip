@@ -20,7 +20,6 @@ export const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 export const PAGE_VARIABLES = {
   FIELD_ID,
   PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
-  SRI: INTEGRITY.ACCESSIBILITY,
 };
 
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.BUYER_COUNTRY;
@@ -87,6 +86,11 @@ export const get = async (req: Request, res: Response) => {
     } else {
       mappedCountries = mapCisCountries(countries);
     }
+    // Add SRI to the locals
+    res.locals.SRI = {
+      ...res.locals.SRI,
+      ACCESSIBILITY: INTEGRITY.ACCESSIBILITY,
+    };
 
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer), ORIGINAL_URL: req.originalUrl }),
@@ -117,6 +121,12 @@ export const post = async (req: Request, res: Response) => {
     const validationErrors = generateValidationErrors(payload);
 
     if (validationErrors) {
+      // Add SRI to the locals
+      res.locals.SRI = {
+        ...res.locals.SRI,
+        ACCESSIBILITY: INTEGRITY.ACCESSIBILITY,
+      };
+
       return res.render(TEMPLATE, {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer), ORIGINAL_URL: req.originalUrl }),
         userName: getUserNameFromSession(req.session.user),

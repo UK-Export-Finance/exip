@@ -70,11 +70,16 @@ export const get = (req: Request, res: Response) => {
 
   const hasSignedOut = importantFlash.includes('successfulSignOut') || false;
 
+  // Add SRI to the locals
+  res.locals.SRI = {
+    ...res.locals.SRI,
+    MOJ: INTEGRITY.MOJ,
+  };
+
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS,
       BACK_LINK: req.headers.referer,
-      SRI: INTEGRITY.MOJ,
     }),
     ...PAGE_VARIABLES,
     userName: getUserNameFromSession(req.session.user),
@@ -97,11 +102,16 @@ export const post = async (req: Request, res: Response) => {
   let validationErrors = generateValidationErrors(payload);
 
   if (validationErrors) {
+    // Add SRI to the locals
+    res.locals.SRI = {
+      ...res.locals.SRI,
+      MOJ: INTEGRITY.MOJ,
+    };
+
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
-        SRI: INTEGRITY.MOJ,
       }),
       ...PAGE_VARIABLES,
       renderBackLink: true,
@@ -141,11 +151,16 @@ export const post = async (req: Request, res: Response) => {
     // invalid credentials - force validation errors by mimicking empty form submission
     validationErrors = generateValidationErrors({});
 
+    // Add SRI to the locals
+    res.locals.SRI = {
+      ...res.locals.SRI,
+      MOJ: INTEGRITY.MOJ,
+    };
+
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
-        SRI: INTEGRITY.MOJ,
       }),
       ...PAGE_VARIABLES,
       renderBackLink: true,
@@ -155,7 +170,6 @@ export const post = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.error('Error signing in account %O', err);
-
     return res.redirect(ROUTES.INSURANCE.PROBLEM_WITH_SERVICE);
   }
 };

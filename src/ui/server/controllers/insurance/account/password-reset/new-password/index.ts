@@ -63,11 +63,16 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(INVALID_LINK);
     }
 
+    // Add SRI to the locals
+    res.locals.SRI = {
+      ...res.locals.SRI,
+      MOJ: INTEGRITY.MOJ,
+    };
+
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
-        SRI: INTEGRITY.MOJ,
       }),
       ...PAGE_VARIABLES,
     });
@@ -98,11 +103,16 @@ export const post = async (req: Request, res: Response) => {
     const validationErrors = generateValidationErrors(payload);
 
     if (validationErrors) {
+      // Add SRI to the locals
+      res.locals.SRI = {
+        ...res.locals.SRI,
+        MOJ: INTEGRITY.MOJ,
+      };
+
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
-          SRI: INTEGRITY.MOJ,
         }),
         ...PAGE_VARIABLES,
         submittedValues: payload,
@@ -122,11 +132,16 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (response.hasBeenUsedBefore) {
+      // Add SRI to the locals
+      res.locals.SRI = {
+        ...res.locals.SRI,
+        MOJ: INTEGRITY.MOJ,
+      };
+
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
-          SRI: INTEGRITY.MOJ,
         }),
         ...PAGE_VARIABLES,
         submittedValues: payload,

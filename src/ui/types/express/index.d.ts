@@ -23,6 +23,15 @@ interface RequestHeaders {
   host: string;
 }
 
+interface SRI {
+  GOVUK?: string;
+  MOJ?: string;
+  FORM?: string;
+  COOKIES?: string;
+  ACCESSIBILITY?: string;
+  GA?: string;
+}
+
 interface ResponseLocals {
   application?: Application;
   csrfToken: string;
@@ -30,6 +39,7 @@ interface ResponseLocals {
   cookieConsentDecision?: boolean;
   cookieConsentNewDecision?: boolean;
   googleAnalyticsId?: string;
+  SRI?: SRI;
 }
 
 interface RequestParams {

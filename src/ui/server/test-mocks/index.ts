@@ -20,6 +20,9 @@ import mockBuyer from './mock-buyer';
 import mockDeclarations from './mock-declarations';
 import { mockInsuranceFeedback } from './mock-feedback';
 import mockBusinessContact from './mock-business-contact';
+import { INTEGRITY } from '../content-strings';
+
+const { GOVUK, FORM, COOKIES, GA, MOJ, ACCESSIBILITY } = INTEGRITY;
 
 const mockReq = () => {
   const req = {
@@ -63,6 +66,14 @@ const mockRes = () => {
 
   res.locals = {
     csrfToken: 'mock',
+    SRI: {
+      GOVUK,
+      MOJ,
+      FORM,
+      COOKIES,
+      ACCESSIBILITY,
+      GA,
+    },
   };
 
   return res;

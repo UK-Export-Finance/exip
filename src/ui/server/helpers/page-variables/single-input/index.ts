@@ -18,7 +18,6 @@ const singleInputPageVariables = ({
   BACK_LINK,
   FEEDBACK_ROUTE = LINKS.EXTERNAL.FEEDBACK,
   ORIGINAL_URL,
-  SRI,
 }: SingleInputPageVariablesInput) => {
   const pageVariables: SingleInputPageVariables = {
     ...corePageVariables({
@@ -26,7 +25,6 @@ const singleInputPageVariables = ({
       BACK_LINK,
       FEEDBACK_ROUTE,
       ORIGINAL_URL,
-      SRI,
     }),
     FIELD_ID,
   };

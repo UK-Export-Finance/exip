@@ -76,11 +76,16 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(DASHBOARD);
   }
 
+  // Add SRI to the locals
+  res.locals.SRI = {
+    ...res.locals.SRI,
+    MOJ: INTEGRITY.MOJ,
+  };
+
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS,
       BACK_LINK: req.headers.referer,
-      SRI: INTEGRITY.MOJ,
     }),
     ...PAGE_VARIABLES,
     userName: getUserNameFromSession(req.session.user),
@@ -100,11 +105,16 @@ export const post = async (req: Request, res: Response) => {
   let validationErrors = generateValidationErrors(payload);
 
   if (validationErrors) {
+    // Add SRI to the locals
+    res.locals.SRI = {
+      ...res.locals.SRI,
+      MOJ: INTEGRITY.MOJ,
+    };
+
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
-        SRI: INTEGRITY.MOJ,
       }),
       ...PAGE_VARIABLES,
       userName: getUserNameFromSession(req.session.user),
@@ -127,11 +137,16 @@ export const post = async (req: Request, res: Response) => {
       validationErrors = generateAccountAlreadyExistsValidationErrors();
 
       if (validationErrors) {
+        // Add SRI to the locals
+        res.locals.SRI = {
+          ...res.locals.SRI,
+          MOJ: INTEGRITY.MOJ,
+        };
+
         return res.render(TEMPLATE, {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
-            SRI: INTEGRITY.MOJ,
           }),
           ...PAGE_VARIABLES,
           userName: getUserNameFromSession(req.session.user),
