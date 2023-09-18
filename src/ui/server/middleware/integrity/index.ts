@@ -21,10 +21,7 @@ export const integrity = (req: Request, res: Response, next: () => void) => {
     GA,
   };
 
-  res.locals.SRI = {
-    ...res.locals.SRI,
-    ...SRI,
-  };
+  Object.assign(res.locals.SRI, SRI);
 
   next();
 };
