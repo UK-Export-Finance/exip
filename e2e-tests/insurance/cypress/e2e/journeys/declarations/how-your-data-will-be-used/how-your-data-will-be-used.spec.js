@@ -36,7 +36,7 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
     cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({});
+      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
       cy.completeAndSubmitCheckYourAnswers();
 

@@ -42,7 +42,7 @@ context('Insurance - Your business - Contact page - Save and go back', () => {
 
       task.link().click();
 
-      cy.completeCompaniesHouseNumberForm({});
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CONTACT}`;

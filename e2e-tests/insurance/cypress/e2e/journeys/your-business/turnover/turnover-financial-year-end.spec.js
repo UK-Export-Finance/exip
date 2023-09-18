@@ -2,6 +2,7 @@ import { turnover } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE } from '../../../../../../constants';
+import { formatDate } from '../../../../../../helpers/date';
 import application from '../../../../../../fixtures/application';
 
 const {
@@ -18,6 +19,12 @@ const {
   },
 } = ROUTES.INSURANCE;
 
+const {
+  TURNOVER: {
+    [FINANCIAL_YEAR_END_DATE]: { DATE_FORMAT },
+  },
+} = FIELDS;
+
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
@@ -26,6 +33,9 @@ const fieldId = FINANCIAL_YEAR_END_DATE;
 const field = turnover[fieldId];
 
 const baseUrl = Cypress.config('baseUrl');
+
+const timestamp = application.EXPORTER_COMPANY[fieldId];
+const expectedValue = formatDate(timestamp, DATE_FORMAT);
 
 context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, () => {
   let referenceNumber;
@@ -40,7 +50,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
 
       task.link().click();
 
-      cy.completeCompaniesHouseNumberForm({});
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
@@ -57,7 +67,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
 
   it(`should display ${FINANCIAL_YEAR_END_DATE} section`, () => {
     field.value().should('exist');
-    cy.checkText(field.value(), application.EXPORTER_COMPANY[fieldId]);
+    cy.checkText(field.value(), expectedValue);
 
     cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
 
@@ -77,7 +87,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} does not ex
 
       task.link().click();
 
-      cy.completeCompaniesHouseNumberForm({ companiesHouseNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE });
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companyNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE });
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
@@ -115,7 +125,7 @@ context(`Insurance - Your business - Turnover page - submitting a company with $
 
       task.link().click();
 
-      cy.completeCompaniesHouseNumberForm({});
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
@@ -136,7 +146,8 @@ context(`Insurance - Your business - Turnover page - submitting a company with $
 
   it(`should display ${FINANCIAL_YEAR_END_DATE} section on company with ${FINANCIAL_YEAR_END_DATE}`, () => {
     field.value().should('exist');
-    cy.checkText(field.value(), application.EXPORTER_COMPANY[fieldId]);
+
+    cy.checkText(field.value(), expectedValue);
 
     cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
 
@@ -148,7 +159,7 @@ context(`Insurance - Your business - Turnover page - submitting a company with $
 
     cy.navigateToUrl(url);
 
-    cy.completeCompaniesHouseNumberForm({ companiesHouseNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE });
+    cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companyNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE });
     cy.completeAndSubmitCompanyDetails();
     cy.completeAndSubmitYourContact({});
     cy.completeAndSubmitNatureOfYourBusiness();

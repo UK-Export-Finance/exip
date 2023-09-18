@@ -38,7 +38,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
       task.link().click();
 
-      cy.completeCompaniesHouseNumberForm({ companiesHouseNumber: COMPANIES_HOUSE_NUMBER });
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companiesHouseNumber: COMPANIES_HOUSE_NUMBER });
 
       cy.assertUrl(url);
     });

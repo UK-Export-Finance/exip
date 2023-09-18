@@ -46,7 +46,7 @@ context('Insurance - Change your answers - Policy and exports - Change multiple 
   before(() => {
     cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-      cy.completePrepareApplicationMultiplePolicyType({});
+      cy.completePrepareApplicationMultiplePolicyType({ referenceNumber });
 
       task.link().click();
 

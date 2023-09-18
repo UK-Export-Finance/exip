@@ -1,7 +1,6 @@
 import { XLSX_CONFIG, XLSX_ROW_INDEXES } from '.';
 import FIELD_IDS from '../field-ids/insurance';
 import { APPLICATION } from '../application';
-import { ANSWERS } from '../answers';
 import { mockApplication } from '../../test-mocks';
 
 const {
@@ -55,7 +54,7 @@ describe('api/constants/XLSX-CONFIG', () => {
         it('should return correct row indexes', () => {
           application.broker = {
             ...mockApplication.buyer,
-            [USING_BROKER]: ANSWERS.YES,
+            [USING_BROKER]: true,
           };
 
           const result = XLSX_ROW_INDEXES(application);
@@ -85,7 +84,7 @@ describe('api/constants/XLSX-CONFIG', () => {
         it('should return correct row indexes', () => {
           application.broker = {
             ...mockApplication.buyer,
-            [USING_BROKER]: ANSWERS.NO,
+            [USING_BROKER]: false,
           };
 
           const result = XLSX_ROW_INDEXES(application);
@@ -125,7 +124,7 @@ describe('api/constants/XLSX-CONFIG', () => {
         it('should return correct row indexes', () => {
           application.broker = {
             ...mockApplication.buyer,
-            [USING_BROKER]: ANSWERS.YES,
+            [USING_BROKER]: true,
           };
 
           const result = XLSX_ROW_INDEXES(application);
@@ -155,7 +154,7 @@ describe('api/constants/XLSX-CONFIG', () => {
         it('should return correct row indexes', () => {
           application.broker = {
             ...mockApplication.buyer,
-            [USING_BROKER]: ANSWERS.NO,
+            [USING_BROKER]: false,
           };
 
           const result = XLSX_ROW_INDEXES(application);
