@@ -1,4 +1,4 @@
-import { INTEGRITY, PAGES } from '../../../../content-strings';
+import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
 import { ACCOUNT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/account';
@@ -70,12 +70,6 @@ export const get = (req: Request, res: Response) => {
 
   const hasSignedOut = importantFlash.includes('successfulSignOut') || false;
 
-  // Add SRI to the locals
-  res.locals.SRI = {
-    ...res.locals.SRI,
-    MOJ: INTEGRITY.MOJ,
-  };
-
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS,
@@ -102,12 +96,6 @@ export const post = async (req: Request, res: Response) => {
   let validationErrors = generateValidationErrors(payload);
 
   if (validationErrors) {
-    // Add SRI to the locals
-    res.locals.SRI = {
-      ...res.locals.SRI,
-      MOJ: INTEGRITY.MOJ,
-    };
-
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
@@ -150,12 +138,6 @@ export const post = async (req: Request, res: Response) => {
 
     // invalid credentials - force validation errors by mimicking empty form submission
     validationErrors = generateValidationErrors({});
-
-    // Add SRI to the locals
-    res.locals.SRI = {
-      ...res.locals.SRI,
-      MOJ: INTEGRITY.MOJ,
-    };
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

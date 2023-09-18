@@ -33,10 +33,9 @@ interface SRI {
 }
 
 interface MetaData {
-  url?: string;
-  title?: string;
-  description?: string;
-  organisation?: string;
+  URL?: string;
+  TITLE?: string;
+  ORGANISATION?: string;
 }
 
 interface ResponseLocals {

@@ -10,9 +10,9 @@ import { PRODUCT } from '../../content-strings';
 export const meta = (req: Request, res: Response, next: () => void) => {
   // Set the meta information in res.locals
   res.locals.meta = {
-    url: `${req.hostname}${req.originalUrl}`,
-    title: PRODUCT.DESCRIPTION.GENERIC,
-    organisation: PRODUCT.DESCRIPTION.ORGANISATION,
+    URL: `${req.hostname}${req.originalUrl}`,
+    TITLE: PRODUCT.DESCRIPTION.GENERIC,
+    ORGANISATION: PRODUCT.DESCRIPTION.ORGANISATION,
   };
 
   // Call the next function

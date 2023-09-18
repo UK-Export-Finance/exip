@@ -25,23 +25,23 @@ describe('sub resource integrity (SRI) middleware unit test cases', () => {
   it('should have all SRI defined', () => {
     integrity(req, res, next);
 
+    expect(res.locals.SRI?.ACCESSIBILITY).toBeDefined();
+    expect(res.locals.SRI?.MOJ).toBeDefined();
     expect(res.locals.SRI?.GOVUK).toBeDefined();
     expect(res.locals.SRI?.FORM).toBeDefined();
     expect(res.locals.SRI?.COOKIES).toBeDefined();
     expect(res.locals.SRI?.GA).toBeDefined();
-    expect(res.locals.SRI?.MOJ).toBeDefined();
-    expect(res.locals.SRI?.ACCESSIBILITY).toBeDefined();
   });
 
   it('should have all SRI calculated using SHA512', () => {
     integrity(req, res, next);
 
+    expect(res.locals.SRI?.ACCESSIBILITY).toContain('sha512');
+    expect(res.locals.SRI?.MOJ).toContain('sha512');
     expect(res.locals.SRI?.GOVUK).toContain('sha512');
     expect(res.locals.SRI?.FORM).toContain('sha512');
     expect(res.locals.SRI?.COOKIES).toContain('sha512');
     expect(res.locals.SRI?.GA).toContain('sha512');
-    expect(res.locals.SRI?.MOJ).toContain('sha512');
-    expect(res.locals.SRI?.ACCESSIBILITY).toContain('sha512');
   });
 
   it('should call next()', () => {
@@ -55,16 +55,5 @@ describe('sub resource integrity (SRI) middleware unit test cases', () => {
 
     expect(res.locals.googleAnalyticsId).toBeDefined();
     expect(res.locals.googleAnalyticsId).toEqual('mock');
-  });
-
-  it('should reflect the updated res.locals.SRI variable value', () => {
-    res.locals.SRI = {
-      ...res.locals.SRI,
-      MOJ: 'mock',
-    };
-    integrity(req, res, next);
-
-    expect(res.locals.SRI.MOJ).toBeDefined();
-    expect(res.locals.SRI.MOJ).toEqual('mock');
   });
 });
