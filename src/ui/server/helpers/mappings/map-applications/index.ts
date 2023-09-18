@@ -1,3 +1,4 @@
+import { DATE_FORMAT } from '../../../constants';
 import { BUTTONS, DEFAULT } from '../../../content-strings';
 import formatDate from '../../date/format-date';
 import replaceCharacterCodesWithCharacters from '../../replace-character-codes-with-characters';
@@ -19,7 +20,7 @@ export const mapApplication = (application: Application) => {
     buyerLocation: buyer.country?.name ? buyer.country.name : DEFAULT.EMPTY,
     buyerName: replaceCharacterCodesWithCharacters(buyer.companyOrOrganisationName) || DEFAULT.EMPTY,
     value: mapValue(application),
-    submitted: submissionDate ? formatDate(new Date(submissionDate)) : BUTTONS.CONTINUE,
+    submitted: submissionDate ? formatDate(new Date(submissionDate), DATE_FORMAT.SHORT_MONTH) : BUTTONS.CONTINUE,
   };
 
   return mapped;

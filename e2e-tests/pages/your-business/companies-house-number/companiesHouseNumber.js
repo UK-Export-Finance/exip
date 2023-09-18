@@ -6,7 +6,6 @@ const {
 
 const companiesHouseNumber = {
   heading: () => cy.get('[data-cy="heading"]'),
-
   hint: () => cy.get(`[data-cy="${COMPANIES_HOUSE_NUMBER}-hint"]`),
   input: () => cy.get(`[data-cy="${COMPANIES_HOUSE_NUMBER}"]`),
   errorMessage: () => cy.get(`[data-cy="${COMPANIES_HOUSE_NUMBER}-error-message"]`),

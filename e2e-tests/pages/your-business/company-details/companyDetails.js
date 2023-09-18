@@ -18,7 +18,7 @@ const companyDetails = {
   differentCompaniesHouseNumber: () => cy.get('[data-cy="different-companies-house-number"]'),
 
   yourBusinessHeading: () => cy.get(`[data-cy="${YOUR_BUSINESS}-heading`),
-  yourBusinessSummaryList: () => cy.get(`[data-cy="${SEARCH}-summary-list`),
+  companiesHouseSummaryList: () => cy.get(`[data-cy="${SEARCH}-summary-list`),
 
   [TRADING_NAME]: {
     label: () => cy.get(`[data-cy="${TRADING_NAME}-legend"]`),

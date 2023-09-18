@@ -7,11 +7,12 @@ const EXPORTER_BUSINESS = {
     COMPANY_ADDRESS: 'registeredOfficeAddress',
     COMPANY_NUMBER: 'companyNumber',
     COMPANY_INCORPORATED: 'dateOfCreation',
+    SIC_CODE: 'sicCode',
     COMPANY_SIC: 'sicCodes',
+    OLD_SIC_CODES: 'oldSicCodes',
+    INDUSTRY_SECTOR_NAME: 'industrySectorName',
     INDUSTRY_SECTOR_NAMES: 'industrySectorNames',
     FINANCIAL_YEAR_END_DATE: 'financialYearEndDate',
-    SIC_CODE: 'sicCode',
-    INDUSTRY_SECTOR_NAME: 'industrySectorName',
     REGISTED_OFFICE_ADDRESS: {
       ADDRESS_LINE_1: 'addressLine1',
       ADDRESS_LINE_2: 'addressLine2',
@@ -30,6 +31,7 @@ const EXPORTER_BUSINESS = {
     NAME: 'name',
   },
   YOUR_COMPANY: {
+    ADDRESS: 'address',
     YOUR_BUSINESS: 'yourBusiness',
     TRADING_ADDRESS: 'hasDifferentTradingAddress',
     TRADING_NAME: 'hasDifferentTradingName',
