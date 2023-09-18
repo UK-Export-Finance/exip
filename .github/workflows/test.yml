@@ -168,7 +168,8 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: true
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
       # Single dimension matrix
       matrix:
         spec:
