@@ -3,7 +3,7 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { objectHasProperty } from '../../../helpers/object';
 import { isPopulatedArray } from '../../../helpers/array';
-import { mapCisCountries } from '../../../helpers/mappings/map-cis-countries';
+import mapCountries from '../../../helpers/mappings/map-countries';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../helpers/construct-payload';
@@ -66,7 +66,7 @@ export const get = async (req: Request, res: Response) => {
   }
 
   try {
-    const countries = await api.external.getCountries();
+    const countries = await api.keystone.APIM.getCisCountries();
 
     if (!isPopulatedArray(countries)) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
@@ -82,9 +82,9 @@ export const get = async (req: Request, res: Response) => {
     let mappedCountries;
 
     if (countryValue) {
-      mappedCountries = mapCisCountries(countries, countryValue.isoCode);
+      mappedCountries = mapCountries(countries, countryValue.isoCode);
     } else {
-      mappedCountries = mapCisCountries(countries);
+      mappedCountries = mapCountries(countries);
     }
 
     return res.render(TEMPLATE, {
@@ -103,13 +103,13 @@ export const get = async (req: Request, res: Response) => {
 
 export const post = async (req: Request, res: Response) => {
   try {
-    const countries = await api.external.getCountries();
+    const countries = await api.keystone.APIM.getCisCountries();
 
     if (!isPopulatedArray(countries)) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const mappedCountries = mapCisCountries(countries);
+    const mappedCountries = mapCountries(countries);
 
     const payload = constructPayload(req.body, [FIELD_ID]);
 
@@ -127,7 +127,7 @@ export const post = async (req: Request, res: Response) => {
 
     const submittedCountryName = payload[FIELD_ID];
 
-    const country = getCountryByName(mappedCountries, submittedCountryName);
+    const country = getCountryByName(countries, submittedCountryName);
 
     if (!country) {
       return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);

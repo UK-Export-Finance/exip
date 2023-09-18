@@ -1,5 +1,9 @@
 import { isCoverQuoteAvailable, canGetAQuoteOnline, canGetAQuoteByEmail, cannotGetAQuote, canApplyOnline, canApplyOffline, cannotApply } from '.';
-import { API } from '../../constants';
+import { EXTERNAL_API_DEFINITIONS } from '../../constants';
+
+const {
+  CIS: { SHORT_TERM_COVER_AVAILABLE },
+} = EXTERNAL_API_DEFINITIONS;
 
 describe('server/helpers/country-support', () => {
   const mockCountryBase = {
@@ -11,33 +15,33 @@ describe('server/helpers/country-support', () => {
   };
 
   describe('isCoverQuoteAvailable', () => {
-    describe(`when the shortTermCover is ${API.CIS.SHORT_TERM_COVER_AVAILABLE.YES}`, () => {
+    describe(`when the shortTermCover is ${SHORT_TERM_COVER_AVAILABLE.YES}`, () => {
       it('should return true', () => {
-        const result = isCoverQuoteAvailable(API.CIS.SHORT_TERM_COVER_AVAILABLE.YES);
+        const result = isCoverQuoteAvailable(SHORT_TERM_COVER_AVAILABLE.YES);
 
         expect(result).toEqual(true);
       });
     });
 
-    describe(`when the shortTermCover is ${API.CIS.SHORT_TERM_COVER_AVAILABLE.ILC}`, () => {
+    describe(`when the shortTermCover is ${SHORT_TERM_COVER_AVAILABLE.ILC}`, () => {
       it('should return true', () => {
-        const result = isCoverQuoteAvailable(API.CIS.SHORT_TERM_COVER_AVAILABLE.ILC);
+        const result = isCoverQuoteAvailable(SHORT_TERM_COVER_AVAILABLE.ILC);
 
         expect(result).toEqual(true);
       });
     });
 
-    describe(`when the shortTermCover is ${API.CIS.SHORT_TERM_COVER_AVAILABLE.CILC}`, () => {
+    describe(`when the shortTermCover is ${SHORT_TERM_COVER_AVAILABLE.CILC}`, () => {
       it('should return true', () => {
-        const result = isCoverQuoteAvailable(API.CIS.SHORT_TERM_COVER_AVAILABLE.CILC);
+        const result = isCoverQuoteAvailable(SHORT_TERM_COVER_AVAILABLE.CILC);
 
         expect(result).toEqual(true);
       });
     });
 
-    describe(`when the shortTermCover is ${API.CIS.SHORT_TERM_COVER_AVAILABLE.REFER}`, () => {
+    describe(`when the shortTermCover is ${SHORT_TERM_COVER_AVAILABLE.REFER}`, () => {
       it('should return true', () => {
-        const result = isCoverQuoteAvailable(API.CIS.SHORT_TERM_COVER_AVAILABLE.REFER);
+        const result = isCoverQuoteAvailable(SHORT_TERM_COVER_AVAILABLE.REFER);
 
         expect(result).toEqual(true);
       });
@@ -55,7 +59,7 @@ describe('server/helpers/country-support', () => {
       it('should return true', () => {
         const mockCountry = {
           ...mockCountryBase,
-          shortTermCover: API.CIS.SHORT_TERM_COVER_AVAILABLE.YES,
+          shortTermCover: SHORT_TERM_COVER_AVAILABLE.YES,
           nbiIssueAvailable: true,
         };
 
@@ -68,7 +72,7 @@ describe('server/helpers/country-support', () => {
     it('should return false', () => {
       const mockCountry = {
         ...mockCountryBase,
-        shortTermCover: API.CIS.SHORT_TERM_COVER_AVAILABLE.NO,
+        shortTermCover: SHORT_TERM_COVER_AVAILABLE.NO,
         nbiIssueAvailable: true,
       };
 
@@ -83,7 +87,7 @@ describe('server/helpers/country-support', () => {
       it('should return true', () => {
         const mockCountry = {
           ...mockCountryBase,
-          shortTermCover: API.CIS.SHORT_TERM_COVER_AVAILABLE.YES,
+          shortTermCover: SHORT_TERM_COVER_AVAILABLE.YES,
           nbiIssueAvailable: false,
         };
 
@@ -96,7 +100,7 @@ describe('server/helpers/country-support', () => {
     it('should return false', () => {
       const mockCountry = {
         ...mockCountryBase,
-        shortTermCover: API.CIS.SHORT_TERM_COVER_AVAILABLE.YES,
+        shortTermCover: SHORT_TERM_COVER_AVAILABLE.YES,
         nbiIssueAvailable: true,
       };
 
@@ -111,7 +115,7 @@ describe('server/helpers/country-support', () => {
       it('should return true', () => {
         const mockCountry = {
           ...mockCountryBase,
-          shortTermCover: API.CIS.SHORT_TERM_COVER_AVAILABLE.NO,
+          shortTermCover: SHORT_TERM_COVER_AVAILABLE.NO,
           nbiIssueAvailable: false,
         };
 
@@ -124,7 +128,7 @@ describe('server/helpers/country-support', () => {
     it('should return false', () => {
       const mockCountry = {
         ...mockCountryBase,
-        shortTermCover: API.CIS.SHORT_TERM_COVER_AVAILABLE.YES,
+        shortTermCover: SHORT_TERM_COVER_AVAILABLE.YES,
         nbiIssueAvailable: true,
       };
 
@@ -135,11 +139,11 @@ describe('server/helpers/country-support', () => {
   });
 
   describe('canApplyOnline', () => {
-    describe(`when the shortTermCover is ${API.CIS.SHORT_TERM_COVER_AVAILABLE.YES}`, () => {
+    describe(`when the shortTermCover is ${SHORT_TERM_COVER_AVAILABLE.YES}`, () => {
       it('should return true', () => {
         const mockCountry = {
           ...mockCountryBase,
-          shortTermCover: API.CIS.SHORT_TERM_COVER_AVAILABLE.YES,
+          shortTermCover: SHORT_TERM_COVER_AVAILABLE.YES,
         };
 
         const result = canApplyOnline(mockCountry);
@@ -161,11 +165,11 @@ describe('server/helpers/country-support', () => {
   });
 
   describe('canApplyOffline', () => {
-    describe(`when the shortTermCover is ${API.CIS.SHORT_TERM_COVER_AVAILABLE.ILC}`, () => {
+    describe(`when the shortTermCover is ${SHORT_TERM_COVER_AVAILABLE.ILC}`, () => {
       it('should return true', () => {
         const mockCountry = {
           ...mockCountryBase,
-          shortTermCover: API.CIS.SHORT_TERM_COVER_AVAILABLE.ILC,
+          shortTermCover: SHORT_TERM_COVER_AVAILABLE.ILC,
         };
 
         const result = canApplyOffline(mockCountry);
@@ -174,11 +178,11 @@ describe('server/helpers/country-support', () => {
       });
     });
 
-    describe(`when the shortTermCover is ${API.CIS.SHORT_TERM_COVER_AVAILABLE.CILC}`, () => {
+    describe(`when the shortTermCover is ${SHORT_TERM_COVER_AVAILABLE.CILC}`, () => {
       it('should return true', () => {
         const mockCountry = {
           ...mockCountryBase,
-          shortTermCover: API.CIS.SHORT_TERM_COVER_AVAILABLE.CILC,
+          shortTermCover: SHORT_TERM_COVER_AVAILABLE.CILC,
         };
 
         const result = canApplyOffline(mockCountry);
@@ -187,11 +191,11 @@ describe('server/helpers/country-support', () => {
       });
     });
 
-    describe(`when the shortTermCover is ${API.CIS.SHORT_TERM_COVER_AVAILABLE.REFER}`, () => {
+    describe(`when the shortTermCover is ${SHORT_TERM_COVER_AVAILABLE.REFER}`, () => {
       it('should return true', () => {
         const mockCountry = {
           ...mockCountryBase,
-          shortTermCover: API.CIS.SHORT_TERM_COVER_AVAILABLE.REFER,
+          shortTermCover: SHORT_TERM_COVER_AVAILABLE.REFER,
         };
 
         const result = canApplyOffline(mockCountry);
@@ -230,7 +234,7 @@ describe('server/helpers/country-support', () => {
       it('should return false', () => {
         const mockCountry = {
           ...mockCountryBase,
-          shortTermCover: API.CIS.SHORT_TERM_COVER_AVAILABLE.YES,
+          shortTermCover: SHORT_TERM_COVER_AVAILABLE.YES,
         };
 
         const result = cannotApply(mockCountry);
@@ -243,7 +247,7 @@ describe('server/helpers/country-support', () => {
       it('should return false', () => {
         const mockCountry = {
           ...mockCountryBase,
-          shortTermCover: API.CIS.SHORT_TERM_COVER_AVAILABLE.ILC,
+          shortTermCover: SHORT_TERM_COVER_AVAILABLE.ILC,
         };
 
         const result = cannotApply(mockCountry);

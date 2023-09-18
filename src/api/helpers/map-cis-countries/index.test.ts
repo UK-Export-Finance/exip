@@ -1,9 +1,11 @@
-import { mapRiskCategory, mapNbiIssueAvailable, filterCisCountries, mapCisCountry, mapCisCountries } from './map-cis-countries';
-import { API } from '../../constants';
+import mapCisCountries, { mapRiskCategory, mapNbiIssueAvailable, filterCisCountries, mapCisCountry } from '.';
+import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../constants';
 import sortArrayAlphabetically from '../sort-array-alphabetically';
-import { CisCountry, Country } from '../../../types';
+import { CisCountry, Country } from '../../types';
 
-describe('server/helpers/mappings/map-cis-countries', () => {
+const { CIS } = EXTERNAL_API_DEFINITIONS;
+
+describe('helpers/map-cis-countries', () => {
   const mockCountries = [
     {
       marketName: 'Abu Dhabi',
@@ -23,21 +25,21 @@ describe('server/helpers/mappings/map-cis-countries', () => {
   ] as Array<CisCountry>;
 
   describe('mapRiskCategory', () => {
-    describe(`when the risk is '${API.CIS.RISK.STANDARD}'`, () => {
+    describe(`when the risk is '${CIS.RISK.STANDARD}'`, () => {
       it('should return simplified string', () => {
-        const str = API.CIS.RISK.STANDARD;
+        const str = CIS.RISK.STANDARD;
 
         const result = mapRiskCategory(str);
 
-        const expected = API.MAPPINGS.RISK.STANDARD;
+        const expected = EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD;
 
         expect(result).toEqual(expected);
       });
     });
 
-    describe(`when the risk is '${API.CIS.RISK.HIGH}'`, () => {
+    describe(`when the risk is '${CIS.RISK.HIGH}'`, () => {
       it('should return the string', () => {
-        const str = API.CIS.RISK.HIGH;
+        const str = CIS.RISK.HIGH;
 
         const result = mapRiskCategory(str);
 
@@ -45,9 +47,9 @@ describe('server/helpers/mappings/map-cis-countries', () => {
       });
     });
 
-    describe(`when the risk is '${API.CIS.RISK.VERY_HIGH}'`, () => {
+    describe(`when the risk is '${CIS.RISK.VERY_HIGH}'`, () => {
       it('should return the string', () => {
-        const str = API.CIS.RISK.VERY_HIGH;
+        const str = CIS.RISK.VERY_HIGH;
 
         const result = mapRiskCategory(str);
 
@@ -65,16 +67,16 @@ describe('server/helpers/mappings/map-cis-countries', () => {
   });
 
   describe('mapNbiIssueAvailable', () => {
-    describe(`when the NBI issue field is ${API.CIS.NBI_ISSUE_AVAILABLE.YES}`, () => {
+    describe(`when the NBI issue field is ${CIS.NBI_ISSUE_AVAILABLE.YES}`, () => {
       it('should return true', () => {
-        const result = mapNbiIssueAvailable(API.CIS.NBI_ISSUE_AVAILABLE.YES);
+        const result = mapNbiIssueAvailable(CIS.NBI_ISSUE_AVAILABLE.YES);
 
         expect(result).toEqual(true);
       });
     });
 
     it('should return false', () => {
-      const result = mapNbiIssueAvailable(API.CIS.NBI_ISSUE_AVAILABLE.NO);
+      const result = mapNbiIssueAvailable(CIS.NBI_ISSUE_AVAILABLE.NO);
 
       expect(result).toEqual(false);
     });
@@ -117,7 +119,6 @@ describe('server/helpers/mappings/map-cis-countries', () => {
       const expected = {
         name: mockCountries[0].marketName,
         isoCode: mockCountries[0].isoCode,
-        value: mockCountries[0].isoCode,
         riskCategory: mapRiskCategory(mockCountries[0].ESRAClassificationDesc),
         shortTermCover: mockCountries[0].shortTermCoverAvailabilityDesc,
         nbiIssueAvailable: mapNbiIssueAvailable(mockCountries[0].NBIIssue),
@@ -135,11 +136,9 @@ describe('server/helpers/mappings/map-cis-countries', () => {
         const expected = {
           name: mockCountries[0].marketName,
           isoCode: mockCountries[0].isoCode,
-          value: mockCountries[0].isoCode,
           riskCategory: mapRiskCategory(mockCountries[0].ESRAClassificationDesc),
           shortTermCover: mockCountries[0].shortTermCoverAvailabilityDesc,
           nbiIssueAvailable: mapNbiIssueAvailable(mockCountries[0].NBIIssue),
-          selected: true,
         } as Country;
 
         expect(result).toEqual(expected);

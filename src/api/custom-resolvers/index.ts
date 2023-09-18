@@ -17,7 +17,7 @@ import {
   createFeedbackAndSendEmail,
   verifyAccountReactivationToken,
 } from './mutations';
-import { getCompaniesHouseInformation, getAccountPasswordResetToken, verifyAccountPasswordResetToken } from './queries';
+import { getAccountPasswordResetToken, getApimCisCountries, getCompaniesHouseInformation, verifyAccountPasswordResetToken } from './queries';
 
 /**
  * customResolvers
@@ -47,8 +47,9 @@ const customResolvers = {
     verifyAccountReactivationToken,
   },
   Query: {
-    getCompaniesHouseInformation,
     getAccountPasswordResetToken,
+    getApimCisCountries,
+    getCompaniesHouseInformation,
     verifyAccountPasswordResetToken,
   },
 };

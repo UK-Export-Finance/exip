@@ -1,0 +1,28 @@
+import APIM from '../../../integrations/APIM';
+import mapCisCountries from '../../../helpers/map-cis-countries';
+
+/**
+ * getApimCisCountries
+ * Get countries from APIM
+ * @param {Object} GraphQL root variables
+ * @returns {Object} APIM response data
+ */
+const getApimCisCountries = async () => {
+  try {
+    console.info('Getting and mapping CIS countries from APIM');
+
+    const response = await APIM.getCisCountries();
+
+    if (response.data) {
+      const mapped = mapCisCountries(response.data);
+
+      return mapped;
+    }
+  } catch (err) {
+    console.error('Error Getting and mapping CIS countries from APIM %O', err);
+
+    throw new Error(`Getting and mapping CIS countries from APIM ${err}`);
+  }
+};
+
+export default getApimCisCountries;

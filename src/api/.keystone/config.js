@@ -367,6 +367,45 @@ var APPLICATION = {
   }
 };
 
+// constants/external-apis.ts
+var EXTERNAL_API_DEFINITIONS = {
+  CIS: {
+    RISK: {
+      VERY_HIGH: "Very High",
+      HIGH: "High",
+      STANDARD: "Standard Risk"
+    },
+    SHORT_TERM_COVER_AVAILABLE: {
+      YES: "Yes",
+      NO: "No",
+      ILC: "ILC Only",
+      CILC: "CILC Only",
+      REFER: "Refer"
+    },
+    NBI_ISSUE_AVAILABLE: {
+      YES: "Y",
+      NO: "N"
+    },
+    INVALID_COUNTRIES: ["EC Market n/k", "Non EC Market n/k", "Non UK", "Third Country"]
+  }
+};
+var EXTERNAL_API_MAPPINGS = {
+  CIS: {
+    RISK: {
+      VERY_HIGH: "Very High",
+      HIGH: "High",
+      STANDARD: "Standard"
+    }
+  }
+};
+var EXTERNAL_API_ENDPOINTS = {
+  MULESOFT_MDM_EA: {
+    CURRENCY: "/currencies",
+    INDUSTRY_SECTORS: "/sector-industries",
+    MARKETS: "/markets"
+  }
+};
+
 // constants/field-values/index.ts
 var { POLICY_TYPE, POLICY_AND_EXPORT } = APPLICATION;
 var FIELD_VALUES = {
@@ -466,13 +505,6 @@ var XLSX_CONFIG = {
 // constants/index.ts
 import_dotenv.default.config();
 var GBP_CURRENCY_CODE = "GBP";
-var EXTERNAL_API_ENDPOINTS = {
-  MULESOFT_MDM_EA: {
-    CURRENCY: "/currencies",
-    INDUSTRY_SECTORS: "/sector-industries",
-    MARKETS: "/markets"
-  }
-};
 var DATE_24_HOURS_FROM_NOW = () => {
   const now = /* @__PURE__ */ new Date();
   const day = now.getDate();
@@ -1578,6 +1610,11 @@ var typeDefs = `
     referenceNumber: Int
   }
 
+  type Country {
+    isoCode: String!
+    marketName: String
+  }
+
   type Mutation {
     """ create an account """
     createAnAccount(
@@ -1705,6 +1742,9 @@ var typeDefs = `
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
+
+    """ get CIS countries from APIM """
+    getApimCisCountries: [Country]
   }
 `;
 var type_defs_default = typeDefs;
@@ -4345,6 +4385,131 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
 };
 var verify_account_reactivation_token_default = verifyAccountReactivationToken;
 
+// custom-resolvers/queries/get-account-password-reset-token/index.ts
+var getAccountPasswordResetToken = async (root, variables, context) => {
+  console.info("Getting account password reset token");
+  try {
+    const { email } = variables;
+    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    if (!account) {
+      console.info("Unable to get account password reset token - account does not exist");
+      return { success: false };
+    }
+    if (account.passwordResetHash) {
+      return {
+        success: true,
+        token: account.passwordResetHash
+      };
+    }
+    console.info("Unable to get account password reset token - reset hash does not exist");
+    return { success: false };
+  } catch (err) {
+    console.error("Error getting account password reset token %O", err);
+    throw new Error(`Getting account password reset token ${err}`);
+  }
+};
+var get_account_password_reset_token_default = getAccountPasswordResetToken;
+
+// integrations/APIM/index.ts
+var import_axios = __toESM(require("axios"));
+var import_dotenv5 = __toESM(require("dotenv"));
+import_dotenv5.default.config();
+var { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
+var username = String(process.env.COMPANIES_HOUSE_API_KEY);
+var url = `${process.env.APIM_MDM_URL}${MULESOFT_MDM_EA.MARKETS}`;
+var APIM = {
+  getCisCountries: async () => {
+    try {
+      console.info("Calling APIM - CIS countries");
+      const response = await (0, import_axios.default)({
+        method: "get",
+        url,
+        auth: { username, password: "" },
+        headers: {
+          "Content-Type": "application/json",
+          [String(process.env.APIM_MDM_KEY)]: process.env.APIM_MDM_VALUE
+        },
+        validateStatus(status) {
+          const acceptableStatus = [200];
+          return acceptableStatus.includes(status);
+        }
+      });
+      if (response.data && response.status === 200) {
+        return {
+          success: true,
+          data: response.data
+        };
+      }
+      return {
+        success: false
+      };
+    } catch (err) {
+      console.error("Error calling APIM - CIS countries %O", err);
+      throw new Error(`Calling APIM - CIS countries ${err}`);
+    }
+  }
+};
+var APIM_default = APIM;
+
+// helpers/sort-array-alphabetically/index.ts
+var sortArrayAlphabetically = (arr, field) => arr.sort((a, b) => a[field].localeCompare(b[field]));
+var sort_array_alphabetically_default = sortArrayAlphabetically;
+
+// helpers/map-cis-countries/index.ts
+var { CIS } = EXTERNAL_API_DEFINITIONS;
+var mapRiskCategory = (str) => {
+  if (str === CIS.RISK.STANDARD) {
+    return EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD;
+  }
+  if (str === CIS.RISK.HIGH) {
+    return str;
+  }
+  if (str === CIS.RISK.VERY_HIGH) {
+    return str;
+  }
+  return null;
+};
+var mapNbiIssueAvailable = (str) => {
+  if (str === CIS.NBI_ISSUE_AVAILABLE.YES) {
+    return true;
+  }
+  return false;
+};
+var filterCisCountries = (countries) => countries.filter((country) => !CIS.INVALID_COUNTRIES.includes(country.marketName));
+var mapCisCountry = (country) => {
+  const mapped = {
+    name: country.marketName,
+    isoCode: country.isoCode,
+    riskCategory: mapRiskCategory(country.ESRAClassificationDesc),
+    shortTermCover: country.shortTermCoverAvailabilityDesc,
+    nbiIssueAvailable: mapNbiIssueAvailable(country.NBIIssue)
+  };
+  return mapped;
+};
+var mapCisCountries = (countries) => {
+  const filteredCountries = filterCisCountries(countries);
+  const mapped = filteredCountries.map((country) => mapCisCountry(country));
+  const sorted = sort_array_alphabetically_default(mapped, "name");
+  return sorted;
+};
+var map_cis_countries_default = mapCisCountries;
+
+// custom-resolvers/queries/get-APIM-CIS-countries/index.ts
+var getApimCisCountries = async () => {
+  try {
+    console.info("Getting and mapping CIS countries from APIM");
+    const response = await APIM_default.getCisCountries();
+    if (response.data) {
+      const mapped = map_cis_countries_default(response.data);
+      return mapped;
+    }
+  } catch (err) {
+    console.error("Error Getting and mapping CIS countries from APIM %O", err);
+    throw new Error(`Getting and mapping CIS countries from APIM ${err}`);
+  }
+};
+var get_APIM_CIS_countries_default = getApimCisCountries;
+
 // helpers/create-full-timestamp-from-day-month/index.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
   if (day && month) {
@@ -4395,11 +4560,11 @@ var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => {
 };
 
 // integrations/industry-sector/index.ts
-var import_axios = __toESM(require("axios"));
-var import_dotenv5 = __toESM(require("dotenv"));
-import_dotenv5.default.config();
+var import_axios2 = __toESM(require("axios"));
+var import_dotenv6 = __toESM(require("dotenv"));
+import_dotenv6.default.config();
 var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
-var { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
+var { MULESOFT_MDM_EA: MULESOFT_MDM_EA2 } = EXTERNAL_API_ENDPOINTS;
 var headers = {
   "Content-Type": "application/json",
   [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
@@ -4408,9 +4573,9 @@ var getIndustrySectorNames = {
   get: async () => {
     try {
       console.info("Calling industry sector API");
-      const response = await (0, import_axios.default)({
+      const response = await (0, import_axios2.default)({
         method: "get",
-        url: `${APIM_MDM_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`,
+        url: `${APIM_MDM_URL}${MULESOFT_MDM_EA2.INDUSTRY_SECTORS}`,
         headers,
         validateStatus(status) {
           const acceptableStatus = [200, 404];
@@ -4438,18 +4603,18 @@ var getIndustrySectorNames = {
 var industry_sector_default = getIndustrySectorNames;
 
 // integrations/companies-house/index.ts
-var import_axios2 = __toESM(require("axios"));
-var import_dotenv6 = __toESM(require("dotenv"));
-import_dotenv6.default.config();
-var username = String(process.env.COMPANIES_HOUSE_API_KEY);
+var import_axios3 = __toESM(require("axios"));
+var import_dotenv7 = __toESM(require("dotenv"));
+import_dotenv7.default.config();
+var username2 = String(process.env.COMPANIES_HOUSE_API_KEY);
 var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
 var companiesHouse = {
   get: async (companyNumber) => {
     try {
-      const response = await (0, import_axios2.default)({
+      const response = await (0, import_axios3.default)({
         method: "get",
         url: `${companiesHouseURL}/company/${companyNumber}`,
-        auth: { username, password: "" },
+        auth: { username: username2, password: "" },
         validateStatus(status) {
           const acceptableStatus = [200, 404];
           return acceptableStatus.includes(status);
@@ -4505,31 +4670,6 @@ var getCompaniesHouseInformation = async (root, variables) => {
   }
 };
 var get_companies_house_information_default = getCompaniesHouseInformation;
-
-// custom-resolvers/queries/get-account-password-reset-token/index.ts
-var getAccountPasswordResetToken = async (root, variables, context) => {
-  console.info("Getting account password reset token");
-  try {
-    const { email } = variables;
-    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
-    if (!account) {
-      console.info("Unable to get account password reset token - account does not exist");
-      return { success: false };
-    }
-    if (account.passwordResetHash) {
-      return {
-        success: true,
-        token: account.passwordResetHash
-      };
-    }
-    console.info("Unable to get account password reset token - reset hash does not exist");
-    return { success: false };
-  } catch (err) {
-    console.error("Error getting account password reset token %O", err);
-    throw new Error(`Getting account password reset token ${err}`);
-  }
-};
-var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
 // custom-resolvers/queries/verify-account-password-reset-token/index.ts
 var import_date_fns10 = require("date-fns");
@@ -4591,8 +4731,9 @@ var customResolvers = {
     verifyAccountReactivationToken: verify_account_reactivation_token_default
   },
   Query: {
-    getCompaniesHouseInformation: get_companies_house_information_default,
     getAccountPasswordResetToken: get_account_password_reset_token_default,
+    getApimCisCountries: get_APIM_CIS_countries_default,
+    getCompaniesHouseInformation: get_companies_house_information_default,
     verifyAccountPasswordResetToken: verify_account_password_reset_token_default
   }
 };

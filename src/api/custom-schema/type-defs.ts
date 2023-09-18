@@ -190,6 +190,11 @@ const typeDefs = `
     referenceNumber: Int
   }
 
+  type Country {
+    isoCode: String!
+    marketName: String
+  }
+
   type Mutation {
     """ create an account """
     createAnAccount(
@@ -317,6 +322,9 @@ const typeDefs = `
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
+
+    """ get CIS countries from APIM """
+    getApimCisCountries: [Country]
   }
 `;
 

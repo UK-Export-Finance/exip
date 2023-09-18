@@ -1,20 +1,24 @@
 import { Country } from '../../../types';
-import { API } from '../../constants';
+import { EXTERNAL_API_DEFINITIONS } from '../../constants';
+
+const {
+  CIS: { SHORT_TERM_COVER_AVAILABLE },
+} = EXTERNAL_API_DEFINITIONS;
 
 export const isCoverQuoteAvailable = (str: string): boolean => {
-  if (str === API.CIS.SHORT_TERM_COVER_AVAILABLE.YES) {
+  if (str === SHORT_TERM_COVER_AVAILABLE.YES) {
     return true;
   }
 
-  if (str === API.CIS.SHORT_TERM_COVER_AVAILABLE.ILC) {
+  if (str === SHORT_TERM_COVER_AVAILABLE.ILC) {
     return true;
   }
 
-  if (str === API.CIS.SHORT_TERM_COVER_AVAILABLE.CILC) {
+  if (str === SHORT_TERM_COVER_AVAILABLE.CILC) {
     return true;
   }
 
-  if (str === API.CIS.SHORT_TERM_COVER_AVAILABLE.REFER) {
+  if (str === SHORT_TERM_COVER_AVAILABLE.REFER) {
     return true;
   }
 
@@ -70,7 +74,7 @@ export const cannotGetAQuote = (c: Country) => {
 };
 
 export const canApplyOnline = (c: Country) => {
-  if (c.shortTermCover === API.CIS.SHORT_TERM_COVER_AVAILABLE.YES) {
+  if (c.shortTermCover === SHORT_TERM_COVER_AVAILABLE.YES) {
     return true;
   }
 
@@ -78,15 +82,15 @@ export const canApplyOnline = (c: Country) => {
 };
 
 export const canApplyOffline = (c: Country) => {
-  if (c.shortTermCover === API.CIS.SHORT_TERM_COVER_AVAILABLE.ILC) {
+  if (c.shortTermCover === SHORT_TERM_COVER_AVAILABLE.ILC) {
     return true;
   }
 
-  if (c.shortTermCover === API.CIS.SHORT_TERM_COVER_AVAILABLE.CILC) {
+  if (c.shortTermCover === SHORT_TERM_COVER_AVAILABLE.CILC) {
     return true;
   }
 
-  if (c.shortTermCover === API.CIS.SHORT_TERM_COVER_AVAILABLE.REFER) {
+  if (c.shortTermCover === SHORT_TERM_COVER_AVAILABLE.REFER) {
     return true;
   }
 

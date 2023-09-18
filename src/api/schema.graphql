@@ -1286,8 +1286,9 @@ input CountryRelateToOneForCreateInput {
 
 type Country {
   id: ID!
-  isoCode: String
+  isoCode: String!
   name: String
+  marketName: String
 }
 
 input CountryWhereUniqueInput {
@@ -2132,6 +2133,9 @@ type Query {
 
   """ get companies house information """
   getCompaniesHouseInformation(companiesHouseNumber: String!): CompaniesHouseResponse
+
+  """ get CIS countries from APIM """
+  getApimCisCountries: [Country]
 }
 
 union AuthenticatedItem = User
