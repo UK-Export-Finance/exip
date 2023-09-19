@@ -6,7 +6,7 @@ import mockCisCountries from '../../test-mocks/mock-CIS-countries';
 
 const { CIS } = EXTERNAL_API_DEFINITIONS;
 
-describe('helpers/map-cis-countries', () => {
+describe('helpers/map-CIS-countries', () => {
   const { 1: initialMockCountry } = mockCisCountries;
 
   const mockCountryBase = {

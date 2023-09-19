@@ -14,7 +14,7 @@ const validMockCountry = {
   nbiIssueAvailable: true,
 } as MappedCisCountry;
 
-describe('helpers/map-cis-countries/map-cis-country/can-get-a-quote-online', () => {
+describe('helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online', () => {
   describe('when a country has true riskCategory, shortTermCover and nbiIssueAvailable', () => {
     it('should return true', () => {
       const result = canGetAQuoteOnline(validMockCountry);

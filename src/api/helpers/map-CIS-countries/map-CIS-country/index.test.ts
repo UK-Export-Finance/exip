@@ -13,7 +13,7 @@ import { MappedCisCountry } from '../../../types';
 
 const { CIS } = EXTERNAL_API_DEFINITIONS;
 
-describe('helpers/map-cis-countries/map-cis-country', () => {
+describe('helpers/map-CIS-countries/map-CIS-country', () => {
   const { 1: initialMockCountry } = mockCisCountries;
 
   const mockCountryBase = {

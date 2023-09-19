@@ -3,7 +3,7 @@ import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
 
 const { CIS } = EXTERNAL_API_DEFINITIONS;
 
-describe('helpers/map-cis-countries/map-cis-country/can-apply-online', () => {
+describe('helpers/map-CIS-countries/map-CIS-country/can-apply-online', () => {
   describe(`when shortTermCoverAvailabilityDesc is ${CIS.SHORT_TERM_COVER_AVAILABLE.YES}`, () => {
     it('should return true', () => {
       const result = canApplyOnline(CIS.SHORT_TERM_COVER_AVAILABLE.YES);
