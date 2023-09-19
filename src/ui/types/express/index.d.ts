@@ -24,12 +24,12 @@ interface RequestHeaders {
 }
 
 interface SRI {
-  GOVUK?: string;
-  MOJ?: string;
-  FORM?: string;
-  COOKIES?: string;
-  ACCESSIBILITY?: string;
-  GA?: string;
+  GOVUK: string;
+  MOJ: string;
+  FORM: string;
+  COOKIES: string;
+  ACCESSIBILITY: string;
+  GA: string;
 }
 
 interface MetaData {

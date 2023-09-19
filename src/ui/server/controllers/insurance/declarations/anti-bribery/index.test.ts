@@ -99,7 +99,7 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = { csrfToken: '1234', SRI: {}, meta: {} };
+        res.locals = mockRes().locals;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -189,7 +189,7 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = { csrfToken: '1234', SRI: {}, meta: {} };
+        res.locals = mockRes().locals;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

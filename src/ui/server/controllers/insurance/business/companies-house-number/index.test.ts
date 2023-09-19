@@ -112,7 +112,7 @@ describe('controllers/insurance/business/companies-house-number', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = { csrfToken: '1234', SRI: {}, meta: {} };
+        res.locals = mockRes().locals;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
@@ -231,7 +231,7 @@ describe('controllers/insurance/business/companies-house-number', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = { csrfToken: '1234', SRI: {}, meta: {} };
+        res.locals = mockRes().locals;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
@@ -273,7 +273,7 @@ describe('controllers/insurance/business/companies-house-number', () => {
 
       describe('when mapAndSave.companyDetails resolves false', () => {
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-          res.locals = { csrfToken: '1234', SRI: {}, meta: {} };
+          res.locals = mockRes().locals;
           mapAndSave.companyDetails = jest.fn(() => Promise.resolve(false));
 
           post(req, res);

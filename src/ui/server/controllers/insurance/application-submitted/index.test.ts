@@ -49,7 +49,7 @@ describe('controllers/insurance/application-submitted', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = { csrfToken: '1234', SRI: {}, meta: {} };
+        res.locals = mockRes().locals;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
@@ -62,9 +62,7 @@ describe('controllers/insurance/application-submitted', () => {
     describe(`when the application does not have a status of ${APPLICATION.STATUS.SUBMITTED}`, () => {
       beforeEach(() => {
         res.locals = {
-          csrfToken: '1234',
-          SRI: {},
-          meta: {},
+          ...res.locals,
           application: {
             ...mockApplication,
             status: APPLICATION.STATUS.IN_PROGRESS,

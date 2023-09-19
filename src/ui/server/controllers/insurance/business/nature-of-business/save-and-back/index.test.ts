@@ -84,7 +84,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
 
   describe('when there is no application', () => {
     beforeEach(() => {
-      res.locals = { csrfToken: '1234', SRI: {}, meta: {} };
+      res.locals = mockRes().locals;
     });
 
     it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
@@ -96,7 +96,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
 
   describe('when mapAndSave.natureOfBusiness fails', () => {
     beforeEach(() => {
-      res.locals = { csrfToken: '1234', SRI: {}, meta: {} };
+      res.locals = mockRes().locals;
       updateMapAndSave = jest.fn(() => Promise.reject());
       mapAndSave.natureOfBusiness = updateMapAndSave;
     });

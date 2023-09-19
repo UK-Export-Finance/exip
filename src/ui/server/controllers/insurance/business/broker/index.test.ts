@@ -130,7 +130,7 @@ describe('controllers/insurance/business/broker', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = { csrfToken: '1234', SRI: {}, meta: {} };
+        res.locals = mockRes().locals;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
@@ -214,7 +214,7 @@ describe('controllers/insurance/business/broker', () => {
 
     describe('when application does not exist', () => {
       beforeEach(() => {
-        res.locals = { csrfToken: '1234', SRI: {}, meta: {} };
+        res.locals = mockRes().locals;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {

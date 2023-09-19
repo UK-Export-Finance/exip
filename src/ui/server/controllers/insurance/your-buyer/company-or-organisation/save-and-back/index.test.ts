@@ -88,7 +88,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
 
   describe('when there is no application', () => {
     beforeEach(() => {
-      res.locals = { csrfToken: '1234', SRI: {}, meta: {} };
+      res.locals = mockRes().locals;
     });
 
     it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
@@ -100,7 +100,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
 
   describe('when mapAndSave.buyer returns false', () => {
     beforeEach(() => {
-      res.locals = { csrfToken: '1234', SRI: {}, meta: {} };
+      res.locals = mockRes().locals;
       updateMapAndSave = jest.fn(() => Promise.resolve(false));
       mapAndSave.yourBuyer = updateMapAndSave;
     });
@@ -114,7 +114,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
 
   describe('when mapAndSave.buyer fails', () => {
     beforeEach(() => {
-      res.locals = { csrfToken: '1234', SRI: {}, meta: {} };
+      res.locals = mockRes().locals;
       updateMapAndSave = jest.fn(() => Promise.reject());
       mapAndSave.yourBuyer = updateMapAndSave;
     });

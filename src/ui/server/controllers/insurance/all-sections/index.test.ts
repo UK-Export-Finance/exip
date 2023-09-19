@@ -58,7 +58,7 @@ describe('controllers/insurance/all-sections', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = { csrfToken: '1234', SRI: {}, meta: {} };
+        res.locals = mockRes().locals;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
