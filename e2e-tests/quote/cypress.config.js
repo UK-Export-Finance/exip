@@ -17,7 +17,7 @@ const cypressConfig = defineConfig({
   basicAuthSecret: 'test',
   chromeWebSecurity: false,
   retries: {
-    runModenMode: 2,
+    runMode: 2,
     openMode: 0,
   },
   e2e: {
