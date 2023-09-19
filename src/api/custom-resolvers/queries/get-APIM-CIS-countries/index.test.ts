@@ -1,6 +1,6 @@
 import getApimCisCountries from '.';
 import APIM from '../../../integrations/APIM';
-import mapCisCountries from '../../../helpers/map-cis-countries';
+import mapCisCountries from '../../../helpers/map-CIS-countries';
 import mockCisCountriesResponse from '../../../test-mocks/mock-CIS-countries-response';
 import mockCisCountries from '../../../test-mocks/mock-CIS-countries';
 

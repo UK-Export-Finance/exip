@@ -1,5 +1,5 @@
 import APIM from '../../../integrations/APIM';
-import mapCisCountries from '../../../helpers/map-cis-countries';
+import mapCisCountries from '../../../helpers/map-CIS-countries';
 
 /**
  * getApimCisCountries

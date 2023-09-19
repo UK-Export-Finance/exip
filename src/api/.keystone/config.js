@@ -4423,9 +4423,9 @@ var get_account_password_reset_token_default = getAccountPasswordResetToken;
 var import_axios = __toESM(require("axios"));
 var import_dotenv5 = __toESM(require("dotenv"));
 import_dotenv5.default.config();
+var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
 var { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
-var username = String(process.env.COMPANIES_HOUSE_API_KEY);
-var url = `${process.env.APIM_MDM_URL}${MULESOFT_MDM_EA.MARKETS}`;
+var url = `${APIM_MDM_URL}${MULESOFT_MDM_EA.MARKETS}`;
 var APIM = {
   getCisCountries: async () => {
     try {
@@ -4433,10 +4433,9 @@ var APIM = {
       const response = await (0, import_axios.default)({
         method: "get",
         url,
-        auth: { username, password: "" },
         headers: {
           "Content-Type": "application/json",
-          [String(process.env.APIM_MDM_KEY)]: process.env.APIM_MDM_VALUE
+          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
         },
         validateStatus(status) {
           const acceptableStatus = [200];
@@ -4460,11 +4459,7 @@ var APIM = {
 };
 var APIM_default = APIM;
 
-// helpers/sort-array-alphabetically/index.ts
-var sortArrayAlphabetically = (arr, field) => arr.sort((a, b) => a[field].localeCompare(b[field]));
-var sort_array_alphabetically_default = sortArrayAlphabetically;
-
-// helpers/map-cis-countries/index.ts
+// helpers/map-CIS-countries/map-CIS-country/map-risk-category/index.ts
 var { CIS } = EXTERNAL_API_DEFINITIONS;
 var mapRiskCategory = (str) => {
   if (str === CIS.RISK.STANDARD) {
@@ -4478,81 +4473,115 @@ var mapRiskCategory = (str) => {
   }
   return null;
 };
+var map_risk_category_default = mapRiskCategory;
+
+// helpers/map-CIS-countries/map-CIS-country/map-short-term-cover-available/index.ts
+var {
+  CIS: { SHORT_TERM_COVER_AVAILABLE }
+} = EXTERNAL_API_DEFINITIONS;
 var mapShortTermCoverAvailable = (str) => {
-  if (str === CIS.SHORT_TERM_COVER_AVAILABLE.YES) {
+  if (str === SHORT_TERM_COVER_AVAILABLE.YES) {
     return true;
   }
-  if (str === CIS.SHORT_TERM_COVER_AVAILABLE.ILC) {
+  if (str === SHORT_TERM_COVER_AVAILABLE.ILC) {
     return true;
   }
-  if (str === CIS.SHORT_TERM_COVER_AVAILABLE.CILC) {
+  if (str === SHORT_TERM_COVER_AVAILABLE.CILC) {
     return true;
   }
-  if (str === CIS.SHORT_TERM_COVER_AVAILABLE.REFER) {
+  if (str === SHORT_TERM_COVER_AVAILABLE.REFER) {
     return true;
   }
   return false;
 };
+var map_short_term_cover_available_default = mapShortTermCoverAvailable;
+
+// helpers/map-CIS-countries/map-CIS-country/map-NBI-issue-available/index.ts
+var { CIS: CIS2 } = EXTERNAL_API_DEFINITIONS;
 var mapNbiIssueAvailable = (str) => {
-  if (str === CIS.NBI_ISSUE_AVAILABLE.YES) {
+  if (str === CIS2.NBI_ISSUE_AVAILABLE.YES) {
     return true;
   }
   return false;
 };
+var map_NBI_issue_available_default = mapNbiIssueAvailable;
+
+// helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online/index.ts
 var canGetAQuoteOnline = (country) => {
   if (country.riskCategory && country.shortTermCover && country.nbiIssueAvailable) {
     return true;
   }
   return false;
 };
+var can_get_a_quote_online_default = canGetAQuoteOnline;
+
+// helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-by-email/index.ts
 var canGetAQuoteByEmail = (country) => {
   if (country.riskCategory && country.shortTermCover && !country.nbiIssueAvailable) {
     return true;
   }
   return false;
 };
+var can_get_a_quote_by_email_default = canGetAQuoteByEmail;
+
+// helpers/map-CIS-countries/map-CIS-country/cannot-get-a-quote/index.ts
 var cannotGetAQuote = (country) => {
   if (!country.riskCategory || !country.shortTermCover && !country.nbiIssueAvailable) {
     return true;
   }
   return false;
 };
+var cannot_get_a_quote_default = cannotGetAQuote;
+
+// helpers/map-CIS-countries/map-CIS-country/can-apply-offline/index.ts
+var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
 var canApplyOffline = (originalShortTermCover) => {
-  if (originalShortTermCover === CIS.SHORT_TERM_COVER_AVAILABLE.ILC) {
+  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.ILC) {
     return true;
   }
-  if (originalShortTermCover === CIS.SHORT_TERM_COVER_AVAILABLE.CILC) {
+  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.CILC) {
     return true;
   }
-  if (originalShortTermCover === CIS.SHORT_TERM_COVER_AVAILABLE.REFER) {
+  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.REFER) {
     return true;
   }
   return false;
 };
-var filterCisCountries = (countries) => countries.filter((country) => !CIS.INVALID_COUNTRIES.includes(country.marketName));
+var can_apply_offline_default = canApplyOffline;
+
+// helpers/map-CIS-countries/map-CIS-country/index.ts
 var mapCisCountry = (country) => {
   const mapped = {
     name: country.marketName,
     isoCode: country.isoCode,
-    riskCategory: mapRiskCategory(country.ESRAClassificationDesc),
-    shortTermCover: mapShortTermCoverAvailable(country.shortTermCoverAvailabilityDesc),
-    nbiIssueAvailable: mapNbiIssueAvailable(country.NBIIssue)
+    riskCategory: map_risk_category_default(country.ESRAClassificationDesc),
+    shortTermCover: map_short_term_cover_available_default(country.shortTermCoverAvailabilityDesc),
+    nbiIssueAvailable: map_NBI_issue_available_default(country.NBIIssue)
   };
-  mapped.canGetAQuoteOnline = canGetAQuoteOnline(mapped);
-  mapped.canGetAQuoteByEmail = canGetAQuoteByEmail(mapped);
-  mapped.cannotGetAQuote = cannotGetAQuote(mapped);
+  mapped.canGetAQuoteOnline = can_get_a_quote_online_default(mapped);
+  mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default(mapped);
+  mapped.cannotGetAQuote = cannot_get_a_quote_default(mapped);
   mapped.canApplyOnline = mapped.shortTermCover;
-  mapped.canApplyOffline = canApplyOffline(country.shortTermCoverAvailabilityDesc);
+  mapped.canApplyOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
   mapped.cannotApply = !mapped.canApplyOnline && !mapped.canApplyOffline;
   return mapped;
 };
+var map_CIS_country_default = mapCisCountry;
+
+// helpers/sort-array-alphabetically/index.ts
+var sortArrayAlphabetically = (arr, field) => arr.sort((a, b) => a[field].localeCompare(b[field]));
+var sort_array_alphabetically_default = sortArrayAlphabetically;
+
+// helpers/map-CIS-countries/index.ts
+var { CIS: CIS4 } = EXTERNAL_API_DEFINITIONS;
+var filterCisCountries = (countries) => countries.filter((country) => !CIS4.INVALID_COUNTRIES.includes(country.marketName));
 var mapCisCountries = (countries) => {
   const filteredCountries = filterCisCountries(countries);
-  const mapped = filteredCountries.map((country) => mapCisCountry(country));
+  const mapped = filteredCountries.map((country) => map_CIS_country_default(country));
   const sorted = sort_array_alphabetically_default(mapped, "name");
   return sorted;
 };
-var map_cis_countries_default = mapCisCountries;
+var map_CIS_countries_default = mapCisCountries;
 
 // custom-resolvers/queries/get-APIM-CIS-countries/index.ts
 var getApimCisCountries = async () => {
@@ -4560,9 +4589,10 @@ var getApimCisCountries = async () => {
     console.info("Getting and mapping CIS countries from APIM");
     const response = await APIM_default.getCisCountries();
     if (response.data) {
-      const mapped = map_cis_countries_default(response.data);
+      const mapped = map_CIS_countries_default(response.data);
       return mapped;
     }
+    return { success: false };
   } catch (err) {
     console.error("Error Getting and mapping CIS countries from APIM %O", err);
     throw new Error(`Getting and mapping CIS countries from APIM ${err}`);
@@ -4623,11 +4653,11 @@ var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => {
 var import_axios2 = __toESM(require("axios"));
 var import_dotenv6 = __toESM(require("dotenv"));
 import_dotenv6.default.config();
-var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
+var { APIM_MDM_URL: APIM_MDM_URL2, APIM_MDM_KEY: APIM_MDM_KEY2, APIM_MDM_VALUE: APIM_MDM_VALUE2 } = process.env;
 var { MULESOFT_MDM_EA: MULESOFT_MDM_EA2 } = EXTERNAL_API_ENDPOINTS;
 var headers = {
   "Content-Type": "application/json",
-  [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
+  [String(APIM_MDM_KEY2)]: APIM_MDM_VALUE2
 };
 var getIndustrySectorNames = {
   get: async () => {
@@ -4635,7 +4665,7 @@ var getIndustrySectorNames = {
       console.info("Calling industry sector API");
       const response = await (0, import_axios2.default)({
         method: "get",
-        url: `${APIM_MDM_URL}${MULESOFT_MDM_EA2.INDUSTRY_SECTORS}`,
+        url: `${APIM_MDM_URL2}${MULESOFT_MDM_EA2.INDUSTRY_SECTORS}`,
         headers,
         validateStatus(status) {
           const acceptableStatus = [200, 404];
@@ -4666,7 +4696,7 @@ var industry_sector_default = getIndustrySectorNames;
 var import_axios3 = __toESM(require("axios"));
 var import_dotenv7 = __toESM(require("dotenv"));
 import_dotenv7.default.config();
-var username2 = String(process.env.COMPANIES_HOUSE_API_KEY);
+var username = String(process.env.COMPANIES_HOUSE_API_KEY);
 var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
 var companiesHouse = {
   get: async (companyNumber) => {
@@ -4674,7 +4704,7 @@ var companiesHouse = {
       const response = await (0, import_axios3.default)({
         method: "get",
         url: `${companiesHouseURL}/company/${companyNumber}`,
-        auth: { username: username2, password: "" },
+        auth: { username, password: "" },
         validateStatus(status) {
           const acceptableStatus = [200, 404];
           return acceptableStatus.includes(status);

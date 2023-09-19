@@ -21,7 +21,7 @@ const mockCountries = [
     name: 'Abu Dhabi',
     isoCode: 'XAD',
     riskCategory: RISK.STANDARD,
-    shortTermCover: FIELD_VALUES.NO,
+    shortTermCover: false,
     ...baseCountry,
     canGetAQuoteOnline: false,
     cannotGetAQuote: true,
