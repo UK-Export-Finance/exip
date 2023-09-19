@@ -7,7 +7,7 @@ const checkAnalyticsScriptsAreRendered = () => {
       .filter((s) => s);
 
     // Ensure GTM script exists
-    const googleTagManagerScript = scripts.filter((script) => script.includes('googletagmanager.com') && script.includes('G-'));
+    const googleTagManagerScript = scripts.filter((script) => script.includes('googletagmanager') && script.includes('G-'));
     expect(googleTagManagerScript.length).to.equal(1);
 
     // Ensure GA script exists

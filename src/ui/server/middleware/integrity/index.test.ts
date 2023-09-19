@@ -8,7 +8,7 @@ const req: Request = mockReq();
 const res: Response = mockRes();
 const next = mockNext;
 
-describe('sub resource integrity (SRI) middleware unit test cases', () => {
+describe('middleware/integrity', () => {
   it('should have all the properties in res.locals.SRI object', () => {
     integrity(req, res, next);
 
