@@ -192,7 +192,7 @@ describe('controllers/quote/buyer-country', () => {
     describe('api error handling', () => {
       describe('when the get CIS countries API call fails', () => {
         beforeEach(() => {
-          getCisCountriesSpy = jest.fn(() => Promise.reject());
+          getCisCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.APIM.getCisCountries = getCisCountriesSpy;
         });
 
@@ -392,7 +392,7 @@ describe('controllers/quote/buyer-country', () => {
     describe('api error handling', () => {
       describe('when the get CIS countries API call fails', () => {
         beforeEach(() => {
-          getCisCountriesSpy = jest.fn(() => Promise.reject());
+          getCisCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.APIM.getCisCountries = getCisCountriesSpy;
         });
 

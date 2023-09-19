@@ -149,7 +149,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
     describe('when the get CIS countries API call fails', () => {
       beforeEach(() => {
-        getCisCountriesSpy = jest.fn(() => Promise.reject());
+        getCisCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
         api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
@@ -329,7 +329,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
     describe('when the get CIS countries API call fails', () => {
       beforeEach(() => {
-        getCisCountriesSpy = jest.fn(() => Promise.reject());
+        getCisCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
         api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
