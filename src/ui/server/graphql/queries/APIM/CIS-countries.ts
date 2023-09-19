@@ -4,7 +4,14 @@ const getApimCisCountries = gql`
   query {
     getApimCisCountries {
       isoCode
-      marketName
+      name
+      riskCategory
+      canGetAQuoteOnline
+      canGetAQuoteByEmail
+      cannotGetAQuote
+      canApplyOnline
+      canApplyOffline
+      cannotApply
     }
   }
 `;

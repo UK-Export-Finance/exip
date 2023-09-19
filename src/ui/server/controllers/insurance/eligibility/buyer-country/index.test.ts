@@ -11,7 +11,7 @@ import getCountryByName from '../../../../helpers/get-country-by-name';
 import mapSubmittedEligibilityCountry from '../../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Country, Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockAnswers, mockSession, mockCountries } from '../../../../test-mocks';
+import { mockReq, mockRes, mockSession, mockCountries } from '../../../../test-mocks';
 
 const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -19,9 +19,9 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
   let req: Request;
   let res: Response;
 
-  const mockCountriesResponse = mockCountries;
+  let mockCountriesResponse = mockCountries;
 
-  const { 0: countryUnsupported, 1: countrySupported, 3: countrySupportedViaOfflineOnly } = mockCountriesResponse;
+  const { 1: countryApplyOnline, 3: countryApplyOffline, 4: countryCannotApply } = mockCountriesResponse;
   const mockFlash = jest.fn();
 
   beforeEach(() => {
@@ -208,14 +208,20 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
     });
 
     describe('when the country can apply for an application online', () => {
-      const selectedCountryName = mockAnswers[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
+      const selectedCountryName = countryApplyOnline.name;
 
       const validBody = {
-        [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: countrySupported.name,
+        [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: selectedCountryName,
       };
 
       beforeEach(() => {
         req.body = validBody;
+
+        mockCountriesResponse = [countryApplyOnline];
+
+        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
       it('should update the session with populated with country object', async () => {
@@ -223,7 +229,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
         const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
 
-        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, true);
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, selectedCountry.canApplyOnline);
 
         const expected = {
           ...req.session.submittedData,
@@ -241,16 +247,24 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
     });
 
     describe('when the submitted country can only apply for an application offline', () => {
+      const selectedCountryName = countryApplyOffline.name;
+
       beforeEach(() => {
-        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = countrySupportedViaOfflineOnly.name;
+        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryName;
+
+        mockCountriesResponse = [countryApplyOffline];
+
+        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
       it('should update the session with populated country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByName(mockCountriesResponse, countrySupportedViaOfflineOnly.name) as Country;
+        const selectedCountry = getCountryByName(mockCountriesResponse, countryApplyOffline.name) as Country;
 
-        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, false);
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, selectedCountry.canApplyOnline);
 
         const expected = {
           ...req.session.submittedData,
@@ -268,16 +282,24 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
     });
 
     describe('when the submitted country cannot apply for an application', () => {
+      const selectedCountryName = countryCannotApply.name;
+
       beforeEach(() => {
-        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = countryUnsupported.name;
+        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryName;
+
+        mockCountriesResponse = [countryCannotApply];
+
+        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
       it('should update the session with populated with country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByName(mockCountriesResponse, countryUnsupported.name) as Country;
+        const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
 
-        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, false);
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, countryCannotApply.canApplyOnline);
 
         const expected = {
           ...req.session.submittedData,
@@ -290,12 +312,10 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       it('should add exitReason to req.flash', async () => {
         await post(req, res);
 
-        const countryName = countryUnsupported.name;
-
         const { CANNOT_APPLY } = PAGES;
         const { REASON } = CANNOT_APPLY;
 
-        const expectedReason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${countryName}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
+        const expectedReason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${selectedCountryName}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
 
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });

@@ -190,9 +190,18 @@ const typeDefs = `
     referenceNumber: Int
   }
 
-  type Country {
+  type MappedCisCountry {
     isoCode: String!
-    marketName: String
+    name: String
+    shortTermCover: Boolean
+    riskCategory: String
+    nbiIssueAvailable: Boolean
+    canGetAQuoteOnline: Boolean
+    canGetAQuoteByEmail: Boolean
+    cannotGetAQuote: Boolean
+    canApplyOnline: Boolean
+    canApplyOffline: Boolean
+    cannotApply: Boolean
   }
 
   type Mutation {
@@ -324,7 +333,7 @@ const typeDefs = `
     ): CompaniesHouseResponse
 
     """ get CIS countries from APIM """
-    getApimCisCountries: [Country]
+    getApimCisCountries: [MappedCisCountry]
   }
 `;
 

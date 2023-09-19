@@ -36,12 +36,32 @@ interface CisCountry {
   riskCategory?: string;
 }
 
+interface MappedCisCountry {
+  name: string;
+  isoCode: string;
+  shortTermCover: boolean;
+  riskCategory?: string;
+  nbiIssueAvailable: boolean;
+  canGetAQuoteOnline: boolean;
+  canGetAQuoteByEmail: boolean;
+  cannotGetAQuote: boolean;
+  canApplyOnline: boolean;
+  canApplyOffline: boolean;
+  cannotApply: boolean;
+}
+
 interface Country extends ApplicationRelationship {
   name: string;
   isoCode: string;
   riskCategory?: string;
-  shortTermCover?: string;
+  shortTermCover?: boolean;
   nbiIssueAvailable?: boolean;
+  canGetAQuoteOnline?: boolean;
+  canGetAQuoteByEmail?: boolean;
+  cannotGetAQuote?: boolean;
+  canApplyOnline?: boolean;
+  canApplyOffline?: boolean;
+  cannotApply?: boolean;
 }
 
 interface ApplicationEligibility extends ApplicationRelationship {
@@ -544,6 +564,7 @@ export {
   CompaniesHouseAPIResponse,
   Context,
   CisCountry,
+  MappedCisCountry,
   Country,
   CreateAnApplicationVariables,
   Currency,

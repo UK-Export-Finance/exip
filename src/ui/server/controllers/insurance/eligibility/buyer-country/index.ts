@@ -9,7 +9,6 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import { validation as generateValidationErrors } from '../../../../shared-validation/buyer-country';
 import getCountryByName from '../../../../helpers/get-country-by-name';
-import { canApplyOnline, canApplyOffline, cannotApply } from '../../../../helpers/country-support';
 import mapSubmittedEligibilityCountry from '../../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
@@ -107,10 +106,8 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
     }
 
-    const applyOnline = canApplyOnline(country);
-
-    if (applyOnline) {
-      const populatedData = mapSubmittedEligibilityCountry(country, applyOnline);
+    if (country.canApplyOnline) {
+      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
 
       req.session.submittedData = {
         ...req.session.submittedData,
@@ -120,8 +117,8 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
     }
 
-    if (canApplyOffline(country)) {
-      const populatedData = mapSubmittedEligibilityCountry(country, applyOnline);
+    if (country.canApplyOffline) {
+      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
 
       req.session.submittedData = {
         ...req.session.submittedData,
@@ -131,8 +128,8 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.INSURANCE.APPLY_OFFLINE);
     }
 
-    if (cannotApply(country)) {
-      const populatedData = mapSubmittedEligibilityCountry(country, applyOnline);
+    if (country.cannotApply) {
+      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
 
       req.session.submittedData = {
         ...req.session.submittedData,

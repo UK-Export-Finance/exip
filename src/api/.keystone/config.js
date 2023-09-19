@@ -1610,9 +1610,18 @@ var typeDefs = `
     referenceNumber: Int
   }
 
-  type Country {
+  type MappedCisCountry {
     isoCode: String!
-    marketName: String
+    name: String
+    shortTermCover: Boolean
+    riskCategory: String
+    nbiIssueAvailable: Boolean
+    canGetAQuoteOnline: Boolean
+    canGetAQuoteByEmail: Boolean
+    cannotGetAQuote: Boolean
+    canApplyOnline: Boolean
+    canApplyOffline: Boolean
+    cannotApply: Boolean
   }
 
   type Mutation {
@@ -1744,7 +1753,7 @@ var typeDefs = `
     ): CompaniesHouseResponse
 
     """ get CIS countries from APIM """
-    getApimCisCountries: [Country]
+    getApimCisCountries: [MappedCisCountry]
   }
 `;
 var type_defs_default = typeDefs;
@@ -4469,8 +4478,53 @@ var mapRiskCategory = (str) => {
   }
   return null;
 };
+var mapShortTermCoverAvailable = (str) => {
+  if (str === CIS.SHORT_TERM_COVER_AVAILABLE.YES) {
+    return true;
+  }
+  if (str === CIS.SHORT_TERM_COVER_AVAILABLE.ILC) {
+    return true;
+  }
+  if (str === CIS.SHORT_TERM_COVER_AVAILABLE.CILC) {
+    return true;
+  }
+  if (str === CIS.SHORT_TERM_COVER_AVAILABLE.REFER) {
+    return true;
+  }
+  return false;
+};
 var mapNbiIssueAvailable = (str) => {
   if (str === CIS.NBI_ISSUE_AVAILABLE.YES) {
+    return true;
+  }
+  return false;
+};
+var canGetAQuoteOnline = (country) => {
+  if (country.riskCategory && country.shortTermCover && country.nbiIssueAvailable) {
+    return true;
+  }
+  return false;
+};
+var canGetAQuoteByEmail = (country) => {
+  if (country.riskCategory && country.shortTermCover && !country.nbiIssueAvailable) {
+    return true;
+  }
+  return false;
+};
+var cannotGetAQuote = (country) => {
+  if (!country.riskCategory || !country.shortTermCover && !country.nbiIssueAvailable) {
+    return true;
+  }
+  return false;
+};
+var canApplyOffline = (originalShortTermCover) => {
+  if (originalShortTermCover === CIS.SHORT_TERM_COVER_AVAILABLE.ILC) {
+    return true;
+  }
+  if (originalShortTermCover === CIS.SHORT_TERM_COVER_AVAILABLE.CILC) {
+    return true;
+  }
+  if (originalShortTermCover === CIS.SHORT_TERM_COVER_AVAILABLE.REFER) {
     return true;
   }
   return false;
@@ -4481,9 +4535,15 @@ var mapCisCountry = (country) => {
     name: country.marketName,
     isoCode: country.isoCode,
     riskCategory: mapRiskCategory(country.ESRAClassificationDesc),
-    shortTermCover: country.shortTermCoverAvailabilityDesc,
+    shortTermCover: mapShortTermCoverAvailable(country.shortTermCoverAvailabilityDesc),
     nbiIssueAvailable: mapNbiIssueAvailable(country.NBIIssue)
   };
+  mapped.canGetAQuoteOnline = canGetAQuoteOnline(mapped);
+  mapped.canGetAQuoteByEmail = canGetAQuoteByEmail(mapped);
+  mapped.cannotGetAQuote = cannotGetAQuote(mapped);
+  mapped.canApplyOnline = mapped.shortTermCover;
+  mapped.canApplyOffline = canApplyOffline(country.shortTermCoverAvailabilityDesc);
+  mapped.cannotApply = !mapped.canApplyOnline && !mapped.canApplyOffline;
   return mapped;
 };
 var mapCisCountries = (countries) => {

@@ -1,28 +1,57 @@
-import mapCisCountries, { mapRiskCategory, mapNbiIssueAvailable, filterCisCountries, mapCisCountry } from '.';
+import mapCisCountries, {
+  mapRiskCategory,
+  mapShortTermCoverAvailable,
+  mapNbiIssueAvailable,
+  canGetAQuoteOnline,
+  canGetAQuoteByEmail,
+  cannotGetAQuote,
+  canApplyOffline,
+  filterCisCountries,
+  mapCisCountry,
+} from '.';
 import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../constants';
 import sortArrayAlphabetically from '../sort-array-alphabetically';
-import { CisCountry, Country } from '../../types';
+import { CisCountry, MappedCisCountry } from '../../types';
 
 const { CIS } = EXTERNAL_API_DEFINITIONS;
+
+// TODO improve test coverage at least with canGetAQuoteByEmail
+// TODO: test coverage for mapShortTermCoverAvailable
 
 describe('helpers/map-cis-countries', () => {
   const mockCountries = [
     {
       marketName: 'Abu Dhabi',
       isoCode: 'XAD',
-      shortTermCoverAvailabilityDesc: 'A',
-      ESRAClassificationDesc: 'B',
-      NBIIssue: 'C',
     },
     {
       marketName: 'Algeria',
       isoCode: 'DZA',
-      oecdRiskCategory: 2,
-      shortTermCoverAvailabilityDesc: 'D',
-      ESRAClassificationDesc: 'E',
-      NBIIssue: 'F',
     },
   ] as Array<CisCountry>;
+
+  const { 1: initialMockCountry } = mockCountries;
+
+  const mockCountryBase = {
+    ...initialMockCountry,
+    marketName: initialMockCountry.marketName,
+    riskCategory: EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD,
+    isoCode: initialMockCountry.isoCode,
+    shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER_AVAILABLE.ILC,
+  };
+
+  const mockMappedCountryBase = {
+    name: mockCountryBase.marketName,
+    isoCode: mockCountryBase.isoCode,
+    riskCategory: CIS.RISK.HIGH,
+    shortTermCover: true,
+    canGetAQuoteOnline: true,
+    canGetAQuoteByEmail: false,
+    cannotGetAQuote: false,
+    canApplyOnline: true,
+    canApplyOffline: true,
+    cannotApply: false,
+  };
 
   describe('mapRiskCategory', () => {
     describe(`when the risk is '${CIS.RISK.STANDARD}'`, () => {
@@ -82,31 +111,168 @@ describe('helpers/map-cis-countries', () => {
     });
   });
 
+  describe('canGetAQuoteOnline', () => {
+    describe('when country has riskCategory, shortTermCover and nbiIssueAvailable', () => {
+      it('should return true', () => {
+        const mockCountry = {
+          ...mockMappedCountryBase,
+          shortTermCover: true,
+          nbiIssueAvailable: true,
+        };
+
+        const result = canGetAQuoteOnline(mockCountry);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    it('should return false', () => {
+      const mockCountry = {
+        ...mockMappedCountryBase,
+        shortTermCover: false,
+        nbiIssueAvailable: true,
+      };
+
+      const result = canGetAQuoteOnline(mockCountry);
+
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('canGetAQuoteByEmail', () => {
+    describe('when country has riskCategory, shortTermCover but no nbiIssueAvailable', () => {
+      it('should return true', () => {
+        const mockCountry = {
+          ...mockMappedCountryBase,
+          shortTermCover: true,
+          nbiIssueAvailable: false,
+        };
+
+        const result = canGetAQuoteByEmail(mockCountry);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    it('should return false', () => {
+      const mockCountry = {
+        ...mockMappedCountryBase,
+        shortTermCover: false,
+        nbiIssueAvailable: false,
+      };
+
+      const result = canGetAQuoteByEmail(mockCountry);
+
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('cannotGetAQuote', () => {
+    describe('when country does not have riskCategory, shortTermCover and nbiIssueAvailable', () => {
+      it('should return true', () => {
+        const mockCountry = {
+          ...mockMappedCountryBase,
+          riskCategory: undefined,
+          shortTermCoverAvailabilityDesc: false,
+          nbiIssueAvailable: false,
+        };
+
+        const result = cannotGetAQuote(mockCountry);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    it('should return false', () => {
+      const mockCountry = {
+        ...mockMappedCountryBase,
+        shortTermCover: true,
+        nbiIssueAvailable: true,
+      };
+
+      const result = cannotGetAQuote(mockCountry);
+
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('canApplyOffline', () => {
+    describe(`when shortTermCoverAvailabilityDesc is ${CIS.SHORT_TERM_COVER_AVAILABLE.ILC}`, () => {
+      it('should return true', () => {
+        const mockCountry = {
+          ...mockCountryBase,
+          shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER_AVAILABLE.ILC,
+        };
+
+        const result = canApplyOffline(mockCountry.shortTermCoverAvailabilityDesc);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe(`when shortTermCoverAvailabilityDesc is ${CIS.SHORT_TERM_COVER_AVAILABLE.CILC}`, () => {
+      it('should return true', () => {
+        const mockCountry = {
+          ...mockCountryBase,
+          shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER_AVAILABLE.CILC,
+        };
+
+        const result = canApplyOffline(mockCountry.shortTermCoverAvailabilityDesc);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe(`when shortTermCoverAvailabilityDesc is ${CIS.SHORT_TERM_COVER_AVAILABLE.REFER}`, () => {
+      it('should return true', () => {
+        const mockCountry = {
+          ...mockCountryBase,
+          shortTermCoverAvailabilityDesc: CIS.SHORT_TERM_COVER_AVAILABLE.REFER,
+        };
+
+        const result = canApplyOffline(mockCountry.shortTermCoverAvailabilityDesc);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    it('should return false', () => {
+      const mockCountry = {
+        ...mockCountryBase,
+        shortTermCoverAvailabilityDesc: 'Something else',
+      };
+
+      const result = canApplyOffline(mockCountry.shortTermCoverAvailabilityDesc);
+
+      expect(result).toEqual(false);
+    });
+  });
+
   describe('filterCisCountries', () => {
     it('should return a list of countries without invalid countries defined in INVALID_CIS_COUNTRIES', () => {
       const mockCountriesWithInvalid = [
-        mockCountries[0],
+        mockCountryBase,
         {
-          ...mockCountries[0],
+          ...mockCountryBase,
           marketName: 'EC Market n/k',
         },
         {
-          ...mockCountries[0],
+          ...mockCountryBase,
           marketName: 'Non EC Market n/k',
         },
         {
-          ...mockCountries[0],
+          ...mockCountryBase,
           marketName: 'Non UK',
         },
         {
-          ...mockCountries[0],
+          ...mockCountryBase,
           marketName: 'Third Country',
         },
       ];
 
       const result = filterCisCountries(mockCountriesWithInvalid);
 
-      const expected = [mockCountries[0]];
+      const expected = [mockCountryBase];
 
       expect(result).toEqual(expected);
     });
@@ -114,50 +280,44 @@ describe('helpers/map-cis-countries', () => {
 
   describe('mapCisCountry', () => {
     it('should return an object', () => {
-      const result = mapCisCountry(mockCountries[0]);
+      const result = mapCisCountry(mockCountryBase);
 
-      const expected = {
-        name: mockCountries[0].marketName,
-        isoCode: mockCountries[0].isoCode,
-        riskCategory: mapRiskCategory(mockCountries[0].ESRAClassificationDesc),
-        shortTermCover: mockCountries[0].shortTermCoverAvailabilityDesc,
-        nbiIssueAvailable: mapNbiIssueAvailable(mockCountries[0].NBIIssue),
-      } as Country;
+      const mapped = {
+        name: mockCountryBase.marketName,
+        isoCode: mockCountryBase.isoCode,
+        riskCategory: mapRiskCategory(mockCountryBase.ESRAClassificationDesc),
+        shortTermCover: mapShortTermCoverAvailable(mockCountryBase.shortTermCoverAvailabilityDesc),
+        nbiIssueAvailable: mapNbiIssueAvailable(mockCountryBase.NBIIssue),
+        canGetAQuoteOnline: false,
+        canGetAQuoteByEmail: false,
+        cannotGetAQuote: false,
+        canApplyOnline: false,
+        canApplyOffline: false,
+        cannotApply: false,
+      } as MappedCisCountry;
 
-      expect(result).toEqual(expected);
-    });
+      mapped.canGetAQuoteOnline = canGetAQuoteOnline(mapped);
+      mapped.canGetAQuoteByEmail = canGetAQuoteByEmail(mapped);
 
-    describe('when a selectedIsoCode is passed', () => {
-      it('should return an object with selected option', () => {
-        const mockSelectedIsoCode = mockCountries[0].isoCode;
+      mapped.cannotGetAQuote = cannotGetAQuote(mapped);
+      mapped.canApplyOnline = mapped.shortTermCover;
+      mapped.canApplyOffline = canApplyOffline(mockCountryBase.shortTermCoverAvailabilityDesc);
 
-        const result = mapCisCountry(mockCountries[0], mockSelectedIsoCode);
+      mapped.cannotApply = !mapped.canApplyOnline && !mapped.canApplyOffline;
 
-        const expected = {
-          name: mockCountries[0].marketName,
-          isoCode: mockCountries[0].isoCode,
-          riskCategory: mapRiskCategory(mockCountries[0].ESRAClassificationDesc),
-          shortTermCover: mockCountries[0].shortTermCoverAvailabilityDesc,
-          nbiIssueAvailable: mapNbiIssueAvailable(mockCountries[0].NBIIssue),
-        } as Country;
-
-        expect(result).toEqual(expected);
-      });
+      expect(result).toEqual(mapped);
     });
   });
 
   describe('mapCisCountries', () => {
     it('should returns array of filtered, mapped and sorted objects', () => {
-      const mockSelectedIsoCode = mockCountries[0].isoCode;
-
       const filteredCountries = filterCisCountries(mockCountries);
 
-      const result = mapCisCountries(filteredCountries, mockSelectedIsoCode);
+      const result = mapCisCountries(filteredCountries);
 
-      const expected = sortArrayAlphabetically(
-        [mapCisCountry(mockCountries[0], mockSelectedIsoCode), mapCisCountry(mockCountries[1], mockSelectedIsoCode)],
-        'name',
-      );
+      const { 0: firstCountry, 1: secondCountry } = mockCountries;
+
+      const expected = sortArrayAlphabetically([mapCisCountry(firstCountry), mapCisCountry(secondCountry)], 'name');
 
       expect(result).toEqual(expected);
     });

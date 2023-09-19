@@ -1,6 +1,6 @@
 import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../constants';
 import sortArrayAlphabetically from '../sort-array-alphabetically';
-import { CisCountry, Country } from '../../types';
+import { CisCountry, MappedCisCountry } from '../../types';
 
 const { CIS } = EXTERNAL_API_DEFINITIONS;
 
@@ -26,32 +26,31 @@ export const mapRiskCategory = (str: string) => {
   return null;
 };
 
-// TODO - this isn't used. ?
 /**
  * mapShortTermCoverAvailable
  * Transform a countries 'short term cover available' string to a boolean
  * @param {String} Risk category
  * @returns {Boolean}
  */
-// export const mapShortTermCoverAvailable = (str: string): boolean => {
-//   if (str === CIS.SHORT_TERM_COVER_AVAILABLE.YES) {
-//     return true;
-//   }
+export const mapShortTermCoverAvailable = (str: string): boolean => {
+  if (str === CIS.SHORT_TERM_COVER_AVAILABLE.YES) {
+    return true;
+  }
 
-//   if (str === CIS.SHORT_TERM_COVER_AVAILABLE.ILC) {
-//     return true;
-//   }
+  if (str === CIS.SHORT_TERM_COVER_AVAILABLE.ILC) {
+    return true;
+  }
 
-//   if (str === CIS.SHORT_TERM_COVER_AVAILABLE.CILC) {
-//     return true;
-//   }
+  if (str === CIS.SHORT_TERM_COVER_AVAILABLE.CILC) {
+    return true;
+  }
 
-//   if (str === CIS.SHORT_TERM_COVER_AVAILABLE.REFER) {
-//     return true;
-//   }
+  if (str === CIS.SHORT_TERM_COVER_AVAILABLE.REFER) {
+    return true;
+  }
 
-//   return false;
-// };
+  return false;
+};
 
 /**
  * mapNbiIssueAvailable
@@ -61,6 +60,70 @@ export const mapRiskCategory = (str: string) => {
  */
 export const mapNbiIssueAvailable = (str: string): boolean => {
   if (str === CIS.NBI_ISSUE_AVAILABLE.YES) {
+    return true;
+  }
+
+  return false;
+};
+
+/**
+ * canGetAQuoteOnline
+ * Check if a country is able to get a quote online
+ * @param {Object} Country from CIS API
+ * @returns {Boolean}
+ */
+export const canGetAQuoteOnline = (country: MappedCisCountry) => {
+  if (country.riskCategory && country.shortTermCover && country.nbiIssueAvailable) {
+    return true;
+  }
+
+  return false;
+};
+
+/**
+ * canGetAQuoteByEmail
+ * Check if a country is able to get a quote by email
+ * @param {Object} Country from CIS API
+ * @returns {Boolean}
+ */
+export const canGetAQuoteByEmail = (country: MappedCisCountry) => {
+  if (country.riskCategory && country.shortTermCover && !country.nbiIssueAvailable) {
+    return true;
+  }
+
+  return false;
+};
+
+/**
+ * cannotGetAQuote
+ * Check if a country cannot get a quote online or offline
+ * @param {Object} Country from CIS API
+ * @returns {Boolean}
+ */
+export const cannotGetAQuote = (country: MappedCisCountry) => {
+  if (!country.riskCategory || (!country.shortTermCover && !country.nbiIssueAvailable)) {
+    return true;
+  }
+
+  return false;
+};
+
+/**
+ * canApplyOffline
+ * Check if a country can get a quote offline
+ * @param {String} Country original short term cover definition from CIS API.
+ * @returns {Boolean}
+ */
+export const canApplyOffline = (originalShortTermCover: string) => {
+  if (originalShortTermCover === CIS.SHORT_TERM_COVER_AVAILABLE.ILC) {
+    return true;
+  }
+
+  if (originalShortTermCover === CIS.SHORT_TERM_COVER_AVAILABLE.CILC) {
+    return true;
+  }
+
+  if (originalShortTermCover === CIS.SHORT_TERM_COVER_AVAILABLE.REFER) {
     return true;
   }
 
@@ -81,14 +144,23 @@ export const filterCisCountries = (countries: Array<CisCountry>) => countries.fi
  * @param {Object} CIS Country
  * @returns {Object} Mapped country
  */
-export const mapCisCountry = (country: CisCountry): Country => {
+export const mapCisCountry = (country: CisCountry): MappedCisCountry => {
   const mapped = {
     name: country.marketName,
     isoCode: country.isoCode,
     riskCategory: mapRiskCategory(country.ESRAClassificationDesc),
-    shortTermCover: country.shortTermCoverAvailabilityDesc,
+    shortTermCover: mapShortTermCoverAvailable(country.shortTermCoverAvailabilityDesc),
     nbiIssueAvailable: mapNbiIssueAvailable(country.NBIIssue),
-  } as Country;
+  } as MappedCisCountry;
+
+  mapped.canGetAQuoteOnline = canGetAQuoteOnline(mapped);
+  mapped.canGetAQuoteByEmail = canGetAQuoteByEmail(mapped);
+
+  mapped.cannotGetAQuote = cannotGetAQuote(mapped);
+  mapped.canApplyOnline = mapped.shortTermCover;
+  mapped.canApplyOffline = canApplyOffline(country.shortTermCoverAvailabilityDesc);
+
+  mapped.cannotApply = !mapped.canApplyOnline && !mapped.canApplyOffline;
 
   return mapped;
 };

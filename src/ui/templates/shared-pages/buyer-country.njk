@@ -71,9 +71,9 @@
 
             {% for country in countries %}
               {% if country.selected %}
-                <option value="{{ country.name }}" selected>{{ country.name }}</option>
+                <option value="{{ country.text }}" selected>{{ country.text }}</option>
               {% else %}
-                <option value="{{ country.name }}">{{ country.name }}</option>
+                <option value="{{ country.text }}">{{ country.text }}</option>
               {% endif %}
             {% endfor %}
           </select>

@@ -10,7 +10,6 @@ import constructPayload from '../../../helpers/construct-payload';
 import { validation as generateValidationErrors } from '../../../shared-validation/buyer-country';
 import isChangeRoute from '../../../helpers/is-change-route';
 import getCountryByName from '../../../helpers/get-country-by-name';
-import { canGetAQuoteOnline, canGetAQuoteByEmail, cannotGetAQuote } from '../../../helpers/country-support';
 import mapSubmittedEligibilityCountry from '../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
@@ -133,10 +132,8 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
     }
 
-    const canApplyOnline = canGetAQuoteOnline(country);
-
-    if (canApplyOnline) {
-      const populatedData = mapSubmittedEligibilityCountry(country, canApplyOnline);
+    if (country.canGetAQuoteOnline) {
+      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
@@ -147,8 +144,8 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.QUOTE.BUYER_BODY);
     }
 
-    if (canGetAQuoteByEmail(country)) {
-      const populatedData = mapSubmittedEligibilityCountry(country, canApplyOnline);
+    if (country.canGetAQuoteByEmail) {
+      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
@@ -163,8 +160,8 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
     }
 
-    if (cannotGetAQuote(country)) {
-      const populatedData = mapSubmittedEligibilityCountry(country, canApplyOnline);
+    if (country.cannotGetAQuote) {
+      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 

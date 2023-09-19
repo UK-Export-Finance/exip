@@ -11,16 +11,16 @@ import mapSubmittedEligibilityCountry from '../../../helpers/mappings/map-submit
 import api from '../../../api';
 import mapCountries from '../../../helpers/mappings/map-countries';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
-import { mockReq, mockRes, mockAnswers, mockSession, mockCountries } from '../../../test-mocks';
+import { mockReq, mockRes, mockSession, mockCountries } from '../../../test-mocks';
 import { Country, Request, Response } from '../../../../types';
 
 describe('controllers/quote/buyer-country', () => {
   let req: Request;
   let res: Response;
 
-  const mockCountriesResponse = mockCountries;
+  let mockCountriesResponse = mockCountries;
 
-  const { 0: countryUnsupported, 2: countrySupportedViaEmailOnly } = mockCountriesResponse;
+  const { 0: countryUnsupported, 1: countryQuoteOnline, 2: countryQuoteByEmail } = mockCountriesResponse;
 
   const mockFlash = jest.fn();
 
@@ -241,16 +241,22 @@ describe('controllers/quote/buyer-country', () => {
     });
 
     describe('when the submitted country can only get a quote via email', () => {
+      const selectedCountryName = countryQuoteByEmail.name;
+
+      mockCountriesResponse = [countryQuoteByEmail];
+
+      getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
       beforeEach(() => {
-        req.body[FIELD_ID] = countrySupportedViaEmailOnly.name;
+        req.body[FIELD_ID] = countryQuoteByEmail.name;
       });
 
       it('should update the session with submitted data, popluated with country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByName(mockCountriesResponse, countrySupportedViaEmailOnly.name) as Country;
+        const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
 
-        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, false);
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, selectedCountry.canApplyOnline);
 
         const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
 
@@ -291,16 +297,24 @@ describe('controllers/quote/buyer-country', () => {
     });
 
     describe('when the submitted country is not supported', () => {
+      const selectedCountryName = countryUnsupported.name;
+
       beforeEach(() => {
-        req.body[FIELD_ID] = countryUnsupported.name;
+        req.body[FIELD_ID] = selectedCountryName;
+
+        mockCountriesResponse = [countryUnsupported];
+
+        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
       it('should update the session with submitted data, popluated with country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByName(mockCountriesResponse, countryUnsupported.name) as Country;
+        const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
 
-        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, false);
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, selectedCountry.canApplyOnline);
 
         const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
 
@@ -312,7 +326,7 @@ describe('controllers/quote/buyer-country', () => {
 
         expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
 
-        const countryName = countryUnsupported.name;
+        const countryName = selectedCountryName;
 
         const { CANNOT_APPLY } = PAGES;
         const { REASON } = CANNOT_APPLY;
@@ -330,9 +344,7 @@ describe('controllers/quote/buyer-country', () => {
     });
 
     describe('when the country is supported for an online quote and there are no validation errors', () => {
-      const selectedCountryName = mockAnswers[FIELD_ID];
-
-      const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
+      const selectedCountryName = countryQuoteOnline.name;
 
       const validBody = {
         [FIELD_ID]: selectedCountryName,
@@ -340,12 +352,20 @@ describe('controllers/quote/buyer-country', () => {
 
       beforeEach(() => {
         req.body = validBody;
+
+        mockCountriesResponse = [countryQuoteOnline];
+
+        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
       it('should update the session with submitted data, popluated with country object', async () => {
         await post(req, res);
 
-        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, true);
+        const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
+
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, selectedCountry.canApplyOnline);
 
         const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
 
