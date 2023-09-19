@@ -162,37 +162,19 @@ jobs:
   # 4. E2E - Insurance
   e2e-tests-insurance:
     name: E2E Insurance 👷
-    needs: [setup]
+    needs: [setup, unit-tests, api-tests]
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
     strategy:
-      # Do not cancel in-progress jobs upon failure
-      fail-fast: false
-      # Single dimension matrix
+      fail-fast: true
+      # Single dimension matrix - 10 jobs
       matrix:
-        spec:
-          [
-            "account",
-            "application-submission",
-            "cannot-skip-flow",
-            "check-your-answers",
-            "dashboard",
-            "declarations",
-            "eligibility",
-            "feedback",
-            "no-access-application-submitted",
-            "no-access-to-application",
-            "policy-and-exports",
-            "submit-name-fields-with-special-characters",
-            "task-list",
-            "your-business",
-            "your-buyer",
-          ]
+        machines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
     concurrency:
-      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
+      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.machines }}
       cancel-in-progress: true
 
     steps:
@@ -214,5 +196,143 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        working-directory: ./e2e-tests/insurance
-        run: npx cypress run --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}/**/*.spec.js" --env TZ=${{ env.timezone }},API_KEY=${{ secrets.API_KEY }},GOV_NOTIFY_EMAIL_RECIPIENT_1=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }},GOV_NOTIFY_EMAIL_RECIPIENT_2=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }},MOCK_ACCOUNT_PASSWORD=${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          record: true
+          parallel: true
+          group: "Insurance"
+          tag: "Machine #${{ matrix.machines }}"
+          browser: chrome
+          project: ./e2e-tests/insurance
+        env:
+          TZ: ${{ env.timezone }}
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          API_KEY: ${{ secrets.API_KEY }}
+          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
+          GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
+          MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+
+      - name: Screenshots
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@main
+        with:
+          name: screenshots
+          path: "./cypress/screenshots"
+
+  # 5. E2E - Quote
+  e2e-tests-quote:
+    name: E2E Quote 👷
+    needs: [setup, unit-tests, api-tests, e2e-tests-insurance]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+      # Single dimension matrix - 10 jobs
+      matrix:
+        machines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+    concurrency:
+      group: e2e-tests-quote-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.machines }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Timezone
+        uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Dependencies
+        working-directory: ./
+        run: npm ci --legacy-peer-deps
+
+      - name: Docker
+        run: docker-compose up --build -d
+
+      - name: Wait
+        run: sleep 30s
+
+      - name: Execute
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          record: true
+          parallel: true
+          group: "Quote"
+          tag: "Machine ${{ matrix.machines }}"
+          browser: chrome
+          project: ./e2e-tests/quote
+        env:
+          TZ: ${{ env.timezone }}
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          API_KEY: ${{ secrets.API_KEY }}
+          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
+          GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
+          MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+
+      - name: Screenshots
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@main
+        with:
+          name: screenshots
+          path: "./cypress/screenshots"
+
+  # 6. E2E - Switch between services
+  e2e-tests-switch-between-services:
+    name: E2E Switch between services 👷
+    needs: [setup, unit-tests, api-tests, e2e-tests-insurance, e2e-tests-quote]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Timezone
+        uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Dependencies
+        working-directory: ./
+        run: npm ci --legacy-peer-deps
+
+      - name: Docker
+        run: docker-compose up --build -d
+
+      - name: Wait
+        run: sleep 30s
+
+      - name: Execute
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          record: true
+          parallel: false
+          group: "Switch services"
+          browser: chrome
+          project: ./e2e-tests/switch-between-services
+        env:
+          TZ: ${{ env.timezone }}
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          API_KEY: ${{ secrets.API_KEY }}
+          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
+          GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
+          MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+
+      - name: Screenshots
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@main
+        with:
+          name: screenshots
+          path: "./cypress/screenshots"
