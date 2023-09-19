@@ -12,7 +12,6 @@ const mapAddress = (address: OrdnanceSurveyResponse) => ({
   }`.trim(),
   addressLine2: address.DPA.DEPENDENT_LOCALITY,
   town: address.DPA.POST_TOWN,
-  county: undefined,
   postalCode: address.DPA.POSTCODE,
 });
 

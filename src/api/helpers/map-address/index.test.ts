@@ -4,9 +4,7 @@ import { OrdnanceSurveyAddress } from '../../types';
 
 const generateAddress = (address: OrdnanceSurveyAddress) => ({
   addressLine1: `${address.ORGANISATION_NAME ?? ''} ${address.BUILDING_NAME ?? ''} ${address.BUILDING_NUMBER ?? ''} ${address.THOROUGHFARE_NAME ?? ''}`.trim(),
-  addressLine2: undefined,
   town: address.POST_TOWN,
-  county: undefined,
   postalCode: address.POSTCODE,
 });
 
