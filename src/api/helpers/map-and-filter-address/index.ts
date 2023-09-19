@@ -12,7 +12,9 @@ import mapAddress from '../map-address';
  */
 const mapAndFilterAddress = (houseNameOrNumber: string, ordnanceSurveyResponse: Array<OrdnanceSurveyResponse>) => {
   // returns array of addresses which match house number or house name
-  const filtered = ordnanceSurveyResponse.filter((eachAddress) => eachAddress.DPA.BUILDING_NUMBER === houseNameOrNumber || eachAddress.DPA.BUILDING_NAME === houseNameOrNumber);
+  const filtered = ordnanceSurveyResponse.filter(
+    (eachAddress) => eachAddress.DPA.BUILDING_NUMBER === houseNameOrNumber || eachAddress.DPA.BUILDING_NAME === houseNameOrNumber,
+  );
 
   // empty array returned if no addresses found
   if (!filtered.length) {
