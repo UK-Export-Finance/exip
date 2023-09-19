@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8"/>
     <title{% if pageTitleLang %} lang="{{ pageTitleLang }}"{% endif %}>
-      {% block pageTitle %}{% endblock %} - {{ meta.organisation }}</title>
+      {% block pageTitle %}{% endblock %} - {{ meta.ORGANISATION }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0b0c0c"/>
 
@@ -47,16 +47,14 @@
 
     {% include "partials/footer.njk" %}
 
-    {%block scripts %}
-      <script src="/assets/js/govukFrontend.js" type="text/javascript" integrity="{{ SRI.GOVUK }}" crossorigin="anonymous"></script>
-      <script src="/assets/js/formSubmission.js" type="text/javascript" integrity="{{ SRI.FORM }}" crossorigin="anonymous"></script>
-      <script src="/assets/js/cookies.js" type="text/javascript" integrity="{{ SRI.COOKIES }}" crossorigin="anonymous"></script>
+    <script src="/assets/js/govukFrontend.js" type="text/javascript" integrity="{{ SRI.GOVUK }}" crossorigin="anonymous"></script>
+    <script src="/assets/js/formSubmission.js" type="text/javascript" integrity="{{ SRI.FORM }}" crossorigin="anonymous"></script>
+    <script src="/assets/js/cookies.js" type="text/javascript" integrity="{{ SRI.COOKIES }}" crossorigin="anonymous"></script>
 
-      {% if cookieConsent %}
-        <script async src="https://www.googletagmanager.com/gtag/js?id={{ googleAnalyticsId }}"></script>
-        <script src="/assets/js/googleAnalytics.js" type="text/javascript" data-campaign="{{ googleAnalyticsId }}" integrity="{{ SRI.GA }}" crossorigin="anonymous"></script>
-      {% endif %}
-    {%endblock%}
+    {% if cookieConsent %}
+      <script async src="https://www.googletagmanager.com/gtag/js?id={{ googleAnalyticsId }}"></script>
+      <script src="/assets/js/googleAnalytics.js" type="text/javascript" data-campaign="{{ googleAnalyticsId }}" integrity="{{ SRI.GA }}" crossorigin="anonymous"></script>
+    {% endif %}
 
-    </body>
-  </html>
+  </body>
+</html>
