@@ -56,7 +56,7 @@ describe('controllers/insurance/check-your-answers/save-and-back', () => {
 
   describe('when there is no application', () => {
     beforeEach(() => {
-      res.locals = { csrfToken: '1234' };
+      res.locals = mockRes().locals;
     });
 
     it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
