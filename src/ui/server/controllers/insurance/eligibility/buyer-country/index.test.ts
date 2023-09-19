@@ -147,7 +147,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       });
     });
 
-    describe('when the CIS (country information system) API call fails', () => {
+    describe('when the get CIS countries API call fails', () => {
       beforeEach(() => {
         getCisCountriesSpy = jest.fn(() => Promise.reject());
         api.keystone.APIM.getCisCountries = getCisCountriesSpy;
@@ -159,7 +159,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       });
     });
 
-    describe('when the CIS (country information system) API does not return a populated array', () => {
+    describe('when the get CIS countries API call does not return a populated array', () => {
       beforeEach(() => {
         getCisCountriesSpy = jest.fn(() => Promise.resolve([]));
         api.keystone.APIM.getCisCountries = getCisCountriesSpy;
@@ -327,7 +327,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       });
     });
 
-    describe('when the CIS (country information system) API call fails', () => {
+    describe('when the get CIS countries API call fails', () => {
       beforeEach(() => {
         getCisCountriesSpy = jest.fn(() => Promise.reject());
         api.keystone.APIM.getCisCountries = getCisCountriesSpy;
@@ -339,7 +339,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       });
     });
 
-    describe('when the CIS (country information system) API does not return a populated array', () => {
+    describe('when the get CIS countries API call does not return a populated array', () => {
       beforeEach(() => {
         getCisCountriesSpy = jest.fn(() => Promise.resolve([]));
         api.keystone.APIM.getCisCountries = getCisCountriesSpy;
