@@ -10,9 +10,9 @@ import mapAddress from '../map-address';
  * @param {Array<OrdnanceSurveyResponse>} ordnanceSurveyResponse
  * @returns {Array<Address>} mapped addresses
  */
-const mapAndFilterAddress = (house: string, ordnanceSurveyResponse: Array<OrdnanceSurveyResponse>) => {
+const mapAndFilterAddress = (houseNameOrNumber: string, ordnanceSurveyResponse: Array<OrdnanceSurveyResponse>) => {
   // returns array of addresses which match house number or house name
-  const filtered = ordnanceSurveyResponse.filter((eachAddress) => eachAddress.DPA.BUILDING_NUMBER === house || eachAddress.DPA.BUILDING_NAME === house);
+  const filtered = ordnanceSurveyResponse.filter((eachAddress) => eachAddress.DPA.BUILDING_NUMBER === houseNameOrNumber || eachAddress.DPA.BUILDING_NAME === houseNameOrNumber);
 
   // empty array returned if no addresses found
   if (!filtered.length) {
