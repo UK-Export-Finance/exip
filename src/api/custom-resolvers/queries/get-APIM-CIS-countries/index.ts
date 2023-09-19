@@ -18,6 +18,8 @@ const getApimCisCountries = async () => {
 
       return mapped;
     }
+
+    return { success: false };
   } catch (err) {
     console.error('Error Getting and mapping CIS countries from APIM %O', err);
 

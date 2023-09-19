@@ -5,10 +5,10 @@ import { GetApimCisCountriesResponse } from '../../types';
 
 dotenv.config();
 
+const { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
 const { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
 
-const username = String(process.env.COMPANIES_HOUSE_API_KEY);
-const url = `${process.env.APIM_MDM_URL}${MULESOFT_MDM_EA.MARKETS}`;
+const url = `${APIM_MDM_URL}${MULESOFT_MDM_EA.MARKETS}`;
 
 /**
  * APIM
@@ -24,10 +24,9 @@ const APIM = {
       const response = await axios({
         method: 'get',
         url,
-        auth: { username, password: '' },
         headers: {
           'Content-Type': 'application/json',
-          [String(process.env.APIM_MDM_KEY)]: process.env.APIM_MDM_VALUE,
+          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE,
         },
         validateStatus(status) {
           const acceptableStatus = [200];
