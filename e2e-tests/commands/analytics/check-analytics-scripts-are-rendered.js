@@ -2,18 +2,23 @@ const checkAnalyticsScriptsAreRendered = () => {
   cy.document().then((document) => {
     const domElements = document.querySelectorAll('script');
 
-    const srcs = [...domElements].map((script) => script.getAttribute('src'));
+    const scripts = Array.from(domElements)
+      .map((script) => script.getAttribute('src'))
+      .filter((s) => s);
 
-    const scripts = srcs.filter((s) => s);
+    // Ensure GTM script exists
+    const googleTagManagerScript = scripts.filter((script) => script.includes('googletagmanager.com') && script.includes('G-'));
+    expect(googleTagManagerScript.length).to.equal(1);
 
-    const googleTagManagerScripts = scripts.filter((s) => s.includes('google') && s.includes('G-'));
+    // Ensure GA script exists
+    const googleAnalyticsScript = scripts.filter((script) => script.includes('googleAnalytics.js'));
+    expect(googleAnalyticsScript.length).to.equal(1);
 
-    expect(googleTagManagerScripts.length).to.equal(1);
-
-    const analyticsDataLayer = domElements[domElements.length - 1].innerHTML;
-
-    expect(analyticsDataLayer.includes('window.dataLayer')).to.equal(true);
-    expect(analyticsDataLayer.includes('G-')).to.equal(true);
+    // Ensure GA campaign attribute exists
+    const dataCampaign = Array.from(domElements)
+      .map((script) => script.getAttribute('data-campaign'))
+      .filter((s) => s);
+    expect(dataCampaign.length).to.equal(1);
   });
 };
 
