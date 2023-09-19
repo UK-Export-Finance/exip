@@ -1,4 +1,4 @@
-import { EXTERNAL_API_MAPPINGS, FIELD_VALUES } from '../constants';
+import { EXTERNAL_API_MAPPINGS } from '../constants';
 import { Country } from '../../types';
 
 const {
