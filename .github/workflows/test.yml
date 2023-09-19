@@ -65,7 +65,7 @@ jobs:
   # 2. UI - Unit test cases
   unit-tests:
     name: Unit 👷
-    needs: setup
+    needs: [setup]
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
@@ -105,7 +105,7 @@ jobs:
   # 3. API - API test cases
   api-tests:
     name: API 👷
-    needs: setup
+    needs: [setup]
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
@@ -162,19 +162,38 @@ jobs:
   # 4. E2E - Insurance
   e2e-tests-insurance:
     name: E2E Insurance 👷
-    needs: [setup, unit-tests, api-tests]
+    needs: [setup]
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: true
-      # Single dimension matrix - 10 jobs
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
+      # Single dimension matrix
       matrix:
-        machines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        spec:
+          [
+            "/*.spec.js",
+            "account/**/*.spec.js",
+            "application-submission/**/*.spec.js",
+            "cannot-skip-flow/**/*.spec.js",
+            "check-your-answers/**/*.spec.js",
+            "dashboard/**/*.spec.js",
+            "declarations/**/*.spec.js",
+            "eligibility/**/*.spec.js",
+            "feedback/**/*.spec.js",
+            "no-access-application-submitted/**/*.spec.js",
+            "no-access-to-application/**/*.spec.js",
+            "policy-and-exports/**/*.spec.js",
+            "submit-name-fields-with-special-characters/**/*.spec.js",
+            "task-list/**/*.spec.js",
+            "your-business/**/*.spec.js",
+            "your-buyer/**/*.spec.js",
+          ]
 
     concurrency:
-      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.machines }}
+      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
       cancel-in-progress: true
 
     steps:
@@ -196,48 +215,27 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v6
-        with:
-          install: false
-          record: true
-          parallel: true
-          group: "Insurance"
-          tag: "Machine #${{ matrix.machines }}"
-          browser: chrome
-          project: ./e2e-tests/insurance
-        env:
-          TZ: ${{ env.timezone }}
-          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          API_KEY: ${{ secrets.API_KEY }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
-          MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
-
-      - name: Screenshots
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@main
-        with:
-          name: screenshots
-          path: "./cypress/screenshots"
+        working-directory: ./e2e-tests/insurance
+        run: npx cypress run --config videoRecording=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}" --env TZ=${{ env.timezone }},API_KEY=${{ secrets.API_KEY }},GOV_NOTIFY_EMAIL_RECIPIENT_1=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }},GOV_NOTIFY_EMAIL_RECIPIENT_2=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }},MOCK_ACCOUNT_PASSWORD=${{ secrets.MOCK_ACCOUNT_PASSWORD }}
 
   # 5. E2E - Quote
   e2e-tests-quote:
     name: E2E Quote 👷
-    needs: [setup, unit-tests, api-tests, e2e-tests-insurance]
+    needs: [setup]
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: true
-      # Single dimension matrix - 10 jobs
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
+      # Single dimension matrix
       matrix:
-        machines: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        spec:
+          ["/*.spec.js", "cookies-consent/**/*.spec.js", "quote/**/*.spec.js"]
 
     concurrency:
-      group: e2e-tests-quote-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.machines }}
+      group: e2e-tests-quote-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
       cancel-in-progress: true
 
     steps:
@@ -259,39 +257,31 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v6
-        with:
-          install: false
-          record: true
-          parallel: true
-          group: "Quote"
-          tag: "Machine ${{ matrix.machines }}"
-          browser: chrome
-          project: ./e2e-tests/quote
-        env:
-          TZ: ${{ env.timezone }}
-          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          API_KEY: ${{ secrets.API_KEY }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
-          MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+        working-directory: ./e2e-tests/quote
+        run: npx cypress run --config videoRecording=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}" --env TZ=${{ env.timezone }},API_KEY=${{ secrets.API_KEY }},GOV_NOTIFY_EMAIL_RECIPIENT_1=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }},GOV_NOTIFY_EMAIL_RECIPIENT_2=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }},MOCK_ACCOUNT_PASSWORD=${{ secrets.MOCK_ACCOUNT_PASSWORD }}
 
-      - name: Screenshots
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@main
-        with:
-          name: screenshots
-          path: "./cypress/screenshots"
-
-  # 6. E2E - Switch between services
-  e2e-tests-switch-between-services:
-    name: E2E Switch between services 👷
-    needs: [setup, unit-tests, api-tests, e2e-tests-insurance, e2e-tests-quote]
+  # 6. E2E - Switch
+  e2e-tests-switch:
+    name: E2E Switch 👷
+    needs: [setup]
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
+
+    strategy:
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
+      # Single dimension matrix
+      matrix:
+        spec:
+          [
+            "via-buyer-country-routes/**/*.spec.js",
+            "via-start-now-routes/**/*.spec.js",
+          ]
+
+    concurrency:
+      group: e2e-tests-switch-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
+      cancel-in-progress: true
 
     steps:
       - uses: actions/checkout@v4
@@ -312,27 +302,5 @@ jobs:
         run: sleep 30s
 
       - name: Execute
-        uses: cypress-io/github-action@v6
-        with:
-          install: false
-          record: true
-          parallel: false
-          group: "Switch services"
-          browser: chrome
-          project: ./e2e-tests/switch-between-services
-        env:
-          TZ: ${{ env.timezone }}
-          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          API_KEY: ${{ secrets.API_KEY }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
-          GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
-          MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
-
-      - name: Screenshots
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@main
-        with:
-          name: screenshots
-          path: "./cypress/screenshots"
+        working-directory: ./e2e-tests/switch-between-services
+        run: npx cypress run --config videoRecording=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}" --env TZ=${{ env.timezone }},API_KEY=${{ secrets.API_KEY }},GOV_NOTIFY_EMAIL_RECIPIENT_1=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }},GOV_NOTIFY_EMAIL_RECIPIENT_2=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }},MOCK_ACCOUNT_PASSWORD=${{ secrets.MOCK_ACCOUNT_PASSWORD }}
