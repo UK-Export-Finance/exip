@@ -29,7 +29,7 @@ context('Insurance - Task list - complete `prepare application` group', () => {
     beforeEach(() => {
       cy.saveSession();
 
-      cy.completePrepareApplicationSinglePolicyType({});
+      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
     });
 
     it('should render a `declarations` task with a link and `not started` status', () => {

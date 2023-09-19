@@ -9,7 +9,7 @@ dotenv.config();
  * Cypress configuration
  */
 const cypressConfig = defineConfig({
-  projectId: 'sefntb',
+  video: true,
   numTestsKeptInMemory: 1,
   viewportWidth: 1920,
   viewportHeight: 1080,
@@ -17,7 +17,7 @@ const cypressConfig = defineConfig({
   basicAuthSecret: 'test',
   chromeWebSecurity: false,
   retries: {
-    runMode: 3,
+    runMode: 2,
     openMode: 0,
   },
   e2e: {

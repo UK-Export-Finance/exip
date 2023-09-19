@@ -14,9 +14,14 @@ const task = taskList.prepareApplication.tasks.policyTypeAndExports;
  * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
  * - useDifferentContactEmail: Should submit a different email address in the "exporter contact" details form.
  * - policyAndExportsMaximumValue: should submit an application with the maximum value of 500000
+ * - referenceNumber: Application reference number
  */
 const completePrepareYourApplicationSectionSingle = ({
-  exporterHasTradedWithBuyer, usingBroker, useDifferentContactEmail, policyAndExportsMaximumValue = false,
+  exporterHasTradedWithBuyer,
+  usingBroker,
+  useDifferentContactEmail,
+  policyAndExportsMaximumValue = false,
+  referenceNumber,
 }) => {
   task.link().click();
 
@@ -26,7 +31,7 @@ const completePrepareYourApplicationSectionSingle = ({
 
   submitButton().click();
 
-  cy.completeCompaniesHouseNumberForm({});
+  cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
   cy.completeAndSubmitCompanyDetails();
   cy.completeAndSubmitYourContact({ useDifferentContactEmail });
   cy.completeAndSubmitNatureOfYourBusiness();
