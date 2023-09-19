@@ -2,7 +2,7 @@ import mapCisCountries, { filterCisCountries } from '.';
 import mapCisCountry from './map-CIS-country';
 import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../constants';
 import sortArrayAlphabetically from '../sort-array-alphabetically';
-import mockCisCountries from '../../test-mocks/mock-CIS-countries'
+import mockCisCountries from '../../test-mocks/mock-CIS-countries';
 
 const { CIS } = EXTERNAL_API_DEFINITIONS;
 
@@ -53,9 +53,9 @@ describe('helpers/map-cis-countries', () => {
 
       const result = mapCisCountries(filteredCountries);
 
-      const { 0: firstCountry, 1: secondCountry } = mockCisCountries;
+      const mapped = filteredCountries.map((country) => mapCisCountry(country));
 
-      const expected = sortArrayAlphabetically([mapCisCountry(firstCountry), mapCisCountry(secondCountry)], 'name');
+      const expected = sortArrayAlphabetically(mapped, 'name');
 
       expect(result).toEqual(expected);
     });

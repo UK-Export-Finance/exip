@@ -4533,16 +4533,26 @@ var cannotGetAQuote = (country) => {
 };
 var cannot_get_a_quote_default = cannotGetAQuote;
 
-// helpers/map-CIS-countries/map-CIS-country/can-apply-offline/index.ts
+// helpers/map-CIS-countries/map-CIS-country/can-apply-online/index.ts
 var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
+var canApplyOnline = (originalShortTermCover) => {
+  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.YES) {
+    return true;
+  }
+  return false;
+};
+var can_apply_online_default = canApplyOnline;
+
+// helpers/map-CIS-countries/map-CIS-country/can-apply-offline/index.ts
+var { CIS: CIS4 } = EXTERNAL_API_DEFINITIONS;
 var canApplyOffline = (originalShortTermCover) => {
-  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.ILC) {
+  if (originalShortTermCover === CIS4.SHORT_TERM_COVER_AVAILABLE.ILC) {
     return true;
   }
-  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.CILC) {
+  if (originalShortTermCover === CIS4.SHORT_TERM_COVER_AVAILABLE.CILC) {
     return true;
   }
-  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.REFER) {
+  if (originalShortTermCover === CIS4.SHORT_TERM_COVER_AVAILABLE.REFER) {
     return true;
   }
   return false;
@@ -4561,7 +4571,7 @@ var mapCisCountry = (country) => {
   mapped.canGetAQuoteOnline = can_get_a_quote_online_default(mapped);
   mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default(mapped);
   mapped.cannotGetAQuote = cannot_get_a_quote_default(mapped);
-  mapped.canApplyOnline = mapped.shortTermCover;
+  mapped.canApplyOnline = can_apply_online_default(country.shortTermCoverAvailabilityDesc);
   mapped.canApplyOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
   mapped.cannotApply = !mapped.canApplyOnline && !mapped.canApplyOffline;
   return mapped;
@@ -4573,8 +4583,8 @@ var sortArrayAlphabetically = (arr, field) => arr.sort((a, b) => a[field].locale
 var sort_array_alphabetically_default = sortArrayAlphabetically;
 
 // helpers/map-CIS-countries/index.ts
-var { CIS: CIS4 } = EXTERNAL_API_DEFINITIONS;
-var filterCisCountries = (countries) => countries.filter((country) => !CIS4.INVALID_COUNTRIES.includes(country.marketName));
+var { CIS: CIS5 } = EXTERNAL_API_DEFINITIONS;
+var filterCisCountries = (countries) => countries.filter((country) => !CIS5.INVALID_COUNTRIES.includes(country.marketName));
 var mapCisCountries = (countries) => {
   const filteredCountries = filterCisCountries(countries);
   const mapped = filteredCountries.map((country) => map_CIS_country_default(country));

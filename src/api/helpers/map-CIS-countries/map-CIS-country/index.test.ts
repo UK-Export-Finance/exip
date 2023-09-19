@@ -5,6 +5,7 @@ import mapNbiIssueAvailable from './map-NBI-issue-available';
 import canGetAQuoteOnline from './can-get-a-quote-online';
 import canGetAQuoteByEmail from './can-get-a-quote-by-email';
 import cannotGetAQuote from './cannot-get-a-quote';
+import canApplyOnline from './can-apply-online';
 import canApplyOffline from './can-apply-offline';
 import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../../constants';
 import mockCisCountries from '../../../test-mocks/mock-CIS-countries';
@@ -44,7 +45,7 @@ describe('helpers/map-cis-countries/map-cis-country', () => {
     mapped.canGetAQuoteByEmail = canGetAQuoteByEmail(mapped);
 
     mapped.cannotGetAQuote = cannotGetAQuote(mapped);
-    mapped.canApplyOnline = mapped.shortTermCover;
+    mapped.canApplyOnline = canApplyOnline(mockCountryBase.shortTermCoverAvailabilityDesc);
     mapped.canApplyOffline = canApplyOffline(mockCountryBase.shortTermCoverAvailabilityDesc);
 
     mapped.cannotApply = !mapped.canApplyOnline && !mapped.canApplyOffline;
