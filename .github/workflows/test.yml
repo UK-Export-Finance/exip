@@ -232,7 +232,7 @@ jobs:
       # Single dimension matrix
       matrix:
         spec:
-          ["/*.spec.js", "cookie-consent/**/*.spec.js", "quote/**/*.spec.js"]
+          ["/*.spec.js", "cookies-consent/**/*.spec.js", "quote/**/*.spec.js"]
 
     concurrency:
       group: e2e-tests-quote-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
