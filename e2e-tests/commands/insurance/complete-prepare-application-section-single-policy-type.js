@@ -28,6 +28,7 @@ const completePrepareYourApplicationSectionSingle = ({
   cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
   cy.completeAndSubmitSingleContractPolicyForm({ policyAndExportsMaximumValue });
   cy.completeAndSubmitAboutGoodsOrServicesForm();
+  cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
 
   submitButton().click();
 

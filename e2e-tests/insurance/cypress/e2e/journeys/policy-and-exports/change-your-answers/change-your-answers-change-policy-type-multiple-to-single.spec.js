@@ -51,6 +51,7 @@ context('Insurance - Policy and exports - Change your answers - Policy type - mu
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
       cy.completeAndSubmitMultipleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
 
       checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       changeLinkHref = `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_CHANGE}`;
@@ -105,8 +106,10 @@ context('Insurance - Policy and exports - Change your answers - Policy type - mu
 
         cy.assertUrl(`${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}#heading`);
 
-        // proceed to "check your answers"
+        // proceed to "name on policy"
         submitButton().click();
+        // proceed to "check your answers"
+        cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
 
         const expectedUrl = `${checkYourAnswersUrl}#heading`;
 
