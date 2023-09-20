@@ -1,6 +1,6 @@
 // CIS = Country Information System
 
-export const API = {
+export const EXTERNAL_API_DEFINITIONS = {
   CIS: {
     RISK: {
       VERY_HIGH: 'Very High',
@@ -20,7 +20,10 @@ export const API = {
     },
     INVALID_COUNTRIES: ['EC Market n/k', 'Non EC Market n/k', 'Non UK', 'Third Country'],
   },
-  MAPPINGS: {
+};
+
+export const EXTERNAL_API_MAPPINGS = {
+  CIS: {
     RISK: {
       VERY_HIGH: 'Very High',
       HIGH: 'High',

@@ -3,7 +3,6 @@ import mockAccount from './mock-account';
 import mockAnswers from './mock-answers';
 import mockSession from './mock-session';
 import mockQuote from './mock-quote';
-import mockCisCountries from './mock-cis-countries';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
 import mockCompany from './mock-company';
@@ -98,7 +97,6 @@ export {
   mockBusinessNatureOfBusiness,
   mockBusinessTurnover,
   mockBuyer,
-  mockCisCountries,
   mockCountries,
   mockCompany,
   mockCurrencies,

@@ -6,12 +6,12 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import { validation as generateValidationErrors } from '../../../../shared-validation/buyer-country';
 import api from '../../../../api';
-import { mapCisCountries } from '../../../../helpers/mappings/map-cis-countries';
+import mapCountries from '../../../../helpers/mappings/map-countries';
 import getCountryByName from '../../../../helpers/get-country-by-name';
 import mapSubmittedEligibilityCountry from '../../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Country, Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockAnswers, mockSession, mockCisCountries } from '../../../../test-mocks';
+import { mockReq, mockRes, mockSession, mockCountries } from '../../../../test-mocks';
 
 const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -19,9 +19,9 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
   let req: Request;
   let res: Response;
 
-  const mockCountriesResponse = mockCisCountries;
+  let mockCountriesResponse = mockCountries;
 
-  const { 0: countryUnsupported, 1: countrySupported, 3: countrySupportedViaOfflineOnly } = mockCountriesResponse;
+  const { 1: countryApplyOnline, 3: countryApplyOffline, 4: countryCannotApply } = mockCountriesResponse;
   const mockFlash = jest.fn();
 
   beforeEach(() => {
@@ -61,17 +61,17 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
   });
 
   describe('get', () => {
-    let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+    let getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
     beforeEach(() => {
       delete req.session.submittedData.quoteEligibility[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
-      api.external.getCountries = getCountriesSpy;
+      api.keystone.APIM.getCisCountries = getCisCountriesSpy;
     });
 
-    it('should call api.external.getCountries', async () => {
+    it('should call api.keystone.APIM.getCisCountries', async () => {
       await get(req, res);
 
-      expect(getCountriesSpy).toHaveBeenCalledTimes(1);
+      expect(getCisCountriesSpy).toHaveBeenCalledTimes(1);
     });
 
     it('should render template', async () => {
@@ -81,7 +81,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         ...singleInputPageVariables(PAGE_VARIABLES),
         BACK_LINK: req.headers.referer,
         userName: getUserNameFromSession(req.session.user),
-        countries: mapCisCountries(mockCountriesResponse),
+        countries: mapCountries(mockCountriesResponse),
         submittedValues: req.session.submittedData.insuranceEligibility,
       };
 
@@ -130,7 +130,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
         await get(req, res);
 
-        const expectedCountries = mapCisCountries(
+        const expectedCountries = mapCountries(
           mockCountriesResponse,
           req.session.submittedData.insuranceEligibility[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY].isoCode,
         );
@@ -147,10 +147,10 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       });
     });
 
-    describe('when the CIS (country information system) API call fails', () => {
+    describe('when the get CIS countries API call fails', () => {
       beforeEach(() => {
-        getCountriesSpy = jest.fn(() => Promise.reject());
-        api.external.getCountries = getCountriesSpy;
+        getCisCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -159,10 +159,10 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       });
     });
 
-    describe('when the CIS (country information system) API does not return a populated array', () => {
+    describe('when the get CIS countries API call does not return a populated array', () => {
       beforeEach(() => {
-        getCountriesSpy = jest.fn(() => Promise.resolve([]));
-        api.external.getCountries = getCountriesSpy;
+        getCisCountriesSpy = jest.fn(() => Promise.resolve([]));
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -173,12 +173,10 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
   });
 
   describe('post', () => {
-    let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
-
-    const mappedCountries = mapCisCountries(mockCountriesResponse);
+    let getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
     beforeEach(() => {
-      api.external.getCountries = getCountriesSpy;
+      api.keystone.APIM.getCisCountries = getCisCountriesSpy;
     });
 
     describe('when there are validation errors', () => {
@@ -191,7 +189,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
           ...singleInputPageVariables(PAGE_VARIABLES),
           userName: getUserNameFromSession(req.session.user),
           BACK_LINK: req.headers.referer,
-          countries: mapCisCountries(mockCountriesResponse),
+          countries: mapCountries(mockCountriesResponse),
           validationErrors: generateValidationErrors(payload),
         });
       });
@@ -210,22 +208,28 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
     });
 
     describe('when the country can apply for an application online', () => {
-      const selectedCountryName = mockAnswers[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
+      const selectedCountryName = countryApplyOnline.name;
 
       const validBody = {
-        [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: countrySupported.marketName,
+        [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: selectedCountryName,
       };
 
       beforeEach(() => {
         req.body = validBody;
+
+        mockCountriesResponse = [countryApplyOnline];
+
+        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
       it('should update the session with populated with country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByName(mappedCountries, selectedCountryName) as Country;
+        const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
 
-        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, true);
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, selectedCountry.canApplyOnline);
 
         const expected = {
           ...req.session.submittedData,
@@ -237,21 +241,30 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION}`, async () => {
         await post(req, res);
+
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
       });
     });
 
     describe('when the submitted country can only apply for an application offline', () => {
+      const selectedCountryName = countryApplyOffline.name;
+
       beforeEach(() => {
-        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = countrySupportedViaOfflineOnly.marketName;
+        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryName;
+
+        mockCountriesResponse = [countryApplyOffline];
+
+        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
-      it('should update the session with populated with country object', async () => {
+      it('should update the session with populated country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByName(mappedCountries, countrySupportedViaOfflineOnly.marketName) as Country;
+        const selectedCountry = getCountryByName(mockCountriesResponse, countryApplyOffline.name) as Country;
 
-        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, false);
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, selectedCountry.canApplyOnline);
 
         const expected = {
           ...req.session.submittedData,
@@ -263,21 +276,30 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
       it(`should redirect to ${ROUTES.INSURANCE.APPLY_OFFLINE}`, async () => {
         await post(req, res);
+
         expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.APPLY_OFFLINE);
       });
     });
 
     describe('when the submitted country cannot apply for an application', () => {
+      const selectedCountryName = countryCannotApply.name;
+
       beforeEach(() => {
-        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = countryUnsupported.marketName;
+        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryName;
+
+        mockCountriesResponse = [countryCannotApply];
+
+        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
       it('should update the session with populated with country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByName(mappedCountries, countryUnsupported.marketName) as Country;
+        const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
 
-        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, false);
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, countryCannotApply.canApplyOnline);
 
         const expected = {
           ...req.session.submittedData,
@@ -290,12 +312,10 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       it('should add exitReason to req.flash', async () => {
         await post(req, res);
 
-        const countryName = countryUnsupported.marketName;
-
         const { CANNOT_APPLY } = PAGES;
         const { REASON } = CANNOT_APPLY;
 
-        const expectedReason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${countryName}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
+        const expectedReason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${selectedCountryName}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
 
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
@@ -307,10 +327,10 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       });
     });
 
-    describe('when the CIS (country information system) API call fails', () => {
+    describe('when the get CIS countries API call fails', () => {
       beforeEach(() => {
-        getCountriesSpy = jest.fn(() => Promise.reject());
-        api.external.getCountries = getCountriesSpy;
+        getCisCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -319,10 +339,10 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       });
     });
 
-    describe('when the CIS (country information system) API does not return a populated array', () => {
+    describe('when the get CIS countries API call does not return a populated array', () => {
       beforeEach(() => {
-        getCountriesSpy = jest.fn(() => Promise.resolve([]));
-        api.external.getCountries = getCountriesSpy;
+        getCisCountriesSpy = jest.fn(() => Promise.resolve([]));
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

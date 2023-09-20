@@ -1,4 +1,4 @@
-import { API, FIELD_VALUES } from '../../constants';
+import { EXTERNAL_API_MAPPINGS, FIELD_VALUES } from '../../constants';
 import PRICING_GRID from '../pricing-grid.json';
 import { PricingGrid, PricingGridMonth, PricingGridRate } from '../../../types';
 
@@ -8,9 +8,9 @@ const PRICING_GRID_MAP = {
     [FIELD_VALUES.POLICY_TYPE.MULTIPLE]: 'MULTIPLE_POLICY',
   },
   RISK_CATEGORY: {
-    [API.MAPPINGS.RISK.STANDARD]: 'STANDARD',
-    [API.MAPPINGS.RISK.HIGH]: 'HIGH',
-    [API.MAPPINGS.RISK.VERY_HIGH]: 'VERY_HIGH',
+    [EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD]: 'STANDARD',
+    [EXTERNAL_API_MAPPINGS.CIS.RISK.HIGH]: 'HIGH',
+    [EXTERNAL_API_MAPPINGS.CIS.RISK.VERY_HIGH]: 'VERY_HIGH',
   },
 };
 

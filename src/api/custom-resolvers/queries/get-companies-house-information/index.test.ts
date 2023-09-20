@@ -5,7 +5,7 @@ import getIndustrySectorNames from '../../../integrations/industry-sector';
 import mockCompanyAPIResponse from '../../../test-mocks/mock-company-api-response';
 import mockIndustrySectors from '../../../test-mocks/mock-industry-sectors';
 
-describe('getCompaniesHouseInformation', () => {
+describe('custom-resolvers/get-companies-house-information', () => {
   jest.mock('../../../integrations/companies-house');
   jest.mock('../../../integrations/industry-sector');
 

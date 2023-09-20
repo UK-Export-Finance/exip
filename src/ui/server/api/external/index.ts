@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import axios, { AxiosResponse, RawAxiosRequestConfig } from 'axios';
-import { EXTERNAL_API_ENDPOINTS } from '../../constants';
+import { EXTERNAL_API_ENDPOINTS } from '../../constants/external-apis';
 
 dotenv.config();
 

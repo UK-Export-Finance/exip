@@ -190,6 +190,20 @@ const typeDefs = `
     referenceNumber: Int
   }
 
+  type MappedCisCountry {
+    isoCode: String!
+    name: String
+    shortTermCover: Boolean
+    riskCategory: String
+    nbiIssueAvailable: Boolean
+    canGetAQuoteOnline: Boolean
+    canGetAQuoteByEmail: Boolean
+    cannotGetAQuote: Boolean
+    canApplyOnline: Boolean
+    canApplyOffline: Boolean
+    cannotApply: Boolean
+  }
+
   type Mutation {
     """ create an account """
     createAnAccount(
@@ -317,6 +331,9 @@ const typeDefs = `
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
+
+    """ get CIS countries from APIM """
+    getApimCisCountries: [MappedCisCountry]
   }
 `;
 

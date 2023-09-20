@@ -1,19 +1,15 @@
 import generatePaginationItems from '.';
-import getTotalPages from '../get-total-pages';
-import { MAX_APPLICATIONS_PER_PAGE } from '../../../constants';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 
 const { DASHBOARD_PAGE } = INSURANCE_ROUTES;
 
-let mockTotalApplications = 100;
+let mockPagesToCreate = 100;
 
 describe('server/helpers/pagination/generate-pagination-items', () => {
   it('should return an array of pagination items', () => {
-    const result = generatePaginationItems(mockTotalApplications);
+    const result = generatePaginationItems(mockPagesToCreate);
 
-    const pagesToCreate = getTotalPages(mockTotalApplications);
-
-    const expected = [...Array(pagesToCreate)].map((x, index) => {
+    const expected = [...Array(mockPagesToCreate)].map((x, index) => {
       const pageNumber = index + 1;
 
       return { url: `${DASHBOARD_PAGE}/${pageNumber}` };
@@ -22,11 +18,11 @@ describe('server/helpers/pagination/generate-pagination-items', () => {
     expect(result).toEqual(expected);
   });
 
-  describe('when pagesToCreate is not greater than 1', () => {
+  describe('when pagesToCreate is NOT greater than 1', () => {
     it('should return an empty array', () => {
-      mockTotalApplications = MAX_APPLICATIONS_PER_PAGE;
+      mockPagesToCreate = 0;
 
-      const result = generatePaginationItems(mockTotalApplications);
+      const result = generatePaginationItems(mockPagesToCreate);
 
       expect(result).toEqual([]);
     });
