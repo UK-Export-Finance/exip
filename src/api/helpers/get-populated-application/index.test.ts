@@ -20,7 +20,7 @@ describe('api/helpers/get-populated-application', () => {
     applicationIds = {
       id: application.id,
       eligibilityId: application.eligibility.id,
-      policyAndExportId: application.policyAndExport.id,
+      policyId: application.policy.id,
       ownerId: application.owner.id,
       companyId: application.company.id,
       businessId: application.business.id,
@@ -34,7 +34,7 @@ describe('api/helpers/get-populated-application', () => {
     const result = await getPopulatedApplication(context, applicationIds);
 
     expect(result.eligibility.id).toEqual(application.eligibility.id);
-    expect(result.policyAndExport.id).toEqual(application.policyAndExport.id);
+    expect(result.policy.id).toEqual(application.policy.id);
     expect(result.owner.id).toEqual(application.owner.id);
     expect(result.company.id).toEqual(application.company.id);
     expect(result.companySicCodes[0].companyId).toEqual(application.company.id);
@@ -68,7 +68,7 @@ describe('api/helpers/get-populated-application', () => {
   });
 
   it('should throw an error when eligibility does not exist', async () => {
-    const invalidId = applicationIds.policyAndExportId;
+    const invalidId = applicationIds.policyId;
 
     try {
       await getPopulatedApplication(context, { ...applicationIds, eligibilityId: invalidId });
@@ -79,7 +79,7 @@ describe('api/helpers/get-populated-application', () => {
   });
 
   it('should throw an error when exporter does not exist', async () => {
-    const invalidId = applicationIds.policyAndExportId;
+    const invalidId = applicationIds.policyId;
 
     try {
       await getPopulatedApplication(context, { ...applicationIds, accountId: invalidId });
@@ -90,7 +90,7 @@ describe('api/helpers/get-populated-application', () => {
   });
 
   it('should throw an error when buyerCountry does not exist', async () => {
-    const invalidId = applicationIds.policyAndExportId;
+    const invalidId = applicationIds.policyId;
 
     try {
       await getPopulatedApplication(context, { ...applicationIds, buyerCountryId: invalidId });
@@ -100,13 +100,13 @@ describe('api/helpers/get-populated-application', () => {
     }
   });
 
-  it('should throw an error when policyAndExport does not exist', async () => {
+  it('should throw an error when policy does not exist', async () => {
     const invalidId = applicationIds.id;
 
     try {
-      await getPopulatedApplication(context, { ...applicationIds, policyAndExportId: invalidId });
+      await getPopulatedApplication(context, { ...applicationIds, policyId: invalidId });
     } catch (err) {
-      const expected = new Error(generateErrorMessage('policyAndExport', applicationIds.id));
+      const expected = new Error(generateErrorMessage('policy', applicationIds.id));
       expect(err).toEqual(expected);
     }
   });

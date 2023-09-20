@@ -27,7 +27,7 @@ export const XLSX = {
   SECTION_TITLES: {
     KEY_INFORMATION: 'Key information',
     EXPORTER_CONTACT_DETAILS: 'Exporter contact details',
-    POLICY_AND_EXPORT: 'Type of policy and exports',
+    POLICY_AND_EXPORT: 'Type of policys',
     EXPORTER_BUSINESS: 'About your business',
     BUYER: 'Your buyer',
     ELIGIBILITY: 'Eligibility',

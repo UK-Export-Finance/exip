@@ -30,14 +30,14 @@ const mockGenericPolicyAndExport = {
   policyCurrencyCode: mockCurrencies[0].isoCode,
 };
 
-export const mockSinglePolicyAndExport = {
+export const mockSinglePolicy = {
   ...mockGenericPolicyAndExport,
   policyType: APPLICATION.POLICY_TYPE.SINGLE,
   contractCompletionDate: add(new Date(), { months: 3 }),
   totalValueOfContract: 1500,
 };
 
-export const mockMultiplePolicyAndExport = {
+export const mockMultiplePolicy = {
   ...mockGenericPolicyAndExport,
   policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
   totalMonthsOfCover: 5,
@@ -108,7 +108,7 @@ export const mockApplicationBuyer = {
 export const mockSectionReview = {
   id: 'clflcq9w4002moqzlnr5yhamr',
   eligibility: true,
-  policyAndExport: true,
+  policy: true,
   business: true,
   buyer: true,
 };
@@ -140,9 +140,9 @@ const mockApplication = {
   },
   status: APPLICATION.STATUS.SUBMITTED,
   owner: mockAccount,
-  policyAndExport: {
+  policy: {
     id: 'clav8by1i0007kgoqies0dbfc',
-    ...mockSinglePolicyAndExport,
+    ...mockSinglePolicy,
   },
   company: mockCompany,
   companySicCodes: [mockCompanySicCode, mockCompanySicCode],
@@ -164,7 +164,7 @@ const mockApplication = {
 
 export const mockApplicationMultiplePolicy = {
   ...mockApplication,
-  policyAndExport: mockMultiplePolicyAndExport,
+  policy: mockMultiplePolicy,
 } as Application;
 
 export default mockApplication;

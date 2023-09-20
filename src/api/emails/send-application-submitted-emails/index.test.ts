@@ -49,7 +49,7 @@ describe('emails/send-email-application-submitted', () => {
     let expectedContactSendEmailVars: ApplicationSubmissionEmailVariables;
 
     beforeEach(() => {
-      const { referenceNumber, owner, company, buyer, policyAndExport, business } = application;
+      const { referenceNumber, owner, company, buyer, policy, business } = application;
       const { email } = owner;
       const { companyName } = company;
       const { companyOrOrganisationName } = buyer;
@@ -60,7 +60,7 @@ describe('emails/send-email-application-submitted', () => {
         buyerName: companyOrOrganisationName,
         buyerLocation: buyer.country?.name,
         companyName,
-        requestedStartDate: formatDate(policyAndExport.requestedStartDate),
+        requestedStartDate: formatDate(policy.requestedStartDate),
       };
 
       expectedSendEmailVars = {

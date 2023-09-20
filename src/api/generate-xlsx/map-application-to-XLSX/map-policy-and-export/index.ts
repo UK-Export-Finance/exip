@@ -30,47 +30,44 @@ const {
 } = FIELD_IDS.POLICY_AND_EXPORTS;
 
 export const mapPolicyAndExportIntro = (application: Application) => {
-  const { policyAndExport } = application;
+  const { policy } = application;
 
   const mapped = [
     xlsxRow(XLSX.SECTION_TITLES.POLICY_AND_EXPORT, ''),
-    xlsxRow(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE]),
-    xlsxRow(String(CONTENT_STRINGS[REQUESTED_START_DATE].SUMMARY?.TITLE), formatDate(policyAndExport[REQUESTED_START_DATE], 'dd-MMM-yy')),
+    xlsxRow(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policy[POLICY_TYPE]),
+    xlsxRow(String(CONTENT_STRINGS[REQUESTED_START_DATE].SUMMARY?.TITLE), formatDate(policy[REQUESTED_START_DATE], 'dd-MMM-yy')),
   ];
 
   return mapped;
 };
 
 export const mapSinglePolicyFields = (application: Application) => {
-  const { policyAndExport } = application;
+  const { policy } = application;
 
   return [
-    xlsxRow(String(CONTENT_STRINGS.SINGLE[CONTRACT_COMPLETION_DATE].SUMMARY?.TITLE), formatDate(policyAndExport[CONTRACT_COMPLETION_DATE], 'dd-MMM-yy')),
-    xlsxRow(String(CONTENT_STRINGS.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), formatCurrency(policyAndExport[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE)),
+    xlsxRow(String(CONTENT_STRINGS.SINGLE[CONTRACT_COMPLETION_DATE].SUMMARY?.TITLE), formatDate(policy[CONTRACT_COMPLETION_DATE], 'dd-MMM-yy')),
+    xlsxRow(String(CONTENT_STRINGS.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), formatCurrency(policy[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE)),
   ];
 };
 
 export const mapMultiplePolicyFields = (application: Application) => {
-  const { policyAndExport } = application;
+  const { policy } = application;
 
   return [
-    xlsxRow(String(CONTENT_STRINGS.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), mapMonthString(policyAndExport[TOTAL_MONTHS_OF_COVER])),
-    xlsxRow(String(CONTENT_STRINGS.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), formatCurrency(policyAndExport[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
-    xlsxRow(
-      String(CONTENT_STRINGS.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE),
-      formatCurrency(policyAndExport[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE),
-    ),
+    xlsxRow(String(CONTENT_STRINGS.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), mapMonthString(policy[TOTAL_MONTHS_OF_COVER])),
+    xlsxRow(String(CONTENT_STRINGS.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), formatCurrency(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
+    xlsxRow(String(CONTENT_STRINGS.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), formatCurrency(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE)),
   ];
 };
 
 export const mapPolicyAndExportOutro = (application: Application) => {
-  const { policyAndExport } = application;
+  const { policy } = application;
 
   const mapped = [
-    xlsxRow(String(CONTENT_STRINGS[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policyAndExport[CREDIT_PERIOD_WITH_BUYER]),
-    xlsxRow(String(CONTENT_STRINGS[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policyAndExport[POLICY_CURRENCY_CODE]),
-    xlsxRow(String(CONTENT_STRINGS[DESCRIPTION].SUMMARY?.TITLE), policyAndExport[DESCRIPTION]),
-    xlsxRow(String(CONTENT_STRINGS[FINAL_DESTINATION].SUMMARY?.TITLE), policyAndExport[FINAL_DESTINATION].name),
+    xlsxRow(String(CONTENT_STRINGS[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policy[CREDIT_PERIOD_WITH_BUYER]),
+    xlsxRow(String(CONTENT_STRINGS[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
+    xlsxRow(String(CONTENT_STRINGS[DESCRIPTION].SUMMARY?.TITLE), policy[DESCRIPTION]),
+    xlsxRow(String(CONTENT_STRINGS[FINAL_DESTINATION].SUMMARY?.TITLE), policy[FINAL_DESTINATION].name),
   ];
 
   return mapped;
@@ -78,14 +75,14 @@ export const mapPolicyAndExportOutro = (application: Application) => {
 
 /**
  * mapPolicyAndExport
- * Map an application's policy and export fields into an array of objects for XLSX generation
+ * Map an application's policy fields into an array of objects for XLSX generation
  * @param {Object} Application
  * @returns {Array} Array of objects for XLSX generation
  */
 const mapPolicyAndExport = (application: Application) => {
   let mapped = mapPolicyAndExportIntro(application);
 
-  const policyType = application.policyAndExport[POLICY_TYPE];
+  const policyType = application.policy[POLICY_TYPE];
 
   if (isSinglePolicyType(policyType)) {
     mapped = [...mapped, ...mapSinglePolicyFields(application)];

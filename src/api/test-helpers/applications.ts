@@ -1,7 +1,7 @@
 import { Application, TestHelperApplicationCreate, TestHelperApplicationGet, TestHelperApplicationUpdate } from '../types';
 
 const applicationQuery =
-  'id createdAt updatedAt referenceNumber dealType submissionCount submissionDeadline submissionType status previousStatus version eligibility { id } policyAndExport { id } owner { id } company { id } business { id businessContactDetail { id } } broker { id } buyer { id } sectionReview { id } declaration { id }';
+  'id createdAt updatedAt referenceNumber dealType submissionCount submissionDeadline submissionType status previousStatus version eligibility { id } policy { id } owner { id } company { id } business { id businessContactDetail { id } } broker { id } buyer { id } sectionReview { id } declaration { id }';
 
 /**
  * create application test helper

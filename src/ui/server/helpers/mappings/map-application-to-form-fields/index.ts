@@ -35,20 +35,20 @@ const mapApplicationToFormFields = (application?: Application): object => {
       mapped[SUBMISSION_DEADLINE] = formatDate(application[SUBMISSION_DEADLINE]);
     }
 
-    if (application?.policyAndExport?.[REQUESTED_START_DATE]) {
-      const timestamp = application.policyAndExport[REQUESTED_START_DATE];
+    if (application?.policy?.[REQUESTED_START_DATE]) {
+      const timestamp = application.policy[REQUESTED_START_DATE];
 
-      mapped.policyAndExport = {
-        ...mapped.policyAndExport,
+      mapped.policy = {
+        ...mapped.policy,
         ...getDateFieldsFromTimestamp(timestamp, REQUESTED_START_DATE),
       };
     }
 
-    if (application?.policyAndExport?.[CONTRACT_COMPLETION_DATE]) {
-      const timestamp = application.policyAndExport[CONTRACT_COMPLETION_DATE];
+    if (application?.policy?.[CONTRACT_COMPLETION_DATE]) {
+      const timestamp = application.policy[CONTRACT_COMPLETION_DATE];
 
-      mapped.policyAndExport = {
-        ...mapped.policyAndExport,
+      mapped.policy = {
+        ...mapped.policy,
         ...getDateFieldsFromTimestamp(timestamp, CONTRACT_COMPLETION_DATE),
       };
     }

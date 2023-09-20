@@ -95,7 +95,7 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     // save the application
-    const saveResponse = await mapAndSave.policyAndExport(payload, application);
+    const saveResponse = await mapAndSave.policy(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

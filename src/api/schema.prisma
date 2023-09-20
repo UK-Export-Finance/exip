@@ -32,8 +32,8 @@ model Application {
   submissionType                   String?           @default("Manual Inclusion Application")
   status                           String            @default("")
   previousStatus                   String            @default("")
-  policyAndExport                  PolicyAndExport?  @relation("Application_policyAndExport", fields: [policyAndExportId], references: [id])
-  policyAndExportId                String?           @map("policyAndExport")
+  policy                           Policy?           @relation("Application_policy", fields: [policyId], references: [id])
+  policyId                         String?           @map("policy")
   owner                            Account?          @relation("Application_owner", fields: [ownerId], references: [id])
   ownerId                          String?           @map("owner")
   business                         Business?         @relation("Application_business", fields: [businessId], references: [id])
@@ -51,7 +51,7 @@ model Application {
   version                          String            @default("1")
   dealType                         String            @default("EXIP") @mysql.VarChar(4)
   from_ReferenceNumber_application ReferenceNumber[] @relation("ReferenceNumber_application")
-  from_PolicyAndExport_application PolicyAndExport[] @relation("PolicyAndExport_application")
+  from_Policy_application          Policy[]          @relation("Policy_application")
   from_Account_applications        Account[]         @relation("Account_applications")
   from_Business_application        Business[]        @relation("Business_application")
   from_Broker_application          Broker[]          @relation("Broker_application")
@@ -63,7 +63,7 @@ model Application {
 
   @@index([eligibilityId])
   @@index([referenceNumber])
-  @@index([policyAndExportId])
+  @@index([policyId])
   @@index([ownerId])
   @@index([businessId])
   @@index([companyId])
@@ -73,22 +73,22 @@ model Application {
   @@index([declarationId])
 }
 
-model PolicyAndExport {
-  id                               String        @id @default(cuid())
-  application                      Application?  @relation("PolicyAndExport_application", fields: [applicationId], references: [id])
-  applicationId                    String?       @map("application")
-  policyType                       String?
-  requestedStartDate               DateTime?
-  contractCompletionDate           DateTime?
-  totalValueOfContract             Int?
-  creditPeriodWithBuyer            String        @default("")
-  policyCurrencyCode               String        @default("") @mysql.VarChar(1000)
-  totalMonthsOfCover               Int?
-  totalSalesToBuyer                Int?
-  maximumBuyerWillOwe              Int?
-  goodsOrServicesDescription       String        @default("") @mysql.VarChar(1000)
-  finalDestinationCountryCode      String        @default("")
-  from_Application_policyAndExport Application[] @relation("Application_policyAndExport")
+model Policy {
+  id                          String        @id @default(cuid())
+  application                 Application?  @relation("Policy_application", fields: [applicationId], references: [id])
+  applicationId               String?       @map("application")
+  policyType                  String?
+  requestedStartDate          DateTime?
+  contractCompletionDate      DateTime?
+  totalValueOfContract        Int?
+  creditPeriodWithBuyer       String        @default("")
+  policyCurrencyCode          String        @default("") @mysql.VarChar(1000)
+  totalMonthsOfCover          Int?
+  totalSalesToBuyer           Int?
+  maximumBuyerWillOwe         Int?
+  goodsOrServicesDescription  String        @default("") @mysql.VarChar(1000)
+  finalDestinationCountryCode String        @default("")
+  from_Application_policy     Application[] @relation("Application_policy")
 
   @@index([applicationId])
 }
@@ -286,7 +286,7 @@ model SectionReview {
   application                    Application?  @relation("SectionReview_application", fields: [applicationId], references: [id])
   applicationId                  String?       @map("application")
   eligibility                    Boolean?
-  policyAndExport                Boolean?
+  policy                         Boolean?
   business                       Boolean?
   buyer                          Boolean?
   from_Application_sectionReview Application[] @relation("Application_sectionReview")

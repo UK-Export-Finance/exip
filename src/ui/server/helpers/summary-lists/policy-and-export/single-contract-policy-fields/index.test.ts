@@ -6,7 +6,7 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
 import formatCurrency from '../../../format-currency';
-import mockApplication, { mockSinglePolicyAndExport } from '../../../../test-mocks/mock-application';
+import mockApplication, { mockSinglePolicy } from '../../../../test-mocks/mock-application';
 
 const {
   CONTRACT_POLICY: {
@@ -22,7 +22,7 @@ const {
 } = ROUTES;
 
 describe('server/helpers/summary-lists/policy-and-export/single-contract-policy-fields', () => {
-  const mockAnswers = mockSinglePolicyAndExport;
+  const mockAnswers = mockSinglePolicy;
   const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
