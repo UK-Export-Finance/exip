@@ -27,4 +27,10 @@ export const POLICY_AND_EXPORTS = {
     DESCRIPTION: 'goodsOrServicesDescription',
     FINAL_DESTINATION: 'finalDestinationCountryCode',
   },
+  NAME_ON_POLICY: {
+    NAME: 'nameOnPolicy',
+    SAME_NAME: 'sameName',
+    OTHER_NAME: 'otherName',
+    POSITION: 'position',
+  },
 };

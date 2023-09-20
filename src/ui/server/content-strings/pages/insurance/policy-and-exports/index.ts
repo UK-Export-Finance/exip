@@ -23,6 +23,12 @@ const ABOUT_GOODS_OR_SERVICES = {
   PAGE_TITLE: 'About the goods or services',
 };
 
+const NAME_ON_POLICY = {
+  ...SHARED,
+  PAGE_TITLE: 'Whose name should be on the policy?',
+  HINT: "This should be the person who will sign the contract on behalf of your organisation. We call this the 'authorised signatory.' We'll still contact you about your application's progress even if you're not named on the policy.",
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -34,4 +40,5 @@ export default {
   MULTIPLE_CONTRACT_POLICY,
   ABOUT_GOODS_OR_SERVICES,
   CHECK_YOUR_ANSWERS,
+  NAME_ON_POLICY,
 };
