@@ -9,32 +9,32 @@ import {
   PAGES,
 } from '../../../../../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 
 const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.NAME_ON_POLICY;
 
 const {
-  INSURANCE: {
-    ROOT: INSURANCE_ROOT,
-    POLICY_AND_EXPORTS: {
-      ABOUT_GOODS_OR_SERVICES,
-      CHECK_YOUR_ANSWERS,
-      NAME_ON_POLICY,
-    },
+  ROOT: INSURANCE_ROOT,
+  POLICY_AND_EXPORTS: {
+    ABOUT_GOODS_OR_SERVICES,
+    CHECK_YOUR_ANSWERS,
+    NAME_ON_POLICY,
   },
-} = ROUTES;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      NAME_ON_POLICY: {
-        NAME, POSITION, SAME_NAME, OTHER_NAME,
-      },
+  POLICY_AND_EXPORTS: {
+    NAME_ON_POLICY: {
+      NAME, POSITION, SAME_NAME, OTHER_NAME,
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy and exports - Name on Policy page - I want to enter the details of my export and policy, So that UKEF will have clarity on who to contact while processing my Export Insurance Application', () => {
   let referenceNumber;
@@ -51,7 +51,7 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
 
       cy.assertUrl(url);
     });
@@ -116,7 +116,7 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
 
       cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(expectedUrl);
     });
   });

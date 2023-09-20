@@ -61,21 +61,15 @@ export const get = async (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
   const refNumber = Number(referenceNumber);
 
-  try {
-    return res.render(TEMPLATE, {
-      ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.NAME_ON_POLICY,
-        BACK_LINK: req.headers.referer,
-      }),
-      ...pageVariables(refNumber),
-      userName: getUserNameFromSession(req.session.user),
-      application,
-    });
-  } catch (err) {
-    console.error('Error getting Name on policy page %O', err);
-
-    return res.redirect(PROBLEM_WITH_SERVICE);
-  }
+  return res.render(TEMPLATE, {
+    ...insuranceCorePageVariables({
+      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.NAME_ON_POLICY,
+      BACK_LINK: req.headers.referer,
+    }),
+    ...pageVariables(refNumber),
+    userName: getUserNameFromSession(req.session.user),
+    application,
+  });
 };
 
 /**

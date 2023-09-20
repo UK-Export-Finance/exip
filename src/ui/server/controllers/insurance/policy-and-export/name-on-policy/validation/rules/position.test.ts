@@ -1,7 +1,7 @@
 import positionRule from './position';
 import { FIELD_IDS } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import generateValidationErrors from '../../../../../../helpers/validation';
+import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 
 const {
   POLICY_AND_EXPORTS: {
@@ -46,14 +46,14 @@ describe('controllers/insurance/policy-and-export/name-on-policy/validation/rule
   });
 
   describe(`when the field is not provided and ${SAME_NAME} is selected`, () => {
-    it('should return validation error', () => {
+    it('should return result of emptyFieldValidation', () => {
       const mockSubmittedData = {
         [NAME]: SAME_NAME,
       };
 
       const result = positionRule(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+      const expected = emptyFieldValidation(mockSubmittedData, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
 
       expect(result).toEqual(expected);
     });
