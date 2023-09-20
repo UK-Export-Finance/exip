@@ -2,7 +2,7 @@
 # 1. BUILD
 ###################
 
-FROM node:20.6.0-alpine3.17 AS build
+FROM node:20.7.0-alpine3.17 AS build
 
 # Build variables
 ARG GITHUB_SHA
