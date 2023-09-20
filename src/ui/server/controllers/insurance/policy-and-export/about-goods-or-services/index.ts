@@ -10,7 +10,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import { objectHasProperty } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
 import mapCountries from '../../../../helpers/mappings/map-countries';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../../export-contract/map-and-save';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
@@ -77,8 +77,8 @@ export const get = async (req: Request, res: Response) => {
 
     let mappedCountries;
 
-    if (objectHasProperty(application.policy, FINAL_DESTINATION)) {
-      mappedCountries = mapCountries(countries, application.policy[FINAL_DESTINATION]);
+    if (objectHasProperty(application.exportContract, FINAL_DESTINATION)) {
+      mappedCountries = mapCountries(countries, application.exportContract[FINAL_DESTINATION]);
     } else {
       mappedCountries = mapCountries(countries);
     }
@@ -158,7 +158,7 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     // save the application
-    const saveResponse = await mapAndSave.policy(req.body, application);
+    const saveResponse = await mapAndSave.exportContract(req.body, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

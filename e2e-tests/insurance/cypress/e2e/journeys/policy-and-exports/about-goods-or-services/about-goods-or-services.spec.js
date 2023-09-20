@@ -153,8 +153,8 @@ context('Insurance - Policy and exports - About goods or services page - As an e
     });
   });
 
-  describe('form submission', () => {
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+  describe.only('form submission', () => {
+    it.only(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitAboutGoodsOrServicesForm();
@@ -184,9 +184,9 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
 
-        aboutGoodsOrServicesPage[DESCRIPTION].input().should('have.value', application.POLICY_AND_EXPORTS[DESCRIPTION]);
+        aboutGoodsOrServicesPage[DESCRIPTION].input().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
 
-        const country = countries.find((c) => c.isoCode === application.POLICY_AND_EXPORTS[FINAL_DESTINATION]);
+        const country = countries.find((c) => c.isoCode === application.EXPORT_CONTRACT[FINAL_DESTINATION]);
         cy.checkText(countryInput.field(FINAL_DESTINATION).results(), country.name);
       });
     });

@@ -61,13 +61,13 @@ export const mapMultiplePolicyFields = (application: Application) => {
 };
 
 export const mapPolicyAndExportOutro = (application: Application) => {
-  const { policy } = application;
+  const { exportContract, policy } = application;
 
   const mapped = [
     xlsxRow(String(CONTENT_STRINGS[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policy[CREDIT_PERIOD_WITH_BUYER]),
     xlsxRow(String(CONTENT_STRINGS[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
-    xlsxRow(String(CONTENT_STRINGS[DESCRIPTION].SUMMARY?.TITLE), policy[DESCRIPTION]),
-    xlsxRow(String(CONTENT_STRINGS[FINAL_DESTINATION].SUMMARY?.TITLE), policy[FINAL_DESTINATION].name),
+    xlsxRow(String(CONTENT_STRINGS[DESCRIPTION].SUMMARY?.TITLE), exportContract[DESCRIPTION]),
+    xlsxRow(String(CONTENT_STRINGS[FINAL_DESTINATION].SUMMARY?.TITLE), exportContract[FINAL_DESTINATION].name),
   ];
 
   return mapped;
