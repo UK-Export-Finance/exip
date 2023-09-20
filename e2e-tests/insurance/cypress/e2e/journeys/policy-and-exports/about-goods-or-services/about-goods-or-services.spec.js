@@ -153,8 +153,8 @@ context('Insurance - Policy and exports - About goods or services page - As an e
     });
   });
 
-  describe.only('form submission', () => {
-    it.only(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+  describe('form submission', () => {
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitAboutGoodsOrServicesForm();
