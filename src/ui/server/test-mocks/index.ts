@@ -19,6 +19,10 @@ import mockBuyer from './mock-buyer';
 import mockDeclarations from './mock-declarations';
 import { mockInsuranceFeedback } from './mock-feedback';
 import mockBusinessContact from './mock-business-contact';
+import { PRODUCT } from '../content-strings';
+import { INTEGRITY } from '../constants';
+
+const { GOVUK, FORM, COOKIES, GA, MOJ, ACCESSIBILITY } = INTEGRITY;
 
 const mockReq = () => {
   const req = {
@@ -62,6 +66,19 @@ const mockRes = () => {
 
   res.locals = {
     csrfToken: 'mock',
+    meta: {
+      URL: 'mock.com/route',
+      TITLE: PRODUCT.DESCRIPTION.GENERIC,
+      ORGANISATION: PRODUCT.DESCRIPTION.ORGANISATION,
+    },
+    SRI: {
+      ACCESSIBILITY,
+      MOJ,
+      GOVUK,
+      FORM,
+      COOKIES,
+      GA,
+    },
   };
 
   return res;

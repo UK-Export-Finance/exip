@@ -89,7 +89,7 @@ describe('controllers/insurance/business/companies-house-number/save-and-back', 
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
+        res.locals = mockRes().locals;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
@@ -101,7 +101,7 @@ describe('controllers/insurance/business/companies-house-number/save-and-back', 
 
     describe('when mapAndSave.companyDetails fails', () => {
       beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
+        res.locals = mockRes().locals;
         updateMapAndSave = jest.fn(() => Promise.reject());
         mapAndSave.companyDetails = updateMapAndSave;
       });

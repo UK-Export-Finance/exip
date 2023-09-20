@@ -94,7 +94,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
+        res.locals = mockRes().locals;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
@@ -194,7 +194,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
     describe('api error handling', () => {
       describe('when application does not exist', () => {
         beforeEach(() => {
-          res.locals = { csrfToken: '1234' };
+          res.locals = mockRes().locals;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
@@ -206,7 +206,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
 
       describe('when saveResponse returns false', () => {
         beforeEach(() => {
-          res.locals = { csrfToken: '1234' };
+          res.locals = mockRes().locals;
           mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(false));
         });
 
@@ -219,7 +219,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
 
       describe('when there is an error', () => {
         beforeEach(() => {
-          res.locals = { csrfToken: '1234' };
+          res.locals = mockRes().locals;
           mapAndSave.yourBuyer = jest.fn(() => Promise.reject());
         });
 

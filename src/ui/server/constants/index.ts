@@ -14,6 +14,7 @@ export * from './supported-currencies';
 export * from './task-ids';
 export * from './templates';
 export * from './ukef-contact-details';
+export * from './integrity';
 
 export const INSURANCE = 'Insurance';
 export const QUOTE = 'Quote';
