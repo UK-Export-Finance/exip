@@ -1,7 +1,7 @@
 import mapSubmittedEligibilityCountry from '.';
 import { FIELD_IDS } from '../../../constants';
-import { mapCisCountries } from '../map-cis-countries';
-import { mockCisCountries } from '../../../test-mocks';
+import mapCountries from '../map-countries';
+import { mockCountries } from '../../../test-mocks';
 
 const {
   ELIGIBILITY: { BUYER_COUNTRY },
@@ -9,7 +9,7 @@ const {
 
 describe('server/helpers/mappings/map-submitted-eligibility-country', () => {
   it('should return an object with BUYER_COUNTRY object', () => {
-    const mappedCountries = mapCisCountries(mockCisCountries);
+    const mappedCountries = mapCountries(mockCountries);
 
     const [mappedCountry] = mappedCountries;
 

@@ -3,13 +3,12 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import api from '../../../../api';
 import { objectHasProperty } from '../../../../helpers/object';
 import { isPopulatedArray } from '../../../../helpers/array';
-import { mapCisCountries } from '../../../../helpers/mappings/map-cis-countries';
+import mapCountries from '../../../../helpers/mappings/map-countries';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import { validation as generateValidationErrors } from '../../../../shared-validation/buyer-country';
 import getCountryByName from '../../../../helpers/get-country-by-name';
-import { canApplyOnline, canApplyOffline, cannotApply } from '../../../../helpers/country-support';
 import mapSubmittedEligibilityCountry from '../../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
@@ -36,7 +35,7 @@ export const get = async (req: Request, res: Response) => {
       };
     }
 
-    const countries = await api.external.getCountries();
+    const countries = await api.keystone.APIM.getCisCountries();
 
     if (!isPopulatedArray(countries)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
@@ -52,9 +51,9 @@ export const get = async (req: Request, res: Response) => {
     let mappedCountries;
 
     if (countryValue) {
-      mappedCountries = mapCisCountries(countries, countryValue.isoCode);
+      mappedCountries = mapCountries(countries, countryValue.isoCode);
     } else {
-      mappedCountries = mapCisCountries(countries);
+      mappedCountries = mapCountries(countries);
     }
 
     return res.render(TEMPLATE, {
@@ -79,13 +78,13 @@ export const post = async (req: Request, res: Response) => {
 
     const validationErrors = generateValidationErrors(payload);
 
-    const countries = await api.external.getCountries();
+    const countries = await api.keystone.APIM.getCisCountries();
 
     if (!isPopulatedArray(countries)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const mappedCountries = mapCisCountries(countries);
+    const mappedCountries = mapCountries(countries);
 
     if (validationErrors) {
       return res.render(TEMPLATE, {
@@ -101,16 +100,14 @@ export const post = async (req: Request, res: Response) => {
 
     const submittedCountryName = payload[FIELD_ID];
 
-    const country = getCountryByName(mappedCountries, submittedCountryName);
+    const country = getCountryByName(countries, submittedCountryName);
 
     if (!country) {
       return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
     }
 
-    const applyOnline = canApplyOnline(country);
-
-    if (applyOnline) {
-      const populatedData = mapSubmittedEligibilityCountry(country, applyOnline);
+    if (country.canApplyOnline) {
+      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
 
       req.session.submittedData = {
         ...req.session.submittedData,
@@ -120,8 +117,8 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
     }
 
-    if (canApplyOffline(country)) {
-      const populatedData = mapSubmittedEligibilityCountry(country, applyOnline);
+    if (country.canApplyOffline) {
+      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
 
       req.session.submittedData = {
         ...req.session.submittedData,
@@ -131,8 +128,8 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.INSURANCE.APPLY_OFFLINE);
     }
 
-    if (cannotApply(country)) {
-      const populatedData = mapSubmittedEligibilityCountry(country, applyOnline);
+    if (country.cannotApply) {
+      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
 
       req.session.submittedData = {
         ...req.session.submittedData,

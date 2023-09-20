@@ -93,7 +93,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
         cy.checkText(yourQuotePage.panel.subHeading(), CONTENT_STRINGS.QUOTE.SUB_HEADING);
       });
 
-      context.only('summary list', () => {
+      context('summary list', () => {
         beforeEach(() => {
           cy.navigateToUrl(url);
         });

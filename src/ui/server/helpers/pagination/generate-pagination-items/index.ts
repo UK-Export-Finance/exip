@@ -1,4 +1,3 @@
-import getTotalPages from '../get-total-pages';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 
 const { DASHBOARD_PAGE } = INSURANCE_ROUTES;
@@ -6,12 +5,10 @@ const { DASHBOARD_PAGE } = INSURANCE_ROUTES;
 /**
  * generatePaginationItems
  * Generate an array of objects for GOV pagination component
- * @param {Number} Total amount of applications
+ * @param {Number} Total amount of pages to create
  * @returns {Array} Array of pagination items/pages
  */
-export const generatePaginationItems = (totalApplications: number) => {
-  const pagesToCreate = getTotalPages(totalApplications);
-
+export const generatePaginationItems = (pagesToCreate: number) => {
   if (pagesToCreate > 1) {
     /**
      * Generate an array of all pages

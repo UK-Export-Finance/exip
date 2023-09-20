@@ -2132,6 +2132,9 @@ type Query {
 
   """ get companies house information """
   getCompaniesHouseInformation(companiesHouseNumber: String!): CompaniesHouseResponse
+
+  """ get CIS countries from APIM """
+  getApimCisCountries: [MappedCisCountry]
 }
 
 union AuthenticatedItem = User
@@ -2414,4 +2417,18 @@ type CreateAnApplicationResponse {
   success: Boolean!
   id: String
   referenceNumber: Int
+}
+
+type MappedCisCountry {
+  isoCode: String!
+  name: String
+  shortTermCover: Boolean
+  riskCategory: String
+  nbiIssueAvailable: Boolean
+  canGetAQuoteOnline: Boolean
+  canGetAQuoteByEmail: Boolean
+  cannotGetAQuote: Boolean
+  canApplyOnline: Boolean
+  canApplyOffline: Boolean
+  cannotApply: Boolean
 }

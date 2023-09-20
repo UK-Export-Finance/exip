@@ -5,20 +5,13 @@ export * from './field-ids';
 export * from './allowed-graphql-resolvers';
 export * from './answers';
 export * from './application';
+export * from './external-apis';
 export * from './field-values';
 export * from './XLSX-CONFIG';
 
 dotenv.config();
 
 export const GBP_CURRENCY_CODE = 'GBP';
-
-export const EXTERNAL_API_ENDPOINTS = {
-  MULESOFT_MDM_EA: {
-    CURRENCY: '/currencies',
-    INDUSTRY_SECTORS: '/sector-industries',
-    MARKETS: '/markets',
-  },
-};
 
 /**
  * DATE_24_HOURS_FROM_NOW
