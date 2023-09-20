@@ -4,7 +4,6 @@ import mapCisCountries from '../../../helpers/map-CIS-countries';
 /**
  * getApimCisCountries
  * Get countries from APIM
- * @param {Object} GraphQL root variables
  * @returns {Object} APIM response data
  */
 const getApimCisCountries = async () => {

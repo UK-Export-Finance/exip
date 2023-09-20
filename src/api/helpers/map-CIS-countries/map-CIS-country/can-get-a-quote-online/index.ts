@@ -3,7 +3,7 @@ import { MappedCisCountry } from '../../../../types';
 /**
  * canGetAQuoteOnline
  * Check if a country is able to get a quote online
- * @param {Object} Country from CIS API
+ * @param {MappedCisCountry} Mapped CIS Country
  * @returns {Boolean}
  */
 export const canGetAQuoteOnline = (country: MappedCisCountry) => {

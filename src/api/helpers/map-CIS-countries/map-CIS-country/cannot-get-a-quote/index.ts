@@ -3,7 +3,7 @@ import { MappedCisCountry } from '../../../../types';
 /**
  * cannotGetAQuote
  * Check if a country cannot get a quote online or offline
- * @param {Object} Country from CIS API
+ * @param {MappedCisCountry} Country from CIS API
  * @returns {Boolean}
  */
 export const cannotGetAQuote = (country: MappedCisCountry) => {

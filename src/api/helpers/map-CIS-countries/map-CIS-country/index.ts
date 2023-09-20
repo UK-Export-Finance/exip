@@ -11,8 +11,8 @@ import { CisCountry, MappedCisCountry } from '../../../types';
 /**
  * mapCisCountry
  * Map a CIS country to cleaner structure
- * @param {Object} CIS Country
- * @returns {Object} Mapped country
+ * @param {CisCountry} CIS Country
+ * @returns {MappedCisCountry} Mapped country
  */
 export const mapCisCountry = (country: CisCountry): MappedCisCountry => {
   const mapped = {

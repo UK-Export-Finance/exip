@@ -11,23 +11,22 @@ const {
  * @returns {Boolean}
  */
 export const mapShortTermCoverAvailable = (str: string): boolean => {
-  if (str === SHORT_TERM_COVER_AVAILABLE.YES) {
-    return true;
-  }
+  switch (str) {
+    case SHORT_TERM_COVER_AVAILABLE.YES:
+      return true;
 
-  if (str === SHORT_TERM_COVER_AVAILABLE.ILC) {
-    return true;
-  }
+    case SHORT_TERM_COVER_AVAILABLE.ILC:
+      return true;
 
-  if (str === SHORT_TERM_COVER_AVAILABLE.CILC) {
-    return true;
-  }
+    case SHORT_TERM_COVER_AVAILABLE.CILC:
+      return true;
 
-  if (str === SHORT_TERM_COVER_AVAILABLE.REFER) {
-    return true;
-  }
+    case SHORT_TERM_COVER_AVAILABLE.REFER:
+      return true;
 
-  return false;
+    default:
+      return false;
+  }
 };
 
 export default mapShortTermCoverAvailable;

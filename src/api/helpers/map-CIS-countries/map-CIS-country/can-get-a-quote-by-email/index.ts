@@ -3,7 +3,7 @@ import { MappedCisCountry } from '../../../../types';
 /**
  * canGetAQuoteByEmail
  * Check if a country is able to get a quote by email
- * @param {Object} Country from CIS API
+ * @param {MappedCisCountry} Mapped CIS Country
  * @returns {Boolean}
  */
 export const canGetAQuoteByEmail = (country: MappedCisCountry) => {
