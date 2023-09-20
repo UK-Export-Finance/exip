@@ -1,6 +1,5 @@
 import FIELD_IDS from '../field-ids/insurance';
 import { isMultiplePolicyType } from '../../helpers/policy-type';
-import { ANSWERS } from '../answers';
 import { Application, XLSXTitleRowIndexes, XLSXRowIndexes } from '../../types';
 
 const {
@@ -51,7 +50,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     isMultiplePolicy = true;
   }
 
-  if (broker[USING_BROKER] === ANSWERS.YES) {
+  if (broker[USING_BROKER]) {
     isUsingBroker = true;
   }
 

@@ -28,7 +28,7 @@ const post = async (req: Request, res: Response) => {
     // run validation on inputs
     const validationErrors = generateValidationErrors(payload);
 
-    // runs save and go back commmand
+    // runs save and go back command
     const saveResponse = await mapAndSave.yourBuyer(payload, application, validationErrors);
 
     if (!saveResponse) {

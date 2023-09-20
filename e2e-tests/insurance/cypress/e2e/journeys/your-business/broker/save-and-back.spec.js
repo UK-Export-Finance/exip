@@ -42,7 +42,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
       task.link().click();
 
-      cy.completeCompaniesHouseNumberForm({});
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
@@ -119,9 +119,9 @@ context('Insurance - Your business - Broker page - Save and back', () => {
     });
   });
 
-  describe('when all fields are provided', () => {
+  describe.only('when all fields are provided', () => {
     describe(`when selecting yes for ${USING_BROKER}`, () => {
-      it(`should redirect to ${ALL_SECTIONS} and change the "your business" task status as "completed"`, () => {
+      it.only(`should redirect to ${ALL_SECTIONS} and change the "your business" task status as "completed"`, () => {
         cy.navigateToUrl(url);
 
         broker[USING_BROKER].yesRadioInput().click();

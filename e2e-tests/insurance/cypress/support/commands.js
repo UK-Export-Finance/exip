@@ -43,19 +43,17 @@ Cypress.Commands.add('completeAndSubmitMultipleContractPolicyForm', require('../
 
 Cypress.Commands.add('completeAndSubmitAboutGoodsOrServicesForm', require('../../../commands/insurance/complete-and-submit-about-goods-or-services-form'));
 
-Cypress.Commands.add('completeCompaniesHouseNumberForm', require('../../../commands/insurance/complete-and-submit-companies-house-number-form'));
-
 Cypress.Commands.add('completeAndSubmitCompanyDetails', require('../../../commands/insurance/complete-and-submit-company-details'));
 Cypress.Commands.add('completeCompanyDetailsForm', require('../../../commands/insurance/complete-company-details-form'));
-Cypress.Commands.add('completeAndSubmitCompaniesHouseSearchForm', require('../../../commands/insurance/complete-and-submit-companies-house-number-form'));
+Cypress.Commands.add('completeAndSubmitCompaniesHouseSearchForm', require('../../../commands/insurance/complete-and-submit-companies-house-number-search-form'));
 
 Cypress.Commands.add('completeAndSubmitYourContact', require('../../../commands/insurance/complete-and-submit-your-contact-form'));
 Cypress.Commands.add('completeAndSubmitNatureOfYourBusiness', require('../../../commands/insurance/complete-and-submit-nature-of-your-business'));
 Cypress.Commands.add('completeAndSubmitTurnoverForm', require('../../../commands/insurance/complete-and-submit-turnover-form'));
 Cypress.Commands.add('completeAndSubmitBrokerForm', require('../../../commands/insurance/complete-and-submit-broker-form'));
 
-Cypress.Commands.add('completePrepareApplicationSinglePolicyType', require('../../../commands/insurance/complete-prepare-your-application-section-single'));
-Cypress.Commands.add('completePrepareApplicationMultiplePolicyType', require('../../../commands/insurance/complete-prepare-your-application-section-multiple'));
+Cypress.Commands.add('completePrepareApplicationSinglePolicyType', require('../../../commands/insurance/complete-prepare-application-section-single-policy-type'));
+Cypress.Commands.add('completePrepareApplicationMultiplePolicyType', require('../../../commands/insurance/complete-prepare-application-section-multiple-policy-type'));
 
 Cypress.Commands.add('completeAndSubmitCompanyOrOrganisationForm', require('../../../commands/insurance/your-buyer/complete-and-submit-company-or-organisation-form'));
 Cypress.Commands.add('completeAndSubmitWorkingWithBuyerForm', require('../../../commands/insurance/your-buyer/complete-and-submit-working-with-buyer-form'));
@@ -74,6 +72,7 @@ Cypress.Commands.add('completeAndSubmitDeclarations', require('../../../commands
 Cypress.Commands.add('completeSignInAndSubmitAnApplication', require('../../../commands/insurance/complete-sign-in-and-submit-an-application'));
 
 Cypress.Commands.add('assertAllSectionsUrl', require('../../../commands/insurance/assert-all-sections-url'));
+Cypress.Commands.add('assertApplicationSubmittedUrl', require('../../../commands/insurance/assert-application-submitted-url'));
 
 Cypress.Commands.add('assertChangeAnswersPageUrl', require('../../../commands/insurance/assert-change-answers-page-url'));
 Cypress.Commands.add('assertSummaryListRowValue', require('../../../commands/assert-summary-list-row-value'));
@@ -86,3 +85,5 @@ Cypress.Commands.add('assertConfirmEmailPageContent', require('../../../commands
 Cypress.Commands.add('assertSubmitAndSaveButtons', require('../../../commands/insurance/assert-submit-and-save-buttons'));
 
 Cypress.Commands.add('assertUncheckedYesNoRadios', require('../../../commands/assert-unchecked-yes-no-radios'));
+
+Cypress.Commands.add('interceptCompaniesHousePost', require('../../../commands/intercept/companies-house-post'));

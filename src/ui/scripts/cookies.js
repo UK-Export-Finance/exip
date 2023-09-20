@@ -7,72 +7,90 @@ const https = window.location.protocol == 'https:';
 // `__Secure` prefix will only work with Secure flag i.e. HTTPS
 const cookieName = https ? '__Secure-optionalCookies' : 'optionalCookies';
 
+/**
+ * Sets cookie expiry timestamp
+ * @returns String cookie expiry date
+ */
 const expiryDate = () => {
   const date = new Date();
 
   // 1 day.
   const oneDay = date.setDate(date.getDate() + 1);
-
   const utcString = new Date(oneDay).toUTCString();
 
   return 'expires=' + utcString + '; ';
 };
 
+/**
+ * Sets cookie domain attribute
+ * @returns String cookie domain
+ */
 const domain = () => {
   return 'domain=' + window.location.hostname;
 };
 
-const createRejectCookie = () => {
-  document.cookie = cookieName + '=false; path=/; SameSite=Strict; secure; ' + expiryDate() + domain();
+/**
+ * Set's cookie value
+ * @param {Boolean} value cookie value
+ */
+const setCookie = (value) => {
+  document.cookie = cookieName + '=' + value + '; path=/; SameSite=Strict; secure; ' + expiryDate() + domain();
 };
 
-const createAcceptCookie = () => {
-  document.cookie = cookieName + '=true; path=/; SameSite=Strict; secure; ' + expiryDate() + domain();
+/**
+ * Initialise cookie banner and listeners
+ */
+const init = () => {
+  // Shift focus to the cookie banner
+  if (!document.cookie.includes(cookieName)) {
+    cookieBanner.removeAttribute('hidden');
+    cookieBanner.setAttribute('tabindex', '-1');
+    cookieBanner.focus();
+    cookieBanner.addEventListener('blur', () => {
+      cookieBanner.removeAttribute('tabindex');
+    });
+  }
+
+  // Cookie is rejected by the user
+  if (rejectButton) {
+    rejectButton.addEventListener('click', function (event) {
+      setCookie(false);
+    });
+  }
+
+  // Cookie is accepted by the user
+  if (acceptButton) {
+    acceptButton.addEventListener('click', function (event) {
+      setCookie(true);
+    });
+  }
+
+  // Hide cookie banner
+  if (hideButton) {
+    hideButton.addEventListener('click', function (event) {
+      cookieBanner.setAttribute('hidden', 'hidden');
+      event.preventDefault();
+    });
+  }
+
+  if (changeCookiesSubmitButton) {
+    changeCookiesSubmitButton.addEventListener('click', function (event) {
+      const checkbox = document.querySelector('input[name="optionalCookies"]:checked');
+
+      if (checkbox) {
+        const answer = document.querySelector('input[name="optionalCookies"]:checked').value;
+
+        if (answer === 'reject') {
+          setCookie(false);
+        }
+
+        if (answer === 'accept') {
+          setCookie(true);
+        }
+      }
+    });
+  }
 };
 
-if (rejectButton) {
-  rejectButton.addEventListener('click', function (event) {
-    createRejectCookie();
-  });
-}
-
-if (acceptButton) {
-  acceptButton.addEventListener('click', function (event) {
-    createAcceptCookie();
-  });
-}
-
-if (!document.cookie.includes(cookieName)) {
-  cookieBanner.removeAttribute('hidden');
-
-  // Shift focus to the banner
-  cookieBanner.setAttribute('tabindex', '-1');
-  cookieBanner.focus();
-  cookieBanner.addEventListener('blur', () => {
-    cookieBanner.removeAttribute('tabindex');
-  });
-}
-
-if (hideButton) {
-  hideButton.addEventListener('click', function (event) {
-    cookieBanner.setAttribute('hidden', 'hidden');
-    event.preventDefault();
-  });
-}
-
-if (changeCookiesSubmitButton) {
-  changeCookiesSubmitButton.addEventListener('click', function (event) {
-    const checkbox = document.querySelector('input[name="optionalCookies"]:checked');
-    if (checkbox) {
-      const answer = document.querySelector('input[name="optionalCookies"]:checked').value;
-
-      if (answer === 'reject') {
-        createRejectCookie();
-      }
-
-      if (answer === 'accept') {
-        createAcceptCookie();
-      }
-    }
-  });
-}
+// Call init when element is loaded
+cookieBanner.addEventListener('DOMContentLoaded', () => init());

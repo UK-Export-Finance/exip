@@ -313,12 +313,6 @@ if (isDevEnvironment) {
 }
 var ALLOWED_GRAPHQL_RESOLVERS = [...DEFAULT_RESOLVERS, ...CUSTOM_RESOLVERS];
 
-// constants/answers/index.ts
-var ANSWERS = {
-  YES: "Yes",
-  NO: "No"
-};
-
 // constants/application/versions/index.ts
 var VERSIONS = [
   {
@@ -431,7 +425,7 @@ var XLSX_ROW_INDEXES = (application2) => {
   if (isMultiplePolicyType(policyType)) {
     isMultiplePolicy = true;
   }
-  if (broker[USING_BROKER] === ANSWERS.YES) {
+  if (broker[USING_BROKER]) {
     isUsingBroker = true;
   }
   if (isMultiplePolicy) {

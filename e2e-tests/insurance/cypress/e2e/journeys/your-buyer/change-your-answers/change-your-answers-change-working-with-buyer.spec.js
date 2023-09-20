@@ -34,7 +34,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
     cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({});
+      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
       task.link().click();
 

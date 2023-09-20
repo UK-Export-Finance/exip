@@ -7,7 +7,7 @@ describe('server/helpers/pagination/get-total-pages', () => {
       const mockTotalApplications = MAX_APPLICATIONS_PER_PAGE + 1;
       const result = getTotalPages(mockTotalApplications);
 
-      const expected = Math.round(mockTotalApplications / MAX_APPLICATIONS_PER_PAGE);
+      const expected = Math.ceil(mockTotalApplications / MAX_APPLICATIONS_PER_PAGE);
 
       expect(result).toEqual(expected);
     });
