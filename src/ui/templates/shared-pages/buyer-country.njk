@@ -28,7 +28,6 @@
   {% endif %}
 
   <form method="POST" id="form" novalidate>
-
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     <input type="hidden" name="{{ HIDDEN_FIELD_ID }}" id="{{ HIDDEN_FIELD_ID }}" value="{{ submittedValues[HIDDEN_FIELD_ID].name }}">
 
@@ -88,6 +87,6 @@
 
   </form>
 
-  <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript"></script>
+  <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript" integrity="{{ SRI.ACCESSIBILITY }}" crossorigin="anonymous"></script>
 
 {% endblock %}
