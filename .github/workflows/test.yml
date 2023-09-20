@@ -9,7 +9,7 @@ run-name: Executing test QA on ${{ github.repository }} 🚀
 
 on:
   pull_request:
-    branches: [main-application]
+    branches: [main-application, main-application-no-pdf]
     paths:
       - ".github/workflows/test.yml"
       - "src/**"
