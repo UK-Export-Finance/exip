@@ -225,7 +225,7 @@ var declarations_default = DECLARATIONS;
 // constants/field-ids/insurance/check-your-answers/index.ts
 var CHECK_YOUR_ANSWERS = {
   ELIGIBILITY: "eligibility",
-  POLICY_AND_EXPORT: "policyAndExport",
+  POLICY_AND_EXPORT: "policy",
   EXPORTER_BUSINESS: "business",
   BUYER: "buyer"
 };
@@ -4477,19 +4477,18 @@ var {
   CIS: { SHORT_TERM_COVER_AVAILABLE }
 } = EXTERNAL_API_DEFINITIONS;
 var mapShortTermCoverAvailable = (str) => {
-  if (str === SHORT_TERM_COVER_AVAILABLE.YES) {
-    return true;
+  switch (str) {
+    case SHORT_TERM_COVER_AVAILABLE.YES:
+      return true;
+    case SHORT_TERM_COVER_AVAILABLE.ILC:
+      return true;
+    case SHORT_TERM_COVER_AVAILABLE.CILC:
+      return true;
+    case SHORT_TERM_COVER_AVAILABLE.REFER:
+      return true;
+    default:
+      return false;
   }
-  if (str === SHORT_TERM_COVER_AVAILABLE.ILC) {
-    return true;
-  }
-  if (str === SHORT_TERM_COVER_AVAILABLE.CILC) {
-    return true;
-  }
-  if (str === SHORT_TERM_COVER_AVAILABLE.REFER) {
-    return true;
-  }
-  return false;
 };
 var map_short_term_cover_available_default = mapShortTermCoverAvailable;
 
