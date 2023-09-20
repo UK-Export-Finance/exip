@@ -5,8 +5,12 @@ interface Country {
   riskCategory: string;
   selected?: boolean;
   value: string;
-  shortTermCover: string;
-  nbiIssueAvailable: boolean;
+  canGetAQuoteOnline: boolean;
+  canGetAQuoteByEmail: boolean;
+  cannotGetAQuote: boolean;
+  canApplyOnline: boolean;
+  canApplyOffline: boolean;
+  cannotApply: boolean;
 }
 
 export { Country };

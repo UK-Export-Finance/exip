@@ -27,9 +27,41 @@ interface ApplicationBusiness extends ApplicationRelationship {
   businessContactDetailId: string;
 }
 
+interface CisCountry {
+  marketName: string;
+  isoCode: string;
+  shortTermCoverAvailabilityDesc: string;
+  ESRAClassificationDesc: string;
+  NBIIssue: string;
+  riskCategory?: string;
+}
+
+interface MappedCisCountry {
+  name: string;
+  isoCode: string;
+  shortTermCover: boolean;
+  riskCategory?: string;
+  nbiIssueAvailable: boolean;
+  canGetAQuoteOnline: boolean;
+  canGetAQuoteByEmail: boolean;
+  cannotGetAQuote: boolean;
+  canApplyOnline: boolean;
+  canApplyOffline: boolean;
+  cannotApply: boolean;
+}
+
 interface Country extends ApplicationRelationship {
   name: string;
   isoCode: string;
+  riskCategory?: string;
+  shortTermCover?: boolean;
+  nbiIssueAvailable?: boolean;
+  canGetAQuoteOnline?: boolean;
+  canGetAQuoteByEmail?: boolean;
+  cannotGetAQuote?: boolean;
+  canApplyOnline?: boolean;
+  canApplyOffline?: boolean;
+  cannotApply?: boolean;
 }
 
 interface ApplicationEligibility extends ApplicationRelationship {
@@ -490,6 +522,11 @@ interface XLSXRowIndexes {
   BUYER_CONTACT_DETAILS: number;
 }
 
+interface GetApimCisCountriesResponse {
+  success: boolean;
+  data?: [CisCountry];
+}
+
 export {
   Account,
   AccountCreationVariables,
@@ -526,12 +563,15 @@ export {
   CompaniesHouseResponse,
   CompaniesHouseAPIResponse,
   Context,
+  CisCountry,
+  MappedCisCountry,
   Country,
   CreateAnApplicationVariables,
   Currency,
   DeleteApplicationByReferenceNumberVariables,
   EmailResponse,
   Feedback,
+  GetApimCisCountriesResponse,
   GetCompaniesHouseInformationVariables,
   GetAccountPasswordResetTokenVariables,
   AccountPasswordResetTokenResponse,

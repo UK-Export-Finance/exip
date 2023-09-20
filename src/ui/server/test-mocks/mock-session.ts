@@ -1,23 +1,18 @@
-import { API, FIELD_IDS, GBP_CURRENCY_CODE } from '../constants';
+import { FIELD_IDS, GBP_CURRENCY_CODE } from '../constants';
 import mockAnswers from './mock-answers';
+import mockCountries from './mock-countries';
 import { RequestSession } from '../../types';
 
 const {
   ELIGIBILITY: { BUYER_COUNTRY, CURRENCY, VALID_EXPORTER_LOCATION, HAS_MINIMUM_UK_GOODS_OR_SERVICES },
 } = FIELD_IDS;
 
-const mockCountry = {
-  name: mockAnswers[BUYER_COUNTRY],
-  isoCode: 'FRA',
-  riskCategory: API.MAPPINGS.RISK.STANDARD,
-};
-
 const mockSession = {
   submittedData: {
     quoteEligibility: {
       ...mockAnswers,
       [BUYER_COUNTRY]: {
-        ...mockCountry,
+        ...mockCountries[0],
         canApplyOnline: true,
       },
       [CURRENCY]: {
@@ -27,7 +22,7 @@ const mockSession = {
     },
     insuranceEligibility: {
       [BUYER_COUNTRY]: {
-        ...mockCountry,
+        ...mockCountries[0],
         canApplyOnline: true,
       },
       [VALID_EXPORTER_LOCATION]: true,
