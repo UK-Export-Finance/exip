@@ -30,7 +30,7 @@ const applicationQuery = gql`
           wantCoverOverMaxAmount
           wantCoverOverMaxPeriod
         }
-        policyAndExport {
+        policy {
           id
           policyType
           requestedStartDate
@@ -122,7 +122,7 @@ const applicationQuery = gql`
         sectionReview {
           id
           eligibility
-          policyAndExport
+          policy
           business
           buyer
         }

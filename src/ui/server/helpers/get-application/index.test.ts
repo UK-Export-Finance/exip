@@ -26,7 +26,7 @@ describe('helpers/get-application', () => {
     });
   });
 
-  describe('when there is no application.policyAndExport', () => {
+  describe('when there is no application.policy', () => {
     it('should return false', async () => {
       getApplicationSpy = jest.fn(() => Promise.resolve({}));
       api.keystone.application.get = getApplicationSpy;

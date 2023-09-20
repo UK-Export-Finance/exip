@@ -26,7 +26,7 @@ describe('controllers/insurance/business/map-and-save/contact', () => {
   const mockValidationErrors = generateValidationErrors(POSITION, 'error', {});
 
   describe('when the form has data', () => {
-    describe('when the form has validation errors ', () => {
+    describe('when the form has validation errors', () => {
       it('should call save.contact with application, populated submitted data and validationErrors.errorList', async () => {
         await mapAndSave.contact(mockFormBody, mockApplication, mockValidationErrors);
 

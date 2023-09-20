@@ -26,7 +26,7 @@ describe('controllers/insurance/business/map-and-save/turnover', () => {
   const mockValidationErrors = generateValidationErrors(PERCENTAGE_TURNOVER, 'error', {});
 
   describe('when the form has data', () => {
-    describe('when the form has validation errors ', () => {
+    describe('when the form has validation errors', () => {
       it('should call save.business with application, populated submitted data and validationErrors.errorList', async () => {
         await mapAndSave.turnover(mockFormBody, mockApplication, mockValidationErrors);
 

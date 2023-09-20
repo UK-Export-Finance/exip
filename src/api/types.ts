@@ -163,7 +163,7 @@ interface ApplicationCompanyAddress extends ApplicationRelationship {
   premises?: string;
 }
 
-interface ApplicationPolicyAndExport extends ApplicationRelationship {
+interface ApplicationPolicy extends ApplicationRelationship {
   requestedStartDate: Date;
 }
 
@@ -181,7 +181,7 @@ interface Application {
   previousStatus?: string;
   eligibility: ApplicationEligibility;
   owner: ApplicationOwner;
-  policyAndExport: ApplicationPolicyAndExport;
+  policy: ApplicationPolicy;
   company: ApplicationCompany;
   companySicCodes: Array<ApplicationCompanySicCode>;
   companyAddress: ApplicationCompanyAddress;
@@ -553,7 +553,7 @@ export {
   ApplicationCompany,
   ApplicationCompanySicCode,
   ApplicationOwner,
-  ApplicationPolicyAndExport,
+  ApplicationPolicy,
   ApplicationRelationship,
   ApplicationSubmissionEmailVariables,
   ApplicationVersion,

@@ -33,13 +33,13 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
 
   jest.mock('../map-and-save');
 
-  mapAndSave.policyAndExport = jest.fn(() => Promise.resolve(true));
+  mapAndSave.policy = jest.fn(() => Promise.resolve(true));
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
 
   const mockApplicationWithoutCountryCode = {
     ...mockApplication,
-    policyAndExport: {
-      ...mockApplication.policyAndExport,
+    policy: {
+      ...mockApplication.policy,
       [FINAL_DESTINATION]: null,
     },
   };
@@ -123,8 +123,8 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
     describe('when a final destination has been previously submitted', () => {
       const mockApplicationWithCountry = {
         ...mockApplication,
-        policyAndExport: {
-          ...mockApplication.policyAndExport,
+        policy: {
+          ...mockApplication.policy,
           [FINAL_DESTINATION]: countryIsoCode,
         },
       };
@@ -208,14 +208,14 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
         req.body = validBody;
       });
 
-      it('should call mapAndSave.policyAndExport with data from constructPayload function and application', async () => {
+      it('should call mapAndSave.policy with data from constructPayload function and application', async () => {
         await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.policy).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(payload, res.locals.application);
+        expect(mapAndSave.policy).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
       it(`should redirect to ${NAME_ON_POLICY}`, async () => {
@@ -352,7 +352,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
         });
       });
 
-      describe('mapAndSave.policyAndExport call', () => {
+      describe('mapAndSave.policy call', () => {
         beforeEach(() => {
           req.body = validBody;
         });
@@ -361,7 +361,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
           beforeEach(() => {
             const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
 
-            mapAndSave.policyAndExport = mapAndSaveSpy;
+            mapAndSave.policy = mapAndSaveSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -375,7 +375,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
           beforeEach(() => {
             const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
 
-            mapAndSave.policyAndExport = mapAndSaveSpy;
+            mapAndSave.policy = mapAndSaveSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

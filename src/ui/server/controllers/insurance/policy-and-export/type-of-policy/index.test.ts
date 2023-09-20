@@ -28,7 +28,8 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
   jest.mock('../save-data');
 
   const mockSavePolicyAndExportData = jest.fn(() => Promise.resolve(true));
-  mapAndSave.policyAndExport = mockSavePolicyAndExportData;
+  mapAndSave.policy = mockSavePolicyAndExportData;
+
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
@@ -105,14 +106,14 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         };
       });
 
-      it('should call mapAndSave.policyAndExport with data from constructPayload function and application', async () => {
+      it('should call mapAndSave.policy with data from constructPayload function and application', async () => {
         await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.policy).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(payload, res.locals.application);
+        expect(mapAndSave.policy).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
       describe('when the answer is `single`', () => {
@@ -211,12 +212,12 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         };
       });
 
-      describe('mapAndSave.policyAndExport call', () => {
+      describe('mapAndSave.policy call', () => {
         describe('when no application is returned', () => {
           beforeEach(() => {
             const savePolicyAndExportDataSpy = jest.fn(() => Promise.resolve(false));
 
-            mapAndSave.policyAndExport = savePolicyAndExportDataSpy;
+            mapAndSave.policy = savePolicyAndExportDataSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -229,7 +230,8 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         describe('when there is an error', () => {
           beforeEach(() => {
             const savePolicyAndExportDataSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
-            mapAndSave.policyAndExport = savePolicyAndExportDataSpy;
+
+            mapAndSave.policy = savePolicyAndExportDataSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

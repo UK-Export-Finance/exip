@@ -225,7 +225,7 @@ var declarations_default = DECLARATIONS;
 // constants/field-ids/insurance/check-your-answers/index.ts
 var CHECK_YOUR_ANSWERS = {
   ELIGIBILITY: "eligibility",
-  POLICY_AND_EXPORT: "policyAndExport",
+  POLICY_AND_EXPORT: "policy",
   EXPORTER_BUSINESS: "business",
   BUYER: "buyer"
 };
@@ -440,7 +440,7 @@ var {
   }
 } = insurance_default;
 var XLSX_ROW_INDEXES = (application2) => {
-  const { policyAndExport, broker } = application2;
+  const { policy, broker } = application2;
   const TITLES = {
     HEADER: 1,
     EXPORTER_CONTACT_DETAILS: 9,
@@ -458,7 +458,7 @@ var XLSX_ROW_INDEXES = (application2) => {
     BUYER_ADDRESS: 50,
     BUYER_CONTACT_DETAILS: 53
   };
-  const policyType = policyAndExport[POLICY_TYPE2];
+  const policyType = policy[POLICY_TYPE2];
   let isMultiplePolicy = false;
   let isUsingBroker = false;
   if (isMultiplePolicyType(policyType)) {
@@ -758,7 +758,7 @@ var lists = {
         validation: { isRequired: true }
       }),
       previousStatus: (0, import_fields.text)(),
-      policyAndExport: (0, import_fields.relationship)({ ref: "PolicyAndExport" }),
+      policy: (0, import_fields.relationship)({ ref: "Policy" }),
       owner: (0, import_fields.relationship)({
         ref: "Account",
         many: false
@@ -789,12 +789,12 @@ var lists = {
               data: {}
             });
             modifiedData.referenceNumber = newReferenceNumber;
-            const { id: policyAndExportId } = await context.db.PolicyAndExport.createOne({
+            const { id: policyId } = await context.db.Policy.createOne({
               data: {}
             });
-            modifiedData.policyAndExport = {
+            modifiedData.policy = {
               connect: {
-                id: policyAndExportId
+                id: policyId
               }
             };
             const { id: companyId } = await context.db.Company.createOne({
@@ -875,7 +875,7 @@ var lists = {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
             const { referenceNumber } = item;
-            const { policyAndExportId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
+            const { policyId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -886,8 +886,8 @@ var lists = {
                 }
               }
             });
-            await context.db.PolicyAndExport.updateOne({
-              where: { id: policyAndExportId },
+            await context.db.Policy.updateOne({
+              where: { id: policyId },
               data: {
                 application: {
                   connect: {
@@ -955,7 +955,7 @@ var lists = {
     },
     access: import_access.allowAll
   },
-  PolicyAndExport: {
+  Policy: {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       policyType: (0, import_fields.select)({
@@ -1230,7 +1230,7 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       eligibility: nullable_checkbox_default(),
-      policyAndExport: nullable_checkbox_default(),
+      policy: nullable_checkbox_default(),
       business: nullable_checkbox_default(),
       buyer: nullable_checkbox_default()
     },
@@ -3224,7 +3224,7 @@ var import_date_fns8 = require("date-fns");
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application2) => {
   console.info("Getting populated application");
-  const { eligibilityId, ownerId, policyAndExportId, companyId, businessId, brokerId, buyerId, declarationId } = application2;
+  const { eligibilityId, ownerId, policyId, companyId, businessId, brokerId, buyerId, declarationId } = application2;
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId }
   });
@@ -3235,15 +3235,15 @@ var getPopulatedApplication = async (context, application2) => {
   if (!account) {
     throw new Error(generateErrorMessage("account", application2.id));
   }
-  const policyAndExport = await context.db.PolicyAndExport.findOne({
-    where: { id: policyAndExportId }
+  const policy = await context.db.Policy.findOne({
+    where: { id: policyId }
   });
-  if (!policyAndExport) {
-    throw new Error(generateErrorMessage("policyAndExport", application2.id));
+  if (!policy) {
+    throw new Error(generateErrorMessage("policy", application2.id));
   }
-  const finalDestinationCountry = await get_country_by_field_default(context, "isoCode", policyAndExport.finalDestinationCountryCode);
-  const populatedPolicyAndExport = {
-    ...policyAndExport,
+  const finalDestinationCountry = await get_country_by_field_default(context, "isoCode", policy.finalDestinationCountryCode);
+  const populatedPolicy = {
+    ...policy,
     finalDestinationCountryCode: finalDestinationCountry
   };
   const company = await context.db.Company.findOne({
@@ -3319,7 +3319,7 @@ var getPopulatedApplication = async (context, application2) => {
       ...eligibility,
       buyerCountry
     },
-    policyAndExport: populatedPolicyAndExport,
+    policy: populatedPolicy,
     owner: account,
     company: populatedCompany,
     companySicCodes,
@@ -3373,7 +3373,7 @@ var is_owner_same_as_business_contact_default = isOwnerSameAsBusinessContact;
 // emails/send-application-submitted-emails/index.ts
 var send2 = async (application2, xlsxPath) => {
   try {
-    const { referenceNumber, owner, company, buyer, policyAndExport, business } = application2;
+    const { referenceNumber, owner, company, buyer, policy, business } = application2;
     const { businessContactDetail } = business;
     const { email } = owner;
     const sharedEmailVars = {
@@ -3381,7 +3381,7 @@ var send2 = async (application2, xlsxPath) => {
       buyerName: buyer.companyOrOrganisationName,
       buyerLocation: buyer.country?.name,
       companyName: company.companyName,
-      requestedStartDate: format_date_default(policyAndExport.requestedStartDate)
+      requestedStartDate: format_date_default(policy.requestedStartDate)
     };
     const sendEmailVars = {
       ...sharedEmailVars,
@@ -3917,13 +3917,13 @@ var {
   }
 } = insurance_default;
 var mapSecondaryKeyInformation = (application2) => {
-  const { policyAndExport } = application2;
+  const { policy } = application2;
   const mapped = [
     xlsx_row_default(KEY_INFORMATION),
     xlsx_row_default(FIELDS4[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
     xlsx_row_default(FIELDS4[COUNTRY2], application2.buyer[COUNTRY2].name),
     xlsx_row_default(FIELDS4[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
-    xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE3].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE3])
+    xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE3].SUMMARY?.TITLE), policy[POLICY_TYPE3])
   ];
   return mapped;
 };
@@ -3962,45 +3962,42 @@ var {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION }
 } = insurance_default.POLICY_AND_EXPORTS;
 var mapPolicyAndExportIntro = (application2) => {
-  const { policyAndExport } = application2;
+  const { policy } = application2;
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.POLICY_AND_EXPORT, ""),
-    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_TYPE4].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE4]),
-    xlsx_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[REQUESTED_START_DATE], "dd-MMM-yy"))
+    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_TYPE4].SUMMARY?.TITLE), policy[POLICY_TYPE4]),
+    xlsx_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policy[REQUESTED_START_DATE], "dd-MMM-yy"))
   ];
   return mapped;
 };
 var mapSinglePolicyFields = (application2) => {
-  const { policyAndExport } = application2;
+  const { policy } = application2;
   return [
-    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[CONTRACT_COMPLETION_DATE2].SUMMARY?.TITLE), format_date_default(policyAndExport[CONTRACT_COMPLETION_DATE2], "dd-MMM-yy")),
-    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE))
+    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[CONTRACT_COMPLETION_DATE2].SUMMARY?.TITLE), format_date_default(policy[CONTRACT_COMPLETION_DATE2], "dd-MMM-yy")),
+    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), format_currency_default(policy[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE))
   ];
 };
 var mapMultiplePolicyFields = (application2) => {
-  const { policyAndExport } = application2;
+  const { policy } = application2;
   return [
-    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), map_month_string_default(policyAndExport[TOTAL_MONTHS_OF_COVER])),
-    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
-    xlsx_row_default(
-      String(CONTENT_STRINGS2.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE),
-      format_currency_default(policyAndExport[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE)
-    )
+    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), map_month_string_default(policy[TOTAL_MONTHS_OF_COVER])),
+    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
+    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
   ];
 };
 var mapPolicyAndExportOutro = (application2) => {
-  const { policyAndExport } = application2;
+  const { policy } = application2;
   const mapped = [
-    xlsx_row_default(String(CONTENT_STRINGS2[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policyAndExport[CREDIT_PERIOD_WITH_BUYER]),
-    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policyAndExport[POLICY_CURRENCY_CODE]),
-    xlsx_row_default(String(CONTENT_STRINGS2[DESCRIPTION].SUMMARY?.TITLE), policyAndExport[DESCRIPTION]),
-    xlsx_row_default(String(CONTENT_STRINGS2[FINAL_DESTINATION].SUMMARY?.TITLE), policyAndExport[FINAL_DESTINATION].name)
+    xlsx_row_default(String(CONTENT_STRINGS2[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policy[CREDIT_PERIOD_WITH_BUYER]),
+    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
+    xlsx_row_default(String(CONTENT_STRINGS2[DESCRIPTION].SUMMARY?.TITLE), policy[DESCRIPTION]),
+    xlsx_row_default(String(CONTENT_STRINGS2[FINAL_DESTINATION].SUMMARY?.TITLE), policy[FINAL_DESTINATION].name)
   ];
   return mapped;
 };
 var mapPolicyAndExport = (application2) => {
   let mapped = mapPolicyAndExportIntro(application2);
-  const policyType = application2.policyAndExport[POLICY_TYPE4];
+  const policyType = application2.policy[POLICY_TYPE4];
   if (isSinglePolicyType(policyType)) {
     mapped = [...mapped, ...mapSinglePolicyFields(application2)];
   }
@@ -4480,19 +4477,18 @@ var {
   CIS: { SHORT_TERM_COVER_AVAILABLE }
 } = EXTERNAL_API_DEFINITIONS;
 var mapShortTermCoverAvailable = (str) => {
-  if (str === SHORT_TERM_COVER_AVAILABLE.YES) {
-    return true;
+  switch (str) {
+    case SHORT_TERM_COVER_AVAILABLE.YES:
+      return true;
+    case SHORT_TERM_COVER_AVAILABLE.ILC:
+      return true;
+    case SHORT_TERM_COVER_AVAILABLE.CILC:
+      return true;
+    case SHORT_TERM_COVER_AVAILABLE.REFER:
+      return true;
+    default:
+      return false;
   }
-  if (str === SHORT_TERM_COVER_AVAILABLE.ILC) {
-    return true;
-  }
-  if (str === SHORT_TERM_COVER_AVAILABLE.CILC) {
-    return true;
-  }
-  if (str === SHORT_TERM_COVER_AVAILABLE.REFER) {
-    return true;
-  }
-  return false;
 };
 var map_short_term_cover_available_default = mapShortTermCoverAvailable;
 

@@ -13,7 +13,7 @@ const {
 } = FIELD_IDS;
 
 describe('server/helpers/summary-lists/policy-and-export/credit-period-and-currency-fields', () => {
-  const mockAnswers = mockApplication.policyAndExport;
+  const mockAnswers = mockApplication.policy;
   const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 

@@ -74,7 +74,7 @@ type Application {
   submissionType: String
   status: String
   previousStatus: String
-  policyAndExport: PolicyAndExport
+  policy: Policy
   owner: Account
   business: Business
   company: Company
@@ -107,7 +107,7 @@ input ApplicationWhereInput {
   submissionType: StringNullableFilter
   status: StringFilter
   previousStatus: StringFilter
-  policyAndExport: PolicyAndExportWhereInput
+  policy: PolicyWhereInput
   owner: AccountWhereInput
   business: BusinessWhereInput
   company: CompanyWhereInput
@@ -220,7 +220,7 @@ input ApplicationUpdateInput {
   submissionType: String
   status: String
   previousStatus: String
-  policyAndExport: PolicyAndExportRelateToOneForUpdateInput
+  policy: PolicyRelateToOneForUpdateInput
   owner: AccountRelateToOneForUpdateInput
   business: BusinessRelateToOneForUpdateInput
   company: CompanyRelateToOneForUpdateInput
@@ -238,9 +238,9 @@ input EligibilityRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input PolicyAndExportRelateToOneForUpdateInput {
-  create: PolicyAndExportCreateInput
-  connect: PolicyAndExportWhereUniqueInput
+input PolicyRelateToOneForUpdateInput {
+  create: PolicyCreateInput
+  connect: PolicyWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -302,7 +302,7 @@ input ApplicationCreateInput {
   submissionType: String
   status: String
   previousStatus: String
-  policyAndExport: PolicyAndExportRelateToOneForCreateInput
+  policy: PolicyRelateToOneForCreateInput
   owner: AccountRelateToOneForCreateInput
   business: BusinessRelateToOneForCreateInput
   company: CompanyRelateToOneForCreateInput
@@ -319,9 +319,9 @@ input EligibilityRelateToOneForCreateInput {
   connect: EligibilityWhereUniqueInput
 }
 
-input PolicyAndExportRelateToOneForCreateInput {
-  create: PolicyAndExportCreateInput
-  connect: PolicyAndExportWhereUniqueInput
+input PolicyRelateToOneForCreateInput {
+  create: PolicyCreateInput
+  connect: PolicyWhereUniqueInput
 }
 
 input AccountRelateToOneForCreateInput {
@@ -359,7 +359,7 @@ input DeclarationRelateToOneForCreateInput {
   connect: DeclarationWhereUniqueInput
 }
 
-type PolicyAndExport {
+type Policy {
   id: ID!
   application: Application
   policyType: String
@@ -375,14 +375,14 @@ type PolicyAndExport {
   finalDestinationCountryCode: String
 }
 
-input PolicyAndExportWhereUniqueInput {
+input PolicyWhereUniqueInput {
   id: ID
 }
 
-input PolicyAndExportWhereInput {
-  AND: [PolicyAndExportWhereInput!]
-  OR: [PolicyAndExportWhereInput!]
-  NOT: [PolicyAndExportWhereInput!]
+input PolicyWhereInput {
+  AND: [PolicyWhereInput!]
+  OR: [PolicyWhereInput!]
+  NOT: [PolicyWhereInput!]
   id: IDFilter
   application: ApplicationWhereInput
   policyType: StringNullableFilter
@@ -398,7 +398,7 @@ input PolicyAndExportWhereInput {
   finalDestinationCountryCode: StringFilter
 }
 
-input PolicyAndExportOrderByInput {
+input PolicyOrderByInput {
   id: OrderDirection
   policyType: OrderDirection
   requestedStartDate: OrderDirection
@@ -413,7 +413,7 @@ input PolicyAndExportOrderByInput {
   finalDestinationCountryCode: OrderDirection
 }
 
-input PolicyAndExportUpdateInput {
+input PolicyUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   policyType: String
   requestedStartDate: DateTime
@@ -428,12 +428,12 @@ input PolicyAndExportUpdateInput {
   finalDestinationCountryCode: String
 }
 
-input PolicyAndExportUpdateArgs {
-  where: PolicyAndExportWhereUniqueInput!
-  data: PolicyAndExportUpdateInput!
+input PolicyUpdateArgs {
+  where: PolicyWhereUniqueInput!
+  data: PolicyUpdateInput!
 }
 
-input PolicyAndExportCreateInput {
+input PolicyCreateInput {
   application: ApplicationRelateToOneForCreateInput
   policyType: String
   requestedStartDate: DateTime
@@ -1406,7 +1406,7 @@ type SectionReview {
   id: ID!
   application: Application
   eligibility: Boolean
-  policyAndExport: Boolean
+  policy: Boolean
   business: Boolean
   buyer: Boolean
 }
@@ -1430,7 +1430,7 @@ input SectionReviewOrderByInput {
 input SectionReviewUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   eligibility: Boolean
-  policyAndExport: Boolean
+  policy: Boolean
   business: Boolean
   buyer: Boolean
 }
@@ -1443,7 +1443,7 @@ input SectionReviewUpdateArgs {
 input SectionReviewCreateInput {
   application: ApplicationRelateToOneForCreateInput
   eligibility: Boolean
-  policyAndExport: Boolean
+  policy: Boolean
   business: Boolean
   buyer: Boolean
 }
@@ -1849,12 +1849,12 @@ type Mutation {
   updateApplications(data: [ApplicationUpdateArgs!]!): [Application]
   deleteApplication(where: ApplicationWhereUniqueInput!): Application
   deleteApplications(where: [ApplicationWhereUniqueInput!]!): [Application]
-  createPolicyAndExport(data: PolicyAndExportCreateInput!): PolicyAndExport
-  createPolicyAndExports(data: [PolicyAndExportCreateInput!]!): [PolicyAndExport]
-  updatePolicyAndExport(where: PolicyAndExportWhereUniqueInput!, data: PolicyAndExportUpdateInput!): PolicyAndExport
-  updatePolicyAndExports(data: [PolicyAndExportUpdateArgs!]!): [PolicyAndExport]
-  deletePolicyAndExport(where: PolicyAndExportWhereUniqueInput!): PolicyAndExport
-  deletePolicyAndExports(where: [PolicyAndExportWhereUniqueInput!]!): [PolicyAndExport]
+  createPolicy(data: PolicyCreateInput!): Policy
+  createPolicies(data: [PolicyCreateInput!]!): [Policy]
+  updatePolicy(where: PolicyWhereUniqueInput!, data: PolicyUpdateInput!): Policy
+  updatePolicies(data: [PolicyUpdateArgs!]!): [Policy]
+  deletePolicy(where: PolicyWhereUniqueInput!): Policy
+  deletePolicies(where: [PolicyWhereUniqueInput!]!): [Policy]
   createAccount(data: AccountCreateInput!): Account
   createAccounts(data: [AccountCreateInput!]!): [Account]
   updateAccount(where: AccountWhereUniqueInput!, data: AccountUpdateInput!): Account
@@ -2055,9 +2055,9 @@ type Query {
   applications(where: ApplicationWhereInput! = {}, orderBy: [ApplicationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ApplicationWhereUniqueInput): [Application!]
   application(where: ApplicationWhereUniqueInput!): Application
   applicationsCount(where: ApplicationWhereInput! = {}): Int
-  policyAndExports(where: PolicyAndExportWhereInput! = {}, orderBy: [PolicyAndExportOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyAndExportWhereUniqueInput): [PolicyAndExport!]
-  policyAndExport(where: PolicyAndExportWhereUniqueInput!): PolicyAndExport
-  policyAndExportsCount(where: PolicyAndExportWhereInput! = {}): Int
+  policies(where: PolicyWhereInput! = {}, orderBy: [PolicyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyWhereUniqueInput): [Policy!]
+  policy(where: PolicyWhereUniqueInput!): Policy
+  policiesCount(where: PolicyWhereInput! = {}): Int
   accounts(where: AccountWhereInput! = {}, orderBy: [AccountOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AccountWhereUniqueInput): [Account!]
   account(where: AccountWhereUniqueInput!): Account
   accountsCount(where: AccountWhereInput! = {}): Int

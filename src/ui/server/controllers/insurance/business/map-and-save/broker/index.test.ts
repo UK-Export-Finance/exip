@@ -24,7 +24,7 @@ describe('controllers/insurance/business/map-and-save/broker', () => {
   const mockValidationErrors = generateValidationErrors(NAME, 'error', {});
 
   describe('when the form has data', () => {
-    describe('when the form has validation errors ', () => {
+    describe('when the form has validation errors', () => {
       it('should call save.broker with application, populated submitted data and validationErrors.errorList', async () => {
         await mapAndSave.broker(mockFormBody, mockApplication, mockValidationErrors);
 

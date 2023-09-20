@@ -2,7 +2,7 @@ import mapInsuredFor from './map-value';
 import { FIELD_IDS, GBP_CURRENCY_CODE } from '../../../constants';
 import { DEFAULT } from '../../../content-strings';
 import formatCurrency from '../../format-currency';
-import mockApplication, { mockSinglePolicyAndExport, mockMultiplePolicyAndExport } from '../../../test-mocks/mock-application';
+import mockApplication, { mockSinglePolicy, mockMultiplePolicy } from '../../../test-mocks/mock-application';
 
 const {
   POLICY_AND_EXPORTS: {
@@ -18,14 +18,14 @@ describe('server/helpers/mappings/map-applications/map-value', () => {
     it(`should return formatted ${TOTAL_CONTRACT_VALUE}`, () => {
       const singlePolicyApplication = {
         ...mockApplication,
-        policyAndExport: mockSinglePolicyAndExport,
+        policy: mockSinglePolicy,
       };
 
       const result = mapInsuredFor(singlePolicyApplication);
 
-      const { policyAndExport } = singlePolicyApplication;
+      const { policy } = singlePolicyApplication;
 
-      const expected = formatCurrency(policyAndExport[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE);
+      const expected = formatCurrency(policy[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE);
 
       expect(result).toEqual(expected);
     });
@@ -35,14 +35,14 @@ describe('server/helpers/mappings/map-applications/map-value', () => {
     it(`should return formatted ${MAXIMUM_BUYER_WILL_OWE}`, () => {
       const multiplePolicyApplication = {
         ...mockApplication,
-        policyAndExport: mockMultiplePolicyAndExport,
+        policy: mockMultiplePolicy,
       };
 
       const result = mapInsuredFor(multiplePolicyApplication);
 
-      const { policyAndExport } = multiplePolicyApplication;
+      const { policy } = multiplePolicyApplication;
 
-      const expected = formatCurrency(policyAndExport[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE);
+      const expected = formatCurrency(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE);
 
       expect(result).toEqual(expected);
     });
@@ -52,8 +52,8 @@ describe('server/helpers/mappings/map-applications/map-value', () => {
     it('should return default empty string', () => {
       const result = mapInsuredFor({
         ...mockApplication,
-        policyAndExport: {
-          id: mockApplication.policyAndExport.id,
+        policy: {
+          id: mockApplication.policy.id,
         },
       });
 

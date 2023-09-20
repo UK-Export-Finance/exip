@@ -28,7 +28,7 @@ describe('controllers/insurance/business/map-and-save/nature-of-business', () =>
   const mockValidationErrors = generateValidationErrors(YEARS_EXPORTING, 'error', {});
 
   describe('when the form has data', () => {
-    describe('when the form has validation errors ', () => {
+    describe('when the form has validation errors', () => {
       it('should call save.business with application, populated submitted data and validationErrors.errorList', async () => {
         await mapAndSave.natureOfBusiness(mockFormBody, mockApplication, mockValidationErrors);
 

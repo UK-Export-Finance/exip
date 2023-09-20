@@ -42,7 +42,7 @@ export const lists = {
         validation: { isRequired: true },
       }),
       previousStatus: text(),
-      policyAndExport: relationship({ ref: 'PolicyAndExport' }),
+      policy: relationship({ ref: 'Policy' }),
       owner: relationship({
         ref: 'Account',
         many: false,
@@ -78,14 +78,14 @@ export const lists = {
 
             modifiedData.referenceNumber = newReferenceNumber;
 
-            // generate and attach a new 'policy and export' relationship
-            const { id: policyAndExportId } = await context.db.PolicyAndExport.createOne({
+            // generate and attach a new 'policy' relationship
+            const { id: policyId } = await context.db.Policy.createOne({
               data: {},
             });
 
-            modifiedData.policyAndExport = {
+            modifiedData.policy = {
               connect: {
-                id: policyAndExportId,
+                id: policyId,
               },
             };
 
@@ -197,7 +197,7 @@ export const lists = {
 
             const { referenceNumber } = item;
 
-            const { policyAndExportId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
+            const { policyId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -211,9 +211,9 @@ export const lists = {
               },
             });
 
-            // add the application ID to the policyAndExport entry.
-            await context.db.PolicyAndExport.updateOne({
-              where: { id: policyAndExportId },
+            // add the application ID to the policy entry.
+            await context.db.Policy.updateOne({
+              where: { id: policyId },
               data: {
                 application: {
                   connect: {
@@ -292,7 +292,7 @@ export const lists = {
     },
     access: allowAll,
   },
-  PolicyAndExport: {
+  Policy: {
     fields: {
       application: relationship({ ref: 'Application' }),
       policyType: select({
@@ -574,7 +574,7 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       eligibility: nullableCheckbox(),
-      policyAndExport: nullableCheckbox(),
+      policy: nullableCheckbox(),
       business: nullableCheckbox(),
       buyer: nullableCheckbox(),
     },

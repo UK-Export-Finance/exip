@@ -22,9 +22,9 @@ const {
 
 describe('server/helpers/task-list/submit-application', () => {
   it('should return EXIP `submit application` tasks', () => {
-    const { referenceNumber, policyAndExport, broker, declaration } = mockApplication;
+    const { referenceNumber, policy, broker, declaration } = mockApplication;
 
-    const { policyType } = policyAndExport;
+    const { policyType } = policy;
     const { isUsingBroker } = broker;
     const { hasAntiBriberyCodeOfConduct } = declaration;
 

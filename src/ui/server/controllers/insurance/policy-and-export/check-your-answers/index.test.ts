@@ -88,7 +88,7 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(res.locals.application),
-        SUMMARY_LIST: policyAndExportSummaryList(mockApplication.policyAndExport, mockApplication.referenceNumber, mockCountries, mockCurrencies),
+        SUMMARY_LIST: policyAndExportSummaryList(mockApplication.policy, mockApplication.referenceNumber, mockCountries, mockCurrencies),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

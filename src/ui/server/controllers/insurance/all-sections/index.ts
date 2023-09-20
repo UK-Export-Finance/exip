@@ -28,7 +28,7 @@ export const get = (req: Request, res: Response) => {
 
   const taskListStructure = generateGroupsAndTasks(
     application.referenceNumber,
-    application.policyAndExport.policyType,
+    application.policy.policyType,
     application.broker.isUsingBroker,
     application.declaration.hasAntiBriberyCodeOfConduct,
   );

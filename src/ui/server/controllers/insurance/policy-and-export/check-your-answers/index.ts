@@ -51,7 +51,7 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const summaryList = policyAndExportSummaryList(application.policyAndExport, refNumber, countries, currencies);
+    const summaryList = policyAndExportSummaryList(application.policy, refNumber, countries, currencies);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

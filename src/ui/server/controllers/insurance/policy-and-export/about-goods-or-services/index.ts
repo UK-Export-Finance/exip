@@ -78,8 +78,8 @@ export const get = async (req: Request, res: Response) => {
 
     let mappedCountries;
 
-    if (objectHasProperty(application.policyAndExport, FINAL_DESTINATION)) {
-      mappedCountries = mapCountries(countries, application.policyAndExport[FINAL_DESTINATION]);
+    if (objectHasProperty(application.policy, FINAL_DESTINATION)) {
+      mappedCountries = mapCountries(countries, application.policy[FINAL_DESTINATION]);
     } else {
       mappedCountries = mapCountries(countries);
     }
@@ -159,7 +159,7 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     // save the application
-    const saveResponse = await mapAndSave.policyAndExport(req.body, application);
+    const saveResponse = await mapAndSave.policy(req.body, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

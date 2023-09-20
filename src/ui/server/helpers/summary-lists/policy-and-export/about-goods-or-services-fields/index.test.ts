@@ -23,7 +23,7 @@ const {
 } = ROUTES;
 
 describe('server/helpers/summary-lists/policy-and-export/about-goods-or-services-fields', () => {
-  const mockAnswers = mockApplication.policyAndExport;
+  const mockAnswers = mockApplication.policy;
   const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 

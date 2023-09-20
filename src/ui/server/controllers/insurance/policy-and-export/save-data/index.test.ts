@@ -20,58 +20,58 @@ describe('controllers/insurance/policy-and-export/save-data', () => {
   };
 
   beforeEach(() => {
-    api.keystone.application.update.policyAndExport = updateApplicationSpy;
+    api.keystone.application.update.policy = updateApplicationSpy;
   });
 
   describe('when errorList is provided', () => {
     const mockErrorList = generateValidationErrors(mockFormBody.invalid)?.errorList;
 
-    it('should call api.keystone.application.update.policyAndExport with policyAndExport ID and stripped and sanitised data', async () => {
-      await save.policyAndExport(mockApplication, mockFormBody.invalid, mockErrorList);
+    it('should call api.keystone.application.update.policy with policy ID and stripped and sanitised data', async () => {
+      await save.policy(mockApplication, mockFormBody.invalid, mockErrorList);
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
       const expectedSanitisedData = sanitiseData(mockFormBody.invalid);
-      expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.policyAndExport.id, expectedSanitisedData);
+      expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.policy.id, expectedSanitisedData);
     });
 
     it('should return the API response', async () => {
-      const result = await save.policyAndExport(mockApplication, mockFormBody.invalid);
+      const result = await save.policy(mockApplication, mockFormBody.invalid);
 
       expect(result).toEqual(mockUpdateApplicationResponse);
     });
   });
 
   describe('when errorList is NOT provided', () => {
-    it('should call api.keystone.application.update.policyAndExport with policyAndExport ID and sanitised data', async () => {
-      await save.policyAndExport(mockApplication, mockFormBody.valid);
+    it('should call api.keystone.application.update.policy with policy ID and sanitised data', async () => {
+      await save.policy(mockApplication, mockFormBody.valid);
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
       const expectedSanitisedData = sanitiseData(mockFormBody.valid);
-      expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.policyAndExport.id, expectedSanitisedData);
+      expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.policy.id, expectedSanitisedData);
     });
 
     it('should return the API response', async () => {
-      const result = await save.policyAndExport(mockApplication, mockFormBody.valid);
+      const result = await save.policy(mockApplication, mockFormBody.valid);
 
       expect(result).toEqual(mockUpdateApplicationResponse);
     });
   });
 
   describe('api error handling', () => {
-    describe('update policyAndExport call', () => {
+    describe('update policy call', () => {
       describe('when there is an error', () => {
         beforeEach(() => {
           updateApplicationSpy = jest.fn(() => Promise.reject());
-          api.keystone.application.update.policyAndExport = updateApplicationSpy;
+          api.keystone.application.update.policy = updateApplicationSpy;
         });
 
         it('should throw an error', async () => {
           try {
-            await save.policyAndExport(mockApplication, mockFormBody.valid);
+            await save.policy(mockApplication, mockFormBody.valid);
           } catch (err) {
-            const expected = new Error("Updating application's policyAndExport");
+            const expected = new Error("Updating application's policy");
             expect(err).toEqual(expected);
           }
         });
