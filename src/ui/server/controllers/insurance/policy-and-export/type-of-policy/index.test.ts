@@ -29,7 +29,6 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
   const mockSavePolicyAndExportData = jest.fn(() => Promise.resolve(true));
   mapAndSave.policyAndExport = mockSavePolicyAndExportData;
-
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
@@ -38,7 +37,6 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
     req.params.referenceNumber = String(mockApplication.referenceNumber);
     refNumber = Number(mockApplication.referenceNumber);
   });
-
   afterAll(() => {
     jest.resetAllMocks();
   });
@@ -73,7 +71,6 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
   describe('get', () => {
     it('should render template', async () => {
       await get(req, res);
-
       const expectedVariables = {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
@@ -94,7 +91,6 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await get(req, res);
-
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
@@ -103,9 +99,9 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
   describe('post', () => {
     describe('when there are no validation errors', () => {
       beforeEach(() => {
+        const FIELD = FIELDS[FIELD_ID];
         req.body = {
-          // @ts-ignore
-          [FIELD_ID]: FIELDS[FIELD_ID]?.OPTIONS?.SINGLE.VALUE,
+          [FIELD_ID]: FIELD?.OPTIONS?.SINGLE?.VALUE,
         };
       });
 
@@ -131,8 +127,11 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
       describe('when the answer is `multi`', () => {
         it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`, async () => {
-          // @ts-ignore
-          req.body[FIELD_ID] = FIELDS[FIELD_ID]?.OPTIONS?.MULTIPLE.VALUE;
+          const FIELD = FIELDS[FIELD_ID];
+
+          req.body = {
+            [FIELD_ID]: FIELD?.OPTIONS?.MULTIPLE?.VALUE,
+          };
 
           await post(req, res);
 
@@ -205,9 +204,10 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
     describe('api error handling', () => {
       beforeEach(() => {
+        const FIELD = FIELDS[FIELD_ID];
+
         req.body = {
-          // @ts-ignore
-          [FIELD_ID]: FIELDS[FIELD_ID]?.OPTIONS?.SINGLE.VALUE,
+          [FIELD_ID]: FIELD?.OPTIONS?.SINGLE?.VALUE,
         };
       });
 
@@ -229,7 +229,6 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
         describe('when there is an error', () => {
           beforeEach(() => {
             const savePolicyAndExportDataSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
-
             mapAndSave.policyAndExport = savePolicyAndExportDataSpy;
           });
 
