@@ -93,4 +93,4 @@ const init = () => {
 };
 
 // Call init when element is loaded
-cookieBanner.addEventListener('DOMContentLoaded', () => init());
+init();
