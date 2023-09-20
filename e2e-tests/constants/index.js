@@ -6,6 +6,7 @@ export * from './dates';
 export * from './examples';
 export * from './field-ids';
 export * from './field-values';
+export * from './pagination';
 export * from './percentages-of-cover';
 export * from './eligibility';
 export * from './routes';

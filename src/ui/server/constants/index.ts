@@ -6,6 +6,7 @@ export * from './dates';
 export * from './external-apis';
 export * from './field-ids';
 export * from './field-values';
+export * from './pagination';
 export * from './percentages-of-cover';
 export * from './phone-number-countries';
 export * from './eligibility';
