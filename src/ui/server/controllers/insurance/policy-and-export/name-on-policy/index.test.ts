@@ -83,7 +83,7 @@ describe('controllers/insurance/policy-and-export/name-on-policy', () => {
 
   describe('get', () => {
     it('should render template', async () => {
-      await get(req, res);
+      get(req, res);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
@@ -104,7 +104,7 @@ describe('controllers/insurance/policy-and-export/name-on-policy', () => {
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
+        get(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });

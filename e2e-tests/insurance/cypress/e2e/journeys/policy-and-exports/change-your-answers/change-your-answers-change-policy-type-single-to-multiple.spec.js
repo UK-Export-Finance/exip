@@ -110,8 +110,11 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
 
         cy.assertUrl(`${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}#heading`);
 
-        // proceed to "check your answers"
+        // proceed to "name on policy"
         submitButton().click();
+        // proceed to "check your answers"
+        cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+
 
         const expectedUrl = `${checkYourAnswersUrl}#heading`;
 

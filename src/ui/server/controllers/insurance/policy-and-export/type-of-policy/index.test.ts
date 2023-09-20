@@ -103,10 +103,9 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
   describe('post', () => {
     describe('when there are no validation errors', () => {
       beforeEach(() => {
-        const FIELD = FIELDS[FIELD_ID];
-
         req.body = {
-          [FIELD_ID]: FIELD?.OPTIONS?.SINGLE?.VALUE,
+          // @ts-ignore
+          [FIELD_ID]: FIELDS[FIELD_ID]?.OPTIONS?.SINGLE.VALUE,
         };
       });
 
@@ -132,9 +131,8 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
       describe('when the answer is `multi`', () => {
         it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`, async () => {
-          const FIELD = FIELDS[FIELD_ID];
-
-          req.body[FIELD_ID] = FIELD[FIELD_ID]?.OPTIONS?.MULTIPLE.VALUE;
+          // @ts-ignore
+          req.body[FIELD_ID] = FIELDS[FIELD_ID]?.OPTIONS?.MULTIPLE.VALUE;
 
           await post(req, res);
 
@@ -207,10 +205,9 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
     describe('api error handling', () => {
       beforeEach(() => {
-        const FIELD = FIELDS[FIELD_ID];
-
         req.body = {
-          [FIELD_ID]: FIELD[FIELD_ID]?.OPTIONS?.SINGLE.VALUE,
+          // @ts-ignore
+          [FIELD_ID]: FIELDS[FIELD_ID]?.OPTIONS?.SINGLE.VALUE,
         };
       });
 

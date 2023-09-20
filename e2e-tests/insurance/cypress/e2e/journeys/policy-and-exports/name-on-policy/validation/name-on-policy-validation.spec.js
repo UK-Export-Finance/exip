@@ -27,6 +27,8 @@ const {
 
 const NAME_ON_POLICY_ERRORS = ERROR_MESSAGES.INSURANCE.POLICY_AND_EXPORTS.NAME_ON_POLICY;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Policy and exports - Name on policy - Validation', () => {
   let referenceNumber;
   let url;
@@ -42,7 +44,7 @@ context('Insurance - Policy and exports - Name on policy - Validation', () => {
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
 
       cy.assertUrl(url);
     });
@@ -106,7 +108,7 @@ context('Insurance - Policy and exports - Name on policy - Validation', () => {
 
       partials.errorSummaryListItems().should('not.exist');
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(expectedUrl);
     });
   });
@@ -121,7 +123,7 @@ context('Insurance - Policy and exports - Name on policy - Validation', () => {
 
       partials.errorSummaryListItems().should('not.exist');
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(expectedUrl);
     });
   });
