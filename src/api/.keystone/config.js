@@ -3819,7 +3819,7 @@ var XLSX = {
   SECTION_TITLES: {
     KEY_INFORMATION: "Key information",
     EXPORTER_CONTACT_DETAILS: "Exporter contact details",
-    POLICY_AND_EXPORT: "Type of policys",
+    POLICY_AND_EXPORT: "Type of policy and exports",
     EXPORTER_BUSINESS: "About your business",
     BUYER: "Your buyer",
     ELIGIBILITY: "Eligibility"
