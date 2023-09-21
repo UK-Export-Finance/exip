@@ -24,6 +24,11 @@
   "bugs": {
     "url": "https://github.com/UK-Export-Finance/exip/issues"
   },
+  "lint-staged": {
+    "package.json": "sort-package-json",
+    "*.js": "eslint --fix",
+    "*.ts": "eslint --fix"
+  },
   "homepage": "https://github.com/UK-Export-Finance/exip#readme",
   "dependencies": {
     "@cypress-audit/lighthouse": "^1.4.2",
@@ -49,6 +54,8 @@
     "@types/node": "^20.6.3",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "@typescript-eslint/parser": "^6.7.2",
+    "commitlint": "^17.7.1",
+    "cspell": "^7.3.6",
     "eslint": "^8.49.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
@@ -64,6 +71,7 @@
     "jest": "^29.7.0",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
+    "sort-package-json": "^2.5.1",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
   }
