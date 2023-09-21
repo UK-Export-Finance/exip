@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const companiesHouseQuery = gql`
-  query ($companiesHouseNumber: String!) {
+  query getCompaniesHouseInformation($companiesHouseNumber: String!) {
     getCompaniesHouseInformation(companiesHouseNumber: $companiesHouseNumber) {
       companyName
       registeredOfficeAddress {

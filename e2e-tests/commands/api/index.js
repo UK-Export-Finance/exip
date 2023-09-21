@@ -64,7 +64,7 @@ const queryStrings = {
     }
   `,
   updateCompanyAndCompanyAddress: () => gql`
-    mutation ($companyId: ID!, $companyAddressId: ID!, $data: CompanyAndCompanyAddressInput!) {
+    mutation updateCompanyAndCompanyAddress($companyId: ID!, $companyAddressId: ID!, $data: CompanyAndCompanyAddressInput!) {
       updateCompanyAndCompanyAddress(companyId: $companyId, companyAddressId: $companyAddressId, data: $data) {
         id
       }
@@ -87,7 +87,7 @@ const queryStrings = {
     }
   `,
   getApplicationByReferenceNumber: (referenceNumber) => gql`
-    {
+    query applications {
       applications (
       orderBy: { updatedAt: desc }
       where: { referenceNumber: { equals: ${referenceNumber} } }

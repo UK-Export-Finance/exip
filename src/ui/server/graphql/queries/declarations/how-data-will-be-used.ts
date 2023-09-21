@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const getDeclarationHowDataWillBeUsedQuery = gql`
-  query {
+  query declarationHowDataWillBeUseds {
     declarationHowDataWillBeUseds(orderBy: { version: desc }, take: 1) {
       id
       version

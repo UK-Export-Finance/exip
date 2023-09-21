@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const applicationQuery = gql`
-  query ($referenceNumber: ID!) {
+  query referenceNumber($referenceNumber: ID!) {
     referenceNumber(where: { id: $referenceNumber }) {
       id
       application {

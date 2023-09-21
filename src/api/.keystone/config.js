@@ -271,7 +271,8 @@ var DEFAULT_RESOLVERS = [
   "updateBusiness",
   "updateBuyer",
   "updateDeclaration",
-  "updatePolicyAndExport",
+  "updatePolicy",
+  "updateExportContract",
   "updateSectionReview",
   "updateEligibility",
   "referenceNumber",
@@ -300,13 +301,14 @@ var CUSTOM_RESOLVERS = [
   "createAnApplication",
   "declarationAntiBriberies",
   "declarationConfirmationAndAcknowledgements",
-  "declarationHowDataWillBeUsed",
+  "declarationHowDataWillBeUseds",
   "deleteApplicationByReferenceNumber",
   "getCompaniesHouseInformation",
   "submitApplication",
   "updateCompanyAndCompanyAddress",
   // feedback
-  "createFeedbackAndSendEmail"
+  "createFeedbackAndSendEmail",
+  "getApimCisCountries"
 ];
 if (isDevEnvironment) {
   CUSTOM_RESOLVERS.push("addAndGetOTP", "createApplications", "createBuyer", "deleteAnAccount", "deleteApplications", "getAccountPasswordResetToken");
@@ -1444,7 +1446,7 @@ var requestDidStart = () => ({
    * via an explicit list of allowed resolvers.
    */
   didResolveOperation({ request }) {
-    if (request.operationName && !ALLOWED_GRAPHQL_RESOLVERS.includes(request.operationName)) {
+    if (!request.operationName || request.operationName && !ALLOWED_GRAPHQL_RESOLVERS.includes(request.operationName)) {
       throw new Error("Operation not permitted");
     }
   }

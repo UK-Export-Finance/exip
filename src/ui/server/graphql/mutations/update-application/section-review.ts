@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const updateSectionReviewMutation = gql`
-  mutation ($where: SectionReviewWhereUniqueInput!, $data: SectionReviewUpdateInput!) {
+  mutation updateSectionReview($where: SectionReviewWhereUniqueInput!, $data: SectionReviewUpdateInput!) {
     updateSectionReview(where: $where, data: $data) {
       id
     }

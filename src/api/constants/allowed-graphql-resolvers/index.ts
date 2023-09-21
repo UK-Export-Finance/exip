@@ -15,7 +15,8 @@ const DEFAULT_RESOLVERS = [
   'updateBusiness',
   'updateBuyer',
   'updateDeclaration',
-  'updatePolicyAndExport',
+  'updatePolicy',
+  'updateExportContract',
   'updateSectionReview',
   'updateEligibility',
   'referenceNumber',
@@ -52,7 +53,7 @@ const CUSTOM_RESOLVERS = [
   'createAnApplication',
   'declarationAntiBriberies',
   'declarationConfirmationAndAcknowledgements',
-  'declarationHowDataWillBeUsed',
+  'declarationHowDataWillBeUseds',
   'deleteApplicationByReferenceNumber',
   'getCompaniesHouseInformation',
   'submitApplication',
@@ -60,6 +61,8 @@ const CUSTOM_RESOLVERS = [
 
   // feedback
   'createFeedbackAndSendEmail',
+
+  'getApimCisCountries',
 ];
 
 /**
