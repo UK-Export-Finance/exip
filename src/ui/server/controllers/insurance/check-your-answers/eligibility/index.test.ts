@@ -79,7 +79,7 @@ describe('controllers/insurance/check-your-answers/eligibility', () => {
 
       const summaryList = eligibilitySummaryList(mockApplication.eligibility);
 
-      const fields = requiredFields(mockApplication.policyAndExport.policyType);
+      const fields = requiredFields(mockApplication.policy.policyType);
 
       const status = sectionStatus(fields, mockApplication);
 
@@ -99,7 +99,7 @@ describe('controllers/insurance/check-your-answers/eligibility', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
+        res.locals = mockRes().locals;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -138,7 +138,7 @@ describe('controllers/insurance/check-your-answers/eligibility', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
+        res.locals = mockRes().locals;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

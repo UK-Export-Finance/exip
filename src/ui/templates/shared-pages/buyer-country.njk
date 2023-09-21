@@ -28,7 +28,6 @@
   {% endif %}
 
   <form method="POST" id="form" novalidate>
-
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     <input type="hidden" name="{{ HIDDEN_FIELD_ID }}" id="{{ HIDDEN_FIELD_ID }}" value="{{ submittedValues[HIDDEN_FIELD_ID].name }}">
 
@@ -71,9 +70,9 @@
 
             {% for country in countries %}
               {% if country.selected %}
-                <option value="{{ country.name }}" selected>{{ country.name }}</option>
+                <option value="{{ country.text }}" selected>{{ country.text }}</option>
               {% else %}
-                <option value="{{ country.name }}">{{ country.name }}</option>
+                <option value="{{ country.text }}">{{ country.text }}</option>
               {% endif %}
             {% endfor %}
           </select>
@@ -88,6 +87,6 @@
 
   </form>
 
-  <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript"></script>
+  <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript" integrity="{{ SRI.ACCESSIBILITY }}" crossorigin="anonymous"></script>
 
 {% endblock %}

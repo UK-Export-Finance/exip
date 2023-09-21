@@ -45,13 +45,13 @@
 
         {% set descriptionHintHtml %}
 
-          <p class="govuk-hint" data-cy="{{ FIELDS.DESCRIPTION.ID }}-hint-intro">{{ FIELDS.DESCRIPTION.HINT.INTRO }}</p>
+        <p class="govuk-hint" data-cy="{{ FIELDS.DESCRIPTION.ID }}-hint-intro">{{ FIELDS.DESCRIPTION.HINT.INTRO }}</p>
 
-          <ul class="govuk-list govuk-list--bullet">
-            {% for item in FIELDS.DESCRIPTION.HINT.LIST %}
-              <li class="govuk-hint" data-cy="{{ FIELDS.DESCRIPTION.ID }}-hint-list-item-{{ loop.index }}">{{ item }}</li>
-            {% endfor %}
-          </ul>
+        <ul class="govuk-list govuk-list--bullet">
+          {% for item in FIELDS.DESCRIPTION.HINT.LIST %}
+            <li class="govuk-hint" data-cy="{{ FIELDS.DESCRIPTION.ID }}-hint-list-item-{{ loop.index }}">{{ item }}</li>
+          {% endfor %}
+        </ul>
         {% endset %}
 
         {{ govukCharacterCount({
@@ -72,7 +72,7 @@
             'data-cy': FIELDS.DESCRIPTION.ID + '-input'
           },
           maxlength: FIELDS.DESCRIPTION.MAXIMUM,
-          value: submittedValues[FIELDS.DESCRIPTION.ID] or application.policyAndExport[FIELDS.DESCRIPTION.ID],
+          value: submittedValues[FIELDS.DESCRIPTION.ID] or application.exportContract[FIELDS.DESCRIPTION.ID],
           errorMessage: validationErrors.errorList[FIELDS.DESCRIPTION.ID] and {
             text: validationErrors.errorList[FIELDS.DESCRIPTION.ID].text,
             attributes: {
@@ -125,6 +125,6 @@
 
   </form>
 
-  <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript"></script>
+  <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript" integrity="{{ SRI.ACCESSIBILITY }}" crossorigin="anonymous"></script>
 
 {% endblock %}

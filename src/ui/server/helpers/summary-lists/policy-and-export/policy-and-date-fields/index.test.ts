@@ -26,7 +26,7 @@ const {
 describe('server/helpers/summary-lists/policy-and-export/policy-and-date-fields', () => {
   const { referenceNumber } = mockApplication;
 
-  const mockAnswers = mockApplication.policyAndExport;
+  const mockAnswers = mockApplication.policy;
   const checkAndChange = false;
 
   it('should return fields and values from the submitted data/answers', () => {

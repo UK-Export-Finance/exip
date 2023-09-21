@@ -6,7 +6,7 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import formatCurrency from '../../../format-currency';
 import mapMonthString from '../../../data-content-mappings/map-month-string';
-import mockApplication, { mockMultiplePolicyAndExport } from '../../../../test-mocks/mock-application';
+import mockApplication, { mockMultiplePolicy } from '../../../../test-mocks/mock-application';
 import generateChangeLink from '../../../generate-change-link';
 
 const {
@@ -22,7 +22,7 @@ const {
 } = ROUTES;
 
 describe('server/helpers/summary-lists/policy-and-export/multiple-contract-policy-fields', () => {
-  const mockAnswers = mockMultiplePolicyAndExport;
+  const mockAnswers = mockMultiplePolicy;
   const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 

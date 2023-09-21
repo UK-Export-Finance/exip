@@ -77,7 +77,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
       cy.navigateToUrl(url);
 
       // submit the form via 'save and go back' button
-      cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].input(), application.POLICY_AND_EXPORTS[DESCRIPTION]);
+      cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].input(), application.EXPORT_CONTRACT[DESCRIPTION]);
       saveAndBackButton().click();
     });
 
@@ -95,7 +95,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
       cy.navigateToUrl(url);
 
       // submit the form via 'save and go back' button
-      cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].input(), application.POLICY_AND_EXPORTS[DESCRIPTION]);
+      cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].input(), application.EXPORT_CONTRACT[DESCRIPTION]);
       saveAndBackButton().click();
 
       // go back to the page via the task list
@@ -103,7 +103,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
       submitButton().click();
       submitButton().click();
 
-      aboutGoodsOrServicesPage[DESCRIPTION].input().should('have.value', application.POLICY_AND_EXPORTS[DESCRIPTION]);
+      aboutGoodsOrServicesPage[DESCRIPTION].input().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
     });
   });
 

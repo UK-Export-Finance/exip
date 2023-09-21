@@ -18,6 +18,10 @@ export const POLICY_AND_EXPORTS = {
   ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK: `${ROOT}/about-goods-or-services/save-and-go-back`,
   ABOUT_GOODS_OR_SERVICES_CHANGE: `${ROOT}/about-goods-or-services/change`,
   ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE: `${ROOT}/about-goods-or-services/check-and-change`,
+  NAME_ON_POLICY: `${ROOT}/name-on-policy`,
+  NAME_ON_POLICY_SAVE_AND_BACK: `${ROOT}/name-on-policy/save-and-go-back`,
+  NAME_ON_POLICY_CHANGE: `${ROOT}/name-on-policy/change`,
+  NAME_ON_POLICY_CHECK_AND_CHANGE: `${ROOT}/name-on-policy/check-and-change`,
   CHECK_YOUR_ANSWERS: `${ROOT}/check-your-answers`,
   CHECK_YOUR_ANSWERS_SAVE_AND_BACK: `${ROOT}/check-your-answers/save-and-go-back`,
 };

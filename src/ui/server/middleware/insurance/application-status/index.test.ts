@@ -119,7 +119,7 @@ describe('middleware/insurance/application-status', () => {
       beforeEach(() => {
         const mockApplicationWithIncompleteFields = mockApplication;
 
-        delete mockApplicationWithIncompleteFields.policyAndExport[POLICY_TYPE];
+        delete mockApplicationWithIncompleteFields.policy[POLICY_TYPE];
 
         res.locals.application = mockApplicationWithIncompleteFields;
       });

@@ -5,13 +5,13 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../types
 
 /**
  * mapAndSave
- * Map and save any valid Single contract policy fields
+ * Map and save any valid  policy fields
  * @param {Express.Request.body} Express request body
  * @param {Object} Application
  * @param {Object} Validation errors
  * @returns {Boolean}
  */
-const policyAndExport = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
+const policy = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
       const populatedData = mapSubmittedData(formBody);
@@ -19,9 +19,9 @@ const policyAndExport = async (formBody: RequestBody, application: Application, 
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await save.policyAndExport(application, populatedData, validationErrors.errorList);
+        saveResponse = await save.policy(application, populatedData, validationErrors.errorList);
       } else {
-        saveResponse = await save.policyAndExport(application, populatedData);
+        saveResponse = await save.policy(application, populatedData);
       }
 
       if (!saveResponse) {
@@ -40,5 +40,5 @@ const policyAndExport = async (formBody: RequestBody, application: Application, 
 };
 
 export default {
-  policyAndExport,
+  policy,
 };

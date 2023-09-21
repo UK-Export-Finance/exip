@@ -3,7 +3,6 @@ import mockAccount from './mock-account';
 import mockAnswers from './mock-answers';
 import mockSession from './mock-session';
 import mockQuote from './mock-quote';
-import mockCisCountries from './mock-cis-countries';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
 import mockCompany from './mock-company';
@@ -20,6 +19,10 @@ import mockBuyer from './mock-buyer';
 import mockDeclarations from './mock-declarations';
 import { mockInsuranceFeedback } from './mock-feedback';
 import mockBusinessContact from './mock-business-contact';
+import { PRODUCT } from '../content-strings';
+import { INTEGRITY } from '../constants';
+
+const { GOVUK, FORM, COOKIES, GA, MOJ, ACCESSIBILITY } = INTEGRITY;
 
 const mockReq = () => {
   const req = {
@@ -63,6 +66,19 @@ const mockRes = () => {
 
   res.locals = {
     csrfToken: 'mock',
+    meta: {
+      URL: 'mock.com/route',
+      TITLE: PRODUCT.DESCRIPTION.GENERIC,
+      ORGANISATION: PRODUCT.DESCRIPTION.ORGANISATION,
+    },
+    SRI: {
+      ACCESSIBILITY,
+      MOJ,
+      GOVUK,
+      FORM,
+      COOKIES,
+      GA,
+    },
   };
 
   return res;
@@ -81,7 +97,6 @@ export {
   mockBusinessNatureOfBusiness,
   mockBusinessTurnover,
   mockBuyer,
-  mockCisCountries,
   mockCountries,
   mockCompany,
   mockCurrencies,

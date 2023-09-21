@@ -15,8 +15,8 @@ const { INSURANCE_ROOT, POLICY_AND_EXPORTS, EXPORTER_BUSINESS: EXPORTER_BUSINESS
 const { PREPARE_APPLICATION } = TASKS.LIST;
 
 describe('server/helpers/task-list/prepare-application', () => {
-  const { referenceNumber, policyAndExport } = mockApplication;
-  const { policyType } = policyAndExport;
+  const { referenceNumber, policy } = mockApplication;
+  const { policyType } = policy;
 
   describe('createPrepareApplicationTasks', () => {
     const initialChecksTasks = createInitialChecksTasks();

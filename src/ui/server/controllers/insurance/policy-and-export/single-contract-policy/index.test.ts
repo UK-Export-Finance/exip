@@ -43,13 +43,13 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
 
   jest.mock('../save-data');
 
-  mapAndSave.policyAndExport = jest.fn(() => Promise.resolve(true));
+  mapAndSave.policy = jest.fn(() => Promise.resolve(true));
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
 
   const mockApplicationWithoutCurrencyCode = {
     ...mockApplication,
-    policyAndExport: {
-      ...mockApplication.policyAndExport,
+    policy: {
+      ...mockApplication.policy,
       [POLICY_CURRENCY_CODE]: null,
     },
   };
@@ -158,8 +158,8 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
     describe('when a policy currency code has been previously submitted', () => {
       const mockApplicationWithCurrencyCode = {
         ...mockApplication,
-        policyAndExport: {
-          ...mockApplication.policyAndExport,
+        policy: {
+          ...mockApplication.policy,
           [POLICY_CURRENCY_CODE]: mockCurrencies[0].isoCode,
         },
       };
@@ -171,7 +171,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
       it('should render template with currencies mapped to submitted currency', async () => {
         await get(req, res);
 
-        const expectedCurrencies = mapCurrencies(mockCurrencies, mockApplicationWithCurrencyCode.policyAndExport[POLICY_CURRENCY_CODE]);
+        const expectedCurrencies = mapCurrencies(mockCurrencies, mockApplicationWithCurrencyCode.policy[POLICY_CURRENCY_CODE]);
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
@@ -190,7 +190,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
+        res.locals = mockRes().locals;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -254,14 +254,14 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
         req.body = validBody;
       });
 
-      it('should call mapAndSave.policyAndExport with data from constructPayload function and application', async () => {
+      it('should call mapAndSave.policy with data from constructPayload function and application', async () => {
         await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.policy).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(payload, res.locals.application);
+        expect(mapAndSave.policy).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
       it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, async () => {
@@ -363,7 +363,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
+        res.locals = mockRes().locals;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -402,7 +402,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
         });
       });
 
-      describe('mapAndSave.policyAndExport call', () => {
+      describe('mapAndSave.policy call', () => {
         beforeEach(() => {
           req.body = validBody;
         });
@@ -411,7 +411,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
           beforeEach(() => {
             const savePolicyAndExportDataSpy = jest.fn(() => Promise.resolve(false));
 
-            mapAndSave.policyAndExport = savePolicyAndExportDataSpy;
+            mapAndSave.policy = savePolicyAndExportDataSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -425,7 +425,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
           beforeEach(() => {
             const savePolicyAndExportDataSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
 
-            mapAndSave.policyAndExport = savePolicyAndExportDataSpy;
+            mapAndSave.policy = savePolicyAndExportDataSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

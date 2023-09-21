@@ -28,7 +28,7 @@ const {
     POLICY_AND_EXPORTS: {
       SINGLE_CONTRACT_POLICY,
       ABOUT_GOODS_OR_SERVICES,
-      CHECK_YOUR_ANSWERS,
+      NAME_ON_POLICY,
     },
   },
 } = ROUTES;
@@ -154,12 +154,12 @@ context('Insurance - Policy and exports - About goods or services page - As an e
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+    it(`should redirect to ${NAME_ON_POLICY}`, () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitAboutGoodsOrServicesForm();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
       cy.assertUrl(expectedUrl);
     });
 
@@ -184,9 +184,9 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
 
-        aboutGoodsOrServicesPage[DESCRIPTION].input().should('have.value', application.POLICY_AND_EXPORTS[DESCRIPTION]);
+        aboutGoodsOrServicesPage[DESCRIPTION].input().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
 
-        const country = countries.find((c) => c.isoCode === application.POLICY_AND_EXPORTS[FINAL_DESTINATION]);
+        const country = countries.find((c) => c.isoCode === application.EXPORT_CONTRACT[FINAL_DESTINATION]);
         cy.checkText(countryInput.field(FINAL_DESTINATION).results(), country.name);
       });
     });

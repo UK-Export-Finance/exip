@@ -1,5 +1,5 @@
 import { getAvailableCover, getResultAndExpected } from './index.test';
-import { API, FIELD_VALUES } from '../../constants';
+import { EXTERNAL_API_MAPPINGS, FIELD_VALUES } from '../../constants';
 
 const standardRisk2Months = getAvailableCover('MULTIPLE_POLICY', 'STANDARD', 2);
 const standardRisk3Months = getAvailableCover('MULTIPLE_POLICY', 'STANDARD', 3);
@@ -11,7 +11,7 @@ describe('server/generate-quote/get-premium-rate', () => {
   };
 
   describe('multiple policy - standard risk', () => {
-    const riskCategory = API.MAPPINGS.RISK.STANDARD;
+    const riskCategory = EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD;
     const mock = {
       ...mockBase,
       riskCategory,

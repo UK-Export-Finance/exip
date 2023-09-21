@@ -33,9 +33,9 @@ describe('controllers/insurance/all-sections', () => {
     it('should render template', () => {
       get(req, res);
 
-      const { referenceNumber, policyAndExport, broker, declaration } = mockApplication;
+      const { referenceNumber, policy, broker, declaration } = mockApplication;
 
-      const { policyType } = policyAndExport;
+      const { policyType } = policy;
       const { isUsingBroker } = broker;
       const { hasAntiBriberyCodeOfConduct } = declaration;
 
@@ -58,7 +58,7 @@ describe('controllers/insurance/all-sections', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = { csrfToken: '1234' };
+        res.locals = mockRes().locals;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
