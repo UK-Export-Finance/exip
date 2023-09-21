@@ -127,6 +127,11 @@ describe('Create an Application', () => {
     expect(typeof application.policy.id).toEqual('string');
   });
 
+  test('it should have a exportContract id', () => {
+    expect(application.exportContract).toBeDefined();
+    expect(typeof application.exportContract.id).toEqual('string');
+  });
+
   test('it should have a company id', () => {
     expect(application.company).toBeDefined();
     expect(typeof application.company.id).toEqual('string');
@@ -168,7 +173,7 @@ describe('Create an Application', () => {
     expect(referenceNumber.application.id).toEqual(application.id);
   });
 
-  test('it should add the application ID to the policy entry', async () => {
+  test('it should add the application ID to the business entry', async () => {
     const business = await context.query.Business.findOne({
       where: {
         id: application.business.id,
@@ -188,6 +193,17 @@ describe('Create an Application', () => {
     });
 
     expect(policy.application.id).toEqual(application.id);
+  });
+
+  test('it should add the application ID to the exportContract entry', async () => {
+    const business = await context.query.ExportContract.findOne({
+      where: {
+        id: application.exportContract.id,
+      },
+      query: 'id application { id }',
+    });
+
+    expect(business.application.id).toEqual(application.id);
   });
 
   test('it should add the application ID to the company entry', async () => {
