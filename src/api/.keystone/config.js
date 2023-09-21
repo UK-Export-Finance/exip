@@ -311,7 +311,15 @@ var CUSTOM_RESOLVERS = [
   "getApimCisCountries"
 ];
 if (isDevEnvironment) {
-  CUSTOM_RESOLVERS.push("addAndGetOTP", "createApplications", "createBuyer", "deleteAnAccount", "deleteApplications", "getAccountPasswordResetToken");
+  CUSTOM_RESOLVERS.push(
+    "accounts",
+    "addAndGetOTP",
+    "createApplications",
+    "createBuyer",
+    "deleteAnAccount",
+    "deleteApplications",
+    "getAccountPasswordResetToken"
+  );
 }
 var ALLOWED_GRAPHQL_RESOLVERS = [...DEFAULT_RESOLVERS, ...CUSTOM_RESOLVERS];
 

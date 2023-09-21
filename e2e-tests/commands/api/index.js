@@ -41,8 +41,8 @@ const queryStrings = {
       }
     }
   `,
-  getAccountByEmail: (email) => `
-    {
+  getAccountByEmail: (email) => gql`
+    query accounts {
       accounts (
         orderBy: { updatedAt: desc }
         where: { email: { equals: "${email}" } }
@@ -241,22 +241,16 @@ const createApplications = (applications) =>
  */
 const getAccountByEmail = async (email) => {
   try {
-    const baseUrl = Cypress.config('apiUrl');
-    const url = `${baseUrl}?query=${queryStrings.getAccountByEmail(email)}`;
+    const response = await apollo.query({
+      query: queryStrings.getAccountByEmail(email),
+      context: APOLLO_CONTEXT,
+    }).then((response) => response);
 
-    const response = await cy.request({
-      headers: {
-        'content-type': 'application/json',
-        'x-api-key': Cypress.env('API_KEY'),
-      },
-      url,
-    });
-
-    if (!response?.body?.data) {
+    if (!response?.data?.accounts) {
       throw new Error('Getting account by email ', { response });
     }
 
-    return response;
+    return response.data.accounts;
   } catch (err) {
     console.error(err);
 
