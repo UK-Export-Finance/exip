@@ -162,7 +162,7 @@ const queryStrings = {
       }
     `,
     getLatestHowDataWillBeUsed: () => gql`
-      query declarationHowDataWillBeUsed {
+      query declarationHowDataWillBeUseds {
         declarationHowDataWillBeUseds(orderBy: { version: desc }, take: 1) {
           id
           version
@@ -563,7 +563,7 @@ const declarations = {
     } catch (err) {
       console.error(err);
 
-      throw new Error('Getting latest declaration - how data will be usd ', { err });
+      throw new Error('Getting latest declaration - how data will be used ', { err });
     }
   },
 };
