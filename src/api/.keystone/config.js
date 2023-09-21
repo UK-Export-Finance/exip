@@ -319,7 +319,8 @@ var VERSIONS = [
     VERSION_NUMBER: "1",
     OVER_500K_SUPPORT: false,
     MAXIMUM_BUYER_CAN_OWE: 5e5,
-    TOTAL_VALUE_OF_CONTRACT: 5e5
+    TOTAL_VALUE_OF_CONTRACT: 5e5,
+    DEFAULT_FINAL_DESTINATION_KNOWN: true
   }
 ];
 var versions_default = VERSIONS;
@@ -364,7 +365,8 @@ var APPLICATION = {
   STATUS: {
     IN_PROGRESS: "In progress",
     SUBMITTED: "Submitted to UKEF"
-  }
+  },
+  DEFAULT_FINAL_DESTINATION_KNOWN: LATEST_VERSION.DEFAULT_FINAL_DESTINATION_KNOWN
 };
 
 // constants/external-apis.ts
@@ -912,7 +914,8 @@ var lists = {
                   connect: {
                     id: applicationId
                   }
-                }
+                },
+                finalDestinationKnown: APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN
               }
             });
             await context.db.Company.updateOne({
@@ -1014,6 +1017,7 @@ var lists = {
       goodsOrServicesDescription: (0, import_fields.text)({
         db: { nativeType: "VarChar(1000)" }
       }),
+      finalDestinationKnown: nullable_checkbox_default(),
       finalDestinationCountryCode: (0, import_fields.text)()
     },
     hooks: {
