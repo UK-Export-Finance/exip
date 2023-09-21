@@ -1,7 +1,6 @@
 import { yourDetailsPage, confirmEmailPage } from '../../../../../../../pages/insurance/account/create';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import { PAGES } from '../../../../../../../content-strings';
-import api from '../../../../../../../commands/api';
 
 const {
   START,
@@ -46,10 +45,8 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
        * so that we can assert that the URL has the correct ID.
        */
 
-      api.getAccountByEmail(accountEmail).then((response) => {
-        const { data } = response.body;
-
-        const [firstAccount] = data.accounts;
+      cy.getAccountByEmail(accountEmail).then((responseData) => {
+        const [firstAccount] = responseData;
         account = firstAccount;
 
         cy.completeAndSubmitSignInAccountForm({ assertRedirectUrl: false });

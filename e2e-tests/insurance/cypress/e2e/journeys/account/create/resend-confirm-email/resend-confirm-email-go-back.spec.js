@@ -1,6 +1,5 @@
 import { confirmEmailPage } from '../../../../../../../pages/insurance/account/create';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
-import api from '../../../../../../../commands/api';
 
 const {
   START,
@@ -33,10 +32,8 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
      */
     const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
-    api.getAccountByEmail(accountEmail).then((response) => {
-      const { data } = response.body;
-
-      const [firstAccount] = data.accounts;
+    cy.getAccountByEmail(accountEmail).then((responseData) => {
+      const [firstAccount] = responseData;
       account = firstAccount;
 
       cy.assertUrl(confirmEmailUrl);

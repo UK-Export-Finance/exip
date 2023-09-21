@@ -1,7 +1,6 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import mockAccount from '../../../../../../../fixtures/account';
-import api from '../../../../../../../commands/api';
 
 const {
   ACCOUNT: {
@@ -49,10 +48,8 @@ context('Insurance - Account - Sign in - Submitting the form with invalid creden
        */
       const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
-      api.getAccountByEmail(accountEmail).then((response) => {
-        const { data } = response.body;
-
-        const [firstAccount] = data.accounts;
+      cy.getAccountByEmail(accountEmail).then((responseData) => {
+        const [firstAccount] = responseData;
         account = firstAccount;
 
         const expectedUrl = `${accountSuspendedUrl}?id=${account.id}`;
