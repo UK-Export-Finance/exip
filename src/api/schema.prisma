@@ -100,6 +100,7 @@ model ExportContract {
   application                     Application?  @relation("ExportContract_application", fields: [applicationId], references: [id])
   applicationId                   String?       @map("application")
   goodsOrServicesDescription      String        @default("") @mysql.VarChar(1000)
+  finalDestinationKnown           Boolean?
   finalDestinationCountryCode     String        @default("")
   from_Application_exportContract Application[] @relation("Application_exportContract")
 

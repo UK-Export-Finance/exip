@@ -244,6 +244,7 @@ export const lists = {
                     id: applicationId,
                   },
                 },
+                finalDestinationKnown: APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN,
               },
             });
 
@@ -356,6 +357,7 @@ export const lists = {
       goodsOrServicesDescription: text({
         db: { nativeType: 'VarChar(1000)' },
       }),
+      finalDestinationKnown: nullableCheckbox(),
       finalDestinationCountryCode: text(),
     },
     hooks: {
