@@ -1,27 +1,25 @@
-import { FIELD_IDS } from '../../constants';
+import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { submitButton, input } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 // TODO: remove once shifted to policy
 const {
-  CONTACT: {
-    BUSINESS_CONTACT_DETAIL,
+  EXPORTER_BUSINESS: {
+    CONTACT: {
+      BUSINESS_CONTACT_DETAIL,
+    },
   },
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
-
-const {
-  DIFFERENT_NAME_ON_POLICY: {
-    POSITION,
+  POLICY_AND_EXPORTS: {
+    DIFFERENT_NAME_ON_POLICY: {
+      POSITION,
+    },
   },
-} = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS;
-
-const {
   ACCOUNT: {
     FIRST_NAME,
     LAST_NAME,
     EMAIL,
   },
-} = FIELD_IDS.INSURANCE;
+} = INSURANCE_FIELD_IDS;
 
 // TODO: remove once shifted to policy
 const businessContactDetails = application.EXPORTER_BUSINESS[BUSINESS_CONTACT_DETAIL];
