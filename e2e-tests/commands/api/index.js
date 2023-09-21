@@ -244,7 +244,7 @@ const getAccountByEmail = async (email) => {
     const response = await apollo.query({
       query: queryStrings.getAccountByEmail(email),
       context: APOLLO_CONTEXT,
-    }).then((response) => response);
+    }).then((res) => res);
 
     if (!response?.data?.accounts) {
       throw new Error('Getting account by email ', { response });
