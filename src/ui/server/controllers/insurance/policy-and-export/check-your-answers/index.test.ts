@@ -21,6 +21,8 @@ const {
 
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
 
+const { policy, exportContract, referenceNumber } = mockApplication;
+
 describe('controllers/insurance/policy-and-export/check-your-answers', () => {
   let req: Request;
   let res: Response;
@@ -80,6 +82,13 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
     it('should render template', async () => {
       await get(req, res);
 
+      const answers = {
+        ...policy,
+        ...exportContract,
+      };
+
+      const summaryList = policyAndExportSummaryList(answers, referenceNumber, mockCountries, mockCurrencies);
+
       const expectedVariables = {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS,
@@ -88,7 +97,7 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(res.locals.application),
-        SUMMARY_LIST: policyAndExportSummaryList(mockApplication.policy, mockApplication.referenceNumber, mockCountries, mockCurrencies),
+        SUMMARY_LIST: summaryList,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

@@ -139,6 +139,8 @@ const application = {
     [TOTAL_MONTHS_OF_COVER]: '2',
     [TOTAL_SALES_TO_BUYER]: '1000',
     [MAXIMUM_BUYER_WILL_OWE]: '500',
+  },
+  EXPORT_CONTRACT: {
     [DESCRIPTION]: 'Mock description',
     [FINAL_DESTINATION]: mockCountries[1].isoCode,
   },

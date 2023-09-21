@@ -2,7 +2,7 @@ import { post } from '.';
 import { ROUTES } from '../../../../../constants';
 import { FIELD_IDS } from '..';
 import constructPayload from '../../../../../helpers/construct-payload';
-import mapAndSave from '../../map-and-save';
+import mapAndSave from '../../../export-contract/map-and-save';
 import generateValidationErrors from '../validation';
 import { Request, Response } from '../../../../../../types';
 import { mockApplication, mockReq, mockRes } from '../../../../../test-mocks';
@@ -18,7 +18,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services/save-a
   jest.mock('../../map-and-save');
 
   let mockMapAndSave = jest.fn(() => Promise.resolve(true));
-  mapAndSave.policy = mockMapAndSave;
+  mapAndSave.exportContract = mockMapAndSave;
 
   const refNumber = Number(mockApplication.referenceNumber);
 
@@ -38,15 +38,15 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services/save-a
   });
 
   describe('when the form has data', () => {
-    it('should call mapAndSave.policy with data from constructPayload function, application and validationErrors', async () => {
+    it('should call mapAndSave.exportContract with data from constructPayload function, application and validationErrors', async () => {
       await post(req, res);
 
       const payload = constructPayload(req.body, FIELD_IDS);
 
       const validationErrors = generateValidationErrors(payload);
 
-      expect(mapAndSave.policy).toHaveBeenCalledTimes(1);
-      expect(mapAndSave.policy).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
+      expect(mapAndSave.exportContract).toHaveBeenCalledTimes(1);
+      expect(mapAndSave.exportContract).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, async () => {
@@ -86,7 +86,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services/save-a
     describe('when the mapAndSave call does not return anything', () => {
       beforeEach(() => {
         mockMapAndSave = jest.fn(() => Promise.resolve(false));
-        mapAndSave.policy = mockMapAndSave;
+        mapAndSave.exportContract = mockMapAndSave;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -99,7 +99,8 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services/save-a
     describe('when the mapAndSave call fails', () => {
       beforeEach(() => {
         mockMapAndSave = jest.fn(() => Promise.reject(new Error('Mock error')));
-        mapAndSave.policy = mockMapAndSave;
+
+        mapAndSave.exportContract = mockMapAndSave;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

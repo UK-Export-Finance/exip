@@ -759,6 +759,7 @@ var lists = {
       }),
       previousStatus: (0, import_fields.text)(),
       policy: (0, import_fields.relationship)({ ref: "Policy" }),
+      exportContract: (0, import_fields.relationship)({ ref: "ExportContract" }),
       owner: (0, import_fields.relationship)({
         ref: "Account",
         many: false
@@ -795,6 +796,14 @@ var lists = {
             modifiedData.policy = {
               connect: {
                 id: policyId
+              }
+            };
+            const { id: exportContractId } = await context.db.ExportContract.createOne({
+              data: {}
+            });
+            modifiedData.exportContract = {
+              connect: {
+                id: exportContractId
               }
             };
             const { id: companyId } = await context.db.Company.createOne({
@@ -875,7 +884,7 @@ var lists = {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
             const { referenceNumber } = item;
-            const { policyId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
+            const { policyId, exportContractId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -888,6 +897,16 @@ var lists = {
             });
             await context.db.Policy.updateOne({
               where: { id: policyId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId
+                  }
+                }
+              }
+            });
+            await context.db.ExportContract.updateOne({
+              where: { id: exportContractId },
               data: {
                 application: {
                   connect: {
@@ -978,7 +997,20 @@ var lists = {
       }),
       totalMonthsOfCover: (0, import_fields.integer)(),
       totalSalesToBuyer: (0, import_fields.integer)(),
-      maximumBuyerWillOwe: (0, import_fields.integer)(),
+      maximumBuyerWillOwe: (0, import_fields.integer)()
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
+    },
+    access: import_access.allowAll
+  },
+  ExportContract: {
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
       goodsOrServicesDescription: (0, import_fields.text)({
         db: { nativeType: "VarChar(1000)" }
       }),
@@ -3224,7 +3256,7 @@ var import_date_fns8 = require("date-fns");
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application2) => {
   console.info("Getting populated application");
-  const { eligibilityId, ownerId, policyId, companyId, businessId, brokerId, buyerId, declarationId } = application2;
+  const { eligibilityId, ownerId, policyId, exportContractId, companyId, businessId, brokerId, buyerId, declarationId } = application2;
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId }
   });
@@ -3241,10 +3273,16 @@ var getPopulatedApplication = async (context, application2) => {
   if (!policy) {
     throw new Error(generateErrorMessage("policy", application2.id));
   }
-  const finalDestinationCountry = await get_country_by_field_default(context, "isoCode", policy.finalDestinationCountryCode);
-  const populatedPolicy = {
-    ...policy,
-    finalDestinationCountryCode: finalDestinationCountry
+  const exportContract = await context.db.ExportContract.findOne({
+    where: { id: exportContractId }
+  });
+  if (!exportContract) {
+    throw new Error(generateErrorMessage("exportContract", application2.id));
+  }
+  const finalDestinationCountry = await get_country_by_field_default(context, "isoCode", exportContract.finalDestinationCountryCode);
+  const populatedExportContract = {
+    ...exportContract,
+    finalDestinationCountry
   };
   const company = await context.db.Company.findOne({
     where: { id: companyId }
@@ -3319,7 +3357,8 @@ var getPopulatedApplication = async (context, application2) => {
       ...eligibility,
       buyerCountry
     },
-    policy: populatedPolicy,
+    policy,
+    exportContract: populatedExportContract,
     owner: account,
     company: populatedCompany,
     companySicCodes,
@@ -3986,12 +4025,12 @@ var mapMultiplePolicyFields = (application2) => {
   ];
 };
 var mapPolicyAndExportOutro = (application2) => {
-  const { policy } = application2;
+  const { exportContract, policy } = application2;
   const mapped = [
     xlsx_row_default(String(CONTENT_STRINGS2[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policy[CREDIT_PERIOD_WITH_BUYER]),
     xlsx_row_default(String(CONTENT_STRINGS2[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
-    xlsx_row_default(String(CONTENT_STRINGS2[DESCRIPTION].SUMMARY?.TITLE), policy[DESCRIPTION]),
-    xlsx_row_default(String(CONTENT_STRINGS2[FINAL_DESTINATION].SUMMARY?.TITLE), policy[FINAL_DESTINATION].name)
+    xlsx_row_default(String(CONTENT_STRINGS2[DESCRIPTION].SUMMARY?.TITLE), exportContract[DESCRIPTION]),
+    xlsx_row_default(String(CONTENT_STRINGS2[FINAL_DESTINATION].SUMMARY?.TITLE), exportContract[FINAL_DESTINATION].name)
   ];
   return mapped;
 };

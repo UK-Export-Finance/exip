@@ -40,8 +40,7 @@ export const get = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
+  const { referenceNumber, policy, exportContract } = application;
 
   try {
     const countries = await api.keystone.countries.getAll();
@@ -51,14 +50,19 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const summaryList = policyAndExportSummaryList(application.policy, refNumber, countries, currencies);
+    const answers = {
+      ...policy,
+      ...exportContract,
+    };
+
+    const summaryList = policyAndExportSummaryList(answers, referenceNumber, countries, currencies);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS,
         BACK_LINK: req.headers.referer,
       }),
-      ...pageVariables(refNumber),
+      ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(res.locals.application),
       SUMMARY_LIST: summaryList,

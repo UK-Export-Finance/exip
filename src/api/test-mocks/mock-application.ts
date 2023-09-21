@@ -23,8 +23,6 @@ export const mockApplicationEligibility = {
 };
 
 const mockGenericPolicyAndExport = {
-  goodsOrServicesDescription: 'Mock description',
-  finalDestinationCountryCode: mockCountries[0].isoCode,
   requestedStartDate: add(new Date(), { months: 1 }),
   creditPeriodWithBuyer: ' Mock free text',
   policyCurrencyCode: mockCurrencies[0].isoCode,
@@ -43,6 +41,11 @@ export const mockMultiplePolicy = {
   totalMonthsOfCover: 5,
   totalSalesToBuyer: 1500,
   maximumBuyerWillOwe: 1000,
+};
+
+export const mockExportContract = {
+  goodsOrServicesDescription: 'Mock description',
+  finalDestinationCountryCode: mockCountries[0].isoCode,
 };
 
 export const mockAccount = {
@@ -144,6 +147,7 @@ const mockApplication = {
     id: 'clav8by1i0007kgoqies0dbfc',
     ...mockSinglePolicy,
   },
+  exportContract: mockExportContract,
   company: mockCompany,
   companySicCodes: [mockCompanySicCode, mockCompanySicCode],
   companyAddress: mockCompany.registeredOfficeAddress,

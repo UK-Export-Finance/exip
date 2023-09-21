@@ -75,6 +75,7 @@ type Application {
   status: String
   previousStatus: String
   policy: Policy
+  exportContract: ExportContract
   owner: Account
   business: Business
   company: Company
@@ -108,6 +109,7 @@ input ApplicationWhereInput {
   status: StringFilter
   previousStatus: StringFilter
   policy: PolicyWhereInput
+  exportContract: ExportContractWhereInput
   owner: AccountWhereInput
   business: BusinessWhereInput
   company: CompanyWhereInput
@@ -221,6 +223,7 @@ input ApplicationUpdateInput {
   status: String
   previousStatus: String
   policy: PolicyRelateToOneForUpdateInput
+  exportContract: ExportContractRelateToOneForUpdateInput
   owner: AccountRelateToOneForUpdateInput
   business: BusinessRelateToOneForUpdateInput
   company: CompanyRelateToOneForUpdateInput
@@ -241,6 +244,12 @@ input EligibilityRelateToOneForUpdateInput {
 input PolicyRelateToOneForUpdateInput {
   create: PolicyCreateInput
   connect: PolicyWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ExportContractRelateToOneForUpdateInput {
+  create: ExportContractCreateInput
+  connect: ExportContractWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -303,6 +312,7 @@ input ApplicationCreateInput {
   status: String
   previousStatus: String
   policy: PolicyRelateToOneForCreateInput
+  exportContract: ExportContractRelateToOneForCreateInput
   owner: AccountRelateToOneForCreateInput
   business: BusinessRelateToOneForCreateInput
   company: CompanyRelateToOneForCreateInput
@@ -322,6 +332,11 @@ input EligibilityRelateToOneForCreateInput {
 input PolicyRelateToOneForCreateInput {
   create: PolicyCreateInput
   connect: PolicyWhereUniqueInput
+}
+
+input ExportContractRelateToOneForCreateInput {
+  create: ExportContractCreateInput
+  connect: ExportContractWhereUniqueInput
 }
 
 input AccountRelateToOneForCreateInput {
@@ -371,8 +386,6 @@ type Policy {
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
-  goodsOrServicesDescription: String
-  finalDestinationCountryCode: String
 }
 
 input PolicyWhereUniqueInput {
@@ -394,8 +407,6 @@ input PolicyWhereInput {
   totalMonthsOfCover: IntNullableFilter
   totalSalesToBuyer: IntNullableFilter
   maximumBuyerWillOwe: IntNullableFilter
-  goodsOrServicesDescription: StringFilter
-  finalDestinationCountryCode: StringFilter
 }
 
 input PolicyOrderByInput {
@@ -409,8 +420,6 @@ input PolicyOrderByInput {
   totalMonthsOfCover: OrderDirection
   totalSalesToBuyer: OrderDirection
   maximumBuyerWillOwe: OrderDirection
-  goodsOrServicesDescription: OrderDirection
-  finalDestinationCountryCode: OrderDirection
 }
 
 input PolicyUpdateInput {
@@ -424,8 +433,6 @@ input PolicyUpdateInput {
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
-  goodsOrServicesDescription: String
-  finalDestinationCountryCode: String
 }
 
 input PolicyUpdateArgs {
@@ -444,6 +451,48 @@ input PolicyCreateInput {
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
+}
+
+type ExportContract {
+  id: ID!
+  application: Application
+  goodsOrServicesDescription: String
+  finalDestinationCountryCode: String
+}
+
+input ExportContractWhereUniqueInput {
+  id: ID
+}
+
+input ExportContractWhereInput {
+  AND: [ExportContractWhereInput!]
+  OR: [ExportContractWhereInput!]
+  NOT: [ExportContractWhereInput!]
+  id: IDFilter
+  application: ApplicationWhereInput
+  goodsOrServicesDescription: StringFilter
+  finalDestinationCountryCode: StringFilter
+}
+
+input ExportContractOrderByInput {
+  id: OrderDirection
+  goodsOrServicesDescription: OrderDirection
+  finalDestinationCountryCode: OrderDirection
+}
+
+input ExportContractUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
+  goodsOrServicesDescription: String
+  finalDestinationCountryCode: String
+}
+
+input ExportContractUpdateArgs {
+  where: ExportContractWhereUniqueInput!
+  data: ExportContractUpdateInput!
+}
+
+input ExportContractCreateInput {
+  application: ApplicationRelateToOneForCreateInput
   goodsOrServicesDescription: String
   finalDestinationCountryCode: String
 }
@@ -1855,6 +1904,12 @@ type Mutation {
   updatePolicies(data: [PolicyUpdateArgs!]!): [Policy]
   deletePolicy(where: PolicyWhereUniqueInput!): Policy
   deletePolicies(where: [PolicyWhereUniqueInput!]!): [Policy]
+  createExportContract(data: ExportContractCreateInput!): ExportContract
+  createExportContracts(data: [ExportContractCreateInput!]!): [ExportContract]
+  updateExportContract(where: ExportContractWhereUniqueInput!, data: ExportContractUpdateInput!): ExportContract
+  updateExportContracts(data: [ExportContractUpdateArgs!]!): [ExportContract]
+  deleteExportContract(where: ExportContractWhereUniqueInput!): ExportContract
+  deleteExportContracts(where: [ExportContractWhereUniqueInput!]!): [ExportContract]
   createAccount(data: AccountCreateInput!): Account
   createAccounts(data: [AccountCreateInput!]!): [Account]
   updateAccount(where: AccountWhereUniqueInput!, data: AccountUpdateInput!): Account
@@ -2058,6 +2113,9 @@ type Query {
   policies(where: PolicyWhereInput! = {}, orderBy: [PolicyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyWhereUniqueInput): [Policy!]
   policy(where: PolicyWhereUniqueInput!): Policy
   policiesCount(where: PolicyWhereInput! = {}): Int
+  exportContracts(where: ExportContractWhereInput! = {}, orderBy: [ExportContractOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractWhereUniqueInput): [ExportContract!]
+  exportContract(where: ExportContractWhereUniqueInput!): ExportContract
+  exportContractsCount(where: ExportContractWhereInput! = {}): Int
   accounts(where: AccountWhereInput! = {}, orderBy: [AccountOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AccountWhereUniqueInput): [Account!]
   account(where: AccountWhereUniqueInput!): Account
   accountsCount(where: AccountWhereInput! = {}): Int

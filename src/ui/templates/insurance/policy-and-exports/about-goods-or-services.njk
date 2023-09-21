@@ -72,7 +72,7 @@
             'data-cy': FIELDS.DESCRIPTION.ID + '-input'
           },
           maxlength: FIELDS.DESCRIPTION.MAXIMUM,
-          value: submittedValues[FIELDS.DESCRIPTION.ID] or application.policy[FIELDS.DESCRIPTION.ID],
+          value: submittedValues[FIELDS.DESCRIPTION.ID] or application.exportContract[FIELDS.DESCRIPTION.ID],
           errorMessage: validationErrors.errorList[FIELDS.DESCRIPTION.ID] and {
             text: validationErrors.errorList[FIELDS.DESCRIPTION.ID].text,
             attributes: {

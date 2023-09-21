@@ -24,7 +24,7 @@ const {
   },
 } = ROUTES;
 
-const { policy, referenceNumber } = mockApplication;
+const { policy, exportContract, referenceNumber } = mockApplication;
 
 describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
   jest.mock('../save-data');
@@ -84,7 +84,12 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
       await get(req, res);
       const checkAndChange = true;
 
-      const summaryList = policyAndExportSummaryList(policy, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
+      const answers = {
+        ...policy,
+        ...exportContract,
+      };
+
+      const summaryList = policyAndExportSummaryList(answers, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
 
       const fields = requiredFields(policy.policyType);
 

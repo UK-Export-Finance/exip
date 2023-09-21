@@ -1,27 +1,24 @@
 import hasFormData from '../../../../helpers/has-form-data';
-import mapSubmittedData from '../map-submitted-data';
 import save from '../save-data';
 import { Application, RequestBody, ValidationErrors } from '../../../../../types';
 
 /**
  * mapAndSave
- * Map and save any valid  policy fields
+ * Map and save any valid export contract fields
  * @param {Express.Request.body} Express request body
  * @param {Object} Application
  * @param {Object} Validation errors
  * @returns {Boolean}
  */
-const policy = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
+const exportContract = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
-      const populatedData = mapSubmittedData(formBody);
-
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await save.policy(application, populatedData, validationErrors.errorList);
+        saveResponse = await save.exportContract(application, formBody, validationErrors.errorList);
       } else {
-        saveResponse = await save.policy(application, populatedData);
+        saveResponse = await save.exportContract(application, formBody);
       }
 
       if (!saveResponse) {
@@ -40,5 +37,5 @@ const policy = async (formBody: RequestBody, application: Application, validatio
 };
 
 export default {
-  policy,
+  exportContract,
 };

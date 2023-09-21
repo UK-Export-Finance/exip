@@ -13,8 +13,6 @@ dotenv.config();
 
 const mockGenericPolicy = {
   id: 'clav8by1i0007kgoqies0dbfc',
-  goodsOrServicesDescription: 'Mock description',
-  finalDestinationCountryCode: mockCountries[0].isoCode,
   requestedStartDate: add(new Date(), { months: 1 }),
   creditPeriodWithBuyer: ' Mock free text',
   policyCurrencyCode: mockCurrencies[0].isoCode,
@@ -33,6 +31,12 @@ export const mockMultiplePolicy = {
   totalMonthsOfCover: 5,
   totalSalesToBuyer: 1500,
   maximumBuyerWillOwe: 1000,
+};
+
+export const mockExportContract = {
+  id: 'clldfm6pt000noqa6fs6cj5xn',
+  goodsOrServicesDescription: 'Mock description',
+  finalDestinationCountryCode: mockCountries[0].isoCode,
 };
 
 export const mockOwner = {
@@ -132,6 +136,7 @@ const mockApplication = {
   status: APPLICATION.STATUS.IN_PROGRESS,
   owner: mockOwner,
   policy: mockSinglePolicy,
+  exportContract: mockExportContract,
   company: mockCompany,
   business: mockBusiness,
   broker: mockBroker,

@@ -41,6 +41,9 @@ const applicationQuery = gql`
           totalMonthsOfCover
           totalSalesToBuyer
           maximumBuyerWillOwe
+        }
+        exportContract {
+          id
           goodsOrServicesDescription
           finalDestinationCountryCode
         }
