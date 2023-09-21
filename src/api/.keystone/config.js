@@ -401,7 +401,7 @@ var EXTERNAL_API_MAPPINGS = {
   }
 };
 var EXTERNAL_API_ENDPOINTS = {
-  MULESOFT_MDM_EA: {
+  APIM_MDM: {
     CURRENCY: "/currencies",
     INDUSTRY_SECTORS: "/sector-industries",
     MARKETS: "/markets"
@@ -4464,8 +4464,8 @@ var import_axios = __toESM(require("axios"));
 var import_dotenv5 = __toESM(require("dotenv"));
 import_dotenv5.default.config();
 var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
-var { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
-var url = `${APIM_MDM_URL}${MULESOFT_MDM_EA.MARKETS}`;
+var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
+var url = `${APIM_MDM_URL}${APIM_MDM.MARKETS}`;
 var APIM = {
   getCisCountries: async () => {
     try {
@@ -4703,7 +4703,7 @@ var import_axios2 = __toESM(require("axios"));
 var import_dotenv6 = __toESM(require("dotenv"));
 import_dotenv6.default.config();
 var { APIM_MDM_URL: APIM_MDM_URL2, APIM_MDM_KEY: APIM_MDM_KEY2, APIM_MDM_VALUE: APIM_MDM_VALUE2 } = process.env;
-var { MULESOFT_MDM_EA: MULESOFT_MDM_EA2 } = EXTERNAL_API_ENDPOINTS;
+var { APIM_MDM: APIM_MDM2 } = EXTERNAL_API_ENDPOINTS;
 var headers = {
   "Content-Type": "application/json",
   [String(APIM_MDM_KEY2)]: APIM_MDM_VALUE2
@@ -4714,7 +4714,7 @@ var getIndustrySectorNames = {
       console.info("Calling industry sector API");
       const response = await (0, import_axios2.default)({
         method: "get",
-        url: `${APIM_MDM_URL2}${MULESOFT_MDM_EA2.INDUSTRY_SECTORS}`,
+        url: `${APIM_MDM_URL2}${APIM_MDM2.INDUSTRY_SECTORS}`,
         headers,
         validateStatus(status) {
           const acceptableStatus = [200, 404];

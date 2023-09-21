@@ -33,7 +33,7 @@ export const EXTERNAL_API_MAPPINGS = {
 };
 
 export const EXTERNAL_API_ENDPOINTS = {
-  MULESOFT_MDM_EA: {
+  APIM_MDM: {
     CURRENCY: '/currencies',
     INDUSTRY_SECTORS: '/sector-industries',
     MARKETS: '/markets',
