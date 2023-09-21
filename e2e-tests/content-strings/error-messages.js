@@ -214,6 +214,14 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Select the final destination of the goods or services',
         },
       },
+      NAME_ON_POLICY: {
+        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.NAME_ON_POLICY.NAME]: {
+          IS_EMPTY: 'Select whose name should appear on the insurance policy',
+        },
+        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.NAME_ON_POLICY.POSITION]: {
+          IS_EMPTY: 'Enter your position at the company',
+        },
+      },
     },
     YOUR_BUYER: {
       COMPANY_OR_ORGANISATION: {

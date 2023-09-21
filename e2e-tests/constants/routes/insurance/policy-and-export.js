@@ -14,5 +14,6 @@ export const POLICY_AND_EXPORTS = {
   ABOUT_GOODS_OR_SERVICES: `${POLICY_AND_EXPORTS_ROOT}/about-goods-or-services`,
   ABOUT_GOODS_OR_SERVICES_CHANGE: `${POLICY_AND_EXPORTS_ROOT}/about-goods-or-services/change`,
   ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE: `${POLICY_AND_EXPORTS_ROOT}/about-goods-or-services/check-and-change`,
+  NAME_ON_POLICY: `${POLICY_AND_EXPORTS_ROOT}/name-on-policy`,
   CHECK_YOUR_ANSWERS: `${POLICY_AND_EXPORTS_ROOT}/check-your-answers`,
 };
