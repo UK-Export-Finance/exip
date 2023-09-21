@@ -26,7 +26,7 @@ context('Insurance - Policy and exports - Complete the entire section as a singl
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
 
       // go back to the all sections page
       saveAndBackButton().click();

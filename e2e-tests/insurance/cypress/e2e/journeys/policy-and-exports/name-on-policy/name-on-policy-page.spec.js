@@ -23,6 +23,7 @@ const {
     ABOUT_GOODS_OR_SERVICES,
     CHECK_YOUR_ANSWERS,
     NAME_ON_POLICY,
+    DIFFERENT_NAME_ON_POLICY,
   },
 } = INSURANCE_ROUTES;
 
@@ -111,12 +112,21 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+    it(`should redirect to ${CHECK_YOUR_ANSWERS} when ${SAME_NAME} selected`, () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
 
       const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      cy.assertUrl(expectedUrl);
+    });
+
+    it(`should redirect to ${DIFFERENT_NAME_ON_POLICY} when ${OTHER_NAME} selected`, () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAndSubmitNameOnPolicyForm();
+
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
       cy.assertUrl(expectedUrl);
     });
   });
