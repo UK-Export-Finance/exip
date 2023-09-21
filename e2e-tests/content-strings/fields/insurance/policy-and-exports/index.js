@@ -7,7 +7,9 @@ import {
 import { LINKS } from '../../../links';
 
 const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
-const { CONTRACT_POLICY, ABOUT_GOODS_OR_SERVICES, NAME_ON_POLICY } = POLICY_AND_EXPORTS;
+const {
+  CONTRACT_POLICY, ABOUT_GOODS_OR_SERVICES, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY,
+} = POLICY_AND_EXPORTS;
 
 const { MAX_COVER_PERIOD_YEARS } = ELIGIBILITY;
 const {
@@ -167,6 +169,11 @@ export const POLICY_AND_EXPORT_FIELDS = {
     },
     [NAME_ON_POLICY.POSITION]: {
       LABEL: "What's your position at the company",
+    },
+  },
+  DIFFERENT_NAME_ON_POLICY: {
+    [DIFFERENT_NAME_ON_POLICY.POSITION]: {
+      LABEL: 'Position at company',
     },
   },
 };

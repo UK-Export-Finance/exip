@@ -1,13 +1,13 @@
 import dotenv from 'dotenv';
-import FIELD_IDS from '../constants/field-ids/insurance/business';
+import FIELD_IDS from '../constants/field-ids/insurance/policy-and-exports';
 import ACCOUNT_FIELD_IDS from '../constants/field-ids/insurance/account';
 
 dotenv.config();
 
-const { POSITION } = FIELD_IDS.CONTACT;
+const { POSITION } = FIELD_IDS.DIFFERENT_NAME_ON_POLICY;
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
-const mockBusinessContact = {
+const mockContact = {
   id: '123',
   [FIRST_NAME]: 'Bob',
   [LAST_NAME]: 'Smith',
@@ -15,4 +15,4 @@ const mockBusinessContact = {
   [POSITION]: 'CEO',
 };
 
-export default mockBusinessContact;
+export default mockContact;

@@ -18,7 +18,7 @@ import mockBroker from './mock-broker';
 import mockBuyer from './mock-buyer';
 import mockDeclarations from './mock-declarations';
 import { mockInsuranceFeedback } from './mock-feedback';
-import mockBusinessContact from './mock-business-contact';
+import mockContact from './mock-contact';
 import { PRODUCT } from '../content-strings';
 import { INTEGRITY } from '../constants';
 
@@ -93,7 +93,7 @@ export {
   mockApplications,
   mockBroker,
   mockBusiness,
-  mockBusinessContact,
+  mockContact,
   mockBusinessNatureOfBusiness,
   mockBusinessTurnover,
   mockBuyer,

@@ -22,6 +22,10 @@ export const POLICY_AND_EXPORTS = {
   NAME_ON_POLICY_SAVE_AND_BACK: `${ROOT}/name-on-policy/save-and-go-back`,
   NAME_ON_POLICY_CHANGE: `${ROOT}/name-on-policy/change`,
   NAME_ON_POLICY_CHECK_AND_CHANGE: `${ROOT}/name-on-policy/check-and-change`,
+  DIFFERENT_NAME_ON_POLICY: `${ROOT}/different-name-on-policy`,
+  DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK: `${ROOT}/different-name-on-policy/save-and-go-back`,
+  DIFFERENT_NAME_ON_POLICY_CHANGE: `${ROOT}/different-name-on-policy/change`,
+  DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE: `${ROOT}/different-name-on-policy/check-and-change`,
   CHECK_YOUR_ANSWERS: `${ROOT}/check-your-answers`,
   CHECK_YOUR_ANSWERS_SAVE_AND_BACK: `${ROOT}/check-your-answers/save-and-go-back`,
 };

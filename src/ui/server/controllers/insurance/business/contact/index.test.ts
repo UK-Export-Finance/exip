@@ -12,7 +12,7 @@ import { FIELDS, ACCOUNT_FIELDS } from '../../../../content-strings/fields/insur
 import mapAndSave from '../map-and-save/contact';
 import getFromSessionOrApplication from '../../../../helpers/get-values-from-user-session-or-application';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockBusinessContact } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockContact } from '../../../../test-mocks';
 
 const { BUSINESS } = BUSINESS_FIELD_IDS;
 const { COMPANY_NAME, POSITION, BUSINESS_CONTACT_DETAIL } = BUSINESS_FIELD_IDS.CONTACT;
@@ -153,7 +153,7 @@ describe('controllers/insurance/business/contact', () => {
 
     describe('when there are no validation errors', () => {
       it('should redirect to next page', async () => {
-        req.body = mockBusinessContact;
+        req.body = mockContact;
 
         await post(req, res);
 
@@ -163,7 +163,7 @@ describe('controllers/insurance/business/contact', () => {
 
       it('should call mapAndSave.contact once with data from constructPayload function', async () => {
         req.body = {
-          ...mockBusinessContact,
+          ...mockContact,
           injection: 1,
         };
 
@@ -178,7 +178,7 @@ describe('controllers/insurance/business/contact', () => {
 
       describe("when the url's last substring is `change`", () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.body = mockBusinessContact;
+          req.body = mockContact;
 
           req.originalUrl = CONTACT_CHANGE;
 
@@ -191,7 +191,7 @@ describe('controllers/insurance/business/contact', () => {
 
       describe("when the url's last substring is `check-and-change`", () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-          req.body = mockBusinessContact;
+          req.body = mockContact;
 
           req.originalUrl = CONTACT_CHECK_AND_CHANGE;
 

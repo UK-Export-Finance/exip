@@ -222,6 +222,20 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Enter your position at the company',
         },
       },
+      DIFFERENT_NAME_ON_POLICY: {
+        [FIELD_IDS.INSURANCE.ACCOUNT.FIRST_NAME]: {
+          IS_EMPTY: 'Enter the first name of the person to be named on the policy',
+        },
+        [FIELD_IDS.INSURANCE.ACCOUNT.LAST_NAME]: {
+          IS_EMPTY: 'Enter the last name of the person to be named on the policy',
+        },
+        [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
+          INCORRECT_FORMAT: 'Enter the email address of the person to be named on the policy',
+        },
+        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY.POSITION]: {
+          IS_EMPTY: 'Enter the position at the company of the person to be named on the policy',
+        },
+      },
     },
     YOUR_BUYER: {
       COMPANY_OR_ORGANISATION: {
