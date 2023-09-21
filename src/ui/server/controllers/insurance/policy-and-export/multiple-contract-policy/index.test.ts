@@ -45,13 +45,13 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
 
   jest.mock('../map-and-save');
 
-  mapAndSave.policyAndExport = jest.fn(() => Promise.resolve(true));
+  mapAndSave.policy = jest.fn(() => Promise.resolve(true));
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
 
   const mockApplicationWithoutOptionsSubmission = {
     ...mockApplication,
-    policyAndExport: {
-      ...mockApplication.policyAndExport,
+    policy: {
+      ...mockApplication.policy,
       [POLICY_CURRENCY_CODE]: null,
       [TOTAL_MONTHS_OF_COVER]: null,
     },
@@ -173,8 +173,8 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
     describe('when a policy currency code has been previously submitted', () => {
       const mockApplicationWithCurrency = {
         ...mockApplicationWithoutOptionsSubmission,
-        policyAndExport: {
-          ...mockApplicationWithoutOptionsSubmission.policyAndExport,
+        policy: {
+          ...mockApplicationWithoutOptionsSubmission.policy,
           [POLICY_CURRENCY_CODE]: currencyCode,
         },
       };
@@ -207,8 +207,8 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
     describe('when total months of cover has been previously submitted', () => {
       const mockApplicationWithMonths = {
         ...mockApplicationWithoutOptionsSubmission,
-        policyAndExport: {
-          ...mockApplicationWithoutOptionsSubmission.policyAndExport,
+        policy: {
+          ...mockApplicationWithoutOptionsSubmission.policy,
           [TOTAL_MONTHS_OF_COVER]: monthsOfCover,
         },
       };
@@ -303,14 +303,14 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
         req.body = validBody;
       });
 
-      it('should call mapAndSave.policyAndExport with data from constructPayload function and application', async () => {
+      it('should call mapAndSave.policy with data from constructPayload function and application', async () => {
         await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.policy).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(payload, res.locals.application);
+        expect(mapAndSave.policy).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
       it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, async () => {
@@ -487,7 +487,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
         });
       });
 
-      describe('mapAndSave.policyAndExport call', () => {
+      describe('mapAndSave.policy call', () => {
         beforeEach(() => {
           req.body = validBody;
         });
@@ -496,7 +496,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
           beforeEach(() => {
             const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
 
-            mapAndSave.policyAndExport = mapAndSaveSpy;
+            mapAndSave.policy = mapAndSaveSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -510,7 +510,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
           beforeEach(() => {
             const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
 
-            mapAndSave.policyAndExport = mapAndSaveSpy;
+            mapAndSave.policy = mapAndSaveSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

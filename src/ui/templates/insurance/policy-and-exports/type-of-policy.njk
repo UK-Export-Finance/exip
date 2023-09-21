@@ -84,7 +84,7 @@
                 attributes: {
                   'data-cy': FIELD.OPTIONS.SINGLE.ID + '-input'
                 },
-                checked: application.policyAndExport[FIELD.ID] === FIELD.OPTIONS.SINGLE.VALUE
+                checked: application.policy[FIELD.ID] === FIELD.OPTIONS.SINGLE.VALUE
               },
               {
                 id: FIELD.OPTIONS.MULTIPLE.ID,
@@ -102,7 +102,7 @@
                 attributes: {
                   'data-cy': FIELD.OPTIONS.MULTIPLE.ID + '-input'
                 },
-                checked: application.policyAndExport[FIELD.ID] === FIELD.OPTIONS.MULTIPLE.VALUE
+                checked: application.policy[FIELD.ID] === FIELD.OPTIONS.MULTIPLE.VALUE
               }
             ],
             errorMessage: validationErrors.errorList[FIELD.OPTIONS.SINGLE.ID] and {

@@ -3,14 +3,13 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import api from '../../../api';
 import { objectHasProperty } from '../../../helpers/object';
 import { isPopulatedArray } from '../../../helpers/array';
-import { mapCisCountries } from '../../../helpers/mappings/map-cis-countries';
+import mapCountries from '../../../helpers/mappings/map-countries';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../helpers/construct-payload';
 import { validation as generateValidationErrors } from '../../../shared-validation/buyer-country';
 import isChangeRoute from '../../../helpers/is-change-route';
 import getCountryByName from '../../../helpers/get-country-by-name';
-import { canGetAQuoteOnline, canGetAQuoteByEmail, cannotGetAQuote } from '../../../helpers/country-support';
 import mapSubmittedEligibilityCountry from '../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
@@ -66,7 +65,7 @@ export const get = async (req: Request, res: Response) => {
   }
 
   try {
-    const countries = await api.external.getCountries();
+    const countries = await api.keystone.APIM.getCisCountries();
 
     if (!isPopulatedArray(countries)) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
@@ -82,9 +81,9 @@ export const get = async (req: Request, res: Response) => {
     let mappedCountries;
 
     if (countryValue) {
-      mappedCountries = mapCisCountries(countries, countryValue.isoCode);
+      mappedCountries = mapCountries(countries, countryValue.isoCode);
     } else {
-      mappedCountries = mapCisCountries(countries);
+      mappedCountries = mapCountries(countries);
     }
 
     return res.render(TEMPLATE, {
@@ -103,13 +102,13 @@ export const get = async (req: Request, res: Response) => {
 
 export const post = async (req: Request, res: Response) => {
   try {
-    const countries = await api.external.getCountries();
+    const countries = await api.keystone.APIM.getCisCountries();
 
     if (!isPopulatedArray(countries)) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    const mappedCountries = mapCisCountries(countries);
+    const mappedCountries = mapCountries(countries);
 
     const payload = constructPayload(req.body, [FIELD_ID]);
 
@@ -127,16 +126,14 @@ export const post = async (req: Request, res: Response) => {
 
     const submittedCountryName = payload[FIELD_ID];
 
-    const country = getCountryByName(mappedCountries, submittedCountryName);
+    const country = getCountryByName(countries, submittedCountryName);
 
     if (!country) {
       return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
     }
 
-    const canApplyOnline = canGetAQuoteOnline(country);
-
-    if (canApplyOnline) {
-      const populatedData = mapSubmittedEligibilityCountry(country, canApplyOnline);
+    if (country.canGetAQuoteOnline) {
+      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
@@ -147,8 +144,8 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.QUOTE.BUYER_BODY);
     }
 
-    if (canGetAQuoteByEmail(country)) {
-      const populatedData = mapSubmittedEligibilityCountry(country, canApplyOnline);
+    if (country.canGetAQuoteByEmail) {
+      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
@@ -163,8 +160,8 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL);
     }
 
-    if (cannotGetAQuote(country)) {
-      const populatedData = mapSubmittedEligibilityCountry(country, canApplyOnline);
+    if (country.cannotGetAQuote) {
+      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 

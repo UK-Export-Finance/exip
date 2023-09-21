@@ -122,9 +122,14 @@ describe('Create an Application', () => {
     expect(typeof application.referenceNumber).toEqual('number');
   });
 
-  test('it should have a policy and export id', () => {
-    expect(application.policyAndExport).toBeDefined();
-    expect(typeof application.policyAndExport.id).toEqual('string');
+  test('it should have a policy id', () => {
+    expect(application.policy).toBeDefined();
+    expect(typeof application.policy.id).toEqual('string');
+  });
+
+  test('it should have a exportContract id', () => {
+    expect(application.exportContract).toBeDefined();
+    expect(typeof application.exportContract.id).toEqual('string');
   });
 
   test('it should have a company id', () => {
@@ -168,7 +173,7 @@ describe('Create an Application', () => {
     expect(referenceNumber.application.id).toEqual(application.id);
   });
 
-  test('it should add the application ID to the policy and export entry', async () => {
+  test('it should add the application ID to the business entry', async () => {
     const business = await context.query.Business.findOne({
       where: {
         id: application.business.id,
@@ -179,15 +184,27 @@ describe('Create an Application', () => {
     expect(business.application.id).toEqual(application.id);
   });
 
-  test('it should add the application ID to the policy and export entry', async () => {
-    const policyAndExport = await context.query.PolicyAndExport.findOne({
+  test('it should add the application ID to the policy entry', async () => {
+    const policy = await context.query.Policy.findOne({
       where: {
-        id: application.policyAndExport.id,
+        id: application.policy.id,
       },
       query: 'id application { id }',
     });
 
-    expect(policyAndExport.application.id).toEqual(application.id);
+    expect(policy.application.id).toEqual(application.id);
+  });
+
+  test('it should add an application ID and default finalDestinationKnown field to the exportContract entry', async () => {
+    const exportContract = await context.query.ExportContract.findOne({
+      where: {
+        id: application.exportContract.id,
+      },
+      query: 'id application { id } finalDestinationKnown',
+    });
+
+    expect(exportContract.application.id).toEqual(application.id);
+    expect(exportContract.finalDestinationKnown).toEqual(true);
   });
 
   test('it should add the application ID to the company entry', async () => {
@@ -358,8 +375,8 @@ describe('Application timestamp updates', () => {
 
   describe('PolicyAndExport', () => {
     test('it should call updateApplication.timestamp', async () => {
-      await context.query.PolicyAndExport.updateOne({
-        where: { id: application.policyAndExport.id },
+      await context.query.Policy.updateOne({
+        where: { id: application.policy.id },
         data: {},
         query: 'id',
       });

@@ -60,12 +60,12 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy-and-export', () =
     it('should return an array of mapped fields', () => {
       const result = mapPolicyAndExportIntro(mockApplication);
 
-      const { policyAndExport } = mockApplication;
+      const { policy } = mockApplication;
 
       const expected = [
         xlsxRow(XLSX.SECTION_TITLES.POLICY_AND_EXPORT, ''),
-        xlsxRow(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE]),
-        xlsxRow(String(CONTENT_STRINGS[REQUESTED_START_DATE].SUMMARY?.TITLE), formatDate(policyAndExport[REQUESTED_START_DATE], 'dd-MMM-yy')),
+        xlsxRow(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policy[POLICY_TYPE]),
+        xlsxRow(String(CONTENT_STRINGS[REQUESTED_START_DATE].SUMMARY?.TITLE), formatDate(policy[REQUESTED_START_DATE], 'dd-MMM-yy')),
       ];
 
       expect(result).toEqual(expected);
@@ -76,11 +76,11 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy-and-export', () =
     it('should return an array of mapped fields', () => {
       const result = mapSinglePolicyFields(mockApplication);
 
-      const { policyAndExport } = mockApplication;
+      const { policy } = mockApplication;
 
       const expected = [
-        xlsxRow(String(CONTENT_STRINGS.SINGLE[CONTRACT_COMPLETION_DATE].SUMMARY?.TITLE), formatDate(policyAndExport[CONTRACT_COMPLETION_DATE], 'dd-MMM-yy')),
-        xlsxRow(String(CONTENT_STRINGS.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), formatCurrency(policyAndExport[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE)),
+        xlsxRow(String(CONTENT_STRINGS.SINGLE[CONTRACT_COMPLETION_DATE].SUMMARY?.TITLE), formatDate(policy[CONTRACT_COMPLETION_DATE], 'dd-MMM-yy')),
+        xlsxRow(String(CONTENT_STRINGS.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), formatCurrency(policy[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE)),
       ];
 
       expect(result).toEqual(expected);
@@ -91,18 +91,12 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy-and-export', () =
     it('should return an array of mapped fields', () => {
       const result = mapMultiplePolicyFields(mockApplicationMultiplePolicy);
 
-      const { policyAndExport } = mockApplicationMultiplePolicy;
+      const { policy } = mockApplicationMultiplePolicy;
 
       const expected = [
-        xlsxRow(String(CONTENT_STRINGS.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), mapMonthString(policyAndExport[TOTAL_MONTHS_OF_COVER])),
-        xlsxRow(
-          String(CONTENT_STRINGS.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE),
-          formatCurrency(policyAndExport[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE),
-        ),
-        xlsxRow(
-          String(CONTENT_STRINGS.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE),
-          formatCurrency(policyAndExport[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE),
-        ),
+        xlsxRow(String(CONTENT_STRINGS.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), mapMonthString(policy[TOTAL_MONTHS_OF_COVER])),
+        xlsxRow(String(CONTENT_STRINGS.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), formatCurrency(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
+        xlsxRow(String(CONTENT_STRINGS.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), formatCurrency(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE)),
       ];
 
       expect(result).toEqual(expected);
@@ -113,13 +107,13 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy-and-export', () =
     it('should return an array of mapped fields', () => {
       const result = mapPolicyAndExportOutro(mockApplication);
 
-      const { policyAndExport } = mockApplication;
+      const { exportContract, policy } = mockApplication;
 
       const expected = [
-        xlsxRow(String(CONTENT_STRINGS[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policyAndExport[CREDIT_PERIOD_WITH_BUYER]),
-        xlsxRow(String(CONTENT_STRINGS[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policyAndExport[POLICY_CURRENCY_CODE]),
-        xlsxRow(String(CONTENT_STRINGS[DESCRIPTION].SUMMARY?.TITLE), policyAndExport[DESCRIPTION]),
-        xlsxRow(String(CONTENT_STRINGS[FINAL_DESTINATION].SUMMARY?.TITLE), policyAndExport[FINAL_DESTINATION].name),
+        xlsxRow(String(CONTENT_STRINGS[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policy[CREDIT_PERIOD_WITH_BUYER]),
+        xlsxRow(String(CONTENT_STRINGS[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
+        xlsxRow(String(CONTENT_STRINGS[DESCRIPTION].SUMMARY?.TITLE), exportContract[DESCRIPTION]),
+        xlsxRow(String(CONTENT_STRINGS[FINAL_DESTINATION].SUMMARY?.TITLE), exportContract[FINAL_DESTINATION].name),
       ];
 
       expect(result).toEqual(expected);

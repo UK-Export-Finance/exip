@@ -74,7 +74,8 @@ type Application {
   submissionType: String
   status: String
   previousStatus: String
-  policyAndExport: PolicyAndExport
+  policy: Policy
+  exportContract: ExportContract
   owner: Account
   business: Business
   company: Company
@@ -107,7 +108,8 @@ input ApplicationWhereInput {
   submissionType: StringNullableFilter
   status: StringFilter
   previousStatus: StringFilter
-  policyAndExport: PolicyAndExportWhereInput
+  policy: PolicyWhereInput
+  exportContract: ExportContractWhereInput
   owner: AccountWhereInput
   business: BusinessWhereInput
   company: CompanyWhereInput
@@ -220,7 +222,8 @@ input ApplicationUpdateInput {
   submissionType: String
   status: String
   previousStatus: String
-  policyAndExport: PolicyAndExportRelateToOneForUpdateInput
+  policy: PolicyRelateToOneForUpdateInput
+  exportContract: ExportContractRelateToOneForUpdateInput
   owner: AccountRelateToOneForUpdateInput
   business: BusinessRelateToOneForUpdateInput
   company: CompanyRelateToOneForUpdateInput
@@ -238,9 +241,15 @@ input EligibilityRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input PolicyAndExportRelateToOneForUpdateInput {
-  create: PolicyAndExportCreateInput
-  connect: PolicyAndExportWhereUniqueInput
+input PolicyRelateToOneForUpdateInput {
+  create: PolicyCreateInput
+  connect: PolicyWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ExportContractRelateToOneForUpdateInput {
+  create: ExportContractCreateInput
+  connect: ExportContractWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -302,7 +311,8 @@ input ApplicationCreateInput {
   submissionType: String
   status: String
   previousStatus: String
-  policyAndExport: PolicyAndExportRelateToOneForCreateInput
+  policy: PolicyRelateToOneForCreateInput
+  exportContract: ExportContractRelateToOneForCreateInput
   owner: AccountRelateToOneForCreateInput
   business: BusinessRelateToOneForCreateInput
   company: CompanyRelateToOneForCreateInput
@@ -319,9 +329,14 @@ input EligibilityRelateToOneForCreateInput {
   connect: EligibilityWhereUniqueInput
 }
 
-input PolicyAndExportRelateToOneForCreateInput {
-  create: PolicyAndExportCreateInput
-  connect: PolicyAndExportWhereUniqueInput
+input PolicyRelateToOneForCreateInput {
+  create: PolicyCreateInput
+  connect: PolicyWhereUniqueInput
+}
+
+input ExportContractRelateToOneForCreateInput {
+  create: ExportContractCreateInput
+  connect: ExportContractWhereUniqueInput
 }
 
 input AccountRelateToOneForCreateInput {
@@ -359,7 +374,7 @@ input DeclarationRelateToOneForCreateInput {
   connect: DeclarationWhereUniqueInput
 }
 
-type PolicyAndExport {
+type Policy {
   id: ID!
   application: Application
   policyType: String
@@ -371,18 +386,16 @@ type PolicyAndExport {
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
-  goodsOrServicesDescription: String
-  finalDestinationCountryCode: String
 }
 
-input PolicyAndExportWhereUniqueInput {
+input PolicyWhereUniqueInput {
   id: ID
 }
 
-input PolicyAndExportWhereInput {
-  AND: [PolicyAndExportWhereInput!]
-  OR: [PolicyAndExportWhereInput!]
-  NOT: [PolicyAndExportWhereInput!]
+input PolicyWhereInput {
+  AND: [PolicyWhereInput!]
+  OR: [PolicyWhereInput!]
+  NOT: [PolicyWhereInput!]
   id: IDFilter
   application: ApplicationWhereInput
   policyType: StringNullableFilter
@@ -394,11 +407,9 @@ input PolicyAndExportWhereInput {
   totalMonthsOfCover: IntNullableFilter
   totalSalesToBuyer: IntNullableFilter
   maximumBuyerWillOwe: IntNullableFilter
-  goodsOrServicesDescription: StringFilter
-  finalDestinationCountryCode: StringFilter
 }
 
-input PolicyAndExportOrderByInput {
+input PolicyOrderByInput {
   id: OrderDirection
   policyType: OrderDirection
   requestedStartDate: OrderDirection
@@ -409,11 +420,9 @@ input PolicyAndExportOrderByInput {
   totalMonthsOfCover: OrderDirection
   totalSalesToBuyer: OrderDirection
   maximumBuyerWillOwe: OrderDirection
-  goodsOrServicesDescription: OrderDirection
-  finalDestinationCountryCode: OrderDirection
 }
 
-input PolicyAndExportUpdateInput {
+input PolicyUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   policyType: String
   requestedStartDate: DateTime
@@ -424,16 +433,14 @@ input PolicyAndExportUpdateInput {
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
-  goodsOrServicesDescription: String
-  finalDestinationCountryCode: String
 }
 
-input PolicyAndExportUpdateArgs {
-  where: PolicyAndExportWhereUniqueInput!
-  data: PolicyAndExportUpdateInput!
+input PolicyUpdateArgs {
+  where: PolicyWhereUniqueInput!
+  data: PolicyUpdateInput!
 }
 
-input PolicyAndExportCreateInput {
+input PolicyCreateInput {
   application: ApplicationRelateToOneForCreateInput
   policyType: String
   requestedStartDate: DateTime
@@ -444,7 +451,52 @@ input PolicyAndExportCreateInput {
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
+}
+
+type ExportContract {
+  id: ID!
+  application: Application
   goodsOrServicesDescription: String
+  finalDestinationKnown: Boolean
+  finalDestinationCountryCode: String
+}
+
+input ExportContractWhereUniqueInput {
+  id: ID
+}
+
+input ExportContractWhereInput {
+  AND: [ExportContractWhereInput!]
+  OR: [ExportContractWhereInput!]
+  NOT: [ExportContractWhereInput!]
+  id: IDFilter
+  application: ApplicationWhereInput
+  goodsOrServicesDescription: StringFilter
+  finalDestinationCountryCode: StringFilter
+}
+
+input ExportContractOrderByInput {
+  id: OrderDirection
+  goodsOrServicesDescription: OrderDirection
+  finalDestinationCountryCode: OrderDirection
+}
+
+input ExportContractUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
+  goodsOrServicesDescription: String
+  finalDestinationKnown: Boolean
+  finalDestinationCountryCode: String
+}
+
+input ExportContractUpdateArgs {
+  where: ExportContractWhereUniqueInput!
+  data: ExportContractUpdateInput!
+}
+
+input ExportContractCreateInput {
+  application: ApplicationRelateToOneForCreateInput
+  goodsOrServicesDescription: String
+  finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
 }
 
@@ -1406,7 +1458,7 @@ type SectionReview {
   id: ID!
   application: Application
   eligibility: Boolean
-  policyAndExport: Boolean
+  policy: Boolean
   business: Boolean
   buyer: Boolean
 }
@@ -1430,7 +1482,7 @@ input SectionReviewOrderByInput {
 input SectionReviewUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   eligibility: Boolean
-  policyAndExport: Boolean
+  policy: Boolean
   business: Boolean
   buyer: Boolean
 }
@@ -1443,7 +1495,7 @@ input SectionReviewUpdateArgs {
 input SectionReviewCreateInput {
   application: ApplicationRelateToOneForCreateInput
   eligibility: Boolean
-  policyAndExport: Boolean
+  policy: Boolean
   business: Boolean
   buyer: Boolean
 }
@@ -1849,12 +1901,18 @@ type Mutation {
   updateApplications(data: [ApplicationUpdateArgs!]!): [Application]
   deleteApplication(where: ApplicationWhereUniqueInput!): Application
   deleteApplications(where: [ApplicationWhereUniqueInput!]!): [Application]
-  createPolicyAndExport(data: PolicyAndExportCreateInput!): PolicyAndExport
-  createPolicyAndExports(data: [PolicyAndExportCreateInput!]!): [PolicyAndExport]
-  updatePolicyAndExport(where: PolicyAndExportWhereUniqueInput!, data: PolicyAndExportUpdateInput!): PolicyAndExport
-  updatePolicyAndExports(data: [PolicyAndExportUpdateArgs!]!): [PolicyAndExport]
-  deletePolicyAndExport(where: PolicyAndExportWhereUniqueInput!): PolicyAndExport
-  deletePolicyAndExports(where: [PolicyAndExportWhereUniqueInput!]!): [PolicyAndExport]
+  createPolicy(data: PolicyCreateInput!): Policy
+  createPolicies(data: [PolicyCreateInput!]!): [Policy]
+  updatePolicy(where: PolicyWhereUniqueInput!, data: PolicyUpdateInput!): Policy
+  updatePolicies(data: [PolicyUpdateArgs!]!): [Policy]
+  deletePolicy(where: PolicyWhereUniqueInput!): Policy
+  deletePolicies(where: [PolicyWhereUniqueInput!]!): [Policy]
+  createExportContract(data: ExportContractCreateInput!): ExportContract
+  createExportContracts(data: [ExportContractCreateInput!]!): [ExportContract]
+  updateExportContract(where: ExportContractWhereUniqueInput!, data: ExportContractUpdateInput!): ExportContract
+  updateExportContracts(data: [ExportContractUpdateArgs!]!): [ExportContract]
+  deleteExportContract(where: ExportContractWhereUniqueInput!): ExportContract
+  deleteExportContracts(where: [ExportContractWhereUniqueInput!]!): [ExportContract]
   createAccount(data: AccountCreateInput!): Account
   createAccounts(data: [AccountCreateInput!]!): [Account]
   updateAccount(where: AccountWhereUniqueInput!, data: AccountUpdateInput!): Account
@@ -2055,9 +2113,12 @@ type Query {
   applications(where: ApplicationWhereInput! = {}, orderBy: [ApplicationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ApplicationWhereUniqueInput): [Application!]
   application(where: ApplicationWhereUniqueInput!): Application
   applicationsCount(where: ApplicationWhereInput! = {}): Int
-  policyAndExports(where: PolicyAndExportWhereInput! = {}, orderBy: [PolicyAndExportOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyAndExportWhereUniqueInput): [PolicyAndExport!]
-  policyAndExport(where: PolicyAndExportWhereUniqueInput!): PolicyAndExport
-  policyAndExportsCount(where: PolicyAndExportWhereInput! = {}): Int
+  policies(where: PolicyWhereInput! = {}, orderBy: [PolicyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyWhereUniqueInput): [Policy!]
+  policy(where: PolicyWhereUniqueInput!): Policy
+  policiesCount(where: PolicyWhereInput! = {}): Int
+  exportContracts(where: ExportContractWhereInput! = {}, orderBy: [ExportContractOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractWhereUniqueInput): [ExportContract!]
+  exportContract(where: ExportContractWhereUniqueInput!): ExportContract
+  exportContractsCount(where: ExportContractWhereInput! = {}): Int
   accounts(where: AccountWhereInput! = {}, orderBy: [AccountOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AccountWhereUniqueInput): [Account!]
   account(where: AccountWhereUniqueInput!): Account
   accountsCount(where: AccountWhereInput! = {}): Int
@@ -2132,6 +2193,9 @@ type Query {
 
   """ get companies house information """
   getCompaniesHouseInformation(companiesHouseNumber: String!): CompaniesHouseResponse
+
+  """ get CIS countries from APIM """
+  getApimCisCountries: [MappedCisCountry]
 }
 
 union AuthenticatedItem = User
@@ -2414,4 +2478,18 @@ type CreateAnApplicationResponse {
   success: Boolean!
   id: String
   referenceNumber: Int
+}
+
+type MappedCisCountry {
+  isoCode: String!
+  name: String
+  shortTermCover: Boolean
+  riskCategory: String
+  nbiIssueAvailable: Boolean
+  canGetAQuoteOnline: Boolean
+  canGetAQuoteByEmail: Boolean
+  cannotGetAQuote: Boolean
+  canApplyOnline: Boolean
+  canApplyOffline: Boolean
+  cannotApply: Boolean
 }

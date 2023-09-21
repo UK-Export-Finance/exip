@@ -9,9 +9,9 @@ import { mockApplication } from '../../../test-mocks';
 const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
 
 describe('server/helpers/task-list/generate-groups-and-tasks', () => {
-  const { referenceNumber, policyAndExport, broker, declaration } = mockApplication;
+  const { referenceNumber, policy, broker, declaration } = mockApplication;
 
-  const { policyType } = policyAndExport;
+  const { policyType } = policy;
   const { isUsingBroker } = broker;
   const { hasAntiBriberyCodeOfConduct } = declaration;
 

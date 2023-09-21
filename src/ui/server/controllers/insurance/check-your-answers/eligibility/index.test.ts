@@ -79,7 +79,7 @@ describe('controllers/insurance/check-your-answers/eligibility', () => {
 
       const summaryList = eligibilitySummaryList(mockApplication.eligibility);
 
-      const fields = requiredFields(mockApplication.policyAndExport.policyType);
+      const fields = requiredFields(mockApplication.policy.policyType);
 
       const status = sectionStatus(fields, mockApplication);
 

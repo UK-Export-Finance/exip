@@ -36,6 +36,10 @@ interface ApplicationPolicyAndExport {
   totalMonthsOfCover?: number;
   totalSalesToBuyer?: number;
   maximumBuyerWillOwe?: number;
+}
+
+interface ApplicationExportContract {
+  id: string;
   goodsOrServicesDescription?: string;
   finalDestinationCountryCode?: string;
 }
@@ -138,7 +142,7 @@ interface ApplicationBuyerApiInput extends ApplicationBuyerCore {
 interface ApplicationSectionReview {
   id: string;
   eligibility?: boolean;
-  policyAndExport?: boolean;
+  policy?: boolean;
   business?: boolean;
   buyer?: boolean;
 }
@@ -156,7 +160,8 @@ interface ApplicationDeclaration {
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   owner: ApplicationOwner;
-  policyAndExport: ApplicationPolicyAndExport;
+  policy: ApplicationPolicyAndExport;
+  exportContract: ApplicationExportContract;
   company: ApplicationCompany;
   business: ApplicationBusiness;
   broker: ApplicationBroker;

@@ -225,7 +225,7 @@ var declarations_default = DECLARATIONS;
 // constants/field-ids/insurance/check-your-answers/index.ts
 var CHECK_YOUR_ANSWERS = {
   ELIGIBILITY: "eligibility",
-  POLICY_AND_EXPORT: "policyAndExport",
+  POLICY_AND_EXPORT: "policy",
   EXPORTER_BUSINESS: "business",
   BUYER: "buyer"
 };
@@ -319,7 +319,8 @@ var VERSIONS = [
     VERSION_NUMBER: "1",
     OVER_500K_SUPPORT: false,
     MAXIMUM_BUYER_CAN_OWE: 5e5,
-    TOTAL_VALUE_OF_CONTRACT: 5e5
+    TOTAL_VALUE_OF_CONTRACT: 5e5,
+    DEFAULT_FINAL_DESTINATION_KNOWN: true
   }
 ];
 var versions_default = VERSIONS;
@@ -364,6 +365,46 @@ var APPLICATION = {
   STATUS: {
     IN_PROGRESS: "In progress",
     SUBMITTED: "Submitted to UKEF"
+  },
+  DEFAULT_FINAL_DESTINATION_KNOWN: LATEST_VERSION.DEFAULT_FINAL_DESTINATION_KNOWN
+};
+
+// constants/external-apis.ts
+var EXTERNAL_API_DEFINITIONS = {
+  CIS: {
+    RISK: {
+      VERY_HIGH: "Very High",
+      HIGH: "High",
+      STANDARD: "Standard Risk"
+    },
+    SHORT_TERM_COVER_AVAILABLE: {
+      YES: "Yes",
+      NO: "No",
+      ILC: "ILC Only",
+      CILC: "CILC Only",
+      REFER: "Refer"
+    },
+    NBI_ISSUE_AVAILABLE: {
+      YES: "Y",
+      NO: "N"
+    },
+    INVALID_COUNTRIES: ["EC Market n/k", "Non EC Market n/k", "Non UK", "Third Country"]
+  }
+};
+var EXTERNAL_API_MAPPINGS = {
+  CIS: {
+    RISK: {
+      VERY_HIGH: "Very High",
+      HIGH: "High",
+      STANDARD: "Standard"
+    }
+  }
+};
+var EXTERNAL_API_ENDPOINTS = {
+  MULESOFT_MDM_EA: {
+    CURRENCY: "/currencies",
+    INDUSTRY_SECTORS: "/sector-industries",
+    MARKETS: "/markets"
   }
 };
 
@@ -401,7 +442,7 @@ var {
   }
 } = insurance_default;
 var XLSX_ROW_INDEXES = (application2) => {
-  const { policyAndExport, broker } = application2;
+  const { policy, broker } = application2;
   const TITLES = {
     HEADER: 1,
     EXPORTER_CONTACT_DETAILS: 9,
@@ -419,7 +460,7 @@ var XLSX_ROW_INDEXES = (application2) => {
     BUYER_ADDRESS: 50,
     BUYER_CONTACT_DETAILS: 53
   };
-  const policyType = policyAndExport[POLICY_TYPE2];
+  const policyType = policy[POLICY_TYPE2];
   let isMultiplePolicy = false;
   let isUsingBroker = false;
   if (isMultiplePolicyType(policyType)) {
@@ -466,13 +507,6 @@ var XLSX_CONFIG = {
 // constants/index.ts
 import_dotenv.default.config();
 var GBP_CURRENCY_CODE = "GBP";
-var EXTERNAL_API_ENDPOINTS = {
-  MULESOFT_MDM_EA: {
-    CURRENCY: "/currencies",
-    INDUSTRY_SECTORS: "/sector-industries",
-    MARKETS: "/markets"
-  }
-};
 var DATE_24_HOURS_FROM_NOW = () => {
   const now = /* @__PURE__ */ new Date();
   const day = now.getDate();
@@ -726,7 +760,8 @@ var lists = {
         validation: { isRequired: true }
       }),
       previousStatus: (0, import_fields.text)(),
-      policyAndExport: (0, import_fields.relationship)({ ref: "PolicyAndExport" }),
+      policy: (0, import_fields.relationship)({ ref: "Policy" }),
+      exportContract: (0, import_fields.relationship)({ ref: "ExportContract" }),
       owner: (0, import_fields.relationship)({
         ref: "Account",
         many: false
@@ -757,12 +792,20 @@ var lists = {
               data: {}
             });
             modifiedData.referenceNumber = newReferenceNumber;
-            const { id: policyAndExportId } = await context.db.PolicyAndExport.createOne({
+            const { id: policyId } = await context.db.Policy.createOne({
               data: {}
             });
-            modifiedData.policyAndExport = {
+            modifiedData.policy = {
               connect: {
-                id: policyAndExportId
+                id: policyId
+              }
+            };
+            const { id: exportContractId } = await context.db.ExportContract.createOne({
+              data: {}
+            });
+            modifiedData.exportContract = {
+              connect: {
+                id: exportContractId
               }
             };
             const { id: companyId } = await context.db.Company.createOne({
@@ -843,7 +886,7 @@ var lists = {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
             const { referenceNumber } = item;
-            const { policyAndExportId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
+            const { policyId, exportContractId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -854,14 +897,25 @@ var lists = {
                 }
               }
             });
-            await context.db.PolicyAndExport.updateOne({
-              where: { id: policyAndExportId },
+            await context.db.Policy.updateOne({
+              where: { id: policyId },
               data: {
                 application: {
                   connect: {
                     id: applicationId
                   }
                 }
+              }
+            });
+            await context.db.ExportContract.updateOne({
+              where: { id: exportContractId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId
+                  }
+                },
+                finalDestinationKnown: APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN
               }
             });
             await context.db.Company.updateOne({
@@ -923,7 +977,7 @@ var lists = {
     },
     access: import_access.allowAll
   },
-  PolicyAndExport: {
+  Policy: {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       policyType: (0, import_fields.select)({
@@ -946,10 +1000,24 @@ var lists = {
       }),
       totalMonthsOfCover: (0, import_fields.integer)(),
       totalSalesToBuyer: (0, import_fields.integer)(),
-      maximumBuyerWillOwe: (0, import_fields.integer)(),
+      maximumBuyerWillOwe: (0, import_fields.integer)()
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
+    },
+    access: import_access.allowAll
+  },
+  ExportContract: {
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
       goodsOrServicesDescription: (0, import_fields.text)({
         db: { nativeType: "VarChar(1000)" }
       }),
+      finalDestinationKnown: nullable_checkbox_default(),
       finalDestinationCountryCode: (0, import_fields.text)()
     },
     hooks: {
@@ -1198,7 +1266,7 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       eligibility: nullable_checkbox_default(),
-      policyAndExport: nullable_checkbox_default(),
+      policy: nullable_checkbox_default(),
       business: nullable_checkbox_default(),
       buyer: nullable_checkbox_default()
     },
@@ -1578,6 +1646,20 @@ var typeDefs = `
     referenceNumber: Int
   }
 
+  type MappedCisCountry {
+    isoCode: String!
+    name: String
+    shortTermCover: Boolean
+    riskCategory: String
+    nbiIssueAvailable: Boolean
+    canGetAQuoteOnline: Boolean
+    canGetAQuoteByEmail: Boolean
+    cannotGetAQuote: Boolean
+    canApplyOnline: Boolean
+    canApplyOffline: Boolean
+    cannotApply: Boolean
+  }
+
   type Mutation {
     """ create an account """
     createAnAccount(
@@ -1705,6 +1787,9 @@ var typeDefs = `
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
+
+    """ get CIS countries from APIM """
+    getApimCisCountries: [MappedCisCountry]
   }
 `;
 var type_defs_default = typeDefs;
@@ -3175,7 +3260,7 @@ var import_date_fns8 = require("date-fns");
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application2) => {
   console.info("Getting populated application");
-  const { eligibilityId, ownerId, policyAndExportId, companyId, businessId, brokerId, buyerId, declarationId } = application2;
+  const { eligibilityId, ownerId, policyId, exportContractId, companyId, businessId, brokerId, buyerId, declarationId } = application2;
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId }
   });
@@ -3186,16 +3271,22 @@ var getPopulatedApplication = async (context, application2) => {
   if (!account) {
     throw new Error(generateErrorMessage("account", application2.id));
   }
-  const policyAndExport = await context.db.PolicyAndExport.findOne({
-    where: { id: policyAndExportId }
+  const policy = await context.db.Policy.findOne({
+    where: { id: policyId }
   });
-  if (!policyAndExport) {
-    throw new Error(generateErrorMessage("policyAndExport", application2.id));
+  if (!policy) {
+    throw new Error(generateErrorMessage("policy", application2.id));
   }
-  const finalDestinationCountry = await get_country_by_field_default(context, "isoCode", policyAndExport.finalDestinationCountryCode);
-  const populatedPolicyAndExport = {
-    ...policyAndExport,
-    finalDestinationCountryCode: finalDestinationCountry
+  const exportContract = await context.db.ExportContract.findOne({
+    where: { id: exportContractId }
+  });
+  if (!exportContract) {
+    throw new Error(generateErrorMessage("exportContract", application2.id));
+  }
+  const finalDestinationCountry = await get_country_by_field_default(context, "isoCode", exportContract.finalDestinationCountryCode);
+  const populatedExportContract = {
+    ...exportContract,
+    finalDestinationCountry
   };
   const company = await context.db.Company.findOne({
     where: { id: companyId }
@@ -3270,7 +3361,8 @@ var getPopulatedApplication = async (context, application2) => {
       ...eligibility,
       buyerCountry
     },
-    policyAndExport: populatedPolicyAndExport,
+    policy,
+    exportContract: populatedExportContract,
     owner: account,
     company: populatedCompany,
     companySicCodes,
@@ -3324,7 +3416,7 @@ var is_owner_same_as_business_contact_default = isOwnerSameAsBusinessContact;
 // emails/send-application-submitted-emails/index.ts
 var send2 = async (application2, xlsxPath) => {
   try {
-    const { referenceNumber, owner, company, buyer, policyAndExport, business } = application2;
+    const { referenceNumber, owner, company, buyer, policy, business } = application2;
     const { businessContactDetail } = business;
     const { email } = owner;
     const sharedEmailVars = {
@@ -3332,7 +3424,7 @@ var send2 = async (application2, xlsxPath) => {
       buyerName: buyer.companyOrOrganisationName,
       buyerLocation: buyer.country?.name,
       companyName: company.companyName,
-      requestedStartDate: format_date_default(policyAndExport.requestedStartDate)
+      requestedStartDate: format_date_default(policy.requestedStartDate)
     };
     const sendEmailVars = {
       ...sharedEmailVars,
@@ -3868,13 +3960,13 @@ var {
   }
 } = insurance_default;
 var mapSecondaryKeyInformation = (application2) => {
-  const { policyAndExport } = application2;
+  const { policy } = application2;
   const mapped = [
     xlsx_row_default(KEY_INFORMATION),
     xlsx_row_default(FIELDS4[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
     xlsx_row_default(FIELDS4[COUNTRY2], application2.buyer[COUNTRY2].name),
     xlsx_row_default(FIELDS4[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
-    xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE3].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE3])
+    xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE3].SUMMARY?.TITLE), policy[POLICY_TYPE3])
   ];
   return mapped;
 };
@@ -3913,45 +4005,42 @@ var {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION }
 } = insurance_default.POLICY_AND_EXPORTS;
 var mapPolicyAndExportIntro = (application2) => {
-  const { policyAndExport } = application2;
+  const { policy } = application2;
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.POLICY_AND_EXPORT, ""),
-    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_TYPE4].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE4]),
-    xlsx_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policyAndExport[REQUESTED_START_DATE], "dd-MMM-yy"))
+    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_TYPE4].SUMMARY?.TITLE), policy[POLICY_TYPE4]),
+    xlsx_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policy[REQUESTED_START_DATE], "dd-MMM-yy"))
   ];
   return mapped;
 };
 var mapSinglePolicyFields = (application2) => {
-  const { policyAndExport } = application2;
+  const { policy } = application2;
   return [
-    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[CONTRACT_COMPLETION_DATE2].SUMMARY?.TITLE), format_date_default(policyAndExport[CONTRACT_COMPLETION_DATE2], "dd-MMM-yy")),
-    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE))
+    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[CONTRACT_COMPLETION_DATE2].SUMMARY?.TITLE), format_date_default(policy[CONTRACT_COMPLETION_DATE2], "dd-MMM-yy")),
+    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), format_currency_default(policy[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE))
   ];
 };
 var mapMultiplePolicyFields = (application2) => {
-  const { policyAndExport } = application2;
+  const { policy } = application2;
   return [
-    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), map_month_string_default(policyAndExport[TOTAL_MONTHS_OF_COVER])),
-    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default(policyAndExport[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
-    xlsx_row_default(
-      String(CONTENT_STRINGS2.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE),
-      format_currency_default(policyAndExport[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE)
-    )
+    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), map_month_string_default(policy[TOTAL_MONTHS_OF_COVER])),
+    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
+    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
   ];
 };
 var mapPolicyAndExportOutro = (application2) => {
-  const { policyAndExport } = application2;
+  const { exportContract, policy } = application2;
   const mapped = [
-    xlsx_row_default(String(CONTENT_STRINGS2[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policyAndExport[CREDIT_PERIOD_WITH_BUYER]),
-    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policyAndExport[POLICY_CURRENCY_CODE]),
-    xlsx_row_default(String(CONTENT_STRINGS2[DESCRIPTION].SUMMARY?.TITLE), policyAndExport[DESCRIPTION]),
-    xlsx_row_default(String(CONTENT_STRINGS2[FINAL_DESTINATION].SUMMARY?.TITLE), policyAndExport[FINAL_DESTINATION].name)
+    xlsx_row_default(String(CONTENT_STRINGS2[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policy[CREDIT_PERIOD_WITH_BUYER]),
+    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
+    xlsx_row_default(String(CONTENT_STRINGS2[DESCRIPTION].SUMMARY?.TITLE), exportContract[DESCRIPTION]),
+    xlsx_row_default(String(CONTENT_STRINGS2[FINAL_DESTINATION].SUMMARY?.TITLE), exportContract[FINAL_DESTINATION].name)
   ];
   return mapped;
 };
 var mapPolicyAndExport = (application2) => {
   let mapped = mapPolicyAndExportIntro(application2);
-  const policyType = application2.policyAndExport[POLICY_TYPE4];
+  const policyType = application2.policy[POLICY_TYPE4];
   if (isSinglePolicyType(policyType)) {
     mapped = [...mapped, ...mapSinglePolicyFields(application2)];
   }
@@ -4345,6 +4434,221 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
 };
 var verify_account_reactivation_token_default = verifyAccountReactivationToken;
 
+// custom-resolvers/queries/get-account-password-reset-token/index.ts
+var getAccountPasswordResetToken = async (root, variables, context) => {
+  console.info("Getting account password reset token");
+  try {
+    const { email } = variables;
+    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    if (!account) {
+      console.info("Unable to get account password reset token - account does not exist");
+      return { success: false };
+    }
+    if (account.passwordResetHash) {
+      return {
+        success: true,
+        token: account.passwordResetHash
+      };
+    }
+    console.info("Unable to get account password reset token - reset hash does not exist");
+    return { success: false };
+  } catch (err) {
+    console.error("Error getting account password reset token %O", err);
+    throw new Error(`Getting account password reset token ${err}`);
+  }
+};
+var get_account_password_reset_token_default = getAccountPasswordResetToken;
+
+// integrations/APIM/index.ts
+var import_axios = __toESM(require("axios"));
+var import_dotenv5 = __toESM(require("dotenv"));
+import_dotenv5.default.config();
+var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
+var { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
+var url = `${APIM_MDM_URL}${MULESOFT_MDM_EA.MARKETS}`;
+var APIM = {
+  getCisCountries: async () => {
+    try {
+      console.info("Calling APIM - CIS countries");
+      const response = await (0, import_axios.default)({
+        method: "get",
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
+        },
+        validateStatus(status) {
+          const acceptableStatus = [200];
+          return acceptableStatus.includes(status);
+        }
+      });
+      if (response.data && response.status === 200) {
+        return {
+          success: true,
+          data: response.data
+        };
+      }
+      return {
+        success: false
+      };
+    } catch (err) {
+      console.error("Error calling APIM - CIS countries %O", err);
+      throw new Error(`Calling APIM - CIS countries ${err}`);
+    }
+  }
+};
+var APIM_default = APIM;
+
+// helpers/map-CIS-countries/map-CIS-country/map-risk-category/index.ts
+var { CIS } = EXTERNAL_API_DEFINITIONS;
+var mapRiskCategory = (str) => {
+  if (str === CIS.RISK.STANDARD) {
+    return EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD;
+  }
+  if (str === CIS.RISK.HIGH) {
+    return str;
+  }
+  if (str === CIS.RISK.VERY_HIGH) {
+    return str;
+  }
+  return null;
+};
+var map_risk_category_default = mapRiskCategory;
+
+// helpers/map-CIS-countries/map-CIS-country/map-short-term-cover-available/index.ts
+var {
+  CIS: { SHORT_TERM_COVER_AVAILABLE }
+} = EXTERNAL_API_DEFINITIONS;
+var mapShortTermCoverAvailable = (str) => {
+  switch (str) {
+    case SHORT_TERM_COVER_AVAILABLE.YES:
+      return true;
+    case SHORT_TERM_COVER_AVAILABLE.ILC:
+      return true;
+    case SHORT_TERM_COVER_AVAILABLE.CILC:
+      return true;
+    case SHORT_TERM_COVER_AVAILABLE.REFER:
+      return true;
+    default:
+      return false;
+  }
+};
+var map_short_term_cover_available_default = mapShortTermCoverAvailable;
+
+// helpers/map-CIS-countries/map-CIS-country/map-NBI-issue-available/index.ts
+var { CIS: CIS2 } = EXTERNAL_API_DEFINITIONS;
+var mapNbiIssueAvailable = (str) => {
+  if (str === CIS2.NBI_ISSUE_AVAILABLE.YES) {
+    return true;
+  }
+  return false;
+};
+var map_NBI_issue_available_default = mapNbiIssueAvailable;
+
+// helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online/index.ts
+var canGetAQuoteOnline = (country) => {
+  if (country.riskCategory && country.shortTermCover && country.nbiIssueAvailable) {
+    return true;
+  }
+  return false;
+};
+var can_get_a_quote_online_default = canGetAQuoteOnline;
+
+// helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-by-email/index.ts
+var canGetAQuoteByEmail = (country) => {
+  if (country.riskCategory && country.shortTermCover && !country.nbiIssueAvailable) {
+    return true;
+  }
+  return false;
+};
+var can_get_a_quote_by_email_default = canGetAQuoteByEmail;
+
+// helpers/map-CIS-countries/map-CIS-country/cannot-get-a-quote/index.ts
+var cannotGetAQuote = (country) => {
+  if (!country.riskCategory || !country.shortTermCover && !country.nbiIssueAvailable) {
+    return true;
+  }
+  return false;
+};
+var cannot_get_a_quote_default = cannotGetAQuote;
+
+// helpers/map-CIS-countries/map-CIS-country/can-apply-online/index.ts
+var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
+var canApplyOnline = (originalShortTermCover) => {
+  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.YES) {
+    return true;
+  }
+  return false;
+};
+var can_apply_online_default = canApplyOnline;
+
+// helpers/map-CIS-countries/map-CIS-country/can-apply-offline/index.ts
+var { CIS: CIS4 } = EXTERNAL_API_DEFINITIONS;
+var canApplyOffline = (originalShortTermCover) => {
+  if (originalShortTermCover === CIS4.SHORT_TERM_COVER_AVAILABLE.ILC) {
+    return true;
+  }
+  if (originalShortTermCover === CIS4.SHORT_TERM_COVER_AVAILABLE.CILC) {
+    return true;
+  }
+  if (originalShortTermCover === CIS4.SHORT_TERM_COVER_AVAILABLE.REFER) {
+    return true;
+  }
+  return false;
+};
+var can_apply_offline_default = canApplyOffline;
+
+// helpers/map-CIS-countries/map-CIS-country/index.ts
+var mapCisCountry = (country) => {
+  const mapped = {
+    name: country.marketName,
+    isoCode: country.isoCode,
+    riskCategory: map_risk_category_default(country.ESRAClassificationDesc),
+    shortTermCover: map_short_term_cover_available_default(country.shortTermCoverAvailabilityDesc),
+    nbiIssueAvailable: map_NBI_issue_available_default(country.NBIIssue)
+  };
+  mapped.canGetAQuoteOnline = can_get_a_quote_online_default(mapped);
+  mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default(mapped);
+  mapped.cannotGetAQuote = cannot_get_a_quote_default(mapped);
+  mapped.canApplyOnline = can_apply_online_default(country.shortTermCoverAvailabilityDesc);
+  mapped.canApplyOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
+  mapped.cannotApply = !mapped.canApplyOnline && !mapped.canApplyOffline;
+  return mapped;
+};
+var map_CIS_country_default = mapCisCountry;
+
+// helpers/sort-array-alphabetically/index.ts
+var sortArrayAlphabetically = (arr, field) => arr.sort((a, b) => a[field].localeCompare(b[field]));
+var sort_array_alphabetically_default = sortArrayAlphabetically;
+
+// helpers/map-CIS-countries/index.ts
+var { CIS: CIS5 } = EXTERNAL_API_DEFINITIONS;
+var filterCisCountries = (countries) => countries.filter((country) => !CIS5.INVALID_COUNTRIES.includes(country.marketName));
+var mapCisCountries = (countries) => {
+  const filteredCountries = filterCisCountries(countries);
+  const mapped = filteredCountries.map((country) => map_CIS_country_default(country));
+  const sorted = sort_array_alphabetically_default(mapped, "name");
+  return sorted;
+};
+var map_CIS_countries_default = mapCisCountries;
+
+// custom-resolvers/queries/get-APIM-CIS-countries/index.ts
+var getApimCisCountries = async () => {
+  try {
+    console.info("Getting and mapping CIS countries from APIM");
+    const response = await APIM_default.getCisCountries();
+    if (response.data) {
+      const mapped = map_CIS_countries_default(response.data);
+      return mapped;
+    }
+    return { success: false };
+  } catch (err) {
+    console.error("Error Getting and mapping CIS countries from APIM %O", err);
+    throw new Error(`Getting and mapping CIS countries from APIM ${err}`);
+  }
+};
+var get_APIM_CIS_countries_default = getApimCisCountries;
+
 // helpers/create-full-timestamp-from-day-month/index.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
   if (day && month) {
@@ -4395,22 +4699,22 @@ var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => {
 };
 
 // integrations/industry-sector/index.ts
-var import_axios = __toESM(require("axios"));
-var import_dotenv5 = __toESM(require("dotenv"));
-import_dotenv5.default.config();
-var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
-var { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
+var import_axios2 = __toESM(require("axios"));
+var import_dotenv6 = __toESM(require("dotenv"));
+import_dotenv6.default.config();
+var { APIM_MDM_URL: APIM_MDM_URL2, APIM_MDM_KEY: APIM_MDM_KEY2, APIM_MDM_VALUE: APIM_MDM_VALUE2 } = process.env;
+var { MULESOFT_MDM_EA: MULESOFT_MDM_EA2 } = EXTERNAL_API_ENDPOINTS;
 var headers = {
   "Content-Type": "application/json",
-  [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
+  [String(APIM_MDM_KEY2)]: APIM_MDM_VALUE2
 };
 var getIndustrySectorNames = {
   get: async () => {
     try {
       console.info("Calling industry sector API");
-      const response = await (0, import_axios.default)({
+      const response = await (0, import_axios2.default)({
         method: "get",
-        url: `${APIM_MDM_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`,
+        url: `${APIM_MDM_URL2}${MULESOFT_MDM_EA2.INDUSTRY_SECTORS}`,
         headers,
         validateStatus(status) {
           const acceptableStatus = [200, 404];
@@ -4438,15 +4742,15 @@ var getIndustrySectorNames = {
 var industry_sector_default = getIndustrySectorNames;
 
 // integrations/companies-house/index.ts
-var import_axios2 = __toESM(require("axios"));
-var import_dotenv6 = __toESM(require("dotenv"));
-import_dotenv6.default.config();
+var import_axios3 = __toESM(require("axios"));
+var import_dotenv7 = __toESM(require("dotenv"));
+import_dotenv7.default.config();
 var username = String(process.env.COMPANIES_HOUSE_API_KEY);
 var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
 var companiesHouse = {
   get: async (companyNumber) => {
     try {
-      const response = await (0, import_axios2.default)({
+      const response = await (0, import_axios3.default)({
         method: "get",
         url: `${companiesHouseURL}/company/${companyNumber}`,
         auth: { username, password: "" },
@@ -4505,31 +4809,6 @@ var getCompaniesHouseInformation = async (root, variables) => {
   }
 };
 var get_companies_house_information_default = getCompaniesHouseInformation;
-
-// custom-resolvers/queries/get-account-password-reset-token/index.ts
-var getAccountPasswordResetToken = async (root, variables, context) => {
-  console.info("Getting account password reset token");
-  try {
-    const { email } = variables;
-    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
-    if (!account) {
-      console.info("Unable to get account password reset token - account does not exist");
-      return { success: false };
-    }
-    if (account.passwordResetHash) {
-      return {
-        success: true,
-        token: account.passwordResetHash
-      };
-    }
-    console.info("Unable to get account password reset token - reset hash does not exist");
-    return { success: false };
-  } catch (err) {
-    console.error("Error getting account password reset token %O", err);
-    throw new Error(`Getting account password reset token ${err}`);
-  }
-};
-var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
 // custom-resolvers/queries/verify-account-password-reset-token/index.ts
 var import_date_fns10 = require("date-fns");
@@ -4591,8 +4870,9 @@ var customResolvers = {
     verifyAccountReactivationToken: verify_account_reactivation_token_default
   },
   Query: {
-    getCompaniesHouseInformation: get_companies_house_information_default,
     getAccountPasswordResetToken: get_account_password_reset_token_default,
+    getApimCisCountries: get_APIM_CIS_countries_default,
+    getCompaniesHouseInformation: get_companies_house_information_default,
     verifyAccountPasswordResetToken: verify_account_password_reset_token_default
   }
 };

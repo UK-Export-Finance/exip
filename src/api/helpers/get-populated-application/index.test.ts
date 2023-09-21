@@ -1,6 +1,7 @@
 import { Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
 import getPopulatedApplication, { generateErrorMessage } from '.';
 import { createFullApplication, getKeystoneContext } from '../../test-helpers';
+import getCountryByField from '../get-country-by-field';
 import mockCountries from '../../test-mocks/mock-countries';
 import { Application, Context } from '../../types';
 import mockApplication from '../../test-mocks/mock-application';
@@ -18,15 +19,16 @@ describe('api/helpers/get-populated-application', () => {
     application = await createFullApplication(context);
 
     applicationIds = {
-      id: application.id,
-      eligibilityId: application.eligibility.id,
-      policyAndExportId: application.policyAndExport.id,
-      ownerId: application.owner.id,
       companyId: application.company.id,
       businessId: application.business.id,
       brokerId: application.broker.id,
       buyerId: application.buyer.id,
       declarationId: application.declaration.id,
+      eligibilityId: application.eligibility.id,
+      exportContractId: application.exportContract.id,
+      id: application.id,
+      ownerId: application.owner.id,
+      policyId: application.policy.id,
     };
   });
 
@@ -34,7 +36,8 @@ describe('api/helpers/get-populated-application', () => {
     const result = await getPopulatedApplication(context, applicationIds);
 
     expect(result.eligibility.id).toEqual(application.eligibility.id);
-    expect(result.policyAndExport.id).toEqual(application.policyAndExport.id);
+    expect(result.policy.id).toEqual(application.policy.id);
+    expect(result.exportContract.id).toEqual(application.exportContract.id);
     expect(result.owner.id).toEqual(application.owner.id);
     expect(result.company.id).toEqual(application.company.id);
     expect(result.companySicCodes[0].companyId).toEqual(application.company.id);
@@ -54,21 +57,31 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.buyer.country?.isoCode).toEqual(expectedCountry.isoCode);
   });
 
-  it('should return an application with populated businessContactDetail object in business', async () => {
+  it('should return an application with populated buyer country', async () => {
     const result = await getPopulatedApplication(context, applicationIds);
 
-    const expectedBusinessContactDetail = mockApplication.business.businessContactDetail;
+    const [expectedCountry] = mockCountries;
 
-    const { firstName, lastName, email, position } = result.business.businessContactDetail;
+    expect(result.buyer.country?.name).toEqual(expectedCountry.name);
+    expect(result.buyer.country?.isoCode).toEqual(expectedCountry.isoCode);
+  });
 
-    expect(firstName).toEqual(expectedBusinessContactDetail.firstName);
-    expect(lastName).toEqual(expectedBusinessContactDetail.lastName);
-    expect(email).toEqual(expectedBusinessContactDetail.email);
-    expect(position).toEqual(expectedBusinessContactDetail.position);
+  it('should return an application with populated answers and finalDestinationCountry object in exportContract', async () => {
+    const result = await getPopulatedApplication(context, applicationIds);
+
+    const { exportContract } = mockApplication;
+
+    const countryCode = String(exportContract.finalDestinationCountryCode);
+
+    const expectedCountry = await getCountryByField(context, 'isoCode', countryCode);
+
+    expect(result.exportContract.finalDestinationCountry).toEqual(expectedCountry);
+    expect(result.exportContract.finalDestinationCountryCode).toEqual(exportContract.finalDestinationCountryCode);
+    expect(result.exportContract.goodsOrServicesDescription).toEqual(exportContract.goodsOrServicesDescription);
   });
 
   it('should throw an error when eligibility does not exist', async () => {
-    const invalidId = applicationIds.policyAndExportId;
+    const invalidId = applicationIds.policyId;
 
     try {
       await getPopulatedApplication(context, { ...applicationIds, eligibilityId: invalidId });
@@ -79,7 +92,7 @@ describe('api/helpers/get-populated-application', () => {
   });
 
   it('should throw an error when exporter does not exist', async () => {
-    const invalidId = applicationIds.policyAndExportId;
+    const invalidId = applicationIds.policyId;
 
     try {
       await getPopulatedApplication(context, { ...applicationIds, accountId: invalidId });
@@ -90,7 +103,7 @@ describe('api/helpers/get-populated-application', () => {
   });
 
   it('should throw an error when buyerCountry does not exist', async () => {
-    const invalidId = applicationIds.policyAndExportId;
+    const invalidId = applicationIds.policyId;
 
     try {
       await getPopulatedApplication(context, { ...applicationIds, buyerCountryId: invalidId });
@@ -100,13 +113,13 @@ describe('api/helpers/get-populated-application', () => {
     }
   });
 
-  it('should throw an error when policyAndExport does not exist', async () => {
+  it('should throw an error when policy does not exist', async () => {
     const invalidId = applicationIds.id;
 
     try {
-      await getPopulatedApplication(context, { ...applicationIds, policyAndExportId: invalidId });
+      await getPopulatedApplication(context, { ...applicationIds, policyId: invalidId });
     } catch (err) {
-      const expected = new Error(generateErrorMessage('policyAndExport', applicationIds.id));
+      const expected = new Error(generateErrorMessage('policy', applicationIds.id));
       expect(err).toEqual(expected);
     }
   });

@@ -28,7 +28,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
   jest.mock('../save-data');
 
   const mockSavePolicyAndExportData = jest.fn(() => Promise.resolve(true));
-  mapAndSave.policyAndExport = mockSavePolicyAndExportData;
+  mapAndSave.policy = mockSavePolicyAndExportData;
 
   beforeEach(() => {
     req = mockReq();
@@ -38,7 +38,6 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
     req.params.referenceNumber = String(mockApplication.referenceNumber);
     refNumber = Number(mockApplication.referenceNumber);
   });
-
   afterAll(() => {
     jest.resetAllMocks();
   });
@@ -73,7 +72,6 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
   describe('get', () => {
     it('should render template', async () => {
       await get(req, res);
-
       const expectedVariables = {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY,
@@ -94,7 +92,6 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await get(req, res);
-
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
@@ -103,19 +100,20 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
   describe('post', () => {
     describe('when there are no validation errors', () => {
       beforeEach(() => {
+        const FIELD = FIELDS[FIELD_ID];
         req.body = {
-          [FIELD_ID]: FIELDS[FIELD_ID]?.OPTIONS?.SINGLE.VALUE,
+          [FIELD_ID]: FIELD?.OPTIONS?.SINGLE?.VALUE,
         };
       });
 
-      it('should call mapAndSave.policyAndExport with data from constructPayload function and application', async () => {
+      it('should call mapAndSave.policy with data from constructPayload function and application', async () => {
         await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.policy).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(payload, res.locals.application);
+        expect(mapAndSave.policy).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
       describe('when the answer is `single`', () => {
@@ -130,7 +128,11 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
       describe('when the answer is `multi`', () => {
         it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`, async () => {
-          req.body[FIELD_ID] = FIELDS[FIELD_ID]?.OPTIONS?.MULTIPLE.VALUE;
+          const FIELD = FIELDS[FIELD_ID];
+
+          req.body = {
+            [FIELD_ID]: FIELD?.OPTIONS?.MULTIPLE?.VALUE,
+          };
 
           await post(req, res);
 
@@ -203,17 +205,19 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
     describe('api error handling', () => {
       beforeEach(() => {
+        const FIELD = FIELDS[FIELD_ID];
+
         req.body = {
-          [FIELD_ID]: FIELDS[FIELD_ID]?.OPTIONS?.SINGLE.VALUE,
+          [FIELD_ID]: FIELD?.OPTIONS?.SINGLE?.VALUE,
         };
       });
 
-      describe('mapAndSave.policyAndExport call', () => {
+      describe('mapAndSave.policy call', () => {
         describe('when no application is returned', () => {
           beforeEach(() => {
             const savePolicyAndExportDataSpy = jest.fn(() => Promise.resolve(false));
 
-            mapAndSave.policyAndExport = savePolicyAndExportDataSpy;
+            mapAndSave.policy = savePolicyAndExportDataSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -227,7 +231,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
           beforeEach(() => {
             const savePolicyAndExportDataSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
 
-            mapAndSave.policyAndExport = savePolicyAndExportDataSpy;
+            mapAndSave.policy = savePolicyAndExportDataSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

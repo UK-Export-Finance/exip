@@ -24,6 +24,8 @@ const {
   },
 } = ROUTES;
 
+const { policy, exportContract, referenceNumber } = mockApplication;
+
 describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
   jest.mock('../save-data');
 
@@ -42,7 +44,7 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
     res = mockRes();
 
     res.locals.application = mockApplication;
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
+    req.params.referenceNumber = String(referenceNumber);
     api.keystone.countries.getAll = getCountriesSpy;
     api.external.getCurrencies = getCurrenciesSpy;
   });
@@ -57,14 +59,14 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD: {
           ID: FIELD_ID,
           ...FIELDS[FIELD_ID],
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TYPE_OF_POLICY_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -81,15 +83,15 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
     it('should render template', async () => {
       await get(req, res);
       const checkAndChange = true;
-      const summaryList = policyAndExportSummaryList(
-        mockApplication.policyAndExport,
-        mockApplication.referenceNumber,
-        mockCountries,
-        mockCurrencies,
-        checkAndChange,
-      );
 
-      const fields = requiredFields(mockApplication.policyAndExport.policyType);
+      const answers = {
+        ...policy,
+        ...exportContract,
+      };
+
+      const summaryList = policyAndExportSummaryList(answers, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
+
+      const fields = requiredFields(policy.policyType);
 
       const status = sectionStatus(fields, mockApplication);
 
@@ -100,7 +102,7 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         SUMMARY_LIST: summaryList,
-        ...pageVariables(mockApplication.referenceNumber),
+        ...pageVariables(referenceNumber),
         status,
       };
 

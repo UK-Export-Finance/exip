@@ -23,8 +23,8 @@ describe('controllers/insurance/your-buyer/map-and-save', () => {
     const mockValidationErrors = generateValidationErrors(ADDRESS, 'error', {});
 
     describe('when the form has data', () => {
-      describe('when the form has validation errors ', () => {
-        it('should call save.buyer with application, populated submitted data and validationErrors.errorList', async () => {
+      describe('when the form has validation errors', () => {
+        it('should call save.buyer with application, submitted data and validationErrors.errorList', async () => {
           await mapAndSave.yourBuyer(mockFormBody, mockApplication, mockValidationErrors);
 
           expect(save.buyer).toHaveBeenCalledTimes(1);
@@ -39,7 +39,7 @@ describe('controllers/insurance/your-buyer/map-and-save', () => {
       });
 
       describe('when the form does NOT have validation errors ', () => {
-        it('should call save.buyer with application and populated submitted data', async () => {
+        it('should call save.buyer with application and submitted data', async () => {
           await mapAndSave.yourBuyer(mockFormBody, mockApplication);
 
           expect(save.buyer).toHaveBeenCalledTimes(1);

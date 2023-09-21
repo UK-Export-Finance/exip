@@ -27,9 +27,41 @@ interface ApplicationBusiness extends ApplicationRelationship {
   businessContactDetailId: string;
 }
 
+interface CisCountry {
+  marketName: string;
+  isoCode: string;
+  shortTermCoverAvailabilityDesc: string;
+  ESRAClassificationDesc: string;
+  NBIIssue: string;
+  riskCategory?: string;
+}
+
+interface MappedCisCountry {
+  name: string;
+  isoCode: string;
+  shortTermCover: boolean;
+  riskCategory?: string;
+  nbiIssueAvailable: boolean;
+  canGetAQuoteOnline: boolean;
+  canGetAQuoteByEmail: boolean;
+  cannotGetAQuote: boolean;
+  canApplyOnline: boolean;
+  canApplyOffline: boolean;
+  cannotApply: boolean;
+}
+
 interface Country extends ApplicationRelationship {
   name: string;
   isoCode: string;
+  riskCategory?: string;
+  shortTermCover?: boolean;
+  nbiIssueAvailable?: boolean;
+  canGetAQuoteOnline?: boolean;
+  canGetAQuoteByEmail?: boolean;
+  cannotGetAQuote?: boolean;
+  canApplyOnline?: boolean;
+  canApplyOffline?: boolean;
+  cannotApply?: boolean;
 }
 
 interface ApplicationEligibility extends ApplicationRelationship {
@@ -89,6 +121,12 @@ interface ApplicationDeclaration extends ApplicationRelationship {
   agreeHowDataWillBeUsed?: boolean;
 }
 
+interface ApplicationExportContract extends ApplicationRelationship {
+  goodsOrServicesDescription?: string;
+  finalDestinationCountryCode?: string;
+  finalDestinationCountry?: Country;
+}
+
 interface AccountInput {
   createdAt: Date;
   updatedAt: Date;
@@ -131,7 +169,7 @@ interface ApplicationCompanyAddress extends ApplicationRelationship {
   premises?: string;
 }
 
-interface ApplicationPolicyAndExport extends ApplicationRelationship {
+interface ApplicationPolicy extends ApplicationRelationship {
   requestedStartDate: Date;
 }
 
@@ -148,8 +186,9 @@ interface Application {
   status: string;
   previousStatus?: string;
   eligibility: ApplicationEligibility;
+  exportContract: ApplicationExportContract;
   owner: ApplicationOwner;
-  policyAndExport: ApplicationPolicyAndExport;
+  policy: ApplicationPolicy;
   company: ApplicationCompany;
   companySicCodes: Array<ApplicationCompanySicCode>;
   companyAddress: ApplicationCompanyAddress;
@@ -173,6 +212,7 @@ interface ApplicationVersion {
   OVER_500K_SUPPORT: boolean;
   MAXIMUM_BUYER_CAN_OWE: number;
   TOTAL_VALUE_OF_CONTRACT: number;
+  DEFAULT_FINAL_DESTINATION_KNOWN: boolean;
 }
 
 type BufferEncoding = 'hex' | 'base64' | 'ascii';
@@ -490,6 +530,11 @@ interface XLSXRowIndexes {
   BUYER_CONTACT_DETAILS: number;
 }
 
+interface GetApimCisCountriesResponse {
+  success: boolean;
+  data?: [CisCountry];
+}
+
 export {
   Account,
   AccountCreationVariables,
@@ -513,10 +558,11 @@ export {
   ApplicationBusinessContactDetail,
   ApplicationDeclaration,
   ApplicationEligibility,
+  ApplicationExportContract,
   ApplicationCompany,
   ApplicationCompanySicCode,
   ApplicationOwner,
-  ApplicationPolicyAndExport,
+  ApplicationPolicy,
   ApplicationRelationship,
   ApplicationSubmissionEmailVariables,
   ApplicationVersion,
@@ -526,12 +572,15 @@ export {
   CompaniesHouseResponse,
   CompaniesHouseAPIResponse,
   Context,
+  CisCountry,
+  MappedCisCountry,
   Country,
   CreateAnApplicationVariables,
   Currency,
   DeleteApplicationByReferenceNumberVariables,
   EmailResponse,
   Feedback,
+  GetApimCisCountriesResponse,
   GetCompaniesHouseInformationVariables,
   GetAccountPasswordResetTokenVariables,
   AccountPasswordResetTokenResponse,

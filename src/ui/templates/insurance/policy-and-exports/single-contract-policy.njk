@@ -56,7 +56,7 @@
           label: FIELDS.REQUESTED_START_DATE.LABEL,
           hint: FIELDS.REQUESTED_START_DATE.HINT,
           error: validationErrors.errorList[FIELDS.REQUESTED_START_DATE.ID],
-          submittedAnswers: submittedValues or application.policyAndExport
+          submittedAnswers: submittedValues or application.policy
         }) }}
 
         {{dateInput.render({
@@ -64,7 +64,7 @@
           label: FIELDS.CONTRACT_COMPLETION_DATE.LABEL,
           hint: FIELDS.CONTRACT_COMPLETION_DATE.HINT,
           error: validationErrors.errorList[FIELDS.CONTRACT_COMPLETION_DATE.ID],
-          submittedAnswers: submittedValues or application.policyAndExport
+          submittedAnswers: submittedValues or application.policy
         }) }}
 
         {% set totalContractValueHintHtml %}
@@ -106,7 +106,7 @@
             }
           },
           spellcheck: false,
-          value: submittedValues[FIELDS.TOTAL_CONTRACT_VALUE.ID] or application.policyAndExport[FIELDS.TOTAL_CONTRACT_VALUE.ID],
+          value: submittedValues[FIELDS.TOTAL_CONTRACT_VALUE.ID] or application.policy[FIELDS.TOTAL_CONTRACT_VALUE.ID],
           errorMessage: validationErrors.errorList[FIELDS.TOTAL_CONTRACT_VALUE.ID] and {
             text: validationErrors.errorList[FIELDS.TOTAL_CONTRACT_VALUE.ID].text,
             attributes: {
@@ -135,7 +135,7 @@
             'data-cy': FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + '-input'
           },
           maxlength: FIELDS.CREDIT_PERIOD_WITH_BUYER.MAXIMUM,
-          value: submittedValues[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID] or application.policyAndExport[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID],
+          value: submittedValues[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID] or application.policy[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID],
           errorMessage: validationErrors.errorList[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID] and {
             text: validationErrors.errorList[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID].text,
             attributes: {

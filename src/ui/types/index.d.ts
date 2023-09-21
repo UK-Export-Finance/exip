@@ -16,7 +16,6 @@ import {
   ApplicationVersion,
 } from './application';
 import { ApolloResponse } from './apollo';
-import { CisCountry } from './cis-country';
 import { CompanyDetails, SicCode } from './company-details';
 import { CompanyHouseResponse } from './company-house-response';
 import { Connect } from './connect';
@@ -70,7 +69,6 @@ export {
   ApplicationBuyerUiInput,
   ApplicationVersion,
   ApolloResponse,
-  CisCountry,
   CompanyDetails,
   CompanyHouseResponse,
   Connect,

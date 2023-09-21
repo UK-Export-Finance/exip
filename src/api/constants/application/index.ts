@@ -7,9 +7,11 @@ const LATEST_VERSION = getApplicationDefinition(LATEST_VERSION_NUMBER);
  * APPLICATION
  * Application constants - some fields are dynamic depending on the latest application version.
  * These constants are used to create an update an application.
- * The following fields could change in future versions, so they are dynamic:
+ * The following fields could or will change in future versions, so they are dynamic:
  * - TOTAL_VALUE_OF_CONTRACT
  * - MAXIMUM_BUYER_CAN_OWE
+ * - FINAL_DESTINATION_KNOWN
+ * - DEFAULT_FINAL_DESTINATION_KNOWN
  * @returns {Object} Application constants
  */
 export const APPLICATION = {
@@ -36,4 +38,5 @@ export const APPLICATION = {
     IN_PROGRESS: 'In progress',
     SUBMITTED: 'Submitted to UKEF',
   },
+  DEFAULT_FINAL_DESTINATION_KNOWN: LATEST_VERSION.DEFAULT_FINAL_DESTINATION_KNOWN,
 };

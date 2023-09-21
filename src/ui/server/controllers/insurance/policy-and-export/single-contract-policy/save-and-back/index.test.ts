@@ -18,7 +18,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/save-an
   jest.mock('../../map-and-save');
 
   let mockMapAndSave = jest.fn(() => Promise.resolve(true));
-  mapAndSave.policyAndExport = mockMapAndSave;
+  mapAndSave.policy = mockMapAndSave;
 
   const refNumber = Number(mockApplication.referenceNumber);
 
@@ -38,15 +38,15 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/save-an
   });
 
   describe('when the form has data', () => {
-    it('should call mapAndSave.policyAndExport with data from constructPayload function, application and validationErrors', async () => {
+    it('should call mapAndSave.policy with data from constructPayload function, application and validationErrors', async () => {
       await post(req, res);
 
       const payload = constructPayload(req.body, FIELD_IDS);
 
       const validationErrors = generateValidationErrors(payload);
 
-      expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
-      expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
+      expect(mapAndSave.policy).toHaveBeenCalledTimes(1);
+      expect(mapAndSave.policy).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, async () => {
@@ -86,7 +86,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/save-an
     describe('when the mapAndSave call does not return anything', () => {
       beforeEach(() => {
         mockMapAndSave = jest.fn(() => Promise.resolve(false));
-        mapAndSave.policyAndExport = mockMapAndSave;
+        mapAndSave.policy = mockMapAndSave;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -99,7 +99,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/save-an
     describe('when the mapAndSave call fails', () => {
       beforeEach(() => {
         mockMapAndSave = jest.fn(() => Promise.reject(new Error('Mock error')));
-        mapAndSave.policyAndExport = mockMapAndSave;
+        mapAndSave.policy = mockMapAndSave;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

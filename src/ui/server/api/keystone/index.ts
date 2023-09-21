@@ -1,4 +1,5 @@
 import account from './account';
+import APIM from './APIM';
 import application from './application';
 import applications from './applications';
 import countries from './countries';
@@ -8,6 +9,7 @@ import feedback from './feedback';
 
 const keystone = {
   account,
+  APIM,
   application,
   applications,
   countries,

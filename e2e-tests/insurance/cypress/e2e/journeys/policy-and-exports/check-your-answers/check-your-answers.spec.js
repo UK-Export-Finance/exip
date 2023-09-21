@@ -37,6 +37,7 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`;
 
@@ -56,7 +57,7 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.NAME_ON_POLICY}`,
       submitButtonCopy: BUTTONS.CONTINUE_NEXT_SECTION,
     });
   });

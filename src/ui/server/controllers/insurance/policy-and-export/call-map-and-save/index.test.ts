@@ -14,7 +14,7 @@ describe('controllers/insurance/policy-and-export/call-map-and-save', () => {
   jest.mock('../map-and-save');
 
   let mockMapAndSave = jest.fn(() => Promise.resolve(true));
-  mapAndSave.policyAndExport = mockMapAndSave;
+  mapAndSave.policy = mockMapAndSave;
 
   const mockFormBody = {
     _csrf: '1234',
@@ -39,11 +39,11 @@ describe('controllers/insurance/policy-and-export/call-map-and-save', () => {
   });
 
   describe('when form data has validation errors ', () => {
-    it('should call mapAndSave.policyAndExport with application, form data and validationErrors', async () => {
+    it('should call mapAndSave.policy with application, form data and validationErrors', async () => {
       await callMapAndSave(req.body, mockApplication, mockValidationErrors);
 
-      expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
-      expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(req.body, res.locals.application, mockValidationErrors);
+      expect(mapAndSave.policy).toHaveBeenCalledTimes(1);
+      expect(mapAndSave.policy).toHaveBeenCalledWith(req.body, res.locals.application, mockValidationErrors);
     });
 
     describe('when the form does NOT have validation errors', () => {
@@ -51,11 +51,11 @@ describe('controllers/insurance/policy-and-export/call-map-and-save', () => {
         req.body = mockValidFormBody;
       });
 
-      it('should call mapAndSave.policyAndExport with application and form data', async () => {
+      it('should call mapAndSave.policy with application and form data', async () => {
         await callMapAndSave(req.body, mockApplication);
 
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(req.body, res.locals.application);
+        expect(mapAndSave.policy).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.policy).toHaveBeenCalledWith(req.body, res.locals.application);
       });
     });
   });
@@ -64,7 +64,7 @@ describe('controllers/insurance/policy-and-export/call-map-and-save', () => {
     describe('when the mapAndSave call does not return anything', () => {
       beforeEach(() => {
         mockMapAndSave = jest.fn(() => Promise.resolve(false));
-        mapAndSave.policyAndExport = mockMapAndSave;
+        mapAndSave.policy = mockMapAndSave;
       });
 
       it('should return false', async () => {
@@ -77,7 +77,7 @@ describe('controllers/insurance/policy-and-export/call-map-and-save', () => {
     describe('when the mapAndSave call fails', () => {
       beforeEach(() => {
         mockMapAndSave = jest.fn(() => Promise.reject(new Error('Mock error')));
-        mapAndSave.policyAndExport = mockMapAndSave;
+        mapAndSave.policy = mockMapAndSave;
       });
 
       it('should return false', async () => {

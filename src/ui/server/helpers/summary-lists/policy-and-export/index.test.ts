@@ -6,7 +6,7 @@ import generateSingleContractPolicyFields from './single-contract-policy-fields'
 import generateMultipleContractPolicyFields from './multiple-contract-policy-fields';
 import generateSummaryListRows from '../generate-summary-list-rows';
 import { mockCountries, mockCurrencies } from '../../../test-mocks';
-import mockApplication, { mockSinglePolicyAndExport, mockMultiplePolicyAndExport } from '../../../test-mocks/mock-application';
+import mockApplication, { mockSinglePolicy, mockMultiplePolicy } from '../../../test-mocks/mock-application';
 
 describe('server/helpers/summary-lists/policy-and-export', () => {
   const { referenceNumber } = mockApplication;
@@ -14,7 +14,7 @@ describe('server/helpers/summary-lists/policy-and-export', () => {
 
   describe('generateFields', () => {
     describe('when the policy type is single policy type', () => {
-      const mockAnswers = mockSinglePolicyAndExport;
+      const mockAnswers = mockSinglePolicy;
 
       it('should return fields and values from the submitted data/answers', () => {
         const result = generateFields(mockAnswers, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
@@ -31,7 +31,7 @@ describe('server/helpers/summary-lists/policy-and-export', () => {
     });
 
     describe('when the policy type is multiple policy type', () => {
-      const mockAnswers = mockMultiplePolicyAndExport;
+      const mockAnswers = mockMultiplePolicy;
 
       it('should return fields and values from the submitted data/answers', () => {
         const result = generateFields(mockAnswers, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
@@ -49,7 +49,7 @@ describe('server/helpers/summary-lists/policy-and-export', () => {
   });
 
   describe('policyAndExportSummaryList', () => {
-    const mockAnswers = mockSinglePolicyAndExport;
+    const mockAnswers = mockSinglePolicy;
 
     it('should return an array of summary list rows', () => {
       const result = policyAndExportSummaryList(mockAnswers, referenceNumber, mockCountries, mockCurrencies);

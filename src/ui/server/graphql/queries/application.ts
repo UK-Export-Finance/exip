@@ -30,7 +30,7 @@ const applicationQuery = gql`
           wantCoverOverMaxAmount
           wantCoverOverMaxPeriod
         }
-        policyAndExport {
+        policy {
           id
           policyType
           requestedStartDate
@@ -41,6 +41,9 @@ const applicationQuery = gql`
           totalMonthsOfCover
           totalSalesToBuyer
           maximumBuyerWillOwe
+        }
+        exportContract {
+          id
           goodsOrServicesDescription
           finalDestinationCountryCode
         }
@@ -122,7 +125,7 @@ const applicationQuery = gql`
         sectionReview {
           id
           eligibility
-          policyAndExport
+          policy
           business
           buyer
         }

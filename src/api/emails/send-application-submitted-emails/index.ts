@@ -14,7 +14,7 @@ import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } fro
  */
 const send = async (application: Application, xlsxPath: string): Promise<SuccessResponse> => {
   try {
-    const { referenceNumber, owner, company, buyer, policyAndExport, business } = application;
+    const { referenceNumber, owner, company, buyer, policy, business } = application;
 
     const { businessContactDetail } = business;
 
@@ -27,7 +27,7 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
       buyerName: buyer.companyOrOrganisationName,
       buyerLocation: buyer.country?.name,
       companyName: company.companyName,
-      requestedStartDate: formatDate(policyAndExport.requestedStartDate),
+      requestedStartDate: formatDate(policy.requestedStartDate),
     };
 
     // email variables for sending email to application owner of application

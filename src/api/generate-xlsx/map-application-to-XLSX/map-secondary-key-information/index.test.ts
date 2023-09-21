@@ -30,14 +30,14 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-secondary-key-informatio
   it('should return an array of mapped buyer fields', () => {
     const result = mapPolicyAndExport(mockApplication);
 
-    const { policyAndExport } = mockApplication;
+    const { policy } = mockApplication;
 
     const expected = [
       xlsxRow(KEY_INFORMATION),
       xlsxRow(FIELDS[EXPORTER_COMPANY_NAME], mockApplication.company[EXPORTER_COMPANY_NAME]),
       xlsxRow(FIELDS[COUNTRY], mockApplication.buyer[COUNTRY].name),
       xlsxRow(FIELDS[BUYER_COMPANY_NAME], mockApplication.buyer[BUYER_COMPANY_NAME]),
-      xlsxRow(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policyAndExport[POLICY_TYPE]),
+      xlsxRow(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policy[POLICY_TYPE]),
     ];
 
     expect(result).toEqual(expected);

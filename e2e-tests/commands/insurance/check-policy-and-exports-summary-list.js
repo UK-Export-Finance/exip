@@ -65,7 +65,7 @@ const checkPolicyAndExportsSummaryList = ({
     const fieldId = DESCRIPTION;
     const expectedKey = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].SUMMARY.TITLE;
 
-    const expectedValue = application.POLICY_AND_EXPORTS[fieldId];
+    const expectedValue = application.EXPORT_CONTRACT[fieldId];
 
     const expectedChangeLinkText = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].SUMMARY.TITLE;
 
@@ -75,7 +75,7 @@ const checkPolicyAndExportsSummaryList = ({
     const fieldId = FINAL_DESTINATION;
     const expectedKey = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].SUMMARY.TITLE;
 
-    const country = countries.find((c) => c.isoCode === application.POLICY_AND_EXPORTS[fieldId]);
+    const country = countries.find((c) => c.isoCode === application.EXPORT_CONTRACT[fieldId]);
 
     const expectedValue = country.name;
 

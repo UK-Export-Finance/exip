@@ -11,28 +11,32 @@ import buyer from './mock-buyer';
 
 dotenv.config();
 
-const mockGenericPolicyAndExport = {
+const mockGenericPolicy = {
   id: 'clav8by1i0007kgoqies0dbfc',
-  goodsOrServicesDescription: 'Mock description',
-  finalDestinationCountryCode: mockCountries[0].isoCode,
   requestedStartDate: add(new Date(), { months: 1 }),
   creditPeriodWithBuyer: ' Mock free text',
   policyCurrencyCode: mockCurrencies[0].isoCode,
 };
 
-export const mockSinglePolicyAndExport = {
-  ...mockGenericPolicyAndExport,
+export const mockSinglePolicy = {
+  ...mockGenericPolicy,
   policyType: APPLICATION.POLICY_TYPE.SINGLE,
   contractCompletionDate: add(new Date(), { months: 3 }),
   totalValueOfContract: 1500,
 };
 
-export const mockMultiplePolicyAndExport = {
-  ...mockGenericPolicyAndExport,
+export const mockMultiplePolicy = {
+  ...mockGenericPolicy,
   policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
   totalMonthsOfCover: 5,
   totalSalesToBuyer: 1500,
   maximumBuyerWillOwe: 1000,
+};
+
+export const mockExportContract = {
+  id: 'clldfm6pt000noqa6fs6cj5xn',
+  goodsOrServicesDescription: 'Mock description',
+  finalDestinationCountryCode: mockCountries[0].isoCode,
 };
 
 export const mockOwner = {
@@ -99,7 +103,7 @@ export const mockApplicationBuyer = {
 export const mockSectionReview = {
   id: 'clflcq9w4002moqzlnr5yhamr',
   eligibility: true,
-  policyAndExport: true,
+  policy: true,
   business: true,
   buyer: true,
 };
@@ -131,7 +135,8 @@ const mockApplication = {
   },
   status: APPLICATION.STATUS.IN_PROGRESS,
   owner: mockOwner,
-  policyAndExport: mockSinglePolicyAndExport,
+  policy: mockSinglePolicy,
+  exportContract: mockExportContract,
   company: mockCompany,
   business: mockBusiness,
   broker: mockBroker,
@@ -142,7 +147,7 @@ const mockApplication = {
 
 export const mockApplicationMultiplePolicy = {
   ...mockApplication,
-  policyAndExport: mockMultiplePolicyAndExport,
+  policy: mockMultiplePolicy,
 } as Application;
 
 export default mockApplication;

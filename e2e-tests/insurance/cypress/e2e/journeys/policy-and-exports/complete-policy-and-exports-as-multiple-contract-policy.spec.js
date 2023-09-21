@@ -26,6 +26,7 @@ context('Insurance - Policy and exports - Complete the entire section as a multi
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
       cy.completeAndSubmitMultipleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
 
       // go back to the all sections page
       saveAndBackButton().click();

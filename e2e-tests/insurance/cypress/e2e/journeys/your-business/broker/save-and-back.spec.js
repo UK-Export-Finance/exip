@@ -119,9 +119,9 @@ context('Insurance - Your business - Broker page - Save and back', () => {
     });
   });
 
-  describe.only('when all fields are provided', () => {
+  describe('when all fields are provided', () => {
     describe(`when selecting yes for ${USING_BROKER}`, () => {
-      it.only(`should redirect to ${ALL_SECTIONS} and change the "your business" task status as "completed"`, () => {
+      it(`should redirect to ${ALL_SECTIONS} and change the "your business" task status as "completed"`, () => {
         cy.navigateToUrl(url);
 
         broker[USING_BROKER].yesRadioInput().click();

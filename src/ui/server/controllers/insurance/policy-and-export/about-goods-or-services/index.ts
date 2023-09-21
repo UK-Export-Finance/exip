@@ -10,14 +10,15 @@ import constructPayload from '../../../../helpers/construct-payload';
 import { objectHasProperty } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
 import mapCountries from '../../../../helpers/mappings/map-countries';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../../export-contract/map-and-save';
+import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    POLICY_AND_EXPORTS: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+    POLICY_AND_EXPORTS: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK, NAME_ON_POLICY, CHECK_YOUR_ANSWERS },
     CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
     PROBLEM_WITH_SERVICE,
   },
@@ -77,8 +78,8 @@ export const get = async (req: Request, res: Response) => {
 
     let mappedCountries;
 
-    if (objectHasProperty(application.policyAndExport, FINAL_DESTINATION)) {
-      mappedCountries = mapCountries(countries, application.policyAndExport[FINAL_DESTINATION]);
+    if (objectHasProperty(application.exportContract, FINAL_DESTINATION)) {
+      mappedCountries = mapCountries(countries, application.exportContract[FINAL_DESTINATION]);
     } else {
       mappedCountries = mapCountries(countries);
     }
@@ -158,17 +159,21 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     // save the application
-    const saveResponse = await mapAndSave.policyAndExport(req.body, application);
+    const saveResponse = await mapAndSave.exportContract(req.body, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
     if (isCheckAndChangeRoute(req.originalUrl)) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`);
   } catch (err) {
     console.error('Error updating application - policy and exports - about goods or services %O', err);
 
