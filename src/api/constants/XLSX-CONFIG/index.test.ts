@@ -44,8 +44,8 @@ describe('api/constants/XLSX-CONFIG', () => {
     describe(APPLICATION.POLICY_TYPE.SINGLE, () => {
       const application = {
         ...mockApplication,
-        policyAndExport: {
-          ...mockApplication.policyAndExport,
+        policy: {
+          ...mockApplication.policy,
           [POLICY_TYPE]: APPLICATION.POLICY_TYPE.SINGLE,
         },
       };
@@ -114,8 +114,8 @@ describe('api/constants/XLSX-CONFIG', () => {
     describe(APPLICATION.POLICY_TYPE.MULTIPLE, () => {
       const application = {
         ...mockApplication,
-        policyAndExport: {
-          ...mockApplication.policyAndExport,
+        policy: {
+          ...mockApplication.policy,
           [POLICY_TYPE]: APPLICATION.POLICY_TYPE.MULTIPLE,
         },
       };

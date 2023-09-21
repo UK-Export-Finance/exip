@@ -14,16 +14,16 @@ const callMapAndSave = async (formData: RequestBody, application: Application, v
     let saveResponse;
 
     if (validationErrors) {
-      saveResponse = await mapAndSave.policyAndExport(formData, application, validationErrors);
+      saveResponse = await mapAndSave.policy(formData, application, validationErrors);
 
       return saveResponse;
     }
 
-    saveResponse = await mapAndSave.policyAndExport(formData, application);
+    saveResponse = await mapAndSave.policy(formData, application);
 
     return saveResponse;
   } catch (err) {
-    console.error('Error calling mapAndSave.policyAndExport %O', err);
+    console.error('Error calling mapAndSave.policy %O', err);
 
     return false;
   }

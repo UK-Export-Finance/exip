@@ -26,8 +26,8 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
     const simpleApplication = {
       ...mockApplication,
       [SUBMISSION_DEADLINE]: formatDate(mockApplication[SUBMISSION_DEADLINE]),
-      policyAndExport: {
-        id: mockApplication.policyAndExport.id,
+      policy: {
+        id: mockApplication.policy.id,
       },
     };
 
@@ -38,17 +38,17 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
     expect(result).toEqual(expected);
   });
 
-  describe(`when an application has policyAndExport.${REQUESTED_START_DATE} field`, () => {
+  describe(`when an application has policy.${REQUESTED_START_DATE} field`, () => {
     it('should return additional date fields from the timestamp', () => {
-      const timestamp = mockApplication.policyAndExport[REQUESTED_START_DATE];
+      const timestamp = mockApplication.policy[REQUESTED_START_DATE];
 
       const result = mapApplicationToFormFields(mockApplication);
 
       const expected = mapNameFields({
         ...mockApplication,
         [SUBMISSION_DEADLINE]: formatDate(mockApplication[SUBMISSION_DEADLINE]),
-        policyAndExport: {
-          ...mockApplication.policyAndExport,
+        policy: {
+          ...mockApplication.policy,
           ...getDateFieldsFromTimestamp(timestamp, REQUESTED_START_DATE),
         },
       });
@@ -78,17 +78,17 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
     });
   });
 
-  describe(`when an application has policyAndExport.${CONTRACT_COMPLETION_DATE} field`, () => {
+  describe(`when an application has policy.${CONTRACT_COMPLETION_DATE} field`, () => {
     it('should return additional date fields from the timestamp', () => {
-      const timestamp = mockApplication.policyAndExport[CONTRACT_COMPLETION_DATE];
+      const timestamp = mockApplication.policy[CONTRACT_COMPLETION_DATE];
 
       const result = mapApplicationToFormFields(mockApplication);
 
       const expected = mapNameFields({
         ...mockApplication,
         [SUBMISSION_DEADLINE]: formatDate(mockApplication[SUBMISSION_DEADLINE]),
-        policyAndExport: {
-          ...mockApplication.policyAndExport,
+        policy: {
+          ...mockApplication.policy,
           ...getDateFieldsFromTimestamp(timestamp, CONTRACT_COMPLETION_DATE),
         },
       });

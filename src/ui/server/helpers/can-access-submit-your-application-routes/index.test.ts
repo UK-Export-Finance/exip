@@ -19,7 +19,7 @@ describe('helpers/can-access-submit-your-application-routes', () => {
     it('should return false', () => {
       const mockApplicationWithIncompleteFields = mockApplication;
 
-      delete mockApplicationWithIncompleteFields.policyAndExport[POLICY_TYPE];
+      delete mockApplicationWithIncompleteFields.policy[POLICY_TYPE];
 
       const result = canAccessSubmitYourApplicationRoutes(mockApplicationWithIncompleteFields);
 

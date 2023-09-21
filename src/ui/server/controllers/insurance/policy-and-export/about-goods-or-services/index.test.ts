@@ -9,7 +9,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import generateValidationErrors from './validation';
 import mapCountries from '../../../../helpers/mappings/map-countries';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../../export-contract/map-and-save';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../test-mocks';
 
@@ -33,13 +33,13 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
 
   jest.mock('../map-and-save');
 
-  mapAndSave.policyAndExport = jest.fn(() => Promise.resolve(true));
+  mapAndSave.exportContract = jest.fn(() => Promise.resolve(true));
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
 
   const mockApplicationWithoutCountryCode = {
     ...mockApplication,
-    policyAndExport: {
-      ...mockApplication.policyAndExport,
+    policy: {
+      ...mockApplication.policy,
       [FINAL_DESTINATION]: null,
     },
   };
@@ -114,7 +114,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mockApplicationWithoutCountryCode,
-        countries: mapCountries(mockCountries),
+        countries: mapCountries(mockCountries, mockApplication.exportContract[FINAL_DESTINATION]),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -123,8 +123,8 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
     describe('when a final destination has been previously submitted', () => {
       const mockApplicationWithCountry = {
         ...mockApplication,
-        policyAndExport: {
-          ...mockApplication.policyAndExport,
+        policy: {
+          ...mockApplication.policy,
           [FINAL_DESTINATION]: countryIsoCode,
         },
       };
@@ -208,14 +208,14 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
         req.body = validBody;
       });
 
-      it('should call mapAndSave.policyAndExport with data from constructPayload function and application', async () => {
+      it('should call mapAndSave.exportContract with data from constructPayload function and application', async () => {
         await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.exportContract).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.policyAndExport).toHaveBeenCalledWith(payload, res.locals.application);
+        expect(mapAndSave.exportContract).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
       it(`should redirect to ${NAME_ON_POLICY}`, async () => {
@@ -352,7 +352,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
         });
       });
 
-      describe('mapAndSave.policyAndExport call', () => {
+      describe('mapAndSave.exportContract call', () => {
         beforeEach(() => {
           req.body = validBody;
         });
@@ -361,7 +361,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
           beforeEach(() => {
             const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
 
-            mapAndSave.policyAndExport = mapAndSaveSpy;
+            mapAndSave.exportContract = mapAndSaveSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -375,7 +375,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
           beforeEach(() => {
             const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
 
-            mapAndSave.policyAndExport = mapAndSaveSpy;
+            mapAndSave.exportContract = mapAndSaveSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

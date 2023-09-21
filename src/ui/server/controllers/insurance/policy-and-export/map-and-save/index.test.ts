@@ -23,34 +23,34 @@ describe('controllers/insurance/policy-and-export/map-and-save', () => {
 
   const mockSavePolicyAndExportData = jest.fn(() => Promise.resolve({}));
 
-  save.policyAndExport = mockSavePolicyAndExportData;
+  save.policy = mockSavePolicyAndExportData;
 
   describe('when the form has data', () => {
-    describe('when the form has validation errors ', () => {
-      it('should call save.policyAndExport with application, populated submitted data and validationErrors.errorList', async () => {
-        await mapAndSave.policyAndExport(mockFormBody, mockApplication, mockValidationErrors);
+    describe('when the form has validation errors', () => {
+      it('should call save.policy with application, populated submitted data and validationErrors.errorList', async () => {
+        await mapAndSave.policy(mockFormBody, mockApplication, mockValidationErrors);
 
-        expect(save.policyAndExport).toHaveBeenCalledTimes(1);
-        expect(save.policyAndExport).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody), mockValidationErrors?.errorList);
+        expect(save.policy).toHaveBeenCalledTimes(1);
+        expect(save.policy).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody), mockValidationErrors?.errorList);
       });
 
       it('should return true', async () => {
-        const result = await mapAndSave.policyAndExport(mockFormBody, mockApplication, mockValidationErrors);
+        const result = await mapAndSave.policy(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
     });
 
     describe('when the form does NOT have validation errors ', () => {
-      it('should call save.policyAndExport with application and populated submitted data', async () => {
-        await mapAndSave.policyAndExport(mockFormBody, mockApplication);
+      it('should call save.policy with application and populated submitted data', async () => {
+        await mapAndSave.policy(mockFormBody, mockApplication);
 
-        expect(save.policyAndExport).toHaveBeenCalledTimes(1);
-        expect(save.policyAndExport).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody));
+        expect(save.policy).toHaveBeenCalledTimes(1);
+        expect(save.policy).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody));
       });
 
       it('should return true', async () => {
-        const result = await mapAndSave.policyAndExport(mockFormBody, mockApplication, mockValidationErrors);
+        const result = await mapAndSave.policy(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
@@ -61,7 +61,7 @@ describe('controllers/insurance/policy-and-export/map-and-save', () => {
     it('should return true', async () => {
       mockFormBody = { _csrf: '1234' };
 
-      const result = await mapAndSave.policyAndExport(mockFormBody, mockApplication, mockValidationErrors);
+      const result = await mapAndSave.policy(mockFormBody, mockApplication, mockValidationErrors);
 
       expect(result).toEqual(true);
     });

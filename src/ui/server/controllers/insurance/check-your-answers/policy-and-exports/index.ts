@@ -54,7 +54,7 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber, policyAndExport } = application;
+    const { referenceNumber, policy, exportContract } = application;
 
     const countries = await api.keystone.countries.getAll();
     const currencies = await api.external.getCurrencies();
@@ -65,9 +65,14 @@ export const get = async (req: Request, res: Response) => {
 
     const checkAndChange = true;
 
-    const summaryList = policyAndExportSummaryList(application.policyAndExport, referenceNumber, countries, currencies, checkAndChange);
+    const answers = {
+      ...policy,
+      ...exportContract,
+    };
 
-    const fields = requiredFields(policyAndExport.policyType);
+    const summaryList = policyAndExportSummaryList(answers, referenceNumber, countries, currencies, checkAndChange);
+
+    const fields = requiredFields(policy.policyType);
 
     const status = sectionStatus(fields, application);
 

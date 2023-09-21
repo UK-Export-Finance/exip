@@ -20,7 +20,7 @@ const {
  * @returns {Object}
  */
 export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
-  const { policyAndExport, broker } = application;
+  const { policy, broker } = application;
 
   const TITLES = {
     HEADER: 1,
@@ -41,7 +41,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     BUYER_CONTACT_DETAILS: 53,
   } as XLSXRowIndexes;
 
-  const policyType = policyAndExport[POLICY_TYPE];
+  const policyType = policy[POLICY_TYPE];
 
   let isMultiplePolicy = false;
   let isUsingBroker = false;

@@ -2,16 +2,17 @@ import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import accounts from './accounts';
 import createAnEligibility from '../helpers/create-an-eligibility';
 import createABuyer from '../helpers/create-a-buyer';
-import { mockApplicationEligibility, mockSinglePolicyAndExport, mockBusiness, mockBusinessContactDetail } from '../test-mocks/mock-application';
+import { mockApplicationEligibility, mockSinglePolicy, mockExportContract, mockBusiness, mockBusinessContactDetail } from '../test-mocks/mock-application';
 import { mockCompany, mockCompanySicCode, mockApplicationDeclaration } from '../test-mocks';
 import mockCountries from '../test-mocks/mock-countries';
 import {
+  ApplicationBusiness,
+  ApplicationBusinessContactDetail,
   ApplicationCompany,
   ApplicationCompanySicCode,
   ApplicationDeclaration,
-  ApplicationBusiness,
-  ApplicationBusinessContactDetail,
-  ApplicationPolicyAndExport,
+  ApplicationExportContract,
+  ApplicationPolicy,
 } from '../types';
 
 /**
@@ -39,7 +40,7 @@ export const createFullApplication = async (context: Context) => {
   // create a new application
   const application = (await context.query.Application.createOne({
     query:
-      'id referenceNumber submissionCount policyAndExport { id requestedStartDate } owner { id } company { id } business { id } broker { id } declaration { id }',
+      'id referenceNumber submissionCount policy { id requestedStartDate } exportContract { id } owner { id } company { id } business { id } broker { id } declaration { id }',
     data: {
       owner: {
         connect: {
@@ -68,17 +69,25 @@ export const createFullApplication = async (context: Context) => {
     },
   });
 
-  // update the policy and export so we have a full data set.
-  (await context.query.PolicyAndExport.updateOne({
+  // update the policy so we have a full data set.
+  (await context.query.Policy.updateOne({
     where: {
-      id: application.policyAndExport.id,
+      id: application.policy.id,
     },
     data: {
-      ...mockSinglePolicyAndExport,
-      finalDestinationCountryCode: buyerCountry.isoCode,
+      ...mockSinglePolicy,
     },
     query: 'id',
-  })) as ApplicationPolicyAndExport;
+  })) as ApplicationPolicy;
+
+  // update the export contract so we have a full data set.
+  (await context.query.ExportContract.updateOne({
+    where: {
+      id: application.exportContract.id,
+    },
+    data: mockExportContract,
+    query: 'id',
+  })) as ApplicationExportContract;
 
   // update the company so we have a company name
   const company = (await context.query.Company.updateOne({

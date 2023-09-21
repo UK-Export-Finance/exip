@@ -121,6 +121,12 @@ interface ApplicationDeclaration extends ApplicationRelationship {
   agreeHowDataWillBeUsed?: boolean;
 }
 
+interface ApplicationExportContract extends ApplicationRelationship {
+  goodsOrServicesDescription?: string;
+  finalDestinationCountryCode?: string;
+  finalDestinationCountry?: Country;
+}
+
 interface AccountInput {
   createdAt: Date;
   updatedAt: Date;
@@ -163,7 +169,7 @@ interface ApplicationCompanyAddress extends ApplicationRelationship {
   premises?: string;
 }
 
-interface ApplicationPolicyAndExport extends ApplicationRelationship {
+interface ApplicationPolicy extends ApplicationRelationship {
   requestedStartDate: Date;
 }
 
@@ -180,8 +186,9 @@ interface Application {
   status: string;
   previousStatus?: string;
   eligibility: ApplicationEligibility;
+  exportContract: ApplicationExportContract;
   owner: ApplicationOwner;
-  policyAndExport: ApplicationPolicyAndExport;
+  policy: ApplicationPolicy;
   company: ApplicationCompany;
   companySicCodes: Array<ApplicationCompanySicCode>;
   companyAddress: ApplicationCompanyAddress;
@@ -550,10 +557,11 @@ export {
   ApplicationBusinessContactDetail,
   ApplicationDeclaration,
   ApplicationEligibility,
+  ApplicationExportContract,
   ApplicationCompany,
   ApplicationCompanySicCode,
   ApplicationOwner,
-  ApplicationPolicyAndExport,
+  ApplicationPolicy,
   ApplicationRelationship,
   ApplicationSubmissionEmailVariables,
   ApplicationVersion,

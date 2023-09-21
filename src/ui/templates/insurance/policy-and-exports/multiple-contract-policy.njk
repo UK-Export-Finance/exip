@@ -54,7 +54,7 @@
           label: FIELDS.REQUESTED_START_DATE.LABEL,
           hint: FIELDS.REQUESTED_START_DATE.HINT,
           error: validationErrors.errorList[FIELDS.REQUESTED_START_DATE.ID],
-          submittedAnswers: submittedValues or application.policyAndExport
+          submittedAnswers: submittedValues or application.policy
         }) }}
 
         {{ govukSelect({
@@ -117,7 +117,7 @@
             }
           },
           spellcheck: false,
-          value: submittedValues[FIELDS.TOTAL_SALES_TO_BUYER.ID] or application.policyAndExport[FIELDS.TOTAL_SALES_TO_BUYER.ID],
+          value: submittedValues[FIELDS.TOTAL_SALES_TO_BUYER.ID] or application.policy[FIELDS.TOTAL_SALES_TO_BUYER.ID],
           errorMessage: validationErrors.errorList[FIELDS.TOTAL_SALES_TO_BUYER.ID] and {
             text: validationErrors.errorList[FIELDS.TOTAL_SALES_TO_BUYER.ID].text,
             attributes: {
@@ -164,7 +164,7 @@
             }
           },
           spellcheck: false,
-          value: submittedValues[FIELDS.MAXIMUM_BUYER_WILL_OWE.ID] or application.policyAndExport[FIELDS.MAXIMUM_BUYER_WILL_OWE.ID],
+          value: submittedValues[FIELDS.MAXIMUM_BUYER_WILL_OWE.ID] or application.policy[FIELDS.MAXIMUM_BUYER_WILL_OWE.ID],
           errorMessage: validationErrors.errorList[FIELDS.MAXIMUM_BUYER_WILL_OWE.ID] and {
             text: validationErrors.errorList[FIELDS.MAXIMUM_BUYER_WILL_OWE.ID].text,
             attributes: {
@@ -194,7 +194,7 @@
             'data-cy': FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + '-input'
           },
           maxlength: FIELDS.CREDIT_PERIOD_WITH_BUYER.MAXIMUM,
-          value: submittedValues[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID] or application.policyAndExport[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID],
+          value: submittedValues[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID] or application.policy[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID],
           errorMessage: validationErrors.errorList[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID] and {
             text: validationErrors.errorList[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID].text,
             attributes: {

@@ -115,16 +115,16 @@ export const get = async (req: Request, res: Response) => {
 
     let mappedCurrencies;
 
-    if (objectHasProperty(application.policyAndExport, POLICY_CURRENCY_CODE)) {
-      mappedCurrencies = mapCurrencies(currencies, application.policyAndExport[POLICY_CURRENCY_CODE]);
+    if (objectHasProperty(application.policy, POLICY_CURRENCY_CODE)) {
+      mappedCurrencies = mapCurrencies(currencies, application.policy[POLICY_CURRENCY_CODE]);
     } else {
       mappedCurrencies = mapCurrencies(currencies);
     }
 
     let mappedTotalMonthsOfCover;
 
-    if (objectHasProperty(application.policyAndExport, TOTAL_MONTHS_OF_COVER)) {
-      mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions, application.policyAndExport[TOTAL_MONTHS_OF_COVER]);
+    if (objectHasProperty(application.policy, TOTAL_MONTHS_OF_COVER)) {
+      mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions, application.policy[TOTAL_MONTHS_OF_COVER]);
     } else {
       mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions);
     }
@@ -214,7 +214,7 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     // save the application
-    const saveResponse = await mapAndSave.policyAndExport(payload, application);
+    const saveResponse = await mapAndSave.policy(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

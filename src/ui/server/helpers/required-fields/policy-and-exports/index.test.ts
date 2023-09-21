@@ -15,8 +15,8 @@ const {
 } = CONTRACT_POLICY;
 
 describe('server/helpers/required-fields/policy-and-exports', () => {
-  const { policyAndExport } = mockApplication;
-  const { policyType } = policyAndExport;
+  const { policy } = mockApplication;
+  const { policyType } = policy;
 
   describe('getContractPolicyTasks', () => {
     describe(`when the policy type is ${POLICY_TYPE.SINGLE}`, () => {
