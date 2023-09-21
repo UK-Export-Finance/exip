@@ -183,3 +183,5 @@ This workflow automates the release process by:
 * 📑 Update `package.json`, `README.md`, and `CHANGELOG.md`
 * 🚀 Create a new release
 * 📂 Upload the release assets
+
+---
