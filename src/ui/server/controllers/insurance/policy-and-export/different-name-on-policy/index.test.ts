@@ -32,7 +32,7 @@ describe('controllers/insurance/policy-and-export/different-name-on-policy', () 
 
   jest.mock('../map-and-save');
 
-  mapAndSave.policyAndExport = jest.fn(() => Promise.resolve(true));
+  mapAndSave.policy = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
