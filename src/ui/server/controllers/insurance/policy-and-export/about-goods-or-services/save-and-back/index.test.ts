@@ -103,6 +103,9 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services/save-a
         mapAndSave.exportContract = mockMapAndSave;
       });
 
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
