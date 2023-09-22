@@ -8,6 +8,8 @@ const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ALL_SECTIONS;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - All sections - new application', () => {
   let referenceNumber;
   let url;
@@ -16,7 +18,7 @@ context('Insurance - All sections - new application', () => {
     cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -51,17 +53,15 @@ context('Insurance - All sections - new application', () => {
       });
 
       describe('tasks', () => {
-        it('should render a `check eligibility` task with link and `completed` status', () => {
+        it('should render a `check eligibility` task with `completed` status', () => {
           cy.navigateToUrl(url);
 
           const task = taskList.initialChecks.tasks.eligibility;
 
-          const expectedHref = '#';
           const expectedText = TASKS.LIST.INITIAL_CHECKS.TASKS.ELIGIBILITY;
 
-          cy.checkLink(
-            task.link(),
-            expectedHref,
+          cy.checkText(
+            task.text(),
             expectedText,
           );
 
