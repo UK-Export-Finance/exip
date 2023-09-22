@@ -195,15 +195,16 @@ describe('Create an Application', () => {
     expect(policy.application.id).toEqual(application.id);
   });
 
-  test('it should add the application ID to the exportContract entry', async () => {
-    const business = await context.query.ExportContract.findOne({
+  test('it should add an application ID and default finalDestinationKnown field to the exportContract entry', async () => {
+    const exportContract = await context.query.ExportContract.findOne({
       where: {
         id: application.exportContract.id,
       },
-      query: 'id application { id }',
+      query: 'id application { id } finalDestinationKnown',
     });
 
-    expect(business.application.id).toEqual(application.id);
+    expect(exportContract.application.id).toEqual(application.id);
+    expect(exportContract.finalDestinationKnown).toEqual(true);
   });
 
   test('it should add the application ID to the company entry', async () => {

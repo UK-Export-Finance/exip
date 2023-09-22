@@ -96,7 +96,7 @@
 * **IaC:** CLI fix ([1aab520](https://github.com/UK-Export-Finance/exip/commit/1aab520dcd7f88c6ea64546124010f76298d7abb))
 * **IaC:** CLI fix ([6b96321](https://github.com/UK-Export-Finance/exip/commit/6b963211e602fa390584fb6c76e7c4a4b3e67d98))
 * **IaC:** CLI fix ([7a4d439](https://github.com/UK-Export-Finance/exip/commit/7a4d439fad0cc7c9a8afe48295071dfdcc01dd14))
-* **iac:** dedicated qa envrionment ([c232cba](https://github.com/UK-Export-Finance/exip/commit/c232cba520356eb9b3867e54d25b5548ea975865))
+* **iac:** dedicated qa environment ([c232cba](https://github.com/UK-Export-Finance/exip/commit/c232cba520356eb9b3867e54d25b5548ea975865))
 * **iac:** remove npm cache clean + deps updates ([b9af3f8](https://github.com/UK-Export-Finance/exip/commit/b9af3f898dd38505894c712dbbdc1844f75224d8))
 * **iac:** variable api url ([d2b38e1](https://github.com/UK-Export-Finance/exip/commit/d2b38e158f3cc7231adaa678fc2c0681b27b24a8))
 * **iac:** variable api url ([78770af](https://github.com/UK-Export-Finance/exip/commit/78770af22011efefdb1af148319ba71a664ca6f1))
@@ -238,7 +238,7 @@
 
 ### Miscellaneous
 
-* High vulenerability - jpeg-js updated from 0.4.3 to 0.4.4 ([#173](https://github.com/UK-Export-Finance/exip/issues/173)) ([5ac714e](https://github.com/UK-Export-Finance/exip/commit/5ac714e26f98d36086246f12f3b2470f5e5b4358))
+* High vulnerability - jpeg-js updated from 0.4.3 to 0.4.4 ([#173](https://github.com/UK-Export-Finance/exip/issues/173)) ([5ac714e](https://github.com/UK-Export-Finance/exip/commit/5ac714e26f98d36086246f12f3b2470f5e5b4358))
 
 ## [1.14.6](https://github.com/UK-Export-Finance/exip/compare/v1.14.5...v1.14.6) (2022-12-06)
 

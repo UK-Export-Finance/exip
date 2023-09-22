@@ -32,16 +32,15 @@ const cypressConfig = defineConfig({
       MOCK_ACCOUNT_PASSWORD: process.env.MOCK_ACCOUNT_PASSWORD,
       API_KEY: process.env.API_KEY,
     },
+    experimentalCspAllowList: ['child-src', 'frame-src', 'form-action', 'script-src', 'script-src-elem'],
     // eslint-disable-next-line
     setupNodeEvents(on, config) {
-      // eslint-disable-next-line
-      on('before:browser:launch', (browser = {}, launchOptions) => {
+      on('before:browser:launch', (browser, launchOptions) => {
         prepareAudit(launchOptions);
       });
 
       on('task', {
         lighthouse: lighthouse(),
-        // pa11y: pa11y(console.log.bind(console)),
         pa11y: pa11y(),
       });
     },

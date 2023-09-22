@@ -632,6 +632,7 @@ CREATE TABLE `ExportContract` (
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `goodsOrServicesDescription` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `finalDestinationCountryCode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `finalDestinationKnown` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ExportContract_application_idx` (`application`),
   CONSTRAINT `ExportContract_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE

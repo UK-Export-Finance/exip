@@ -457,6 +457,7 @@ type ExportContract {
   id: ID!
   application: Application
   goodsOrServicesDescription: String
+  finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
 }
 
@@ -483,6 +484,7 @@ input ExportContractOrderByInput {
 input ExportContractUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   goodsOrServicesDescription: String
+  finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
 }
 
@@ -494,6 +496,7 @@ input ExportContractUpdateArgs {
 input ExportContractCreateInput {
   application: ApplicationRelateToOneForCreateInput
   goodsOrServicesDescription: String
+  finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
 }
 

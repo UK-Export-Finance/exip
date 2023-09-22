@@ -212,6 +212,7 @@ interface ApplicationVersion {
   OVER_500K_SUPPORT: boolean;
   MAXIMUM_BUYER_CAN_OWE: number;
   TOTAL_VALUE_OF_CONTRACT: number;
+  DEFAULT_FINAL_DESTINATION_KNOWN: boolean;
 }
 
 type BufferEncoding = 'hex' | 'base64' | 'ascii';
