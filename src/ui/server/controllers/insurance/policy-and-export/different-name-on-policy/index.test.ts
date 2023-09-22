@@ -1,29 +1,30 @@
 import { pageVariables, TEMPLATE, FIELD_IDS, get, post } from '.';
-import { ROUTES, TEMPLATES } from '../../../../constants';
+import { TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_AND_EXPORTS_FIELD_IDS from '../../../../constants/field-ids/insurance/policy-and-exports';
 import { PAGES } from '../../../../content-strings';
-import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
+import { POLICY_AND_EXPORTS_FIELDS as FIELDS, ACCOUNT_FIELDS } from '../../../../content-strings/fields/insurance';
+import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockContact } from '../../../../test-mocks';
 
 const {
-  INSURANCE: {
-    INSURANCE_ROOT,
-    POLICY_AND_EXPORTS: { NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, DIFFERENT_NAME_ON_POLICY },
-    PROBLEM_WITH_SERVICE,
-  },
-} = ROUTES;
+  INSURANCE_ROOT,
+  POLICY_AND_EXPORTS: { DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 const {
-  NAME_ON_POLICY: { NAME, POSITION, SAME_NAME, OTHER_NAME },
+  DIFFERENT_NAME_ON_POLICY: { POLICY_CONTACT_DETAIL, POSITION },
 } = POLICY_AND_EXPORTS_FIELD_IDS;
+const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
-describe('controllers/insurance/policy-and-export/name-on-policy', () => {
+describe('controllers/insurance/policy-and-export/different-name-on-policy', () => {
   let req: Request;
   let res: Response;
   let refNumber: number;
@@ -51,16 +52,27 @@ describe('controllers/insurance/policy-and-export/name-on-policy', () => {
 
       const expected = {
         FIELDS: {
-          NAME_ON_POLICY: {
-            ID: NAME,
-            ...FIELDS.NAME_ON_POLICY,
+          FIRST_NAME: {
+            ID: FIRST_NAME,
+            ...ACCOUNT_FIELDS[FIRST_NAME],
+          },
+          LAST_NAME: {
+            ID: LAST_NAME,
+            ...ACCOUNT_FIELDS[LAST_NAME],
+          },
+          EMAIL_ADDRESS: {
+            ID: EMAIL,
+            ...ACCOUNT_FIELDS[EMAIL],
           },
           POSITION: {
             ID: POSITION,
-            ...FIELDS.NAME_ON_POLICY[POSITION],
+            ...FIELDS.DIFFERENT_NAME_ON_POLICY[POSITION],
+          },
+          POLICY_CONTACT_DETAIL: {
+            ID: POLICY_CONTACT_DETAIL,
           },
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NAME_ON_POLICY_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -69,13 +81,13 @@ describe('controllers/insurance/policy-and-export/name-on-policy', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.NAME_ON_POLICY);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY);
     });
   });
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [NAME, POSITION];
+      const expected = [FIRST_NAME, LAST_NAME, EMAIL, POSITION];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -87,7 +99,7 @@ describe('controllers/insurance/policy-and-export/name-on-policy', () => {
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.NAME_ON_POLICY,
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY,
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
@@ -112,33 +124,17 @@ describe('controllers/insurance/policy-and-export/name-on-policy', () => {
   });
 
   describe('post', () => {
-    const validBody = {
-      [NAME]: SAME_NAME,
-      [POSITION]: 'Text',
-    };
+    const validBody = mockContact;
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = validBody;
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS} when ${SAME_NAME} is selected`, async () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
         await post(req, res);
 
         const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
-
-        expect(res.redirect).toHaveBeenCalledWith(expected);
-      });
-
-      it(`should redirect to ${CHECK_YOUR_ANSWERS} when ${OTHER_NAME} is selected`, async () => {
-        req.body = {
-          [NAME]: OTHER_NAME,
-          [POSITION]: 'Text',
-        };
-
-        await post(req, res);
-
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
@@ -152,7 +148,7 @@ describe('controllers/insurance/policy-and-export/name-on-policy', () => {
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.NAME_ON_POLICY,
+            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY,
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),

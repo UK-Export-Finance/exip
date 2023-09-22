@@ -9,18 +9,18 @@ import {
   PAGES,
 } from '../../../../../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
+import { ACCOUNT_FIELDS } from '../../../../../../content-strings/fields/insurance/account';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 
 const { taskList } = partials.insurancePartials;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.NAME_ON_POLICY;
+const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY;
 
 const {
   ROOT: INSURANCE_ROOT,
   POLICY_AND_EXPORTS: {
-    ABOUT_GOODS_OR_SERVICES,
     CHECK_YOUR_ANSWERS,
     NAME_ON_POLICY,
     DIFFERENT_NAME_ON_POLICY,
@@ -29,15 +29,18 @@ const {
 
 const {
   POLICY_AND_EXPORTS: {
-    NAME_ON_POLICY: {
-      NAME, POSITION, SAME_NAME, OTHER_NAME,
+    DIFFERENT_NAME_ON_POLICY: {
+      POSITION, POLICY_CONTACT_DETAIL,
     },
+  },
+  ACCOUNT: {
+    FIRST_NAME, LAST_NAME, EMAIL,
   },
 } = INSURANCE_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy and exports - Name on Policy page - I want to enter the details of my export and policy, So that UKEF will have clarity on who to contact while processing my Export Insurance Application', () => {
+context('Insurance - Policy and exports - Different name on Policy page - I want to enter the details of my export application contact, So that UKEF will have clarity on who to contact while processing my Export Insurance Application', () => {
   let referenceNumber;
   let url;
 
@@ -51,8 +54,9 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitNameOnPolicyForm({});
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
 
       cy.assertUrl(url);
     });
@@ -69,8 +73,8 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
+      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`,
     });
   });
 
@@ -84,24 +88,43 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
     });
 
     it('renders a hint', () => {
-      cy.checkText(input.field(NAME).hint(), CONTENT_STRINGS.HINT);
+      cy.checkText(input.field(POLICY_CONTACT_DETAIL).hint(), CONTENT_STRINGS.HINT);
     });
 
-    it(`renders a ${SAME_NAME} radio`, () => {
-      input.field(SAME_NAME).input().should('exist');
+    it(`should display ${FIRST_NAME} field and be prepopulated`, () => {
+      const fieldId = FIRST_NAME;
+      const field = input.field(fieldId);
+
+      field.input().should('exist');
+
+      cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
     });
 
-    it(`renders ${POSITION} input if ${SAME_NAME} is selected'`, () => {
-      input.field(SAME_NAME).input().click();
+    it(`should display ${LAST_NAME} field and be prepopulated`, () => {
+      const fieldId = LAST_NAME;
+      const field = input.field(fieldId);
 
-      input.field(POSITION).input().should('exist');
-      cy.checkText(input.field(POSITION).label(), FIELDS.NAME_ON_POLICY[POSITION].LABEL);
+      field.input().should('exist');
+
+      cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
     });
 
-    it(`renders a ${OTHER_NAME} radio'`, () => {
-      input.field(OTHER_NAME).input().should('exist');
+    it(`should display ${EMAIL} field and be prepopulated`, () => {
+      const fieldId = EMAIL;
+      const field = input.field(fieldId);
 
-      cy.checkText(input.field(OTHER_NAME).label(), FIELDS.NAME_ON_POLICY.OPTIONS.OTHER_NAME.TEXT);
+      field.input().should('exist');
+
+      cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
+    });
+
+    it(`should display ${POSITION} field and should not be prepopulated`, () => {
+      const fieldId = POSITION;
+      const field = input.field(fieldId);
+
+      field.input().should('exist');
+
+      cy.checkText(field.label(), FIELDS.DIFFERENT_NAME_ON_POLICY[fieldId].LABEL);
     });
 
     it('renders a `save and back` button', () => {
@@ -112,21 +135,12 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${CHECK_YOUR_ANSWERS} when ${SAME_NAME} is selected`, () => {
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+      cy.completeAndSubmitDifferentNameOnPolicyForm();
 
       const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      cy.assertUrl(expectedUrl);
-    });
-
-    it(`should redirect to ${DIFFERENT_NAME_ON_POLICY} when ${OTHER_NAME} is selected`, () => {
-      cy.navigateToUrl(url);
-
-      cy.completeAndSubmitNameOnPolicyForm({});
-
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
       cy.assertUrl(expectedUrl);
     });
   });

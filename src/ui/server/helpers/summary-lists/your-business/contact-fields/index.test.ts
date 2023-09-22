@@ -6,7 +6,7 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import generateChangeLink from '../../../generate-change-link';
 import mockApplication from '../../../../test-mocks/mock-application';
-import { mockBusinessContact } from '../../../../test-mocks';
+import { mockContact } from '../../../../test-mocks';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
@@ -26,7 +26,7 @@ const {
 
 describe('server/helpers/summary-lists/your-business/contact-fields', () => {
   describe('generateBusinessContactFields', () => {
-    const mockAnswers = mockBusinessContact;
+    const mockAnswers = mockContact;
     const { referenceNumber } = mockApplication;
     const checkAndChange = false;
 
@@ -38,7 +38,7 @@ describe('server/helpers/summary-lists/your-business/contact-fields', () => {
           href: generateChangeLink(CONTACT_CHANGE, CONTACT_CHECK_AND_CHANGE, `#${FIRST_NAME}-label`, referenceNumber, checkAndChange),
           renderChangeLink: true,
         },
-        `${mockBusinessContact[FIRST_NAME]} ${mockBusinessContact[LAST_NAME]}`,
+        `${mockContact[FIRST_NAME]} ${mockContact[LAST_NAME]}`,
       ),
       fieldGroupItem(
         {
@@ -47,7 +47,7 @@ describe('server/helpers/summary-lists/your-business/contact-fields', () => {
           href: generateChangeLink(CONTACT_CHANGE, CONTACT_CHECK_AND_CHANGE, `#${EMAIL}-label`, referenceNumber, checkAndChange),
           renderChangeLink: true,
         },
-        mockBusinessContact[EMAIL],
+        mockContact[EMAIL],
       ),
       fieldGroupItem({
         field: getFieldById(FIELDS.CONTACT, POSITION),
@@ -58,7 +58,7 @@ describe('server/helpers/summary-lists/your-business/contact-fields', () => {
     ];
 
     it('should return fields and values from the submitted data/answers', () => {
-      const result = generateBusinessContactFields(mockBusinessContact, referenceNumber, checkAndChange);
+      const result = generateBusinessContactFields(mockContact, referenceNumber, checkAndChange);
 
       expect(result).toEqual(expectedBase);
     });
