@@ -112,7 +112,32 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
       cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
 
-    it('should display additional broker section when yes radio is selected', () => {
+    it('should NOT display conditional broker section without selecting the "yes" radio', () => {
+      broker[LEGEND]().should('not.be.visible');
+
+      broker[NAME].label().should('not.be.visible');
+      broker[NAME].input().should('not.be.visible');
+
+      broker[ADDRESS_LINE_1].label().should('not.be.visible');
+      broker[ADDRESS_LINE_1].input().should('not.be.visible');
+
+      broker[ADDRESS_LINE_2].label().should('not.be.visible');
+      broker[ADDRESS_LINE_2].input().should('not.be.visible');
+
+      broker[TOWN].label().should('not.be.visible');
+      broker[TOWN].input().should('not.be.visible');
+
+      broker[COUNTY].label().should('not.be.visible');
+      broker[COUNTY].input().should('not.be.visible');
+
+      broker[POSTCODE].label().should('not.be.visible');
+      broker[POSTCODE].input().should('not.be.visible');
+
+      broker[EMAIL].label().should('not.be.visible');
+      broker[EMAIL].input().should('not.be.visible');
+    });
+
+    it('should display conditional broker section when selecting the "yes" radio', () => {
       const fieldId = USING_BROKER;
       const field = broker[fieldId];
       field.yesRadioInput().click();
