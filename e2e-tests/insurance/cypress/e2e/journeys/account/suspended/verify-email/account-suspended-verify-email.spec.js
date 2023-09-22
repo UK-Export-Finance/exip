@@ -1,5 +1,4 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
-import api from '../../../../../../../commands/api';
 
 const {
   ACCOUNT: {
@@ -30,10 +29,8 @@ context('Insurance - Account - Suspended - Verify email - As an Exporter - I wan
        * Get the reactivation hash directly from the API,
        * so that we can navigate to the VERIFY_EMAIL URL with a valid token
        */
-      api.getAccountByEmail(accountEmail).then((response) => {
-        const { data } = response.body;
-
-        const [firstAccount] = data.accounts;
+      cy.getAccountByEmail(accountEmail).then((responseData) => {
+        const [firstAccount] = responseData;
         account = firstAccount;
 
         const verifyEmailUrl = `${baseUrl}${VERIFY_EMAIL}?token=${account.reactivationHash}`;

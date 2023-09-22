@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const getDeclarationAntiBriberyQuery = gql`
-  query {
+  query declarationAntiBriberies {
     declarationAntiBriberies(orderBy: { version: desc }, take: 1) {
       id
       version
