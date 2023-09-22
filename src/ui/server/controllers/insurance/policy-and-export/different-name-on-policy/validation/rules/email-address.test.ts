@@ -22,7 +22,7 @@ describe('controllers/insurance/policy-and-exports/different-name-on-policy/vali
     [FIELD_ID]: '',
   } as RequestBody;
 
-  it('should return the result of emptyFieldValidation', () => {
+  it('should return the result of emailValidation', () => {
     const response = emailAddress(mockBody, mockErrors);
 
     const expected = emailValidation(FIELD_ID, mockBody[FIELD_ID], errorMessage, mockErrors);

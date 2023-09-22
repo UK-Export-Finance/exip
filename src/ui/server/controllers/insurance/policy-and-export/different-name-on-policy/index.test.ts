@@ -1,5 +1,6 @@
 import { pageVariables, TEMPLATE, FIELD_IDS, get, post } from '.';
-import { ROUTES, TEMPLATES } from '../../../../constants';
+import { TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_AND_EXPORTS_FIELD_IDS from '../../../../constants/field-ids/insurance/policy-and-exports';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS, ACCOUNT_FIELDS } from '../../../../content-strings/fields/insurance';
@@ -13,12 +14,10 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockContact } from '../../../../test-mocks';
 
 const {
-  INSURANCE: {
-    INSURANCE_ROOT,
-    POLICY_AND_EXPORTS: { DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
-    PROBLEM_WITH_SERVICE,
-  },
-} = ROUTES;
+  INSURANCE_ROOT,
+  POLICY_AND_EXPORTS: { DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 const {
   DIFFERENT_NAME_ON_POLICY: { POLICY_CONTACT_DETAIL, POSITION },
