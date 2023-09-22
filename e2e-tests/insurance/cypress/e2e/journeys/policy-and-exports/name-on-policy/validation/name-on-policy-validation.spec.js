@@ -10,6 +10,7 @@ const {
     ROOT: INSURANCE_ROOT,
     POLICY_AND_EXPORTS: {
       CHECK_YOUR_ANSWERS,
+      DIFFERENT_NAME_ON_POLICY,
       NAME_ON_POLICY,
     },
   },
@@ -123,7 +124,7 @@ context('Insurance - Policy and exports - Name on policy - Validation', () => {
 
       partials.errorSummaryListItems().should('not.exist');
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
       cy.assertUrl(expectedUrl);
     });
   });

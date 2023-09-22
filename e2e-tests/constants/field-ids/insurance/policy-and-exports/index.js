@@ -33,4 +33,8 @@ export const POLICY_AND_EXPORTS = {
     OTHER_NAME: 'otherName',
     POSITION: 'position',
   },
+  DIFFERENT_NAME_ON_POLICY: {
+    POLICY_CONTACT_DETAIL: 'policyContactDetail',
+    POSITION: 'position',
+  },
 };
