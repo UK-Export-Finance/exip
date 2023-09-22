@@ -2,7 +2,6 @@ import { backLink } from '../../../../../../../pages/shared';
 import { yourDetailsPage } from '../../../../../../../pages/insurance/account/create';
 import { signInPage } from '../../../../../../../pages/insurance/account/sign-in';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
-import api from '../../../../../../../commands/api';
 
 const {
   ACCOUNT: {
@@ -51,10 +50,8 @@ context('Insurance - Account - Password reset - Submitting the form successfully
        */
       const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
-      api.getAccountByEmail(accountEmail).then((response) => {
-        const { data } = response.body;
-
-        const [firstAccount] = data.accounts;
+      cy.getAccountByEmail(accountEmail).then((responseData) => {
+        const [firstAccount] = responseData;
         account = firstAccount;
 
         const expectedUrl = `${accountSuspendedUrl}?id=${account.id}`;

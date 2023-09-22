@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const updateBrokerMutation = gql`
-  mutation ($where: BrokerWhereUniqueInput!, $data: BrokerUpdateInput!) {
+  mutation updateBroker($where: BrokerWhereUniqueInput!, $data: BrokerUpdateInput!) {
     updateBroker(where: $where, data: $data) {
       id
     }
