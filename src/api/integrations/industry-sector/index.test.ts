@@ -8,7 +8,7 @@ import mockIndustrySectors from '../../test-mocks/mock-industry-sectors';
 dotenv.config();
 
 const { APIM_MDM_URL } = process.env;
-const { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
+const { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 
 describe('integrations/industry-sector', () => {
   describe('when a 200 status and data is returned', () => {
@@ -17,7 +17,7 @@ describe('integrations/industry-sector', () => {
 
       const mockResponseData = mockIndustrySectors;
 
-      mock.onGet(`${APIM_MDM_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`).reply(200, mockResponseData);
+      mock.onGet(`${APIM_MDM_URL}${APIM_MDM.INDUSTRY_SECTORS}`).reply(200, mockResponseData);
 
       const result = await getIndustrySectorNames.get();
 
@@ -34,7 +34,7 @@ describe('integrations/industry-sector', () => {
     test('it should return success=false', async () => {
       const mock = new MockAdapter(axios);
 
-      mock.onGet(`${APIM_MDM_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`).reply(200);
+      mock.onGet(`${APIM_MDM_URL}${APIM_MDM.INDUSTRY_SECTORS}`).reply(200);
 
       const result = await getIndustrySectorNames.get();
 
@@ -50,7 +50,7 @@ describe('integrations/industry-sector', () => {
     test('it should return success=false and apiError=true', async () => {
       const mock = new MockAdapter(axios);
 
-      mock.onGet(`${APIM_MDM_URL}${MULESOFT_MDM_EA.INDUSTRY_SECTORS}`).reply(500);
+      mock.onGet(`${APIM_MDM_URL}${APIM_MDM.INDUSTRY_SECTORS}`).reply(500);
 
       const result = await getIndustrySectorNames.get();
 

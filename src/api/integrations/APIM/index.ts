@@ -6,9 +6,9 @@ import { GetApimCisCountriesResponse } from '../../types';
 dotenv.config();
 
 const { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
-const { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
+const { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 
-const url = `${APIM_MDM_URL}${MULESOFT_MDM_EA.MARKETS}`;
+const url = `${APIM_MDM_URL}${APIM_MDM.MARKETS}`;
 
 /**
  * APIM

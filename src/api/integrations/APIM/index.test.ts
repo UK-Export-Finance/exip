@@ -8,9 +8,9 @@ import mockCisCountries from '../../test-mocks/mock-CIS-countries';
 dotenv.config();
 
 const { APIM_MDM_URL } = process.env;
-const { MULESOFT_MDM_EA } = EXTERNAL_API_ENDPOINTS;
+const { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 
-const url = `${APIM_MDM_URL}${MULESOFT_MDM_EA.MARKETS}`;
+const url = `${APIM_MDM_URL}${APIM_MDM.MARKETS}`;
 
 describe('integrations/APIM', () => {
   describe('when a 200 status and data is returned', () => {
