@@ -1,6 +1,8 @@
 import gql from 'graphql-tag';
 import apollo from './apollo';
 
+const baseUrl = Cypress.config('apiUrl');
+
 const APOLLO_CONTEXT = {
   headers: {
     'x-api-key': Cypress.env('API_KEY'),
@@ -41,7 +43,7 @@ const queryStrings = {
       }
     }
   `,
-  getAccountByEmail: (email) => gql`
+  getAccountByEmail: (email) => `
     query accounts {
       accounts (
         orderBy: { updatedAt: desc }
@@ -52,7 +54,8 @@ const queryStrings = {
         verificationHash
         reactivationHash
       }
-    }`,
+    }
+  `,
   updateAccount: () => gql`
     mutation updateAccount($where: AccountWhereUniqueInput!, $data: AccountUpdateInput!)  {
       updateAccount(where: $where, data: $data) {
@@ -239,24 +242,19 @@ const createApplications = (applications) =>
  * @param {String} Account email address
  * @returns {Object} Account
  */
-const getAccountByEmail = async (email) => {
-  try {
-    const response = await apollo.query({
+const getAccountByEmail = (email) =>
+  cy.request({
+    headers: {
+      'content-type': 'application/json',
+      'x-api-key': Cypress.env('API_KEY'),
+    },
+    url: `${baseUrl}`,
+    body: JSON.stringify({
       query: queryStrings.getAccountByEmail(email),
-      context: APOLLO_CONTEXT,
-    }).then((res) => res);
-
-    if (!response?.data?.accounts) {
-      throw new Error('Getting account by email ', { response });
-    }
-
-    return response.data.accounts;
-  } catch (err) {
-    console.error(err);
-
-    throw new Error('Getting account by email ', { err });
-  }
-};
+      operationName: 'accounts',
+    }),
+    method: 'POST',
+  }).then((response) => response.body.data.accounts);
 
 /**
  * updateAccount

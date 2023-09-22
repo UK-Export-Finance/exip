@@ -43,9 +43,7 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
 
       const accountsResponse = await api.getAccountByEmail(accountEmail);
 
-      const { data } = accountsResponse.body;
-
-      const [firstAccount] = data.accounts;
+      const [firstAccount] = accountsResponse.body.data.accounts;
       account = firstAccount;
 
       /**
