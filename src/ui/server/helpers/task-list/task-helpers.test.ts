@@ -174,10 +174,10 @@ describe('server/helpers/task-helpers', () => {
     });
 
     describe(`when the task has a status of ${TASKS.STATUS.CANNOT_START}`, () => {
-      it('should return null', () => {
+      it('should return an empty string', () => {
         const result = taskLink(mockTaskLink, TASKS.STATUS.CANNOT_START);
 
-        expect(result).toEqual(null);
+        expect(result).toEqual('');
       });
     });
   });

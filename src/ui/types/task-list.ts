@@ -1,5 +1,5 @@
 interface TaskListDataTask {
-  href: string;
+  href?: string;
   title: string;
   id: string;
   fields: Array<string>;

@@ -38,7 +38,7 @@ export const getAllTasksFieldsInAGroup = (group: TaskListDataGroup): Array<strin
 
 /**
  * areTaskDependenciesMet
- * @param {Array} dependencies Array of depedency ids
+ * @param {Array} dependencies Array of dependency ids
  * @param {Object} submittedData Submitted application data
  * @returns {Boolean}
  */
@@ -104,4 +104,4 @@ export const taskStatus = (task: TaskListDataTask, submittedData: ApplicationFla
  * @param {String} status Status of the task
  * @returns {String} Task link if the status is not `cannot start`
  */
-export const taskLink = (link: string, status: string): string | null => (status === TASKS.STATUS.CANNOT_START ? null : link);
+export const taskLink = (link: string, status: string): string => (status === TASKS.STATUS.CANNOT_START ? '' : link);
