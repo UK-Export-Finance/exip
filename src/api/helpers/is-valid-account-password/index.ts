@@ -6,7 +6,7 @@ import getPasswordHash from '../get-password-hash';
  * @param {String} Password
  * @param {String} Salt
  * @param {String} Hash
- * @returns {Booealn}
+ * @returns {Boolean}
  */
 const isValidAccountPassword = (password: string, salt: string, hash: string) => {
   console.info('Validating account password');

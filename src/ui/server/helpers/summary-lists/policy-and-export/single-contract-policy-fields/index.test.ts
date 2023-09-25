@@ -39,7 +39,7 @@ describe('server/helpers/summary-lists/policy-and-export/single-contract-policy-
     },
   };
 
-  it('should return fields and values from the submitted data/answes', () => {
+  it('should return fields and values from the submitted data/answers', () => {
     const result = generateSingleContractPolicyFields(mockAnswers, referenceNumber, checkAndChange);
 
     const expected = [

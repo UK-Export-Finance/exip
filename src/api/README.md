@@ -19,7 +19,7 @@ To set up and run the API locally, you'll need the following prerequisites:
 Follow these steps to run the API locally:
 
 1. Execute `npm run dev` or `npm run build && npm run start`.
-2. The GraphQL API will be accessible at [http://localhost:5001/api/graphql](http://localhost:5001/api/graphql).
+2. The GraphQL API will be accessible at [http://localhost:4001/api/graphql](http://localhost:4001/api/graphql).
 
 A GraphQL playground is also set up at the same URL, which allows you to interact with and explore the API.
 

@@ -37,7 +37,7 @@ import isQuoteRoute from './helpers/is-quote-route';
 const ui = express();
 ui.disable('x-powered-by');
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.UI_PORT || 5000;
 const https = Boolean(process.env.HTTPS || 0);
 const secureCookieName = https ? '__Host-exip-session' : 'exip-session';
 

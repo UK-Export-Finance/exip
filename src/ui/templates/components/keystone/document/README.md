@@ -16,7 +16,7 @@ Assuming you can fetch the data from the Keystone API, for example: :calling:
 const getKeystonePage = async (pageId) => {
   const config = {
     method: 'GET',
-    url: `http://localhost:5001/api/graphql?query={page(where: { id: "${pageId}" }) {heading, content {document}}}`,
+    url: `http://localhost:4001/api/graphql?query={page(where: { id: "${pageId}" }) {heading, content {document}}}`,
     headers: {
       'Content-Type': 'application/json',
     },
@@ -40,7 +40,7 @@ const get = async (req, res) => {
 };
 ```
 
-Finally, import and call the `keystoneDocument` nunjuck component in that page:
+Finally, import and call the `keystoneDocument` nunjucks component in that page:
 
 ```html
 {% import '../components/keystone/document/index.njk' as keystoneDocument %}

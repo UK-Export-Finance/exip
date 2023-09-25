@@ -43,7 +43,7 @@ const post = async (req: Request, res: Response) => {
       ...company,
     };
 
-    // runs save and go back commmand
+    // runs save and go back command
     const saveResponse = await mapAndSave.companyDetails(updateBody, application, validationErrors);
 
     if (!saveResponse) {

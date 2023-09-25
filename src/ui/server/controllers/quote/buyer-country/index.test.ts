@@ -251,7 +251,7 @@ describe('controllers/quote/buyer-country', () => {
         req.body[FIELD_ID] = countryQuoteByEmail.name;
       });
 
-      it('should update the session with submitted data, popluated with country object', async () => {
+      it('should update the session with submitted data, populated with country object', async () => {
         await post(req, res);
 
         const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
@@ -309,7 +309,7 @@ describe('controllers/quote/buyer-country', () => {
         api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
-      it('should update the session with submitted data, popluated with country object', async () => {
+      it('should update the session with submitted data, populated with country object', async () => {
         await post(req, res);
 
         const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
@@ -360,7 +360,7 @@ describe('controllers/quote/buyer-country', () => {
         api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
-      it('should update the session with submitted data, popluated with country object', async () => {
+      it('should update the session with submitted data, populated with country object', async () => {
         await post(req, res);
 
         const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;

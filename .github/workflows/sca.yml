@@ -50,7 +50,23 @@ jobs:
         with:
           verbose: true
 
-  # 3. Licensing - SCA
+  # 3. Code quality - Spell check
+  spell:
+    name: Spelling 📚
+    needs: setup
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository
+        uses: actions/checkout@v4
+
+      - name: Spell check
+        working-directory: ./
+        run: npm run spellcheck
+
+  # 4. Licensing - SCA
   license:
     name: Licensing ✏️
     needs: setup

@@ -2049,7 +2049,7 @@ type Mutation {
   """ verify an account's email address """
   verifyAccountEmailAddress(token: String!): VerifyAccountEmailAddressResponse
 
-  """ verify an account's reactivation tokeen """
+  """ verify an account's reactivation token """
   verifyAccountReactivationToken(token: String!): VerifyAccountReactivationTokenResponse
 
   """ send confirm email address email """

@@ -127,7 +127,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
     });
   });
 
-  it("should nullify thhe account's OTP fields", () => {
+  it("should nullify the account's OTP fields", () => {
     expect(updatedAccount.otpSalt).toEqual('');
     expect(updatedAccount.otpHash).toEqual('');
     expect(updatedAccount.otpExpiry).toEqual(null);

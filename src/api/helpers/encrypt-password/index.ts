@@ -15,7 +15,7 @@ const {
 /**
  * encryptPassword
  * Encrypt a password
- * @param {String} Password to encrpyt
+ * @param {String} Password to encrypt
  * @param {Object} Password salt and hash
  */
 const encryptPassword = (password: string) => {

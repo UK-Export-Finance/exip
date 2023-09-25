@@ -24,7 +24,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-context('Insurance - Account - Create - Your details page - form validation - As an Exporter, I want the system to verify that the email address that I register against my UKEF digital service account is unique, So that I can be sure that the system does not have multiple digital service accounts with the same email addressa', () => {
+context('Insurance - Account - Create - Your details page - form validation - As an Exporter, I want the system to verify that the email address that I register against my UKEF digital service account is unique, So that I can be sure that the system does not have multiple digital service accounts with the same email address', () => {
   let url;
 
   before(() => {

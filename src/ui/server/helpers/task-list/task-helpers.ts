@@ -38,7 +38,7 @@ export const getAllTasksFieldsInAGroup = (group: TaskListDataGroup): Array<strin
 
 /**
  * areTaskDependenciesMet
- * @param {Array} dependencies Array of depedency ids
+ * @param {Array} dependencies Array of dependency ids
  * @param {Object} submittedData Submitted application data
  * @returns {Boolean}
  */

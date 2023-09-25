@@ -4896,13 +4896,13 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 });
 
 // keystone.ts
-var { NODE_ENV: NODE_ENV2, DATABASE_URL } = process.env;
+var { NODE_ENV: NODE_ENV2, API_PORT, DATABASE_URL } = process.env;
 var isDevEnvironment2 = NODE_ENV2 === "development";
 var isProdEnvironment = NODE_ENV2 === "production";
 var keystone_default = withAuth(
   (0, import_core3.config)({
     server: {
-      port: 5001,
+      port: Number(API_PORT),
       extendExpressApp: (app) => {
         app.use(check_api_key_default);
         if (isProdEnvironment) {

@@ -33,7 +33,7 @@ context('Insurance - no access to application when application is submitted - ch
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('when trying to access a "check your answers" page in an application that is already sbumitted', () => {
+  describe('when trying to access a "check your answers" page in an application that is already submitted', () => {
     it(`should redirect to ${NO_ACCESS_APPLICATION_SUBMITTED} when navigating to the Check your answers - Eligibility page directly`, () => {
       const url = `${insuranceRoute}/${referenceNumber}${ELIGIBILITY}`;
 
