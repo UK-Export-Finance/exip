@@ -24,7 +24,7 @@ const cypressConfig = defineConfig({
     pageLoadTimeout: 120000,
     responseTimeout: 120000,
     baseUrl: 'http://localhost:5000',
-    apiUrl: 'http://localhost:4001/api/graphql',
+    apiUrl: 'http://localhost:5001/api/graphql',
     specPattern: 'cypress/e2e/**/*.spec.js',
     env: {
       GOV_NOTIFY_EMAIL_RECIPIENT_1: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
