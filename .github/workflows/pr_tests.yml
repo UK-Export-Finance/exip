@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: "16"
       - name: Linting
         working-directory: ./src/ui
         run: |
@@ -44,7 +44,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          node-version: "16"
       - name: Unit tests
         working-directory: ./src/ui
         run: |
@@ -57,14 +57,18 @@ jobs:
     environment:
       name: ${{ needs.set-environment.outputs.environment }}
     runs-on: ubuntu-latest
+
     strategy:
-      # when one test fails, DO NOT cancel the other
-      # containers, because this will kill Cypress processes
-      # leaving the Dashboard hanging ...
-      # https://github.com/cypress-io/github-action/issues/48
+      # Do not cancel in-progress jobs upon failure
       fail-fast: false
+      # Single dimension matrix
       matrix:
-        machines: [1, 2, 3, 4]
+        spec:
+          ["/*.spec.js", "cookies-consent/**/*.spec.js", "quote/**/*.spec.js"]
+
+    concurrency:
+      group: e2e-tests-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
+      cancel-in-progress: true
 
     env:
       NODE_ENV: ${{ secrets.NODE_ENV }}
@@ -86,20 +90,23 @@ jobs:
       APIM_MDM_VALUE: ${{ secrets.APIM_MDM_VALUE }}
 
     steps:
-      - uses: actions/checkout@v3
-      - name: Start Docker Compose
-        run: docker-compose up --build -d
-      - name: Run e2e tests
-        uses: cypress-io/github-action@v4
-        with:
-          headed: false
-          record: true
-          parallel: true
-          browser: chrome
-          group: 'EXIPS'
-          project: ./e2e-tests
-          config: video=false
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v4
 
+      - name: Timezone
+        uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Dependencies
+        working-directory: ./
+        run: npm ci --legacy-peer-deps
+
+      - name: Docker
+        run: docker-compose up --build -d
+
+      - name: Wait
+        run: sleep 30s
+
+      - name: Execute
+        working-directory: ./e2e-tests/quote
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}" --env TZ=${{ env.timezone }},API_KEY=${{ secrets.API_KEY }},GOV_NOTIFY_EMAIL_RECIPIENT_1=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }},GOV_NOTIFY_EMAIL_RECIPIENT_2=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }},MOCK_ACCOUNT_PASSWORD=${{ secrets.MOCK_ACCOUNT_PASSWORD }}
