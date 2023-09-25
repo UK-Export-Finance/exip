@@ -1,4 +1,4 @@
-import lasttNameRules from './last-name';
+import lastNameRules from './last-name';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/account';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../../shared-validation/empty-field';
@@ -21,7 +21,7 @@ describe('controllers/insurance/account/create/your-details/validation/rules/las
 
   it('should return the result of emptyFieldValidation', () => {
     const mockFormBody = {};
-    const result = lasttNameRules(mockFormBody, mockErrors);
+    const result = lastNameRules(mockFormBody, mockErrors);
 
     const expected = emptyFieldValidation(mockFormBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
 

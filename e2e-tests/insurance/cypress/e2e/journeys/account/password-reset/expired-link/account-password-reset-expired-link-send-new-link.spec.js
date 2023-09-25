@@ -47,7 +47,7 @@ context('Insurance - Account - Password reset - expired link page - send new lin
     cy.saveSession();
   });
 
-  describe(`When a password reset verfication token has expired and the user navigates to ${NEW_PASSWORD} with the expired token and clicks the 'send new link' button/submits the form`, () => {
+  describe(`When a password reset verification token has expired and the user navigates to ${NEW_PASSWORD} with the expired token and clicks the 'send new link' button/submits the form`, () => {
     let updatedAccount;
 
     beforeEach(async () => {

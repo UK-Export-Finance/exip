@@ -6,7 +6,7 @@ import { mockAccount } from '../../test-mocks';
 const { FIRST_NAME, LAST_NAME } = ACCOUNT_FIELD_IDS;
 
 describe('server/helpers/get-user-name-from-session', () => {
-  it("should return a users's full anme", () => {
+  it("should return a users's full name", () => {
     const result = getUserNameFromSession(mockAccount);
 
     const firstName = replaceCharacterCodesWithCharacters(mockAccount[FIRST_NAME]);

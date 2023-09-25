@@ -18,7 +18,7 @@ const getCountryByField = async (context: Context, field: string, value: string)
       take: 1,
     });
 
-    // ensure that we have found a country with the requsted field/value
+    // ensure that we have found a country with the requested field/value
     if (!countriesArray?.length || !countriesArray[0]) {
       console.info('Getting country by field - no country exists with the provided field/value');
 

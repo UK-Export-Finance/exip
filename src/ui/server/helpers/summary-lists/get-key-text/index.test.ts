@@ -8,7 +8,7 @@ const {
 
 describe('server/helpers/summary-lists/get-key-text', () => {
   describe('getKeyText', () => {
-    describe('when a field has SUMMARY objct with TITLE', () => {
+    describe('when a field has SUMMARY object with TITLE', () => {
       it('should return FIELD.SUMMARY.TITLE', () => {
         const result = getKeyText({
           id: 'mock',

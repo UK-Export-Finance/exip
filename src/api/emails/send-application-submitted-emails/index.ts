@@ -44,7 +44,7 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
       emailAddress: businessContactDetail.email,
     } as ApplicationSubmissionEmailVariables;
 
-    // checks if application owner email on application is the same as tghe business contact email provided
+    // checks if application owner email on application is the same as the business contact email provided
     const isOwnerSameAsContact = isOwnerSameAsBusinessContact(email, businessContactDetail.email);
 
     console.info('Sending application submitted email to application account owner: %s', sendEmailVars.emailAddress);

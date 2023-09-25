@@ -14,7 +14,7 @@ const {
 } = XLSX;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-contact-details', () => {
-  it('should return an array of mapped eporter contact details', () => {
+  it('should return an array of mapped exporter contact details', () => {
     const result = mapBuyer(mockApplication);
 
     const {

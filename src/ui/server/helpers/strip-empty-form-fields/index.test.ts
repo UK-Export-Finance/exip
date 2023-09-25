@@ -31,7 +31,7 @@ describe('helpers/strip-empty-form-fields', () => {
     });
   });
 
-  describe('when a field has a value of false bolean', () => {
+  describe('when a field has a value of false boolean', () => {
     it('should return the field', () => {
       const mockFormData = {
         a: false,

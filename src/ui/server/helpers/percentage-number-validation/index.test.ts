@@ -65,7 +65,7 @@ describe('server/helpers/percentage-number-validation', () => {
     });
   });
 
-  describe('perentage is a special character', () => {
+  describe('percentage is a special character', () => {
     it('should return a validation error', () => {
       mockBody.testField = '!';
       const response = percentageNumberValidation(mockBody, FIELD, mockErrors, errorMessages);

@@ -33,7 +33,7 @@ export const getTomorrowDay = (): number => {
 /**
  * getYesterdayDay
  * Get 1 day before now and return the day
- * @returns {Integer} 1 day before toda
+ * @returns {Integer} 1 day before today
  */
 export const getYesterdayDay = (): number => {
   const now = new Date();

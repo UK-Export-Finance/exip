@@ -15,7 +15,8 @@
     "lint:fix:all": "prettier --write src/ui  && eslint --ext .ts src/api --fix && eslint --ext .ts src/ui --fix &&  eslint --ext .js e2e-tests --fix",
     "install:all": "npm i --legacy-peer-deps && npm i --legacy-peer-deps --prefix ./src/ui && npm i --legacy-peer-deps --prefix ./src/api && npm i --legacy-peer-deps --prefix ./generate-exip-pricing-grid",
     "update:all": "npm update --save --legacy-peer-deps && npm update --save --legacy-peer-deps --prefix ./src/ui && npm update --save --legacy-peer-deps --prefix ./src/api && npm update --save --legacy-peer-deps --prefix ./generate-exip-pricing-grid",
-    "audit:all": "npm audit && npm audit --prefix ./src/ui && npm audit --prefix ./src/api && npm audit --prefix ./generate-exip-pricing-grid"
+    "audit:all": "npm audit && npm audit --prefix ./src/ui && npm audit --prefix ./src/api && npm audit --prefix ./generate-exip-pricing-grid",
+    "spellcheck": "cspell lint --gitignore --no-must-find-files --quiet --unique --no-progress --show-suggestions --color '**/*'"
   },
   "repository": {
     "type": "git",
@@ -31,7 +32,7 @@
     "*.js": "eslint --fix",
     "*.ts": "eslint --fix",
     "*": [
-      "cspell lint --gitignore --no-summary --fail-fast --no-must-find-files --color"
+      "npm run spellcheck"
     ]
   },
   "homepage": "https://github.com/UK-Export-Finance/exip#readme",

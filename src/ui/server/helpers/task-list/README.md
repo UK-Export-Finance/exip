@@ -188,7 +188,7 @@ const getTaskList = (req, res) => {
 
 Now, a task list can be rendered in a UI template or component.
 
-In this repository there is a [task-list nunjuck component](/src/ui/templates/components/task-list.njk) that can automatically render the data into a GOV design list. Example:
+In this repository there is a [task-list nunjucks component](/src/ui/templates/components/task-list.njk) that can automatically render the data into a GOV design list. Example:
 
 ```html
 // template.njk {% import '../components/task-list.njk' as taskList %} {{ taskList.render({ groups: taskListData }) }}

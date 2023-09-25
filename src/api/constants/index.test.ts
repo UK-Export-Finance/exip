@@ -40,11 +40,11 @@ describe('constants/index', () => {
         it('should have a time of 30 minutes from now', () => {
           const result = ACCOUNT.OTP.VERIFICATION_EXPIRY();
 
-          const resultMminutes = new Date(result).getMinutes();
+          const resultMinutes = new Date(result).getMinutes();
 
           const expectedMinutes = get30minutesFromNow();
 
-          expect(resultMminutes).toEqual(expectedMinutes);
+          expect(resultMinutes).toEqual(expectedMinutes);
         });
       });
     });
