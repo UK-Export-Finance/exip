@@ -11,7 +11,7 @@ const BUYER_BODY_PAGE = {
   DETAILS: {
     INTRO: 'What counts as a government or public sector body?',
     BODY_1: 'This means a formally established organisation that is, at least in part, publicly funded to deliver a public or government service.',
-    BODY_2: 'For example, a central government department, a local authority or a public utlity company.',
+    BODY_2: 'For example, a central government department, a local authority or a public utility company.',
   },
 };
 
