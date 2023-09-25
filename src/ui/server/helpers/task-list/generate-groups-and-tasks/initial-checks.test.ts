@@ -11,7 +11,6 @@ describe('server/helpers/task-list/initial-checks', () => {
 
     const expected = [
       {
-        href: '#',
         title: INITIAL_CHECKS.TASKS.ELIGIBILITY,
         id: TASK_IDS.INITIAL_CHECKS.ELIGIBILITY,
         fields: requiredFields(),
