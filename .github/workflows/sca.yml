@@ -62,6 +62,10 @@ jobs:
       - name: Repository
         uses: actions/checkout@v4
 
+      - name: Dependencies
+        working-directory: ./
+        run: npm ci --legacy-peer-deps
+
       - name: Spell check
         working-directory: ./
         run: npm run spellcheck
