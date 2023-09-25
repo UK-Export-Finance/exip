@@ -1,6 +1,7 @@
 const { defineConfig } = require('cypress');
 
 const cypressConfig = defineConfig({
+  projectId: 'sefntb',
   numTestsKeptInMemory: 1,
   basicAuthKey: 'dev',
   basicAuthSecret: 'test',
