@@ -123,6 +123,28 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
       });
     });
 
+    describe('expandable details - definition of terms', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
+      const { expandable } = antiBriberyPage;
+
+      it('should render summary text with collapsed conditional `details` content', () => {
+        cy.checkText(expandable.summary(), CONTENT_STRINGS.EXPANDABLE.INTRO);
+
+        expandable.details().should('not.have.attr', 'open');
+      });
+
+      describe('when clicking the summary text', () => {
+        it('should expand the collapsed `details` content', () => {
+          expandable.summary().click();
+
+          expandable.details().should('have.attr', 'open');
+        });
+      });
+    });
+
     it("renders `I've read and agree` label and input", () => {
       field.label().should('exist');
       cy.checkText(field.label(), FIELDS[FIELD_ID].LABEL);
