@@ -2,30 +2,25 @@
   "name": "exip-ui",
   "version": "1.0.0",
   "description": "Export Insurance Policies UI",
-  "engineStrict": true,
-  "engines": {
-    "node": ">=18",
-    "npm": ">=9.5.0"
-  },
-  "scripts": {
-    "lint": "eslint ./server",
-    "lint:fix": "eslint ./server --fix",
-    "build": "webpack --mode production --config webpack.prod.config.js",
-    "start": "ts-node server/index.ts",
-    "dev": "npx nodemon server/index.ts",
-    "test": "jest --notify --coverage --verbose --config=jest.config.js",
-    "test-watch": "jest --watchAll --notify --coverage --verbose --config=jest.config.js --detectOpenHandles"
+  "homepage": "https://github.com/UK-Export-Finance/exip#readme",
+  "bugs": {
+    "url": "https://github.com/UK-Export-Finance/exip/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/UK-Export-Finance/exip.git"
   },
-  "author": "UK Export Finance",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/UK-Export-Finance/exip/issues"
+  "author": "UK Export Finance",
+  "scripts": {
+    "build": "webpack --mode production --config webpack.prod.config.js",
+    "dev": "npx nodemon server/index.ts",
+    "lint": "eslint ./server",
+    "lint:fix": "eslint ./server --fix",
+    "start": "ts-node server/index.ts",
+    "test": "jest --notify --coverage --verbose --config=jest.config.js",
+    "test-watch": "jest --watchAll --notify --coverage --verbose --config=jest.config.js --detectOpenHandles"
   },
-  "homepage": "https://github.com/UK-Export-Finance/exip#readme",
   "dependencies": {
     "@ministryofjustice/frontend": "^1.8.0",
     "@types/compression": "^1.7.3",
@@ -102,5 +97,10 @@
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-merge": "^5.9.0"
-  }
+  },
+  "engines": {
+    "node": ">=18",
+    "npm": ">=9.5.0"
+  },
+  "engineStrict": true
 }
