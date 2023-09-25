@@ -28,7 +28,7 @@
     "*.js": "eslint --fix",
     "*.ts": "eslint --fix",
     "*": [
-      "npm run spellcheck"
+      "cspell lint --gitignore --no-must-find-files --quiet --unique --no-progress --show-suggestions --color"
     ]
   },
   "dependencies": {
@@ -52,12 +52,12 @@
     "@commitlint/cli": "^17.7.1",
     "@commitlint/config-conventional": "^17.7.0",
     "@types/jest": "^29.5.5",
-    "@types/node": "^20.6.3",
+    "@types/node": "^20.6.5",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "@typescript-eslint/parser": "^6.7.2",
     "commitlint": "^17.7.1",
     "cspell": "^7.3.6",
-    "eslint": "^8.49.0",
+    "eslint": "^8.50.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.1.0",
