@@ -127,7 +127,8 @@
         "EASS",
         "UNSUPPORTRED",
         "alphanum",
-        "hrefs"
+        "hrefs",
+        "occured"
     ],
     "dictionaries": [
         "en-gb",
