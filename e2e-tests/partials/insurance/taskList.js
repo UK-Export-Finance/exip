@@ -11,6 +11,7 @@ const taskList = {
     groupHeading: () => cy.get(`[data-cy="task-list-group-heading-${INITIAL_CHECKS.HEADING}"]`),
     tasks: {
       eligibility: {
+        link: () => cy.get(`[data-cy="task-list-group-${INITIAL_CHECKS.HEADING}-task-${INITIAL_CHECKS.TASKS.ELIGIBILITY}-link"]`),
         text: () => cy.get(`[data-cy="task-list-group-${INITIAL_CHECKS.HEADING}-task-${INITIAL_CHECKS.TASKS.ELIGIBILITY}"]`),
         status: () => cy.get(`[data-cy="task-list-group-${INITIAL_CHECKS.HEADING}-task-${INITIAL_CHECKS.TASKS.ELIGIBILITY}-status"]`),
       },
