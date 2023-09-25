@@ -694,7 +694,7 @@ var import_core = require("@keystone-6/core");
 var nullableCheckbox = () => () => (
   /**
    * Database/GraphQL config.
-   * This defines the field as an optionl boolean with a default value of null.
+   * This defines the field as an optional boolean with a default value of null.
    */
   (0, import_types.fieldType)({
     kind: "scalar",
@@ -702,7 +702,7 @@ var nullableCheckbox = () => () => (
     scalar: "Boolean"
   })({
     /**
-     * Input/ouput config.
+     * Input/output config.
      * This determines what is set during a create, update and get operations.
      */
     input: {
@@ -1696,7 +1696,7 @@ var typeDefs = `
       token: String!
     ): VerifyAccountEmailAddressResponse
 
-    """ verify an account's reactivation tokeen """
+    """ verify an account's reactivation token """
     verifyAccountReactivationToken(
       token: String!
     ): VerifyAccountReactivationTokenResponse
@@ -4896,13 +4896,13 @@ var extendGraphqlSchema = (schema) => (0, import_schema.mergeSchemas)({
 });
 
 // keystone.ts
-var { NODE_ENV: NODE_ENV2, DATABASE_URL } = process.env;
+var { NODE_ENV: NODE_ENV2, API_PORT, DATABASE_URL } = process.env;
 var isDevEnvironment2 = NODE_ENV2 === "development";
 var isProdEnvironment = NODE_ENV2 === "production";
 var keystone_default = withAuth(
   (0, import_core3.config)({
     server: {
-      port: 5001,
+      port: Number(API_PORT),
       extendExpressApp: (app) => {
         app.use(check_api_key_default);
         if (isProdEnvironment) {

@@ -230,7 +230,7 @@ const typeDefs = `
       token: String!
     ): VerifyAccountEmailAddressResponse
 
-    """ verify an account's reactivation tokeen """
+    """ verify an account's reactivation token """
     verifyAccountReactivationToken(
       token: String!
     ): VerifyAccountReactivationTokenResponse

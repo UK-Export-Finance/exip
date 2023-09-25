@@ -73,7 +73,7 @@ describe('controllers/insurance/dashboard', () => {
     });
 
     describe('when there is a req.params.pageNumber', () => {
-      it('should call api.keystone.applications.getAll with the user session ID and a skip count frmo params', async () => {
+      it('should call api.keystone.applications.getAll with the user session ID and a skip count from params', async () => {
         req.params.pageNumber = '1';
 
         await get(req, res);

@@ -20,7 +20,7 @@ const fileExists = (filePath: Buffer | string) => {
 
 /**
  * isAcceptedFileType
- * Chec if a file is an accepted file type.
+ * Check if a file is an accepted file type.
  * @param {String} file path
  * @returns {Boolean}
  */

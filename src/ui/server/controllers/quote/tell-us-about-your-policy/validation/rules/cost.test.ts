@@ -1,4 +1,4 @@
-import { hasDisllowedCharacters, costRules } from './cost';
+import { hasDisallowedCharacters, costRules } from './cost';
 import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
@@ -9,10 +9,10 @@ const {
 } = FIELD_IDS;
 
 describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', () => {
-  describe('hasDisllowedCharacters', () => {
+  describe('hasDisallowedCharacters', () => {
     describe('with character that is not a number or comma', () => {
       it('should return true', () => {
-        const result = hasDisllowedCharacters('£123.45');
+        const result = hasDisallowedCharacters('£123.45');
 
         expect(result).toEqual(true);
       });
@@ -20,7 +20,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
 
     describe('with a character that is a number or comma', () => {
       it('should return false', () => {
-        const result = hasDisllowedCharacters('123,456,78');
+        const result = hasDisallowedCharacters('123,456,78');
 
         expect(result).toEqual(false);
       });

@@ -77,7 +77,7 @@ describe('server/helpers/summary-lists/generate-summary-list-rows', () => {
     });
 
     describe('when a field has renderChangeLink', () => {
-      it('should add a link to action.itmes', () => {
+      it('should add a link to action.times', () => {
         const mockField = {
           id: 'mock',
           title: 'Test',

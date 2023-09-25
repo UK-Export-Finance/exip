@@ -16,7 +16,7 @@ const send = async (context: Context, urlOrigin: string, accountId: string): Pro
     // get the account
     const account = await getAccountById(context, accountId);
 
-    // ensure that we have found an account with the requsted ID.
+    // ensure that we have found an account with the requested ID.
     if (!account) {
       console.info('Sending email verification - no account exists with the provided account ID');
 

@@ -3,7 +3,7 @@ import { isPopulatedArray } from '../array';
 
 /**
  * constructPayload
- * contructs payload from requestBody
+ * constructs payload from requestBody
  * filters out anything which is not part of specified fieldIds
  * @param {RequestBody} requestBody
  * @param {Array<String>} fieldIds

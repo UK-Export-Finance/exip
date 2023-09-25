@@ -48,7 +48,7 @@ describe('middleware/headers/security/get-url-origin', () => {
   });
 
   describe('when the provided string is not a valid url', () => {
-    it('should return an empy string', () => {
+    it('should return an empty string', () => {
       const mockUrl = 'not-a-url';
 
       const result = getUrlOrigin(mockUrl);

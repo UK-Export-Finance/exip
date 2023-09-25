@@ -83,7 +83,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
       });
 
       describe('when clicking `request new code`', () => {
-        it(`should rediect to ${REQUEST_NEW_CODE}`, () => {
+        it(`should re-direct to ${REQUEST_NEW_CODE}`, () => {
           enterCodePage.requestNewCodeLink().click();
 
           const expectedUrl = `${Cypress.config('baseUrl')}${REQUEST_NEW_CODE}`;

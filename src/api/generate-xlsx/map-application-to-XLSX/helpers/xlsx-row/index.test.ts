@@ -32,7 +32,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/helpers/xlsx-row', () => {
     });
   });
 
-  describe('when answer is undefind', () => {
+  describe('when answer is undefined', () => {
     it('should return an empty string', () => {
       const result = xlsxRow(mockFieldName);
 

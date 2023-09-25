@@ -209,7 +209,7 @@ describe('controllers/insurance/account/create/your-details', () => {
           expect(res.redirect).toHaveBeenCalledWith(CONFIRM_EMAIL);
         });
 
-        describe('when an application is not succesfully created', () => {
+        describe('when an application is not successfully created', () => {
           beforeEach(() => {
             // @ts-ignore
             createApplicationSpy = jest.fn(() => Promise.resolve());

@@ -54,7 +54,7 @@ context('Insurance - Account - Password reset - expired link page', () => {
     cy.deleteAccount();
   });
 
-  describe(`when a password reset verfication token has expired and the user navigates to ${NEW_PASSWORD} with the expired token`, () => {
+  describe(`when a password reset verification token has expired and the user navigates to ${NEW_PASSWORD} with the expired token`, () => {
     let updatedAccount;
 
     beforeEach(async () => {

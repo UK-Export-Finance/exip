@@ -56,7 +56,7 @@ describe('api/middleware/headers/check-api-key', () => {
     });
   });
 
-  describe('when x-api-key header is inavlid', () => {
+  describe('when x-api-key header is invalid', () => {
     it('should call res.status with 401', () => {
       req.headers['x-api-key'] = `${API_KEY}-invalid`;
 

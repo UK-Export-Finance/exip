@@ -19,7 +19,7 @@ import { graphql } from '@keystone-6/core';
 export const nullableCheckbox = () => () =>
   /**
    * Database/GraphQL config.
-   * This defines the field as an optionl boolean with a default value of null.
+   * This defines the field as an optional boolean with a default value of null.
    */
   fieldType({
     kind: 'scalar',
@@ -27,7 +27,7 @@ export const nullableCheckbox = () => () =>
     scalar: 'Boolean',
   })({
     /**
-     * Input/ouput config.
+     * Input/output config.
      * This determines what is set during a create, update and get operations.
      */
     input: {

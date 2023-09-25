@@ -38,7 +38,7 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
     cy.saveSession();
   });
 
-  describe('when valid credentials are submitted, but the account is not verifed', () => {
+  describe('when valid credentials are submitted, but the account is not verified', () => {
     beforeEach(() => {
       /**
        * Get the account ID directly from the API,
