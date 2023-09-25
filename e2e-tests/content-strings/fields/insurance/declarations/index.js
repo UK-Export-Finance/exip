@@ -9,20 +9,20 @@ const { HAS_ANTI_BRIBERY_CODE_OF_CONDUCT, AGREE_CONFIRMATION_ACKNOWLEDGEMENTS, A
 
 const CONFIRM_READ_AND_AGREE = "Confirm you've read and agree with";
 
-const HAVE_READ_AND_AREED = "I've read and agree with";
+const HAVE_READ_AND_AGREED = "I've read and agree with";
 
 export const DECLARATIONS_FIELDS = {
   [AGREE_CONFIDENTIALITY]: {
     LABEL: `${CONFIRM_READ_AND_AGREE} the confidentiality declaration`,
     OPTION: {
-      TEXT: `${HAVE_READ_AND_AREED} the confidentiality declaration`,
+      TEXT: `${HAVE_READ_AND_AGREED} the confidentiality declaration`,
       VALUE: true,
     },
   },
   [AGREE_ANTI_BRIBERY]: {
     LABEL: `${CONFIRM_READ_AND_AGREE} the anti-bribery and corruption declaration`,
     OPTION: {
-      TEXT: `${HAVE_READ_AND_AREED} the anti-bribery and corruption declaration`,
+      TEXT: `${HAVE_READ_AND_AGREED} the anti-bribery and corruption declaration`,
       VALUE: true,
     },
   },
@@ -41,21 +41,21 @@ export const DECLARATIONS_FIELDS = {
   [AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
     LABEL: `${CONFIRM_READ_AND_AGREE} the confirmation and acknowledgements`,
     OPTION: {
-      TEXT: `${HAVE_READ_AND_AREED} the confirmation and acknowledgements`,
+      TEXT: `${HAVE_READ_AND_AGREED} the confirmation and acknowledgements`,
       VALUE: true,
     },
   },
   [AGREE_HOW_YOUR_DATA_WILL_BE_USED]: {
     LABEL: `${CONFIRM_READ_AND_AGREE} how your data will be used`,
     OPTION: {
-      TEXT: `${HAVE_READ_AND_AREED} how my data will be used`,
+      TEXT: `${HAVE_READ_AND_AGREED} how my data will be used`,
       VALUE: true,
     },
   },
   [AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
     LABEL: `${CONFIRM_READ_AND_AGREE} confirmation and acknowledgements`,
     OPTION: {
-      TEXT: `${HAVE_READ_AND_AREED} confirmation and acknowledgements`,
+      TEXT: `${HAVE_READ_AND_AGREED} confirmation and acknowledgements`,
       VALUE: true,
     },
   },
