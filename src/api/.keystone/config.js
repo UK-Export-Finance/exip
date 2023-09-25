@@ -694,7 +694,7 @@ var import_core = require("@keystone-6/core");
 var nullableCheckbox = () => () => (
   /**
    * Database/GraphQL config.
-   * This defines the field as an optionl boolean with a default value of null.
+   * This defines the field as an optional boolean with a default value of null.
    */
   (0, import_types.fieldType)({
     kind: "scalar",
@@ -702,7 +702,7 @@ var nullableCheckbox = () => () => (
     scalar: "Boolean"
   })({
     /**
-     * Input/ouput config.
+     * Input/output config.
      * This determines what is set during a create, update and get operations.
      */
     input: {
@@ -1696,7 +1696,7 @@ var typeDefs = `
       token: String!
     ): VerifyAccountEmailAddressResponse
 
-    """ verify an account's reactivation tokeen """
+    """ verify an account's reactivation token """
     verifyAccountReactivationToken(
       token: String!
     ): VerifyAccountReactivationTokenResponse
