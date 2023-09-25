@@ -25,7 +25,7 @@ import { requiredDataProvided } from './middleware/required-data-provided';
 
 // @ts-ignore
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.UI_PORT || 5000;
 const https = Boolean(process.env.HTTPS || 0);
 const secureCookieName = https ? '__Host-exip-session' : 'exip-session';
 
