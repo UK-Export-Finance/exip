@@ -2,30 +2,26 @@
   "name": "@uk-export-finance/exip",
   "version": "1.16.0",
   "description": "Export Insurance Policies",
-  "engineStrict": true,
-  "engines": {
-    "node": ">=18",
-    "npm": ">=9.5.0"
-  },
-  "scripts": {
-    "postinstall": "husky install",
-    "housekeeping": "npm run update:all && npm run install:all && npm run lint:fix:all && npm run audit:all",
-    "lint": "npm i --legacy-peer-deps && npm i --legacy-peer-deps --prefix ./src/ui && eslint --ext .ts src/ui && npm i --legacy-peer-deps --prefix ./src/api && eslint --ext .ts src/api && eslint --ext .js e2e-tests",
-    "lint:fix": "prettier --write src/ui  && eslint --ext .ts src/api --fix && eslint --ext .ts src/ui --fix &&  eslint --ext .js e2e-tests --fix",
-    "lint:fix:all": "prettier --write src/ui  && eslint --ext .ts src/api --fix && eslint --ext .ts src/ui --fix &&  eslint --ext .js e2e-tests --fix",
-    "install:all": "npm i --legacy-peer-deps && npm i --legacy-peer-deps --prefix ./src/ui && npm i --legacy-peer-deps --prefix ./src/api && npm i --legacy-peer-deps --prefix ./generate-exip-pricing-grid",
-    "update:all": "npm update --save --legacy-peer-deps && npm update --save --legacy-peer-deps --prefix ./src/ui && npm update --save --legacy-peer-deps --prefix ./src/api && npm update --save --legacy-peer-deps --prefix ./generate-exip-pricing-grid",
-    "audit:all": "npm audit && npm audit --prefix ./src/ui && npm audit --prefix ./src/api && npm audit --prefix ./generate-exip-pricing-grid",
-    "spellcheck": "cspell lint --gitignore --no-must-find-files --quiet --unique --no-progress --show-suggestions --color '**/*'"
+  "homepage": "https://github.com/UK-Export-Finance/exip#readme",
+  "bugs": {
+    "url": "https://github.com/UK-Export-Finance/exip/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/UK-Export-Finance/exip.git"
   },
-  "author": "UK Export Finance",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/UK-Export-Finance/exip/issues"
+  "author": "UK Export Finance",
+  "scripts": {
+    "audit:all": "npm audit && npm audit --prefix ./src/ui && npm audit --prefix ./src/api && npm audit --prefix ./generate-exip-pricing-grid",
+    "housekeeping": "npm run update:all && npm run install:all && npm run lint:fix:all && npm run audit:all",
+    "postinstall": "husky install",
+    "install:all": "npm i --legacy-peer-deps && npm i --legacy-peer-deps --prefix ./src/ui && npm i --legacy-peer-deps --prefix ./src/api && npm i --legacy-peer-deps --prefix ./generate-exip-pricing-grid",
+    "lint": "npm i --legacy-peer-deps && npm i --legacy-peer-deps --prefix ./src/ui && eslint --ext .ts src/ui && npm i --legacy-peer-deps --prefix ./src/api && eslint --ext .ts src/api && eslint --ext .js e2e-tests",
+    "lint:fix": "prettier --write src/ui  && eslint --ext .ts src/api --fix && eslint --ext .ts src/ui --fix &&  eslint --ext .js e2e-tests --fix",
+    "lint:fix:all": "prettier --write src/ui  && eslint --ext .ts src/api --fix && eslint --ext .ts src/ui --fix &&  eslint --ext .js e2e-tests --fix",
+    "spellcheck": "cspell lint --gitignore --no-must-find-files --quiet --unique --no-progress --show-suggestions --color '**/*'",
+    "update:all": "npm update --save --legacy-peer-deps && npm update --save --legacy-peer-deps --prefix ./src/ui && npm update --save --legacy-peer-deps --prefix ./src/api && npm update --save --legacy-peer-deps --prefix ./generate-exip-pricing-grid"
   },
   "lint-staged": {
     "package.json": "sort-package-json",
@@ -35,7 +31,6 @@
       "npm run spellcheck"
     ]
   },
-  "homepage": "https://github.com/UK-Export-Finance/exip#readme",
   "dependencies": {
     "@cypress-audit/lighthouse": "^1.4.2",
     "@cypress-audit/pa11y": "^1.4.2",
@@ -80,5 +75,10 @@
     "sort-package-json": "^2.5.1",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
-  }
+  },
+  "engines": {
+    "node": ">=18",
+    "npm": ">=9.5.0"
+  },
+  "engineStrict": true
 }
