@@ -106,15 +106,16 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
     });
 
     it('should NOT render conditional `we will email you` hint without selecting the "yes" radio', () => {
-      yesRadio(FIELD_ID).hint().should('not.be.visible');
+      // yesRadio(FIELD_ID).hint().should('not.be.visible');
+      codeOfConductPage.revealText().should('not.be.visible');
     });
 
     it('should display conditional `we will email you` hint when selecting the "yes" radio', () => {
       yesRadio().input().click();
 
-      yesRadio(FIELD_ID).hint().should('be.visible');
+      codeOfConductPage.revealText().should('be.visible');
 
-      cy.checkText(yesRadio(FIELD_ID).hint(), FIELDS[FIELD_ID].ANSWER_YES_REVEAL.TEXT);
+      cy.checkText(codeOfConductPage.revealText(), FIELDS[FIELD_ID].ANSWER_YES_REVEAL.TEXT);
     });
   });
 
