@@ -2233,11 +2233,7 @@ var delete_an_account_default = deleteAnAccount;
 
 // custom-resolvers/mutations/verify-account-email-address/index.ts
 var import_date_fns3 = require("date-fns");
-var {
-  INSURANCE: {
-    ACCOUNT: { EMAIL: EMAIL2, VERIFICATION_HASH, VERIFICATION_EXPIRY }
-  }
-} = FIELD_IDS;
+var { EMAIL: EMAIL2, VERIFICATION_HASH, VERIFICATION_EXPIRY } = account_default2;
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
     console.info("Verifying account email address");
@@ -2570,7 +2566,7 @@ var accountSignIn = async (root, variables, context) => {
   try {
     console.info("Signing in account");
     const { urlOrigin, email, password: password2 } = variables;
-    const accountData = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    const accountData = await get_account_by_field_default(context, account_default2.EMAIL, email);
     if (!accountData) {
       console.info("Unable to validate account - no account found");
       return { success: false };
@@ -2792,7 +2788,7 @@ var addAndGetOTP = async (root, variables, context) => {
   try {
     console.info("Adding OTP to an account");
     const { email } = variables;
-    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    const account = await get_account_by_field_default(context, account_default2.EMAIL, email);
     if (!account) {
       console.info("Unable to generate and add OTP to an account - no account found");
       return { success: false };
@@ -2824,7 +2820,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
   try {
     console.info("Received a password reset request - checking account");
     const { urlOrigin, email } = variables;
-    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    const account = await get_account_by_field_default(context, account_default2.EMAIL, email);
     if (!account) {
       console.info("Unable to check account and send password reset email - no account found");
       return { success: false };
@@ -2931,7 +2927,7 @@ var accountPasswordReset = async (root, variables, context) => {
   console.info("Resetting account password");
   try {
     const { token, password: newPassword } = variables;
-    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD_RESET_HASH, token);
+    const account = await get_account_by_field_default(context, account_default2.PASSWORD_RESET_HASH, token);
     if (!account) {
       console.info("Unable to reset account password - account does not exist");
       return { success: false };
@@ -3912,17 +3908,13 @@ var XLSX = {
     [BUYER_CONTACT_DETAILS]: "Buyer contact details"
   }
 };
-var XLSX_default = XLSX;
-
-// content-strings/index.ts
-var XLSX2 = XLSX_default;
 
 // generate-xlsx/map-application-to-XLSX/helpers/format-time-of-day/index.ts
 var formatTimeOfDay = (date) => format_date_default(date, DATE_FORMAT.HOURS_AND_MINUTES);
 var format_time_of_day_default = formatTimeOfDay;
 
 // generate-xlsx/map-application-to-XLSX/map-key-information/index.ts
-var { FIELDS: FIELDS2 } = XLSX2;
+var { FIELDS: FIELDS2 } = XLSX;
 var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL5 } = account_default2;
 var mapKeyInformation = (application2) => {
   const mapped = [
@@ -3944,7 +3936,7 @@ var {
 var {
   SECTION_TITLES: { EXPORTER_CONTACT_DETAILS },
   FIELDS: FIELDS3
-} = XLSX2;
+} = XLSX;
 var mapExporterContactDetails = (application2) => {
   const {
     business: { businessContactDetail }
@@ -3963,7 +3955,7 @@ var map_exporter_contact_details_default = mapExporterContactDetails;
 var {
   SECTION_TITLES: { KEY_INFORMATION },
   FIELDS: FIELDS4
-} = XLSX2;
+} = XLSX;
 var CONTENT_STRINGS = {
   ...POLICY_AND_EXPORTS_FIELDS
 };
@@ -4026,7 +4018,7 @@ var {
 var mapPolicyAndExportIntro = (application2) => {
   const { policy } = application2;
   const mapped = [
-    xlsx_row_default(XLSX2.SECTION_TITLES.POLICY_AND_EXPORT, ""),
+    xlsx_row_default(XLSX.SECTION_TITLES.POLICY_AND_EXPORT, ""),
     xlsx_row_default(String(CONTENT_STRINGS2[POLICY_TYPE4].SUMMARY?.TITLE), policy[POLICY_TYPE4]),
     xlsx_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policy[REQUESTED_START_DATE], "dd-MMM-yy"))
   ];
@@ -4123,7 +4115,7 @@ var mapSicCodes2 = (sicCodes) => {
 };
 var mapBroker = (application2) => {
   const { broker } = application2;
-  let mapped = [xlsx_row_default(XLSX2.FIELDS[USING_BROKER4], map_yes_no_field_default(broker[USING_BROKER4]))];
+  let mapped = [xlsx_row_default(XLSX.FIELDS[USING_BROKER4], map_yes_no_field_default(broker[USING_BROKER4]))];
   if (broker[USING_BROKER4]) {
     const addressAnswer = {
       lineOneAndTwo: `${broker[ADDRESS_LINE_12]} ${xlsx_new_line_default}${broker[ADDRESS_LINE_2]}`,
@@ -4131,9 +4123,9 @@ var mapBroker = (application2) => {
     };
     mapped = [
       ...mapped,
-      xlsx_row_default(XLSX2.FIELDS[BROKER_NAME2], broker[BROKER_NAME2]),
-      xlsx_row_default(XLSX2.FIELDS[ADDRESS_LINE_12], `${addressAnswer.lineOneAndTwo}${addressAnswer.other}`),
-      xlsx_row_default(XLSX2.FIELDS[EMAIL7], broker[EMAIL7])
+      xlsx_row_default(XLSX.FIELDS[BROKER_NAME2], broker[BROKER_NAME2]),
+      xlsx_row_default(XLSX.FIELDS[ADDRESS_LINE_12], `${addressAnswer.lineOneAndTwo}${addressAnswer.other}`),
+      xlsx_row_default(XLSX.FIELDS[EMAIL7], broker[EMAIL7])
     ];
   }
   return mapped;
@@ -4145,24 +4137,24 @@ var mapExporter = (application2) => {
     financialYearEndDate = format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM");
   }
   const mapped = [
-    xlsx_row_default(XLSX2.SECTION_TITLES.EXPORTER_BUSINESS, ""),
+    xlsx_row_default(XLSX.SECTION_TITLES.EXPORTER_BUSINESS, ""),
     // company fields
     xlsx_row_default(CONTENT_STRINGS3[COMPANY_NUMBER2].SUMMARY?.TITLE, company[COMPANY_NUMBER2]),
-    xlsx_row_default(XLSX2.FIELDS[COMPANY_NAME2], company[COMPANY_NAME2]),
+    xlsx_row_default(XLSX.FIELDS[COMPANY_NAME2], company[COMPANY_NAME2]),
     xlsx_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
-    xlsx_row_default(XLSX2.FIELDS[COMPANY_ADDRESS2], map_address_default(company[COMPANY_ADDRESS2])),
+    xlsx_row_default(XLSX.FIELDS[COMPANY_ADDRESS2], map_address_default(company[COMPANY_ADDRESS2])),
     xlsx_row_default(CONTENT_STRINGS3[TRADING_NAME2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_NAME2])),
     xlsx_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_ADDRESS2])),
-    xlsx_row_default(XLSX2.FIELDS[COMPANY_SIC2], mapSicCodes2(companySicCodes)),
+    xlsx_row_default(XLSX.FIELDS[COMPANY_SIC2], mapSicCodes2(companySicCodes)),
     xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, financialYearEndDate),
-    xlsx_row_default(XLSX2.FIELDS[WEBSITE3], company[WEBSITE3]),
-    xlsx_row_default(XLSX2.FIELDS[PHONE_NUMBER3], company[PHONE_NUMBER3]),
+    xlsx_row_default(XLSX.FIELDS[WEBSITE3], company[WEBSITE3]),
+    xlsx_row_default(XLSX.FIELDS[PHONE_NUMBER3], company[PHONE_NUMBER3]),
     // business fields
-    xlsx_row_default(XLSX2.FIELDS[GOODS_OR_SERVICES3], business[GOODS_OR_SERVICES3]),
-    xlsx_row_default(XLSX2.FIELDS[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
-    xlsx_row_default(XLSX2.FIELDS[EMPLOYEES_UK3], business[EMPLOYEES_UK3]),
-    xlsx_row_default(XLSX2.FIELDS[EMPLOYEES_INTERNATIONAL3], business[EMPLOYEES_INTERNATIONAL3]),
-    xlsx_row_default(XLSX2.FIELDS[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
+    xlsx_row_default(XLSX.FIELDS[GOODS_OR_SERVICES3], business[GOODS_OR_SERVICES3]),
+    xlsx_row_default(XLSX.FIELDS[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
+    xlsx_row_default(XLSX.FIELDS[EMPLOYEES_UK3], business[EMPLOYEES_UK3]),
+    xlsx_row_default(XLSX.FIELDS[EMPLOYEES_INTERNATIONAL3], business[EMPLOYEES_INTERNATIONAL3]),
+    xlsx_row_default(XLSX.FIELDS[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
     xlsx_row_default(CONTENT_STRINGS3[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
     // broker fields
     ...mapBroker(application2)
@@ -4183,12 +4175,12 @@ var {
 var mapBuyer = (application2) => {
   const { buyer } = application2;
   const mapped = [
-    xlsx_row_default(XLSX2.SECTION_TITLES.BUYER, ""),
-    xlsx_row_default(XLSX2.FIELDS[NAME2], buyer[NAME2]),
+    xlsx_row_default(XLSX.SECTION_TITLES.BUYER, ""),
+    xlsx_row_default(XLSX.FIELDS[NAME2], buyer[NAME2]),
     xlsx_row_default(String(CONTENT_STRINGS4[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${xlsx_new_line_default}${buyer[COUNTRY3].name}`),
-    xlsx_row_default(XLSX2.FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
+    xlsx_row_default(XLSX.FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
     xlsx_row_default(String(CONTENT_STRINGS4[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
-    xlsx_row_default(XLSX2.FIELDS[FIRST_NAME4], `${buyer[FIRST_NAME4]} ${buyer[LAST_NAME4]} ${xlsx_new_line_default}${buyer[POSITION]} ${xlsx_new_line_default}${buyer[EMAIL8]}`),
+    xlsx_row_default(XLSX.FIELDS[FIRST_NAME4], `${buyer[FIRST_NAME4]} ${buyer[LAST_NAME4]} ${xlsx_new_line_default}${buyer[POSITION]} ${xlsx_new_line_default}${buyer[EMAIL8]}`),
     xlsx_row_default(String(CONTENT_STRINGS4[CAN_CONTACT_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[CAN_CONTACT_BUYER])),
     xlsx_row_default(String(CONTENT_STRINGS4[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[CONNECTED_WITH_BUYER])),
     xlsx_row_default(String(CONTENT_STRINGS4[TRADED_WITH_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[TRADED_WITH_BUYER]))
@@ -4212,7 +4204,7 @@ var {
 var mapEligibility = (application2) => {
   const { eligibility } = application2;
   const mapped = [
-    xlsx_row_default(XLSX2.SECTION_TITLES.ELIGIBILITY, ""),
+    xlsx_row_default(XLSX.SECTION_TITLES.ELIGIBILITY, ""),
     xlsx_row_default(FIELDS_ELIGIBILITY[BUYER_COUNTRY2].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY2].name),
     xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[VALID_EXPORTER_LOCATION2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES2])),
@@ -4299,7 +4291,7 @@ var styledColumns = (application2, worksheet) => {
 var styled_columns_default = styledColumns;
 
 // generate-xlsx/index.ts
-var XLSX3 = (application2) => {
+var XLSX2 = (application2) => {
   try {
     console.info("Generating XLSX file for application %s", application2.id);
     const { referenceNumber } = application2;
@@ -4327,7 +4319,7 @@ var XLSX3 = (application2) => {
   }
 };
 var generate2 = {
-  XLSX: XLSX3
+  XLSX: XLSX2
 };
 var generate_xlsx_default = generate2;
 
@@ -4458,7 +4450,7 @@ var getAccountPasswordResetToken = async (root, variables, context) => {
   console.info("Getting account password reset token");
   try {
     const { email } = variables;
-    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    const account = await get_account_by_field_default(context, account_default2.EMAIL, email);
     if (!account) {
       console.info("Unable to get account password reset token - account does not exist");
       return { success: false };
@@ -4831,9 +4823,7 @@ var get_companies_house_information_default = getCompaniesHouseInformation;
 
 // custom-resolvers/queries/verify-account-password-reset-token/index.ts
 var import_date_fns10 = require("date-fns");
-var {
-  ACCOUNT: { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY }
-} = FIELD_IDS.INSURANCE;
+var { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY } = account_default2;
 var verifyAccountPasswordResetToken = async (root, variables, context) => {
   console.info("Verifying account password reset token");
   try {

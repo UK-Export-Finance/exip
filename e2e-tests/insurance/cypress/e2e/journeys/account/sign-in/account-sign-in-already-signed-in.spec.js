@@ -9,6 +9,8 @@ const {
   DASHBOARD,
 } = ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Sign in - Already signed in', () => {
   let referenceNumber;
   let url;
@@ -17,7 +19,7 @@ context('Insurance - Account - Sign in - Already signed in', () => {
     cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -34,7 +36,7 @@ context('Insurance - Account - Sign in - Already signed in', () => {
   it(`should redirect to ${DASHBOARD} when visiting ${SIGN_IN_ROOT}`, () => {
     cy.navigateToUrl(SIGN_IN_ROOT);
 
-    const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+    const expectedUrl = `${baseUrl}${DASHBOARD}`;
 
     cy.assertUrl(expectedUrl);
   });

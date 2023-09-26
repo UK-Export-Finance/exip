@@ -1,5 +1,5 @@
 import { isAfter } from 'date-fns';
-import { FIELD_IDS } from '../../../constants';
+import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import encryptPassword from '../../../helpers/encrypt-password';
 import hasAccountUsedPasswordBefore from '../../../helpers/account-has-used-password-before';
@@ -18,7 +18,7 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
      * Get the account the token is associated with.
      * If no account is found, return success=false
      */
-    const account = (await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD_RESET_HASH, token)) as Account;
+    const account = (await getAccountByField(context, ACCOUNT_FIELD_IDS.PASSWORD_RESET_HASH, token)) as Account;
 
     if (!account) {
       console.info('Unable to reset account password - account does not exist');
