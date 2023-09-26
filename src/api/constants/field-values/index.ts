@@ -1,4 +1,4 @@
-import { APPLICATION } from '../application';
+import APPLICATION from '../application';
 
 const { POLICY_TYPE, POLICY_AND_EXPORT } = APPLICATION;
 

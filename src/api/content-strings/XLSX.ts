@@ -23,7 +23,7 @@ const {
   COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS },
 } = YOUR_BUYER;
 
-export const XLSX = {
+const XLSX = {
   SECTION_TITLES: {
     KEY_INFORMATION: 'Key information',
     EXPORTER_CONTACT_DETAILS: 'Exporter contact details',
@@ -62,3 +62,5 @@ export const XLSX = {
     [BUYER_CONTACT_DETAILS]: 'Buyer contact details',
   },
 };
+
+export default XLSX;
