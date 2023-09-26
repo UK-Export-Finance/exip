@@ -25,7 +25,7 @@ RUN npm ci --legacy-peer-deps
 # Copy API
 COPY --chown=node:node ./keystone.ts .
 COPY --chown=node:node ./schema.ts .
-COPY --chown=node:node ./types .
+COPY --chown=node:node ./types ./types
 COPY --chown=node:node ./schema.graphql .
 COPY --chown=node:node ./schema.prisma .
 COPY --chown=node:node ./auth.ts .
