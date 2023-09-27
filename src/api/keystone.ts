@@ -4,7 +4,7 @@ import checkApiKey from './middleware/headers/check-api-key';
 import rateLimiter from './middleware/rate-limiter';
 import { lists } from './schema';
 import { withAuth, session } from './auth';
-import apolloPlugins from './apollo-plugins';
+// import apolloPlugins from './apollo-plugins';
 import { extendGraphqlSchema } from './custom-schema';
 
 const { NODE_ENV, API_PORT, DATABASE_URL } = process.env;
@@ -59,7 +59,7 @@ export default withAuth(
       playground: isDevEnvironment,
       apolloConfig: {
         introspection: isDevEnvironment,
-        plugins: apolloPlugins,
+        // plugins: apolloPlugins,
       },
     },
     lists,
