@@ -67,10 +67,19 @@ WORKDIR /app
 # Copy from `build` to `prod`
 COPY --chown=node:node --from=build /app/package.json .
 COPY --chown=node:node --from=build /app/package-lock.json .
+COPY --chown=node:node --from=build /app/keystone.ts .
+COPY --chown=node:node --from=build /app/schema.ts .
+COPY --chown=node:node --from=build /app/types.ts .
+COPY --chown=node:node --from=build /app/schema.graphql .
+COPY --chown=node:node --from=build /app/schema.prisma .
+COPY --chown=node:node --from=build /app/auth.ts .
 COPY --chown=node:node --from=build /app/node_modules ./node_modules
 COPY --chown=node:node --from=build /app/.keystone ./.keystone
 COPY --chown=node:node --from=build /app/apollo-plugins ./apollo-plugins
+COPY --chown=node:node --from=build /app/constants ./constants
 COPY --chown=node:node --from=build /app/custom-resolvers ./custom-resolvers
+COPY --chown=node:node --from=build /app/custom-schema ./custom-schema
+COPY --chown=node:node --from=build /app/content-strings ./content-strings
 COPY --chown=node:node --from=build /app/emails ./emails
 COPY --chown=node:node --from=build /app/file-system ./file-system
 COPY --chown=node:node --from=build /app/generate-xlsx ./generate-xlsx
