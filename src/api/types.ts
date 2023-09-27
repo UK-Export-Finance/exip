@@ -14,6 +14,7 @@ interface ApplicationPolicyContact extends ApplicationRelationship {
   lastName: string;
   email: string;
   position: string;
+  isSameAsOwner: boolean;
 }
 
 interface ApplicationBusiness extends ApplicationRelationship {
@@ -196,6 +197,7 @@ interface Application {
   buyer: ApplicationBuyer;
   sectionReview: ApplicationRelationship;
   declaration: ApplicationDeclaration;
+  policyContact: ApplicationPolicyContact;
 }
 
 interface ApplicationSubmissionEmailVariables {
