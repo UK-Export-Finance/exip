@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const pageQuery = gql`
-  query page($id: ID) {
+  query ($id: ID) {
     page(where: { id: $id }) {
       heading
       content {

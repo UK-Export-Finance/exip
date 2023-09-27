@@ -15,8 +15,7 @@ const DEFAULT_RESOLVERS = [
   'updateBusiness',
   'updateBuyer',
   'updateDeclaration',
-  'updatePolicy',
-  'updateExportContract',
+  'updatePolicyAndExport',
   'updateSectionReview',
   'updateEligibility',
   'referenceNumber',
@@ -53,7 +52,7 @@ const CUSTOM_RESOLVERS = [
   'createAnApplication',
   'declarationAntiBriberies',
   'declarationConfirmationAndAcknowledgements',
-  'declarationHowDataWillBeUseds',
+  'declarationHowDataWillBeUsed',
   'deleteApplicationByReferenceNumber',
   'getCompaniesHouseInformation',
   'submitApplication',
@@ -61,8 +60,6 @@ const CUSTOM_RESOLVERS = [
 
   // feedback
   'createFeedbackAndSendEmail',
-
-  'getApimCisCountries',
 ];
 
 /**
@@ -70,15 +67,7 @@ const CUSTOM_RESOLVERS = [
  * These are only used for testing purposes.
  */
 if (isDevEnvironment) {
-  CUSTOM_RESOLVERS.push(
-    'accounts',
-    'addAndGetOTP',
-    'createApplications',
-    'createBuyer',
-    'deleteAnAccount',
-    'deleteApplications',
-    'getAccountPasswordResetToken',
-  );
+  CUSTOM_RESOLVERS.push('addAndGetOTP', 'createApplications', 'createBuyer', 'deleteAnAccount', 'deleteApplications', 'getAccountPasswordResetToken');
 }
 
 /**

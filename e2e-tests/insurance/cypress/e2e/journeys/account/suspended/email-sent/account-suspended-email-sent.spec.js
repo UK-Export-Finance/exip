@@ -2,6 +2,7 @@ import { emailSentPage } from '../../../../../../../pages/insurance/account/susp
 import { submitButton } from '../../../../../../../pages/shared';
 import { PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
+import api from '../../../../../../../commands/api';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SUSPENDED.EMAIL_SENT;
 
@@ -39,8 +40,10 @@ context('Insurance - Account - Suspended - Email sent page - As an Exporter, I w
        * Get the account ID directly from the API,
        * so that we can assert that the URL has the correct ID.
        */
-      cy.getAccountByEmail(accountEmail).then((responseData) => {
-        const [firstAccount] = responseData;
+      api.getAccountByEmail(accountEmail).then((response) => {
+        const { data } = response.body;
+
+        const [firstAccount] = data.accounts;
         account = firstAccount;
 
         accountSuspendedUrlWithIdParam = `${accountSuspendedUrl}?id=${account.id}`;

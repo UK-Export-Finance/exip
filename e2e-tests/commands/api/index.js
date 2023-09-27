@@ -1,8 +1,6 @@
 import gql from 'graphql-tag';
 import apollo from './apollo';
 
-const baseUrl = Cypress.config('apiUrl');
-
 const APOLLO_CONTEXT = {
   headers: {
     'x-api-key': Cypress.env('API_KEY'),
@@ -44,7 +42,7 @@ const queryStrings = {
     }
   `,
   getAccountByEmail: (email) => `
-    query accounts {
+    {
       accounts (
         orderBy: { updatedAt: desc }
         where: { email: { equals: "${email}" } }
@@ -54,8 +52,7 @@ const queryStrings = {
         verificationHash
         reactivationHash
       }
-    }
-  `,
+    }`,
   updateAccount: () => gql`
     mutation updateAccount($where: AccountWhereUniqueInput!, $data: AccountUpdateInput!)  {
       updateAccount(where: $where, data: $data) {
@@ -67,7 +64,7 @@ const queryStrings = {
     }
   `,
   updateCompanyAndCompanyAddress: () => gql`
-    mutation updateCompanyAndCompanyAddress($companyId: ID!, $companyAddressId: ID!, $data: CompanyAndCompanyAddressInput!) {
+    mutation ($companyId: ID!, $companyAddressId: ID!, $data: CompanyAndCompanyAddressInput!) {
       updateCompanyAndCompanyAddress(companyId: $companyId, companyAddressId: $companyAddressId, data: $data) {
         id
       }
@@ -90,7 +87,7 @@ const queryStrings = {
     }
   `,
   getApplicationByReferenceNumber: (referenceNumber) => gql`
-    query applications {
+    {
       applications (
       orderBy: { updatedAt: desc }
       where: { referenceNumber: { equals: ${referenceNumber} } }
@@ -165,7 +162,7 @@ const queryStrings = {
       }
     `,
     getLatestHowDataWillBeUsed: () => gql`
-      query declarationHowDataWillBeUseds {
+      query declarationHowDataWillBeUsed {
         declarationHowDataWillBeUseds(orderBy: { version: desc }, take: 1) {
           id
           version
@@ -242,19 +239,30 @@ const createApplications = (applications) =>
  * @param {String} Account email address
  * @returns {Object} Account
  */
-const getAccountByEmail = (email) =>
-  cy.request({
-    headers: {
-      'content-type': 'application/json',
-      'x-api-key': Cypress.env('API_KEY'),
-    },
-    url: `${baseUrl}`,
-    body: JSON.stringify({
-      query: queryStrings.getAccountByEmail(email),
-      operationName: 'accounts',
-    }),
-    method: 'POST',
-  }).then((response) => response.body.data.accounts);
+const getAccountByEmail = async (email) => {
+  try {
+    const baseUrl = Cypress.config('apiUrl');
+    const url = `${baseUrl}?query=${queryStrings.getAccountByEmail(email)}`;
+
+    const response = await cy.request({
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': Cypress.env('API_KEY'),
+      },
+      url,
+    });
+
+    if (!response?.body?.data) {
+      throw new Error('Getting account by email ', { response });
+    }
+
+    return response;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error('Getting account by email ', { err });
+  }
+};
 
 /**
  * updateAccount
@@ -555,7 +563,7 @@ const declarations = {
     } catch (err) {
       console.error(err);
 
-      throw new Error('Getting latest declaration - how data will be used ', { err });
+      throw new Error('Getting latest declaration - how data will be usd ', { err });
     }
   },
 };

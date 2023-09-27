@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const updateBuyerMutation = gql`
-  mutation updateBuyer($where: BuyerWhereUniqueInput!, $data: BuyerUpdateInput!) {
+  mutation ($where: BuyerWhereUniqueInput!, $data: BuyerUpdateInput!) {
     updateBuyer(where: $where, data: $data) {
       id
     }

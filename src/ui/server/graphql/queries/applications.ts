@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const applicationsQuery = gql`
-  query applications($accountId: ID!, $take: Int!, $skip: Int!) {
+  query ($accountId: ID!, $take: Int!, $skip: Int!) {
     applications(where: { owner: { id: { equals: $accountId } } }, orderBy: { updatedAt: desc }, take: $take, skip: $skip) {
       status
       referenceNumber

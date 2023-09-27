@@ -8,7 +8,13 @@ import api from '../../api';
  */
 const getAccountByEmail = (email) => {
   try {
-    return api.getAccountByEmail(email);
+    api.getAccountByEmail(email).then((response) => {
+      if (!response?.body || !response?.body?.data) {
+        throw new Error('Getting account by email', { response });
+      }
+
+      return response;
+    });
   } catch (err) {
     console.error(err);
 

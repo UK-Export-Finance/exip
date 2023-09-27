@@ -6,8 +6,6 @@ const {
 
 const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
-const baseUrl = Cypress.config('baseUrl');
-
 /**
  * verifyAccountEmail
  * Get the account (with verification hash) directly from the API,
@@ -16,16 +14,18 @@ const baseUrl = Cypress.config('baseUrl');
 const verifyAccountEmail = () => {
   try {
     // get the account
-    cy.getAccountByEmail(accountEmail).then((responseData) => {
-      const [firstAccount] = responseData;
+    cy.getAccountByEmail(accountEmail).then((response) => {
+      const { data } = response.body;
+
+      const [firstAccount] = data.accounts;
 
       const { verificationHash } = firstAccount;
 
       // mimic clicking email verification link
-      cy.navigateToUrl(`${baseUrl}${VERIFY_EMAIL}?token=${verificationHash}`);
+      cy.navigateToUrl(`${Cypress.config('baseUrl')}${VERIFY_EMAIL}?token=${verificationHash}`);
 
       // User should be verified and therefore redirected to the "sign in" page.
-      const expected = `${baseUrl}${SIGN_IN.ROOT}`;
+      const expected = `${Cypress.config('baseUrl')}${SIGN_IN.ROOT}`;
 
       cy.assertUrl(expected);
     });

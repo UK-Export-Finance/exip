@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const getApimCisCountries = gql`
-  query getApimCisCountries {
+  query {
     getApimCisCountries {
       isoCode
       name

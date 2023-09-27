@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const countriesByIsoCodeQuery = gql`
-  query countries($isoCode: String) {
+  query ($isoCode: String) {
     countries(where: { isoCode: { equals: $isoCode } }) {
       id
       name

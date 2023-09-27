@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const getDeclarationConfirmationAndAcknowledgementQuery = gql`
-  query declarationConfirmationAndAcknowledgements {
+  query {
     declarationConfirmationAndAcknowledgements(orderBy: { version: desc }, take: 1) {
       id
       version

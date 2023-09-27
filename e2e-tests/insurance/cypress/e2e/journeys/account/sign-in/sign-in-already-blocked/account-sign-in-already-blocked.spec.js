@@ -1,6 +1,4 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import mockAccount from '../../../../../../../fixtures/account';
 import api from '../../../../../../../commands/api';
 
 const {
@@ -10,13 +8,8 @@ const {
   },
 } = ROUTES;
 
-const { ACCOUNT: { PASSWORD } } = INSURANCE_FIELD_IDS;
-
-const baseUrl = Cypress.config('baseUrl');
-
-const invalidPassword = `${mockAccount[PASSWORD]}-invalid`;
-
 context('Insurance - Account - Sign in - Submitting the form when already blocked', () => {
+  const baseUrl = Cypress.config('baseUrl');
   const signInUrl = `${baseUrl}${SIGN_IN_ROOT}`;
   const accountSuspendedUrl = `${baseUrl}${SUSPENDED_ROOT}`;
 
@@ -38,36 +31,27 @@ context('Insurance - Account - Sign in - Submitting the form when already blocke
     cy.navigateToUrl(signInUrl);
 
     // force the account to be blocked
-    cy.completeAndSubmitSignInAccountFormMaximumInvalidRetries({
-      password: invalidPassword,
+    cy.completeAndSubmitSignInAccountFormMaximumInvalidRetries({});
+
+    cy.navigateToUrl(signInUrl);
+
+    cy.completeAndSubmitSignInAccountForm({
+      assertRedirectUrl: false,
     });
   });
 
-  describe('when attempting to sign in with an account that has been blocked', () => {
-    beforeEach(async () => {
-      /**
-       * Get the account ID directly from the API,
-       * so that we can assert that the URL has the correct account ID.
-       */
-      const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+  it(`should redirect to ${SUSPENDED_ROOT} with ID query param`, () => {
+    /**
+     * Get the account ID directly from the API,
+     * so that we can assert that the URL has the correct account ID.
+     */
+    const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
-      const accountsResponse = await api.getAccountByEmail(accountEmail);
+    api.getAccountByEmail(accountEmail).then((response) => {
+      const { data } = response.body;
 
-      const [firstAccount] = accountsResponse.body.data.accounts;
+      const [firstAccount] = data.accounts;
       account = firstAccount;
-    });
-
-    it(`should redirect to ${SUSPENDED_ROOT} with ID query param`, () => {
-      /**
-       * 1) Go to the sign in page.
-       * 2) Attempt to sign in again.
-       * 3) Check a user is redirected to the suspended page.
-       */
-      cy.navigateToUrl(signInUrl);
-
-      cy.completeAndSubmitSignInAccountForm({
-        assertRedirectUrl: false,
-      });
 
       const expectedUrl = `${accountSuspendedUrl}?id=${account.id}`;
 
