@@ -45,9 +45,7 @@ context('Insurance - Account - Suspended - Reactivate account after verification
        */
       const accountsResponse = await api.getAccountByEmail(accountEmail);
 
-      const { data } = accountsResponse.body;
-
-      const [firstAccount] = data.accounts;
+      const [firstAccount] = accountsResponse.body.data.accounts;
       const account = firstAccount;
 
       /**
@@ -80,9 +78,7 @@ context('Insurance - Account - Suspended - Reactivate account after verification
        */
       const accountsResponse = await api.getAccountByEmail(accountEmail);
 
-      const { data } = accountsResponse.body;
-
-      const [firstAccount] = data.accounts;
+      const [firstAccount] = accountsResponse.body.data.accounts;
       const account = firstAccount;
 
       cy.navigateToUrl(`${verifyEmailUrl}?token=${account[REACTIVATION_HASH]}`);

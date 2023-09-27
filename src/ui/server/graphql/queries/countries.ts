@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const countriesQuery = gql`
-  query {
+  query countries {
     countries {
       id
       name

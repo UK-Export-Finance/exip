@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const submitApplicationMutation = gql`
-  mutation ($applicationId: String!) {
+  mutation submitApplication($applicationId: String!) {
     submitApplication(applicationId: $applicationId) {
       success
     }
