@@ -8,11 +8,11 @@ FROM node:20.7.0-alpine3.17 AS build
 ARG GITHUB_SHA
 ARG SESSION_SECRET
 ARG GOV_NOTIFY_API_KEY
-ARG PORT
+ARG API_PORT
 ENV GITHUB_SHA=$GITHUB_SHA
 ENV SESSION_SECRET=$SESSION_SECRET
 ENV GOV_NOTIFY_API_KEY=$GOV_NOTIFY_API_KEY
-ENV PORT=$PORT
+ENV API_PORT=$API_PORT
 
 
 WORKDIR /app
@@ -87,7 +87,7 @@ HEALTHCHECK \
 CMD wget \
 --no-verbose \
 --tries=3 \
---spider http://localhost:${PORT} \
+--spider http://localhost:${API_PORT} \
 || exit 1
 
 # Execute Script
