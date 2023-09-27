@@ -5,6 +5,7 @@ import mockEligibility from './mock-eligibility';
 import mockAccount from './mock-account';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
+import mockContact from './mock-contact';
 import { Application } from '../../types';
 import broker from './mock-broker';
 import buyer from './mock-buyer';
@@ -143,6 +144,7 @@ const mockApplication = {
   buyer: mockApplicationBuyer,
   sectionReview: mockSectionReview,
   declaration: mockApplicationDeclaration,
+  policyContact: mockContact,
 };
 
 export const mockApplicationMultiplePolicy = {

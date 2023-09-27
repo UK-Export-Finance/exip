@@ -272,6 +272,7 @@ var DEFAULT_RESOLVERS = [
   "updateBuyer",
   "updateDeclaration",
   "updatePolicy",
+  "updatePolicyContact",
   "updateExportContract",
   "updateSectionReview",
   "updateEligibility",
@@ -782,6 +783,7 @@ var lists = {
       buyer: (0, import_fields.relationship)({ ref: "Buyer" }),
       sectionReview: (0, import_fields.relationship)({ ref: "SectionReview" }),
       declaration: (0, import_fields.relationship)({ ref: "Declaration" }),
+      policyContact: (0, import_fields.relationship)({ ref: "PolicyContact" }),
       version: (0, import_fields.text)({
         defaultValue: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
         validation: { isRequired: true }
@@ -843,15 +845,14 @@ var lists = {
                 id: businessId
               }
             };
-            await context.db.BusinessContactDetail.createOne({
-              data: {
-                business: {
-                  connect: {
-                    id: businessId
-                  }
-                }
-              }
+            const { id: policyContactId } = await context.db.PolicyContact.createOne({
+              data: {}
             });
+            modifiedData.policyContact = {
+              connect: {
+                id: policyContactId
+              }
+            };
             const { id: brokerId } = await context.db.Broker.createOne({
               data: {}
             });
@@ -896,7 +897,7 @@ var lists = {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
             const { referenceNumber } = item;
-            const { policyId, exportContractId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
+            const { policyId, policyContactId, exportContractId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -909,6 +910,16 @@ var lists = {
             });
             await context.db.Policy.updateOne({
               where: { id: policyId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId
+                  }
+                }
+              }
+            });
+            await context.db.PolicyContact.updateOne({
+              where: { id: policyContactId },
               data: {
                 application: {
                   connect: {
@@ -1021,6 +1032,17 @@ var lists = {
     },
     access: import_access.allowAll
   },
+  PolicyContact: (0, import_core2.list)({
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      firstName: (0, import_fields.text)(),
+      lastName: (0, import_fields.text)(),
+      email: (0, import_fields.text)(),
+      position: (0, import_fields.text)(),
+      isSameAsOwner: nullable_checkbox_default()
+    },
+    access: import_access.allowAll
+  }),
   ExportContract: {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
@@ -1126,10 +1148,7 @@ var lists = {
       totalEmployeesUK: (0, import_fields.integer)(),
       totalEmployeesInternational: (0, import_fields.integer)(),
       estimatedAnnualTurnover: (0, import_fields.integer)(),
-      exportsTurnoverPercentage: (0, import_fields.integer)(),
-      businessContactDetail: (0, import_fields.relationship)({
-        ref: "BusinessContactDetail.business"
-      })
+      exportsTurnoverPercentage: (0, import_fields.integer)()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -1137,16 +1156,6 @@ var lists = {
           await update_application_default.timestamp(context, item.applicationId);
         }
       }
-    },
-    access: import_access.allowAll
-  }),
-  BusinessContactDetail: (0, import_core2.list)({
-    fields: {
-      business: (0, import_fields.relationship)({ ref: "Business.businessContactDetail" }),
-      firstName: (0, import_fields.text)(),
-      lastName: (0, import_fields.text)(),
-      email: (0, import_fields.text)(),
-      position: (0, import_fields.text)()
     },
     access: import_access.allowAll
   }),

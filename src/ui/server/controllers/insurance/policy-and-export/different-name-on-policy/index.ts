@@ -9,6 +9,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
+import mapAndSave from '../map-and-save/policy-contact';
 
 const {
   INSURANCE_ROOT,
@@ -81,6 +82,7 @@ export const get = (req: Request, res: Response) => {
     ...pageVariables(refNumber),
     userName: getUserNameFromSession(req.session.user),
     application,
+    submittedValues: application.policyContact,
   });
 };
 
@@ -120,11 +122,11 @@ export const post = async (req: Request, res: Response) => {
   }
 
   try {
-    // // save the application
-    // const saveResponse = await mapAndSave.policy(req.body, application);
-    // if (!saveResponse) {
-    //   return res.redirect(PROBLEM_WITH_SERVICE);
-    // }
+    // save the application
+    const saveResponse = await mapAndSave.policyContact(payload, application);
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
     // if (isCheckAndChangeRoute(req.originalUrl)) {
     //   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     // }

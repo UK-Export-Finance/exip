@@ -200,6 +200,12 @@ const application = {
     [CONNECTED_WITH_BUYER]: FIELD_VALUES.YES,
     [TRADED_WITH_BUYER]: FIELD_VALUES.YES,
   },
+  POLICY_CONTACT: {
+    [ACCOUNT_FIRST_NAME]: 'Bob',
+    [ACCOUNT_LAST_NAME]: 'Smith',
+    [ACCOUNT_EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
+    [CONTACT_POSITION]: 'CEO',
+  },
 };
 
 export default application;

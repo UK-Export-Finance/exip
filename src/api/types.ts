@@ -9,7 +9,7 @@ interface ApplicationRelationship {
   id: string;
 }
 
-interface ApplicationBusinessContactDetail extends ApplicationRelationship {
+interface ApplicationPolicyContact extends ApplicationRelationship {
   firstName: string;
   lastName: string;
   email: string;
@@ -17,14 +17,12 @@ interface ApplicationBusinessContactDetail extends ApplicationRelationship {
 }
 
 interface ApplicationBusiness extends ApplicationRelationship {
-  businessContactDetail: ApplicationBusinessContactDetail;
   goodsOrServicesSupplied: string;
   totalYearsExporting: string;
   totalEmployeesInternational: string;
   totalEmployeesUK: string;
   estimatedAnnualTurnover: string;
   exportsTurnoverPercentage: string;
-  businessContactDetailId: string;
 }
 
 interface CisCountry {
@@ -189,6 +187,7 @@ interface Application {
   exportContract: ApplicationExportContract;
   owner: ApplicationOwner;
   policy: ApplicationPolicy;
+  policyOwner: ApplicationPolicyContact;
   company: ApplicationCompany;
   companySicCodes: Array<ApplicationCompanySicCode>;
   companyAddress: ApplicationCompanyAddress;
@@ -555,7 +554,6 @@ export {
   Application,
   ApplicationBuyer,
   ApplicationBusiness,
-  ApplicationBusinessContactDetail,
   ApplicationDeclaration,
   ApplicationEligibility,
   ApplicationExportContract,
@@ -563,6 +561,7 @@ export {
   ApplicationCompanySicCode,
   ApplicationOwner,
   ApplicationPolicy,
+  ApplicationPolicyContact,
   ApplicationRelationship,
   ApplicationSubmissionEmailVariables,
   ApplicationVersion,

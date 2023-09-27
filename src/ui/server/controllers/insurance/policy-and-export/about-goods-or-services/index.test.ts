@@ -31,7 +31,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
   let res: Response;
   let refNumber: number;
 
-  jest.mock('../map-and-save');
+  jest.mock('../map-and-save/policy');
 
   mapAndSave.exportContract = jest.fn(() => Promise.resolve(true));
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
