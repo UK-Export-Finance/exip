@@ -30,7 +30,7 @@
     "@types/express-session": "^1.17.8",
     "@types/google-libphonenumber": "^7.4.27",
     "@types/is-url": "^1.2.30",
-    "@types/morgan": "^1.9.5",
+    "@types/morgan": "^1.9.6",
     "@types/node": "^20.6.5",
     "@types/nunjucks": "^3.2.4",
     "accessible-autocomplete": "^2.0.4",
