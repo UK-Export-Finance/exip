@@ -8,7 +8,7 @@ export interface NotifyPersonalisation {
   linkToFile?: string;
 }
 
-export interface SendExporterEmailVariables {
+export interface SendConfirmEmailAddressVariables {
   urlOrigin: string;
   accountId: string;
   referenceNumber?: string;
