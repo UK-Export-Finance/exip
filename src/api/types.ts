@@ -9,6 +9,12 @@ interface ApplicationRelationship {
   id: string;
 }
 
+interface ApplicationBusinessContactDetail extends ApplicationRelationship {
+  firstName: string;
+  lastName: string;
+  email: string;
+  position: string;
+}
 interface ApplicationPolicyContact extends ApplicationRelationship {
   firstName: string;
   lastName: string;
@@ -556,6 +562,7 @@ export {
   Application,
   ApplicationBuyer,
   ApplicationBusiness,
+  ApplicationBusinessContactDetail,
   ApplicationDeclaration,
   ApplicationEligibility,
   ApplicationExportContract,

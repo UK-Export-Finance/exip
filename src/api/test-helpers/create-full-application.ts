@@ -2,11 +2,19 @@ import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import accounts from './accounts';
 import createAnEligibility from '../helpers/create-an-eligibility';
 import createABuyer from '../helpers/create-a-buyer';
-import { mockApplicationEligibility, mockSinglePolicy, mockExportContract, mockBusiness, mockBusinessContactDetail } from '../test-mocks/mock-application';
+import {
+  mockApplicationEligibility,
+  mockSinglePolicy,
+  mockExportContract,
+  mockBusiness,
+  mockBusinessContactDetail,
+  mockPolicyContact,
+} from '../test-mocks/mock-application';
 import { mockCompany, mockCompanySicCode, mockApplicationDeclaration } from '../test-mocks';
 import mockCountries from '../test-mocks/mock-countries';
 import {
   ApplicationBusiness,
+  ApplicationBusinessContactDetail,
   ApplicationCompany,
   ApplicationCompanySicCode,
   ApplicationDeclaration,
@@ -111,9 +119,21 @@ export const createFullApplication = async (context: Context) => {
     query: 'id',
   })) as ApplicationCompanySicCode;
 
-  const policyContact = (await context.query.PolicyContact.createOne({
+  const businessContactDetail = (await context.query.BusinessContactDetail.createOne({
     data: {
       ...mockBusinessContactDetail,
+      business: {
+        connect: {
+          id: application.business.id,
+        },
+      },
+    },
+    query: 'id firstName lastName email',
+  })) as ApplicationBusinessContactDetail;
+
+  const policyContact = (await context.query.PolicyContact.createOne({
+    data: {
+      ...mockPolicyContact,
       application: {
         connect: { id: application.id },
       },
@@ -126,7 +146,7 @@ export const createFullApplication = async (context: Context) => {
       id: application.business.id,
     },
     data: mockBusiness,
-    query: 'id',
+    query: 'id businessContactDetail { id firstName lastName email }',
   })) as ApplicationBusiness;
 
   // update the declaration so we have a full data set.
@@ -143,6 +163,7 @@ export const createFullApplication = async (context: Context) => {
     companySicCodes,
     owner: account,
     business,
+    businessContactDetail,
     policyContact,
     buyer,
     company,

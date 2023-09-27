@@ -135,6 +135,17 @@ export const lists = {
               },
             };
 
+            // generate a new `business contact detail` relationship with the business
+            await context.db.BusinessContactDetail.createOne({
+              data: {
+                business: {
+                  connect: {
+                    id: businessId,
+                  },
+                },
+              },
+            });
+
             // generate a new `policy contact` relationship with the policy
             const { id: policyContactId } = await context.db.PolicyContact.createOne({
               data: {},

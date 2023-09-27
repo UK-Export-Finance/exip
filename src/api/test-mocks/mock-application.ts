@@ -89,6 +89,14 @@ export const mockBusinessContactDetail = {
   position: 'CEO',
 };
 
+export const mockPolicyContact = {
+  firstName: 'Bob',
+  lastName: 'Smith',
+  email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
+  position: 'CEO',
+  isSameAsOwner: true,
+};
+
 export const mockBusiness = {
   goodsOrServicesSupplied: 'ABC',
   totalYearsExporting: 20,
@@ -164,6 +172,7 @@ const mockApplication = {
   buyer: mockApplicationBuyer,
   sectionReview: mockSectionReview,
   declaration: mockApplicationDeclaration,
+  policyContact: mockPolicyContact,
 } as Application;
 
 export const mockApplicationMultiplePolicy = {
