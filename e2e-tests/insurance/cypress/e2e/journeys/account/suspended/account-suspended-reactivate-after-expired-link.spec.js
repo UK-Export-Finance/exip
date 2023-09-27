@@ -45,7 +45,7 @@ context('Insurance - Account - Suspended - Reactivate account after verification
        */
       const accountsResponse = await api.getAccountByEmail(accountEmail);
 
-      const [firstAccount] = accountsResponse.body.data.accounts;
+      const [firstAccount] = accountsResponse;
       const account = firstAccount;
 
       /**
@@ -60,17 +60,23 @@ context('Insurance - Account - Suspended - Reactivate account after verification
 
       updatedAccount = await api.updateAccount(account.id, updateObj);
 
-      cy.navigateToUrl(`${verifyEmailUrl}?token=${updatedAccount[REACTIVATION_HASH]}`);
+      // cy.navigateToUrl(`${verifyEmailUrl}?token=${updatedAccount[REACTIVATION_HASH]}`);
 
-      submitButton().click();
+      // submitButton().click();
     });
 
     it(`should redirect to ${EMAIL_SENT}`, () => {
+      cy.navigateToUrl(`${verifyEmailUrl}?token=${updatedAccount[REACTIVATION_HASH]}`);
+
+      submitButton().click();
+
       cy.assertUrl(emailSentUrl);
     });
   });
 
   describe(`when a user navigates to ${VERIFY_EMAIL} with a new, valid token and submits the form`, () => {
+    let account;
+
     beforeEach(async () => {
       /**
        * Get the latest account data
@@ -78,13 +84,13 @@ context('Insurance - Account - Suspended - Reactivate account after verification
        */
       const accountsResponse = await api.getAccountByEmail(accountEmail);
 
-      const [firstAccount] = accountsResponse.body.data.accounts;
-      const account = firstAccount;
-
-      cy.navigateToUrl(`${verifyEmailUrl}?token=${account[REACTIVATION_HASH]}`);
+      const [firstAccount] = accountsResponse;
+      account = firstAccount;
     });
 
     it(`should redirect to ${REACTIVATED_ROOT}`, () => {
+      cy.navigateToUrl(`${verifyEmailUrl}?token=${account[REACTIVATION_HASH]}`);
+
       cy.assertUrl(reactivatedUrl);
     });
   });

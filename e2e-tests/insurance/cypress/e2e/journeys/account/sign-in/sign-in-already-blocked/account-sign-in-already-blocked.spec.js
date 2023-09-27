@@ -53,7 +53,7 @@ context('Insurance - Account - Sign in - Submitting the form when already blocke
 
       const accountsResponse = await api.getAccountByEmail(accountEmail);
 
-      const [firstAccount] = accountsResponse.body.data.accounts;
+      const [firstAccount] = accountsResponse;
       account = firstAccount;
     });
 
