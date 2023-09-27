@@ -40,7 +40,7 @@ const get = async (req, res) => {
 };
 ```
 
-Finally, import and call the `keystoneDocument` nunjuck component in that page:
+Finally, import and call the `keystoneDocument` nunjucks component in that page:
 
 ```html
 {% import '../components/keystone/document/index.njk' as keystoneDocument %}

@@ -162,7 +162,7 @@ describe('controllers/quote/buyer-body', () => {
         req.body = validBody;
       });
 
-      it('should update the session with submitted data, popluated with mapped buyer body answer', async () => {
+      it('should update the session with submitted data, populated with mapped buyer body answer', async () => {
         await post(req, res);
 
         const payload = constructPayload(req.body, [FIELD_ID]);

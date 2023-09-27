@@ -420,7 +420,7 @@ VALUES
 	('clacmav3d2295bfoqmf9zk2kt','WSM','Samoa'),
 	('clacmav3d2297bfoqx1yjwri8','SEN','Senegal'),
 	('clacmav3d2301bfoqrbkjxqjz','SAU','Saudi Arabia'),
-	('clacmav3d2303bfoq63ux9k2b','SCG','Serbia'),
+	('clacmav3d2303bfoq63ux9k2b','SRB','Serbia'),
 	('clacmav3d2305bfoq78cn9kk6','SGP','Singapore'),
 	('clacmav3d2306bfoq8hpgbbwo','SYC','Seychelles'),
 	('clacmav3d2309bfoq2314whl5','SVK','Slovakia'),

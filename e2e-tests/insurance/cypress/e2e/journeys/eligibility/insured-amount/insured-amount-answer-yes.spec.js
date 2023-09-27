@@ -21,7 +21,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Insured amount page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is less than the maxium amount of cover available online - submit `cover over max amount`', () => {
+context('Insurance - Insured amount page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is less than the maximum amount of cover available online - submit `cover over max amount`', () => {
   const url = `${baseUrl}${INSURED_AMOUNT}`;
 
   before(() => {

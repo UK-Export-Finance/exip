@@ -81,7 +81,7 @@ export const requiredInsuranceEligibilityDataProvided = (req: Request, res: Resp
   const isIrrelevantRoute = (route: string) => irrelevantRoutes.includes(route);
 
   // do not run any data checks if the requested route is one of the following:
-  // is a route that does nout require any data checks
+  // is a route that does not require any data checks
   // is 404 page
   // or the request is not a GET request.
   if (isIrrelevantRoute(url) || !routeIsKnown(routesArray, url) || method !== 'GET') {

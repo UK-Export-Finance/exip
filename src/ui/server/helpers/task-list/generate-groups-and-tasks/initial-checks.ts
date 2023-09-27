@@ -11,7 +11,6 @@ const { INITIAL_CHECKS } = TASKS.LIST;
  */
 const createInitialChecksTasks = (): Array<TaskListDataTask> => [
   {
-    href: '#',
     title: INITIAL_CHECKS.TASKS.ELIGIBILITY,
     id: TASK_IDS.INITIAL_CHECKS.ELIGIBILITY,
     fields: requiredFields(),

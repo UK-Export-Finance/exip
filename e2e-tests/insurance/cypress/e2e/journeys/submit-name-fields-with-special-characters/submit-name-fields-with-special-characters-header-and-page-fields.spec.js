@@ -142,15 +142,15 @@ context('Insurance - Name fields - Header and page fields should render special 
         backLink().click();
       });
 
-      it('should render special characters in the comapny/organisation name field', () => {
+      it('should render special characters in the company/organisation name field', () => {
         const buyerNameField = companyOrOrganisationPage[BUYER_NAME];
         cy.checkValue(buyerNameField, nameWithSpecialCharacters);
 
         const buyerFirstNameField = companyOrOrganisationPage[BUYER_CONTACT_FIRST_NAME];
         cy.checkValue(buyerFirstNameField, nameWithSpecialCharacters);
 
-        const buyerLasttNameField = companyOrOrganisationPage[BUYER_CONTACT_LAST_NAME];
-        cy.checkValue(buyerLasttNameField, nameWithSpecialCharacters);
+        const buyerLastNameField = companyOrOrganisationPage[BUYER_CONTACT_LAST_NAME];
+        cy.checkValue(buyerLastNameField, nameWithSpecialCharacters);
       });
     });
   });

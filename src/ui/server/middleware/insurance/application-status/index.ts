@@ -37,7 +37,7 @@ export const applicationStatusMiddleware = async (req: Request, res: Response, n
     }
 
     /**
-     * If the URL is a route in the "submit your appication" group ("check your answers" or "declarations")
+     * If the URL is a route in the "submit your application" group ("check your answers" or "declarations")
      * and required data for these routes is missing,
      * do not allow the user to view/access these routes and redirect to COMPLETE_OTHER_SECTIONS.
      */

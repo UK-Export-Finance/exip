@@ -28,7 +28,7 @@ const afterClick = {
 
     field.revealButton().click();
 
-    // field input shuld change from password to text
+    // field input should change from password to text
     field.input().should('have.attr', 'type', 'text');
 
     // reveal button text should change to 'hide'
@@ -40,7 +40,7 @@ const afterSecondClick = {
   changesInputType: () => {
     field.revealButton().click();
 
-    // field input shuld change from text to password
+    // field input should change from text to password
     field.input().should('have.attr', 'type', 'password');
 
     // reveal button text should change to 'show'

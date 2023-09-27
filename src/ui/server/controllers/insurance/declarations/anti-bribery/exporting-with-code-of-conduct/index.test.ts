@@ -22,7 +22,7 @@ const {
 
 const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT;
 
-describe('controllers/insurance/declarations/anti-bribery/exporting-with-acode-of-conduct', () => {
+describe('controllers/insurance/declarations/anti-bribery/exporting-with-a-code-of-conduct', () => {
   jest.mock('../../save-data');
 
   let mockSaveDeclaration = jest.fn(() => Promise.resolve({}));

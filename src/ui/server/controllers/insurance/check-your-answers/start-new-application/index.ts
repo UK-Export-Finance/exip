@@ -29,10 +29,10 @@ export const pageVariables = (referenceNumber: number) => ({
 
 /**
  * get
- * Render the check your answers start new applcation page
+ * Render the check your answers start new application page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} check your answers start new applcation page
+ * @returns {Express.Response.render} check your answers start new application page
  */
 export const get = (req: Request, res: Response) => {
   try {
@@ -56,7 +56,7 @@ export const get = (req: Request, res: Response) => {
       formattedSubmissionDeadline,
     });
   } catch (err) {
-    console.error('Error getting check your answers - start new applcation %O', err);
+    console.error('Error getting check your answers - start new application %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
