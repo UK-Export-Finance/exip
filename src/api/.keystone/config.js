@@ -845,6 +845,15 @@ var lists = {
                 id: businessId
               }
             };
+            await context.db.BusinessContactDetail.createOne({
+              data: {
+                business: {
+                  connect: {
+                    id: businessId
+                  }
+                }
+              }
+            });
             const { id: policyContactId } = await context.db.PolicyContact.createOne({
               data: {}
             });
