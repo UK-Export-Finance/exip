@@ -175,8 +175,6 @@ jobs:
         spec:
           [
             "/*.spec.js",
-
-            # "account/**/*.spec.js",
             "account/create/**/*.spec.js",
             "account/manage/**/*.spec.js",
             "account/password-reset/**/*.spec.js",
@@ -187,29 +185,21 @@ jobs:
             "application-submission/*.spec.js",
             "application-submission/multiple-policy-type/**/*.spec.js",
             "application-submission/single-policy-type/**/*.spec.js",
-
             "cannot-skip-flow/**/*.spec.js",
-
-            # "check-your-answers/**/*.spec.js",
             "check-your-answers/eligibility/**/*.spec.js",
             "check-your-answers/need-to-start-new-application/**/*.spec.js",
             "check-your-answers/policy-and-exports/**/*.spec.js",
             "check-your-answers/your-business/**/*.spec.js",
             "check-your-answers/your-buyer/**/*.spec.js",
             "dashboard/**/*.spec.js",
-
-            # "declarations/**/*.spec.js",
             "declarations/anti-bribery/**/*.spec.js",
             "declarations/confidentiality/**/*.spec.js",
             "declarations/confirmation-and-acknowledgements/**/*.spec.js",
             "declarations/how-your-data-will-be-used/**/*.spec.js",
-
             "eligibility/**/*.spec.js",
             "feedback/**/*.spec.js",
             "no-access-application-submitted/**/*.spec.js",
             "no-access-to-application/**/*.spec.js",
-
-            # "policy-and-exports/**/*.spec.js",
             "policy-and-exports/about-goods-or-services/**/*.spec.js",
             "policy-and-exports/change-your-answers/**/*.spec.js",
             "policy-and-exports/check-your-answers/**/*.spec.js",
@@ -220,9 +210,6 @@ jobs:
             "policy-and-exports/type-of-policy/**/*.spec.js",
             "submit-name-fields-with-special-characters/**/*.spec.js",
             "task-list/**/*.spec.js",
-
-            # "your-business/**/*.spec.js",
-
             "your-business/broker/**/*.spec.js",
             "your-business/change-your-answers/**/*.spec.js",
             "your-business/check-your-answers/**/*.spec.js",
