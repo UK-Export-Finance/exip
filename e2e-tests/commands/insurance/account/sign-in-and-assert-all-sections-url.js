@@ -14,6 +14,14 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
+/**
+ * signInAndAssertAllSectionsUrl
+ * 1) Sign into an account.
+ * 2) Check that the URL is the "all sections" application page.
+ * If no referenceNumber is provided, it's obtained by invoking cy.getReferenceNumber.
+ * @param {String} Account email
+ * @returns {Object} Account
+ */
 const signInAndAssertAllSectionsUrl = ({
   accountId,
   emailAddress,
