@@ -184,7 +184,10 @@ jobs:
             "account/sign-in/**/*.spec.js",
             "account/sign-out/**/*.spec.js",
             "account/suspended/**/*.spec.js",
-            "application-submission/**/*.spec.js",
+            "application-submission/*.spec.js",
+            "application-submission/multiple-policy-type/**/*.spec.js",
+            "application-submission/single-policy-type/**/*.spec.js",
+
             "cannot-skip-flow/**/*.spec.js",
 
             # "check-your-answers/**/*.spec.js",
@@ -265,7 +268,21 @@ jobs:
       # Single dimension matrix
       matrix:
         spec:
-          ["/*.spec.js", "cookies-consent/**/*.spec.js", "quote/**/*.spec.js"]
+          [
+            "/*.spec.js",
+            "cookies-consent/**/*.spec.js",
+            "quote/*.spec.js",
+            "quote/buyer-body/*.spec.js",
+            "quote/buyer-country/*.spec.js",
+            "quote/cannot-skip-flow/*.spec.js",
+            "quote/change-your-answers/*.spec.js",
+            "quote/check-your-answers/*.spec.js",
+            "quote/exporter-location/*.spec.js",
+            "quote/policy-type/*.spec.js",
+            "quote/tell-us-about-your-policy/*.spec.js",
+            "quote/uk-goods-or-services/*.spec.js",
+            "quote/your-quote/*.spec.js"
+          ]
 
     concurrency:
       group: e2e-tests-quote-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}

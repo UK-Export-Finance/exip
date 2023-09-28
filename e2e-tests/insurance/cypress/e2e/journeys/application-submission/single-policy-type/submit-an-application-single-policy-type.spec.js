@@ -1,7 +1,7 @@
-import dashboardPage from '../../../../../pages/insurance/dashboard';
-import header from '../../../../../partials/header';
-import { APPLICATION } from '../../../../../constants';
-import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
+import dashboardPage from '../../../../../../pages/insurance/dashboard';
+import header from '../../../../../../partials/header';
+import { APPLICATION } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const { table } = dashboardPage;
 
