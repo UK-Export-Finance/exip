@@ -26,6 +26,8 @@ const {
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_HOW_YOUR_DATA_WILL_BE_USED;
 
+const baseUrl = Cypress.config('baseUrl');
+
 const field = singleInputField(FIELD_ID);
 
 context('Insurance - Declarations - How your data will be used page - As an Exporter, I want to have details of how my export insurance application data will be used, So that I can determine if I am okay with the use of my application in that format', () => {
@@ -49,7 +51,7 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
       cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct();
       cy.completeAndSubmitDeclarationConfirmationAndAcknowledgements();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
 
       cy.assertUrl(url);
     });
@@ -143,7 +145,7 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
 
         cy.completeAndSubmitDeclarationHowYourDataWillBeUsed();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
+        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
 
         cy.assertUrl(expectedUrl);
       });

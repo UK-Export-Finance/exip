@@ -88,6 +88,8 @@
         "numbergenerator",
         "NVARCHAR",
         "organisation",
+        "outro",
+        "OUTRO",
         "pino",
         "pinojs",
         "plusplus",

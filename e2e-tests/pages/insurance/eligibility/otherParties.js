@@ -1,6 +1,7 @@
 const otherPartiesPage = {
   description: {
     summary: () => cy.get('[data-cy="other-parties"] summary'),
+    details: () => cy.get('[data-cy="other-parties"]'),
     list: {
       intro: () => cy.get('[data-cy="other-parties-list-intro"]'),
       item1: () => cy.get('[data-cy="other-parties-list-item-1"]'),

@@ -1,6 +1,7 @@
 import {
   yesRadio, noRadio, submitButton,
 } from '../../../../../../pages/shared';
+import buyerBodyPage from '../../../../../../pages/quote/buyerBody';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
@@ -21,14 +22,14 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
+const url = `${baseUrl}${BUYER_BODY}`;
+
 context('Buyer body page - as an exporter, I want to check if I can get an EXIP online quote for my buyers country', () => {
   beforeEach(() => {
     cy.login();
     completeAndSubmitBuyerCountryForm();
 
-    const expectedUrl = `${baseUrl}${BUYER_BODY}`;
-
-    cy.assertUrl(expectedUrl);
+    cy.assertUrl(url);
   });
 
   it('renders core page elements', () => {
@@ -51,6 +52,31 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
     cy.checkText(noRadio().label(), FIELD_VALUES.NO);
 
     cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
+  });
+
+  describe('expandable details - what counts as government or public sector body', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
+    const { description } = buyerBodyPage;
+
+    it('should render summary text with collapsed conditional `details` content', () => {
+      cy.checkText(description.summary(), CONTENT_STRINGS.DETAILS.INTRO);
+
+      description.details().should('not.have.attr', 'open');
+    });
+
+    describe('when clicking the summary text', () => {
+      it('should expand the collapsed `details` content', () => {
+        description.summary().click();
+
+        description.details().should('have.attr', 'open');
+
+        cy.checkText(description.body1(), CONTENT_STRINGS.DETAILS.BODY_1);
+        cy.checkText(description.body2(), CONTENT_STRINGS.DETAILS.BODY_2);
+      });
+    });
   });
 
   describe('form submission', () => {
