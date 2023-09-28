@@ -14,26 +14,20 @@ const baseUrl = Cypress.config('baseUrl');
  * Mimic "cliking email verification link" in an email inbox by manually navigating to the URL
  */
 const verifyAccountEmail = () => {
-  try {
-    // get the account
-    cy.getAccountByEmail(accountEmail).then((responseData) => {
-      const [firstAccount] = responseData;
+  // get the account
+  cy.getAccountByEmail(accountEmail).then((responseData) => {
+    const [firstAccount] = responseData;
 
-      const { verificationHash } = firstAccount;
+    const { verificationHash } = firstAccount;
 
-      // mimic clicking email verification link
-      cy.navigateToUrl(`${baseUrl}${VERIFY_EMAIL}?token=${verificationHash}`);
+    // mimic clicking email verification link
+    cy.navigateToUrl(`${baseUrl}${VERIFY_EMAIL}?token=${verificationHash}`);
 
-      // User should be verified and therefore redirected to the "sign in" page.
-      const expected = `${baseUrl}${SIGN_IN.ROOT}`;
+    // User should be verified and therefore redirected to the "sign in" page.
+    const expectedUrl = `${baseUrl}${SIGN_IN.ROOT}`;
 
-      cy.assertUrl(expected);
-    });
-  } catch (err) {
-    console.error(err);
-
-    throw new Error('Verifying account email');
-  }
+    cy.assertUrl(expectedUrl);
+  });
 };
 
 export default verifyAccountEmail;

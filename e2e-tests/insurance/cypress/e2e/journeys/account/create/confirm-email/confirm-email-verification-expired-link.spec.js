@@ -10,6 +10,8 @@ const {
   ACCOUNT: { CREATE: { CONFIRM_EMAIL, VERIFY_EMAIL, VERIFY_EMAIL_EXPIRED_LINK } },
 } = ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Create - Confirm email page - expired token - As an Exporter I want to verify my email address for account creation, So that I can activate my email address and use it to create a digital service account with UKEF', () => {
   let url;
   let account;
@@ -22,7 +24,7 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
 
-    url = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
+    url = `${baseUrl}${CONFIRM_EMAIL}`;
 
     cy.assertUrl(url);
   });
@@ -43,7 +45,7 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
 
       const accountsResponse = await api.getAccountByEmail(accountEmail);
 
-      const [firstAccount] = accountsResponse.body.data.accounts;
+      const [firstAccount] = accountsResponse;
       account = firstAccount;
 
       /**
@@ -63,9 +65,9 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
     it(`should redirect to ${VERIFY_EMAIL_EXPIRED_LINK} and render core page elements and content`, () => {
       const { verificationHash } = updatedAccount;
 
-      cy.navigateToUrl(`${Cypress.config('baseUrl')}${VERIFY_EMAIL}?token=${verificationHash}`);
+      cy.navigateToUrl(`${baseUrl}${VERIFY_EMAIL}?token=${verificationHash}`);
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${VERIFY_EMAIL_EXPIRED_LINK}?id=${account.id}`;
+      const expectedUrl = `${baseUrl}${VERIFY_EMAIL_EXPIRED_LINK}?id=${account.id}`;
 
       cy.assertUrl(expectedUrl);
 
