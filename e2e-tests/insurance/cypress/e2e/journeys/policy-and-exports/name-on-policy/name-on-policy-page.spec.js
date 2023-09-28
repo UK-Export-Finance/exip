@@ -99,12 +99,14 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
 
       const nameAndEmail = `${account[FIRST_NAME]} ${account[LAST_NAME]} (${account[EMAIL]})`;
       cy.checkText(input.field(SAME_NAME).label(), nameAndEmail);
+
+      // input.field(POSITION).input().should('not.be.visible');
     });
 
     it(`renders ${POSITION} input if ${SAME_NAME} is selected'`, () => {
       input.field(SAME_NAME).input().click();
 
-      input.field(POSITION).input().should('exist');
+      input.field(POSITION).input().should('be.visible');
       cy.checkText(input.field(POSITION).label(), FIELDS.NAME_ON_POLICY[POSITION].LABEL);
     });
 

@@ -9,7 +9,7 @@ const {
   NAME_ON_POLICY: { POSITION, IS_SAME_AS_OWNER },
 } = POLICY_AND_EXPORTS_FIELD_IDS;
 
-describe('controllers/insurance/policy-and-export/policy-contact/save-data', () => {
+describe('controllers/insurance/policy-and-export/save-data/policy-contact', () => {
   const mockUpdateApplicationResponse = mockApplication;
   let updateApplicationSpy = jest.fn(() => Promise.resolve(mockUpdateApplicationResponse));
 

@@ -3,11 +3,11 @@ import updateApplicationPolicyContactMutation from '../../../../graphql/mutation
 import { ApolloResponse } from '../../../../../types';
 
 /**
- * updatePolicy
- * Update an application's "policy"
- * @param {String} Policy ID
- * @param {Object} Policy update
- * @returns {Object} Updated policy
+ * updatePolicyContact
+ * Update an application's policy contact
+ * @param {String} PolicyContact ID
+ * @param {Object} PolicyContact update
+ * @returns {Object} Updated policy contact
  */
 const updatePolicy = async (id: string, update: object) => {
   try {

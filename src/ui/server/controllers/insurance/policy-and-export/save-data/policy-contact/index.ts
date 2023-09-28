@@ -7,7 +7,7 @@ import { Application, RequestBody } from '../../../../../../types';
  * policyContact
  * Strip invalid fields from submitted form data and update the application.
  * This is used for any save functionality in the Policy Contact section of the application.
- * @param {Object} Application
+ * @param {Application} Application
  * @param {Express.Request.body} Form data
  * @param {Express.Request.body} Field error list
  * @returns {Object} Saved data
