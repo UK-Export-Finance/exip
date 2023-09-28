@@ -22,7 +22,7 @@ import mockContact from './mock-contact';
 import { PRODUCT } from '../content-strings';
 import { INTEGRITY } from '../constants';
 
-const { GOVUK, FORM, COOKIES, GA, MOJ, ACCESSIBILITY } = INTEGRITY;
+const { JS, GOVUK, FORM, COOKIES, GA, MOJ, ACCESSIBILITY } = INTEGRITY;
 
 const mockReq = () => {
   const req = {
@@ -72,6 +72,7 @@ const mockRes = () => {
       ORGANISATION: PRODUCT.DESCRIPTION.ORGANISATION,
     },
     SRI: {
+      JS,
       ACCESSIBILITY,
       MOJ,
       GOVUK,

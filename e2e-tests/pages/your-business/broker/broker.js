@@ -16,7 +16,7 @@ const {
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
-const broker = {
+const brokerPage = {
   [LEGEND]: () => cy.get(`[data-cy="${LEGEND}-legend`),
   [USING_BROKER]: {
     value: () => cy.get(`[data-cy="${USING_BROKER}`),
@@ -68,4 +68,4 @@ const broker = {
   },
 };
 
-export default broker;
+export default brokerPage;

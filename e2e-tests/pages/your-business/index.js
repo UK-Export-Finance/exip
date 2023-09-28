@@ -4,7 +4,7 @@ import companiesHouseUnavailablePage from './companies-house-unavailable/compani
 import yourContactPage from './contact/yourContact';
 import natureOfBusiness from './nature-of-business/natureOfBusiness';
 import turnover from './turnover/turnover';
-import broker from './broker/broker';
+import brokerPage from './broker/broker';
 
 export {
   companiesHouseNumber,
@@ -13,5 +13,5 @@ export {
   yourContactPage,
   natureOfBusiness,
   turnover,
-  broker,
+  brokerPage,
 };

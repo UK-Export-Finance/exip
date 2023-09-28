@@ -24,6 +24,7 @@ interface RequestHeaders {
 }
 
 interface SRI {
+  JS: string;
   GOVUK: string;
   MOJ: string;
   FORM: string;

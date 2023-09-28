@@ -26,6 +26,8 @@ const {
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_ANTI_BRIBERY;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want the system to provide the details of the anti-bribery and corruption declaration for my export insurance application, So that, while processing my export insurance application. I have clarity on my anti-bribery and corruption declarations', () => {
   let referenceNumber;
   let url;
@@ -41,7 +43,7 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
 
       cy.completeAndSubmitDeclarationConfidentiality();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -121,6 +123,28 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
       });
     });
 
+    describe('expandable details - definition of terms', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
+      const { expandable } = antiBriberyPage;
+
+      it('should render summary text with collapsed conditional `details` content', () => {
+        cy.checkText(expandable.summary(), CONTENT_STRINGS.EXPANDABLE.INTRO);
+
+        expandable.details().should('not.have.attr', 'open');
+      });
+
+      describe('when clicking the summary text', () => {
+        it('should expand the collapsed `details` content', () => {
+          expandable.summary().click();
+
+          expandable.details().should('have.attr', 'open');
+        });
+      });
+    });
+
     it("renders `I've read and agree` label and input", () => {
       field.label().should('exist');
       cy.checkText(field.label(), FIELDS[FIELD_ID].LABEL);
@@ -163,7 +187,7 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
 
         cy.completeAndSubmitDeclarationAntiBribery();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
+        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
 
         cy.assertUrl(expectedUrl);
       });

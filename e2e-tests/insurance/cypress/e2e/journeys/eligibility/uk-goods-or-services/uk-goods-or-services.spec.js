@@ -88,12 +88,12 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
         checkCalculateDescriptionSummaryText();
       });
 
-      it('clicking summary text reveals details', () => {
-        checkCalculateDescriptionSummaryClickRevealsContent();
-      });
+      describe('when clicking the summary text', () => {
+        it('should expand the collapsed `details` content', () => {
+          checkCalculateDescriptionSummaryClickRevealsContent();
 
-      it('renders expanded content', () => {
-        checkCalculateDescriptionDescriptionContent();
+          checkCalculateDescriptionDescriptionContent();
+        });
       });
     });
 
@@ -102,16 +102,16 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
         checkDescriptionSummaryText();
       });
 
-      it('clicking summary text reveals details', () => {
-        checkDescriptionSummaryClickRevealsContent();
-      });
+      describe('when clicking the summary text', () => {
+        it('should expand the collapsed `details` content', () => {
+          checkDescriptionSummaryClickRevealsContent();
 
-      it('renders expanded content', () => {
-        checkDescriptionContent();
-      });
+          checkDescriptionContent();
+        });
 
-      it('does NOT render `will calculate thoroughly` copy ', () => {
-        partials.ukGoodsOrServicesDescription.calculateThoroughly().should('not.exist');
+        it('does NOT render `will calculate thoroughly` copy ', () => {
+          partials.ukGoodsOrServicesDescription.calculateThoroughly().should('not.exist');
+        });
       });
     });
   });

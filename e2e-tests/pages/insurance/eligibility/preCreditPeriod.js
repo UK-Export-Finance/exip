@@ -1,6 +1,7 @@
 const preCreditPeriodPage = {
   description: {
     summary: () => cy.get('[data-cy="pre-credit-period"] summary'),
+    details: () => cy.get('[data-cy="pre-credit-period"]'),
     intro: () => cy.get('[data-cy="pre-credit-period-intro"]'),
     body1: () => cy.get('[data-cy="pre-credit-period-body-1"]'),
     list: {
