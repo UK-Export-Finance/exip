@@ -92,6 +92,14 @@ export interface ApplicationPolicy extends Relationship {
   requestedStartDate: Date;
 }
 
+export interface ApplicationPolicyContact extends Relationship {
+  firstName: string;
+  lastName: string;
+  email: string;
+  position: string;
+  isSameAsOwner: boolean;
+}
+
 export interface Application {
   id: string;
   referenceNumber: number;
