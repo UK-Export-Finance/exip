@@ -22,6 +22,8 @@ const {
 
 const FIELD_STRINGS = ACCOUNT_FIELDS;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Sign in - As an Exporter, I want to sign in into my UKEF digital service account after completing eligibility, So that I can complete my application for a UKEF Export Insurance Policy', () => {
   let url;
 
@@ -39,7 +41,7 @@ context('Insurance - Account - Sign in - As an Exporter, I want to sign in into 
     // navigate to sign in page
     yourDetailsPage.signInButtonLink().click();
 
-    url = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
+    url = `${baseUrl}${SIGN_IN_ROOT}`;
 
     cy.assertUrl(url);
   });
@@ -122,7 +124,7 @@ context('Insurance - Account - Sign in - As an Exporter, I want to sign in into 
     it(`should redirect to ${YOUR_DETAILS} when clicking 'need to create an account'`, () => {
       signInPage.createAccountLink().click();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
+      const expectedUrl = `${baseUrl}${YOUR_DETAILS}`;
 
       cy.assertUrl(expectedUrl);
     });
@@ -139,7 +141,7 @@ context('Insurance - Account - Sign in - As an Exporter, I want to sign in into 
 
         cy.completeAndSubmitSignInAccountForm({});
 
-        const expected = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
+        const expected = `${baseUrl}${ENTER_CODE}`;
         cy.assertUrl(expected);
       });
     });

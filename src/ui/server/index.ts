@@ -37,7 +37,7 @@ import isQuoteRoute from './helpers/is-quote-route';
 const ui = express();
 ui.disable('x-powered-by');
 
-const PORT = process.env.UI_PORT || 5000;
+const { UI_PORT } = process.env;
 const https = Boolean(process.env.HTTPS || 0);
 const secureCookieName = https ? '__Host-exip-session' : 'exip-session';
 
@@ -185,6 +185,6 @@ ui.get('*', (req: Request, res: Response) => {
   });
 });
 
-ui.listen(PORT, () => console.info('EXIP UI app listening on port %s!', PORT));
+ui.listen(UI_PORT, () => console.info('EXIP UI app listening on port %s!', UI_PORT));
 
 /* eslint-enable @typescript-eslint/ban-ts-comment */
