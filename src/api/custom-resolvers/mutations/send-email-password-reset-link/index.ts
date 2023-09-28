@@ -1,5 +1,6 @@
 import crypto from 'crypto';
-import { ACCOUNT, FIELD_IDS } from '../../../constants';
+import { ACCOUNT } from '../../../constants';
+import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
 import shouldBlockAccount from '../../../helpers/should-block-account';
@@ -43,7 +44,7 @@ const sendEmailPasswordResetLink = async (
      * Get the account the email is associated with.
      * If an account does not exist, return success=false
      */
-    const account = (await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email)) as Account;
+    const account = (await getAccountByField(context, ACCOUNT_FIELD_IDS.EMAIL, email)) as Account;
 
     if (!account) {
       console.info('Unable to check account and send password reset email - no account found');

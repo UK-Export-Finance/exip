@@ -1,11 +1,9 @@
 import { isAfter } from 'date-fns';
-import { FIELD_IDS } from '../../../constants';
+import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import { Context, AccountPasswordResetTokenResponse, VerifyAccountPasswordResetTokenVariables } from '../../../types';
 
-const {
-  ACCOUNT: { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY },
-} = FIELD_IDS.INSURANCE;
+const { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY } = ACCOUNT_FIELD_IDS;
 
 /**
  * verifyAccountPasswordResetToken

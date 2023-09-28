@@ -3,7 +3,7 @@ import fileSystem from '../../file-system';
 import { callNotify } from '../call-notify';
 import { ApplicationSubmissionEmailVariables, EmailResponse } from '../../types';
 
-export const application = {
+const application = {
   /**
    * application.submittedEmail
    * Send "application submitted" email to an account
@@ -65,3 +65,5 @@ export const application = {
     }
   },
 };
+
+export default application;

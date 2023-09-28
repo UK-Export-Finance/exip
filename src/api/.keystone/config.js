@@ -85,25 +85,8 @@ var SHARED_ELIGIBILITY = {
 };
 var shared_eligibility_default = SHARED_ELIGIBILITY;
 
-// constants/field-ids/insurance/account/index.ts
-var ACCOUNT = {
-  FIRST_NAME: "firstName",
-  LAST_NAME: "lastName",
-  EMAIL: "email",
-  PASSWORD: "password",
-  SALT: "salt",
-  HASH: "hash",
-  SECURITY_CODE: "securityCode",
-  IS_VERIFIED: "isVerified",
-  IS_BLOCKED: "isBlocked",
-  PASSWORD_RESET_HASH: "passwordResetHash",
-  PASSWORD_RESET_EXPIRY: "passwordResetExpiry",
-  REACTIVATION_HASH: "reactivationHash",
-  REACTIVATION_EXPIRY: "reactivationExpiry",
-  VERIFICATION_HASH: "verificationHash",
-  VERIFICATION_EXPIRY: "verificationExpiry"
-};
-var account_default = ACCOUNT;
+// types/account/index.ts
+var account_default = {};
 
 // constants/field-ids/insurance/policy-and-exports/index.ts
 var SHARED_CONTRACT_POLICY = {
@@ -379,6 +362,7 @@ var APPLICATION = {
   },
   DEFAULT_FINAL_DESTINATION_KNOWN: LATEST_VERSION.DEFAULT_FINAL_DESTINATION_KNOWN
 };
+var application_default = APPLICATION;
 
 // constants/external-apis.ts
 var EXTERNAL_API_DEFINITIONS = {
@@ -420,7 +404,7 @@ var EXTERNAL_API_ENDPOINTS = {
 };
 
 // constants/field-values/index.ts
-var { POLICY_TYPE, POLICY_AND_EXPORT } = APPLICATION;
+var { POLICY_TYPE, POLICY_AND_EXPORT } = application_default;
 var FIELD_VALUES = {
   OPTIONAL_COOKIES: {
     ACCEPT: "accept",
@@ -537,7 +521,7 @@ var DATE_30_MINUTES_FROM_NOW = () => {
   const future = new Date(now.getTime() + minutes * milliseconds);
   return future;
 };
-var ACCOUNT2 = {
+var ACCOUNT = {
   EMAIL: {
     VERIFICATION_EXPIRY: DATE_24_HOURS_FROM_NOW
   },
@@ -641,6 +625,26 @@ var DATE_FORMAT = {
   DEFAULT: "d MMMM yyyy",
   HOURS_AND_MINUTES: "HH:mm"
 };
+
+// constants/field-ids/insurance/account/index.ts
+var ACCOUNT2 = {
+  FIRST_NAME: "firstName",
+  LAST_NAME: "lastName",
+  EMAIL: "email",
+  PASSWORD: "password",
+  SALT: "salt",
+  HASH: "hash",
+  SECURITY_CODE: "securityCode",
+  IS_VERIFIED: "isVerified",
+  IS_BLOCKED: "isBlocked",
+  PASSWORD_RESET_HASH: "passwordResetHash",
+  PASSWORD_RESET_EXPIRY: "passwordResetExpiry",
+  REACTIVATION_HASH: "reactivationHash",
+  REACTIVATION_EXPIRY: "reactivationExpiry",
+  VERIFICATION_HASH: "verificationHash",
+  VERIFICATION_EXPIRY: "verificationExpiry"
+};
+var account_default2 = ACCOUNT2;
 
 // helpers/update-application/index.ts
 var timestamp = async (context, applicationId) => {
@@ -1116,7 +1120,7 @@ var lists = {
         if (operation === "create") {
           const { email } = resolvedData;
           const requestedEmail = String(email);
-          const account = await get_account_by_field_default(context, account_default.EMAIL, requestedEmail);
+          const account = await get_account_by_field_default(context, account_default2.EMAIL, requestedEmail);
           if (account) {
             throw new Error(`Unable to create a new account for ${requestedEmail} - account already exists`);
           }
@@ -1840,7 +1844,7 @@ var import_crypto2 = __toESM(require("crypto"));
 
 // helpers/encrypt-password/index.ts
 var import_crypto = __toESM(require("crypto"));
-var { ENCRYPTION } = ACCOUNT2;
+var { ENCRYPTION } = ACCOUNT;
 var {
   RANDOM_BYTES_SIZE,
   STRING_TYPE,
@@ -2081,6 +2085,7 @@ var application = {
     }
   }
 };
+var application_default2 = application;
 
 // emails/documents/index.ts
 var documentsEmail = async (variables, templateId) => {
@@ -2139,14 +2144,14 @@ var sendEmail = {
   securityCodeEmail,
   passwordResetLink,
   reactivateAccountLink,
-  application,
+  application: application_default2,
   documentsEmail,
   insuranceFeedbackEmail
 };
 var emails_default = sendEmail;
 
 // custom-resolvers/mutations/create-an-account/index.ts
-var { EMAIL, ENCRYPTION: ENCRYPTION2 } = ACCOUNT2;
+var { EMAIL, ENCRYPTION: ENCRYPTION2 } = ACCOUNT;
 var {
   STRING_TYPE: STRING_TYPE2,
   PBKDF2: { ITERATIONS: ITERATIONS2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 },
@@ -2158,7 +2163,7 @@ var createAnAccount = async (root, variables, context) => {
   console.info("Creating new account for %s", variables.email);
   try {
     const { urlOrigin, firstName, lastName, email, password: password2 } = variables;
-    const account = await get_account_by_field_default(context, account_default.EMAIL, email);
+    const account = await get_account_by_field_default(context, account_default2.EMAIL, email);
     if (account) {
       console.info("Unable to create a new account for %s - account already exists", variables.email);
       return { success: false };
@@ -2259,11 +2264,7 @@ var delete_an_account_default = deleteAnAccount;
 
 // custom-resolvers/mutations/verify-account-email-address/index.ts
 var import_date_fns3 = require("date-fns");
-var {
-  INSURANCE: {
-    ACCOUNT: { EMAIL: EMAIL2, VERIFICATION_HASH, VERIFICATION_EXPIRY }
-  }
-} = FIELD_IDS;
+var { EMAIL: EMAIL2, VERIFICATION_HASH, VERIFICATION_EXPIRY } = account_default2;
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
     console.info("Verifying account email address");
@@ -2370,7 +2371,7 @@ var send_email_confirm_email_address_default2 = sendEmailConfirmEmailAddressMuta
 
 // helpers/get-password-hash/index.ts
 var import_crypto3 = __toESM(require("crypto"));
-var { ENCRYPTION: ENCRYPTION3 } = ACCOUNT2;
+var { ENCRYPTION: ENCRYPTION3 } = ACCOUNT;
 var {
   STRING_TYPE: STRING_TYPE3,
   PBKDF2: { ITERATIONS: ITERATIONS3, DIGEST_ALGORITHM: DIGEST_ALGORITHM3 },
@@ -2429,7 +2430,7 @@ var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
 
 // helpers/should-block-account/index.ts
 var import_date_fns4 = require("date-fns");
-var { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT2;
+var { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT;
 var shouldBlockAccount = async (context, accountId) => {
   console.info("Checking account authentication retries %s", accountId);
   try {
@@ -2480,7 +2481,7 @@ var import_date_fns5 = require("date-fns");
 // helpers/generate-otp/index.ts
 var import_crypto4 = __toESM(require("crypto"));
 var import_otplib = require("otplib");
-var { ENCRYPTION: ENCRYPTION4, OTP } = ACCOUNT2;
+var { ENCRYPTION: ENCRYPTION4, OTP } = ACCOUNT;
 var {
   RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE2,
   STRING_TYPE: STRING_TYPE4,
@@ -2540,7 +2541,7 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
 var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
 
 // custom-resolvers/mutations/account-sign-in/account-checks/index.ts
-var { EMAIL: EMAIL3 } = ACCOUNT2;
+var { EMAIL: EMAIL3 } = ACCOUNT;
 var accountChecks = async (context, account, urlOrigin) => {
   try {
     console.info("Signing in account - checking account");
@@ -2596,7 +2597,7 @@ var accountSignIn = async (root, variables, context) => {
   try {
     console.info("Signing in account");
     const { urlOrigin, email, password: password2 } = variables;
-    const accountData = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    const accountData = await get_account_by_field_default(context, account_default2.EMAIL, email);
     if (!accountData) {
       console.info("Unable to validate account - no account found");
       return { success: false };
@@ -2672,7 +2673,7 @@ var import_date_fns6 = require("date-fns");
 
 // helpers/is-valid-otp/index.ts
 var import_crypto5 = __toESM(require("crypto"));
-var { ENCRYPTION: ENCRYPTION5 } = ACCOUNT2;
+var { ENCRYPTION: ENCRYPTION5 } = ACCOUNT;
 var {
   STRING_TYPE: STRING_TYPE5,
   PBKDF2: { ITERATIONS: ITERATIONS5, DIGEST_ALGORITHM: DIGEST_ALGORITHM5 },
@@ -2723,7 +2724,7 @@ var {
     KEY: { SIGNATURE, ENCODING, STRING_ENCODING },
     TOKEN: { EXPIRY, ALGORITHM }
   }
-} = ACCOUNT2;
+} = ACCOUNT;
 var PRIV_KEY = Buffer.from(SIGNATURE, ENCODING).toString(STRING_ENCODING);
 var createJWT = (accountId) => {
   const sessionIdentifier = import_crypto6.default.randomBytes(RANDOM_BYTES_SIZE3).toString(STRING_TYPE6);
@@ -2748,7 +2749,7 @@ var create_jwt_default = create;
 // custom-resolvers/mutations/verify-account-sign-in-code/index.ts
 var {
   JWT: { SESSION_EXPIRY }
-} = ACCOUNT2;
+} = ACCOUNT;
 var verifyAccountSignInCode = async (root, variables, context) => {
   try {
     console.info("Verifying account sign in code");
@@ -2818,7 +2819,7 @@ var addAndGetOTP = async (root, variables, context) => {
   try {
     console.info("Adding OTP to an account");
     const { email } = variables;
-    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    const account = await get_account_by_field_default(context, account_default2.EMAIL, email);
     if (!account) {
       console.info("Unable to generate and add OTP to an account - no account found");
       return { success: false };
@@ -2845,12 +2846,12 @@ var {
       PBKDF2: { KEY_LENGTH: KEY_LENGTH6 }
     }
   }
-} = ACCOUNT2;
+} = ACCOUNT;
 var sendEmailPasswordResetLink = async (root, variables, context) => {
   try {
     console.info("Received a password reset request - checking account");
     const { urlOrigin, email } = variables;
-    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    const account = await get_account_by_field_default(context, account_default2.EMAIL, email);
     if (!account) {
       console.info("Unable to check account and send password reset email - no account found");
       return { success: false };
@@ -2880,7 +2881,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
     const passwordResetHash = import_crypto7.default.pbkdf2Sync(email, account.salt, ITERATIONS6, KEY_LENGTH6, DIGEST_ALGORITHM6).toString(STRING_TYPE7);
     const accountUpdate = {
       passwordResetHash,
-      passwordResetExpiry: ACCOUNT2.PASSWORD_RESET_EXPIRY()
+      passwordResetExpiry: ACCOUNT.PASSWORD_RESET_EXPIRY()
     };
     console.info("Updating account for password reset");
     await context.db.Account.updateOne({
@@ -2957,7 +2958,7 @@ var accountPasswordReset = async (root, variables, context) => {
   console.info("Resetting account password");
   try {
     const { token, password: newPassword } = variables;
-    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD_RESET_HASH, token);
+    const account = await get_account_by_field_default(context, account_default2.PASSWORD_RESET_HASH, token);
     if (!account) {
       console.info("Unable to reset account password - account does not exist");
       return { success: false };
@@ -3042,7 +3043,7 @@ var {
       PBKDF2: { KEY_LENGTH: KEY_LENGTH7 }
     }
   }
-} = ACCOUNT2;
+} = ACCOUNT;
 var sendEmailReactivateAccountLink = async (root, variables, context) => {
   try {
     console.info("Received a request to send reactivate account email/link - checking account");
@@ -3057,7 +3058,7 @@ var sendEmailReactivateAccountLink = async (root, variables, context) => {
     const reactivationHash = import_crypto8.default.pbkdf2Sync(email, account.salt, ITERATIONS7, KEY_LENGTH7, DIGEST_ALGORITHM7).toString(STRING_TYPE8);
     const accountUpdate = {
       reactivationHash,
-      reactivationExpiry: ACCOUNT2.REACTIVATION_EXPIRY()
+      reactivationExpiry: ACCOUNT.REACTIVATION_EXPIRY()
     };
     console.info("Updating account for reactivation");
     await context.db.Account.updateOne({
@@ -3229,7 +3230,7 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 };
 var delete_application_by_reference_number_default = deleteApplicationByReferenceNumber;
 
-// types.ts
+// types/index.ts
 var import_types2 = __toESM(require("@keystone-6/core/types"));
 
 // helpers/map-sic-codes/index.ts
@@ -3883,7 +3884,7 @@ var DEFAULT = {
 };
 
 // content-strings/XLSX.ts
-var { FIRST_NAME, LAST_NAME } = account_default;
+var { FIRST_NAME, LAST_NAME } = account_default2;
 var {
   CONTRACT_POLICY: {
     SINGLE: { CONTRACT_COMPLETION_DATE }
@@ -3945,7 +3946,7 @@ var format_time_of_day_default = formatTimeOfDay;
 
 // generate-xlsx/map-application-to-XLSX/map-key-information/index.ts
 var { FIELDS: FIELDS2 } = XLSX;
-var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL5 } = account_default;
+var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL5 } = account_default2;
 var mapKeyInformation = (application2) => {
   const mapped = [
     xlsx_row_default(REFERENCE_NUMBER.SUMMARY.TITLE, application2.referenceNumber),
@@ -4480,7 +4481,7 @@ var getAccountPasswordResetToken = async (root, variables, context) => {
   console.info("Getting account password reset token");
   try {
     const { email } = variables;
-    const account = await get_account_by_field_default(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    const account = await get_account_by_field_default(context, account_default2.EMAIL, email);
     if (!account) {
       console.info("Unable to get account password reset token - account does not exist");
       return { success: false };
@@ -4853,9 +4854,7 @@ var get_companies_house_information_default = getCompaniesHouseInformation;
 
 // custom-resolvers/queries/verify-account-password-reset-token/index.ts
 var import_date_fns10 = require("date-fns");
-var {
-  ACCOUNT: { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY }
-} = FIELD_IDS.INSURANCE;
+var { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY } = account_default2;
 var verifyAccountPasswordResetToken = async (root, variables, context) => {
   console.info("Verifying account password reset token");
   try {

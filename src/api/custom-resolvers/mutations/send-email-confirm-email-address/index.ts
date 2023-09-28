@@ -1,5 +1,5 @@
 import confirmEmailAddressEmail from '../../../helpers/send-email-confirm-email-address';
-import { Context, SendExporterEmailVariables } from '../../../types';
+import { Context, SendConfirmEmailAddressVariables } from '../../../types';
 
 /**
  * sendEmailConfirmEmailAddress
@@ -8,7 +8,7 @@ import { Context, SendExporterEmailVariables } from '../../../types';
  * @param {Object} KeystoneJS context API
  * @returns {Object} Object with success flag / result of sendEmailConfirmEmailAddress
  */
-const sendEmailConfirmEmailAddressMutation = async (root: any, variables: SendExporterEmailVariables, context: Context) => {
+const sendEmailConfirmEmailAddressMutation = async (root: any, variables: SendConfirmEmailAddressVariables, context: Context) => {
   try {
     const emailResponse = await confirmEmailAddressEmail.send(context, variables.urlOrigin, variables.accountId);
 
