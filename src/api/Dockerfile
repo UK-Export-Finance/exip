@@ -69,7 +69,7 @@ COPY --chown=node:node --from=build /app/package.json .
 COPY --chown=node:node --from=build /app/package-lock.json .
 COPY --chown=node:node --from=build /app/keystone.ts .
 COPY --chown=node:node --from=build /app/schema.ts .
-COPY --chown=node:node --from=build /app/types.ts .
+COPY --chown=node:node --from=build /app/types ./types
 COPY --chown=node:node --from=build /app/schema.graphql .
 COPY --chown=node:node --from=build /app/schema.prisma .
 COPY --chown=node:node --from=build /app/auth.ts .
