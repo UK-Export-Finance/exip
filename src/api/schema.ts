@@ -499,6 +499,9 @@ export const lists = {
       totalEmployeesInternational: integer(),
       estimatedAnnualTurnover: integer(),
       exportsTurnoverPercentage: integer(),
+      businessContactDetail: relationship({
+        ref: 'BusinessContactDetail.business',
+      }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -506,6 +509,16 @@ export const lists = {
           await updateApplication.timestamp(context, item.applicationId);
         }
       },
+    },
+    access: allowAll,
+  }),
+  BusinessContactDetail: list({
+    fields: {
+      business: relationship({ ref: 'Business.businessContactDetail' }),
+      firstName: text(),
+      lastName: text(),
+      email: text(),
+      position: text(),
     },
     access: allowAll,
   }),

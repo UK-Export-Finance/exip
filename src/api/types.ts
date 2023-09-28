@@ -24,12 +24,14 @@ interface ApplicationPolicyContact extends ApplicationRelationship {
 }
 
 interface ApplicationBusiness extends ApplicationRelationship {
+  businessContactDetail: ApplicationBusinessContactDetail;
   goodsOrServicesSupplied: string;
   totalYearsExporting: string;
   totalEmployeesInternational: string;
   totalEmployeesUK: string;
   estimatedAnnualTurnover: string;
   exportsTurnoverPercentage: string;
+  businessContactDetailId: string;
 }
 
 interface CisCountry {

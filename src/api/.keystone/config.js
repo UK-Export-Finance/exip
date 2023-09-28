@@ -1157,7 +1157,10 @@ var lists = {
       totalEmployeesUK: (0, import_fields.integer)(),
       totalEmployeesInternational: (0, import_fields.integer)(),
       estimatedAnnualTurnover: (0, import_fields.integer)(),
-      exportsTurnoverPercentage: (0, import_fields.integer)()
+      exportsTurnoverPercentage: (0, import_fields.integer)(),
+      businessContactDetail: (0, import_fields.relationship)({
+        ref: "BusinessContactDetail.business"
+      })
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -1165,6 +1168,16 @@ var lists = {
           await update_application_default.timestamp(context, item.applicationId);
         }
       }
+    },
+    access: import_access.allowAll
+  }),
+  BusinessContactDetail: (0, import_core2.list)({
+    fields: {
+      business: (0, import_fields.relationship)({ ref: "Business.businessContactDetail" }),
+      firstName: (0, import_fields.text)(),
+      lastName: (0, import_fields.text)(),
+      email: (0, import_fields.text)(),
+      position: (0, import_fields.text)()
     },
     access: import_access.allowAll
   }),
