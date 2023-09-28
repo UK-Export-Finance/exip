@@ -46,9 +46,7 @@ context('Insurance - Account - Suspended - Verify email - Visit with an expired 
 
       const accountsResponse = await api.getAccountByEmail(accountEmail);
 
-      const { data } = accountsResponse.body;
-
-      const [firstAccount] = data.accounts;
+      const [firstAccount] = accountsResponse;
       const account = firstAccount;
 
       /**

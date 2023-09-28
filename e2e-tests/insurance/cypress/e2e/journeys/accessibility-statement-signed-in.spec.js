@@ -13,7 +13,7 @@ context('Accessibility statement page - Insurance - Signed in', () => {
 
   beforeEach(() => {
     cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
-      dashboardUrl = `${Cypress.config('baseUrl')}${ROOT}/${refNumber}${ALL_SECTIONS}`;
+      dashboardUrl = `${baseUrl}${ROOT}/${refNumber}${ALL_SECTIONS}`;
     });
 
     partials.footer.supportLinks.accessibilityStatement().click();
