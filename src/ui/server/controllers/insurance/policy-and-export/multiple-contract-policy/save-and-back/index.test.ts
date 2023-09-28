@@ -2,7 +2,7 @@ import { post } from '.';
 import { ROUTES } from '../../../../../constants';
 import { FIELD_IDS } from '..';
 import constructPayload from '../../../../../helpers/construct-payload';
-import mapAndSave from '../../map-and-save';
+import mapAndSave from '../../map-and-save/policy';
 import generateValidationErrors from '../validation';
 import { Request, Response } from '../../../../../../types';
 import { mockApplication, mockReq, mockRes } from '../../../../../test-mocks';
@@ -15,7 +15,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy/save-
   let req: Request;
   let res: Response;
 
-  jest.mock('../../map-and-save');
+  jest.mock('../../map-and-save/policy');
 
   let mockMapAndSave = jest.fn(() => Promise.resolve(true));
   mapAndSave.policy = mockMapAndSave;

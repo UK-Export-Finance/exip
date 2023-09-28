@@ -14,6 +14,8 @@ import {
   ApplicationBuyerApiInput,
   ApplicationBuyerUiInput,
   ApplicationVersion,
+  ApplicationOwner,
+  ApplicationPolicyContact,
 } from './application';
 import { ApolloResponse } from './apollo';
 import { CompanyDetails, SicCode } from './company-details';
@@ -69,6 +71,8 @@ export {
   ApplicationBuyerUiInput,
   ApplicationVersion,
   ApolloResponse,
+  ApplicationOwner,
+  ApplicationPolicyContact,
   CompanyDetails,
   CompanyHouseResponse,
   Connect,

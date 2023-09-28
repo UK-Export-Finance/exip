@@ -1,6 +1,6 @@
-import { RequestBody } from '../../../../../types';
-import { FIELD_IDS } from '../../../../constants';
-import createTimestampFromNumbers from '../../../../helpers/date/create-timestamp-from-numbers';
+import { RequestBody } from '../../../../../../types';
+import { FIELD_IDS } from '../../../../../constants';
+import createTimestampFromNumbers from '../../../../../helpers/date/create-timestamp-from-numbers';
 
 const {
   POLICY_AND_EXPORTS: {

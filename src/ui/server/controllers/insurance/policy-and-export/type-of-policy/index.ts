@@ -9,7 +9,7 @@ import { objectHasKeysAndValues } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
 import { isMultiplePolicyType, isSinglePolicyType } from '../../../../helpers/policy-type';
 import constructPayload from '../../../../helpers/construct-payload';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
 
 const {

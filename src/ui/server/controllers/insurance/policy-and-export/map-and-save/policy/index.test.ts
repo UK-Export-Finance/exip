@@ -1,9 +1,9 @@
 import mapAndSave from '.';
-import { FIELD_IDS } from '../../../../constants';
-import mapSubmittedData from '../map-submitted-data';
-import save from '../save-data';
-import generateValidationErrors from '../single-contract-policy/validation';
-import { mockApplication } from '../../../../test-mocks';
+import { FIELD_IDS } from '../../../../../constants';
+import mapSubmittedData from '../../map-submitted-data/policy';
+import save from '../../save-data/policy';
+import generateValidationErrors from '../../single-contract-policy/validation';
+import { mockApplication } from '../../../../../test-mocks';
 
 const {
   POLICY_AND_EXPORTS: {
@@ -11,8 +11,8 @@ const {
   },
 } = FIELD_IDS.INSURANCE;
 
-describe('controllers/insurance/policy-and-export/map-and-save', () => {
-  jest.mock('../save-data');
+describe('controllers/insurance/policy-and-export/map-and-save/policy', () => {
+  jest.mock('../../save-data/policy');
 
   let mockFormBody = {
     _csrf: '1234',

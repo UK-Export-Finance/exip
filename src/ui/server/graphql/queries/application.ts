@@ -42,6 +42,14 @@ const applicationQuery = gql`
           totalSalesToBuyer
           maximumBuyerWillOwe
         }
+        policyContact {
+          id
+          firstName
+          lastName
+          email
+          position
+          isSameAsOwner
+        }
         exportContract {
           id
           goodsOrServicesDescription
@@ -49,6 +57,9 @@ const applicationQuery = gql`
         }
         owner {
           id
+          firstName
+          lastName
+          email
         }
         company {
           id
