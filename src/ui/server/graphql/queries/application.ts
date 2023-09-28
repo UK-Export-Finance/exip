@@ -96,6 +96,13 @@ const applicationQuery = gql`
           totalEmployeesInternational
           estimatedAnnualTurnover
           exportsTurnoverPercentage
+          businessContactDetail {
+            id
+            firstName
+            lastName
+            email
+            position
+          }
         }
         broker {
           id

@@ -26,7 +26,11 @@ const getNameEmailPositionFromOwnerAndPolicy = (owner: ApplicationOwner, policyC
 
   let nameOnPolicy;
 
-  // if IS_SAME_AS_OWNER is set to true, then SAME_NAME so radio can be checked
+  /**
+   * 1) If IS_SAME_AS_OWNER is set to true, set the policy contact name as SAME_NAME.
+   * 2) If IS_SAME_AS_OWNER is false, set the policy contact name as OTHER_NAME.
+   * This ensures that if IS_SAME_AS_OWNER is null or undefined, we do not set anything.
+   */
   if (policyContact[IS_SAME_AS_OWNER] === true) {
     nameOnPolicy = SAME_NAME;
   }
