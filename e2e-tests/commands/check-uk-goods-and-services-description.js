@@ -4,13 +4,14 @@ import { UK_GOODS_AND_SERVICES_DESCRIPTION } from '../content-strings';
 const CONTENT_STRINGS = UK_GOODS_AND_SERVICES_DESCRIPTION;
 
 const checkDescriptionSummaryText = () => {
-  partials.ukGoodsOrServicesDescription.summary().should('exist');
-
   cy.checkText(partials.ukGoodsOrServicesDescription.summary(), CONTENT_STRINGS.INTRO);
+
+  partials.ukGoodsOrServicesDescription.details().should('not.have.attr', 'open');
 };
 
 const checkDescriptionSummaryClickRevealsContent = () => {
   partials.ukGoodsOrServicesDescription.summary().click();
+  partials.ukGoodsOrServicesDescription.details().should('have.attr', 'open');
 
   partials.ukGoodsOrServicesDescription.includes.intro().should('be.visible');
 };

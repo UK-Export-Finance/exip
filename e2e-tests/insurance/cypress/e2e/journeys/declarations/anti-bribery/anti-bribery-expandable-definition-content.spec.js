@@ -20,6 +20,8 @@ const { expandable } = antiBriberyPage;
 
 const { INTRO, TABLE } = CONTENT_STRINGS.EXPANDABLE;
 
+const baseUrl = Cypress.config('baseUrl');
+
 const assertTermColumn = (selector, content) => {
   cy.checkText(selector, content.TERM);
 };
@@ -41,7 +43,7 @@ context('Insurance - Declarations - Anti-bribery page - expandable `definition` 
 
       cy.completeAndSubmitDeclarationConfidentiality();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 
       cy.assertUrl(url);
     });

@@ -3,7 +3,7 @@ import { Request, Response } from '../../../types';
 import { integrity } from '.';
 import { INTEGRITY } from '../../constants';
 
-const { GOVUK, FORM, COOKIES, GA, MOJ, ACCESSIBILITY } = INTEGRITY;
+const { JS, GOVUK, FORM, COOKIES, GA, MOJ, ACCESSIBILITY } = INTEGRITY;
 const req: Request = mockReq();
 const res: Response = mockRes();
 const next = mockNext;
@@ -13,6 +13,7 @@ describe('middleware/integrity', () => {
     integrity(req, res, next);
 
     expect(res.locals.SRI).toEqual({
+      JS,
       GOVUK,
       FORM,
       COOKIES,
@@ -25,6 +26,7 @@ describe('middleware/integrity', () => {
   it('should have all SRI defined', () => {
     integrity(req, res, next);
 
+    expect(res.locals.SRI?.JS).toBeDefined();
     expect(res.locals.SRI?.ACCESSIBILITY).toBeDefined();
     expect(res.locals.SRI?.MOJ).toBeDefined();
     expect(res.locals.SRI?.GOVUK).toBeDefined();
@@ -36,6 +38,7 @@ describe('middleware/integrity', () => {
   it('should have all SRI calculated using SHA512', () => {
     integrity(req, res, next);
 
+    expect(res.locals.SRI?.JS).toContain('sha512');
     expect(res.locals.SRI?.ACCESSIBILITY).toContain('sha512');
     expect(res.locals.SRI?.MOJ).toContain('sha512');
     expect(res.locals.SRI?.GOVUK).toContain('sha512');

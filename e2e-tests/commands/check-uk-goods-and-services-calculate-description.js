@@ -4,13 +4,14 @@ import { UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION } from '../content-strings'
 const CONTENT_STRINGS = UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION;
 
 const checkCalculateDescriptionSummaryText = () => {
-  partials.ukGoodsOrServicesCalculateDescription.summary().should('exist');
-
   cy.checkText(partials.ukGoodsOrServicesCalculateDescription.summary(), CONTENT_STRINGS.INTRO);
+
+  partials.ukGoodsOrServicesCalculateDescription.details().should('not.have.attr', 'open');
 };
 
 const checkCalculateDescriptionSummaryClickRevealsContent = () => {
   partials.ukGoodsOrServicesCalculateDescription.summary().click();
+  partials.ukGoodsOrServicesCalculateDescription.details().should('have.attr', 'open');
 
   partials.ukGoodsOrServicesCalculateDescription.list.intro().should('be.visible');
 };
