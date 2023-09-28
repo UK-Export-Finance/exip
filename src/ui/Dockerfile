@@ -6,10 +6,10 @@ FROM node:20.7.0-alpine3.17 AS build
 
 # Build variables
 ARG GITHUB_SHA
-ARG PORT
+ARG UI_PORT
 ARG NODE_ENV
 ENV GITHUB_SHA=$GITHUB_SHA
-ENV PORT=$PORT
+ENV UI_PORT=$UI_PORT
 ENV NODE_ENV=$NODE_ENV
 
 WORKDIR /app
@@ -64,7 +64,7 @@ HEALTHCHECK \
 CMD wget \
 --no-verbose \
 --tries=3 \
---spider http://localhost:${PORT} \
+--spider http://localhost:${UI_PORT} \
 || exit 1
 
 # Execute Script
