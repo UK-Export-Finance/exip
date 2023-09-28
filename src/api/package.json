@@ -13,7 +13,7 @@
   "license": "MIT",
   "author": "UK Export Finance",
   "scripts": {
-    "build": "keystone build",
+    "build": "keystone build --no-ui",
     "dev": "keystone dev  --no-ui",
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",

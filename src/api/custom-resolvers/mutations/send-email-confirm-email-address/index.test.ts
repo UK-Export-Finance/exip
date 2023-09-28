@@ -3,13 +3,13 @@ import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
 import accounts from '../../../test-helpers/accounts';
 import { mockAccount, mockSendEmailResponse } from '../../../test-mocks';
-import { Account, Context, SendExporterEmailVariables } from '../../../types';
+import { Account, Context, SendConfirmEmailAddressVariables } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
 describe('custom-resolvers/send-email-confirm-email-address', () => {
   let context: Context;
   let account: Account;
-  let variables: SendExporterEmailVariables;
+  let variables: SendConfirmEmailAddressVariables;
 
   let sendConfirmEmailAddressEmailSpy = jest.fn();
 
