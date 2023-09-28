@@ -197,7 +197,13 @@ jobs:
             "check-your-answers/your-business/**/*.spec.js",
             "check-your-answers/your-buyer/**/*.spec.js",
             "dashboard/**/*.spec.js",
-            "declarations/**/*.spec.js",
+
+            # "declarations/**/*.spec.js",
+            "declarations/anti-bribery/**/*.spec.js",
+            "declarations/confidentiality/**/*.spec.js",
+            "declarations/confirmation-and-acknowledgements/**/*.spec.js",
+            "declarations/how-your-data-will-be-used/**/*.spec.js",
+
             "eligibility/**/*.spec.js",
             "feedback/**/*.spec.js",
             "no-access-application-submitted/**/*.spec.js",
