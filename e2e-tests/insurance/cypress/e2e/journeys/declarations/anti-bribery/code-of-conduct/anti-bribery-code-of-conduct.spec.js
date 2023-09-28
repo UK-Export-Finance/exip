@@ -106,7 +106,6 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
     });
 
     it('should NOT render conditional `we will email you` hint without selecting the "yes" radio', () => {
-      // yesRadio(FIELD_ID).hint().should('not.be.visible');
       codeOfConductPage.revealText().should('not.be.visible');
     });
 
