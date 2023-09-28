@@ -1,7 +1,7 @@
 import { FIELD_IDS, FIELD_VALUES } from '../../constants';
 import { summaryList } from '../../pages/shared';
 import { FIELDS_ELIGIBILITY as FIELDS } from '../../content-strings/fields/insurance/eligibility';
-import mockCountries from '../../fixtures/countries';
+import { country } from '../../fixtures/application';
 import getSummaryListField from './get-summary-list-field';
 
 const {
@@ -21,7 +21,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const fieldId = BUYER_COUNTRY;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = mockCountries[1].name;
+    const expectedValue = country.name;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },

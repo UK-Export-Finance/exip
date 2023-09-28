@@ -31,16 +31,21 @@ const signInAndAssertAllSectionsUrl = ({
     // submit the OTP security code
     submitButton().click();
 
-    if (!referenceNumber) {
+    if (referenceNumber) {
+      // assert that we are on the "all sections" application page.
+      const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+
+      cy.assertUrl(expectedUrl);
+    } else {
       cy.getReferenceNumber().then((refNumber) => {
         applicationReferenceNumber = refNumber;
+
+        // assert that we are on the "all sections" application page.
+        const expectedUrl = `${baseUrl}${ROOT}/${refNumber}${ALL_SECTIONS}`;
+
+        cy.assertUrl(expectedUrl);
       });
     }
-
-    // assert that we are on the "all sections" application page.
-    const expectedUrl = `${baseUrl}${ROOT}/${applicationReferenceNumber}${ALL_SECTIONS}`;
-
-    cy.assertUrl(expectedUrl);
   }).then(() => ({
     accountId,
     referenceNumber: applicationReferenceNumber,

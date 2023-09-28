@@ -37,7 +37,6 @@ Cypress.Commands.add('createAnAccountAndBecomeBlocked', require('../../../comman
 Cypress.Commands.add('completeSignInAndGoToDashboard', require('../../../commands/insurance/account/complete-sign-in-and-go-to-dashboard'));
 
 Cypress.Commands.add('signInAndGoToUrl', require('../../../commands/insurance/account/sign-in-and-go-to-url'));
-Cypress.Commands.add('signInAndAssertAllSectionsUrl', require('../../../commands/insurance/account/sign-in-and-assert-all-sections-url'));
 
 Cypress.Commands.add('completeAndSubmitPolicyTypeForm', require('../../../commands/insurance/complete-and-submit-policy-type-form'));
 Cypress.Commands.add('completeAndSubmitSingleContractPolicyForm', require('../../../commands/insurance/complete-and-submit-single-contract-policy-form'));

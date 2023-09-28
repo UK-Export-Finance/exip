@@ -23,7 +23,7 @@ context('Tell us about your multiple policy page - Signed in', () => {
   const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
   before(() => {
-    cy.completeSignInAndGoToApplication({});
+    cy.completeSignInAndGoToApplication({ createApplicationViaApi: false });
     cy.login();
 
     completeAndSubmitBuyerCountryForm();

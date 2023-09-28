@@ -200,4 +200,8 @@ const application = {
   },
 };
 
+export const country = {
+  ...mockCountries[1],
+};
+
 export default application;
