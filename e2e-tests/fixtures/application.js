@@ -6,7 +6,6 @@ import {
 } from '../constants';
 import { GBP_CURRENCY_CODE } from './currencies';
 import mockCountries from './countries';
-import { FIELDS_ELIGIBILITY } from '../content-strings/fields/insurance/eligibility';
 import sicCodes from './sic-codes';
 
 const {
@@ -23,7 +22,6 @@ const {
       LETTER_OF_CREDIT,
       PRE_CREDIT_PERIOD,
       COMPANIES_HOUSE_NUMBER: ELIGIBILITY_COMPANIES_HOUSE_NUMBER,
-      BUYER_COUNTRY,
       HAS_MINIMUM_UK_GOODS_OR_SERVICES,
       VALID_EXPORTER_LOCATION,
     },
@@ -112,15 +110,15 @@ export const endDate = new Date(date.setMonth((date.getMonth() + 6))); // Add 6 
 
 const application = {
   ELIGIBILITY: {
-    [BUYER_COUNTRY]: mockCountries[1].name,
-    [VALID_EXPORTER_LOCATION]: FIELD_VALUES.YES,
-    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES].ANSWER,
-    [WANT_COVER_OVER_MAX_AMOUNT]: FIELD_VALUES.NO,
-    [WANT_COVER_OVER_MAX_PERIOD]: FIELD_VALUES.NO,
-    [OTHER_PARTIES_INVOLVED]: FIELD_VALUES.NO,
-    [LETTER_OF_CREDIT]: FIELD_VALUES.NO,
-    [PRE_CREDIT_PERIOD]: FIELD_VALUES.NO,
-    [ELIGIBILITY_COMPANIES_HOUSE_NUMBER]: FIELD_VALUES.YES,
+    buyerCountryIsoCode: mockCountries[1].isoCode,
+    [VALID_EXPORTER_LOCATION]: true,
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
+    [WANT_COVER_OVER_MAX_AMOUNT]: false,
+    [WANT_COVER_OVER_MAX_PERIOD]: false,
+    [OTHER_PARTIES_INVOLVED]: false,
+    [LETTER_OF_CREDIT]: false,
+    [PRE_CREDIT_PERIOD]: false,
+    [ELIGIBILITY_COMPANIES_HOUSE_NUMBER]: true,
   },
   POLICY_AND_EXPORTS: {
     [REQUESTED_START_DATE]: {

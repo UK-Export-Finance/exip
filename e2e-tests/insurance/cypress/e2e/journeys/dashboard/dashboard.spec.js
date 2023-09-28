@@ -36,7 +36,7 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
   const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       header.navigation.applications().click();

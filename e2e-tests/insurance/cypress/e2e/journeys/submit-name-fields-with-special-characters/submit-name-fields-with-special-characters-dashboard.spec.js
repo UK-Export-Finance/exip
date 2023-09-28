@@ -20,7 +20,7 @@ context('Insurance - Name fields - Dashboard fields should render special charac
   let referenceNumber;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       taskList.prepareApplication.tasks.buyer.link().click();

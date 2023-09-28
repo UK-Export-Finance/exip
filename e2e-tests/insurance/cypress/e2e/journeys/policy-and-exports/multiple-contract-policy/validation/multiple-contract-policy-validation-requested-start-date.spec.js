@@ -13,7 +13,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       taskList.prepareApplication.tasks.policyTypeAndExports.link().click();

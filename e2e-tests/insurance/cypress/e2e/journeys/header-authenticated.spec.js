@@ -25,7 +25,7 @@ context('Insurance - header - authenticated - As an Exporter, I want the system 
   const dashboardUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       allSectionsUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;

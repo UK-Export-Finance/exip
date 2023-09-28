@@ -27,7 +27,7 @@ context('Insurance - Declarations - Anti-bribery page - Save and go back', () =>
   before(() => {
     cy.deleteAccount();
 
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });

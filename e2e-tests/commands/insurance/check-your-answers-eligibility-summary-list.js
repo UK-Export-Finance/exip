@@ -1,7 +1,7 @@
-import { FIELD_IDS } from '../../constants';
+import { FIELD_IDS, FIELD_VALUES } from '../../constants';
 import { summaryList } from '../../pages/shared';
 import { FIELDS_ELIGIBILITY as FIELDS } from '../../content-strings/fields/insurance/eligibility';
-import application from '../../fixtures/application';
+import mockCountries from '../../fixtures/countries';
 import getSummaryListField from './get-summary-list-field';
 
 const {
@@ -21,7 +21,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const fieldId = BUYER_COUNTRY;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.ELIGIBILITY[fieldId];
+    const expectedValue = mockCountries[1].name;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
@@ -29,7 +29,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const fieldId = VALID_EXPORTER_LOCATION;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.ELIGIBILITY[fieldId];
+    const expectedValue = FIELD_VALUES.YES;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
@@ -37,7 +37,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const fieldId = HAS_MINIMUM_UK_GOODS_OR_SERVICES;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.ELIGIBILITY[fieldId];
+    const expectedValue = FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES].ANSWER;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
@@ -45,7 +45,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const fieldId = WANT_COVER_OVER_MAX_AMOUNT;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.ELIGIBILITY[fieldId];
+    const expectedValue = FIELD_VALUES.NO;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
@@ -53,7 +53,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const fieldId = WANT_COVER_OVER_MAX_PERIOD;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.ELIGIBILITY[fieldId];
+    const expectedValue = FIELD_VALUES.NO;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
@@ -61,7 +61,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const fieldId = OTHER_PARTIES_INVOLVED;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.ELIGIBILITY[fieldId];
+    const expectedValue = FIELD_VALUES.NO;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
@@ -69,7 +69,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const fieldId = LETTER_OF_CREDIT;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.ELIGIBILITY[fieldId];
+    const expectedValue = FIELD_VALUES.NO;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
@@ -77,7 +77,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const fieldId = PRE_CREDIT_PERIOD;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.ELIGIBILITY[fieldId];
+    const expectedValue = FIELD_VALUES.NO;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
@@ -85,7 +85,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const fieldId = COMPANIES_HOUSE_NUMBER;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.ELIGIBILITY[fieldId];
+    const expectedValue = FIELD_VALUES.YES;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },

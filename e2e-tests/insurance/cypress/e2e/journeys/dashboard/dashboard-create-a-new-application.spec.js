@@ -13,7 +13,7 @@ context('Insurance - Dashboard - Start new application button - As an Exporter, 
   let referenceNumbers;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumbers = [refNumber];
 
       header.navigation.applications().click();

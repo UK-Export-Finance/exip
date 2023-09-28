@@ -18,7 +18,7 @@ context('Insurance - Policy and exports - Complete the entire section as a singl
   let referenceNumber;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       taskList.prepareApplication.tasks.policyTypeAndExports.link().click();

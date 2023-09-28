@@ -41,7 +41,7 @@ context('Insurance - Your business - Contact page - As an Exporter I want to ent
   let natureOfBusinessUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
