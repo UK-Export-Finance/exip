@@ -66,7 +66,7 @@ context('Insurance - Account - Password reset - expired link page', () => {
 
       const accountsResponse = await api.getAccountByEmail(accountEmail);
 
-      const [firstAccount] = accountsResponse.body.data.accounts;
+      const [firstAccount] = accountsResponse;
       const account = firstAccount;
 
       /**

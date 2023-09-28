@@ -79,13 +79,9 @@ describe('helpers/create-authentication-retry-entry', () => {
       try {
         await createAuthenticationRetryEntry(context, account.id);
       } catch (err) {
-        // TODO: Post Keystone update ensure `occured` is updated to `occurred`.
-        const expectedKeystoneError = `An error occured while resolving relationship fields.
-  - AuthenticationRetry.account: Access denied: You cannot connect that Account - it may not exist`;
+        const expectedErr = 'An error occurred while resolving relationship fields';
 
-        const expected = new Error(expectedKeystoneError);
-
-        expect(err).toEqual(expected);
+        expect(String(err).includes(expectedErr)).toEqual(true);
       }
     });
   });

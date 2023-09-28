@@ -216,7 +216,7 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/insurance
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}" --env TZ=${{ env.timezone }},API_KEY=${{ secrets.API_KEY }},GOV_NOTIFY_EMAIL_RECIPIENT_1=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }},GOV_NOTIFY_EMAIL_RECIPIENT_2=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }},MOCK_ACCOUNT_PASSWORD=${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
   # 5. E2E - Quote
   e2e-tests-quote:
@@ -258,7 +258,7 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/quote
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}" --env TZ=${{ env.timezone }},API_KEY=${{ secrets.API_KEY }},GOV_NOTIFY_EMAIL_RECIPIENT_1=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }},GOV_NOTIFY_EMAIL_RECIPIENT_2=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }},MOCK_ACCOUNT_PASSWORD=${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
   # 6. E2E - Switch
   e2e-tests-switch:
@@ -303,4 +303,4 @@ jobs:
 
       - name: Execute
         working-directory: ./e2e-tests/switch-between-services
-        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}" --env TZ=${{ env.timezone }},API_KEY=${{ secrets.API_KEY }},GOV_NOTIFY_EMAIL_RECIPIENT_1=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }},GOV_NOTIFY_EMAIL_RECIPIENT_2=${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }},MOCK_ACCOUNT_PASSWORD=${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
