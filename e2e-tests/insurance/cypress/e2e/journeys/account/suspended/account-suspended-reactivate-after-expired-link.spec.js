@@ -59,10 +59,6 @@ context('Insurance - Account - Suspended - Reactivate account after verification
       };
 
       updatedAccount = await api.updateAccount(account.id, updateObj);
-
-      // cy.navigateToUrl(`${verifyEmailUrl}?token=${updatedAccount[REACTIVATION_HASH]}`);
-
-      // submitButton().click();
     });
 
     it(`should redirect to ${EMAIL_SENT}`, () => {
