@@ -2,7 +2,14 @@ import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import accounts from './accounts';
 import createAnEligibility from '../helpers/create-an-eligibility';
 import createABuyer from '../helpers/create-a-buyer';
-import { mockApplicationEligibility, mockSinglePolicy, mockExportContract, mockBusiness, mockBusinessContactDetail } from '../test-mocks/mock-application';
+import {
+  mockApplicationEligibility,
+  mockSinglePolicy,
+  mockExportContract,
+  mockBusiness,
+  mockBusinessContactDetail,
+  mockPolicyContact,
+} from '../test-mocks/mock-application';
 import { mockCompany, mockCompanySicCode, mockApplicationDeclaration } from '../test-mocks';
 import mockCountries from '../test-mocks/mock-countries';
 import {
@@ -13,6 +20,7 @@ import {
   ApplicationDeclaration,
   ApplicationExportContract,
   ApplicationPolicy,
+  ApplicationPolicyContact,
 } from '../types';
 
 /**
@@ -123,6 +131,16 @@ export const createFullApplication = async (context: Context) => {
     query: 'id firstName lastName email',
   })) as ApplicationBusinessContactDetail;
 
+  const policyContact = (await context.query.PolicyContact.createOne({
+    data: {
+      ...mockPolicyContact,
+      application: {
+        connect: { id: application.id },
+      },
+    },
+    query: 'id firstName lastName email isSameAsOwner',
+  })) as ApplicationPolicyContact;
+
   const business = (await context.query.Business.updateOne({
     where: {
       id: application.business.id,
@@ -146,6 +164,7 @@ export const createFullApplication = async (context: Context) => {
     owner: account,
     business,
     businessContactDetail,
+    policyContact,
     buyer,
     company,
     declaration,

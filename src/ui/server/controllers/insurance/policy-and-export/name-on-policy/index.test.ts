@@ -7,7 +7,8 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/policy-contact';
+import getNameEmailPositionFromOwnerAndPolicy from '../../../../helpers/get-name-email-position-from-owner-and-policy';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -28,9 +29,9 @@ describe('controllers/insurance/policy-and-export/name-on-policy', () => {
   let res: Response;
   let refNumber: number;
 
-  jest.mock('../map-and-save');
+  jest.mock('../map-and-save/policy-contact');
 
-  mapAndSave.policy = jest.fn(() => Promise.resolve(true));
+  mapAndSave.policyContact = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -85,6 +86,8 @@ describe('controllers/insurance/policy-and-export/name-on-policy', () => {
     it('should render template', async () => {
       get(req, res);
 
+      const submittedValues = getNameEmailPositionFromOwnerAndPolicy(mockApplication.owner, mockApplication.policyContact);
+
       const expectedVariables = {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.NAME_ON_POLICY,
@@ -93,6 +96,7 @@ describe('controllers/insurance/policy-and-export/name-on-policy', () => {
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mockApplication,
+        submittedValues,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -112,35 +116,68 @@ describe('controllers/insurance/policy-and-export/name-on-policy', () => {
   });
 
   describe('post', () => {
-    const validBody = {
-      [NAME]: SAME_NAME,
-      [POSITION]: 'Text',
-    };
+    mapAndSave.policyContact = jest.fn(() => Promise.resolve(true));
 
     describe('when there are no validation errors', () => {
-      beforeEach(() => {
-        req.body = validBody;
-      });
-
-      it(`should redirect to ${CHECK_YOUR_ANSWERS} when ${SAME_NAME} is selected`, async () => {
-        await post(req, res);
-
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
-
-        expect(res.redirect).toHaveBeenCalledWith(expected);
-      });
-
-      it(`should redirect to ${CHECK_YOUR_ANSWERS} when ${OTHER_NAME} is selected`, async () => {
-        req.body = {
-          [NAME]: OTHER_NAME,
+      describe(`when ${SAME_NAME} is selected`, () => {
+        const validBody = {
+          [NAME]: SAME_NAME,
           [POSITION]: 'Text',
         };
 
-        await post(req, res);
+        beforeEach(() => {
+          req.body = validBody;
+        });
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(expected);
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+
+        it('should call mapAndSave.policyContact once with data from constructPayload function', async () => {
+          req.body = validBody;
+
+          await post(req, res);
+
+          const payload = constructPayload(req.body, FIELD_IDS);
+
+          expect(mapAndSave.policyContact).toHaveBeenCalledTimes(1);
+
+          expect(mapAndSave.policyContact).toHaveBeenCalledWith(payload, mockApplication);
+        });
+      });
+
+      describe(`when ${OTHER_NAME} is selected`, () => {
+        const validBody = {
+          [NAME]: OTHER_NAME,
+        };
+
+        beforeEach(() => {
+          req.body = validBody;
+        });
+
+        it(`should redirect to ${DIFFERENT_NAME_ON_POLICY}`, async () => {
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+
+        it('should call mapAndSave.policyContact once with data from constructPayload function', async () => {
+          req.body = validBody;
+
+          await post(req, res);
+
+          const payload = constructPayload(req.body, FIELD_IDS);
+
+          expect(mapAndSave.policyContact).toHaveBeenCalledTimes(1);
+
+          expect(mapAndSave.policyContact).toHaveBeenCalledWith(payload, mockApplication);
+        });
       });
     });
 

@@ -7,6 +7,8 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
+import getNameEmailPositionFromOwnerAndPolicy from '../../../../helpers/get-name-email-position-from-owner-and-policy';
+import mapAndSave from '../map-and-save/policy-contact';
 
 const {
   INSURANCE: {
@@ -61,6 +63,8 @@ export const get = (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
   const refNumber = Number(referenceNumber);
 
+  const submittedValues = getNameEmailPositionFromOwnerAndPolicy(application.owner, application.policyContact);
+
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.NAME_ON_POLICY,
@@ -69,6 +73,7 @@ export const get = (req: Request, res: Response) => {
     ...pageVariables(refNumber),
     userName: getUserNameFromSession(req.session.user),
     application,
+    submittedValues,
   });
 };
 
@@ -94,39 +99,36 @@ export const post = async (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(payload);
 
   if (validationErrors) {
-    try {
-      return res.render(TEMPLATE, {
-        ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.NAME_ON_POLICY,
-          BACK_LINK: req.headers.referer,
-        }),
-        ...pageVariables(refNumber),
-        userName: getUserNameFromSession(req.session.user),
-        application,
-        submittedValues: payload,
-        validationErrors,
-      });
-    } catch (err) {
-      console.error('Error rendering Name on policy page %O', err);
-
-      return res.redirect(PROBLEM_WITH_SERVICE);
-    }
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY_AND_EXPORTS.NAME_ON_POLICY,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...pageVariables(refNumber),
+      userName: getUserNameFromSession(req.session.user),
+      application,
+      submittedValues: payload,
+      validationErrors,
+    });
   }
 
   try {
+    let redirectRoute = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
     if (payload[NAME] === OTHER_NAME) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`);
+      redirectRoute = `${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
     }
     // // save the application
-    // const saveResponse = await mapAndSave.policy(req.body, application);
-    // if (!saveResponse) {
-    //   return res.redirect(PROBLEM_WITH_SERVICE);
-    // }
+    const saveResponse = await mapAndSave.policyContact(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
     // if (isCheckAndChangeRoute(req.originalUrl)) {
     //   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     // }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    return res.redirect(redirectRoute);
   } catch (err) {
     console.error('Error updating application - policy and exports - name on policy %O', err);
 
