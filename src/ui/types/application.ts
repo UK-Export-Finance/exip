@@ -4,6 +4,9 @@ import { Country } from './country';
 
 interface ApplicationOwner {
   id: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
 }
 
 type ApplicationCore = {
@@ -157,6 +160,15 @@ interface ApplicationDeclaration {
   agreeHowDataWillBeUsed?: boolean;
 }
 
+interface ApplicationPolicyContact {
+  id: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  position?: string;
+  isSameAsOwner?: boolean;
+}
+
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   owner: ApplicationOwner;
@@ -168,6 +180,7 @@ interface Application extends ApplicationCore {
   buyer: ApplicationBuyer;
   sectionReview: ApplicationSectionReview;
   declaration: ApplicationDeclaration;
+  policyContact: ApplicationPolicyContact;
 }
 
 interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore, ApplicationOwner {
@@ -199,4 +212,6 @@ export {
   ApplicationSectionReview,
   ApplicationDeclaration,
   ApplicationVersion,
+  ApplicationOwner,
+  ApplicationPolicyContact,
 };

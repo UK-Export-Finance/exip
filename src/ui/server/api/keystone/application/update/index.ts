@@ -6,6 +6,7 @@ import company from './company';
 import declarations from '../declarations';
 import exportContract from './exportContract';
 import policy from './policy';
+import policyContact from './policyContact';
 import sectionReview from './sectionReview';
 
 /**
@@ -22,6 +23,7 @@ const update = {
   declarations: declarations.update,
   exportContract,
   policy,
+  policyContact,
   sectionReview,
 };
 

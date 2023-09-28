@@ -15,6 +15,13 @@ interface ApplicationBusinessContactDetail extends ApplicationRelationship {
   email: string;
   position: string;
 }
+interface ApplicationPolicyContact extends ApplicationRelationship {
+  firstName: string;
+  lastName: string;
+  email: string;
+  position: string;
+  isSameAsOwner: boolean;
+}
 
 interface ApplicationBusiness extends ApplicationRelationship {
   businessContactDetail: ApplicationBusinessContactDetail;
@@ -189,6 +196,7 @@ interface Application {
   exportContract: ApplicationExportContract;
   owner: ApplicationOwner;
   policy: ApplicationPolicy;
+  policyOwner: ApplicationPolicyContact;
   company: ApplicationCompany;
   companySicCodes: Array<ApplicationCompanySicCode>;
   companyAddress: ApplicationCompanyAddress;
@@ -197,6 +205,7 @@ interface Application {
   buyer: ApplicationBuyer;
   sectionReview: ApplicationRelationship;
   declaration: ApplicationDeclaration;
+  policyContact: ApplicationPolicyContact;
 }
 
 interface ApplicationSubmissionEmailVariables {
@@ -563,6 +572,7 @@ export {
   ApplicationCompanySicCode,
   ApplicationOwner,
   ApplicationPolicy,
+  ApplicationPolicyContact,
   ApplicationRelationship,
   ApplicationSubmissionEmailVariables,
   ApplicationVersion,

@@ -1,11 +1,11 @@
 import save from '.';
-import api from '../../../../api';
-import generateValidationErrors from '../type-of-policy/validation';
-import { sanitiseData } from '../../../../helpers/sanitise-data';
-import { FIELD_IDS, FIELD_VALUES } from '../../../../constants';
-import { mockApplication } from '../../../../test-mocks';
+import api from '../../../../../api';
+import generateValidationErrors from '../../type-of-policy/validation';
+import { sanitiseData } from '../../../../../helpers/sanitise-data';
+import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
+import { mockApplication } from '../../../../../test-mocks';
 
-describe('controllers/insurance/policy-and-export/save-data', () => {
+describe('controllers/insurance/policy-and-export/save-data/policy', () => {
   const mockUpdateApplicationResponse = mockApplication;
   let updateApplicationSpy = jest.fn(() => Promise.resolve(mockUpdateApplicationResponse));
 

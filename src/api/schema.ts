@@ -54,6 +54,7 @@ export const lists = {
       buyer: relationship({ ref: 'Buyer' }),
       sectionReview: relationship({ ref: 'SectionReview' }),
       declaration: relationship({ ref: 'Declaration' }),
+      policyContact: relationship({ ref: 'PolicyContact' }),
       version: text({
         defaultValue: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
         validation: { isRequired: true },
@@ -145,6 +146,17 @@ export const lists = {
               },
             });
 
+            // generate a new `policy contact` relationship with the policy
+            const { id: policyContactId } = await context.db.PolicyContact.createOne({
+              data: {},
+            });
+
+            modifiedData.policyContact = {
+              connect: {
+                id: policyContactId,
+              },
+            };
+
             // generate and attach a new 'broker' relationship
             const { id: brokerId } = await context.db.Broker.createOne({
               data: {},
@@ -209,7 +221,7 @@ export const lists = {
 
             const { referenceNumber } = item;
 
-            const { policyId, exportContractId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
+            const { policyId, policyContactId, exportContractId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -226,6 +238,18 @@ export const lists = {
             // add the application ID to the policy entry.
             await context.db.Policy.updateOne({
               where: { id: policyId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId,
+                  },
+                },
+              },
+            });
+
+            // add the application ID to the policy contact.
+            await context.db.PolicyContact.updateOne({
+              where: { id: policyContactId },
               data: {
                 application: {
                   connect: {
@@ -351,6 +375,17 @@ export const lists = {
     },
     access: allowAll,
   },
+  PolicyContact: list({
+    fields: {
+      application: relationship({ ref: 'Application' }),
+      firstName: text(),
+      lastName: text(),
+      email: text(),
+      position: text(),
+      isSameAsOwner: nullableCheckbox(),
+    },
+    access: allowAll,
+  }),
   ExportContract: {
     fields: {
       application: relationship({ ref: 'Application' }),

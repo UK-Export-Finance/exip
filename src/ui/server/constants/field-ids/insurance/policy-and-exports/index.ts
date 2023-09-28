@@ -39,6 +39,7 @@ const POLICY_AND_EXPORTS = {
   },
   NAME_ON_POLICY: {
     NAME: 'nameOnPolicy',
+    IS_SAME_AS_OWNER: 'isSameAsOwner',
     SAME_NAME: 'sameName',
     OTHER_NAME: 'otherName',
     POSITION: 'position',
