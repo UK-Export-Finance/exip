@@ -30,6 +30,8 @@ const {
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.HAS_ANTI_BRIBERY_CODE_OF_CONDUCT;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an Exporter, I want to confirm if I will use my company's anti - bribery code of conduct for my export insurance application, So that UKEF can refer to it as applicable when processing my export insurance application", () => {
   let referenceNumber;
   let url;
@@ -46,7 +48,7 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
       cy.completeAndSubmitDeclarationConfidentiality();
       cy.completeAndSubmitDeclarationAntiBribery();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
 
       cy.assertUrl(url);
     });
@@ -101,6 +103,19 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
 
     it('renders a submit button and `save and back` button', () => {
       cy.assertSubmitAndSaveButtons();
+    });
+
+    it('should NOT render conditional `we will email you` hint without selecting the "yes" radio', () => {
+      // yesRadio(FIELD_ID).hint().should('not.be.visible');
+      codeOfConductPage.revealText().should('not.be.visible');
+    });
+
+    it('should display conditional `we will email you` hint when selecting the "yes" radio', () => {
+      yesRadio().input().click();
+
+      codeOfConductPage.revealText().should('be.visible');
+
+      cy.checkText(codeOfConductPage.revealText(), FIELDS[FIELD_ID].ANSWER_YES_REVEAL.TEXT);
     });
   });
 

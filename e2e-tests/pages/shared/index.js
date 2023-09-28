@@ -13,12 +13,14 @@ const yesNoRadioHint = () => cy.get('[data-cy="yes-no-input-hint"]');
 const yesRadio = (fieldId) => ({
   label: () => cy.get('[data-cy="yes"]'),
   input: () => cy.get('[data-cy="yes-input"]'),
+  hint: () => cy.get(`[data-cy="${fieldId}-hint"]`),
   errorMessage: () => cy.get(`[data-cy="${fieldId}-error-message"]`),
 });
 const yesRadioInput = () => cy.get('[data-cy="yes-input"]');
 const noRadio = (fieldId) => ({
   label: () => cy.get('[data-cy="no"]'),
   input: () => cy.get('[data-cy="no-input"]'),
+  hint: () => cy.get(`[data-cy="${fieldId}-hint"]`),
   errorMessage: () => cy.get(`[data-cy="${fieldId}-error-message"]`),
 });
 const noRadioInput = () => cy.get('[data-cy="no-input"]');

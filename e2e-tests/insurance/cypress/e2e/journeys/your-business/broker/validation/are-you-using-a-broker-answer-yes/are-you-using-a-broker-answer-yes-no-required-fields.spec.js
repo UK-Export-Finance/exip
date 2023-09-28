@@ -1,4 +1,4 @@
-import { broker } from '../../../../../../../../pages/your-business';
+import { brokerPage } from '../../../../../../../../pages/your-business';
 import partials from '../../../../../../../../partials';
 import { ROUTES } from '../../../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/business';
@@ -61,20 +61,20 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
   it('should display validation errors when the yes radio is selected and no required fields are entered', () => {
     const expectedErrorsCount = 5;
 
-    const field = broker[FIELD_ID];
+    const field = brokerPage[FIELD_ID];
 
     field.yesRadioInput().click();
 
     // NAME error check
-    cy.submitAndAssertFieldErrors(broker[NAME], null, 0, expectedErrorsCount, BROKER_ERRORS[NAME].IS_EMPTY);
+    cy.submitAndAssertFieldErrors(brokerPage[NAME], null, 0, expectedErrorsCount, BROKER_ERRORS[NAME].IS_EMPTY);
 
     // ADDRESS_LINE_1 error check
-    cy.submitAndAssertFieldErrors(broker[ADDRESS_LINE_1], null, 1, expectedErrorsCount, BROKER_ERRORS[ADDRESS_LINE_1].IS_EMPTY);
+    cy.submitAndAssertFieldErrors(brokerPage[ADDRESS_LINE_1], null, 1, expectedErrorsCount, BROKER_ERRORS[ADDRESS_LINE_1].IS_EMPTY);
 
     // TOWN error check
-    cy.submitAndAssertFieldErrors(broker[TOWN], null, 2, expectedErrorsCount, BROKER_ERRORS[TOWN].IS_EMPTY);
+    cy.submitAndAssertFieldErrors(brokerPage[TOWN], null, 2, expectedErrorsCount, BROKER_ERRORS[TOWN].IS_EMPTY);
 
     // EMAIL error check
-    cy.submitAndAssertFieldErrors(broker[EMAIL], null, 3, expectedErrorsCount, BROKER_ERRORS[EMAIL].INCORRECT_FORMAT);
+    cy.submitAndAssertFieldErrors(brokerPage[EMAIL], null, 3, expectedErrorsCount, BROKER_ERRORS[EMAIL].INCORRECT_FORMAT);
   });
 });

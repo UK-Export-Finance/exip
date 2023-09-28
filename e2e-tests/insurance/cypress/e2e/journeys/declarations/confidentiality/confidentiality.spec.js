@@ -20,6 +20,8 @@ const {
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
 
+const baseUrl = Cypress.config('baseUrl');
+
 const field = singleInputField(FIELD_ID);
 
 context('Insurance - Declarations - Confidentiality page - As an Exporter, I want to make confidentiality declaration for my export insurance application, So that UKEF can be assured of my agreement with regards to confidentiality while processing my export insurance application', () => {
@@ -35,7 +37,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
       // go to the page we want to test.
       taskList.submitApplication.tasks.declarationsAndSubmit.link().click();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`;
 
       cy.assertUrl(url);
     });
@@ -145,7 +147,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
 
         cy.completeAndSubmitDeclarationConfidentiality();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
+        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 
         cy.assertUrl(expectedUrl);
       });

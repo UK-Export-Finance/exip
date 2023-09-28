@@ -23,6 +23,8 @@ const {
 
 const task = taskList.submitApplication.tasks.declarationsAndSubmit;
 
+const baseUrl = Cypress.config('baseUrl');
+
 const navigateBackToPage = () => {
   task.link().click();
 
@@ -49,7 +51,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
       cy.completeAndSubmitDeclarationConfidentiality();
       cy.completeAndSubmitDeclarationAntiBribery();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
 
       cy.assertUrl(url);
     });
@@ -71,7 +73,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });

@@ -1,7 +1,7 @@
 import {
   yesNoRadioHint, yesRadio, noRadio, noRadioInput, submitButton,
 } from '../../../../../../pages/shared';
-import { insurance } from '../../../../../../pages';
+import preCreditPeriodPage from '../../../../../../pages/insurance/eligibility/preCreditPeriod';
 import {
   FIELDS,
   PAGES,
@@ -77,41 +77,34 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
       cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
 
-    describe('expandable details', () => {
-      it('renders summary text', () => {
-        insurance.eligibility.preCreditPeriodPage.description.summary().should('exist');
-
-        cy.checkText(insurance.eligibility.preCreditPeriodPage.description.summary(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.INTRO);
+    describe('expandable details - what is the pre-credit period', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
       });
 
-      it('clicking summary text reveals details', () => {
-        insurance.eligibility.preCreditPeriodPage.description.summary().click();
+      const { description } = preCreditPeriodPage;
 
-        insurance.eligibility.preCreditPeriodPage.description.list.intro().should('be.visible');
+      it('should render summary text with collapsed conditional `details` content', () => {
+        cy.checkText(description.summary(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.INTRO);
+
+        description.details().should('not.have.attr', 'open');
       });
 
-      it('renders body text', () => {
-        insurance.eligibility.preCreditPeriodPage.description.body1().should('exist');
+      describe('when clicking the summary text', () => {
+        it('should expand the collapsed `details` content', () => {
+          description.summary().click();
 
-        cy.checkText(insurance.eligibility.preCreditPeriodPage.description.body1(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.BODY_1);
-      });
+          description.details().should('have.attr', 'open');
+          description.list.intro().should('be.visible');
 
-      it('renders expanded content', () => {
-        cy.checkText(insurance.eligibility.preCreditPeriodPage.description.list.intro(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.LIST_INTRO);
+          cy.checkText(description.list.intro(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.LIST_INTRO);
+          cy.checkText(description.list.item1(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.LIST[0].TEXT);
+          cy.checkText(description.list.item2(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.LIST[1].TEXT);
 
-        cy.checkText(insurance.eligibility.preCreditPeriodPage.description.list.item1(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.LIST[0].TEXT);
-
-        cy.checkText(insurance.eligibility.preCreditPeriodPage.description.list.item2(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.LIST[1].TEXT);
-      });
-
-      it('renders outro body text', () => {
-        insurance.eligibility.preCreditPeriodPage.description.body2().should('exist');
-
-        cy.checkText(insurance.eligibility.preCreditPeriodPage.description.body2(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.BODY_2);
-
-        insurance.eligibility.preCreditPeriodPage.description.body3().should('exist');
-
-        cy.checkText(insurance.eligibility.preCreditPeriodPage.description.body3(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.BODY_3);
+          cy.checkText(description.body1(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.BODY_1);
+          cy.checkText(description.body2(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.BODY_2);
+          cy.checkText(description.body3(), CONTENT_STRINGS.PRE_CREDIT_PERIOD_DESCRIPTION.BODY_3);
+        });
       });
     });
   });

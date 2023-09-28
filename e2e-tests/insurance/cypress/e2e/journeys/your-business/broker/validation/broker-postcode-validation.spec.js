@@ -1,4 +1,4 @@
-import { broker } from '../../../../../../../pages/your-business';
+import { brokerPage } from '../../../../../../../pages/your-business';
 import partials from '../../../../../../../partials';
 import { submitButton } from '../../../../../../../pages/shared';
 import { ROUTES, INVALID_POSTCODES, VALID_POSTCODES } from '../../../../../../../constants';
@@ -26,7 +26,7 @@ const task = taskList.prepareApplication.tasks.business;
 const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
 const ERROR_ASSERTIONS = {
-  errorField: broker[POSTCODE],
+  errorField: brokerPage[POSTCODE],
   expectedErrorsCount: 5,
   errorIndex: 4,
   errorMessageEmpty: BROKER_ERRORS[POSTCODE].IS_EMPTY,
@@ -37,7 +37,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
   let referenceNumber;
   let url;
 
-  const field = broker[FIELD_ID];
+  const field = brokerPage[FIELD_ID];
 
   before(() => {
     Cypress.session.clearAllSavedSessions();
@@ -215,7 +215,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
 
       field.yesRadioInput().click();
 
-      cy.keyboardInput(broker[POSTCODE].input(), VALID_POSTCODES.WITH_SPACE);
+      cy.keyboardInput(brokerPage[POSTCODE].input(), VALID_POSTCODES.WITH_SPACE);
       submitButton().click();
 
       partials.errorSummaryListItems().should('have.length', 4);
@@ -226,7 +226,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
 
       field.yesRadioInput().click();
 
-      cy.keyboardInput(broker[POSTCODE].input(), VALID_POSTCODES.WITHOUT_SPACE);
+      cy.keyboardInput(brokerPage[POSTCODE].input(), VALID_POSTCODES.WITHOUT_SPACE);
       submitButton().click();
 
       partials.errorSummaryListItems().should('have.length', 4);
