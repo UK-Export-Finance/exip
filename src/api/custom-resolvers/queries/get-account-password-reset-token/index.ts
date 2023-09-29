@@ -1,4 +1,4 @@
-import { FIELD_IDS } from '../../../constants';
+import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import { AccountPasswordResetTokenResponse, Context, GetAccountPasswordResetTokenVariables } from '../../../types';
 
@@ -26,7 +26,7 @@ const getAccountPasswordResetToken = async (
      * Get the account the email is associated with.
      * If an account does not exist, return success=false
      */
-    const account = await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email);
+    const account = await getAccountByField(context, ACCOUNT_FIELD_IDS.EMAIL, email);
 
     if (!account) {
       console.info('Unable to get account password reset token - account does not exist');

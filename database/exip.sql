@@ -137,6 +137,7 @@ CREATE TABLE `Application` (
 	`owner` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`version` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
 	`dealType` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'EXIP',
+  `policyContact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Application_eligibility_idx` (`eligibility`),
   KEY `Application_referenceNumber_idx` (`referenceNumber`),
@@ -149,6 +150,7 @@ CREATE TABLE `Application` (
 	KEY `Application_exportContract_idx` (`exportContract`),
 	KEY `Application_sectionReview_idx` (`sectionReview`),
 	KEY `Application_owner_idx` (`owner`),
+  KEY `Application_policyContact_idx` (`policyContact`),
 	CONSTRAINT `Application_buyer_fkey` FOREIGN KEY (`buyer`) REFERENCES `Buyer` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
 	CONSTRAINT `Application_declaration_fkey` FOREIGN KEY (`declaration`) REFERENCES `Declaration` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_eligibility_fkey` FOREIGN KEY (`eligibility`) REFERENCES `Eligibility` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -158,7 +160,8 @@ CREATE TABLE `Application` (
 	CONSTRAINT `Application_exportContract_fkey` FOREIGN KEY (`exportContract`) REFERENCES `ExportContract` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_policy_fkey` FOREIGN KEY (`policy`) REFERENCES `Policy` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
 	CONSTRAINT `Application_sectionReview_fkey` FOREIGN KEY (`sectionReview`) REFERENCES `SectionReview` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-	CONSTRAINT `Application_owner_fkey` FOREIGN KEY (`owner`) REFERENCES `Account` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+	CONSTRAINT `Application_owner_fkey` FOREIGN KEY (`owner`) REFERENCES `Account` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Application_policyContact_fkey` FOREIGN KEY (`policyContact`) REFERENCES `PolicyContact` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -677,28 +680,9 @@ CREATE TABLE `Business` (
   `totalEmployeesInternational` int DEFAULT NULL,
   `estimatedAnnualTurnover` int DEFAULT NULL,
   `exportsTurnoverPercentage` int DEFAULT NULL,
-  `businessContactDetail` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `Business_businessContactDetail_key` (`businessContactDetail`),
   KEY `Business_application_idx` (`application`),
-  CONSTRAINT `Business_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Business_businessContactDetail_fkey` FOREIGN KEY (`businessContactDetail`) REFERENCES `BusinessContactDetail` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-
-
-# Dump of table BusinessContactDetail
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `BusinessContactDetail`;
-
-CREATE TABLE `BusinessContactDetail` (
-  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `firstName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `lastName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `position` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  CONSTRAINT `Business_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -818,6 +802,24 @@ CREATE TABLE IF NOT EXISTS `Policy` (
   CONSTRAINT `Policy_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+# Dump of table PolicyContact
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `PolicyContact`;
+
+CREATE TABLE `PolicyContact` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `firstName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `lastName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `position` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `isSameAsOwner` tinyint(1) DEFAULT NULL,
+  `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `PolicyContact_application_idx` (`application`),
+  CONSTRAINT `PolicyContact_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 # Dump of table ReferenceNumber

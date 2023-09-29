@@ -18,12 +18,14 @@ const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIDENTIALITY;
 
 const task = taskList.submitApplication.tasks.declarationsAndSubmit;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Declarations - Confidentiality page - Save and go back', () => {
   let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
@@ -31,7 +33,7 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
       // go to the page we want to test.
       task.link().click();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIDENTIALITY}`;
 
       cy.assertUrl(url);
     });
@@ -53,7 +55,7 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
@@ -73,7 +75,7 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });

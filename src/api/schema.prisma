@@ -50,10 +50,13 @@ model Application {
   sectionReviewId                  String?           @map("sectionReview")
   declaration                      Declaration?      @relation("Application_declaration", fields: [declarationId], references: [id])
   declarationId                    String?           @map("declaration")
+  policyContact                    PolicyContact?    @relation("Application_policyContact", fields: [policyContactId], references: [id])
+  policyContactId                  String?           @map("policyContact")
   version                          String            @default("1")
   dealType                         String            @default("EXIP") @mysql.VarChar(4)
   from_ReferenceNumber_application ReferenceNumber[] @relation("ReferenceNumber_application")
   from_Policy_application          Policy[]          @relation("Policy_application")
+  from_PolicyContact_application   PolicyContact[]   @relation("PolicyContact_application")
   from_ExportContract_application  ExportContract[]  @relation("ExportContract_application")
   from_Account_applications        Account[]         @relation("Account_applications")
   from_Business_application        Business[]        @relation("Business_application")
@@ -75,6 +78,7 @@ model Application {
   @@index([buyerId])
   @@index([sectionReviewId])
   @@index([declarationId])
+  @@index([policyContactId])
 }
 
 model Policy {
@@ -91,6 +95,20 @@ model Policy {
   totalSalesToBuyer       Int?
   maximumBuyerWillOwe     Int?
   from_Application_policy Application[] @relation("Application_policy")
+
+  @@index([applicationId])
+}
+
+model PolicyContact {
+  id                             String        @id @default(cuid())
+  application                    Application?  @relation("PolicyContact_application", fields: [applicationId], references: [id])
+  applicationId                  String?       @map("application")
+  firstName                      String        @default("")
+  lastName                       String        @default("")
+  email                          String        @default("")
+  position                       String        @default("")
+  isSameAsOwner                  Boolean?
+  from_Application_policyContact Application[] @relation("Application_policyContact")
 
   @@index([applicationId])
 }
@@ -159,29 +177,18 @@ model Authentication {
 }
 
 model Business {
-  id                          String                 @id @default(cuid())
-  application                 Application?           @relation("Business_application", fields: [applicationId], references: [id])
-  applicationId               String?                @map("application")
-  goodsOrServicesSupplied     String                 @default("") @mysql.VarChar(1000)
+  id                          String        @id @default(cuid())
+  application                 Application?  @relation("Business_application", fields: [applicationId], references: [id])
+  applicationId               String?       @map("application")
+  goodsOrServicesSupplied     String        @default("") @mysql.VarChar(1000)
   totalYearsExporting         Int?
   totalEmployeesUK            Int?
   totalEmployeesInternational Int?
   estimatedAnnualTurnover     Int?
   exportsTurnoverPercentage   Int?
-  businessContactDetail       BusinessContactDetail? @relation("Business_businessContactDetail", fields: [businessContactDetailId], references: [id])
-  businessContactDetailId     String?                @unique @map("businessContactDetail")
-  from_Application_business   Application[]          @relation("Application_business")
+  from_Application_business   Application[] @relation("Application_business")
 
   @@index([applicationId])
-}
-
-model BusinessContactDetail {
-  id        String    @id @default(cuid())
-  business  Business? @relation("Business_businessContactDetail")
-  firstName String    @default("")
-  lastName  String    @default("")
-  email     String    @default("")
-  position  String    @default("")
 }
 
 model Broker {

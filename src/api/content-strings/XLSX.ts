@@ -62,3 +62,5 @@ export const XLSX = {
     [BUYER_CONTACT_DETAILS]: 'Buyer contact details',
   },
 };
+
+export default XLSX;

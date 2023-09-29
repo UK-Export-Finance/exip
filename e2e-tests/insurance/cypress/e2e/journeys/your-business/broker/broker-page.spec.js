@@ -1,4 +1,4 @@
-import { broker } from '../../../../../../pages/your-business';
+import { brokerPage } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
 import { saveAndBackButton, submitButton } from '../../../../../../pages/shared';
 import {
@@ -45,7 +45,7 @@ const ERROR_MESSAGE_BROKER = BROKER_ERRORS[USING_BROKER];
 const { APPROVED_BROKER_LIST } = LINKS.EXTERNAL;
 
 const ERROR_ASSERTIONS = {
-  field: broker[USING_BROKER],
+  field: brokerPage[USING_BROKER],
   numberOfExpectedErrors: 1,
   errorIndex: 0,
 };
@@ -56,14 +56,13 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
   let checkYourAnswersUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
 
       cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
 
@@ -112,47 +111,78 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
       cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
 
-    it('should display additional broker section when yes radio is selected', () => {
-      const fieldId = USING_BROKER;
-      const field = broker[fieldId];
-      field.yesRadioInput().click();
+    it('should NOT display conditional broker section without selecting the "yes" radio', () => {
+      brokerPage[LEGEND]().should('not.be.visible');
 
-      cy.checkText(broker[LEGEND](), FIELDS.BROKER[LEGEND].LEGEND);
+      brokerPage[NAME].label().should('not.be.visible');
+      brokerPage[NAME].input().should('not.be.visible');
 
-      cy.checkText(broker[NAME].label(), FIELDS.BROKER[NAME].LABEL);
-      broker[NAME].input().should('exist');
+      brokerPage[ADDRESS_LINE_1].label().should('not.be.visible');
+      brokerPage[ADDRESS_LINE_1].input().should('not.be.visible');
 
-      cy.checkText(broker[ADDRESS_LINE_1].label(), FIELDS.BROKER[ADDRESS_LINE_1].LABEL);
-      broker[ADDRESS_LINE_1].input().should('exist');
+      brokerPage[ADDRESS_LINE_2].label().should('not.be.visible');
+      brokerPage[ADDRESS_LINE_2].input().should('not.be.visible');
 
-      cy.checkText(broker[ADDRESS_LINE_2].label(), FIELDS.BROKER[ADDRESS_LINE_2].LABEL);
-      broker[ADDRESS_LINE_2].input().should('exist');
+      brokerPage[TOWN].label().should('not.be.visible');
+      brokerPage[TOWN].input().should('not.be.visible');
 
-      cy.checkText(broker[TOWN].label(), FIELDS.BROKER[TOWN].LABEL);
-      broker[TOWN].input().should('exist');
+      brokerPage[COUNTY].label().should('not.be.visible');
+      brokerPage[COUNTY].input().should('not.be.visible');
 
-      cy.checkText(broker[COUNTY].label(), FIELDS.BROKER[COUNTY].LABEL);
-      broker[COUNTY].input().should('exist');
+      brokerPage[POSTCODE].label().should('not.be.visible');
+      brokerPage[POSTCODE].input().should('not.be.visible');
 
-      cy.checkText(broker[POSTCODE].label(), FIELDS.BROKER[POSTCODE].LABEL);
-      broker[POSTCODE].input().should('exist');
-
-      cy.checkText(broker[EMAIL].label(), FIELDS.BROKER[EMAIL].LABEL);
-      broker[EMAIL].input().should('exist');
+      brokerPage[EMAIL].label().should('not.be.visible');
+      brokerPage[EMAIL].input().should('not.be.visible');
     });
 
-    describe('when clicking the "Why appoint a broker" details section', () => {
-      it('should display the details section', () => {
-        cy.checkText(broker[DETAILS].summary(), FIELDS.BROKER[DETAILS].SUMMARY);
+    it('should display conditional broker section when selecting the "yes" radio', () => {
+      const fieldId = USING_BROKER;
+      const field = brokerPage[fieldId];
+      field.yesRadioInput().click();
 
-        broker[DETAILS].summary().click();
+      cy.checkText(brokerPage[LEGEND](), FIELDS.BROKER[LEGEND].LEGEND);
 
-        cy.checkText(broker[DETAILS].line_1(), FIELDS.BROKER[DETAILS].LINE_1);
-        cy.checkText(broker[DETAILS].line_2(), FIELDS.BROKER[DETAILS].LINE_2);
-        cy.checkText(broker[DETAILS].line_3(), FIELDS.BROKER[DETAILS].LINE_3);
-        cy.checkText(broker[DETAILS].line_4(), FIELDS.BROKER[DETAILS].LINE_4);
+      cy.checkText(brokerPage[NAME].label(), FIELDS.BROKER[NAME].LABEL);
+      brokerPage[NAME].input().should('exist');
 
-        cy.checkLink(broker[DETAILS].link(), APPROVED_BROKER_LIST, FIELDS.BROKER[DETAILS].LINK_TEXT);
+      cy.checkText(brokerPage[ADDRESS_LINE_1].label(), FIELDS.BROKER[ADDRESS_LINE_1].LABEL);
+      brokerPage[ADDRESS_LINE_1].input().should('exist');
+
+      cy.checkText(brokerPage[ADDRESS_LINE_2].label(), FIELDS.BROKER[ADDRESS_LINE_2].LABEL);
+      brokerPage[ADDRESS_LINE_2].input().should('exist');
+
+      cy.checkText(brokerPage[TOWN].label(), FIELDS.BROKER[TOWN].LABEL);
+      brokerPage[TOWN].input().should('exist');
+
+      cy.checkText(brokerPage[COUNTY].label(), FIELDS.BROKER[COUNTY].LABEL);
+      brokerPage[COUNTY].input().should('exist');
+
+      cy.checkText(brokerPage[POSTCODE].label(), FIELDS.BROKER[POSTCODE].LABEL);
+      brokerPage[POSTCODE].input().should('exist');
+
+      cy.checkText(brokerPage[EMAIL].label(), FIELDS.BROKER[EMAIL].LABEL);
+      brokerPage[EMAIL].input().should('exist');
+    });
+
+    it('should display summary text with collapsed conditional `details` content', () => {
+      cy.checkText(brokerPage[DETAILS].summary(), FIELDS.BROKER[DETAILS].SUMMARY);
+
+      brokerPage[DETAILS].details().should('not.have.attr', 'open');
+    });
+
+    describe('when clicking the summary text', () => {
+      it('should expand the collapsed `details` content', () => {
+        brokerPage[DETAILS].summary().click();
+
+        brokerPage[DETAILS].details().should('have.attr', 'open');
+
+        cy.checkText(brokerPage[DETAILS].line_1(), FIELDS.BROKER[DETAILS].LINE_1);
+        cy.checkText(brokerPage[DETAILS].line_2(), FIELDS.BROKER[DETAILS].LINE_2);
+        cy.checkText(brokerPage[DETAILS].line_3(), FIELDS.BROKER[DETAILS].LINE_3);
+        cy.checkText(brokerPage[DETAILS].line_4(), FIELDS.BROKER[DETAILS].LINE_4);
+
+        cy.checkLink(brokerPage[DETAILS].link(), APPROVED_BROKER_LIST, FIELDS.BROKER[DETAILS].LINK_TEXT);
       });
     });
 
@@ -191,21 +221,21 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
             it('should have the submitted values', () => {
               cy.navigateToUrl(url);
 
-              broker[USING_BROKER].yesRadioInput().should('be.checked');
-              cy.checkValue(broker[NAME], application.EXPORTER_BROKER[NAME]);
-              cy.checkValue(broker[ADDRESS_LINE_1], application.EXPORTER_BROKER[ADDRESS_LINE_1]);
-              cy.checkValue(broker[ADDRESS_LINE_2], application.EXPORTER_BROKER[ADDRESS_LINE_2]);
-              cy.checkValue(broker[TOWN], application.EXPORTER_BROKER[TOWN]);
-              cy.checkValue(broker[COUNTY], application.EXPORTER_BROKER[COUNTY]);
-              cy.checkValue(broker[POSTCODE], application.EXPORTER_BROKER[POSTCODE]);
-              cy.checkValue(broker[EMAIL], application.EXPORTER_BROKER[EMAIL]);
+              brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
+              cy.checkValue(brokerPage[NAME], application.EXPORTER_BROKER[NAME]);
+              cy.checkValue(brokerPage[ADDRESS_LINE_1], application.EXPORTER_BROKER[ADDRESS_LINE_1]);
+              cy.checkValue(brokerPage[ADDRESS_LINE_2], application.EXPORTER_BROKER[ADDRESS_LINE_2]);
+              cy.checkValue(brokerPage[TOWN], application.EXPORTER_BROKER[TOWN]);
+              cy.checkValue(brokerPage[COUNTY], application.EXPORTER_BROKER[COUNTY]);
+              cy.checkValue(brokerPage[POSTCODE], application.EXPORTER_BROKER[POSTCODE]);
+              cy.checkValue(brokerPage[EMAIL], application.EXPORTER_BROKER[EMAIL]);
             });
           });
         });
 
         describe(`when selecting no for ${USING_BROKER}`, () => {
           it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
-            broker[USING_BROKER].noRadioInput().click();
+            brokerPage[USING_BROKER].noRadioInput().click();
             submitButton().click();
 
             cy.assertUrl(checkYourAnswersUrl);
@@ -215,7 +245,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
             it('should have the submitted values', () => {
               cy.navigateToUrl(url);
 
-              broker[USING_BROKER].noRadioInput().should('be.checked');
+              brokerPage[USING_BROKER].noRadioInput().should('be.checked');
             });
           });
         });

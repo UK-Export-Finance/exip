@@ -15,7 +15,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services/save-a
   let req: Request;
   let res: Response;
 
-  jest.mock('../../map-and-save');
+  jest.mock('../../map-and-save/policy');
 
   let mockMapAndSave = jest.fn(() => Promise.resolve(true));
   mapAndSave.exportContract = mockMapAndSave;

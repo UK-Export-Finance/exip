@@ -35,7 +35,7 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();

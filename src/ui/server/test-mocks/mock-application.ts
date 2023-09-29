@@ -5,6 +5,7 @@ import mockEligibility from './mock-eligibility';
 import mockAccount from './mock-account';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
+import mockContact from './mock-contact';
 import { Application } from '../../types';
 import broker from './mock-broker';
 import buyer from './mock-buyer';
@@ -81,13 +82,6 @@ export const mockBusiness = {
   totalEmployeesUK: '400',
   estimatedAnnualTurnover: '155220',
   exportsTurnoverPercentage: '20',
-  businessContactDetail: {
-    id: 'clcyyopna0158m8noaglhh5gg',
-    firstName: mockAccount.firstName,
-    lastName: mockAccount.lastName,
-    email: mockAccount.email,
-    position: 'CEO',
-  },
 };
 
 export const mockBroker = {
@@ -143,6 +137,7 @@ const mockApplication = {
   buyer: mockApplicationBuyer,
   sectionReview: mockSectionReview,
   declaration: mockApplicationDeclaration,
+  policyContact: mockContact,
 };
 
 export const mockApplicationMultiplePolicy = {

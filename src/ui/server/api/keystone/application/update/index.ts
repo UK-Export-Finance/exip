@@ -1,11 +1,11 @@
 import broker from './broker';
 import business from './business';
-import businessContact from './businessContact';
 import buyer from './buyer';
 import company from './company';
 import declarations from '../declarations';
 import exportContract from './exportContract';
 import policy from './policy';
+import policyContact from './policyContact';
 import sectionReview from './sectionReview';
 
 /**
@@ -16,12 +16,12 @@ import sectionReview from './sectionReview';
 const update = {
   broker,
   business,
-  businessContact,
   buyer,
   company,
   declarations: declarations.update,
   exportContract,
   policy,
+  policyContact,
   sectionReview,
 };
 

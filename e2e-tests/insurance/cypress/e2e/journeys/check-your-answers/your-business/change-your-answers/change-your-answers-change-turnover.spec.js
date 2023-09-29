@@ -45,7 +45,7 @@ context('Insurance - Check your answers - Turnover - Your business - Summary lis
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });

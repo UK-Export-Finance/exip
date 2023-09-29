@@ -1,13 +1,9 @@
 import { isBefore } from 'date-fns';
-import { FIELD_IDS } from '../../../constants';
+import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import { Context, VerifyEmailAddressVariables, VerifyEmailAddressResponse } from '../../../types';
 
-const {
-  INSURANCE: {
-    ACCOUNT: { EMAIL, VERIFICATION_HASH, VERIFICATION_EXPIRY },
-  },
-} = FIELD_IDS;
+const { EMAIL, VERIFICATION_HASH, VERIFICATION_EXPIRY } = ACCOUNT_FIELD_IDS;
 
 /**
  * verifyAccountEmailAddress

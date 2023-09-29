@@ -15,7 +15,7 @@ context('Insurance - All sections - new application', () => {
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
@@ -202,7 +202,10 @@ context('Insurance - All sections - new application', () => {
 
     it('should render correct reference number', () => {
       insurance.allSectionsPage.yourReferenceNumber().should('exist');
-      cy.checkText(insurance.allSectionsPage.yourReferenceNumber(), referenceNumber);
+
+      const expectedReferenceNumber = String(referenceNumber);
+
+      cy.checkText(insurance.allSectionsPage.yourReferenceNumber(), expectedReferenceNumber);
     });
   });
 });

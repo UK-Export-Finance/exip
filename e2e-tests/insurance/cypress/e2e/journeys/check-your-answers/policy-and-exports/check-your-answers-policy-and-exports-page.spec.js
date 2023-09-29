@@ -30,7 +30,7 @@ context('Insurance - Check your answers - Policy and exports - I want to confirm
   let allSectionsUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });

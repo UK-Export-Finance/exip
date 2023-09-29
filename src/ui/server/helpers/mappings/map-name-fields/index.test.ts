@@ -4,7 +4,6 @@ import replaceCharacterCodesWithCharacters from '../../replace-character-codes-w
 import { mockApplication } from '../../../test-mocks';
 
 const {
-  ACCOUNT: { FIRST_NAME, LAST_NAME },
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { NAME: BUYER_NAME, FIRST_NAME: BUYER_CONTACT_FIRST_NAME, LAST_NAME: BUYER_CONTACT_LAST_NAME },
   },
@@ -16,14 +15,6 @@ const mockStringWithCharacterCodes = String.raw`mock${characterCodes}`;
 
 const mockApplicationWithCharacterCodes = {
   ...mockApplication,
-  business: {
-    ...mockApplication.business,
-    businessContactDetail: {
-      ...mockApplication.business.businessContactDetail,
-      [FIRST_NAME]: mockStringWithCharacterCodes,
-      [LAST_NAME]: mockStringWithCharacterCodes,
-    },
-  },
   buyer: {
     ...mockApplication.buyer,
     [BUYER_NAME]: mockStringWithCharacterCodes,
@@ -33,26 +24,6 @@ const mockApplicationWithCharacterCodes = {
 };
 
 describe('server/helpers/mappings/map-name-fields', () => {
-  it(`should replace character codes in businessContactDetail.${FIRST_NAME}`, () => {
-    const result = mapNameFields(mockApplicationWithCharacterCodes);
-
-    const fieldValue = mockApplicationWithCharacterCodes.business.businessContactDetail[FIRST_NAME];
-
-    const expected = replaceCharacterCodesWithCharacters(fieldValue);
-
-    expect(result.business.businessContactDetail[FIRST_NAME]).toEqual(expected);
-  });
-
-  it(`should replace character codes in businessContactDetail.${LAST_NAME}`, () => {
-    const result = mapNameFields(mockApplicationWithCharacterCodes);
-
-    const fieldValue = mockApplicationWithCharacterCodes.business.businessContactDetail[LAST_NAME];
-
-    const expected = replaceCharacterCodesWithCharacters(fieldValue);
-
-    expect(result.business.businessContactDetail[LAST_NAME]).toEqual(expected);
-  });
-
   it(`should replace character codes in buyer.${BUYER_NAME}`, () => {
     const result = mapNameFields(mockApplicationWithCharacterCodes);
 

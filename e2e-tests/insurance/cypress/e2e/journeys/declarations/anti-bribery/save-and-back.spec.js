@@ -20,6 +20,8 @@ const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_ANTI_BRIBERY;
 
 const task = taskList.submitApplication.tasks.declarationsAndSubmit;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Declarations - Anti-bribery page - Save and go back', () => {
   let referenceNumber;
   let url;
@@ -27,7 +29,7 @@ context('Insurance - Declarations - Anti-bribery page - Save and go back', () =>
   before(() => {
     cy.deleteAccount();
 
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
@@ -37,7 +39,7 @@ context('Insurance - Declarations - Anti-bribery page - Save and go back', () =>
 
       cy.completeAndSubmitDeclarationConfidentiality();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -59,7 +61,7 @@ context('Insurance - Declarations - Anti-bribery page - Save and go back', () =>
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
@@ -79,7 +81,7 @@ context('Insurance - Declarations - Anti-bribery page - Save and go back', () =>
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });

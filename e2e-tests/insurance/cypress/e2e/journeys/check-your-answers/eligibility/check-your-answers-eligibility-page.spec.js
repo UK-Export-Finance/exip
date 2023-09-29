@@ -32,7 +32,7 @@ context('Insurance - Check your answers - Eligibility page - I want to confirm m
   let startNewApplicationUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });

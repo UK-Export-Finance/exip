@@ -14,12 +14,14 @@ const {
   },
 } = INSURANCE_ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an Exporter, I want to confirm my company do not have code of conduct procedure, So that UKEF can have clarity about how my company operates processing my export insurance application', () => {
   let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
@@ -30,7 +32,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
       cy.completeAndSubmitDeclarationConfidentiality();
       cy.completeAndSubmitDeclarationAntiBribery();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
 
       cy.assertUrl(url);
     });
@@ -50,7 +52,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
   });
 
   it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, () => {
-    const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
+    const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
     cy.assertUrl(expectedUrl);
   });

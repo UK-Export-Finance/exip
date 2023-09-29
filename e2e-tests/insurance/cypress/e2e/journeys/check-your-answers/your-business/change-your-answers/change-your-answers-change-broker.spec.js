@@ -1,6 +1,6 @@
 import { submitButton, status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
-import { broker } from '../../../../../../../pages/your-business';
+import { brokerPage } from '../../../../../../../pages/your-business';
 import {
   checkChangeLinkUrl,
   changeAnswerField,
@@ -53,7 +53,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber, usingBroker: true });
@@ -107,7 +107,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = 'Test name 2';
-        changeAnswerField(fieldVariables, broker[fieldId].input());
+        changeAnswerField(fieldVariables, brokerPage[fieldId].input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -148,11 +148,11 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(broker[fieldId].input(), addressLine1);
-        cy.keyboardInput(broker[ADDRESS_LINE_2].input(), addressLine2);
-        cy.keyboardInput(broker[TOWN].input(), town);
-        cy.keyboardInput(broker[COUNTY].input(), country);
-        cy.keyboardInput(broker[POSTCODE].input(), postcode);
+        cy.keyboardInput(brokerPage[fieldId].input(), addressLine1);
+        cy.keyboardInput(brokerPage[ADDRESS_LINE_2].input(), addressLine2);
+        cy.keyboardInput(brokerPage[TOWN].input(), town);
+        cy.keyboardInput(brokerPage[COUNTY].input(), country);
+        cy.keyboardInput(brokerPage[POSTCODE].input(), postcode);
 
         submitButton().click();
       });
@@ -208,7 +208,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = 'testing321@test.com';
-        changeAnswerField(fieldVariables, broker[fieldId].input());
+        changeAnswerField(fieldVariables, brokerPage[fieldId].input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -243,7 +243,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
 
         summaryList.field(fieldId).changeLink().click();
 
-        broker[fieldId].noRadioInput().click();
+        brokerPage[fieldId].noRadioInput().click();
 
         submitButton().click();
       });

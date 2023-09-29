@@ -24,6 +24,8 @@ const {
 
 const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIRMATION_ACKNOWLEDGEMENTS;
 
+const baseUrl = Cypress.config('baseUrl');
+
 const field = singleInputField(FIELD_ID);
 
 context("Insurance - Declarations - Confirmation and acknowledgements page - As an Exporter, I want the system to provide the details of my application's confirmation and acknowledgement, So that, I can readily confirm my export insurance application", () => {
@@ -31,7 +33,7 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
@@ -44,7 +46,7 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
       cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct();
       cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
       cy.assertUrl(url);
     });
@@ -143,7 +145,7 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
 
         cy.completeAndSubmitDeclarationConfirmationAndAcknowledgements();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
+        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
 
         cy.assertUrl(expectedUrl);
       });

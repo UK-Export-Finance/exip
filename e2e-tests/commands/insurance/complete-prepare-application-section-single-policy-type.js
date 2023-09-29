@@ -12,14 +12,12 @@ const task = taskList.prepareApplication.tasks.policyTypeAndExports;
  * @param {Object} Object with flags on how to complete specific parts of the application
  * - exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form. Defaults to "yes".
  * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
- * - useDifferentContactEmail: Should submit a different email address in the "exporter contact" details form.
  * - policyAndExportsMaximumValue: should submit an application with the maximum value of 500000
  * - referenceNumber: Application reference number
  */
 const completePrepareYourApplicationSectionSingle = ({
   exporterHasTradedWithBuyer,
   usingBroker,
-  useDifferentContactEmail,
   policyAndExportsMaximumValue = false,
   referenceNumber,
 }) => {
@@ -34,7 +32,6 @@ const completePrepareYourApplicationSectionSingle = ({
 
   cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
   cy.completeAndSubmitCompanyDetails();
-  cy.completeAndSubmitYourContact({ useDifferentContactEmail });
   cy.completeAndSubmitNatureOfYourBusiness();
   cy.completeAndSubmitTurnoverForm();
   cy.completeAndSubmitBrokerForm({ usingBroker });

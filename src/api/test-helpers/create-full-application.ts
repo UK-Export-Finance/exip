@@ -2,17 +2,17 @@ import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import accounts from './accounts';
 import createAnEligibility from '../helpers/create-an-eligibility';
 import createABuyer from '../helpers/create-a-buyer';
-import { mockApplicationEligibility, mockSinglePolicy, mockExportContract, mockBusiness, mockBusinessContactDetail } from '../test-mocks/mock-application';
+import { mockApplicationEligibility, mockSinglePolicy, mockExportContract, mockBusiness, mockPolicyContact } from '../test-mocks/mock-application';
 import { mockCompany, mockCompanySicCode, mockApplicationDeclaration } from '../test-mocks';
 import mockCountries from '../test-mocks/mock-countries';
 import {
   ApplicationBusiness,
-  ApplicationBusinessContactDetail,
   ApplicationCompany,
   ApplicationCompanySicCode,
   ApplicationDeclaration,
   ApplicationExportContract,
   ApplicationPolicy,
+  ApplicationPolicyContact,
 } from '../types';
 
 /**
@@ -40,7 +40,7 @@ export const createFullApplication = async (context: Context) => {
   // create a new application
   const application = (await context.query.Application.createOne({
     query:
-      'id referenceNumber submissionCount policy { id requestedStartDate } exportContract { id } owner { id } company { id } business { id } broker { id } declaration { id }',
+      'id referenceNumber submissionCount policy { id requestedStartDate } policyContact { id } exportContract { id } owner { id } company { id } business { id } broker { id } declaration { id }',
     data: {
       owner: {
         connect: {
@@ -111,24 +111,20 @@ export const createFullApplication = async (context: Context) => {
     query: 'id',
   })) as ApplicationCompanySicCode;
 
-  const businessContactDetail = (await context.query.BusinessContactDetail.createOne({
-    data: {
-      ...mockBusinessContactDetail,
-      business: {
-        connect: {
-          id: application.business.id,
-        },
-      },
+  const policyContact = (await context.query.PolicyContact.updateOne({
+    where: {
+      id: application.policyContact.id,
     },
-    query: 'id firstName lastName email',
-  })) as ApplicationBusinessContactDetail;
+    data: mockPolicyContact,
+    query: 'id firstName lastName email isSameAsOwner',
+  })) as ApplicationPolicyContact;
 
   const business = (await context.query.Business.updateOne({
     where: {
       id: application.business.id,
     },
     data: mockBusiness,
-    query: 'id businessContactDetail { id firstName lastName email }',
+    query: 'id',
   })) as ApplicationBusiness;
 
   // update the declaration so we have a full data set.
@@ -145,7 +141,7 @@ export const createFullApplication = async (context: Context) => {
     companySicCodes,
     owner: account,
     business,
-    businessContactDetail,
+    policyContact,
     buyer,
     company,
     declaration,

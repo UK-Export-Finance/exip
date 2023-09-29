@@ -1,4 +1,4 @@
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/policy';
 import { Application, RequestBody, ValidationErrors } from '../../../../../types';
 
 /**

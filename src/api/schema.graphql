@@ -83,6 +83,7 @@ type Application {
   buyer: Buyer
   sectionReview: SectionReview
   declaration: Declaration
+  policyContact: PolicyContact
   version: String
   dealType: String
 }
@@ -117,6 +118,7 @@ input ApplicationWhereInput {
   buyer: BuyerWhereInput
   sectionReview: SectionReviewWhereInput
   declaration: DeclarationWhereInput
+  policyContact: PolicyContactWhereInput
   version: StringFilter
   dealType: StringFilter
 }
@@ -231,6 +233,7 @@ input ApplicationUpdateInput {
   buyer: BuyerRelateToOneForUpdateInput
   sectionReview: SectionReviewRelateToOneForUpdateInput
   declaration: DeclarationRelateToOneForUpdateInput
+  policyContact: PolicyContactRelateToOneForUpdateInput
   version: String
   dealType: String
 }
@@ -295,6 +298,12 @@ input DeclarationRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input PolicyContactRelateToOneForUpdateInput {
+  create: PolicyContactCreateInput
+  connect: PolicyContactWhereUniqueInput
+  disconnect: Boolean
+}
+
 input ApplicationUpdateArgs {
   where: ApplicationWhereUniqueInput!
   data: ApplicationUpdateInput!
@@ -320,6 +329,7 @@ input ApplicationCreateInput {
   buyer: BuyerRelateToOneForCreateInput
   sectionReview: SectionReviewRelateToOneForCreateInput
   declaration: DeclarationRelateToOneForCreateInput
+  policyContact: PolicyContactRelateToOneForCreateInput
   version: String
   dealType: String
 }
@@ -372,6 +382,11 @@ input SectionReviewRelateToOneForCreateInput {
 input DeclarationRelateToOneForCreateInput {
   create: DeclarationCreateInput
   connect: DeclarationWhereUniqueInput
+}
+
+input PolicyContactRelateToOneForCreateInput {
+  create: PolicyContactCreateInput
+  connect: PolicyContactWhereUniqueInput
 }
 
 type Policy {
@@ -451,6 +466,63 @@ input PolicyCreateInput {
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
+}
+
+type PolicyContact {
+  id: ID!
+  application: Application
+  firstName: String
+  lastName: String
+  email: String
+  position: String
+  isSameAsOwner: Boolean
+}
+
+input PolicyContactWhereUniqueInput {
+  id: ID
+}
+
+input PolicyContactWhereInput {
+  AND: [PolicyContactWhereInput!]
+  OR: [PolicyContactWhereInput!]
+  NOT: [PolicyContactWhereInput!]
+  id: IDFilter
+  application: ApplicationWhereInput
+  firstName: StringFilter
+  lastName: StringFilter
+  email: StringFilter
+  position: StringFilter
+}
+
+input PolicyContactOrderByInput {
+  id: OrderDirection
+  firstName: OrderDirection
+  lastName: OrderDirection
+  email: OrderDirection
+  position: OrderDirection
+}
+
+input PolicyContactUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
+  firstName: String
+  lastName: String
+  email: String
+  position: String
+  isSameAsOwner: Boolean
+}
+
+input PolicyContactUpdateArgs {
+  where: PolicyContactWhereUniqueInput!
+  data: PolicyContactUpdateInput!
+}
+
+input PolicyContactCreateInput {
+  application: ApplicationRelateToOneForCreateInput
+  firstName: String
+  lastName: String
+  email: String
+  position: String
+  isSameAsOwner: Boolean
 }
 
 type ExportContract {
@@ -816,7 +888,6 @@ type Business {
   totalEmployeesInternational: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
-  businessContactDetail: BusinessContactDetail
 }
 
 input BusinessWhereUniqueInput {
@@ -835,7 +906,6 @@ input BusinessWhereInput {
   totalEmployeesInternational: IntNullableFilter
   estimatedAnnualTurnover: IntNullableFilter
   exportsTurnoverPercentage: IntNullableFilter
-  businessContactDetail: BusinessContactDetailWhereInput
 }
 
 input BusinessOrderByInput {
@@ -856,13 +926,6 @@ input BusinessUpdateInput {
   totalEmployeesInternational: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
-  businessContactDetail: BusinessContactDetailRelateToOneForUpdateInput
-}
-
-input BusinessContactDetailRelateToOneForUpdateInput {
-  create: BusinessContactDetailCreateInput
-  connect: BusinessContactDetailWhereUniqueInput
-  disconnect: Boolean
 }
 
 input BusinessUpdateArgs {
@@ -878,66 +941,6 @@ input BusinessCreateInput {
   totalEmployeesInternational: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
-  businessContactDetail: BusinessContactDetailRelateToOneForCreateInput
-}
-
-input BusinessContactDetailRelateToOneForCreateInput {
-  create: BusinessContactDetailCreateInput
-  connect: BusinessContactDetailWhereUniqueInput
-}
-
-type BusinessContactDetail {
-  id: ID!
-  business: Business
-  firstName: String
-  lastName: String
-  email: String
-  position: String
-}
-
-input BusinessContactDetailWhereUniqueInput {
-  id: ID
-}
-
-input BusinessContactDetailWhereInput {
-  AND: [BusinessContactDetailWhereInput!]
-  OR: [BusinessContactDetailWhereInput!]
-  NOT: [BusinessContactDetailWhereInput!]
-  id: IDFilter
-  business: BusinessWhereInput
-  firstName: StringFilter
-  lastName: StringFilter
-  email: StringFilter
-  position: StringFilter
-}
-
-input BusinessContactDetailOrderByInput {
-  id: OrderDirection
-  firstName: OrderDirection
-  lastName: OrderDirection
-  email: OrderDirection
-  position: OrderDirection
-}
-
-input BusinessContactDetailUpdateInput {
-  business: BusinessRelateToOneForUpdateInput
-  firstName: String
-  lastName: String
-  email: String
-  position: String
-}
-
-input BusinessContactDetailUpdateArgs {
-  where: BusinessContactDetailWhereUniqueInput!
-  data: BusinessContactDetailUpdateInput!
-}
-
-input BusinessContactDetailCreateInput {
-  business: BusinessRelateToOneForCreateInput
-  firstName: String
-  lastName: String
-  email: String
-  position: String
 }
 
 type Broker {
@@ -1907,6 +1910,12 @@ type Mutation {
   updatePolicies(data: [PolicyUpdateArgs!]!): [Policy]
   deletePolicy(where: PolicyWhereUniqueInput!): Policy
   deletePolicies(where: [PolicyWhereUniqueInput!]!): [Policy]
+  createPolicyContact(data: PolicyContactCreateInput!): PolicyContact
+  createPolicyContacts(data: [PolicyContactCreateInput!]!): [PolicyContact]
+  updatePolicyContact(where: PolicyContactWhereUniqueInput!, data: PolicyContactUpdateInput!): PolicyContact
+  updatePolicyContacts(data: [PolicyContactUpdateArgs!]!): [PolicyContact]
+  deletePolicyContact(where: PolicyContactWhereUniqueInput!): PolicyContact
+  deletePolicyContacts(where: [PolicyContactWhereUniqueInput!]!): [PolicyContact]
   createExportContract(data: ExportContractCreateInput!): ExportContract
   createExportContracts(data: [ExportContractCreateInput!]!): [ExportContract]
   updateExportContract(where: ExportContractWhereUniqueInput!, data: ExportContractUpdateInput!): ExportContract
@@ -1937,12 +1946,6 @@ type Mutation {
   updateBusinesses(data: [BusinessUpdateArgs!]!): [Business]
   deleteBusiness(where: BusinessWhereUniqueInput!): Business
   deleteBusinesses(where: [BusinessWhereUniqueInput!]!): [Business]
-  createBusinessContactDetail(data: BusinessContactDetailCreateInput!): BusinessContactDetail
-  createBusinessContactDetails(data: [BusinessContactDetailCreateInput!]!): [BusinessContactDetail]
-  updateBusinessContactDetail(where: BusinessContactDetailWhereUniqueInput!, data: BusinessContactDetailUpdateInput!): BusinessContactDetail
-  updateBusinessContactDetails(data: [BusinessContactDetailUpdateArgs!]!): [BusinessContactDetail]
-  deleteBusinessContactDetail(where: BusinessContactDetailWhereUniqueInput!): BusinessContactDetail
-  deleteBusinessContactDetails(where: [BusinessContactDetailWhereUniqueInput!]!): [BusinessContactDetail]
   createBroker(data: BrokerCreateInput!): Broker
   createBrokers(data: [BrokerCreateInput!]!): [Broker]
   updateBroker(where: BrokerWhereUniqueInput!, data: BrokerUpdateInput!): Broker
@@ -2116,6 +2119,9 @@ type Query {
   policies(where: PolicyWhereInput! = {}, orderBy: [PolicyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyWhereUniqueInput): [Policy!]
   policy(where: PolicyWhereUniqueInput!): Policy
   policiesCount(where: PolicyWhereInput! = {}): Int
+  policyContacts(where: PolicyContactWhereInput! = {}, orderBy: [PolicyContactOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyContactWhereUniqueInput): [PolicyContact!]
+  policyContact(where: PolicyContactWhereUniqueInput!): PolicyContact
+  policyContactsCount(where: PolicyContactWhereInput! = {}): Int
   exportContracts(where: ExportContractWhereInput! = {}, orderBy: [ExportContractOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractWhereUniqueInput): [ExportContract!]
   exportContract(where: ExportContractWhereUniqueInput!): ExportContract
   exportContractsCount(where: ExportContractWhereInput! = {}): Int
@@ -2131,9 +2137,6 @@ type Query {
   businesses(where: BusinessWhereInput! = {}, orderBy: [BusinessOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BusinessWhereUniqueInput): [Business!]
   business(where: BusinessWhereUniqueInput!): Business
   businessesCount(where: BusinessWhereInput! = {}): Int
-  businessContactDetails(where: BusinessContactDetailWhereInput! = {}, orderBy: [BusinessContactDetailOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BusinessContactDetailWhereUniqueInput): [BusinessContactDetail!]
-  businessContactDetail(where: BusinessContactDetailWhereUniqueInput!): BusinessContactDetail
-  businessContactDetailsCount(where: BusinessContactDetailWhereInput! = {}): Int
   brokers(where: BrokerWhereInput! = {}, orderBy: [BrokerOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BrokerWhereUniqueInput): [Broker!]
   broker(where: BrokerWhereUniqueInput!): Broker
   brokersCount(where: BrokerWhereInput! = {}): Int

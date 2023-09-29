@@ -33,14 +33,13 @@ context('Insurance - Your business - Change your answers - Nature of your busine
   before(() => {
     cy.deleteAccount();
 
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
 
       cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitBrokerForm({});
