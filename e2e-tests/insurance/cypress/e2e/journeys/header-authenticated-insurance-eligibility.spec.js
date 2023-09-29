@@ -5,7 +5,7 @@ context('Insurance - header - authenticated - complete insurance eligibility', (
   let referenceNumber;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       // go to the dashboard

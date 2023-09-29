@@ -17,7 +17,7 @@ context('Insurance - no access to application page - signed in', () => {
     cy.saveSession();
 
     // sign into an account, create an application.
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumbers = [refNumber];
 
       firstApplicationUrl = `${Cypress.config('baseUrl')}${ROOT}/${refNumber}${ALL_SECTIONS}`;
@@ -39,7 +39,7 @@ context('Insurance - no access to application page - signed in', () => {
       cy.clearCookie('exip-session');
 
       // sign into a different accont
-      cy.completeSignInAndGoToApplication(secondAccountEmail).then((refNumber) => {
+      cy.completeSignInAndGoToApplication({ email: secondAccountEmail }).then((refNumber) => {
         referenceNumbers = [...referenceNumbers, refNumber];
 
         cy.navigateToUrl(firstApplicationUrl);

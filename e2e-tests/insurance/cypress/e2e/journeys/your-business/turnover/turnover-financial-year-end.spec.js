@@ -45,7 +45,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
     cy.clearCookies();
     Cypress.session.clearAllSavedSessions();
 
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
@@ -82,7 +82,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} does not ex
     cy.clearCookies();
     Cypress.session.clearAllSavedSessions();
 
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
@@ -120,7 +120,7 @@ context(`Insurance - Your business - Turnover page - submitting a company with $
     cy.clearCookies();
     Cypress.session.clearAllSavedSessions();
 
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();

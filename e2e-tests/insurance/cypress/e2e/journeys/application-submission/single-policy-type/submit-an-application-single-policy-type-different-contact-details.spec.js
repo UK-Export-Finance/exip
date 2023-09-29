@@ -1,4 +1,4 @@
-import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const { APPLICATION_SUBMITTED } = INSURANCE_ROUTES;
 

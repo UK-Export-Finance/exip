@@ -16,7 +16,7 @@ context('Insurance - Check your answers - Need to start new application - start 
   const dashboardUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });

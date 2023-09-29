@@ -11,7 +11,7 @@ context('Insurance - Dashboard - visit with 1 existing application and an invali
   const dashboardPageUrl = `${baseUrl}${DASHBOARD_PAGE}`;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ refNumber }) => {
       referenceNumber = refNumber;
 
       const invalidUrl = `${dashboardPageUrl}/not-a-number`;

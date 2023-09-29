@@ -44,7 +44,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
   const futureDate = add(date, { months: 3 });
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();

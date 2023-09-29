@@ -20,7 +20,7 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF e
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumbers = [refNumber];
 
       firstReferenceNumber = refNumber;
@@ -54,7 +54,9 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF e
   });
 
   it('should have the correct reference number', () => {
-    cy.checkText(table.body.firstRow.referenceNumber(), firstReferenceNumber);
+    const expectedReferenceNumber = String(firstReferenceNumber);
+
+    cy.checkText(table.body.firstRow.referenceNumber(), expectedReferenceNumber);
   });
 
   describe('when a different exporter logs in and creates an application', () => {
@@ -69,7 +71,7 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF e
       header.navigation.signOut().click();
 
       // sign into a different accont
-      cy.completeSignInAndGoToApplication(secondAccountEmail).then(({ referenceNumber: refNumber }) => {
+      cy.completeSignInAndGoToApplication({ email: secondAccountEmail }).then(({ referenceNumber: refNumber }) => {
         referenceNumbers = [...referenceNumbers, refNumber];
 
         secondReferenceNumber = refNumber;
@@ -97,7 +99,9 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF e
       });
 
       it('should have the correct reference number', () => {
-        cy.checkText(table.body.firstRow.referenceNumber(), secondReferenceNumber);
+        const expectedReferenceNumber = String(secondReferenceNumber);
+
+        cy.checkText(table.body.firstRow.referenceNumber(), expectedReferenceNumber);
       });
     });
   });

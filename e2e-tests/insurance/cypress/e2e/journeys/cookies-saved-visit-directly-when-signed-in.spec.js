@@ -14,7 +14,7 @@ context('Cookies saved page - Insurance - visit the page directly as a signed in
   const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.navigateToUrl(COOKIES);
