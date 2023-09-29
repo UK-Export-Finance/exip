@@ -1,13 +1,15 @@
-const LOCATION = './server/cert/';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
+const { TLS_CERTIFICATE, TLS_KEY } = process.env;
 
 const CERTIFICATE = {
-  LOCATION,
-  NAME: `${LOCATION}localhost.crt`,
+  VALUE: String(TLS_CERTIFICATE).replace(/\\n/g, '\n'),
 };
 
 const KEY = {
-  LOCATION,
-  NAME: `${LOCATION}localhost.key`,
+  VALUE: String(TLS_KEY).replace(/\\n/g, '\n'),
 };
 
 export const TLS = {

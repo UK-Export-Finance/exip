@@ -21,6 +21,8 @@ env:
   environment: "qa"
   timezone: "Europe/London"
   NODE_ENV: ${{ secrets.NODE_ENV }}
+  TLS_CERTIFICATE: ${{ secrets.TLS_CERTIFICATE }}
+  TLS_KEY: ${{ secrets.TLS_KEY }}
   DATABASE_PORT: ${{ vars.DATABASE_PORT }}
   API_PORT: ${{ vars.API_PORT }}
   UI_PORT: ${{ vars.UI_PORT }}
@@ -127,6 +129,8 @@ jobs:
       - name: API
         working-directory: ./
         env:
+          TLS_CERTIFICATE: ${{ secrets.TLS_CERTIFICATE }}
+          TLS_KEY: ${{ secrets.TLS_KEY }}
           DATABASE_PORT: ${{ vars.DATABASE_PORT }}
           API_PORT: ${{ vars.API_PORT }}
           UI_PORT: ${{ vars.UI_PORT }}

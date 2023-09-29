@@ -1,7 +1,6 @@
 import * as dotenv from 'dotenv';
 import * as http from 'http';
 import tls from 'https';
-import { readFileSync } from 'fs';
 import { TLS, SERVICE_NAME } from '../../constants';
 
 dotenv.config();
@@ -25,9 +24,17 @@ const { UI_PORT } = process.env;
  * https(server);
  */
 export const https = (server: http.RequestListener) => {
+  if (!TLS.CERTIFICATE.VALUE) {
+    throw new Error('Invalid TLS certificate!');
+  }
+
+  if (!TLS.KEY.VALUE) {
+    throw new Error('Invalid TLS key!');
+  }
+
   const serverOptions = {
-    key: readFileSync(TLS.KEY.NAME),
-    cert: readFileSync(TLS.CERTIFICATE.NAME),
+    key: TLS.KEY.VALUE,
+    cert: TLS.CERTIFICATE.VALUE,
   };
 
   const ui = tls.createServer(serverOptions, server);

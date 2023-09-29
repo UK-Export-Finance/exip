@@ -1,21 +1,18 @@
 import * as dotenv from 'dotenv';
 import tls from 'https';
-import fs from 'fs';
 import express from 'express';
 import { https } from './index';
 import { TLS } from '../../constants';
 
 dotenv.config();
-const { UI_PORT } = process.env;
+
+const { UI_PORT, TLS_CERTIFICATE, TLS_KEY } = process.env;
 
 describe('middleware/https', () => {
   // @ts-ignore
   const mockServer = express();
 
   beforeEach(() => {
-    // Mock the readFileSync function to return a dummy key and certificate
-    jest.spyOn(fs, 'readFileSync').mockReturnValueOnce(TLS.KEY.NAME).mockReturnValueOnce(TLS.CERTIFICATE.NAME);
-
     // Mock the tls.createServer function to return a dummy server
     jest.spyOn(tls, 'createServer').mockReturnValueOnce(mockServer);
 
@@ -28,18 +25,18 @@ describe('middleware/https', () => {
     https(mockServer);
   });
 
-  it('should read key and certificate files from the correct location', () => {
+  it('should ensure both certificate and key are not empty', () => {
     // Expect the readFileSync function to be called with the correct file paths
-    expect(fs.readFileSync).toHaveBeenCalledWith(TLS.KEY.NAME);
-    expect(fs.readFileSync).toHaveBeenCalledWith(TLS.CERTIFICATE.NAME);
+    expect(TLS_CERTIFICATE).not.toBeFalsy();
+    expect(TLS_KEY).not.toBeFalsy();
   });
 
   it('should start HTTPS server on specified port', () => {
     // Expect the createServer function to be called with the correct options and server
     expect(tls.createServer).toHaveBeenCalledWith(
       {
-        key: TLS.KEY.NAME,
-        cert: TLS.CERTIFICATE.NAME,
+        key: TLS.KEY.VALUE,
+        cert: TLS.CERTIFICATE.VALUE,
       },
       mockServer,
     );

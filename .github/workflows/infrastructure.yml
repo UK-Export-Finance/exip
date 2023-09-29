@@ -308,6 +308,8 @@ jobs:
           --settings \
           HTTPS=0 \
           TZ=Europe/London \
+          TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
+          TLS_KEY='${{ secrets.TLS_KEY }}' \
           WEBSITE_DNS_SERVER='${{ vars.WEBSITE_DNS_SERVER }}' \
           WEBSITE_VNET_ROUTE_ALL=1 \
           SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
@@ -325,6 +327,8 @@ jobs:
           --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
           --settings \
           TZ=Europe/London \
+          TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
+          TLS_KEY='${{ secrets.TLS_KEY }}' \
           WEBSITE_DNS_SERVER=${{ vars.WEBSITE_DNS_SERVER }} \
           WEBSITE_VNET_ROUTE_ALL=1 \
           DATABASE_URL='${{ secrets.DATABASE_URL }}' \
