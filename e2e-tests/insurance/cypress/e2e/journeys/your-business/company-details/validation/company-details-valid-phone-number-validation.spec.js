@@ -15,7 +15,7 @@ const {
 } = FIELD_IDS.INSURANCE;
 
 let url;
-let yourContactUrl;
+let natureOfBusinessUrl;
 
 const companyDetailsFormVariables = {
   [WEBSITE]: WEBSITE_EXAMPLES.VALID,
@@ -32,6 +32,8 @@ const completeAllFields = (phoneNumber) => {
   submitButton().click();
 };
 
+const baseUrl = Cypress.config('baseUrl');
+
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - phone number validation - valid phone number", () => {
   let referenceNumber;
 
@@ -39,9 +41,9 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+      url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
-      yourContactUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.CONTACT}`;
+      natureOfBusinessUrl = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
 
       task.link().click();
 
@@ -76,7 +78,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     it('should redirect to next page', () => {
-      cy.assertUrl(yourContactUrl);
+      cy.assertUrl(natureOfBusinessUrl);
     });
   });
 
@@ -93,7 +95,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should redirect to next page', () => {
-        cy.assertUrl(yourContactUrl);
+        cy.assertUrl(natureOfBusinessUrl);
       });
     });
 
@@ -109,7 +111,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should redirect to next page', () => {
-        cy.assertUrl(yourContactUrl);
+        cy.assertUrl(natureOfBusinessUrl);
       });
     });
 
@@ -125,7 +127,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should redirect to next page', () => {
-        cy.assertUrl(yourContactUrl);
+        cy.assertUrl(natureOfBusinessUrl);
       });
     });
 
@@ -141,7 +143,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should redirect to next page', () => {
-        cy.assertUrl(yourContactUrl);
+        cy.assertUrl(natureOfBusinessUrl);
       });
     });
 
@@ -157,7 +159,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should redirect to next page', () => {
-        cy.assertUrl(yourContactUrl);
+        cy.assertUrl(natureOfBusinessUrl);
       });
     });
 
@@ -173,7 +175,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should redirect to next page', () => {
-        cy.assertUrl(yourContactUrl);
+        cy.assertUrl(natureOfBusinessUrl);
       });
     });
 
@@ -189,7 +191,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should redirect to next page', () => {
-        cy.assertUrl(yourContactUrl);
+        cy.assertUrl(natureOfBusinessUrl);
       });
     });
 
@@ -205,7 +207,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should redirect to next page', () => {
-        cy.assertUrl(yourContactUrl);
+        cy.assertUrl(natureOfBusinessUrl);
       });
     });
 
@@ -221,7 +223,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should redirect to next page', () => {
-        cy.assertUrl(yourContactUrl);
+        cy.assertUrl(natureOfBusinessUrl);
       });
     });
   });

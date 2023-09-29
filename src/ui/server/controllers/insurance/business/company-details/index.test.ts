@@ -26,7 +26,7 @@ const {
   EXPORTER_BUSINESS: {
     COMPANY_DETAILS_SAVE_AND_BACK,
     COMPANIES_HOUSE_NUMBER_ROOT,
-    CONTACT_ROOT,
+    NATURE_OF_BUSINESS_ROOT,
     CHECK_YOUR_ANSWERS,
     COMPANY_DETAILS_CHANGE,
     COMPANY_DETAILS_ROOT,
@@ -178,7 +178,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CONTACT_ROOT}`;
+        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 

@@ -11,9 +11,6 @@ const {
 
 const {
   INSURANCE: {
-    ACCOUNT: {
-      EMAIL: ACCOUNT_EMAIL,
-    },
     EXPORTER_BUSINESS: {
       COMPANY_HOUSE: {
         COMPANY_NAME,
@@ -22,10 +19,6 @@ const {
         COMPANY_INCORPORATED,
         COMPANY_SIC,
         FINANCIAL_YEAR_END_DATE,
-      },
-      CONTACT: {
-        NAME: CONTACT_NAME,
-        POSITION,
       },
       YOUR_COMPANY: {
         TRADING_ADDRESS,
@@ -69,7 +62,6 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
 
       cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitBrokerForm({ usingBroker: true });
@@ -126,18 +118,6 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
 
   it(`should render a ${PHONE_NUMBER} summary list row`, () => {
     checkSummaryList[PHONE_NUMBER]();
-  });
-
-  it(`should render a ${CONTACT_NAME} summary list row`, () => {
-    checkSummaryList[`contact-${CONTACT_NAME}`]();
-  });
-
-  it(`should render a ${ACCOUNT_EMAIL} summary list row`, () => {
-    checkSummaryList[`contact-${ACCOUNT_EMAIL}`]();
-  });
-
-  it(`should render a ${POSITION} summary list row`, () => {
-    checkSummaryList[POSITION]();
   });
 
   it(`should render a ${GOODS_OR_SERVICES} summary list row`, () => {

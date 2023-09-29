@@ -24,12 +24,6 @@ const EXPORTER_BUSINESS = {
       PREMISES: 'premises',
     },
   },
-  CONTACT: {
-    BUSINESS_CONTACT_DETAIL: 'businessContactDetail',
-    COMPANY_NAME: 'companyName',
-    POSITION: 'position',
-    NAME: 'name',
-  },
   YOUR_COMPANY: {
     ADDRESS: 'address',
     YOUR_BUSINESS: 'yourBusiness',

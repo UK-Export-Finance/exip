@@ -8,7 +8,6 @@ export interface ApplicationBusiness extends Relationship {
   totalEmployeesUK: string;
   estimatedAnnualTurnover: string;
   exportsTurnoverPercentage: string;
-  businessContactDetailId: string;
 }
 
 export interface ApplicationBuyer extends Relationship {

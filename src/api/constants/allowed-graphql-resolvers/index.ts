@@ -11,7 +11,6 @@ const isDevEnvironment = NODE_ENV === 'development';
 const DEFAULT_RESOLVERS = [
   // application
   'updateBroker',
-  'updateBusinessContactDetail',
   'updateBusiness',
   'updateBuyer',
   'updateDeclaration',

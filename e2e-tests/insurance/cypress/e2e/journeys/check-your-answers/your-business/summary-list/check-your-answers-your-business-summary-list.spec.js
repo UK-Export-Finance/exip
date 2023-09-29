@@ -25,10 +25,6 @@ const {
     WEBSITE,
     PHONE_NUMBER,
   },
-  CONTACT: {
-    NAME: CONTACT_NAME,
-    POSITION,
-  },
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES,
     YEARS_EXPORTING,
@@ -46,8 +42,6 @@ const {
     EMAIL,
   },
 } = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
-
-const { EMAIL: ACCOUNT_EMAIL } = INSURANCE_FIELD_IDS.ACCOUNT;
 
 const { taskList } = partials.insurancePartials;
 
@@ -125,18 +119,6 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
 
   it(`should render a ${PHONE_NUMBER} summary list row`, () => {
     checkSummaryList[PHONE_NUMBER]();
-  });
-
-  it(`should render a ${CONTACT_NAME} summary list row`, () => {
-    checkSummaryList[`contact-${CONTACT_NAME}`]();
-  });
-
-  it(`should render a ${ACCOUNT_EMAIL} summary list row`, () => {
-    checkSummaryList[`contact-${ACCOUNT_EMAIL}`]();
-  });
-
-  it(`should render a ${POSITION} summary list row`, () => {
-    checkSummaryList[POSITION]();
   });
 
   it(`should render a ${GOODS_OR_SERVICES} summary list row`, () => {

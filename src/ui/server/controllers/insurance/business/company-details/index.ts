@@ -33,7 +33,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-const { COMPANY_DETAILS_SAVE_AND_BACK, CONTACT_ROOT, CHECK_YOUR_ANSWERS, COMPANIES_HOUSE_NUMBER_ROOT } = EXPORTER_BUSINESS_ROUTES;
+const { COMPANY_DETAILS_SAVE_AND_BACK, NATURE_OF_BUSINESS_ROOT, CHECK_YOUR_ANSWERS, COMPANIES_HOUSE_NUMBER_ROOT } = EXPORTER_BUSINESS_ROUTES;
 
 const pageVariables = (referenceNumber: number) => {
   return {
@@ -150,7 +150,7 @@ const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CONTACT_ROOT}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`);
   } catch (err) {
     console.error('Error updating application - your business - company details %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);

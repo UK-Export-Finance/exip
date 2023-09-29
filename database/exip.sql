@@ -680,27 +680,11 @@ CREATE TABLE `Business` (
   `totalEmployeesInternational` int DEFAULT NULL,
   `estimatedAnnualTurnover` int DEFAULT NULL,
   `exportsTurnoverPercentage` int DEFAULT NULL,
-  `businessContactDetail` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `Business_businessContactDetail_key` (`businessContactDetail`),
   KEY `Business_application_idx` (`application`),
-  CONSTRAINT `Business_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Business_businessContactDetail_fkey` FOREIGN KEY (`businessContactDetail`) REFERENCES `BusinessContactDetail` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `Business_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-# Dump of table BusinessContactDetail
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `BusinessContactDetail`;
-
-CREATE TABLE `BusinessContactDetail` (
-  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `firstName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `lastName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `position` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 # Dump of table Company

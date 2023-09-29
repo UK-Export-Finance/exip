@@ -124,7 +124,7 @@ export const createFullApplication = async (context: Context) => {
       id: application.business.id,
     },
     data: mockBusiness,
-    query: 'id businessContactDetail { id firstName lastName email }',
+    query: 'id',
   })) as ApplicationBusiness;
 
   // update the declaration so we have a full data set.
