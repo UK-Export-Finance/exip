@@ -18,7 +18,7 @@ context('Insurance - Complete other sections page', () => {
   let completeOtherSectionsUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       // go to a page with a new application that will trigger a redirect to this page.

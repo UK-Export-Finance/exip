@@ -14,6 +14,8 @@ const {
   },
 } = ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 /**
  * signInAndGoToUrl
  * 1) Navigate to the sign in page/URL
@@ -25,7 +27,7 @@ const {
  * @param {String} Page URL to go to after account sign in
  */
 const signInAndGoToUrl = (url) => {
-  cy.navigateToUrl(`${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`);
+  cy.navigateToUrl(`${baseUrl}${SIGN_IN_ROOT}`);
   cy.completeAndSubmitSignInAccountForm({});
 
   // get the OTP security code

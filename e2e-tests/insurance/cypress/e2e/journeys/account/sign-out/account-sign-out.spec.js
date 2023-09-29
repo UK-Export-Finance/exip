@@ -17,7 +17,7 @@ context('Insurance - Account - Sign out - As an Exporter, I want to be able to s
   let referenceNumber;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
     });
   });

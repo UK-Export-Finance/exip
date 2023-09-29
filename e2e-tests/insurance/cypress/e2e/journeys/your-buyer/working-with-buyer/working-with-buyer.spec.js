@@ -30,7 +30,7 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
   let checkYourAnswersUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
