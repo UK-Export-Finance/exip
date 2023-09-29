@@ -1,15 +1,7 @@
 import { Country } from '../country';
 import { Relationship } from '../relationship';
 
-export interface ApplicationBusinessContactDetail extends Relationship {
-  firstName: string;
-  lastName: string;
-  email: string;
-  position: string;
-}
-
 export interface ApplicationBusiness extends Relationship {
-  businessContactDetail: ApplicationBusinessContactDetail;
   goodsOrServicesSupplied: string;
   totalYearsExporting: string;
   totalEmployeesInternational: string;

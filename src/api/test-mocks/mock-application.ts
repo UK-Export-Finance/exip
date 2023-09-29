@@ -82,13 +82,6 @@ export const mockCompany = {
   __typename: 'Company',
 };
 
-export const mockBusinessContactDetail = {
-  firstName: 'Bob',
-  lastName: 'Smith',
-  email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
-  position: 'CEO',
-};
-
 export const mockPolicyContact = {
   firstName: 'Bob',
   lastName: 'Smith',
@@ -161,12 +154,7 @@ const mockApplication = {
   companyAddress: mockCompany.registeredOfficeAddress,
   business: {
     id: 'clcyyopna0158m8noaglyy9gg',
-    businessContactDetailId: mockBusinessContactDetail.id,
     ...mockBusiness,
-    businessContactDetail: {
-      id: 'clcyyopna0158m8noaglyy9ab',
-      ...mockBusinessContactDetail,
-    },
   },
   broker: mockBroker,
   buyer: mockApplicationBuyer,
