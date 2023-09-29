@@ -1,12 +1,6 @@
-<<<<<<< Updated upstream:e2e-tests/insurance/cypress/e2e/journeys/account/sign-in/account-creation-and-sign-in-with-eligibility-answers.spec.js
 import dashboardPage from '../../../../../../pages/insurance/dashboard';
-import { ROUTES } from '../../../../../../constants';
+import { ROUTES, COOKIE } from '../../../../../../constants';
 import header from '../../../../../../partials/header';
-=======
-import dashboardPage from '../../../../../pages/insurance/dashboard';
-import { ROUTES, COOKIE } from '../../../../../constants';
-import header from '../../../../../partials/header';
->>>>>>> Stashed changes:e2e-tests/insurance/cypress/e2e/journeys/account/account-creation-and-sign-in-with-eligibility-answers.spec.js
 
 const { table } = dashboardPage;
 
