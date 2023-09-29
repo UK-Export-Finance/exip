@@ -2,11 +2,11 @@ import { headingCaption, saveAndBackButton, submitButton } from '../../../../../
 import partials from '../../../../../../partials';
 import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import { ROUTES } from '../../../../../../constants';
 import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
-import application from '../../../../../../fixtures/application';
+import application, { country } from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION;
 
@@ -25,8 +25,6 @@ const {
   },
 } = YOUR_BUYER_FIELD_IDS;
 
-const { ELIGIBILITY: { BUYER_COUNTRY } } = FIELD_IDS;
-
 const {
   YOUR_BUYER: { WORKING_WITH_BUYER, COMPANY_OR_ORGANISATION },
 } = ROUTES.INSURANCE;
@@ -41,7 +39,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
   let workingWithBuyerUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
@@ -84,7 +82,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       const field = companyOrOrganisationPage[fieldId];
 
       cy.checkText(field.heading(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
-      cy.checkText(field.value(), application.ELIGIBILITY[BUYER_COUNTRY]);
+      cy.checkText(field.value(), country.name);
     });
 
     it(`renders an ${NAME} label, and input`, () => {

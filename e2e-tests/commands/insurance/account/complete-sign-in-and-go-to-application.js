@@ -1,3 +1,4 @@
+import createAnAccountAndApplicationAndSignIn from './create-an-account-and-application-and-sign-in';
 import completeInsuranceEligibilitySignInAndGoToDashboard from './complete-insurance-eligibility-sign-in-and-go-to-dashboard';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import mockAccount from '../../../fixtures/account';
@@ -8,17 +9,40 @@ const {
 
 /**
  * completeSignInAndGoToApplication
- * 1) Complete "sign in and go to dashboard"
- * 2) As there is only application, it should go straight to the application
- * 3) Get and return the application reference number from the URL for consumption in the tests
+ * Create an account, sign in and create an application via the API or via the full eligibility flow.
  * @param {String} Account email address
- * @return {String} Application reference number
+ * @param {Boolean} Flag whether to create the application via API instead of going through the eligibility journey. Defaults to true.
+ * @return {Object} Account ID, application reference number
  */
-const completeSignInAndGoToApplication = (email = mockAccount[EMAIL]) =>
-  // complete sign in and go to dashboard
-  completeInsuranceEligibilitySignInAndGoToDashboard(email).then(({ accountId }) => {
-    // get the reference number and return for consumption in the test
-    cy.getReferenceNumber().then((referenceNumber) => ({ accountId, referenceNumber }));
-  });
+const completeSignInAndGoToApplication = ({
+  email = mockAccount[EMAIL],
+  createApplicationViaApi = true,
+}) => {
+  if (createApplicationViaApi) {
+    /**
+     * 1) Create an account via the API.
+     * 2) Verify account by navigating to the verification URL with a valid token.
+     * 3) Create an application directly via the API, associated with the created user; Avoiding going through the full eligibility flow.
+     * 4) Sign into the account, submitting a valid OTP.
+     * 5) Assert that the user is taken to the "all sections" application page.
+     */
+    return createAnAccountAndApplicationAndSignIn(email).then(({ accountId, referenceNumber }) => ({
+      accountId,
+      referenceNumber,
+    }));
+  }
+  /**
+   * 1) Navigate to the start page.
+   * 2) Go through the full eligibility flow.
+   * 3) Create an account via the API.
+   * 4) Verify account by navigating to the verification URL with a valid token.
+   * 5) Sign into the account, submitting a valid OTP.
+   * 6) Assert that the user is taken to the "all sections" application page.
+   */
+  return completeInsuranceEligibilitySignInAndGoToDashboard(email).then(({ accountId, referenceNumber }) => ({
+    accountId,
+    referenceNumber,
+  }));
+};
 
 export default completeSignInAndGoToApplication;

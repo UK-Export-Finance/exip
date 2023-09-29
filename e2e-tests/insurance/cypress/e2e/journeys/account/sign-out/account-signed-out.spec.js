@@ -1,6 +1,6 @@
-import signedOutPage from '../../../../../pages/insurance/account/signed-out';
-import { BUTTONS, PAGES } from '../../../../../content-strings';
-import { INSURANCE_ROUTES as ROUTES } from '../../../../../constants/routes/insurance';
+import signedOutPage from '../../../../../../pages/insurance/account/signed-out';
+import { BUTTONS, PAGES } from '../../../../../../content-strings';
+import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SIGNED_OUT;
 

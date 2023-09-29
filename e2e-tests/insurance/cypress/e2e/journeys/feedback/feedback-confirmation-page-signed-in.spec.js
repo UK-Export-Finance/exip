@@ -13,7 +13,7 @@ context('Insurance - Feedback confirmation page - Signed in', () => {
   const url = FEEDBACK_SENT;
 
   before(() => {
-    cy.completeSignInAndGoToApplication();
+    cy.completeSignInAndGoToApplication({});
     partials.phaseBanner.feedbackLink().click();
     // to reach confirmation page
     submitButton().click();

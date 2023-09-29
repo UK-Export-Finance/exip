@@ -27,7 +27,7 @@ context('Insurance - no access to application page - signed in - check your answ
     cy.saveSession();
 
     // sign into an account, create an application.
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       firstApplicationReferenceNumber = refNumber;
 
       referenceNumbers = [refNumber];
@@ -49,7 +49,7 @@ context('Insurance - no access to application page - signed in - check your answ
       cy.clearCookie('exip-session');
 
       // sign into a different accont
-      cy.completeSignInAndGoToApplication(secondAccountEmail).then((refNumber) => {
+      cy.completeSignInAndGoToApplication({ email: secondAccountEmail }).then((refNumber) => {
         referenceNumbers = [...referenceNumbers, refNumber];
       });
     });
