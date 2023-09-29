@@ -1,7 +1,6 @@
 import sendEmail from '../index';
 import getFullNameString from '../../helpers/get-full-name-string';
 import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-application-submitted-email-template-ids';
-import isOwnerSameAsBusinessContact from '../../helpers/is-owner-same-as-business-contact';
 import formatDate from '../../helpers/format-date';
 import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } from '../../types';
 
@@ -14,9 +13,7 @@ import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } fro
  */
 const send = async (application: Application, xlsxPath: string): Promise<SuccessResponse> => {
   try {
-    const { referenceNumber, owner, company, buyer, policy, business } = application;
-
-    const { businessContactDetail } = business;
+    const { referenceNumber, owner, company, buyer, policy, policyContact } = application;
 
     // generate email variables
     const { email } = owner;
@@ -31,36 +28,33 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
     };
 
     // email variables for sending email to application owner of application
-    const sendEmailVars = {
+    const sendOwnerEmailVars = {
       ...sharedEmailVars,
       name: getFullNameString(owner),
       emailAddress: email,
     } as ApplicationSubmissionEmailVariables;
 
-    // email variables for sending email to business contact named on application
+    // email variables for sending email to policy contact named on application
     const sendContactEmailVars = {
       ...sharedEmailVars,
-      name: getFullNameString(businessContactDetail),
-      emailAddress: businessContactDetail.email,
+      name: getFullNameString(policyContact),
+      emailAddress: policyContact.email,
     } as ApplicationSubmissionEmailVariables;
 
-    // checks if application owner email on application is the same as the business contact email provided
-    const isOwnerSameAsContact = isOwnerSameAsBusinessContact(email, businessContactDetail.email);
-
-    console.info('Sending application submitted email to application account owner: %s', sendEmailVars.emailAddress);
+    console.info('Sending application submitted email to application account owner: %s', sendOwnerEmailVars.emailAddress);
     // send "application submitted" email receipt to the application owner
-    const accountSubmittedResponse = await sendEmail.application.submittedEmail(sendEmailVars);
+    const accountSubmittedResponse = await sendEmail.application.submittedEmail(sendOwnerEmailVars);
 
     if (!accountSubmittedResponse.success) {
       throw new Error('Sending application submitted email to owner/account');
     }
 
     /**
-     * if the contact email address is different to the application owner
-     * then it sends the same "application submitted" email receipt to the contact email address
+     * if the policy contact email address is different to the application owner,
+     * send the same "application submitted" email receipt to the contact email address
      */
-    if (!isOwnerSameAsContact) {
-      console.info('Sending application submitted email to business contact email: %s', sendContactEmailVars.emailAddress);
+    if (!policyContact.isSameAsOwner) {
+      console.info('Sending application submitted email to policy contact email: %s', sendContactEmailVars.emailAddress);
       const contactSubmittedResponse = await sendEmail.application.submittedEmail(sendContactEmailVars);
 
       if (!contactSubmittedResponse.success) {
@@ -72,7 +66,7 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
     const templateIds = getApplicationSubmittedEmailTemplateIds(application);
 
     // send "application submitted" email to the underwriting team
-    const underwritingTeamSubmittedResponse = await sendEmail.application.underwritingTeam(sendEmailVars, xlsxPath, templateIds.underwritingTeam);
+    const underwritingTeamSubmittedResponse = await sendEmail.application.underwritingTeam(sendOwnerEmailVars, xlsxPath, templateIds.underwritingTeam);
 
     if (!underwritingTeamSubmittedResponse.success) {
       throw new Error('Sending application submitted email to underwriting team');
@@ -80,19 +74,19 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
 
     // send "documents" email to the applicant depending on submitted answers
     if (templateIds.account) {
-      console.info('Sending documents email to application owner: %s', sendEmailVars.emailAddress);
-      const documentsResponse = await sendEmail.documentsEmail(sendEmailVars, templateIds.account);
+      console.info('Sending documents email to application owner: %s', sendOwnerEmailVars.emailAddress);
+      const documentsResponse = await sendEmail.documentsEmail(sendOwnerEmailVars, templateIds.account);
 
       if (!documentsResponse.success) {
         throw new Error(`Sending application documents emails ${documentsResponse}`);
       }
 
       /**
-       * if the contact email address is different to the application owner
-       * then it sends the same "application submitted" email receipt to the contact email address
+       * if the contact email address is different to the application owner,
+       * send the same "application submitted" email receipt to the contact email address
        */
-      if (!isOwnerSameAsContact) {
-        console.info('Sending documents email to business contact: %s', sendContactEmailVars.emailAddress);
+      if (!policyContact.isSameAsOwner) {
+        console.info('Sending documents email to policy contact: %s', sendContactEmailVars.emailAddress);
         const contactDocumentsResponse = await sendEmail.documentsEmail(sendContactEmailVars, templateIds.account);
 
         if (!contactDocumentsResponse.success) {
