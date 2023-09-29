@@ -3928,10 +3928,28 @@ var mapKeyInformation = (application2) => {
 };
 var map_key_information_default = mapKeyInformation;
 
+// generate-xlsx/map-application-to-XLSX/map-exporter-contact-details/index.ts
+var { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL6 } = account_default2;
+var {
+  SECTION_TITLES: { EXPORTER_CONTACT_DETAILS },
+  FIELDS: FIELDS3
+} = XLSX;
+var mapExporterContactDetails = (application2) => {
+  const { policyContact } = application2;
+  const mapped = [
+    xlsx_row_default(EXPORTER_CONTACT_DETAILS),
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT[FIRST_NAME3], policyContact[FIRST_NAME3]),
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT[LAST_NAME3], policyContact[LAST_NAME3]),
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL6])
+  ];
+  return mapped;
+};
+var map_exporter_contact_details_default = mapExporterContactDetails;
+
 // generate-xlsx/map-application-to-XLSX/map-secondary-key-information/index.ts
 var {
   SECTION_TITLES: { KEY_INFORMATION },
-  FIELDS: FIELDS3
+  FIELDS: FIELDS4
 } = XLSX;
 var CONTENT_STRINGS = {
   ...POLICY_AND_EXPORTS_FIELDS
@@ -3951,9 +3969,9 @@ var mapSecondaryKeyInformation = (application2) => {
   const { policy } = application2;
   const mapped = [
     xlsx_row_default(KEY_INFORMATION),
-    xlsx_row_default(FIELDS3[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
-    xlsx_row_default(FIELDS3[COUNTRY2], application2.buyer[COUNTRY2].name),
-    xlsx_row_default(FIELDS3[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
+    xlsx_row_default(FIELDS4[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
+    xlsx_row_default(FIELDS4[COUNTRY2], application2.buyer[COUNTRY2].name),
+    xlsx_row_default(FIELDS4[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
     xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE3].SUMMARY?.TITLE), policy[POLICY_TYPE3])
   ];
   return mapped;
@@ -4080,7 +4098,7 @@ var {
   YOUR_COMPANY: { TRADING_NAME: TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE3, PHONE_NUMBER: PHONE_NUMBER3 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL3 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
-  BROKER: { USING_BROKER: USING_BROKER4, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL6 }
+  BROKER: { USING_BROKER: USING_BROKER4, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL7 }
 } = business_default;
 var mapSicCodes2 = (sicCodes) => {
   let mapped = "";
@@ -4102,7 +4120,7 @@ var mapBroker = (application2) => {
       ...mapped,
       xlsx_row_default(XLSX.FIELDS[BROKER_NAME2], broker[BROKER_NAME2]),
       xlsx_row_default(XLSX.FIELDS[ADDRESS_LINE_12], `${addressAnswer.lineOneAndTwo}${addressAnswer.other}`),
-      xlsx_row_default(XLSX.FIELDS[EMAIL6], broker[EMAIL6])
+      xlsx_row_default(XLSX.FIELDS[EMAIL7], broker[EMAIL7])
     ];
   }
   return mapped;
@@ -4146,7 +4164,7 @@ var CONTENT_STRINGS4 = {
   ...YOUR_BUYER_FIELDS.WORKING_WITH_BUYER
 };
 var {
-  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4, FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, POSITION, EMAIL: EMAIL7, CAN_CONTACT_BUYER },
+  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4, FIRST_NAME: FIRST_NAME4, LAST_NAME: LAST_NAME4, POSITION, EMAIL: EMAIL8, CAN_CONTACT_BUYER },
   WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER }
 } = your_buyer_default;
 var mapBuyer = (application2) => {
@@ -4157,7 +4175,7 @@ var mapBuyer = (application2) => {
     xlsx_row_default(String(CONTENT_STRINGS4[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${xlsx_new_line_default}${buyer[COUNTRY3].name}`),
     xlsx_row_default(XLSX.FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
     xlsx_row_default(String(CONTENT_STRINGS4[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
-    xlsx_row_default(XLSX.FIELDS[FIRST_NAME3], `${buyer[FIRST_NAME3]} ${buyer[LAST_NAME3]} ${xlsx_new_line_default}${buyer[POSITION]} ${xlsx_new_line_default}${buyer[EMAIL7]}`),
+    xlsx_row_default(XLSX.FIELDS[FIRST_NAME4], `${buyer[FIRST_NAME4]} ${buyer[LAST_NAME4]} ${xlsx_new_line_default}${buyer[POSITION]} ${xlsx_new_line_default}${buyer[EMAIL8]}`),
     xlsx_row_default(String(CONTENT_STRINGS4[CAN_CONTACT_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[CAN_CONTACT_BUYER])),
     xlsx_row_default(String(CONTENT_STRINGS4[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[CONNECTED_WITH_BUYER])),
     xlsx_row_default(String(CONTENT_STRINGS4[TRADED_WITH_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[TRADED_WITH_BUYER]))
@@ -4201,6 +4219,8 @@ var mapApplicationToXLSX = (application2) => {
   try {
     const mapped = [
       ...map_key_information_default(application2),
+      xlsx_row_seperator_default,
+      ...map_exporter_contact_details_default(application2),
       xlsx_row_seperator_default,
       ...map_secondary_key_information_default(application2),
       xlsx_row_seperator_default,
