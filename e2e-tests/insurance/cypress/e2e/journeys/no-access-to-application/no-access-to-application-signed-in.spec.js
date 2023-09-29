@@ -1,4 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
+import { COOKIE } from '../../../../../constants';
 
 const {
   ROOT,
@@ -17,7 +18,7 @@ context('Insurance - no access to application page - signed in', () => {
     cy.saveSession();
 
     // sign into an account, create an application.
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumbers = [refNumber];
 
       firstApplicationUrl = `${Cypress.config('baseUrl')}${ROOT}/${refNumber}${ALL_SECTIONS}`;
@@ -36,10 +37,10 @@ context('Insurance - no access to application page - signed in', () => {
   describe('when trying to access an application created by another user', () => {
     beforeEach(() => {
       // clear the session - means we are not a signed in user.
-      cy.clearCookie('exip-session');
+      cy.clearCookie(COOKIE.NAME.SESSION);
 
       // sign into a different accont
-      cy.completeSignInAndGoToApplication(secondAccountEmail).then((refNumber) => {
+      cy.completeSignInAndGoToApplication({ email: secondAccountEmail }).then((refNumber) => {
         referenceNumbers = [...referenceNumbers, refNumber];
 
         cy.navigateToUrl(firstApplicationUrl);

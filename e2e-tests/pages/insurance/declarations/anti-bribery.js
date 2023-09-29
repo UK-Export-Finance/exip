@@ -13,6 +13,7 @@ const antiBriberyPage = {
   },
   expandable: {
     summary: () => cy.get('[data-cy="definition-of-terms"] summary'),
+    details: () => cy.get('[data-cy="definition-of-terms"]'),
     table: {
       headers: {
         term: () => cy.get('[data-cy="header-term"]'),

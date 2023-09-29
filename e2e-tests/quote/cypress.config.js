@@ -21,8 +21,6 @@ const cypressConfig = defineConfig({
   numTestsKeptInMemory: 1,
   viewportWidth: 1920,
   viewportHeight: 1080,
-  basicAuthKey: 'dev',
-  basicAuthSecret: 'test',
   chromeWebSecurity: false,
   retries: {
     runMode: 2,
@@ -31,8 +29,8 @@ const cypressConfig = defineConfig({
   e2e: {
     pageLoadTimeout: 120000,
     responseTimeout: 120000,
-    baseUrl: `http://localhost:${UI_PORT}`,
-    apiUrl: `http://localhost:${API_PORT}/api/graphql`,
+    baseUrl: `https://localhost:${UI_PORT}`,
+    apiUrl: `https://localhost:${API_PORT}/api/graphql`,
     specPattern: 'cypress/e2e/**/*.spec.js',
     env: {
       UI_PORT,

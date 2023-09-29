@@ -62,28 +62,30 @@ context('Insurance - Account - Sign in - Request new code page - I want to enter
       const { doNotHaveAccessToEmail } = requestNewCodePage;
       const { DO_NOT_HAVE_EMAIL_ACCESS } = CONTENT_STRINGS;
 
-      it('renders summary text', () => {
+      it('should render summary text with collapsed conditional `details` content', () => {
         cy.checkText(doNotHaveAccessToEmail.summary(), DO_NOT_HAVE_EMAIL_ACCESS.INTRO);
+
+        doNotHaveAccessToEmail.details().should('not.have.attr', 'open');
       });
 
-      it('clicking summary text reveals details', () => {
-        doNotHaveAccessToEmail.summary().click();
+      describe('when clicking the summary text', () => {
+        it('should expand the collapsed `details` content', () => {
+          doNotHaveAccessToEmail.summary().click();
 
-        doNotHaveAccessToEmail.cannotAccess().should('be.visible');
-      });
+          doNotHaveAccessToEmail.details().should('have.attr', 'open');
 
-      it('renders expanded content', () => {
-        doNotHaveAccessToEmail.summary().click();
+          doNotHaveAccessToEmail.cannotAccess().should('be.visible');
 
-        cy.checkText(doNotHaveAccessToEmail.cannotAccess(), DO_NOT_HAVE_EMAIL_ACCESS.CANNOT_ACCESS);
+          cy.checkText(doNotHaveAccessToEmail.cannotAccess(), DO_NOT_HAVE_EMAIL_ACCESS.CANNOT_ACCESS);
 
-        cy.checkLink(
-          doNotHaveAccessToEmail.contactUsLink(),
-          DO_NOT_HAVE_EMAIL_ACCESS.CONTACT_US.HREF,
-          DO_NOT_HAVE_EMAIL_ACCESS.CONTACT_US.TEXT,
-        );
+          cy.checkLink(
+            doNotHaveAccessToEmail.contactUsLink(),
+            DO_NOT_HAVE_EMAIL_ACCESS.CONTACT_US.HREF,
+            DO_NOT_HAVE_EMAIL_ACCESS.CONTACT_US.TEXT,
+          );
 
-        cy.checkText(doNotHaveAccessToEmail.outro(), DO_NOT_HAVE_EMAIL_ACCESS.OUTRO);
+          cy.checkText(doNotHaveAccessToEmail.outro(), DO_NOT_HAVE_EMAIL_ACCESS.OUTRO);
+        });
       });
     });
   });

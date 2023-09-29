@@ -142,9 +142,9 @@ describe('Create an Application', () => {
     expect(typeof application.business.id).toEqual('string');
   });
 
-  test('it should have a business id', () => {
-    expect(application.business.businessContactDetail.id).toBeDefined();
-    expect(typeof application.business.businessContactDetail.id).toEqual('string');
+  test('it should have a policy contact id', () => {
+    expect(application.policyContact.id).toBeDefined();
+    expect(typeof application.policyContact.id).toEqual('string');
   });
 
   test('it should have a broker id', () => {

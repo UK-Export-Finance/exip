@@ -64,7 +64,7 @@ HEALTHCHECK \
 CMD wget \
 --no-verbose \
 --tries=3 \
---spider http://localhost:${UI_PORT} \
+--spider https://localhost:${UI_PORT} \
 || exit 1
 
 # Execute Script

@@ -1,5 +1,5 @@
 import { mapSicCodes } from '../../../helpers/map-sic-codes';
-import { ApplicationRelationship, Context, UpdateCompanyAndCompanyAddressVariables } from '../../../types';
+import { Relationship, Context, UpdateCompanyAndCompanyAddressVariables } from '../../../types';
 
 /**
  * updateCompanyAndCompanyAddress
@@ -9,11 +9,7 @@ import { ApplicationRelationship, Context, UpdateCompanyAndCompanyAddressVariabl
  * @param {Object} KeystoneJS context API
  * @returns {Object} Object with company ID
  */
-const updateCompanyAndCompanyAddress = async (
-  root: any,
-  variables: UpdateCompanyAndCompanyAddressVariables,
-  context: Context,
-): Promise<ApplicationRelationship> => {
+const updateCompanyAndCompanyAddress = async (root: any, variables: UpdateCompanyAndCompanyAddressVariables, context: Context): Promise<Relationship> => {
   try {
     console.info('Updating application company and company address for %s', variables.companyId);
     const { address, sicCodes, industrySectorNames, oldSicCodes, ...company } = variables.data;

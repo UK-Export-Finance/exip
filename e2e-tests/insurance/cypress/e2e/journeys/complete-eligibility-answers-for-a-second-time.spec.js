@@ -20,15 +20,17 @@ const {
   ELIGIBILITY: { BUYER_COUNTRY },
 } = ROUTES.INSURANCE;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Eligibility - start and complete for a second time after creating an application', () => {
   let referenceNumber;
 
-  const buyerCountryUrl = `${Cypress.config('baseUrl')}${BUYER_COUNTRY}`;
+  const buyerCountryUrl = `${baseUrl}${BUYER_COUNTRY}`;
 
   before(() => {
     cy.deleteAccount();
 
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       partials.header.navigation.applications().click();

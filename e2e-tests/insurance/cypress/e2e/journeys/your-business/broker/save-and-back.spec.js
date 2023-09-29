@@ -1,4 +1,4 @@
-import { broker } from '../../../../../../pages/your-business';
+import { brokerPage } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
 import { saveAndBackButton, submitButton } from '../../../../../../pages/shared';
 import { TASKS } from '../../../../../../content-strings';
@@ -37,14 +37,13 @@ context('Insurance - Your business - Broker page - Save and back', () => {
   let allSectionsUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
 
       cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
 
@@ -80,9 +79,9 @@ context('Insurance - Your business - Broker page - Save and back', () => {
     it(`should redirect to ${ALL_SECTIONS} retain the "your business" task status as "in progress"`, () => {
       cy.navigateToUrl(url);
 
-      broker[USING_BROKER].yesRadioInput().click();
+      brokerPage[USING_BROKER].yesRadioInput().click();
 
-      cy.keyboardInput(broker[NAME].input(), application.EXPORTER_BROKER[NAME]);
+      cy.keyboardInput(brokerPage[NAME].input(), application.EXPORTER_BROKER[NAME]);
 
       saveAndBackButton().click();
 
@@ -101,21 +100,19 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       submitButton().click();
       // submit company details form
       submitButton().click();
-      // your contact page submit
-      cy.completeAndSubmitYourContact({});
       // submit nature of business form
       submitButton().click();
       // submit turnover form
       submitButton().click();
 
-      broker[USING_BROKER].yesRadioInput().should('be.checked');
-      cy.checkValue(broker[NAME], application.EXPORTER_BROKER[NAME]);
-      cy.checkValue(broker[ADDRESS_LINE_1], '');
-      cy.checkValue(broker[ADDRESS_LINE_2], '');
-      cy.checkValue(broker[TOWN], '');
-      cy.checkValue(broker[COUNTY], '');
-      cy.checkValue(broker[POSTCODE], '');
-      cy.checkValue(broker[EMAIL], '');
+      brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
+      cy.checkValue(brokerPage[NAME], application.EXPORTER_BROKER[NAME]);
+      cy.checkValue(brokerPage[ADDRESS_LINE_1], '');
+      cy.checkValue(brokerPage[ADDRESS_LINE_2], '');
+      cy.checkValue(brokerPage[TOWN], '');
+      cy.checkValue(brokerPage[COUNTY], '');
+      cy.checkValue(brokerPage[POSTCODE], '');
+      cy.checkValue(brokerPage[EMAIL], '');
     });
   });
 
@@ -124,15 +121,15 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       it(`should redirect to ${ALL_SECTIONS} and change the "your business" task status as "completed"`, () => {
         cy.navigateToUrl(url);
 
-        broker[USING_BROKER].yesRadioInput().click();
+        brokerPage[USING_BROKER].yesRadioInput().click();
 
-        cy.keyboardInput(broker[NAME].input(), application.EXPORTER_BROKER[NAME]);
-        cy.keyboardInput(broker[ADDRESS_LINE_1].input(), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
-        cy.keyboardInput(broker[ADDRESS_LINE_2].input(), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
-        cy.keyboardInput(broker[TOWN].input(), application.EXPORTER_BROKER[TOWN]);
-        cy.keyboardInput(broker[COUNTY].input(), application.EXPORTER_BROKER[COUNTY]);
-        cy.keyboardInput(broker[EMAIL].input(), application.EXPORTER_BROKER[EMAIL]);
-        cy.keyboardInput(broker[POSTCODE].input(), application.EXPORTER_BROKER[POSTCODE]);
+        cy.keyboardInput(brokerPage[NAME].input(), application.EXPORTER_BROKER[NAME]);
+        cy.keyboardInput(brokerPage[ADDRESS_LINE_1].input(), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
+        cy.keyboardInput(brokerPage[ADDRESS_LINE_2].input(), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
+        cy.keyboardInput(brokerPage[TOWN].input(), application.EXPORTER_BROKER[TOWN]);
+        cy.keyboardInput(brokerPage[COUNTY].input(), application.EXPORTER_BROKER[COUNTY]);
+        cy.keyboardInput(brokerPage[EMAIL].input(), application.EXPORTER_BROKER[EMAIL]);
+        cy.keyboardInput(brokerPage[POSTCODE].input(), application.EXPORTER_BROKER[POSTCODE]);
 
         saveAndBackButton().click();
 
@@ -151,21 +148,19 @@ context('Insurance - Your business - Broker page - Save and back', () => {
         submitButton().click();
         // submit company details form
         submitButton().click();
-        // your contact page submit
-        cy.completeAndSubmitYourContact({});
         // submit nature of business form
         submitButton().click();
         // submit turnover form
         submitButton().click();
 
-        broker[USING_BROKER].yesRadioInput().should('be.checked');
-        cy.checkValue(broker[NAME], application.EXPORTER_BROKER[NAME]);
-        cy.checkValue(broker[ADDRESS_LINE_1], application.EXPORTER_BROKER[ADDRESS_LINE_1]);
-        cy.checkValue(broker[ADDRESS_LINE_2], application.EXPORTER_BROKER[ADDRESS_LINE_2]);
-        cy.checkValue(broker[TOWN], application.EXPORTER_BROKER[TOWN]);
-        cy.checkValue(broker[COUNTY], application.EXPORTER_BROKER[COUNTY]);
-        cy.checkValue(broker[POSTCODE], application.EXPORTER_BROKER[POSTCODE]);
-        cy.checkValue(broker[EMAIL], application.EXPORTER_BROKER[EMAIL]);
+        brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
+        cy.checkValue(brokerPage[NAME], application.EXPORTER_BROKER[NAME]);
+        cy.checkValue(brokerPage[ADDRESS_LINE_1], application.EXPORTER_BROKER[ADDRESS_LINE_1]);
+        cy.checkValue(brokerPage[ADDRESS_LINE_2], application.EXPORTER_BROKER[ADDRESS_LINE_2]);
+        cy.checkValue(brokerPage[TOWN], application.EXPORTER_BROKER[TOWN]);
+        cy.checkValue(brokerPage[COUNTY], application.EXPORTER_BROKER[COUNTY]);
+        cy.checkValue(brokerPage[POSTCODE], application.EXPORTER_BROKER[POSTCODE]);
+        cy.checkValue(brokerPage[EMAIL], application.EXPORTER_BROKER[EMAIL]);
       });
     });
 
@@ -173,7 +168,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       it(`should redirect to ${ALL_SECTIONS} and change the "your business" task status as "Completed"`, () => {
         cy.navigateToUrl(url);
 
-        broker[USING_BROKER].noRadioInput().click();
+        brokerPage[USING_BROKER].noRadioInput().click();
 
         saveAndBackButton().click();
 
@@ -192,14 +187,12 @@ context('Insurance - Your business - Broker page - Save and back', () => {
         submitButton().click();
         // submit company details form
         submitButton().click();
-        // your contact page submit
-        cy.completeAndSubmitYourContact({});
         // submit nature of business form
         submitButton().click();
         // submit turnover form
         submitButton().click();
 
-        broker[USING_BROKER].noRadioInput().should('be.checked');
+        brokerPage[USING_BROKER].noRadioInput().should('be.checked');
       });
     });
   });

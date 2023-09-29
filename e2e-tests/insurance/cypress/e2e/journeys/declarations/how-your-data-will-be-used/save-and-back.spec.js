@@ -18,12 +18,14 @@ const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_HOW_YOUR_DATA_WILL_BE_US
 
 const task = taskList.submitApplication.tasks.declarationsAndSubmit;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Declarations - How your data will be used page - Save and go back', () => {
   let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
@@ -37,7 +39,7 @@ context('Insurance - Declarations - How your data will be used page - Save and g
       cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct();
       cy.completeAndSubmitDeclarationConfirmationAndAcknowledgements();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
 
       cy.assertUrl(url);
     });
@@ -59,7 +61,7 @@ context('Insurance - Declarations - How your data will be used page - Save and g
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
@@ -79,7 +81,7 @@ context('Insurance - Declarations - How your data will be used page - Save and g
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
@@ -106,7 +108,7 @@ context('Insurance - Declarations - How your data will be used page - Save and g
       // go through the 5th declaration - confirmation and acknowledgements
       submitButton().click();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
 
       singleInputField(FIELD_ID).input().should('be.checked');
     });

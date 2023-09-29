@@ -45,14 +45,13 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
     cy.clearCookies();
     Cypress.session.clearAllSavedSessions();
 
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
 
       cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
@@ -82,14 +81,13 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} does not ex
     cy.clearCookies();
     Cypress.session.clearAllSavedSessions();
 
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
 
       cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companyNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE });
       cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
       const url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
@@ -120,14 +118,13 @@ context(`Insurance - Your business - Turnover page - submitting a company with $
     cy.clearCookies();
     Cypress.session.clearAllSavedSessions();
 
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
 
       cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
       const url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
@@ -161,7 +158,6 @@ context(`Insurance - Your business - Turnover page - submitting a company with $
 
     cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companyNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE });
     cy.completeAndSubmitCompanyDetails();
-    cy.completeAndSubmitYourContact({});
     cy.completeAndSubmitNatureOfYourBusiness();
 
     field.value().should('not.exist');

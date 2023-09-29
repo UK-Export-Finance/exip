@@ -14,12 +14,6 @@ export const EXPORTER_BUSINESS = {
     FINANCIAL_YEAR_END_DATE: 'financialYearEndDate',
     SUMMARY_LIST: 'summaryList',
   },
-  CONTACT: {
-    BUSINESS_CONTACT_DETAIL: 'businessContactDetail',
-    COMPANY_NAME: 'companyName',
-    POSITION: 'position',
-    NAME: 'name',
-  },
   YOUR_COMPANY: {
     ADDRESS: 'address',
     YOUR_BUSINESS: 'yourBusiness',

@@ -1,5 +1,6 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { submitButton, input } from '../../pages/shared';
+import application from '../../fixtures/application';
 
 const {
   POLICY_AND_EXPORTS: {
@@ -11,6 +12,8 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
+const { POLICY_CONTACT } = application;
+
 /**
  * completeAndSubmitNameOnPolicyForm
  * completes and submits name on policy form
@@ -21,7 +24,7 @@ const {
 const completeAndSubmitNameOnPolicyForm = ({ sameName = false }) => {
   if (sameName) {
     input.field(SAME_NAME).input().click();
-    cy.keyboardInput(input.field(POSITION).input(), 'CEO');
+    cy.keyboardInput(input.field(POSITION).input(), POLICY_CONTACT[POSITION]);
   } else {
     input.field(OTHER_NAME).input().click();
   }

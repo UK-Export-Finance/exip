@@ -11,7 +11,7 @@ import api from '../../../../api';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCurrencies } from '../../../../test-mocks';
 
@@ -41,7 +41,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
   let res: Response;
   let refNumber: number;
 
-  jest.mock('../save-data');
+  jest.mock('../save-data/policy');
 
   mapAndSave.policy = jest.fn(() => Promise.resolve(true));
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));

@@ -37,7 +37,7 @@ context('Insurance - Check your answers - Policy and exports - Multiple contract
   let referenceNumber;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
       cy.completePrepareApplicationMultiplePolicyType({ referenceNumber });
 

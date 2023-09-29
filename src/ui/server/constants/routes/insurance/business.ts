@@ -1,7 +1,6 @@
 const ROOT = '/your-business';
 const COMPANIES_HOUSE_NUMBER_ROOT = `${ROOT}/companies-house-number`;
 const COMPANY_DETAILS_ROOT = `${ROOT}/company-details`;
-const CONTACT_ROOT = `${ROOT}/contact`;
 const NATURE_OF_BUSINESS_ROOT = `${ROOT}/nature-of-business`;
 const TURNOVER_ROOT = `${ROOT}/turnover`;
 const BROKER_ROOT = `${ROOT}/broker`;
@@ -21,10 +20,6 @@ export const EXPORTER_BUSINESS = {
   COMPANY_DETAILS_CHECK_AND_CHANGE: `${COMPANY_DETAILS_ROOT}/check-and-change`,
   COMPANY_DETAILS_SAVE_AND_BACK: `${COMPANY_DETAILS_ROOT}/save-and-back`,
   COMPANY_HOUSE_SEARCH: `${COMPANY_DETAILS_ROOT}/companies-house-search`,
-  CONTACT_ROOT,
-  CONTACT_CHANGE: `${CONTACT_ROOT}/change`,
-  CONTACT_CHECK_AND_CHANGE: `${CONTACT_ROOT}/check-and-change`,
-  CONTACT_SAVE_AND_BACK: `${CONTACT_ROOT}/save-and-back`,
   NATURE_OF_BUSINESS_ROOT,
   NATURE_OF_BUSINESS_CHANGE: `${NATURE_OF_BUSINESS_ROOT}/change`,
   NATURE_OF_BUSINESS_CHECK_AND_CHANGE: `${NATURE_OF_BUSINESS_ROOT}/check-and-change`,

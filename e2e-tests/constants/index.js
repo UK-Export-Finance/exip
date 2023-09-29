@@ -1,3 +1,4 @@
+export * from './cookies';
 export * from './account';
 export * from './api';
 export * from './application';
@@ -12,5 +13,3 @@ export * from './eligibility';
 export * from './routes';
 export * from './supported-currencies';
 export * from './ukef-contact-details';
-
-export const MAX_APPLICATIONS_PER_PAGE = 15;

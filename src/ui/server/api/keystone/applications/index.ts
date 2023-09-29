@@ -1,7 +1,7 @@
 import { ApolloResponse } from '../../../../types';
 import apollo from '../../../graphql/apollo';
 import getApplicationsQuery from '../../../graphql/queries/applications';
-import { MAX_APPLICATIONS_PER_PAGE } from '../../../constants';
+import { MAX_APPLICATIONS_PER_PAGE } from '../../../constants/pagination';
 
 const applications = {
   /**

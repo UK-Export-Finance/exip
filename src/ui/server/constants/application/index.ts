@@ -1,8 +1,12 @@
 import LATEST_VERSION_NUMBER from './versions/latest';
 
+export const SERVICE_NAME = 'EXIP';
+export const INSURANCE = 'Insurance';
+export const QUOTE = 'Quote';
+
 export const APPLICATION = {
   LATEST_VERSION: { LATEST_VERSION_NUMBER },
-  DEAL_TYPE: 'EXIP',
+  DEAL_TYPE: SERVICE_NAME,
   SUBMISSION_COUNT_DEFAULT: 0,
   SUBMISSION_DEADLINE_IN_MONTHS: 1,
   SUBMISSION_TYPE: {

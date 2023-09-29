@@ -84,8 +84,6 @@ services:
       API_URL:
       API_KEY:
       SESSION_SECRET:
-      BASIC_AUTH_KEY:
-      BASIC_AUTH_SECRET:
       APIM_MDM_URL:
       APIM_MDM_KEY:
       APIM_MDM_VALUE:

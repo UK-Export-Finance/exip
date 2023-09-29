@@ -25,7 +25,7 @@ describe('middleware/headers/security/get-url-origin', () => {
 
   describe('when the origin is localhost', () => {
     it('should return the the origin of the URL', () => {
-      const mockUrl = 'http://localhost:1234';
+      const mockUrl = 'https://localhost:1234';
 
       const result = getUrlOrigin(mockUrl);
 

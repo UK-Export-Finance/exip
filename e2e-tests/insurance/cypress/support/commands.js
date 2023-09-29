@@ -25,6 +25,7 @@ Cypress.Commands.add('completeAndSubmitNewPasswordAccountForm', require('../../.
 Cypress.Commands.add('getAccountByEmail', require('../../../commands/insurance/account/get-account-by-email'));
 Cypress.Commands.add('verifyAccountEmail', require('../../../commands/insurance/account/verify-account-email'));
 
+Cypress.Commands.add('createAnApplication', require('../../../commands/insurance/create-an-application'));
 Cypress.Commands.add('createApplications', require('../../../commands/insurance/create-applications'));
 
 Cypress.Commands.add('deleteAccount', require('../../../commands/insurance/account/delete-account'));
@@ -50,7 +51,6 @@ Cypress.Commands.add('completeAndSubmitCompanyDetails', require('../../../comman
 Cypress.Commands.add('completeCompanyDetailsForm', require('../../../commands/insurance/complete-company-details-form'));
 Cypress.Commands.add('completeAndSubmitCompaniesHouseSearchForm', require('../../../commands/insurance/complete-and-submit-companies-house-number-search-form'));
 
-Cypress.Commands.add('completeAndSubmitYourContact', require('../../../commands/insurance/complete-and-submit-your-contact-form'));
 Cypress.Commands.add('completeAndSubmitNatureOfYourBusiness', require('../../../commands/insurance/complete-and-submit-nature-of-your-business'));
 Cypress.Commands.add('completeAndSubmitTurnoverForm', require('../../../commands/insurance/complete-and-submit-turnover-form'));
 Cypress.Commands.add('completeAndSubmitBrokerForm', require('../../../commands/insurance/complete-and-submit-broker-form'));
