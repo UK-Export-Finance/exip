@@ -3302,7 +3302,7 @@ var import_date_fns8 = require("date-fns");
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application2) => {
   console.info("Getting populated application");
-  const { eligibilityId, ownerId, policyId, exportContractId, companyId, businessId, brokerId, buyerId, declarationId } = application2;
+  const { eligibilityId, ownerId, policyId, policyContactId, exportContractId, companyId, businessId, brokerId, buyerId, declarationId } = application2;
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId }
   });
@@ -3318,6 +3318,12 @@ var getPopulatedApplication = async (context, application2) => {
   });
   if (!policy) {
     throw new Error(generateErrorMessage("policy", application2.id));
+  }
+  const policyContact = await context.db.PolicyContact.findOne({
+    where: { id: policyContactId }
+  });
+  if (!policyContact) {
+    throw new Error(generateErrorMessage("policyContact", application2.id));
   }
   const exportContract = await context.db.ExportContract.findOne({
     where: { id: exportContractId }
@@ -3403,15 +3409,16 @@ var getPopulatedApplication = async (context, application2) => {
       ...eligibility,
       buyerCountry
     },
-    policy,
-    exportContract: populatedExportContract,
-    owner: account,
+    broker,
+    business: populatedBusiness,
+    buyer: populatedBuyer,
     company: populatedCompany,
     companySicCodes,
-    business: populatedBusiness,
-    broker,
-    buyer: populatedBuyer,
-    declaration
+    declaration,
+    exportContract: populatedExportContract,
+    owner: account,
+    policy,
+    policyContact
   };
   return populatedApplication;
 };
@@ -3961,22 +3968,18 @@ var mapKeyInformation = (application2) => {
 var map_key_information_default = mapKeyInformation;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-contact-details/index.ts
-var {
-  ACCOUNT: { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL6 }
-} = insurance_default;
+var { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL6 } = account_default2;
 var {
   SECTION_TITLES: { EXPORTER_CONTACT_DETAILS },
   FIELDS: FIELDS3
 } = XLSX;
 var mapExporterContactDetails = (application2) => {
-  const {
-    business: { businessContactDetail }
-  } = application2;
+  const { policyContact } = application2;
   const mapped = [
     xlsx_row_default(EXPORTER_CONTACT_DETAILS),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT[FIRST_NAME3], businessContactDetail[FIRST_NAME3]),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT[LAST_NAME3], businessContactDetail[LAST_NAME3]),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, businessContactDetail[EMAIL6])
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT[FIRST_NAME3], policyContact[FIRST_NAME3]),
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT[LAST_NAME3], policyContact[LAST_NAME3]),
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL6])
   ];
   return mapped;
 };

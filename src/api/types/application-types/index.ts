@@ -116,6 +116,7 @@ export interface Application {
   exportContract: ApplicationExportContract;
   owner: ApplicationOwner;
   policy: ApplicationPolicy;
+  policyContact: ApplicationPolicyContact;
   company: ApplicationCompany;
   companySicCodes: Array<ApplicationCompanySicCode>;
   companyAddress: ApplicationCompanyAddress;
