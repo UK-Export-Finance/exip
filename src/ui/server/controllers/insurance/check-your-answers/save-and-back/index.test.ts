@@ -23,8 +23,6 @@ describe('controllers/insurance/check-your-answers/save-and-back', () => {
     req.body[FIELD_IDS[0]] = 'true';
 
     res = mockRes();
-
-    res.locals.application = mockApplication;
   });
 
   afterAll(() => {
@@ -56,7 +54,7 @@ describe('controllers/insurance/check-your-answers/save-and-back', () => {
 
   describe('when there is no application', () => {
     beforeEach(() => {
-      res.locals = mockRes().locals;
+      delete res.locals.application;
     });
 
     it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {

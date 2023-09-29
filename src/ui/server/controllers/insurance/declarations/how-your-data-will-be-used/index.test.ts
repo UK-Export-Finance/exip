@@ -37,8 +37,6 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
-
     api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatestHowDataWillBeUsedSpy;
   });
 
@@ -100,7 +98,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -213,7 +211,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

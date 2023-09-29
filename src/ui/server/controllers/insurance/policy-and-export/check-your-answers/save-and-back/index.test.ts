@@ -16,7 +16,6 @@ describe('controllers/insurance/policy-and-export/check-your-answers/save-and-ba
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 

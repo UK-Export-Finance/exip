@@ -153,7 +153,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -313,7 +313,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

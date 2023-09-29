@@ -37,7 +37,6 @@ describe('controllers/insurance/export-contract/call-map-and-save', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
 
     req.body = mockFormBody;

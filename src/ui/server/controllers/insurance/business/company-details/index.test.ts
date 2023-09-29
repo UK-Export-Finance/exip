@@ -43,8 +43,6 @@ describe('controllers/insurance/business/companies-details', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
   });
 
   afterAll(() => {
@@ -122,7 +120,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
@@ -135,6 +133,12 @@ describe('controllers/insurance/business/companies-details', () => {
 
   describe('post', () => {
     mapAndSave.companyDetails = jest.fn(() => Promise.resolve(true));
+
+    const validBody = {
+      [TRADING_NAME]: 'true',
+      [TRADING_ADDRESS]: 'false',
+      [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
+    };
 
     describe('when there are validation errors', () => {
       it('should render template with validation errors and submitted values', async () => {
@@ -168,12 +172,6 @@ describe('controllers/insurance/business/companies-details', () => {
     });
 
     describe('when there are no validation errors', () => {
-      const validBody = {
-        [TRADING_NAME]: 'true',
-        [TRADING_ADDRESS]: 'false',
-        [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
-      };
-
       it('should redirect to next page', async () => {
         req.body = validBody;
         req.originalUrl = `insurance/${mockApplication.referenceNumber}/${COMPANY_DETAILS_ROOT}`;
@@ -228,11 +226,11 @@ describe('controllers/insurance/business/companies-details', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
@@ -241,11 +239,7 @@ describe('controllers/insurance/business/companies-details', () => {
     describe('api error handling', () => {
       describe('when mapAndSave.companyDetails returns an error', () => {
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          req.body = {
-            [TRADING_NAME]: 'true',
-            [TRADING_ADDRESS]: 'false',
-            [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
-          };
+          req.body = validBody;
 
           mapAndSave.companyDetails = jest.fn(() => Promise.reject());
 
@@ -256,11 +250,12 @@ describe('controllers/insurance/business/companies-details', () => {
       });
 
       describe('when mapAndSave.companyDetails resolves false', () => {
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          req.body = validBody;
           res.locals = mockRes().locals;
           mapAndSave.companyDetails = jest.fn(() => Promise.resolve(false));
 
-          post(req, res);
+          await post(req, res);
 
           expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });

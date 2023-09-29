@@ -33,7 +33,6 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 
@@ -94,7 +93,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
@@ -106,18 +105,18 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
   });
 
   describe('post', () => {
-    beforeEach(() => {
-      mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(true));
-    });
-
-    const mockBody = {
+    const validBody = {
       [CONNECTED_WITH_BUYER]: FIELD_VALUES.YES,
       [TRADED_WITH_BUYER]: FIELD_VALUES.YES,
     };
 
+    beforeEach(() => {
+      mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(true));
+    });
+
     describe('when there are no validation errors', () => {
       beforeEach(() => {
-        req.body = mockBody;
+        req.body = validBody;
       });
 
       it('should redirect to the next page', async () => {
@@ -137,7 +136,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
 
       it('should call mapAndSave.buyer once with data from constructPayload function and application', async () => {
         req.body = {
-          ...mockBody,
+          ...validBody,
           injection: 1,
         };
 
@@ -191,27 +190,28 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
       });
     });
 
-    describe('api error handling', () => {
-      describe('when application does not exist', () => {
-        beforeEach(() => {
-          res.locals = mockRes().locals;
-        });
-
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-          post(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        delete res.locals.application;
       });
 
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
       describe('when saveResponse returns false', () => {
         beforeEach(() => {
+          req.body = validBody;
           res.locals = mockRes().locals;
           mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(false));
         });
 
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-          post(req, res);
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
 
           expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
@@ -219,12 +219,13 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
 
       describe('when there is an error', () => {
         beforeEach(() => {
+          req.body = validBody;
           res.locals = mockRes().locals;
           mapAndSave.yourBuyer = jest.fn(() => Promise.reject());
         });
 
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-          post(req, res);
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
 
           expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });

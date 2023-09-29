@@ -23,8 +23,6 @@ describe('controllers/insurance/business/contact/save-and-back', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
-
     mapAndSave.contact = updateMapAndSave;
   });
 
@@ -94,27 +92,43 @@ describe('controllers/insurance/business/contact/save-and-back', () => {
 
   describe('when there is no application', () => {
     beforeEach(() => {
-      res.locals = mockRes().locals;
+      delete res.locals.application;
     });
 
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-      post(req, res);
+    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+      await post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
     });
   });
 
-  describe('when mapAndSave.contact fails', () => {
-    beforeEach(() => {
-      res.locals = mockRes().locals;
-      updateMapAndSave = jest.fn(() => Promise.reject());
-      mapAndSave.contact = updateMapAndSave;
+  describe('api error handling', () => {
+    describe('when saveResponse returns false', () => {
+      beforeEach(() => {
+        req.body = validBody;
+        res.locals = mockRes().locals;
+        mapAndSave.contact = jest.fn(() => Promise.resolve(false));
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
     });
 
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-      post(req, res);
+    describe('when mapAndSave.contact fails', () => {
+      beforeEach(() => {
+        res.locals = mockRes().locals;
+        updateMapAndSave = jest.fn(() => Promise.reject());
+        mapAndSave.contact = updateMapAndSave;
+      });
 
-      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
     });
   });
 });

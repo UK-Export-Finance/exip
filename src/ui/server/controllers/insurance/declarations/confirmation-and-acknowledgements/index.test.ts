@@ -35,8 +35,6 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
-
     api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement = getLatestConfirmationAndAcknowledgementSpy;
   });
 
@@ -97,7 +95,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -188,7 +186,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

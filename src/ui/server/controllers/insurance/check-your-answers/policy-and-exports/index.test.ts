@@ -43,7 +43,6 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     req.params.referenceNumber = String(referenceNumber);
     api.keystone.countries.getAll = getCountriesSpy;
     api.external.getCurrencies = getCurrenciesSpy;
@@ -111,7 +110,7 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -204,7 +203,7 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

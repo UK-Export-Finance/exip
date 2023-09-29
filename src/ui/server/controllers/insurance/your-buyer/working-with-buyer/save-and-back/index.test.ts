@@ -6,7 +6,7 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication, mockBuyer } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockBuyer } from '../../../../../test-mocks';
 
 const {
   WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER },
@@ -23,8 +23,6 @@ describe('controllers/insurance/your-buyer/working-with-buyer/save-and-back', ()
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
 
     mapAndSave.yourBuyer = updateMapAndSave;
   });
@@ -47,7 +45,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer/save-and-back', ()
       expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should call mapAndSave.buyer once with data from constructPayload function', async () => {
+    it('should call mapAndSave.yourBuyer once with data from constructPayload function', async () => {
       req.body = validBody;
 
       await post(req, res);
@@ -72,7 +70,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer/save-and-back', ()
       expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should call mapAndSave.buyer once with data from constructPayload function', async () => {
+    it('should call mapAndSave.yourBuyer once with data from constructPayload function', async () => {
       req.body = {
         [TRADED_WITH_BUYER]: mockBuyer[TRADED_WITH_BUYER],
       };
@@ -90,7 +88,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer/save-and-back', ()
 
   describe('when there is no application', () => {
     beforeEach(() => {
-      res.locals = mockRes().locals;
+      delete res.locals.application;
     });
 
     it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
@@ -100,29 +98,29 @@ describe('controllers/insurance/your-buyer/working-with-buyer/save-and-back', ()
     });
   });
 
-  describe('when mapAndSave.buyer returns false', () => {
+  describe('when mapAndSave.yourBuyer returns false', () => {
     beforeEach(() => {
       res.locals = mockRes().locals;
       updateMapAndSave = jest.fn(() => Promise.resolve(false));
       mapAndSave.yourBuyer = updateMapAndSave;
     });
 
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-      post(req, res);
+    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+      await post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
     });
   });
 
-  describe('when mapAndSave.buyer fails', () => {
+  describe('when mapAndSave.yourBuyer fails', () => {
     beforeEach(() => {
       res.locals = mockRes().locals;
       updateMapAndSave = jest.fn(() => Promise.reject());
       mapAndSave.yourBuyer = updateMapAndSave;
     });
 
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-      post(req, res);
+    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+      await post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
     });

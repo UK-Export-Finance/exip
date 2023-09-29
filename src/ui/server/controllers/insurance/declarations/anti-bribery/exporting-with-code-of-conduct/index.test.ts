@@ -35,8 +35,6 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-a-code-
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
   });
 
   describe('FIELD_ID', () => {
@@ -85,7 +83,7 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-a-code-
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -143,7 +141,7 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-a-code-
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

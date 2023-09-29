@@ -49,8 +49,6 @@ describe('controllers/insurance/business/companies-house-number', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
   });
 
   afterAll(() => {
@@ -90,8 +88,6 @@ describe('controllers/insurance/business/companies-house-number', () => {
 
   describe('get', () => {
     it('should render the broker template with correct variables', () => {
-      res.locals.application = mockApplication;
-
       get(req, res);
 
       const submittedValues = {
@@ -112,7 +108,7 @@ describe('controllers/insurance/business/companies-house-number', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
@@ -142,6 +138,10 @@ describe('controllers/insurance/business/companies-house-number', () => {
 
     mapAndSave.companyDetails = jest.fn(() => Promise.resolve(true));
 
+    const validBody = {
+      [COMPANIES_HOUSE_NUMBER]: '8989898',
+    };
+
     describe('when there are validation errors', () => {
       it('should render template with validation errors and submitted values', async () => {
         req.body = {};
@@ -170,10 +170,6 @@ describe('controllers/insurance/business/companies-house-number', () => {
     });
 
     describe('when there are no validation errors', () => {
-      const validBody = {
-        [COMPANIES_HOUSE_NUMBER]: '8989898',
-      };
-
       it('should redirect to next page', async () => {
         req.body = validBody;
 
@@ -231,11 +227,11 @@ describe('controllers/insurance/business/companies-house-number', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
@@ -244,9 +240,7 @@ describe('controllers/insurance/business/companies-house-number', () => {
     describe('api error handling', () => {
       describe('when mapAndSave.companyDetails returns an error', () => {
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          req.body = {
-            [COMPANIES_HOUSE_NUMBER]: '8989898',
-          };
+          req.body = validBody;
 
           api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
           mapAndSave.companyDetails = jest.fn(() => Promise.reject());
@@ -259,9 +253,7 @@ describe('controllers/insurance/business/companies-house-number', () => {
 
       describe('when getCompaniesHouseResponse returns an error', () => {
         it(`should redirect to ${COMPANIES_HOUSE_UNAVAILABLE}`, async () => {
-          req.body = {
-            [COMPANIES_HOUSE_NUMBER]: '8989898',
-          };
+          req.body = validBody;
 
           api.keystone.getCompaniesHouseInformation = jest.fn(() => Promise.resolve({ apiError: true }));
 
@@ -272,11 +264,15 @@ describe('controllers/insurance/business/companies-house-number', () => {
       });
 
       describe('when mapAndSave.companyDetails resolves false', () => {
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          req.body = validBody;
+
           res.locals = mockRes().locals;
+
+          api.keystone.getCompaniesHouseInformation = jest.fn(() => Promise.resolve({ apiError: false }));
           mapAndSave.companyDetails = jest.fn(() => Promise.resolve(false));
 
-          post(req, res);
+          await post(req, res);
 
           expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
