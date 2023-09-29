@@ -5,14 +5,9 @@ const { ELIGIBILITY: mockEligibilityAnswers } = mockApplication;
 
 /**
  * createAnApplication
- * Create an application directly via the API
- * 1) Get a country
- * 2) Create a buyer with country ID
- * 3) Generate mock application with owner and buyer relationships
- * 4) Create applications
+ * Create an application with eligibility answers directly via the API
  * @param {String} Account ID for the application owner
- * @param {Number} Amount of applications to create
- * @returns {Array} Created applications
+ * @returns {Object} Created application
  */
 const createAnApplication = (accountId) => {
   if (accountId) {
