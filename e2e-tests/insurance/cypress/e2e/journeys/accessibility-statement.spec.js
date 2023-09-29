@@ -28,6 +28,8 @@ const {
   PREPERATION_OF_STATEMENT,
 } = CONTENT_STRINGS;
 
+const baseUrl = Cypress.config('baseUrl');
+
 const startRoute = ROUTES.INSURANCE.START;
 
 context('Accessibility statement page - Insurance', () => {
@@ -36,7 +38,7 @@ context('Accessibility statement page - Insurance', () => {
 
     partials.footer.supportLinks.accessibilityStatement().click();
 
-    cy.assertUrl(`${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ACCESSIBILITY_STATEMENT}`);
+    cy.assertUrl(`${baseUrl}${ROUTES.INSURANCE.ACCESSIBILITY_STATEMENT}`);
 
     cy.saveSession();
   });

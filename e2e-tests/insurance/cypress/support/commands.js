@@ -25,6 +25,7 @@ Cypress.Commands.add('completeAndSubmitNewPasswordAccountForm', require('../../.
 Cypress.Commands.add('getAccountByEmail', require('../../../commands/insurance/account/get-account-by-email'));
 Cypress.Commands.add('verifyAccountEmail', require('../../../commands/insurance/account/verify-account-email'));
 
+Cypress.Commands.add('createAnApplication', require('../../../commands/insurance/create-an-application'));
 Cypress.Commands.add('createApplications', require('../../../commands/insurance/create-applications'));
 
 Cypress.Commands.add('deleteAccount', require('../../../commands/insurance/account/delete-account'));

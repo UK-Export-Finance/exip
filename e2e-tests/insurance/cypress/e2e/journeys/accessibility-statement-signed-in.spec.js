@@ -12,7 +12,7 @@ context('Accessibility statement page - Insurance - Signed in', () => {
   let dashboardUrl;
 
   beforeEach(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       dashboardUrl = `${baseUrl}${ROOT}/${refNumber}${ALL_SECTIONS}`;
     });
 

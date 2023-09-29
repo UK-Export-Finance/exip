@@ -12,7 +12,7 @@ context('Insurance - Dashboard - new application', () => {
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       url = `${baseUrl}${DASHBOARD}`;

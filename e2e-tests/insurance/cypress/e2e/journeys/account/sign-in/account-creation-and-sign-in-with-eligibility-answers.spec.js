@@ -1,6 +1,6 @@
-import dashboardPage from '../../../../../pages/insurance/dashboard';
-import { ROUTES } from '../../../../../constants';
-import header from '../../../../../partials/header';
+import dashboardPage from '../../../../../../pages/insurance/dashboard';
+import { ROUTES } from '../../../../../../constants';
+import header from '../../../../../../partials/header';
 
 const { table } = dashboardPage;
 

@@ -46,6 +46,8 @@ Cypress.Commands.add('completeSignInAndOTP', require('./insurance/account/comple
 
 Cypress.Commands.add('accountAddAndGetOTP', require('./insurance/account/add-and-get-OTP'));
 
+Cypress.Commands.add('signInAndAssertAllSectionsUrl', require('./insurance/account/sign-in-and-assert-all-sections-url'));
+
 Cypress.Commands.add('assertCustomerServiceContactDetailsContent', require('./assert-customer-service-contact-details-content'));
 
 Cypress.Commands.add('checkErrorSummaryListHeading', require('./check-error-summary-list-heading'));

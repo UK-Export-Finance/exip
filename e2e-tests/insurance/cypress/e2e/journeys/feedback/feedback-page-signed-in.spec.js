@@ -17,7 +17,7 @@ context('Insurance - Feedback Page - Signed in', () => {
   const url = FEEDBACK;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       dashboardUrl = `${baseUrl}${ROOT}/${refNumber}${ALL_SECTIONS}`;
     });
     partials.phaseBanner.feedbackLink().click();

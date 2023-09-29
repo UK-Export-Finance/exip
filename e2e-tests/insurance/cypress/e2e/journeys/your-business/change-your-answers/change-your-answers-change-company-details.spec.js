@@ -48,7 +48,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
   before(() => {
     cy.clearCookies();
 
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();

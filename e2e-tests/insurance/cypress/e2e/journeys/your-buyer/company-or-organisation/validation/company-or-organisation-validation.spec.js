@@ -33,7 +33,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   let referenceNumber;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();

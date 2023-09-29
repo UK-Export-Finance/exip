@@ -30,7 +30,7 @@ context('Insurance - Account - Sign in - I want to go straight to my application
   describe('when there is one application', () => {
     it('should redirect to the application directly', () => {
       // creates new application and account
-      cy.completeSignInAndGoToApplication().then(({ referenceNumber }) => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber }) => {
         // sign out for next test
         header.navigation.signOut().click();
 
@@ -43,7 +43,7 @@ context('Insurance - Account - Sign in - I want to go straight to my application
   describe('when there is more than one application', () => {
     it('should redirect to the dashboard', () => {
       // creates account and application
-      cy.completeSignInAndGoToApplication().then(() => {
+      cy.completeSignInAndGoToApplication({}).then(() => {
         // go to all applications for user
         header.navigation.applications().click();
         // click on start new application page

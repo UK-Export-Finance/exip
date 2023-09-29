@@ -46,7 +46,7 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
   let changeLinkHref;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();

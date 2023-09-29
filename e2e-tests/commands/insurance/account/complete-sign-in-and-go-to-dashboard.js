@@ -4,6 +4,8 @@ const {
   INSURANCE: { DASHBOARD },
 } = ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 /**
  * completeSignInAndGoToDashboard
  * 1) Create an account directly via the API
@@ -26,7 +28,7 @@ const completeSignInAndGoToDashboard = () => cy.createAccount({}).then(({ accoun
     cy.completeAndSubmitEnterCodeAccountForm(securityCode);
 
     // assert we are on the dashboard
-    const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+    const expectedUrl = `${baseUrl}${DASHBOARD}`;
     cy.assertUrl(expectedUrl);
   }).then(() => ({
     accountId,

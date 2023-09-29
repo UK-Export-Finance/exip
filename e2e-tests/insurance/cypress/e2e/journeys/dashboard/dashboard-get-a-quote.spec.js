@@ -13,7 +13,7 @@ context('Insurance - Dashboard - Get a quote button - As an Exporter, I want to 
   let referenceNumber;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       header.navigation.applications().click();
