@@ -1,7 +1,7 @@
 import getCompaniesHouseInformation from '.';
 import companiesHouse from '../../../integrations/companies-house';
 import { mapCompaniesHouseFields } from '../../../helpers/map-companies-house-fields';
-import getIndustrySectorNames from '../../../integrations/industry-sector';
+import industrySectorNames from '../../../integrations/industry-sector';
 import mockCompanyAPIResponse from '../../../test-mocks/mock-company-api-response';
 import mockIndustrySectors from '../../../test-mocks/mock-industry-sectors';
 
@@ -58,7 +58,7 @@ describe('custom-resolvers/get-companies-house-information', () => {
   describe('when companies house returns a response but industry sector returns a success = false', () => {
     beforeEach(() => {
       companiesHouse.get = jest.fn(() => Promise.resolve({ success: true, data: mockCompanyAPIResponse }));
-      getIndustrySectorNames.get = jest.fn(() => Promise.resolve({ success: false }));
+      industrySectorNames.get = jest.fn(() => Promise.resolve({ success: false }));
     });
 
     it('should return object containing success as false and apiError as true', async () => {
@@ -73,7 +73,7 @@ describe('custom-resolvers/get-companies-house-information', () => {
   describe('when companies house returns a response but industry sector returns an apiError', () => {
     beforeEach(() => {
       companiesHouse.get = jest.fn(() => Promise.resolve({ success: true, data: mockCompanyAPIResponse }));
-      getIndustrySectorNames.get = jest.fn(() => Promise.resolve({ success: false, apiError: true }));
+      industrySectorNames.get = jest.fn(() => Promise.resolve({ success: false, apiError: true }));
     });
 
     it('should return object containing success as false and apiError as true', async () => {
@@ -88,7 +88,7 @@ describe('custom-resolvers/get-companies-house-information', () => {
   describe('when companies house returns a response but industry sector errors', () => {
     beforeEach(() => {
       companiesHouse.get = jest.fn(() => Promise.resolve({ success: true, data: mockCompanyAPIResponse }));
-      getIndustrySectorNames.get = jest.fn(() => Promise.reject());
+      industrySectorNames.get = jest.fn(() => Promise.reject());
     });
 
     it('should return object containing success as false and apiError as true', async () => {
@@ -103,7 +103,7 @@ describe('custom-resolvers/get-companies-house-information', () => {
   describe('when companies house returns a response but industry sector returns a response', () => {
     beforeEach(() => {
       companiesHouse.get = jest.fn(() => Promise.resolve({ success: true, data: mockCompanyAPIResponse }));
-      getIndustrySectorNames.get = jest.fn(() => Promise.resolve({ success: true, data: mockIndustrySectors }));
+      industrySectorNames.get = jest.fn(() => Promise.resolve({ success: true, data: mockIndustrySectors }));
     });
 
     it('should return object containing success as true and the mapped companies house fields', async () => {
