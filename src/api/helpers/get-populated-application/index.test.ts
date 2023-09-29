@@ -29,23 +29,24 @@ describe('api/helpers/get-populated-application', () => {
       id: application.id,
       ownerId: application.owner.id,
       policyId: application.policy.id,
+      policyContactId: application.policyContact.id,
     };
   });
 
   it('should return an application with associated data', async () => {
     const result = await getPopulatedApplication(context, applicationIds);
 
-    expect(result.eligibility.id).toEqual(application.eligibility.id);
-    expect(result.policy.id).toEqual(application.policy.id);
-    expect(result.exportContract.id).toEqual(application.exportContract.id);
-    expect(result.owner.id).toEqual(application.owner.id);
     expect(result.company.id).toEqual(application.company.id);
     expect(result.companySicCodes[0].companyId).toEqual(application.company.id);
     expect(result.business.id).toEqual(application.business.id);
     expect(result.broker.id).toEqual(application.broker.id);
     expect(result.buyer.id).toEqual(application.buyer.id);
-
     expect(result.declaration.id).toEqual(application.declaration.id);
+    expect(result.eligibility.id).toEqual(application.eligibility.id);
+    expect(result.exportContract.id).toEqual(application.exportContract.id);
+    expect(result.owner.id).toEqual(application.owner.id);
+    expect(result.policy.id).toEqual(application.policy.id);
+    expect(result.policyContact.id).toEqual(application.policyContact.id);
   });
 
   it('should return an application with populated buyer country', async () => {
@@ -120,6 +121,17 @@ describe('api/helpers/get-populated-application', () => {
       await getPopulatedApplication(context, { ...applicationIds, policyId: invalidId });
     } catch (err) {
       const expected = new Error(generateErrorMessage('policy', applicationIds.id));
+      expect(err).toEqual(expected);
+    }
+  });
+
+  it('should throw an error when policyContact does not exist', async () => {
+    const invalidId = applicationIds.id;
+
+    try {
+      await getPopulatedApplication(context, { ...applicationIds, policyContactId: invalidId });
+    } catch (err) {
+      const expected = new Error(generateErrorMessage('policyContact', applicationIds.id));
       expect(err).toEqual(expected);
     }
   });

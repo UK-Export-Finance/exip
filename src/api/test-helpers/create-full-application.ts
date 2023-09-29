@@ -40,7 +40,7 @@ export const createFullApplication = async (context: Context) => {
   // create a new application
   const application = (await context.query.Application.createOne({
     query:
-      'id referenceNumber submissionCount policy { id requestedStartDate } exportContract { id } owner { id } company { id } business { id } broker { id } declaration { id }',
+      'id referenceNumber submissionCount policy { id requestedStartDate } policyContact { id } exportContract { id } owner { id } company { id } business { id } broker { id } declaration { id }',
     data: {
       owner: {
         connect: {
@@ -111,13 +111,11 @@ export const createFullApplication = async (context: Context) => {
     query: 'id',
   })) as ApplicationCompanySicCode;
 
-  const policyContact = (await context.query.PolicyContact.createOne({
-    data: {
-      ...mockPolicyContact,
-      application: {
-        connect: { id: application.id },
-      },
+  const policyContact = (await context.query.PolicyContact.updateOne({
+    where: {
+      id: application.policyContact.id,
     },
+    data: mockPolicyContact,
     query: 'id firstName lastName email isSameAsOwner',
   })) as ApplicationPolicyContact;
 

@@ -3279,7 +3279,7 @@ var import_date_fns8 = require("date-fns");
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application2) => {
   console.info("Getting populated application");
-  const { eligibilityId, ownerId, policyId, exportContractId, companyId, businessId, brokerId, buyerId, declarationId } = application2;
+  const { eligibilityId, ownerId, policyId, policyContactId, exportContractId, companyId, businessId, brokerId, buyerId, declarationId } = application2;
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId }
   });
@@ -3295,6 +3295,12 @@ var getPopulatedApplication = async (context, application2) => {
   });
   if (!policy) {
     throw new Error(generateErrorMessage("policy", application2.id));
+  }
+  const policyContact = await context.db.PolicyContact.findOne({
+    where: { id: policyContactId }
+  });
+  if (!policyContact) {
+    throw new Error(generateErrorMessage("policyContact", application2.id));
   }
   const exportContract = await context.db.ExportContract.findOne({
     where: { id: exportContractId }
@@ -3370,15 +3376,16 @@ var getPopulatedApplication = async (context, application2) => {
       ...eligibility,
       buyerCountry
     },
-    policy,
-    exportContract: populatedExportContract,
-    owner: account,
+    broker,
+    business,
+    buyer: populatedBuyer,
     company: populatedCompany,
     companySicCodes,
-    business,
-    broker,
-    buyer: populatedBuyer,
-    declaration
+    declaration,
+    exportContract: populatedExportContract,
+    owner: account,
+    policy,
+    policyContact
   };
   return populatedApplication;
 };
@@ -3421,7 +3428,7 @@ var get_application_submitted_email_template_ids_default = getApplicationSubmitt
 // emails/send-application-submitted-emails/index.ts
 var send2 = async (application2, xlsxPath) => {
   try {
-    const { referenceNumber, owner, company, buyer, policy } = application2;
+    const { referenceNumber, owner, company, buyer, policy, policyContact } = application2;
     const { email } = owner;
     const sharedEmailVars = {
       referenceNumber,
@@ -3430,26 +3437,45 @@ var send2 = async (application2, xlsxPath) => {
       companyName: company.companyName,
       requestedStartDate: format_date_default(policy.requestedStartDate)
     };
-    const sendEmailVars = {
+    const sendOwnerEmailVars = {
       ...sharedEmailVars,
       name: get_full_name_string_default(owner),
       emailAddress: email
     };
-    console.info("Sending application submitted email to application account owner: %s", sendEmailVars.emailAddress);
-    const accountSubmittedResponse = await emails_default.application.submittedEmail(sendEmailVars);
+    const sendContactEmailVars = {
+      ...sharedEmailVars,
+      name: get_full_name_string_default(policyContact),
+      emailAddress: policyContact.email
+    };
+    console.info("Sending application submitted email to application account owner: %s", sendOwnerEmailVars.emailAddress);
+    const accountSubmittedResponse = await emails_default.application.submittedEmail(sendOwnerEmailVars);
     if (!accountSubmittedResponse.success) {
       throw new Error("Sending application submitted email to owner/account");
     }
+    if (!policyContact.isSameAsOwner) {
+      console.info("Sending application submitted email to policy contact email: %s", sendContactEmailVars.emailAddress);
+      const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars);
+      if (!contactSubmittedResponse.success) {
+        throw new Error("Sending application submitted email to contact");
+      }
+    }
     const templateIds = get_application_submitted_email_template_ids_default(application2);
-    const underwritingTeamSubmittedResponse = await emails_default.application.underwritingTeam(sendEmailVars, xlsxPath, templateIds.underwritingTeam);
+    const underwritingTeamSubmittedResponse = await emails_default.application.underwritingTeam(sendOwnerEmailVars, xlsxPath, templateIds.underwritingTeam);
     if (!underwritingTeamSubmittedResponse.success) {
       throw new Error("Sending application submitted email to underwriting team");
     }
     if (templateIds.account) {
-      console.info("Sending documents email to application owner: %s", sendEmailVars.emailAddress);
-      const documentsResponse = await emails_default.documentsEmail(sendEmailVars, templateIds.account);
+      console.info("Sending documents email to application owner: %s", sendOwnerEmailVars.emailAddress);
+      const documentsResponse = await emails_default.documentsEmail(sendOwnerEmailVars, templateIds.account);
       if (!documentsResponse.success) {
         throw new Error(`Sending application documents emails ${documentsResponse}`);
+      }
+      if (!policyContact.isSameAsOwner) {
+        console.info("Sending documents email to policy contact: %s", sendContactEmailVars.emailAddress);
+        const contactDocumentsResponse = await emails_default.documentsEmail(sendContactEmailVars, templateIds.account);
+        if (!contactDocumentsResponse.success) {
+          throw new Error(`Sending application documents emails to contact ${documentsResponse}`);
+        }
       }
     }
     return {

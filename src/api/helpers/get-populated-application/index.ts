@@ -16,7 +16,7 @@ export const generateErrorMessage = (section: string, applicationId: number) =>
 const getPopulatedApplication = async (context: Context, application: KeystoneApplication): Promise<Application> => {
   console.info('Getting populated application');
 
-  const { eligibilityId, ownerId, policyId, exportContractId, companyId, businessId, brokerId, buyerId, declarationId } = application;
+  const { eligibilityId, ownerId, policyId, policyContactId, exportContractId, companyId, businessId, brokerId, buyerId, declarationId } = application;
 
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId },
@@ -38,6 +38,14 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
 
   if (!policy) {
     throw new Error(generateErrorMessage('policy', application.id));
+  }
+
+  const policyContact = await context.db.PolicyContact.findOne({
+    where: { id: policyContactId },
+  });
+
+  if (!policyContact) {
+    throw new Error(generateErrorMessage('policyContact', application.id));
   }
 
   const exportContract = await context.db.ExportContract.findOne({
@@ -135,15 +143,16 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
       ...eligibility,
       buyerCountry,
     },
-    policy,
-    exportContract: populatedExportContract,
-    owner: account,
+    broker,
+    business,
+    buyer: populatedBuyer,
     company: populatedCompany,
     companySicCodes,
-    business,
-    broker,
-    buyer: populatedBuyer,
     declaration,
+    exportContract: populatedExportContract,
+    owner: account,
+    policy,
+    policyContact,
   };
 
   return populatedApplication;
