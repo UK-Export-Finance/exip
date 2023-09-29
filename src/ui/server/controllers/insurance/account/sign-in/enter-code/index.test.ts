@@ -392,7 +392,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
           req.body = validBody;
 
           api.keystone.account.verifyAccountSignInCode = verifyAccountSignInCodeSpy;
-          api.keystone.applications.getAll = () => Promise.reject();
+          api.keystone.applications.getAll = () => Promise.reject(new Error('mock'));
           api.keystone.application.create = createApplicationSpy;
         });
 
