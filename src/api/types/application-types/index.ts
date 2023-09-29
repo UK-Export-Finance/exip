@@ -1,15 +1,7 @@
 import { Country } from '../country';
 import { Relationship } from '../relationship';
 
-export interface ApplicationBusinessContactDetail extends Relationship {
-  firstName: string;
-  lastName: string;
-  email: string;
-  position: string;
-}
-
 export interface ApplicationBusiness extends Relationship {
-  businessContactDetail: ApplicationBusinessContactDetail;
   goodsOrServicesSupplied: string;
   totalYearsExporting: string;
   totalEmployeesInternational: string;
@@ -116,6 +108,7 @@ export interface Application {
   exportContract: ApplicationExportContract;
   owner: ApplicationOwner;
   policy: ApplicationPolicy;
+  policyContact: ApplicationPolicyContact;
   company: ApplicationCompany;
   companySicCodes: Array<ApplicationCompanySicCode>;
   companyAddress: ApplicationCompanyAddress;
