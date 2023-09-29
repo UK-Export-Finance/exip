@@ -51,7 +51,6 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
 
       cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;

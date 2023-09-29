@@ -1,7 +1,6 @@
 import sendEmail from '../index';
 import getFullNameString from '../../helpers/get-full-name-string';
 import getApplicationSubmittedEmailTemplateIds from '../../helpers/get-application-submitted-email-template-ids';
-import isOwnerSameAsBusinessContact from '../../helpers/is-owner-same-as-business-contact';
 import formatDate from '../../helpers/format-date';
 import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } from '../../types';
 
@@ -14,9 +13,7 @@ import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } fro
  */
 const send = async (application: Application, xlsxPath: string): Promise<SuccessResponse> => {
   try {
-    const { referenceNumber, owner, company, buyer, policy, business } = application;
-
-    const { businessContactDetail } = business;
+    const { referenceNumber, owner, company, buyer, policy } = application;
 
     // generate email variables
     const { email } = owner;
@@ -37,35 +34,12 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
       emailAddress: email,
     } as ApplicationSubmissionEmailVariables;
 
-    // email variables for sending email to business contact named on application
-    const sendContactEmailVars = {
-      ...sharedEmailVars,
-      name: getFullNameString(businessContactDetail),
-      emailAddress: businessContactDetail.email,
-    } as ApplicationSubmissionEmailVariables;
-
-    // checks if application owner email on application is the same as the business contact email provided
-    const isOwnerSameAsContact = isOwnerSameAsBusinessContact(email, businessContactDetail.email);
-
     console.info('Sending application submitted email to application account owner: %s', sendEmailVars.emailAddress);
     // send "application submitted" email receipt to the application owner
     const accountSubmittedResponse = await sendEmail.application.submittedEmail(sendEmailVars);
 
     if (!accountSubmittedResponse.success) {
       throw new Error('Sending application submitted email to owner/account');
-    }
-
-    /**
-     * if the contact email address is different to the application owner
-     * then it sends the same "application submitted" email receipt to the contact email address
-     */
-    if (!isOwnerSameAsContact) {
-      console.info('Sending application submitted email to business contact email: %s', sendContactEmailVars.emailAddress);
-      const contactSubmittedResponse = await sendEmail.application.submittedEmail(sendContactEmailVars);
-
-      if (!contactSubmittedResponse.success) {
-        throw new Error('Sending application submitted email to contact');
-      }
     }
 
     // get email template IDs depending on the submitted answers
@@ -85,19 +59,6 @@ const send = async (application: Application, xlsxPath: string): Promise<Success
 
       if (!documentsResponse.success) {
         throw new Error(`Sending application documents emails ${documentsResponse}`);
-      }
-
-      /**
-       * if the contact email address is different to the application owner
-       * then it sends the same "application submitted" email receipt to the contact email address
-       */
-      if (!isOwnerSameAsContact) {
-        console.info('Sending documents email to business contact: %s', sendContactEmailVars.emailAddress);
-        const contactDocumentsResponse = await sendEmail.documentsEmail(sendContactEmailVars, templateIds.account);
-
-        if (!contactDocumentsResponse.success) {
-          throw new Error(`Sending application documents emails to contact ${documentsResponse}`);
-        }
       }
     }
 

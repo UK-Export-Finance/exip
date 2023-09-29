@@ -46,14 +46,12 @@ describe('emails/send-email-application-submitted', () => {
 
   describe('emails', () => {
     let expectedSendEmailVars: ApplicationSubmissionEmailVariables;
-    let expectedContactSendEmailVars: ApplicationSubmissionEmailVariables;
 
     beforeEach(() => {
-      const { referenceNumber, owner, company, buyer, policy, business } = application;
+      const { referenceNumber, owner, company, buyer, policy } = application;
       const { email } = owner;
       const { companyName } = company;
       const { companyOrOrganisationName } = buyer;
-      const { businessContactDetail } = business;
 
       const sharedEmailVars = {
         referenceNumber,
@@ -66,12 +64,6 @@ describe('emails/send-email-application-submitted', () => {
       expectedSendEmailVars = {
         emailAddress: email,
         name: getFullNameString(owner),
-        ...sharedEmailVars,
-      } as ApplicationSubmissionEmailVariables;
-
-      expectedContactSendEmailVars = {
-        emailAddress: businessContactDetail.email,
-        name: getFullNameString(businessContactDetail),
         ...sharedEmailVars,
       } as ApplicationSubmissionEmailVariables;
     });
@@ -102,45 +94,6 @@ describe('emails/send-email-application-submitted', () => {
         const templateId = getApplicationSubmittedEmailTemplateIds(application).account;
 
         expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateId);
-      });
-    });
-
-    describe('when application owner and business contact emails are the different', () => {
-      test('it should call sendEmail.application.submittedEmail twice', async () => {
-        application.business.businessContactDetail.email = 'test@test.com';
-        expectedContactSendEmailVars.emailAddress = application.business.businessContactDetail.email;
-
-        await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
-
-        expect(applicationSubmittedEmailSpy).toHaveBeenCalledTimes(2);
-        expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars);
-        expect(applicationSubmittedEmailSpy).toHaveBeenCalledWith(expectedContactSendEmailVars);
-      });
-
-      test('it should call sendEmail.application.submittedEmail with the correct template ID', async () => {
-        application.business.businessContactDetail.email = 'test@test.com';
-
-        await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
-
-        expect(underwritingTeamEmailSpy).toHaveBeenCalledTimes(1);
-
-        const templateId = getApplicationSubmittedEmailTemplateIds(application).underwritingTeam;
-
-        expect(underwritingTeamEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, mockXlsxPath, templateId);
-      });
-
-      test('it should call sendEmail.documentsEmail with the correct template ID twice', async () => {
-        application.business.businessContactDetail.email = 'test@test.com';
-        expectedContactSendEmailVars.emailAddress = application.business.businessContactDetail.email;
-
-        await sendApplicationSubmittedEmails.send(application, mockXlsxPath);
-
-        expect(documentsEmailSpy).toHaveBeenCalledTimes(2);
-
-        const templateId = getApplicationSubmittedEmailTemplateIds(application).account;
-
-        expect(documentsEmailSpy).toHaveBeenCalledWith(expectedSendEmailVars, templateId);
-        expect(documentsEmailSpy).toHaveBeenCalledWith(expectedContactSendEmailVars, templateId);
       });
     });
 

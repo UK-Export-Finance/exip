@@ -1,6 +1,5 @@
 import broker from './broker';
 import business from './business';
-import businessContact from './businessContact';
 import buyer from './buyer';
 import company from './company';
 import declarations from '../declarations';
@@ -17,7 +16,6 @@ import sectionReview from './sectionReview';
 const update = {
   broker,
   business,
-  businessContact,
   buyer,
   company,
   declarations: declarations.update,

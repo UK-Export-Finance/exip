@@ -92,19 +92,6 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('business', application.id));
   }
 
-  const businessContactDetail = await context.db.BusinessContactDetail.findOne({
-    where: { id: business?.businessContactDetailId },
-  });
-
-  if (!businessContactDetail) {
-    throw new Error(generateErrorMessage('businessContactDetail', application.id));
-  }
-
-  const populatedBusiness = {
-    ...business,
-    businessContactDetail,
-  };
-
   const broker = await context.db.Broker.findOne({
     where: { id: brokerId },
   });
@@ -153,7 +140,7 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     owner: account,
     company: populatedCompany,
     companySicCodes,
-    business: populatedBusiness,
+    business,
     broker,
     buyer: populatedBuyer,
     declaration,

@@ -7,14 +7,12 @@ import {
   mockSinglePolicy,
   mockExportContract,
   mockBusiness,
-  mockBusinessContactDetail,
   mockPolicyContact,
 } from '../test-mocks/mock-application';
 import { mockCompany, mockCompanySicCode, mockApplicationDeclaration } from '../test-mocks';
 import mockCountries from '../test-mocks/mock-countries';
 import {
   ApplicationBusiness,
-  ApplicationBusinessContactDetail,
   ApplicationCompany,
   ApplicationCompanySicCode,
   ApplicationDeclaration,
@@ -119,18 +117,6 @@ export const createFullApplication = async (context: Context) => {
     query: 'id',
   })) as ApplicationCompanySicCode;
 
-  const businessContactDetail = (await context.query.BusinessContactDetail.createOne({
-    data: {
-      ...mockBusinessContactDetail,
-      business: {
-        connect: {
-          id: application.business.id,
-        },
-      },
-    },
-    query: 'id firstName lastName email',
-  })) as ApplicationBusinessContactDetail;
-
   const policyContact = (await context.query.PolicyContact.createOne({
     data: {
       ...mockPolicyContact,
@@ -146,7 +132,7 @@ export const createFullApplication = async (context: Context) => {
       id: application.business.id,
     },
     data: mockBusiness,
-    query: 'id businessContactDetail { id firstName lastName email }',
+    query: 'id',
   })) as ApplicationBusiness;
 
   // update the declaration so we have a full data set.
@@ -163,7 +149,6 @@ export const createFullApplication = async (context: Context) => {
     companySicCodes,
     owner: account,
     business,
-    businessContactDetail,
     policyContact,
     buyer,
     company,

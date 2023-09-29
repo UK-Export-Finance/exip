@@ -104,11 +104,6 @@ context('Insurance - Name fields - Header and page fields should render special 
         cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
         cy.completeAndSubmitCompanyDetails();
 
-        cy.completeAndSubmitYourContact({
-          [FIRST_NAME]: mockAccountSpecialCharacters[FIRST_NAME],
-          [LAST_NAME]: mockAccountSpecialCharacters[LAST_NAME],
-        });
-
         backLink().click();
       });
 

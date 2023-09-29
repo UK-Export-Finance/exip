@@ -250,7 +250,6 @@ var isDevEnvironment = NODE_ENV === "development";
 var DEFAULT_RESOLVERS = [
   // application
   "updateBroker",
-  "updateBusinessContactDetail",
   "updateBusiness",
   "updateBuyer",
   "updateDeclaration",
@@ -849,15 +848,6 @@ var lists = {
                 id: businessId
               }
             };
-            await context.db.BusinessContactDetail.createOne({
-              data: {
-                business: {
-                  connect: {
-                    id: businessId
-                  }
-                }
-              }
-            });
             const { id: policyContactId } = await context.db.PolicyContact.createOne({
               data: {}
             });
@@ -1161,10 +1151,7 @@ var lists = {
       totalEmployeesUK: (0, import_fields.integer)(),
       totalEmployeesInternational: (0, import_fields.integer)(),
       estimatedAnnualTurnover: (0, import_fields.integer)(),
-      exportsTurnoverPercentage: (0, import_fields.integer)(),
-      businessContactDetail: (0, import_fields.relationship)({
-        ref: "BusinessContactDetail.business"
-      })
+      exportsTurnoverPercentage: (0, import_fields.integer)()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -1172,16 +1159,6 @@ var lists = {
           await update_application_default.timestamp(context, item.applicationId);
         }
       }
-    },
-    access: import_access.allowAll
-  }),
-  BusinessContactDetail: (0, import_core2.list)({
-    fields: {
-      business: (0, import_fields.relationship)({ ref: "Business.businessContactDetail" }),
-      firstName: (0, import_fields.text)(),
-      lastName: (0, import_fields.text)(),
-      email: (0, import_fields.text)(),
-      position: (0, import_fields.text)()
     },
     access: import_access.allowAll
   }),
@@ -3359,16 +3336,6 @@ var getPopulatedApplication = async (context, application2) => {
   if (!business) {
     throw new Error(generateErrorMessage("business", application2.id));
   }
-  const businessContactDetail = await context.db.BusinessContactDetail.findOne({
-    where: { id: business?.businessContactDetailId }
-  });
-  if (!businessContactDetail) {
-    throw new Error(generateErrorMessage("businessContactDetail", application2.id));
-  }
-  const populatedBusiness = {
-    ...business,
-    businessContactDetail
-  };
   const broker = await context.db.Broker.findOne({
     where: { id: brokerId }
   });
@@ -3408,7 +3375,7 @@ var getPopulatedApplication = async (context, application2) => {
     owner: account,
     company: populatedCompany,
     companySicCodes,
-    business: populatedBusiness,
+    business,
     broker,
     buyer: populatedBuyer,
     declaration
@@ -3451,15 +3418,10 @@ var getApplicationSubmittedEmailTemplateIds = (application2) => {
 };
 var get_application_submitted_email_template_ids_default = getApplicationSubmittedEmailTemplateIds;
 
-// helpers/is-owner-same-as-business-contact/index.ts
-var isOwnerSameAsBusinessContact = (ownerEmail, contactEmail) => ownerEmail === contactEmail;
-var is_owner_same_as_business_contact_default = isOwnerSameAsBusinessContact;
-
 // emails/send-application-submitted-emails/index.ts
 var send2 = async (application2, xlsxPath) => {
   try {
-    const { referenceNumber, owner, company, buyer, policy, business } = application2;
-    const { businessContactDetail } = business;
+    const { referenceNumber, owner, company, buyer, policy } = application2;
     const { email } = owner;
     const sharedEmailVars = {
       referenceNumber,
@@ -3473,23 +3435,10 @@ var send2 = async (application2, xlsxPath) => {
       name: get_full_name_string_default(owner),
       emailAddress: email
     };
-    const sendContactEmailVars = {
-      ...sharedEmailVars,
-      name: get_full_name_string_default(businessContactDetail),
-      emailAddress: businessContactDetail.email
-    };
-    const isOwnerSameAsContact = is_owner_same_as_business_contact_default(email, businessContactDetail.email);
     console.info("Sending application submitted email to application account owner: %s", sendEmailVars.emailAddress);
     const accountSubmittedResponse = await emails_default.application.submittedEmail(sendEmailVars);
     if (!accountSubmittedResponse.success) {
       throw new Error("Sending application submitted email to owner/account");
-    }
-    if (!isOwnerSameAsContact) {
-      console.info("Sending application submitted email to business contact email: %s", sendContactEmailVars.emailAddress);
-      const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars);
-      if (!contactSubmittedResponse.success) {
-        throw new Error("Sending application submitted email to contact");
-      }
     }
     const templateIds = get_application_submitted_email_template_ids_default(application2);
     const underwritingTeamSubmittedResponse = await emails_default.application.underwritingTeam(sendEmailVars, xlsxPath, templateIds.underwritingTeam);
@@ -3501,13 +3450,6 @@ var send2 = async (application2, xlsxPath) => {
       const documentsResponse = await emails_default.documentsEmail(sendEmailVars, templateIds.account);
       if (!documentsResponse.success) {
         throw new Error(`Sending application documents emails ${documentsResponse}`);
-      }
-      if (!isOwnerSameAsContact) {
-        console.info("Sending documents email to business contact: %s", sendContactEmailVars.emailAddress);
-        const contactDocumentsResponse = await emails_default.documentsEmail(sendContactEmailVars, templateIds.account);
-        if (!contactDocumentsResponse.success) {
-          throw new Error(`Sending application documents emails to contact ${documentsResponse}`);
-        }
       }
     }
     return {
@@ -3960,32 +3902,10 @@ var mapKeyInformation = (application2) => {
 };
 var map_key_information_default = mapKeyInformation;
 
-// generate-xlsx/map-application-to-XLSX/map-exporter-contact-details/index.ts
-var {
-  ACCOUNT: { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL6 }
-} = insurance_default;
-var {
-  SECTION_TITLES: { EXPORTER_CONTACT_DETAILS },
-  FIELDS: FIELDS3
-} = XLSX;
-var mapExporterContactDetails = (application2) => {
-  const {
-    business: { businessContactDetail }
-  } = application2;
-  const mapped = [
-    xlsx_row_default(EXPORTER_CONTACT_DETAILS),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT[FIRST_NAME3], businessContactDetail[FIRST_NAME3]),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT[LAST_NAME3], businessContactDetail[LAST_NAME3]),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, businessContactDetail[EMAIL6])
-  ];
-  return mapped;
-};
-var map_exporter_contact_details_default = mapExporterContactDetails;
-
 // generate-xlsx/map-application-to-XLSX/map-secondary-key-information/index.ts
 var {
   SECTION_TITLES: { KEY_INFORMATION },
-  FIELDS: FIELDS4
+  FIELDS: FIELDS3
 } = XLSX;
 var CONTENT_STRINGS = {
   ...POLICY_AND_EXPORTS_FIELDS
@@ -4005,9 +3925,9 @@ var mapSecondaryKeyInformation = (application2) => {
   const { policy } = application2;
   const mapped = [
     xlsx_row_default(KEY_INFORMATION),
-    xlsx_row_default(FIELDS4[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
-    xlsx_row_default(FIELDS4[COUNTRY2], application2.buyer[COUNTRY2].name),
-    xlsx_row_default(FIELDS4[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
+    xlsx_row_default(FIELDS3[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
+    xlsx_row_default(FIELDS3[COUNTRY2], application2.buyer[COUNTRY2].name),
+    xlsx_row_default(FIELDS3[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
     xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE3].SUMMARY?.TITLE), policy[POLICY_TYPE3])
   ];
   return mapped;
@@ -4134,7 +4054,7 @@ var {
   YOUR_COMPANY: { TRADING_NAME: TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE3, PHONE_NUMBER: PHONE_NUMBER3 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL3 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
-  BROKER: { USING_BROKER: USING_BROKER4, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL7 }
+  BROKER: { USING_BROKER: USING_BROKER4, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL6 }
 } = business_default;
 var mapSicCodes2 = (sicCodes) => {
   let mapped = "";
@@ -4156,7 +4076,7 @@ var mapBroker = (application2) => {
       ...mapped,
       xlsx_row_default(XLSX.FIELDS[BROKER_NAME2], broker[BROKER_NAME2]),
       xlsx_row_default(XLSX.FIELDS[ADDRESS_LINE_12], `${addressAnswer.lineOneAndTwo}${addressAnswer.other}`),
-      xlsx_row_default(XLSX.FIELDS[EMAIL7], broker[EMAIL7])
+      xlsx_row_default(XLSX.FIELDS[EMAIL6], broker[EMAIL6])
     ];
   }
   return mapped;
@@ -4200,7 +4120,7 @@ var CONTENT_STRINGS4 = {
   ...YOUR_BUYER_FIELDS.WORKING_WITH_BUYER
 };
 var {
-  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4, FIRST_NAME: FIRST_NAME4, LAST_NAME: LAST_NAME4, POSITION, EMAIL: EMAIL8, CAN_CONTACT_BUYER },
+  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4, FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, POSITION, EMAIL: EMAIL7, CAN_CONTACT_BUYER },
   WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER }
 } = your_buyer_default;
 var mapBuyer = (application2) => {
@@ -4211,7 +4131,7 @@ var mapBuyer = (application2) => {
     xlsx_row_default(String(CONTENT_STRINGS4[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${xlsx_new_line_default}${buyer[COUNTRY3].name}`),
     xlsx_row_default(XLSX.FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
     xlsx_row_default(String(CONTENT_STRINGS4[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
-    xlsx_row_default(XLSX.FIELDS[FIRST_NAME4], `${buyer[FIRST_NAME4]} ${buyer[LAST_NAME4]} ${xlsx_new_line_default}${buyer[POSITION]} ${xlsx_new_line_default}${buyer[EMAIL8]}`),
+    xlsx_row_default(XLSX.FIELDS[FIRST_NAME3], `${buyer[FIRST_NAME3]} ${buyer[LAST_NAME3]} ${xlsx_new_line_default}${buyer[POSITION]} ${xlsx_new_line_default}${buyer[EMAIL7]}`),
     xlsx_row_default(String(CONTENT_STRINGS4[CAN_CONTACT_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[CAN_CONTACT_BUYER])),
     xlsx_row_default(String(CONTENT_STRINGS4[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[CONNECTED_WITH_BUYER])),
     xlsx_row_default(String(CONTENT_STRINGS4[TRADED_WITH_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[TRADED_WITH_BUYER]))
@@ -4255,8 +4175,6 @@ var mapApplicationToXLSX = (application2) => {
   try {
     const mapped = [
       ...map_key_information_default(application2),
-      xlsx_row_seperator_default,
-      ...map_exporter_contact_details_default(application2),
       xlsx_row_seperator_default,
       ...map_secondary_key_information_default(application2),
       xlsx_row_seperator_default,

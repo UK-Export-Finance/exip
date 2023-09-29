@@ -3,7 +3,7 @@ import { add, addMonths } from 'date-fns';
 import { APPLICATION } from '../constants';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
-import { Application } from '../types';
+import { Application, ApplicationPolicyContact } from '../types';
 import broker from './mock-broker';
 import buyer from './mock-buyer';
 import mockCompanySicCode from './mock-company-sic-code';
@@ -82,20 +82,13 @@ export const mockCompany = {
   __typename: 'Company',
 };
 
-export const mockBusinessContactDetail = {
-  firstName: 'Bob',
-  lastName: 'Smith',
-  email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
-  position: 'CEO',
-};
-
 export const mockPolicyContact = {
   firstName: 'Bob',
   lastName: 'Smith',
   email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
   position: 'CEO',
   isSameAsOwner: true,
-};
+} as ApplicationPolicyContact;
 
 export const mockBusiness = {
   goodsOrServicesSupplied: 'ABC',
@@ -161,12 +154,7 @@ const mockApplication = {
   companyAddress: mockCompany.registeredOfficeAddress,
   business: {
     id: 'clcyyopna0158m8noaglyy9gg',
-    businessContactDetailId: mockBusinessContactDetail.id,
     ...mockBusiness,
-    businessContactDetail: {
-      id: 'clcyyopna0158m8noaglyy9ab',
-      ...mockBusinessContactDetail,
-    },
   },
   broker: mockBroker,
   buyer: mockApplicationBuyer,
