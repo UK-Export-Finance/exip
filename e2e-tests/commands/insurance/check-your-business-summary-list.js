@@ -7,11 +7,6 @@ import application from '../../fixtures/application';
 
 const {
   INSURANCE: {
-    ACCOUNT: {
-      FIRST_NAME,
-      LAST_NAME,
-      EMAIL: ACCOUNT_EMAIL,
-    },
     EXPORTER_BUSINESS: {
       COMPANY_HOUSE: {
         COMPANY_NAME,
@@ -28,11 +23,6 @@ const {
         TRADING_ADDRESS,
         WEBSITE,
         PHONE_NUMBER,
-      },
-      CONTACT: {
-        NAME: CONTACT_NAME,
-        POSITION,
-        BUSINESS_CONTACT_DETAIL,
       },
       NATURE_OF_YOUR_BUSINESS: {
         YEARS_EXPORTING,
@@ -166,36 +156,6 @@ const checkYourBusinessSummaryList = ({
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = application.EXPORTER_COMPANY[fieldId];
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
-  },
-  [`contact-${CONTACT_NAME}`]: () => {
-    const fieldId = CONTACT_NAME;
-
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.CONTACT);
-
-    const firstName = application.EXPORTER_BUSINESS[BUSINESS_CONTACT_DETAIL][FIRST_NAME];
-    const lastName = application.EXPORTER_BUSINESS[BUSINESS_CONTACT_DETAIL][LAST_NAME];
-
-    const expectedValue = `${firstName} ${lastName}`;
-
-    cy.assertSummaryListRow(summaryList, `contact-${fieldId}`, expectedKey, expectedValue, expectedChangeLinkText);
-  },
-  [`contact-${ACCOUNT_EMAIL}`]: () => {
-    const fieldId = ACCOUNT_EMAIL;
-
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.CONTACT);
-
-    const expectedValue = application.EXPORTER_BUSINESS[BUSINESS_CONTACT_DETAIL][ACCOUNT_EMAIL];
-
-    cy.assertSummaryListRow(summaryList, `contact-${ACCOUNT_EMAIL}`, expectedKey, expectedValue, expectedChangeLinkText);
-  },
-  [POSITION]: () => {
-    const fieldId = POSITION;
-
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.CONTACT);
-
-    const expectedValue = application.EXPORTER_BUSINESS[BUSINESS_CONTACT_DETAIL][POSITION];
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },

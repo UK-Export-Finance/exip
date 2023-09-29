@@ -3,7 +3,7 @@ import { add, addMonths } from 'date-fns';
 import { APPLICATION } from '../constants';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
-import { Application } from '../types';
+import { Application, ApplicationPolicyContact } from '../types';
 import broker from './mock-broker';
 import buyer from './mock-buyer';
 import mockCompanySicCode from './mock-company-sic-code';
@@ -88,7 +88,7 @@ export const mockPolicyContact = {
   email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
   position: 'CEO',
   isSameAsOwner: true,
-};
+} as ApplicationPolicyContact;
 
 export const mockBusiness = {
   goodsOrServicesSupplied: 'ABC',

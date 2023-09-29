@@ -81,21 +81,12 @@ interface ApplicationCompany {
   sicCodes: Array<ApplicationExporterSicCodes>;
 }
 
-interface ApplicationBusinessContactDetail {
-  id: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  position?: string;
-}
-
 interface ApplicationBusiness {
   id: string;
   goodsOrServices?: string;
   totalYearsExporting?: string;
   totalEmployeesUK?: string;
   totalEmployeesInternational?: string;
-  businessContactDetail: ApplicationBusinessContactDetail;
 }
 
 interface ApplicationBroker {
@@ -204,7 +195,6 @@ export {
   ApplicationExporterSicCodes,
   ApplicationExporterindustrySectorNames,
   ApplicationBusiness,
-  ApplicationBusinessContactDetail,
   ApplicationBroker,
   ApplicationBuyer,
   ApplicationBuyerUiInput,

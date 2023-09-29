@@ -250,7 +250,6 @@ var isDevEnvironment = NODE_ENV === "development";
 var DEFAULT_RESOLVERS = [
   // application
   "updateBroker",
-  "updateBusinessContactDetail",
   "updateBusiness",
   "updateBuyer",
   "updateDeclaration",
@@ -849,15 +848,6 @@ var lists = {
                 id: businessId
               }
             };
-            await context.db.BusinessContactDetail.createOne({
-              data: {
-                business: {
-                  connect: {
-                    id: businessId
-                  }
-                }
-              }
-            });
             const { id: policyContactId } = await context.db.PolicyContact.createOne({
               data: {}
             });
@@ -1161,10 +1151,7 @@ var lists = {
       totalEmployeesUK: (0, import_fields.integer)(),
       totalEmployeesInternational: (0, import_fields.integer)(),
       estimatedAnnualTurnover: (0, import_fields.integer)(),
-      exportsTurnoverPercentage: (0, import_fields.integer)(),
-      businessContactDetail: (0, import_fields.relationship)({
-        ref: "BusinessContactDetail.business"
-      })
+      exportsTurnoverPercentage: (0, import_fields.integer)()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -1172,16 +1159,6 @@ var lists = {
           await update_application_default.timestamp(context, item.applicationId);
         }
       }
-    },
-    access: import_access.allowAll
-  }),
-  BusinessContactDetail: (0, import_core2.list)({
-    fields: {
-      business: (0, import_fields.relationship)({ ref: "Business.businessContactDetail" }),
-      firstName: (0, import_fields.text)(),
-      lastName: (0, import_fields.text)(),
-      email: (0, import_fields.text)(),
-      position: (0, import_fields.text)()
     },
     access: import_access.allowAll
   }),
@@ -3365,16 +3342,6 @@ var getPopulatedApplication = async (context, application2) => {
   if (!business) {
     throw new Error(generateErrorMessage("business", application2.id));
   }
-  const businessContactDetail = await context.db.BusinessContactDetail.findOne({
-    where: { id: business?.businessContactDetailId }
-  });
-  if (!businessContactDetail) {
-    throw new Error(generateErrorMessage("businessContactDetail", application2.id));
-  }
-  const populatedBusiness = {
-    ...business,
-    businessContactDetail
-  };
   const broker = await context.db.Broker.findOne({
     where: { id: brokerId }
   });
@@ -3410,7 +3377,7 @@ var getPopulatedApplication = async (context, application2) => {
       buyerCountry
     },
     broker,
-    business: populatedBusiness,
+    business,
     buyer: populatedBuyer,
     company: populatedCompany,
     companySicCodes,
@@ -3458,15 +3425,10 @@ var getApplicationSubmittedEmailTemplateIds = (application2) => {
 };
 var get_application_submitted_email_template_ids_default = getApplicationSubmittedEmailTemplateIds;
 
-// helpers/is-owner-same-as-business-contact/index.ts
-var isOwnerSameAsBusinessContact = (ownerEmail, contactEmail) => ownerEmail === contactEmail;
-var is_owner_same_as_business_contact_default = isOwnerSameAsBusinessContact;
-
 // emails/send-application-submitted-emails/index.ts
 var send2 = async (application2, xlsxPath) => {
   try {
-    const { referenceNumber, owner, company, buyer, policy, business } = application2;
-    const { businessContactDetail } = business;
+    const { referenceNumber, owner, company, buyer, policy, policyContact } = application2;
     const { email } = owner;
     const sharedEmailVars = {
       referenceNumber,
@@ -3475,42 +3437,41 @@ var send2 = async (application2, xlsxPath) => {
       companyName: company.companyName,
       requestedStartDate: format_date_default(policy.requestedStartDate)
     };
-    const sendEmailVars = {
+    const sendOwnerEmailVars = {
       ...sharedEmailVars,
       name: get_full_name_string_default(owner),
       emailAddress: email
     };
     const sendContactEmailVars = {
       ...sharedEmailVars,
-      name: get_full_name_string_default(businessContactDetail),
-      emailAddress: businessContactDetail.email
+      name: get_full_name_string_default(policyContact),
+      emailAddress: policyContact.email
     };
-    const isOwnerSameAsContact = is_owner_same_as_business_contact_default(email, businessContactDetail.email);
-    console.info("Sending application submitted email to application account owner: %s", sendEmailVars.emailAddress);
-    const accountSubmittedResponse = await emails_default.application.submittedEmail(sendEmailVars);
+    console.info("Sending application submitted email to application account owner: %s", sendOwnerEmailVars.emailAddress);
+    const accountSubmittedResponse = await emails_default.application.submittedEmail(sendOwnerEmailVars);
     if (!accountSubmittedResponse.success) {
       throw new Error("Sending application submitted email to owner/account");
     }
-    if (!isOwnerSameAsContact) {
-      console.info("Sending application submitted email to business contact email: %s", sendContactEmailVars.emailAddress);
+    if (!policyContact.isSameAsOwner) {
+      console.info("Sending application submitted email to policy contact email: %s", sendContactEmailVars.emailAddress);
       const contactSubmittedResponse = await emails_default.application.submittedEmail(sendContactEmailVars);
       if (!contactSubmittedResponse.success) {
         throw new Error("Sending application submitted email to contact");
       }
     }
     const templateIds = get_application_submitted_email_template_ids_default(application2);
-    const underwritingTeamSubmittedResponse = await emails_default.application.underwritingTeam(sendEmailVars, xlsxPath, templateIds.underwritingTeam);
+    const underwritingTeamSubmittedResponse = await emails_default.application.underwritingTeam(sendOwnerEmailVars, xlsxPath, templateIds.underwritingTeam);
     if (!underwritingTeamSubmittedResponse.success) {
       throw new Error("Sending application submitted email to underwriting team");
     }
     if (templateIds.account) {
-      console.info("Sending documents email to application owner: %s", sendEmailVars.emailAddress);
-      const documentsResponse = await emails_default.documentsEmail(sendEmailVars, templateIds.account);
+      console.info("Sending documents email to application owner: %s", sendOwnerEmailVars.emailAddress);
+      const documentsResponse = await emails_default.documentsEmail(sendOwnerEmailVars, templateIds.account);
       if (!documentsResponse.success) {
         throw new Error(`Sending application documents emails ${documentsResponse}`);
       }
-      if (!isOwnerSameAsContact) {
-        console.info("Sending documents email to business contact: %s", sendContactEmailVars.emailAddress);
+      if (!policyContact.isSameAsOwner) {
+        console.info("Sending documents email to policy contact: %s", sendContactEmailVars.emailAddress);
         const contactDocumentsResponse = await emails_default.documentsEmail(sendContactEmailVars, templateIds.account);
         if (!contactDocumentsResponse.success) {
           throw new Error(`Sending application documents emails to contact ${documentsResponse}`);

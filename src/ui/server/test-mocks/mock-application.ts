@@ -82,13 +82,6 @@ export const mockBusiness = {
   totalEmployeesUK: '400',
   estimatedAnnualTurnover: '155220',
   exportsTurnoverPercentage: '20',
-  businessContactDetail: {
-    id: 'clcyyopna0158m8noaglhh5gg',
-    firstName: mockAccount.firstName,
-    lastName: mockAccount.lastName,
-    email: mockAccount.email,
-    position: 'CEO',
-  },
 };
 
 export const mockBroker = {
