@@ -102,7 +102,7 @@ describe('controllers/insurance/business/companies-details', () => {
     });
 
     describe('api error handling', () => {
-      describe('when saveResponse returns false', () => {
+      describe('when mapAndSave.companyDetails returns false', () => {
         beforeEach(() => {
           req.body = validBody;
           res.locals = mockRes().locals;

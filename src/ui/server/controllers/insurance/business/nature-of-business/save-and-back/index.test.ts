@@ -95,7 +95,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
   });
 
   describe('api error handling', () => {
-    describe('when saveResponse returns false', () => {
+    describe('when mapAndSave.natureOfBusiness returns false', () => {
       beforeEach(() => {
         req.body = validBody;
         res.locals = mockRes().locals;

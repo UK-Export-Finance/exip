@@ -103,7 +103,7 @@ describe('controllers/insurance/business/contact/save-and-back', () => {
   });
 
   describe('api error handling', () => {
-    describe('when saveResponse returns false', () => {
+    describe('when mapAndSave.contact returns false', () => {
       beforeEach(() => {
         req.body = validBody;
         res.locals = mockRes().locals;

@@ -240,7 +240,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
     });
 
     describe('api error handling', () => {
-      describe('when saveResponse returns false', () => {
+      describe('when mapAndSave.yourBuyer returns false', () => {
         beforeEach(() => {
           req.body = validBody;
           res.locals = mockRes().locals;
@@ -254,7 +254,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
         });
       });
 
-      describe('when there is an error', () => {
+      describe('when mapAndSave.yourBuyer fails', () => {
         beforeEach(() => {
           req.body = validBody;
           res.locals = mockRes().locals;

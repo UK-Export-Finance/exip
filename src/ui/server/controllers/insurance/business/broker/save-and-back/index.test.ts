@@ -95,7 +95,7 @@ describe('controllers/insurance/business/broker/save-and-back', () => {
   });
 
   describe('api error handling', () => {
-    describe('when saveResponse returns false', () => {
+    describe('when mapAndSave.broker returns false', () => {
       beforeEach(() => {
         req.body = validBody;
         res.locals = mockRes().locals;
