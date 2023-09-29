@@ -164,7 +164,7 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
 
       describe('when the save data API call fails', () => {
         beforeEach(() => {
-          mockSaveSectionReview = jest.fn(() => Promise.reject());
+          mockSaveSectionReview = jest.fn(() => Promise.reject(new Error('mock')));
           save.sectionReview = mockSaveSectionReview;
 
           req.body = mockBody;

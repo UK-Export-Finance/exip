@@ -123,7 +123,7 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
     describe('api error handling', () => {
       describe('when the get countries API call fails', () => {
         beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.reject());
+          getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
@@ -149,7 +149,7 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
 
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject());
+          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.external.getCurrencies = getCurrenciesSpy;
         });
 
@@ -231,7 +231,7 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
 
       describe('when the save data API call fails', () => {
         beforeEach(() => {
-          mockSaveSectionReview = jest.fn(() => Promise.reject());
+          mockSaveSectionReview = jest.fn(() => Promise.reject(new Error('mock')));
           save.sectionReview = mockSaveSectionReview;
 
           req.body = mockBody;

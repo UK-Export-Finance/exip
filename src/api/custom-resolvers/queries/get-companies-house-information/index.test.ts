@@ -43,7 +43,7 @@ describe('custom-resolvers/get-companies-house-information', () => {
 
   describe('when companies house API is down', () => {
     beforeEach(() => {
-      companiesHouse.get = jest.fn(() => Promise.reject());
+      companiesHouse.get = jest.fn(() => Promise.reject(new Error('mock')));
     });
 
     it('should return object containing success as false and apiError as true', async () => {
@@ -88,7 +88,7 @@ describe('custom-resolvers/get-companies-house-information', () => {
   describe('when companies house returns a response but industry sector errors', () => {
     beforeEach(() => {
       companiesHouse.get = jest.fn(() => Promise.resolve({ success: true, data: mockCompanyAPIResponse }));
-      industrySectorNames.get = jest.fn(() => Promise.reject());
+      industrySectorNames.get = jest.fn(() => Promise.reject(new Error('mock')));
     });
 
     it('should return object containing success as false and apiError as true', async () => {

@@ -26,7 +26,7 @@ describe('controllers/insurance/business/save-data/business - API error', () => 
 
   describe('when there is an error', () => {
     beforeEach(() => {
-      updateApplicationSpy = jest.fn(() => Promise.reject());
+      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
       api.keystone.application.update.business = updateApplicationSpy;
     });
 

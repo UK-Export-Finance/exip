@@ -178,7 +178,7 @@ describe('controllers/insurance/declarations/confidentiality', () => {
 
         describe('when the save data API call fails', () => {
           beforeEach(() => {
-            mockSaveDeclaration = jest.fn(() => Promise.reject());
+            mockSaveDeclaration = jest.fn(() => Promise.reject(new Error('mock')));
             save.declaration = mockSaveDeclaration;
 
             req.body = validBody;

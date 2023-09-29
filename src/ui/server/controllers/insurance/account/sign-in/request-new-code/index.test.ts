@@ -126,7 +126,7 @@ describe('controllers/insurance/account/sign-in/request-new-code', () => {
     describe('api error handling', () => {
       describe('when there is an error', () => {
         beforeEach(() => {
-          signInSendNewCodeSpy = jest.fn(() => Promise.reject());
+          signInSendNewCodeSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.account.signInSendNewCode = signInSendNewCodeSpy;
         });
 

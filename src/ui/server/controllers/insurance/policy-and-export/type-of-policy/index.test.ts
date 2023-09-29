@@ -228,7 +228,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
         describe('when there is an error', () => {
           beforeEach(() => {
-            const savePolicyAndExportDataSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
+            const savePolicyAndExportDataSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
             mapAndSave.policy = savePolicyAndExportDataSpy;
           });

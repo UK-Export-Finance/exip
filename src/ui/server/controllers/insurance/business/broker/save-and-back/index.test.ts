@@ -113,7 +113,7 @@ describe('controllers/insurance/business/broker/save-and-back', () => {
       beforeEach(() => {
         req.body = validBody;
         res.locals = mockRes().locals;
-        updateMapAndSave = jest.fn(() => Promise.reject());
+        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
         mapAndSave.broker = updateMapAndSave;
       });
 

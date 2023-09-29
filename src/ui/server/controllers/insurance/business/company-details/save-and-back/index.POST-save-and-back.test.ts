@@ -120,7 +120,7 @@ describe('controllers/insurance/business/companies-details', () => {
         beforeEach(() => {
           req.body = validBody;
           res.locals = mockRes().locals;
-          updateMapAndSave = jest.fn(() => Promise.reject());
+          updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
           mapAndSave.companyDetails = updateMapAndSave;
         });
 

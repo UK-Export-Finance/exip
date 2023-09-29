@@ -115,7 +115,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer/save-and-back', ()
   describe('when mapAndSave.yourBuyer fails', () => {
     beforeEach(() => {
       res.locals = mockRes().locals;
-      updateMapAndSave = jest.fn(() => Promise.reject());
+      updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
       mapAndSave.yourBuyer = updateMapAndSave;
     });
 

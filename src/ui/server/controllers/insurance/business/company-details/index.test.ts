@@ -241,7 +241,7 @@ describe('controllers/insurance/business/companies-details', () => {
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
           req.body = validBody;
 
-          mapAndSave.companyDetails = jest.fn(() => Promise.reject());
+          mapAndSave.companyDetails = jest.fn(() => Promise.reject(new Error('mock')));
 
           await post(req, res);
 

@@ -112,7 +112,7 @@ describe('controllers/insurance/business/nature-of-business/save-and-back', () =
     describe('when mapAndSave.natureOfBusiness fails', () => {
       beforeEach(() => {
         res.locals = mockRes().locals;
-        updateMapAndSave = jest.fn(() => Promise.reject());
+        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
         mapAndSave.natureOfBusiness = updateMapAndSave;
       });
 

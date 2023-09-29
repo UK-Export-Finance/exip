@@ -253,7 +253,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
     describe('api error handling', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject());
+          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.external.getCurrencies = getCurrenciesSpy;
         });
 
@@ -462,7 +462,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
       describe('get currencies call', () => {
         describe('when the get currencies API call fails', () => {
           beforeEach(() => {
-            getCurrenciesSpy = jest.fn(() => Promise.reject());
+            getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
             api.external.getCurrencies = getCurrenciesSpy;
           });
 
@@ -508,7 +508,7 @@ describe('controllers/insurance/policy-and-export/multiple-contract-policy', () 
 
         describe('when there is an error', () => {
           beforeEach(() => {
-            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
+            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
             mapAndSave.policy = mapAndSaveSpy;
           });

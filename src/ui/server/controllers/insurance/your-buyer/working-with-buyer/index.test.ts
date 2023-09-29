@@ -221,7 +221,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
         beforeEach(() => {
           req.body = validBody;
           res.locals = mockRes().locals;
-          mapAndSave.yourBuyer = jest.fn(() => Promise.reject());
+          mapAndSave.yourBuyer = jest.fn(() => Promise.reject(new Error('mock')));
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

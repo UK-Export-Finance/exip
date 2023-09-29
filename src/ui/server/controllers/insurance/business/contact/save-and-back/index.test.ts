@@ -120,7 +120,7 @@ describe('controllers/insurance/business/contact/save-and-back', () => {
     describe('when mapAndSave.contact fails', () => {
       beforeEach(() => {
         res.locals = mockRes().locals;
-        updateMapAndSave = jest.fn(() => Promise.reject());
+        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
         mapAndSave.contact = updateMapAndSave;
       });
 

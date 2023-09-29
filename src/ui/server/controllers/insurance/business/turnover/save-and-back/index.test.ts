@@ -112,7 +112,7 @@ describe('controllers/insurance/business/turnover/save-and-back', () => {
       beforeEach(() => {
         req.body = validBody;
         res.locals = mockRes().locals;
-        updateMapAndSave = jest.fn(() => Promise.reject());
+        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
         mapAndSave.turnover = updateMapAndSave;
       });
 

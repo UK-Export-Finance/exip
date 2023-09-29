@@ -80,7 +80,7 @@ describe('controllers/insurance/check-your-answers/save-and-back', () => {
 
     describe('when the save data API call fails', () => {
       beforeEach(() => {
-        mockSaveData = jest.fn(() => Promise.reject(new Error('Mock error')));
+        mockSaveData = jest.fn(() => Promise.reject(new Error('mock')));
         save.sectionReview = mockSaveData;
       });
 

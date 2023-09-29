@@ -110,7 +110,7 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
     describe('api error handling', () => {
       describe('when there is an error', () => {
         beforeAll(() => {
-          getLatestAntiBriberySpy = jest.fn(() => Promise.reject());
+          getLatestAntiBriberySpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.application.declarations.getLatestAntiBribery = getLatestAntiBriberySpy;
         });
 
@@ -201,7 +201,7 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
       describe('get latest anti-bribery call', () => {
         describe('when the get latest anti-bribery API call fails', () => {
           beforeEach(() => {
-            getLatestAntiBriberySpy = jest.fn(() => Promise.reject());
+            getLatestAntiBriberySpy = jest.fn(() => Promise.reject(new Error('mock')));
             api.keystone.application.declarations.getLatestAntiBribery = getLatestAntiBriberySpy;
           });
 
@@ -231,7 +231,7 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
 
         describe('when the save data API call fails', () => {
           beforeEach(() => {
-            mockSaveDeclaration = jest.fn(() => Promise.reject());
+            mockSaveDeclaration = jest.fn(() => Promise.reject(new Error('mock')));
             save.declaration = mockSaveDeclaration;
 
             req.body = validBody;

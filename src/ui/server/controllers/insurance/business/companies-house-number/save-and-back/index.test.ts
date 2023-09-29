@@ -100,7 +100,7 @@ describe('controllers/insurance/business/companies-house-number/save-and-back', 
     describe('when mapAndSave.companyDetails fails', () => {
       beforeEach(() => {
         res.locals = mockRes().locals;
-        updateMapAndSave = jest.fn(() => Promise.reject());
+        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
         mapAndSave.companyDetails = updateMapAndSave;
       });
 

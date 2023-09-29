@@ -29,7 +29,7 @@ describe('controllers/insurance/business/map-and-save/contact - API error', () =
 
   describe('when save application contact call fails', () => {
     beforeEach(() => {
-      save.contact = jest.fn(() => Promise.reject(new Error('Mock error')));
+      save.contact = jest.fn(() => Promise.reject(new Error('mock')));
     });
 
     it('should return false', async () => {

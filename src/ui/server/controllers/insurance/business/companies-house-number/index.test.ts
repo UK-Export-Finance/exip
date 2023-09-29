@@ -243,7 +243,7 @@ describe('controllers/insurance/business/companies-house-number', () => {
           req.body = validBody;
 
           api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
-          mapAndSave.companyDetails = jest.fn(() => Promise.reject());
+          mapAndSave.companyDetails = jest.fn(() => Promise.reject(new Error('mock')));
 
           await post(req, res);
 

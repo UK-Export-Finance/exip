@@ -75,7 +75,7 @@ describe('controllers/insurance/policy-and-export/call-map-and-save', () => {
 
     describe('when the mapAndSave call fails', () => {
       beforeEach(() => {
-        mockMapAndSave = jest.fn(() => Promise.reject(new Error('Mock error')));
+        mockMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
         mapAndSave.policy = mockMapAndSave;
       });
 

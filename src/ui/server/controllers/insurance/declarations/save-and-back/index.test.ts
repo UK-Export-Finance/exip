@@ -102,7 +102,7 @@ describe('controllers/insurance/declarations/confidentiality/save-and-back', () 
 
     describe('when the mapAndSave call fails', () => {
       beforeEach(() => {
-        mockSaveData = jest.fn(() => Promise.reject(new Error('Mock error')));
+        mockSaveData = jest.fn(() => Promise.reject(new Error('mock')));
         save.declaration = mockSaveData;
       });
 
