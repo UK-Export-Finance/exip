@@ -24,8 +24,10 @@ const expectedErrors = 1;
 const errorIndex = 0;
 const errorMessage = COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT;
 
-let yourContactUrl;
+let natureOfBusinessUrl;
 let url;
+
+const baseUrl = Cypress.config('baseUrl');
 
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - company website validation", () => {
   let referenceNumber;
@@ -34,8 +36,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
-      yourContactUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.CONTACT}`;
+      url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+      natureOfBusinessUrl = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
 
       task.link().click();
 
@@ -105,8 +107,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       partials.errorSummaryListItems().should('have.length', 0);
     });
 
-    it(`should redirect to ${yourContactUrl}`, () => {
-      cy.assertUrl(yourContactUrl);
+    it(`should redirect to ${natureOfBusinessUrl}`, () => {
+      cy.assertUrl(natureOfBusinessUrl);
     });
   });
 
@@ -124,8 +126,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       partials.errorSummaryListItems().should('have.length', 0);
     });
 
-    it(`should redirect to ${yourContactUrl}`, () => {
-      cy.assertUrl(yourContactUrl);
+    it(`should redirect to ${natureOfBusinessUrl}`, () => {
+      cy.assertUrl(natureOfBusinessUrl);
     });
   });
 });

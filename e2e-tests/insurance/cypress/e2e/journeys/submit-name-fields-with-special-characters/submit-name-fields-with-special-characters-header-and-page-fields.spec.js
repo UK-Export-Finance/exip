@@ -1,6 +1,5 @@
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 import { enterCodePage } from '../../../../../pages/insurance/account/sign-in';
-import { yourContactPage } from '../../../../../pages/your-business';
 import { companyOrOrganisationPage } from '../../../../../pages/insurance/your-buyer';
 import { submitButton, backLink } from '../../../../../pages/shared';
 import dashboardPage from '../../../../../pages/insurance/dashboard';
@@ -92,31 +91,6 @@ context('Insurance - Name fields - Header and page fields should render special 
       partials.header.navigation.manageAccount(),
       expected,
     );
-  });
-
-  describe("'your business - contact details' page", () => {
-    describe('when submitting a name with special characters and going back to the page', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(allSectionsUrl);
-
-        tasks.business.link().click();
-
-        cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
-        cy.completeAndSubmitCompanyDetails();
-
-        backLink().click();
-      });
-
-      it("should render special characters in the contact's first and last name fields", () => {
-        const firstNameField = yourContactPage.field(FIRST_NAME);
-
-        cy.checkValue(firstNameField, mockAccountSpecialCharacters[FIRST_NAME]);
-
-        const lastNameField = yourContactPage.field(FIRST_NAME);
-
-        cy.checkValue(lastNameField, mockAccountSpecialCharacters[FIRST_NAME]);
-      });
-    });
   });
 
   describe("'your buyer - company or organisation' page", () => {
