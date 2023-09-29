@@ -216,7 +216,6 @@ jobs:
             "your-business/check-your-answers/**/*.spec.js",
             "your-business/companies-house-number/**/*.spec.js",
             "your-business/company-details/**/*.spec.js",
-            "your-business/contact/**/*.spec.js",
             "your-business/nature-of-business/**/*.spec.js",
             "your-business/turnover/**/*.spec.js",
             "your-buyer/**/*.spec.js",

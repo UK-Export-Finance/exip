@@ -2,13 +2,7 @@ import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import accounts from './accounts';
 import createAnEligibility from '../helpers/create-an-eligibility';
 import createABuyer from '../helpers/create-a-buyer';
-import {
-  mockApplicationEligibility,
-  mockSinglePolicy,
-  mockExportContract,
-  mockBusiness,
-  mockPolicyContact,
-} from '../test-mocks/mock-application';
+import { mockApplicationEligibility, mockSinglePolicy, mockExportContract, mockBusiness, mockPolicyContact } from '../test-mocks/mock-application';
 import { mockCompany, mockCompanySicCode, mockApplicationDeclaration } from '../test-mocks';
 import mockCountries from '../test-mocks/mock-countries';
 import {
