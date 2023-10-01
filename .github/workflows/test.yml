@@ -274,7 +274,7 @@ jobs:
             "quote/policy-type/*.spec.js",
             "quote/tell-us-about-your-policy/*.spec.js",
             "quote/uk-goods-or-services/*.spec.js",
-            "quote/your-quote/*.spec.js"
+            "quote/your-quote/*.spec.js",
           ]
 
     concurrency:
