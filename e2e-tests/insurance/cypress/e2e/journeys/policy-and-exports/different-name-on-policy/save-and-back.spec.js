@@ -121,7 +121,7 @@ context('Insurance - Policy and exports - Different name on policy - Save and go
       cy.assertUrl(expected);
     });
 
-    it('should have the originally submitted answera populated when going back to the page after submission', () => {
+    it('should have the originally submitted answers populated when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
       cy.checkValue(input.field(FIRST_NAME), POLICY_CONTACT[FIRST_NAME]);

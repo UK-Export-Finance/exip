@@ -41,7 +41,7 @@ describe('controllers/insurance/policy-and-export/different-name-on-policy/save-
   });
 
   describe('when the form has data', () => {
-    it('should call mapAndSave.polucyContact with data from constructPayload function, application and validationErrors', async () => {
+    it('should call mapAndSave.policyContact with data from constructPayload function, application and validationErrors', async () => {
       await post(req, res);
 
       const payload = constructPayload(req.body, FIELD_IDS);
