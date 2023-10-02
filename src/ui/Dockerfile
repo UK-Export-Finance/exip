@@ -2,7 +2,7 @@
 # 1. BUILD
 ###################
 
-FROM node:20.7.0-alpine3.17 AS build
+FROM node:20.8.0-alpine3.17 AS build
 
 # Build variables
 ARG GITHUB_SHA
@@ -43,7 +43,7 @@ RUN npm ci --legacy-peer-deps --omit=dev --ignore-scripts
 # 2. PRODUCTION
 ###################
 
-FROM node:20.7.0-alpine3.17 AS production
+FROM node:20.8.0-alpine3.17 AS production
 
 WORKDIR /app
 
