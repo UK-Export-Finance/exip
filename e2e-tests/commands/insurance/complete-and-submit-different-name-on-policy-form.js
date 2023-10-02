@@ -21,7 +21,7 @@ const { POLICY_CONTACT } = application;
  * completeAndSubmitDifferentNameOnPolicyForm
  * Runs through the different name on policy form in the "policy" section
  */
-const completeAndSubmitDifferentNameOnPolicyForm = () => {
+const completeAndSubmitDifferentNameOnPolicyForm = ({ submit = true }) => {
   cy.keyboardInput(input.field(FIRST_NAME).input(), POLICY_CONTACT[FIRST_NAME]);
   cy.keyboardInput(input.field(LAST_NAME).input(), POLICY_CONTACT[LAST_NAME]);
 
@@ -29,7 +29,9 @@ const completeAndSubmitDifferentNameOnPolicyForm = () => {
 
   cy.keyboardInput(input.field(POSITION).input(), POLICY_CONTACT[POSITION]);
 
-  submitButton().click();
+  if (submit) {
+    submitButton().click();
+  }
 };
 
 export default completeAndSubmitDifferentNameOnPolicyForm;

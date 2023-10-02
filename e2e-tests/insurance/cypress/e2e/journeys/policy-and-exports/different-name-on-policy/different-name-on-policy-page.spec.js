@@ -139,7 +139,7 @@ context('Insurance - Policy and exports - Different name on Policy page - I want
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitDifferentNameOnPolicyForm();
+      cy.completeAndSubmitDifferentNameOnPolicyForm({});
 
       const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(expectedUrl);

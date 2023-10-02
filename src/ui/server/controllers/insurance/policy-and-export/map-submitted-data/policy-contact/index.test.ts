@@ -77,10 +77,33 @@ describe('controllers/insurance/policy-and-export/map-submitted-data/policy-cont
       [EMAIL]: owner[EMAIL],
     };
 
-    it('should should mockBody', () => {
+    it('should return mockBody', () => {
       const result = mapSubmittedData(mockBody, mockApplication);
 
       expect(result).toEqual(mockBody);
+    });
+  });
+
+  describe(`when ${NAME} is am empty string`, () => {
+    const { owner } = mockApplication;
+
+    const mockBody = {
+      [NAME]: '',
+      [FIRST_NAME]: owner[FIRST_NAME],
+      [LAST_NAME]: owner[LAST_NAME],
+      [EMAIL]: owner[EMAIL],
+    };
+
+    it(`should should mockBody without ${NAME}`, () => {
+      const result = mapSubmittedData(mockBody, mockApplication);
+
+      const expected = {
+        [FIRST_NAME]: owner[FIRST_NAME],
+        [LAST_NAME]: owner[LAST_NAME],
+        [EMAIL]: owner[EMAIL],
+      };
+
+      expect(result).toEqual(expected);
     });
   });
 });

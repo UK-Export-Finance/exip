@@ -52,6 +52,10 @@ const mapSubmittedData = (formBody: RequestBody, application: Application): obje
     }
   }
 
+  if (populatedData[NAME] === '') {
+    delete populatedData[NAME];
+  }
+
   return populatedData;
 };
 
