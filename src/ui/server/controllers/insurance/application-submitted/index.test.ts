@@ -49,7 +49,7 @@ describe('controllers/insurance/application-submitted', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
@@ -61,12 +61,9 @@ describe('controllers/insurance/application-submitted', () => {
 
     describe(`when the application does not have a status of ${APPLICATION.STATUS.SUBMITTED}`, () => {
       beforeEach(() => {
-        res.locals = {
-          ...res.locals,
-          application: {
-            ...mockApplication,
-            status: APPLICATION.STATUS.IN_PROGRESS,
-          },
+        res.locals.application = {
+          ...mockApplication,
+          status: APPLICATION.STATUS.IN_PROGRESS,
         };
       });
 

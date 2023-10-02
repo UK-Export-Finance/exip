@@ -19,8 +19,6 @@ describe('controllers/insurance/all-sections', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
   });
 
   describe('TEMPLATE', () => {
@@ -58,7 +56,7 @@ describe('controllers/insurance/all-sections', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {

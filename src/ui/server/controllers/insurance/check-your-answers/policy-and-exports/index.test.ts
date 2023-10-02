@@ -43,7 +43,6 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     req.params.referenceNumber = String(referenceNumber);
     api.keystone.countries.getAll = getCountriesSpy;
     api.external.getCurrencies = getCurrenciesSpy;
@@ -111,7 +110,7 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -124,7 +123,7 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
     describe('api error handling', () => {
       describe('when the get countries API call fails', () => {
         beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.reject());
+          getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
@@ -150,7 +149,7 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
 
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject());
+          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.external.getCurrencies = getCurrenciesSpy;
         });
 
@@ -204,7 +203,7 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -232,7 +231,7 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
 
       describe('when the save data API call fails', () => {
         beforeEach(() => {
-          mockSaveSectionReview = jest.fn(() => Promise.reject());
+          mockSaveSectionReview = jest.fn(() => Promise.reject(new Error('mock')));
           save.sectionReview = mockSaveSectionReview;
 
           req.body = mockBody;

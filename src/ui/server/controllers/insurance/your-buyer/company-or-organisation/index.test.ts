@@ -31,6 +31,8 @@ const {
 
 const { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER } = COMPANY_OR_ORGANISATION;
 
+const { exporterIsConnectedWithBuyer, exporterHasTradedWithBuyer, ...companyOrOrganisationMock } = mockBuyer;
+
 describe('controllers/insurance/your-buyer/company-or-organisation', () => {
   let req: Request;
   let res: Response;
@@ -39,7 +41,6 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 
@@ -130,30 +131,29 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
 
-    describe('api error handling', () => {
-      describe('when there is no application', () => {
-        beforeEach(() => {
-          res.locals = mockRes().locals;
-        });
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        delete res.locals.application;
+      });
 
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-          get(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
+        get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });
 
   describe('post', () => {
+    const validBody = companyOrOrganisationMock;
+
     beforeEach(() => {
       mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(true));
     });
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
-        const { exporterIsConnectedWithBuyer, exporterHasTradedWithBuyer, ...companyOrOrganisationMock } = mockBuyer;
-        req.body = companyOrOrganisationMock;
+        req.body = validBody;
       });
 
       it('should redirect to the next page', async () => {
@@ -163,9 +163,9 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call mapAndSave.buyer once with data from constructPayload function and application', async () => {
+      it('should call mapAndSave.yourBuyer once with data from constructPayload function and application', async () => {
         req.body = {
-          ...mockBuyer,
+          ...validBody,
           injection: 1,
         };
 
@@ -180,8 +180,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
 
       describe("when the url's last substring is `change`", () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          const { exporterIsConnectedWithBuyer, exporterHasTradedWithBuyer, ...mockCompanyOrOrganisation } = mockBuyer;
-          req.body = mockCompanyOrOrganisation;
+          req.body = validBody;
 
           req.originalUrl = COMPANY_OR_ORGANISATION_CHANGE;
 
@@ -194,10 +193,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
 
       describe("when the url's last substring is `check-and-change`", () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-          const { exporterIsConnectedWithBuyer, exporterHasTradedWithBuyer, ...mockCompanyOrOrganisation } = mockBuyer;
-
-          req.body = mockCompanyOrOrganisation;
-
+          req.body = validBody;
           req.originalUrl = COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE;
 
           await post(req, res);
@@ -231,14 +227,42 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
       });
     });
 
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        delete res.locals.application;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
     describe('api error handling', () => {
-      describe('when application does not exist', () => {
+      describe('when mapAndSave.yourBuyer returns false', () => {
         beforeEach(() => {
+          req.body = validBody;
           res.locals = mockRes().locals;
+          mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(false));
         });
 
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-          post(req, res);
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when mapAndSave.yourBuyer fails', () => {
+        beforeEach(() => {
+          req.body = validBody;
+          res.locals = mockRes().locals;
+          mapAndSave.yourBuyer = jest.fn(() => Promise.reject(new Error('mock')));
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
 
           expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });

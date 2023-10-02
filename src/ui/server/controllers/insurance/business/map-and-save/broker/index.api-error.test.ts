@@ -27,7 +27,7 @@ describe('controllers/insurance/business/map-and-save/broker - API error', () =>
 
   describe('when save application broker call fails', () => {
     beforeEach(() => {
-      save.broker = jest.fn(() => Promise.reject(new Error('Mock error')));
+      save.broker = jest.fn(() => Promise.reject(new Error('mock')));
     });
 
     it('should return false', async () => {

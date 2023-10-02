@@ -124,7 +124,7 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
 
       describe('when there is an error with the API call', () => {
         beforeEach(() => {
-          createApplicationSpy = jest.fn(() => Promise.reject());
+          createApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.application.create = createApplicationSpy;
         });
 

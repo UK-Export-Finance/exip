@@ -24,7 +24,7 @@ describe('controllers/insurance/policy-and-export/map-and-save/policy - api erro
 
   describe('when save application policy call fails', () => {
     beforeEach(() => {
-      save.policy = jest.fn(() => Promise.reject(new Error('Mock error')));
+      save.policy = jest.fn(() => Promise.reject(new Error('mock')));
     });
 
     it('should return false', async () => {

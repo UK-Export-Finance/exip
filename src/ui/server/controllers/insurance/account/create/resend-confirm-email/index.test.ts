@@ -92,7 +92,7 @@ describe('controllers/insurance/account/create/resend-confirm-email', () => {
     describe('api error handling', () => {
       describe('when there is an error', () => {
         beforeEach(() => {
-          sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.reject());
+          sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.account.sendEmailConfirmEmailAddress = sendEmailConfirmEmailAddressSpy;
         });
 

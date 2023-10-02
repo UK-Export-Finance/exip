@@ -45,7 +45,7 @@ describe('controllers/insurance/check-your-answers/save-data', () => {
     describe('update declarations call', () => {
       describe('when there is an error', () => {
         beforeEach(() => {
-          updateApplicationSpy = jest.fn(() => Promise.reject());
+          updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.application.update.declarations = updateApplicationSpy;
         });
 

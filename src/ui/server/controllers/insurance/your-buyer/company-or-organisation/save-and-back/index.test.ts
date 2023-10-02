@@ -6,7 +6,7 @@ import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication, mockBuyer } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockBuyer } from '../../../../../test-mocks';
 
 const {
   COMPANY_OR_ORGANISATION: { NAME },
@@ -23,8 +23,6 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
 
     mapAndSave.yourBuyer = updateMapAndSave;
   });
@@ -88,41 +86,43 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
 
   describe('when there is no application', () => {
     beforeEach(() => {
-      res.locals = mockRes().locals;
+      delete res.locals.application;
     });
 
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-      post(req, res);
+    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+      await post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
     });
   });
 
-  describe('when mapAndSave.buyer returns false', () => {
-    beforeEach(() => {
-      res.locals = mockRes().locals;
-      updateMapAndSave = jest.fn(() => Promise.resolve(false));
-      mapAndSave.yourBuyer = updateMapAndSave;
+  describe('api error handling', () => {
+    describe('when mapAndSave.buyer returns false', () => {
+      beforeEach(() => {
+        res.locals = mockRes().locals;
+        updateMapAndSave = jest.fn(() => Promise.resolve(false));
+        mapAndSave.yourBuyer = updateMapAndSave;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
     });
 
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-      post(req, res);
+    describe('when mapAndSave.buyer fails', () => {
+      beforeEach(() => {
+        res.locals = mockRes().locals;
+        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+        mapAndSave.yourBuyer = updateMapAndSave;
+      });
 
-      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-    });
-  });
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
-  describe('when mapAndSave.buyer fails', () => {
-    beforeEach(() => {
-      res.locals = mockRes().locals;
-      updateMapAndSave = jest.fn(() => Promise.reject());
-      mapAndSave.yourBuyer = updateMapAndSave;
-    });
-
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-      post(req, res);
-
-      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
     });
   });
 });

@@ -26,8 +26,6 @@ describe('middleware/insurance/application-status', () => {
     req = mockReq();
     res = mockRes();
     next = nextSpy;
-
-    res.locals.application = mockApplication;
   });
 
   describe(`when res.locals.application has status of ${APPLICATION.STATUS.SUBMITTED}`, () => {

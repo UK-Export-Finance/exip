@@ -361,7 +361,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
         beforeEach(() => {
           req.body = validBody;
 
-          verifyAccountSignInCodeSpy = jest.fn(() => Promise.reject());
+          verifyAccountSignInCodeSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.account.verifyAccountSignInCode = verifyAccountSignInCodeSpy;
         });
 
@@ -376,7 +376,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
         beforeEach(() => {
           req.body = validBody;
 
-          createApplicationSpy = jest.fn(() => Promise.reject());
+          createApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.application.create = createApplicationSpy;
         });
 
@@ -392,7 +392,7 @@ describe('controllers/insurance/account/sign-in/enter-code', () => {
           req.body = validBody;
 
           api.keystone.account.verifyAccountSignInCode = verifyAccountSignInCodeSpy;
-          api.keystone.applications.getAll = () => Promise.reject();
+          api.keystone.applications.getAll = () => Promise.reject(new Error('mock'));
           api.keystone.application.create = createApplicationSpy;
         });
 

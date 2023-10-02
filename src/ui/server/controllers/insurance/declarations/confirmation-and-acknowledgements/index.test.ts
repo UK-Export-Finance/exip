@@ -35,8 +35,6 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
-
     api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement = getLatestConfirmationAndAcknowledgementSpy;
   });
 
@@ -97,7 +95,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -110,7 +108,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
     describe('api error handling', () => {
       describe('when there is an error', () => {
         beforeAll(() => {
-          getLatestConfirmationAndAcknowledgementSpy = jest.fn(() => Promise.reject());
+          getLatestConfirmationAndAcknowledgementSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
           api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement = getLatestConfirmationAndAcknowledgementSpy;
         });
@@ -188,7 +186,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -202,7 +200,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
       describe('get latest confirmation and acknowledgements call', () => {
         describe('when the get latest confirmation and acknowledgements API call fails', () => {
           beforeEach(() => {
-            getLatestConfirmationAndAcknowledgementSpy = jest.fn(() => Promise.reject());
+            getLatestConfirmationAndAcknowledgementSpy = jest.fn(() => Promise.reject(new Error('mock')));
             api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement = getLatestConfirmationAndAcknowledgementSpy;
           });
 
@@ -232,7 +230,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
 
         describe('when the save data API call fails', () => {
           beforeEach(() => {
-            mockSaveDeclaration = jest.fn(() => Promise.reject());
+            mockSaveDeclaration = jest.fn(() => Promise.reject(new Error('mock')));
             save.declaration = mockSaveDeclaration;
 
             req.body = validBody;

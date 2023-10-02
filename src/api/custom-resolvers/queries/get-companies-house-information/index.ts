@@ -1,6 +1,6 @@
 import { mapCompaniesHouseFields } from '../../../helpers/map-companies-house-fields';
 import { GetCompaniesHouseInformationVariables } from '../../../types';
-import getIndustrySectorNames from '../../../integrations/industry-sector';
+import industrySectorNames from '../../../integrations/industry-sector';
 import companiesHouse from '../../../integrations/companies-house';
 
 /**
@@ -29,9 +29,9 @@ const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHo
     }
 
     // gets all industry sectors
-    const industrySectorNames = await getIndustrySectorNames.get();
+    const industrySectors = await industrySectorNames.get();
 
-    if (!industrySectorNames.success || industrySectorNames.apiError) {
+    if (!industrySectors.success || industrySectors.apiError) {
       return {
         apiError: true,
         success: false,
@@ -39,7 +39,7 @@ const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHo
     }
 
     // maps response to camelCase fields
-    const mappedResponse = mapCompaniesHouseFields(response.data, industrySectorNames.data);
+    const mappedResponse = mapCompaniesHouseFields(response.data, industrySectors.data);
 
     return {
       ...mappedResponse,
