@@ -37,7 +37,7 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+      cy.completeAndSubmitNameOnPolicyForm({});
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`;
 

@@ -7,7 +7,7 @@ import { Application, RequestBody } from '../../../../../types';
  * exportContract
  * Strip invalid fields from submitted form data and update the application.
  * This is used for any save functionality in the Export contract section of the application.
- * @param {Object} Application
+ * @param {Application}
  * @param {Express.Request.body} Form data
  * @param {Object} Field error list
  * @returns {Object} Saved data

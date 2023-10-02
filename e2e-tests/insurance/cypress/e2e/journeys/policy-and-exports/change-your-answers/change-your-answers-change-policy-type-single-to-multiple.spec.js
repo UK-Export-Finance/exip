@@ -54,7 +54,7 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+      cy.completeAndSubmitNameOnPolicyForm({});
 
       checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       changeLinkHref = `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}`;
@@ -113,7 +113,7 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
         // proceed to "name on policy"
         submitButton().click();
         // proceed to "check your answers"
-        cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+        cy.completeAndSubmitNameOnPolicyForm({});
 
         const expectedUrl = `${checkYourAnswersUrl}#heading`;
 

@@ -13,7 +13,7 @@ const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT;
 /**
  * mapKeyInformation
  * Map key information for an application
- * @param {Object} Application
+ * @param {Application}
  * @returns {Array} Array of objects for XLSX generation
  */
 const mapKeyInformation = (application: Application) => {
