@@ -3,9 +3,7 @@ const cookieBanner = document.querySelector('.govuk-cookie-banner');
 const acceptButton = document.querySelector('.js-cookies-button-accept');
 const rejectButton = document.querySelector('.js-cookies-button-reject');
 const changeCookiesSubmitButton = document.querySelector('.change-cookies-submit-button');
-const https = window.location.protocol == 'https:';
-// `__Secure` prefix will only work with Secure flag i.e. HTTPS
-const cookieName = https ? '__Secure-optionalCookies' : 'optionalCookies';
+const cookieName = '__Host-optionalCookies';
 
 /**
  * Sets cookie expiry timestamp
@@ -22,20 +20,10 @@ const expiryDate = () => {
 };
 
 /**
- * Sets cookie domain attribute
- * @returns String cookie domain
- */
-const domain = () => {
-  return 'domain=' + window.location.hostname;
-};
-
-/**
  * Set's cookie value
  * @param {Boolean} value cookie value
  */
-const setCookie = (value) => {
-  document.cookie = cookieName + '=' + value + '; path=/; SameSite=Strict; secure; ' + expiryDate() + domain();
-};
+const setCookie = (value) => document.cookie = cookieName + '=' + value + '; path=/; SameSite=Strict; secure; ' + expiryDate();
 
 /**
  * Initialise cookie banner and listeners
