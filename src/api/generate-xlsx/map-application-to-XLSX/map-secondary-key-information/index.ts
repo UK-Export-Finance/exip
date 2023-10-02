@@ -28,7 +28,7 @@ const {
 /**
  * mapSecondaryKeyInformation
  * Map secondary key information for an application
- * @param {Object} Application
+ * @param {Application}
  * @returns {Array} Array of objects for XLSX generation
  */
 const mapSecondaryKeyInformation = (application: Application) => {

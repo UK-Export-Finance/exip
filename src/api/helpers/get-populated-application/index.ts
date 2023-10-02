@@ -10,7 +10,7 @@ export const generateErrorMessage = (section: string, applicationId: number) =>
  * getPopulatedApplication
  * Get data associated with an application
  * @param {Object} KeystoneJS context API
- * @param {Object} Application
+ * @param {Application}
  * @returns {Object} Populated application
  */
 const getPopulatedApplication = async (context: Context, application: KeystoneApplication): Promise<Application> => {

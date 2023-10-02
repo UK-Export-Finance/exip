@@ -11,7 +11,7 @@ import { Application } from '../../../types';
  * - Has a draft status
  * - Is submitting before the submission deadline
  * - Has not been submitted before
- * @param {Object} Application
+ * @param {Application}
  * @returns {Boolean}
  */
 const canSubmitApplication = (application: Application): boolean => {

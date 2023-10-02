@@ -19,7 +19,7 @@ const {
 /**
  * mapBuyer
  * Map an application's buyer fields into an array of objects for XLSX generation
- * @param {Object} Application
+ * @param {Application}
  * @returns {Array} Array of objects for XLSX generation
  */
 const mapBuyer = (application: Application) => {

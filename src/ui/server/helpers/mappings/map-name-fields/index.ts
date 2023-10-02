@@ -12,7 +12,7 @@ const {
 /**
  * mapNameFields
  * Replace character codes in name fields with characters
- * @param {Object} Application
+ * @param {Application}
  * @returns {Object} Application with name field characters
  */
 const mapNameFields = (application: Application): Application => {
