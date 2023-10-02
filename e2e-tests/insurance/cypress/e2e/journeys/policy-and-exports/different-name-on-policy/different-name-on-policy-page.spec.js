@@ -13,7 +13,9 @@ import { ACCOUNT_FIELDS } from '../../../../../../content-strings/fields/insuran
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import application from '../../../../../../fixtures/application';
+import mockApplication from '../../../../../../fixtures/application';
+
+const { POLICY_CONTACT } = mockApplication;
 
 const { taskList } = partials.insurancePartials;
 
@@ -55,7 +57,7 @@ context('Insurance - Policy and exports - Different name on Policy page - I want
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();
-      cy.completeAndSubmitNameOnPolicyForm({});
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
 
@@ -146,7 +148,6 @@ context('Insurance - Policy and exports - Different name on Policy page - I want
     });
 
     it('should should have submitted values when navigating back to page', () => {
-      const { POLICY_CONTACT } = application;
       cy.navigateToUrl(url);
 
       cy.checkValue(input.field(FIRST_NAME), POLICY_CONTACT[FIRST_NAME]);

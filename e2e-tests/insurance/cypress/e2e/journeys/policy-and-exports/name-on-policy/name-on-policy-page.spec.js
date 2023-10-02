@@ -128,7 +128,7 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
       it(`should redirect to ${CHECK_YOUR_ANSWERS} when ${SAME_NAME} is selected`, () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+        cy.completeAndSubmitNameOnPolicyForm({});
 
         const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
         cy.assertUrl(expectedUrl);
@@ -150,7 +150,7 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
       it(`should redirect to ${DIFFERENT_NAME_ON_POLICY} when ${OTHER_NAME} is selected`, () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitNameOnPolicyForm({});
+        cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
 
         const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
         cy.assertUrl(expectedUrl);

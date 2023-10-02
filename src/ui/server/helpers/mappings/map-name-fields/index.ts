@@ -3,6 +3,7 @@ import replaceCharacterCodesWithCharacters from '../../replace-character-codes-w
 import { Application } from '../../../../types';
 
 const {
+  ACCOUNT: { FIRST_NAME, LAST_NAME },
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { NAME: BUYER_NAME, FIRST_NAME: BUYER_CONTACT_FIRST_NAME, LAST_NAME: BUYER_CONTACT_LAST_NAME },
   },
@@ -15,7 +16,7 @@ const {
  * @returns {Object} Application with name field characters
  */
 const mapNameFields = (application: Application): Application => {
-  const { buyer } = application;
+  const { buyer, policyContact } = application;
 
   if (buyer?.[BUYER_NAME]) {
     const fieldValue = buyer[BUYER_NAME];
@@ -33,6 +34,18 @@ const mapNameFields = (application: Application): Application => {
     const fieldValue = buyer[BUYER_CONTACT_LAST_NAME];
 
     buyer[BUYER_CONTACT_LAST_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
+  }
+
+  if (policyContact?.[FIRST_NAME]) {
+    const fieldValue = policyContact[FIRST_NAME];
+
+    policyContact[FIRST_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
+  }
+
+  if (policyContact?.[LAST_NAME]) {
+    const fieldValue = policyContact[LAST_NAME];
+
+    policyContact[LAST_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
   }
 
   return application;

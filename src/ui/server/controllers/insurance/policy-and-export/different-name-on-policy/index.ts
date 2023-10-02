@@ -6,6 +6,7 @@ import { POLICY_AND_EXPORTS_FIELDS as FIELDS, ACCOUNT_FIELDS } from '../../../..
 import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapNameFields from '../../../../helpers/mappings/map-name-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
@@ -82,7 +83,10 @@ export const get = (req: Request, res: Response) => {
     ...pageVariables(refNumber),
     userName: getUserNameFromSession(req.session.user),
     application,
-    submittedValues: application.policyContact,
+    submittedValues: {
+      ...application.policyContact,
+      ...mapNameFields(application).policyContact,
+    },
   });
 };
 
