@@ -99,11 +99,13 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
 
       const nameAndEmail = `${account[FIRST_NAME]} ${account[LAST_NAME]} (${account[EMAIL]})`;
       cy.checkText(input.field(SAME_NAME).label(), nameAndEmail);
+    });
 
+    it(`should NOT display conditional "${POSITION}" section without selecting the "same name" radio`, () => {
       input.field(POSITION).input().should('not.be.visible');
     });
 
-    it(`renders ${POSITION} input if ${SAME_NAME} is selected'`, () => {
+    it(`should display conditional "${POSITION}" section when selecting the "yes" radio`, () => {
       input.field(SAME_NAME).input().click();
 
       input.field(POSITION).input().should('be.visible');
