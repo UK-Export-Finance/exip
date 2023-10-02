@@ -20,6 +20,7 @@ const { POLICY_CONTACT } = application;
  * if sameName selected, then clicks radio and fills in conditional field
  * if not sameName then only clicks other name radio
  * @param {Boolean} sameName - if name is the same name as owner - default true
+ * @param {Boolean} submit - should form by submitted - default true
  */
 const completeAndSubmitNameOnPolicyForm = ({ sameName = true, submit = true }) => {
   if (sameName) {

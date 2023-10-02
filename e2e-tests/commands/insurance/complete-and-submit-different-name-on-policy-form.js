@@ -22,6 +22,7 @@ const { POLICY_CONTACT } = mockApplication;
  * Runs through the different name on policy form in the "policy" section
  * @param {String} First name
  * @param {String} Last name
+ * @param {Boolean} submit - should form by submitted - default true
  */
 const completeAndSubmitDifferentNameOnPolicyForm = ({
   firstName = POLICY_CONTACT[FIRST_NAME],
