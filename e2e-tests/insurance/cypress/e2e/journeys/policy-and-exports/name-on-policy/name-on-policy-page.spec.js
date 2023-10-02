@@ -99,11 +99,13 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
 
       const nameAndEmail = `${account[FIRST_NAME]} ${account[LAST_NAME]} (${account[EMAIL]})`;
       cy.checkText(input.field(SAME_NAME).label(), nameAndEmail);
+    });
 
+    it(`should NOT display conditional "${POSITION}" section without selecting the "same name" radio`, () => {
       input.field(POSITION).input().should('not.be.visible');
     });
 
-    it(`renders ${POSITION} input if ${SAME_NAME} is selected'`, () => {
+    it(`should display conditional "${POSITION}" section when selecting the "yes" radio`, () => {
       input.field(SAME_NAME).input().click();
 
       input.field(POSITION).input().should('be.visible');
@@ -128,7 +130,7 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
       it(`should redirect to ${CHECK_YOUR_ANSWERS} when ${SAME_NAME} is selected`, () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+        cy.completeAndSubmitNameOnPolicyForm({});
 
         const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
         cy.assertUrl(expectedUrl);
@@ -150,7 +152,7 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
       it(`should redirect to ${DIFFERENT_NAME_ON_POLICY} when ${OTHER_NAME} is selected`, () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitNameOnPolicyForm({});
+        cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
 
         const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
         cy.assertUrl(expectedUrl);

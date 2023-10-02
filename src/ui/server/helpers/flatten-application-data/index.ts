@@ -4,7 +4,7 @@ import { Application, ApplicationFlat } from '../../../types';
 /**
  * flattenApplicationData
  * Transform an application into a single level object
- * @param {Object} Application
+ * @param {Application}
  * @returns {Object} Application as a single level object
  */
 const flattenApplicationData = (application: Application): ApplicationFlat => {

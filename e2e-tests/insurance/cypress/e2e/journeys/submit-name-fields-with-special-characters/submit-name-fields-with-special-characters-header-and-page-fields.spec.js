@@ -33,8 +33,9 @@ const mockAccountSpecialCharacters = {
   [LAST_NAME]: mockNameWithSpecialCharacters(mockAccount[LAST_NAME]),
 };
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Name fields - Header and page fields should render special characters without character codes after submission', () => {
-  const baseUrl = Cypress.config('baseUrl');
   let referenceNumber;
   let allSectionsUrl;
 

@@ -11,7 +11,7 @@ const {
 /**
  * applicationIsComplete
  * Check if the application is complete
- * @param {Object} Application
+ * @param {Application}
  * @returns {Boolean}
  */
 const applicationIsComplete = (application: ApplicationFlat) => {

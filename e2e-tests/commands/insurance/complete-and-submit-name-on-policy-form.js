@@ -19,9 +19,9 @@ const { POLICY_CONTACT } = application;
  * completes and submits name on policy form
  * if sameName selected, then clicks radio and fills in conditional field
  * if not sameName then only clicks other name radio
- * @param {Boolean} sameName - if name is the same name as owner - default false
+ * @param {Boolean} sameName - if name is the same name as owner - default true
  */
-const completeAndSubmitNameOnPolicyForm = ({ sameName = false }) => {
+const completeAndSubmitNameOnPolicyForm = ({ sameName = true }) => {
   if (sameName) {
     input.field(SAME_NAME).input().click();
     cy.keyboardInput(input.field(POSITION).input(), POLICY_CONTACT[POSITION]);
