@@ -1,5 +1,4 @@
 import '@cypress-audit/lighthouse/commands';
-import 'cypress-v10-preserve-cookie';
 
 import analytics from './analytics';
 

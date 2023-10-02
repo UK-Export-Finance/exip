@@ -41,7 +41,6 @@
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
     "cypress": "^13.3.0",
-    "cypress-v10-preserve-cookie": "^1.2.1",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
     "graphql-tag": "^2.12.6",
