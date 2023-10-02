@@ -4,8 +4,8 @@ const { pa11y } = require('@cypress-audit/pa11y');
 const dotenv = require('dotenv');
 const path = require('path');
 
-// Read from root `./e2e-tests/.env` directory
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
+// Read from root `./.env` directory
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 const {
   UI_PORT,
