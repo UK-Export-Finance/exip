@@ -23,6 +23,7 @@ const completeSignInAndSubmitAnApplication = ({
   exportingWithCodeOfConduct,
   policyAndExportsMaximumValue = false,
   usingBroker,
+  differentPolicyContact = false,
 }) => {
   completeSignInAndGoToApplication({}).then(({ referenceNumber }) => {
     if (policyType === APPLICATION.POLICY_TYPE.MULTIPLE) {
@@ -31,6 +32,7 @@ const completeSignInAndSubmitAnApplication = ({
         policyAndExportsMaximumValue,
         referenceNumber,
         usingBroker,
+        differentPolicyContact,
       });
     } else {
       cy.completePrepareApplicationSinglePolicyType({
@@ -38,6 +40,7 @@ const completeSignInAndSubmitAnApplication = ({
         policyAndExportsMaximumValue,
         referenceNumber,
         usingBroker,
+        differentPolicyContact,
       });
     }
     cy.completeAndSubmitCheckYourAnswers();

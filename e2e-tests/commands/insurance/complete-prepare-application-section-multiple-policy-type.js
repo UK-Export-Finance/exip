@@ -12,11 +12,13 @@ const task = taskList.prepareApplication.tasks.policyTypeAndExports;
  * @param {Object} Object with flags on how to complete specific parts of the application
  * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
  * - policyAndExportsMaximumValue: should submit an application with the maximum value of 500000
+ * - differentPolicyContact: Should submit an application with a different policy contact to the owner
  * - referenceNumber: Application reference number
  */
 const completePrepareApplicationMultiplePolicyType = ({
   usingBroker,
   policyAndExportsMaximumValue = false,
+  differentPolicyContact,
   referenceNumber,
 }) => {
   task.link().click();
@@ -24,7 +26,11 @@ const completePrepareApplicationMultiplePolicyType = ({
   cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
   cy.completeAndSubmitMultipleContractPolicyForm({ policyAndExportsMaximumValue });
   cy.completeAndSubmitAboutGoodsOrServicesForm();
-  cy.completeAndSubmitNameOnPolicyForm({});
+  cy.completeAndSubmitNameOnPolicyForm({ sameName: !differentPolicyContact });
+
+  if (differentPolicyContact) {
+    cy.completeAndSubmitDifferentNameOnPolicyForm({});
+  }
 
   submitButton().click();
 
