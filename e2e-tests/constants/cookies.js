@@ -3,7 +3,7 @@
  * `__Host-` prefixed cookie.
  * TODO: Ensure E2E are executed using `__Host-` cookie
  */
-const PREFIX = '__Secure-';
+const PREFIX = '__Host-';
 
 const NAME = {
   SESSION: `${PREFIX}SID`,
