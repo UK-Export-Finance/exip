@@ -39,6 +39,8 @@ const {
   },
 } = ERROR_MESSAGES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Policy and exports - Single contract policy page - form validation - contract completion date', () => {
   let referenceNumber;
   let url;
@@ -51,7 +53,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
+      url = `${baseUrl}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
 
       cy.assertUrl(url);
     });
@@ -209,7 +211,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   describe(`when ${REQUESTED_START_DATE} is also provided`, () => {
     const date = new Date();
-    const startDate = add(date, { months: 3 });
+    const startDate = add(date, { years: 1 });
 
     beforeEach(() => {
       cy.navigateToUrl(url);
