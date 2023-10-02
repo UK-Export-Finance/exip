@@ -4,7 +4,7 @@ import { ROUTES, TEMPLATES } from '../../../constants';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../test-mocks';
+import { mockReq, mockRes } from '../../../test-mocks';
 
 const {
   INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS },
@@ -17,8 +17,6 @@ describe('controllers/insurance/all-sections', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
   });
 
   describe('TEMPLATE', () => {

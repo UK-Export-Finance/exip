@@ -101,7 +101,7 @@ describe('controllers/insurance/account/create/confirm-email', () => {
     describe('api error handling', () => {
       describe('when there is an error', () => {
         beforeAll(() => {
-          getAccountSpy = jest.fn(() => Promise.reject());
+          getAccountSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.account.get = getAccountSpy;
         });
 

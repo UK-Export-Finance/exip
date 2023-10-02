@@ -28,8 +28,6 @@ describe('middleware/insurance/application-access', () => {
     req = mockReq();
     res = mockRes();
     next = nextSpy;
-
-    res.locals.application = mockApplication;
   });
 
   describe('IRRELEVANT_ROUTES', () => {

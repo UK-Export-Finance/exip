@@ -32,7 +32,7 @@ describe('controllers/insurance/policy-and-export/map-and-save/policy-contact', 
 
   describe('when save application policy call fails', () => {
     beforeEach(() => {
-      save.policyContact = jest.fn(() => Promise.reject(new Error('Mock error')));
+      save.policyContact = jest.fn(() => Promise.reject(new Error('mock')));
     });
 
     it('should return false', async () => {

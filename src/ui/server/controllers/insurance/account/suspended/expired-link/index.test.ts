@@ -100,7 +100,7 @@ describe('controllers/insurance/account/suspended/expired-link', () => {
     describe('api error handling', () => {
       describe('when the send email reactivate account link API call fails', () => {
         beforeEach(() => {
-          sendEmailReactivateAccountLinkResponseSpy = jest.fn(() => Promise.reject());
+          sendEmailReactivateAccountLinkResponseSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.account.sendEmailReactivateAccountLink = sendEmailReactivateAccountLinkResponseSpy;
         });
 

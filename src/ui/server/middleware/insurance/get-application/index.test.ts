@@ -104,7 +104,7 @@ describe('middleware/insurance/get-application', () => {
     });
 
     describe('when the API call fails', () => {
-      const getApplicationSpy = jest.fn(() => Promise.reject());
+      const getApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
       beforeEach(() => {
         api.keystone.application.get = getApplicationSpy;

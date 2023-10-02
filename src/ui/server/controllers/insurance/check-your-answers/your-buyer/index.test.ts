@@ -38,7 +38,6 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 
@@ -98,7 +97,7 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -137,7 +136,7 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -165,7 +164,7 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
 
       describe('when the save data API call fails', () => {
         beforeEach(() => {
-          mockSaveSectionReview = jest.fn(() => Promise.reject());
+          mockSaveSectionReview = jest.fn(() => Promise.reject(new Error('mock')));
           save.sectionReview = mockSaveSectionReview;
 
           req.body = mockBody;

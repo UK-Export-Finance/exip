@@ -324,7 +324,7 @@ describe('controllers/insurance/account/sign-in', () => {
         beforeEach(() => {
           req.body = validBody;
 
-          accountSignInSpy = jest.fn(() => Promise.reject());
+          accountSignInSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.account.signIn = accountSignInSpy;
         });
 

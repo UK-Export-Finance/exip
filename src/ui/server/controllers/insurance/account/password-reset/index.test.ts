@@ -183,7 +183,7 @@ describe('controllers/insurance/account/password-reset', () => {
           beforeEach(() => {
             req.body = validBody;
 
-            sendEmailPasswordResetLinkSpy = jest.fn(() => Promise.reject());
+            sendEmailPasswordResetLinkSpy = jest.fn(() => Promise.reject(new Error('mock')));
             api.keystone.account.sendEmailPasswordResetLink = sendEmailPasswordResetLinkSpy;
           });
 

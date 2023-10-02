@@ -42,7 +42,7 @@ describe('controllers/insurance/business/map-and-save/company-details - API erro
 
   describe('when save application companyDetails call fails', () => {
     beforeEach(() => {
-      save.companyDetails = jest.fn(() => Promise.reject(new Error('Mock error')));
+      save.companyDetails = jest.fn(() => Promise.reject(new Error('mock')));
     });
 
     it('should return false', async () => {

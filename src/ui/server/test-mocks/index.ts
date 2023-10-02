@@ -65,6 +65,7 @@ const mockRes = () => {
   res.status = jest.fn();
 
   res.locals = {
+    application: mockApplication,
     csrfToken: 'mock',
     meta: {
       URL: 'mock.com/route',
