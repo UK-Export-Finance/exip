@@ -54,7 +54,7 @@
 #
 # 4. Outputs:
 # Environment: The name of the environment, e.g. development or production.
-# Timezone: The timezone, e.g. Europe/London.
+# Timezone: The timezone, e.g. '${{ vars.TIMEZONE }}'.
 #
 # Note
 # ****
@@ -74,7 +74,7 @@ on:
 env:
   PRODUCT: exip
   ENVIRONMENT: infrastructure
-  TIMEZONE: 'Europe/London'
+  TIMEZONE: ''${{ vars.TIMEZONE }}''
   # Deployment environment target i.e., `development`, `staging`, `production`
   TARGET: ${{ vars.ENVIRONMENT }}
 
@@ -305,7 +305,7 @@ jobs:
           az webapp config appsettings set \
           --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
           --settings \
-          TZ=Europe/London \
+          TZ='${{ vars.TIMEZONE }}' \
           PORT='${{ vars.UI_PORT }}' \
           WEBSITE_PORT='${{ vars.UI_PORT }}' \
           TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
@@ -326,7 +326,7 @@ jobs:
           az webapp config appsettings set \
           --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
           --settings \
-          TZ=Europe/London \
+          TZ='${{ vars.TIMEZONE }}' \
           PORT='${{ vars.API_PORT }}' \
           WEBSITE_PORT='${{ vars.API_PORT }}' \
           TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
