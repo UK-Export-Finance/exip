@@ -7,7 +7,7 @@ import { SuccessResponse, ApplicationSubmissionEmailVariables, Application } fro
 /**
  * applicationSubmittedEmails.send
  * Send "application submitted" emails
- * @param {Object} Application
+ * @param {Application}
  * @param {String} Path to XLSX file for underwriting team email
  * @returns {Object} Object with success flag and emailRecipient
  */

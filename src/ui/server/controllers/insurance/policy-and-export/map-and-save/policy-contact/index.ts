@@ -7,7 +7,7 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * mapAndSave policyContact
  * Map and save any valid policyContact fields
  * @param {Express.Request.body} Express request body
- * @param {Object} Application
+ * @param {Application}
  * @param {Object} Validation errors
  * @returns {Boolean}
  */

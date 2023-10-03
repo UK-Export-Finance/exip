@@ -2021,7 +2021,7 @@ var application = {
   /**
    * application.submittedEmail
    * Send "application submitted" email to an account
-   * @param {Object} ApplicationSubmissionEmailVariables
+   * @param {ApplicationSubmissionEmailVariables} ApplicationSubmissionEmailVariables
    * @returns {Object} callNotify response
    */
   submittedEmail: async (variables) => {
@@ -2041,7 +2041,7 @@ var application = {
    * Read CSV file, generate a file buffer
    * Send "application submitted" email to the underwriting team with a link to CSV
    * We send a file buffer to Notify and Notify generates a unique URL that is then rendered in the email.
-   * @param {Object} ApplicationSubmissionEmailVariables
+   * @param {ApplicationSubmissionEmailVariables}
    * @returns {Object} callNotify response
    */
   underwritingTeam: async (variables, filePath, templateId) => {
@@ -3211,15 +3211,15 @@ var delete_application_by_reference_number_default = deleteApplicationByReferenc
 var import_types2 = __toESM(require("@keystone-6/core/types"));
 
 // helpers/map-sic-codes/index.ts
-var mapSicCodes = (company, sicCodes, industrySectorNames) => {
+var mapSicCodes = (company, sicCodes, industrySectorNames2) => {
   const mapped = [];
   if (!sicCodes?.length) {
     return mapped;
   }
   sicCodes.forEach((code, index) => {
     let industrySectorName = "";
-    if (industrySectorNames && industrySectorNames[index]) {
-      industrySectorName = industrySectorNames[index];
+    if (industrySectorNames2 && industrySectorNames2[index]) {
+      industrySectorName = industrySectorNames2[index];
     }
     const codeToAdd = {
       sicCode: code,
@@ -3239,7 +3239,7 @@ var mapSicCodes = (company, sicCodes, industrySectorNames) => {
 var updateCompanyAndCompanyAddress = async (root, variables, context) => {
   try {
     console.info("Updating application company and company address for %s", variables.companyId);
-    const { address, sicCodes, industrySectorNames, oldSicCodes, ...company } = variables.data;
+    const { address, sicCodes, industrySectorNames: industrySectorNames2, oldSicCodes, ...company } = variables.data;
     if (company?.companyNumber && !company?.financialYearEndDate) {
       company.financialYearEndDate = null;
     }
@@ -3251,7 +3251,7 @@ var updateCompanyAndCompanyAddress = async (root, variables, context) => {
       where: { id: variables.companyAddressId },
       data: address
     });
-    const mappedSicCodes = mapSicCodes(updatedCompany, sicCodes, industrySectorNames);
+    const mappedSicCodes = mapSicCodes(updatedCompany, sicCodes, industrySectorNames2);
     if (company && oldSicCodes && oldSicCodes.length) {
       await context.db.CompanySicCode.deleteMany({
         where: oldSicCodes
@@ -4666,15 +4666,15 @@ var create_full_timestamp_from_day_month_default = createFullTimestampFromDayAnd
 
 // helpers/map-sic-code-descriptions/index.ts
 var mapSicCodeDescriptions = (sicCodes, sectors) => {
-  const industrySectorNames = [];
+  const industrySectorNames2 = [];
   if (!sicCodes?.length || !sectors?.length) {
-    return industrySectorNames;
+    return industrySectorNames2;
   }
   sicCodes.forEach((sicCode) => {
     const sicCodeSector = sectors.find((sector) => sector.ukefIndustryId === sicCode);
-    industrySectorNames.push(sicCodeSector?.ukefIndustryName);
+    industrySectorNames2.push(sicCodeSector?.ukefIndustryName);
   });
-  return industrySectorNames;
+  return industrySectorNames2;
 };
 var map_sic_code_descriptions_default = mapSicCodeDescriptions;
 
@@ -4714,7 +4714,7 @@ var headers = {
   "Content-Type": "application/json",
   [String(APIM_MDM_KEY2)]: APIM_MDM_VALUE2
 };
-var getIndustrySectorNames = {
+var industrySectorNames = {
   get: async () => {
     try {
       console.info("Calling industry sector API");
@@ -4745,7 +4745,7 @@ var getIndustrySectorNames = {
     }
   }
 };
-var industry_sector_default = getIndustrySectorNames;
+var industry_sector_default = industrySectorNames;
 
 // integrations/companies-house/index.ts
 var import_axios3 = __toESM(require("axios"));
@@ -4794,14 +4794,14 @@ var getCompaniesHouseInformation = async (root, variables) => {
         success: false
       };
     }
-    const industrySectorNames = await industry_sector_default.get();
-    if (!industrySectorNames.success || industrySectorNames.apiError) {
+    const industrySectors = await industry_sector_default.get();
+    if (!industrySectors.success || industrySectors.apiError) {
       return {
         apiError: true,
         success: false
       };
     }
-    const mappedResponse = mapCompaniesHouseFields(response.data, industrySectorNames.data);
+    const mappedResponse = mapCompaniesHouseFields(response.data, industrySectors.data);
     return {
       ...mappedResponse,
       success: true

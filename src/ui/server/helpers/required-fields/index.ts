@@ -10,7 +10,7 @@ const {
 
 /**
  * Required fields for an application
- * @param {Object} Application
+ * @param {Application}
  * @returns {Array} Required field IDs
  */
 const requiredFields = (application: ApplicationFlat) => [

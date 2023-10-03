@@ -6,7 +6,7 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../types
  * mapAndSave
  * Map and save any valid export contract fields
  * @param {Express.Request.body} Express request body
- * @param {Object} Application
+ * @param {Application}
  * @param {Object} Validation errors
  * @returns {Boolean}
  */

@@ -46,7 +46,7 @@ export const mapSicCodes = (sicCodes: Array<ApplicationCompanySicCode>) => {
 /**
  * mapBroker
  * Map an application's broker fields into an array of objects for XLSX generation
- * @param {Object} Application
+ * @param {Application}
  * @returns {Array} Array of objects for XLSX generation
  */
 export const mapBroker = (application: Application) => {
@@ -74,7 +74,7 @@ export const mapBroker = (application: Application) => {
 /**
  * mapExporter
  * Map an application's exporter fields into an array of objects for XLSX generation
- * @param {Object} Application
+ * @param {Application}
  * @returns {Array} Array of objects for XLSX generation
  */
 const mapExporter = (application: Application) => {
