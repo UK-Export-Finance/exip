@@ -2,7 +2,7 @@
 # 1. BUILD
 ###################
 
-FROM node:20.0-alpine3.16 AS build
+FROM node:20.8.0-alpine3.17 AS build
 
 # Build variables
 ARG GITHUB_SHA
@@ -43,7 +43,7 @@ RUN npm ci --legacy-peer-deps --omit=dev --ignore-scripts
 # 2. PRODUCTION
 ###################
 
-FROM node:20.0-alpine3.16 AS production
+FROM node:20.8.0-alpine3.17 AS production
 
 WORKDIR /app
 
@@ -56,6 +56,9 @@ COPY --chown=node:node --from=build /app/public ./public
 COPY --chown=node:node --from=build /app/server ./server
 COPY --chown=node:node --from=build /app/templates ./templates
 COPY --chown=node:node --from=build /app/types ./types
+
+# Expose listening port
+EXPOSE ${UI_PORT}
 
 # Container healthcheck
 HEALTHCHECK \
