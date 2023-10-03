@@ -12,7 +12,9 @@ import { post as multipleContractPolicySaveAndBackPost } from '../../../controll
 import { get as aboutGoodsOrServicesGet, post as aboutGoodsOrServicesPost } from '../../../controllers/insurance/policy-and-export/about-goods-or-services';
 import { post as aboutGoodsOrServicesSaveAndBackPost } from '../../../controllers/insurance/policy-and-export/about-goods-or-services/save-and-back';
 import { get as nameOnPolicyGet, post as nameOnPolicyPost } from '../../../controllers/insurance/policy-and-export/name-on-policy';
+import { post as nameOnPolicySaveAndBackPost } from '../../../controllers/insurance/policy-and-export/name-on-policy/save-and-back';
 import { get as differentNameOnPolicyGet, post as differentNameOnPolicyPost } from '../../../controllers/insurance/policy-and-export/different-name-on-policy';
+import { post as differentNameOnPolicySaveAndBackPost } from '../../../controllers/insurance/policy-and-export/different-name-on-policy/save-and-back';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/policy-and-export/check-your-answers';
 import { post as checkYourAnswersSaveAndBackPost } from '../../../controllers/insurance/policy-and-export/check-your-answers/save-and-back';
 
@@ -77,9 +79,14 @@ insurancePolicyAndExportsRouter.post(
 
 insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.NAME_ON_POLICY}`, nameOnPolicyGet);
 insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.NAME_ON_POLICY}`, nameOnPolicyPost);
+insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.NAME_ON_POLICY_SAVE_AND_BACK}`, nameOnPolicySaveAndBackPost);
 
 insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY}`, differentNameOnPolicyGet);
 insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY}`, differentNameOnPolicyPost);
+insurancePolicyAndExportsRouter.post(
+  `/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK}`,
+  differentNameOnPolicySaveAndBackPost,
+);
 
 insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

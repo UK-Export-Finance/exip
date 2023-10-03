@@ -9,6 +9,14 @@ const {
 
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
+const { owner } = mockApplication;
+
+const expectedVariables = {
+  [FIRST_NAME]: owner[FIRST_NAME],
+  [LAST_NAME]: owner[LAST_NAME],
+  [EMAIL]: owner[EMAIL],
+};
+
 describe('controllers/insurance/policy-and-export/map-submitted-data/policy-contact', () => {
   describe(`when ${NAME} is ${SAME_NAME}`, () => {
     const mockBody = {
@@ -19,12 +27,8 @@ describe('controllers/insurance/policy-and-export/map-submitted-data/policy-cont
     it(`should return an object with application owner contact details and should remove ${NAME} and add ${IS_SAME_AS_OWNER} as true`, () => {
       const result = mapSubmittedData(mockBody, mockApplication);
 
-      const { owner } = mockApplication;
-
       const expected = {
-        [FIRST_NAME]: owner[FIRST_NAME],
-        [LAST_NAME]: owner[LAST_NAME],
-        [EMAIL]: owner[EMAIL],
+        ...expectedVariables,
         [POSITION]: mockBody[POSITION],
         [IS_SAME_AS_OWNER]: true,
       };
@@ -69,18 +73,23 @@ describe('controllers/insurance/policy-and-export/map-submitted-data/policy-cont
   });
 
   describe(`when ${NAME} is not provided`, () => {
-    const { owner } = mockApplication;
+    it('should return mockBody', () => {
+      const result = mapSubmittedData(expectedVariables, mockApplication);
 
+      expect(result).toEqual(expectedVariables);
+    });
+  });
+
+  describe(`when ${NAME} is am empty string`, () => {
     const mockBody = {
-      [FIRST_NAME]: owner[FIRST_NAME],
-      [LAST_NAME]: owner[LAST_NAME],
-      [EMAIL]: owner[EMAIL],
+      [NAME]: '',
+      ...expectedVariables,
     };
 
-    it('should should mockBody', () => {
+    it(`should should mockBody without ${NAME}`, () => {
       const result = mapSubmittedData(mockBody, mockApplication);
 
-      expect(result).toEqual(mockBody);
+      expect(result).toEqual(expectedVariables);
     });
   });
 });
