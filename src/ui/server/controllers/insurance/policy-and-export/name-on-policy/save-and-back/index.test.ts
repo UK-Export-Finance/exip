@@ -36,7 +36,6 @@ describe('controllers/insurance/policy-and-export/name-on-policy/save-and-back',
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
 
     req.body = mockFormBody;

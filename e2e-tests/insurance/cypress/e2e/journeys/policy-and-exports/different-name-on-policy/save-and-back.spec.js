@@ -30,9 +30,12 @@ const {
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Policy and exports - Different name on policy - Save and go back', () => {
   let referenceNumber;
   let url;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -43,9 +46,10 @@ context('Insurance - Policy and exports - Different name on policy - Save and go
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();
-      cy.completeAndSubmitNameOnPolicyForm({});
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
+      allSectionsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
       cy.assertUrl(url);
     });
   });
@@ -66,9 +70,7 @@ context('Insurance - Policy and exports - Different name on policy - Save and go
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+      cy.assertUrl(allSectionsUrl);
     });
 
     it('should have the all inputs as empty when going back to the page after submission', () => {
@@ -92,9 +94,7 @@ context('Insurance - Policy and exports - Different name on policy - Save and go
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+      cy.assertUrl(allSectionsUrl);
     });
 
     it('should have the originally submitted answers populated when going back to the page after submission', () => {
@@ -111,14 +111,12 @@ context('Insurance - Policy and exports - Different name on policy - Save and go
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitDifferentNameOnPolicyForm({ submit: false });
+      cy.completeDifferentNameOnPolicyForm({});
       saveAndBackButton().click();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+      cy.assertUrl(allSectionsUrl);
     });
 
     it('should have the originally submitted answers populated when going back to the page after submission', () => {

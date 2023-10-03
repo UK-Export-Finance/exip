@@ -30,7 +30,7 @@ export const post = async (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(payload);
 
   try {
-    // // save the application
+    // save the application
     const saveResponse = await mapAndSave.policyContact(payload, application, validationErrors);
 
     if (!saveResponse) {

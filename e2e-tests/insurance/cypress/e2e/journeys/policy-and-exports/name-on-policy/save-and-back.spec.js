@@ -1,6 +1,8 @@
 import { input, saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
 
 const { taskList } = partials.insurancePartials;
@@ -8,30 +10,29 @@ const { taskList } = partials.insurancePartials;
 const { POLICY_CONTACT } = application;
 
 const {
-  INSURANCE: {
-    ROOT: INSURANCE_ROOT,
-    POLICY_AND_EXPORTS: {
-      NAME_ON_POLICY,
-    },
-    ALL_SECTIONS,
+  ROOT: INSURANCE_ROOT,
+  POLICY_AND_EXPORTS: {
+    NAME_ON_POLICY,
   },
-} = ROUTES;
+  ALL_SECTIONS,
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      NAME_ON_POLICY: {
-        POSITION, SAME_NAME, OTHER_NAME,
-      },
+  POLICY_AND_EXPORTS: {
+    NAME_ON_POLICY: {
+      POSITION, SAME_NAME, OTHER_NAME,
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy and exports - Name on policy - Save and go back', () => {
   let referenceNumber;
   let url;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -43,7 +44,8 @@ context('Insurance - Policy and exports - Name on policy - Save and go back', ()
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
+      allSectionsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
       cy.assertUrl(url);
     });
   });
@@ -64,9 +66,7 @@ context('Insurance - Policy and exports - Name on policy - Save and go back', ()
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+      cy.assertUrl(allSectionsUrl);
     });
   });
 
@@ -79,9 +79,7 @@ context('Insurance - Policy and exports - Name on policy - Save and go back', ()
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+      cy.assertUrl(allSectionsUrl);
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
@@ -101,9 +99,7 @@ context('Insurance - Policy and exports - Name on policy - Save and go back', ()
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+      cy.assertUrl(allSectionsUrl);
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
@@ -120,14 +116,12 @@ context('Insurance - Policy and exports - Name on policy - Save and go back', ()
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: true, submit: false });
+      cy.completeNameOnPolicyForm({ sameName: true });
       saveAndBackButton().click();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+      cy.assertUrl(allSectionsUrl);
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {

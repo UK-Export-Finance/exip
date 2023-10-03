@@ -44,7 +44,9 @@ Cypress.Commands.add('completeAndSubmitMultipleContractPolicyForm', require('../
 
 Cypress.Commands.add('completeAndSubmitAboutGoodsOrServicesForm', require('../../../commands/insurance/complete-and-submit-about-goods-or-services-form'));
 
+Cypress.Commands.add('completeNameOnPolicyForm', require('../../../commands/insurance/complete-name-on-policy-form'));
 Cypress.Commands.add('completeAndSubmitNameOnPolicyForm', require('../../../commands/insurance/complete-and-submit-name-on-policy-form'));
+Cypress.Commands.add('completeDifferentNameOnPolicyForm', require('../../../commands/insurance/complete-different-name-on-policy-form'));
 Cypress.Commands.add('completeAndSubmitDifferentNameOnPolicyForm', require('../../../commands/insurance/complete-and-submit-different-name-on-policy-form'));
 
 Cypress.Commands.add('completeAndSubmitCompanyDetails', require('../../../commands/insurance/complete-and-submit-company-details'));
