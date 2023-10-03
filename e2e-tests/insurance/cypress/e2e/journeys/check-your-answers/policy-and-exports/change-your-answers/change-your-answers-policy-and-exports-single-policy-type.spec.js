@@ -1,5 +1,6 @@
 import partials from '../../../../../../../partials';
-import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { status, summaryList } from '../../../../../../../pages/shared';
 import application from '../../../../../../../fixtures/application';
 import { singleContractPolicyPage } from '../../../../../../../pages/insurance/policy-and-export';
@@ -15,20 +16,18 @@ const {
   CHECK_YOUR_ANSWERS: {
     TYPE_OF_POLICY,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
-        POLICY_CURRENCY_CODE,
-        SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-      },
+  POLICY_AND_EXPORTS: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      CREDIT_PERIOD_WITH_BUYER,
+      POLICY_CURRENCY_CODE,
+      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
@@ -98,6 +97,8 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
       });
 
       describe('form submission with a new answer', () => {
+        const contractCompletionDateYearChange = newAnswer.year + 1;
+
         beforeEach(() => {
           cy.navigateToUrl(url);
 
@@ -107,7 +108,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
 
           cy.changeAnswerField(fieldVariables, singleContractPolicyPage[fieldId].yearInput(), false);
 
-          fieldVariables.newValueInput = newAnswer.year + 1;
+          fieldVariables.newValueInput = contractCompletionDateYearChange;
           cy.changeAnswerField(fieldVariables, singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput());
         });
 
@@ -116,7 +117,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
         });
 
         it('should render the new answer', () => {
-          fieldVariables.newValue = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
+          fieldVariables.newValue = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, contractCompletionDateYearChange));
           cy.checkChangeAnswerRendered(fieldVariables);
         });
       });
