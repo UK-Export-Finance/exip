@@ -89,6 +89,9 @@ COPY --chown=node:node --from=build /app/middleware ./middleware
 COPY --chown=node:node --from=build /app/nullable-checkbox ./nullable-checkbox
 COPY --chown=node:node --from=build /app/XLSX ./XLSX
 
+# Expose listening port
+EXPOSE ${API_PORT}
+
 # Container healthcheck
 HEALTHCHECK \
 --interval=60s \
