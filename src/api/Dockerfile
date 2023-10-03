@@ -2,7 +2,7 @@
 # 1. BUILD
 ###################
 
-FROM node:20.0-alpine3.16 AS build
+FROM node:20.8.0-alpine3.17 AS build
 
 # Build variables
 ARG GITHUB_SHA
@@ -60,7 +60,7 @@ USER node
 # 2. PRODUCTION
 ###################
 
-FROM node:20.0-alpine3.16 AS production
+FROM node:20.8.0-alpine3.17 AS production
 
 WORKDIR /app
 
@@ -88,6 +88,9 @@ COPY --chown=node:node --from=build /app/integrations ./integrations
 COPY --chown=node:node --from=build /app/middleware ./middleware
 COPY --chown=node:node --from=build /app/nullable-checkbox ./nullable-checkbox
 COPY --chown=node:node --from=build /app/XLSX ./XLSX
+
+# Expose listening port
+EXPOSE ${API_PORT}
 
 # Container healthcheck
 HEALTHCHECK \
