@@ -1,8 +1,3 @@
-const navigateToUrl = (url) => cy.visit(url, {
-  auth: {
-    username: Cypress.config('basicAuthKey'),
-    password: Cypress.config('basicAuthSecret'),
-  },
-});
+const navigateToUrl = (url) => cy.visit(url);
 
 export default navigateToUrl;

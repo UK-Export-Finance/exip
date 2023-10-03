@@ -1,9 +1,12 @@
+import { COOKIE } from '../../constants';
+
 const checkAnalyticsCookieProperties = () => {
-  cy.getCookie('optionalCookies').then((cookie) => {
-    cy.getCookie('optionalCookies').should('have.property', 'path', '/');
-    cy.getCookie('optionalCookies').should('have.property', 'sameSite', 'strict');
-    cy.getCookie('optionalCookies').should('have.property', 'httpOnly', false);
-    cy.getCookie('optionalCookies').should('have.property', 'secure', true);
+  cy.getCookie(COOKIE.NAME.OPTION).then((cookie) => {
+    cy.getCookie(COOKIE.NAME.OPTION).should('have.property', 'name', COOKIE.NAME.OPTION);
+    cy.getCookie(COOKIE.NAME.OPTION).should('have.property', 'path', '/');
+    cy.getCookie(COOKIE.NAME.OPTION).should('have.property', 'sameSite', 'strict');
+    cy.getCookie(COOKIE.NAME.OPTION).should('have.property', 'httpOnly', false);
+    cy.getCookie(COOKIE.NAME.OPTION).should('have.property', 'secure', true);
 
     const date = new Date(cookie.expiry * 1000);
     const day = new Date(date).getDate();
@@ -22,7 +25,7 @@ const checkAnalyticsCookieProperties = () => {
     expect(year).to.equal(expectedYear);
 
     cy.location('hostname').then((hostname) => {
-      cy.getCookie('optionalCookies').should('have.property', 'domain', hostname);
+      cy.getCookie(COOKIE.NAME.OPTION).should('have.property', 'domain', hostname);
     });
   });
 };

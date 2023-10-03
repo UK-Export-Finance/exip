@@ -1,5 +1,5 @@
 import dashboardPage from '../../../../../../pages/insurance/dashboard';
-import { ROUTES } from '../../../../../../constants';
+import { ROUTES, COOKIE } from '../../../../../../constants';
 import header from '../../../../../../partials/header';
 
 const { table } = dashboardPage;
@@ -35,7 +35,7 @@ context('Insurance - Account - When answering eligibility answers, creating an a
      * So that we are mimicking starting a fresh session/browser instance,
      * when clicking the link in "verify account" email
      */
-    cy.clearCookie('exip-session');
+    cy.clearCookie(COOKIE.NAME.SESSION);
 
     cy.verifyAccountEmail();
 

@@ -1,11 +1,12 @@
 import checkAnalyticsCookieProperties from './check-analytics-cookie-properties';
+import { COOKIE } from '../../constants';
 
 const checkAnalyticsCookieIsFalse = () => {
-  cy.getCookie('optionalCookies').should('exist');
+  cy.getCookie(COOKIE.NAME.OPTION).should('exist');
 
   checkAnalyticsCookieProperties();
 
-  cy.getCookie('optionalCookies').should('have.property', 'value', 'false');
+  cy.getCookie(COOKIE.NAME.OPTION).should('have.property', 'value', 'false');
 };
 
 export default checkAnalyticsCookieIsFalse;

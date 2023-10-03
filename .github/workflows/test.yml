@@ -21,6 +21,8 @@ env:
   environment: "qa"
   timezone: "Europe/London"
   NODE_ENV: ${{ secrets.NODE_ENV }}
+  TLS_CERTIFICATE: ${{ secrets.TLS_CERTIFICATE }}
+  TLS_KEY: ${{ secrets.TLS_KEY }}
   DATABASE_PORT: ${{ vars.DATABASE_PORT }}
   API_PORT: ${{ vars.API_PORT }}
   UI_PORT: ${{ vars.UI_PORT }}
@@ -30,8 +32,6 @@ env:
   MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
   MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
   SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-  BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
-  BASIC_AUTH_SECRET: ${{ secrets.BASIC_AUTH_SECRET }}
   APIM_MDM_URL: ${{ secrets.APIM_MDM_URL }}
   APIM_MDM_KEY: ${{ secrets.APIM_MDM_KEY }}
   APIM_MDM_VALUE: ${{ secrets.APIM_MDM_VALUE }}
@@ -92,8 +92,6 @@ jobs:
         working-directory: ./src/ui
         env:
           SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
-          BASIC_AUTH_KEY: ${{ secrets.BASIC_AUTH_KEY }}
-          BASIC_AUTH_SECRET: ${{ secrets.BASIC_AUTH_SECRET }}
           GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
           GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
           GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
@@ -131,6 +129,8 @@ jobs:
       - name: API
         working-directory: ./
         env:
+          TLS_CERTIFICATE: ${{ secrets.TLS_CERTIFICATE }}
+          TLS_KEY: ${{ secrets.TLS_KEY }}
           DATABASE_PORT: ${{ vars.DATABASE_PORT }}
           API_PORT: ${{ vars.API_PORT }}
           UI_PORT: ${{ vars.UI_PORT }}
@@ -274,7 +274,7 @@ jobs:
             "quote/policy-type/*.spec.js",
             "quote/tell-us-about-your-policy/*.spec.js",
             "quote/uk-goods-or-services/*.spec.js",
-            "quote/your-quote/*.spec.js"
+            "quote/your-quote/*.spec.js",
           ]
 
     concurrency:

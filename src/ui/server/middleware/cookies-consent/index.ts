@@ -1,16 +1,16 @@
 import * as dotenv from 'dotenv';
 import { Request, Response } from '../../../types';
-import { SECURE_OPTION_COOKIE } from '../../constants';
+import { COOKIE } from '../../constants';
 
 dotenv.config();
 
 export const cookiesConsent = (req: Request, res: Response, next: () => void) => {
   if (req.cookies) {
-    if (req.cookies.optionalCookies || req.cookies[SECURE_OPTION_COOKIE]) {
+    if (req.cookies.optionalCookies || req.cookies[COOKIE.NAME.OPTION]) {
       res.locals.cookieConsentDecision = true;
     }
 
-    if (req.cookies.optionalCookies === 'true' || req.cookies[SECURE_OPTION_COOKIE] === 'true') {
+    if (req.cookies.optionalCookies === 'true' || req.cookies[COOKIE.NAME.OPTION] === 'true') {
       res.locals.cookieConsent = true;
       res.locals.googleAnalyticsId = process.env.GOOGLE_ANALYTICS_ID;
     } else {

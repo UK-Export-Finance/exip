@@ -7,7 +7,6 @@
 // ***********************************************
 
 import '@cypress-audit/lighthouse/commands';
-import 'cypress-v10-preserve-cookie';
 
 Cypress.Commands.add('submitInsuranceEligibilityAnswersFromBuyerCountryHappyPath', require('../../../commands/insurance/eligibility/submit-answers-from-buyer-country-happy-path'));
 

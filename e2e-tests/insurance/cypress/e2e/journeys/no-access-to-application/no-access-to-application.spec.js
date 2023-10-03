@@ -1,6 +1,7 @@
 import noAccessToApplicationPage from '../../../../../pages/insurance/noAccessToApplication';
 import { PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
+import { COOKIE } from '../../../../../constants';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.NO_ACCESS_TO_APPLICATION_PAGE;
 
@@ -34,7 +35,7 @@ context('Insurance - no access to application page - signed out', () => {
   describe('when trying to access an application', () => {
     beforeEach(() => {
       // clear the session - means we are not a signed in user.
-      cy.clearCookie('exip-session');
+      cy.clearCookie(COOKIE.NAME.SESSION);
 
       cy.navigateToUrl(applicationUrl);
     });

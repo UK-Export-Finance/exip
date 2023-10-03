@@ -9,18 +9,17 @@ import cookieParser from 'cookie-parser';
 import csrf from 'csurf';
 import path from 'path';
 import flash from 'connect-flash';
-import basicAuth from 'express-basic-auth';
-import { meta, integrity, csrf as csrfToken, cookiesConsent, security, seo, queryParams } from './middleware';
+import { https, meta, integrity, csrf as csrfToken, cookiesConsent, security, seo, queryParams } from './middleware';
 import { Request, Response } from '../types';
 
 import * as dotenv from 'dotenv';
 
 dotenv.config();
+const { NODE_ENV, SESSION_SECRET } = process.env;
 
 import configureNunjucks from './nunjucks-configuration';
-
 import { rootRoute, quoteRoutes, insuranceRoutes } from './routes';
-import { ROUTES } from './constants';
+import { ROUTES, COOKIE } from './constants';
 import { PAGES } from './content-strings';
 import { requiredQuoteEligibilityDataProvided } from './middleware/required-data-provided/quote';
 import { requiredInsuranceEligibilityDataProvided } from './middleware/required-data-provided/insurance/eligibility';
@@ -35,11 +34,6 @@ import isQuoteRoute from './helpers/is-quote-route';
 
 // @ts-ignore
 const ui = express();
-ui.disable('x-powered-by');
-
-const { UI_PORT } = process.env;
-const https = Boolean(process.env.HTTPS || 0);
-const secureCookieName = https ? '__Host-exip-session' : 'exip-session';
 
 ui.use(meta);
 ui.use(integrity);
@@ -55,21 +49,21 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-if (process.env.NODE_ENV === 'production') {
+if (NODE_ENV === 'production') {
   ui.use(limiter);
 }
 
 const cookie = {
   path: '/',
   httpOnly: true,
-  secure: https,
+  secure: true,
   sameSite: 'strict',
-  maxAge: 604800000, // 7 days
+  maxAge: COOKIE.TTL.SESSION,
 } as csrf.CookieOptions;
 
 const sessionOptions = {
-  name: secureCookieName,
-  secret: process.env.SESSION_SECRET || crypto.randomBytes(256 / 8).toString('hex'),
+  name: COOKIE.NAME.SESSION,
+  secret: SESSION_SECRET || crypto.randomBytes(256 / 8).toString('hex'),
   resave: false,
   saveUninitialized: true,
   cookie,
@@ -87,15 +81,14 @@ ui.use(
   csrf({
     cookie: {
       ...cookie,
-      maxAge: 43200, // 12 hours
+      key: COOKIE.NAME.CSRF,
+      maxAge: COOKIE.TTL.CSRF,
     },
   }),
 );
 
 ui.use(cookiesConsent);
-
 ui.use(csrfToken());
-
 ui.use(flash());
 
 configureNunjucks({
@@ -110,18 +103,6 @@ ui.use(
     skip: (req) => req.url.startsWith('/assets'),
   }),
 );
-
-if (process.env.NODE_ENV !== 'production') {
-  ui.use(
-    basicAuth({
-      users: {
-        // @ts-ignore
-        [process.env.BASIC_AUTH_KEY]: process.env.BASIC_AUTH_SECRET, // @ts-ignore
-      },
-      challenge: true,
-    }),
-  );
-}
 
 ui.use('/quote', requiredQuoteEligibilityDataProvided);
 ui.use('/insurance/eligibility', requiredInsuranceEligibilityDataProvided);
@@ -185,6 +166,4 @@ ui.get('*', (req: Request, res: Response) => {
   });
 });
 
-ui.listen(UI_PORT, () => console.info('EXIP UI app listening on port %s!', UI_PORT));
-
-/* eslint-enable @typescript-eslint/ban-ts-comment */
+https(ui);

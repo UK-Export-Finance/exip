@@ -2,8 +2,11 @@ const { defineConfig } = require('cypress');
 const { lighthouse, prepareAudit } = require('@cypress-audit/lighthouse');
 const { pa11y } = require('@cypress-audit/pa11y');
 const dotenv = require('dotenv');
+const path = require('path');
 
-dotenv.config();
+// Read from root `./.env` directory
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+
 const {
   UI_PORT,
   API_PORT,
@@ -21,8 +24,6 @@ const cypressConfig = defineConfig({
   numTestsKeptInMemory: 1,
   viewportWidth: 1920,
   viewportHeight: 1080,
-  basicAuthKey: 'dev',
-  basicAuthSecret: 'test',
   chromeWebSecurity: false,
   retries: {
     runMode: 2,
@@ -31,7 +32,7 @@ const cypressConfig = defineConfig({
   e2e: {
     pageLoadTimeout: 120000,
     responseTimeout: 120000,
-    baseUrl: `http://localhost:${UI_PORT}`,
+    baseUrl: `https://localhost:${UI_PORT}`,
     apiUrl: `http://localhost:${API_PORT}/api/graphql`,
     specPattern: 'cypress/e2e/**/*.spec.js',
     env: {
@@ -43,8 +44,7 @@ const cypressConfig = defineConfig({
       API_KEY,
     },
     experimentalCspAllowList: ['child-src', 'frame-src', 'form-action', 'script-src', 'script-src-elem'],
-    // eslint-disable-next-line
-    setupNodeEvents(on, config) {
+    setupNodeEvents(on) {
       on('before:browser:launch', (browser, launchOptions) => {
         prepareAudit(launchOptions);
       });

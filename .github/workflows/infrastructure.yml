@@ -308,11 +308,11 @@ jobs:
           --settings \
           HTTPS=0 \
           TZ=Europe/London \
+          TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
+          TLS_KEY='${{ secrets.TLS_KEY }}' \
           WEBSITE_DNS_SERVER='${{ vars.WEBSITE_DNS_SERVER }}' \
           WEBSITE_VNET_ROUTE_ALL=1 \
           SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
-          BASIC_AUTH_KEY='${{ secrets.BASIC_AUTH_KEY }}' \
-          BASIC_AUTH_SECRET='${{ secrets.BASIC_AUTH_SECRET }}' \
           GOOGLE_ANALYTICS_ID='${{ secrets.GOOGLE_ANALYTICS_ID }}' \
           GOV_NOTIFY_API_KEY='${{ secrets.GOV_NOTIFY_API_KEY }}' \
           COMPANIES_HOUSE_API_URL='${{ secrets.COMPANIES_HOUSE_API_URL }}' \
@@ -327,6 +327,8 @@ jobs:
           --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
           --settings \
           TZ=Europe/London \
+          TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
+          TLS_KEY='${{ secrets.TLS_KEY }}' \
           WEBSITE_DNS_SERVER=${{ vars.WEBSITE_DNS_SERVER }} \
           WEBSITE_VNET_ROUTE_ALL=1 \
           DATABASE_URL='${{ secrets.DATABASE_URL }}' \
