@@ -24,7 +24,6 @@ describe('controllers/insurance/check-your-answers/start-new-application', () =>
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 
@@ -66,7 +65,7 @@ describe('controllers/insurance/check-your-answers/start-new-application', () =>
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

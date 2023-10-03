@@ -7,7 +7,7 @@ import { Application, RequestBody } from '../../../../../types';
  * declarations
  * Update an application's declaration
  * This is used for any save functionality in the Declarations section of an application
- * @param {Object} Application
+ * @param {Application}
  * @param {Express.Request.body} Form data
  * @returns {Object} Saved data
  */

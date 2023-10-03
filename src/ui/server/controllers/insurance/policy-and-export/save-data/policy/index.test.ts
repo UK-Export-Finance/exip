@@ -63,7 +63,7 @@ describe('controllers/insurance/policy-and-export/save-data/policy', () => {
     describe('update policy call', () => {
       describe('when there is an error', () => {
         beforeEach(() => {
-          updateApplicationSpy = jest.fn(() => Promise.reject());
+          updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.application.update.policy = updateApplicationSpy;
         });
 

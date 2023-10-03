@@ -34,7 +34,6 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
     refNumber = Number(mockApplication.referenceNumber);
   });
@@ -87,7 +86,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -193,7 +192,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -229,7 +228,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
         describe('when there is an error', () => {
           beforeEach(() => {
-            const savePolicyAndExportDataSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
+            const savePolicyAndExportDataSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
             mapAndSave.policy = savePolicyAndExportDataSpy;
           });

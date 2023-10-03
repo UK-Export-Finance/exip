@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import getIndustrySectorNames from '.';
+import industrySectorNames from '.';
 import { EXTERNAL_API_ENDPOINTS } from '../../constants';
 import mockIndustrySectors from '../../test-mocks/mock-industry-sectors';
 
@@ -19,7 +19,7 @@ describe('integrations/industry-sector', () => {
 
       mock.onGet(`${APIM_MDM_URL}${APIM_MDM.INDUSTRY_SECTORS}`).reply(200, mockResponseData);
 
-      const result = await getIndustrySectorNames.get();
+      const result = await industrySectorNames.get();
 
       const expected = {
         success: true,
@@ -36,7 +36,7 @@ describe('integrations/industry-sector', () => {
 
       mock.onGet(`${APIM_MDM_URL}${APIM_MDM.INDUSTRY_SECTORS}`).reply(200);
 
-      const result = await getIndustrySectorNames.get();
+      const result = await industrySectorNames.get();
 
       const expected = {
         success: false,
@@ -52,7 +52,7 @@ describe('integrations/industry-sector', () => {
 
       mock.onGet(`${APIM_MDM_URL}${APIM_MDM.INDUSTRY_SECTORS}`).reply(500);
 
-      const result = await getIndustrySectorNames.get();
+      const result = await industrySectorNames.get();
 
       const expected = {
         success: false,

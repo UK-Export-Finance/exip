@@ -20,7 +20,7 @@ const {
 /**
  * mapEligibility
  * Map an application's eligibility fields into an array of objects for XLSX generation
- * @param {Object} Application
+ * @param {Application}
  * @returns {Array} Array of objects for XLSX generation
  */
 const mapEligibility = (application: Application) => {

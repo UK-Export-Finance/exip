@@ -7,6 +7,7 @@ import { POLICY_AND_EXPORTS_FIELDS as FIELDS, ACCOUNT_FIELDS } from '../../../..
 import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapNameFields from '../../../../helpers/mappings/map-name-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy-contact';
@@ -37,7 +38,6 @@ describe('controllers/insurance/policy-and-export/different-name-on-policy', () 
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
     refNumber = Number(mockApplication.referenceNumber);
   });
@@ -105,7 +105,10 @@ describe('controllers/insurance/policy-and-export/different-name-on-policy', () 
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mockApplication,
-        submittedValues: mockApplication.policyContact,
+        submittedValues: {
+          ...mockApplication.policyContact,
+          ...mapNameFields(mockApplication).policyContact,
+        },
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -113,7 +116,7 @@ describe('controllers/insurance/policy-and-export/different-name-on-policy', () 
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -179,7 +182,7 @@ describe('controllers/insurance/policy-and-export/different-name-on-policy', () 
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

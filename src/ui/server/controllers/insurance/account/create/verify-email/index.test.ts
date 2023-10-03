@@ -136,7 +136,7 @@ describe('controllers/insurance/account/create/verify-email', () => {
       describe('when there is an error', () => {
         beforeEach(() => {
           req.query.token = mockToken;
-          verifyEmailAddressSpy = jest.fn(() => Promise.reject());
+          verifyEmailAddressSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
           api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
         });

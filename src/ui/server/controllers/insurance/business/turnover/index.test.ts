@@ -37,8 +37,6 @@ describe('controllers/insurance/business/turnover', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
   });
 
   afterAll(() => {
@@ -85,8 +83,6 @@ describe('controllers/insurance/business/turnover', () => {
 
   describe('get', () => {
     it('should render the turnover template with correct variables', () => {
-      res.locals.application = mockApplication;
-
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TURNOVER_TEMPLATE, {
@@ -102,7 +98,7 @@ describe('controllers/insurance/business/turnover', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
@@ -198,9 +194,9 @@ describe('controllers/insurance/business/turnover', () => {
       });
     });
 
-    describe('when application does not exist', () => {
+    describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {

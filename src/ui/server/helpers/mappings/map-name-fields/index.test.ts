@@ -4,6 +4,7 @@ import replaceCharacterCodesWithCharacters from '../../replace-character-codes-w
 import { mockApplication } from '../../../test-mocks';
 
 const {
+  ACCOUNT: { FIRST_NAME, LAST_NAME },
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { NAME: BUYER_NAME, FIRST_NAME: BUYER_CONTACT_FIRST_NAME, LAST_NAME: BUYER_CONTACT_LAST_NAME },
   },
@@ -20,6 +21,11 @@ const mockApplicationWithCharacterCodes = {
     [BUYER_NAME]: mockStringWithCharacterCodes,
     [BUYER_CONTACT_FIRST_NAME]: mockStringWithCharacterCodes,
     [BUYER_CONTACT_LAST_NAME]: mockStringWithCharacterCodes,
+  },
+  policyContact: {
+    ...mockApplication.policyContact,
+    [FIRST_NAME]: mockStringWithCharacterCodes,
+    [LAST_NAME]: mockStringWithCharacterCodes,
   },
 };
 

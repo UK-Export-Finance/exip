@@ -37,8 +37,6 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
-
     api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatestHowDataWillBeUsedSpy;
   });
 
@@ -100,7 +98,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -113,7 +111,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
     describe('api error handling', () => {
       describe('when there is an error', () => {
         beforeAll(() => {
-          getLatestHowDataWillBeUsedSpy = jest.fn(() => Promise.reject());
+          getLatestHowDataWillBeUsedSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
           api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatestHowDataWillBeUsedSpy;
         });
@@ -213,7 +211,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -227,7 +225,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
       describe('get latest how your data will be used call', () => {
         describe('when the get latest how your data will be used API call fails', () => {
           beforeEach(() => {
-            getLatestHowDataWillBeUsedSpy = jest.fn(() => Promise.reject());
+            getLatestHowDataWillBeUsedSpy = jest.fn(() => Promise.reject(new Error('mock')));
             api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatestHowDataWillBeUsedSpy;
           });
 
@@ -256,7 +254,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
 
         describe('when the save data API call fails', () => {
           beforeEach(() => {
-            mockSaveDeclaration = jest.fn(() => Promise.reject());
+            mockSaveDeclaration = jest.fn(() => Promise.reject(new Error('mock')));
             save.declaration = mockSaveDeclaration;
 
             req.body = validBody;
@@ -288,7 +286,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
 
         describe('when the submit application API call fails', () => {
           beforeEach(() => {
-            submitApplicationSpy = jest.fn(() => Promise.reject());
+            submitApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
             api.keystone.application.submit = submitApplicationSpy;
 
             req.body = validBody;

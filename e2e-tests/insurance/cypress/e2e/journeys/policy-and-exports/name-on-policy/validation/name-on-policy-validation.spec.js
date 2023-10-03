@@ -105,7 +105,7 @@ context('Insurance - Policy and exports - Name on policy - Validation', () => {
     });
 
     it('should not display validation error and redirect to the next page', () => {
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+      cy.completeAndSubmitNameOnPolicyForm({});
 
       partials.errorSummaryListItems().should('not.exist');
 
@@ -120,7 +120,7 @@ context('Insurance - Policy and exports - Name on policy - Validation', () => {
     });
 
     it('should not display validation error and redirect to the next page', () => {
-      cy.completeAndSubmitNameOnPolicyForm({});
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
 
       partials.errorSummaryListItems().should('not.exist');
 

@@ -163,7 +163,7 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
     describe('api error handling', () => {
       describe('when the verify account password reset token API call fails', () => {
         beforeEach(() => {
-          verifyAccountPasswordResetTokenSpy = jest.fn(() => Promise.reject());
+          verifyAccountPasswordResetTokenSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.account.verifyPasswordResetToken = verifyAccountPasswordResetTokenSpy;
         });
 
@@ -279,7 +279,7 @@ describe('controllers/insurance/account/password-reset/new-password', () => {
       describe('api error handling', () => {
         describe('when the password reset API call fails', () => {
           beforeEach(() => {
-            passwordResetSpy = jest.fn(() => Promise.reject());
+            passwordResetSpy = jest.fn(() => Promise.reject(new Error('mock')));
             api.keystone.account.passwordReset = passwordResetSpy;
           });
 

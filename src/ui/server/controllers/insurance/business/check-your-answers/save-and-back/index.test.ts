@@ -16,7 +16,6 @@ describe('controllers/insurance/business/check-your-answers/save-and-back', () =
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 

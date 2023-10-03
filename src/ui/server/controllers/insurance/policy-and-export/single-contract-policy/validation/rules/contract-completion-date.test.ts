@@ -132,7 +132,12 @@ describe('controllers/insurance/policy-and-export/single-contract-policy/validat
 
   describe(`when ${REQUESTED_START_DATE} is also provided`, () => {
     const date = new Date();
-    const futureDate = add(date, { months: 3 });
+
+    // Add 1 day
+    const initFutureDate = new Date(date.setDate(date.getDate() + 1));
+
+    // Add 1 year
+    const futureDate = new Date(initFutureDate.setFullYear(getYear(initFutureDate) + 1));
 
     const requestedStartDateFields = {
       [`${REQUESTED_START_DATE}-day`]: getDate(futureDate),

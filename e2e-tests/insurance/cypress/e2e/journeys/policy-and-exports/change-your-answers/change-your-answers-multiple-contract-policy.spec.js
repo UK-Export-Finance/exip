@@ -45,7 +45,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
       cy.completeAndSubmitMultipleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+      cy.completeAndSubmitNameOnPolicyForm({});
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(url);

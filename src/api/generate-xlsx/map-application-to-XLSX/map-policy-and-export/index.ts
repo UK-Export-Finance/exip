@@ -76,7 +76,7 @@ export const mapPolicyAndExportOutro = (application: Application) => {
 /**
  * mapPolicyAndExport
  * Map an application's policy fields into an array of objects for XLSX generation
- * @param {Object} Application
+ * @param {Application}
  * @returns {Array} Array of objects for XLSX generation
  */
 const mapPolicyAndExport = (application: Application) => {

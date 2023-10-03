@@ -4,7 +4,7 @@ import { ApplicationSubmissionEmailVariables, EmailResponse } from '../../types'
 /**
  * documentsEmail
  * Send "we need some documents from you" email to an account
- * @param {Object} ApplicationSubmissionEmailVariables
+ * @param {ApplicationSubmissionEmailVariables}
  * @param {Boolean} Flag for sending anti-bribery/trading history template
  * @returns {Object} callNotify response
  */

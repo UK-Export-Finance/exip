@@ -24,7 +24,7 @@ describe('controllers/insurance/export-contract/map-and-save - api errors', () =
 
   describe('when save application exportContract call fails', () => {
     beforeEach(() => {
-      save.exportContract = jest.fn(() => Promise.reject(new Error('Mock error')));
+      save.exportContract = jest.fn(() => Promise.reject(new Error('mock')));
     });
 
     it('should return false', async () => {

@@ -24,7 +24,7 @@ describe('controllers/insurance/business/map-and-save - api errors', () => {
 
   describe('when save application buyer call fails', () => {
     beforeEach(() => {
-      save.buyer = jest.fn(() => Promise.reject(new Error('Mock error')));
+      save.buyer = jest.fn(() => Promise.reject(new Error('mock')));
     });
 
     it('should return false', async () => {

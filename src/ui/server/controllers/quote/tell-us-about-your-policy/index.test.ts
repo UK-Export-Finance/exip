@@ -331,7 +331,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     describe('api error handling', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject());
+          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.external.getCurrencies = getCurrenciesSpy;
         });
 
@@ -586,7 +586,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     describe('api error handling', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject());
+          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.external.getCurrencies = getCurrenciesSpy;
         });
 
