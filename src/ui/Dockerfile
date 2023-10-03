@@ -6,10 +6,10 @@ FROM node:20.8.0-alpine3.17 AS build
 
 # Build variables
 ARG GITHUB_SHA
-ARG UI_PORT
+ARG PORT
 ARG NODE_ENV
 ENV GITHUB_SHA=$GITHUB_SHA
-ENV UI_PORT=$UI_PORT
+ENV PORT=$PORT
 ENV NODE_ENV=$NODE_ENV
 
 WORKDIR /app
@@ -58,7 +58,7 @@ COPY --chown=node:node --from=build /app/templates ./templates
 COPY --chown=node:node --from=build /app/types ./types
 
 # Expose listening port
-EXPOSE ${UI_PORT}
+EXPOSE ${PORT}
 
 # Container healthcheck
 HEALTHCHECK \
@@ -67,7 +67,7 @@ HEALTHCHECK \
 CMD wget \
 --no-verbose \
 --tries=3 \
---spider https://localhost:${UI_PORT} \
+--spider https://localhost:${PORT} \
 || exit 1
 
 # Execute Script
