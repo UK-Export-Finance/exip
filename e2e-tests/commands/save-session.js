@@ -12,15 +12,20 @@ const flags = {
   log: false,
 };
 
+/**
+ * Saves cookies to Cypress environment
+ * variables for preservation.
+ * @returns {void}
+ */
 const saveSession = () => {
   // Iterate through the cookies array
   cookies.forEach((cookie) => {
-    // Cypress cookie name
-    const cypressCookie = `cookie_${cookie}`;
-
     // Fetch Cypress cookie
-    cy.getCookie(cypressCookie)
+    cy.getCookie(cookie)
       .then((value) => {
+        // Cypress cookie name
+        const cypressCookie = `cookie_${cookie}`;
+
         if (value) {
           // Cookie exists, save to the environment
           Cypress.env(cypressCookie, value);

@@ -18,3 +18,7 @@ export * from './templates';
 export * from './ukef-contact-details';
 export * from './integrity';
 export * from './cookie';
+
+// TODO: Refactor below constants
+export const SERVICE_NAME = 'EXIP';
+export const QUOTE = 'Quote';
