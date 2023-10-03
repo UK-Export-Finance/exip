@@ -9,11 +9,6 @@ import {
   COMPANY_EXAMPLE,
 } from '../../../../../../../constants';
 import { companyDetails, companiesHouseNumber } from '../../../../../../../pages/your-business';
-import {
-  checkChangeLinkUrl,
-  changeAnswerField,
-  checkChangeAnswerRendered,
-} from '../../../../../../../commands/check-summary-list-field-change';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
@@ -122,7 +117,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = '14440211';
-        changeAnswerField(fieldVariables, companiesHouseNumber.input());
+        cy.changeAnswerField(fieldVariables, companiesHouseNumber.input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -133,7 +128,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered(fieldVariables);
 
         cy.checkText(summaryList.field(COMPANY_NAME).value(), COMPANY_EXAMPLE.COMPANY_NAME);
         cy.checkText(summaryList.field(COMPANY_INCORPORATED).value(), COMPANY_EXAMPLE.COMPANY_INCORPORATED);
@@ -161,7 +156,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber, fieldId);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber, fieldId);
       });
     });
 
@@ -202,7 +197,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber, fieldId);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber, fieldId);
       });
     });
 
@@ -243,7 +238,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -254,7 +249,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = VALID_PHONE_NUMBERS.LANDLINE.NORMAL;
-        changeAnswerField(fieldVariables, companyDetails[PHONE_NUMBER].input());
+        cy.changeAnswerField(fieldVariables, companyDetails[PHONE_NUMBER].input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -263,7 +258,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered(fieldVariables);
 
         cy.checkTaskStatusCompleted(status());
       });
@@ -284,7 +279,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -295,7 +290,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = WEBSITE_EXAMPLES.VALID;
-        changeAnswerField(fieldVariables, companyDetails[WEBSITE].input());
+        cy.changeAnswerField(fieldVariables, companyDetails[WEBSITE].input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -304,7 +299,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered(fieldVariables);
 
         cy.checkTaskStatusCompleted(status());
       });

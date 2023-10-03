@@ -15,7 +15,7 @@ import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-st
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import application from '../../../../../../fixtures/application';
 import countries from '../../../../../../fixtures/countries';
-import checkAutocompleteInput from '../../../../../../commands/check-autocomplete-input';
+import checkAutocompleteInput from '../../../../../../commands/shared-commands/assertions/check-autocomplete-input';
 
 const { taskList } = partials.insurancePartials;
 

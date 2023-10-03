@@ -1,4 +1,4 @@
-import checkText from '../check-text';
+import checkText from '../shared-commands/assertions/check-text';
 import pagination from '../../partials/pagination';
 
 /**

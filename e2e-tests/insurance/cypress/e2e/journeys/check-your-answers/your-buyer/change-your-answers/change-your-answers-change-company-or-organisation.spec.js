@@ -4,11 +4,6 @@ import { WEBSITE_EXAMPLES, FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { companyOrOrganisationPage } from '../../../../../../../pages/insurance/your-buyer';
-import {
-  checkChangeLinkUrl,
-  changeAnswerField,
-  checkChangeAnswerRendered,
-} from '../../../../../../../commands/check-summary-list-field-change';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/your-buyer';
 import application from '../../../../../../../fixtures/application';
 
@@ -100,7 +95,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -111,7 +106,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = 'Test name 2';
-        changeAnswerField(fieldVariables, companyOrOrganisationPage[fieldId].input());
+        cy.changeAnswerField(fieldVariables, companyOrOrganisationPage[fieldId].input());
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {
@@ -120,7 +115,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered(fieldVariables);
 
         cy.checkTaskStatusCompleted(status());
       });
@@ -140,7 +135,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -151,7 +146,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = 'Address test 2';
-        changeAnswerField(fieldVariables, companyOrOrganisationPage[fieldId].input());
+        cy.changeAnswerField(fieldVariables, companyOrOrganisationPage[fieldId].input());
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {
@@ -189,7 +184,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -200,7 +195,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = '99999';
-        changeAnswerField(fieldVariables, companyOrOrganisationPage[fieldId].input());
+        cy.changeAnswerField(fieldVariables, companyOrOrganisationPage[fieldId].input());
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {
@@ -209,7 +204,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered(fieldVariables);
 
         cy.checkTaskStatusCompleted(status());
       });
@@ -229,7 +224,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -240,7 +235,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = WEBSITE_EXAMPLES.VALID_UKEF;
-        changeAnswerField(fieldVariables, companyOrOrganisationPage[fieldId].input());
+        cy.changeAnswerField(fieldVariables, companyOrOrganisationPage[fieldId].input());
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {
@@ -249,7 +244,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered(fieldVariables);
 
         cy.checkTaskStatusCompleted(status());
       });
@@ -269,7 +264,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -328,7 +323,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -349,7 +344,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = FIELD_VALUES.NO;
-        checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered(fieldVariables);
 
         cy.checkTaskStatusCompleted(status());
       });

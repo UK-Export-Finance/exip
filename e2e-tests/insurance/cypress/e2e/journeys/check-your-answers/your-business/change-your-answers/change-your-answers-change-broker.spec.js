@@ -1,11 +1,6 @@
 import { submitButton, status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { brokerPage } from '../../../../../../../pages/your-business';
-import {
-  checkChangeLinkUrl,
-  changeAnswerField,
-  checkChangeAnswerRendered,
-} from '../../../../../../../commands/check-summary-list-field-change';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/business';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -96,7 +91,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -107,7 +102,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = 'Test name 2';
-        changeAnswerField(fieldVariables, brokerPage[fieldId].input());
+        cy.changeAnswerField(fieldVariables, brokerPage[fieldId].input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -116,7 +111,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered(fieldVariables);
 
         cy.checkTaskStatusCompleted(status());
       });
@@ -197,7 +192,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -208,7 +203,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = 'testing321@test.com';
-        changeAnswerField(fieldVariables, brokerPage[fieldId].input());
+        cy.changeAnswerField(fieldVariables, brokerPage[fieldId].input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -217,7 +212,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered(fieldVariables);
 
         cy.checkTaskStatusCompleted(status());
       });
