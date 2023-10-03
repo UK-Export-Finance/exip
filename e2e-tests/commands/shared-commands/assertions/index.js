@@ -4,12 +4,7 @@ import {
   checkBuyerCountryValidationErrors,
   checkBuyerCountryFocusAfterSummaryErrorClick,
 } from './check-buyer-country-form';
-import {
-  checkChangeLinkUrl,
-  changeAnswerField,
-  changeAnswerSelectField,
-  checkChangeAnswerRendered,
-} from './check-summary-list-field-change';
+import { checkChangeLinkUrl, checkChangeAnswerRendered } from './check-summary-list-field-change';
 
 Cypress.Commands.add('assertUrl', require('./assert-url'));
 
@@ -28,9 +23,6 @@ Cypress.Commands.add('checkBuyerCountryInputHint', checkBuyerCountryInputHint);
 Cypress.Commands.add('checkBuyerCountryValidationErrors', checkBuyerCountryValidationErrors);
 Cypress.Commands.add('checkBuyerCountryFocusAfterSummaryErrorClick', checkBuyerCountryFocusAfterSummaryErrorClick);
 
-// TODO - change should not be in here, not an assertion.
-Cypress.Commands.add('changeAnswerField', changeAnswerField);
-Cypress.Commands.add('changeAnswerSelectField', changeAnswerSelectField);
 Cypress.Commands.add('checkChangeLinkUrl', checkChangeLinkUrl);
 Cypress.Commands.add('checkChangeAnswerRendered', checkChangeAnswerRendered);
 
