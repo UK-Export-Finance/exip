@@ -24,7 +24,7 @@ services:
     build:
       context: ./src/api
       args:
-        API_PORT: ${API_PORT}
+        PORT: ${API_PORT}
         SESSION_SECRET: ${SESSION_SECRET}
         GOV_NOTIFY_API_KEY: ${GOV_NOTIFY_API_KEY}
     image: api
@@ -65,7 +65,7 @@ services:
     build:
       context: ./src/ui
       args:
-        UI_PORT: ${UI_PORT}
+        PORT: ${UI_PORT}
     image: ui
     container_name: exip_ui
     restart: always

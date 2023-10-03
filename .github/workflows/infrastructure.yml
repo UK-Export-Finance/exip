@@ -54,7 +54,7 @@
 #
 # 4. Outputs:
 # Environment: The name of the environment, e.g. development or production.
-# Timezone: The timezone, e.g. Europe/London.
+# Timezone: The timezone referred from the GitHub environment variables.
 #
 # Note
 # ****
@@ -74,7 +74,7 @@ on:
 env:
   PRODUCT: exip
   ENVIRONMENT: infrastructure
-  TIMEZONE: 'Europe/London'
+  TIMEZONE: '${{ vars.TIMEZONE }}'
   # Deployment environment target i.e., `development`, `staging`, `production`
   TARGET: ${{ vars.ENVIRONMENT }}
 
@@ -302,12 +302,12 @@ jobs:
           # Set a web app's settings
 
           # UI
-          # TODO: `HTTPS=1` post container SSL
           az webapp config appsettings set \
           --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
           --settings \
-          HTTPS=0 \
-          TZ=Europe/London \
+          TZ='${{ vars.TIMEZONE }}' \
+          PORT='${{ vars.UI_PORT }}' \
+          WEBSITES_PORT='${{ vars.UI_PORT }}' \
           TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
           TLS_KEY='${{ secrets.TLS_KEY }}' \
           WEBSITE_DNS_SERVER='${{ vars.WEBSITE_DNS_SERVER }}' \
@@ -326,7 +326,9 @@ jobs:
           az webapp config appsettings set \
           --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
           --settings \
-          TZ=Europe/London \
+          TZ='${{ vars.TIMEZONE }}' \
+          PORT='${{ vars.API_PORT }}' \
+          WEBSITES_PORT='${{ vars.API_PORT }}' \
           TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
           TLS_KEY='${{ secrets.TLS_KEY }}' \
           WEBSITE_DNS_SERVER=${{ vars.WEBSITE_DNS_SERVER }} \
