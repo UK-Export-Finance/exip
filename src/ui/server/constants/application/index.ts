@@ -1,5 +1,7 @@
 import LATEST_VERSION_NUMBER from './versions/latest';
 
+export const INSURANCE = 'Insurance';
+
 export const APPLICATION = {
   LATEST_VERSION: { LATEST_VERSION_NUMBER },
   DEAL_TYPE: 'EXIP',

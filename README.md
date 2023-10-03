@@ -42,7 +42,8 @@ This project utilizes various technologies and tools, including:
 To run the project locally, follow these steps:
 
 1. Execute `docker-compose up` from the root directory. Use `--build` for the first-time usage.
-2. Visit [http://localhost:5000](http://localhost:5000) in your web browser.
+2. Visit [https://localhost:5000](https://localhost:5000) in your web browser.
+3. If presented with the certificate not trusted error, then please accept and proceed with certificate is self-signed for domain `localhost`.
 
 Alternatively, you can run each microservice via npm:
 
@@ -55,8 +56,6 @@ Alternatively, you can run each microservice via npm:
   1. `cd src/api`
   2. `npm start`
   3. For hot reloading: `npm run dev`
-
-Note: In non-production environments, the project uses [express-basic-auth](https://www.npmjs.com/package/express-basic-auth) to restrict access, preventing unauthorized users from viewing work in progress.
 
 To run the full application flow without Docker, set up a MySQL database, update the `DATABASE_URL`, `MYSQL_DATABASE`, and `MYSQL_ROOT_PASSWORD` environment variables, and import the [MySQL dump](https://github.com/UK-Export-Finance/exip/blob/main-application/database/exip.sql) to populate the database.
 

@@ -1,8 +1,9 @@
 import partials from '../../partials';
 import checkCookiesConsentBannerIsNotVisible from './check-cookies-consent-banner-is-not-visible';
+import { COOKIE } from '../../constants';
 
 const clearCookies = () => {
-  cy.clearCookie('optionalCookies');
+  cy.clearCookie(COOKIE.NAME.OPTION);
 };
 
 const refreshPage = () => {

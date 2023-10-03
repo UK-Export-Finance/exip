@@ -1,4 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
+import { COOKIE } from '../../../../../constants';
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -46,7 +47,7 @@ context('Insurance - no access to application page - signed in - check your answ
   describe('when trying to access a "check your answers" page in an application created by another user', () => {
     before(() => {
       // clear the session - means we are not a signed in user.
-      cy.clearCookie('exip-session');
+      cy.clearCookie(COOKIE.NAME.SESSION);
 
       // sign into a different accont
       cy.completeSignInAndGoToApplication({ email: secondAccountEmail }).then((refNumber) => {
