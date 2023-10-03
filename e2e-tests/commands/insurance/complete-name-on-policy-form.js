@@ -1,5 +1,5 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
-import { input } from '../../pages/shared';
+import { field } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
@@ -23,10 +23,10 @@ const { POLICY_CONTACT } = application;
  */
 const completeNameOnPolicyForm = ({ sameName = true }) => {
   if (sameName) {
-    input.field(SAME_NAME).input().click();
-    cy.keyboardInput(input.field(POSITION).input(), POLICY_CONTACT[POSITION]);
+    field(SAME_NAME).input().click();
+    cy.keyboardInput(field(POSITION).input(), POLICY_CONTACT[POSITION]);
   } else {
-    input.field(OTHER_NAME).input().click();
+    field(OTHER_NAME).input().click();
   }
 };
 

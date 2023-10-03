@@ -1,7 +1,7 @@
 import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { FIELD_VALUES } from '../../../../../constants/field-values';
-import { input, backLink } from '../../../../../pages/shared';
+import { field, backLink } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import mockAccount from '../../../../../fixtures/account';
 import mockNameWithSpecialCharacters from '../../../../../fixtures/name-with-special-characters';
@@ -71,8 +71,8 @@ context('Insurance - Name fields - `Policy contact` name fields should render sp
       });
 
       it('should render special characters in the first and last name fields', () => {
-        cy.checkValue(input.field(FIRST_NAME), mockAccountSpecialCharacters[FIRST_NAME]);
-        cy.checkValue(input.field(LAST_NAME), mockAccountSpecialCharacters[LAST_NAME]);
+        cy.checkValue(field(FIRST_NAME), mockAccountSpecialCharacters[FIRST_NAME]);
+        cy.checkValue(field(LAST_NAME), mockAccountSpecialCharacters[LAST_NAME]);
       });
     });
   });

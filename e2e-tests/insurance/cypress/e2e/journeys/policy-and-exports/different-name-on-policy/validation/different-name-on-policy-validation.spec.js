@@ -1,4 +1,4 @@
-import { input } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ACCOUNT_FIELDS } from '../../../../../../../content-strings/fields/insurance/account';
@@ -70,7 +70,7 @@ context('Insurance - Policy and exports - Different name on Policy page - Valida
       const ERROR = ERRORS[FIELD_ID];
 
       const ERROR_ASSERTIONS = {
-        field: input.field(FIELD_ID),
+        field: fieldSelector(FIELD_ID),
         numberOfExpectedErrors: 4,
         errorIndex: 0,
       };
@@ -90,7 +90,7 @@ context('Insurance - Policy and exports - Different name on Policy page - Valida
       const ERROR = ERRORS[FIELD_ID];
 
       const ERROR_ASSERTIONS = {
-        field: input.field(FIELD_ID),
+        field: fieldSelector(FIELD_ID),
         numberOfExpectedErrors: 4,
         errorIndex: 1,
       };
@@ -110,7 +110,7 @@ context('Insurance - Policy and exports - Different name on Policy page - Valida
       const ERROR = ERRORS[FIELD_ID];
 
       const ERROR_ASSERTIONS = {
-        field: input.field(FIELD_ID),
+        field: fieldSelector(FIELD_ID),
         numberOfExpectedErrors: 4,
         errorIndex: 2,
       };
@@ -139,7 +139,7 @@ context('Insurance - Policy and exports - Different name on Policy page - Valida
       const ERROR = ERRORS[FIELD_ID];
 
       const ERROR_ASSERTIONS = {
-        field: input.field(FIELD_ID),
+        field: fieldSelector(FIELD_ID),
         numberOfExpectedErrors: 4,
         errorIndex: 3,
       };
@@ -156,7 +156,7 @@ context('Insurance - Policy and exports - Different name on Policy page - Valida
 
     it(`should display ${FIRST_NAME} field and be prepopulated`, () => {
       const fieldId = FIRST_NAME;
-      const field = input.field(fieldId);
+      const field = fieldSelector(fieldId);
 
       field.input().should('exist');
 

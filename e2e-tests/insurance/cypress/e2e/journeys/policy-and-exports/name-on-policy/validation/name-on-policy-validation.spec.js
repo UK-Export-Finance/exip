@@ -1,4 +1,4 @@
-import { input } from '../../../../../../../pages/shared';
+import { field } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
@@ -69,7 +69,7 @@ context('Insurance - Policy and exports - Name on policy - Validation', () => {
       const expectedErrorMessage = NAME_ON_POLICY_ERRORS[NAME].IS_EMPTY;
 
       cy.submitAndAssertRadioErrors(
-        input.field(SAME_NAME),
+        field(SAME_NAME),
         0,
         expectedErrorsCount,
         expectedErrorMessage,
@@ -83,13 +83,13 @@ context('Insurance - Policy and exports - Name on policy - Validation', () => {
     });
 
     it('should display validation error', () => {
-      input.field(SAME_NAME).input().click();
+      field(SAME_NAME).input().click();
 
       const expectedErrorsCount = 1;
       const expectedErrorMessage = NAME_ON_POLICY_ERRORS[POSITION].IS_EMPTY;
 
       cy.submitAndAssertFieldErrors(
-        input.field(POSITION),
+        field(POSITION),
         null,
         0,
         expectedErrorsCount,
