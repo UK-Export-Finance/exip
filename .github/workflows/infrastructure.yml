@@ -54,7 +54,7 @@
 #
 # 4. Outputs:
 # Environment: The name of the environment, e.g. development or production.
-# Timezone: The timezone, e.g. '${{ vars.TIMEZONE }}'.
+# Timezone: The timezone referred from the GitHub environment variables.
 #
 # Note
 # ****
@@ -74,7 +74,7 @@ on:
 env:
   PRODUCT: exip
   ENVIRONMENT: infrastructure
-  TIMEZONE: ''${{ vars.TIMEZONE }}''
+  TIMEZONE: '${{ vars.TIMEZONE }}'
   # Deployment environment target i.e., `development`, `staging`, `production`
   TARGET: ${{ vars.ENVIRONMENT }}
 
@@ -307,7 +307,7 @@ jobs:
           --settings \
           TZ='${{ vars.TIMEZONE }}' \
           PORT='${{ vars.UI_PORT }}' \
-          WEBSITE_PORT='${{ vars.UI_PORT }}' \
+          WEBSITES_PORT='${{ vars.UI_PORT }}' \
           TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
           TLS_KEY='${{ secrets.TLS_KEY }}' \
           WEBSITE_DNS_SERVER='${{ vars.WEBSITE_DNS_SERVER }}' \
@@ -328,7 +328,7 @@ jobs:
           --settings \
           TZ='${{ vars.TIMEZONE }}' \
           PORT='${{ vars.API_PORT }}' \
-          WEBSITE_PORT='${{ vars.API_PORT }}' \
+          WEBSITES_PORT='${{ vars.API_PORT }}' \
           TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
           TLS_KEY='${{ secrets.TLS_KEY }}' \
           WEBSITE_DNS_SERVER=${{ vars.WEBSITE_DNS_SERVER }} \
