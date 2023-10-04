@@ -8,4 +8,4 @@
  * `ABC
  * CBA`
  */
-export const sanitise = (string?: string): string | undefined => (string ? string.replace(/\\\n/g, '\n') : string);
+export const sanitise = (string?: string): string | undefined => (string ? string.replace(/\\n|\\\n|\\\\n/g, '\n') : string);
