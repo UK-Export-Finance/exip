@@ -24,8 +24,8 @@ export default (params) => {
     cy.navigateToUrl(YOUR_DETAILS);
   }
 
-  cy.keyboardInput(field[FIRST_NAME].input(), account[FIRST_NAME]);
-  cy.keyboardInput(field[LAST_NAME].input(), account[LAST_NAME]);
+  cy.keyboardInput(field(FIRST_NAME).input(), account[FIRST_NAME]);
+  cy.keyboardInput(field(LAST_NAME).input(), account[LAST_NAME]);
   cy.keyboardInput(field(EMAIL).input(), account[EMAIL]);
   cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
 
