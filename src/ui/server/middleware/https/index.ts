@@ -4,7 +4,7 @@ import tls from 'https';
 import { TLS, SERVICE_NAME } from '../../constants';
 
 dotenv.config();
-const { UI_PORT } = process.env;
+const { PORT, UI_PORT } = process.env;
 
 /**
  * Creates an HTTPS server using the `https` module.
@@ -24,6 +24,9 @@ const { UI_PORT } = process.env;
  * https(server);
  */
 export const https = (server: http.RequestListener) => {
+  // Azure requires `PORT` whilst GHA requires `UI_PORT`
+  const port = Number(PORT) || Number(UI_PORT);
+
   if (!TLS.CERTIFICATE.VALUE) {
     throw new Error('Invalid TLS certificate!');
   }
@@ -39,7 +42,7 @@ export const https = (server: http.RequestListener) => {
 
   const ui = tls.createServer(serverOptions, server);
 
-  ui.on('error', (error) => console.error('❌ TLS %s UI failed to start on :%d %s', SERVICE_NAME, UI_PORT, error));
+  ui.on('error', (error) => console.error('❌ TLS %s UI failed to start on :%d %s', SERVICE_NAME, port, error));
 
-  ui.listen(UI_PORT, () => console.info('🔐 TLS %s UI serving on :%d', SERVICE_NAME, UI_PORT));
+  ui.listen(port, () => console.info('🔐 TLS %s UI serving on :%d', SERVICE_NAME, port));
 };

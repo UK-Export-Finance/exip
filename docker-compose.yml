@@ -43,7 +43,7 @@ services:
       TLS_KEY:
       NODE_ENV:
       TZ:
-      API_PORT:
+      PORT: ${API_PORT}
       DATABASE_URL:
       API_KEY:
       SESSION_SECRET:
@@ -83,7 +83,7 @@ services:
       TLS_KEY:
       NODE_ENV:
       TZ:
-      UI_PORT:
+      PORT: ${UI_PORT}
       API_URL:
       API_KEY:
       SESSION_SECRET:

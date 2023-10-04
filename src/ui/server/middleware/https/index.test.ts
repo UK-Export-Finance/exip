@@ -6,18 +6,20 @@ import { TLS } from '../../constants';
 
 dotenv.config();
 
-const { UI_PORT, TLS_CERTIFICATE, TLS_KEY } = process.env;
+const { PORT, UI_PORT, TLS_CERTIFICATE, TLS_KEY } = process.env;
 
 describe('middleware/https', () => {
   // @ts-ignore
   const mockServer = express();
+  // Azure requires `PORT` whilst GHA requires `UI_PORT`
+  const port = Number(PORT) || Number(UI_PORT);
 
   beforeEach(() => {
     // Mock the tls.createServer function to return a dummy server
     jest.spyOn(tls, 'createServer').mockReturnValueOnce(mockServer);
 
     // Mock the ui.listen function to call the callback function
-    jest.spyOn(mockServer, 'listen').mockImplementationOnce((port: number, callback: any) => {
+    jest.spyOn(mockServer, 'listen').mockImplementationOnce((portNumber: number, callback: any) => {
       callback();
     });
 
@@ -42,6 +44,6 @@ describe('middleware/https', () => {
     );
 
     // Expect the listen function to be called with the specified port
-    expect(mockServer.listen).toHaveBeenCalledWith(UI_PORT, expect.any(Function));
+    expect(mockServer.listen).toHaveBeenCalledWith(port, expect.any(Function));
   });
 });
