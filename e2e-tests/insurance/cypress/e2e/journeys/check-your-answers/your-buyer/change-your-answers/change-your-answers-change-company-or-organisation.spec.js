@@ -1,4 +1,9 @@
-import { submitButton, status, summaryList } from '../../../../../../../pages/shared';
+import {
+  field,
+  submitButton,
+  status,
+  summaryList,
+} from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { WEBSITE_EXAMPLES, FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -106,7 +111,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = 'Test name 2';
-        cy.changeAnswerField(fieldVariables, companyOrOrganisationPage[fieldId].input());
+        cy.changeAnswerField(fieldVariables, field(fieldId).input());
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {
@@ -146,7 +151,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = 'Address test 2';
-        cy.changeAnswerField(fieldVariables, companyOrOrganisationPage[fieldId].input());
+        cy.changeAnswerField(fieldVariables, field(fieldId).input());
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {
@@ -195,7 +200,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = '99999';
-        cy.changeAnswerField(fieldVariables, companyOrOrganisationPage[fieldId].input());
+        cy.changeAnswerField(fieldVariables, field(fieldId).input());
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {
@@ -235,7 +240,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = WEBSITE_EXAMPLES.VALID_UKEF;
-        cy.changeAnswerField(fieldVariables, companyOrOrganisationPage[fieldId].input());
+        cy.changeAnswerField(fieldVariables, field(fieldId).input());
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {
@@ -278,9 +283,9 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(companyOrOrganisationPage[fieldId].input(), newAnswerFirstName);
-        cy.keyboardInput(companyOrOrganisationPage[LAST_NAME].input(), newAnswerLastName);
-        cy.keyboardInput(companyOrOrganisationPage[POSITION].input(), newAnswerPosition);
+        cy.keyboardInput(field(fieldId).input(), newAnswerFirstName);
+        cy.keyboardInput(field(LAST_NAME).input(), newAnswerLastName);
+        cy.keyboardInput(field(POSITION).input(), newAnswerPosition);
 
         submitButton().click();
       });

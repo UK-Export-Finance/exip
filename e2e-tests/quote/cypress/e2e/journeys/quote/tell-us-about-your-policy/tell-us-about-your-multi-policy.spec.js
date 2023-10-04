@@ -5,7 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeMultiForm,
 } from '../../../../../../commands/quote/forms';
-import { submitButton } from '../../../../../../pages/shared';
+import { field as fieldSelector, submitButton } from '../../../../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import {
   LINKS,
@@ -80,7 +80,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     it('renders `currency and amount` legend', () => {
       const fieldId = AMOUNT_CURRENCY;
 
-      const field = tellUsAboutYourPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.legend().should('exist');
       cy.checkText(field.legend(), FIELDS[fieldId].MULTIPLE_POLICY.LEGEND);
@@ -89,7 +89,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     it('renders `currency` legend, label and input', () => {
       const fieldId = CURRENCY;
 
-      const field = tellUsAboutYourPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.label().should('exist');
       cy.checkText(field.label(), FIELDS[fieldId].LABEL);
@@ -100,7 +100,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     it('renders only supported currencies in alphabetical order', () => {
       const fieldId = CURRENCY;
 
-      const field = tellUsAboutYourPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.input().select(1).should('have.value', SUPPORTED_CURRENCIES[0]);
       field.input().select(2).should('have.value', SUPPORTED_CURRENCIES[1]);
@@ -110,7 +110,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     it('renders `max amount owed` label and input', () => {
       const fieldId = MAX_AMOUNT_OWED;
 
-      const field = tellUsAboutYourPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.label().should('exist');
       cy.checkText(field.label(), FIELDS[fieldId].LABEL);
@@ -121,7 +121,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     it('renders `percentage of cover` label, hint and input', () => {
       const fieldId = PERCENTAGE_OF_COVER;
 
-      const field = tellUsAboutYourPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.label().should('exist');
       cy.checkText(field.label(), FIELDS[fieldId].MULTIPLE_POLICY.LABEL);
@@ -135,7 +135,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     it('renders `percentage of cover` label, hint and input with correct options', () => {
       const fieldId = PERCENTAGE_OF_COVER;
 
-      const field = tellUsAboutYourPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.label().should('exist');
       cy.checkText(field.label(), FIELDS[fieldId].MULTIPLE_POLICY.LABEL);
@@ -159,7 +159,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       field.label().should('exist');
-      cy.checkText(field.labelText(), FIELDS[fieldId].LABEL);
+      cy.checkText(field.label(), FIELDS[fieldId].LABEL);
 
       field.hint().should('exist');
 
@@ -192,9 +192,9 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '100');
-      tellUsAboutYourPolicyPage[CURRENCY].input().select(GBP_CURRENCY_CODE);
-      tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
+      cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), '100');
+      fieldSelector(CURRENCY).input().select(GBP_CURRENCY_CODE);
+      fieldSelector(PERCENTAGE_OF_COVER).input().select('90');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
 
       submitButton().click();

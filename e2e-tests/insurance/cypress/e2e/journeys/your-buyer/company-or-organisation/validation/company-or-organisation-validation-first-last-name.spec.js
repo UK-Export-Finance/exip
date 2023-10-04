@@ -1,5 +1,4 @@
-import { submitButton } from '../../../../../../../pages/shared';
-import { companyOrOrganisationPage } from '../../../../../../../pages/insurance/your-buyer';
+import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES } from '../../../../../../../constants';
@@ -59,7 +58,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     });
 
     const ERROR_ASSERTIONS = {
-      field: companyOrOrganisationPage[FIRST_NAME_FIELD_ID],
+      field: fieldSelector(FIRST_NAME_FIELD_ID),
       numberOfExpectedErrors: 7,
       errorIndex: 2,
     };
@@ -73,7 +72,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     });
 
     it(`should NOT display validation errors when ${FIRST_NAME_FIELD_ID} is correctly entered`, () => {
-      cy.keyboardInput(companyOrOrganisationPage[FIRST_NAME_FIELD_ID].input(), application.BUYER[FIRST_NAME_FIELD_ID]);
+      cy.keyboardInput(fieldSelector(FIRST_NAME_FIELD_ID).input(), application.BUYER[FIRST_NAME_FIELD_ID]);
 
       submitButton().click();
 
@@ -85,11 +84,11 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(companyOrOrganisationPage[FIRST_NAME_FIELD_ID].input(), application.BUYER[FIRST_NAME_FIELD_ID]);
+      cy.keyboardInput(fieldSelector(FIRST_NAME_FIELD_ID).input(), application.BUYER[FIRST_NAME_FIELD_ID]);
     });
 
     const ERROR_ASSERTIONS = {
-      field: companyOrOrganisationPage[LAST_NAME_FIELD_ID],
+      field: fieldSelector(LAST_NAME_FIELD_ID),
       numberOfExpectedErrors: 6,
       errorIndex: 2,
     };
@@ -98,11 +97,11 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
       const errorMessage = ERROR_MESSAGE_LAST_NAME.IS_EMPTY;
       const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
 
-      cy.submitAndAssertFieldErrors(companyOrOrganisationPage[LAST_NAME_FIELD_ID], null, errorIndex, numberOfExpectedErrors, errorMessage);
+      cy.submitAndAssertFieldErrors(fieldSelector(LAST_NAME_FIELD_ID), null, errorIndex, numberOfExpectedErrors, errorMessage);
     });
 
     it(`should NOT display validation errors when ${LAST_NAME_FIELD_ID} is correctly entered`, () => {
-      cy.keyboardInput(companyOrOrganisationPage[LAST_NAME_FIELD_ID].input(), application.BUYER[LAST_NAME_FIELD_ID]);
+      cy.keyboardInput(fieldSelector(LAST_NAME_FIELD_ID).input(), application.BUYER[LAST_NAME_FIELD_ID]);
 
       submitButton().click();
 

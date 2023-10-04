@@ -1,5 +1,4 @@
-import { submitButton } from '../../../pages/shared';
-import { enterCodePage } from '../../../pages/insurance/account/sign-in';
+import { field, submitButton } from '../../../pages/shared';
 import { FIELD_IDS, ROUTES } from '../../../constants';
 
 const {
@@ -32,7 +31,7 @@ const signInAndGoToUrl = (url) => {
 
   // get the OTP security code
   cy.accountAddAndGetOTP().then((securityCode) => {
-    cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), securityCode);
+    cy.keyboardInput(field(SECURITY_CODE).input(), securityCode);
 
     // submit the OTP security code
     submitButton().click();

@@ -1,7 +1,7 @@
 import { companiesHouseNumber, companyDetails } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
 import { ROUTES, COMPANIES_HOUSE_NUMBER, COMPANIES_HOUSE_NUMBER_TOO_SHORT } from '../../../../../../constants';
-import { saveAndBackButton } from '../../../../../../pages/shared';
+import { field, saveAndBackButton } from '../../../../../../pages/shared';
 
 const { ROOT } = ROUTES.INSURANCE;
 
@@ -46,7 +46,7 @@ context('Insurance - Your business - Companies house number page validation', ()
     });
 
     it('should have an empty companies house number input', () => {
-      companiesHouseNumber.input().should('be.empty');
+      field(COMPANIES_HOUSE_NUMBER).input().should('be.empty');
     });
   });
 
@@ -58,14 +58,14 @@ context('Insurance - Your business - Companies house number page validation', ()
 
       cy.interceptCompaniesHousePost({ referenceNumber, companyNumber });
 
-      cy.keyboardInput(companiesHouseNumber.input(), companyNumber);
+      cy.keyboardInput(field(COMPANIES_HOUSE_NUMBER).input(), companyNumber);
       saveAndBackButton().click();
 
       cy.navigateToUrl(url);
     });
 
     it('should have an empty companies house number input', () => {
-      companiesHouseNumber.input().should('be.empty');
+      field(COMPANIES_HOUSE_NUMBER).input().should('be.empty');
     });
   });
 
@@ -77,7 +77,7 @@ context('Insurance - Your business - Companies house number page validation', ()
 
       cy.interceptCompaniesHousePost({ referenceNumber, companyNumber });
 
-      cy.keyboardInput(companiesHouseNumber.input(), companyNumber);
+      cy.keyboardInput(field(COMPANIES_HOUSE_NUMBER).input(), companyNumber);
       saveAndBackButton().click();
 
       cy.navigateToUrl(url);

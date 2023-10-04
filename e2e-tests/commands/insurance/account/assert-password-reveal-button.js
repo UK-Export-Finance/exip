@@ -3,14 +3,12 @@ import { ACCOUNT_FIELDS } from '../../../content-strings/fields/insurance/accoun
 import accountFormFields from '../../../partials/insurance/accountFormFields';
 
 const {
-  ACCOUNT: { PASSWORD },
+  ACCOUNT: { PASSWORD: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
-const fieldId = PASSWORD;
+const FIELD_STRINGS = ACCOUNT_FIELDS[FIELD_ID];
 
-const FIELD_STRINGS = ACCOUNT_FIELDS[fieldId];
-
-const field = accountFormFields[fieldId];
+const field = accountFormFields[FIELD_ID];
 
 const expectedShowText = `${FIELD_STRINGS.REVEAL.SHOW} password`;
 const expectedHideText = `${FIELD_STRINGS.REVEAL.HIDE} password`;

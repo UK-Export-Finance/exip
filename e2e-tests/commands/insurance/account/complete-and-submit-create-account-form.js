@@ -1,5 +1,4 @@
-import { submitButton } from '../../../pages/shared';
-import { yourDetailsPage } from '../../../pages/insurance/account/create';
+import { field, submitButton } from '../../../pages/shared';
 import accountFormFields from '../../../partials/insurance/accountFormFields';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
@@ -25,9 +24,9 @@ export default (params) => {
     cy.navigateToUrl(YOUR_DETAILS);
   }
 
-  cy.keyboardInput(yourDetailsPage[FIRST_NAME].input(), account[FIRST_NAME]);
-  cy.keyboardInput(yourDetailsPage[LAST_NAME].input(), account[LAST_NAME]);
-  cy.keyboardInput(accountFormFields[EMAIL].input(), account[EMAIL]);
+  cy.keyboardInput(field[FIRST_NAME].input(), account[FIRST_NAME]);
+  cy.keyboardInput(field[LAST_NAME].input(), account[LAST_NAME]);
+  cy.keyboardInput(field(EMAIL).input(), account[EMAIL]);
   cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
 
   submitButton().click();

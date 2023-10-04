@@ -1,6 +1,5 @@
 import { FIELD_IDS } from '../../constants';
-import { turnover } from '../../pages/your-business';
-import { submitButton } from '../../pages/shared';
+import { field, submitButton } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
@@ -11,8 +10,8 @@ const {
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 export default () => {
-  cy.keyboardInput(turnover[ESTIMATED_ANNUAL_TURNOVER].input(), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
-  cy.keyboardInput(turnover[PERCENTAGE_TURNOVER].input(), application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
+  cy.keyboardInput(field(ESTIMATED_ANNUAL_TURNOVER).input(), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+  cy.keyboardInput(field(PERCENTAGE_TURNOVER).input(), application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
 
   submitButton().click();
 };

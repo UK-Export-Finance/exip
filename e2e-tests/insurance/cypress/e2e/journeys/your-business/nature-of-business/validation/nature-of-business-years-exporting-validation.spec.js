@@ -1,6 +1,5 @@
-import { natureOfBusiness } from '../../../../../../../pages/your-business';
 import partials from '../../../../../../../partials';
-import { submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 
@@ -17,7 +16,7 @@ const {
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const fieldId = YEARS_EXPORTING;
-const field = natureOfBusiness[fieldId];
+const field = fieldSelector(fieldId);
 
 const expectedErrorsCount = 4;
 

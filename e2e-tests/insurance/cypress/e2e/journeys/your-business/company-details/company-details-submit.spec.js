@@ -1,5 +1,5 @@
 import { companyDetails } from '../../../../../../pages/your-business';
-import { submitButton } from '../../../../../../pages/shared';
+import { field as fieldSelector, submitButton } from '../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import partials from '../../../../../../partials';
 import {
@@ -52,8 +52,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     cy.navigateToUrl(url);
 
-    cy.keyboardInput(companyDetails[WEBSITE].input(), WEBSITE_EXAMPLES.INVALID);
-    cy.keyboardInput(companyDetails[PHONE_NUMBER].input(), INVALID_PHONE_NUMBERS.LANDLINE.LONG);
+    cy.keyboardInput(fieldSelector(WEBSITE).input(), WEBSITE_EXAMPLES.INVALID);
+    cy.keyboardInput(fieldSelector(PHONE_NUMBER).input(), INVALID_PHONE_NUMBERS.LANDLINE.LONG);
 
     submitButton().click();
   });

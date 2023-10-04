@@ -1,6 +1,5 @@
-import { turnover } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
-import { submitButton, saveAndBackButton } from '../../../../../../pages/shared';
+import { field, submitButton, saveAndBackButton } from '../../../../../../pages/shared';
 import { TASKS } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import application from '../../../../../../fixtures/application';
@@ -24,6 +23,8 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your business - Turnover page - Save and back', () => {
   let referenceNumber;
   let url;
@@ -38,7 +39,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitNatureOfYourBusiness();
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
 
       cy.assertUrl(url);
     });
@@ -60,7 +61,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
@@ -73,13 +74,13 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(turnover[ESTIMATED_ANNUAL_TURNOVER].input(), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+      cy.keyboardInput(field(ESTIMATED_ANNUAL_TURNOVER).input(), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
 
       saveAndBackButton().click();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
@@ -96,8 +97,8 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
       // submit nature of business form
       submitButton().click();
 
-      turnover[ESTIMATED_ANNUAL_TURNOVER].input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
-      turnover[PERCENTAGE_TURNOVER].input().should('have.value', '');
+      field(ESTIMATED_ANNUAL_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+      field(PERCENTAGE_TURNOVER).input().should('have.value', '');
     });
   });
 
@@ -105,14 +106,14 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(turnover[ESTIMATED_ANNUAL_TURNOVER].input(), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
-      cy.keyboardInput(turnover[PERCENTAGE_TURNOVER].input(), application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
+      cy.keyboardInput(field(ESTIMATED_ANNUAL_TURNOVER).input(), application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+      cy.keyboardInput(field(PERCENTAGE_TURNOVER).input(), application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
 
       saveAndBackButton().click();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
@@ -130,8 +131,8 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
       // submit nature of business form
       submitButton().click();
 
-      turnover[ESTIMATED_ANNUAL_TURNOVER].input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
-      turnover[PERCENTAGE_TURNOVER].input().should('have.value', application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
+      field(ESTIMATED_ANNUAL_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+      field(PERCENTAGE_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
     });
   });
 });

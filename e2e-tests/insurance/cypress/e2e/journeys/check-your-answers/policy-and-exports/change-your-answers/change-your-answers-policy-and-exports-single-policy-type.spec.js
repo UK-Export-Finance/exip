@@ -1,7 +1,7 @@
 import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import { status, summaryList } from '../../../../../../../pages/shared';
+import { field, status, summaryList } from '../../../../../../../pages/shared';
 import application from '../../../../../../../fixtures/application';
 import { singleContractPolicyPage } from '../../../../../../../pages/insurance/policy-and-export';
 import formatCurrency from '../../../../../../../helpers/format-currency';
@@ -231,7 +231,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
           summaryList.field(fieldId).changeLink().click();
           fieldVariables.newValueInput = `${String(application.POLICY_AND_EXPORTS[fieldId])} additional text`;
 
-          cy.changeAnswerField(fieldVariables, singleContractPolicyPage[fieldId].input());
+          cy.changeAnswerField(fieldVariables, field(fieldId).input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {

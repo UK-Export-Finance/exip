@@ -1,5 +1,4 @@
-import { submitButton } from '../../../../../../../pages/shared';
-import { typeOfPolicyPage, multipleContractPolicyPage } from '../../../../../../../pages/insurance/policy-and-export';
+import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
@@ -7,7 +6,7 @@ import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
 const { taskList } = partials.insurancePartials;
 
 const multiplePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
-const multiplePolicyField = typeOfPolicyPage[multiplePolicyFieldId].multiple;
+const multiplePolicyField = fieldSelector(multiplePolicyFieldId);
 
 const { INSURANCE } = ROUTES;
 
@@ -56,7 +55,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     cy.deleteApplication(referenceNumber);
   });
 
-  const field = multipleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];
+  const field = fieldSelector(CREDIT_PERIOD_WITH_BUYER);
 
   describe('when credit period with buyer is not provided', () => {
     it('should render a validation error', () => {

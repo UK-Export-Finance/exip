@@ -1,6 +1,6 @@
 import { companiesHouseNumber } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
-import { saveAndBackButton } from '../../../../../../pages/shared';
+import { field, saveAndBackButton } from '../../../../../../pages/shared';
 import { PAGES, BUTTONS } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 
@@ -61,8 +61,8 @@ context('Insurance - Your business - Companies house number page - As an Exporte
     });
 
     it(`should display the ${COMPANIES_HOUSE_NUMBER} input`, () => {
-      companiesHouseNumber.input().should('exist');
-      companiesHouseNumber.errorMessage().should('not.exist');
+      field(COMPANIES_HOUSE_NUMBER).input().should('exist');
+      field(COMPANIES_HOUSE_NUMBER).errorMessage().should('not.exist');
     });
 
     it('should display a link for no companies house number', () => {

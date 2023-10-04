@@ -1,6 +1,5 @@
-import { natureOfBusiness } from '../../../../../../../pages/your-business';
 import partials from '../../../../../../../partials';
-import { submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/business';
 import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
@@ -49,7 +48,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
   });
 
   const fieldId = GOODS_OR_SERVICES;
-  const field = natureOfBusiness[fieldId];
+  const field = fieldSelector(fieldId);
   const expectedErrorsCount = 4;
 
   describe(`when ${GOODS_OR_SERVICES} is left empty`, () => {

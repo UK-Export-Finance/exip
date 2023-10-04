@@ -1,5 +1,5 @@
 import partials from '../../../../../partials';
-import { feedbackPage } from '../../../../../pages/insurance/feedback';
+import { field as fieldSelector } from '../../../../../pages/shared';
 import { BUTTONS, PAGES, FIELDS } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { FIELD_IDS } from '../../../../../constants/field-ids';
@@ -53,26 +53,26 @@ context('Insurance - Feedback - As an exporter I want to give feedback on the UK
     });
 
     it(`should render the ${SATISFACTION} radios`, () => {
-      const field = feedbackPage.field(SATISFACTION);
+      const field = fieldSelector(SATISFACTION);
 
       cy.checkText(field.heading(), FIELDS[SATISFACTION].TITLE);
       cy.checkText(field.label(), FIELDS[SATISFACTION].LABEL);
 
-      cy.checkText(feedbackPage.field(VERY_SATISFIED).label(), FIELDS[SATISFACTION].VERY_SATISFIED);
-      cy.checkText(feedbackPage.field(SATISFIED).label(), FIELDS[SATISFACTION].SATISFIED);
-      cy.checkText(feedbackPage.field(NEITHER).label(), FIELDS[SATISFACTION].NEITHER);
-      cy.checkText(feedbackPage.field(DISSATISFIED).label(), FIELDS[SATISFACTION].DISSATISFIED);
-      cy.checkText(feedbackPage.field(VERY_DISSATISIFED).label(), FIELDS[SATISFACTION].VERY_DISSATISIFED);
+      cy.checkText(fieldSelector(VERY_SATISFIED).label(), FIELDS[SATISFACTION].VERY_SATISFIED);
+      cy.checkText(fieldSelector(SATISFIED).label(), FIELDS[SATISFACTION].SATISFIED);
+      cy.checkText(fieldSelector(NEITHER).label(), FIELDS[SATISFACTION].NEITHER);
+      cy.checkText(fieldSelector(DISSATISFIED).label(), FIELDS[SATISFACTION].DISSATISFIED);
+      cy.checkText(fieldSelector(VERY_DISSATISIFED).label(), FIELDS[SATISFACTION].VERY_DISSATISIFED);
 
-      feedbackPage.field(VERY_SATISFIED).input().should('exist');
-      feedbackPage.field(SATISFIED).input().should('exist');
-      feedbackPage.field(NEITHER).input().should('exist');
-      feedbackPage.field(DISSATISFIED).input().should('exist');
-      feedbackPage.field(VERY_DISSATISIFED).input().should('exist');
+      fieldSelector(VERY_SATISFIED).input().should('exist');
+      fieldSelector(SATISFIED).input().should('exist');
+      fieldSelector(NEITHER).input().should('exist');
+      fieldSelector(DISSATISFIED).input().should('exist');
+      fieldSelector(VERY_DISSATISIFED).input().should('exist');
     });
 
     it(`should render the ${IMPROVEMENT} section`, () => {
-      const field = feedbackPage.field(IMPROVEMENT);
+      const field = fieldSelector(IMPROVEMENT);
 
       cy.checkText(field.label(), FIELDS[IMPROVEMENT].LABEL);
       cy.checkText(field.hint(), FIELDS[IMPROVEMENT].HINT);
@@ -80,7 +80,7 @@ context('Insurance - Feedback - As an exporter I want to give feedback on the UK
     });
 
     it(`should render the ${OTHER_COMMENTS} section`, () => {
-      const field = feedbackPage.field(OTHER_COMMENTS);
+      const field = fieldSelector(OTHER_COMMENTS);
 
       cy.checkText(field.label(), FIELDS[OTHER_COMMENTS].LABEL);
       cy.checkText(field.hint(), FIELDS[OTHER_COMMENTS].HINT);

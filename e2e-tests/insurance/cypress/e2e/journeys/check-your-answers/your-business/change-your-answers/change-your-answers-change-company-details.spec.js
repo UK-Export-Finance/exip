@@ -1,5 +1,5 @@
 import {
-  submitButton, status, summaryList, noRadioInput,
+  field, submitButton, status, summaryList, noRadioInput,
 } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import {
@@ -8,7 +8,7 @@ import {
   WEBSITE_EXAMPLES,
   COMPANY_EXAMPLE,
 } from '../../../../../../../constants';
-import { companyDetails, companiesHouseNumber } from '../../../../../../../pages/your-business';
+import { companyDetails } from '../../../../../../../pages/your-business';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
@@ -18,7 +18,9 @@ const {
     YOUR_BUSINESS,
   },
   EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE_NUMBER_CHECK_AND_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE,
+    COMPANIES_HOUSE_NUMBER,
+    COMPANIES_HOUSE_NUMBER_CHECK_AND_CHANGE,
+    COMPANY_DETAILS_CHECK_AND_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
@@ -117,7 +119,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = '14440211';
-        cy.changeAnswerField(fieldVariables, companiesHouseNumber.input());
+        cy.changeAnswerField(fieldVariables, field(COMPANIES_HOUSE_NUMBER).input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {

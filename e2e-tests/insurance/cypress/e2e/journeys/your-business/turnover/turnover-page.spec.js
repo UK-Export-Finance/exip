@@ -1,6 +1,5 @@
-import { turnover } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
-import { saveAndBackButton } from '../../../../../../pages/shared';
+import { field as fieldSelector, saveAndBackButton } from '../../../../../../pages/shared';
 import { PAGES, BUTTONS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { ROUTES } from '../../../../../../constants';
@@ -87,7 +86,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
 
     it(`should display ${FINANCIAL_YEAR_END_DATE} section`, () => {
       const fieldId = FINANCIAL_YEAR_END_DATE;
-      const field = turnover[fieldId];
+      const field = fieldSelector(fieldId);
 
       cy.checkText(field.value(), financialYearEnd.expectedValue);
 
@@ -98,14 +97,14 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
 
     it('should display turnover fieldset legend', () => {
       const fieldId = ESTIMATED_ANNUAL_TURNOVER;
-      const field = turnover[fieldId];
+      const field = fieldSelector(fieldId);
 
       cy.checkText(field.legend(), FIELDS.TURNOVER[fieldId].LEGEND);
     });
 
     it(`should display ${ESTIMATED_ANNUAL_TURNOVER} section`, () => {
       const fieldId = ESTIMATED_ANNUAL_TURNOVER;
-      const field = turnover[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.input().should('exist');
 
@@ -116,7 +115,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
 
     it(`should display ${PERCENTAGE_TURNOVER} section`, () => {
       const fieldId = PERCENTAGE_TURNOVER;
-      const field = turnover[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.input().should('exist');
 
@@ -144,10 +143,10 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
     it('should have the submitted values', () => {
       cy.navigateToUrl(url);
 
-      cy.checkText(turnover[FINANCIAL_YEAR_END_DATE].value(), financialYearEnd.expectedValue);
+      cy.checkText(fieldSelector(FINANCIAL_YEAR_END_DATE).value(), financialYearEnd.expectedValue);
 
-      turnover[ESTIMATED_ANNUAL_TURNOVER].input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
-      turnover[PERCENTAGE_TURNOVER].input().should('have.value', application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
+      fieldSelector(ESTIMATED_ANNUAL_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+      fieldSelector(PERCENTAGE_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
     });
   });
 });

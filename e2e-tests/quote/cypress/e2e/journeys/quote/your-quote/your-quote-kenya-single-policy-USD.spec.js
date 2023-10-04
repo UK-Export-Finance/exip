@@ -3,11 +3,13 @@ import {
   completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
 } from '../../../../../../commands/quote/forms';
-import { countryInput, submitButton, summaryList } from '../../../../../../pages/shared';
 import {
-  policyTypePage,
-  tellUsAboutYourPolicyPage,
-} from '../../../../../../pages/quote';
+  countryInput,
+  field,
+  submitButton,
+  summaryList,
+} from '../../../../../../pages/shared';
+import { policyTypePage } from '../../../../../../pages/quote';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { USD_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 
@@ -52,11 +54,11 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
   });
 
   it('should get a quote with a large contract value and render in the correct format', () => {
-    cy.keyboardInput(tellUsAboutYourPolicyPage[POLICY_LENGTH].input(), '18');
-    cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '100,000');
+    cy.keyboardInput(field(POLICY_LENGTH).input(), '18');
+    cy.keyboardInput(field(CONTRACT_VALUE).input(), '100,000');
 
-    tellUsAboutYourPolicyPage[CURRENCY].input().select(USD_CURRENCY_CODE);
-    tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('80');
+    field(CURRENCY).input().select(USD_CURRENCY_CODE);
+    field(PERCENTAGE_OF_COVER).input().select('80');
 
     submitButton().click();
 

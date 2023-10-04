@@ -1,6 +1,6 @@
 import { brokerPage } from '../../../../../../../pages/your-business';
 import partials from '../../../../../../../partials';
-import { submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import { ROUTES, INVALID_POSTCODES, VALID_POSTCODES } from '../../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
@@ -214,7 +214,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
 
       field.yesRadioInput().click();
 
-      cy.keyboardInput(brokerPage[POSTCODE].input(), VALID_POSTCODES.WITH_SPACE);
+      cy.keyboardInput(fieldSelector(POSTCODE).input(), VALID_POSTCODES.WITH_SPACE);
       submitButton().click();
 
       partials.errorSummaryListItems().should('have.length', 4);
@@ -225,7 +225,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
 
       field.yesRadioInput().click();
 
-      cy.keyboardInput(brokerPage[POSTCODE].input(), VALID_POSTCODES.WITHOUT_SPACE);
+      cy.keyboardInput(fieldSelector(POSTCODE).input(), VALID_POSTCODES.WITHOUT_SPACE);
       submitButton().click();
 
       partials.errorSummaryListItems().should('have.length', 4);

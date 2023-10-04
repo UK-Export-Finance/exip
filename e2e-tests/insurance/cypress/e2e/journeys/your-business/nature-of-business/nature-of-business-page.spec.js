@@ -1,6 +1,5 @@
-import { natureOfBusiness } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
-import { submitButton, saveAndBackButton } from '../../../../../../pages/shared';
+import { field as fieldSelector, submitButton, saveAndBackButton } from '../../../../../../pages/shared';
 import { PAGES, BUTTONS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
@@ -78,7 +77,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
 
     it(`should display ${GOODS_OR_SERVICES} input box`, () => {
       const fieldId = GOODS_OR_SERVICES;
-      const field = natureOfBusiness[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.input().should('exist');
       cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
@@ -88,7 +87,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
 
     it(`should display ${YEARS_EXPORTING} input box`, () => {
       const fieldId = YEARS_EXPORTING;
-      const field = natureOfBusiness[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.input().should('exist');
       cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
@@ -103,14 +102,14 @@ context('Insurance - Your business - Nature of your business page - As an Export
 
     it('should display the employees fieldset legend', () => {
       const fieldId = EMPLOYEES_UK;
-      const field = natureOfBusiness[fieldId];
+      const field = fieldSelector(fieldId);
 
       cy.checkText(field.legend(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LEGEND);
     });
 
     it(`should display ${EMPLOYEES_UK} input box`, () => {
       const fieldId = EMPLOYEES_UK;
-      const field = natureOfBusiness[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.input().should('exist');
       cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
@@ -118,7 +117,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
 
     it(`should display ${EMPLOYEES_INTERNATIONAL} input box`, () => {
       const fieldId = EMPLOYEES_INTERNATIONAL;
-      const field = natureOfBusiness[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.input().should('exist');
       cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
@@ -145,10 +144,10 @@ context('Insurance - Your business - Nature of your business page - As an Export
     it('should have the submitted values', () => {
       cy.navigateToUrl(natureOfBusinessUrl);
 
-      natureOfBusiness[GOODS_OR_SERVICES].input().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
-      natureOfBusiness[YEARS_EXPORTING].input().should('have.value', application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
-      natureOfBusiness[EMPLOYEES_UK].input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
-      natureOfBusiness[EMPLOYEES_INTERNATIONAL].input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_INTERNATIONAL]);
+      fieldSelector(GOODS_OR_SERVICES).input().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
+      fieldSelector(YEARS_EXPORTING).input().should('have.value', application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
+      fieldSelector(EMPLOYEES_UK).input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
+      fieldSelector(EMPLOYEES_INTERNATIONAL).input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_INTERNATIONAL]);
     });
   });
 });

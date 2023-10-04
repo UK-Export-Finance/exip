@@ -1,6 +1,6 @@
 import partials from '../../../../../../../partials';
 import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
-import { summaryList } from '../../../../../../../pages/shared';
+import { field, summaryList } from '../../../../../../../pages/shared';
 import application from '../../../../../../../fixtures/application';
 import { multipleContractPolicyPage } from '../../../../../../../pages/insurance/policy-and-export';
 import formatCurrency from '../../../../../../../helpers/format-currency';
@@ -141,7 +141,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           summaryList.field(fieldId).changeLink().click();
 
           fieldVariables.newValueInput = String(Number(application.POLICY_AND_EXPORTS[fieldId]) + 1);
-          cy.changeAnswerSelectField(fieldVariables, multipleContractPolicyPage[fieldId].input());
+          cy.changeAnswerSelectField(fieldVariables, field(fieldId).input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -180,7 +180,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           summaryList.field(fieldId).changeLink().click();
 
           fieldVariables.newValueInput = application.POLICY_AND_EXPORTS[fieldId] - 500;
-          cy.changeAnswerField(fieldVariables, multipleContractPolicyPage[fieldId].input());
+          cy.changeAnswerField(fieldVariables, field(fieldId).input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -258,7 +258,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           summaryList.field(fieldId).changeLink().click();
 
           fieldVariables.newValueInput = `${String(application.POLICY_AND_EXPORTS[fieldId])} additional text`;
-          cy.changeAnswerField(fieldVariables, multipleContractPolicyPage[fieldId].input());
+          cy.changeAnswerField(fieldVariables, field(fieldId).input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {

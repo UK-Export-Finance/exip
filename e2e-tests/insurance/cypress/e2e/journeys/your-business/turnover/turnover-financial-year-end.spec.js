@@ -1,5 +1,5 @@
-import { turnover } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE } from '../../../../../../constants';
 import { formatDate } from '../../../../../../helpers/date';
@@ -30,7 +30,7 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.business;
 
 const fieldId = FINANCIAL_YEAR_END_DATE;
-const field = turnover[fieldId];
+const field = fieldSelector(fieldId);
 
 const baseUrl = Cypress.config('baseUrl');
 

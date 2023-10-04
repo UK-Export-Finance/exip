@@ -1,7 +1,6 @@
 import {
-  backLink, countryInput, submitButton, summaryList,
+  backLink, countryInput, field, submitButton, summaryList,
 } from '../../../../../../pages/shared';
-import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
 
@@ -65,7 +64,7 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '200');
+      cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '200');
 
       submitButton().click();
 
@@ -110,7 +109,7 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('95');
+      field(PERCENTAGE_OF_COVER).input().select('95');
       submitButton().click();
 
       const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#${PERCENTAGE_OF_COVER}-label`;

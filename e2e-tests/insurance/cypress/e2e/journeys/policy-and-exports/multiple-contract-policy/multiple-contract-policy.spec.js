@@ -1,4 +1,5 @@
 import {
+  field as fieldSelector,
   headingCaption,
   submitButton,
   saveAndBackButton,
@@ -58,6 +59,8 @@ const {
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Policy and exports - Multiple contract policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {
   let referenceNumber;
   let url;
@@ -70,7 +73,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
       cy.assertUrl(url);
     });
@@ -105,7 +108,6 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
       const fieldId = REQUESTED_START_DATE;
       const field = multipleContractPolicyPage[fieldId];
 
-      field.label().should('exist');
       cy.checkText(field.label(), CONTRACT_POLICY[fieldId].LABEL);
 
       cy.checkText(field.hint(), CONTRACT_POLICY[fieldId].HINT);
@@ -117,10 +119,9 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
     describe('total months of cover', () => {
       const fieldId = TOTAL_MONTHS_OF_COVER;
-      const field = multipleContractPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       it('renders `total months of insurance` label, hint and input', () => {
-        field.label().should('exist');
         cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
 
         cy.checkText(field.hint(), CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
@@ -137,9 +138,8 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
     it('renders `total sales to buyer` label, hint, prefix and input', () => {
       const fieldId = TOTAL_SALES_TO_BUYER;
-      const field = multipleContractPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
 
       cy.checkText(field.hint(), CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
@@ -154,7 +154,6 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
       const field = multipleContractPolicyPage[fieldId];
       const { HINT } = CONTRACT_POLICY.MULTIPLE[fieldId];
 
-      field.label().should('exist');
       cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
 
       cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
@@ -177,9 +176,8 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
     it('renders `buyer credit period` label, hint and input', () => {
       const fieldId = CREDIT_PERIOD_WITH_BUYER;
-      const field = multipleContractPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), CONTRACT_POLICY[fieldId].LABEL);
 
       cy.checkText(field.hint(), CONTRACT_POLICY[fieldId].HINT);
@@ -206,7 +204,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
     it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, () => {
       cy.completeAndSubmitMultipleContractPolicyForm({});
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
       cy.assertUrl(expectedUrl);
     });
 
@@ -221,21 +219,21 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        multipleContractPolicyPage[REQUESTED_START_DATE].dayInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].day);
-        multipleContractPolicyPage[REQUESTED_START_DATE].monthInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);
-        multipleContractPolicyPage[REQUESTED_START_DATE].yearInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].year);
+        fieldSelector(REQUESTED_START_DATE).dayInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].day);
+        fieldSelector(REQUESTED_START_DATE).monthInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);
+        fieldSelector(REQUESTED_START_DATE).yearInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].year);
 
-        cy.checkText(multipleContractPolicyPage[TOTAL_MONTHS_OF_COVER].inputOptionSelected(), `${application.POLICY_AND_EXPORTS[TOTAL_MONTHS_OF_COVER]} months`);
+        cy.checkText(fieldSelector(TOTAL_MONTHS_OF_COVER).inputOptionSelected(), `${application.POLICY_AND_EXPORTS[TOTAL_MONTHS_OF_COVER]} months`);
 
-        multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().should('have.value', application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
+        fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
         multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().should('have.value', application.POLICY_AND_EXPORTS[MAXIMUM_BUYER_WILL_OWE]);
-        multipleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().should('have.value', application.POLICY_AND_EXPORTS[CREDIT_PERIOD_WITH_BUYER]);
+        fieldSelector(CREDIT_PERIOD_WITH_BUYER).input().should('have.value', application.POLICY_AND_EXPORTS[CREDIT_PERIOD_WITH_BUYER]);
         policyCurrencyCodeFormField.inputOptionSelected().contains(application.POLICY_AND_EXPORTS[POLICY_CURRENCY_CODE]);
       });
     });
 
     describe('when the credit period with buyer field is a pure number and there are no other validation errors', () => {
-      const creditPeriodField = multipleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];
+      const creditPeriodField = fieldSelector(CREDIT_PERIOD_WITH_BUYER);
       const submittedValue = '1234';
 
       it('should retain the submitted value when going back to the page', () => {

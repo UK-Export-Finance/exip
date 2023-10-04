@@ -5,12 +5,17 @@ import {
   COMPANY_EXAMPLE,
   FIELD_VALUES,
 } from '../../../../../../constants';
-import { companyDetails, companiesHouseNumber } from '../../../../../../pages/your-business';
-import { submitButton, summaryList, noRadioInput } from '../../../../../../pages/shared';
+import {
+  field,
+  submitButton,
+  summaryList,
+  noRadioInput,
+} from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
+  COMPANIES_HOUSE_NUMBER,
   COMPANY_HOUSE: {
     COMPANY_NAME,
     COMPANY_NUMBER,
@@ -94,7 +99,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(companiesHouseNumber.input(), newAnswer);
+        cy.keyboardInput(field(COMPANIES_HOUSE_NUMBER).input(), newAnswer);
 
         submitButton().click();
       });
@@ -214,7 +219,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(companyDetails[PHONE_NUMBER].input(), newAnswer);
+        cy.keyboardInput(field(PHONE_NUMBER).input(), newAnswer);
 
         submitButton().click();
       });
@@ -250,7 +255,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(companyDetails[WEBSITE].input(), newAnswer);
+        cy.keyboardInput(field(WEBSITE).input(), newAnswer);
 
         submitButton().click();
       });

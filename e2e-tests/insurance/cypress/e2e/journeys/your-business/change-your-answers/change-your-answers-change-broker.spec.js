@@ -1,6 +1,6 @@
 import partials from '../../../../../../partials';
 import { brokerPage } from '../../../../../../pages/your-business';
-import { submitButton, summaryList } from '../../../../../../pages/shared';
+import { field, submitButton, summaryList } from '../../../../../../pages/shared';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -80,7 +80,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(brokerPage[fieldId].input(), newAnswer);
+        cy.keyboardInput(field(fieldId).input(), newAnswer);
 
         submitButton().click();
       });
@@ -120,11 +120,11 @@ context('Insurance - Your business - Change your answers - Broker - As an export
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(brokerPage[fieldId].input(), addressLine1);
-        cy.keyboardInput(brokerPage[ADDRESS_LINE_2].input(), addressLine2);
-        cy.keyboardInput(brokerPage[TOWN].input(), town);
-        cy.keyboardInput(brokerPage[COUNTY].input(), country);
-        cy.keyboardInput(brokerPage[POSTCODE].input(), postcode);
+        cy.keyboardInput(field(fieldId).input(), addressLine1);
+        cy.keyboardInput(field(ADDRESS_LINE_2).input(), addressLine2);
+        cy.keyboardInput(field(TOWN).input(), town);
+        cy.keyboardInput(field(COUNTY).input(), country);
+        cy.keyboardInput(field(POSTCODE).input(), postcode);
 
         submitButton().click();
       });
@@ -153,7 +153,9 @@ context('Insurance - Your business - Change your answers - Broker - As an export
     });
   });
 
-  describe(EMAIL, () => {
+  // TODO - missing EMAIL test.
+
+  describe(NAME, () => {
     const fieldId = NAME;
 
     describe('when clicking the `change` link', () => {
@@ -174,7 +176,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(brokerPage[fieldId].input(), newAnswer);
+        cy.keyboardInput(field(fieldId).input(), newAnswer);
 
         submitButton().click();
       });

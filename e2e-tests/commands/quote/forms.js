@@ -1,4 +1,9 @@
-import { yesRadio, noRadio, submitButton } from '../../pages/shared';
+import {
+  field,
+  yesRadio,
+  noRadio,
+  submitButton,
+} from '../../pages/shared';
 import { policyTypePage, tellUsAboutYourPolicyPage } from '../../pages/quote';
 import { FIELD_IDS } from '../../constants';
 import { GBP_CURRENCY_CODE } from '../../fixtures/currencies';
@@ -43,17 +48,17 @@ export const completeAndSubmitPolicyTypeMultiForm = () => {
 };
 
 export const completeAndSubmitTellUsAboutYourSinglePolicyForm = () => {
-  cy.keyboardInput(tellUsAboutYourPolicyPage[POLICY_LENGTH].input(), '3');
-  tellUsAboutYourPolicyPage[CURRENCY].input().select(GBP_CURRENCY_CODE);
-  cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '150000');
+  cy.keyboardInput(field(POLICY_LENGTH).input(), '3');
+  field(CURRENCY).input().select(GBP_CURRENCY_CODE);
+  cy.keyboardInput(field(CONTRACT_VALUE).input(), '150000');
   tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
   submitButton().click();
 };
 
 export const completeAndSubmitTellUsAboutYourMultiPolicyForm = () => {
-  tellUsAboutYourPolicyPage[CURRENCY].input().select(GBP_CURRENCY_CODE);
-  cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '150000');
-  tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
+  field(CURRENCY).input().select(GBP_CURRENCY_CODE);
+  cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '150000');
+  field(PERCENTAGE_OF_COVER).input().select('90');
   tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
   submitButton().click();
 };

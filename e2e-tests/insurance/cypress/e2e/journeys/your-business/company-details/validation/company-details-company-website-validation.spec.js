@@ -1,5 +1,4 @@
-import { companyDetails } from '../../../../../../../pages/your-business';
-import { submitButton } from '../../../../../../../pages/shared';
+import { field, submitButton } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import partials from '../../../../../../../partials';
 import {
@@ -65,7 +64,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       it('should display validation errors', () => {
         cy.submitAndAssertFieldErrors(
-          companyDetails[WEBSITE],
+          field(WEBSITE),
           WEBSITE_EXAMPLES.INVALID,
           errorIndex,
           expectedErrors,
@@ -83,7 +82,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       it('should display validation errors', () => {
         cy.submitAndAssertFieldErrors(
-          companyDetails[WEBSITE],
+          field(WEBSITE),
           WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH,
           errorIndex,
           expectedErrors,
@@ -99,7 +98,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       cy.completeCompanyDetailsForm({});
 
-      companyDetails[WEBSITE].input().clear();
+      field(WEBSITE).input().clear();
       submitButton().click();
     });
 
@@ -118,7 +117,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       cy.completeCompanyDetailsForm({});
 
-      companyDetails[WEBSITE].input().clear().type(WEBSITE_EXAMPLES.VALID);
+      field(WEBSITE).input().clear().type(WEBSITE_EXAMPLES.VALID);
       submitButton().click();
     });
 

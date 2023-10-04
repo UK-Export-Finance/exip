@@ -1,8 +1,7 @@
 import partials from '../../../../../../../partials';
-import { summaryList } from '../../../../../../../pages/shared';
+import { field, summaryList } from '../../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { turnover } from '../../../../../../../pages/your-business';
 
 const {
   ROOT,
@@ -94,7 +93,7 @@ context('Insurance - Check your answers - Turnover - Your business - Summary lis
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = '455445';
-        cy.changeAnswerField(fieldVariables, turnover[fieldId].input());
+        cy.changeAnswerField(fieldVariables, field(fieldId).input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -133,7 +132,7 @@ context('Insurance - Check your answers - Turnover - Your business - Summary lis
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = '85';
-        cy.changeAnswerField(fieldVariables, turnover[fieldId].input());
+        cy.changeAnswerField(fieldVariables, field(fieldId).input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {

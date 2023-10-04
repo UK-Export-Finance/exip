@@ -5,7 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../../../commands/quote/forms';
-import { submitButton } from '../../../../../../pages/shared';
+import { field as fieldSelector, submitButton } from '../../../../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { FIELDS, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS, SUPPORTED_CURRENCIES } from '../../../../../../constants';
@@ -70,7 +70,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
 
     it('should render policy length input with label and hint', () => {
       const fieldId = POLICY_LENGTH;
-      const field = tellUsAboutYourPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.input().should('be.visible');
 
@@ -82,7 +82,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
     it('should render `currency and amount` legend', () => {
       const fieldId = AMOUNT_CURRENCY;
 
-      const field = tellUsAboutYourPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.legend().should('exist');
       cy.checkText(field.legend(), FIELDS[fieldId].SINGLE_POLICY.LEGEND);
@@ -91,7 +91,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
     it('should render `currency` legend, label and input', () => {
       const fieldId = CURRENCY;
 
-      const field = tellUsAboutYourPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.label().should('exist');
       cy.checkText(field.label(), FIELDS[fieldId].LABEL);
@@ -102,7 +102,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
     it('should render only supported currencies in alphabetical order', () => {
       const fieldId = CURRENCY;
 
-      const field = tellUsAboutYourPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.input().select(1).should('have.value', SUPPORTED_CURRENCIES[0]);
       field.input().select(2).should('have.value', SUPPORTED_CURRENCIES[1]);
@@ -112,7 +112,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
     it('should render `contract value` label and input', () => {
       const fieldId = CONTRACT_VALUE;
 
-      const field = tellUsAboutYourPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.label().should('exist');
       cy.checkText(field.label(), FIELDS[fieldId].LABEL);
@@ -123,7 +123,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
     it('should render `percentage of cover` label, no hint and input with correct options', () => {
       const fieldId = PERCENTAGE_OF_COVER;
 
-      const field = tellUsAboutYourPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.label().should('exist');
       cy.checkText(field.label(), FIELDS[fieldId].SINGLE_POLICY.LABEL);
@@ -157,10 +157,10 @@ context('Tell us about your single policy page - as an exporter, I want to provi
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(tellUsAboutYourPolicyPage[POLICY_LENGTH].input(), 1);
-      cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), 100);
-      tellUsAboutYourPolicyPage[CURRENCY].input().select(GBP_CURRENCY_CODE);
-      tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
+      cy.keyboardInput(fieldSelector(POLICY_LENGTH).input(), 1);
+      cy.keyboardInput(fieldSelector(CONTRACT_VALUE).input(), 100);
+      fieldSelector(CURRENCY).input().select(GBP_CURRENCY_CODE);
+      fieldSelector(PERCENTAGE_OF_COVER).input().select('90');
 
       submitButton().click();
 

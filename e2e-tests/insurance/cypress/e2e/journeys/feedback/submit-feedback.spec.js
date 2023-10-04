@@ -1,8 +1,7 @@
 import partials from '../../../../../partials';
-import { feedbackPage } from '../../../../../pages/insurance/feedback';
+import { field, submitButton } from '../../../../../pages/shared';
 import { ROUTES } from '../../../../../constants';
 import { FIELD_IDS } from '../../../../../constants/field-ids';
-import { submitButton } from '../../../../../pages/shared';
 
 const {
   FEEDBACK: {
@@ -52,9 +51,9 @@ context('Insurance - Feedback - Submit feedback form', () => {
       cy.navigateToUrl(startUrl);
       partials.phaseBanner.feedbackLink().click();
 
-      feedbackPage.field(SATISFIED).input().click();
-      cy.keyboardInput(feedbackPage.field(IMPROVEMENT).input(), 'test');
-      cy.keyboardInput(feedbackPage.field(OTHER_COMMENTS).input(), 'test');
+      field(SATISFIED).input().click();
+      cy.keyboardInput(field(IMPROVEMENT).input(), 'test');
+      cy.keyboardInput(field(OTHER_COMMENTS).input(), 'test');
       submitButton().click();
     });
 
@@ -82,9 +81,9 @@ context('Insurance - Feedback - Submit feedback form', () => {
       cy.navigateToUrl(startUrl);
       partials.phaseBanner.feedbackLink().click();
 
-      feedbackPage.field(SATISFIED).input().click();
-      cy.keyboardInput(feedbackPage.field(IMPROVEMENT).input(), longString);
-      cy.keyboardInput(feedbackPage.field(OTHER_COMMENTS).input(), longString);
+      field(SATISFIED).input().click();
+      cy.keyboardInput(field(IMPROVEMENT).input(), longString);
+      cy.keyboardInput(field(OTHER_COMMENTS).input(), longString);
       submitButton().click();
     });
 
@@ -110,7 +109,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
       cy.navigateToUrl(startUrl);
       partials.phaseBanner.feedbackLink().click();
 
-      cy.keyboardInput(feedbackPage.field(IMPROVEMENT).input(), 'test');
+      cy.keyboardInput(field(IMPROVEMENT).input(), 'test');
       submitButton().click();
     });
 

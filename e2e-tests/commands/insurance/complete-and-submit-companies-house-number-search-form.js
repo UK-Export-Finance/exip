@@ -1,5 +1,4 @@
-import { companiesHouseNumber } from '../../pages/your-business';
-import { submitButton } from '../../pages/shared';
+import { field, submitButton } from '../../pages/shared';
 import { COMPANIES_HOUSE_NUMBER } from '../../constants';
 
 /**
@@ -11,7 +10,7 @@ import { COMPANIES_HOUSE_NUMBER } from '../../constants';
 const completeAndSubmitCompaniesHouseSearchForm = ({ referenceNumber, companyNumber = COMPANIES_HOUSE_NUMBER }) => {
   cy.interceptCompaniesHousePost({ referenceNumber, companyNumber });
 
-  cy.keyboardInput(companiesHouseNumber.input(), companyNumber);
+  cy.keyboardInput(field(COMPANIES_HOUSE_NUMBER).input(), companyNumber);
   submitButton().click();
 };
 

@@ -1,4 +1,9 @@
-import { headingCaption, saveAndBackButton, submitButton } from '../../../../../../pages/shared';
+import {
+  field as fieldSelector,
+  headingCaption,
+  saveAndBackButton,
+  submitButton,
+} from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
@@ -79,7 +84,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it('renders a buyer country section', () => {
       const fieldId = COUNTRY;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       cy.checkText(field.heading(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
       cy.checkText(field.value(), country.name);
@@ -87,7 +92,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it(`renders an ${NAME} label, and input`, () => {
       const fieldId = NAME;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
@@ -96,7 +101,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it(`renders an ${ADDRESS} label, and input`, () => {
       const fieldId = ADDRESS;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
@@ -105,7 +110,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it(`renders ${REGISTRATION_NUMBER} label and input`, () => {
       const fieldId = REGISTRATION_NUMBER;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
@@ -115,7 +120,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it(`renders ${WEBSITE} label and input`, () => {
       const fieldId = WEBSITE;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
@@ -125,7 +130,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it('renders the contact details fieldset legend', () => {
       const fieldId = FIRST_NAME;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.legend().should('exist');
       cy.checkText(field.legend(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LEGEND);
@@ -133,7 +138,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it(`renders ${FIRST_NAME} heading, hint, label and input`, () => {
       const fieldId = FIRST_NAME;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.hint().should('exist');
       cy.checkText(field.hint(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HINT);
@@ -146,7 +151,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it(`renders ${LAST_NAME} label and input`, () => {
       const fieldId = LAST_NAME;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
@@ -156,7 +161,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it(`renders ${POSITION} label and input`, () => {
       const fieldId = POSITION;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
@@ -180,7 +185,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it(`renders ${EMAIL} label and input`, () => {
       const fieldId = EMAIL;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);

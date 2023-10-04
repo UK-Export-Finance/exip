@@ -1,7 +1,4 @@
-import { submitButton, summaryList } from '../../../../../../pages/shared';
-import {
-  tellUsAboutYourPolicyPage,
-} from '../../../../../../pages/quote';
+import { field, submitButton, summaryList } from '../../../../../../pages/shared';
 import { QUOTE_TITLES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { EUR_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
@@ -34,7 +31,7 @@ context('Get a quote/your quote page (non GBP currency) - as an exporter, I want
     // change currency to non-GBP
     summaryList.field(CONTRACT_VALUE).changeLink().click();
 
-    tellUsAboutYourPolicyPage[CURRENCY].input().select(EUR_CURRENCY_CODE);
+    field(CURRENCY).input().select(EUR_CURRENCY_CODE);
     submitButton().click();
 
     submitButton().click();

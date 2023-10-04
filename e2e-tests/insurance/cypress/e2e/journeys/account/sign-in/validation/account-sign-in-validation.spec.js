@@ -1,4 +1,4 @@
-import { submitButton } from '../../../../../../../pages/shared';
+import { field, submitButton } from '../../../../../../../pages/shared';
 import accountFormFields from '../../../../../../../partials/insurance/accountFormFields';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -23,7 +23,7 @@ const {
 const TOTAL_REQUIRED_FIELDS = 2;
 
 const assertAllFieldErrors = () => {
-  cy.submitAndAssertFieldErrors(accountFormFields[EMAIL], null, 0, TOTAL_REQUIRED_FIELDS, SIGN_IN_ERROR_MESSAGES[EMAIL].INCORRECT);
+  cy.submitAndAssertFieldErrors(field(EMAIL), null, 0, TOTAL_REQUIRED_FIELDS, SIGN_IN_ERROR_MESSAGES[EMAIL].INCORRECT);
   cy.submitAndAssertFieldErrors(accountFormFields[PASSWORD], null, 1, TOTAL_REQUIRED_FIELDS, SIGN_IN_ERROR_MESSAGES[PASSWORD].INCORRECT);
 };
 
@@ -53,7 +53,7 @@ context('Insurance - Account - Sign in - Validation', () => {
   });
 
   it('should render a validation error for both fields when email is provided, but password is not', () => {
-    cy.keyboardInput(accountFormFields[EMAIL].input(), account[EMAIL]);
+    cy.keyboardInput(field(EMAIL).input(), account[EMAIL]);
 
     submitButton().click();
 
@@ -61,7 +61,7 @@ context('Insurance - Account - Sign in - Validation', () => {
   });
 
   it('should render a validation error for both fields when password is provided, but email is not', () => {
-    accountFormFields[EMAIL].input().clear();
+    field(EMAIL).input().clear();
     cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
 
     submitButton().click();
@@ -70,7 +70,7 @@ context('Insurance - Account - Sign in - Validation', () => {
   });
 
   it('should render a validation error for both fields when email and password are provided, but email is incorrect', () => {
-    cy.keyboardInput(accountFormFields[EMAIL].input(), `incorrect-${account[EMAIL]}`);
+    cy.keyboardInput(field(EMAIL).input(), `incorrect-${account[EMAIL]}`);
     cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
 
     submitButton().click();
@@ -79,7 +79,7 @@ context('Insurance - Account - Sign in - Validation', () => {
   });
 
   it('should render a validation error for both fields when email and password are provided, but password is incorrect', () => {
-    cy.keyboardInput(accountFormFields[EMAIL].input(), account[EMAIL]);
+    cy.keyboardInput(field(EMAIL).input(), account[EMAIL]);
     cy.keyboardInput(accountFormFields[PASSWORD].input(), `incorrect-${account[PASSWORD]}`);
 
     submitButton().click();
@@ -88,7 +88,7 @@ context('Insurance - Account - Sign in - Validation', () => {
   });
 
   it('should render a validation error for both fields when email and password are provided and both are incorrect', () => {
-    cy.keyboardInput(accountFormFields[EMAIL].input(), `incorrect-${account[EMAIL]}`);
+    cy.keyboardInput(field(EMAIL).input(), `incorrect-${account[EMAIL]}`);
     cy.keyboardInput(accountFormFields[PASSWORD].input(), `incorrect-${account[PASSWORD]}`);
 
     submitButton().click();
@@ -97,7 +97,7 @@ context('Insurance - Account - Sign in - Validation', () => {
   });
 
   it('should render a validation error for both fields when password is a pure number', () => {
-    cy.keyboardInput(accountFormFields[EMAIL].input(), `incorrect-${account[EMAIL]}`);
+    cy.keyboardInput(field(EMAIL).input(), `incorrect-${account[EMAIL]}`);
     cy.keyboardInput(accountFormFields[PASSWORD].input(), '12345');
 
     submitButton().click();

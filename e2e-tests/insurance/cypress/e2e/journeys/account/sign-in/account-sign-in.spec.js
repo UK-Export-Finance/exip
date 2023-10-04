@@ -71,7 +71,6 @@ context('Insurance - Account - Sign in - As an Exporter, I want to sign in into 
       const fieldId = EMAIL;
       const field = accountFormFields[fieldId];
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
 
       field.input().should('exist');
@@ -86,7 +85,6 @@ context('Insurance - Account - Sign in - As an Exporter, I want to sign in into 
       });
 
       it('renders a label and input', () => {
-        field.label().should('exist');
         cy.checkText(field.label(), FIELD_STRINGS.SIGN_IN[fieldId].LABEL);
 
         field.input().should('exist');

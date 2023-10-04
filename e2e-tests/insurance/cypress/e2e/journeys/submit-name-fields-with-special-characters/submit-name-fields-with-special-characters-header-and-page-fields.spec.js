@@ -1,7 +1,6 @@
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
-import { enterCodePage } from '../../../../../pages/insurance/account/sign-in';
 import { companyOrOrganisationPage } from '../../../../../pages/insurance/your-buyer';
-import { submitButton, backLink } from '../../../../../pages/shared';
+import { field, submitButton, backLink } from '../../../../../pages/shared';
 import dashboardPage from '../../../../../pages/insurance/dashboard';
 import partials from '../../../../../partials';
 import mockAccount from '../../../../../fixtures/account';
@@ -57,7 +56,7 @@ context('Insurance - Name fields - Header and page fields should render special 
 
       // get the OTP security code
       cy.accountAddAndGetOTP(mockAccount.emailAddress).then((securityCode) => {
-        cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), securityCode);
+        cy.keyboardInput(field(SECURITY_CODE).input(), securityCode);
 
         // submit the OTP security code
         submitButton().click();

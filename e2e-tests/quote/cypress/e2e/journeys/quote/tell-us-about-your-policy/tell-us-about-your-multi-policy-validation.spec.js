@@ -5,9 +5,9 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeMultiForm,
 } from '../../../../../../commands/quote/forms';
-import { submitButton } from '../../../../../../pages/shared';
-import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
+import { field, submitButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
+import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
@@ -58,7 +58,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[CURRENCY].errorMessage(),
+        field(CURRENCY).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY}`,
       );
 
@@ -69,7 +69,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].errorMessage(),
+        field(MAX_AMOUNT_OWED).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].IS_EMPTY}`,
       );
 
@@ -80,7 +80,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].errorMessage(),
+        field(PERCENTAGE_OF_COVER).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY}`,
       );
 
@@ -99,15 +99,15 @@ context('Tell us about the multiple policy you need - form validation', () => {
     it('should focus on inputs when clicking summary error message', () => {
       // currency
       partials.errorSummaryListItemLinks().eq(0).click();
-      tellUsAboutYourPolicyPage[CURRENCY].input().should('have.focus');
+      field(CURRENCY).input().should('have.focus');
 
       // max amount owed
       partials.errorSummaryListItemLinks().eq(1).click();
-      tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input().should('have.focus');
+      field(MAX_AMOUNT_OWED).input().should('have.focus');
 
       // perecentage of cover
       partials.errorSummaryListItemLinks().eq(2).click();
-      tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().should('have.focus');
+      field(PERCENTAGE_OF_COVER).input().should('have.focus');
 
       // credit period
       partials.errorSummaryListItemLinks().eq(3).click();
@@ -119,7 +119,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), 'a');
+      cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), 'a');
       submitButton().click();
 
       cy.checkText(
@@ -128,7 +128,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].errorMessage(),
+        field(MAX_AMOUNT_OWED).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_NUMBER}`,
       );
     });
@@ -138,7 +138,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '1234.56');
+      cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '1234.56');
       submitButton().click();
 
       cy.checkText(
@@ -147,7 +147,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].errorMessage(),
+        field(MAX_AMOUNT_OWED).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER}`,
       );
     });
@@ -157,7 +157,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '0');
+      cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '0');
       submitButton().click();
 
       cy.checkText(
@@ -166,7 +166,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       );
 
       cy.checkText(
-        tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].errorMessage(),
+        field(MAX_AMOUNT_OWED).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].BELOW_MINIMUM}`,
       );
     });
@@ -194,14 +194,14 @@ context('Tell us about the multiple policy you need - form validation', () => {
     it('should render submitted values', () => {
       cy.navigateToUrl(url);
 
-      tellUsAboutYourPolicyPage[CURRENCY].input().select(GBP_CURRENCY_CODE);
-      cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '10');
+      field(CURRENCY).input().select(GBP_CURRENCY_CODE);
+      cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '10');
 
       submitButton().click();
 
-      tellUsAboutYourPolicyPage[CURRENCY].inputOptionSelected().contains(GBP_CURRENCY_CODE);
+      field(CURRENCY).inputOptionSelected().contains(GBP_CURRENCY_CODE);
 
-      tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input()
+      field(MAX_AMOUNT_OWED).input()
         .should('have.attr', 'value', '10');
     });
   });

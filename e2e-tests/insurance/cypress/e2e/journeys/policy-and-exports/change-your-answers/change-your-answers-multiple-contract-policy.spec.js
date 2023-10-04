@@ -1,4 +1,4 @@
-import { submitButton, summaryList } from '../../../../../../pages/shared';
+import { field, submitButton, summaryList } from '../../../../../../pages/shared';
 import { multipleContractPolicyPage } from '../../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../../partials';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
@@ -85,7 +85,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.keyboardInput(multipleContractPolicyPage[fieldId].yearInput(), newAnswer.year);
+          cy.keyboardInput(field(fieldId).yearInput(), newAnswer.year);
 
           submitButton().click();
         });
@@ -123,7 +123,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
 
           summaryList.field(fieldId).changeLink().click();
 
-          multipleContractPolicyPage[fieldId].input().select(newAnswer);
+          field(fieldId).input().select(newAnswer);
 
           submitButton().click();
         });
@@ -161,7 +161,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.keyboardInput(multipleContractPolicyPage[fieldId].input(), newAnswer);
+          cy.keyboardInput(field(fieldId).input(), newAnswer);
 
           submitButton().click();
         });
@@ -237,7 +237,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.keyboardInput(multipleContractPolicyPage[fieldId].input(), newAnswer);
+          cy.keyboardInput(field(fieldId).input(), newAnswer);
 
           submitButton().click();
         });

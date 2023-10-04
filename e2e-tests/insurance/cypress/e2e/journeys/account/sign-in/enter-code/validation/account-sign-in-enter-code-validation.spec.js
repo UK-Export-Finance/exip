@@ -1,4 +1,4 @@
-import { enterCodePage } from '../../../../../../../../pages/insurance/account/sign-in';
+import { field as fieldSelector } from '../../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../../constants/routes/insurance';
@@ -19,7 +19,7 @@ const {
   INSURANCE: { ACCOUNT: { [SECURITY_CODE]: SECURITY_CODE_ERROR_MESSAGE } },
 } = ERROR_MESSAGES;
 
-const field = enterCodePage[SECURITY_CODE];
+const field = fieldSelector(SECURITY_CODE);
 let value = null;
 const fieldIndex = 0;
 const TOTAL_REQUIRED_FIELDS = 1;
@@ -67,7 +67,7 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
 
     cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
 
-    enterCodePage[SECURITY_CODE].input().should('have.value', invalidSecurityCode);
+    field.input().should('have.value', invalidSecurityCode);
   });
 
   describe('when submitting a valid security code', () => {

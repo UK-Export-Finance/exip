@@ -1,8 +1,7 @@
 import partials from '../../../../../../../partials';
-import { summaryList } from '../../../../../../../pages/shared';
+import { field, summaryList } from '../../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { natureOfBusiness } from '../../../../../../../pages/your-business';
 
 const {
   ROOT,
@@ -96,7 +95,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = 'test 12345';
-        cy.changeAnswerField(fieldVariables, natureOfBusiness[fieldId].input());
+        cy.changeAnswerField(fieldVariables, field(fieldId).input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -135,7 +134,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = '25';
-        cy.changeAnswerField(fieldVariables, natureOfBusiness[fieldId].input());
+        cy.changeAnswerField(fieldVariables, field(fieldId).input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -174,7 +173,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = '26';
-        cy.changeAnswerField(fieldVariables, natureOfBusiness[fieldId].input());
+        cy.changeAnswerField(fieldVariables, field(fieldId).input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -213,7 +212,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = '35';
-        cy.changeAnswerField(fieldVariables, natureOfBusiness[fieldId].input());
+        cy.changeAnswerField(fieldVariables, field(fieldId).input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {

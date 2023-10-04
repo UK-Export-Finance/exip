@@ -1,8 +1,7 @@
 import { successPage } from '../../../../../../pages/insurance/account/password-reset';
-import { enterCodePage } from '../../../../../../pages/insurance/account/sign-in';
-import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { submitButton } from '../../../../../../pages/shared';
+import { field, submitButton } from '../../../../../../pages/shared';
 import api from '../../../../../../commands/api';
 import account from '../../../../../../fixtures/account';
 
@@ -12,14 +11,15 @@ const {
     SIGN_IN: { ROOT: SIGN_IN_ROOT, ENTER_CODE },
   },
   DASHBOARD,
-} = ROUTES;
+} = INSURANCE_ROUTES;
 
 const {
   ACCOUNT: { SECURITY_CODE, PASSWORD },
 } = INSURANCE_FIELD_IDS;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Password reset and sign in - As an Exporter, I want to login to my UKEF digital service account after my password reset, So that I can securely access my digital service account with UKEF', () => {
-  const baseUrl = Cypress.config('baseUrl');
   const successUrl = `${baseUrl}${SUCCESS}`;
   const signInUrl = `${baseUrl}${SIGN_IN_ROOT}`;
   const enterCodeUrl = `${baseUrl}${ENTER_CODE}`;
@@ -86,7 +86,7 @@ context('Insurance - Account - Password reset and sign in - As an Exporter, I wa
       it(`should redirect to ${DASHBOARD}`, () => {
         cy.navigateToUrl(enterCodeUrl);
 
-        cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), validSecurityCode);
+        cy.keyboardInput(field(SECURITY_CODE).input(), validSecurityCode);
 
         submitButton().click();
 
