@@ -5,14 +5,14 @@
 FROM node:20.8.0-alpine3.17 AS build
 
 # Build variables
-ARG GITHUB_SHA
+ARG PORT
+ARG NODE_ENV
 ARG SESSION_SECRET
 ARG GOV_NOTIFY_API_KEY
-ARG API_PORT
-ENV GITHUB_SHA=$GITHUB_SHA
+ENV PORT=$PORT
+ENV NODE_ENV=$NODE_ENV
 ENV SESSION_SECRET=$SESSION_SECRET
 ENV GOV_NOTIFY_API_KEY=$GOV_NOTIFY_API_KEY
-ENV API_PORT=$API_PORT
 
 
 WORKDIR /app
@@ -90,7 +90,7 @@ COPY --chown=node:node --from=build /app/nullable-checkbox ./nullable-checkbox
 COPY --chown=node:node --from=build /app/XLSX ./XLSX
 
 # Expose listening port
-EXPOSE ${API_PORT}
+EXPOSE ${PORT}
 
 # Container healthcheck
 HEALTHCHECK \
@@ -99,7 +99,7 @@ HEALTHCHECK \
 CMD wget \
 --no-verbose \
 --tries=3 \
---spider http://localhost:${API_PORT} \
+--spider http://localhost:${PORT} \
 || exit 1
 
 # Execute Script
