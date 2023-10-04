@@ -153,8 +153,6 @@ context('Insurance - Your business - Change your answers - Broker - As an export
     });
   });
 
-  // TODO - missing EMAIL test.
-
   describe(NAME, () => {
     const fieldId = NAME;
 
@@ -165,6 +163,42 @@ context('Insurance - Your business - Change your answers - Broker - As an export
         summaryList.field(fieldId).changeLink().click();
 
         cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, NAME);
+      });
+    });
+
+    describe('form submission with a new answer', () => {
+      const newAnswer = 'testing321@test.com';
+
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.keyboardInput(field(fieldId).input(), newAnswer);
+
+        submitButton().click();
+      });
+
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+      });
+
+      it('should render the new answer', () => {
+        cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
+      });
+    });
+  });
+
+  describe(EMAIL, () => {
+    const fieldId = EMAIL;
+
+    describe('when clicking the `change` link', () => {
+      it(`should redirect to ${BROKER_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, EMAIL);
       });
     });
 
