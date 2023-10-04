@@ -1,12 +1,18 @@
 import partials from '../../../../../../../partials';
-import { FIELD_VALUES, ROUTES } from '../../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import requestedCoverStartDate from '../../../../../../../commands/insurance/requested-start-date-field';
+
+const {
+  ROOT,
+  POLICY_AND_EXPORTS: { SINGLE_CONTRACT_POLICY },
+} = INSURANCE_ROUTES;
 
 const { taskList } = partials.insurancePartials;
 
 const { checkValidation } = requestedCoverStartDate;
 
-const { INSURANCE } = ROUTES;
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy and exports - Single contract policy page - form validation - requested start date', () => {
   let referenceNumber;
@@ -20,7 +26,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
       cy.assertUrl(url);
     });

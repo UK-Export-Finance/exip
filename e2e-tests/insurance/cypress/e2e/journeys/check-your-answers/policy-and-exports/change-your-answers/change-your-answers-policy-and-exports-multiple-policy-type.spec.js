@@ -1,5 +1,6 @@
 import partials from '../../../../../../../partials';
-import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { field, summaryList } from '../../../../../../../pages/shared';
 import application from '../../../../../../../fixtures/application';
 import { multipleContractPolicyPage } from '../../../../../../../pages/insurance/policy-and-export';
@@ -15,20 +16,18 @@ const {
   CHECK_YOUR_ANSWERS: {
     TYPE_OF_POLICY,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
-        POLICY_CURRENCY_CODE,
-        MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-      },
+  POLICY_AND_EXPORTS: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      CREDIT_PERIOD_WITH_BUYER,
+      POLICY_CURRENCY_CODE,
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
@@ -103,7 +102,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
           fieldVariables.newValueInput = newAnswer.year;
 
-          cy.changeAnswerField(fieldVariables, multipleContractPolicyPage[fieldId].yearInput());
+          cy.changeAnswerField(fieldVariables, field(fieldId).yearInput());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {

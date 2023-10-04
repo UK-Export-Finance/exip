@@ -148,10 +148,10 @@ context('Insurance - Policy and exports - Different name on Policy page - I want
     it('should should have submitted values when navigating back to page', () => {
       cy.navigateToUrl(url);
 
-      cy.checkValue(fieldSelector(FIRST_NAME).input(), POLICY_CONTACT[FIRST_NAME]);
-      cy.checkValue(fieldSelector(LAST_NAME).input(), POLICY_CONTACT[LAST_NAME]);
-      cy.checkValue(fieldSelector(EMAIL).input(), POLICY_CONTACT[EMAIL]);
-      cy.checkValue(fieldSelector(POSITION).input(), POLICY_CONTACT[POSITION]);
+      cy.checkValue(fieldSelector(FIRST_NAME), POLICY_CONTACT[FIRST_NAME]);
+      cy.checkValue(fieldSelector(LAST_NAME), POLICY_CONTACT[LAST_NAME]);
+      cy.checkValue(fieldSelector(EMAIL), POLICY_CONTACT[EMAIL]);
+      cy.checkValue(fieldSelector(POSITION), POLICY_CONTACT[POSITION]);
     });
   });
 });

@@ -16,7 +16,7 @@ const {
 } = FIELD_IDS;
 
 export default () => {
-  cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].input(), application.EXPORT_CONTRACT[DESCRIPTION]);
+  cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].textarea(), application.EXPORT_CONTRACT[DESCRIPTION]);
 
   cy.keyboardInput(countryInput.field(FINAL_DESTINATION).input(), mockCountries[1].name);
 

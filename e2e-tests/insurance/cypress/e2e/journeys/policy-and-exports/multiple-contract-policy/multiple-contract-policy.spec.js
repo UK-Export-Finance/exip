@@ -13,12 +13,9 @@ import {
   TASKS,
 } from '../../../../../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
-import {
-  APPLICATION,
-  FIELD_IDS,
-  FIELD_VALUES,
-  ROUTES,
-} from '../../../../../../constants';
+import { APPLICATION, FIELD_VALUES } from '../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
 import checkPolicyCurrencyCodeInput from '../../../../../../commands/insurance/check-policy-currency-code-input';
 
@@ -27,35 +24,31 @@ const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY;
 
 const {
-  INSURANCE: {
-    ROOT: INSURANCE_ROOT,
-    ALL_SECTIONS,
-    POLICY_AND_EXPORTS: {
-      TYPE_OF_POLICY,
-      MULTIPLE_CONTRACT_POLICY,
-      ABOUT_GOODS_OR_SERVICES,
-    },
+  ROOT: INSURANCE_ROOT,
+  ALL_SECTIONS,
+  POLICY_AND_EXPORTS: {
+    TYPE_OF_POLICY,
+    MULTIPLE_CONTRACT_POLICY,
+    ABOUT_GOODS_OR_SERVICES,
   },
-} = ROUTES;
+} = INSURANCE_ROUTES;
 
 const { CONTRACT_POLICY } = FIELDS;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
-        POLICY_CURRENCY_CODE,
-        MULTIPLE: {
-          TOTAL_MONTHS_OF_COVER,
-          TOTAL_SALES_TO_BUYER,
-          MAXIMUM_BUYER_WILL_OWE,
-        },
+  POLICY_AND_EXPORTS: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      CREDIT_PERIOD_WITH_BUYER,
+      POLICY_CURRENCY_CODE,
+      MULTIPLE: {
+        TOTAL_MONTHS_OF_COVER,
+        TOTAL_SALES_TO_BUYER,
+        MAXIMUM_BUYER_WILL_OWE,
       },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
@@ -106,7 +99,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
 
     it('renders `requested start date` label, hint and inputs', () => {
       const fieldId = REQUESTED_START_DATE;
-      const field = multipleContractPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       cy.checkText(field.label(), CONTRACT_POLICY[fieldId].LABEL);
 
@@ -224,7 +217,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
         cy.checkText(fieldSelector(TOTAL_MONTHS_OF_COVER).inputOptionSelected(), `${application.POLICY_AND_EXPORTS[TOTAL_MONTHS_OF_COVER]} months`);
 
         fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
-        multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input().should('have.value', application.POLICY_AND_EXPORTS[MAXIMUM_BUYER_WILL_OWE]);
+        fieldSelector(MAXIMUM_BUYER_WILL_OWE).input().should('have.value', application.POLICY_AND_EXPORTS[MAXIMUM_BUYER_WILL_OWE]);
         fieldSelector(CREDIT_PERIOD_WITH_BUYER).input().should('have.value', application.POLICY_AND_EXPORTS[CREDIT_PERIOD_WITH_BUYER]);
         policyCurrencyCodeFormField.inputOptionSelected().contains(application.POLICY_AND_EXPORTS[POLICY_CURRENCY_CODE]);
       });

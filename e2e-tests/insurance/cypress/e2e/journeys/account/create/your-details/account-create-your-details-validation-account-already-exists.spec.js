@@ -1,5 +1,5 @@
 import { signInPage } from '../../../../../../../pages/insurance/account/sign-in';
-import passwordField from '../../../../../../../partials/insurance/passwordField';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -57,11 +57,12 @@ context('Insurance - Account - Create - Your details page - form validation - As
   });
 
   it('should render a validation error when trying to create an account with an email that already has an account', () => {
+    const field = fieldSelector(EMAIL);
     const value = mockAccount.email;
     const fieldIndex = 0;
     const TOTAL_REQUIRED_FIELDS = 1;
     const expectedMessage = String(YOUR_DETAILS_ERROR_MESSAGES[EMAIL].ACCOUNT_ALREADY_EXISTS);
 
-    cy.submitAndAssertFieldErrors(passwordField, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
+    cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
   });
 });

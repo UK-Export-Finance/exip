@@ -45,7 +45,9 @@ context('Insurance - Feedback - form validation', () => {
       const fieldIndex = 0;
       const expectedMessage = String(ERROR_MESSAGE_IMPROVEMENT);
 
-      cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
+      const textareaField = { ...field, input: field.textarea };
+
+      cy.submitAndAssertFieldErrors(textareaField, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
     });
 
     it('should display validation errors', () => {
@@ -54,7 +56,9 @@ context('Insurance - Feedback - form validation', () => {
       const fieldIndex = 0;
       const expectedMessage = String(ERROR_MESSAGE_OTHER_COMMENT);
 
-      cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
+      const textareaField = { ...field, input: field.textarea };
+
+      cy.submitAndAssertFieldErrors(textareaField, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
     });
   });
 });

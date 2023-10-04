@@ -52,8 +52,8 @@ context('Insurance - Feedback - Submit feedback form', () => {
       partials.phaseBanner.feedbackLink().click();
 
       field(SATISFIED).input().click();
-      cy.keyboardInput(field(IMPROVEMENT).input(), 'test');
-      cy.keyboardInput(field(OTHER_COMMENTS).input(), 'test');
+      cy.keyboardInput(field(IMPROVEMENT).textarea(), 'test');
+      cy.keyboardInput(field(OTHER_COMMENTS).textarea(), 'test');
       submitButton().click();
     });
 
@@ -82,8 +82,8 @@ context('Insurance - Feedback - Submit feedback form', () => {
       partials.phaseBanner.feedbackLink().click();
 
       field(SATISFIED).input().click();
-      cy.keyboardInput(field(IMPROVEMENT).input(), longString);
-      cy.keyboardInput(field(OTHER_COMMENTS).input(), longString);
+      cy.keyboardInput(field(IMPROVEMENT).textarea(), longString);
+      cy.keyboardInput(field(OTHER_COMMENTS).textarea(), longString);
       submitButton().click();
     });
 
@@ -109,7 +109,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
       cy.navigateToUrl(startUrl);
       partials.phaseBanner.feedbackLink().click();
 
-      cy.keyboardInput(field(IMPROVEMENT).input(), 'test');
+      cy.keyboardInput(field(IMPROVEMENT).textarea(), 'test');
       submitButton().click();
     });
 

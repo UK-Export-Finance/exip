@@ -51,7 +51,7 @@ export const completeAndSubmitTellUsAboutYourSinglePolicyForm = () => {
   cy.keyboardInput(field(POLICY_LENGTH).input(), '3');
   field(CURRENCY).input().select(GBP_CURRENCY_CODE);
   cy.keyboardInput(field(CONTRACT_VALUE).input(), '150000');
-  tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
+  field(PERCENTAGE_OF_COVER).input().select('90');
   submitButton().click();
 };
 

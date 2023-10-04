@@ -106,10 +106,10 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
 
           fieldVariables.newValueInput = newAnswer.year;
 
-          cy.changeAnswerField(fieldVariables, singleContractPolicyPage[fieldId].yearInput(), false);
+          cy.changeAnswerField(fieldVariables, field(fieldId).yearInput(), false);
 
           fieldVariables.newValueInput = contractCompletionDateYearChange;
-          cy.changeAnswerField(fieldVariables, singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput());
+          cy.changeAnswerField(fieldVariables, field(CONTRACT_COMPLETION_DATE).yearInput());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -153,7 +153,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
 
           fieldVariables.newValueInput = newAnswer.year;
 
-          cy.changeAnswerField(fieldVariables, singleContractPolicyPage[fieldId].yearInput());
+          cy.changeAnswerField(fieldVariables, field(fieldId).yearInput());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {

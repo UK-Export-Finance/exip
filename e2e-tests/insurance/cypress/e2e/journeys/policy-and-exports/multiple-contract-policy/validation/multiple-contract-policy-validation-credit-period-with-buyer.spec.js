@@ -1,24 +1,27 @@
 import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
+import { typeOfPolicyPage } from '../../../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const { taskList } = partials.insurancePartials;
 
-const multiplePolicyFieldId = FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE;
-const multiplePolicyField = fieldSelector(multiplePolicyFieldId);
-
-const { INSURANCE } = ROUTES;
+const multiplePolicyFieldId = INSURANCE_FIELD_IDS.POLICY_AND_EXPORTS.POLICY_TYPE;
+const multiplePolicyField = typeOfPolicyPage[multiplePolicyFieldId].multiple;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        CREDIT_PERIOD_WITH_BUYER,
-      },
+  POLICY_AND_EXPORTS: {
+    CONTRACT_POLICY: {
+      CREDIT_PERIOD_WITH_BUYER,
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
+
+const {
+  ROOT,
+  POLICY_AND_EXPORTS: { MULTIPLE_CONTRACT_POLICY },
+} = INSURANCE_ROUTES;
 
 const {
   INSURANCE: {
@@ -27,6 +30,8 @@ const {
     },
   },
 } = ERROR_MESSAGES;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy and exports - Multiple contract policy page - form validation - credit period with buyer', () => {
   let referenceNumber;
@@ -41,7 +46,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
       multiplePolicyField.input().click();
       submitButton().click();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
       cy.assertUrl(url);
     });

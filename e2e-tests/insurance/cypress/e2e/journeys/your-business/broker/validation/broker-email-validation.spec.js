@@ -1,4 +1,5 @@
 import { brokerPage } from '../../../../../../../pages/your-business';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ROUTES } from '../../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
@@ -24,8 +25,10 @@ const task = taskList.prepareApplication.tasks.business;
 
 const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
+const field = brokerPage[FIELD_ID];
+
 const ERROR_ASSERTIONS = {
-  errorField: brokerPage[EMAIL],
+  errorField: fieldSelector(EMAIL),
   expectedErrorsCount: 5,
   errorIndex: 3,
   errorMessage: BROKER_ERRORS[EMAIL].INCORRECT_FORMAT,
@@ -59,8 +62,6 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   });
 
   it('should display validation errors when the email field is left empty', () => {
-    const field = brokerPage[FIELD_ID];
-
     field.yesRadioInput().click();
 
     const {
@@ -72,8 +73,6 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   });
 
   it('should display validation errors when email does not contain an @ symbol', () => {
-    const field = brokerPage[FIELD_ID];
-
     field.yesRadioInput().click();
 
     const {
@@ -87,8 +86,6 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   });
 
   it('should display validation errors when email does not contain at least one dot', () => {
-    const field = brokerPage[FIELD_ID];
-
     field.yesRadioInput().click();
 
     const {
@@ -102,8 +99,6 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   });
 
   it('should display validation errors when email contains a space', () => {
-    const field = brokerPage[FIELD_ID];
-
     field.yesRadioInput().click();
 
     const {
@@ -117,8 +112,6 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   });
 
   it('should display validation errors when email does not contain a domain', () => {
-    const field = brokerPage[FIELD_ID];
-
     field.yesRadioInput().click();
 
     const {

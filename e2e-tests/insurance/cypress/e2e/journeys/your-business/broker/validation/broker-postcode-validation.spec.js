@@ -1,7 +1,8 @@
 import { brokerPage } from '../../../../../../../pages/your-business';
 import partials from '../../../../../../../partials';
 import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
-import { ROUTES, INVALID_POSTCODES, VALID_POSTCODES } from '../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INVALID_POSTCODES, VALID_POSTCODES } from '../../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 
@@ -17,7 +18,7 @@ const {
   EXPORTER_BUSINESS: {
     BROKER,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const { taskList } = partials.insurancePartials;
 
@@ -25,8 +26,10 @@ const task = taskList.prepareApplication.tasks.business;
 
 const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
+const field = brokerPage[FIELD_ID];
+
 const ERROR_ASSERTIONS = {
-  errorField: brokerPage[POSTCODE],
+  errorField: fieldSelector(POSTCODE),
   expectedErrorsCount: 5,
   errorIndex: 4,
   errorMessageEmpty: BROKER_ERRORS[POSTCODE].IS_EMPTY,
@@ -36,8 +39,6 @@ const ERROR_ASSERTIONS = {
 context('Insurance - Your business - Broker Page - Validation - Postcode', () => {
   let referenceNumber;
   let url;
-
-  const field = brokerPage[FIELD_ID];
 
   before(() => {
     Cypress.session.clearAllSavedSessions();

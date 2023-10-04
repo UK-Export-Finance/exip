@@ -1,13 +1,4 @@
-import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
-import passwordField from '../../../partials/insurance/passwordField';
-
-const {
-  ACCOUNT: { PASSWORD },
-} = INSURANCE_FIELD_IDS;
-
-const fieldId = PASSWORD;
-
-const field = passwordField[fieldId];
+import field from '../../../partials/insurance/passwordField';
 
 const assertPasswordLabelHintAndInput = (fieldStrings) => {
   cy.checkText(field.label(), fieldStrings.LABEL);

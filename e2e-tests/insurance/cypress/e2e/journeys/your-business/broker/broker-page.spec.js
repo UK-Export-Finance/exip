@@ -4,7 +4,7 @@ import { field as fieldSelector, saveAndBackButton, submitButton } from '../../.
 import {
   PAGES, BUTTONS, ERROR_MESSAGES, LINKS,
 } from '../../../../../../content-strings';
-import { ROUTES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/business';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import application from '../../../../../../fixtures/application';
@@ -33,7 +33,7 @@ const {
     TURNOVER,
     CHECK_YOUR_ANSWERS,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const { taskList } = partials.insurancePartials;
 
@@ -49,6 +49,8 @@ const ERROR_ASSERTIONS = {
   numberOfExpectedErrors: 1,
   errorIndex: 0,
 };
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your business - Broker Page - As an Exporter I want to confirm if I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my export insurance', () => {
   let referenceNumber;
@@ -66,8 +68,8 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
-      checkYourAnswersUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER}`;
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
       cy.assertUrl(url);
     });
@@ -141,9 +143,9 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
       const field = brokerPage[fieldId];
       field.yesRadioInput().click();
 
-      cy.checkText(brokerPage[LEGEND](), FIELDS.BROKER[LEGEND].LEGEND);
+      cy.checkText(fieldSelector(LEGEND).legend(), FIELDS.BROKER[LEGEND].LEGEND);
 
-      cy.checkText(brokerPage[NAME].label(), FIELDS.BROKER[NAME].LABEL);
+      cy.checkText(fieldSelector(NAME).label(), FIELDS.BROKER[NAME].LABEL);
       fieldSelector(NAME).input().should('exist');
 
       cy.checkText(fieldSelector(ADDRESS_LINE_1).label(), FIELDS.BROKER[ADDRESS_LINE_1].LABEL);

@@ -1,12 +1,18 @@
 import partials from '../../../../../../../partials';
-import { FIELD_VALUES, ROUTES } from '../../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import requestedCoverStartDate from '../../../../../../../commands/insurance/requested-start-date-field';
+
+const {
+  ROOT,
+  POLICY_AND_EXPORTS: { MULTIPLE_CONTRACT_POLICY },
+} = INSURANCE_ROUTES;
 
 const { taskList } = partials.insurancePartials;
 
 const { checkValidation } = requestedCoverStartDate;
 
-const { INSURANCE } = ROUTES;
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy and exports - Multiple contract policy page - form validation - requested start date', () => {
   let referenceNumber;
@@ -20,7 +26,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
       cy.assertUrl(url);
     });

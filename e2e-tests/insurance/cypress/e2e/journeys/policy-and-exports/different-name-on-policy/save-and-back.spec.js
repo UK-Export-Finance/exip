@@ -76,10 +76,10 @@ context('Insurance - Policy and exports - Different name on policy - Save and go
     it('should have the all inputs as empty when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
-      cy.checkValue(field(FIRST_NAME).input(), '');
-      cy.checkValue(field(LAST_NAME).input(), '');
-      cy.checkValue(field(EMAIL).input(), '');
-      cy.checkValue(field(POSITION).input(), '');
+      cy.checkValue(field(FIRST_NAME), '');
+      cy.checkValue(field(LAST_NAME), '');
+      cy.checkValue(field(EMAIL), '');
+      cy.checkValue(field(POSITION), '');
     });
   });
 
@@ -87,8 +87,8 @@ context('Insurance - Policy and exports - Different name on policy - Save and go
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(field(FIRST_NAME).input().input(), POLICY_CONTACT[FIRST_NAME]);
-      cy.keyboardInput(field(LAST_NAME).input().input(), POLICY_CONTACT[LAST_NAME]);
+      cy.keyboardInput(field(FIRST_NAME).input(), POLICY_CONTACT[FIRST_NAME]);
+      cy.keyboardInput(field(LAST_NAME).input(), POLICY_CONTACT[LAST_NAME]);
 
       saveAndBackButton().click();
     });
@@ -100,10 +100,10 @@ context('Insurance - Policy and exports - Different name on policy - Save and go
     it('should have the originally submitted answers populated when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
-      cy.checkValue(field(FIRST_NAME).input(), POLICY_CONTACT[FIRST_NAME]);
-      cy.checkValue(field(LAST_NAME).input(), POLICY_CONTACT[LAST_NAME]);
-      cy.checkValue(field(EMAIL).input(), '');
-      cy.checkValue(field(POSITION).input(), '');
+      cy.checkValue(field(FIRST_NAME), POLICY_CONTACT[FIRST_NAME]);
+      cy.checkValue(field(LAST_NAME), POLICY_CONTACT[LAST_NAME]);
+      cy.checkValue(field(EMAIL), '');
+      cy.checkValue(field(POSITION), '');
     });
   });
 
@@ -122,10 +122,10 @@ context('Insurance - Policy and exports - Different name on policy - Save and go
     it('should have the originally submitted answers populated when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
-      cy.checkValue(field(FIRST_NAME).input(), POLICY_CONTACT[FIRST_NAME]);
-      cy.checkValue(field(LAST_NAME).input(), POLICY_CONTACT[LAST_NAME]);
-      cy.checkValue(field(EMAIL).input(), POLICY_CONTACT[EMAIL]);
-      cy.checkValue(field(POSITION).input(), POLICY_CONTACT[POSITION]);
+      cy.checkValue(field(FIRST_NAME), POLICY_CONTACT[FIRST_NAME]);
+      cy.checkValue(field(LAST_NAME), POLICY_CONTACT[LAST_NAME]);
+      cy.checkValue(field(EMAIL), POLICY_CONTACT[EMAIL]);
+      cy.checkValue(field(POSITION), POLICY_CONTACT[POSITION]);
     });
   });
 });

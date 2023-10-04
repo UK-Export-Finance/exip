@@ -10,7 +10,6 @@ const {
     EMPLOYEES_INTERNATIONAL,
     EMPLOYEES_UK,
   },
-
 } = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
 
 const {
@@ -76,7 +75,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(field(fieldId).input(), newAnswer);
+        cy.keyboardInput(field(fieldId).textarea(), newAnswer);
 
         submitButton().click();
       });

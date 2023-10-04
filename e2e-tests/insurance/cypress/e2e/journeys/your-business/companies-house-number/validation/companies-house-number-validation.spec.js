@@ -1,9 +1,7 @@
-import { companiesHouseNumber } from '../../../../../../../pages/your-business';
+import { field } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import {
-  ROUTES,
-  FIELD_IDS,
   COMPANIES_HOUSE_NUMBER,
   COMPANIES_HOUSE_NUMBER_EMPTY,
   COMPANIES_HOUSE_NUMBER_TOO_SHORT,
@@ -11,12 +9,16 @@ import {
   COMPANIES_HOUSE_NUMBER_WITH_SPACE,
   COMPANIES_HOUSE_NUMBER_NOT_FOUND,
 } from '../../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
-const { ROOT } = ROUTES.INSURANCE;
+const { ROOT } = INSURANCE_ROUTES;
 
 const {
-  COMPANIES_HOUSE_NUMBER: FIELD_ID,
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+  EXPORTER_BUSINESS: {
+    COMPANIES_HOUSE_NUMBER: FIELD_ID,
+  },
+} = INSURANCE_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
@@ -24,13 +26,13 @@ const task = taskList.prepareApplication.tasks.business;
 
 const COMPANY_HOUSE_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your business - Companies house number page validation', () => {
   let referenceNumber;
   let url;
   let companyDetailsUrl;
   let companyNumber;
-
-  const baseUrl = Cypress.config('baseUrl');
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -38,8 +40,8 @@ context('Insurance - Your business - Companies house number page validation', ()
 
       task.link().click();
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER}`;
-      companyDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${INSURANCE_ROUTES.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER}`;
+      companyDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${INSURANCE_ROUTES.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
       cy.assertUrl(url);
     });
   });
@@ -62,7 +64,7 @@ context('Insurance - Your business - Companies house number page validation', ()
     });
 
     it('should display the incorrect format error', () => {
-      cy.submitAndAssertFieldErrors(companiesHouseNumber, companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
     });
   });
 
@@ -76,7 +78,7 @@ context('Insurance - Your business - Companies house number page validation', ()
     });
 
     it('should display the incorrect format error', () => {
-      cy.submitAndAssertFieldErrors(companiesHouseNumber, companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
     });
   });
 
@@ -90,7 +92,7 @@ context('Insurance - Your business - Companies house number page validation', ()
     });
 
     it('should display the incorrect format error', () => {
-      cy.submitAndAssertFieldErrors(companiesHouseNumber, companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
     });
   });
 
@@ -104,7 +106,7 @@ context('Insurance - Your business - Companies house number page validation', ()
     });
 
     it('should display the incorrect format error', () => {
-      cy.submitAndAssertFieldErrors(companiesHouseNumber, companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
     });
   });
 
@@ -118,7 +120,7 @@ context('Insurance - Your business - Companies house number page validation', ()
     });
 
     it('should display the incorrect format error', () => {
-      cy.submitAndAssertFieldErrors(companiesHouseNumber, companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].NOT_FOUND);
+      cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].NOT_FOUND);
     });
   });
 
@@ -126,14 +128,12 @@ context('Insurance - Your business - Companies house number page validation', ()
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      companyNumber = COMPANIES_HOUSE_NUMBER;
-
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companyNumber });
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, COMPANIES_HOUSE_NUMBER });
     });
 
     it('should not display errors and redirect to companies details page', () => {
       partials.errorSummaryListItems().should('not.exist');
-      companiesHouseNumber.errorMessage().should('not.exist');
+      field(FIELD_ID).errorMessage().should('not.exist');
       cy.assertUrl(companyDetailsUrl);
     });
   });
