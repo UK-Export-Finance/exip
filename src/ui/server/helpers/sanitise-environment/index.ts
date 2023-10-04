@@ -1,11 +1,17 @@
-/**
- * Sanitises an environment variable string by replacing occurrences of all the sequence
- * '\\n' with a newline character ('\n').
- * Note the triple back-slash are for escaping the escaped back-slash.
- * @param string - The input string that needs to be sanitised.
- * @returns The sanitised version of the input string.
- * @example `ABC\\nCBA` will be sanitised to
- * `ABC
- * CBA`
- */
-export const sanitise = (string?: string): string | undefined => (string ? string.replace(/\\n|\\\n|\\\\n/g, '\n') : string);
+export const sanitise = (string?: string): string | undefined => {
+  /**
+   * Sanitises the input string by replacing occurrences of the sequence '\\n' with a newline character ('\n').
+   *
+   * @param string - The input string to be sanitised.
+   * @returns The sanitised version of the input string, or undefined if no input string is provided.
+   *
+   * @example
+   * const input = 'ABC\\nCBA';
+   * const output = sanitise(input);
+   * console.log(output);
+   * // Output:
+   * // ABC
+   * // CBA
+   */
+  return string ? string.replace(/\\n|\\\n|\\\\n/g, '\n') : string;
+};
