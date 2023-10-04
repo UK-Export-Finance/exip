@@ -1,6 +1,7 @@
 import { signInPage } from '../../../../../../pages/insurance/account/sign-in';
 import { yourDetailsPage } from '../../../../../../pages/insurance/account/create';
-import accountFormFields from '../../../../../../partials/insurance/accountFormFields';
+import passwordField from '../../../../../../partials/insurance/passwordField';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { ACCOUNT_FIELDS } from '../../../../../../content-strings/fields/insurance/account';
@@ -69,7 +70,7 @@ context('Insurance - Account - Sign in - As an Exporter, I want to sign in into 
 
     it('renders `email` label and input', () => {
       const fieldId = EMAIL;
-      const field = accountFormFields[fieldId];
+      const field = fieldSelector(fieldId);
 
       cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
 
@@ -78,7 +79,7 @@ context('Insurance - Account - Sign in - As an Exporter, I want to sign in into 
 
     describe('password', () => {
       const fieldId = PASSWORD;
-      const field = accountFormFields[fieldId];
+      const field = passwordField;
 
       beforeEach(() => {
         cy.navigateToUrl(url);

@@ -1,5 +1,5 @@
 import { submitButton } from '../../../pages/shared';
-import accountFormFields from '../../../partials/insurance/accountFormFields';
+import passwordField from '../../../partials/insurance/passwordField';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import account from '../../../fixtures/account';
 
@@ -13,7 +13,7 @@ const {
  * @param {Object}: Arguments/values to complete the form
  */
 const completeAndSubmitNewPasswordAccountForm = ({ password = account[PASSWORD] }) => {
-  cy.keyboardInput(accountFormFields[PASSWORD].input(), password);
+  cy.keyboardInput(passwordField.input(), password);
   submitButton().click();
 };
 

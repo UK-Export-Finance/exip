@@ -1,5 +1,5 @@
 import { enterCodePage } from '../../../../../../pages/insurance/account/sign-in';
-import accountFormFields from '../../../../../../partials/insurance/accountFormFields';
+import passwordField from '../../../../../../partials/insurance/passwordField';
 import { field, submitButton } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -34,7 +34,7 @@ context('Insurance - Account - Sign in - I want to enter the new security code s
     cy.assertUrl(`${baseUrl}${SIGN_IN_ROOT}`);
 
     cy.keyboardInput(field(EMAIL).input(), account[EMAIL]);
-    cy.keyboardInput(accountFormFields[PASSWORD].input(), account[PASSWORD]);
+    cy.keyboardInput(passwordField.input(), account[PASSWORD]);
 
     submitButton().click();
 

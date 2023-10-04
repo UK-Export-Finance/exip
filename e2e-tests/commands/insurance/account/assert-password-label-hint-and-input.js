@@ -1,5 +1,5 @@
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
-import accountFormFields from '../../../partials/insurance/accountFormFields';
+import passwordField from '../../../partials/insurance/passwordField';
 
 const {
   ACCOUNT: { PASSWORD },
@@ -7,16 +7,16 @@ const {
 
 const fieldId = PASSWORD;
 
-const field = accountFormFields[fieldId];
+const field = passwordField[fieldId];
 
 const assertPasswordLabelHintAndInput = (fieldStrings) => {
   cy.checkText(field.label(), fieldStrings.LABEL);
 
-  cy.checkText(accountFormFields[fieldId].hint.intro(), fieldStrings.HINT.INTRO);
-  cy.checkText(accountFormFields[fieldId].hint.listItem1(), fieldStrings.HINT.RULES[0]);
-  cy.checkText(accountFormFields[fieldId].hint.listItem2(), fieldStrings.HINT.RULES[1]);
-  cy.checkText(accountFormFields[fieldId].hint.listItem3(), fieldStrings.HINT.RULES[2]);
-  cy.checkText(accountFormFields[fieldId].hint.listItem4(), fieldStrings.HINT.RULES[3]);
+  cy.checkText(field.hint.intro(), fieldStrings.HINT.INTRO);
+  cy.checkText(field.hint.listItem1(), fieldStrings.HINT.RULES[0]);
+  cy.checkText(field.hint.listItem2(), fieldStrings.HINT.RULES[1]);
+  cy.checkText(field.hint.listItem3(), fieldStrings.HINT.RULES[2]);
+  cy.checkText(field.hint.listItem4(), fieldStrings.HINT.RULES[3]);
 
   field.input().should('exist');
 };
