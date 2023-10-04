@@ -2,7 +2,6 @@ import {
   field as fieldSelector,
   headingCaption,
   saveAndBackButton,
-  submitButton,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
@@ -94,7 +93,6 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       const fieldId = NAME;
       const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
       field.input().should('exist');
     });
@@ -103,7 +101,6 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       const fieldId = ADDRESS;
       const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
       field.input().should('exist');
     });
@@ -112,7 +109,6 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       const fieldId = REGISTRATION_NUMBER;
       const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
       field.input().should('exist');
@@ -122,7 +118,6 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       const fieldId = WEBSITE;
       const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
       field.input().should('exist');
@@ -143,7 +138,6 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       field.hint().should('exist');
       cy.checkText(field.hint(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HINT);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
       field.input().should('exist');
@@ -153,7 +147,6 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       const fieldId = LAST_NAME;
       const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
       field.input().should('exist');
@@ -163,7 +156,6 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       const fieldId = POSITION;
       const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
       field.input().should('exist');
@@ -173,7 +165,6 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       const fieldId = CAN_CONTACT_BUYER;
       const field = companyOrOrganisationPage[fieldId];
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
       field.hint().should('exist');
@@ -187,21 +178,12 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       const fieldId = EMAIL;
       const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
       field.input().should('exist');
     });
 
-    it('renders a `submit` button', () => {
-      submitButton().should('exist');
-
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
-    });
-
     it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });

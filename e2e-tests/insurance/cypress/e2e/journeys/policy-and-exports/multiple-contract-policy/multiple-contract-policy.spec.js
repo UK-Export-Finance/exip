@@ -190,8 +190,6 @@ context('Insurance - Policy and exports - Multiple contract policy page - As an 
     });
 
     it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });

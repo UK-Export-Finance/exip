@@ -84,7 +84,6 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
     });
 
     it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
 

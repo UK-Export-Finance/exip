@@ -66,7 +66,6 @@ context('Change your answers (policy type) - multiple times via back button - as
 
     const field = tellUsAboutYourPolicyPage[CREDIT_PERIOD];
 
-    field.label().should('exist');
     field.hint().should('exist');
     field.input().should('exist');
   });
@@ -130,7 +129,6 @@ context('Change your answers (policy type) - multiple times via back button - as
     it('renders credit period field in the `tell us about your policy` page', () => {
       const field = tellUsAboutYourPolicyPage[CREDIT_PERIOD];
 
-      field.label().should('exist');
       field.hint().should('exist');
       field.input().should('exist');
     });

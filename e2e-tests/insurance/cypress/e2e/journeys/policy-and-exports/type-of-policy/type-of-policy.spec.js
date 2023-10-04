@@ -102,8 +102,6 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     });
 
     it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });

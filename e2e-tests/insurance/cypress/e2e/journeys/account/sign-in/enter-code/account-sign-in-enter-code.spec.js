@@ -63,7 +63,6 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
         const fieldId = SECURITY_CODE;
         const field = fieldSelector(fieldId);
 
-        field.label().should('exist');
         cy.checkText(field.label(), FIELD_STRINGS.LABEL);
 
         field.input().should('exist');

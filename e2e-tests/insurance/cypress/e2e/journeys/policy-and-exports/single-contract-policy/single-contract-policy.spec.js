@@ -102,7 +102,6 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
       const fieldId = REQUESTED_START_DATE;
       const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.CONTRACT_POLICY[fieldId].LABEL);
 
       cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY[fieldId].HINT);
@@ -116,7 +115,6 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
       const fieldId = CONTRACT_COMPLETION_DATE;
       const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].LABEL);
 
       cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT);
@@ -130,7 +128,6 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
       const fieldId = TOTAL_CONTRACT_VALUE;
       const field = singleContractPolicyPage[fieldId];
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].LABEL);
 
       const hintContent = FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT;
@@ -160,7 +157,6 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
       const fieldId = CREDIT_PERIOD_WITH_BUYER;
       const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.CONTRACT_POLICY[fieldId].LABEL);
 
       cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY[fieldId].HINT);
@@ -175,8 +171,6 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
     });
 
     it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });

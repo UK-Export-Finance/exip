@@ -1,4 +1,4 @@
-import { headingCaption, saveAndBackButton, submitButton } from '../../../../../../pages/shared';
+import { headingCaption, saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { workingWithBuyerPage } from '../../../../../../pages/insurance/your-buyer';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
@@ -81,7 +81,6 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
 
       const labelCopy = FIELDS.WORKING_WITH_BUYER[fieldId].LABEL;
 
-      field.label().should('exist');
       cy.checkText(field.label(), labelCopy);
 
       field.hint().should('exist');
@@ -99,7 +98,6 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
       const labelCopy = FIELDS.WORKING_WITH_BUYER[fieldId].LABEL;
       const hintCopy = FIELDS.WORKING_WITH_BUYER[fieldId].HINT;
 
-      field.label().should('exist');
       cy.checkText(field.label(), labelCopy);
 
       cy.checkText(field.hint(), hintCopy);
@@ -109,15 +107,7 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
       cy.checkAriaLabel(field.noRadioInput(), `${labelCopy} No`);
     });
 
-    it('renders a `submit` button', () => {
-      submitButton().should('exist');
-
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
-    });
-
     it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
 

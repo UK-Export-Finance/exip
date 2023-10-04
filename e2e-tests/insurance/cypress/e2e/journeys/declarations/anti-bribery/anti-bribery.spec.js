@@ -146,7 +146,6 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
     });
 
     it("renders `I've read and agree` label and input", () => {
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS[FIELD_ID].LABEL);
 
       field.input().should('exist');

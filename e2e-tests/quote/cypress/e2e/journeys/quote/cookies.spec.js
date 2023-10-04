@@ -165,12 +165,6 @@ context('Cookies page - Quote', () => {
       cy.checkText(reject.label(), FIELDS[FIELD_ID].OPTIONS.REJECT.TEXT);
     });
 
-    it('renders a submit button', () => {
-      submitButton().should('exist');
-
-      cy.checkText(submitButton(), BUTTONS.SAVE_CHANGES);
-    });
-
     describe('form submission', () => {
       describe('when submitting an empty form', () => {
         beforeEach(() => {

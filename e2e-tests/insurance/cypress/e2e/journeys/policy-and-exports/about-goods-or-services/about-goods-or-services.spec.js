@@ -93,7 +93,6 @@ context('Insurance - Policy and exports - About goods or services page - As an e
       const fieldId = DESCRIPTION;
       const field = aboutGoodsOrServicesPage[fieldId];
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].LABEL);
 
       cy.checkText(field.hint.intro(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.INTRO);
@@ -111,7 +110,6 @@ context('Insurance - Policy and exports - About goods or services page - As an e
       const fieldId = FINAL_DESTINATION;
       const field = countryInput.field(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].LABEL);
 
       field.input().should('exist');
@@ -147,8 +145,6 @@ context('Insurance - Policy and exports - About goods or services page - As an e
     });
 
     it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });

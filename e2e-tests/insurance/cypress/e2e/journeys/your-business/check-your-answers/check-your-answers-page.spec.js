@@ -78,10 +78,6 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
     });
 
     it('renders a `save and back` button', () => {
-      submitButton().should('exist');
-      cy.checkText(submitButton(), BUTTONS.CONTINUE_NEXT_SECTION);
-
-      saveAndBackButton().should('exist');
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });

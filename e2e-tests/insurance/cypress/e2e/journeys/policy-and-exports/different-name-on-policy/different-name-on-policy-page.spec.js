@@ -131,8 +131,6 @@ context('Insurance - Policy and exports - Different name on Policy page - I want
     });
 
     it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });

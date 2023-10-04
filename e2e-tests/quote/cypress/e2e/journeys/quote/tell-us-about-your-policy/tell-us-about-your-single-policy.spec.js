@@ -93,7 +93,6 @@ context('Tell us about your single policy page - as an exporter, I want to provi
 
       const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS[fieldId].LABEL);
 
       field.input().should('exist');
@@ -114,7 +113,6 @@ context('Tell us about your single policy page - as an exporter, I want to provi
 
       const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS[fieldId].LABEL);
 
       field.input().should('exist');
@@ -125,7 +123,6 @@ context('Tell us about your single policy page - as an exporter, I want to provi
 
       const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS[fieldId].SINGLE_POLICY.LABEL);
 
       cy.checkText(field.hint(), '');
