@@ -27,6 +27,8 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Policy and exports - About goods or services page - Save and go back', () => {
   let referenceNumber;
   let url;
@@ -41,7 +43,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
 
       cy.completeAndSubmitSingleContractPolicyForm({});
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
       cy.assertUrl(url);
     });
   });
@@ -62,7 +64,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
@@ -77,12 +79,12 @@ context('Insurance - Policy and exports - About goods or services page - Save an
       cy.navigateToUrl(url);
 
       // submit the form via 'save and go back' button
-      cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].input(), application.EXPORT_CONTRACT[DESCRIPTION]);
+      cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].textarea(), application.EXPORT_CONTRACT[DESCRIPTION]);
       saveAndBackButton().click();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
@@ -95,7 +97,7 @@ context('Insurance - Policy and exports - About goods or services page - Save an
       cy.navigateToUrl(url);
 
       // submit the form via 'save and go back' button
-      cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].input(), application.EXPORT_CONTRACT[DESCRIPTION]);
+      cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].textarea(), application.EXPORT_CONTRACT[DESCRIPTION]);
       saveAndBackButton().click();
 
       // go back to the page via the task list
@@ -103,29 +105,29 @@ context('Insurance - Policy and exports - About goods or services page - Save an
       submitButton().click();
       submitButton().click();
 
-      aboutGoodsOrServicesPage[DESCRIPTION].input().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
+      aboutGoodsOrServicesPage[DESCRIPTION].textarea().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
     });
   });
 
-  describe('when removing a previously submitted `buyer credit period` value', () => {
+  describe('when removing a previously submitted `description` value', () => {
     const field = aboutGoodsOrServicesPage[DESCRIPTION];
 
     beforeEach(() => {
       cy.navigateToUrl(url);
 
       // submit a value
-      cy.keyboardInput(field.input(), 'Test');
+      cy.keyboardInput(field.textarea(), 'Test');
       saveAndBackButton().click();
 
       // go back to the page
       cy.clickBackLink();
 
-      field.input().clear();
+      field.textarea().clear();
       saveAndBackButton().click();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
@@ -134,13 +136,13 @@ context('Insurance - Policy and exports - About goods or services page - Save an
       cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
-    it('should have no value in `buyer credit period` when going back to the page', () => {
+    it('should have no value in `description` when going back to the page', () => {
       // go back to the page via the task list
       task.link().click();
       submitButton().click();
       submitButton().click();
 
-      field.input().should('have.value', '');
+      field.textarea().should('have.value', '');
     });
   });
 });
