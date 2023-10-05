@@ -47,7 +47,6 @@ const checkAutocompleteInput = {
 
     // search for a different country, submit with enter key
     cy.keyboardInput(field.input(), `${country2}{enter}`);
-    // cy.keyboardInput(field.input(), `${country2}`);
 
     // check hidden input value
     const expectedValue = country2;
