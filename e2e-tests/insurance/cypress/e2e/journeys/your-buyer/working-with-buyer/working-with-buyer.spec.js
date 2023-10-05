@@ -83,7 +83,6 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
 
       cy.checkText(field.label(), labelCopy);
 
-      field.hint().should('exist');
       cy.checkText(field.hint(), FIELDS.WORKING_WITH_BUYER[fieldId].HINT);
 
       cy.checkAriaLabel(field.yesRadioInput(), `${labelCopy} Yes`);

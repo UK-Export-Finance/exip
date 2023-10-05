@@ -136,7 +136,6 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       const fieldId = FIRST_NAME;
       const field = fieldSelector(fieldId);
 
-      field.hint().should('exist');
       cy.checkText(field.hint(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HINT);
 
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);

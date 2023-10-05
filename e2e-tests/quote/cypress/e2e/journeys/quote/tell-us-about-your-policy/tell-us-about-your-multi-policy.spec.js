@@ -123,7 +123,6 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
 
       cy.checkText(field.label(), FIELDS[fieldId].MULTIPLE_POLICY.LABEL);
 
-      field.hint().should('exist');
       cy.checkText(field.hint(), FIELDS[fieldId].MULTIPLE_POLICY.HINT);
 
       field.input().should('exist');
@@ -136,7 +135,6 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
 
       cy.checkText(field.label(), FIELDS[fieldId].MULTIPLE_POLICY.LABEL);
 
-      field.hint().should('exist');
       cy.checkText(field.hint(), FIELDS[fieldId].MULTIPLE_POLICY.HINT);
 
       field.input().should('exist');
@@ -155,8 +153,6 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       const field = tellUsAboutYourPolicyPage[fieldId];
 
       cy.checkText(field.label(), FIELDS[fieldId].LABEL);
-
-      field.hint().should('exist');
 
       const { HINT } = FIELDS[fieldId];
 
