@@ -12,7 +12,9 @@ import {
   TASKS,
 } from '../../../../../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
 import countries from '../../../../../../fixtures/countries';
 import checkAutocompleteInput from '../../../../../../commands/shared-commands/assertions/check-autocomplete-input';
@@ -22,26 +24,24 @@ const { taskList } = partials.insurancePartials;
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES;
 
 const {
-  INSURANCE: {
-    ROOT: INSURANCE_ROOT,
-    ALL_SECTIONS,
-    POLICY_AND_EXPORTS: {
-      SINGLE_CONTRACT_POLICY,
-      ABOUT_GOODS_OR_SERVICES,
-      NAME_ON_POLICY,
-    },
+  ROOT: INSURANCE_ROOT,
+  ALL_SECTIONS,
+  POLICY_AND_EXPORTS: {
+    SINGLE_CONTRACT_POLICY,
+    ABOUT_GOODS_OR_SERVICES,
+    NAME_ON_POLICY,
   },
-} = ROUTES;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
-    },
+  POLICY_AND_EXPORTS: {
+    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy and exports - About goods or services page - As an exporter, I want to enter the details of the export contract', () => {
   let referenceNumber;
@@ -58,7 +58,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
       cy.completeAndSubmitSingleContractPolicyForm({});
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
       cy.assertUrl(url);
     });
@@ -103,7 +103,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
       cy.checkText(field.hint.list.item3(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[2]);
 
-      field.input().should('exist');
+      field.textarea().should('exist');
     });
 
     it('renders `final destination` label and input with disabled first input', () => {
@@ -136,11 +136,11 @@ context('Insurance - Policy and exports - About goods or services page - As an e
       });
 
       it('renders multiple country results after searching', () => {
-        checkAutocompleteInput.rendersMultipleResults(field, 'Be');
+        checkAutocompleteInput.rendersMultipleResults(field);
       });
 
       it('allows user to remove a selected country and search again', () => {
-        checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(field, countries[1].name, countries[4].name);
+        checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(field, countries[0].name, countries[1].name);
       });
     });
 
@@ -155,7 +155,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
       cy.completeAndSubmitAboutGoodsOrServicesForm();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
       cy.assertUrl(expectedUrl);
     });
 
@@ -180,7 +180,7 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
 
-        aboutGoodsOrServicesPage[DESCRIPTION].input().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
+        aboutGoodsOrServicesPage[DESCRIPTION].textarea().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
 
         const country = countries.find((c) => c.isoCode === application.EXPORT_CONTRACT[FINAL_DESTINATION]);
         cy.checkText(countryInput.field(FINAL_DESTINATION).results(), country.name);
@@ -198,14 +198,14 @@ context('Insurance - Policy and exports - About goods or services page - As an e
 
         cy.clickBackLink();
 
-        cy.keyboardInput(descriptionField.input(), submittedValue);
+        cy.keyboardInput(descriptionField.textarea(), submittedValue);
         submitButton().click();
       });
 
       it('should retain the submitted value when going back to the page', () => {
         cy.clickBackLink();
 
-        descriptionField.input().should('have.value', submittedValue);
+        descriptionField.textarea().should('have.value', submittedValue);
       });
     });
   });

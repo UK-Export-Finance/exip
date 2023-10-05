@@ -18,6 +18,8 @@ const {
 
 const { MAXIMUM } = FIELDS.NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES];
 
+const baseUrl = Cypress.config('baseUrl');
+
 describe('Insurance - Your business - Nature of your business page - As an Exporter I want to enter details about the nature of my business - goods or services input validation', () => {
   let referenceNumber;
   let url;
@@ -31,7 +33,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
 
-      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
+      url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
 
       cy.assertUrl(url);
     });
@@ -49,6 +51,8 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
   const fieldId = GOODS_OR_SERVICES;
   const field = fieldSelector(fieldId);
+  const textareaField = { ...field, input: field.textarea };
+
   const expectedErrorsCount = 4;
 
   describe(`when ${GOODS_OR_SERVICES} is left empty`, () => {
@@ -56,7 +60,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].IS_EMPTY;
 
       cy.submitAndAssertFieldErrors(
-        field,
+        textareaField,
         null,
         0,
         expectedErrorsCount,
@@ -69,13 +73,13 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       submitButton().click();
 
       partials.errorSummaryListItemLinks().first().click();
-      field.input().should('have.focus');
+      field.textarea().should('have.focus');
     });
   });
 
   describe(`when ${GOODS_OR_SERVICES} has over ${MAXIMUM} characters`, () => {
     beforeEach(() => {
-      cy.keyboardInput(field.input(), 'a'.repeat(MAXIMUM + 1));
+      cy.keyboardInput(field.textarea(), 'a'.repeat(MAXIMUM + 1));
       submitButton().click();
     });
 
@@ -85,7 +89,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       const submittedValue = 'a'.repeat(MAXIMUM + 1);
 
       cy.submitAndAssertFieldErrors(
-        field,
+        textareaField,
         submittedValue,
         0,
         expectedErrorsCount,
@@ -99,7 +103,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     it('should not display validation errors', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(field.input(), 'test');
+      cy.keyboardInput(field.textarea(), 'test');
       submitButton().click();
 
       cy.checkErrorSummaryListHeading();

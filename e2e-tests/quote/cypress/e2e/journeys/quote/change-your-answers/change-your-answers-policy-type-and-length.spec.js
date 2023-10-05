@@ -44,7 +44,7 @@ const changeFromSingleToMultiple = () => {
 
   // max amount owed and credit period fields are now required because it's a multiple policy
   cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '120000');
-  policyTypePage[CREDIT_PERIOD].input().select('1');
+  field(CREDIT_PERIOD).input().select('1');
 
   submitButton().click();
 };
@@ -141,7 +141,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
       // max amount owed and credit period fields are now required because it's a multiple policy
       cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '120000');
-      policyTypePage[CREDIT_PERIOD].input().select('1');
+      field(CREDIT_PERIOD).input().select('1');
       submitButton().click();
     });
 

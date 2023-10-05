@@ -13,6 +13,7 @@ const field = (id) => ({
   yearInput: () => cy.get(`[data-cy="${id}-year-input"]`),
   errorMessage: () => cy.get(`[data-cy="${id}-error-message"]`),
   prefix: () => cy.get(`[data-cy="${id}-prefix"]`),
+  suffix: () => cy.get(`[data-cy="${id}-suffix"]`),
 });
 
 export default field;

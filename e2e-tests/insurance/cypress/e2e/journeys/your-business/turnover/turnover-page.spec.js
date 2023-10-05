@@ -1,8 +1,9 @@
 import partials from '../../../../../../partials';
 import { field as fieldSelector, saveAndBackButton } from '../../../../../../pages/shared';
+import { turnoverPage } from '../../../../../../pages/your-business';
 import { PAGES, BUTTONS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
-import { ROUTES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/business';
 import { formatDate } from '../../../../../../helpers/date';
 import application from '../../../../../../fixtures/application';
@@ -24,7 +25,7 @@ const {
     NATURE_OF_BUSINESS,
     BROKER,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const { taskList } = partials.insurancePartials;
 
@@ -36,6 +37,8 @@ const financialYearEnd = {
 };
 
 financialYearEnd.expectedValue = formatDate(financialYearEnd.timestamp, financialYearEnd.content.DATE_FORMAT);
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your business - Turnover page - As an Exporter I want to enter the I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
   let referenceNumber;
@@ -52,8 +55,8 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitNatureOfYourBusiness();
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
-      brokerUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
+      brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER}`;
 
       cy.assertUrl(url);
     });
@@ -88,7 +91,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       const fieldId = FINANCIAL_YEAR_END_DATE;
       const field = fieldSelector(fieldId);
 
-      cy.checkText(field.value(), financialYearEnd.expectedValue);
+      cy.checkText(turnoverPage[fieldId](), financialYearEnd.expectedValue);
 
       cy.checkText(field.label(), financialYearEnd.content.LABEL);
 
@@ -143,9 +146,10 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
     it('should have the submitted values', () => {
       cy.navigateToUrl(url);
 
-      cy.checkText(fieldSelector(FINANCIAL_YEAR_END_DATE).value(), financialYearEnd.expectedValue);
+      cy.checkText(turnoverPage[FINANCIAL_YEAR_END_DATE](), financialYearEnd.expectedValue);
 
       fieldSelector(ESTIMATED_ANNUAL_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+
       fieldSelector(PERCENTAGE_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
     });
   });

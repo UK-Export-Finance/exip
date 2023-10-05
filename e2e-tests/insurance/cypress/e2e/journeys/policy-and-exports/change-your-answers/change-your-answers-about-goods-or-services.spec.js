@@ -74,7 +74,7 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(aboutGoodsOrServicesPage[fieldId].input(), newAnswer);
+        cy.keyboardInput(aboutGoodsOrServicesPage[fieldId].textarea(), newAnswer);
 
         submitButton().click();
       });

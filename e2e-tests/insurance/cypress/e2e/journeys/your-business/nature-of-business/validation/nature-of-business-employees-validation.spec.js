@@ -1,7 +1,8 @@
 import partials from '../../../../../../../partials';
 import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const NATURE_OF_BUSINESS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
@@ -10,11 +11,20 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.business;
 
 const {
-  NATURE_OF_YOUR_BUSINESS: {
-    EMPLOYEES_UK,
-    EMPLOYEES_INTERNATIONAL,
+  EXPORTER_BUSINESS: {
+    NATURE_OF_YOUR_BUSINESS: {
+      EMPLOYEES_UK,
+      EMPLOYEES_INTERNATIONAL,
+    },
   },
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+} = INSURANCE_FIELD_IDS;
+
+const {
+  ROOT,
+  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS },
+} = INSURANCE_ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
 
 describe('Insurance - Your business - Nature of your business page - As an Exporter I want to enter details about the nature of my business - number of employees input validation', () => {
   let referenceNumber;
@@ -29,7 +39,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
 
-      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
 
       cy.assertUrl(url);
     });
@@ -215,13 +225,14 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_INTERNATIONAL].BELOW_UK;
 
       it(`should display validation errors for ${EMPLOYEES_INTERNATIONAL}`, () => {
-        const fieldId = EMPLOYEES_INTERNATIONAL;
-        const field = fieldSelector(fieldId);
+        const internationalField = fieldSelector(EMPLOYEES_INTERNATIONAL);
+        const ukField = fieldSelector(EMPLOYEES_UK);
 
-        cy.keyboardInput(field.input(), '20');
+        cy.keyboardInput(ukField.input(), '20');
+
         const value = '10';
 
-        cy.submitAndAssertFieldErrors(field, value, 2, 3, errorMessage);
+        cy.submitAndAssertFieldErrors(internationalField, value, 2, 3, errorMessage);
       });
     });
 

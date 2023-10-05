@@ -1,4 +1,5 @@
 import {
+  countryInput,
   field as fieldSelector,
   headingCaption,
   saveAndBackButton,
@@ -83,10 +84,10 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it('renders a buyer country section', () => {
       const fieldId = COUNTRY;
-      const field = fieldSelector(fieldId);
+      const field = countryInput.field(fieldId);
 
       cy.checkText(field.heading(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
-      cy.checkText(field.value(), country.name);
+      cy.checkText(companyOrOrganisationPage[fieldId](), country.name);
     });
 
     it(`renders an ${NAME} label, and input`, () => {
@@ -167,8 +168,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
-      field.hint().should('exist');
-      cy.checkText(field.hint(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HINT);
+      cy.checkText(field.yesNoRadioHint(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HINT);
 
       field.yesRadioInput().should('exist');
       field.noRadioInput().should('exist');
@@ -206,12 +206,12 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
         cy.navigateToUrl(url);
 
         companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().should('be.checked');
-        cy.checkValue(companyOrOrganisationPage[ADDRESS], BUYER[ADDRESS]);
-        cy.checkValue(companyOrOrganisationPage[REGISTRATION_NUMBER], BUYER[REGISTRATION_NUMBER]);
-        cy.checkValue(companyOrOrganisationPage[WEBSITE], BUYER[WEBSITE]);
-        cy.checkValue(companyOrOrganisationPage[FIRST_NAME], BUYER[FIRST_NAME]);
-        cy.checkValue(companyOrOrganisationPage[LAST_NAME], BUYER[LAST_NAME]);
-        cy.checkValue(companyOrOrganisationPage[POSITION], BUYER[POSITION]);
+        cy.checkValue(fieldSelector(ADDRESS), BUYER[ADDRESS]);
+        cy.checkValue(fieldSelector(REGISTRATION_NUMBER), BUYER[REGISTRATION_NUMBER]);
+        cy.checkValue(fieldSelector(WEBSITE), BUYER[WEBSITE]);
+        cy.checkValue(fieldSelector(FIRST_NAME), BUYER[FIRST_NAME]);
+        cy.checkValue(fieldSelector(LAST_NAME), BUYER[LAST_NAME]);
+        cy.checkValue(fieldSelector(POSITION), BUYER[POSITION]);
       });
     });
   });

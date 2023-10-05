@@ -8,7 +8,6 @@ import {
   WEBSITE_EXAMPLES,
   COMPANY_EXAMPLE,
 } from '../../../../../../../constants';
-import { companyDetails } from '../../../../../../../pages/your-business';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
@@ -18,13 +17,13 @@ const {
     YOUR_BUSINESS,
   },
   EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE_NUMBER,
     COMPANIES_HOUSE_NUMBER_CHECK_AND_CHANGE,
     COMPANY_DETAILS_CHECK_AND_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
 const {
+  COMPANIES_HOUSE_NUMBER,
   COMPANY_HOUSE: {
     COMPANY_NAME,
     COMPANY_NUMBER,
@@ -119,6 +118,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = '14440211';
+
         cy.changeAnswerField(fieldVariables, field(COMPANIES_HOUSE_NUMBER).input());
       });
 
@@ -251,7 +251,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = VALID_PHONE_NUMBERS.LANDLINE.NORMAL;
-        cy.changeAnswerField(fieldVariables, companyDetails[PHONE_NUMBER].input());
+        cy.changeAnswerField(fieldVariables, field(PHONE_NUMBER).input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -292,7 +292,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = WEBSITE_EXAMPLES.VALID;
-        cy.changeAnswerField(fieldVariables, companyDetails[WEBSITE].input());
+        cy.changeAnswerField(fieldVariables, field(WEBSITE).input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {

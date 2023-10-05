@@ -1,12 +1,11 @@
-import { companyDetails } from '../../../../../../pages/your-business';
 import { field, saveAndBackButton, yesRadioInput } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import {
-  ROUTES, FIELD_IDS, INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS,
+  INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS,
 } from '../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { TASKS } from '../../../../../../content-strings';
-
-const { ALL_SECTIONS } = ROUTES.INSURANCE;
 
 const {
   EXPORTER_BUSINESS: {
@@ -17,7 +16,13 @@ const {
       PHONE_NUMBER,
     },
   },
-} = FIELD_IDS.INSURANCE;
+} = INSURANCE_FIELD_IDS;
+
+const {
+  ROOT,
+  ALL_SECTIONS,
+  EXPORTER_BUSINESS: { COMPANY_DETAILS },
+} = INSURANCE_ROUTES;
 
 const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.business;
@@ -36,7 +41,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
 
       task.link().click();
 
@@ -62,7 +67,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       yesRadioInput().eq(1).click();
       saveAndBackButton().click();
 
-      cy.assertUrl(`${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
@@ -84,7 +89,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
       saveAndBackButton().click();
 
-      cy.assertUrl(`${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
@@ -108,7 +113,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
       saveAndBackButton().click();
 
-      cy.assertUrl(`${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
@@ -117,7 +122,9 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
       yesRadioInput().first().should('be.checked');
       yesRadioInput().eq(1).should('be.checked');
-      cy.checkValue(companyDetails[PHONE_NUMBER], VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
+
+      cy.checkValue(field(PHONE_NUMBER), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
+
       field(WEBSITE).input().should('be.empty');
     });
   });
@@ -133,7 +140,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
       saveAndBackButton().click();
 
-      cy.assertUrl(`${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
@@ -142,8 +149,8 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
       yesRadioInput().first().should('be.checked');
       yesRadioInput().eq(1).should('be.checked');
-      cy.checkValue(companyDetails[PHONE_NUMBER], VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
-      cy.checkValue(companyDetails[WEBSITE], WEBSITE_EXAMPLES.VALID);
+      cy.checkValue(field(PHONE_NUMBER), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
+      cy.checkValue(field(WEBSITE), WEBSITE_EXAMPLES.VALID);
     });
   });
 });

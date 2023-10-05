@@ -1,4 +1,4 @@
-import passwordField from '../../../../../../../partials/insurance/passwordField';
+import { field } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -23,7 +23,7 @@ const {
 } = ERROR_MESSAGES;
 
 const ERROR_ASSERTIONS = {
-  errorField: passwordField,
+  errorField: field(EMAIL),
   expectedErrorsCount: 1,
   errorIndex: 0,
   errorMessage: PASSWORD_RESET_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT,

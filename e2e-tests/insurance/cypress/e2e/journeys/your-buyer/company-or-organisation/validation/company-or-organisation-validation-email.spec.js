@@ -1,10 +1,9 @@
 import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
-import { companyOrOrganisationPage } from '../../../../../../../pages/insurance/your-buyer';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { ROUTES, INVALID_EMAILS } from '../../../../../../../constants';
+import { INVALID_EMAILS } from '../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
-import { INSURANCE_ROOT } from '../../../../../../../constants/routes/insurance';
 import application from '../../../../../../../fixtures/application';
 
 const {
@@ -12,6 +11,11 @@ const {
     EMAIL: FIELD_ID,
   },
 } = FIELD_IDS;
+
+const {
+  ROOT: INSURANCE_ROOT,
+  YOUR_BUYER: { COMPANY_OR_ORGANISATION },
+} = INSURANCE_ROUTES;
 
 const {
   INSURANCE: {
@@ -27,6 +31,8 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.buyer;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your Buyer - Company or organisation page - form validation - email', () => {
   let referenceNumber;
   let url;
@@ -37,7 +43,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
       task.link().click();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`;
 
       cy.assertUrl(url);
     });
@@ -54,7 +60,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   });
 
   const ERROR_ASSERTIONS = {
-    field: companyOrOrganisationPage[FIELD_ID],
+    field: fieldSelector(FIELD_ID),
     numberOfExpectedErrors: 7,
     errorIndex: 5,
   };

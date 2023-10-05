@@ -25,6 +25,8 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your business - Nature of your business page - Save and back', () => {
   let referenceNumber;
   let url;
@@ -38,7 +40,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
       cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
 
       cy.assertUrl(url);
     });
@@ -60,7 +62,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
@@ -74,13 +76,13 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(field(GOODS_OR_SERVICES).input(), application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
+      cy.keyboardInput(field(GOODS_OR_SERVICES).textarea(), application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
 
       saveAndBackButton().click();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
@@ -96,7 +98,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
       // company details submit
       submitButton().click();
 
-      field(GOODS_OR_SERVICES).input().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
+      field(GOODS_OR_SERVICES).textarea().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
       field(YEARS_EXPORTING).input().should('have.value', '');
       field(EMPLOYEES_UK).input().should('have.value', '');
       field(EMPLOYEES_INTERNATIONAL).input().should('have.value', '');
@@ -107,7 +109,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(field(GOODS_OR_SERVICES).input(), application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
+      cy.keyboardInput(field(GOODS_OR_SERVICES).textarea(), application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
       cy.keyboardInput(field(YEARS_EXPORTING).input(), application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
       cy.keyboardInput(field(EMPLOYEES_UK).input(), application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
       cy.keyboardInput(field(EMPLOYEES_INTERNATIONAL).input(), application.EXPORTER_BUSINESS[EMPLOYEES_INTERNATIONAL]);
@@ -116,7 +118,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
@@ -131,7 +133,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
       // company details submit
       submitButton().click();
 
-      field(GOODS_OR_SERVICES).input().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
+      field(GOODS_OR_SERVICES).textarea().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
       field(YEARS_EXPORTING).input().should('have.value', application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
       field(EMPLOYEES_UK).input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
       field(EMPLOYEES_INTERNATIONAL).input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_INTERNATIONAL]);
