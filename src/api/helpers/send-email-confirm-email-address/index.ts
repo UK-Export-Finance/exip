@@ -1,4 +1,6 @@
 import getAccountById from '../get-account-by-id';
+import generateAccountVerificationHash from '../get-account-verification-hash';
+import update from '../update-account';
 import getFullNameString from '../get-full-name-string';
 import sendEmail from '../../emails';
 import { Context, SuccessResponse } from '../../types';
@@ -25,12 +27,33 @@ const send = async (context: Context, urlOrigin: string, accountId: string): Pro
       };
     }
 
+    let latestVerificationHash = '';
+
+    if (account.verificationHash) {
+      latestVerificationHash = account.verificationHash;
+    } else {
+      /**
+       * If an account does not have a verification hash,
+       * 1) Generate a new hash
+       * 2) Update the account
+       */
+      const { email, salt } = account;
+
+      const { verificationHash, verificationExpiry } = generateAccountVerificationHash(email, salt);
+
+      const accountUpdate = { verificationHash, verificationExpiry };
+
+      latestVerificationHash = verificationHash;
+
+      await update.account(context, accountId, accountUpdate);
+    }
+
     // send "confirm email" email.
-    const { email, verificationHash } = account;
+    const { email } = account;
 
     const name = getFullNameString(account);
 
-    const emailResponse = await sendEmail.confirmEmailAddress(email, urlOrigin, name, verificationHash);
+    const emailResponse = await sendEmail.confirmEmailAddress(email, urlOrigin, name, latestVerificationHash);
 
     if (emailResponse.success) {
       return emailResponse;

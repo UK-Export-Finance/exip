@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { ACCOUNT } from '../../constants';
-import { Account } from '../../types';
+import { AccountVerification } from '../../types';
 
 const { EMAIL, ENCRYPTION } = ACCOUNT;
 
@@ -12,7 +12,14 @@ const {
   },
 } = ENCRYPTION;
 
-const generateAccountVerificationHash = (email: string, salt: string) => {
+/**
+ * generateAccountVerificationHash
+ * Generate a new account verification has
+ * @param {String} Account email address
+ * @param {String} Account salt
+ * @returns {Object} Verification hash and expiry
+ */
+const generateAccountVerificationHash = (email: string, salt: string): AccountVerification => {
   const verificationHash = crypto.pbkdf2Sync(email, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
 
   const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();

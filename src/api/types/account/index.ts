@@ -13,16 +13,19 @@ export interface AccountDeletionVariables {
   email: string;
 }
 
-export interface AccountInput {
+export interface AccountVerification {
+  isVerified?: boolean;
+  verificationHash: string;
+  verificationExpiry: Date;
+}
+
+export interface AccountInput extends AccountVerification {
   createdAt: Date;
   updatedAt: Date;
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-  isVerified?: boolean;
-  verificationHash: string;
-  verificationExpiry: Date;
 }
 
 export interface AddOtpToAccountVariables {
@@ -85,14 +88,14 @@ export interface AccountSignInVariables {
   password: string;
 }
 
-export interface Account extends AccountUpdateInput {
-  id: string;
+export interface AccountCreationCore {
   email: string;
   firstName: string;
   lastName: string;
   salt: string;
   hash: string;
-  verificationHash: string;
+  verificationHash?: string;
+  verificationExpiry?: Date;
   optSalt?: string;
   optHash?: string;
   otpExpiry?: Date;
@@ -102,6 +105,10 @@ export interface Account extends AccountUpdateInput {
   isVerified: boolean;
   reactivationHash?: string;
   reactivationExpiry?: Date;
+}
+
+export interface Account extends AccountCreationCore {
+  id: string;
 }
 
 export interface GetAccountPasswordResetTokenVariables {

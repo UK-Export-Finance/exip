@@ -1,21 +1,10 @@
-import crypto from 'crypto';
-import { ACCOUNT } from '../../../constants';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import encryptPassword from '../../../helpers/encrypt-password';
+import generateAccountVerificationHash from '../../../helpers/get-account-verification-hash';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
-import { AccountCreationVariables, Context } from '../../../types';
-
-const { EMAIL, ENCRYPTION } = ACCOUNT;
-
-const {
-  STRING_TYPE,
-  PBKDF2: { ITERATIONS, DIGEST_ALGORITHM },
-  PASSWORD: {
-    PBKDF2: { KEY_LENGTH },
-  },
-} = ENCRYPTION;
+import { AccountCreationVariables, AccountCreationCore, Context } from '../../../types';
 
 /**
  * createAnAccount
@@ -47,12 +36,9 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
     // generate encrypted password
     const { salt, hash } = encryptPassword(password);
 
-    // generate email verification hash/token and expiry.
-    const verificationHash = crypto.pbkdf2Sync(password, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
-
-    const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
-
     const now = new Date();
+
+    const { verificationHash, verificationExpiry } = generateAccountVerificationHash(email, salt);
 
     // create account data
     const accountData = {
@@ -61,11 +47,12 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
       email,
       salt,
       hash,
+      isVerified: false,
       verificationHash,
       verificationExpiry,
       createdAt: now,
       updatedAt: now,
-    };
+    } as AccountCreationCore;
 
     const creationResponse = await context.db.Account.createOne({
       data: accountData,
