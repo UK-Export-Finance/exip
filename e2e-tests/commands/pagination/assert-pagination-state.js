@@ -1,4 +1,4 @@
-import assertUrl from '../assert-url';
+import assertUrl from '../shared-commands/assertions/assert-url';
 import pagination from '../../partials/pagination';
 import assertActivePaginationLink from './assert-active-pagination-link';
 import assertPaginationNextLink from './assert-pagination-next-link';

@@ -1,4 +1,4 @@
-import checkLink from '../check-link';
+import checkLink from '../shared-commands/assertions/check-link';
 import pagination from '../../partials/pagination';
 import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
 

@@ -1,7 +1,7 @@
 import {
   headingCaption,
   saveAndBackButton,
-  input,
+  field,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import {
@@ -91,36 +91,34 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
     });
 
     it('renders a hint', () => {
-      cy.checkText(input.field(NAME).hint(), CONTENT_STRINGS.HINT);
+      cy.checkText(field(NAME).hint(), CONTENT_STRINGS.HINT);
     });
 
     it(`renders a ${SAME_NAME} radio`, () => {
-      input.field(SAME_NAME).input().should('exist');
+      field(SAME_NAME).input().should('exist');
 
       const nameAndEmail = `${account[FIRST_NAME]} ${account[LAST_NAME]} (${account[EMAIL]})`;
-      cy.checkText(input.field(SAME_NAME).label(), nameAndEmail);
+      cy.checkText(field(SAME_NAME).label(), nameAndEmail);
     });
 
     it(`should NOT display conditional "${POSITION}" section without selecting the "same name" radio`, () => {
-      input.field(POSITION).input().should('not.be.visible');
+      field(POSITION).input().should('not.be.visible');
     });
 
     it(`should display conditional "${POSITION}" section when selecting the "yes" radio`, () => {
-      input.field(SAME_NAME).input().click();
+      field(SAME_NAME).input().click();
 
-      input.field(POSITION).input().should('be.visible');
-      cy.checkText(input.field(POSITION).label(), FIELDS.NAME_ON_POLICY[POSITION].LABEL);
+      field(POSITION).input().should('be.visible');
+      cy.checkText(field(POSITION).label(), FIELDS.NAME_ON_POLICY[POSITION].LABEL);
     });
 
     it(`renders a ${OTHER_NAME} radio'`, () => {
-      input.field(OTHER_NAME).input().should('exist');
+      field(OTHER_NAME).input().should('exist');
 
-      cy.checkText(input.field(OTHER_NAME).label(), FIELDS.NAME_ON_POLICY.OPTIONS.OTHER_NAME.TEXT);
+      cy.checkText(field(OTHER_NAME).label(), FIELDS.NAME_ON_POLICY.OPTIONS.OTHER_NAME.TEXT);
     });
 
     it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });
@@ -142,8 +140,8 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
 
           cy.navigateToUrl(url);
 
-          input.field(SAME_NAME).input().should('be.checked');
-          cy.checkValue(input.field(POSITION), POLICY_CONTACT[POSITION]);
+          field(SAME_NAME).input().should('be.checked');
+          cy.checkValue(field(POSITION), POLICY_CONTACT[POSITION]);
         });
       });
     });
@@ -162,7 +160,7 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
         it('should have the submitted values', () => {
           cy.navigateToUrl(url);
 
-          input.field(OTHER_NAME).input().should('be.checked');
+          field(OTHER_NAME).input().should('be.checked');
         });
       });
     });

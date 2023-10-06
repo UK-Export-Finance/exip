@@ -72,8 +72,6 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
     });
 
     it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
 

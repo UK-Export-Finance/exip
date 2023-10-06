@@ -1,5 +1,4 @@
-import { submitButton } from '../../../../../../../pages/shared';
-import { singleContractPolicyPage } from '../../../../../../../pages/insurance/policy-and-export';
+import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
@@ -26,6 +25,8 @@ const {
   },
 } = ERROR_MESSAGES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Policy and exports - Single contract policy page - form validation - credit period with buyer', () => {
   let referenceNumber;
   let url;
@@ -38,7 +39,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
+      url = `${baseUrl}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
 
       cy.assertUrl(url);
     });
@@ -52,7 +53,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
     cy.deleteApplication(referenceNumber);
   });
 
-  const field = singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];
+  const field = fieldSelector(CREDIT_PERIOD_WITH_BUYER);
 
   describe('when credit period with buyer is not provided', () => {
     it('should render a validation error', () => {

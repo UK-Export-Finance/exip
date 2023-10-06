@@ -5,10 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../../../commands/quote/forms';
-import { submitButton, summaryList } from '../../../../../../pages/shared';
-import {
-  tellUsAboutYourPolicyPage,
-} from '../../../../../../pages/quote';
+import { field, submitButton, summaryList } from '../../../../../../pages/shared';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 
@@ -44,11 +41,11 @@ context('Get a quote/your quote page (large contract value) - as an exporter, I 
   });
 
   it('should get a quote with a large contract value and render in the correct format', () => {
-    cy.keyboardInput(tellUsAboutYourPolicyPage[POLICY_LENGTH].input(), '3');
-    cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '12,345,678');
+    cy.keyboardInput(field(POLICY_LENGTH).input(), '3');
+    cy.keyboardInput(field(CONTRACT_VALUE).input(), '12,345,678');
 
-    tellUsAboutYourPolicyPage[CURRENCY].input().select(GBP_CURRENCY_CODE);
-    tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('90');
+    field(CURRENCY).input().select(GBP_CURRENCY_CODE);
+    field(PERCENTAGE_OF_COVER).input().select('90');
 
     submitButton().click();
 

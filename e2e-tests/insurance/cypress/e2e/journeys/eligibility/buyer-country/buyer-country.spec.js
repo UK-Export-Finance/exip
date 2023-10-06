@@ -3,13 +3,8 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { FIELD_IDS } from '../../../../../../constants';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../../commands/insurance/eligibility/forms';
-import {
-  checkInputHint,
-  checkValidationErrors,
-  checkFocusOnInputWhenClickingSummaryErrorMessage,
-} from '../../../../../../commands/check-buyer-country-form';
 import { COUNTRY_SUPPORTED_ONLINE } from '../../../../../../fixtures/countries';
-import checkAutocompleteInput from '../../../../../../commands/check-autocomplete-input';
+import checkAutocompleteInput from '../../../../../../commands/shared-commands/assertions/check-autocomplete-input';
 
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
@@ -47,7 +42,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
   });
 
   it('renders a hint', () => {
-    checkInputHint();
+    cy.checkBuyerCountryInputHint();
   });
 
   describe('searchable autocomplete input', () => {
@@ -83,7 +78,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
       });
 
       it('should render validation errors', () => {
-        checkValidationErrors();
+        cy.checkBuyerCountryValidationErrors();
       });
 
       it('renders a back link with correct url', () => {
@@ -97,7 +92,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
       });
 
       it('should focus on input when clicking summary error message', () => {
-        checkFocusOnInputWhenClickingSummaryErrorMessage();
+        cy.checkBuyerCountryFocusAfterSummaryErrorClick();
       });
     });
 

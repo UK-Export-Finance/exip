@@ -12,7 +12,6 @@ const checkPolicyCurrencyCodeInput = () => {
 
   const CONTENT_STRINGS = POLICY_AND_EXPORT_FIELDS.CONTRACT_POLICY[fieldId];
 
-  field.label().should('exist');
   field.label().invoke('text').then((text) => {
     expect(text.trim()).equal(CONTENT_STRINGS.LABEL);
   });

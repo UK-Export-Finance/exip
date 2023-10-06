@@ -1,6 +1,6 @@
 import { brokerPage } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
-import { saveAndBackButton, submitButton } from '../../../../../../pages/shared';
+import { field, saveAndBackButton, submitButton } from '../../../../../../pages/shared';
 import { TASKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/business';
@@ -81,7 +81,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
       brokerPage[USING_BROKER].yesRadioInput().click();
 
-      cy.keyboardInput(brokerPage[NAME].input(), application.EXPORTER_BROKER[NAME]);
+      cy.keyboardInput(field(NAME).input(), application.EXPORTER_BROKER[NAME]);
 
       saveAndBackButton().click();
 
@@ -106,13 +106,13 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       submitButton().click();
 
       brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
-      cy.checkValue(brokerPage[NAME], application.EXPORTER_BROKER[NAME]);
-      cy.checkValue(brokerPage[ADDRESS_LINE_1], '');
-      cy.checkValue(brokerPage[ADDRESS_LINE_2], '');
-      cy.checkValue(brokerPage[TOWN], '');
-      cy.checkValue(brokerPage[COUNTY], '');
-      cy.checkValue(brokerPage[POSTCODE], '');
-      cy.checkValue(brokerPage[EMAIL], '');
+      cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
+      cy.checkValue(field(ADDRESS_LINE_1), '');
+      cy.checkValue(field(ADDRESS_LINE_2), '');
+      cy.checkValue(field(TOWN), '');
+      cy.checkValue(field(COUNTY), '');
+      cy.checkValue(field(POSTCODE), '');
+      cy.checkValue(field(EMAIL), '');
     });
   });
 
@@ -123,13 +123,13 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
         brokerPage[USING_BROKER].yesRadioInput().click();
 
-        cy.keyboardInput(brokerPage[NAME].input(), application.EXPORTER_BROKER[NAME]);
-        cy.keyboardInput(brokerPage[ADDRESS_LINE_1].input(), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
-        cy.keyboardInput(brokerPage[ADDRESS_LINE_2].input(), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
-        cy.keyboardInput(brokerPage[TOWN].input(), application.EXPORTER_BROKER[TOWN]);
-        cy.keyboardInput(brokerPage[COUNTY].input(), application.EXPORTER_BROKER[COUNTY]);
-        cy.keyboardInput(brokerPage[EMAIL].input(), application.EXPORTER_BROKER[EMAIL]);
-        cy.keyboardInput(brokerPage[POSTCODE].input(), application.EXPORTER_BROKER[POSTCODE]);
+        cy.keyboardInput(field(NAME).input(), application.EXPORTER_BROKER[NAME]);
+        cy.keyboardInput(field(ADDRESS_LINE_1).input(), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
+        cy.keyboardInput(field(ADDRESS_LINE_2).input(), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
+        cy.keyboardInput(field(TOWN).input(), application.EXPORTER_BROKER[TOWN]);
+        cy.keyboardInput(field(COUNTY).input(), application.EXPORTER_BROKER[COUNTY]);
+        cy.keyboardInput(field(EMAIL).input(), application.EXPORTER_BROKER[EMAIL]);
+        cy.keyboardInput(field(POSTCODE).input(), application.EXPORTER_BROKER[POSTCODE]);
 
         saveAndBackButton().click();
 
@@ -154,13 +154,13 @@ context('Insurance - Your business - Broker page - Save and back', () => {
         submitButton().click();
 
         brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
-        cy.checkValue(brokerPage[NAME], application.EXPORTER_BROKER[NAME]);
-        cy.checkValue(brokerPage[ADDRESS_LINE_1], application.EXPORTER_BROKER[ADDRESS_LINE_1]);
-        cy.checkValue(brokerPage[ADDRESS_LINE_2], application.EXPORTER_BROKER[ADDRESS_LINE_2]);
-        cy.checkValue(brokerPage[TOWN], application.EXPORTER_BROKER[TOWN]);
-        cy.checkValue(brokerPage[COUNTY], application.EXPORTER_BROKER[COUNTY]);
-        cy.checkValue(brokerPage[POSTCODE], application.EXPORTER_BROKER[POSTCODE]);
-        cy.checkValue(brokerPage[EMAIL], application.EXPORTER_BROKER[EMAIL]);
+        cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
+        cy.checkValue(field(ADDRESS_LINE_1), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
+        cy.checkValue(field(ADDRESS_LINE_2), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
+        cy.checkValue(field(TOWN), application.EXPORTER_BROKER[TOWN]);
+        cy.checkValue(field(COUNTY), application.EXPORTER_BROKER[COUNTY]);
+        cy.checkValue(field(POSTCODE), application.EXPORTER_BROKER[POSTCODE]);
+        cy.checkValue(field(EMAIL), application.EXPORTER_BROKER[EMAIL]);
       });
     });
 

@@ -1,5 +1,4 @@
-import { submitButton } from '../../../../../../../pages/shared';
-import { multipleContractPolicyPage } from '../../../../../../../pages/insurance/policy-and-export';
+import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
@@ -64,7 +63,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     cy.deleteApplication(referenceNumber);
   });
 
-  const field = multipleContractPolicyPage[TOTAL_SALES_TO_BUYER];
+  const field = fieldSelector(TOTAL_SALES_TO_BUYER);
 
   it('should render a validation error when total sales to buyer is not provided', () => {
     submitButton().click();
@@ -81,7 +80,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
   });
 
   it('should render a validation error when total sales to buyer is not a number', () => {
-    cy.keyboardInput(multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input(), 'ten!');
+    cy.keyboardInput(fieldSelector(TOTAL_SALES_TO_BUYER).input(), 'ten!');
     submitButton().click();
 
     cy.checkText(
@@ -96,7 +95,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
   });
 
   it('should render a validation error when total sales to buyer contains a decimal', () => {
-    cy.keyboardInput(multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input(), '1.2');
+    cy.keyboardInput(fieldSelector(TOTAL_SALES_TO_BUYER).input(), '1.2');
     submitButton().click();
 
     cy.checkText(
@@ -111,7 +110,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
   });
 
   it('should render a validation error when total sales to buyer contains a comma and decimal', () => {
-    cy.keyboardInput(multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input(), '1,234.56');
+    cy.keyboardInput(fieldSelector(TOTAL_SALES_TO_BUYER).input(), '1,234.56');
     submitButton().click();
 
     cy.checkText(
@@ -126,7 +125,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
   });
 
   it('should render a validation error when total sales to buyer is below the minimum', () => {
-    cy.keyboardInput(multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input(), '0');
+    cy.keyboardInput(fieldSelector(TOTAL_SALES_TO_BUYER).input(), '0');
     submitButton().click();
 
     cy.checkText(
@@ -147,7 +146,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
       cy.completeAndSubmitMultipleContractPolicyForm({});
       cy.clickBackLink();
 
-      cy.keyboardInput(multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input(), '1,234');
+      cy.keyboardInput(fieldSelector(TOTAL_SALES_TO_BUYER).input(), '1,234');
       submitButton().click();
 
       const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;

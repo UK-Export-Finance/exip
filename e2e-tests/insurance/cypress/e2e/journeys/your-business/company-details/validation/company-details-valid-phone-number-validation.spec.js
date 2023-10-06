@@ -1,5 +1,4 @@
-import { companyDetails } from '../../../../../../../pages/your-business';
-import { submitButton } from '../../../../../../../pages/shared';
+import { field, submitButton } from '../../../../../../../pages/shared';
 import {
   ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES,
 } from '../../../../../../../constants';
@@ -69,7 +68,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
-      companyDetails[PHONE_NUMBER].input().clear();
+      field(PHONE_NUMBER).input().clear();
       submitButton().click();
     });
 

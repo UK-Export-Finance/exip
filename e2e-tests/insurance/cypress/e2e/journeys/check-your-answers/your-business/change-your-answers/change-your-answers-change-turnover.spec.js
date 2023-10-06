@@ -1,13 +1,7 @@
 import partials from '../../../../../../../partials';
-import { summaryList } from '../../../../../../../pages/shared';
+import { field, summaryList } from '../../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { turnover } from '../../../../../../../pages/your-business';
-import {
-  checkChangeLinkUrl,
-  changeAnswerField,
-  checkChangeAnswerRendered,
-} from '../../../../../../../commands/check-summary-list-field-change';
 
 const {
   ROOT,
@@ -88,7 +82,7 @@ context('Insurance - Check your answers - Turnover - Your business - Summary lis
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -99,7 +93,7 @@ context('Insurance - Check your answers - Turnover - Your business - Summary lis
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = '455445';
-        changeAnswerField(fieldVariables, turnover[fieldId].input());
+        cy.changeAnswerField(fieldVariables, field(fieldId).input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -108,7 +102,7 @@ context('Insurance - Check your answers - Turnover - Your business - Summary lis
 
       it('should render the new answer', () => {
         fieldVariables.newValue = `£${fieldVariables.newValueInput}`;
-        checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered(fieldVariables);
       });
     });
   });
@@ -127,7 +121,7 @@ context('Insurance - Check your answers - Turnover - Your business - Summary lis
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -138,7 +132,7 @@ context('Insurance - Check your answers - Turnover - Your business - Summary lis
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = '85';
-        changeAnswerField(fieldVariables, turnover[fieldId].input());
+        cy.changeAnswerField(fieldVariables, field(fieldId).input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -147,7 +141,7 @@ context('Insurance - Check your answers - Turnover - Your business - Summary lis
 
       it('should render the new answer', () => {
         fieldVariables.newValue = `${fieldVariables.newValueInput}%`;
-        checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered(fieldVariables);
       });
     });
   });

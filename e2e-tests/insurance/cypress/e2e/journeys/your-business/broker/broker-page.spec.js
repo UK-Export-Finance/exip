@@ -1,10 +1,10 @@
 import { brokerPage } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
-import { saveAndBackButton, submitButton } from '../../../../../../pages/shared';
+import { field as fieldSelector, saveAndBackButton, submitButton } from '../../../../../../pages/shared';
 import {
   PAGES, BUTTONS, ERROR_MESSAGES, LINKS,
 } from '../../../../../../content-strings';
-import { ROUTES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/business';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import application from '../../../../../../fixtures/application';
@@ -33,7 +33,7 @@ const {
     TURNOVER,
     CHECK_YOUR_ANSWERS,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const { taskList } = partials.insurancePartials;
 
@@ -49,6 +49,8 @@ const ERROR_ASSERTIONS = {
   numberOfExpectedErrors: 1,
   errorIndex: 0,
 };
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your business - Broker Page - As an Exporter I want to confirm if I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my export insurance', () => {
   let referenceNumber;
@@ -66,8 +68,8 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
-      checkYourAnswersUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER}`;
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
       cy.assertUrl(url);
     });
@@ -112,28 +114,28 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     });
 
     it('should NOT display conditional broker section without selecting the "yes" radio', () => {
-      brokerPage[LEGEND]().should('not.be.visible');
+      fieldSelector(LEGEND).legend().should('not.be.visible');
 
-      brokerPage[NAME].label().should('not.be.visible');
-      brokerPage[NAME].input().should('not.be.visible');
+      fieldSelector(NAME).label().should('not.be.visible');
+      fieldSelector(NAME).input().should('not.be.visible');
 
-      brokerPage[ADDRESS_LINE_1].label().should('not.be.visible');
-      brokerPage[ADDRESS_LINE_1].input().should('not.be.visible');
+      fieldSelector(ADDRESS_LINE_1).label().should('not.be.visible');
+      fieldSelector(ADDRESS_LINE_1).input().should('not.be.visible');
 
-      brokerPage[ADDRESS_LINE_2].label().should('not.be.visible');
-      brokerPage[ADDRESS_LINE_2].input().should('not.be.visible');
+      fieldSelector(ADDRESS_LINE_2).label().should('not.be.visible');
+      fieldSelector(ADDRESS_LINE_2).input().should('not.be.visible');
 
-      brokerPage[TOWN].label().should('not.be.visible');
-      brokerPage[TOWN].input().should('not.be.visible');
+      fieldSelector(TOWN).label().should('not.be.visible');
+      fieldSelector(TOWN).input().should('not.be.visible');
 
-      brokerPage[COUNTY].label().should('not.be.visible');
-      brokerPage[COUNTY].input().should('not.be.visible');
+      fieldSelector(COUNTY).label().should('not.be.visible');
+      fieldSelector(COUNTY).input().should('not.be.visible');
 
-      brokerPage[POSTCODE].label().should('not.be.visible');
-      brokerPage[POSTCODE].input().should('not.be.visible');
+      fieldSelector(POSTCODE).label().should('not.be.visible');
+      fieldSelector(POSTCODE).input().should('not.be.visible');
 
-      brokerPage[EMAIL].label().should('not.be.visible');
-      brokerPage[EMAIL].input().should('not.be.visible');
+      fieldSelector(EMAIL).label().should('not.be.visible');
+      fieldSelector(EMAIL).input().should('not.be.visible');
     });
 
     it('should display conditional broker section when selecting the "yes" radio', () => {
@@ -141,28 +143,28 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
       const field = brokerPage[fieldId];
       field.yesRadioInput().click();
 
-      cy.checkText(brokerPage[LEGEND](), FIELDS.BROKER[LEGEND].LEGEND);
+      cy.checkText(fieldSelector(LEGEND).legend(), FIELDS.BROKER[LEGEND].LEGEND);
 
-      cy.checkText(brokerPage[NAME].label(), FIELDS.BROKER[NAME].LABEL);
-      brokerPage[NAME].input().should('exist');
+      cy.checkText(fieldSelector(NAME).label(), FIELDS.BROKER[NAME].LABEL);
+      fieldSelector(NAME).input().should('exist');
 
-      cy.checkText(brokerPage[ADDRESS_LINE_1].label(), FIELDS.BROKER[ADDRESS_LINE_1].LABEL);
-      brokerPage[ADDRESS_LINE_1].input().should('exist');
+      cy.checkText(fieldSelector(ADDRESS_LINE_1).label(), FIELDS.BROKER[ADDRESS_LINE_1].LABEL);
+      fieldSelector(ADDRESS_LINE_1).input().should('exist');
 
-      cy.checkText(brokerPage[ADDRESS_LINE_2].label(), FIELDS.BROKER[ADDRESS_LINE_2].LABEL);
-      brokerPage[ADDRESS_LINE_2].input().should('exist');
+      cy.checkText(fieldSelector(ADDRESS_LINE_2).label(), FIELDS.BROKER[ADDRESS_LINE_2].LABEL);
+      fieldSelector(ADDRESS_LINE_2).input().should('exist');
 
-      cy.checkText(brokerPage[TOWN].label(), FIELDS.BROKER[TOWN].LABEL);
-      brokerPage[TOWN].input().should('exist');
+      cy.checkText(fieldSelector(TOWN).label(), FIELDS.BROKER[TOWN].LABEL);
+      fieldSelector(TOWN).input().should('exist');
 
-      cy.checkText(brokerPage[COUNTY].label(), FIELDS.BROKER[COUNTY].LABEL);
-      brokerPage[COUNTY].input().should('exist');
+      cy.checkText(fieldSelector(COUNTY).label(), FIELDS.BROKER[COUNTY].LABEL);
+      fieldSelector(COUNTY).input().should('exist');
 
-      cy.checkText(brokerPage[POSTCODE].label(), FIELDS.BROKER[POSTCODE].LABEL);
-      brokerPage[POSTCODE].input().should('exist');
+      cy.checkText(fieldSelector(POSTCODE).label(), FIELDS.BROKER[POSTCODE].LABEL);
+      fieldSelector(POSTCODE).input().should('exist');
 
-      cy.checkText(brokerPage[EMAIL].label(), FIELDS.BROKER[EMAIL].LABEL);
-      brokerPage[EMAIL].input().should('exist');
+      cy.checkText(fieldSelector(EMAIL).label(), FIELDS.BROKER[EMAIL].LABEL);
+      fieldSelector(EMAIL).input().should('exist');
     });
 
     it('should display summary text with collapsed conditional `details` content', () => {
@@ -222,13 +224,13 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
               cy.navigateToUrl(url);
 
               brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
-              cy.checkValue(brokerPage[NAME], application.EXPORTER_BROKER[NAME]);
-              cy.checkValue(brokerPage[ADDRESS_LINE_1], application.EXPORTER_BROKER[ADDRESS_LINE_1]);
-              cy.checkValue(brokerPage[ADDRESS_LINE_2], application.EXPORTER_BROKER[ADDRESS_LINE_2]);
-              cy.checkValue(brokerPage[TOWN], application.EXPORTER_BROKER[TOWN]);
-              cy.checkValue(brokerPage[COUNTY], application.EXPORTER_BROKER[COUNTY]);
-              cy.checkValue(brokerPage[POSTCODE], application.EXPORTER_BROKER[POSTCODE]);
-              cy.checkValue(brokerPage[EMAIL], application.EXPORTER_BROKER[EMAIL]);
+              cy.checkValue(fieldSelector(NAME), application.EXPORTER_BROKER[NAME]);
+              cy.checkValue(fieldSelector(ADDRESS_LINE_1), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
+              cy.checkValue(fieldSelector(ADDRESS_LINE_2), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
+              cy.checkValue(fieldSelector(TOWN), application.EXPORTER_BROKER[TOWN]);
+              cy.checkValue(fieldSelector(COUNTY), application.EXPORTER_BROKER[COUNTY]);
+              cy.checkValue(fieldSelector(POSTCODE), application.EXPORTER_BROKER[POSTCODE]);
+              cy.checkValue(fieldSelector(EMAIL), application.EXPORTER_BROKER[EMAIL]);
             });
           });
         });

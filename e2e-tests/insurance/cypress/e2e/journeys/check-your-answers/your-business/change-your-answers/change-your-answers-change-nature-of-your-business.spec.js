@@ -1,13 +1,7 @@
 import partials from '../../../../../../../partials';
-import { summaryList } from '../../../../../../../pages/shared';
+import { field, summaryList } from '../../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { natureOfBusiness } from '../../../../../../../pages/your-business';
-import {
-  checkChangeLinkUrl,
-  changeAnswerField,
-  checkChangeAnswerRendered,
-} from '../../../../../../../commands/check-summary-list-field-change';
 
 const {
   ROOT,
@@ -42,6 +36,8 @@ const getFieldVariables = (fieldId, referenceNumber) => ({
   changeLink: summaryList.field(fieldId).changeLink,
 });
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Check your answers - Nature of your Business - Your business - Summary list', () => {
   let referenceNumber;
   let url;
@@ -60,7 +56,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
       // To get past "Policy and exports" check your answers page
       cy.submitCheckYourAnswersForm();
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
       cy.assertUrl(url);
     });
@@ -90,7 +86,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -101,7 +97,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = 'test 12345';
-        changeAnswerField(fieldVariables, natureOfBusiness[fieldId].input());
+        cy.changeAnswerField(fieldVariables, field(fieldId).textarea());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -110,7 +106,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
 
       it('should render the new answer', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered(fieldVariables);
       });
     });
   });
@@ -129,7 +125,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -140,7 +136,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = '25';
-        changeAnswerField(fieldVariables, natureOfBusiness[fieldId].input());
+        cy.changeAnswerField(fieldVariables, field(fieldId).input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -149,7 +145,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
 
       it('should render the new answer', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered(fieldVariables);
       });
     });
   });
@@ -168,7 +164,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -179,7 +175,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = '26';
-        changeAnswerField(fieldVariables, natureOfBusiness[fieldId].input());
+        cy.changeAnswerField(fieldVariables, field(fieldId).input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -188,7 +184,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
 
       it('should render the new answer', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered(fieldVariables);
       });
     });
   });
@@ -207,7 +203,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -218,7 +214,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = '35';
-        changeAnswerField(fieldVariables, natureOfBusiness[fieldId].input());
+        cy.changeAnswerField(fieldVariables, field(fieldId).input());
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -227,7 +223,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
 
       it('should render the new answer', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered(fieldVariables);
       });
     });
   });

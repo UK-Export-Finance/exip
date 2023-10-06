@@ -1,9 +1,9 @@
-import { turnover } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
-import { saveAndBackButton } from '../../../../../../pages/shared';
+import { field as fieldSelector, saveAndBackButton } from '../../../../../../pages/shared';
+import { turnoverPage } from '../../../../../../pages/your-business';
 import { PAGES, BUTTONS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
-import { ROUTES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/business';
 import { formatDate } from '../../../../../../helpers/date';
 import application from '../../../../../../fixtures/application';
@@ -25,7 +25,7 @@ const {
     NATURE_OF_BUSINESS,
     BROKER,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const { taskList } = partials.insurancePartials;
 
@@ -37,6 +37,8 @@ const financialYearEnd = {
 };
 
 financialYearEnd.expectedValue = formatDate(financialYearEnd.timestamp, financialYearEnd.content.DATE_FORMAT);
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your business - Turnover page - As an Exporter I want to enter the I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
   let referenceNumber;
@@ -53,8 +55,8 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitNatureOfYourBusiness();
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TURNOVER}`;
-      brokerUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
+      brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER}`;
 
       cy.assertUrl(url);
     });
@@ -87,9 +89,9 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
 
     it(`should display ${FINANCIAL_YEAR_END_DATE} section`, () => {
       const fieldId = FINANCIAL_YEAR_END_DATE;
-      const field = turnover[fieldId];
+      const field = fieldSelector(fieldId);
 
-      cy.checkText(field.value(), financialYearEnd.expectedValue);
+      cy.checkText(turnoverPage[fieldId](), financialYearEnd.expectedValue);
 
       cy.checkText(field.label(), financialYearEnd.content.LABEL);
 
@@ -98,14 +100,14 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
 
     it('should display turnover fieldset legend', () => {
       const fieldId = ESTIMATED_ANNUAL_TURNOVER;
-      const field = turnover[fieldId];
+      const field = fieldSelector(fieldId);
 
       cy.checkText(field.legend(), FIELDS.TURNOVER[fieldId].LEGEND);
     });
 
     it(`should display ${ESTIMATED_ANNUAL_TURNOVER} section`, () => {
       const fieldId = ESTIMATED_ANNUAL_TURNOVER;
-      const field = turnover[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.input().should('exist');
 
@@ -116,7 +118,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
 
     it(`should display ${PERCENTAGE_TURNOVER} section`, () => {
       const fieldId = PERCENTAGE_TURNOVER;
-      const field = turnover[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.input().should('exist');
 
@@ -144,10 +146,11 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
     it('should have the submitted values', () => {
       cy.navigateToUrl(url);
 
-      cy.checkText(turnover[FINANCIAL_YEAR_END_DATE].value(), financialYearEnd.expectedValue);
+      cy.checkText(turnoverPage[FINANCIAL_YEAR_END_DATE](), financialYearEnd.expectedValue);
 
-      turnover[ESTIMATED_ANNUAL_TURNOVER].input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
-      turnover[PERCENTAGE_TURNOVER].input().should('have.value', application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
+      fieldSelector(ESTIMATED_ANNUAL_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+
+      fieldSelector(PERCENTAGE_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
     });
   });
 });

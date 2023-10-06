@@ -1,16 +1,15 @@
-import { FIELD_IDS } from '../../../constants';
+import { field } from '../../shared';
+import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
-    },
+  POLICY_AND_EXPORTS: {
+    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const aboutGoodsOrServices = {
   [DESCRIPTION]: {
-    label: () => cy.get(`[data-cy="${DESCRIPTION}-label"]`),
+    ...field(DESCRIPTION),
     hint: {
       intro: () => cy.get(`[data-cy="${DESCRIPTION}-hint-intro"]`),
       list: {
@@ -19,9 +18,6 @@ const aboutGoodsOrServices = {
         item3: () => cy.get(`[data-cy="${DESCRIPTION}-hint-list-item-3"]`),
       },
     },
-    prefix: () => cy.get(`[data-cy="${DESCRIPTION}-prefix"]`),
-    input: () => cy.get(`[data-cy="${DESCRIPTION}-input"]`),
-    errorMessage: () => cy.get(`[data-cy="${DESCRIPTION}-error-message"]`),
   },
 };
 

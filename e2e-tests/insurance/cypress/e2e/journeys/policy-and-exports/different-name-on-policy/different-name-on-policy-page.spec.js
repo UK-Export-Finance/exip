@@ -1,7 +1,7 @@
 import {
   headingCaption,
   saveAndBackButton,
-  input,
+  field as fieldSelector,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import {
@@ -91,12 +91,12 @@ context('Insurance - Policy and exports - Different name on Policy page - I want
     });
 
     it('renders a hint', () => {
-      cy.checkText(input.field(POLICY_CONTACT_DETAIL).hint(), CONTENT_STRINGS.HINT);
+      cy.checkText(fieldSelector(POLICY_CONTACT_DETAIL).hint(), CONTENT_STRINGS.HINT);
     });
 
     it(`should display ${FIRST_NAME} field and be prepopulated`, () => {
       const fieldId = FIRST_NAME;
-      const field = input.field(fieldId);
+      const field = fieldSelector(fieldId);
 
       field.input().should('exist');
 
@@ -105,7 +105,7 @@ context('Insurance - Policy and exports - Different name on Policy page - I want
 
     it(`should display ${LAST_NAME} field and be prepopulated`, () => {
       const fieldId = LAST_NAME;
-      const field = input.field(fieldId);
+      const field = fieldSelector(fieldId);
 
       field.input().should('exist');
 
@@ -114,7 +114,7 @@ context('Insurance - Policy and exports - Different name on Policy page - I want
 
     it(`should display ${EMAIL} field and be prepopulated`, () => {
       const fieldId = EMAIL;
-      const field = input.field(fieldId);
+      const field = fieldSelector(fieldId);
 
       field.input().should('exist');
 
@@ -123,7 +123,7 @@ context('Insurance - Policy and exports - Different name on Policy page - I want
 
     it(`should display ${POSITION} field and should not be prepopulated`, () => {
       const fieldId = POSITION;
-      const field = input.field(fieldId);
+      const field = fieldSelector(fieldId);
 
       field.input().should('exist');
 
@@ -131,8 +131,6 @@ context('Insurance - Policy and exports - Different name on Policy page - I want
     });
 
     it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });
@@ -150,10 +148,10 @@ context('Insurance - Policy and exports - Different name on Policy page - I want
     it('should should have submitted values when navigating back to page', () => {
       cy.navigateToUrl(url);
 
-      cy.checkValue(input.field(FIRST_NAME), POLICY_CONTACT[FIRST_NAME]);
-      cy.checkValue(input.field(LAST_NAME), POLICY_CONTACT[LAST_NAME]);
-      cy.checkValue(input.field(EMAIL), POLICY_CONTACT[EMAIL]);
-      cy.checkValue(input.field(POSITION), POLICY_CONTACT[POSITION]);
+      cy.checkValue(fieldSelector(FIRST_NAME), POLICY_CONTACT[FIRST_NAME]);
+      cy.checkValue(fieldSelector(LAST_NAME), POLICY_CONTACT[LAST_NAME]);
+      cy.checkValue(fieldSelector(EMAIL), POLICY_CONTACT[EMAIL]);
+      cy.checkValue(fieldSelector(POSITION), POLICY_CONTACT[POSITION]);
     });
   });
 });

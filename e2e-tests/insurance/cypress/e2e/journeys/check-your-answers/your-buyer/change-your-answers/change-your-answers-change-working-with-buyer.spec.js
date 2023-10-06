@@ -4,10 +4,6 @@ import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { workingWithBuyerPage } from '../../../../../../../pages/insurance/your-buyer';
-import {
-  checkChangeLinkUrl,
-  checkChangeAnswerRendered,
-} from '../../../../../../../commands/check-summary-list-field-change';
 
 const {
   ROOT,
@@ -90,7 +86,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -111,7 +107,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = FIELD_VALUES.NO;
-        checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered(fieldVariables);
 
         cy.checkTaskStatusCompleted(status());
       });
@@ -131,7 +127,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        checkChangeLinkUrl(fieldVariables, referenceNumber);
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -152,7 +148,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = FIELD_VALUES.NO;
-        checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered(fieldVariables);
 
         cy.checkTaskStatusCompleted(status());
       });

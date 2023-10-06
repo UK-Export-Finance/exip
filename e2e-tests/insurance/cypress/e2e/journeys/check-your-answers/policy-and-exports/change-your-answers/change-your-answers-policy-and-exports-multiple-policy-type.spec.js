@@ -1,14 +1,9 @@
 import partials from '../../../../../../../partials';
-import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
-import { summaryList } from '../../../../../../../pages/shared';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { field, summaryList } from '../../../../../../../pages/shared';
 import application from '../../../../../../../fixtures/application';
 import { multipleContractPolicyPage } from '../../../../../../../pages/insurance/policy-and-export';
-import {
-  checkChangeLinkUrl,
-  changeAnswerField,
-  checkChangeAnswerRendered,
-} from '../../../../../../../commands/check-summary-list-field-change';
-import { changeAnswerSelectField } from '../../../../../../../commands/check-summary-list-select-change';
 import formatCurrency from '../../../../../../../helpers/format-currency';
 import currencies from '../../../../../../../fixtures/currencies';
 import { createTimestampFromNumbers, formatDate } from '../../../../../../../helpers/date';
@@ -21,20 +16,18 @@ const {
   CHECK_YOUR_ANSWERS: {
     TYPE_OF_POLICY,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
-        POLICY_CURRENCY_CODE,
-        MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-      },
+  POLICY_AND_EXPORTS: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      CREDIT_PERIOD_WITH_BUYER,
+      POLICY_CURRENCY_CODE,
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
@@ -97,7 +90,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           cy.navigateToUrl(url);
           fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-          checkChangeLinkUrl(fieldVariables, referenceNumber);
+          cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
       });
 
@@ -109,7 +102,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
           fieldVariables.newValueInput = newAnswer.year;
 
-          changeAnswerField(fieldVariables, multipleContractPolicyPage[fieldId].yearInput());
+          cy.changeAnswerField(fieldVariables, field(fieldId).yearInput());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -118,7 +111,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
         it('should render the new answer', () => {
           fieldVariables.newValue = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
-          checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered(fieldVariables);
         });
       });
     });
@@ -136,7 +129,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           cy.navigateToUrl(url);
           fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-          checkChangeLinkUrl(fieldVariables, referenceNumber);
+          cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
       });
 
@@ -147,7 +140,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           summaryList.field(fieldId).changeLink().click();
 
           fieldVariables.newValueInput = String(Number(application.POLICY_AND_EXPORTS[fieldId]) + 1);
-          changeAnswerSelectField(fieldVariables, multipleContractPolicyPage[fieldId].input());
+          cy.changeAnswerSelectField(fieldVariables, field(fieldId).input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -156,7 +149,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
         it('should render the new answer', () => {
           fieldVariables.newValue = `${fieldVariables.newValueInput} months`;
-          checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered(fieldVariables);
         });
       });
     });
@@ -175,7 +168,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           cy.navigateToUrl(url);
           fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-          checkChangeLinkUrl(fieldVariables, referenceNumber);
+          cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
       });
 
@@ -186,7 +179,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           summaryList.field(fieldId).changeLink().click();
 
           fieldVariables.newValueInput = application.POLICY_AND_EXPORTS[fieldId] - 500;
-          changeAnswerField(fieldVariables, multipleContractPolicyPage[fieldId].input());
+          cy.changeAnswerField(fieldVariables, field(fieldId).input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -195,7 +188,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
         it('should render the new answer', () => {
           fieldVariables.newValue = formatCurrency(fieldVariables.newValueInput);
-          checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered(fieldVariables);
         });
       });
     });
@@ -214,7 +207,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           cy.navigateToUrl(url);
           fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-          checkChangeLinkUrl(fieldVariables, referenceNumber);
+          cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
       });
 
@@ -225,7 +218,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           summaryList.field(fieldId).changeLink().click();
 
           fieldVariables.newValueInput = Number(application.POLICY_AND_EXPORTS[fieldId]) + 1000;
-          changeAnswerField(fieldVariables, multipleContractPolicyPage[fieldId].input());
+          cy.changeAnswerField(fieldVariables, multipleContractPolicyPage[fieldId].input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -234,7 +227,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
         it('should render the new answer', () => {
           fieldVariables.newValue = formatCurrency(fieldVariables.newValueInput);
-          checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered(fieldVariables);
         });
       });
     });
@@ -253,7 +246,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           cy.navigateToUrl(url);
           fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-          checkChangeLinkUrl(fieldVariables, referenceNumber);
+          cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
       });
 
@@ -264,7 +257,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           summaryList.field(fieldId).changeLink().click();
 
           fieldVariables.newValueInput = `${String(application.POLICY_AND_EXPORTS[fieldId])} additional text`;
-          changeAnswerField(fieldVariables, multipleContractPolicyPage[fieldId].input());
+          cy.changeAnswerField(fieldVariables, field(fieldId).input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -273,7 +266,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
 
         it('should render the new answer', () => {
           fieldVariables.newValue = fieldVariables.newValueInput;
-          checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered(fieldVariables);
         });
       });
     });
@@ -292,7 +285,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
           fieldVariables.newValueInput = currencies[3].isoCode;
-          checkChangeLinkUrl(fieldVariables, referenceNumber);
+          cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
       });
 
@@ -303,7 +296,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           summaryList.field(fieldId).changeLink().click();
 
           fieldVariables.newValueInput = currencies[3].isoCode;
-          changeAnswerSelectField(fieldVariables, policyCurrencyCodeFormField.input());
+          cy.changeAnswerSelectField(fieldVariables, policyCurrencyCodeFormField.input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -315,7 +308,7 @@ context('Insurance - Change your answers - Policy and exports - multiple contrac
           const { name } = expected;
 
           fieldVariables.newValue = name;
-          checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered(fieldVariables);
         });
       });
     });

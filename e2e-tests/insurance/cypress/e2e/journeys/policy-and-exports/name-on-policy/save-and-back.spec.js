@@ -1,4 +1,4 @@
-import { input, saveAndBackButton } from '../../../../../../pages/shared';
+import { field, saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -86,7 +86,7 @@ context('Insurance - Policy and exports - Name on policy - Save and go back', ()
       cy.navigateToUrl(url);
 
       // submit the form via 'save and go back' button
-      input.field(OTHER_NAME).input().should('be.checked');
+      field(OTHER_NAME).input().should('be.checked');
     });
   });
 
@@ -94,7 +94,7 @@ context('Insurance - Policy and exports - Name on policy - Save and go back', ()
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      input.field(SAME_NAME).input().click();
+      field(SAME_NAME).input().click();
       saveAndBackButton().click();
     });
 
@@ -106,9 +106,9 @@ context('Insurance - Policy and exports - Name on policy - Save and go back', ()
       cy.navigateToUrl(url);
 
       // submit the form via 'save and go back' button
-      input.field(SAME_NAME).input().should('be.checked');
+      field(SAME_NAME).input().should('be.checked');
 
-      cy.checkValue(input.field(POSITION), '');
+      cy.checkValue(field(POSITION), '');
     });
   });
 
@@ -128,9 +128,9 @@ context('Insurance - Policy and exports - Name on policy - Save and go back', ()
       cy.navigateToUrl(url);
 
       // submit the form via 'save and go back' button
-      input.field(SAME_NAME).input().should('be.checked');
+      field(SAME_NAME).input().should('be.checked');
 
-      cy.checkValue(input.field(POSITION), POLICY_CONTACT[POSITION]);
+      cy.checkValue(field(POSITION), POLICY_CONTACT[POSITION]);
     });
   });
 });

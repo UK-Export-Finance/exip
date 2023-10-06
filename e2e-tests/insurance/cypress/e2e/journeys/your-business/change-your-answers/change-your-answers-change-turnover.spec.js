@@ -1,6 +1,5 @@
 import partials from '../../../../../../partials';
-import { turnover } from '../../../../../../pages/your-business';
-import { submitButton, summaryList } from '../../../../../../pages/shared';
+import { field, submitButton, summaryList } from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -72,7 +71,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(turnover[fieldId].input(), newAnswer);
+        cy.keyboardInput(field(fieldId).input(), newAnswer);
 
         submitButton().click();
       });
@@ -108,7 +107,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(turnover[fieldId].input(), newAnswer);
+        cy.keyboardInput(field(fieldId).input(), newAnswer);
 
         submitButton().click();
       });

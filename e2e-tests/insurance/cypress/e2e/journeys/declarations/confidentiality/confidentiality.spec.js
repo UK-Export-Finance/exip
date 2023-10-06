@@ -110,8 +110,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
       });
     });
 
-    it("renders `I've read and agree` label and input", () => {
-      field.input().should('exist');
+    it('renders a `confirm` label and input', () => {
       cy.checkText(field.label(), FIELDS[FIELD_ID].LABEL);
 
       field.input().should('exist');

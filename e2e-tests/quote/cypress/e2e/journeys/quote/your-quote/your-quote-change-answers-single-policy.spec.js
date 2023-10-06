@@ -1,5 +1,5 @@
 import {
-  backLink, countryInput, submitButton, summaryList,
+  backLink, countryInput, field, submitButton, summaryList,
 } from '../../../../../../pages/shared';
 import {
   policyTypePage,
@@ -73,7 +73,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '1000');
+      cy.keyboardInput(field(CONTRACT_VALUE).input(), '1000');
       submitButton().click();
 
       const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#${CONTRACT_VALUE}-label`;
@@ -81,7 +81,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it('renders the new answer in the quote', () => {
-      cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '1000');
+      cy.keyboardInput(field(CONTRACT_VALUE).input(), '1000');
 
       // form submit
       submitButton().click();
@@ -124,7 +124,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('85');
+      field(PERCENTAGE_OF_COVER).input().select('85');
       submitButton().click();
 
       const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#${PERCENTAGE_OF_COVER}-label`;
@@ -133,7 +133,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it('renders the new answer in the quote', () => {
-      tellUsAboutYourPolicyPage[PERCENTAGE_OF_COVER].input().select('85');
+      field(PERCENTAGE_OF_COVER).input().select('85');
 
       // form submit
       submitButton().click();
@@ -164,7 +164,7 @@ context('Your quote page - change answers (single policy type to multiple policy
 
       submitButton().click();
       // max amount owed and credit period fields are now required because it's a multiple policy
-      cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '120000');
+      cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '120000');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
 
       // submit the "tell us about your policy" form

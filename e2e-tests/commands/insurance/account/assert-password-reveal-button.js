@@ -1,50 +1,46 @@
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import { ACCOUNT_FIELDS } from '../../../content-strings/fields/insurance/account';
-import accountFormFields from '../../../partials/insurance/accountFormFields';
+import passwordField from '../../../partials/insurance/passwordField';
 
 const {
-  ACCOUNT: { PASSWORD },
+  ACCOUNT: { PASSWORD: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
-const fieldId = PASSWORD;
-
-const FIELD_STRINGS = ACCOUNT_FIELDS[fieldId];
-
-const field = accountFormFields[fieldId];
+const FIELD_STRINGS = ACCOUNT_FIELDS[FIELD_ID];
 
 const expectedShowText = `${FIELD_STRINGS.REVEAL.SHOW} password`;
 const expectedHideText = `${FIELD_STRINGS.REVEAL.HIDE} password`;
 
 const shouldRender = () => {
-  field.revealButton().should('exist');
+  passwordField.revealButton().should('exist');
 
-  cy.checkText(field.revealButton(), expectedShowText);
+  cy.checkText(passwordField.revealButton(), expectedShowText);
 };
 
 const afterClick = {
   changesInputType: () => {
-    field.input().should('have.attr', 'type', 'password');
-    cy.keyboardInput(field.input(), 'Mock');
+    passwordField.input().should('have.attr', 'type', 'password');
+    cy.keyboardInput(passwordField.input(), 'Mock');
 
-    field.revealButton().click();
+    passwordField.revealButton().click();
 
     // field input should change from password to text
-    field.input().should('have.attr', 'type', 'text');
+    passwordField.input().should('have.attr', 'type', 'text');
 
     // reveal button text should change to 'hide'
-    cy.checkText(field.revealButton(), expectedHideText);
+    cy.checkText(passwordField.revealButton(), expectedHideText);
   },
 };
 
 const afterSecondClick = {
   changesInputType: () => {
-    field.revealButton().click();
+    passwordField.revealButton().click();
 
     // field input should change from text to password
-    field.input().should('have.attr', 'type', 'password');
+    passwordField.input().should('have.attr', 'type', 'password');
 
     // reveal button text should change to 'show'
-    cy.checkText(field.revealButton(), expectedShowText);
+    cy.checkText(passwordField.revealButton(), expectedShowText);
   },
 };
 

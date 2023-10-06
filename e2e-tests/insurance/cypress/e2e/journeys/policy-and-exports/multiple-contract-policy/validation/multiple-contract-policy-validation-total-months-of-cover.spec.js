@@ -1,22 +1,24 @@
-import { submitButton } from '../../../../../../../pages/shared';
-import { multipleContractPolicyPage } from '../../../../../../../pages/insurance/policy-and-export';
+import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const { taskList } = partials.insurancePartials;
 
-const { INSURANCE } = ROUTES;
-
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        MULTIPLE: { TOTAL_MONTHS_OF_COVER },
-      },
+  POLICY_AND_EXPORTS: {
+    CONTRACT_POLICY: {
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
+
+const {
+  ROOT,
+  POLICY_AND_EXPORTS: { MULTIPLE_CONTRACT_POLICY },
+} = INSURANCE_ROUTES;
 
 const {
   INSURANCE: {
@@ -28,6 +30,8 @@ const {
   },
 } = ERROR_MESSAGES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Policy and exports - Multiple contract policy page - form validation - total months of cover', () => {
   let referenceNumber;
 
@@ -38,7 +42,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
       taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
+      const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
       cy.assertUrl(expectedUrl);
     });
@@ -52,7 +56,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - form v
     cy.deleteApplication(referenceNumber);
   });
 
-  const field = multipleContractPolicyPage[TOTAL_MONTHS_OF_COVER];
+  const field = fieldSelector(TOTAL_MONTHS_OF_COVER);
 
   describe('when total months of cover is not provided', () => {
     it('should render a validation error', () => {

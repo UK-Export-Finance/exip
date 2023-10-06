@@ -4,7 +4,7 @@ import exporterLocationPage from './exporterLocation';
 import needToStartAgainPage from './needToStartAgain';
 import summaryList from './summaryList';
 import ukGoodsOrServicesPage from './ukGoodsOrServices';
-import input from './input';
+import field from './field';
 
 const backLink = () => cy.get('[data-cy="back-link"]');
 const heading = () => cy.get('[data-cy="heading"]');
@@ -49,7 +49,7 @@ export {
   countryInput,
   cannotApplyPage,
   exporterLocationPage,
-  input,
+  field,
   needToStartAgainPage,
   summaryList,
   ukGoodsOrServicesPage,

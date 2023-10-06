@@ -1,6 +1,5 @@
-import { companyDetails } from '../../pages/your-business';
 import { FIELD_IDS } from '../../constants';
-import { yesRadioInput } from '../../pages/shared';
+import { field, yesRadioInput } from '../../pages/shared';
 
 const {
   YOUR_COMPANY: {
@@ -21,11 +20,11 @@ const completeCompaniesDetailsForm = ({ phoneNumber, companyWebsite }) => {
   yesRadioInput().eq(1).click();
 
   if (phoneNumber) {
-    cy.keyboardInput(companyDetails[PHONE_NUMBER].input(), phoneNumber);
+    cy.keyboardInput(field(PHONE_NUMBER).input(), phoneNumber);
   }
 
   if (companyWebsite) {
-    cy.keyboardInput(companyDetails[WEBSITE].input(), companyWebsite);
+    cy.keyboardInput(field(WEBSITE).input(), companyWebsite);
   }
 };
 

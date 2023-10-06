@@ -1,7 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
-import { submitButton } from '../../../pages/shared';
-import { enterCodePage } from '../../../pages/insurance/account/sign-in';
+import { field, submitButton } from '../../../pages/shared';
 
 const {
   ACCOUNT: { SECURITY_CODE },
@@ -34,7 +33,7 @@ const signInAndAssertAllSectionsUrl = ({
 
   // get the OTP security code
   cy.accountAddAndGetOTP(emailAddress).then((securityCode) => {
-    cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), securityCode);
+    cy.keyboardInput(field(SECURITY_CODE).input(), securityCode);
 
     // submit the OTP security code
     submitButton().click();

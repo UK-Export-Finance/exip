@@ -15,12 +15,12 @@ import {
   checkCalculateDescriptionSummaryText,
   checkCalculateDescriptionSummaryClickRevealsContent,
   checkCalculateDescriptionDescriptionContent,
-} from '../../../../../../commands/check-uk-goods-and-services-calculate-description';
+} from '../../../../../../commands/shared-commands/assertions/check-uk-goods-and-services-calculate-description';
 import {
   checkDescriptionSummaryText,
   checkDescriptionSummaryClickRevealsContent,
   checkDescriptionContent,
-} from '../../../../../../commands/check-uk-goods-and-services-description';
+} from '../../../../../../commands/shared-commands/assertions/check-uk-goods-and-services-description';
 
 const CONTENT_STRINGS = PAGES.UK_GOODS_OR_SERVICES;
 

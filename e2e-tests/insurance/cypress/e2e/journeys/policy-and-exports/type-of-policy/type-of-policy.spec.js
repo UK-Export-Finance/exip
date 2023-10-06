@@ -1,4 +1,5 @@
 import {
+  field,
   headingCaption,
   submitButton,
   saveAndBackButton,
@@ -32,6 +33,8 @@ const goToPageDirectly = (referenceNumber) => {
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Policy and exports - Type of policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {
   let referenceNumber;
   let url;
@@ -42,7 +45,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
       task.link().click();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;
 
       cy.assertUrl(url);
     });
@@ -102,8 +105,6 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
     });
 
     it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });
@@ -117,8 +118,15 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
       it('should render a validation error', () => {
         const expectedErrorsCount = 1;
 
+        const { errorMessage } = field(FIELD_ID);
+
+        const radioField = {
+          ...singlePolicyField,
+          errorMessage,
+        };
         cy.submitAndAssertRadioErrors(
-          singlePolicyField,
+          // singlePolicyField,
+          radioField,
           0,
           expectedErrorsCount,
           ERROR_MESSAGES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY[FIELD_ID].IS_EMPTY,
@@ -136,7 +144,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
 
         submitButton().click();
 
-        const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
+        const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
 
         cy.assertUrl(expected);
       });
@@ -156,7 +164,7 @@ context('Insurance - Policy and exports - Type of policy page - As an exporter, 
       it(`should redirect to ${POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`, () => {
         cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-        const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
+        const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
 
         cy.assertUrl(expected);
       });

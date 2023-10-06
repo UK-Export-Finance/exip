@@ -6,7 +6,7 @@ import {
   WEBSITE_EXAMPLES,
 } from '../../../../../../constants';
 import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
-import { submitButton, summaryList } from '../../../../../../pages/shared';
+import { field, submitButton, summaryList } from '../../../../../../pages/shared';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import application from '../../../../../../fixtures/application';
 
@@ -86,7 +86,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(companyOrOrganisationPage[fieldId].input(), newAnswer);
+        cy.keyboardInput(field(fieldId).input(), newAnswer);
 
         submitButton().click();
       });
@@ -122,7 +122,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(companyOrOrganisationPage[fieldId].input(), newAnswer);
+        cy.keyboardInput(field(fieldId).input(), newAnswer);
 
         submitButton().click();
       });
@@ -168,7 +168,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(companyOrOrganisationPage[fieldId].input(), newAnswer);
+        cy.keyboardInput(field(fieldId).input(), newAnswer);
 
         submitButton().click();
       });
@@ -204,7 +204,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(companyOrOrganisationPage[fieldId].input(), newAnswer);
+        cy.keyboardInput(field(fieldId).input(), newAnswer);
 
         submitButton().click();
       });
@@ -242,9 +242,9 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(companyOrOrganisationPage[fieldId].input(), newAnswerFirstName);
-        cy.keyboardInput(companyOrOrganisationPage[LAST_NAME].input(), newAnswerLastName);
-        cy.keyboardInput(companyOrOrganisationPage[POSITION].input(), newAnswerPosition);
+        cy.keyboardInput(field(fieldId).input(), newAnswerFirstName);
+        cy.keyboardInput(field(LAST_NAME).input(), newAnswerLastName);
+        cy.keyboardInput(field(POSITION).input(), newAnswerPosition);
 
         submitButton().click();
       });

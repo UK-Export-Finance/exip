@@ -1,4 +1,4 @@
-import { input, saveAndBackButton } from '../../../../../../pages/shared';
+import { field, saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -76,10 +76,10 @@ context('Insurance - Policy and exports - Different name on policy - Save and go
     it('should have the all inputs as empty when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
-      cy.checkValue(input.field(FIRST_NAME), '');
-      cy.checkValue(input.field(LAST_NAME), '');
-      cy.checkValue(input.field(EMAIL), '');
-      cy.checkValue(input.field(POSITION), '');
+      cy.checkValue(field(FIRST_NAME), '');
+      cy.checkValue(field(LAST_NAME), '');
+      cy.checkValue(field(EMAIL), '');
+      cy.checkValue(field(POSITION), '');
     });
   });
 
@@ -87,8 +87,8 @@ context('Insurance - Policy and exports - Different name on policy - Save and go
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(input.field(FIRST_NAME).input(), POLICY_CONTACT[FIRST_NAME]);
-      cy.keyboardInput(input.field(LAST_NAME).input(), POLICY_CONTACT[LAST_NAME]);
+      cy.keyboardInput(field(FIRST_NAME).input(), POLICY_CONTACT[FIRST_NAME]);
+      cy.keyboardInput(field(LAST_NAME).input(), POLICY_CONTACT[LAST_NAME]);
 
       saveAndBackButton().click();
     });
@@ -100,10 +100,10 @@ context('Insurance - Policy and exports - Different name on policy - Save and go
     it('should have the originally submitted answers populated when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
-      cy.checkValue(input.field(FIRST_NAME), POLICY_CONTACT[FIRST_NAME]);
-      cy.checkValue(input.field(LAST_NAME), POLICY_CONTACT[LAST_NAME]);
-      cy.checkValue(input.field(EMAIL), '');
-      cy.checkValue(input.field(POSITION), '');
+      cy.checkValue(field(FIRST_NAME), POLICY_CONTACT[FIRST_NAME]);
+      cy.checkValue(field(LAST_NAME), POLICY_CONTACT[LAST_NAME]);
+      cy.checkValue(field(EMAIL), '');
+      cy.checkValue(field(POSITION), '');
     });
   });
 
@@ -122,10 +122,10 @@ context('Insurance - Policy and exports - Different name on policy - Save and go
     it('should have the originally submitted answers populated when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
-      cy.checkValue(input.field(FIRST_NAME), POLICY_CONTACT[FIRST_NAME]);
-      cy.checkValue(input.field(LAST_NAME), POLICY_CONTACT[LAST_NAME]);
-      cy.checkValue(input.field(EMAIL), POLICY_CONTACT[EMAIL]);
-      cy.checkValue(input.field(POSITION), POLICY_CONTACT[POSITION]);
+      cy.checkValue(field(FIRST_NAME), POLICY_CONTACT[FIRST_NAME]);
+      cy.checkValue(field(LAST_NAME), POLICY_CONTACT[LAST_NAME]);
+      cy.checkValue(field(EMAIL), POLICY_CONTACT[EMAIL]);
+      cy.checkValue(field(POSITION), POLICY_CONTACT[POSITION]);
     });
   });
 });

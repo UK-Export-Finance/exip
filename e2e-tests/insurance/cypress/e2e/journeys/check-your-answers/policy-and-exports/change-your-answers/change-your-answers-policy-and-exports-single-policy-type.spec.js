@@ -1,14 +1,9 @@
 import partials from '../../../../../../../partials';
-import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
-import { status, summaryList } from '../../../../../../../pages/shared';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { field, status, summaryList } from '../../../../../../../pages/shared';
 import application from '../../../../../../../fixtures/application';
 import { singleContractPolicyPage } from '../../../../../../../pages/insurance/policy-and-export';
-import {
-  checkChangeLinkUrl,
-  changeAnswerField,
-  checkChangeAnswerRendered,
-} from '../../../../../../../commands/check-summary-list-field-change';
-import { changeAnswerSelectField } from '../../../../../../../commands/check-summary-list-select-change';
 import formatCurrency from '../../../../../../../helpers/format-currency';
 import currencies from '../../../../../../../fixtures/currencies';
 import { createTimestampFromNumbers, formatDate } from '../../../../../../../helpers/date';
@@ -21,20 +16,18 @@ const {
   CHECK_YOUR_ANSWERS: {
     TYPE_OF_POLICY,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
-        POLICY_CURRENCY_CODE,
-        SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-      },
+  POLICY_AND_EXPORTS: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      CREDIT_PERIOD_WITH_BUYER,
+      POLICY_CURRENCY_CODE,
+      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
@@ -99,11 +92,13 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
           cy.navigateToUrl(url);
           fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-          checkChangeLinkUrl(fieldVariables, referenceNumber);
+          cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
       });
 
       describe('form submission with a new answer', () => {
+        const contractCompletionDateYearChange = newAnswer.year + 1;
+
         beforeEach(() => {
           cy.navigateToUrl(url);
 
@@ -111,10 +106,10 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
 
           fieldVariables.newValueInput = newAnswer.year;
 
-          changeAnswerField(fieldVariables, singleContractPolicyPage[fieldId].yearInput(), false);
+          cy.changeAnswerField(fieldVariables, field(fieldId).yearInput(), false);
 
-          fieldVariables.newValueInput = newAnswer.year + 1;
-          changeAnswerField(fieldVariables, singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput());
+          fieldVariables.newValueInput = contractCompletionDateYearChange;
+          cy.changeAnswerField(fieldVariables, field(CONTRACT_COMPLETION_DATE).yearInput());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -122,8 +117,8 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
         });
 
         it('should render the new answer', () => {
-          fieldVariables.newValue = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
-          checkChangeAnswerRendered(fieldVariables);
+          fieldVariables.newValue = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, contractCompletionDateYearChange));
+          cy.checkChangeAnswerRendered(fieldVariables);
         });
       });
     });
@@ -146,7 +141,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
           cy.navigateToUrl(url);
           fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-          checkChangeLinkUrl(fieldVariables, referenceNumber);
+          cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
       });
 
@@ -158,7 +153,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
 
           fieldVariables.newValueInput = newAnswer.year;
 
-          changeAnswerField(fieldVariables, singleContractPolicyPage[fieldId].yearInput());
+          cy.changeAnswerField(fieldVariables, field(fieldId).yearInput());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -167,7 +162,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
 
         it('should render the new answer', () => {
           fieldVariables.newValue = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
-          checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered(fieldVariables);
         });
       });
     });
@@ -186,7 +181,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
           cy.navigateToUrl(url);
           fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-          checkChangeLinkUrl(fieldVariables, referenceNumber);
+          cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
       });
 
@@ -197,7 +192,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
           summaryList.field(fieldId).changeLink().click();
 
           fieldVariables.newValueInput = application.POLICY_AND_EXPORTS[fieldId] - 500;
-          changeAnswerField(fieldVariables, singleContractPolicyPage[fieldId].input());
+          cy.changeAnswerField(fieldVariables, singleContractPolicyPage[fieldId].input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -206,7 +201,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
 
         it('should render the new answer', () => {
           fieldVariables.newValue = formatCurrency(fieldVariables.newValueInput);
-          checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered(fieldVariables);
         });
       });
     });
@@ -225,7 +220,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
           cy.navigateToUrl(url);
           fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-          checkChangeLinkUrl(fieldVariables, referenceNumber);
+          cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
       });
 
@@ -236,7 +231,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
           summaryList.field(fieldId).changeLink().click();
           fieldVariables.newValueInput = `${String(application.POLICY_AND_EXPORTS[fieldId])} additional text`;
 
-          changeAnswerField(fieldVariables, singleContractPolicyPage[fieldId].input());
+          cy.changeAnswerField(fieldVariables, field(fieldId).input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -245,7 +240,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
 
         it('should render the new answer', () => {
           fieldVariables.newValue = fieldVariables.newValueInput;
-          checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered(fieldVariables);
         });
       });
     });
@@ -264,7 +259,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
           fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
           fieldVariables.newValueInput = currencies[3].isoCode;
-          checkChangeLinkUrl(fieldVariables, referenceNumber);
+          cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
       });
 
@@ -275,7 +270,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
           summaryList.field(fieldId).changeLink().click();
 
           fieldVariables.newValueInput = currencies[3].isoCode;
-          changeAnswerSelectField(fieldVariables, policyCurrencyCodeFormField.input());
+          cy.changeAnswerSelectField(fieldVariables, policyCurrencyCodeFormField.input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -287,7 +282,7 @@ context('Insurance - Change your answers - Policy and exports - Single contract 
           const { name } = expected;
 
           fieldVariables.newValue = name;
-          checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered(fieldVariables);
 
           cy.checkTaskStatusCompleted(status());
         });

@@ -1,15 +1,13 @@
 import companiesHouseNumber from './companies-house-number/companiesHouseNumber';
 import companyDetails from './company-details/companyDetails';
 import companiesHouseUnavailablePage from './companies-house-unavailable/companiesHouseUnavailablePage';
-import natureOfBusiness from './nature-of-business/natureOfBusiness';
-import turnover from './turnover/turnover';
 import brokerPage from './broker/broker';
+import turnoverPage from './turnover';
 
 export {
   companiesHouseNumber,
   companyDetails,
   companiesHouseUnavailablePage,
-  natureOfBusiness,
-  turnover,
   brokerPage,
+  turnoverPage,
 };

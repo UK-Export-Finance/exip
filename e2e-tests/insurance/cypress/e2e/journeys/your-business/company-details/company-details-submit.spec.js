@@ -1,10 +1,12 @@
 import { companyDetails } from '../../../../../../pages/your-business';
-import { submitButton } from '../../../../../../pages/shared';
+import { field as fieldSelector, submitButton } from '../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import partials from '../../../../../../partials';
 import {
-  ROUTES, FIELD_IDS, INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS,
+  INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS,
 } from '../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   EXPORTER_BUSINESS: {
@@ -15,7 +17,15 @@ const {
       PHONE_NUMBER,
     },
   },
-} = FIELD_IDS.INSURANCE;
+} = INSURANCE_FIELD_IDS;
+
+const {
+  ROOT,
+  EXPORTER_BUSINESS: {
+    COMPANY_DETAILS,
+    NATURE_OF_BUSINESS,
+  },
+} = INSURANCE_ROUTES;
 
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
@@ -27,6 +37,8 @@ const INVALID_PHONE_NUMBER = INVALID_PHONE_NUMBERS.LANDLINE.LONG;
 
 const expectedErrors = 4;
 
+const baseUrl = Cypress.config('baseUrl');
+
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section", () => {
   let referenceNumber;
   let url;
@@ -36,8 +48,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
-      natureOfBusinessUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
+      natureOfBusinessUrl = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
 
       task.link().click();
 
@@ -52,8 +64,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     cy.navigateToUrl(url);
 
-    cy.keyboardInput(companyDetails[WEBSITE].input(), WEBSITE_EXAMPLES.INVALID);
-    cy.keyboardInput(companyDetails[PHONE_NUMBER].input(), INVALID_PHONE_NUMBERS.LANDLINE.LONG);
+    cy.keyboardInput(fieldSelector(WEBSITE).input(), WEBSITE_EXAMPLES.INVALID);
+    cy.keyboardInput(fieldSelector(PHONE_NUMBER).input(), INVALID_PHONE_NUMBERS.LANDLINE.LONG);
 
     submitButton().click();
   });
@@ -86,12 +98,12 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     it('should display the validation error for company website in company website section', () => {
-      cy.submitAndAssertFieldErrors(companyDetails[WEBSITE], WEBSITE_EXAMPLES.INVALID, 2, expectedErrors, COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors(fieldSelector(WEBSITE), WEBSITE_EXAMPLES.INVALID, 2, expectedErrors, COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT);
     });
 
     it('should display the validation error for phone number in phone number section', () => {
       cy.submitAndAssertFieldErrors(
-        companyDetails[PHONE_NUMBER],
+        fieldSelector(PHONE_NUMBER),
         INVALID_PHONE_NUMBER,
         3,
         expectedErrors,

@@ -1,5 +1,4 @@
-import { submitButton, summaryList } from '../../../../../../pages/shared';
-import { singleContractPolicyPage } from '../../../../../../pages/insurance/policy-and-export';
+import { field, submitButton, summaryList } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
@@ -85,8 +84,8 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.keyboardInput(singleContractPolicyPage[fieldId].yearInput(), newAnswer.year);
-          cy.keyboardInput(singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput(), newAnswer.year + 1);
+          cy.keyboardInput(field(fieldId).yearInput(), newAnswer.year);
+          cy.keyboardInput(field(CONTRACT_COMPLETION_DATE).yearInput(), newAnswer.year + 1);
 
           submitButton().click();
         });
@@ -127,7 +126,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.keyboardInput(singleContractPolicyPage[fieldId].yearInput(), newAnswer.year);
+          cy.keyboardInput(field(fieldId).yearInput(), newAnswer.year);
 
           submitButton().click();
         });
@@ -165,7 +164,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.keyboardInput(singleContractPolicyPage[fieldId].input(), newAnswer);
+          cy.keyboardInput(field(fieldId).input(), newAnswer);
 
           submitButton().click();
         });
@@ -203,7 +202,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.keyboardInput(singleContractPolicyPage[fieldId].input(), newAnswer);
+          cy.keyboardInput(field(fieldId).input(), newAnswer);
 
           submitButton().click();
         });

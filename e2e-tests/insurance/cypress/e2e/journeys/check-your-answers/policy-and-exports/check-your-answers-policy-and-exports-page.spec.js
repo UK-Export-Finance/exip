@@ -79,10 +79,6 @@ context('Insurance - Check your answers - Policy and exports - I want to confirm
     });
 
     it('renders a `save and back` button', () => {
-      submitButton().should('exist');
-      cy.checkText(submitButton(), BUTTONS.CONFIRM_AND_CONTINUE);
-
-      saveAndBackButton().should('exist');
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });
