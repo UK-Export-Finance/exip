@@ -1,4 +1,3 @@
-import { AccountUpdateInput } from '.keystone/types'; // eslint-disable-line
 import { SuccessResponse } from '../generic';
 
 export interface AccountCreationVariables {

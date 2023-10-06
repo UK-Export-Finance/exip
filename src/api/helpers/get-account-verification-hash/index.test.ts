@@ -25,7 +25,7 @@ describe('helpers/get-account-verification-hash', () => {
 
     const { email, salt } = account;
 
-    result = await generateAccountVerificationHash(email, salt);
+    result = generateAccountVerificationHash(email, salt);
   });
 
   it('should generate and return a verification hash', () => {
