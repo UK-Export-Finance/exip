@@ -180,9 +180,14 @@ ui.get('*', (req: Request, res: Response) => {
 });
 
 /**
- * When being executed on Azure only HTTP server should be running,
- * since TLS will be stripped. However ensure localhost and GHA
- * are executed on TLS.
+ * Azure WebApp will strip TLS before reaching the express server.
+ * Due to above constraint one can only run HTTP server on Azure,
+ * however it is proxied behind a HTTPS connection therefore
+ * `trust proxy` has been enabled.
+ *
+ * However for localhost and GHA a HTTPS server with a self-signed
+ * certificate will be spawned to allow creation of `__Host-` prefixed
+ * cookies and a uniform environment.
  */
 if (isProduction()) {
   http(ui);

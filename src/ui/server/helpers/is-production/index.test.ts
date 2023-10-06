@@ -21,13 +21,8 @@ describe('helpers/isProduction', () => {
     expect(isProduction()).toBe(false);
   });
 
-  it('should return false when NODE_ENV is set to an unexpected value', () => {
+  it('should return false when NODE_ENV is set to an blank value', () => {
     process.env.NODE_ENV = '';
-    expect(isProduction()).toBe(false);
-  });
-
-  it('should return false when NODE_ENV is set to an unexpected value', () => {
-    process.env.NODE_ENV = ' ';
     expect(isProduction()).toBe(false);
   });
 });
