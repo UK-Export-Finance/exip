@@ -2156,6 +2156,7 @@ var createAnAccount = async (root, variables, context) => {
     }
     const { salt, hash } = encrypt_password_default(password2);
     const now = /* @__PURE__ */ new Date();
+    const { verificationHash, verificationExpiry } = get_account_verification_hash_default(email, salt);
     const accountData = {
       firstName,
       lastName,
@@ -2163,14 +2164,11 @@ var createAnAccount = async (root, variables, context) => {
       salt,
       hash,
       isVerified: false,
-      // verificationHash,
-      // verificationExpiry,
+      verificationHash,
+      verificationExpiry,
       createdAt: now,
       updatedAt: now
     };
-    const { verificationHash, verificationExpiry } = get_account_verification_hash_default(email, salt);
-    accountData.verificationHash = verificationHash;
-    accountData.verificationExpiry = verificationExpiry;
     const creationResponse = await context.db.Account.createOne({
       data: accountData
     });
