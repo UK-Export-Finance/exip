@@ -1,6 +1,7 @@
 import { isBefore } from 'date-fns';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
+import update from '../../../helpers/update-account';
 import { Context, VerifyEmailAddressVariables, VerifyEmailAddressResponse } from '../../../types';
 
 const { EMAIL, VERIFICATION_HASH, VERIFICATION_EXPIRY } = ACCOUNT_FIELD_IDS;
@@ -48,10 +49,7 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
         verificationExpiry: null,
       };
 
-      await context.db.Account.updateOne({
-        where: { id: account.id },
-        data: accountUpdate,
-      });
+      await update.account(context, id, accountUpdate);
 
       return {
         success: true,
