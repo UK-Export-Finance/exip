@@ -21,7 +21,7 @@ const {
 } = ROUTES;
 
 const {
-  NAME_ON_POLICY: { NAME, POSITION, OTHER_NAME, IS_SAME_AS_OWNER },
+  NAME_ON_POLICY: { NAME, POSITION, OTHER_NAME, SAME_NAME },
 } = POLICY_AND_EXPORTS_FIELD_IDS;
 
 /**
@@ -98,6 +98,8 @@ export const post = async (req: Request, res: Response) => {
 
   const payload = constructPayload(req.body, FIELD_IDS);
 
+  const isSameAsOwner = payload[NAME] === SAME_NAME;
+
   const validationErrors = generateValidationErrors(payload);
 
   if (validationErrors) {
@@ -127,14 +129,14 @@ export const post = async (req: Request, res: Response) => {
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
-    console.log(payload, isCheckAndChangeRoute(req.originalUrl))
+
     if (isCheckAndChangeRoute(req.originalUrl)) {
       /**
        * if check-and-change route
        * if someone else is selected then redirects to different name on policy page with /check-and-change in url
        * ensures that redirects to next page and once submitted, then redirects back to check and change page
        */
-      if (!payload[IS_SAME_AS_OWNER]) {
+      if (!isSameAsOwner) {
         return res.redirect(`${differentNameOnPolicyRoute}/check-and-change`);
       }
 
