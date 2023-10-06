@@ -306,6 +306,7 @@ jobs:
           --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
           --settings \
           TZ='${{ vars.TIMEZONE }}' \
+          NODE_ENV='${{ vars.NODE_ENV }}' \
           PORT='${{ vars.UI_PORT }}' \
           WEBSITES_PORT='${{ vars.UI_PORT }}' \
           TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
@@ -327,6 +328,7 @@ jobs:
           --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
           --settings \
           TZ='${{ vars.TIMEZONE }}' \
+          NODE_ENV='${{ vars.NODE_ENV }}' \
           PORT='${{ vars.API_PORT }}' \
           WEBSITES_PORT='${{ vars.API_PORT }}' \
           TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
