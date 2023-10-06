@@ -10,6 +10,8 @@ import { Context, SendConfirmEmailAddressVariables } from '../../../types';
  */
 const sendEmailConfirmEmailAddressMutation = async (root: any, variables: SendConfirmEmailAddressVariables, context: Context) => {
   try {
+    console.info('Sending email verification for account creation');
+
     const emailResponse = await confirmEmailAddressEmail.send(context, variables.urlOrigin, variables.accountId);
 
     if (emailResponse.success) {

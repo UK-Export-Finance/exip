@@ -683,8 +683,8 @@ var getAccountByField = async (context, field, value) => {
       console.info("Getting account by field - no account exists with the provided field/value");
       return false;
     }
-    const account = accountsArray[0];
-    return account;
+    const account2 = accountsArray[0];
+    return account2;
   } catch (err) {
     console.error("Error getting account by field/value %O", err);
     throw new Error(`Getting account by field/value ${err}`);
@@ -1110,8 +1110,8 @@ var lists = {
         if (operation === "create") {
           const { email } = resolvedData;
           const requestedEmail = String(email);
-          const account = await get_account_by_field_default(context, account_default2.EMAIL, requestedEmail);
-          if (account) {
+          const account2 = await get_account_by_field_default(context, account_default2.EMAIL, requestedEmail);
+          if (account2) {
             throw new Error(`Unable to create a new account for ${requestedEmail} - account already exists`);
           }
         }
@@ -1816,9 +1816,6 @@ var typeDefs = `
 `;
 var type_defs_default = typeDefs;
 
-// custom-resolvers/mutations/create-an-account/index.ts
-var import_crypto2 = __toESM(require("crypto"));
-
 // helpers/encrypt-password/index.ts
 var import_crypto = __toESM(require("crypto"));
 var { ENCRYPTION } = ACCOUNT;
@@ -1840,9 +1837,29 @@ var encryptPassword = (password2) => {
 };
 var encrypt_password_default = encryptPassword;
 
+// helpers/get-account-verification-hash/index.ts
+var import_crypto2 = __toESM(require("crypto"));
+var { EMAIL, ENCRYPTION: ENCRYPTION2 } = ACCOUNT;
+var {
+  STRING_TYPE: STRING_TYPE2,
+  PBKDF2: { ITERATIONS: ITERATIONS2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 },
+  PASSWORD: {
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH2 }
+  }
+} = ENCRYPTION2;
+var generateAccountVerificationHash = (email, salt) => {
+  const verificationHash = import_crypto2.default.pbkdf2Sync(email, salt, ITERATIONS2, KEY_LENGTH2, DIGEST_ALGORITHM2).toString(STRING_TYPE2);
+  const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
+  return {
+    verificationHash,
+    verificationExpiry
+  };
+};
+var get_account_verification_hash_default = generateAccountVerificationHash;
+
 // helpers/get-full-name-string/index.ts
-var getFullNameString = (account) => {
-  const { firstName, lastName } = account;
+var getFullNameString = (account2) => {
+  const { firstName, lastName } = account2;
   const fullName = `${firstName} ${lastName}`;
   return fullName;
 };
@@ -2128,33 +2145,25 @@ var sendEmail = {
 var emails_default = sendEmail;
 
 // custom-resolvers/mutations/create-an-account/index.ts
-var { EMAIL, ENCRYPTION: ENCRYPTION2 } = ACCOUNT;
-var {
-  STRING_TYPE: STRING_TYPE2,
-  PBKDF2: { ITERATIONS: ITERATIONS2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 },
-  PASSWORD: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH2 }
-  }
-} = ENCRYPTION2;
 var createAnAccount = async (root, variables, context) => {
   console.info("Creating new account for %s", variables.email);
   try {
     const { urlOrigin, firstName, lastName, email, password: password2 } = variables;
-    const account = await get_account_by_field_default(context, account_default2.EMAIL, email);
-    if (account) {
+    const account2 = await get_account_by_field_default(context, account_default2.EMAIL, email);
+    if (account2) {
       console.info("Unable to create a new account for %s - account already exists", variables.email);
       return { success: false };
     }
     const { salt, hash } = encrypt_password_default(password2);
-    const verificationHash = import_crypto2.default.pbkdf2Sync(password2, salt, ITERATIONS2, KEY_LENGTH2, DIGEST_ALGORITHM2).toString(STRING_TYPE2);
-    const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
     const now = /* @__PURE__ */ new Date();
+    const { verificationHash, verificationExpiry } = get_account_verification_hash_default(email, salt);
     const accountData = {
       firstName,
       lastName,
       email,
       salt,
       hash,
+      isVerified: false,
       verificationHash,
       verificationExpiry,
       createdAt: now,
@@ -2206,12 +2215,12 @@ var deleteAnAccount = async (root, variables, context) => {
   console.info("Deleting account ", variables.email);
   try {
     const { email } = variables;
-    const account = await get_account_by_field_default(context, "email", email);
-    if (!account) {
+    const account2 = await get_account_by_field_default(context, "email", email);
+    if (!account2) {
       console.info(`Unable to delete account - account not found`);
       return { success: false };
     }
-    const { id: accountId } = account;
+    const { id: accountId } = account2;
     console.info("Checking authentication retry entries");
     const retries = await get_authentication_retries_by_account_id_default(context, accountId);
     if (retries.length) {
@@ -2241,15 +2250,38 @@ var delete_an_account_default = deleteAnAccount;
 
 // custom-resolvers/mutations/verify-account-email-address/index.ts
 var import_date_fns3 = require("date-fns");
+
+// helpers/update-account/index.ts
+var account = async (context, accountId, updateData) => {
+  try {
+    console.info("Updating account");
+    const updatedAccount = await context.db.Account.updateOne({
+      where: {
+        id: accountId
+      },
+      data: updateData
+    });
+    return updatedAccount;
+  } catch (err) {
+    console.error("Error updating account %O", err);
+    throw new Error(`Updating account ${err}`);
+  }
+};
+var update = {
+  account
+};
+var update_account_default = update;
+
+// custom-resolvers/mutations/verify-account-email-address/index.ts
 var { EMAIL: EMAIL2, VERIFICATION_HASH, VERIFICATION_EXPIRY } = account_default2;
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
     console.info("Verifying account email address");
-    const account = await get_account_by_field_default(context, VERIFICATION_HASH, variables.token);
-    if (account) {
-      const { id } = account;
+    const account2 = await get_account_by_field_default(context, VERIFICATION_HASH, variables.token);
+    if (account2) {
+      const { id } = account2;
       const now = /* @__PURE__ */ new Date();
-      const canActivateAccount = (0, import_date_fns3.isBefore)(now, account[VERIFICATION_EXPIRY]);
+      const canActivateAccount = (0, import_date_fns3.isBefore)(now, account2[VERIFICATION_EXPIRY]);
       if (!canActivateAccount) {
         console.info("Unable to verify account email - verification period has expired");
         return {
@@ -2264,14 +2296,11 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
         verificationHash: "",
         verificationExpiry: null
       };
-      await context.db.Account.updateOne({
-        where: { id: account.id },
-        data: accountUpdate
-      });
+      await update_account_default.account(context, id, accountUpdate);
       return {
         success: true,
         accountId: id,
-        emailRecipient: account[EMAIL2]
+        emailRecipient: account2[EMAIL2]
       };
     }
     console.info("Unable to verify account email - no account found from the provided %s", VERIFICATION_HASH);
@@ -2290,12 +2319,12 @@ var verify_account_email_address_default = verifyAccountEmailAddress;
 var getAccountById = async (context, accountId) => {
   try {
     console.info("Getting account by ID");
-    const account = await context.db.Account.findOne({
+    const account2 = await context.db.Account.findOne({
       where: {
         id: accountId
       }
     });
-    return account;
+    return account2;
   } catch (err) {
     console.error("Error getting account by ID %O", err);
     throw new Error(`Getting account by ID ${err}`);
@@ -2307,16 +2336,26 @@ var get_account_by_id_default = getAccountById;
 var send = async (context, urlOrigin, accountId) => {
   try {
     console.info("Sending email verification");
-    const account = await get_account_by_id_default(context, accountId);
-    if (!account) {
+    const account2 = await get_account_by_id_default(context, accountId);
+    if (!account2) {
       console.info("Sending email verification - no account exists with the provided account ID");
       return {
         success: false
       };
     }
-    const { email, verificationHash } = account;
-    const name = get_full_name_string_default(account);
-    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash);
+    let latestVerificationHash = "";
+    if (account2.verificationHash) {
+      latestVerificationHash = account2.verificationHash;
+    } else {
+      const { email: email2, salt } = account2;
+      const { verificationHash, verificationExpiry } = get_account_verification_hash_default(email2, salt);
+      const accountUpdate = { verificationHash, verificationExpiry };
+      latestVerificationHash = verificationHash;
+      await update_account_default.account(context, accountId, accountUpdate);
+    }
+    const { email } = account2;
+    const name = get_full_name_string_default(account2);
+    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, latestVerificationHash);
     if (emailResponse.success) {
       return emailResponse;
     }
@@ -2334,6 +2373,7 @@ var send_email_confirm_email_address_default = confirmEmailAddressEmail;
 // custom-resolvers/mutations/send-email-confirm-email-address/index.ts
 var sendEmailConfirmEmailAddressMutation = async (root, variables, context) => {
   try {
+    console.info("Sending email verification for account creation");
     const emailResponse = await send_email_confirm_email_address_default.send(context, variables.urlOrigin, variables.accountId);
     if (emailResponse.success) {
       return emailResponse;
@@ -2437,10 +2477,8 @@ var should_block_account_default = shouldBlockAccount;
 var blockAccount = async (context, accountId) => {
   console.info("Blocking account %s", accountId);
   try {
-    const result = await context.db.Account.updateOne({
-      where: { id: accountId },
-      data: { isBlocked: true }
-    });
+    const accountUpdate = { isBlocked: true };
+    const result = await update_account_default.account(context, accountId, accountUpdate);
     if (result.id) {
       return true;
     }
@@ -2502,10 +2540,7 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
       otpHash: hash,
       otpExpiry: expiry
     };
-    await context.db.Account.updateOne({
-      where: { id: accountId },
-      data: accountUpdate
-    });
+    await update_account_default.account(context, accountId, accountUpdate);
     return {
       success: true,
       securityCode
@@ -2519,23 +2554,20 @@ var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
 
 // custom-resolvers/mutations/account-sign-in/account-checks/index.ts
 var { EMAIL: EMAIL3 } = ACCOUNT;
-var accountChecks = async (context, account, urlOrigin) => {
+var accountChecks = async (context, account2, urlOrigin) => {
   try {
     console.info("Signing in account - checking account");
-    const { id: accountId, email } = account;
-    if (!account.isVerified) {
+    const { id: accountId, email } = account2;
+    if (!account2.isVerified) {
       console.info("Unable to sign in account - account has not been verified yet");
       const now = /* @__PURE__ */ new Date();
-      const verificationHasExpired = (0, import_date_fns5.isAfter)(now, account.verificationExpiry);
-      if (account.verificationHash && !verificationHasExpired) {
+      const verificationHasExpired = (0, import_date_fns5.isAfter)(now, account2.verificationExpiry);
+      if (account2.verificationHash && !verificationHasExpired) {
         console.info("Account has an unexpired verification token - resetting verification expiry");
         const accountUpdate = {
           verificationExpiry: EMAIL3.VERIFICATION_EXPIRY()
         };
-        await context.db.Account.updateOne({
-          where: { id: accountId },
-          data: accountUpdate
-        });
+        await update_account_default.account(context, accountId, accountUpdate);
         console.info("Account has an unexpired verification token - sending verification email");
         const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
         if (emailResponse2?.success) {
@@ -2551,7 +2583,7 @@ var accountChecks = async (context, account, urlOrigin) => {
       return { success: false };
     }
     const { securityCode } = await generate_otp_and_update_account_default(context, accountId);
-    const name = get_full_name_string_default(account);
+    const name = get_full_name_string_default(account2);
     const emailResponse = await emails_default.securityCodeEmail(email, name, securityCode);
     if (emailResponse?.success) {
       return {
@@ -2579,16 +2611,16 @@ var accountSignIn = async (root, variables, context) => {
       console.info("Unable to validate account - no account found");
       return { success: false };
     }
-    const account = accountData;
-    const { id: accountId } = account;
-    const { isBlocked } = account;
+    const account2 = accountData;
+    const { id: accountId } = account2;
+    const { isBlocked } = account2;
     if (isBlocked) {
       console.info("Unable to sign in account - account is already blocked");
       return { success: false, isBlocked: true, accountId };
     }
-    if (is_valid_account_password_default(password2, account.salt, account.hash)) {
+    if (is_valid_account_password_default(password2, account2.salt, account2.hash)) {
       console.info("Signing in account - valid credentials provided");
-      return account_checks_default(context, account, urlOrigin);
+      return account_checks_default(context, account2, urlOrigin);
     }
     console.info("Signing in account - invalid credentials provided");
     const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
@@ -2620,19 +2652,19 @@ var accountSignInSendNewCode = async (root, variables, context) => {
   try {
     console.info("Generating and sending new sign in code for account");
     const { accountId } = variables;
-    const account = await get_account_by_id_default(context, accountId);
-    if (!account) {
+    const account2 = await get_account_by_id_default(context, accountId);
+    if (!account2) {
       console.info("Unable to validate account - no account found");
       return { success: false };
     }
-    const { securityCode } = await generate_otp_and_update_account_default(context, account.id);
-    const { email } = account;
-    const name = get_full_name_string_default(account);
+    const { securityCode } = await generate_otp_and_update_account_default(context, account2.id);
+    const { email } = account2;
+    const name = get_full_name_string_default(account2);
     const emailResponse = await emails_default.securityCodeEmail(email, name, securityCode);
     if (emailResponse.success) {
       return {
         ...emailResponse,
-        accountId: account.id
+        accountId: account2.id
       };
     }
     return {
@@ -2731,20 +2763,20 @@ var verifyAccountSignInCode = async (root, variables, context) => {
   try {
     console.info("Verifying account sign in code");
     const { accountId, securityCode } = variables;
-    const account = await get_account_by_id_default(context, accountId);
-    if (!account) {
+    const account2 = await get_account_by_id_default(context, accountId);
+    if (!account2) {
       console.info("Unable to verify account sign in code - no account exists with the provided ID");
       return {
         success: false
       };
     }
-    if (!account.otpSalt || !account.otpHash || !account.otpExpiry) {
+    if (!account2.otpSalt || !account2.otpHash || !account2.otpExpiry) {
       console.info("Unable to verify account sign in code - no OTP available for this account");
       return {
         success: false
       };
     }
-    const { otpSalt, otpHash, otpExpiry } = account;
+    const { otpSalt, otpHash, otpExpiry } = account2;
     const now = /* @__PURE__ */ new Date();
     const hasExpired = (0, import_date_fns6.isAfter)(now, otpExpiry);
     if (hasExpired) {
@@ -2767,16 +2799,13 @@ var verifyAccountSignInCode = async (root, variables, context) => {
         otpHash: "",
         otpExpiry: null
       };
-      await context.db.Account.updateOne({
-        where: { id: accountId },
-        data: accountUpdate
-      });
+      await update_account_default.account(context, accountId, accountUpdate);
       return {
         success: true,
-        accountId: account.id,
-        lastName: account.lastName,
-        firstName: account.firstName,
-        email: account.email,
+        accountId: account2.id,
+        lastName: account2.lastName,
+        firstName: account2.firstName,
+        email: account2.email,
         ...jwt,
         expires: accountUpdate.sessionExpiry
       };
@@ -2796,12 +2825,12 @@ var addAndGetOTP = async (root, variables, context) => {
   try {
     console.info("Adding OTP to an account");
     const { email } = variables;
-    const account = await get_account_by_field_default(context, account_default2.EMAIL, email);
-    if (!account) {
+    const account2 = await get_account_by_field_default(context, account_default2.EMAIL, email);
+    if (!account2) {
       console.info("Unable to generate and add OTP to an account - no account found");
       return { success: false };
     }
-    const { securityCode } = await generate_otp_and_update_account_default(context, account.id);
+    const { securityCode } = await generate_otp_and_update_account_default(context, account2.id);
     return {
       success: true,
       securityCode
@@ -2828,12 +2857,12 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
   try {
     console.info("Received a password reset request - checking account");
     const { urlOrigin, email } = variables;
-    const account = await get_account_by_field_default(context, account_default2.EMAIL, email);
-    if (!account) {
+    const account2 = await get_account_by_field_default(context, account_default2.EMAIL, email);
+    if (!account2) {
       console.info("Unable to check account and send password reset email - no account found");
       return { success: false };
     }
-    const { id: accountId } = account;
+    const { id: accountId } = account2;
     const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
     if (!newRetriesEntry.success) {
       return { success: false };
@@ -2855,18 +2884,15 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
       }
     }
     console.info("Generating password reset hash");
-    const passwordResetHash = import_crypto7.default.pbkdf2Sync(email, account.salt, ITERATIONS6, KEY_LENGTH6, DIGEST_ALGORITHM6).toString(STRING_TYPE7);
+    const passwordResetHash = import_crypto7.default.pbkdf2Sync(email, account2.salt, ITERATIONS6, KEY_LENGTH6, DIGEST_ALGORITHM6).toString(STRING_TYPE7);
     const accountUpdate = {
       passwordResetHash,
       passwordResetExpiry: ACCOUNT.PASSWORD_RESET_EXPIRY()
     };
     console.info("Updating account for password reset");
-    await context.db.Account.updateOne({
-      where: { id: accountId },
-      data: accountUpdate
-    });
+    await update_account_default.account(context, accountId, accountUpdate);
     console.info("Sending password reset email");
-    const name = get_full_name_string_default(account);
+    const name = get_full_name_string_default(account2);
     const emailResponse = await emails_default.passwordResetLink(urlOrigin, email, name, passwordResetHash);
     if (emailResponse.success) {
       return emailResponse;
@@ -2935,17 +2961,17 @@ var accountPasswordReset = async (root, variables, context) => {
   console.info("Resetting account password");
   try {
     const { token, password: newPassword } = variables;
-    const account = await get_account_by_field_default(context, account_default2.PASSWORD_RESET_HASH, token);
-    if (!account) {
+    const account2 = await get_account_by_field_default(context, account_default2.PASSWORD_RESET_HASH, token);
+    if (!account2) {
       console.info("Unable to reset account password - account does not exist");
       return { success: false };
     }
-    const { isBlocked } = account;
+    const { isBlocked } = account2;
     if (isBlocked) {
       console.info("Unable to reset account password - account is blocked");
       return { success: false };
     }
-    const { id: accountId, passwordResetHash, passwordResetExpiry, salt: currentSalt, hash: currentHash } = account;
+    const { id: accountId, passwordResetHash, passwordResetExpiry, salt: currentSalt, hash: currentHash } = account2;
     if (!passwordResetHash || !passwordResetExpiry) {
       console.info("Unable to reset account password - reset hash or expiry does not exist");
       return { success: false };
@@ -2994,12 +3020,7 @@ var accountPasswordReset = async (root, variables, context) => {
       passwordResetHash: "",
       passwordResetExpiry: null
     };
-    await context.db.Account.updateOne({
-      where: {
-        id: accountId
-      },
-      data: accountUpdate
-    });
+    await update_account_default.account(context, accountId, accountUpdate);
     return {
       success: true
     };
@@ -3025,25 +3046,22 @@ var sendEmailReactivateAccountLink = async (root, variables, context) => {
   try {
     console.info("Received a request to send reactivate account email/link - checking account");
     const { urlOrigin, accountId } = variables;
-    const account = await get_account_by_id_default(context, accountId);
-    if (!account) {
+    const account2 = await get_account_by_id_default(context, accountId);
+    if (!account2) {
       console.info("Unable to check account and send reactivate account email/link - no account found");
       return { success: false };
     }
-    const { email } = account;
+    const { email } = account2;
     console.info("Generating hash for account reactivation");
-    const reactivationHash = import_crypto8.default.pbkdf2Sync(email, account.salt, ITERATIONS7, KEY_LENGTH7, DIGEST_ALGORITHM7).toString(STRING_TYPE8);
+    const reactivationHash = import_crypto8.default.pbkdf2Sync(email, account2.salt, ITERATIONS7, KEY_LENGTH7, DIGEST_ALGORITHM7).toString(STRING_TYPE8);
     const accountUpdate = {
       reactivationHash,
       reactivationExpiry: ACCOUNT.REACTIVATION_EXPIRY()
     };
     console.info("Updating account for reactivation");
-    await context.db.Account.updateOne({
-      where: { id: accountId },
-      data: accountUpdate
-    });
+    await update_account_default.account(context, accountId, accountUpdate);
     console.info("Sending reactivate account email/link");
-    const name = get_full_name_string_default(account);
+    const name = get_full_name_string_default(account2);
     const emailResponse = await emails_default.reactivateAccountLink(urlOrigin, email, name, reactivationHash);
     if (emailResponse.success) {
       return {
@@ -3133,8 +3151,8 @@ var createAnApplication = async (root, variables, context) => {
   console.info("Creating application for ", variables.accountId);
   try {
     const { accountId, eligibilityAnswers } = variables;
-    const account = await get_account_by_id_default(context, accountId);
-    if (!account) {
+    const account2 = await get_account_by_id_default(context, accountId);
+    if (!account2) {
       return {
         success: false
       };
@@ -3286,8 +3304,8 @@ var getPopulatedApplication = async (context, application2) => {
   if (!eligibility) {
     throw new Error(generateErrorMessage("eligibility", application2.id));
   }
-  const account = await get_account_by_id_default(context, ownerId);
-  if (!account) {
+  const account2 = await get_account_by_id_default(context, ownerId);
+  if (!account2) {
     throw new Error(generateErrorMessage("account", application2.id));
   }
   const policy = await context.db.Policy.findOne({
@@ -3383,7 +3401,7 @@ var getPopulatedApplication = async (context, application2) => {
     companySicCodes,
     declaration,
     exportContract: populatedExportContract,
-    owner: account,
+    owner: account2,
     policy,
     policyContact
   };
@@ -4333,7 +4351,7 @@ var submitApplication = async (root, variables, context) => {
       const isFirstSubmission = submissionCount === 0;
       const canSubmit = isInProgress && validSubmissionDate && isFirstSubmission;
       if (canSubmit) {
-        const update = {
+        const update2 = {
           status: APPLICATION.STATUS.SUBMITTED,
           previousStatus: APPLICATION.STATUS.IN_PROGRESS,
           submissionDate: now,
@@ -4341,7 +4359,7 @@ var submitApplication = async (root, variables, context) => {
         };
         const updatedApplication = await context.db.Application.updateOne({
           where: { id: application2.id },
-          data: update
+          data: update2
         });
         const populatedApplication = await get_populated_application_default(context, updatedApplication);
         const xlsxPath = await generate_xlsx_default.XLSX(populatedApplication);
@@ -4399,31 +4417,28 @@ var {
 var verifyAccountReactivationToken = async (root, variables, context) => {
   try {
     console.info("Received a request to reactivate account - checking account");
-    const account = await get_account_by_field_default(context, REACTIVATION_HASH, variables.token);
-    if (account) {
-      console.info("Received a request to reactivate account - found account %s", account.id);
+    const account2 = await get_account_by_field_default(context, REACTIVATION_HASH, variables.token);
+    if (account2) {
+      console.info("Received a request to reactivate account - found account %s", account2.id);
       const now = /* @__PURE__ */ new Date();
-      const canReactivateAccount = (0, import_date_fns9.isBefore)(now, account[REACTIVATION_EXPIRY]);
+      const canReactivateAccount = (0, import_date_fns9.isBefore)(now, account2[REACTIVATION_EXPIRY]);
       if (!canReactivateAccount) {
         console.info("Unable to reactivate account - reactivation period has expired");
         return {
           expired: true,
           success: false,
-          accountId: account.id
+          accountId: account2.id
         };
       }
-      console.info("Reactivating account %s", account.id);
+      console.info("Reactivating account %s", account2.id);
       const accountUpdate = {
         isBlocked: false,
         isVerified: true,
         reactivationHash: "",
         reactivationExpiry: null
       };
-      await context.db.Account.updateOne({
-        where: { id: account.id },
-        data: accountUpdate
-      });
-      await delete_authentication_retries_default(context, account.id);
+      await update_account_default.account(context, account2.id, accountUpdate);
+      await delete_authentication_retries_default(context, account2.id);
       return {
         success: true
       };
@@ -4445,15 +4460,15 @@ var getAccountPasswordResetToken = async (root, variables, context) => {
   console.info("Getting account password reset token");
   try {
     const { email } = variables;
-    const account = await get_account_by_field_default(context, account_default2.EMAIL, email);
-    if (!account) {
+    const account2 = await get_account_by_field_default(context, account_default2.EMAIL, email);
+    if (!account2) {
       console.info("Unable to get account password reset token - account does not exist");
       return { success: false };
     }
-    if (account.passwordResetHash) {
+    if (account2.passwordResetHash) {
       return {
         success: true,
-        token: account.passwordResetHash
+        token: account2.passwordResetHash
       };
     }
     console.info("Unable to get account password reset token - reset hash does not exist");
@@ -4823,16 +4838,16 @@ var verifyAccountPasswordResetToken = async (root, variables, context) => {
   console.info("Verifying account password reset token");
   try {
     const { token } = variables;
-    const account = await get_account_by_field_default(context, PASSWORD_RESET_HASH, token);
-    if (account) {
+    const account2 = await get_account_by_field_default(context, PASSWORD_RESET_HASH, token);
+    if (account2) {
       const now = /* @__PURE__ */ new Date();
-      const hasExpired = (0, import_date_fns10.isAfter)(now, account[PASSWORD_RESET_EXPIRY]);
+      const hasExpired = (0, import_date_fns10.isAfter)(now, account2[PASSWORD_RESET_EXPIRY]);
       if (hasExpired) {
         console.info("Unable to verify account password reset token - token has expired");
         return {
           success: false,
           expired: true,
-          accountId: account.id
+          accountId: account2.id
         };
       }
       console.info("Successfully verified account password reset token");

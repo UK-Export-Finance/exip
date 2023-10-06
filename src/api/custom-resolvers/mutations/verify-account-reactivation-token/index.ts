@@ -1,6 +1,7 @@
 import { isBefore } from 'date-fns';
-import getAccountByField from '../../../helpers/get-account-by-field';
 import { FIELD_IDS } from '../../../constants';
+import getAccountByField from '../../../helpers/get-account-by-field';
+import update from '../../../helpers/update-account';
 import deleteAuthenticationRetries from '../../../helpers/delete-authentication-retries';
 import { Account, Context, VerifyAccountReactivationTokenVariables, VerifyAccountReactivationTokenResponse } from '../../../types';
 
@@ -64,10 +65,7 @@ const verifyAccountReactivationToken = async (
         reactivationExpiry: null,
       };
 
-      await context.db.Account.updateOne({
-        where: { id: account.id },
-        data: accountUpdate,
-      });
+      await update.account(context, account.id, accountUpdate);
 
       /**
        * Wipe the retry entries

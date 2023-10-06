@@ -6,6 +6,7 @@ import hasAccountUsedPasswordBefore from '../../../helpers/account-has-used-pass
 import getPasswordHash from '../../../helpers/get-password-hash';
 import deleteAuthenticationRetries from '../../../helpers/delete-authentication-retries';
 import createAuthenticationEntry from '../../../helpers/create-authentication-entry';
+import update from '../../../helpers/update-account';
 import { Account, AccountPasswordResetVariables, Context } from '../../../types';
 
 const accountPasswordReset = async (root: any, variables: AccountPasswordResetVariables, context: Context) => {
@@ -131,12 +132,7 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
       passwordResetExpiry: null,
     };
 
-    await context.db.Account.updateOne({
-      where: {
-        id: accountId,
-      },
-      data: accountUpdate,
-    });
+    await update.account(context, accountId, accountUpdate);
 
     return {
       success: true,

@@ -5,6 +5,7 @@ import getAccountByField from '../../../helpers/get-account-by-field';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
 import shouldBlockAccount from '../../../helpers/should-block-account';
 import blockAccount from '../../../helpers/block-account';
+import update from '../../../helpers/update-account';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
 import { AccountSendEmailPasswordResetLinkVariables, Account, AccountSendEmailPasswordResetLinkResponse, Context } from '../../../types';
@@ -102,10 +103,7 @@ const sendEmailPasswordResetLink = async (
 
     console.info('Updating account for password reset');
 
-    (await context.db.Account.updateOne({
-      where: { id: accountId },
-      data: accountUpdate,
-    })) as Account;
+    await update.account(context, accountId, accountUpdate);
 
     console.info('Sending password reset email');
 
