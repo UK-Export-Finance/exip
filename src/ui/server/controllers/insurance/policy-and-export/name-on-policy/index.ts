@@ -9,17 +9,19 @@ import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 import getNameEmailPositionFromOwnerAndPolicy from '../../../../helpers/get-name-email-position-from-owner-and-policy';
 import mapAndSave from '../map-and-save/policy-contact';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 
 const {
   INSURANCE: {
     INSURANCE_ROOT,
     POLICY_AND_EXPORTS: { NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, DIFFERENT_NAME_ON_POLICY },
+    CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 
 const {
-  NAME_ON_POLICY: { NAME, POSITION, OTHER_NAME },
+  NAME_ON_POLICY: { NAME, POSITION, OTHER_NAME, IS_SAME_AS_OWNER },
 } = POLICY_AND_EXPORTS_FIELD_IDS;
 
 /**
@@ -114,9 +116,10 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     let redirectRoute = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+    const differentNameOnPolicyRoute = `${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
 
     if (payload[NAME] === OTHER_NAME) {
-      redirectRoute = `${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
+      redirectRoute = differentNameOnPolicyRoute;
     }
     // // save the application
     const saveResponse = await mapAndSave.policyContact(payload, application);
@@ -124,9 +127,19 @@ export const post = async (req: Request, res: Response) => {
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
-    // if (isCheckAndChangeRoute(req.originalUrl)) {
-    //   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
-    // }
+    console.log(payload, isCheckAndChangeRoute(req.originalUrl))
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      /**
+       * if check-and-change route
+       * if someone else is selected then redirects to different name on policy page with /check-and-change in url
+       * ensures that redirects to next page and once submitted, then redirects back to check and change page
+       */
+      if (!payload[IS_SAME_AS_OWNER]) {
+        return res.redirect(`${differentNameOnPolicyRoute}/check-and-change`);
+      }
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+    }
 
     return res.redirect(redirectRoute);
   } catch (err) {

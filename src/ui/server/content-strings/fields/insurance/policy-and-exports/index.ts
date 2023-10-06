@@ -1,8 +1,9 @@
 import { APPLICATION, ELIGIBILITY, FIELD_IDS, FIELD_VALUES } from '../../../../constants';
 import { LINKS } from '../../../links';
 
-const { POLICY_AND_EXPORTS } = FIELD_IDS.INSURANCE;
+const { POLICY_AND_EXPORTS, ACCOUNT } = FIELD_IDS.INSURANCE;
 const { CONTRACT_POLICY, ABOUT_GOODS_OR_SERVICES, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY } = POLICY_AND_EXPORTS;
+const { EMAIL } = ACCOUNT;
 
 const { MAX_COVER_PERIOD_YEARS } = ELIGIBILITY;
 const {
@@ -162,11 +163,24 @@ export const POLICY_AND_EXPORTS_FIELDS = {
     },
     [NAME_ON_POLICY.POSITION]: {
       LABEL: "What's your position at the company",
+      SUMMARY: {
+        TITLE: 'Position at company',
+      },
+    },
+    [NAME_ON_POLICY.NAME]: {
+      SUMMARY: {
+        TITLE: 'Name on policy',
+      },
     },
   },
   DIFFERENT_NAME_ON_POLICY: {
     [DIFFERENT_NAME_ON_POLICY.POSITION]: {
       LABEL: 'Position at company',
+    },
+    [EMAIL]: {
+      SUMMARY: {
+        TITLE: 'Contact email',
+      },
     },
   },
 };

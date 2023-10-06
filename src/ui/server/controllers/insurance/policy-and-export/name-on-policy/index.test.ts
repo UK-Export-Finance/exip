@@ -15,13 +15,14 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    POLICY_AND_EXPORTS: { NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, DIFFERENT_NAME_ON_POLICY },
+    POLICY_AND_EXPORTS: { NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, DIFFERENT_NAME_ON_POLICY, NAME_ON_POLICY_CHECK_AND_CHANGE },
+    CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
 
 const {
-  NAME_ON_POLICY: { NAME, POSITION, SAME_NAME, OTHER_NAME },
+  NAME_ON_POLICY: { NAME, POSITION, SAME_NAME, OTHER_NAME, IS_SAME_AS_OWNER },
 } = POLICY_AND_EXPORTS_FIELD_IDS;
 
 describe('controllers/insurance/policy-and-export/name-on-policy', () => {
@@ -176,6 +177,27 @@ describe('controllers/insurance/policy-and-export/name-on-policy', () => {
           expect(mapAndSave.policyContact).toHaveBeenCalledTimes(1);
 
           expect(mapAndSave.policyContact).toHaveBeenCalledWith(payload, mockApplication);
+        });
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        const validBody = {
+          [NAME]: SAME_NAME,
+          [IS_SAME_AS_OWNER]: true,
+          [POSITION]: 'Text',
+        };
+
+        describe(`when ${SAME_NAME} is selected`, () => {
+          it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+            req.originalUrl = NAME_ON_POLICY_CHECK_AND_CHANGE;
+            req.body = validBody;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
         });
       });
     });

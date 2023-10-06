@@ -81,11 +81,27 @@ insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_
 insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.NAME_ON_POLICY}`, nameOnPolicyPost);
 insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.NAME_ON_POLICY_SAVE_AND_BACK}`, nameOnPolicySaveAndBackPost);
 
+insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.NAME_ON_POLICY_CHANGE}`, nameOnPolicyGet);
+insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.NAME_ON_POLICY_CHANGE}`, nameOnPolicyPost);
+insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.NAME_ON_POLICY_CHECK_AND_CHANGE}`, nameOnPolicyGet);
+insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.NAME_ON_POLICY_CHECK_AND_CHANGE}`, nameOnPolicyPost);
+
 insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY}`, differentNameOnPolicyGet);
 insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY}`, differentNameOnPolicyPost);
 insurancePolicyAndExportsRouter.post(
   `/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK}`,
   differentNameOnPolicySaveAndBackPost,
+);
+
+insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY_CHANGE}`, differentNameOnPolicyGet);
+insurancePolicyAndExportsRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY_CHANGE}`, differentNameOnPolicyPost);
+insurancePolicyAndExportsRouter.get(
+  `/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE}`,
+  differentNameOnPolicyGet,
+);
+insurancePolicyAndExportsRouter.post(
+  `/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE}`,
+  differentNameOnPolicyPost,
 );
 
 insurancePolicyAndExportsRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);

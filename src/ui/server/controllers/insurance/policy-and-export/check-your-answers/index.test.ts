@@ -8,7 +8,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { policyAndExportSummaryList } from '../../../../helpers/summary-lists/policy-and-export';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCountries, mockCurrencies } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCountries, mockCurrencies, mockContact } from '../../../../test-mocks';
 
 const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 const {
@@ -86,7 +86,7 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
         ...exportContract,
       };
 
-      const summaryList = policyAndExportSummaryList(answers, referenceNumber, mockCountries, mockCurrencies);
+      const summaryList = policyAndExportSummaryList(answers, mockContact, referenceNumber, mockCountries, mockCurrencies);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({

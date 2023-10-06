@@ -16,7 +16,8 @@ import { mockReq, mockRes, mockApplication, mockContact } from '../../../../test
 
 const {
   INSURANCE_ROOT,
-  POLICY_AND_EXPORTS: { DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  POLICY_AND_EXPORTS: { DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -155,6 +156,19 @@ describe('controllers/insurance/policy-and-export/different-name-on-policy', () 
         expect(mapAndSave.policyContact).toHaveBeenCalledTimes(1);
 
         expect(mapAndSave.policyContact).toHaveBeenCalledWith(payload, mockApplication);
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.originalUrl = DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE;
+          req.body = validBody;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 

@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import FIELD_IDS from '../constants/field-ids/insurance/policy-and-exports';
 import ACCOUNT_FIELD_IDS from '../constants/field-ids/insurance/account';
+import { ApplicationPolicyContact } from '../../types';
 
 dotenv.config();
 
@@ -13,6 +14,6 @@ const mockContact = {
   [LAST_NAME]: 'Smith',
   [EMAIL]: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
   [POSITION]: 'CEO',
-};
+} as ApplicationPolicyContact;
 
 export default mockContact;

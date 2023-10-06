@@ -40,7 +40,7 @@ export const get = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber, policy, exportContract } = application;
+  const { referenceNumber, policy, exportContract, policyContact } = application;
 
   try {
     const countries = await api.keystone.countries.getAll();
@@ -55,7 +55,7 @@ export const get = async (req: Request, res: Response) => {
       ...exportContract,
     };
 
-    const summaryList = policyAndExportSummaryList(answers, referenceNumber, countries, currencies);
+    const summaryList = policyAndExportSummaryList(answers, policyContact, referenceNumber, countries, currencies);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

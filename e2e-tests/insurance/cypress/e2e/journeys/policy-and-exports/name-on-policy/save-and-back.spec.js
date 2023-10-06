@@ -85,7 +85,6 @@ context('Insurance - Policy and exports - Name on policy - Save and go back', ()
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
-      // submit the form via 'save and go back' button
       field(OTHER_NAME).input().should('be.checked');
     });
   });
@@ -105,7 +104,6 @@ context('Insurance - Policy and exports - Name on policy - Save and go back', ()
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
-      // submit the form via 'save and go back' button
       field(SAME_NAME).input().should('be.checked');
 
       cy.checkValue(field(POSITION), '');
@@ -127,7 +125,6 @@ context('Insurance - Policy and exports - Name on policy - Save and go back', ()
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
-      // submit the form via 'save and go back' button
       field(SAME_NAME).input().should('be.checked');
 
       cy.checkValue(field(POSITION), POLICY_CONTACT[POSITION]);
