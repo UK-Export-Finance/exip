@@ -1,4 +1,5 @@
 import generate from '../generate-otp';
+import update from '../update-account';
 import { AddAndGetOtpResponse, Context } from '../../types';
 
 /**
@@ -23,10 +24,7 @@ const generateOTPAndUpdateAccount = async (context: Context, accountId: string):
       otpExpiry: expiry,
     };
 
-    await context.db.Account.updateOne({
-      where: { id: accountId },
-      data: accountUpdate,
-    });
+    await update.account(context, accountId, accountUpdate);
 
     return {
       success: true,

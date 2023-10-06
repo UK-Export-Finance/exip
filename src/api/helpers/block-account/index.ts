@@ -1,4 +1,6 @@
+import update from '../update-account';
 import { Account, Context } from '../../types';
+
 /**
  * blockAccount
  * Update an account to have a true isBlocked property/flag
@@ -10,10 +12,9 @@ const blockAccount = async (context: Context, accountId: string) => {
   console.info('Blocking account %s', accountId);
 
   try {
-    const result = (await context.db.Account.updateOne({
-      where: { id: accountId },
-      data: { isBlocked: true },
-    })) as Account;
+    const accountUpdate = { isBlocked: true };
+
+    const result = (await update.account(context, accountId, accountUpdate)) as Account;
 
     if (result.id) {
       return true;
