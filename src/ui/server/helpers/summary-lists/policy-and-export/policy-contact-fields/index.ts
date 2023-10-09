@@ -29,16 +29,29 @@ const nameOnPolicyField = (answers: ApplicationPolicyContact, referenceNumber: n
     `${answers[FIRST_NAME]} ${answers[LAST_NAME]}`,
   );
 
-// generates fieldGroupItem for position
-const positionField = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange: boolean) =>
-  fieldGroupItem(
+// generates fieldGroupItem for position - changeLink based on sameName
+const positionField = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange: boolean, sameName: boolean) => {
+  let changeLink = generateChangeLink(NAME_ON_POLICY_CHANGE, NAME_ON_POLICY_CHECK_AND_CHANGE, `#${POSITION}-label`, referenceNumber, checkAndChange);
+
+  if (!sameName) {
+    changeLink = generateChangeLink(
+      DIFFERENT_NAME_ON_POLICY_CHANGE,
+      DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE,
+      `#${POSITION}-label`,
+      referenceNumber,
+      checkAndChange,
+    );
+  }
+
+  return fieldGroupItem(
     {
       field: getFieldById(FIELDS.NAME_ON_POLICY, POSITION),
       renderChangeLink: true,
-      href: generateChangeLink(NAME_ON_POLICY_CHANGE, NAME_ON_POLICY_CHECK_AND_CHANGE, `#${POSITION}-label`, referenceNumber, checkAndChange),
+      href: changeLink,
     },
     answers[POSITION],
   );
+};
 
 // generates fieldGroupItem for email
 const emailField = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange: boolean) =>
@@ -66,7 +79,7 @@ const generatePolicyContactFields = (answers: ApplicationPolicyContact, referenc
     fields.push(emailField(answers, referenceNumber, checkAndChange));
   }
 
-  fields.push(positionField(answers, referenceNumber, checkAndChange));
+  fields.push(positionField(answers, referenceNumber, checkAndChange, answers[IS_SAME_AS_OWNER]));
 
   return fields;
 };
