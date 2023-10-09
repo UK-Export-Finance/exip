@@ -1,6 +1,6 @@
 import { FIELD_VALUES } from '../../constants';
 
-const { SINGLE, MULTIPLE } = FIELD_VALUES.POLICY_TYPE;
+const { SINGLE } = FIELD_VALUES.POLICY_TYPE;
 
 /**
  * completePolicyAndExportSection
