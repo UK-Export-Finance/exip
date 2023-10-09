@@ -1,5 +1,6 @@
 import partials from '../../../../../../../partials';
-import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-and-exports-summary-list';
 
 const {
@@ -7,28 +8,29 @@ const {
   CHECK_YOUR_ANSWERS: {
     TYPE_OF_POLICY,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      TYPE_OF_POLICY: { POLICY_TYPE },
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
-        POLICY_CURRENCY_CODE,
-        SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-      },
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+  POLICY_AND_EXPORTS: {
+    TYPE_OF_POLICY: { POLICY_TYPE },
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      CREDIT_PERIOD_WITH_BUYER,
+      POLICY_CURRENCY_CODE,
+      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     },
+    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+    NAME_ON_POLICY: { NAME, POSITION },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-context('Insurance - Check your answers - Policy and exports - Single contract policy - Summary List', () => {
+const baseUrl = Cypress.config('baseUrl');
+
+context('Insurance - Check your answers - Policy and exports - Single contract policy - Same name - Summary List', () => {
   let url;
   let referenceNumber;
 
@@ -42,7 +44,7 @@ context('Insurance - Check your answers - Policy and exports - Single contract p
       // To get past "Eligibility" check your answers page
       cy.submitCheckYourAnswersForm();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
       cy.assertUrl(url);
     });
@@ -88,5 +90,13 @@ context('Insurance - Check your answers - Policy and exports - Single contract p
 
   it(`should render a ${FINAL_DESTINATION} summary list row`, () => {
     checkSummaryList[FINAL_DESTINATION]();
+  });
+
+  it(`should render a ${NAME} summary list row`, () => {
+    checkSummaryList[NAME]({});
+  });
+
+  it(`should render a ${POSITION} summary list row`, () => {
+    checkSummaryList[POSITION]();
   });
 });

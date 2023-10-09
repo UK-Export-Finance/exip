@@ -11,10 +11,12 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 import mapAndSave from '../map-and-save/policy-contact';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 
 const {
   INSURANCE_ROOT,
   POLICY_AND_EXPORTS: { DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -131,9 +133,11 @@ export const post = async (req: Request, res: Response) => {
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
-    // if (isCheckAndChangeRoute(req.originalUrl)) {
-    //   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
-    // }
+
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+    }
+
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (err) {
     console.error('Error updating application - policy and exports - Different name on policy %O', err);

@@ -1,6 +1,7 @@
-import { RequestBody, Application } from '../../../../../../types';
+import { RequestBody, Application, ApplicationPolicyContact } from '../../../../../../types';
 import POLICY_AND_EXPORTS_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy-and-exports';
 import ACCOUNT_FIELD_IDS from '../../../../../constants/field-ids/insurance/account';
+import hasPolicyContactChanged from '../../../../../helpers/has-policy-contact-changed';
 
 const {
   NAME_ON_POLICY: { NAME, POSITION, SAME_NAME, OTHER_NAME, IS_SAME_AS_OWNER },
@@ -47,7 +48,9 @@ const mapSubmittedData = (formBody: RequestBody, application: Application): obje
 
     delete populatedData[NAME];
 
-    if (populatedData[POSITION]) {
+    const policyContactChanged = hasPolicyContactChanged(application.policyContact, formBody as ApplicationPolicyContact);
+
+    if (populatedData[POSITION] && policyContactChanged) {
       populatedData[POSITION] = '';
     }
   }

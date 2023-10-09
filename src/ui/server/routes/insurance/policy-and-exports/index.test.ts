@@ -29,8 +29,8 @@ describe('routes/insurance/policy-and-exports', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(15);
-    expect(post).toHaveBeenCalledTimes(22);
+    expect(get).toHaveBeenCalledTimes(19);
+    expect(post).toHaveBeenCalledTimes(26);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`, typeOfPolicyGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`, typeOfPolicyPost);
@@ -93,12 +93,26 @@ describe('routes/insurance/policy-and-exports', () => {
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.NAME_ON_POLICY}`, nameOnPolicyGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.NAME_ON_POLICY}`, nameOnPolicyPost);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.NAME_ON_POLICY_SAVE_AND_BACK}`, nameOnPolicySaveAndBackPost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.NAME_ON_POLICY_CHANGE}`, nameOnPolicyGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.NAME_ON_POLICY_CHANGE}`, nameOnPolicyPost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.NAME_ON_POLICY_CHECK_AND_CHANGE}`, nameOnPolicyGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.NAME_ON_POLICY_CHECK_AND_CHANGE}`, nameOnPolicyPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY}`, differentNameOnPolicyGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY}`, differentNameOnPolicyPost);
     expect(post).toHaveBeenCalledWith(
       `/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK}`,
       differentNameOnPolicySaveAndBackPost,
+    );
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY_CHANGE}`, differentNameOnPolicyGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY_CHANGE}`, differentNameOnPolicyPost);
+    expect(get).toHaveBeenCalledWith(
+      `/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE}`,
+      differentNameOnPolicyGet,
+    );
+    expect(post).toHaveBeenCalledWith(
+      `/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE}`,
+      differentNameOnPolicyPost,
     );
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);

@@ -1,36 +1,34 @@
 import partials from '../../../../../../../partials';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-and-exports-summary-list';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
   ROOT: INSURANCE_ROOT,
   POLICY_AND_EXPORTS,
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      TYPE_OF_POLICY: { POLICY_TYPE },
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
-        POLICY_CURRENCY_CODE,
-        MULTIPLE: {
-          TOTAL_MONTHS_OF_COVER,
-          TOTAL_SALES_TO_BUYER,
-          MAXIMUM_BUYER_WILL_OWE,
-        },
-      },
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+  POLICY_AND_EXPORTS: {
+    TYPE_OF_POLICY: { POLICY_TYPE },
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      CREDIT_PERIOD_WITH_BUYER,
+      POLICY_CURRENCY_CODE,
+      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     },
+    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+    NAME_ON_POLICY: { NAME, POSITION },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
-context('Insurance - Policy and exports - Check your answers - Summary list - multiple contract policy', () => {
+const baseUrl = Cypress.config('baseUrl');
+
+context('Insurance - Policy and exports - Check your answers - Summary list - single contract policy', () => {
   let referenceNumber;
   let url;
 
@@ -40,9 +38,9 @@ context('Insurance - Policy and exports - Check your answers - Summary list - mu
 
       task.link().click();
 
-      cy.completePolicyAndExportSection({ policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE });
+      cy.completePolicyAndExportSection({});
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`;
     });
   });
 
@@ -57,23 +55,19 @@ context('Insurance - Policy and exports - Check your answers - Summary list - mu
   });
 
   it(`should render a ${POLICY_TYPE} summary list row`, () => {
-    checkSummaryList.multipleContractPolicy[POLICY_TYPE]();
+    checkSummaryList.singleContractPolicy[POLICY_TYPE]();
   });
 
   it(`should render a ${REQUESTED_START_DATE} summary list row`, () => {
     checkSummaryList[REQUESTED_START_DATE]();
   });
 
-  it(`should render a ${TOTAL_MONTHS_OF_COVER} summary list row`, () => {
-    checkSummaryList.multipleContractPolicy[TOTAL_MONTHS_OF_COVER]();
+  it(`should render a ${CONTRACT_COMPLETION_DATE} summary list row`, () => {
+    checkSummaryList.singleContractPolicy[CONTRACT_COMPLETION_DATE]();
   });
 
-  it(`should render a ${TOTAL_SALES_TO_BUYER} summary list row`, () => {
-    checkSummaryList.multipleContractPolicy[TOTAL_SALES_TO_BUYER]();
-  });
-
-  it(`should render a ${MAXIMUM_BUYER_WILL_OWE} summary list row`, () => {
-    checkSummaryList.multipleContractPolicy[MAXIMUM_BUYER_WILL_OWE]();
+  it(`should render a ${TOTAL_CONTRACT_VALUE} summary list row`, () => {
+    checkSummaryList.singleContractPolicy[TOTAL_CONTRACT_VALUE]();
   });
 
   it(`should render a ${CREDIT_PERIOD_WITH_BUYER} summary list row`, () => {
@@ -90,5 +84,13 @@ context('Insurance - Policy and exports - Check your answers - Summary list - mu
 
   it(`should render a ${FINAL_DESTINATION} summary list row`, () => {
     checkSummaryList[FINAL_DESTINATION]();
+  });
+
+  it(`should render a ${NAME} summary list row`, () => {
+    checkSummaryList[NAME]({});
+  });
+
+  it(`should render a ${POSITION} summary list row`, () => {
+    checkSummaryList[POSITION]();
   });
 });

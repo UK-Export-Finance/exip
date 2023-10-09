@@ -1,48 +1,57 @@
 import partials from '../../../../../../../partials';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-and-exports-summary-list';
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY_AND_EXPORTS,
-} = ROUTES.INSURANCE;
+  CHECK_YOUR_ANSWERS: {
+    TYPE_OF_POLICY,
+  },
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      TYPE_OF_POLICY: { POLICY_TYPE },
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
-        POLICY_CURRENCY_CODE,
-        MULTIPLE: {
-          TOTAL_MONTHS_OF_COVER,
-          TOTAL_SALES_TO_BUYER,
-          MAXIMUM_BUYER_WILL_OWE,
-        },
+  POLICY_AND_EXPORTS: {
+    TYPE_OF_POLICY: { POLICY_TYPE },
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      CREDIT_PERIOD_WITH_BUYER,
+      POLICY_CURRENCY_CODE,
+      MULTIPLE: {
+        TOTAL_MONTHS_OF_COVER,
+        TOTAL_SALES_TO_BUYER,
+        MAXIMUM_BUYER_WILL_OWE,
       },
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
     },
+    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+    NAME_ON_POLICY: { NAME, POSITION },
   },
-} = FIELD_IDS;
+  ACCOUNT: { EMAIL },
+} = INSURANCE_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+const task = taskList.submitApplication.tasks.checkAnswers;
 
-context('Insurance - Policy and exports - Check your answers - Summary list - multiple contract policy', () => {
-  let referenceNumber;
+const baseUrl = Cypress.config('baseUrl');
+
+context('Insurance - Check your answers - Policy and exports - Multiple contract policy - Different name - Summary List', () => {
   let url;
+  let referenceNumber;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
+      cy.completePrepareApplicationMultiplePolicyType({ referenceNumber, differentPolicyContact: true });
 
       task.link().click();
 
-      cy.completePolicyAndExportSection({ policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE });
+      // To get past "Eligibility" check your answers page
+      cy.submitCheckYourAnswersForm();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
+
+      cy.assertUrl(url);
     });
   });
 
@@ -90,5 +99,17 @@ context('Insurance - Policy and exports - Check your answers - Summary list - mu
 
   it(`should render a ${FINAL_DESTINATION} summary list row`, () => {
     checkSummaryList[FINAL_DESTINATION]();
+  });
+
+  it(`should render a ${NAME} summary list row`, () => {
+    checkSummaryList[NAME]({ sameName: false });
+  });
+
+  it(`should render a ${EMAIL} summary list row`, () => {
+    checkSummaryList[EMAIL]();
+  });
+
+  it(`should render a ${POSITION} summary list row`, () => {
+    checkSummaryList[POSITION]();
   });
 });

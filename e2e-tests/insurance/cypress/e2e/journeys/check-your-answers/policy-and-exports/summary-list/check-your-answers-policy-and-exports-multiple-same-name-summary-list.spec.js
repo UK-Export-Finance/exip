@@ -1,5 +1,6 @@
 import partials from '../../../../../../../partials';
-import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-and-exports-summary-list';
 
 const {
@@ -7,32 +8,31 @@ const {
   CHECK_YOUR_ANSWERS: {
     TYPE_OF_POLICY,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      TYPE_OF_POLICY: { POLICY_TYPE },
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
-        POLICY_CURRENCY_CODE,
-        MULTIPLE: {
-          TOTAL_MONTHS_OF_COVER,
-          TOTAL_SALES_TO_BUYER,
-          MAXIMUM_BUYER_WILL_OWE,
-        },
+  POLICY_AND_EXPORTS: {
+    TYPE_OF_POLICY: { POLICY_TYPE },
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      CREDIT_PERIOD_WITH_BUYER,
+      POLICY_CURRENCY_CODE,
+      MULTIPLE: {
+        TOTAL_MONTHS_OF_COVER,
+        TOTAL_SALES_TO_BUYER,
+        MAXIMUM_BUYER_WILL_OWE,
       },
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
     },
+    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+    NAME_ON_POLICY: { NAME, POSITION },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-context('Insurance - Check your answers - Policy and exports - Multiple contract policy - Summary List', () => {
+context('Insurance - Check your answers - Policy and exports - Multiple contract policy - Same name - Summary List', () => {
   let url;
   let referenceNumber;
 
@@ -96,5 +96,13 @@ context('Insurance - Check your answers - Policy and exports - Multiple contract
 
   it(`should render a ${FINAL_DESTINATION} summary list row`, () => {
     checkSummaryList[FINAL_DESTINATION]();
+  });
+
+  it(`should render a ${NAME} summary list row`, () => {
+    checkSummaryList[NAME]({});
+  });
+
+  it(`should render a ${POSITION} summary list row`, () => {
+    checkSummaryList[POSITION]();
   });
 });

@@ -72,6 +72,26 @@ describe('controllers/insurance/policy-and-export/map-submitted-data/policy-cont
     });
   });
 
+  describe(`when ${NAME} is ${OTHER_NAME} and ${POSITION} is provided but application ${IS_SAME_AS_OWNER} is ${OTHER_NAME}`, () => {
+    const mockBody = {
+      [NAME]: OTHER_NAME,
+    };
+
+    it(`should retain ${POSITION}`, () => {
+      mockBody[POSITION] = 'CEO';
+      mockApplication.policyContact[POSITION] = 'CEO';
+
+      const result = mapSubmittedData(mockBody, mockApplication);
+
+      const expected = {
+        [IS_SAME_AS_OWNER]: false,
+        [POSITION]: mockBody[POSITION],
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe(`when ${NAME} is not provided`, () => {
     it('should return mockBody', () => {
       const result = mapSubmittedData(expectedVariables, mockApplication);

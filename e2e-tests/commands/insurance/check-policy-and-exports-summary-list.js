@@ -1,6 +1,7 @@
 import { summaryList } from '../../pages/shared';
 import { FIELD_IDS, FIELD_VALUES } from '../../constants';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../content-strings/fields/insurance/policy-and-exports';
+import account from '../../fixtures/account';
 import application from '../../fixtures/application';
 import countries from '../../fixtures/countries';
 import currencies from '../../fixtures/currencies';
@@ -22,10 +23,14 @@ const {
           MAXIMUM_BUYER_WILL_OWE,
         },
       },
+      NAME_ON_POLICY: { NAME, POSITION },
       ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
     },
+    ACCOUNT: { EMAIL, FIRST_NAME, LAST_NAME },
   },
 } = FIELD_IDS;
+
+const { POLICY_CONTACT } = application;
 
 const checkPolicyAndExportsSummaryList = ({
   [REQUESTED_START_DATE]: () => {
@@ -156,6 +161,40 @@ const checkPolicyAndExportsSummaryList = ({
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
+  },
+  [NAME]: ({ sameName = true }) => {
+    const fieldId = NAME;
+    const expectedKey = FIELDS.NAME_ON_POLICY[fieldId].SUMMARY.TITLE;
+
+    let expectedValue = `${account[FIRST_NAME]} ${account[LAST_NAME]}`;
+
+    if (!sameName) {
+      expectedValue = `${POLICY_CONTACT[FIRST_NAME]} ${POLICY_CONTACT[LAST_NAME]}`;
+    }
+
+    const expectedChangeLinkText = FIELDS.NAME_ON_POLICY[fieldId].SUMMARY.TITLE;
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [EMAIL]: () => {
+    const fieldId = EMAIL;
+    const expectedKey = FIELDS.DIFFERENT_NAME_ON_POLICY[fieldId].SUMMARY.TITLE;
+
+    const expectedValue = POLICY_CONTACT[EMAIL];
+
+    const expectedChangeLinkText = FIELDS.DIFFERENT_NAME_ON_POLICY[fieldId].SUMMARY.TITLE;
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [POSITION]: () => {
+    const fieldId = POSITION;
+    const expectedKey = FIELDS.NAME_ON_POLICY[fieldId].SUMMARY.TITLE;
+
+    const expectedValue = POLICY_CONTACT[POSITION];
+
+    const expectedChangeLinkText = FIELDS.NAME_ON_POLICY[fieldId].SUMMARY.TITLE;
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
 });
 

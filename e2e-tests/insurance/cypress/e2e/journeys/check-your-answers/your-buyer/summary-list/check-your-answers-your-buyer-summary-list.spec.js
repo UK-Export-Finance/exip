@@ -67,7 +67,7 @@ context('Insurance - Check your answers - Your buyer page - Summary list', () =>
   });
 
   it(`should render a ${NAME} summary list row`, () => {
-    checkSummaryList[NAME]();
+    checkSummaryList[NAME]({});
   });
 
   it(`should render a ${ADDRESS} summary list row`, () => {

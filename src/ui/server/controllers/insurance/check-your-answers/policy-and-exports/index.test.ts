@@ -12,7 +12,7 @@ import sectionStatus from '../../../../helpers/section-status';
 import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCountries, mockCurrencies } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCountries, mockCurrencies, mockContact } from '../../../../test-mocks';
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -88,7 +88,7 @@ describe('controllers/insurance/check-your-answers/policy-and-exports', () => {
         ...exportContract,
       };
 
-      const summaryList = policyAndExportSummaryList(answers, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
+      const summaryList = policyAndExportSummaryList(answers, mockContact, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
 
       const fields = requiredFields(policy.policyType);
 

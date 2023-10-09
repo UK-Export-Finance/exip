@@ -20,7 +20,6 @@ describe('server/helpers/get-name-email-position-from-owner-and-policy', () => {
 
   describe(`when ${SAME_NAME} is provided`, () => {
     it(`should return object with constructed name and email string, position and ${NAME} set to ${SAME_NAME}`, () => {
-      // @ts-ignore
       mockContact[IS_SAME_AS_OWNER] = true;
 
       const result = getNameEmailPositionFromOwnerAndPolicy(owner, mockContact);
@@ -37,7 +36,6 @@ describe('server/helpers/get-name-email-position-from-owner-and-policy', () => {
 
   describe(`when ${OTHER_NAME} is provided`, () => {
     it(`should return object with constructed name and email string, position and ${NAME} set to ${OTHER_NAME}`, () => {
-      // @ts-ignore
       mockContact[IS_SAME_AS_OWNER] = false;
 
       const result = getNameEmailPositionFromOwnerAndPolicy(owner, mockContact);
@@ -54,7 +52,6 @@ describe('server/helpers/get-name-email-position-from-owner-and-policy', () => {
 
   describe(`when ${IS_SAME_AS_OWNER} is undefined`, () => {
     it(`should return object with constructed name and email string, position and ${NAME} as undefined`, () => {
-      // @ts-ignore
       mockContact[IS_SAME_AS_OWNER] = undefined;
 
       const result = getNameEmailPositionFromOwnerAndPolicy(owner, mockContact);
