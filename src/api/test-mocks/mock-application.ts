@@ -46,9 +46,6 @@ export const mockMultiplePolicy = {
 export const mockExportContract = {
   goodsOrServicesDescription: 'Mock description',
   finalDestinationCountryCode: mockCountries[0].isoCode,
-  // finalDestinationCountry: {
-  //   name: mockCountries[0].name,
-  // }
 };
 
 export const mockAccount = {
