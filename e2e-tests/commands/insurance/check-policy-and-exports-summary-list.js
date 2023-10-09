@@ -162,7 +162,7 @@ const checkPolicyAndExportsSummaryList = ({
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
   },
-  [NAME]: (sameName = true) => {
+  [NAME]: ({ sameName = true }) => {
     const fieldId = NAME;
     const expectedKey = FIELDS.NAME_ON_POLICY[fieldId].SUMMARY.TITLE;
 

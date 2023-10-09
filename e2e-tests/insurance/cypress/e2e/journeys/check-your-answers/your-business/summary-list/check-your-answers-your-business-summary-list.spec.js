@@ -150,7 +150,7 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
   });
 
   it(`should render a ${NAME} summary list row`, () => {
-    checkSummaryList[NAME]();
+    checkSummaryList[NAME]({});
   });
 
   it(`should render a ${ADDRESS_LINE_1} summary list row`, () => {

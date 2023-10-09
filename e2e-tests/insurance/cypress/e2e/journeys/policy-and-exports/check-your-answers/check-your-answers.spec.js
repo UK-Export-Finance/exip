@@ -8,7 +8,7 @@ import {
   BUTTONS,
   PAGES,
 } from '../../../../../../content-strings';
-import { FIELD_VALUES, ROUTES } from '../../../../../../constants';
+import { ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 
 const {
@@ -34,10 +34,7 @@ context('Insurance - Policy and exports - Check your answers - As an exporter, I
 
       task.link().click();
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-      cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
-      cy.completeAndSubmitNameOnPolicyForm({});
+      cy.completePolicyAndExportSection({});
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`;
 

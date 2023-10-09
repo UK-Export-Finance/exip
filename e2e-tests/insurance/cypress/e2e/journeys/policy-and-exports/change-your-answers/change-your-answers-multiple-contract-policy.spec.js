@@ -42,10 +42,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
 
       task.link().click();
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
-      cy.completeAndSubmitMultipleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
-      cy.completeAndSubmitNameOnPolicyForm({});
+      cy.completePolicyAndExportSection({ policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE });
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(url);

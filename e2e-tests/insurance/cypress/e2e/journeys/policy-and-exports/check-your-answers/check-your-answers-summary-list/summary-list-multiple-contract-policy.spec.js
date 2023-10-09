@@ -40,10 +40,7 @@ context('Insurance - Policy and exports - Check your answers - Summary list - mu
 
       task.link().click();
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
-      cy.completeAndSubmitMultipleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
-      cy.completeAndSubmitNameOnPolicyForm({});
+      cy.completePolicyAndExportSection({ policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE });
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`;
     });

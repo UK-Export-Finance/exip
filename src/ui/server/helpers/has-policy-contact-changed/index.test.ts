@@ -1,4 +1,4 @@
-import isPolicyContactChanged from '.';
+import hasPolicyContactChanged from '.';
 import POLICY_AND_EXPORTS_FIELD_IDS from '../../constants/field-ids/insurance/policy-and-exports';
 import { mockContact } from '../../test-mocks';
 import { ApplicationPolicyContact } from '../../../types';
@@ -17,7 +17,7 @@ describe('server/helpers/is-policy-contact-changed', () => {
     it('should return true', () => {
       mockContact[IS_SAME_AS_OWNER] = true;
 
-      const result = isPolicyContactChanged(mockContact, mockNewBody);
+      const result = hasPolicyContactChanged(mockContact, mockNewBody);
 
       expect(result).toEqual(true);
     });
@@ -28,7 +28,7 @@ describe('server/helpers/is-policy-contact-changed', () => {
       mockContact[IS_SAME_AS_OWNER] = true;
       mockNewBody[IS_SAME_AS_OWNER] = true;
 
-      const result = isPolicyContactChanged(mockContact, mockNewBody);
+      const result = hasPolicyContactChanged(mockContact, mockNewBody);
 
       expect(result).toEqual(false);
     });
@@ -39,7 +39,7 @@ describe('server/helpers/is-policy-contact-changed', () => {
       mockContact[IS_SAME_AS_OWNER] = false;
       mockNewBody[IS_SAME_AS_OWNER] = false;
 
-      const result = isPolicyContactChanged(mockContact, mockNewBody);
+      const result = hasPolicyContactChanged(mockContact, mockNewBody);
 
       expect(result).toEqual(false);
     });
@@ -50,7 +50,7 @@ describe('server/helpers/is-policy-contact-changed', () => {
       mockContact[IS_SAME_AS_OWNER] = false;
       mockNewBody[IS_SAME_AS_OWNER] = true;
 
-      const result = isPolicyContactChanged(mockContact, mockNewBody);
+      const result = hasPolicyContactChanged(mockContact, mockNewBody);
 
       expect(result).toEqual(true);
     });

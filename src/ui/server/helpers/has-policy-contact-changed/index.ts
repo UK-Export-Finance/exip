@@ -12,7 +12,7 @@ const {
  * @param {ApplicationPolicyContact} newPolicyContact - updated policyContact data after update
  * @returns {Boolean}
  */
-const isPolicyContactChanged = (oldPolicyContact: ApplicationPolicyContact, newPolicyContact: ApplicationPolicyContact) =>
+const hasPolicyContactChanged = (oldPolicyContact: ApplicationPolicyContact, newPolicyContact: ApplicationPolicyContact) =>
   oldPolicyContact[IS_SAME_AS_OWNER] !== newPolicyContact[IS_SAME_AS_OWNER];
 
-export default isPolicyContactChanged;
+export default hasPolicyContactChanged;

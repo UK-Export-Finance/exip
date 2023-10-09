@@ -1,6 +1,6 @@
 import { field, submitButton, summaryList } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
+import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import { createTimestampFromNumbers, formatDate } from '../../../../../../helpers/date';
 import formatCurrency from '../../../../../../helpers/format-currency';
@@ -41,10 +41,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
 
       task.link().click();
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-      cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
-      cy.completeAndSubmitNameOnPolicyForm({});
+      cy.completePolicyAndExportSection({});
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(url);

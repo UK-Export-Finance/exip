@@ -1,24 +1,23 @@
 import { summaryList, field, submitButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
-import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
+  ROOT,
   POLICY_AND_EXPORTS: {
     CHECK_YOUR_ANSWERS,
     NAME_ON_POLICY_CHANGE,
     DIFFERENT_NAME_ON_POLICY_CHANGE,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      NAME_ON_POLICY: { NAME, POSITION },
-    },
-    ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
+  POLICY_AND_EXPORTS: {
+    NAME_ON_POLICY: { NAME, POSITION },
   },
-} = FIELD_IDS;
+  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
+} = INSURANCE_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
@@ -40,13 +39,9 @@ context('Insurance - Policy and exports - Change your answers - Policy contact- 
 
       task.link().click();
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-      cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
-      cy.completeAndSubmitDifferentNameOnPolicyForm({});
+      cy.completePolicyAndExportSection({ sameName: false });
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(url);
     });
   });

@@ -1,32 +1,33 @@
 import partials from '../../../../../../../partials';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-and-exports-summary-list';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
   ROOT: INSURANCE_ROOT,
   POLICY_AND_EXPORTS,
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      TYPE_OF_POLICY: { POLICY_TYPE },
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
-        POLICY_CURRENCY_CODE,
-        SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-      },
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
-      NAME_ON_POLICY: { NAME, POSITION },
+  POLICY_AND_EXPORTS: {
+    TYPE_OF_POLICY: { POLICY_TYPE },
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      CREDIT_PERIOD_WITH_BUYER,
+      POLICY_CURRENCY_CODE,
+      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     },
-    ACCOUNT: { EMAIL },
+    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+    NAME_ON_POLICY: { NAME, POSITION },
   },
-} = FIELD_IDS;
+  ACCOUNT: { EMAIL },
+} = INSURANCE_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy and exports - Check your answers - Summary list - single contract policy', () => {
   let referenceNumber;
@@ -38,13 +39,9 @@ context('Insurance - Policy and exports - Check your answers - Summary list - si
 
       task.link().click();
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-      cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
-      cy.completeAndSubmitDifferentNameOnPolicyForm({});
+      cy.completePolicyAndExportSection({ sameName: false });
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY_AND_EXPORTS.CHECK_YOUR_ANSWERS}`;
     });
   });
 
@@ -91,7 +88,7 @@ context('Insurance - Policy and exports - Check your answers - Summary list - si
   });
 
   it(`should render a ${NAME} summary list row`, () => {
-    checkSummaryList[NAME](false);
+    checkSummaryList[NAME]({ sameName: false });
   });
 
   it(`should render a ${EMAIL} summary list row`, () => {
