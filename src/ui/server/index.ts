@@ -9,24 +9,29 @@ import cookieParser from 'cookie-parser';
 import csrf from 'csurf';
 import path from 'path';
 import flash from 'connect-flash';
-import { https, meta, integrity, csrf as csrfToken, cookiesConsent, security, seo, queryParams } from './middleware';
+import { meta, integrity, csrf as csrfToken, cookiesConsent, security, seo, queryParams } from './middleware';
 import { Request, Response } from '../types';
 
 import * as dotenv from 'dotenv';
 
 dotenv.config();
-const { NODE_ENV, SESSION_SECRET } = process.env;
+const { SESSION_SECRET } = process.env;
 
 import configureNunjucks from './nunjucks-configuration';
 import { rootRoute, quoteRoutes, insuranceRoutes } from './routes';
 import { ROUTES, COOKIE } from './constants';
 import { PAGES } from './content-strings';
+
 import { requiredQuoteEligibilityDataProvided } from './middleware/required-data-provided/quote';
 import { requiredInsuranceEligibilityDataProvided } from './middleware/required-data-provided/insurance/eligibility';
 import applicationAccess from './middleware/insurance/application-access';
 import applicationStatus from './middleware/insurance/application-status';
 import getApplication from './middleware/insurance/get-application';
 import userSession from './middleware/insurance/user-session';
+
+import { http } from './helpers/http';
+import { https } from './helpers/https';
+import { isProduction } from './helpers/is-production';
 import isInsuranceRoute from './helpers/is-insurance-route';
 import getUserNameFromSession from './helpers/get-user-name-from-session';
 import corePageVariables from './helpers/page-variables/core';
@@ -49,8 +54,16 @@ const limiter = rateLimit({
   legacyHeaders: false,
 });
 
-if (NODE_ENV === 'production') {
+/**
+ * Production only services:
+ * 1. Rate limiter
+ * 2. Trust proxy (X-Forwarded-Proto)
+ * Express will have knowledge that it's sitting behind a proxy and that the X-Forwarded-*
+ * header fields may be trusted.
+ */
+if (isProduction()) {
   ui.use(limiter);
+  ui.set('trust proxy', 1);
 }
 
 const cookie = {
@@ -166,4 +179,18 @@ ui.get('*', (req: Request, res: Response) => {
   });
 });
 
-https(ui);
+/**
+ * Azure WebApp will strip TLS before reaching the express server.
+ * Due to above constraint one can only run HTTP server on Azure,
+ * however it is proxied behind a HTTPS connection therefore
+ * `trust proxy` has been enabled.
+ *
+ * However for localhost and GHA a HTTPS server with a self-signed
+ * certificate will be spawned to allow creation of `__Host-` prefixed
+ * cookies and a uniform environment.
+ */
+if (isProduction()) {
+  http(ui);
+} else {
+  https(ui);
+}
