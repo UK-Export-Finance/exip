@@ -7,8 +7,7 @@ import mapApplicationIds from './map-application-ids';
  * generateSubmittedApplication
  * 1) Create an application.
  * 2) Populate the application.
- * 3) Create an object with submitted date
- * @param {Object} Context
+ * 3) Create and return an object with submitted date
  * @returns {Object} Submitted application
  */
 export const generateSubmittedApplication = async () => {

@@ -3,7 +3,7 @@ import { Application } from '../types';
 /**
  * Collate an object of IDs in an application.
  * This is then used in "getPopulatedApplication".
- * @param {Object} Application
+ * @param {Application} Application
  * @returns {Object} IDs in an application
  */
 export const mapApplicationIds = (application: Application) => {

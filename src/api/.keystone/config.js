@@ -114,7 +114,7 @@ var POLICY_AND_EXPORTS = {
   ABOUT_GOODS_OR_SERVICES: {
     DESCRIPTION: "goodsOrServicesDescription",
     FINAL_DESTINATION: "finalDestinationCountryCode",
-    FINAL_DESTINATION_OBJECT: "finalDestinationCountry"
+    FINAL_DESTINATION_COUNTRY: "finalDestinationCountry"
   }
 };
 var policy_and_exports_default = POLICY_AND_EXPORTS;
@@ -4027,7 +4027,7 @@ var {
     CREDIT_PERIOD_WITH_BUYER,
     POLICY_CURRENCY_CODE
   },
-  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_OBJECT }
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_COUNTRY }
 } = insurance_default.POLICY_AND_EXPORTS;
 var mapPolicyAndExportIntro = (application2) => {
   const { policy } = application2;
@@ -4059,7 +4059,7 @@ var mapPolicyAndExportOutro = (application2) => {
     xlsx_row_default(String(CONTENT_STRINGS2[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policy[CREDIT_PERIOD_WITH_BUYER]),
     xlsx_row_default(String(CONTENT_STRINGS2[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
     xlsx_row_default(String(CONTENT_STRINGS2[DESCRIPTION].SUMMARY?.TITLE), exportContract[DESCRIPTION]),
-    xlsx_row_default(String(CONTENT_STRINGS2[FINAL_DESTINATION].SUMMARY?.TITLE), exportContract[FINAL_DESTINATION_OBJECT].name)
+    xlsx_row_default(String(CONTENT_STRINGS2[FINAL_DESTINATION].SUMMARY?.TITLE), exportContract[FINAL_DESTINATION_COUNTRY].name)
   ];
   return mapped;
 };

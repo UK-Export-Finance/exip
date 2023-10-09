@@ -28,7 +28,7 @@ const {
     CREDIT_PERIOD_WITH_BUYER,
     POLICY_CURRENCY_CODE,
   },
-  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_OBJECT },
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_COUNTRY },
 } = FIELD_IDS.POLICY_AND_EXPORTS;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-policy-and-export', () => {
@@ -139,7 +139,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy-and-export', () =
         xlsxRow(String(CONTENT_STRINGS[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policy[CREDIT_PERIOD_WITH_BUYER]),
         xlsxRow(String(CONTENT_STRINGS[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
         xlsxRow(String(CONTENT_STRINGS[DESCRIPTION].SUMMARY?.TITLE), exportContract[DESCRIPTION]),
-        xlsxRow(String(CONTENT_STRINGS[FINAL_DESTINATION].SUMMARY?.TITLE), exportContract[FINAL_DESTINATION_OBJECT].name),
+        xlsxRow(String(CONTENT_STRINGS[FINAL_DESTINATION].SUMMARY?.TITLE), exportContract[FINAL_DESTINATION_COUNTRY].name),
       ];
 
       expect(result).toEqual(expected);
