@@ -1,12 +1,24 @@
 import generate from '.';
-import { mockApplication } from '../test-mocks';
+import getPopulatedApplication from '../helpers/get-populated-application';
+import { createFullApplication, getKeystoneContext, mapApplicationIds } from '../test-helpers';
 import fileSystem from '../file-system';
 
 describe('api/generate-xlsx/index', () => {
   it('should return an XLSX file path', async () => {
-    const result = await generate.XLSX(mockApplication);
+    const context = getKeystoneContext();
+    const application = await createFullApplication(context);
 
-    const expected = `XLSX/${mockApplication.referenceNumber}.xlsx`;
+    const applicationIds = mapApplicationIds(application);
+    const populatedApplication = await getPopulatedApplication(context, applicationIds);
+
+    const submittedApplication = {
+      ...populatedApplication,
+      submissionDate: new Date(),
+    };
+
+    const result = await generate.XLSX(submittedApplication);
+
+    const expected = `XLSX/${submittedApplication.referenceNumber}.xlsx`;
 
     expect(result).toEqual(expected);
 

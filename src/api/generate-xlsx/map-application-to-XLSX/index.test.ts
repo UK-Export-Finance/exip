@@ -7,38 +7,55 @@ import mapPolicyAndExport from './map-policy-and-export';
 import mapExporter from './map-exporter';
 import mapBuyer from './map-buyer';
 import mapEligibility from './map-eligibility';
-import { mockApplication } from '../../test-mocks';
+import getPopulatedApplication from '../../helpers/get-populated-application';
+import { createFullApplication, getKeystoneContext, mapApplicationIds } from '../../test-helpers';
+import { Application } from '../../types';
 
 describe('api/generate-xlsx/map-application-to-xlsx/index', () => {
+  let submittedApplication: Application;
+
+  beforeEach(async () => {
+    const context = getKeystoneContext();
+    const application = await createFullApplication(context);
+
+    const applicationIds = mapApplicationIds(application);
+    const populatedApplication = await getPopulatedApplication(context, applicationIds);
+
+    submittedApplication = {
+      ...populatedApplication,
+      submissionDate: new Date(),
+    };
+  });
+
   it('should return an array of mappings and section breaks', () => {
-    const result = mapApplicationToXLSX(mockApplication);
+    const result = mapApplicationToXLSX(submittedApplication);
 
     const expected = [
-      ...mapKeyInformation(mockApplication),
+      ...mapKeyInformation(submittedApplication),
 
       ROW_SEPERATOR,
 
-      ...mapExporterContactDetails(mockApplication),
+      ...mapExporterContactDetails(submittedApplication),
 
       ROW_SEPERATOR,
 
-      ...mapSecondaryKeyInformation(mockApplication),
+      ...mapSecondaryKeyInformation(submittedApplication),
 
       ROW_SEPERATOR,
 
-      ...mapPolicyAndExport(mockApplication),
+      ...mapPolicyAndExport(submittedApplication),
 
       ROW_SEPERATOR,
 
-      ...mapExporter(mockApplication),
+      ...mapExporter(submittedApplication),
 
       ROW_SEPERATOR,
 
-      ...mapBuyer(mockApplication),
+      ...mapBuyer(submittedApplication),
 
       ROW_SEPERATOR,
 
-      ...mapEligibility(mockApplication),
+      ...mapEligibility(submittedApplication),
     ];
 
     expect(result).toEqual(expected);

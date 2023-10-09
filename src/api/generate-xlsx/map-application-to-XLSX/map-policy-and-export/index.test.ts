@@ -7,7 +7,9 @@ import xlsxRow from '../helpers/xlsx-row';
 import formatDate from '../../../helpers/format-date';
 import formatCurrency from '../helpers/format-currency';
 import mapMonthString from '../helpers/map-month-string';
-import mockApplication, { mockApplicationMultiplePolicy } from '../../../test-mocks/mock-application';
+import getPopulatedApplication from '../../../helpers/get-populated-application';
+import { createFullApplication, getKeystoneContext, mapApplicationIds } from '../../../test-helpers';
+import { Application, Context } from '../../../types';
 
 const CONTENT_STRINGS = {
   ...POLICY_AND_EXPORTS_FIELDS,
@@ -26,16 +28,40 @@ const {
     CREDIT_PERIOD_WITH_BUYER,
     POLICY_CURRENCY_CODE,
   },
-  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_OBJECT },
 } = FIELD_IDS.POLICY_AND_EXPORTS;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-policy-and-export', () => {
+  let populatedApplication: Application;
+  let populatedApplicationMultiplePolicy: Application;
+  let application: Application;
+  let applicationIds: object;
+  let context: Context;
+
+  beforeAll(async () => {
+    context = getKeystoneContext();
+
+    application = await createFullApplication(context);
+
+    applicationIds = mapApplicationIds(application);
+
+    populatedApplication = await getPopulatedApplication(context, applicationIds);
+
+    const multiplePolicyApplication = await createFullApplication(context, FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+
+    populatedApplicationMultiplePolicy = await getPopulatedApplication(context, mapApplicationIds(multiplePolicyApplication));
+  });
+
   describe('mapPolicyAndExport', () => {
     describe(`when the policy type is ${FIELD_VALUES.POLICY_TYPE.SINGLE}`, () => {
       it('should return an array of mapped fields with single specific fields', () => {
-        const result = mapPolicyAndExport(mockApplication);
+        const result = mapPolicyAndExport(populatedApplication);
 
-        const expected = [...mapPolicyAndExportIntro(mockApplication), ...mapSinglePolicyFields(mockApplication), ...mapPolicyAndExportOutro(mockApplication)];
+        const expected = [
+          ...mapPolicyAndExportIntro(populatedApplication),
+          ...mapSinglePolicyFields(populatedApplication),
+          ...mapPolicyAndExportOutro(populatedApplication),
+        ];
 
         expect(result).toEqual(expected);
       });
@@ -43,12 +69,12 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy-and-export', () =
 
     describe(`when the policy type is ${FIELD_VALUES.POLICY_TYPE.MULTIPLE}`, () => {
       it('should return an array of mapped fields with multiple specific fields', () => {
-        const result = mapPolicyAndExport(mockApplicationMultiplePolicy);
+        const result = mapPolicyAndExport(populatedApplicationMultiplePolicy);
 
         const expected = [
-          ...mapPolicyAndExportIntro(mockApplicationMultiplePolicy),
-          ...mapMultiplePolicyFields(mockApplicationMultiplePolicy),
-          ...mapPolicyAndExportOutro(mockApplicationMultiplePolicy),
+          ...mapPolicyAndExportIntro(populatedApplicationMultiplePolicy),
+          ...mapMultiplePolicyFields(populatedApplicationMultiplePolicy),
+          ...mapPolicyAndExportOutro(populatedApplicationMultiplePolicy),
         ];
 
         expect(result).toEqual(expected);
@@ -58,9 +84,9 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy-and-export', () =
 
   describe('mapPolicyAndExportIntro', () => {
     it('should return an array of mapped fields', () => {
-      const result = mapPolicyAndExportIntro(mockApplication);
+      const result = mapPolicyAndExportIntro(populatedApplication);
 
-      const { policy } = mockApplication;
+      const { policy } = populatedApplication;
 
       const expected = [
         xlsxRow(XLSX.SECTION_TITLES.POLICY_AND_EXPORT, ''),
@@ -74,9 +100,9 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy-and-export', () =
 
   describe('mapSinglePolicyFields', () => {
     it('should return an array of mapped fields', () => {
-      const result = mapSinglePolicyFields(mockApplication);
+      const result = mapSinglePolicyFields(populatedApplication);
 
-      const { policy } = mockApplication;
+      const { policy } = populatedApplication;
 
       const expected = [
         xlsxRow(String(CONTENT_STRINGS.SINGLE[CONTRACT_COMPLETION_DATE].SUMMARY?.TITLE), formatDate(policy[CONTRACT_COMPLETION_DATE], 'dd-MMM-yy')),
@@ -89,9 +115,9 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy-and-export', () =
 
   describe('mapMultiplePolicyFields', () => {
     it('should return an array of mapped fields', () => {
-      const result = mapMultiplePolicyFields(mockApplicationMultiplePolicy);
+      const result = mapMultiplePolicyFields(populatedApplicationMultiplePolicy);
 
-      const { policy } = mockApplicationMultiplePolicy;
+      const { policy } = populatedApplicationMultiplePolicy;
 
       const expected = [
         xlsxRow(String(CONTENT_STRINGS.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), mapMonthString(policy[TOTAL_MONTHS_OF_COVER])),
@@ -104,16 +130,16 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy-and-export', () =
   });
 
   describe('mapPolicyAndExportOutro', () => {
-    it('should return an array of mapped fields', () => {
-      const result = mapPolicyAndExportOutro(mockApplication);
+    it('should return an array of mapped fields', async () => {
+      const result = mapPolicyAndExportOutro(populatedApplication);
 
-      const { exportContract, policy } = mockApplication;
+      const { exportContract, policy } = populatedApplication;
 
       const expected = [
         xlsxRow(String(CONTENT_STRINGS[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policy[CREDIT_PERIOD_WITH_BUYER]),
         xlsxRow(String(CONTENT_STRINGS[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
         xlsxRow(String(CONTENT_STRINGS[DESCRIPTION].SUMMARY?.TITLE), exportContract[DESCRIPTION]),
-        xlsxRow(String(CONTENT_STRINGS[FINAL_DESTINATION].SUMMARY?.TITLE), exportContract[FINAL_DESTINATION].name),
+        xlsxRow(String(CONTENT_STRINGS[FINAL_DESTINATION].SUMMARY?.TITLE), exportContract[FINAL_DESTINATION_OBJECT].name),
       ];
 
       expect(result).toEqual(expected);

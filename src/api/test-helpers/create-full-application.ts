@@ -1,11 +1,19 @@
-import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import accounts from './accounts';
 import createAnEligibility from '../helpers/create-an-eligibility';
 import createABuyer from '../helpers/create-a-buyer';
-import { mockApplicationEligibility, mockSinglePolicy, mockExportContract, mockBusiness, mockPolicyContact } from '../test-mocks/mock-application';
+import { FIELD_VALUES } from '../constants';
+import {
+  mockApplicationEligibility,
+  mockSinglePolicy,
+  mockMultiplePolicy,
+  mockExportContract,
+  mockBusiness,
+  mockPolicyContact,
+} from '../test-mocks/mock-application';
 import { mockCompany, mockCompanySicCode, mockApplicationDeclaration } from '../test-mocks';
 import mockCountries from '../test-mocks/mock-countries';
 import {
+  Application,
   ApplicationBusiness,
   ApplicationCompany,
   ApplicationCompanySicCode,
@@ -13,7 +21,10 @@ import {
   ApplicationExportContract,
   ApplicationPolicy,
   ApplicationPolicyContact,
+  Context,
 } from '../types';
+
+const { POLICY_TYPE } = FIELD_VALUES;
 
 /**
  * createFullApplication
@@ -21,7 +32,7 @@ import {
  * @param {Object} KeystoneJS context API
  * @returns {Object} Application
  */
-export const createFullApplication = async (context: Context) => {
+export const createFullApplication = async (context: Context, policyType?: string) => {
   const { buyerCountry, ...otherEligibilityAnswers } = mockApplicationEligibility;
 
   const countries = await context.query.Country.createMany({
@@ -70,13 +81,24 @@ export const createFullApplication = async (context: Context) => {
   });
 
   // update the policy so we have a full data set.
+  /**
+   * Update the policy so we have a full data set.
+   * If a multiple policy type is passed, use mock multiple policy data.
+   * Otherwise, use mock single policy data.
+   */
+  let policyData = {};
+
+  if (policyType === POLICY_TYPE.MULTIPLE) {
+    policyData = mockMultiplePolicy;
+  } else {
+    policyData = mockSinglePolicy;
+  }
+
   (await context.query.Policy.updateOne({
     where: {
       id: application.policy.id,
     },
-    data: {
-      ...mockSinglePolicy,
-    },
+    data: policyData,
     query: 'id',
   })) as ApplicationPolicy;
 

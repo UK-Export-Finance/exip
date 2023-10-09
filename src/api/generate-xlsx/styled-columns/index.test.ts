@@ -3,6 +3,8 @@ import styledColumns, { worksheetRowHeights } from '.';
 import HEADER_COLUMNS from '../header-columns';
 import mapApplicationToXLSX from '../map-application-to-XLSX';
 import { XLSX_CONFIG, XLSX_ROW_INDEXES } from '../../constants';
+import getPopulatedApplication from '../../helpers/get-populated-application';
+import { createFullApplication, getKeystoneContext, mapApplicationIds } from '../../test-helpers';
 import { mockApplication } from '../../test-mocks';
 
 const { LARGE_ADDITIONAL_COLUMN_HEIGHT, ADDITIONAL_TITLE_COLUMN_HEIGHT, FONT_SIZE } = XLSX_CONFIG;
@@ -76,8 +78,19 @@ describe('api/generate-xlsx/styled-columns/index', () => {
   });
 
   describe('worksheetRowHeights', () => {
-    it('should add column heights to particular columns', () => {
-      const xlsxData = mapApplicationToXLSX(mockApplication);
+    it('should add column heights to particular columns', async () => {
+      const context = getKeystoneContext();
+      const application = await createFullApplication(context);
+
+      const applicationIds = mapApplicationIds(application);
+      const populatedApplication = await getPopulatedApplication(context, applicationIds);
+
+      const submittedApplication = {
+        ...populatedApplication,
+        submissionDate: new Date(),
+      };
+
+      const xlsxData = mapApplicationToXLSX(submittedApplication);
 
       xlsxData.forEach((row) => {
         worksheet.addRow(row);
