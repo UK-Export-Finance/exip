@@ -1,20 +1,10 @@
 import generate from '.';
-import getPopulatedApplication from '../helpers/get-populated-application';
-import { createFullApplication, getKeystoneContext, mapApplicationIds } from '../test-helpers';
+import { generateSubmittedApplication } from '../test-helpers';
 import fileSystem from '../file-system';
 
 describe('api/generate-xlsx/index', () => {
   it('should return an XLSX file path', async () => {
-    const context = getKeystoneContext();
-    const application = await createFullApplication(context);
-
-    const applicationIds = mapApplicationIds(application);
-    const populatedApplication = await getPopulatedApplication(context, applicationIds);
-
-    const submittedApplication = {
-      ...populatedApplication,
-      submissionDate: new Date(),
-    };
+    const submittedApplication = await generateSubmittedApplication();
 
     const result = await generate.XLSX(submittedApplication);
 
