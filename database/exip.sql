@@ -612,7 +612,6 @@ CREATE TABLE IF NOT EXISTS `Eligibility` (
   `validExporterLocation` tinyint(1) NOT NULL DEFAULT '0',
   `otherPartiesInvolved` tinyint(1) NOT NULL DEFAULT '0',
   `paidByLetterOfCredit` tinyint(1) NOT NULL DEFAULT '0',
-  `needPreCreditPeriodCover` tinyint(1) NOT NULL DEFAULT '0',
   `wantCoverOverMaxAmount` tinyint(1) NOT NULL DEFAULT '0',
   `wantCoverOverMaxPeriod` tinyint(1) NOT NULL DEFAULT '0',
   `hasCompaniesHouseNumber` tinyint(1) NOT NULL DEFAULT '0',
@@ -795,8 +794,7 @@ CREATE TABLE IF NOT EXISTS `Policy` (
 	`totalMonthsOfCover` int DEFAULT NULL,
 	`totalSalesToBuyer` int DEFAULT NULL,
 	`maximumBuyerWillOwe` int DEFAULT NULL,
-	`goodsOrServicesDescription` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-	`finalDestinationCountryCode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `needPreCreditPeriodCover` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Policy_application_idx` (`application`),
   CONSTRAINT `Policy_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
