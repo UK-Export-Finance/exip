@@ -1,8 +1,8 @@
 import { Application, TestHelperPolicyCreate } from '../types';
 
 /**
- * create policy test helper
- * Create an policy with mock policy data and any provied custom policy data.
+ * Create policy test helper
+ * Create a policy with or without any provied custom policy data.
  * @param {Object} KeystoneJS context API, policy data
  * @returns {Object} Created policy
  */

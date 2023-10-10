@@ -50,7 +50,7 @@ describe('custom-resolvers/create-an-application', () => {
     expect(result.referenceNumber).toEqual(expected);
   });
 
-  test('it should create buyer and eligibility relationships', async () => {
+  test('it should create buyer, eligibility and policy relationships', async () => {
     result = await createAnApplication({}, variables, context);
 
     const application = await applications.get({ context, applicationId: result.id });
@@ -58,10 +58,12 @@ describe('custom-resolvers/create-an-application', () => {
     const expected = {
       buyerId: application.buyer.id,
       eligibilityId: application.eligibility.id,
+      policyId: application.policy.id,
     };
 
     expect(result.buyerId).toEqual(expected.buyerId);
     expect(result.eligibilityId).toEqual(expected.eligibilityId);
+    expect(result.policyId).toEqual(expected.policyId);
   });
 
   describe('when there is no account for the provided accountId', () => {

@@ -3183,8 +3183,8 @@ var createAnApplication = async (root, variables, context) => {
       }
     });
     const { id: applicationId } = application2;
-    const eligibility = await create_an_eligibility_default(context, country.id, applicationId, otherEligibilityAnswers);
     const buyer = await create_a_buyer_default(context, country.id, applicationId);
+    const eligibility = await create_an_eligibility_default(context, country.id, applicationId, otherEligibilityAnswers);
     const policy = await create_a_policy_default(context, applicationId);
     const updatedApplication = await context.db.Application.updateOne({
       where: {

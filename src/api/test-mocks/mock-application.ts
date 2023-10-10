@@ -17,7 +17,6 @@ export const mockApplicationEligibility = {
   hasCompaniesHouseNumber: true,
   otherPartiesInvolved: false,
   paidByLetterOfCredit: false,
-  // needPreCreditPeriodCover: false,
   wantCoverOverMaxAmount: false,
   wantCoverOverMaxPeriod: false,
 };

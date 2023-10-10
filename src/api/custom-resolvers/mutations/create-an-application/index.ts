@@ -61,18 +61,13 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
     const { id: applicationId } = application;
 
     /**
-     * Create eligibility and relationships for:
-     * 1) The buyer country
-     * 2) The application
-     */
-    const eligibility = await createAnEligibility(context, country.id, applicationId, otherEligibilityAnswers);
-
-    /**
-     * Create buyer and relationships for:
-     * 1) The country
-     * 2) The application
+     * 1) Create a new eligibility with country and application relationship.
+     * 2) Create a new buyer with country and application relationship.
+     * 3) Create a new policy with application relationship.
      */
     const buyer = await createABuyer(context, country.id, applicationId);
+
+    const eligibility = await createAnEligibility(context, country.id, applicationId, otherEligibilityAnswers);
 
     const policy = await createAPolicy(context, applicationId);
 
