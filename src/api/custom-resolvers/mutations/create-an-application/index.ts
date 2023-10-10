@@ -2,6 +2,7 @@ import getAccountById from '../../../helpers/get-account-by-id';
 import getCountryByField from '../../../helpers/get-country-by-field';
 import createAnEligibility from '../../../helpers/create-an-eligibility';
 import createABuyer from '../../../helpers/create-a-buyer';
+import createAPolicy from '../../../helpers/create-a-policy';
 import { CreateAnApplicationVariables, Context } from '../../../types';
 
 /**
@@ -41,7 +42,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
      * 1) Eligibility buyer country relationship
      * 2) Buyer country relationship
      */
-    const { buyerCountryIsoCode, ...otherEligibilityAnswers } = eligibilityAnswers;
+    const { buyerCountryIsoCode, needPreCreditPeriodCover, ...otherEligibilityAnswers } = eligibilityAnswers;
 
     const country = await getCountryByField(context, 'isoCode', buyerCountryIsoCode);
 
@@ -57,28 +58,33 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
       },
     });
 
+    const { id: applicationId } = application;
+
     /**
      * Create eligibility and relationships for:
      * 1) The buyer country
      * 2) The application
      */
-    const eligibility = await createAnEligibility(context, country.id, application.id, otherEligibilityAnswers);
+    const eligibility = await createAnEligibility(context, country.id, applicationId, otherEligibilityAnswers);
 
     /**
      * Create buyer and relationships for:
      * 1) The country
      * 2) The application
      */
-    const buyer = await createABuyer(context, country.id, application.id);
+    const buyer = await createABuyer(context, country.id, applicationId);
+
+    const policy = await createAPolicy(context, applicationId);
 
     /**
      * Update the application with relationships for:
      * 1) Buyer
      * 2) Eligibility
+     * 3) Policy
      */
     const updatedApplication = await context.db.Application.updateOne({
       where: {
-        id: application.id,
+        id: applicationId,
       },
       data: {
         buyer: {
@@ -86,6 +92,9 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
         },
         eligibility: {
           connect: { id: eligibility.id },
+        },
+        policy: {
+          connect: { id: policy.id },
         },
       },
     });

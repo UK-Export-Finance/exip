@@ -314,7 +314,8 @@ var VERSIONS = [
     OVER_500K_SUPPORT: false,
     MAXIMUM_BUYER_CAN_OWE: 5e5,
     TOTAL_VALUE_OF_CONTRACT: 5e5,
-    DEFAULT_FINAL_DESTINATION_KNOWN: true
+    DEFAULT_FINAL_DESTINATION_KNOWN: true,
+    DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: false
   }
 ];
 var versions_default = VERSIONS;
@@ -360,7 +361,8 @@ var APPLICATION = {
     IN_PROGRESS: "In progress",
     SUBMITTED: "Submitted to UKEF"
   },
-  DEFAULT_FINAL_DESTINATION_KNOWN: LATEST_VERSION.DEFAULT_FINAL_DESTINATION_KNOWN
+  DEFAULT_FINAL_DESTINATION_KNOWN: LATEST_VERSION.DEFAULT_FINAL_DESTINATION_KNOWN,
+  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: LATEST_VERSION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER
 };
 var application_default = APPLICATION;
 
@@ -696,7 +698,7 @@ var get_account_by_field_default = getAccountByField;
 // nullable-checkbox/index.ts
 var import_types = require("@keystone-6/core/types");
 var import_core = require("@keystone-6/core");
-var nullableCheckbox = () => () => (
+var nullableCheckboxConfig = (defaultValue) => (
   /**
    * Database/GraphQL config.
    * This defines the field as an optional boolean with a default value of null.
@@ -714,6 +716,9 @@ var nullableCheckbox = () => () => (
       create: {
         arg: import_core.graphql.arg({ type: import_core.graphql.Boolean }),
         resolve() {
+          if (defaultValue || defaultValue === false) {
+            return defaultValue;
+          }
           return null;
         }
       },
@@ -740,6 +745,7 @@ var nullableCheckbox = () => () => (
     }
   })
 );
+var nullableCheckbox = (defaultValue) => () => nullableCheckboxConfig(defaultValue);
 var nullable_checkbox_default = nullableCheckbox;
 
 // schema.ts
@@ -808,14 +814,6 @@ var lists = {
               data: {}
             });
             modifiedData.referenceNumber = newReferenceNumber;
-            const { id: policyId } = await context.db.Policy.createOne({
-              data: {}
-            });
-            modifiedData.policy = {
-              connect: {
-                id: policyId
-              }
-            };
             const { id: exportContractId } = await context.db.ExportContract.createOne({
               data: {}
             });
@@ -901,19 +899,9 @@ var lists = {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
             const { referenceNumber } = item;
-            const { policyId, policyContactId, exportContractId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
+            const { policyContactId, exportContractId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
-            await context.db.Policy.updateOne({
-              where: { id: policyId },
               data: {
                 application: {
                   connect: {
@@ -1005,6 +993,14 @@ var lists = {
   Policy: {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
+      /**
+       * NOTE:
+       * - For MVP, needPreCreditPeriodCover is part of the eligibility UI flow.
+       * - Post MVP/next phase needPreCreditPeriodCover is part of the application flow.
+       * - To avoid data migration, we save the eligibility answer as part of the "policy", instead of eligibility.
+       * - In the next phase, the defaultValue can be removed, to default null.
+       */
+      needPreCreditPeriodCover: nullable_checkbox_default(APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER),
       policyType: (0, import_fields.select)({
         options: [
           { label: APPLICATION.POLICY_TYPE.SINGLE, value: APPLICATION.POLICY_TYPE.SINGLE },
@@ -1279,7 +1275,6 @@ var lists = {
       hasCompaniesHouseNumber: (0, import_fields.checkbox)(),
       otherPartiesInvolved: (0, import_fields.checkbox)(),
       paidByLetterOfCredit: (0, import_fields.checkbox)(),
-      needPreCreditPeriodCover: (0, import_fields.checkbox)(),
       wantCoverOverMaxAmount: (0, import_fields.checkbox)(),
       wantCoverOverMaxPeriod: (0, import_fields.checkbox)()
     },
@@ -3147,6 +3142,26 @@ var createABuyer = async (context, countryId, applicationId) => {
 };
 var create_a_buyer_default = createABuyer;
 
+// helpers/create-a-policy/index.ts
+var createAPolicy = async (context, applicationId) => {
+  console.info("Creating a policy for ", applicationId);
+  try {
+    const policy = await context.db.Policy.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        },
+        needPreCreditPeriodCover: APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER
+      }
+    });
+    return policy;
+  } catch (err) {
+    console.error("Error creating a policy %O", err);
+    throw new Error(`Creating a policy ${err}`);
+  }
+};
+var create_a_policy_default = createAPolicy;
+
 // custom-resolvers/mutations/create-an-application/index.ts
 var createAnApplication = async (root, variables, context) => {
   console.info("Creating application for ", variables.accountId);
@@ -3158,7 +3173,7 @@ var createAnApplication = async (root, variables, context) => {
         success: false
       };
     }
-    const { buyerCountryIsoCode, ...otherEligibilityAnswers } = eligibilityAnswers;
+    const { buyerCountryIsoCode, needPreCreditPeriodCover, ...otherEligibilityAnswers } = eligibilityAnswers;
     const country = await get_country_by_field_default(context, "isoCode", buyerCountryIsoCode);
     const application2 = await context.db.Application.createOne({
       data: {
@@ -3167,11 +3182,13 @@ var createAnApplication = async (root, variables, context) => {
         }
       }
     });
-    const eligibility = await create_an_eligibility_default(context, country.id, application2.id, otherEligibilityAnswers);
-    const buyer = await create_a_buyer_default(context, country.id, application2.id);
+    const { id: applicationId } = application2;
+    const eligibility = await create_an_eligibility_default(context, country.id, applicationId, otherEligibilityAnswers);
+    const buyer = await create_a_buyer_default(context, country.id, applicationId);
+    const policy = await create_a_policy_default(context, applicationId);
     const updatedApplication = await context.db.Application.updateOne({
       where: {
-        id: application2.id
+        id: applicationId
       },
       data: {
         buyer: {
@@ -3179,6 +3196,9 @@ var createAnApplication = async (root, variables, context) => {
         },
         eligibility: {
           connect: { id: eligibility.id }
+        },
+        policy: {
+          connect: { id: policy.id }
         }
       }
     });

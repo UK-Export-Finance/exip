@@ -14,6 +14,7 @@ describe('custom-resolvers/create-an-application', () => {
     accountId: '',
     eligibilityAnswers: {
       buyerCountryIsoCode: mockCountries[0].isoCode,
+      needPreCreditPeriodCover: false,
     },
   };
 
