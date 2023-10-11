@@ -179,7 +179,7 @@ context('Your quote page - change answers (single policy type to multiple policy
 
       const insuredFor = summaryList.field(QUOTE.INSURED_FOR);
 
-      cy.checkText(insuredFor.value(), '£84,000.00');
+      cy.checkText(insuredFor.value(), '£108,000.00');
 
       const policyLength = summaryList.field(POLICY_LENGTH);
 
