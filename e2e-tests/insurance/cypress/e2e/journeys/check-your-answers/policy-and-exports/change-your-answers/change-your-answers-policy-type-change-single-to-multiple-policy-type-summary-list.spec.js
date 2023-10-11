@@ -100,7 +100,7 @@ context('Insurance - Change your answers - Policy and exports - Change single to
       });
 
       it(POLICY_TYPE, () => {
-        cy.assertSummaryListRowValueNew(summaryList, POLICY_TYPE, FIELD_VALUES.POLICY_TYPE.SINGLE);
+        cy.assertSummaryListRowValueNew(summaryList, POLICY_TYPE, FIELD_VALUES.POLICY_TYPE.MULTIPLE);
       });
 
       it(TOTAL_MONTHS_OF_COVER, () => {
