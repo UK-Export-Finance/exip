@@ -196,7 +196,7 @@ const post = async (req: Request, res: Response) => {
 
       // map percentage of cover drop down options
       let mappedPercentageOfCover = [];
-      const submittedPercentageOfCover = payload[PERCENTAGE_OF_COVER];
+      const submittedPercentageOfCover = Number(req.body[PERCENTAGE_OF_COVER]);
 
       if (submittedPercentageOfCover) {
         mappedPercentageOfCover = mapPercentageOfCover(PERCENTAGES_OF_COVER, submittedPercentageOfCover);

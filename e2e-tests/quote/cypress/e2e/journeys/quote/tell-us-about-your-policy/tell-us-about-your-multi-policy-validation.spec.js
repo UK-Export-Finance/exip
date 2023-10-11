@@ -5,7 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeMultiForm,
 } from '../../../../../../commands/quote/forms';
-import { field, submitButton } from '../../../../../../pages/shared';
+import { field as fieldSelector, submitButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
@@ -58,7 +58,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       );
 
       cy.checkText(
-        field(CURRENCY).errorMessage(),
+        fieldSelector(CURRENCY).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY}`,
       );
 
@@ -69,7 +69,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       );
 
       cy.checkText(
-        field(MAX_AMOUNT_OWED).errorMessage(),
+        fieldSelector(MAX_AMOUNT_OWED).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].IS_EMPTY}`,
       );
 
@@ -80,7 +80,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       );
 
       cy.checkText(
-        field(PERCENTAGE_OF_COVER).errorMessage(),
+        fieldSelector(PERCENTAGE_OF_COVER).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY}`,
       );
 
@@ -99,15 +99,15 @@ context('Tell us about the multiple policy you need - form validation', () => {
     it('should focus on inputs when clicking summary error message', () => {
       // currency
       partials.errorSummaryListItemLinks().eq(0).click();
-      field(CURRENCY).input().should('have.focus');
+      fieldSelector(CURRENCY).input().should('have.focus');
 
       // max amount owed
       partials.errorSummaryListItemLinks().eq(1).click();
-      field(MAX_AMOUNT_OWED).input().should('have.focus');
+      fieldSelector(MAX_AMOUNT_OWED).input().should('have.focus');
 
       // perecentage of cover
       partials.errorSummaryListItemLinks().eq(2).click();
-      field(PERCENTAGE_OF_COVER).input().should('have.focus');
+      fieldSelector(PERCENTAGE_OF_COVER).input().should('have.focus');
 
       // credit period
       partials.errorSummaryListItemLinks().eq(3).click();
@@ -119,7 +119,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), 'a');
+      cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), 'a');
       submitButton().click();
 
       cy.checkText(
@@ -128,7 +128,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       );
 
       cy.checkText(
-        field(MAX_AMOUNT_OWED).errorMessage(),
+        fieldSelector(MAX_AMOUNT_OWED).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_NUMBER}`,
       );
     });
@@ -138,7 +138,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '1234.56');
+      cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), '1234.56');
       submitButton().click();
 
       cy.checkText(
@@ -147,7 +147,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       );
 
       cy.checkText(
-        field(MAX_AMOUNT_OWED).errorMessage(),
+        fieldSelector(MAX_AMOUNT_OWED).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER}`,
       );
     });
@@ -157,7 +157,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '0');
+      cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), '0');
       submitButton().click();
 
       cy.checkText(
@@ -166,7 +166,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       );
 
       cy.checkText(
-        field(MAX_AMOUNT_OWED).errorMessage(),
+        fieldSelector(MAX_AMOUNT_OWED).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].BELOW_MINIMUM}`,
       );
     });
@@ -190,19 +190,52 @@ context('Tell us about the multiple policy you need - form validation', () => {
     });
   });
 
+  describe('with `currency` and `max amount owed` fields have been submitted and `percentage of cover` is not provided', () => {
+    it('should render the submitted values for the `currency` and `max amount owed` fields', () => {
+      cy.navigateToUrl(url);
+
+      fieldSelector(CURRENCY).input().select('GBP');
+      cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), '10');
+
+      submitButton().click();
+
+      fieldSelector(CURRENCY).inputOptionSelected().contains('GBP');
+
+      cy.checkValue(fieldSelector(MAX_AMOUNT_OWED), '10');
+    });
+  });
+
+  describe('with the `percentage of cover` field has been submitted and other fields are not provided', () => {
+    it('should render the submitted values for the `percentage of cover` field', () => {
+      cy.navigateToUrl(url);
+
+      fieldSelector(MAX_AMOUNT_OWED).input().clear();
+
+      const field = fieldSelector(PERCENTAGE_OF_COVER);
+
+      field.input().select('85');
+
+      submitButton().click();
+
+      field.inputOptionSelected().contains('85');
+    });
+  });
+
   describe('with any validation error', () => {
     it('should render submitted values', () => {
       cy.navigateToUrl(url);
 
-      field(CURRENCY).input().select(GBP_CURRENCY_CODE);
-      cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '10');
+      const currencyField = fieldSelector(CURRENCY);
+      const maxAmountOwedField = fieldSelector(MAX_AMOUNT_OWED);
+
+      currencyField.input().select(GBP_CURRENCY_CODE);
+      cy.keyboardInput(maxAmountOwedField.input(), '10');
 
       submitButton().click();
 
-      field(CURRENCY).inputOptionSelected().contains(GBP_CURRENCY_CODE);
+      currencyField.inputOptionSelected().contains(GBP_CURRENCY_CODE);
 
-      field(MAX_AMOUNT_OWED).input()
-        .should('have.attr', 'value', '10');
+      cy.checkValue(maxAmountOwedField, '10');
     });
   });
 });
