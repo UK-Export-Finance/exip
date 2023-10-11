@@ -1,36 +1,38 @@
 import { field, submitButton, summaryList } from '../../../../../../pages/shared';
 import { multipleContractPolicyPage } from '../../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../../partials';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
-import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
+import { FIELD_VALUES } from '../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { createTimestampFromNumbers, formatDate } from '../../../../../../helpers/date';
 import formatCurrency from '../../../../../../helpers/format-currency';
 import application from '../../../../../../fixtures/application';
 import currencies from '../../../../../../fixtures/currencies';
 
 const {
+  ROOT,
   POLICY_AND_EXPORTS: {
     CHECK_YOUR_ANSWERS,
     MULTIPLE_CONTRACT_POLICY_CHANGE,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
-        POLICY_CURRENCY_CODE,
-        MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-      },
+  POLICY_AND_EXPORTS: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      CREDIT_PERIOD_WITH_BUYER,
+      POLICY_CURRENCY_CODE,
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy and exports - Change your answers - Multiple contract policy - As an exporter, I want to change my answers to the type of policy and exports section', () => {
   let referenceNumber;
@@ -44,7 +46,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
 
       cy.completePolicyAndExportSection({ policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE });
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(url);
     });
   });
@@ -57,7 +59,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('single policy type answers', () => {
+  describe('multiple policy type answers', () => {
     describe(REQUESTED_START_DATE, () => {
       const fieldId = REQUESTED_START_DATE;
 

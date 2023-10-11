@@ -1,5 +1,6 @@
 import { pageVariables, TEMPLATE, FIELD_IDS, get, post } from '.';
-import { ROUTES, TEMPLATES } from '../../../../constants';
+import { TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_AND_EXPORTS_FIELD_IDS from '../../../../constants/field-ids/insurance/policy-and-exports';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
@@ -12,13 +13,27 @@ import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
-const { INSURANCE } = ROUTES;
-
-const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = INSURANCE;
+const {
+  INSURANCE_ROOT,
+  PROBLEM_WITH_SERVICE,
+  POLICY_AND_EXPORTS: {
+    TYPE_OF_POLICY_SAVE_AND_BACK,
+    SINGLE_CONTRACT_POLICY,
+    SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+    MULTIPLE_CONTRACT_POLICY,
+    MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+  },
+} = INSURANCE_ROUTES;
 
 const {
   TYPE_OF_POLICY: { POLICY_TYPE: FIELD_ID },
 } = POLICY_AND_EXPORTS_FIELD_IDS;
+
+const { referenceNumber } = mockApplication;
+
+const singlePolicyRoute = `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
+const multiplePolicyRoute = `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
+const checkAndChangeRoute = `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`;
 
 describe('controllers/insurance/policy-and-export/type-of-policy', () => {
   let req: Request;
@@ -34,8 +49,8 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
     req = mockReq();
     res = mockRes();
 
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-    refNumber = Number(mockApplication.referenceNumber);
+    req.params.referenceNumber = String(referenceNumber);
+    refNumber = Number(referenceNumber);
   });
   afterAll(() => {
     jest.resetAllMocks();
@@ -47,7 +62,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
       const expected = {
         FIELD: FIELDS[FIELD_ID],
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${TYPE_OF_POLICY_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -116,30 +131,83 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
       });
 
       describe('when the answer is `single`', () => {
-        it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`, async () => {
+        it(`should redirect to ${singlePolicyRoute}`, async () => {
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
+          expect(res.redirect).toHaveBeenCalledWith(singlePolicyRoute);
+        });
 
-          expect(res.redirect).toHaveBeenCalledWith(expected);
+        describe("when the url's last substring is `change`", () => {
+          it(`should redirect to ${singlePolicyRoute}/change`, async () => {
+            req.originalUrl += '/change';
+
+            await post(req, res);
+
+            const expected = `${singlePolicyRoute}/change`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
+        });
+
+        describe("when the url's last substring is `check-and-change`", () => {
+          it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, async () => {
+            req.originalUrl = checkAndChangeRoute;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${refNumber}${SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
         });
       });
 
       describe('when the answer is `multi`', () => {
-        it(`should redirect to ${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`, async () => {
+        beforeEach(() => {
           const FIELD = FIELDS[FIELD_ID];
-
           req.body = {
             [FIELD_ID]: FIELD?.OPTIONS?.MULTIPLE?.VALUE,
           };
+        });
 
+        it('should call mapAndSave.policy with data from constructPayload function and application', async () => {
           await post(req, res);
 
-          const referenceNumber = Number(req.params.referenceNumber);
+          const payload = constructPayload(req.body, FIELD_IDS);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.MULTIPLE_CONTRACT_POLICY}`;
+          expect(mapAndSave.policy).toHaveBeenCalledTimes(1);
 
-          expect(res.redirect).toHaveBeenCalledWith(expected);
+          expect(mapAndSave.policy).toHaveBeenCalledWith(payload, res.locals.application);
+        });
+
+        it(`should redirect to ${multiplePolicyRoute}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(multiplePolicyRoute);
+        });
+
+        describe("when the url's last substring is `change`", () => {
+          it(`should redirect to ${multiplePolicyRoute}/change`, async () => {
+            req.originalUrl += '/change';
+
+            await post(req, res);
+
+            const expected = `${multiplePolicyRoute}/change`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
+        });
+
+        describe("when the url's last substring is `check-and-change`", () => {
+          it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, async () => {
+            req.originalUrl = checkAndChangeRoute;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${refNumber}${MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
         });
       });
     });

@@ -1,35 +1,36 @@
 import { field, submitButton, summaryList } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { FIELD_IDS, ROUTES } from '../../../../../../constants';
-import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { createTimestampFromNumbers, formatDate } from '../../../../../../helpers/date';
 import formatCurrency from '../../../../../../helpers/format-currency';
 import application from '../../../../../../fixtures/application';
 import currencies from '../../../../../../fixtures/currencies';
 
 const {
+  ROOT,
   POLICY_AND_EXPORTS: {
     CHECK_YOUR_ANSWERS,
     SINGLE_CONTRACT_POLICY_CHANGE,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
-        POLICY_CURRENCY_CODE,
-        SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-      },
+  POLICY_AND_EXPORTS: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      CREDIT_PERIOD_WITH_BUYER,
+      POLICY_CURRENCY_CODE,
+      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy and exports - Change your answers - Single contract policy - As an exporter, I want to change my answers to the type of policy and exports section', () => {
   let referenceNumber;
@@ -43,7 +44,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
 
       cy.completePolicyAndExportSection({});
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(url);
     });
   });

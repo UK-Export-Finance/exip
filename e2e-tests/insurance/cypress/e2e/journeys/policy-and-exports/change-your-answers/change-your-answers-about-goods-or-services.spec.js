@@ -22,8 +22,9 @@ const {
 } = FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
-
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy and exports - Change your answers - About goods or services- As an exporter, I want to change my answers to the type of policy and exports section', () => {
   let referenceNumber;
@@ -37,7 +38,7 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
 
       cy.completePolicyAndExportSection({});
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(url);
     });
   });
