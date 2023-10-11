@@ -10,7 +10,7 @@ extensions:
   graphqlScalarExamples: true
 
 info:
-  title: EXIPS GraphQL API Reference
+  title: EXIP GraphQL API Reference
   description: Export Insurance Policies
 
 servers:
