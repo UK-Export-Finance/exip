@@ -11,7 +11,7 @@ import { Application } from '../../types';
 /**
  * mapApplicationToXLSX
  * Map application fields into an array of objects for XLSX generation
- * @param {Object} Application
+ * @param {Application}
  * @returns {Array} Array of objects for XLSX generation
  */
 const mapApplicationToXLSX = (application: Application) => {

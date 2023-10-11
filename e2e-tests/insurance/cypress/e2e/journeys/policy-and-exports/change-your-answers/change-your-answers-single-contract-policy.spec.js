@@ -1,7 +1,6 @@
-import { submitButton, summaryList } from '../../../../../../pages/shared';
-import { singleContractPolicyPage } from '../../../../../../pages/insurance/policy-and-export';
+import { field, submitButton, summaryList } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
+import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import { createTimestampFromNumbers, formatDate } from '../../../../../../helpers/date';
 import formatCurrency from '../../../../../../helpers/format-currency';
@@ -37,15 +36,12 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-      cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+      cy.completePolicyAndExportSection({});
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(url);
@@ -85,8 +81,8 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.keyboardInput(singleContractPolicyPage[fieldId].yearInput(), newAnswer.year);
-          cy.keyboardInput(singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput(), newAnswer.year + 1);
+          cy.keyboardInput(field(fieldId).yearInput(), newAnswer.year);
+          cy.keyboardInput(field(CONTRACT_COMPLETION_DATE).yearInput(), newAnswer.year + 1);
 
           submitButton().click();
         });
@@ -127,7 +123,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.keyboardInput(singleContractPolicyPage[fieldId].yearInput(), newAnswer.year);
+          cy.keyboardInput(field(fieldId).yearInput(), newAnswer.year);
 
           submitButton().click();
         });
@@ -165,7 +161,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.keyboardInput(singleContractPolicyPage[fieldId].input(), newAnswer);
+          cy.keyboardInput(field(fieldId).input(), newAnswer);
 
           submitButton().click();
         });
@@ -203,7 +199,7 @@ context('Insurance - Policy and exports - Change your answers - Single contract 
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.keyboardInput(singleContractPolicyPage[fieldId].input(), newAnswer);
+          cy.keyboardInput(field(fieldId).input(), newAnswer);
 
           submitButton().click();
         });

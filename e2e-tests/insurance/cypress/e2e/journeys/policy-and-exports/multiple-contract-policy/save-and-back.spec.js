@@ -1,5 +1,4 @@
-import { submitButton, saveAndBackButton } from '../../../../../../pages/shared';
-import { multipleContractPolicyPage } from '../../../../../../pages/insurance/policy-and-export';
+import { field as fieldSelector, submitButton, saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
@@ -35,7 +34,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
@@ -75,7 +74,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
   });
 
   describe('when entering an invalid total sales to buyer and submitting the form via `save and go back` button', () => {
-    const field = multipleContractPolicyPage[TOTAL_SALES_TO_BUYER];
+    const field = fieldSelector(TOTAL_SALES_TO_BUYER);
     const invalidValue = 'Not a number';
 
     beforeEach(() => {
@@ -116,7 +115,7 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
   });
 
   describe('when entering a valid total sales to buyer and submitting the form via `save and go back` button', () => {
-    const field = multipleContractPolicyPage[TOTAL_SALES_TO_BUYER];
+    const field = fieldSelector(TOTAL_SALES_TO_BUYER);
 
     beforeEach(() => {
       cy.navigateToUrl(url);
@@ -149,13 +148,13 @@ context('Insurance - Policy and exports - Multiple contract policy page - Save a
       });
 
       it('should have the submitted value', () => {
-        multipleContractPolicyPage[TOTAL_SALES_TO_BUYER].input().should('have.value', application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
+        fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY_AND_EXPORTS[TOTAL_SALES_TO_BUYER]);
       });
     });
   });
 
   describe('when removing a previously submitted `buyer credit period` value', () => {
-    const field = multipleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];
+    const field = fieldSelector(CREDIT_PERIOD_WITH_BUYER);
 
     beforeEach(() => {
       cy.navigateToUrl(url);

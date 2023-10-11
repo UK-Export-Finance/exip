@@ -37,7 +37,6 @@ describe('controllers/insurance/export-contract/call-map-and-save', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
 
     req.body = mockFormBody;
@@ -81,7 +80,7 @@ describe('controllers/insurance/export-contract/call-map-and-save', () => {
 
     describe('when the mapAndSave call fails', () => {
       beforeEach(() => {
-        mockMapAndSave = jest.fn(() => Promise.reject(new Error('Mock error')));
+        mockMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
         mapAndSave.exportContract = mockMapAndSave;
       });
 

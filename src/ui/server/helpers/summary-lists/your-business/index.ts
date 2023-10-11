@@ -1,17 +1,9 @@
 import generateSummaryListRows from '../generate-summary-list-rows';
 import generateYourCompanyFields from './your-company-fields';
-import generateBusinessContactFields from './contact-fields';
 import generateNatureOfYourBusinessFields from './nature-of-your-business-fields';
 import generateTurnoverFields from './turnover-fields';
 import { generateBrokerFields } from './broker-fields';
 import { ApplicationCompany, ApplicationBusiness, ApplicationBroker, SummaryListItemData } from '../../../../types';
-import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
-
-const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
-
-const {
-  CONTACT: { BUSINESS_CONTACT_DETAIL },
-} = FIELD_IDS;
 
 /**
  * generateFields
@@ -30,7 +22,6 @@ const generateFields = (
 ) => {
   const fields = [
     ...generateYourCompanyFields(answersCompany, referenceNumber, checkAndChange),
-    ...generateBusinessContactFields(answersBusiness[BUSINESS_CONTACT_DETAIL], referenceNumber, checkAndChange),
     ...generateNatureOfYourBusinessFields(answersBusiness, referenceNumber, checkAndChange),
     ...generateTurnoverFields(answersBusiness, referenceNumber, checkAndChange),
     ...generateBrokerFields(answersBroker, referenceNumber, checkAndChange),

@@ -1,6 +1,5 @@
-import { natureOfBusiness } from '../../../../../../../pages/your-business';
 import partials from '../../../../../../../partials';
-import { submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 
@@ -17,7 +16,7 @@ const {
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const fieldId = YEARS_EXPORTING;
-const field = natureOfBusiness[fieldId];
+const field = fieldSelector(fieldId);
 
 const expectedErrorsCount = 4;
 
@@ -26,14 +25,13 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
 
       cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitYourContact({});
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
 

@@ -1,5 +1,7 @@
+import { COOKIE } from '../../constants';
+
 const checkAnalyticsCookieDoesNotExist = () => {
-  cy.getCookie('optionalCookies').should('not.exist');
+  cy.getCookie(COOKIE.NAME.OPTION).should('not.exist');
 };
 
 export default checkAnalyticsCookieDoesNotExist;

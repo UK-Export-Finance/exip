@@ -1,5 +1,5 @@
 import { enterCodePage } from '../../../../../../../pages/insurance/account/sign-in';
-import accountFormFields from '../../../../../../../partials/insurance/accountFormFields';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { ACCOUNT_FIELDS } from '../../../../../../../content-strings/fields/insurance/account';
@@ -61,9 +61,8 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
 
       it('renders `security code` label and input', () => {
         const fieldId = SECURITY_CODE;
-        const field = accountFormFields[fieldId];
+        const field = fieldSelector(fieldId);
 
-        field.label().should('exist');
         cy.checkText(field.label(), FIELD_STRINGS.LABEL);
 
         field.input().should('exist');
@@ -83,7 +82,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
       });
 
       describe('when clicking `request new code`', () => {
-        it(`should rediect to ${REQUEST_NEW_CODE}`, () => {
+        it(`should re-direct to ${REQUEST_NEW_CODE}`, () => {
           enterCodePage.requestNewCodeLink().click();
 
           const expectedUrl = `${Cypress.config('baseUrl')}${REQUEST_NEW_CODE}`;

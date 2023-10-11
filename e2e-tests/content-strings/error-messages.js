@@ -75,20 +75,6 @@ export const ERROR_MESSAGES = {
       },
     },
     EXPORTER_BUSINESS: {
-      CONTACT: {
-        [FIELD_IDS.INSURANCE.ACCOUNT.FIRST_NAME]: {
-          IS_EMPTY: 'Enter the first name of the exporter contact',
-        },
-        [FIELD_IDS.INSURANCE.ACCOUNT.LAST_NAME]: {
-          IS_EMPTY: 'Enter the last name of the exporter contact',
-        },
-        [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
-          INCORRECT_FORMAT: 'Enter an email address in the correct format, like name@example.com',
-        },
-        [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CONTACT.POSITION]: {
-          IS_EMPTY: 'Enter the position at company of the exporter contact',
-        },
-      },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER]: {
         INCORRECT_FORMAT: 'Enter your Companies House registration number in the correct format - for example, 8989898 or SC907816',
         NOT_FOUND: 'The number you entered does not match any company in Companies House - try again',
@@ -220,6 +206,20 @@ export const ERROR_MESSAGES = {
         },
         [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.NAME_ON_POLICY.POSITION]: {
           IS_EMPTY: 'Enter your position at the company',
+        },
+      },
+      DIFFERENT_NAME_ON_POLICY: {
+        [FIELD_IDS.INSURANCE.ACCOUNT.FIRST_NAME]: {
+          IS_EMPTY: 'Enter the first name of the person to be named on the policy',
+        },
+        [FIELD_IDS.INSURANCE.ACCOUNT.LAST_NAME]: {
+          IS_EMPTY: 'Enter the last name of the person to be named on the policy',
+        },
+        [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
+          INCORRECT_FORMAT: 'Enter the email address of the person to be named on the policy',
+        },
+        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY.POSITION]: {
+          IS_EMPTY: 'Enter the position at the company of the person to be named on the policy',
         },
       },
     },

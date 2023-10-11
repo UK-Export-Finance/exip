@@ -1,44 +1,72 @@
-import generateTaskList, { generateTaskStatusesAndLinks, generateSimplifiedTaskList } from '.';
+import generateTaskList, { mapTask, generateTaskStatusesAndLinks, generateSimplifiedTaskList } from '.';
 import { taskStatus, taskLink } from './task-helpers';
 import generateGroupsAndTasks from './generate-groups-and-tasks';
 import flattenApplicationData from '../flatten-application-data';
-import { TaskListDataTask, ApplicationFlat } from '../../../types';
 import { mockApplication } from '../../test-mocks';
 
 describe('server/helpers/task-list', () => {
   const mockApplicationFlat = flattenApplicationData(mockApplication);
+  const mockTaskListData = generateGroupsAndTasks(mockApplication.referenceNumber);
+
+  const { 0: mockTaskGroup } = mockTaskListData;
+  const { tasks: group1Tasks } = mockTaskGroup;
+  const { 0: mockTask } = group1Tasks;
+
+  describe('mapTask', () => {
+    describe('when a task has a href', () => {
+      it('should return a task with status and href', () => {
+        const mockTaskWithHref = {
+          ...mockTask,
+          href: '/mock',
+        };
+
+        const result = mapTask(mockTaskWithHref, mockApplicationFlat);
+
+        const expectedStatus = taskStatus(mockTaskWithHref, mockApplicationFlat);
+
+        const expected = {
+          ...mockTaskWithHref,
+          status: expectedStatus,
+          href: taskLink(mockTaskWithHref.href, expectedStatus),
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when a task does NOT have a href', () => {
+      it('should return a task with status, no href', () => {
+        const result = mapTask(mockTask, mockApplicationFlat);
+
+        const expected = {
+          ...mockTask,
+          status: taskStatus(mockTask, mockApplicationFlat),
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+  });
 
   describe('generateTaskStatusesAndLinks', () => {
     it('should return an array of groups and tasks with task statuses', () => {
-      const mockTaskListData = generateGroupsAndTasks(mockApplication.referenceNumber);
-
       const result = generateTaskStatusesAndLinks(mockTaskListData, mockApplicationFlat);
-
-      const mapTask = (task: TaskListDataTask, application: ApplicationFlat) => {
-        const status = taskStatus(task, application);
-
-        return {
-          ...task,
-          status,
-          href: taskLink(task.href, status),
-        };
-      };
 
       const expectedTasks = {
         initialChecks: () => {
-          const { 0: tasksListData } = mockTaskListData;
-          const { tasks } = tasksListData;
-          return tasks.map((task) => mapTask(task, mockApplicationFlat));
+          return group1Tasks.map((task) => mapTask(task, mockApplicationFlat));
         },
         prepareApplication: () => {
           const { 1: tasksListData } = mockTaskListData;
-          const { tasks } = tasksListData;
-          return tasks.map((task) => mapTask(task, mockApplicationFlat));
+          const { tasks: group2Tasks } = tasksListData;
+
+          return group2Tasks.map((task) => mapTask(task, mockApplicationFlat));
         },
         submitApplication: () => {
           const { 2: tasksListData } = mockTaskListData;
-          const { tasks } = tasksListData;
-          return tasks.map((task) => mapTask(task, mockApplicationFlat));
+          const { tasks: group3Tasks } = tasksListData;
+
+          return group3Tasks.map((task) => mapTask(task, mockApplicationFlat));
         },
       };
 
@@ -63,7 +91,6 @@ describe('server/helpers/task-list', () => {
 
   describe('generateSimplifiedTaskList', () => {
     it('should return a simplified task list in an array of objects structure', () => {
-      const mockTaskListData = generateGroupsAndTasks(mockApplication.referenceNumber);
       const taskListDataWithStates = generateTaskStatusesAndLinks(mockTaskListData, mockApplicationFlat);
 
       const result = generateSimplifiedTaskList(taskListDataWithStates);
@@ -104,8 +131,6 @@ describe('server/helpers/task-list', () => {
 
   describe('generateTaskList', () => {
     it('should return a simplified task list with statuses', () => {
-      const mockTaskListData = generateGroupsAndTasks(mockApplication.referenceNumber);
-
       const result = generateTaskList(mockTaskListData, mockApplicationFlat);
 
       const withStatusesAndLinks = generateTaskStatusesAndLinks(mockTaskListData, mockApplicationFlat);

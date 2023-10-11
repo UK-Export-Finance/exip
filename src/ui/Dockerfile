@@ -2,13 +2,11 @@
 # 1. BUILD
 ###################
 
-FROM node:20.7.0-alpine3.17 AS build
+FROM node:20.8.0-alpine3.17 AS build
 
 # Build variables
-ARG GITHUB_SHA
 ARG PORT
 ARG NODE_ENV
-ENV GITHUB_SHA=$GITHUB_SHA
 ENV PORT=$PORT
 ENV NODE_ENV=$NODE_ENV
 
@@ -43,7 +41,7 @@ RUN npm ci --legacy-peer-deps --omit=dev --ignore-scripts
 # 2. PRODUCTION
 ###################
 
-FROM node:20.7.0-alpine3.17 AS production
+FROM node:20.8.0-alpine3.17 AS production
 
 WORKDIR /app
 
@@ -57,6 +55,9 @@ COPY --chown=node:node --from=build /app/server ./server
 COPY --chown=node:node --from=build /app/templates ./templates
 COPY --chown=node:node --from=build /app/types ./types
 
+# Expose listening port
+EXPOSE ${PORT}
+
 # Container healthcheck
 HEALTHCHECK \
 --interval=60s \
@@ -64,11 +65,11 @@ HEALTHCHECK \
 CMD wget \
 --no-verbose \
 --tries=3 \
---spider http://localhost:${PORT} \
+--spider https://localhost:${PORT} \
 || exit 1
 
 # Execute Script
 CMD ["npm", "run", "start"]
 
 # Non-root user
-# USER node
+USER node

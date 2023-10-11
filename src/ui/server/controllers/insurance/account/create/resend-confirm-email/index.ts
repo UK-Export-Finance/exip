@@ -9,10 +9,8 @@ dotenv.config();
 /**
  * req.headers.origin is not available in a GET request.
  * We therefore need to use req.headers.host
- * and prefix with the protocol
+ * and prefix with the protocol (https://)
  */
-const https = Boolean(process.env.HTTPS || 0);
-const protocol = https ? 'https://' : 'http://';
 
 const {
   INSURANCE: {
@@ -38,7 +36,7 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const urlOrigin = `${protocol}${req.headers.host}`;
+    const urlOrigin = `https://${req.headers.host}`;
 
     const sanitisedId = String(sanitiseValue({ value: id }));
 

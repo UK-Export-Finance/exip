@@ -18,11 +18,11 @@ import mockBroker from './mock-broker';
 import mockBuyer from './mock-buyer';
 import mockDeclarations from './mock-declarations';
 import { mockInsuranceFeedback } from './mock-feedback';
-import mockBusinessContact from './mock-business-contact';
+import mockContact from './mock-contact';
 import { PRODUCT } from '../content-strings';
 import { INTEGRITY } from '../constants';
 
-const { GOVUK, FORM, COOKIES, GA, MOJ, ACCESSIBILITY } = INTEGRITY;
+const { JS, GOVUK, FORM, COOKIES, GA, MOJ, ACCESSIBILITY } = INTEGRITY;
 
 const mockReq = () => {
   const req = {
@@ -65,6 +65,7 @@ const mockRes = () => {
   res.status = jest.fn();
 
   res.locals = {
+    application: mockApplication,
     csrfToken: 'mock',
     meta: {
       URL: 'mock.com/route',
@@ -72,6 +73,7 @@ const mockRes = () => {
       ORGANISATION: PRODUCT.DESCRIPTION.ORGANISATION,
     },
     SRI: {
+      JS,
       ACCESSIBILITY,
       MOJ,
       GOVUK,
@@ -93,7 +95,7 @@ export {
   mockApplications,
   mockBroker,
   mockBusiness,
-  mockBusinessContact,
+  mockContact,
   mockBusinessNatureOfBusiness,
   mockBusinessTurnover,
   mockBuyer,

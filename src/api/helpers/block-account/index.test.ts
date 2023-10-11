@@ -39,9 +39,10 @@ describe('helpers/block-account', () => {
       try {
         await blockAccount(context, invalidId);
       } catch (err) {
-        const expected = new Error('Blocking account Access denied: You cannot update that Account - it may not exist');
+        const errorString = String(err);
 
-        expect(err).toEqual(expected);
+        expect(errorString.includes('Blocking account')).toEqual(true);
+        expect(errorString.includes('cannot update that Account')).toEqual(true);
       }
     });
   });
@@ -53,9 +54,10 @@ describe('helpers/block-account', () => {
       try {
         await blockAccount(context, account.id);
       } catch (err) {
-        const expected = new Error('Blocking account Access denied: You cannot update that Account - it may not exist');
+        const errorString = String(err);
 
-        expect(err).toEqual(expected);
+        expect(errorString.includes('Blocking account')).toEqual(true);
+        expect(errorString.includes('cannot update that Account')).toEqual(true);
       }
     });
   });

@@ -1,5 +1,4 @@
-import accountFormFields from '../../../../../../../partials/insurance/accountFormFields';
-import { yourDetailsPage } from '../../../../../../../pages/insurance/account/create';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -26,6 +25,8 @@ const {
   },
 } = ERROR_MESSAGES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Create - Your details page - empty form validation', () => {
   let url;
 
@@ -34,7 +35,7 @@ context('Insurance - Account - Create - Your details page - empty form validatio
 
     cy.submitEligibilityAndStartAccountCreation();
 
-    url = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
+    url = `${baseUrl}${YOUR_DETAILS}`;
 
     cy.assertUrl(url);
   });
@@ -48,7 +49,7 @@ context('Insurance - Account - Create - Your details page - empty form validatio
   const TOTAL_REQUIRED_FIELDS = 4;
 
   it('should render first name validation error', () => {
-    const field = yourDetailsPage[FIRST_NAME];
+    const field = fieldSelector(FIRST_NAME);
     const value = null;
     const fieldIndex = 0;
     const expectedMessage = String(YOUR_DETAILS_ERROR_MESSAGES[FIRST_NAME].IS_EMPTY);
@@ -59,7 +60,7 @@ context('Insurance - Account - Create - Your details page - empty form validatio
   });
 
   it('should render last name a validation error', () => {
-    const field = yourDetailsPage[LAST_NAME];
+    const field = fieldSelector(LAST_NAME);
     const value = null;
     const fieldIndex = 1;
     const expectedMessage = String(YOUR_DETAILS_ERROR_MESSAGES[LAST_NAME].IS_EMPTY);
@@ -68,7 +69,7 @@ context('Insurance - Account - Create - Your details page - empty form validatio
   });
 
   it('should render email validation error', () => {
-    const field = accountFormFields[EMAIL];
+    const field = fieldSelector(EMAIL);
     const value = null;
     const fieldIndex = 2;
     const expectedMessage = String(YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT);
@@ -77,7 +78,7 @@ context('Insurance - Account - Create - Your details page - empty form validatio
   });
 
   it('should render password validation error', () => {
-    const field = accountFormFields[PASSWORD];
+    const field = fieldSelector(PASSWORD);
     const value = null;
     const fieldIndex = 3;
     const expectedMessage = String(YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT);

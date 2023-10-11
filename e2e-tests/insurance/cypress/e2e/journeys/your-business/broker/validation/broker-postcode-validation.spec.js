@@ -1,7 +1,8 @@
-import { broker } from '../../../../../../../pages/your-business';
+import { brokerPage } from '../../../../../../../pages/your-business';
 import partials from '../../../../../../../partials';
-import { submitButton } from '../../../../../../../pages/shared';
-import { ROUTES, INVALID_POSTCODES, VALID_POSTCODES } from '../../../../../../../constants';
+import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INVALID_POSTCODES, VALID_POSTCODES } from '../../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 
@@ -17,7 +18,7 @@ const {
   EXPORTER_BUSINESS: {
     BROKER,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const { taskList } = partials.insurancePartials;
 
@@ -25,8 +26,10 @@ const task = taskList.prepareApplication.tasks.business;
 
 const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
+const field = brokerPage[FIELD_ID];
+
 const ERROR_ASSERTIONS = {
-  errorField: broker[POSTCODE],
+  errorField: fieldSelector(POSTCODE),
   expectedErrorsCount: 5,
   errorIndex: 4,
   errorMessageEmpty: BROKER_ERRORS[POSTCODE].IS_EMPTY,
@@ -37,19 +40,16 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
   let referenceNumber;
   let url;
 
-  const field = broker[FIELD_ID];
-
   before(() => {
     Cypress.session.clearAllSavedSessions();
 
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
 
       cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
 
@@ -215,7 +215,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
 
       field.yesRadioInput().click();
 
-      cy.keyboardInput(broker[POSTCODE].input(), VALID_POSTCODES.WITH_SPACE);
+      cy.keyboardInput(fieldSelector(POSTCODE).input(), VALID_POSTCODES.WITH_SPACE);
       submitButton().click();
 
       partials.errorSummaryListItems().should('have.length', 4);
@@ -226,7 +226,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
 
       field.yesRadioInput().click();
 
-      cy.keyboardInput(broker[POSTCODE].input(), VALID_POSTCODES.WITHOUT_SPACE);
+      cy.keyboardInput(fieldSelector(POSTCODE).input(), VALID_POSTCODES.WITHOUT_SPACE);
       submitButton().click();
 
       partials.errorSummaryListItems().should('have.length', 4);

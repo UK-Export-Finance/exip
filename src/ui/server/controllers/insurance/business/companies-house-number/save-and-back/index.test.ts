@@ -21,8 +21,6 @@ describe('controllers/insurance/business/companies-house-number/save-and-back', 
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
-
     mapAndSave.companyDetails = updateMapAndSave;
 
     const getCompaniesHouseResponse = jest.fn(() => Promise.resolve(mockCompany));
@@ -89,11 +87,11 @@ describe('controllers/insurance/business/companies-house-number/save-and-back', 
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
@@ -102,12 +100,12 @@ describe('controllers/insurance/business/companies-house-number/save-and-back', 
     describe('when mapAndSave.companyDetails fails', () => {
       beforeEach(() => {
         res.locals = mockRes().locals;
-        updateMapAndSave = jest.fn(() => Promise.reject());
+        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
         mapAndSave.companyDetails = updateMapAndSave;
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });

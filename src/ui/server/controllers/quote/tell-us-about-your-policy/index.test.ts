@@ -331,7 +331,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     describe('api error handling', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject());
+          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.external.getCurrencies = getCurrenciesSpy;
         });
 
@@ -551,7 +551,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         req.body = validBody;
       });
 
-      it('should update the session with submitted data, popluated with full currency object from constructPayload function', async () => {
+      it('should update the session with submitted data, populated with full currency object from constructPayload function', async () => {
         await post(req, res);
 
         const payload = constructPayload(validBody, FIELD_IDS);
@@ -586,7 +586,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     describe('api error handling', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject());
+          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.external.getCurrencies = getCurrenciesSpy;
         });
 

@@ -32,7 +32,7 @@ context('Insurance - Check your answers - Eligibility page - I want to confirm m
   let startNewApplicationUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
@@ -86,10 +86,6 @@ context('Insurance - Check your answers - Eligibility page - I want to confirm m
     });
 
     it('renders a `save and back` button', () => {
-      submitButton().should('exist');
-      cy.checkText(submitButton(), BUTTONS.CONFIRM_AND_CONTINUE);
-
-      saveAndBackButton().should('exist');
       cy.checkText(saveAndBackButton(), BUTTONS.CHANGE_ANSWERS_START_NEW_APPLICATION);
     });
 

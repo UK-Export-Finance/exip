@@ -37,7 +37,7 @@ context('Insurance - no access to application when application is submitted - de
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('when trying to access a "declarations" page in an application that is already sbumitted', () => {
+  describe('when trying to access a "declarations" page in an application that is already submitted', () => {
     it(`should redirect to ${NO_ACCESS_APPLICATION_SUBMITTED} when navigating to the Declarations - Confidentiality page directly`, () => {
       const url = `${insuranceRoute}/${referenceNumber}${CONFIDENTIALITY}`;
 

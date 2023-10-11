@@ -17,7 +17,7 @@ context('Insurance - Account - Sign out - As an Exporter, I want to be able to s
   let referenceNumber;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
     });
   });
@@ -51,7 +51,7 @@ context('Insurance - Account - Sign out - As an Exporter, I want to be able to s
       // try to navigate to an authenticated route
       cy.navigateToUrl(DASHBOARD);
 
-      // should be taken to the sign in paeg
+      // should be taken to the sign in page
       const expectedUrl = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
 
       cy.assertUrl(expectedUrl);

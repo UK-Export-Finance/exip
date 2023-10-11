@@ -33,7 +33,7 @@ describe('integrations/notify', () => {
     beforeEach(() => {
       notificationsClient.NotifyClient = () => ({
         prepareUpload: jest.fn(),
-        sendEmail: jest.fn(() => Promise.reject()),
+        sendEmail: jest.fn(() => Promise.reject(new Error('mock'))),
       });
     });
 

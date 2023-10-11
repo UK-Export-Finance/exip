@@ -1,5 +1,4 @@
-import { companyDetails } from '../../../../../../../pages/your-business';
-import { submitButton } from '../../../../../../../pages/shared';
+import { field, submitButton } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import partials from '../../../../../../../partials';
 import {
@@ -24,18 +23,20 @@ const expectedErrors = 1;
 const errorIndex = 0;
 const errorMessage = COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT;
 
-let yourContactUrl;
+let natureOfBusinessUrl;
 let url;
+
+const baseUrl = Cypress.config('baseUrl');
 
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - company website validation", () => {
   let referenceNumber;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
-      yourContactUrl = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.CONTACT}`;
+      url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+      natureOfBusinessUrl = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
 
       task.link().click();
 
@@ -63,7 +64,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       it('should display validation errors', () => {
         cy.submitAndAssertFieldErrors(
-          companyDetails[WEBSITE],
+          field(WEBSITE),
           WEBSITE_EXAMPLES.INVALID,
           errorIndex,
           expectedErrors,
@@ -81,7 +82,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       it('should display validation errors', () => {
         cy.submitAndAssertFieldErrors(
-          companyDetails[WEBSITE],
+          field(WEBSITE),
           WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH,
           errorIndex,
           expectedErrors,
@@ -97,7 +98,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       cy.completeCompanyDetailsForm({});
 
-      companyDetails[WEBSITE].input().clear();
+      field(WEBSITE).input().clear();
       submitButton().click();
     });
 
@@ -105,8 +106,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       partials.errorSummaryListItems().should('have.length', 0);
     });
 
-    it(`should redirect to ${yourContactUrl}`, () => {
-      cy.assertUrl(yourContactUrl);
+    it(`should redirect to ${natureOfBusinessUrl}`, () => {
+      cy.assertUrl(natureOfBusinessUrl);
     });
   });
 
@@ -116,7 +117,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       cy.completeCompanyDetailsForm({});
 
-      companyDetails[WEBSITE].input().clear().type(WEBSITE_EXAMPLES.VALID);
+      field(WEBSITE).input().clear().type(WEBSITE_EXAMPLES.VALID);
       submitButton().click();
     });
 
@@ -124,8 +125,8 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       partials.errorSummaryListItems().should('have.length', 0);
     });
 
-    it(`should redirect to ${yourContactUrl}`, () => {
-      cy.assertUrl(yourContactUrl);
+    it(`should redirect to ${natureOfBusinessUrl}`, () => {
+      cy.assertUrl(natureOfBusinessUrl);
     });
   });
 });

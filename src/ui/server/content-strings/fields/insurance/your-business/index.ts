@@ -1,19 +1,16 @@
 import { FIELD_IDS } from '../../../../constants';
 import { LINKS } from '../../..';
 
-const { EXPORTER_BUSINESS, ACCOUNT } = FIELD_IDS.INSURANCE;
+const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 
 const {
   COMPANIES_HOUSE_NUMBER,
   COMPANY_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS },
-  CONTACT: { POSITION, COMPANY_NAME: CONTACT_COMPANY_NAME, NAME: CONTACT_NAME },
   YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
   TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   BROKER: { LEGEND, USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN, EMAIL },
 } = EXPORTER_BUSINESS;
-
-const { EMAIL: ACCOUNT_EMAIL } = ACCOUNT;
 
 export const FIELDS = {
   COMPANIES_HOUSE_NUMBER: {
@@ -70,29 +67,6 @@ export const FIELDS = {
     [PHONE_NUMBER]: {
       SUMMARY: {
         TITLE: 'UK telephone number (optional)',
-      },
-    },
-  },
-  CONTACT: {
-    [CONTACT_COMPANY_NAME]: {
-      LABEL: 'Your company name',
-      HINT: 'This information comes from Companies House',
-    },
-    [POSITION]: {
-      LABEL: 'Position at company',
-      SUMMARY: {
-        TITLE: 'Position at company',
-      },
-    },
-    [ACCOUNT_EMAIL]: {
-      LABEL: 'Contact email',
-      SUMMARY: {
-        TITLE: 'Contact email',
-      },
-    },
-    [CONTACT_NAME]: {
-      SUMMARY: {
-        TITLE: 'Contact name',
       },
     },
   },

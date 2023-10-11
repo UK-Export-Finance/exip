@@ -10,7 +10,7 @@ const {
 /**
  * getApplicationSubmittedEmailTemplateIds
  * Get "application submitted" email template IDs team depending on submitted answers
- * @param {Object} Application
+ * @param {Application}
  * @returns {Object} Email template IDs for application owner/account and UKEF underwriting team
  */
 const getApplicationSubmittedEmailTemplateIds = (application: Application) => {

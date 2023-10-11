@@ -28,7 +28,7 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
   const policyType = quote[POLICY_TYPE];
 
   const isSinglePolicy = isSinglePolicyType(policyType);
-  const isMultiplePolcy = isMultiplePolicyType(policyType);
+  const isMultiplePolicy = isMultiplePolicyType(policyType);
 
   if (isSinglePolicy) {
     fields = [
@@ -41,7 +41,7 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
     ];
   }
 
-  if (isMultiplePolcy) {
+  if (isMultiplePolicy) {
     fields = [
       fieldGroupItem({
         field: { id: MAX_AMOUNT_OWED, title: QUOTE_TITLES[MAX_AMOUNT_OWED] },
@@ -72,7 +72,7 @@ const generateFields = (quote: QuoteContent): Array<SummaryListItemData> => {
     ];
   }
 
-  if (isMultiplePolcy) {
+  if (isMultiplePolicy) {
     fields = [
       ...fields,
       fieldGroupItem({

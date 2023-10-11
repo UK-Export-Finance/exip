@@ -2,48 +2,45 @@
   "name": "@uk-export-finance/exip",
   "version": "1.16.0",
   "description": "Export Insurance Policies",
-  "engineStrict": true,
-  "engines": {
-    "node": ">=18",
-    "npm": ">=9.5.0"
-  },
-  "scripts": {
-    "postinstall": "husky install",
-    "lint": "npm i --legacy-peer-deps && npm i --legacy-peer-deps --prefix ./src/ui && eslint --ext .ts src/ui && npm i --legacy-peer-deps --prefix ./src/api && eslint --ext .ts src/api && eslint --ext .js e2e-tests",
-    "lint:fix": "prettier --write src/ui  && eslint --ext .ts src/api --fix && eslint --ext .ts src/ui --fix &&  eslint --ext .js e2e-tests --fix",
-    "install:all": "npm i --legacy-peer-deps && npm i --legacy-peer-deps --prefix ./src/ui && npm i --legacy-peer-deps --prefix ./src/api && npm i --legacy-peer-deps --prefix ./generate-exip-pricing-grid",
-    "update:all": "npm update --save --legacy-peer-deps && npm update --save --legacy-peer-deps --prefix ./src/ui && npm update --save --legacy-peer-deps --prefix ./src/api && npm update --save --legacy-peer-deps --prefix ./generate-exip-pricing-grid",
-    "audit:all": "npm audit && npm audit --prefix ./src/ui && npm audit --prefix ./src/api && npm audit --prefix ./generate-exip-pricing-grid"
+  "homepage": "https://github.com/UK-Export-Finance/exip#readme",
+  "bugs": {
+    "url": "https://github.com/UK-Export-Finance/exip/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/UK-Export-Finance/exip.git"
   },
-  "author": "UK Export Finance",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/UK-Export-Finance/exip/issues"
+  "author": "UK Export Finance",
+  "scripts": {
+    "audit:all": "npm audit && npm audit --prefix ./src/ui && npm audit --prefix ./src/api && npm audit --prefix ./generate-exip-pricing-grid",
+    "housekeeping": "npm run update:all && npm run install:all && npm run lint:fix:all && npm run audit:all",
+    "postinstall": "husky install",
+    "install:all": "npm i --legacy-peer-deps && npm i --legacy-peer-deps --prefix ./src/ui && npm i --legacy-peer-deps --prefix ./src/api && npm i --legacy-peer-deps --prefix ./generate-exip-pricing-grid",
+    "lint": "npm i --legacy-peer-deps && npm i --legacy-peer-deps --prefix ./src/ui && eslint --ext .ts src/ui && npm i --legacy-peer-deps --prefix ./src/api && eslint --ext .ts src/api && eslint --ext .js e2e-tests",
+    "lint:fix": "prettier --write src/ui  && eslint --ext .ts src/api --fix && eslint --ext .ts src/ui --fix &&  eslint --ext .js e2e-tests --fix",
+    "lint:fix:all": "prettier --write src/ui  && eslint --ext .ts src/api --fix && eslint --ext .ts src/ui --fix &&  eslint --ext .js e2e-tests --fix",
+    "spellcheck": "cspell lint --gitignore --no-must-find-files --quiet --unique --no-progress --show-suggestions --color '**/*'",
+    "update:all": "npm update --save --legacy-peer-deps && npm update --save --legacy-peer-deps --prefix ./src/ui && npm update --save --legacy-peer-deps --prefix ./src/api && npm update --save --legacy-peer-deps --prefix ./generate-exip-pricing-grid"
   },
   "lint-staged": {
     "package.json": "sort-package-json",
     "*.js": "eslint --fix",
     "*.ts": "eslint --fix",
     "*": [
-      "cspell lint --gitignore --no-summary --fail-fast --no-must-find-files --color"
+      "cspell lint --gitignore --no-must-find-files --quiet --unique --no-progress --show-suggestions --color"
     ]
   },
-  "homepage": "https://github.com/UK-Export-Finance/exip#readme",
   "dependencies": {
     "@cypress-audit/lighthouse": "^1.4.2",
     "@cypress-audit/pa11y": "^1.4.2",
     "@keystone-6/auth": "^7.0.2",
-    "@keystone-6/core": "^5.6.0",
+    "@keystone-6/core": "^5.7.0",
     "@keystone-6/fields-document": "^8.0.2",
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
-    "cypress": "^13.2.0",
-    "cypress-v10-preserve-cookie": "^1.2.1",
+    "cypress": "^13.3.0",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
     "graphql-tag": "^2.12.6",
@@ -51,21 +48,21 @@
     "typescript": "^5.2.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.7.1",
+    "@commitlint/cli": "^17.7.2",
     "@commitlint/config-conventional": "^17.7.0",
     "@types/jest": "^29.5.5",
-    "@types/node": "^20.6.3",
-    "@typescript-eslint/eslint-plugin": "^6.7.2",
-    "@typescript-eslint/parser": "^6.7.2",
-    "commitlint": "^17.7.1",
-    "cspell": "^7.3.6",
-    "eslint": "^8.49.0",
+    "@types/node": "^20.8.3",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "commitlint": "^17.7.2",
+    "cspell": "^7.3.7",
+    "eslint": "^8.51.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-airbnb-typescript-prettier": "^5.0.0",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-import-resolver-typescript": "^3.6.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-cypress": "^2.15.1",
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-jsx-a11y": "^6.7.1",
@@ -74,8 +71,13 @@
     "jest": "^29.7.0",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
-    "sort-package-json": "^2.5.1",
+    "sort-package-json": "^2.6.0",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
-  }
+  },
+  "engines": {
+    "node": ">=18",
+    "npm": ">=9.5.0"
+  },
+  "engineStrict": true
 }

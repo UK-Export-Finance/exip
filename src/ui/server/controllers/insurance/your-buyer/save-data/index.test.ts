@@ -67,7 +67,7 @@ describe('controllers/insurance/your-buyer/save-data', () => {
 
       describe('when there is an error', () => {
         beforeEach(() => {
-          updateApplicationSpy = jest.fn(() => Promise.reject());
+          updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.application.update.buyer = updateApplicationSpy;
         });
 

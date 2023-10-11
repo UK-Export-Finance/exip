@@ -1,6 +1,5 @@
-import { turnover } from '../../../../../../../pages/your-business';
 import partials from '../../../../../../../partials';
-import { submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES } from '../../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
@@ -20,7 +19,7 @@ const ERROR_MESSAGE = TURNOVER_ERRORS[FIELD_ID];
 
 // for error assertion - common fields
 const ERROR_ASSERTIONS = {
-  field: turnover[FIELD_ID],
+  field: fieldSelector(FIELD_ID),
   numberOfExpectedErrors: 2,
   errorIndex: 1,
 };
@@ -30,14 +29,13 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
 
       cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER}`;
@@ -111,7 +109,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
   });
 
   it(`should NOT display validation errors when ${FIELD_ID} is correctly entered as a whole number`, () => {
-    const field = turnover[FIELD_ID];
+    const field = fieldSelector(FIELD_ID);
 
     cy.keyboardInput(field.input(), '5');
 
@@ -121,7 +119,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
   });
 
   it(`should NOT display validation errors when ${FIELD_ID} is correctly entered as 0`, () => {
-    const field = turnover[FIELD_ID];
+    const field = fieldSelector(FIELD_ID);
 
     cy.keyboardInput(field.input(), '0');
 

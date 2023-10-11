@@ -7,7 +7,7 @@ import transformNumberToString from '../../transform-number-to-string';
 /**
  * getSummaryListItemDataValue
  * Get a field's value from a list of data
- * Conditonally returns a custom value if passed (e.g, custom HTML for an address).
+ * Conditionally returns a custom value if passed (e.g, custom HTML for an address).
  * @param {String} Field ID
  * @param {Object} Submitted data
  * @param {String} Custom field value

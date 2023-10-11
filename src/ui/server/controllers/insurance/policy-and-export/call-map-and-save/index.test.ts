@@ -2,7 +2,7 @@ import callMapAndSave from '.';
 import { FIELD_IDS, FIELD_VALUES } from '../../../../constants';
 import { Request, Response } from '../../../../../types';
 import generateValidationErrors from '../type-of-policy/validation';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/policy';
 import { mockApplication, mockReq, mockRes } from '../../../../test-mocks';
 
 const { POLICY_TYPE } = FIELD_IDS;
@@ -11,7 +11,7 @@ describe('controllers/insurance/policy-and-export/call-map-and-save', () => {
   let req: Request;
   let res: Response;
 
-  jest.mock('../map-and-save');
+  jest.mock('../map-and-save/policy');
 
   let mockMapAndSave = jest.fn(() => Promise.resolve(true));
   mapAndSave.policy = mockMapAndSave;
@@ -32,7 +32,6 @@ describe('controllers/insurance/policy-and-export/call-map-and-save', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
 
     req.body = mockFormBody;
@@ -76,7 +75,7 @@ describe('controllers/insurance/policy-and-export/call-map-and-save', () => {
 
     describe('when the mapAndSave call fails', () => {
       beforeEach(() => {
-        mockMapAndSave = jest.fn(() => Promise.reject(new Error('Mock error')));
+        mockMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
         mapAndSave.policy = mockMapAndSave;
       });
 

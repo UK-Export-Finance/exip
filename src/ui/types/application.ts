@@ -4,6 +4,9 @@ import { Country } from './country';
 
 interface ApplicationOwner {
   id: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
 }
 
 type ApplicationCore = {
@@ -78,21 +81,12 @@ interface ApplicationCompany {
   sicCodes: Array<ApplicationExporterSicCodes>;
 }
 
-interface ApplicationBusinessContactDetail {
-  id: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  position?: string;
-}
-
 interface ApplicationBusiness {
   id: string;
   goodsOrServices?: string;
   totalYearsExporting?: string;
   totalEmployeesUK?: string;
   totalEmployeesInternational?: string;
-  businessContactDetail: ApplicationBusinessContactDetail;
 }
 
 interface ApplicationBroker {
@@ -157,6 +151,15 @@ interface ApplicationDeclaration {
   agreeHowDataWillBeUsed?: boolean;
 }
 
+interface ApplicationPolicyContact {
+  id: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  position?: string;
+  isSameAsOwner?: boolean;
+}
+
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   owner: ApplicationOwner;
@@ -168,6 +171,7 @@ interface Application extends ApplicationCore {
   buyer: ApplicationBuyer;
   sectionReview: ApplicationSectionReview;
   declaration: ApplicationDeclaration;
+  policyContact: ApplicationPolicyContact;
 }
 
 interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore, ApplicationOwner {
@@ -191,7 +195,6 @@ export {
   ApplicationExporterSicCodes,
   ApplicationExporterindustrySectorNames,
   ApplicationBusiness,
-  ApplicationBusinessContactDetail,
   ApplicationBroker,
   ApplicationBuyer,
   ApplicationBuyerUiInput,
@@ -199,4 +202,6 @@ export {
   ApplicationSectionReview,
   ApplicationDeclaration,
   ApplicationVersion,
+  ApplicationOwner,
+  ApplicationPolicyContact,
 };

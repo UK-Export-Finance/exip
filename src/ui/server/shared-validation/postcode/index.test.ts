@@ -106,7 +106,7 @@ describe('shared-validation/postcode', () => {
       });
     });
 
-    describe('when the postcode doesnt have a space', () => {
+    describe('when the postcode does not have a space', () => {
       it('should return the provided errors object', () => {
         const mockValue = 'SW1A2HQ';
 

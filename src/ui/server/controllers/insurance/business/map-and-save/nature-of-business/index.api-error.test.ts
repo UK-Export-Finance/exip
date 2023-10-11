@@ -37,7 +37,7 @@ describe('controllers/insurance/business/map-and-save/nature-of-business - API e
 
   describe('when save application business call fails', () => {
     beforeEach(() => {
-      save.business = jest.fn(() => Promise.reject(new Error('Mock error')));
+      save.business = jest.fn(() => Promise.reject(new Error('mock')));
     });
 
     it('should return false', async () => {

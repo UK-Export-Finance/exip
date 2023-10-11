@@ -6,7 +6,7 @@ import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm } from '../../../../../../commands/quote/forms';
-import { checkDescriptionSummaryText, checkDescriptionSummaryClickRevealsContent, checkDescriptionContent } from '../../../../../../commands/check-uk-goods-and-services-description';
+import { checkDescriptionSummaryText, checkDescriptionSummaryClickRevealsContent, checkDescriptionContent } from '../../../../../../commands/shared-commands/assertions/check-uk-goods-and-services-description';
 
 const CONTENT_STRINGS = {
   ...PAGES.UK_GOODS_OR_SERVICES,

@@ -1,4 +1,5 @@
 import {
+  field as fieldSelector,
   headingCaption,
   submitButton,
   saveAndBackButton,
@@ -59,7 +60,7 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
@@ -99,9 +100,8 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
     it('renders `requested start date` label, hint and inputs', () => {
       const fieldId = REQUESTED_START_DATE;
-      const field = singleContractPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.CONTRACT_POLICY[fieldId].LABEL);
 
       cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY[fieldId].HINT);
@@ -113,9 +113,8 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
     it('renders `contract completion date` label, hint and inputs', () => {
       const fieldId = CONTRACT_COMPLETION_DATE;
-      const field = singleContractPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].LABEL);
 
       cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT);
@@ -129,7 +128,6 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
       const fieldId = TOTAL_CONTRACT_VALUE;
       const field = singleContractPolicyPage[fieldId];
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].LABEL);
 
       const hintContent = FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT;
@@ -157,9 +155,8 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
     it('renders `buyer credit period` label, hint and input', () => {
       const fieldId = CREDIT_PERIOD_WITH_BUYER;
-      const field = singleContractPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.CONTRACT_POLICY[fieldId].LABEL);
 
       cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY[fieldId].HINT);
@@ -174,8 +171,6 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
     });
 
     it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });
@@ -207,22 +202,22 @@ context('Insurance - Policy and exports - Single contract policy page - As an ex
 
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`);
 
-        singleContractPolicyPage[REQUESTED_START_DATE].dayInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].day);
-        singleContractPolicyPage[REQUESTED_START_DATE].monthInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);
-        singleContractPolicyPage[REQUESTED_START_DATE].yearInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].year);
+        fieldSelector(REQUESTED_START_DATE).dayInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].day);
+        fieldSelector(REQUESTED_START_DATE).monthInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);
+        fieldSelector(REQUESTED_START_DATE).yearInput().should('have.value', application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].year);
 
-        singleContractPolicyPage[CONTRACT_COMPLETION_DATE].dayInput().should('have.value', application.POLICY_AND_EXPORTS[CONTRACT_COMPLETION_DATE].day);
-        singleContractPolicyPage[CONTRACT_COMPLETION_DATE].monthInput().should('have.value', application.POLICY_AND_EXPORTS[CONTRACT_COMPLETION_DATE].month);
-        singleContractPolicyPage[CONTRACT_COMPLETION_DATE].yearInput().should('have.value', application.POLICY_AND_EXPORTS[CONTRACT_COMPLETION_DATE].year);
+        fieldSelector(CONTRACT_COMPLETION_DATE).dayInput().should('have.value', application.POLICY_AND_EXPORTS[CONTRACT_COMPLETION_DATE].day);
+        fieldSelector(CONTRACT_COMPLETION_DATE).monthInput().should('have.value', application.POLICY_AND_EXPORTS[CONTRACT_COMPLETION_DATE].month);
+        fieldSelector(CONTRACT_COMPLETION_DATE).yearInput().should('have.value', application.POLICY_AND_EXPORTS[CONTRACT_COMPLETION_DATE].year);
 
         singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().should('have.value', application.POLICY_AND_EXPORTS[TOTAL_CONTRACT_VALUE]);
-        singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER].input().should('have.value', application.POLICY_AND_EXPORTS[CREDIT_PERIOD_WITH_BUYER]);
+        fieldSelector(CREDIT_PERIOD_WITH_BUYER).input().should('have.value', application.POLICY_AND_EXPORTS[CREDIT_PERIOD_WITH_BUYER]);
         policyCurrencyCodeFormField.inputOptionSelected().contains(application.POLICY_AND_EXPORTS[POLICY_CURRENCY_CODE]);
       });
     });
 
     describe('when the credit period with buyer field is a pure number and there are no other validation errors', () => {
-      const creditPeriodField = singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];
+      const creditPeriodField = fieldSelector(CREDIT_PERIOD_WITH_BUYER);
       const submittedValue = '1234';
 
       beforeEach(() => {

@@ -1,0 +1,32 @@
+import Context from '@keystone-6/core/types';
+import { ApplicationCreateInput, BuyerCreateInput } from '.keystone/types'; // eslint-disable-line
+import { Account } from '../account';
+
+export interface TestHelperCreate {
+  context: Context;
+  companyId?: string;
+}
+
+export interface TestHelperAccountCreate extends TestHelperCreate {
+  data?: Account;
+  deleteAccounts?: boolean;
+}
+
+export interface TestHelperApplicationCreate extends TestHelperCreate {
+  data: ApplicationCreateInput;
+}
+
+export interface TestHelperApplicationGet {
+  context: Context;
+  applicationId: string;
+}
+
+export interface TestHelperApplicationUpdate {
+  context: Context;
+  applicationId: string;
+  data: object;
+}
+
+export interface TestHelperBuyerCreate extends TestHelperCreate {
+  data: BuyerCreateInput;
+}

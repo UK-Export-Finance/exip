@@ -18,7 +18,7 @@ const {
 /**
  * mapValue
  * Map an application's "insurance value" depending on the policy type, for display in the dashboard
- * @param {Object} Application
+ * @param {Application}
  * @returns {String} Formatted insured amount or empty dash
  */
 const mapValue = (application: Application) => {

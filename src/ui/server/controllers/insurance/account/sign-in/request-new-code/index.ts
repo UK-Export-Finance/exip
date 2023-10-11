@@ -38,7 +38,7 @@ export const get = (req: Request, res: Response) => {
     /**
      * No account ID is in the session.
      * We cannot make an API call in the POST without this.
-     * Therfore, redirect to the sign in route.
+     * Therefore, redirect to the sign in route.
      */
     return res.redirect(SIGN_IN_ROOT);
   }

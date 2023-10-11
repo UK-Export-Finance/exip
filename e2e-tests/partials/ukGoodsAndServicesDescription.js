@@ -1,5 +1,6 @@
 const ukGoodsOrServicesDescription = {
   summary: () => cy.get('[data-cy="goods-services"] summary'),
+  details: () => cy.get('[data-cy="goods-services"]'),
   includes: {
     intro: () => cy.get('[data-cy="goods-services-includes-intro"]'),
     listItem1: () => cy.get('[data-cy="goods-services-includes-item-1"]'),

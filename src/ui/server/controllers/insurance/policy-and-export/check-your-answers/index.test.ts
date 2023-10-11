@@ -8,7 +8,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { policyAndExportSummaryList } from '../../../../helpers/summary-lists/policy-and-export';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCountries, mockCurrencies } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCountries, mockCurrencies, mockContact } from '../../../../test-mocks';
 
 const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 const {
@@ -35,7 +35,6 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
     refNumber = Number(mockApplication.referenceNumber);
 
@@ -87,7 +86,7 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
         ...exportContract,
       };
 
-      const summaryList = policyAndExportSummaryList(answers, referenceNumber, mockCountries, mockCurrencies);
+      const summaryList = policyAndExportSummaryList(answers, mockContact, referenceNumber, mockCountries, mockCurrencies);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
@@ -105,7 +104,7 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -118,7 +117,7 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
     describe('api error handling', () => {
       describe('when the get countries API call fails', () => {
         beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.reject());
+          getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
@@ -144,7 +143,7 @@ describe('controllers/insurance/policy-and-export/check-your-answers', () => {
 
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject());
+          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.external.getCurrencies = getCurrenciesSpy;
         });
 

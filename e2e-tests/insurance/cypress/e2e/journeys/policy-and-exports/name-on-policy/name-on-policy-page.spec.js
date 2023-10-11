@@ -1,7 +1,7 @@
 import {
   headingCaption,
   saveAndBackButton,
-  input,
+  field,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import {
@@ -12,6 +12,8 @@ import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-st
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import account from '../../../../../../fixtures/account';
+import application from '../../../../../../fixtures/application';
 
 const { taskList } = partials.insurancePartials;
 
@@ -23,6 +25,7 @@ const {
     ABOUT_GOODS_OR_SERVICES,
     CHECK_YOUR_ANSWERS,
     NAME_ON_POLICY,
+    DIFFERENT_NAME_ON_POLICY,
   },
 } = INSURANCE_ROUTES;
 
@@ -31,6 +34,11 @@ const {
     NAME_ON_POLICY: {
       NAME, POSITION, SAME_NAME, OTHER_NAME,
     },
+  },
+  ACCOUNT: {
+    FIRST_NAME,
+    LAST_NAME,
+    EMAIL,
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -41,7 +49,7 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
@@ -83,41 +91,78 @@ context('Insurance - Policy and exports - Name on Policy page - I want to enter 
     });
 
     it('renders a hint', () => {
-      cy.checkText(input.field(NAME).hint(), CONTENT_STRINGS.HINT);
+      cy.checkText(field(NAME).hint(), CONTENT_STRINGS.HINT);
     });
 
     it(`renders a ${SAME_NAME} radio`, () => {
-      input.field(SAME_NAME).input().should('exist');
+      field(SAME_NAME).input().should('exist');
+
+      const nameAndEmail = `${account[FIRST_NAME]} ${account[LAST_NAME]} (${account[EMAIL]})`;
+      cy.checkText(field(SAME_NAME).label(), nameAndEmail);
     });
 
-    it(`renders ${POSITION} input if ${SAME_NAME} is selected'`, () => {
-      input.field(SAME_NAME).input().click();
+    it(`should NOT display conditional "${POSITION}" section without selecting the "same name" radio`, () => {
+      field(POSITION).input().should('not.be.visible');
+    });
 
-      input.field(POSITION).input().should('exist');
-      cy.checkText(input.field(POSITION).label(), FIELDS.NAME_ON_POLICY[POSITION].LABEL);
+    it(`should display conditional "${POSITION}" section when selecting the "yes" radio`, () => {
+      field(SAME_NAME).input().click();
+
+      field(POSITION).input().should('be.visible');
+      cy.checkText(field(POSITION).label(), FIELDS.NAME_ON_POLICY[POSITION].LABEL);
     });
 
     it(`renders a ${OTHER_NAME} radio'`, () => {
-      input.field(OTHER_NAME).input().should('exist');
+      field(OTHER_NAME).input().should('exist');
 
-      cy.checkText(input.field(OTHER_NAME).label(), FIELDS.NAME_ON_POLICY.OPTIONS.OTHER_NAME.TEXT);
+      cy.checkText(field(OTHER_NAME).label(), FIELDS.NAME_ON_POLICY.OPTIONS.OTHER_NAME.TEXT);
     });
 
     it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      cy.navigateToUrl(url);
+    describe(SAME_NAME, () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS} when ${SAME_NAME} is selected`, () => {
+        cy.navigateToUrl(url);
 
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+        cy.completeAndSubmitNameOnPolicyForm({});
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      cy.assertUrl(expectedUrl);
+        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        cy.assertUrl(expectedUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted values', () => {
+          const { POLICY_CONTACT } = application;
+
+          cy.navigateToUrl(url);
+
+          field(SAME_NAME).input().should('be.checked');
+          cy.checkValue(field(POSITION), POLICY_CONTACT[POSITION]);
+        });
+      });
+    });
+
+    describe(OTHER_NAME, () => {
+      it(`should redirect to ${DIFFERENT_NAME_ON_POLICY} when ${OTHER_NAME} is selected`, () => {
+        cy.navigateToUrl(url);
+
+        cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
+
+        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
+        cy.assertUrl(expectedUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted values', () => {
+          cy.navigateToUrl(url);
+
+          field(OTHER_NAME).input().should('be.checked');
+        });
+      });
     });
   });
 });

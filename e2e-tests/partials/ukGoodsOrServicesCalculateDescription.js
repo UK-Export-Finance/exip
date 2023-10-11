@@ -1,5 +1,6 @@
 const ukGoodsOrServicesCalculateDescription = {
   summary: () => cy.get('[data-cy="goods-and-services-calculate"] summary'),
+  details: () => cy.get('[data-cy="goods-and-services-calculate"]'),
   list: {
     intro: () => cy.get('[data-cy="goods-and-services-calculate-list-intro"]'),
     item1: () => cy.get('[data-cy="goods-and-services-calculate-list-item-1"]'),

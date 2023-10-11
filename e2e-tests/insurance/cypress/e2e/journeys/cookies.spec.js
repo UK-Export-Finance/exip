@@ -4,7 +4,7 @@ import partials from '../../../../partials';
 import {
   BUTTONS, ERROR_MESSAGES, FIELDS, PAGES,
 } from '../../../../content-strings';
-import { FIELD_IDS, ROUTES } from '../../../../constants';
+import { FIELD_IDS, ROUTES, COOKIE } from '../../../../constants';
 
 const CONTENT_STRINGS = PAGES.COOKIES_PAGE;
 
@@ -166,12 +166,6 @@ context('Cookies page - Insurance', () => {
       cy.checkText(rejectRadioLabel, FIELDS[FIELD_ID].OPTIONS.REJECT.TEXT);
     });
 
-    it('renders a submit button', () => {
-      submitButton().should('exist');
-
-      cy.checkText(submitButton(), BUTTONS.SAVE_CHANGES);
-    });
-
     describe('form submission', () => {
       describe('when submitting an empty form', () => {
         beforeEach(() => {
@@ -275,7 +269,7 @@ context('Cookies page - Insurance', () => {
 
       describe('when a user navigates to the cookies page directly via URL and optional cookies are submitted as `accept`', () => {
         beforeEach(() => {
-          cy.clearCookie('exip-session');
+          cy.clearCookie(COOKIE.NAME.SESSION);
 
           cy.navigateToUrl(url);
 
@@ -296,7 +290,7 @@ context('Cookies page - Insurance', () => {
 
       describe('when a user navigates to the cookies page directly via URL and optional cookies are submitted as `reject`', () => {
         beforeEach(() => {
-          cy.clearCookie('exip-session');
+          cy.clearCookie(COOKIE.NAME.SESSION);
 
           cy.navigateToUrl(url);
 

@@ -1,8 +1,6 @@
 import gql from 'graphql-tag';
 import apollo from './apollo';
 
-const baseUrl = Cypress.config('apiUrl');
-
 const APOLLO_CONTEXT = {
   headers: {
     'x-api-key': Cypress.env('API_KEY'),
@@ -29,6 +27,13 @@ const queryStrings = {
       }
     }
   `,
+  createAnApplication: () => gql`
+    mutation createAnApplication($accountId: String!, $eligibilityAnswers: ApplicationEligibility!) {
+      createAnApplication(accountId: $accountId, eligibilityAnswers: $eligibilityAnswers) {
+        referenceNumber
+      }
+    }
+  `,
   createApplications: () => gql`
     mutation createApplications($data: [ApplicationCreateInput!]!) {
       createApplications(data: $data) {
@@ -43,13 +48,9 @@ const queryStrings = {
       }
     }
   `,
-  getAccountByEmail: (email) => `
+  getAccountByEmail: () => gql`
     query accounts {
-      accounts (
-        orderBy: { updatedAt: desc }
-        where: { email: { equals: "${email}" } }
-        take: 1
-      ) {
+      accounts {
         id
         verificationHash
         reactivationHash
@@ -222,6 +223,23 @@ const createBuyer = (countryId) =>
   }).then((response) => response.data.createBuyer);
 
 /**
+  * createAnApplication
+  * Create an application
+  * @param {String} Account/application owner ID
+  * @param {Object} Eligibility answers
+  * @returns {Object} Created application
+  */
+const createAnApplication = (accountId, eligibilityAnswers) =>
+  apollo.query({
+    query: queryStrings.createAnApplication(),
+    variables: {
+      accountId,
+      eligibilityAnswers,
+    },
+    context: APOLLO_CONTEXT,
+  }).then((response) => response.data.createAnApplication);
+
+/**
   * createApplications
   * Create multiple applications
   * @param {Array} Array of applications
@@ -242,19 +260,27 @@ const createApplications = (applications) =>
  * @param {String} Account email address
  * @returns {Object} Account
  */
-const getAccountByEmail = (email) =>
-  cy.request({
-    headers: {
-      'content-type': 'application/json',
-      'x-api-key': Cypress.env('API_KEY'),
-    },
-    url: `${baseUrl}`,
-    body: JSON.stringify({
+const getAccountByEmail = async (email) => {
+  try {
+    const responseBody = await apollo.query({
       query: queryStrings.getAccountByEmail(email),
-      operationName: 'accounts',
-    }),
-    method: 'POST',
-  }).then((response) => response.body.data.accounts);
+      variables: {
+        where: {
+          orderBy: { updatedAt: 'desc' },
+          email: { equals: email },
+          take: 1,
+        },
+      },
+      context: APOLLO_CONTEXT,
+    }).then((response) => response.data.accounts);
+
+    return responseBody;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error('Getting account by email', { err });
+  }
+};
 
 /**
  * updateAccount
@@ -563,6 +589,7 @@ const declarations = {
 const api = {
   createAnAccount,
   createBuyer,
+  createAnApplication,
   createApplications,
   getAccountByEmail,
   updateAccount,

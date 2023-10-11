@@ -7,7 +7,7 @@ import { withAuth, session } from './auth';
 import apolloPlugins from './apollo-plugins';
 import { extendGraphqlSchema } from './custom-schema';
 
-const { NODE_ENV, DATABASE_URL } = process.env;
+const { NODE_ENV, PORT, DATABASE_URL } = process.env;
 
 /**
  * Only allow the following functionalities to run if the environment is development.
@@ -41,7 +41,7 @@ const isProdEnvironment = NODE_ENV === 'production';
 export default withAuth(
   config({
     server: {
-      port: 5001,
+      port: Number(PORT),
       extendExpressApp: (app) => {
         app.use(checkApiKey);
 

@@ -22,7 +22,7 @@ const {
 
 const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_EXPORTING_WITH_CODE_OF_CONDUCT;
 
-describe('controllers/insurance/declarations/anti-bribery/exporting-with-acode-of-conduct', () => {
+describe('controllers/insurance/declarations/anti-bribery/exporting-with-a-code-of-conduct', () => {
   jest.mock('../../save-data');
 
   let mockSaveDeclaration = jest.fn(() => Promise.resolve({}));
@@ -35,8 +35,6 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-acode-o
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
   });
 
   describe('FIELD_ID', () => {
@@ -85,7 +83,7 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-acode-o
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -143,7 +141,7 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-acode-o
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -172,7 +170,7 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-acode-o
 
         describe('when the save data API call fails', () => {
           beforeEach(() => {
-            mockSaveDeclaration = jest.fn(() => Promise.reject());
+            mockSaveDeclaration = jest.fn(() => Promise.reject(new Error('mock')));
             save.declaration = mockSaveDeclaration;
 
             req.body = validBody;

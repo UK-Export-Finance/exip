@@ -1,8 +1,10 @@
-import { backLink, submitButton, summaryList } from '../../../../../../pages/shared';
 import {
-  policyTypePage,
-  tellUsAboutYourPolicyPage,
-} from '../../../../../../pages/quote';
+  backLink,
+  field,
+  submitButton,
+  summaryList,
+} from '../../../../../../pages/shared';
+import { policyTypePage } from '../../../../../../pages/quote';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
 
@@ -41,8 +43,8 @@ const changeFromSingleToMultiple = () => {
   submitButton().click();
 
   // max amount owed and credit period fields are now required because it's a multiple policy
-  cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '120000');
-  tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
+  cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '120000');
+  field(CREDIT_PERIOD).input().select('1');
 
   submitButton().click();
 };
@@ -65,9 +67,9 @@ const changeFromMultipleToSingle = () => {
    * "Policy length" and "contract value fields" are now required,
    * because it's a single policy.
    */
-  cy.keyboardInput(tellUsAboutYourPolicyPage[POLICY_LENGTH].input(), '3');
+  cy.keyboardInput(field(POLICY_LENGTH).input(), '3');
 
-  cy.keyboardInput(tellUsAboutYourPolicyPage[CONTRACT_VALUE].input(), '150');
+  cy.keyboardInput(field(CONTRACT_VALUE).input(), '150');
   submitButton().click();
 };
 
@@ -138,8 +140,8 @@ context('Change your answers - as an exporter, I want to change the details befo
       submitButton().click();
 
       // max amount owed and credit period fields are now required because it's a multiple policy
-      cy.keyboardInput(tellUsAboutYourPolicyPage[MAX_AMOUNT_OWED].input(), '120000');
-      tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
+      cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '120000');
+      field(CREDIT_PERIOD).input().select('1');
       submitButton().click();
     });
 

@@ -1,5 +1,5 @@
-import { submitButton } from '../../../pages/shared';
-import accountFormFields from '../../../partials/insurance/accountFormFields';
+import { field, submitButton } from '../../../pages/shared';
+import passwordField from '../../../partials/insurance/passwordField';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import account from '../../../fixtures/account';
@@ -17,6 +17,8 @@ const {
   },
 } = INSURANCE_ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 /**
  * completeAndSubmitSignInAccountForm
  * Complete and submit the "sign in" form
@@ -30,14 +32,14 @@ const completeAndSubmitSignInAccountForm = ({
   password = account[PASSWORD],
   assertRedirectUrl = true,
 }) => {
-  cy.keyboardInput(accountFormFields[EMAIL].input(), emailAddress);
-  cy.keyboardInput(accountFormFields[PASSWORD].input(), password);
+  cy.keyboardInput(field(EMAIL).input(), emailAddress);
+  cy.keyboardInput(passwordField.input(), password);
 
   submitButton().click();
 
   if (assertRedirectUrl) {
     // assert we are on the 'enter code' page'
-    const expectedUrl = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
+    const expectedUrl = `${baseUrl}${ENTER_CODE}`;
     cy.assertUrl(expectedUrl);
   }
 };

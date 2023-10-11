@@ -5,31 +5,28 @@ import {
   getYear,
   sub,
 } from 'date-fns';
-import { submitButton } from '../../../../../../../pages/shared';
-import { singleContractPolicyPage } from '../../../../../../../pages/insurance/policy-and-export';
+import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import {
-  FIELD_IDS,
-  FIELD_VALUES,
-  ELIGIBILITY,
-  ROUTES,
-} from '../../../../../../../constants';
+import { FIELD_VALUES, ELIGIBILITY } from '../../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const { taskList } = partials.insurancePartials;
 
-const { INSURANCE } = ROUTES;
-
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        SINGLE: { CONTRACT_COMPLETION_DATE },
-      },
+  POLICY_AND_EXPORTS: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      SINGLE: { CONTRACT_COMPLETION_DATE },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
+
+const {
+  ROOT,
+  POLICY_AND_EXPORTS: { SINGLE_CONTRACT_POLICY },
+} = INSURANCE_ROUTES;
 
 const {
   INSURANCE: {
@@ -39,19 +36,21 @@ const {
   },
 } = ERROR_MESSAGES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Policy and exports - Single contract policy page - form validation - contract completion date', () => {
   let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.SINGLE_CONTRACT_POLICY}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
       cy.assertUrl(url);
     });
@@ -67,7 +66,7 @@ context('Insurance - Policy and exports - Single contract policy page - form val
     cy.deleteApplication(referenceNumber);
   });
 
-  const field = singleContractPolicyPage[CONTRACT_COMPLETION_DATE];
+  const field = fieldSelector(CONTRACT_COMPLETION_DATE);
 
   it('should render a validation error when day is not provided', () => {
     cy.keyboardInput(field.monthInput(), '1');
@@ -209,14 +208,14 @@ context('Insurance - Policy and exports - Single contract policy page - form val
 
   describe(`when ${REQUESTED_START_DATE} is also provided`, () => {
     const date = new Date();
-    const startDate = add(date, { months: 3 });
+    const startDate = add(date, { years: 1 });
 
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(singleContractPolicyPage[REQUESTED_START_DATE].dayInput(), '2');
-      cy.keyboardInput(singleContractPolicyPage[REQUESTED_START_DATE].monthInput(), getMonth(startDate));
-      cy.keyboardInput(singleContractPolicyPage[REQUESTED_START_DATE].yearInput(), getYear(startDate));
+      cy.keyboardInput(fieldSelector(REQUESTED_START_DATE).dayInput(), '2');
+      cy.keyboardInput(fieldSelector(REQUESTED_START_DATE).monthInput(), getMonth(startDate));
+      cy.keyboardInput(fieldSelector(REQUESTED_START_DATE).yearInput(), getYear(startDate));
     });
 
     it(`should render a validation error when the date is the same as ${REQUESTED_START_DATE}`, () => {

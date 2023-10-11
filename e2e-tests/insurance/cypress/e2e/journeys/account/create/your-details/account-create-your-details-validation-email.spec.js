@@ -1,6 +1,5 @@
-import { submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
-import accountFormFields from '../../../../../../../partials/insurance/accountFormFields';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -25,8 +24,10 @@ const {
 
 const expectedMessage = String(YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT);
 
+const baseUrl = Cypress.config('baseUrl');
+
 const submitAndAssertFieldErrors = (fieldValue) => {
-  const field = accountFormFields[EMAIL];
+  const field = fieldSelector(EMAIL);
 
   cy.keyboardInput(field.input(), fieldValue);
 
@@ -48,7 +49,7 @@ context('Insurance - Account - Create - Your details page - form validation - em
 
     cy.submitEligibilityAndStartAccountCreation();
 
-    url = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
+    url = `${baseUrl}${YOUR_DETAILS}`;
 
     cy.assertUrl(url);
   });

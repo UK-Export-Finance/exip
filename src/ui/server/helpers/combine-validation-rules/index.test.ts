@@ -24,7 +24,7 @@ describe('server/helpers/combine-validation-rules', () => {
   };
 
   describe('when there are rule errors', () => {
-    it('shouold return an object with all errors combined', () => {
+    it('should return an object with all errors combined', () => {
       const mockErrorFirstName = {
         errorList: {
           firstName: {

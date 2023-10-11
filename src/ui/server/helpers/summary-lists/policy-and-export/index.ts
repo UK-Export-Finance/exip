@@ -6,7 +6,8 @@ import generateCreditPeriodAndCurrencyFields from './credit-period-and-currency-
 import generateAboutGoodsOrServicesFields from './about-goods-or-services-fields';
 import generateSingleContractPolicyFields from './single-contract-policy-fields';
 import generateMultipleContractPolicyFields from './multiple-contract-policy-fields';
-import { ApplicationPolicyAndExport, Country, Currency } from '../../../../types';
+import generatePolicyContactFields from './policy-contact-fields';
+import { ApplicationPolicyAndExport, ApplicationPolicyContact, Country, Currency } from '../../../../types';
 
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },
@@ -21,6 +22,7 @@ const {
  */
 const generateFields = (
   answers: ApplicationPolicyAndExport,
+  answersPolicyContact: ApplicationPolicyContact,
   referenceNumber: number,
   countries: Array<Country>,
   currencies: Array<Currency>,
@@ -40,6 +42,7 @@ const generateFields = (
     ...fields,
     ...generateCreditPeriodAndCurrencyFields(answers, referenceNumber, currencies, checkAndChange),
     ...generateAboutGoodsOrServicesFields(answers, referenceNumber, countries, checkAndChange),
+    ...generatePolicyContactFields(answersPolicyContact, referenceNumber, checkAndChange),
   ];
 
   return fields;
@@ -48,18 +51,20 @@ const generateFields = (
 /**
  * policyAndExportSummaryList
  * Create multiple groups with govukSummaryList data structure
- * @param {Object} All answers/submitted data in a simple object.text structure
+ * @param {ApplicationPolicyAndExport} answers policyAndExport answers/submitted data in a simple object.text structure
+ * @param {ApplicationPolicyContact} answersPolicyContact policyContact answers/submitted data in a simple object.text structure
  * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section.  Default as false
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 const policyAndExportSummaryList = (
   answers: ApplicationPolicyAndExport,
+  answersPolicyContact: ApplicationPolicyContact,
   referenceNumber: number,
   countries: Array<Country>,
   currencies: Array<Currency>,
   checkAndChange = false,
 ) => {
-  const fields = generateFields(answers, referenceNumber, countries, currencies, checkAndChange);
+  const fields = generateFields(answers, answersPolicyContact, referenceNumber, countries, currencies, checkAndChange);
 
   const summaryList = generateSummaryListRows(fields);
 

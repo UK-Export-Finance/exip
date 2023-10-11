@@ -1,12 +1,14 @@
 import generate from '.';
-import { mockApplication } from '../test-mocks';
+import { generateSubmittedApplication } from '../test-helpers';
 import fileSystem from '../file-system';
 
 describe('api/generate-xlsx/index', () => {
   it('should return an XLSX file path', async () => {
-    const result = await generate.XLSX(mockApplication);
+    const submittedApplication = await generateSubmittedApplication();
 
-    const expected = `XLSX/${mockApplication.referenceNumber}.xlsx`;
+    const result = await generate.XLSX(submittedApplication);
+
+    const expected = `XLSX/${submittedApplication.referenceNumber}.xlsx`;
 
     expect(result).toEqual(expected);
 

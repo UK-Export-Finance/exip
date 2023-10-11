@@ -1,9 +1,10 @@
 import crypto from 'crypto';
 import { ACCOUNT } from '../../../constants';
 import getAccountById from '../../../helpers/get-account-by-id';
+import update from '../../../helpers/update-account';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
-import { AccountSendEmailReactivateLinkVariables, AccountSendEmailReactivateLinkResponse, Account, Context } from '../../../types';
+import { AccountSendEmailReactivateLinkVariables, AccountSendEmailReactivateLinkResponse, Context } from '../../../types';
 
 const {
   ENCRYPTION: {
@@ -62,10 +63,7 @@ const sendEmailReactivateAccountLink = async (
 
     console.info('Updating account for reactivation');
 
-    (await context.db.Account.updateOne({
-      where: { id: accountId },
-      data: accountUpdate,
-    })) as Account;
+    await update.account(context, accountId, accountUpdate);
 
     console.info('Sending reactivate account email/link');
 

@@ -12,8 +12,8 @@ context('Accessibility statement page - Insurance - Signed in', () => {
   let dashboardUrl;
 
   beforeEach(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
-      dashboardUrl = `${Cypress.config('baseUrl')}${ROOT}/${refNumber}${ALL_SECTIONS}`;
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+      dashboardUrl = `${baseUrl}${ROOT}/${refNumber}${ALL_SECTIONS}`;
     });
 
     partials.footer.supportLinks.accessibilityStatement().click();

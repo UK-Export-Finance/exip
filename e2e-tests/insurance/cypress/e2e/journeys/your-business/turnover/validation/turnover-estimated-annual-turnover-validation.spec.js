@@ -1,6 +1,5 @@
-import { turnover } from '../../../../../../../pages/your-business';
 import partials from '../../../../../../../partials';
-import { submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES } from '../../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
@@ -20,27 +19,28 @@ const ERROR_MESSAGE = TURNOVER_ERRORS[FIELD_ID];
 
 // for error assertion - common fields
 const ERROR_ASSERTIONS = {
-  field: turnover[FIELD_ID],
+  field: fieldSelector(FIELD_ID),
   numberOfExpectedErrors: 2,
   errorIndex: 0,
 };
+
+const baseUrl = Cypress.config('baseUrl');
 
 describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_ID}`, () => {
   let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
 
       cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
-      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER}`;
+      url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER}`;
 
       cy.assertUrl(url);
     });
@@ -92,7 +92,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
 
   it(`should NOT display validation errors when ${FIELD_ID} is correctly entered as a whole number`, () => {
     const fieldId = FIELD_ID;
-    const field = turnover[fieldId];
+    const field = fieldSelector(fieldId);
 
     cy.keyboardInput(field.input(), '5');
     submitButton().click();
@@ -101,7 +101,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
 
   it(`should NOT display validation errors when ${FIELD_ID} is correctly entered with a comma`, () => {
     const fieldId = FIELD_ID;
-    const field = turnover[fieldId];
+    const field = fieldSelector(fieldId);
 
     cy.keyboardInput(field.input(), '5,00');
     submitButton().click();
@@ -110,7 +110,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
 
   it(`should NOT display validation errors when ${FIELD_ID} is correctly entered as 0`, () => {
     const fieldId = FIELD_ID;
-    const field = turnover[fieldId];
+    const field = fieldSelector(fieldId);
 
     cy.keyboardInput(field.input(), '0');
     submitButton().click();
@@ -119,7 +119,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
 
   it(`should NOT display validation errors when ${FIELD_ID} is correctly entered as a negative number`, () => {
     const fieldId = FIELD_ID;
-    const field = turnover[fieldId];
+    const field = fieldSelector(fieldId);
 
     cy.keyboardInput(field.input(), '-256');
     submitButton().click();

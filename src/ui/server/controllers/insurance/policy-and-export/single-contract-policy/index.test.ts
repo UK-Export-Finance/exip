@@ -11,7 +11,7 @@ import api from '../../../../api';
 import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCurrencies } from '../../../../test-mocks';
 
@@ -41,7 +41,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
   let res: Response;
   let refNumber: number;
 
-  jest.mock('../save-data');
+  jest.mock('../save-data/policy');
 
   mapAndSave.policy = jest.fn(() => Promise.resolve(true));
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
@@ -190,7 +190,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -203,7 +203,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
     describe('api error handling', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.reject());
+          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.external.getCurrencies = getCurrenciesSpy;
         });
 
@@ -363,7 +363,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -377,7 +377,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
       describe('get currencies call', () => {
         describe('when the get currencies API call fails', () => {
           beforeEach(() => {
-            getCurrenciesSpy = jest.fn(() => Promise.reject());
+            getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
             api.external.getCurrencies = getCurrenciesSpy;
           });
 
@@ -423,7 +423,7 @@ describe('controllers/insurance/policy-and-export/single-contract-policy', () =>
 
         describe('when there is an error', () => {
           beforeEach(() => {
-            const savePolicyAndExportDataSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
+            const savePolicyAndExportDataSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
             mapAndSave.policy = savePolicyAndExportDataSpy;
           });

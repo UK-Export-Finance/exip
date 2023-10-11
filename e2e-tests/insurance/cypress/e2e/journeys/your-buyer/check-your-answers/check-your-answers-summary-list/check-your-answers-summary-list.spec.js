@@ -41,7 +41,7 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
   before(() => {
     cy.deleteAccount();
 
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
@@ -64,7 +64,7 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
   });
 
   it(`should render a ${NAME} summary list row`, () => {
-    checkSummaryList[NAME]();
+    checkSummaryList[NAME]({});
   });
 
   it(`should render a ${ADDRESS} summary list row`, () => {

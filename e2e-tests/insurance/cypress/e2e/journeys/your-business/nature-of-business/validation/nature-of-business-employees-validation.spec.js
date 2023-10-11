@@ -1,8 +1,8 @@
-import { natureOfBusiness } from '../../../../../../../pages/your-business';
 import partials from '../../../../../../../partials';
-import { submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const NATURE_OF_BUSINESS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
@@ -11,27 +11,35 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.business;
 
 const {
-  NATURE_OF_YOUR_BUSINESS: {
-    EMPLOYEES_UK,
-    EMPLOYEES_INTERNATIONAL,
+  EXPORTER_BUSINESS: {
+    NATURE_OF_YOUR_BUSINESS: {
+      EMPLOYEES_UK,
+      EMPLOYEES_INTERNATIONAL,
+    },
   },
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+} = INSURANCE_FIELD_IDS;
+
+const {
+  ROOT,
+  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS },
+} = INSURANCE_ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
 
 describe('Insurance - Your business - Nature of your business page - As an Exporter I want to enter details about the nature of my business - number of employees input validation', () => {
   let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
 
       cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitYourContact({});
 
-      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
 
       cy.assertUrl(url);
     });
@@ -65,7 +73,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
       it(`should display validation errors for ${EMPLOYEES_UK}`, () => {
         const fieldId = EMPLOYEES_UK;
-        const field = natureOfBusiness[fieldId];
+        const field = fieldSelector(fieldId);
 
         const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
         const value = null;
@@ -79,7 +87,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
       it(`should display validation errors for ${EMPLOYEES_UK}`, () => {
         const fieldId = EMPLOYEES_UK;
-        const field = natureOfBusiness[fieldId];
+        const field = fieldSelector(fieldId);
 
         const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
         const value = '5.5';
@@ -93,7 +101,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
       it(`should display validation errors for ${EMPLOYEES_UK}`, () => {
         const fieldId = EMPLOYEES_UK;
-        const field = natureOfBusiness[fieldId];
+        const field = fieldSelector(fieldId);
 
         const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
         const value = '3S';
@@ -107,7 +115,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         cy.navigateToUrl(url);
 
         const fieldId = EMPLOYEES_UK;
-        const field = natureOfBusiness[fieldId];
+        const field = fieldSelector(fieldId);
 
         cy.keyboardInput(field.input(), '0');
         submitButton().click();
@@ -120,7 +128,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         cy.navigateToUrl(url);
 
         const fieldId = EMPLOYEES_UK;
-        const field = natureOfBusiness[fieldId];
+        const field = fieldSelector(fieldId);
 
         cy.keyboardInput(field.input(), '5');
         submitButton().click();
@@ -133,7 +141,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         cy.navigateToUrl(url);
 
         const fieldId = EMPLOYEES_UK;
-        const field = natureOfBusiness[fieldId];
+        const field = fieldSelector(fieldId);
 
         cy.keyboardInput(field.input(), '5,000');
         submitButton().click();
@@ -160,7 +168,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         cy.navigateToUrl(url);
 
         const fieldId = EMPLOYEES_INTERNATIONAL;
-        const field = natureOfBusiness[fieldId];
+        const field = fieldSelector(fieldId);
 
         const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
         const value = null;
@@ -174,7 +182,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
       it(`should display validation errors for ${EMPLOYEES_INTERNATIONAL}`, () => {
         const fieldId = EMPLOYEES_INTERNATIONAL;
-        const field = natureOfBusiness[fieldId];
+        const field = fieldSelector(fieldId);
 
         const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
         const value = '5.5';
@@ -188,7 +196,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
       it(`should display validation errors for ${EMPLOYEES_INTERNATIONAL}`, () => {
         const fieldId = EMPLOYEES_INTERNATIONAL;
-        const field = natureOfBusiness[fieldId];
+        const field = fieldSelector(fieldId);
 
         const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
         const value = '3S';
@@ -202,9 +210,9 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
       it(`should display validation errors for ${EMPLOYEES_INTERNATIONAL}`, () => {
         const fieldId = EMPLOYEES_INTERNATIONAL;
-        const field = natureOfBusiness[fieldId];
+        const field = fieldSelector(fieldId);
 
-        natureOfBusiness[EMPLOYEES_UK].input().clear();
+        field.input().clear();
 
         const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
         const value = '0';
@@ -217,13 +225,14 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_INTERNATIONAL].BELOW_UK;
 
       it(`should display validation errors for ${EMPLOYEES_INTERNATIONAL}`, () => {
-        const fieldId = EMPLOYEES_INTERNATIONAL;
-        const field = natureOfBusiness[fieldId];
+        const internationalField = fieldSelector(EMPLOYEES_INTERNATIONAL);
+        const ukField = fieldSelector(EMPLOYEES_UK);
 
-        cy.keyboardInput(natureOfBusiness[EMPLOYEES_UK].input(), '20');
+        cy.keyboardInput(ukField.input(), '20');
+
         const value = '10';
 
-        cy.submitAndAssertFieldErrors(field, value, 2, 3, errorMessage);
+        cy.submitAndAssertFieldErrors(internationalField, value, 2, 3, errorMessage);
       });
     });
 
@@ -232,7 +241,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         cy.navigateToUrl(url);
 
         const fieldId = EMPLOYEES_INTERNATIONAL;
-        const field = natureOfBusiness[fieldId];
+        const field = fieldSelector(fieldId);
 
         cy.keyboardInput(field.input(), '5');
         submitButton().click();
@@ -245,7 +254,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         cy.navigateToUrl(url);
 
         const fieldId = EMPLOYEES_INTERNATIONAL;
-        const field = natureOfBusiness[fieldId];
+        const field = fieldSelector(fieldId);
 
         cy.keyboardInput(field.input(), '5,000,000');
         submitButton().click();

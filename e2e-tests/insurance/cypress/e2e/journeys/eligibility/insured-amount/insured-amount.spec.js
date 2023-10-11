@@ -18,7 +18,7 @@ const {
   ELIGIBILITY: { WANT_COVER_OVER_MAX_AMOUNT: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
-context('Insurance - Insured amount page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is less than the maxium amount of cover available online', () => {
+context('Insurance - Insured amount page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is less than the maximum amount of cover available online', () => {
   let url;
 
   before(() => {

@@ -1,5 +1,5 @@
-import { broker } from '../../pages/your-business';
-import { submitButton } from '../../pages/shared';
+import { brokerPage } from '../../pages/your-business';
+import { field, submitButton } from '../../pages/shared';
 import { FIELD_IDS } from '../../constants';
 import application from '../../fixtures/application';
 
@@ -26,16 +26,16 @@ const completeAndSubmitBrokerForm = ({
   usingBroker = false,
 }) => {
   if (usingBroker) {
-    broker[USING_BROKER].yesRadioInput().click();
-    cy.keyboardInput(broker[NAME].input(), application.EXPORTER_BROKER[NAME]);
-    cy.keyboardInput(broker[ADDRESS_LINE_1].input(), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
-    cy.keyboardInput(broker[ADDRESS_LINE_2].input(), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
-    cy.keyboardInput(broker[TOWN].input(), application.EXPORTER_BROKER[TOWN]);
-    cy.keyboardInput(broker[COUNTY].input(), application.EXPORTER_BROKER[COUNTY]);
-    cy.keyboardInput(broker[EMAIL].input(), application.EXPORTER_BROKER[EMAIL]);
-    cy.keyboardInput(broker[POSTCODE].input(), application.EXPORTER_BROKER[POSTCODE]);
+    brokerPage[USING_BROKER].yesRadioInput().click();
+    cy.keyboardInput(field(NAME).input(), application.EXPORTER_BROKER[NAME]);
+    cy.keyboardInput(field(ADDRESS_LINE_1).input(), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
+    cy.keyboardInput(field(ADDRESS_LINE_2).input(), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
+    cy.keyboardInput(field(TOWN).input(), application.EXPORTER_BROKER[TOWN]);
+    cy.keyboardInput(field(COUNTY).input(), application.EXPORTER_BROKER[COUNTY]);
+    cy.keyboardInput(field(EMAIL).input(), application.EXPORTER_BROKER[EMAIL]);
+    cy.keyboardInput(field(POSTCODE).input(), application.EXPORTER_BROKER[POSTCODE]);
   } else {
-    broker[USING_BROKER].noRadioInput().click();
+    brokerPage[USING_BROKER].noRadioInput().click();
   }
 
   submitButton().click();

@@ -3,6 +3,7 @@ import { ACCOUNT } from '../../../../constants';
 import confirmEmailAddressEmail from '../../../../helpers/send-email-confirm-email-address';
 import generateOTPAndUpdateAccount from '../../../../helpers/generate-otp-and-update-account';
 import getFullNameString from '../../../../helpers/get-full-name-string';
+import update from '../../../../helpers/update-account';
 import sendEmail from '../../../../emails';
 import { Account, Context } from '../../../../types';
 
@@ -49,10 +50,7 @@ const accountChecks = async (context: Context, account: Account, urlOrigin: stri
           verificationExpiry: EMAIL.VERIFICATION_EXPIRY(),
         };
 
-        (await context.db.Account.updateOne({
-          where: { id: accountId },
-          data: accountUpdate,
-        })) as Account;
+        await update.account(context, accountId, accountUpdate);
 
         console.info('Account has an unexpired verification token - sending verification email');
 

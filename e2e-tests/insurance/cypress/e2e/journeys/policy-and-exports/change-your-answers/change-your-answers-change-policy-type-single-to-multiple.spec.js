@@ -46,15 +46,12 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
   let changeLinkHref;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-      cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+      cy.completePolicyAndExportSection({});
 
       checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       changeLinkHref = `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}`;
@@ -113,7 +110,7 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
         // proceed to "name on policy"
         submitButton().click();
         // proceed to "check your answers"
-        cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+        cy.completeAndSubmitNameOnPolicyForm({});
 
         const expectedUrl = `${checkYourAnswersUrl}#heading`;
 

@@ -28,7 +28,7 @@ export const worksheetRowHeights = (titleRowIndexes: Array<number>, rowIndexes: 
 /**
  * styledColumns
  * Add custom styles to each worksheet cell
- * @param {Object} Application
+ * @param {Application}
  * @param {ExcelJS.Worksheet} ExcelJS worksheet
  * @returns {ExcelJS.Worksheet} ExcelJS worksheet
  */

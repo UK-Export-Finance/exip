@@ -1,7 +1,6 @@
-import { backLink } from '../../../../../../pages/shared';
+import { backLink, field as fieldSelector } from '../../../../../../pages/shared';
 import { signInPage } from '../../../../../../pages/insurance/account/sign-in';
 import { yourDetailsPage } from '../../../../../../pages/insurance/account/create';
-import accountFormFields from '../../../../../../partials/insurance/accountFormFields';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { ACCOUNT_FIELDS } from '../../../../../../content-strings/fields/insurance/account';
@@ -69,9 +68,8 @@ context('Insurance - Account - Password reset page - As an Exporter, I want to r
 
     it('renders `email` label, hint and input', () => {
       const fieldId = EMAIL;
-      const field = accountFormFields[fieldId];
+      const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
 
       field.input().should('exist');

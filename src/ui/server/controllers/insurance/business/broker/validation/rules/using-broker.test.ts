@@ -21,7 +21,7 @@ describe('controllers/insurance/business/broker/validation/rules/using-broker', 
     [FIELD_ID]: '',
   } as RequestBody;
 
-  describe('whemn the answer is false', () => {
+  describe('when the answer is false', () => {
     it('should return the provided errors', () => {
       const mockBodyFalseAnswer = {
         [FIELD_ID]: false,

@@ -1,5 +1,5 @@
 import pagination from '../../partials/pagination';
-import checkAriaLabel from '../check-aria-label';
+import checkAriaLabel from '../shared-commands/assertions/check-aria-label';
 
 /**
  * assertActivePaginationLink

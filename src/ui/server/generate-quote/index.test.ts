@@ -54,7 +54,7 @@ describe('server/generate-quote/index', () => {
 
   describe('getInsuredFor', () => {
     describe('when policy type is single', () => {
-      it('should return pecentage of contract value', () => {
+      it('should return percentage of contract value', () => {
         const mockSubmittedData = {
           quoteEligibility: {
             [CONTRACT_VALUE]: 1234,
@@ -71,7 +71,7 @@ describe('server/generate-quote/index', () => {
     });
 
     describe('when policy type is multiple', () => {
-      it('should return pecentage of max amount owed', () => {
+      it('should return percentage of max amount owed', () => {
         const mockSubmittedData = {
           quoteEligibility: {
             [MAX_AMOUNT_OWED]: 5678,

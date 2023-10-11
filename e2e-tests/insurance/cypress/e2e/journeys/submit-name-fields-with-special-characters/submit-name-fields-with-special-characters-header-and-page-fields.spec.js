@@ -1,8 +1,6 @@
-import { FIELD_IDS, ROUTES } from '../../../../../constants';
-import { enterCodePage } from '../../../../../pages/insurance/account/sign-in';
-import { yourContactPage } from '../../../../../pages/your-business';
-import { companyOrOrganisationPage } from '../../../../../pages/insurance/your-buyer';
-import { submitButton, backLink } from '../../../../../pages/shared';
+import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
+import { field, submitButton, backLink } from '../../../../../pages/shared';
 import dashboardPage from '../../../../../pages/insurance/dashboard';
 import partials from '../../../../../partials';
 import mockAccount from '../../../../../fixtures/account';
@@ -10,17 +8,15 @@ import mockApplication from '../../../../../fixtures/application';
 import mockNameWithSpecialCharacters from '../../../../../fixtures/name-with-special-characters';
 
 const {
-  INSURANCE: {
-    ACCOUNT: { FIRST_NAME, LAST_NAME, SECURITY_CODE },
-    YOUR_BUYER: {
-      COMPANY_OR_ORGANISATION: { NAME: BUYER_NAME, FIRST_NAME: BUYER_CONTACT_FIRST_NAME, LAST_NAME: BUYER_CONTACT_LAST_NAME },
-    },
+  ACCOUNT: { FIRST_NAME, LAST_NAME, SECURITY_CODE },
+  YOUR_BUYER: {
+    COMPANY_OR_ORGANISATION: { NAME: BUYER_NAME, FIRST_NAME: BUYER_CONTACT_FIRST_NAME, LAST_NAME: BUYER_CONTACT_LAST_NAME },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const {
-  INSURANCE: { ROOT, DASHBOARD, ALL_SECTIONS },
-} = ROUTES;
+  ROOT, DASHBOARD, ALL_SECTIONS,
+} = INSURANCE_ROUTES;
 
 const {
   taskList: {
@@ -34,8 +30,9 @@ const mockAccountSpecialCharacters = {
   [LAST_NAME]: mockNameWithSpecialCharacters(mockAccount[LAST_NAME]),
 };
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Name fields - Header and page fields should render special characters without character codes after submission', () => {
-  const baseUrl = Cypress.config('baseUrl');
   let referenceNumber;
   let allSectionsUrl;
 
@@ -57,7 +54,7 @@ context('Insurance - Name fields - Header and page fields should render special 
 
       // get the OTP security code
       cy.accountAddAndGetOTP(mockAccount.emailAddress).then((securityCode) => {
-        cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), securityCode);
+        cy.keyboardInput(field(SECURITY_CODE).input(), securityCode);
 
         // submit the OTP security code
         submitButton().click();
@@ -94,36 +91,6 @@ context('Insurance - Name fields - Header and page fields should render special 
     );
   });
 
-  describe("'your business - contact details' page", () => {
-    describe('when submitting a name with special characters and going back to the page', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(allSectionsUrl);
-
-        tasks.business.link().click();
-
-        cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
-        cy.completeAndSubmitCompanyDetails();
-
-        cy.completeAndSubmitYourContact({
-          [FIRST_NAME]: mockAccountSpecialCharacters[FIRST_NAME],
-          [LAST_NAME]: mockAccountSpecialCharacters[LAST_NAME],
-        });
-
-        backLink().click();
-      });
-
-      it("should render special characters in the contact's first and last name fields", () => {
-        const firstNameField = yourContactPage.field(FIRST_NAME);
-
-        cy.checkValue(firstNameField, mockAccountSpecialCharacters[FIRST_NAME]);
-
-        const lastNameField = yourContactPage.field(FIRST_NAME);
-
-        cy.checkValue(lastNameField, mockAccountSpecialCharacters[FIRST_NAME]);
-      });
-    });
-  });
-
   describe("'your buyer - company or organisation' page", () => {
     describe('when submitting name fields with special characters and going back to the page', () => {
       const nameWithSpecialCharacters = mockNameWithSpecialCharacters(mockApplication.BUYER[BUYER_NAME]);
@@ -142,15 +109,15 @@ context('Insurance - Name fields - Header and page fields should render special 
         backLink().click();
       });
 
-      it('should render special characters in the comapny/organisation name field', () => {
-        const buyerNameField = companyOrOrganisationPage[BUYER_NAME];
+      it('should render special characters in the company/organisation name field', () => {
+        const buyerNameField = field(BUYER_NAME);
         cy.checkValue(buyerNameField, nameWithSpecialCharacters);
 
-        const buyerFirstNameField = companyOrOrganisationPage[BUYER_CONTACT_FIRST_NAME];
+        const buyerFirstNameField = field(BUYER_CONTACT_FIRST_NAME);
         cy.checkValue(buyerFirstNameField, nameWithSpecialCharacters);
 
-        const buyerLasttNameField = companyOrOrganisationPage[BUYER_CONTACT_LAST_NAME];
-        cy.checkValue(buyerLasttNameField, nameWithSpecialCharacters);
+        const buyerLastNameField = field(BUYER_CONTACT_LAST_NAME);
+        cy.checkValue(buyerLastNameField, nameWithSpecialCharacters);
       });
     });
   });

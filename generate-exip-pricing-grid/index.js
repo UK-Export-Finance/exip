@@ -219,7 +219,7 @@ const createJson = (data) => {
 /**
  * run
  * Executes everything.
- * - Get work sheeets
+ * - Get work sheets
  * - Create empty pricing grid
  * - Map and add all policy types to the create
  * - Create a JSON file.

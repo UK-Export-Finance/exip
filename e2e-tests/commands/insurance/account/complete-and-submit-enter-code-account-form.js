@@ -1,5 +1,4 @@
-import { submitButton } from '../../../pages/shared';
-import { enterCodePage } from '../../../pages/insurance/account/sign-in';
+import { field, submitButton } from '../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 
 const {
@@ -12,7 +11,7 @@ const {
  * @param {String} Valid OTP
  */
 const completeAndSubmitEnterCodeAccountForm = (securityCode) => {
-  cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), securityCode);
+  cy.keyboardInput(field(SECURITY_CODE).input(), securityCode);
 
   submitButton().click();
 };

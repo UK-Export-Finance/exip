@@ -31,7 +31,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
   let res: Response;
   let refNumber: number;
 
-  jest.mock('../map-and-save');
+  jest.mock('../map-and-save/policy');
 
   mapAndSave.exportContract = jest.fn(() => Promise.resolve(true));
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
@@ -153,7 +153,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -166,7 +166,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
     describe('api error handling', () => {
       describe('when the get countries API call fails', () => {
         beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.reject());
+          getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.countries.getAll = getCountriesSpy;
         });
 
@@ -313,7 +313,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -327,7 +327,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
       describe('get countries call', () => {
         describe('when the get countries API call fails', () => {
           beforeEach(() => {
-            getCountriesSpy = jest.fn(() => Promise.reject());
+            getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
             api.keystone.countries.getAll = getCountriesSpy;
           });
 
@@ -373,7 +373,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services', () =
 
         describe('when there is an error', () => {
           beforeEach(() => {
-            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
+            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
             mapAndSave.exportContract = mapAndSaveSpy;
           });

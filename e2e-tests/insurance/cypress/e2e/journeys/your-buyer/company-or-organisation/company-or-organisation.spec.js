@@ -1,12 +1,17 @@
-import { headingCaption, saveAndBackButton, submitButton } from '../../../../../../pages/shared';
+import {
+  countryInput,
+  field as fieldSelector,
+  headingCaption,
+  saveAndBackButton,
+} from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import { ROUTES } from '../../../../../../constants';
 import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
-import application from '../../../../../../fixtures/application';
+import application, { country } from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION;
 
@@ -25,8 +30,6 @@ const {
   },
 } = YOUR_BUYER_FIELD_IDS;
 
-const { ELIGIBILITY: { BUYER_COUNTRY } } = FIELD_IDS;
-
 const {
   YOUR_BUYER: { WORKING_WITH_BUYER, COMPANY_OR_ORGANISATION },
 } = ROUTES.INSURANCE;
@@ -41,7 +44,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
   let workingWithBuyerUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
@@ -81,35 +84,32 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it('renders a buyer country section', () => {
       const fieldId = COUNTRY;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = countryInput.field(fieldId);
 
       cy.checkText(field.heading(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
-      cy.checkText(field.value(), application.ELIGIBILITY[BUYER_COUNTRY]);
+      cy.checkText(companyOrOrganisationPage[fieldId](), country.name);
     });
 
     it(`renders an ${NAME} label, and input`, () => {
       const fieldId = NAME;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
       field.input().should('exist');
     });
 
     it(`renders an ${ADDRESS} label, and input`, () => {
       const fieldId = ADDRESS;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
       field.input().should('exist');
     });
 
     it(`renders ${REGISTRATION_NUMBER} label and input`, () => {
       const fieldId = REGISTRATION_NUMBER;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
       field.input().should('exist');
@@ -117,9 +117,8 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it(`renders ${WEBSITE} label and input`, () => {
       const fieldId = WEBSITE;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
       field.input().should('exist');
@@ -127,7 +126,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it('renders the contact details fieldset legend', () => {
       const fieldId = FIRST_NAME;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       field.legend().should('exist');
       cy.checkText(field.legend(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LEGEND);
@@ -135,12 +134,10 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it(`renders ${FIRST_NAME} heading, hint, label and input`, () => {
       const fieldId = FIRST_NAME;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
-      field.hint().should('exist');
       cy.checkText(field.hint(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HINT);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
       field.input().should('exist');
@@ -148,9 +145,8 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it(`renders ${LAST_NAME} label and input`, () => {
       const fieldId = LAST_NAME;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
       field.input().should('exist');
@@ -158,9 +154,8 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it(`renders ${POSITION} label and input`, () => {
       const fieldId = POSITION;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
       field.input().should('exist');
@@ -170,11 +165,9 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       const fieldId = CAN_CONTACT_BUYER;
       const field = companyOrOrganisationPage[fieldId];
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
-      field.hint().should('exist');
-      cy.checkText(field.hint(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HINT);
+      cy.checkText(field.yesNoRadioHint(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HINT);
 
       field.yesRadioInput().should('exist');
       field.noRadioInput().should('exist');
@@ -182,23 +175,14 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it(`renders ${EMAIL} label and input`, () => {
       const fieldId = EMAIL;
-      const field = companyOrOrganisationPage[fieldId];
+      const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
       field.input().should('exist');
     });
 
-    it('renders a `submit` button', () => {
-      submitButton().should('exist');
-
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
-    });
-
     it('renders a `save and back` button', () => {
-      saveAndBackButton().should('exist');
-
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });
@@ -221,12 +205,12 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
         cy.navigateToUrl(url);
 
         companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().should('be.checked');
-        cy.checkValue(companyOrOrganisationPage[ADDRESS], BUYER[ADDRESS]);
-        cy.checkValue(companyOrOrganisationPage[REGISTRATION_NUMBER], BUYER[REGISTRATION_NUMBER]);
-        cy.checkValue(companyOrOrganisationPage[WEBSITE], BUYER[WEBSITE]);
-        cy.checkValue(companyOrOrganisationPage[FIRST_NAME], BUYER[FIRST_NAME]);
-        cy.checkValue(companyOrOrganisationPage[LAST_NAME], BUYER[LAST_NAME]);
-        cy.checkValue(companyOrOrganisationPage[POSITION], BUYER[POSITION]);
+        cy.checkValue(fieldSelector(ADDRESS), BUYER[ADDRESS]);
+        cy.checkValue(fieldSelector(REGISTRATION_NUMBER), BUYER[REGISTRATION_NUMBER]);
+        cy.checkValue(fieldSelector(WEBSITE), BUYER[WEBSITE]);
+        cy.checkValue(fieldSelector(FIRST_NAME), BUYER[FIRST_NAME]);
+        cy.checkValue(fieldSelector(LAST_NAME), BUYER[LAST_NAME]);
+        cy.checkValue(fieldSelector(POSITION), BUYER[POSITION]);
       });
     });
   });

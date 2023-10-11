@@ -12,23 +12,11 @@ const {
 /**
  * mapNameFields
  * Replace character codes in name fields with characters
- * @param {Object} Application
+ * @param {Application}
  * @returns {Object} Application with name field characters
  */
 const mapNameFields = (application: Application): Application => {
-  const { business, buyer } = application;
-
-  if (business && business.businessContactDetail[FIRST_NAME]) {
-    const fieldValue = business.businessContactDetail[FIRST_NAME];
-
-    business.businessContactDetail[FIRST_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
-  }
-
-  if (business?.businessContactDetail[LAST_NAME]) {
-    const fieldValue = business.businessContactDetail[LAST_NAME];
-
-    business.businessContactDetail[LAST_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
-  }
+  const { buyer, policyContact } = application;
 
   if (buyer?.[BUYER_NAME]) {
     const fieldValue = buyer[BUYER_NAME];
@@ -46,6 +34,18 @@ const mapNameFields = (application: Application): Application => {
     const fieldValue = buyer[BUYER_CONTACT_LAST_NAME];
 
     buyer[BUYER_CONTACT_LAST_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
+  }
+
+  if (policyContact?.[FIRST_NAME]) {
+    const fieldValue = policyContact[FIRST_NAME];
+
+    policyContact[FIRST_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
+  }
+
+  if (policyContact?.[LAST_NAME]) {
+    const fieldValue = policyContact[LAST_NAME];
+
+    policyContact[LAST_NAME] = replaceCharacterCodesWithCharacters(fieldValue);
   }
 
   return application;

@@ -3,11 +3,11 @@ import fileSystem from '../../file-system';
 import { callNotify } from '../call-notify';
 import { ApplicationSubmissionEmailVariables, EmailResponse } from '../../types';
 
-export const application = {
+const application = {
   /**
    * application.submittedEmail
    * Send "application submitted" email to an account
-   * @param {Object} ApplicationSubmissionEmailVariables
+   * @param {ApplicationSubmissionEmailVariables} ApplicationSubmissionEmailVariables
    * @returns {Object} callNotify response
    */
   submittedEmail: async (variables: ApplicationSubmissionEmailVariables): Promise<EmailResponse> => {
@@ -32,7 +32,7 @@ export const application = {
    * Read CSV file, generate a file buffer
    * Send "application submitted" email to the underwriting team with a link to CSV
    * We send a file buffer to Notify and Notify generates a unique URL that is then rendered in the email.
-   * @param {Object} ApplicationSubmissionEmailVariables
+   * @param {ApplicationSubmissionEmailVariables}
    * @returns {Object} callNotify response
    */
   underwritingTeam: async (variables: ApplicationSubmissionEmailVariables, filePath: string, templateId: string): Promise<EmailResponse> => {
@@ -65,3 +65,5 @@ export const application = {
     }
   },
 };
+
+export default application;

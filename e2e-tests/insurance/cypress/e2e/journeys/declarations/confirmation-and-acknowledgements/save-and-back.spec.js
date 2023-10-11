@@ -18,12 +18,14 @@ const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_CONFIRMATION_ACKNOWLEDGE
 
 const task = taskList.submitApplication.tasks.declarationsAndSubmit;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Declarations - Confirmation and acknowledgements page - Save and go back', () => {
   let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
@@ -36,7 +38,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
       cy.completeAndSubmitDeclarationAntiBriberyCodeOfConduct();
       cy.completeAndSubmitDeclarationAntiBriberyExportingWithCodeOfConduct();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
       cy.assertUrl(url);
     });
@@ -58,7 +60,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
@@ -78,7 +80,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
@@ -102,7 +104,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
       // go through the 4th declaration - anti-bribery - exporting with code of conduct
       submitButton().click();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
       singleInputField(FIELD_ID).input().should('be.checked');
     });

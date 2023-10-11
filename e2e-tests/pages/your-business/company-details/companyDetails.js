@@ -5,8 +5,6 @@ const {
   YOUR_COMPANY: {
     TRADING_NAME,
     TRADING_ADDRESS,
-    WEBSITE,
-    PHONE_NUMBER,
     YOUR_BUSINESS,
   },
   COMPANY_HOUSE: {
@@ -31,17 +29,6 @@ const companyDetails = {
     yesRadioInput: () => yesRadioInput().eq(1),
     noRadioInput: () => noRadioInput().eq(1),
     errorMessage: () => cy.get(`[data-cy="${TRADING_ADDRESS}-error-message"]`),
-  },
-  [WEBSITE]: {
-    label: () => cy.get(`[data-cy="${WEBSITE}-label"]`),
-    input: () => cy.get(`[data-cy="${WEBSITE}"]`),
-    errorMessage: () => cy.get(`[data-cy="${WEBSITE}-error-message"]`),
-  },
-  [PHONE_NUMBER]: {
-    label: () => cy.get(`[data-cy="${PHONE_NUMBER}-label"]`),
-    input: () => cy.get(`[data-cy="${PHONE_NUMBER}"]`),
-    hint: () => cy.get(`[data-cy="${PHONE_NUMBER}-hint"]`),
-    errorMessage: () => cy.get(`[data-cy="${PHONE_NUMBER}-error-message"]`),
   },
 };
 

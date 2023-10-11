@@ -1,4 +1,4 @@
-import accountFormFields from '../../../../../../../../partials/insurance/accountFormFields';
+import passwordField from '../../../../../../../../partials/insurance/passwordField';
 import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
 import { INVALID_PASSWORDS } from '../../../../../../../../constants/examples';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
@@ -32,7 +32,7 @@ const {
 } = ERROR_MESSAGES;
 
 const fieldErrorAssertions = (value) => ({
-  field: accountFormFields[PASSWORD],
+  field: passwordField,
   value,
   fieldIndex: 0,
   errorSummaryLength: 1,

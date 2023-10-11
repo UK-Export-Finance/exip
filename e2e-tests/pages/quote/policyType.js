@@ -1,3 +1,4 @@
+import { field } from '../shared';
 import { FIELD_IDS } from '../../constants';
 
 const {
@@ -9,16 +10,12 @@ const {
 const policyTypePage = {
   [POLICY_TYPE]: {
     single: {
-      label: () => cy.get(`[data-cy="${SINGLE_POLICY_TYPE}-label"]`),
+      ...field(SINGLE_POLICY_TYPE),
       hintListItem: (index) => cy.get(`[data-cy="${SINGLE_POLICY_TYPE}-hint-list-item-${index}"]`),
-      input: () => cy.get(`[data-cy="${SINGLE_POLICY_TYPE}-input"]`),
-      errorMessage: () => cy.get(`[data-cy="${POLICY_TYPE}-error-message"]`),
     },
     multiple: {
-      label: () => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE}-label"]`),
+      ...field(MULTIPLE_POLICY_TYPE),
       hintListItem: (index) => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE}-hint-list-item-${index}"]`),
-      input: () => cy.get(`[data-cy="${MULTIPLE_POLICY_TYPE}-input"]`),
-      errorMessage: () => cy.get(`[data-cy="${POLICY_TYPE}-error-message"]`),
     },
   },
 };

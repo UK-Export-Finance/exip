@@ -2,17 +2,17 @@
 # 1. BUILD
 ###################
 
-FROM node:20.7.0-alpine3.17 AS build
+FROM node:20.8.0-alpine3.17 AS build
 
 # Build variables
-ARG GITHUB_SHA
+ARG PORT
+ARG NODE_ENV
 ARG SESSION_SECRET
 ARG GOV_NOTIFY_API_KEY
-ARG PORT
-ENV GITHUB_SHA=$GITHUB_SHA
+ENV PORT=$PORT
+ENV NODE_ENV=$NODE_ENV
 ENV SESSION_SECRET=$SESSION_SECRET
 ENV GOV_NOTIFY_API_KEY=$GOV_NOTIFY_API_KEY
-ENV PORT=$PORT
 
 
 WORKDIR /app
@@ -25,7 +25,7 @@ RUN npm ci --legacy-peer-deps
 # Copy API
 COPY --chown=node:node ./keystone.ts .
 COPY --chown=node:node ./schema.ts .
-COPY --chown=node:node ./types.ts .
+COPY --chown=node:node ./types ./types
 COPY --chown=node:node ./schema.graphql .
 COPY --chown=node:node ./schema.prisma .
 COPY --chown=node:node ./auth.ts .
@@ -61,17 +61,26 @@ USER node
 # 2. PRODUCTION
 ###################
 
-FROM node:20.7.0-alpine3.17 AS production
+FROM node:20.8.0-alpine3.17 AS production
 
 WORKDIR /app
 
 # Copy from `build` to `prod`
 COPY --chown=node:node --from=build /app/package.json .
 COPY --chown=node:node --from=build /app/package-lock.json .
+COPY --chown=node:node --from=build /app/keystone.ts .
+COPY --chown=node:node --from=build /app/schema.ts .
+COPY --chown=node:node --from=build /app/types ./types
+COPY --chown=node:node --from=build /app/schema.graphql .
+COPY --chown=node:node --from=build /app/schema.prisma .
+COPY --chown=node:node --from=build /app/auth.ts .
 COPY --chown=node:node --from=build /app/node_modules ./node_modules
 COPY --chown=node:node --from=build /app/.keystone ./.keystone
 COPY --chown=node:node --from=build /app/apollo-plugins ./apollo-plugins
+COPY --chown=node:node --from=build /app/constants ./constants
 COPY --chown=node:node --from=build /app/custom-resolvers ./custom-resolvers
+COPY --chown=node:node --from=build /app/custom-schema ./custom-schema
+COPY --chown=node:node --from=build /app/content-strings ./content-strings
 COPY --chown=node:node --from=build /app/emails ./emails
 COPY --chown=node:node --from=build /app/file-system ./file-system
 COPY --chown=node:node --from=build /app/generate-xlsx ./generate-xlsx
@@ -80,6 +89,9 @@ COPY --chown=node:node --from=build /app/integrations ./integrations
 COPY --chown=node:node --from=build /app/middleware ./middleware
 COPY --chown=node:node --from=build /app/nullable-checkbox ./nullable-checkbox
 COPY --chown=node:node --from=build /app/XLSX ./XLSX
+
+# Expose listening port
+EXPOSE ${PORT}
 
 # Container healthcheck
 HEALTHCHECK \

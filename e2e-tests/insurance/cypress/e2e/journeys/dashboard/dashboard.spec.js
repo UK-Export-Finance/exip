@@ -36,7 +36,7 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
   const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       header.navigation.applications().click();
@@ -140,7 +140,9 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
       it(`should render empty ${TABLE_HEADERS.REFERENCE_NUMBER} cell`, () => {
         const cell = table.body.row(referenceNumber).referenceNumber();
 
-        cy.checkText(cell, referenceNumber);
+        const expectedReferenceNumber = String(referenceNumber);
+
+        cy.checkText(cell, expectedReferenceNumber);
       });
 
       it(`should render ${TABLE_HEADERS.SUBMITTED} cell '${BUTTONS.CONTINUE}' link`, () => {

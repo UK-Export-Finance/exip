@@ -1,4 +1,4 @@
-import { FIELD_IDS } from '../../../constants';
+import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import isValidAccountPassword from '../../../helpers/is-valid-account-password';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
@@ -31,7 +31,7 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
     const { urlOrigin, email, password } = variables;
 
     // Get the account the email is associated with.
-    const accountData = (await getAccountByField(context, FIELD_IDS.INSURANCE.ACCOUNT.EMAIL, email)) as Account;
+    const accountData = (await getAccountByField(context, ACCOUNT_FIELD_IDS.EMAIL, email)) as Account;
 
     if (!accountData) {
       console.info('Unable to validate account - no account found');

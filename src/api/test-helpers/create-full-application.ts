@@ -1,27 +1,39 @@
-import { Context, Application } from '.keystone/types'; // eslint-disable-line
 import accounts from './accounts';
 import createAnEligibility from '../helpers/create-an-eligibility';
 import createABuyer from '../helpers/create-a-buyer';
-import { mockApplicationEligibility, mockSinglePolicy, mockExportContract, mockBusiness, mockBusinessContactDetail } from '../test-mocks/mock-application';
+import { FIELD_VALUES } from '../constants';
+import {
+  mockApplicationEligibility,
+  mockSinglePolicy,
+  mockMultiplePolicy,
+  mockExportContract,
+  mockBusiness,
+  mockPolicyContact,
+} from '../test-mocks/mock-application';
 import { mockCompany, mockCompanySicCode, mockApplicationDeclaration } from '../test-mocks';
 import mockCountries from '../test-mocks/mock-countries';
 import {
+  Application,
   ApplicationBusiness,
-  ApplicationBusinessContactDetail,
   ApplicationCompany,
   ApplicationCompanySicCode,
   ApplicationDeclaration,
   ApplicationExportContract,
   ApplicationPolicy,
+  ApplicationPolicyContact,
+  Context,
 } from '../types';
+
+const { POLICY_TYPE } = FIELD_VALUES;
 
 /**
  * createFullApplication
  * Create a full application for unit testing
  * @param {Object} KeystoneJS context API
+ * @param {String} Policy type flag - different data is created if multiple is passed. Defaults to single.
  * @returns {Object} Application
  */
-export const createFullApplication = async (context: Context) => {
+export const createFullApplication = async (context: Context, policyType?: string) => {
   const { buyerCountry, ...otherEligibilityAnswers } = mockApplicationEligibility;
 
   const countries = await context.query.Country.createMany({
@@ -40,7 +52,7 @@ export const createFullApplication = async (context: Context) => {
   // create a new application
   const application = (await context.query.Application.createOne({
     query:
-      'id referenceNumber submissionCount policy { id requestedStartDate } exportContract { id } owner { id } company { id } business { id } broker { id } declaration { id }',
+      'id referenceNumber submissionCount policy { id requestedStartDate } policyContact { id } exportContract { id } owner { id } company { id } business { id } broker { id } declaration { id }',
     data: {
       owner: {
         connect: {
@@ -70,13 +82,24 @@ export const createFullApplication = async (context: Context) => {
   });
 
   // update the policy so we have a full data set.
+  /**
+   * Update the policy so we have a full data set.
+   * If a multiple policy type is passed, use mock multiple policy data.
+   * Otherwise, use mock single policy data.
+   */
+  let policyData = {};
+
+  if (policyType === POLICY_TYPE.MULTIPLE) {
+    policyData = mockMultiplePolicy;
+  } else {
+    policyData = mockSinglePolicy;
+  }
+
   (await context.query.Policy.updateOne({
     where: {
       id: application.policy.id,
     },
-    data: {
-      ...mockSinglePolicy,
-    },
+    data: policyData,
     query: 'id',
   })) as ApplicationPolicy;
 
@@ -111,24 +134,20 @@ export const createFullApplication = async (context: Context) => {
     query: 'id',
   })) as ApplicationCompanySicCode;
 
-  const businessContactDetail = (await context.query.BusinessContactDetail.createOne({
-    data: {
-      ...mockBusinessContactDetail,
-      business: {
-        connect: {
-          id: application.business.id,
-        },
-      },
+  const policyContact = (await context.query.PolicyContact.updateOne({
+    where: {
+      id: application.policyContact.id,
     },
-    query: 'id firstName lastName email',
-  })) as ApplicationBusinessContactDetail;
+    data: mockPolicyContact,
+    query: 'id firstName lastName email isSameAsOwner',
+  })) as ApplicationPolicyContact;
 
   const business = (await context.query.Business.updateOne({
     where: {
       id: application.business.id,
     },
     data: mockBusiness,
-    query: 'id businessContactDetail { id firstName lastName email }',
+    query: 'id',
   })) as ApplicationBusiness;
 
   // update the declaration so we have a full data set.
@@ -145,7 +164,7 @@ export const createFullApplication = async (context: Context) => {
     companySicCodes,
     owner: account,
     business,
-    businessContactDetail,
+    policyContact,
     buyer,
     company,
     declaration,

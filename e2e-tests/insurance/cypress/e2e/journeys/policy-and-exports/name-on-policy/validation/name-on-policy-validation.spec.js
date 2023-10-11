@@ -1,4 +1,4 @@
-import { input } from '../../../../../../../pages/shared';
+import { field } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
@@ -10,6 +10,7 @@ const {
     ROOT: INSURANCE_ROOT,
     POLICY_AND_EXPORTS: {
       CHECK_YOUR_ANSWERS,
+      DIFFERENT_NAME_ON_POLICY,
       NAME_ON_POLICY,
     },
   },
@@ -34,7 +35,7 @@ context('Insurance - Policy and exports - Name on policy - Validation', () => {
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
@@ -68,7 +69,7 @@ context('Insurance - Policy and exports - Name on policy - Validation', () => {
       const expectedErrorMessage = NAME_ON_POLICY_ERRORS[NAME].IS_EMPTY;
 
       cy.submitAndAssertRadioErrors(
-        input.field(SAME_NAME),
+        field(SAME_NAME),
         0,
         expectedErrorsCount,
         expectedErrorMessage,
@@ -82,13 +83,13 @@ context('Insurance - Policy and exports - Name on policy - Validation', () => {
     });
 
     it('should display validation error', () => {
-      input.field(SAME_NAME).input().click();
+      field(SAME_NAME).input().click();
 
       const expectedErrorsCount = 1;
       const expectedErrorMessage = NAME_ON_POLICY_ERRORS[POSITION].IS_EMPTY;
 
       cy.submitAndAssertFieldErrors(
-        input.field(POSITION),
+        field(POSITION),
         null,
         0,
         expectedErrorsCount,
@@ -104,7 +105,7 @@ context('Insurance - Policy and exports - Name on policy - Validation', () => {
     });
 
     it('should not display validation error and redirect to the next page', () => {
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+      cy.completeAndSubmitNameOnPolicyForm({});
 
       partials.errorSummaryListItems().should('not.exist');
 
@@ -119,11 +120,11 @@ context('Insurance - Policy and exports - Name on policy - Validation', () => {
     });
 
     it('should not display validation error and redirect to the next page', () => {
-      cy.completeAndSubmitNameOnPolicyForm({});
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
 
       partials.errorSummaryListItems().should('not.exist');
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
       cy.assertUrl(expectedUrl);
     });
   });

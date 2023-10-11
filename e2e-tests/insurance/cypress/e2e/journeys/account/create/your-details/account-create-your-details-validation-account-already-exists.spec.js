@@ -1,5 +1,5 @@
 import { signInPage } from '../../../../../../../pages/insurance/account/sign-in';
-import accountFormFields from '../../../../../../../partials/insurance/accountFormFields';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -24,7 +24,9 @@ const {
   },
 } = ERROR_MESSAGES;
 
-context('Insurance - Account - Create - Your details page - form validation - As an Exporter, I want the system to verify that the email address that I register against my UKEF digital service account is unique, So that I can be sure that the system does not have multiple digital service accounts with the same email addressa', () => {
+const baseUrl = Cypress.config('baseUrl');
+
+context('Insurance - Account - Create - Your details page - form validation - As an Exporter, I want the system to verify that the email address that I register against my UKEF digital service account is unique, So that I can be sure that the system does not have multiple digital service accounts with the same email address', () => {
   let url;
 
   before(() => {
@@ -41,7 +43,7 @@ context('Insurance - Account - Create - Your details page - form validation - As
     // go to create account page
     signInPage.createAccountLink().click();
 
-    url = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
+    url = `${baseUrl}${YOUR_DETAILS}`;
 
     cy.assertUrl(url);
   });
@@ -55,7 +57,7 @@ context('Insurance - Account - Create - Your details page - form validation - As
   });
 
   it('should render a validation error when trying to create an account with an email that already has an account', () => {
-    const field = accountFormFields[EMAIL];
+    const field = fieldSelector(EMAIL);
     const value = mockAccount.email;
     const fieldIndex = 0;
     const TOTAL_REQUIRED_FIELDS = 1;

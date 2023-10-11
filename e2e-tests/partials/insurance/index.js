@@ -1,9 +1,9 @@
-import accountFormFields from './accountFormFields';
+import passwordField from './passwordField';
 import taskList from './taskList';
 import policyCurrencyCodeFormField from './policyCurrencyCodeFormField';
 
 const partials = {
-  accountFormFields,
+  passwordField,
   taskList,
   policyCurrencyCodeFormField,
 };

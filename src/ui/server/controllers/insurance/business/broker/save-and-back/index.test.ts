@@ -23,8 +23,6 @@ describe('controllers/insurance/business/broker/save-and-back', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
-
     mapAndSave.broker = updateMapAndSave;
   });
 
@@ -60,11 +58,13 @@ describe('controllers/insurance/business/broker/save-and-back', () => {
   });
 
   describe('when there are validation errors', () => {
+    const mockInvalidBody = {
+      [NAME]: 'Test',
+      [POSTCODE]: 'SW1',
+    };
+
     it('should redirect to all sections page', async () => {
-      req.body = {
-        [NAME]: 'Test',
-        [POSTCODE]: 'SW1',
-      };
+      req.body = mockInvalidBody;
 
       await post(req, res);
 
@@ -72,10 +72,7 @@ describe('controllers/insurance/business/broker/save-and-back', () => {
     });
 
     it('should call mapAndSave.broker once', async () => {
-      req.body = {
-        [NAME]: 'Test',
-        [POSTCODE]: 'SW1',
-      };
+      req.body = mockInvalidBody;
 
       await post(req, res);
 
@@ -85,27 +82,46 @@ describe('controllers/insurance/business/broker/save-and-back', () => {
 
   describe('when there is no application', () => {
     beforeEach(() => {
-      res.locals = mockRes().locals;
+      req.body = validBody;
+
+      delete res.locals.application;
     });
 
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-      post(req, res);
+    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+      await post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
     });
   });
 
-  describe('when mapAndSave.broker fails', () => {
-    beforeEach(() => {
-      res.locals = mockRes().locals;
-      updateMapAndSave = jest.fn(() => Promise.reject());
-      mapAndSave.broker = updateMapAndSave;
+  describe('api error handling', () => {
+    describe('when mapAndSave.broker returns false', () => {
+      beforeEach(() => {
+        req.body = validBody;
+        res.locals = mockRes().locals;
+        mapAndSave.broker = jest.fn(() => Promise.resolve(false));
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
     });
 
-    it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-      post(req, res);
+    describe('when mapAndSave.broker fails', () => {
+      beforeEach(() => {
+        req.body = validBody;
+        res.locals = mockRes().locals;
+        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+        mapAndSave.broker = updateMapAndSave;
+      });
 
-      expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
     });
   });
 });

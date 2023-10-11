@@ -114,7 +114,7 @@ describe('controllers/insurance/account/password-reset/expired-link', () => {
     describe('api error handling', () => {
       describe('when the get account API call fails', () => {
         beforeEach(() => {
-          getAccountSpy = jest.fn(() => Promise.reject());
+          getAccountSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.account.get = sendEmailPasswordResetLinkSpy;
         });
 
@@ -127,7 +127,7 @@ describe('controllers/insurance/account/password-reset/expired-link', () => {
 
       describe('when the password reset link API call fails', () => {
         beforeEach(() => {
-          sendEmailPasswordResetLinkSpy = jest.fn(() => Promise.reject());
+          sendEmailPasswordResetLinkSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.account.sendEmailPasswordResetLink = sendEmailPasswordResetLinkSpy;
         });
 

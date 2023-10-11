@@ -7,6 +7,5 @@
 // ***********************************************
 
 import '@cypress-audit/lighthouse/commands';
-import 'cypress-v10-preserve-cookie';
 
 Cypress.Commands.add('submitInsuranceEligibilityAndStartApplication', require('../../../commands/insurance/submit-eligibility-and-start-an-application'));

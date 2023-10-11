@@ -1,3 +1,4 @@
+export * from './tls';
 export * from './account';
 export * from './application';
 export * from './currencies';
@@ -16,10 +17,9 @@ export * from './task-ids';
 export * from './templates';
 export * from './ukef-contact-details';
 export * from './integrity';
+export * from './cookie';
+export * from './environments';
 
-export const INSURANCE = 'Insurance';
-export const QUOTE = 'Quote';
+// TODO: Refactor below constants
 export const SERVICE_NAME = 'EXIP';
-export const SECURE_OPTION_COOKIE = '__Secure-optionalCookies';
-
-export const MAX_APPLICATIONS_PER_PAGE = 15;
+export const QUOTE = 'Quote';

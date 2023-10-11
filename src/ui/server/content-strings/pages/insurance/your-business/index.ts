@@ -25,14 +25,6 @@ const EXPORTER_BUSINESS = {
     CONTINUE_SUFFIX: 'until this problem is resolved',
     INFORMATION: '(You may lose any information you entered on the previous page.)',
   },
-  CONTACT: {
-    ...SHARED,
-    PAGE_TITLE: 'Your contact details',
-    CONTACT_DETAILS: {
-      LEGEND: 'Contact details',
-      HINT: 'This will be the name on the contract policy',
-    },
-  },
   NATURE_OF_YOUR_BUSINESS: {
     ...SHARED,
     PAGE_TITLE: 'Nature of your business',

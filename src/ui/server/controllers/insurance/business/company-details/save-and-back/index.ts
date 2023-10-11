@@ -42,7 +42,7 @@ const post = async (req: Request, res: Response) => {
 
     const validationErrors = companyDetailsValidation(payload);
 
-    // runs save and go back commmand
+    // runs save and go back command
     const saveResponse = await mapAndSave.companyDetails(payload, application, validationErrors);
 
     if (!saveResponse) {

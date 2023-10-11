@@ -8,7 +8,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -25,7 +25,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
   let res: Response;
   let refNumber: number;
 
-  jest.mock('../save-data');
+  jest.mock('../save-data/policy');
 
   const mockSavePolicyAndExportData = jest.fn(() => Promise.resolve(true));
   mapAndSave.policy = mockSavePolicyAndExportData;
@@ -34,7 +34,6 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
     refNumber = Number(mockApplication.referenceNumber);
   });
@@ -87,7 +86,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -193,7 +192,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
     describe('when there is no application', () => {
       beforeEach(() => {
-        res.locals = mockRes().locals;
+        delete res.locals.application;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -229,7 +228,7 @@ describe('controllers/insurance/policy-and-export/type-of-policy', () => {
 
         describe('when there is an error', () => {
           beforeEach(() => {
-            const savePolicyAndExportDataSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
+            const savePolicyAndExportDataSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
             mapAndSave.policy = savePolicyAndExportDataSpy;
           });

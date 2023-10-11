@@ -14,10 +14,10 @@ const {
   POLICY_TYPE,
 } = FIELD_IDS;
 
-const hasDisllowedCharacters = (str: string) => {
-  const disllowedValues = str.replace(/[0-9,]/g, '');
+const hasDisallowedCharacters = (str: string) => {
+  const disallowedValues = str.replace(/[0-9,]/g, '');
 
-  if (disllowedValues.length) {
+  if (disallowedValues.length) {
     return true;
   }
 
@@ -49,7 +49,7 @@ const costRules = (formBody: RequestBody, errors: object) => {
     return updatedErrors;
   }
 
-  if (hasDisllowedCharacters(formBody[fieldId])) {
+  if (hasDisallowedCharacters(formBody[fieldId])) {
     updatedErrors = generateValidationErrors(fieldId, ERROR_MESSAGES.ELIGIBILITY[fieldId].NOT_A_NUMBER, errors);
 
     return updatedErrors;
@@ -67,4 +67,4 @@ const costRules = (formBody: RequestBody, errors: object) => {
   return updatedErrors;
 };
 
-export { hasDisllowedCharacters, costRules };
+export { hasDisallowedCharacters, costRules };

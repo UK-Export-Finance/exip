@@ -132,7 +132,7 @@ describe('controllers/insurance/account/create/confirm-email-resent', () => {
         beforeEach(() => {
           req.query.id = mockAccount.id;
 
-          getAccountSpy = jest.fn(() => Promise.reject());
+          getAccountSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.account.get = getAccountSpy;
         });
 

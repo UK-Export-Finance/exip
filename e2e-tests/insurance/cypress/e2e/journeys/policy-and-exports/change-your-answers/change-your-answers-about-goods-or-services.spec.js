@@ -1,7 +1,7 @@
 import { submitButton, summaryList, countryInput } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../../partials';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
+import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
 import countries from '../../../../../../fixtures/countries';
@@ -30,15 +30,12 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-      cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+      cy.completePolicyAndExportSection({});
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(url);
@@ -74,7 +71,7 @@ context('Insurance - Policy and exports - Change your answers - About goods or s
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(aboutGoodsOrServicesPage[fieldId].input(), newAnswer);
+        cy.keyboardInput(aboutGoodsOrServicesPage[fieldId].textarea(), newAnswer);
 
         submitButton().click();
       });

@@ -1,7 +1,7 @@
 import {
   yesRadio, noRadio, noRadioInput, submitButton,
 } from '../../../../../../pages/shared';
-import { insurance } from '../../../../../../pages';
+import otherPartiesPage from '../../../../../../pages/insurance/eligibility/otherParties';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -21,6 +21,8 @@ const {
   ELIGIBILITY: { OTHER_PARTIES_INVOLVED: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Other parties page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if there are other parties involved in the export', () => {
   let url;
 
@@ -35,7 +37,7 @@ context('Insurance - Other parties page - I want to check if I can use online se
     completeInsuredAmountForm();
     completeInsuredPeriodForm();
 
-    url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED}`;
+    url = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED}`;
 
     cy.assertUrl(url);
   });
@@ -74,35 +76,37 @@ context('Insurance - Other parties page - I want to check if I can use online se
       cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
 
-    describe('expandable details', () => {
+    describe('expandable details - what counts as another party', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
       });
 
-      it('renders summary text', () => {
-        insurance.eligibility.otherPartiesPage.description.summary().should('exist');
+      const { description } = otherPartiesPage;
 
-        cy.checkText(insurance.eligibility.otherPartiesPage.description.summary(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.INTRO);
+      it('should render summary text with collapsed conditional `details` content', () => {
+        cy.checkText(description.summary(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.INTRO);
+
+        description.details().should('not.have.attr', 'open');
       });
 
-      it('clicking summary text reveals details', () => {
-        insurance.eligibility.otherPartiesPage.description.summary().click();
+      describe('when clicking the summary text', () => {
+        it('should expand the collapsed `details` content', () => {
+          description.summary().click();
 
-        insurance.eligibility.otherPartiesPage.description.list.intro().should('be.visible');
-      });
+          description.details().should('have.attr', 'open');
 
-      it('renders expanded content', () => {
-        cy.checkText(insurance.eligibility.otherPartiesPage.description.list.intro(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST_INTRO);
+          cy.checkText(description.list.intro(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST_INTRO);
 
-        cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item1(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[0].TEXT);
+          cy.checkText(description.list.item1(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[0].TEXT);
 
-        cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item2(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[1].TEXT);
+          cy.checkText(description.list.item2(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[1].TEXT);
 
-        cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item3(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[2].TEXT);
+          cy.checkText(description.list.item3(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[2].TEXT);
 
-        cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item4(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[3].TEXT);
+          cy.checkText(description.list.item4(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[3].TEXT);
 
-        cy.checkText(insurance.eligibility.otherPartiesPage.description.list.item5(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[4].TEXT);
+          cy.checkText(description.list.item5(), CONTENT_STRINGS.OTHER_PARTIES_DESCRIPTION.LIST[4].TEXT);
+        });
       });
     });
   });
@@ -134,7 +138,7 @@ context('Insurance - Other parties page - I want to check if I can use online se
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`, () => {
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`;
+        const expected = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT}`;
 
         cy.assertUrl(expected);
       });

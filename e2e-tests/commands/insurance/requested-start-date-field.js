@@ -4,9 +4,8 @@ import {
   getMonth,
   getYear,
 } from 'date-fns';
-import { multipleContractPolicyPage } from '../../pages/insurance/policy-and-export';
 import partials from '../../partials';
-import { submitButton } from '../../pages/shared';
+import { field as fieldSelector, submitButton } from '../../pages/shared';
 import { ERROR_MESSAGES } from '../../content-strings';
 import { FIELD_IDS } from '../../constants';
 
@@ -28,7 +27,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-const field = multipleContractPolicyPage[REQUESTED_START_DATE];
+const field = fieldSelector(REQUESTED_START_DATE);
 
 const checkValidation = {
   day: {

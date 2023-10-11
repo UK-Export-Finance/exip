@@ -89,17 +89,19 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
     beforeEach(async () => {
       jest.resetAllMocks();
 
+      const accountUpdate = {
+        isVerified: false,
+        isBlocked: false,
+        verificationHash: mockAccount.verificationHash,
+      };
+
       sendConfirmEmailAddressEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
       confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
 
       const updatedAccount = await context.query.Account.updateOne({
         where: { id: account.id },
-        data: {
-          isVerified: false,
-          isBlocked: false,
-          verificationHash: mockAccount.verificationHash,
-        },
+        data: accountUpdate,
         query: 'id firstName lastName email verificationHash',
       });
 

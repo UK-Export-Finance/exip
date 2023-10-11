@@ -12,6 +12,7 @@ const taskList = {
     tasks: {
       eligibility: {
         link: () => cy.get(`[data-cy="task-list-group-${INITIAL_CHECKS.HEADING}-task-${INITIAL_CHECKS.TASKS.ELIGIBILITY}-link"]`),
+        text: () => cy.get(`[data-cy="task-list-group-${INITIAL_CHECKS.HEADING}-task-${INITIAL_CHECKS.TASKS.ELIGIBILITY}"]`),
         status: () => cy.get(`[data-cy="task-list-group-${INITIAL_CHECKS.HEADING}-task-${INITIAL_CHECKS.TASKS.ELIGIBILITY}-status"]`),
       },
     },

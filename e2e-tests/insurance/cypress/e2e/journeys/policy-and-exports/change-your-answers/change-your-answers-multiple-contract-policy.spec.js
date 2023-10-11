@@ -1,4 +1,4 @@
-import { submitButton, summaryList } from '../../../../../../pages/shared';
+import { field, submitButton, summaryList } from '../../../../../../pages/shared';
 import { multipleContractPolicyPage } from '../../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../../partials';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
@@ -37,15 +37,12 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
-      cy.completeAndSubmitMultipleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
-      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+      cy.completePolicyAndExportSection({ policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE });
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(url);
@@ -85,7 +82,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.keyboardInput(multipleContractPolicyPage[fieldId].yearInput(), newAnswer.year);
+          cy.keyboardInput(field(fieldId).yearInput(), newAnswer.year);
 
           submitButton().click();
         });
@@ -123,7 +120,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
 
           summaryList.field(fieldId).changeLink().click();
 
-          multipleContractPolicyPage[fieldId].input().select(newAnswer);
+          field(fieldId).input().select(newAnswer);
 
           submitButton().click();
         });
@@ -161,7 +158,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.keyboardInput(multipleContractPolicyPage[fieldId].input(), newAnswer);
+          cy.keyboardInput(field(fieldId).input(), newAnswer);
 
           submitButton().click();
         });
@@ -237,7 +234,7 @@ context('Insurance - Policy and exports - Change your answers - Multiple contrac
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.keyboardInput(multipleContractPolicyPage[fieldId].input(), newAnswer);
+          cy.keyboardInput(field(fieldId).input(), newAnswer);
 
           submitButton().click();
         });

@@ -1,4 +1,4 @@
-import { broker } from '../../../../../../../pages/your-business';
+import { brokerPage } from '../../../../../../../pages/your-business';
 import partials from '../../../../../../../partials';
 import { submitButton } from '../../../../../../../pages/shared';
 import { ROUTES } from '../../../../../../../constants';
@@ -28,14 +28,13 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
   let checkYourAnswersUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
 
       cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitYourContact({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
 
@@ -56,7 +55,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
   describe('when the no radio is selected', () => {
     it(`should  not display validation errors and redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      const field = broker[FIELD_ID];
+      const field = brokerPage[FIELD_ID];
 
       field.noRadioInput().click();
       submitButton().click();

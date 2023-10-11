@@ -100,7 +100,7 @@
           name: FIELDS.YOUR_COMPANY.WEBSITE,
           classes: "companies-house-input-width",
           attributes: {
-            'data-cy': FIELDS.YOUR_COMPANY.WEBSITE,
+            'data-cy': FIELDS.YOUR_COMPANY.WEBSITE + '-input',
             'aria-label': CONTENT_STRINGS.WEBSITE
           },
           value: submittedValues[FIELDS.YOUR_COMPANY.WEBSITE],
@@ -137,7 +137,7 @@
           value: submittedValues[FIELDS.YOUR_COMPANY.PHONE_NUMBER],
           classes: "companies-house-input-width",
           attributes: {
-            'data-cy': FIELDS.YOUR_COMPANY.PHONE_NUMBER,
+            'data-cy': FIELDS.YOUR_COMPANY.PHONE_NUMBER + '-input',
             'aria-label': CONTENT_STRINGS.PHONE_NUMBER
           },
            errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.PHONE_NUMBER] and {

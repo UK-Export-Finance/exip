@@ -8,9 +8,6 @@ import { mockReq, mockRes, mockAccount } from '../../../../../test-mocks';
 
 dotenv.config();
 
-const https = Boolean(process.env.HTTPS || 0);
-const protocol = https ? 'https://' : 'http://';
-
 const {
   INSURANCE: {
     ACCOUNT: {
@@ -51,7 +48,7 @@ describe('controllers/insurance/account/create/resend-confirm-email', () => {
 
       expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
 
-      const expectedUrlOrigin = `${protocol}${req.headers.host}`;
+      const expectedUrlOrigin = `https://${req.headers.host}`;
 
       expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(expectedUrlOrigin, sanitisedId);
     });
@@ -92,7 +89,7 @@ describe('controllers/insurance/account/create/resend-confirm-email', () => {
     describe('api error handling', () => {
       describe('when there is an error', () => {
         beforeEach(() => {
-          sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.reject());
+          sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.reject(new Error('mock')));
           api.keystone.account.sendEmailConfirmEmailAddress = sendEmailConfirmEmailAddressSpy;
         });
 

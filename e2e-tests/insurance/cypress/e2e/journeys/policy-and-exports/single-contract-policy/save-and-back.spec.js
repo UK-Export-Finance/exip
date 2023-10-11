@@ -5,53 +5,52 @@ import {
   getYear,
   sub,
 } from 'date-fns';
-import { submitButton, saveAndBackButton } from '../../../../../../pages/shared';
-import { singleContractPolicyPage } from '../../../../../../pages/insurance/policy-and-export';
+import { field as fieldSelector, submitButton, saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { FIELD_VALUES } from '../../../../../../constants';
 
 const { taskList } = partials.insurancePartials;
 
 const {
-  INSURANCE: {
-    ROOT: INSURANCE_ROOT,
-    ALL_SECTIONS,
-    POLICY_AND_EXPORTS: {
-      SINGLE_CONTRACT_POLICY,
-    },
+  ROOT: INSURANCE_ROOT,
+  ALL_SECTIONS,
+  POLICY_AND_EXPORTS: {
+    SINGLE_CONTRACT_POLICY,
   },
-} = ROUTES;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
-      },
+  POLICY_AND_EXPORTS: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      CREDIT_PERIOD_WITH_BUYER,
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy and exports - Single contract policy page - Save and go back', () => {
   let referenceNumber;
   let url;
 
   const date = new Date();
-  const futureDate = add(date, { months: 3 });
+  const futureDate = add(date, { years: 1 });
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
       cy.assertUrl(url);
     });
@@ -73,7 +72,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
@@ -84,7 +83,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
   });
 
   describe('when entering an invalid requested cover start date and submitting the form via `save and go back` button', () => {
-    const field = singleContractPolicyPage[REQUESTED_START_DATE];
+    const field = fieldSelector(REQUESTED_START_DATE);
 
     beforeEach(() => {
       cy.navigateToUrl(url);
@@ -100,7 +99,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
@@ -120,7 +119,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
   });
 
   describe('when entering a valid requested cover start date and submitting the form via `save and go back` button', () => {
-    const field = singleContractPolicyPage[REQUESTED_START_DATE];
+    const field = fieldSelector(REQUESTED_START_DATE);
 
     beforeEach(() => {
       cy.navigateToUrl(url);
@@ -133,7 +132,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
@@ -153,7 +152,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
   });
 
   describe('when removing a previously submitted `buyer credit period` value', () => {
-    const field = singleContractPolicyPage[CREDIT_PERIOD_WITH_BUYER];
+    const field = fieldSelector(CREDIT_PERIOD_WITH_BUYER);
 
     beforeEach(() => {
       cy.navigateToUrl(url);
@@ -170,7 +169,7 @@ context('Insurance - Policy and exports - Single contract policy page - Save and
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });

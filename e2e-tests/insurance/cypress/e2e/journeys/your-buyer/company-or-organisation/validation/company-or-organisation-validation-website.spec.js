@@ -1,5 +1,4 @@
-import { submitButton } from '../../../../../../../pages/shared';
-import { companyOrOrganisationPage } from '../../../../../../../pages/insurance/your-buyer';
+import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES, WEBSITE_EXAMPLES } from '../../../../../../../constants';
@@ -31,7 +30,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
@@ -54,7 +53,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
   // for error assertion - common fields
   const ERROR_ASSERTIONS = {
-    field: companyOrOrganisationPage[FIELD_ID],
+    field: fieldSelector(FIELD_ID),
     numberOfExpectedErrors: 8,
     errorIndex: 2,
   };
@@ -79,7 +78,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
   describe(`when ${FIELD_ID} is correctly entered`, () => {
     it('should not display validation errors', () => {
-      cy.keyboardInput(companyOrOrganisationPage[FIELD_ID].input(), WEBSITE_EXAMPLES.VALID);
+      cy.keyboardInput(fieldSelector(FIELD_ID).input(), WEBSITE_EXAMPLES.VALID);
 
       submitButton().click();
 

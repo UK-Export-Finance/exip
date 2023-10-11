@@ -24,11 +24,13 @@ const {
   },
 } = ERROR_MESSAGES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Policy and exports - About goods or services page - form validation', () => {
   let referenceNumber;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       taskList.prepareApplication.tasks.policyTypeAndExports.link().click();
@@ -37,7 +39,7 @@ context('Insurance - Policy and exports - About goods or services page - form va
 
       cy.completeAndSubmitSingleContractPolicyForm({});
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
+      const expectedUrl = `${baseUrl}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES}`;
 
       cy.assertUrl(expectedUrl);
     });
@@ -54,9 +56,13 @@ context('Insurance - Policy and exports - About goods or services page - form va
   it('should render validation errors for all required fields', () => {
     const expectedErrorsCount = 2;
 
+    const descriptionField = aboutGoodsOrServicesPage[DESCRIPTION];
+
+    const textareaField = { ...descriptionField, input: descriptionField.textarea };
+
     // description
     cy.submitAndAssertFieldErrors(
-      aboutGoodsOrServicesPage[DESCRIPTION],
+      textareaField,
       null,
       0,
       expectedErrorsCount,

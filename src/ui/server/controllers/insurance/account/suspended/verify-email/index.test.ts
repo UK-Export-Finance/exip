@@ -110,7 +110,7 @@ describe('controllers/insurance/account/suspended/verify-email', () => {
   describe('api error handling', () => {
     describe('when the verify reactivate account token API call fails', () => {
       beforeEach(() => {
-        verifyAccountReactivationTokenSpy = jest.fn(() => Promise.reject());
+        verifyAccountReactivationTokenSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
         api.keystone.account.verifyAccountReactivationToken = verifyAccountReactivationTokenSpy;
       });

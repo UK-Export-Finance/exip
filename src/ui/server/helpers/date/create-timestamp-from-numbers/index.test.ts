@@ -5,7 +5,7 @@ describe('server/helpers/date/create-date-from-numbers', () => {
   const month = 12;
   const year = 2022;
 
-  it('shouild return a formatted currency', () => {
+  it('should return a formatted currency', () => {
     const result = createTimestampFromNumbers(day, month, year);
 
     const expected = new Date(`${month} ${day} ${year}`);

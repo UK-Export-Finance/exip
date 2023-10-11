@@ -2,6 +2,7 @@ import { format } from 'date-fns';
 import { companyDetails } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
 import {
+  field,
   saveAndBackButton,
   summaryList,
   yesRadioInput,
@@ -51,7 +52,7 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication().then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
@@ -143,19 +144,19 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     });
 
     it('should display the company website text area', () => {
-      cy.checkText(companyDetails[WEBSITE].label(), FIELDS[WEBSITE].LABEL);
+      cy.checkText(field(WEBSITE).label(), FIELDS[WEBSITE].LABEL);
 
-      companyDetails[WEBSITE].input().should('exist');
-      cy.checkAriaLabel(companyDetails[WEBSITE].input(), FIELDS[WEBSITE].LABEL);
+      field(WEBSITE).input().should('exist');
+      cy.checkAriaLabel(field(WEBSITE).input(), FIELDS[WEBSITE].LABEL);
     });
 
     it('should display the phone number text area', () => {
-      cy.checkText(companyDetails[PHONE_NUMBER].label(), FIELDS[PHONE_NUMBER].LABEL);
+      cy.checkText(field(PHONE_NUMBER).label(), FIELDS[PHONE_NUMBER].LABEL);
 
-      cy.checkText(companyDetails[PHONE_NUMBER].hint(), FIELDS[PHONE_NUMBER].HINT);
+      cy.checkText(field(PHONE_NUMBER).hint(), FIELDS[PHONE_NUMBER].HINT);
 
-      companyDetails[PHONE_NUMBER].input().should('exist');
-      cy.checkAriaLabel(companyDetails[PHONE_NUMBER].input(), FIELDS[PHONE_NUMBER].LABEL);
+      field(PHONE_NUMBER).input().should('exist');
+      cy.checkAriaLabel(field(PHONE_NUMBER).input(), FIELDS[PHONE_NUMBER].LABEL);
     });
 
     it('should display save and go back button', () => {

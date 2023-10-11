@@ -1,5 +1,4 @@
-import { submitButton } from '../../../pages/shared';
-import { enterCodePage } from '../../../pages/insurance/account/sign-in';
+import { field, submitButton } from '../../../pages/shared';
 import { FIELD_IDS, ROUTES } from '../../../constants';
 
 const {
@@ -14,6 +13,8 @@ const {
   },
 } = ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 /**
  * signInAndGoToUrl
  * 1) Navigate to the sign in page/URL
@@ -25,12 +26,12 @@ const {
  * @param {String} Page URL to go to after account sign in
  */
 const signInAndGoToUrl = (url) => {
-  cy.navigateToUrl(`${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`);
+  cy.navigateToUrl(`${baseUrl}${SIGN_IN_ROOT}`);
   cy.completeAndSubmitSignInAccountForm({});
 
   // get the OTP security code
   cy.accountAddAndGetOTP().then((securityCode) => {
-    cy.keyboardInput(enterCodePage[SECURITY_CODE].input(), securityCode);
+    cy.keyboardInput(field(SECURITY_CODE).input(), securityCode);
 
     // submit the OTP security code
     submitButton().click();

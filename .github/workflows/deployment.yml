@@ -128,7 +128,8 @@ jobs:
           docker build . \
           -t ${{ env.ACR }}/${{ env.NAME }}:${{ github.sha }} \
           -t ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }} \
-          --build-arg GITHUB_SHA=${{ github.sha }} \
+          --build-arg NODE_ENV=${{ vars.NODE_ENV }} \
+          --build-arg PORT=${{ vars.API_PORT }} \
           --build-arg SESSION_SECRET=${{ secrets.SESSION_SECRET }} \
           --build-arg GOV_NOTIFY_API_KEY=${{ secrets.GOV_NOTIFY_API_KEY }}
 
@@ -211,7 +212,8 @@ jobs:
           docker build . \
           -t ${{ env.ACR }}/${{ env.NAME }}:${{ github.sha }} \
           -t ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }} \
-          --build-arg GITHUB_SHA=${{ github.sha }}
+          --build-arg NODE_ENV=${{ vars.NODE_ENV }} \
+          --build-arg PORT=${{ vars.UI_PORT }}
 
           # Push images
           docker push ${{ env.ACR }}/${{ env.NAME }}:${{ github.sha }}

@@ -14,11 +14,11 @@ const headers = {
 };
 
 /**
- * getIndustrySectorNames
- * Get
+ * industrySectorNames
+ * get
  * @returns {Object} Object with success flag array with all industry sectors
  */
-const getIndustrySectorNames = {
+const industrySectorNames = {
   get: async () => {
     try {
       console.info('Calling industry sector API');
@@ -54,4 +54,4 @@ const getIndustrySectorNames = {
   },
 };
 
-export default getIndustrySectorNames;
+export default industrySectorNames;

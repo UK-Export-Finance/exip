@@ -2,6 +2,25 @@ import { taskStatus, taskLink } from './task-helpers';
 import { TaskListData, TaskListDataTask, TaskListGroup, ApplicationFlat } from '../../../types';
 
 /**
+ * mapTask
+ * @param {TaskListDataTask} Task list groups and tasks
+ * @param {ApplicationFlat} Submitted application data
+ * @returns {Object} Tasks with status and optional href
+ */
+export const mapTask = (task: TaskListDataTask, submittedData: ApplicationFlat) => {
+  const mapped = {
+    ...task,
+    status: taskStatus(task, submittedData),
+  };
+
+  if (task.href) {
+    mapped.href = taskLink(task.href, mapped.status);
+  }
+
+  return mapped;
+};
+
+/**
  * generateTaskStatusesAndLinks
  * @param {Array} taskListData Task list groups and tasks
  * @param {Object} submittedData Submitted application data
@@ -11,15 +30,7 @@ export const generateTaskStatusesAndLinks = (taskListData: TaskListData, submitt
   const tasksList = taskListData.map((group) => {
     return {
       ...group,
-      tasks: group.tasks.map((task) => {
-        const status = taskStatus(task, submittedData);
-
-        return {
-          ...task,
-          status,
-          href: taskLink(task.href, status),
-        };
-      }),
+      tasks: group.tasks.map((task) => mapTask(task, submittedData)),
     };
   }) as TaskListData;
 

@@ -32,7 +32,7 @@ describe('controllers/account/create/your-details/save-data', () => {
   describe('api error handling', () => {
     describe('when there is an error', () => {
       beforeEach(() => {
-        accountCreateSpy = jest.fn(() => Promise.reject());
+        accountCreateSpy = jest.fn(() => Promise.reject(new Error('mock')));
         api.keystone.account.create = accountCreateSpy;
       });
 

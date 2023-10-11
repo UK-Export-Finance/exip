@@ -15,7 +15,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services/save-a
   let req: Request;
   let res: Response;
 
-  jest.mock('../../map-and-save');
+  jest.mock('../../map-and-save/policy');
 
   let mockMapAndSave = jest.fn(() => Promise.resolve(true));
   mapAndSave.exportContract = mockMapAndSave;
@@ -31,7 +31,6 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services/save-a
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     req.params.referenceNumber = String(mockApplication.referenceNumber);
 
     req.body = mockFormBody;
@@ -72,7 +71,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services/save-a
 
   describe('when there is no application', () => {
     beforeEach(() => {
-      res.locals = mockRes().locals;
+      delete res.locals.application;
     });
 
     it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -98,7 +97,7 @@ describe('controllers/insurance/policy-and-export/about-goods-or-services/save-a
 
     describe('when the mapAndSave call fails', () => {
       beforeEach(() => {
-        mockMapAndSave = jest.fn(() => Promise.reject(new Error('Mock error')));
+        mockMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
 
         mapAndSave.exportContract = mockMapAndSave;
       });

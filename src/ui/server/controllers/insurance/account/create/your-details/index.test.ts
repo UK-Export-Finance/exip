@@ -209,7 +209,7 @@ describe('controllers/insurance/account/create/your-details', () => {
           expect(res.redirect).toHaveBeenCalledWith(CONFIRM_EMAIL);
         });
 
-        describe('when an application is not succesfully created', () => {
+        describe('when an application is not successfully created', () => {
           beforeEach(() => {
             // @ts-ignore
             createApplicationSpy = jest.fn(() => Promise.resolve());
@@ -283,7 +283,7 @@ describe('controllers/insurance/account/create/your-details', () => {
 
         describe('when there is an error', () => {
           beforeEach(() => {
-            const saveDataSpy = jest.fn(() => Promise.reject(new Error('Mock error')));
+            const saveDataSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
             saveData.account = saveDataSpy;
           });
@@ -301,7 +301,7 @@ describe('controllers/insurance/account/create/your-details', () => {
           beforeEach(() => {
             req.body = validBody;
 
-            createApplicationSpy = jest.fn(() => Promise.reject());
+            createApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
             api.keystone.application.create = createApplicationSpy;
           });
 

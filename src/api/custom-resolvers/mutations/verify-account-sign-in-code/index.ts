@@ -4,6 +4,7 @@ import getAccountById from '../../../helpers/get-account-by-id';
 import isValidOTP from '../../../helpers/is-valid-otp';
 import deleteAuthenticationRetries from '../../../helpers/delete-authentication-retries';
 import create from '../../../helpers/create-jwt';
+import update from '../../../helpers/update-account';
 import { Context, VerifyAccountSignInCodeVariables, VerifyAccountSignInCodeResponse } from '../../../types';
 
 const {
@@ -82,10 +83,7 @@ const verifyAccountSignInCode = async (root: any, variables: VerifyAccountSignIn
         otpExpiry: null,
       };
 
-      await context.db.Account.updateOne({
-        where: { id: accountId },
-        data: accountUpdate,
-      });
+      await update.account(context, accountId, accountUpdate);
 
       return {
         success: true,

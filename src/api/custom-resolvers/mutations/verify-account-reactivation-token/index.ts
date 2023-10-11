@@ -1,6 +1,7 @@
 import { isBefore } from 'date-fns';
-import getAccountByField from '../../../helpers/get-account-by-field';
 import { FIELD_IDS } from '../../../constants';
+import getAccountByField from '../../../helpers/get-account-by-field';
+import update from '../../../helpers/update-account';
 import deleteAuthenticationRetries from '../../../helpers/delete-authentication-retries';
 import { Account, Context, VerifyAccountReactivationTokenVariables, VerifyAccountReactivationTokenResponse } from '../../../types';
 
@@ -51,7 +52,7 @@ const verifyAccountReactivationToken = async (
        * Update the account:
        * - mark as unblocked
        * - mark as verified (incase the account was previously unverified)
-       *   - both verification and reactivation have the same mechaniem (clicking token via email)
+       *   - both verification and reactivation have the same mechanism (clicking token via email)
        * - nullify the reactivation hash and expiry
        * - mark the account has unblocked and nullify the verification hash and expiry.
        */
@@ -64,10 +65,7 @@ const verifyAccountReactivationToken = async (
         reactivationExpiry: null,
       };
 
-      await context.db.Account.updateOne({
-        where: { id: account.id },
-        data: accountUpdate,
-      });
+      await update.account(context, account.id, accountUpdate);
 
       /**
        * Wipe the retry entries

@@ -36,11 +36,11 @@
   </div>
 
    {{ govukHint({
-      text: CONTENT_STRINGS.HINT,
-      attributes: {
-      "data-cy": FIELDS.NAME_ON_POLICY.ID + "-hint"
-      }
-    }) }}
+    text: CONTENT_STRINGS.HINT,
+    attributes: {
+    "data-cy": FIELDS.NAME_ON_POLICY.ID + "-hint"
+    }
+  }) }}
 
 
   <form method="POST" id="form" novalidate>
@@ -51,7 +51,7 @@
       {{ govukInput({
         id: FIELDS.POSITION.ID,
         name: FIELDS.POSITION.ID,
-        value: submittedValues[FIELDS.POSITION.ID] or application.policyAndExports[FIELDS.POSITION.ID],
+        value: submittedValues[FIELDS.POSITION.ID],
         label: {
           text:FIELDS.POSITION.LABEL,
           classes: "govuk-body govuk-!-font-weight-bold",
@@ -86,7 +86,7 @@
             }
           },
           value: FIELDS.NAME_ON_POLICY.OPTIONS.SAME_NAME.VALUE ,
-          text: 'TEST',
+          text: submittedValues[FIELDS.NAME_ON_POLICY.OPTIONS.SAME_NAME.ID],
           attributes: {
             "data-cy": FIELDS.NAME_ON_POLICY.OPTIONS.SAME_NAME.ID + "-input"
           },

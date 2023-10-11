@@ -1,5 +1,5 @@
-import accountFormFields from '../../../../../../../partials/insurance/accountFormFields';
 import { yourDetailsPage } from '../../../../../../../pages/insurance/account/create';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { BUTTONS, PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { ACCOUNT_FIELDS } from '../../../../../../../content-strings/fields/insurance/account';
@@ -66,9 +66,8 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
 
     it('renders `first name` label and input', () => {
       const fieldId = FIRST_NAME;
-      const field = yourDetailsPage[fieldId];
+      const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
 
       field.input().should('exist');
@@ -76,9 +75,8 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
 
     it('renders `last name` label and input', () => {
       const fieldId = LAST_NAME;
-      const field = yourDetailsPage[fieldId];
+      const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
 
       field.input().should('exist');
@@ -86,9 +84,8 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
 
     it('renders `email` label and input', () => {
       const fieldId = EMAIL;
-      const field = accountFormFields[fieldId];
+      const field = fieldSelector(fieldId);
 
-      field.label().should('exist');
       cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
 
       field.input().should('exist');

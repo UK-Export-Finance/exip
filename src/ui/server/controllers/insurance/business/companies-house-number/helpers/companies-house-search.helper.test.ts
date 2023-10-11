@@ -71,7 +71,7 @@ describe('controllers/insurance/business/companies-house-number/helpers/companie
       [COMPANIES_HOUSE_NUMBER]: '123456',
     };
 
-    const getCompaniesHouseResponse = jest.fn(() => Promise.reject());
+    const getCompaniesHouseResponse = jest.fn(() => Promise.reject(new Error('mock')));
     api.keystone.getCompaniesHouseInformation = getCompaniesHouseResponse;
 
     const response = await companiesHouseSearch(formBody);
