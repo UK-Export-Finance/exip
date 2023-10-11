@@ -1,37 +1,35 @@
 import { submitButton, summaryList } from '../../../../../../pages/shared';
 import { typeOfPolicyPage } from '../../../../../../pages/insurance/policy-and-export';
 import partials from '../../../../../../partials';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
 import { POLICY_AND_EXPORT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy-and-exports';
-import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import formatCurrency from '../../../../../../helpers/format-currency';
 import application from '../../../../../../fixtures/application';
 
 const {
+  ROOT,
   POLICY_AND_EXPORTS: {
     CHECK_YOUR_ANSWERS,
     TYPE_OF_POLICY_CHANGE,
     MULTIPLE_CONTRACT_POLICY_CHANGE,
-    MULTIPLE_CONTRACT_POLICY,
-    ABOUT_GOODS_OR_SERVICES,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY_AND_EXPORTS: {
-      TYPE_OF_POLICY: { POLICY_TYPE },
-      CONTRACT_POLICY: {
-        MULTIPLE: {
-          TOTAL_MONTHS_OF_COVER,
-          TOTAL_SALES_TO_BUYER,
-          MAXIMUM_BUYER_WILL_OWE,
-        },
+  POLICY_AND_EXPORTS: {
+    TYPE_OF_POLICY: { POLICY_TYPE },
+    CONTRACT_POLICY: {
+      MULTIPLE: {
+        TOTAL_MONTHS_OF_COVER,
+        TOTAL_SALES_TO_BUYER,
+        MAXIMUM_BUYER_WILL_OWE,
       },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const { CONTRACT_POLICY: { MULTIPLE: MULTIPLE_FIELD_STRINGS } } = FIELDS;
 
@@ -39,10 +37,12 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Policy and exports - Change your answers - Policy type - single to multiple', () => {
-  const baseUrl = Cypress.config('baseUrl');
   let referenceNumber;
   let checkYourAnswersUrl;
+  let typeOfPolicyUrl;
   let changeLinkHref;
 
   before(() => {
@@ -53,8 +53,11 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
 
       cy.completePolicyAndExportSection({});
 
-      checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      changeLinkHref = `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHANGE}`;
+      const applicationRouteUrl = `${ROOT}/${referenceNumber}`;
+
+      checkYourAnswersUrl = `${baseUrl}${applicationRouteUrl}${CHECK_YOUR_ANSWERS}`;
+      typeOfPolicyUrl = `${baseUrl}${applicationRouteUrl}${TYPE_OF_POLICY_CHANGE}`;
+      changeLinkHref = `${applicationRouteUrl}${MULTIPLE_CONTRACT_POLICY_CHANGE}`;
 
       cy.assertUrl(checkYourAnswersUrl);
     });
@@ -75,14 +78,14 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
       summaryList.field(POLICY_TYPE).changeLink().click();
     });
 
-    it(`should redirect to ${TYPE_OF_POLICY_CHANGE}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_CHANGE}#heading`;
+    it(`should redirect to ${TYPE_OF_POLICY_CHANGE} with heading anchor`, () => {
+      const expectedUrl = `${typeOfPolicyUrl}#heading`;
 
-      cy.assertUrl(expected);
+      cy.assertUrl(expectedUrl);
     });
   });
 
-  describe('form submission with a new answer', () => {
+  describe('after submitting a new policy type (multiple) and completing (now required) fields for a multiple policy', () => {
     beforeEach(() => {
       cy.navigateToUrl(checkYourAnswersUrl);
 
@@ -90,38 +93,26 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
 
       typeOfPolicyPage[POLICY_TYPE].multiple.input().click();
       submitButton().click();
+
+      cy.completeAndSubmitMultipleContractPolicyForm({});
     });
 
-    it(`should redirect to ${MULTIPLE_CONTRACT_POLICY}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}#heading`;
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      const expectedUrl = `${checkYourAnswersUrl}#heading`;
 
-      cy.assertUrl(expected);
+      cy.assertUrl(expectedUrl);
     });
 
-    describe(`after completing (now required) fields in ${MULTIPLE_CONTRACT_POLICY} and proceeding to ${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, () => {
+    describe('should render new answers and change links for new multiple policy fields', () => {
       beforeEach(() => {
-        cy.navigateToUrl(`${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}#heading`);
-
-        // complete the form/now required fields for a multiple contract policy
-        cy.completeAndSubmitMultipleContractPolicyForm({});
-
-        cy.assertUrl(`${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}#heading`);
-
-        // proceed to "name on policy"
-        submitButton().click();
-        // proceed to "check your answers"
-        cy.completeAndSubmitNameOnPolicyForm({});
-
-        const expectedUrl = `${checkYourAnswersUrl}#heading`;
-
-        cy.assertUrl(expectedUrl);
+        cy.navigateToUrl(checkYourAnswersUrl);
       });
 
-      it(`should render the new answer for ${POLICY_TYPE}`, () => {
+      it(POLICY_TYPE, () => {
         cy.assertSummaryListRowValueNew(summaryList, POLICY_TYPE, FIELD_VALUES.POLICY_TYPE.MULTIPLE);
       });
 
-      it(`should render the new answers and 'change' links for ${TOTAL_MONTHS_OF_COVER}`, () => {
+      it(TOTAL_MONTHS_OF_COVER, () => {
         const fieldId = TOTAL_MONTHS_OF_COVER;
 
         const expectedTotalMonthsOfCover = `${application.POLICY_AND_EXPORTS[fieldId]} months`;
@@ -135,7 +126,7 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
         );
       });
 
-      it(`should render the new answer and 'change' link for ${TOTAL_SALES_TO_BUYER}`, () => {
+      it(TOTAL_SALES_TO_BUYER, () => {
         const fieldId = TOTAL_SALES_TO_BUYER;
 
         const expectedTotalSalesToBuyer = formatCurrency(application.POLICY_AND_EXPORTS[fieldId]);
@@ -149,7 +140,7 @@ context('Insurance - Policy and exports - Change your answers - Policy type - si
         );
       });
 
-      it(`should render the new answer and 'change' link for ${MAXIMUM_BUYER_WILL_OWE}`, () => {
+      it(MAXIMUM_BUYER_WILL_OWE, () => {
         const fieldId = MAXIMUM_BUYER_WILL_OWE;
 
         const expectedMaximumBuyerWillOwe = formatCurrency(application.POLICY_AND_EXPORTS[fieldId]);
