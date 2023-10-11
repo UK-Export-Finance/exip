@@ -5,7 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../../../commands/quote/forms';
-import { field, submitButton } from '../../../../../../pages/shared';
+import { field as fieldSelector, submitButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
@@ -57,7 +57,7 @@ context('Tell us about the policy you need page - form validation', () => {
       );
 
       cy.checkText(
-        field(POLICY_LENGTH).errorMessage(),
+        fieldSelector(POLICY_LENGTH).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].IS_EMPTY}`,
       );
 
@@ -68,7 +68,7 @@ context('Tell us about the policy you need page - form validation', () => {
       );
 
       cy.checkText(
-        field(CURRENCY).errorMessage(),
+        fieldSelector(CURRENCY).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[CURRENCY].IS_EMPTY}`,
       );
 
@@ -79,7 +79,7 @@ context('Tell us about the policy you need page - form validation', () => {
       );
 
       cy.checkText(
-        field(CONTRACT_VALUE).errorMessage(),
+        fieldSelector(CONTRACT_VALUE).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].IS_EMPTY}`,
       );
 
@@ -90,7 +90,7 @@ context('Tell us about the policy you need page - form validation', () => {
       );
 
       cy.checkText(
-        field(PERCENTAGE_OF_COVER).errorMessage(),
+        fieldSelector(PERCENTAGE_OF_COVER).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[PERCENTAGE_OF_COVER].IS_EMPTY}`,
       );
     });
@@ -98,19 +98,19 @@ context('Tell us about the policy you need page - form validation', () => {
     it('should focus on inputs when clicking summary error message', () => {
       // policy length
       partials.errorSummaryListItemLinks().eq(0).click();
-      field(POLICY_LENGTH).input().should('have.focus');
+      fieldSelector(POLICY_LENGTH).input().should('have.focus');
 
       // currency
       partials.errorSummaryListItemLinks().eq(1).click();
-      field(CURRENCY).input().should('have.focus');
+      fieldSelector(CURRENCY).input().should('have.focus');
 
       // contract value
       partials.errorSummaryListItemLinks().eq(2).click();
-      field(CONTRACT_VALUE).input().should('have.focus');
+      fieldSelector(CONTRACT_VALUE).input().should('have.focus');
 
       // perecentage of cover
       partials.errorSummaryListItemLinks().eq(3).click();
-      field(PERCENTAGE_OF_COVER).input().should('have.focus');
+      fieldSelector(PERCENTAGE_OF_COVER).input().should('have.focus');
     });
   });
 
@@ -118,7 +118,7 @@ context('Tell us about the policy you need page - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(field(POLICY_LENGTH).input(), 'a');
+      cy.keyboardInput(fieldSelector(POLICY_LENGTH).input(), 'a');
       submitButton().click();
 
       cy.checkText(
@@ -127,7 +127,7 @@ context('Tell us about the policy you need page - form validation', () => {
       );
 
       cy.checkText(
-        field(POLICY_LENGTH).errorMessage(),
+        fieldSelector(POLICY_LENGTH).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].NOT_A_NUMBER}`,
       );
     });
@@ -137,7 +137,7 @@ context('Tell us about the policy you need page - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(field(POLICY_LENGTH).input(), '1.2');
+      cy.keyboardInput(fieldSelector(POLICY_LENGTH).input(), '1.2');
       submitButton().click();
 
       cy.checkText(
@@ -146,7 +146,7 @@ context('Tell us about the policy you need page - form validation', () => {
       );
 
       cy.checkText(
-        field(POLICY_LENGTH).errorMessage(),
+        fieldSelector(POLICY_LENGTH).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].NOT_A_WHOLE_NUMBER}`,
       );
     });
@@ -156,7 +156,7 @@ context('Tell us about the policy you need page - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(field(POLICY_LENGTH).input(), '0');
+      cy.keyboardInput(fieldSelector(POLICY_LENGTH).input(), '0');
       submitButton().click();
 
       cy.checkText(
@@ -165,7 +165,7 @@ context('Tell us about the policy you need page - form validation', () => {
       );
 
       cy.checkText(
-        field(POLICY_LENGTH).errorMessage(),
+        fieldSelector(POLICY_LENGTH).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].BELOW_MINIMUM}`,
       );
     });
@@ -175,7 +175,7 @@ context('Tell us about the policy you need page - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(field(POLICY_LENGTH).input(), '23');
+      cy.keyboardInput(fieldSelector(POLICY_LENGTH).input(), '23');
       submitButton().click();
 
       cy.checkText(
@@ -184,7 +184,7 @@ context('Tell us about the policy you need page - form validation', () => {
       );
 
       cy.checkText(
-        field(POLICY_LENGTH).errorMessage(),
+        fieldSelector(POLICY_LENGTH).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[POLICY_LENGTH].ABOVE_MAXIMUM}`,
       );
     });
@@ -194,7 +194,7 @@ context('Tell us about the policy you need page - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(field(CONTRACT_VALUE).input(), 'a');
+      cy.keyboardInput(fieldSelector(CONTRACT_VALUE).input(), 'a');
 
       submitButton().click();
 
@@ -204,7 +204,7 @@ context('Tell us about the policy you need page - form validation', () => {
       );
 
       cy.checkText(
-        field(CONTRACT_VALUE).errorMessage(),
+        fieldSelector(CONTRACT_VALUE).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_NUMBER}`,
       );
     });
@@ -214,7 +214,7 @@ context('Tell us about the policy you need page - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(field(CONTRACT_VALUE).input(), '1234.56');
+      cy.keyboardInput(fieldSelector(CONTRACT_VALUE).input(), '1234.56');
 
       submitButton().click();
 
@@ -224,7 +224,7 @@ context('Tell us about the policy you need page - form validation', () => {
       );
 
       cy.checkText(
-        field(CONTRACT_VALUE).errorMessage(),
+        fieldSelector(CONTRACT_VALUE).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_WHOLE_NUMBER}`,
       );
     });
@@ -234,7 +234,7 @@ context('Tell us about the policy you need page - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(field(CONTRACT_VALUE).input(), '0');
+      cy.keyboardInput(fieldSelector(CONTRACT_VALUE).input(), '0');
 
       submitButton().click();
 
@@ -244,9 +244,24 @@ context('Tell us about the policy you need page - form validation', () => {
       );
 
       cy.checkText(
-        field(CONTRACT_VALUE).errorMessage(),
+        fieldSelector(CONTRACT_VALUE).errorMessage(),
         `Error: ${ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].BELOW_MINIMUM}`,
       );
+    });
+  });
+
+  describe('with the `percentage of cover` field has been submitted and other fields are not provided', () => {
+    it('should render the submitted values for the `percentage of cover` field', () => {
+      cy.navigateToUrl(url);
+
+      fieldSelector(CONTRACT_VALUE).input().clear();
+
+      const field = fieldSelector(PERCENTAGE_OF_COVER);
+
+      field.input().select('90');
+      submitButton().click();
+
+      field.inputOptionSelected().contains('90');
     });
   });
 
@@ -254,20 +269,20 @@ context('Tell us about the policy you need page - form validation', () => {
     it('should render submitted values', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(field(POLICY_LENGTH).input(), 1);
+      cy.keyboardInput(fieldSelector(POLICY_LENGTH).input(), 1);
 
-      field(CURRENCY).input().select(GBP_CURRENCY_CODE);
+      fieldSelector(CURRENCY).input().select(GBP_CURRENCY_CODE);
 
-      cy.keyboardInput(field(CONTRACT_VALUE).input(), '10');
+      cy.keyboardInput(fieldSelector(CONTRACT_VALUE).input(), '10');
 
       submitButton().click();
 
-      field(POLICY_LENGTH).input()
+      fieldSelector(POLICY_LENGTH).input()
         .should('have.attr', 'value', '1');
 
-      field(CURRENCY).inputOptionSelected().contains(GBP_CURRENCY_CODE);
+      fieldSelector(CURRENCY).inputOptionSelected().contains(GBP_CURRENCY_CODE);
 
-      field(CONTRACT_VALUE).input()
+      fieldSelector(CONTRACT_VALUE).input()
         .should('have.attr', 'value', '10');
     });
   });

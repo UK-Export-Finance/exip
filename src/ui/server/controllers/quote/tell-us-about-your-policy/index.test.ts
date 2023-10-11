@@ -461,16 +461,17 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
           req.body[PERCENTAGE_OF_COVER] = mockAnswers[PERCENTAGE_OF_COVER];
         });
 
-        it('should render template with mapped submitted percentage from constructPayload function', async () => {
+        it('should render template with mapped submitted percentage', async () => {
           await post(req, res);
+
+          const submittedPercentageOfCover = Number(req.body[PERCENTAGE_OF_COVER]);
+          const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, submittedPercentageOfCover);
 
           const policyType = req.session.submittedData.quoteEligibility[POLICY_TYPE];
 
           const PAGE_VARIABLES = generatePageVariables(policyType);
 
           const payload = constructPayload(req.body, FIELD_IDS);
-
-          const mappedPercentageOfCoverWithSelected = mapPercentageOfCover(PERCENTAGES_OF_COVER, req.body[PERCENTAGE_OF_COVER]);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY, {
             userName: getUserNameFromSession(req.session.user),
