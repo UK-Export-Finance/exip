@@ -269,21 +269,23 @@ context('Tell us about the policy you need page - form validation', () => {
     it('should render submitted values', () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(fieldSelector(POLICY_LENGTH).input(), 1);
+      const policyLengthField = fieldSelector(POLICY_LENGTH);
+      const currencyField = fieldSelector(CURRENCY);
+      const contractValueField = fieldSelector(CONTRACT_VALUE);
 
-      fieldSelector(CURRENCY).input().select(GBP_CURRENCY_CODE);
+      cy.keyboardInput(policyLengthField.input(), 1);
 
-      cy.keyboardInput(fieldSelector(CONTRACT_VALUE).input(), '10');
+      currencyField.input().select(GBP_CURRENCY_CODE);
+
+      cy.keyboardInput(contractValueField.input(), '10');
 
       submitButton().click();
 
-      fieldSelector(POLICY_LENGTH).input()
-        .should('have.attr', 'value', '1');
+      cy.checkValue(policyLengthField, '1');
 
-      fieldSelector(CURRENCY).inputOptionSelected().contains(GBP_CURRENCY_CODE);
+      currencyField.inputOptionSelected().contains(GBP_CURRENCY_CODE);
 
-      fieldSelector(CONTRACT_VALUE).input()
-        .should('have.attr', 'value', '10');
+      cy.checkValue(contractValueField, '10');
     });
   });
 });

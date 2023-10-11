@@ -225,14 +225,17 @@ context('Tell us about the multiple policy you need - form validation', () => {
     it('should render submitted values', () => {
       cy.navigateToUrl(url);
 
-      fieldSelector(CURRENCY).input().select(GBP_CURRENCY_CODE);
-      cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), '10');
+      const currencyField = fieldSelector(CURRENCY);
+      const maxAmountOwedField = fieldSelector(MAX_AMOUNT_OWED);
+
+      currencyField.input().select(GBP_CURRENCY_CODE);
+      cy.keyboardInput(maxAmountOwedField.input(), '10');
 
       submitButton().click();
 
-      fieldSelector(CURRENCY).inputOptionSelected().contains(GBP_CURRENCY_CODE);
+      currencyField.inputOptionSelected().contains(GBP_CURRENCY_CODE);
 
-      cy.checkValue(fieldSelector(MAX_AMOUNT_OWED), '10');
+      cy.checkValue(maxAmountOwedField, '10');
     });
   });
 });
