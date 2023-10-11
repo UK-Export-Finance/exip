@@ -115,7 +115,7 @@ export const post = async (req: Request, res: Response) => {
 
     /**
      * If the route is a "change" route,
-     * redirect to the appropriate "change" route (single or multiple policy route)
+     * redirect to the appropriate "change" route (single or multiple policy route).
      */
     if (isChangeRoute(req.originalUrl)) {
       if (isSinglePolicyType(payload[FIELD_ID])) {
@@ -129,11 +129,9 @@ export const post = async (req: Request, res: Response) => {
 
     /**
      * If the route is a "check and change" route,
-     * redirect to the application's "check your answers - policy type" (single or multiple policy route)
+     * redirect to the application's "check your answers - policy type" (single or multiple) route.
      */
     if (isCheckAndChangeRoute(req.originalUrl)) {
-      // return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
-
       if (isSinglePolicyType(payload[FIELD_ID])) {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`);
       }
