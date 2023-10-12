@@ -15,9 +15,9 @@ const {
   MULTIPLE,
 } = CONTRACT_POLICY;
 
-const { IS_SAME_AS_OWNER, POSITION } = NAME_ON_POLICY;
+const { IS_SAME_AS_OWNER, POSITION, POLICY_CONTACT_EMAIL } = NAME_ON_POLICY;
 
-const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
+const { FIRST_NAME, LAST_NAME } = ACCOUNT_FIELD_IDS;
 
 describe('server/helpers/required-fields/policy-and-exports', () => {
   const { policy } = mockApplication;
@@ -72,7 +72,7 @@ describe('server/helpers/required-fields/policy-and-exports', () => {
         IS_SAME_AS_OWNER,
         FIRST_NAME,
         LAST_NAME,
-        EMAIL,
+        POLICY_CONTACT_EMAIL,
         POSITION,
       });
 

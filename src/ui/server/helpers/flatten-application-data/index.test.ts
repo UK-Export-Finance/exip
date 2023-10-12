@@ -1,4 +1,4 @@
-import flattenApplicationData from '.';
+import flattenApplicationData, { policyContactMapped } from '.';
 import getTrueAndFalseAnswers from '../get-true-and-false-answers';
 import { mockApplication } from '../../test-mocks';
 
@@ -27,7 +27,7 @@ describe('server/helpers/flatten-application-data', () => {
       ...business,
       ...broker,
       ...buyer,
-      ...policyContact,
+      ...policyContactMapped(policyContact),
       ...getTrueAndFalseAnswers(sectionReview),
       ...getTrueAndFalseAnswers(declaration),
     };

@@ -107,13 +107,21 @@ context('Insurance - Change your answers - Policy and exports - Change from same
           cy.navigateToUrl(url);
         });
 
-        it('should display new answers', () => {
+        it(NAME, () => {
           const newName = `${POLICY_CONTACT[FIRST_NAME]} ${POLICY_CONTACT[LAST_NAME]}`;
-          const newEmail = POLICY_CONTACT[EMAIL];
-          const newPosition = POLICY_CONTACT[POSITION];
 
           cy.assertSummaryListRowValueNew(summaryList, fieldId, newName);
+        });
+
+        it(EMAIL, () => {
+          const newEmail = POLICY_CONTACT[EMAIL];
+
           cy.assertSummaryListRowValueNew(summaryList, EMAIL, newEmail);
+        });
+
+        it(POSITION, () => {
+          const newPosition = POLICY_CONTACT[POSITION];
+
           cy.assertSummaryListRowValueNew(summaryList, POSITION, newPosition);
         });
       });

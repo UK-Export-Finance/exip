@@ -11,9 +11,9 @@ const {
   MULTIPLE,
 } = CONTRACT_POLICY;
 
-const { IS_SAME_AS_OWNER, POSITION } = NAME_ON_POLICY;
+const { IS_SAME_AS_OWNER, POSITION, POLICY_CONTACT_EMAIL } = NAME_ON_POLICY;
 
-const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
+const { FIRST_NAME, LAST_NAME } = ACCOUNT_FIELD_IDS;
 
 /**
  * getContractPolicyTasks
@@ -52,7 +52,7 @@ const requiredFields = (policyType?: string) =>
     IS_SAME_AS_OWNER,
     FIRST_NAME,
     LAST_NAME,
-    EMAIL,
+    POLICY_CONTACT_EMAIL,
     POSITION,
   });
 

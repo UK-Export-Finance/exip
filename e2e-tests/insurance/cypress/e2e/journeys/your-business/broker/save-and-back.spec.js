@@ -58,9 +58,9 @@ context('Insurance - Your business - Broker page - Save and back', () => {
     cy.saveSession();
   });
 
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
+  // after(() => {
+  //   cy.deleteApplication(referenceNumber);
+  // });
 
   describe('when no fields are provided', () => {
     it(`should redirect to ${ALL_SECTIONS} retain the "your business" task status as "in progress"`, () => {

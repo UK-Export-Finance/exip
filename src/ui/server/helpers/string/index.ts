@@ -12,7 +12,7 @@ const isEmptyString = (str: string) => str === '';
  * @param {String} str
  * @returns {Boolean}
  */
-const isPopulatedString = (str: string) => Boolean(str && str.length > 0);
+const isPopulatedString = (str?: string) => Boolean(str && str.length > 0);
 
 /**
  * stripCommas
@@ -22,4 +22,22 @@ const isPopulatedString = (str: string) => Boolean(str && str.length > 0);
  */
 const stripCommas = (str: string) => str.replace(/,/g, '');
 
-export { isEmptyString, stripCommas, isPopulatedString };
+/**
+ * stringsAreDefined
+ * checks that strings are not null or undefined and greater length than 0
+ * @param {String} str1
+ * @param {String} str2
+ * @returns {Boolean}
+ */
+const stringsAreDefined = (str1?: string, str2?: string) => isPopulatedString(str1) && isPopulatedString(str2);
+
+/**
+ * stringsAreEqual
+ * checks that strings are the same
+ * @param {String} str1
+ * @param {String} str2
+ * @returns {Boolean}
+ */
+const stringsAreEqual = (str1: string, str2: string) => str1 === str2;
+
+export { isEmptyString, stripCommas, isPopulatedString, stringsAreDefined, stringsAreEqual };

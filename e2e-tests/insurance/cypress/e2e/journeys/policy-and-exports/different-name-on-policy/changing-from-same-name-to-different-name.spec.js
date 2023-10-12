@@ -30,7 +30,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(`Insurance - Policy and exports - Different name on Policy page - Changing $${SAME_NAME} to ${OTHER_NAME} should not populate fields on different name on policy page`, () => {
+context(`Insurance - Policy and exports - Different name on Policy page - Changing ${SAME_NAME} to ${OTHER_NAME} should not populate fields on different name on policy page`, () => {
   let referenceNumber;
   let url;
 

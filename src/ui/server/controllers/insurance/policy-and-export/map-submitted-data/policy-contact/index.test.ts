@@ -101,7 +101,7 @@ describe('controllers/insurance/policy-and-export/map-submitted-data/policy-cont
     });
   });
 
-  describe(`when ${OTHER_NAME} the same as owner`, () => {
+  describe(`when ${OTHER_NAME} the same as the application owner`, () => {
     const mockBody = {
       [NAME]: OTHER_NAME,
       ...mockContact,
@@ -109,11 +109,9 @@ describe('controllers/insurance/policy-and-export/map-submitted-data/policy-cont
 
     const applicationSameOwner = mockApplication;
 
-    beforeEach(() => {
-      applicationSameOwner.owner = mockContact;
-    });
-
     it(`should replace ${IS_SAME_AS_OWNER} with true`, () => {
+      applicationSameOwner.owner = mockContact;
+
       const result = mapSubmittedData(mockBody, applicationSameOwner);
 
       const expected = {

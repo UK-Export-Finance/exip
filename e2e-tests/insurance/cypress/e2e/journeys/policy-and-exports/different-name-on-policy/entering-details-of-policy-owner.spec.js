@@ -64,7 +64,7 @@ context(`Insurance - Policy and exports - Different name on Policy page - Enteri
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('when entering contact details of application owner on different name on policy page', () => {
+  describe('when entering contact details of application owner on "different name on policy" page', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
