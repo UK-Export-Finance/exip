@@ -24,7 +24,7 @@ export const START_NEW_APPLICATION = {
 
 export const POLICY = {
   ...SHARED,
-  PAGE_TITLE: 'Type of policy',
+  PAGE_TITLE: 'Type of policy and exports',
 };
 
 export const YOUR_BUSINESS = {
