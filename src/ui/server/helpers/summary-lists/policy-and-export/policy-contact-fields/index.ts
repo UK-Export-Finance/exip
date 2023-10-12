@@ -18,7 +18,14 @@ const {
   POLICY_AND_EXPORTS: { NAME_ON_POLICY_CHANGE, NAME_ON_POLICY_CHECK_AND_CHANGE, DIFFERENT_NAME_ON_POLICY_CHANGE, DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
-// generates fieldGroupItem for nameOnPolicy
+/**
+ * nameOnPolicyField
+ * returns fieldGroupItem for summary list for nameOnPolicy
+ * @param {ApplicationPolicyContact} answers submitted policyContact data
+ * @param {Number} referenceNumber
+ * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
+ * @returns {Object} fieldGroupItem for name on policy
+ */
 const nameOnPolicyField = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange: boolean) =>
   fieldGroupItem(
     {
@@ -29,7 +36,16 @@ const nameOnPolicyField = (answers: ApplicationPolicyContact, referenceNumber: n
     `${answers[FIRST_NAME]} ${answers[LAST_NAME]}`,
   );
 
-// generates fieldGroupItem for position - changeLink based on sameName
+/**
+ * positionField
+ * returns fieldGroupItem for summary list for position
+ * generates changeLink to name on policy page or different name on policy page based on if sameName is true or not
+ * @param {ApplicationPolicyContact} answers submitted policyContact data
+ * @param {Number} referenceNumber
+ * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
+ * @param {Boolean} sameName if IS_SAME_AS_OWNER is true
+ * @returns {Object} fieldGroupItem for position
+ */
 const positionField = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange: boolean, sameName: boolean) => {
   let changeLink = generateChangeLink(NAME_ON_POLICY_CHANGE, NAME_ON_POLICY_CHECK_AND_CHANGE, `#${POSITION}-label`, referenceNumber, checkAndChange);
 
@@ -53,7 +69,14 @@ const positionField = (answers: ApplicationPolicyContact, referenceNumber: numbe
   );
 };
 
-// generates fieldGroupItem for email
+/**
+ * emailField
+ * returns fieldGroupItem for summary list for email
+ * @param {ApplicationPolicyContact} answers submitted policyContact data
+ * @param {Number} referenceNumber
+ * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
+ * @returns {Object} fieldGroupItem for name on email
+ */
 const emailField = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange: boolean) =>
   fieldGroupItem(
     {

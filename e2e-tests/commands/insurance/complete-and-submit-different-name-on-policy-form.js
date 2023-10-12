@@ -6,6 +6,7 @@ const {
   ACCOUNT: {
     FIRST_NAME,
     LAST_NAME,
+    EMAIL,
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -20,8 +21,9 @@ const { POLICY_CONTACT } = mockApplication;
 const completeAndSubmitDifferentNameOnPolicyForm = ({
   firstName = POLICY_CONTACT[FIRST_NAME],
   lastName = POLICY_CONTACT[LAST_NAME],
+  email = POLICY_CONTACT[EMAIL],
 }) => {
-  cy.completeDifferentNameOnPolicyForm({ firstName, lastName });
+  cy.completeDifferentNameOnPolicyForm({ firstName, lastName, email });
   submitButton().click();
 };
 

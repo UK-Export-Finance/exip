@@ -1,4 +1,4 @@
-import { isEmptyString, stripCommas } from '.';
+import { isEmptyString, stripCommas, isPopulatedString } from '.';
 
 describe('server/helpers/string', () => {
   describe('isEmptyString', () => {
@@ -15,6 +15,34 @@ describe('server/helpers/string', () => {
         const result = isEmptyString('Mock');
 
         expect(result).toEqual(false);
+      });
+    });
+  });
+
+  describe('isPopulatedString', () => {
+    describe('when a string is empty', () => {
+      it('should return false', () => {
+        const result = isPopulatedString('');
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when a string is undefined', () => {
+      it('should return false', () => {
+        // required to test if undefined
+        // @ts-ignore
+        const result = isPopulatedString(undefined);
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when a string is not empty', () => {
+      it('should return true', () => {
+        const result = isPopulatedString('test');
+
+        expect(result).toEqual(true);
       });
     });
   });

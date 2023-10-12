@@ -1,6 +1,6 @@
 import POLICY_AND_EXPORTS_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy-and-exports';
 import ACCOUNT_FIELD_IDS from '../../../../../constants/field-ids/insurance/account';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplication, mockContact } from '../../../../../test-mocks';
 import mapSubmittedData from '.';
 
 const {
@@ -47,24 +47,9 @@ describe('controllers/insurance/policy-and-export/map-submitted-data/policy-cont
 
       const expected = {
         [IS_SAME_AS_OWNER]: false,
-      };
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe(`when ${NAME} is ${OTHER_NAME} and ${POSITION} is provided`, () => {
-    const mockBody = {
-      [NAME]: OTHER_NAME,
-    };
-
-    it(`should return an object without ${NAME} and add ${IS_SAME_AS_OWNER} as false and set ${POSITION} to empty string`, () => {
-      mockBody[POSITION] = 'CEO';
-
-      const result = mapSubmittedData(mockBody, mockApplication);
-
-      const expected = {
-        [IS_SAME_AS_OWNER]: false,
+        [FIRST_NAME]: '',
+        [LAST_NAME]: '',
+        [EMAIL]: '',
         [POSITION]: '',
       };
 
@@ -86,6 +71,9 @@ describe('controllers/insurance/policy-and-export/map-submitted-data/policy-cont
       const expected = {
         [IS_SAME_AS_OWNER]: false,
         [POSITION]: mockBody[POSITION],
+        [FIRST_NAME]: mockBody[FIRST_NAME],
+        [LAST_NAME]: mockBody[LAST_NAME],
+        [EMAIL]: mockBody[EMAIL],
       };
 
       expect(result).toEqual(expected);
@@ -110,6 +98,34 @@ describe('controllers/insurance/policy-and-export/map-submitted-data/policy-cont
       const result = mapSubmittedData(mockBody, mockApplication);
 
       expect(result).toEqual(expectedVariables);
+    });
+  });
+
+  describe(`when ${OTHER_NAME} the same as owner`, () => {
+    const mockBody = {
+      [NAME]: OTHER_NAME,
+      ...mockContact,
+    };
+
+    const applicationSameOwner = mockApplication;
+
+    beforeEach(() => {
+      applicationSameOwner.owner = mockContact;
+    });
+
+    it(`should replace ${IS_SAME_AS_OWNER} with true`, () => {
+      const result = mapSubmittedData(mockBody, applicationSameOwner);
+
+      const expected = {
+        id: mockBody.id,
+        [IS_SAME_AS_OWNER]: true,
+        [FIRST_NAME]: mockBody[FIRST_NAME],
+        [LAST_NAME]: mockBody[LAST_NAME],
+        [EMAIL]: mockBody[EMAIL],
+        [POSITION]: mockBody[POSITION],
+      };
+
+      expect(result).toEqual(expected);
     });
   });
 });
