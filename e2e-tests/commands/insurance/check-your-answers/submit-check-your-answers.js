@@ -10,7 +10,7 @@ export default () => {
   // "Eligibility" check your answers
   cy.submitCheckYourAnswersForm();
 
-  // "Policy and exports" check your answers
+  // "Policy" check your answers
   cy.submitCheckYourAnswersForm();
 
   // "Your business" check your answers

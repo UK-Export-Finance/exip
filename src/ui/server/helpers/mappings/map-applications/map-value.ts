@@ -6,7 +6,7 @@ import { objectHasProperty } from '../../object';
 import { Application } from '../../../../types';
 
 const {
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     POLICY_TYPE,
     CONTRACT_POLICY: {
       SINGLE: { TOTAL_CONTRACT_VALUE },

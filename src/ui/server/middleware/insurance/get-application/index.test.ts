@@ -9,7 +9,7 @@ const {
   ELIGIBILITY_ROOT,
   ELIGIBILITY: { CHECK_IF_ELIGIBLE },
   ALL_SECTIONS,
-  POLICY_AND_EXPORTS,
+  POLICY,
   EXPORTER_BUSINESS,
   YOUR_BUYER,
   COMPLETE_OTHER_SECTIONS,
@@ -37,7 +37,7 @@ describe('middleware/insurance/get-application', () => {
     it('should return an array of routes', () => {
       const expected = [
         ALL_SECTIONS,
-        POLICY_AND_EXPORTS.ROOT,
+        POLICY.ROOT,
         EXPORTER_BUSINESS.ROOT,
         YOUR_BUYER.ROOT,
         DECLARATIONS.ROOT,

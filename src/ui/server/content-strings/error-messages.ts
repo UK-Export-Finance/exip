@@ -145,27 +145,27 @@ export const ERROR_MESSAGES = {
         INCORRECT_FORMAT: 'Enter the postcode for your broker in the correct format, like KT3 3QQ',
       },
     },
-    POLICY_AND_EXPORTS: {
+    POLICY: {
       TYPE_OF_POLICY: {
-        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.POLICY_TYPE]: {
+        [FIELD_IDS.INSURANCE.POLICY.POLICY_TYPE]: {
           IS_EMPTY: 'Select the type of policy you need',
         },
       },
       CONTRACT_POLICY: {
-        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.CREDIT_PERIOD_WITH_BUYER]: {
+        [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.CREDIT_PERIOD_WITH_BUYER]: {
           IS_EMPTY: 'Enter the credit period you have with your buyer',
           ABOVE_MAXIMUM: 'The credit period you have with your buyer cannot be more than 1000 characters.',
         },
-        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.REQUESTED_START_DATE]: {
+        [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.REQUESTED_START_DATE]: {
           INCORRECT_FORMAT: 'Enter a policy start date in the correct format, like 06 11 2023',
           NOT_A_NUMBER: 'Enter a policy start date in the correct format, like 06 11 2023',
           BEFORE_EARLIEST: 'You cannot enter a policy start date in the past - enter a future date',
         },
-        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
+        [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
           IS_EMPTY: 'Select currency you want your policy to be issued in',
         },
         SINGLE: {
-          [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {
+          [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {
             INCORRECT_FORMAT: 'Enter a contract completion date in the correct format, like 06 11 2023',
             NOT_A_NUMBER: 'Enter a contract completion date in the correct format, like 06 11 2023',
             BEFORE_EARLIEST: 'You cannot enter a contract completion date in the past - enter a future date',
@@ -174,21 +174,21 @@ export const ERROR_MESSAGES = {
             CANNOT_BE_THE_SAME: 'Your contract completion date cannot be the same as your policy start date',
             CANNOT_BE_BEFORE: 'Your contract completion date must be after your policy start date',
           },
-          [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
+          [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
             INCORRECT_FORMAT: 'Enter your contract value as a whole number - do not enter decimals',
             BELOW_MINIMUM: 'Your contract value must be 1 or more',
             ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £500,000',
           },
         },
         MULTIPLE: {
-          [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
+          [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
             IS_EMPTY: 'Select how many months you want to be insured for',
           },
-          [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
+          [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
             INCORRECT_FORMAT: 'Enter your estimated sales as a whole number - do not enter decimals',
             BELOW_MINIMUM: 'Your estimated sales must be 1 or more',
           },
-          [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.CONTRACT_POLICY.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
+          [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
             INCORRECT_FORMAT: 'Enter the maximum the buyer will owe as a whole number - do not enter decimals',
             BELOW_MINIMUM: 'The maximum the buyer will owe must be 1 or more',
             ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £500,000',
@@ -196,19 +196,19 @@ export const ERROR_MESSAGES = {
         },
       },
       ABOUT_GOODS_OR_SERVICES: {
-        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES.DESCRIPTION]: {
+        [FIELD_IDS.INSURANCE.POLICY.ABOUT_GOODS_OR_SERVICES.DESCRIPTION]: {
           IS_EMPTY: 'Enter the goods or services you will supply to the buyer',
           ABOVE_MAXIMUM: 'The goods or services you will supply to the buyer cannot be more than 1000 characters',
         },
-        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION]: {
+        [FIELD_IDS.INSURANCE.POLICY.ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION]: {
           IS_EMPTY: 'Select the final destination of the goods or services',
         },
       },
       NAME_ON_POLICY: {
-        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.NAME_ON_POLICY.NAME]: {
+        [FIELD_IDS.INSURANCE.POLICY.NAME_ON_POLICY.NAME]: {
           IS_EMPTY: 'Select whose name should appear on the insurance policy',
         },
-        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.NAME_ON_POLICY.POSITION]: {
+        [FIELD_IDS.INSURANCE.POLICY.NAME_ON_POLICY.POSITION]: {
           IS_EMPTY: 'Enter your position at the company',
         },
       },
@@ -222,7 +222,7 @@ export const ERROR_MESSAGES = {
         [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
           INCORRECT_FORMAT: 'Enter the email address of the person to be named on the policy',
         },
-        [FIELD_IDS.INSURANCE.POLICY_AND_EXPORTS.DIFFERENT_NAME_ON_POLICY.POSITION]: {
+        [FIELD_IDS.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY.POSITION]: {
           IS_EMPTY: 'Enter the position at the company of the person to be named on the policy',
         },
       },

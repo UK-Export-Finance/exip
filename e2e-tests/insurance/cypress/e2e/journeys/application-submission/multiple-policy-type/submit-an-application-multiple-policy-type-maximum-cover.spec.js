@@ -9,7 +9,7 @@ context('Insurance - submit an application - Multiple policy type, no broker - A
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
       policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
-      policyAndExportsMaximumValue: true,
+      policyMaximumValue: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

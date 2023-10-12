@@ -1,5 +1,5 @@
 import { field } from '../../pages/shared';
-import { SHARED_CONTRACT_POLICY } from '../../constants/field-ids/insurance/policy-and-exports';
+import { SHARED_CONTRACT_POLICY } from '../../constants/field-ids/insurance/policy';
 
 const { POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 

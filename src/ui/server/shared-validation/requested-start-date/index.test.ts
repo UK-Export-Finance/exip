@@ -5,14 +5,14 @@ import { ERROR_MESSAGES } from '../../content-strings';
 import generateValidationErrors from '../../helpers/validation';
 
 const {
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     CONTRACT_POLICY: { REQUESTED_START_DATE: FIELD_ID },
   },
 } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    POLICY_AND_EXPORTS: {
+    POLICY: {
       CONTRACT_POLICY: { [FIELD_ID]: ERROR_MESSAGE },
     },
   },

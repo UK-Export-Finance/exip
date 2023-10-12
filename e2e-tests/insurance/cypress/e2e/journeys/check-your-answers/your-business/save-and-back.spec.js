@@ -29,7 +29,7 @@ context('Insurance - Check your answers - Your business page - Save and back', (
       // To get past "Eligibility" check your answers page
       cy.submitCheckYourAnswersForm();
 
-      // To get past "Policy and exports" check your answers page
+      // To get past "Policy" check your answers page
       cy.submitCheckYourAnswersForm();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`;

@@ -3,7 +3,7 @@ import { field } from '../../pages/shared';
 import mockApplication from '../../fixtures/application';
 
 const {
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     DIFFERENT_NAME_ON_POLICY: {
       POSITION,
     },

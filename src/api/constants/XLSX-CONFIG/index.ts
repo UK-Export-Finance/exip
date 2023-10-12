@@ -3,7 +3,7 @@ import { isMultiplePolicyType } from '../../helpers/policy-type';
 import { Application, XLSXTitleRowIndexes, XLSXRowIndexes } from '../../types';
 
 const {
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE },
   },
   EXPORTER_BUSINESS: {
@@ -15,7 +15,7 @@ const {
  * XLSX_ROW_INDEXES
  * Generate row indexes for XLSX.
  * Depending on the submitted application data, the rows can be different:
- * - If the policy type is multiple - the XLSX's "Policy and exports” section has 1 additional row.
+ * - If the policy type is multiple - the XLSX's "Policy” section has 1 additional row.
  * - If "using a broker" is true - the XLSX's “About your business“ section has 3 additional rows.
  * @returns {Object}
  */
@@ -26,7 +26,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     HEADER: 1,
     EXPORTER_CONTACT_DETAILS: 9,
     KEY_INFORMATION: 14,
-    POLICY_AND_EXPORT: 20,
+    POLICY: 20,
     EXPORTER_BUSINESS: 30,
     BUYER: 49,
     ELIGIBILITY: 59,

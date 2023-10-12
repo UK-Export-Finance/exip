@@ -1,13 +1,13 @@
 import getNameEmailPositionFromOwnerAndPolicy from '.';
 import replaceCharacterCodesWithCharacters from '../replace-character-codes-with-characters';
 import ACCOUNT_FIELD_IDS from '../../constants/field-ids/insurance/account';
-import POLICY_AND_EXPORTS_FIELD_IDS from '../../constants/field-ids/insurance/policy-and-exports';
+import POLICY_FIELD_IDS from '../../constants/field-ids/insurance/policy';
 import { mockApplication, mockContact } from '../../test-mocks';
 
 const {
   NAME_ON_POLICY: { NAME, SAME_NAME, OTHER_NAME, IS_SAME_AS_OWNER },
   DIFFERENT_NAME_ON_POLICY: { POSITION },
-} = POLICY_AND_EXPORTS_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
 const { owner } = mockApplication;

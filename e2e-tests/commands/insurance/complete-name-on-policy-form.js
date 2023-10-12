@@ -3,7 +3,7 @@ import { field } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     NAME_ON_POLICY: {
       POSITION,
       SAME_NAME,

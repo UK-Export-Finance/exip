@@ -63,7 +63,7 @@ context('Insurance - no access to application page - signed in - check your answ
       cy.assertUrl(cannotAccessUrl);
     });
 
-    it(`should redirect to ${NO_ACCESS_TO_APPLICATION} when navigating to the Check your answers - Policy and exports page directly`, () => {
+    it(`should redirect to ${NO_ACCESS_TO_APPLICATION} when navigating to the Check your answers - Policy page directly`, () => {
       const url = `${insuranceRoute}/${firstApplicationReferenceNumber}${TYPE_OF_POLICY}`;
 
       cy.navigateToUrl(url);

@@ -1,11 +1,11 @@
 import hasPolicyContactChanged from '.';
-import POLICY_AND_EXPORTS_FIELD_IDS from '../../constants/field-ids/insurance/policy-and-exports';
+import POLICY_FIELD_IDS from '../../constants/field-ids/insurance/policy';
 import { mockContact } from '../../test-mocks';
 import { ApplicationPolicyContact } from '../../../types';
 
 const {
   NAME_ON_POLICY: { IS_SAME_AS_OWNER },
-} = POLICY_AND_EXPORTS_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 describe('server/helpers/is-policy-contact-changed', () => {
   const mockNewBody = {

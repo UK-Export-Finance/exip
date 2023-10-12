@@ -1,6 +1,6 @@
 import { ELIGIBILITY_TEMPLATES } from './eligibility';
 import { ACCOUNT_TEMPLATES } from './account';
-import { POLICY_AND_EXPORTS_TEMPLATES } from './policy-and-exports';
+import { POLICY_TEMPLATES } from './policy';
 import { BUSINESS_TEMPLATES } from './business';
 import { YOUR_BUYER_TEMPLATES } from './your-buyer';
 import { DECLARATIONS_TEMPLATES } from './declarations';
@@ -13,7 +13,7 @@ export const INSURANCE_TEMPLATES = {
   ACCOUNT: ACCOUNT_TEMPLATES,
   DASHBOARD: 'insurance/dashboard.njk',
   ALL_SECTIONS: 'insurance/all-sections.njk',
-  POLICY_AND_EXPORTS: POLICY_AND_EXPORTS_TEMPLATES,
+  POLICY: POLICY_TEMPLATES,
   EXPORTER_BUSINESS: BUSINESS_TEMPLATES,
   YOUR_BUYER: YOUR_BUYER_TEMPLATES,
   DECLARATIONS: DECLARATIONS_TEMPLATES,

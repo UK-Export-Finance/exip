@@ -1,5 +1,5 @@
 import ACCOUNT from '../constants/field-ids/insurance/account';
-import POLICY_AND_EXPORTS from '../constants/field-ids/insurance/policy-and-exports';
+import POLICY from '../constants/field-ids/insurance/policy';
 import EXPORTER_BUSINESS from '../constants/field-ids/insurance/business';
 import YOUR_BUYER from '../constants/field-ids/insurance/your-buyer';
 
@@ -9,7 +9,7 @@ const {
   CONTRACT_POLICY: {
     SINGLE: { CONTRACT_COMPLETION_DATE },
   },
-} = POLICY_AND_EXPORTS;
+} = POLICY;
 
 const {
   COMPANY_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
@@ -27,7 +27,7 @@ export const XLSX = {
   SECTION_TITLES: {
     KEY_INFORMATION: 'Key information',
     EXPORTER_CONTACT_DETAILS: 'Exporter contact details',
-    POLICY_AND_EXPORT: 'Type of policy and exports',
+    POLICY: 'Type of policy and exports',
     EXPORTER_BUSINESS: 'About your business',
     BUYER: 'Your buyer',
     ELIGIBILITY: 'Eligibility',

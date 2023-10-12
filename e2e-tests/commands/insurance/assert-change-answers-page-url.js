@@ -3,7 +3,7 @@ import { INSURANCE_ROOT } from '../../constants/routes/insurance';
 /**
  * assertChangeAnswersPageUrl
  * Construct and check a page URL for any "change/check answers" page.
- * E.g assertChangeAnswersPageUrl(1234, '/policy-and-exports/services', 'startDate', 'heading')
+ * E.g assertChangeAnswersPageUrl(1234, '/policy/services', 'startDate', 'heading')
  * @param {Number} Application reference number
  * @param {String} Expected route
  * @param {String} Field ID for the field that is being changed/navigated to

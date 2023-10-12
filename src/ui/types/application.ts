@@ -28,7 +28,7 @@ interface ApplicationEligibility extends InsuranceEligibilityCore {
   buyerCountry: Country;
 }
 
-interface ApplicationPolicyAndExport {
+interface ApplicationPolicy {
   id: string;
   policyType?: string;
   requestedStartDate?: Date;
@@ -163,7 +163,7 @@ interface ApplicationPolicyContact {
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   owner: ApplicationOwner;
-  policy: ApplicationPolicyAndExport;
+  policy: ApplicationPolicy;
   exportContract: ApplicationExportContract;
   company: ApplicationCompany;
   business: ApplicationBusiness;
@@ -178,7 +178,7 @@ interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore,
   buyerCountry: string;
 }
 
-type ApplicationFlat = ApplicationFlatCore & ApplicationPolicyAndExport & ApplicationCompany & ApplicationDeclaration;
+type ApplicationFlat = ApplicationFlatCore & ApplicationPolicy & ApplicationCompany & ApplicationDeclaration;
 
 interface ApplicationVersion {
   VERSION_NUMBER: string;
@@ -191,7 +191,7 @@ export {
   Application,
   ApplicationCompany,
   ApplicationFlat,
-  ApplicationPolicyAndExport,
+  ApplicationPolicy,
   ApplicationExporterSicCodes,
   ApplicationExporterindustrySectorNames,
   ApplicationBusiness,

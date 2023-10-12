@@ -1,5 +1,5 @@
 export * from './eligibility';
-export * from './policy-and-exports';
+export * from './policy';
 export * from './your-business';
 export * from './your-buyer';
 

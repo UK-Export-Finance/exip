@@ -1,12 +1,12 @@
 import { ApplicationOwner, ApplicationPolicyContact } from '../../../types';
 import replaceCharacterCodesWithCharacters from '../replace-character-codes-with-characters';
 import ACCOUNT_FIELD_IDS from '../../constants/field-ids/insurance/account';
-import POLICY_AND_EXPORTS_FIELD_IDS from '../../constants/field-ids/insurance/policy-and-exports';
+import POLICY_FIELD_IDS from '../../constants/field-ids/insurance/policy';
 
 const {
   NAME_ON_POLICY: { NAME, IS_SAME_AS_OWNER, SAME_NAME, OTHER_NAME },
   DIFFERENT_NAME_ON_POLICY: { POSITION },
-} = POLICY_AND_EXPORTS_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
 /**

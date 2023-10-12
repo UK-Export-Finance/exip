@@ -21,7 +21,7 @@ context('Insurance - Check your answers - Need to start new application - start 
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      // go to the check your answers - policy and exports page
+      // go to the check your answers - policy page
       task.link().click();
 
       // go to the "you need to start a new application" page

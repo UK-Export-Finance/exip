@@ -1,5 +1,5 @@
 import { XLSX } from '../../../content-strings';
-import { POLICY_AND_EXPORTS_FIELDS } from '../../../content-strings/fields/insurance';
+import { POLICY_FIELDS } from '../../../content-strings/fields/insurance';
 import FIELD_IDS from '../../../constants/field-ids/insurance';
 import xlsxRow from '../helpers/xlsx-row';
 import { Application } from '../../../types';
@@ -10,7 +10,7 @@ const {
 } = XLSX;
 
 const CONTENT_STRINGS = {
-  ...POLICY_AND_EXPORTS_FIELDS,
+  ...POLICY_FIELDS,
 };
 
 const {
@@ -20,7 +20,7 @@ const {
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME },
   },
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE },
   },
 } = FIELD_IDS;

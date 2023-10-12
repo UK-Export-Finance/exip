@@ -6,7 +6,7 @@ import { RequestBody } from '../../../types';
 
 const {
   INSURANCE: {
-    POLICY_AND_EXPORTS: {
+    POLICY: {
       CONTRACT_POLICY: { CREDIT_PERIOD_WITH_BUYER: FIELD_ID },
     },
   },
@@ -14,7 +14,7 @@ const {
 
 const {
   INSURANCE: {
-    POLICY_AND_EXPORTS: {
+    POLICY: {
       CONTRACT_POLICY: { [FIELD_ID]: ERROR_MESSAGE },
     },
   },

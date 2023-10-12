@@ -11,7 +11,7 @@ import { FIELD_IDS } from '../../constants';
 
 const {
   INSURANCE: {
-    POLICY_AND_EXPORTS: {
+    POLICY: {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
       },
@@ -21,7 +21,7 @@ const {
 
 const {
   INSURANCE: {
-    POLICY_AND_EXPORTS: {
+    POLICY: {
       CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES,
     },
   },

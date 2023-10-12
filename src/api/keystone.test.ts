@@ -373,7 +373,7 @@ describe('Application timestamp updates', () => {
     expect(updateApplicationTimestampSpy).toHaveBeenCalledWith(context, application.id);
   };
 
-  describe('PolicyAndExport', () => {
+  describe('Policy', () => {
     test('it should call updateApplication.timestamp', async () => {
       await context.query.Policy.updateOne({
         where: { id: application.policy.id },

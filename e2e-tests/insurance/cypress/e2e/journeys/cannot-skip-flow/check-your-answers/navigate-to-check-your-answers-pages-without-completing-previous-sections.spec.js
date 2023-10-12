@@ -41,7 +41,7 @@ context('Insurance - Check your answers - cannot skip to any Check your answers 
     cy.assertUrl(completeOtherSectionsUrl);
   });
 
-  it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Check your answers - Policy and exports page directly`, () => {
+  it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Check your answers - Policy page directly`, () => {
     const url = `${insuranceRoute}/${referenceNumber}${TYPE_OF_POLICY}`;
 
     cy.navigateToUrl(url);

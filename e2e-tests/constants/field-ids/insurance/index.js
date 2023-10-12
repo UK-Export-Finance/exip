@@ -1,6 +1,6 @@
 import { SHARED_ELIGIBILITY_FIELD_IDS } from '../shared-eligibility';
 import { ACCOUNT } from './account';
-import { POLICY_AND_EXPORTS } from './policy-and-exports';
+import { POLICY } from './policy';
 import { EXPORTER_BUSINESS } from './business';
 import { YOUR_BUYER } from './your-buyer';
 import { DECLARATIONS } from './declarations';
@@ -18,7 +18,7 @@ export const INSURANCE_FIELD_IDS = {
   },
   SUBMISSION_DEADLINE: 'submissionDeadline',
   ACCOUNT,
-  POLICY_AND_EXPORTS,
+  POLICY,
   EXPORTER_BUSINESS,
   YOUR_BUYER,
   DECLARATIONS,

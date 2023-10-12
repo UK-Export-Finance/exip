@@ -3,7 +3,7 @@ import { LINKS } from '../../links';
 import { BUTTONS } from '../../buttons';
 import ELIGIBILITY_CONTENT_STRINGS from './eligibility';
 import ACCOUNT from './account';
-import POLICY_AND_EXPORTS from './policy-and-exports';
+import POLICY from './policy';
 import EXPORTER_BUSINESS from './your-business';
 import YOUR_BUYER from './your-buyer';
 import DECLARATIONS from './declarations';
@@ -158,7 +158,7 @@ export default {
   EXPORTER_BUSINESS,
   ELIGIBILITY: ELIGIBILITY_CONTENT_STRINGS,
   NO_ACCESS_TO_APPLICATION_PAGE,
-  POLICY_AND_EXPORTS,
+  POLICY,
   SPEAK_TO_UKEF_EFM,
   YOUR_BUYER,
   DECLARATIONS,

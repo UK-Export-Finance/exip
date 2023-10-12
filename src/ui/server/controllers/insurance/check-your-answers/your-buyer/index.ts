@@ -74,7 +74,7 @@ export const get = async (req: Request, res: Response) => {
       ...pageVariables(referenceNumber),
     });
   } catch (err) {
-    console.error('Error getting check your answers - policy and exports %O', err);
+    console.error('Error getting check your answers - policy %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

@@ -1,12 +1,12 @@
 import { FIELD_IDS, APPLICATION } from '../../constants';
-import { singleContractPolicyPage } from '../../pages/insurance/policy-and-export';
+import { singleContractPolicyPage } from '../../pages/insurance/policy';
 import insurancePartials from '../../partials/insurance';
 import { field, submitButton } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
   INSURANCE: {
-    POLICY_AND_EXPORTS: {
+    POLICY: {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
         CREDIT_PERIOD_WITH_BUYER,
@@ -20,25 +20,25 @@ const {
 /**
  * completeAndSubmitSingleContractPolicyForm
  * @param {Object} Object with flags completing and submitting single contract policy form
- * - policyAndExportsMaximumValue: should submit an application with the maximum value of 500000
+ * - policyMaximumValue: should submit an application with the maximum value of 500000
  */
-export default ({ policyAndExportsMaximumValue = false }) => {
-  cy.keyboardInput(field(REQUESTED_START_DATE).dayInput(), application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].day);
-  cy.keyboardInput(field(REQUESTED_START_DATE).monthInput(), application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].month);
-  cy.keyboardInput(field(REQUESTED_START_DATE).yearInput(), application.POLICY_AND_EXPORTS[REQUESTED_START_DATE].year);
+export default ({ policyMaximumValue = false }) => {
+  cy.keyboardInput(field(REQUESTED_START_DATE).dayInput(), application.POLICY[REQUESTED_START_DATE].day);
+  cy.keyboardInput(field(REQUESTED_START_DATE).monthInput(), application.POLICY[REQUESTED_START_DATE].month);
+  cy.keyboardInput(field(REQUESTED_START_DATE).yearInput(), application.POLICY[REQUESTED_START_DATE].year);
 
-  cy.keyboardInput(field(CONTRACT_COMPLETION_DATE).dayInput(), application.POLICY_AND_EXPORTS[CONTRACT_COMPLETION_DATE].day);
-  cy.keyboardInput(field(CONTRACT_COMPLETION_DATE).monthInput(), application.POLICY_AND_EXPORTS[CONTRACT_COMPLETION_DATE].month);
-  cy.keyboardInput(field(CONTRACT_COMPLETION_DATE).yearInput(), application.POLICY_AND_EXPORTS[CONTRACT_COMPLETION_DATE].year);
+  cy.keyboardInput(field(CONTRACT_COMPLETION_DATE).dayInput(), application.POLICY[CONTRACT_COMPLETION_DATE].day);
+  cy.keyboardInput(field(CONTRACT_COMPLETION_DATE).monthInput(), application.POLICY[CONTRACT_COMPLETION_DATE].month);
+  cy.keyboardInput(field(CONTRACT_COMPLETION_DATE).yearInput(), application.POLICY[CONTRACT_COMPLETION_DATE].year);
 
-  if (policyAndExportsMaximumValue) {
-    cy.keyboardInput(singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input(), APPLICATION.POLICY_AND_EXPORT.TOTAL_VALUE_OF_CONTRACT.MAXIMUM);
+  if (policyMaximumValue) {
+    cy.keyboardInput(singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input(), APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT.MAXIMUM);
   } else {
-    cy.keyboardInput(singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input(), application.POLICY_AND_EXPORTS[TOTAL_CONTRACT_VALUE]);
+    cy.keyboardInput(singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input(), application.POLICY[TOTAL_CONTRACT_VALUE]);
   }
 
-  cy.keyboardInput(field(CREDIT_PERIOD_WITH_BUYER).input(), application.POLICY_AND_EXPORTS[CREDIT_PERIOD_WITH_BUYER]);
-  insurancePartials.policyCurrencyCodeFormField.input().select(application.POLICY_AND_EXPORTS[POLICY_CURRENCY_CODE]);
+  cy.keyboardInput(field(CREDIT_PERIOD_WITH_BUYER).input(), application.POLICY[CREDIT_PERIOD_WITH_BUYER]);
+  insurancePartials.policyCurrencyCodeFormField.input().select(application.POLICY[POLICY_CURRENCY_CODE]);
 
   submitButton().click();
 };

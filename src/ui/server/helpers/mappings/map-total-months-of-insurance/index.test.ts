@@ -1,10 +1,10 @@
 import { FIELD_IDS } from '../../../constants';
-import { POLICY_AND_EXPORTS_FIELDS as FIELDS } from '../../../content-strings/fields/insurance';
+import { POLICY_FIELDS as FIELDS } from '../../../content-strings/fields/insurance';
 import mapTotalMonthsOfCover from '.';
 import mapMonthString from '../../data-content-mappings/map-month-string';
 
 const {
-  POLICY_AND_EXPORTS: { CONTRACT_POLICY },
+  POLICY: { CONTRACT_POLICY },
 } = FIELD_IDS.INSURANCE;
 
 const {

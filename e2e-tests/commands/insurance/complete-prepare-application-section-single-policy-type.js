@@ -4,7 +4,7 @@ import { FIELD_VALUES } from '../../constants';
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+const task = taskList.prepareApplication.tasks.policy;
 
 /**
  * completePrepareYourApplicationSectionSingle
@@ -12,21 +12,21 @@ const task = taskList.prepareApplication.tasks.policyTypeAndExports;
  * @param {Object} Object with flags on how to complete specific parts of the application
  * - exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form. Defaults to "yes".
  * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
- * - policyAndExportsMaximumValue: Should submit an application with the maximum value of 500000
+ * - policyMaximumValue: Should submit an application with the maximum value of 500000
  * - differentPolicyContact: Should submit an application with a different policy contact to the owner
  * - referenceNumber: Application reference number
  */
 const completePrepareYourApplicationSectionSingle = ({
   exporterHasTradedWithBuyer,
   usingBroker,
-  policyAndExportsMaximumValue = false,
+  policyMaximumValue = false,
   differentPolicyContact,
   referenceNumber,
 }) => {
   task.link().click();
 
   cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-  cy.completeAndSubmitSingleContractPolicyForm({ policyAndExportsMaximumValue });
+  cy.completeAndSubmitSingleContractPolicyForm({ policyMaximumValue });
   cy.completeAndSubmitAboutGoodsOrServicesForm();
   cy.completeAndSubmitNameOnPolicyForm({ sameName: !differentPolicyContact });
 

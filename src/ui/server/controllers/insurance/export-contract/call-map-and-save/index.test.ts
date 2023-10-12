@@ -1,12 +1,12 @@
 import callMapAndSave from '.';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { Request, Response } from '../../../../../types';
-import generateValidationErrors from '../../policy-and-export/about-goods-or-services/validation';
+import generateValidationErrors from '../../policy/about-goods-or-services/validation';
 import mapAndSave from '../map-and-save';
 import { mockApplication, mockReq, mockRes } from '../../../../test-mocks';
 
 const {
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
   },
 } = INSURANCE_FIELD_IDS;

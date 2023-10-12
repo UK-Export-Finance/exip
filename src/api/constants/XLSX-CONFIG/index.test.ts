@@ -4,7 +4,7 @@ import { APPLICATION } from '../application';
 import { mockApplication } from '../../test-mocks';
 
 const {
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE },
   },
   EXPORTER_BUSINESS: {
@@ -64,7 +64,7 @@ describe('api/constants/XLSX-CONFIG', () => {
               HEADER: 1,
               EXPORTER_CONTACT_DETAILS: 9,
               KEY_INFORMATION: 14,
-              POLICY_AND_EXPORT: 20,
+              POLICY: 20,
               EXPORTER_BUSINESS: 30,
               BUYER: 52,
               ELIGIBILITY: 62,
@@ -94,7 +94,7 @@ describe('api/constants/XLSX-CONFIG', () => {
               HEADER: 1,
               EXPORTER_CONTACT_DETAILS: 9,
               KEY_INFORMATION: 14,
-              POLICY_AND_EXPORT: 20,
+              POLICY: 20,
               EXPORTER_BUSINESS: 30,
               BUYER: 49,
               ELIGIBILITY: 59,
@@ -134,7 +134,7 @@ describe('api/constants/XLSX-CONFIG', () => {
               HEADER: 1,
               EXPORTER_CONTACT_DETAILS: 9,
               KEY_INFORMATION: 14,
-              POLICY_AND_EXPORT: 20,
+              POLICY: 20,
               EXPORTER_BUSINESS: 31,
               BUYER: 53,
               ELIGIBILITY: 63,
@@ -164,7 +164,7 @@ describe('api/constants/XLSX-CONFIG', () => {
               HEADER: 1,
               EXPORTER_CONTACT_DETAILS: 9,
               KEY_INFORMATION: 14,
-              POLICY_AND_EXPORT: 20,
+              POLICY: 20,
               EXPORTER_BUSINESS: 31,
               BUYER: 50,
               ELIGIBILITY: 60,

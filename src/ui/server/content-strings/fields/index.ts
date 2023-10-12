@@ -3,7 +3,7 @@ import { LINKS } from '../links';
 
 const { MAX_COVER_PERIOD_YEARS } = ELIGIBILITY;
 const {
-  POLICY_AND_EXPORT: { TOTAL_MONTHS_OF_COVER },
+  POLICY: { TOTAL_MONTHS_OF_COVER },
 } = APPLICATION;
 
 export const FIELDS = {

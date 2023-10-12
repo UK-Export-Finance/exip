@@ -6,7 +6,7 @@ import dashboardPage from './dashboard';
 import allSectionsPage from './allSections';
 import * as eligibility from './eligibility';
 import * as account from './account';
-import * as policyAndExport from './policy-and-export';
+import * as policy from './policy';
 import * as checkYourAnswers from './check-your-answers';
 import * as declarations from './declarations';
 import completeOtherSectionsPage from './complete-other-sections';
@@ -22,7 +22,7 @@ const insurancePages = {
   allSectionsPage,
   eligibility,
   account,
-  policyAndExport,
+  policy,
   checkYourAnswers,
   declarations,
   applicationSubmittedPage,
