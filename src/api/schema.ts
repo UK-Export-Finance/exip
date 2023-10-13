@@ -80,17 +80,6 @@ export const lists = {
 
             modifiedData.referenceNumber = newReferenceNumber;
 
-            // generate and attach a new 'policy' relationship
-            const { id: policyId } = await context.db.Policy.createOne({
-              data: {},
-            });
-
-            modifiedData.policy = {
-              connect: {
-                id: policyId,
-              },
-            };
-
             // generate and attach a new 'export contract' relationship
             const { id: exportContractId } = await context.db.ExportContract.createOne({
               data: {},
@@ -210,23 +199,11 @@ export const lists = {
 
             const { referenceNumber } = item;
 
-            const { policyId, policyContactId, exportContractId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
+            const { policyContactId, exportContractId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-              },
-            });
-
-            // add the application ID to the policy entry.
-            await context.db.Policy.updateOne({
-              where: { id: policyId },
               data: {
                 application: {
                   connect: {
@@ -333,6 +310,14 @@ export const lists = {
   Policy: {
     fields: {
       application: relationship({ ref: 'Application' }),
+      /**
+       * NOTE:
+       * - For MVP, needPreCreditPeriodCover is part of the eligibility UI flow.
+       * - Post MVP/next phase needPreCreditPeriodCover is part of the application flow.
+       * - To avoid data migration, we save the eligibility answer as part of the "policy", instead of eligibility.
+       * - In the next phase, the defaultValue can be removed, to default null.
+       */
+      needPreCreditPeriodCover: nullableCheckbox(APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER),
       policyType: select({
         options: [
           { label: APPLICATION.POLICY_TYPE.SINGLE, value: APPLICATION.POLICY_TYPE.SINGLE },
@@ -614,7 +599,6 @@ export const lists = {
       hasCompaniesHouseNumber: checkbox(),
       otherPartiesInvolved: checkbox(),
       paidByLetterOfCredit: checkbox(),
-      needPreCreditPeriodCover: checkbox(),
       wantCoverOverMaxAmount: checkbox(),
       wantCoverOverMaxPeriod: checkbox(),
     },

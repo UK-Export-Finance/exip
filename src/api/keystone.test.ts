@@ -5,6 +5,7 @@ import accounts from './test-helpers/accounts';
 import getKeystoneContext from './test-helpers/get-keystone-context';
 import applications from './test-helpers/applications';
 import buyers from './test-helpers/buyers';
+import policies from './test-helpers/policies';
 import { mockAccount } from './test-mocks';
 import { Application, Account, Context } from './types';
 
@@ -27,13 +28,26 @@ describe('Create an Application', () => {
       },
     });
 
-    // update the application with buyer ID.
+    // create policy and associate with the application.
+    const policy = await policies.create({
+      context,
+      data: {
+        application: {
+          connect: { id: application.id },
+        },
+      },
+    });
+
+    // update the application with buyer and policy IDs.
     await applications.update({
       context,
       applicationId: application.id,
       data: {
         buyer: {
           connect: { id: buyer.id },
+        },
+        policy: {
+          connect: { id: policy.id },
         },
       },
     });
@@ -42,6 +56,9 @@ describe('Create an Application', () => {
       ...application,
       buyer: {
         id: buyer.id,
+      },
+      policy: {
+        id: policy.id,
       },
     };
   });
@@ -122,11 +139,6 @@ describe('Create an Application', () => {
     expect(typeof application.referenceNumber).toEqual('number');
   });
 
-  test('it should have a policy id', () => {
-    expect(application.policy).toBeDefined();
-    expect(typeof application.policy.id).toEqual('string');
-  });
-
   test('it should have a exportContract id', () => {
     expect(application.exportContract).toBeDefined();
     expect(typeof application.exportContract.id).toEqual('string');
@@ -182,17 +194,6 @@ describe('Create an Application', () => {
     });
 
     expect(business.application.id).toEqual(application.id);
-  });
-
-  test('it should add the application ID to the policy entry', async () => {
-    const policy = await context.query.Policy.findOne({
-      where: {
-        id: application.policy.id,
-      },
-      query: 'id application { id }',
-    });
-
-    expect(policy.application.id).toEqual(application.id);
   });
 
   test('it should add an application ID and default finalDestinationKnown field to the exportContract entry', async () => {
@@ -341,6 +342,16 @@ describe('Application timestamp updates', () => {
       },
     });
 
+    // create policy and associate with the application.
+    const policy = await policies.create({
+      context,
+      data: {
+        application: {
+          connect: { id: application.id },
+        },
+      },
+    });
+
     // update the application with buyer ID.
     await applications.update({
       context,
@@ -356,6 +367,9 @@ describe('Application timestamp updates', () => {
       ...application,
       buyer: {
         id: buyer.id,
+      },
+      policy: {
+        id: policy.id,
       },
     };
   });

@@ -1,5 +1,5 @@
 import Context from '@keystone-6/core/types';
-import { ApplicationCreateInput, BuyerCreateInput } from '.keystone/types'; // eslint-disable-line
+import { ApplicationCreateInput, BuyerCreateInput, PolicyCreateInput } from '.keystone/types'; // eslint-disable-line
 import { Account } from '../account';
 
 export interface TestHelperCreate {
@@ -29,4 +29,8 @@ export interface TestHelperApplicationUpdate {
 
 export interface TestHelperBuyerCreate extends TestHelperCreate {
   data: BuyerCreateInput;
+}
+
+export interface TestHelperPolicyCreate extends TestHelperCreate {
+  data: PolicyCreateInput;
 }

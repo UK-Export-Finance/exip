@@ -54,7 +54,10 @@ export const get = (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const summaryList = eligibilitySummaryList(application.eligibility);
+    const summaryList = eligibilitySummaryList({
+      ...application.eligibility,
+      ...application.policy,
+    });
 
     const fields = requiredFields();
 

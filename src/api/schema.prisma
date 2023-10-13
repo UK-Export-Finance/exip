@@ -82,19 +82,20 @@ model Application {
 }
 
 model Policy {
-  id                      String        @id @default(cuid())
-  application             Application?  @relation("Policy_application", fields: [applicationId], references: [id])
-  applicationId           String?       @map("application")
-  policyType              String?
-  requestedStartDate      DateTime?
-  contractCompletionDate  DateTime?
-  totalValueOfContract    Int?
-  creditPeriodWithBuyer   String        @default("")
-  policyCurrencyCode      String        @default("") @mysql.VarChar(1000)
-  totalMonthsOfCover      Int?
-  totalSalesToBuyer       Int?
-  maximumBuyerWillOwe     Int?
-  from_Application_policy Application[] @relation("Application_policy")
+  id                       String        @id @default(cuid())
+  application              Application?  @relation("Policy_application", fields: [applicationId], references: [id])
+  applicationId            String?       @map("application")
+  needPreCreditPeriodCover Boolean?
+  policyType               String?
+  requestedStartDate       DateTime?
+  contractCompletionDate   DateTime?
+  totalValueOfContract     Int?
+  creditPeriodWithBuyer    String        @default("")
+  policyCurrencyCode       String        @default("") @mysql.VarChar(1000)
+  totalMonthsOfCover       Int?
+  totalSalesToBuyer        Int?
+  maximumBuyerWillOwe      Int?
+  from_Application_policy  Application[] @relation("Application_policy")
 
   @@index([applicationId])
 }
@@ -293,7 +294,6 @@ model Eligibility {
   hasCompaniesHouseNumber      Boolean       @default(false)
   otherPartiesInvolved         Boolean       @default(false)
   paidByLetterOfCredit         Boolean       @default(false)
-  needPreCreditPeriodCover     Boolean       @default(false)
   wantCoverOverMaxAmount       Boolean       @default(false)
   wantCoverOverMaxPeriod       Boolean       @default(false)
   from_Application_eligibility Application[] @relation("Application_eligibility")

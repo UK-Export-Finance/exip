@@ -22,16 +22,18 @@ const {
  * @returns {String} Formatted insured amount or empty dash
  */
 const mapValue = (application: Application) => {
-  const { policy } = application;
+  if (application.policy) {
+    const { policy } = application;
 
-  const policyType = policy[POLICY_TYPE];
+    const policyType = policy[POLICY_TYPE];
 
-  if (isSinglePolicyType(policyType) && objectHasProperty(policy, TOTAL_CONTRACT_VALUE)) {
-    return formatCurrency(policy[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE);
-  }
+    if (isSinglePolicyType(policyType) && objectHasProperty(policy, TOTAL_CONTRACT_VALUE)) {
+      return formatCurrency(policy[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE);
+    }
 
-  if (isMultiplePolicyType(policyType) && objectHasProperty(policy, MAXIMUM_BUYER_WILL_OWE)) {
-    return formatCurrency(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE);
+    if (isMultiplePolicyType(policyType) && objectHasProperty(policy, MAXIMUM_BUYER_WILL_OWE)) {
+      return formatCurrency(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE);
+    }
   }
 
   return DEFAULT.EMPTY;

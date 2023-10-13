@@ -43,6 +43,7 @@ const POLICY = {
     SAME_NAME: 'sameName',
     OTHER_NAME: 'otherName',
     POSITION: 'position',
+    POLICY_CONTACT_EMAIL: 'policyContact.email',
   },
   DIFFERENT_NAME_ON_POLICY: {
     POLICY_CONTACT_DETAIL: 'policyContactDetail',

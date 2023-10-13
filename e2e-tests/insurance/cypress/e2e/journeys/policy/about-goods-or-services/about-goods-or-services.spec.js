@@ -160,14 +160,14 @@ context('Insurance - Policy - About goods or services page - As an exporter, I w
     });
 
     describe('after submitting the form', () => {
-      it('should retain the `type of policy` task status as `completed`', () => {
+      it('should retain the `type of policy and exports` task status as `in progress`', () => {
         cy.navigateToUrl(url);
 
         cy.completeAndSubmitAboutGoodsOrServicesForm();
 
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
-        const expected = TASKS.STATUS.COMPLETED;
+        const expected = TASKS.STATUS.IN_PROGRESS;
         cy.checkText(task.status(), expected);
       });
     });

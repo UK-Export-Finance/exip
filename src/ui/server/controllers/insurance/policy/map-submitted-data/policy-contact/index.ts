@@ -2,6 +2,7 @@ import { RequestBody, Application, ApplicationPolicyContact } from '../../../../
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import ACCOUNT_FIELD_IDS from '../../../../../constants/field-ids/insurance/account';
 import hasPolicyContactChanged from '../../../../../helpers/has-policy-contact-changed';
+import isPolicyContactDataSameAsOwner from '../../../../../helpers/is-policy-contact-data-same-as-owner';
 
 const {
   NAME_ON_POLICY: { NAME, POSITION, SAME_NAME, OTHER_NAME, IS_SAME_AS_OWNER },
@@ -21,6 +22,7 @@ const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
  */
 const mapSubmittedData = (formBody: RequestBody, application: Application): object => {
   const populatedData = formBody;
+  const samePolicyContact = isPolicyContactDataSameAsOwner(application.owner, formBody as ApplicationPolicyContact);
 
   /**
    * if SAME_NAME, then populate fields from application owner
@@ -50,13 +52,20 @@ const mapSubmittedData = (formBody: RequestBody, application: Application): obje
 
     const policyContactChanged = hasPolicyContactChanged(application.policyContact, formBody as ApplicationPolicyContact);
 
-    if (populatedData[POSITION] && policyContactChanged) {
+    if (policyContactChanged && !samePolicyContact) {
       populatedData[POSITION] = '';
+      populatedData[FIRST_NAME] = '';
+      populatedData[LAST_NAME] = '';
+      populatedData[EMAIL] = '';
     }
   }
 
   if (populatedData[NAME] === '') {
     delete populatedData[NAME];
+  }
+
+  if (samePolicyContact) {
+    populatedData[IS_SAME_AS_OWNER] = true;
   }
 
   return populatedData;

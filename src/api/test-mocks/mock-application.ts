@@ -17,7 +17,6 @@ export const mockApplicationEligibility = {
   hasCompaniesHouseNumber: true,
   otherPartiesInvolved: false,
   paidByLetterOfCredit: false,
-  needPreCreditPeriodCover: false,
   wantCoverOverMaxAmount: false,
   wantCoverOverMaxPeriod: false,
 };
@@ -26,6 +25,7 @@ const mockGenericPolicy = {
   requestedStartDate: add(new Date(), { months: 1 }),
   creditPeriodWithBuyer: ' Mock free text',
   policyCurrencyCode: mockCurrencies[0].isoCode,
+  needPreCreditPeriodCover: false,
 };
 
 export const mockSinglePolicy = {

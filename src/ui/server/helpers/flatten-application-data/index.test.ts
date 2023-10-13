@@ -1,4 +1,4 @@
-import flattenApplicationData from '.';
+import flattenApplicationData, { policyContactMapped } from '.';
 import getTrueAndFalseAnswers from '../get-true-and-false-answers';
 import { mockApplication } from '../../test-mocks';
 
@@ -6,7 +6,7 @@ describe('server/helpers/flatten-application-data', () => {
   it('should return an application with a flat structure with no nested objects', () => {
     const result = flattenApplicationData(mockApplication);
 
-    const { policy, exportContract, company, broker, business, buyer, sectionReview, declaration } = mockApplication;
+    const { policy, exportContract, company, broker, business, buyer, sectionReview, declaration, policyContact } = mockApplication;
 
     const expected = {
       ...mockApplication.eligibility,
@@ -27,6 +27,7 @@ describe('server/helpers/flatten-application-data', () => {
       ...business,
       ...broker,
       ...buyer,
+      ...policyContactMapped(policyContact),
       ...getTrueAndFalseAnswers(sectionReview),
       ...getTrueAndFalseAnswers(declaration),
     };

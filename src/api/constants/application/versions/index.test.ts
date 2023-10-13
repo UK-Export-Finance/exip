@@ -9,6 +9,7 @@ describe('api/constants/application/versions', () => {
         MAXIMUM_BUYER_CAN_OWE: 500000,
         TOTAL_VALUE_OF_CONTRACT: 500000,
         DEFAULT_FINAL_DESTINATION_KNOWN: true,
+        DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: false,
       },
     ];
 

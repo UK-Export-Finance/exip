@@ -76,7 +76,10 @@ describe('controllers/insurance/check-your-answers/eligibility', () => {
     it('should render template', async () => {
       await get(req, res);
 
-      const summaryList = eligibilitySummaryList(mockApplication.eligibility);
+      const summaryList = eligibilitySummaryList({
+        ...mockApplication.eligibility,
+        ...mockApplication.policy,
+      });
 
       const fields = requiredFields(mockApplication.policy.policyType);
 
