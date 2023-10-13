@@ -19,6 +19,7 @@ const taskList = {
   },
   prepareApplication: {
     groupHeading: () => cy.get(`[data-cy="task-list-group-heading-${PREPARE_APPLICATION.HEADING}"]`),
+    groupHint: () => cy.get(`[data-cy="task-list-group-hint-${PREPARE_APPLICATION.HINT}"]`),
     tasks: {
       business: {
         link: () => cy.get(`[data-cy="task-list-group-${PREPARE_APPLICATION.HEADING}-task-${PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS}-link"]`),

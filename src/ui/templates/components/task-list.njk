@@ -5,7 +5,17 @@
   {% set groups = params.groups %}
 
   {% for group in groups %}
-    <h2 class="govuk-heading-m" data-cy="task-list-group-heading-{{ group.title }}">{{ loop.index }}. {{ group.title }}</h2>
+
+    {% set headingClass = "govuk-heading-m" %}
+    {% set hintClass = "govuk-hint" %}
+
+    {% if group.hint %}
+      {% set headingClass = headingClass + " govuk-!-margin-bottom-0" %}
+      {% set hintClass = hintClass + " govuk-!-margin-top-0" %}
+    {% endif %}
+    
+    <h2 class="{{ headingClass }}" data-cy="task-list-group-heading-{{ group.title }}">{{ loop.index }}. {{ group.title }}</h2>
+    <p class="{{ hintClass }}" data-cy="task-list-group-hint-{{ group.hint }}">{{ group.hint }}</p>
 
     <dl class="govuk-summary-list ukef-task-list">
       {% for task in group.tasks %}

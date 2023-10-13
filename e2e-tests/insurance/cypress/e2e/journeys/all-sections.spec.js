@@ -73,12 +73,16 @@ context('Insurance - All sections - new application', () => {
     });
 
     describe('`prepare application` group', () => {
-      it('should render a group heading', () => {
+      it('should render a group heading and hint', () => {
         cy.navigateToUrl(url);
 
-        const expected = `2. ${TASKS.LIST.PREPARE_APPLICATION.HEADING}`;
+        const expectedHeading = `2. ${TASKS.LIST.PREPARE_APPLICATION.HEADING}`;
 
-        cy.checkText(taskList.prepareApplication.groupHeading(), expected);
+        cy.checkText(taskList.prepareApplication.groupHeading(), expectedHeading);
+
+        const expectedHint = TASKS.LIST.PREPARE_APPLICATION.HINT;
+
+        cy.checkText(taskList.prepareApplication.groupHint(), expectedHint);
       });
 
       describe('tasks', () => {
