@@ -103,6 +103,17 @@ export const post = async (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(payload);
 
   if (validationErrors) {
+    /**
+     * have to get name of owner to render radio (radio uses name and email of owner)
+     * combine with payload to ensure name shows on radio and submitted value before validatione error
+     */
+    const nameOfOwner = getNameEmailPositionFromOwnerAndPolicy(application.owner, application.policyContact);
+
+    const submittedValues = {
+      ...nameOfOwner,
+      ...payload,
+    };
+
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.NAME_ON_POLICY,
@@ -111,7 +122,7 @@ export const post = async (req: Request, res: Response) => {
       ...pageVariables(refNumber),
       userName: getUserNameFromSession(req.session.user),
       application,
-      submittedValues: payload,
+      submittedValues,
       validationErrors,
     });
   }

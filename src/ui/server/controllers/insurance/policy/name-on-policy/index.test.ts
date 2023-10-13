@@ -227,6 +227,12 @@ describe('controllers/insurance/policy/name-on-policy', () => {
         await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
+        const nameOfOwner = getNameEmailPositionFromOwnerAndPolicy(mockApplication.owner, mockApplication.policyContact);
+
+        const submittedValues = {
+          ...nameOfOwner,
+          ...payload,
+        };
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
@@ -236,7 +242,7 @@ describe('controllers/insurance/policy/name-on-policy', () => {
           ...pageVariables(refNumber),
           userName: getUserNameFromSession(req.session.user),
           application: mockApplication,
-          submittedValues: payload,
+          submittedValues,
           validationErrors: generateValidationErrors(payload),
         };
 
