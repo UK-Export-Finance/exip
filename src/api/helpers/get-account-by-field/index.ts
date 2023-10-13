@@ -2,7 +2,7 @@ import { Account, Context } from '../../types';
 
 const getAccountByField = async (context: Context, field: string, value: string): Promise<Account | boolean> => {
   try {
-    console.info('Getting account by field/value');
+    console.info('Getting account by field/value $s', `${field}, ${value}`);
 
     /**
      * Get an account by a particular field and value.
@@ -17,6 +17,8 @@ const getAccountByField = async (context: Context, field: string, value: string)
       },
       take: 1,
     });
+
+    console.info('temp logging - accountsArray ', accountsArray);
 
     // ensure that we have found an account with the requested field/value
     if (!accountsArray?.length || !accountsArray[0]) {

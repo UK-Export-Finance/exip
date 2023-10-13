@@ -20,6 +20,8 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
     // get the account the token is associated with.
     const account = await getAccountByField(context, VERIFICATION_HASH, variables.token);
 
+    console.info('temp logging - verifyAccountEmailAddress  - account ', account);
+
     if (account) {
       const { id } = account;
 
@@ -49,7 +51,9 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
         verificationExpiry: null,
       };
 
-      await update.account(context, id, accountUpdate);
+      const updatedAccount = await update.account(context, id, accountUpdate);
+
+      console.info('temp logging - updatedAccount %O', updatedAccount);
 
       return {
         success: true,

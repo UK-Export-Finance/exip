@@ -673,13 +673,14 @@ var update_application_default = updateApplication;
 // helpers/get-account-by-field/index.ts
 var getAccountByField = async (context, field, value) => {
   try {
-    console.info("Getting account by field/value");
+    console.info("Getting account by field/value $s", `${field}, ${value}`);
     const accountsArray = await context.db.Account.findMany({
       where: {
         [field]: { equals: value }
       },
       take: 1
     });
+    console.info("temp logging - accountsArray ", accountsArray);
     if (!accountsArray?.length || !accountsArray[0]) {
       console.info("Getting account by field - no account exists with the provided field/value");
       return false;
@@ -2279,6 +2280,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
     console.info("Verifying account email address");
     const account2 = await get_account_by_field_default(context, VERIFICATION_HASH, variables.token);
+    console.info("temp logging - verifyAccountEmailAddress  - account ", account2);
     if (account2) {
       const { id } = account2;
       const now = /* @__PURE__ */ new Date();
@@ -2297,7 +2299,8 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
         verificationHash: "",
         verificationExpiry: null
       };
-      await update_account_default.account(context, id, accountUpdate);
+      const updatedAccount = await update_account_default.account(context, id, accountUpdate);
+      console.info("temp logging - updatedAccount %O", updatedAccount);
       return {
         success: true,
         accountId: id,
