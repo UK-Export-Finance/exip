@@ -109,7 +109,7 @@ describe('server/helpers/string', () => {
 
     describe('one string is different', () => {
       it('should return false', () => {
-        const result = stringsAreDefined('test1', 'test');
+        const result = stringsAreEqual('test1', 'test');
 
         expect(result).toEqual(false);
       });
