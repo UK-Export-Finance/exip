@@ -12,6 +12,7 @@ const {
 /**
  * policyContactMapped
  * maps policyContact and replaces email with POLICY_CONTACT_EMAIL for task list
+ * POLICY_CONTACT_EMAIL - has dot notation to stop clashes with email from broker - allows task list to show completed for policy and for business
  * @param policyContact
  * @returns {Object}
  */
