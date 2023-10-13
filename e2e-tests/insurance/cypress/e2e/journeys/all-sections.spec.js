@@ -86,21 +86,6 @@ context('Insurance - All sections - new application', () => {
           cy.navigateToUrl(url);
         });
 
-        it('should render a `type of policy` task with link and `not started` status', () => {
-          const task = taskList.prepareApplication.tasks.policy;
-
-          const expectedHref = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY.TYPE_OF_POLICY}`;
-          const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY;
-
-          cy.checkLink(
-            task.link(),
-            expectedHref,
-            expectedText,
-          );
-
-          cy.checkText(task.status(), TASKS.STATUS.NOT_STARTED_YET);
-        });
-
         it('should render a `your business` task with link and `not started` status', () => {
           const task = taskList.prepareApplication.tasks.business;
 
@@ -121,6 +106,36 @@ context('Insurance - All sections - new application', () => {
 
           const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.BUYER;
           const expectedHref = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
+
+          cy.checkLink(
+            task.link(),
+            expectedHref,
+            expectedText,
+          );
+
+          cy.checkText(task.status(), TASKS.STATUS.NOT_STARTED_YET);
+        });
+
+        it('should render a `type of policy` task with link and `not started` status', () => {
+          const task = taskList.prepareApplication.tasks.policy;
+
+          const expectedHref = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY.TYPE_OF_POLICY}`;
+          const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY;
+
+          cy.checkLink(
+            task.link(),
+            expectedHref,
+            expectedText,
+          );
+
+          cy.checkText(task.status(), TASKS.STATUS.NOT_STARTED_YET);
+        });
+
+        it('should render an `export contract` task with link and `not started` status', () => {
+          const task = taskList.prepareApplication.tasks.exportContract;
+
+          const expectedHref = '#';
+          const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORT_CONTRACT;
 
           cy.checkLink(
             task.link(),

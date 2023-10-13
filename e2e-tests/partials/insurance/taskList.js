@@ -20,10 +20,6 @@ const taskList = {
   prepareApplication: {
     groupHeading: () => cy.get(`[data-cy="task-list-group-heading-${PREPARE_APPLICATION.HEADING}"]`),
     tasks: {
-      policy: {
-        link: () => cy.get(`[data-cy="task-list-group-${PREPARE_APPLICATION.HEADING}-task-${PREPARE_APPLICATION.TASKS.POLICY}-link"]`),
-        status: () => cy.get(`[data-cy="task-list-group-${PREPARE_APPLICATION.HEADING}-task-${PREPARE_APPLICATION.TASKS.POLICY}-status"]`),
-      },
       business: {
         link: () => cy.get(`[data-cy="task-list-group-${PREPARE_APPLICATION.HEADING}-task-${PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS}-link"]`),
         status: () => cy.get(`[data-cy="task-list-group-${PREPARE_APPLICATION.HEADING}-task-${PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS}-status"]`),
@@ -31,6 +27,14 @@ const taskList = {
       buyer: {
         link: () => cy.get(`[data-cy="task-list-group-${PREPARE_APPLICATION.HEADING}-task-${PREPARE_APPLICATION.TASKS.BUYER}-link"]`),
         status: () => cy.get(`[data-cy="task-list-group-${PREPARE_APPLICATION.HEADING}-task-${PREPARE_APPLICATION.TASKS.BUYER}-status"]`),
+      },
+      policy: {
+        link: () => cy.get(`[data-cy="task-list-group-${PREPARE_APPLICATION.HEADING}-task-${PREPARE_APPLICATION.TASKS.POLICY}-link"]`),
+        status: () => cy.get(`[data-cy="task-list-group-${PREPARE_APPLICATION.HEADING}-task-${PREPARE_APPLICATION.TASKS.POLICY}-status"]`),
+      },
+      exportContract: {
+        link: () => cy.get(`[data-cy="task-list-group-${PREPARE_APPLICATION.HEADING}-task-${PREPARE_APPLICATION.TASKS.EXPORT_CONTRACT}-link"]`),
+        status: () => cy.get(`[data-cy="task-list-group-${PREPARE_APPLICATION.HEADING}-task-${PREPARE_APPLICATION.TASKS.EXPORT_CONTRACT}-status"]`),
       },
     },
   },

@@ -15,9 +15,10 @@ export const TASKS = {
     PREPARE_APPLICATION: {
       HEADING: 'Prepare your application',
       TASKS: {
-        POLICY: 'Type of policy and exports',
-        EXPORTER_BUSINESS: 'Your business',
-        BUYER: 'Your buyer',
+        EXPORTER_BUSINESS: 'About your business',
+        BUYER: 'About your buyer',
+        POLICY: 'Your insurance policy',
+        EXPORT_CONTRACT: 'Your export contract',
       },
     },
     SUBMIT_APPLICATION: {
