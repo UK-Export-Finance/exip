@@ -11,13 +11,13 @@ const { taskList } = partials.insurancePartials;
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     NAME_ON_POLICY: { NAME, SAME_NAME, OTHER_NAME },
     DIFFERENT_NAME_ON_POLICY: {
       POSITION,
