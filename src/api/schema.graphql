@@ -392,6 +392,7 @@ input PolicyContactRelateToOneForCreateInput {
 type Policy {
   id: ID!
   application: Application
+  needPreCreditPeriodCover: Boolean
   policyType: String
   requestedStartDate: DateTime
   contractCompletionDate: DateTime
@@ -439,6 +440,7 @@ input PolicyOrderByInput {
 
 input PolicyUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
+  needPreCreditPeriodCover: Boolean
   policyType: String
   requestedStartDate: DateTime
   contractCompletionDate: DateTime
@@ -457,6 +459,7 @@ input PolicyUpdateArgs {
 
 input PolicyCreateInput {
   application: ApplicationRelateToOneForCreateInput
+  needPreCreditPeriodCover: Boolean
   policyType: String
   requestedStartDate: DateTime
   contractCompletionDate: DateTime
@@ -1388,7 +1391,6 @@ type Eligibility {
   hasCompaniesHouseNumber: Boolean
   otherPartiesInvolved: Boolean
   paidByLetterOfCredit: Boolean
-  needPreCreditPeriodCover: Boolean
   wantCoverOverMaxAmount: Boolean
   wantCoverOverMaxPeriod: Boolean
 }
@@ -1409,7 +1411,6 @@ input EligibilityWhereInput {
   hasCompaniesHouseNumber: BooleanFilter
   otherPartiesInvolved: BooleanFilter
   paidByLetterOfCredit: BooleanFilter
-  needPreCreditPeriodCover: BooleanFilter
   wantCoverOverMaxAmount: BooleanFilter
   wantCoverOverMaxPeriod: BooleanFilter
 }
@@ -1421,7 +1422,6 @@ input EligibilityOrderByInput {
   hasCompaniesHouseNumber: OrderDirection
   otherPartiesInvolved: OrderDirection
   paidByLetterOfCredit: OrderDirection
-  needPreCreditPeriodCover: OrderDirection
   wantCoverOverMaxAmount: OrderDirection
   wantCoverOverMaxPeriod: OrderDirection
 }
@@ -1434,7 +1434,6 @@ input EligibilityUpdateInput {
   hasCompaniesHouseNumber: Boolean
   otherPartiesInvolved: Boolean
   paidByLetterOfCredit: Boolean
-  needPreCreditPeriodCover: Boolean
   wantCoverOverMaxAmount: Boolean
   wantCoverOverMaxPeriod: Boolean
 }
@@ -1452,7 +1451,6 @@ input EligibilityCreateInput {
   hasCompaniesHouseNumber: Boolean
   otherPartiesInvolved: Boolean
   paidByLetterOfCredit: Boolean
-  needPreCreditPeriodCover: Boolean
   wantCoverOverMaxAmount: Boolean
   wantCoverOverMaxPeriod: Boolean
 }

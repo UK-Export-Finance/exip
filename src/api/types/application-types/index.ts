@@ -80,7 +80,7 @@ export interface ApplicationOwner extends Relationship {
 }
 
 export interface ApplicationPolicy extends Relationship {
-  requestedStartDate: Date;
+  requestedStartDate?: Date;
 }
 
 export interface ApplicationPolicyContact extends Relationship {
@@ -132,6 +132,7 @@ export interface ApplicationVersion {
   MAXIMUM_BUYER_CAN_OWE: number;
   TOTAL_VALUE_OF_CONTRACT: number;
   DEFAULT_FINAL_DESTINATION_KNOWN: boolean;
+  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: boolean;
 }
 
 export interface CreateAnApplicationVariables {
