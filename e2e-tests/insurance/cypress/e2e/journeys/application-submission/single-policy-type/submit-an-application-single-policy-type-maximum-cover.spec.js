@@ -7,7 +7,7 @@ context('Insurance - submit an application - Single policy type, no broker - As 
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
-      policyAndExportsMaximumValue: true,
+      policyMaximumValue: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

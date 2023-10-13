@@ -5,7 +5,7 @@ import { mockApplication } from '../../../../test-mocks';
 import generateValidationErrors from '../../../../helpers/validation';
 
 const {
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
   },
 } = INSURANCE_FIELD_IDS;

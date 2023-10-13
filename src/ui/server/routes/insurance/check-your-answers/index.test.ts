@@ -2,10 +2,7 @@ import { get, post } from '../../../test-mocks/mock-router';
 import { ROUTES } from '../../../constants';
 import { get as getCheckYourAnswersEligibility, post as postCheckYourAnswersEligibility } from '../../../controllers/insurance/check-your-answers/eligibility';
 import { get as getStartNewApplication } from '../../../controllers/insurance/check-your-answers/start-new-application';
-import {
-  get as getCheckYourAnswersPolicyAndExports,
-  post as postCheckYourAnswersPolicyAndExports,
-} from '../../../controllers/insurance/check-your-answers/policy-and-exports';
+import { get as getCheckYourAnswersPolicy, post as postCheckYourAnswersPolicy } from '../../../controllers/insurance/check-your-answers/policy';
 import {
   get as getCheckYourAnswersYourBusiness,
   post as postCheckYourAnswersYourBusiness,
@@ -31,8 +28,8 @@ describe('routes/insurance/check-your-answers', () => {
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.START_NEW_APPLICATION}`, getStartNewApplication);
 
-    expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, getCheckYourAnswersPolicyAndExports);
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, postCheckYourAnswersPolicyAndExports);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, getCheckYourAnswersPolicy);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, postCheckYourAnswersPolicy);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.TYPE_OF_POLICY_SAVE_AND_BACK}`, saveAndBack);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUSINESS}`, getCheckYourAnswersYourBusiness);

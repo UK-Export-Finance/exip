@@ -15,7 +15,7 @@ import { get as feedbackGet, post as feedbackPost } from '../../controllers/insu
 import { get as feedbackConfirmationGet } from '../../controllers/insurance/feedback/feedback-confirmation';
 
 import insuranceEligibilityRoutes from './eligibility';
-import insurancePolicyAndExportsRouter from './policy-and-exports';
+import insurancePolicyRouter from './policy';
 import insuranceBusinessRouter from './business';
 import insuranceYourBuyerRouter from './your-buyer';
 import insuranceDeclarationsRouter from './declarations';
@@ -48,7 +48,7 @@ insuranceRouter.get(INSURANCE_ROUTES.NO_ACCESS_APPLICATION_SUBMITTED, noAccessAp
 
 insuranceRouter.use('/', insuranceEligibilityRoutes);
 insuranceRouter.use('/', insuranceAccountRouter);
-insuranceRouter.use(INSURANCE_ROOT, insurancePolicyAndExportsRouter);
+insuranceRouter.use(INSURANCE_ROOT, insurancePolicyRouter);
 insuranceRouter.use(INSURANCE_ROOT, insuranceBusinessRouter);
 insuranceRouter.use(INSURANCE_ROOT, insuranceYourBuyerRouter);
 insuranceRouter.use(INSURANCE_ROOT, insuranceDeclarationsRouter);

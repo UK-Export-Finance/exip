@@ -8,14 +8,14 @@ import { isNumber } from '../../helpers/number';
 import { RequestBody } from '../../../types';
 
 const {
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     CONTRACT_POLICY: { REQUESTED_START_DATE: FIELD_ID },
   },
 } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    POLICY_AND_EXPORTS: {
+    POLICY: {
       CONTRACT_POLICY: { [FIELD_ID]: ERROR_MESSAGE },
     },
   },

@@ -1,10 +1,10 @@
 import { FIELD_IDS, FIELD_VALUES } from '../../constants';
-import { typeOfPolicyPage } from '../../pages/insurance/policy-and-export';
+import { typeOfPolicyPage } from '../../pages/insurance/policy';
 import { submitButton } from '../../pages/shared';
 
 const {
   INSURANCE: {
-    POLICY_AND_EXPORTS: { POLICY_TYPE },
+    POLICY: { POLICY_TYPE },
   },
 } = FIELD_IDS;
 

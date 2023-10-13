@@ -1,6 +1,6 @@
 const CHECK_YOUR_ANSWERS = {
   ELIGIBILITY: 'eligibility',
-  POLICY_AND_EXPORT: 'policy',
+  POLICY: 'policy',
   EXPORTER_BUSINESS: 'business',
   BUYER: 'buyer',
 };

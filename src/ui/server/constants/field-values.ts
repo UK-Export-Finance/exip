@@ -1,6 +1,6 @@
 import { APPLICATION } from './application';
 
-const { POLICY_TYPE, POLICY_AND_EXPORT } = APPLICATION;
+const { POLICY_TYPE, POLICY } = APPLICATION;
 
 export const FIELD_VALUES = {
   OPTIONAL_COOKIES: {
@@ -15,7 +15,7 @@ export const FIELD_VALUES = {
     // default multiple policy length in months
     MULTIPLE: 12,
   },
-  TOTAL_MONTHS_OF_COVER: Array.from(Array(POLICY_AND_EXPORT.TOTAL_MONTHS_OF_COVER).keys()),
+  TOTAL_MONTHS_OF_COVER: Array.from(Array(POLICY.TOTAL_MONTHS_OF_COVER).keys()),
   YES: 'Yes',
   NO: 'No',
 };

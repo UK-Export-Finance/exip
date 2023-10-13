@@ -328,8 +328,8 @@ export const lists = {
       contractCompletionDate: timestamp(),
       totalValueOfContract: integer({
         validation: {
-          min: APPLICATION.POLICY_AND_EXPORT.TOTAL_VALUE_OF_CONTRACT.MINIMUM,
-          max: APPLICATION.POLICY_AND_EXPORT.TOTAL_VALUE_OF_CONTRACT.MAXIMUM,
+          min: APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT.MINIMUM,
+          max: APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT.MAXIMUM,
         },
       }),
       creditPeriodWithBuyer: text(),

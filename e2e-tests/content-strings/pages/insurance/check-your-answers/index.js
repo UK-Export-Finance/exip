@@ -22,7 +22,7 @@ export const START_NEW_APPLICATION = {
   INSET: 'You can continue to make changes to your existing application until',
 };
 
-export const POLICY_AND_EXPORTS = {
+export const POLICY = {
   ...SHARED,
   PAGE_TITLE: 'Type of policy and exports',
 };

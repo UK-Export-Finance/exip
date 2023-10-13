@@ -249,7 +249,7 @@ export const get = (req: Request, res: Response) =>
   });
 ```
 
-A more complete example with validation handling and a POST request can be found [here](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/controllers/insurance/policy-and-export/type-of-policy/index.ts).
+A more complete example with validation handling and a POST request can be found [here](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/controllers/insurance/policy/type-of-policy/index.ts).
 
 ### Quote tool controllers
 

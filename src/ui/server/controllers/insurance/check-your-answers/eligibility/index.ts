@@ -107,7 +107,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`);
   } catch (err) {
-    console.error('Error updating check your answers - policy and exports %O', err);
+    console.error('Error updating check your answers - policy %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

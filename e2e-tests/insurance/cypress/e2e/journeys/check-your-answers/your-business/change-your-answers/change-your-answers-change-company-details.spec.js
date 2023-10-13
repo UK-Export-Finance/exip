@@ -70,7 +70,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       // To get past "Eligibility" check your answers page
       cy.submitCheckYourAnswersForm();
 
-      // To get past "Policy and exports" check your answers page
+      // To get past "Policy" check your answers page
       cy.submitCheckYourAnswersForm();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;

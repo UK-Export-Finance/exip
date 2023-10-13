@@ -86,11 +86,11 @@ context('Insurance - All sections - new application', () => {
           cy.navigateToUrl(url);
         });
 
-        it('should render a `type of policy and exports` task with link and `not started` status', () => {
-          const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+        it('should render a `type of policy` task with link and `not started` status', () => {
+          const task = taskList.prepareApplication.tasks.policy;
 
-          const expectedHref = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY_AND_EXPORTS.TYPE_OF_POLICY}`;
-          const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY_TYPE_AND_EXPORTS;
+          const expectedHref = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY.TYPE_OF_POLICY}`;
+          const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY;
 
           cy.checkLink(
             task.link(),

@@ -2,7 +2,7 @@ export interface XLSXTitleRowIndexes {
   HEADER: number;
   KEY_INFORMATION: number;
   EXPORTER_CONTACT_DETAILS?: number;
-  POLICY_AND_EXPORT: number;
+  POLICY: number;
   EXPORTER_BUSINESS: number;
   BUYER: number;
   ELIGIBILITY: number;

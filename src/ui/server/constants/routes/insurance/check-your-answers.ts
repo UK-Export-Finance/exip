@@ -1,5 +1,5 @@
 const ROOT = '/check-your-answers';
-const TYPE_OF_POLICY_ROOT = `${ROOT}/type-of-policy-and-exports`;
+const TYPE_OF_POLICY_ROOT = `${ROOT}/type-of-policy`;
 const YOUR_BUSINESS_ROOT = `${ROOT}/your-business`;
 const YOUR_BUYER_ROOT = `${ROOT}/your-buyer`;
 

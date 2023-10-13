@@ -1,6 +1,6 @@
 import { ELIGIBILITY } from '../../eligibility';
 import { ACCOUNT } from './account';
-import { POLICY_AND_EXPORTS } from './policy-and-export';
+import { POLICY } from './policy';
 import { EXPORTER_BUSINESS } from './business';
 import { YOUR_BUYER } from './your-buyer';
 import { DECLARATIONS } from './declarations';
@@ -38,7 +38,7 @@ export const INSURANCE_ROUTES = {
   DASHBOARD: `${INSURANCE_ROOT}/dashboard`,
   DASHBOARD_PAGE: `${INSURANCE_ROOT}/dashboard/page`,
   ALL_SECTIONS: '/all-sections',
-  POLICY_AND_EXPORTS,
+  POLICY,
   EXPORTER_BUSINESS,
   YOUR_BUYER,
   DECLARATIONS,

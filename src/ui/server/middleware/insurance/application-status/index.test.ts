@@ -1,7 +1,7 @@
 import applicationStatusMiddleware from '.';
 import { ROUTES } from '../../../constants/routes';
 import { APPLICATION } from '../../../constants';
-import POLICY_AND_EXPORTS_FIELD_IDS from '../../../constants/field-ids/insurance/policy-and-exports';
+import POLICY_FIELD_IDS from '../../../constants/field-ids/insurance/policy';
 import { mockReq, mockRes, mockApplication, mockAccount } from '../../../test-mocks';
 import { Next, Request, Response } from '../../../../types';
 
@@ -11,7 +11,7 @@ const {
 
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },
-} = POLICY_AND_EXPORTS_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const { referenceNumber } = mockApplication;
 

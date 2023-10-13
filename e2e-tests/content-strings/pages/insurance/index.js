@@ -1,7 +1,7 @@
 import { LINKS } from '../../links';
 import { BUTTONS } from '../../buttons';
 import { ELIGIBILITY, ROUTES, CONTACT_DETAILS } from '../../../constants';
-import POLICY_AND_EXPORTS from './policy-and-exports';
+import POLICY from './policy';
 import * as ELIGIBILITY_PAGES from './eligibility';
 import * as ACCOUNT_PAGES from './account';
 import * as EXPORTER_BUSINESS from './business';
@@ -159,7 +159,7 @@ const INSURANCE = {
   EXPORTER_BUSINESS,
   ELIGIBILITY: ELIGIBILITY_PAGES,
   NO_ACCESS_TO_APPLICATION_PAGE,
-  POLICY_AND_EXPORTS,
+  POLICY,
   SPEAK_TO_UKEF_EFM,
   YOUR_BUYER,
   DECLARATIONS,

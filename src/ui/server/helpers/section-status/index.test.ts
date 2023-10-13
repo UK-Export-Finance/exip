@@ -6,7 +6,7 @@ import { mockApplication } from '../../test-mocks';
 describe('server/helpers/section-status', () => {
   describe('when the section is in progress (does not have all required fields provided)', () => {
     it(`should return ${TASKS.STATUS.IN_PROGRESS}`, () => {
-      const mockFields = ['a', 'b', INSURANCE_FIELD_IDS.POLICY_AND_EXPORTS.POLICY_TYPE];
+      const mockFields = ['a', 'b', INSURANCE_FIELD_IDS.POLICY.POLICY_TYPE];
 
       const result = sectionStatus(mockFields, mockApplication);
 
@@ -16,7 +16,7 @@ describe('server/helpers/section-status', () => {
 
   describe('when the section is completed (has all required fields provided)', () => {
     it(`should return ${TASKS.STATUS.COMPLETED}`, () => {
-      const mockFields = [INSURANCE_FIELD_IDS.POLICY_AND_EXPORTS.POLICY_TYPE];
+      const mockFields = [INSURANCE_FIELD_IDS.POLICY.POLICY_TYPE];
 
       const result = sectionStatus(mockFields, mockApplication);
 

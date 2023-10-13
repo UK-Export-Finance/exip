@@ -1,9 +1,9 @@
 import { ApplicationPolicyContact } from '../../../types';
-import POLICY_AND_EXPORTS_FIELD_IDS from '../../constants/field-ids/insurance/policy-and-exports';
+import POLICY_FIELD_IDS from '../../constants/field-ids/insurance/policy';
 
 const {
   NAME_ON_POLICY: { IS_SAME_AS_OWNER },
-} = POLICY_AND_EXPORTS_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 /**
  * checks if policyContact isSameAsOwner has changed

@@ -88,13 +88,13 @@ var shared_eligibility_default = SHARED_ELIGIBILITY;
 // types/account/index.ts
 var account_default = {};
 
-// constants/field-ids/insurance/policy-and-exports/index.ts
+// constants/field-ids/insurance/policy/index.ts
 var SHARED_CONTRACT_POLICY = {
   REQUESTED_START_DATE: "requestedStartDate",
   CREDIT_PERIOD_WITH_BUYER: "creditPeriodWithBuyer",
   POLICY_CURRENCY_CODE: "policyCurrencyCode"
 };
-var POLICY_AND_EXPORTS = {
+var POLICY = {
   ...shared_default,
   TYPE_OF_POLICY: {
     POLICY_TYPE: shared_default.POLICY_TYPE
@@ -117,7 +117,7 @@ var POLICY_AND_EXPORTS = {
     FINAL_DESTINATION_COUNTRY: "finalDestinationCountry"
   }
 };
-var policy_and_exports_default = POLICY_AND_EXPORTS;
+var policy_default = POLICY;
 
 // constants/field-ids/insurance/business/index.ts
 var EXPORTER_BUSINESS = {
@@ -209,7 +209,7 @@ var declarations_default = DECLARATIONS;
 // constants/field-ids/insurance/check-your-answers/index.ts
 var CHECK_YOUR_ANSWERS = {
   ELIGIBILITY: "eligibility",
-  POLICY_AND_EXPORT: "policy",
+  POLICY: "policy",
   EXPORTER_BUSINESS: "business",
   BUYER: "buyer"
 };
@@ -229,7 +229,7 @@ var INSURANCE_FIELD_IDS = {
   },
   SUBMISSION_DEADLINE: "submissionDeadline",
   ACCOUNT: account_default,
-  POLICY_AND_EXPORTS: policy_and_exports_default,
+  POLICY: policy_default,
   EXPORTER_BUSINESS: business_default,
   YOUR_BUYER: your_buyer_default,
   DECLARATIONS: declarations_default,
@@ -349,7 +349,7 @@ var APPLICATION = {
     SINGLE: "Single contract policy",
     MULTIPLE: "Multiple contract policy"
   },
-  POLICY_AND_EXPORT: {
+  POLICY: {
     TOTAL_VALUE_OF_CONTRACT: {
       MINIMUM: 1,
       MAXIMUM: LATEST_VERSION.TOTAL_VALUE_OF_CONTRACT
@@ -406,7 +406,7 @@ var EXTERNAL_API_ENDPOINTS = {
 };
 
 // constants/field-values/index.ts
-var { POLICY_TYPE, POLICY_AND_EXPORT } = application_default;
+var { POLICY_TYPE, POLICY: POLICY2 } = application_default;
 var FIELD_VALUES = {
   OPTIONAL_COOKIES: {
     ACCEPT: "accept",
@@ -420,7 +420,7 @@ var FIELD_VALUES = {
     // default multiple policy length in months
     MULTIPLE: 12
   },
-  TOTAL_MONTHS_OF_COVER: Array.from(Array(POLICY_AND_EXPORT.TOTAL_MONTHS_OF_COVER).keys()),
+  TOTAL_MONTHS_OF_COVER: Array.from(Array(POLICY2.TOTAL_MONTHS_OF_COVER).keys()),
   YES: "Yes",
   NO: "No"
 };
@@ -431,7 +431,7 @@ var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TY
 
 // constants/XLSX-CONFIG/index.ts
 var {
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 }
   },
   EXPORTER_BUSINESS: {
@@ -444,7 +444,7 @@ var XLSX_ROW_INDEXES = (application2) => {
     HEADER: 1,
     EXPORTER_CONTACT_DETAILS: 9,
     KEY_INFORMATION: 14,
-    POLICY_AND_EXPORT: 20,
+    POLICY: 20,
     EXPORTER_BUSINESS: 30,
     BUYER: 49,
     ELIGIBILITY: 59
@@ -1011,8 +1011,8 @@ var lists = {
       contractCompletionDate: (0, import_fields.timestamp)(),
       totalValueOfContract: (0, import_fields.integer)({
         validation: {
-          min: APPLICATION.POLICY_AND_EXPORT.TOTAL_VALUE_OF_CONTRACT.MINIMUM,
-          max: APPLICATION.POLICY_AND_EXPORT.TOTAL_VALUE_OF_CONTRACT.MAXIMUM
+          min: APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT.MINIMUM,
+          max: APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT.MAXIMUM
         }
       }),
       creditPeriodWithBuyer: (0, import_fields.text)(),
@@ -3615,11 +3615,11 @@ var FIELDS_ELIGIBILITY = {
   }
 };
 
-// content-strings/fields/insurance/policy-and-exports/index.ts
-var { POLICY_AND_EXPORTS: POLICY_AND_EXPORTS2 } = FIELD_IDS.INSURANCE;
-var { CONTRACT_POLICY, ABOUT_GOODS_OR_SERVICES } = POLICY_AND_EXPORTS2;
-var POLICY_AND_EXPORTS_FIELDS = {
-  [POLICY_AND_EXPORTS2.POLICY_TYPE]: {
+// content-strings/fields/insurance/policy/index.ts
+var { POLICY: POLICY3 } = FIELD_IDS.INSURANCE;
+var { CONTRACT_POLICY, ABOUT_GOODS_OR_SERVICES } = POLICY3;
+var POLICY_FIELDS = {
+  [POLICY3.POLICY_TYPE]: {
     ID: FIELD_IDS.POLICY_TYPE,
     SUMMARY: {
       TITLE: "Policy type"
@@ -3896,7 +3896,7 @@ var {
   CONTRACT_POLICY: {
     SINGLE: { CONTRACT_COMPLETION_DATE }
   }
-} = policy_and_exports_default;
+} = policy_default;
 var {
   COMPANY_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
   YOUR_COMPANY: { WEBSITE: WEBSITE2, PHONE_NUMBER: PHONE_NUMBER2 },
@@ -3911,7 +3911,7 @@ var XLSX = {
   SECTION_TITLES: {
     KEY_INFORMATION: "Key information",
     EXPORTER_CONTACT_DETAILS: "Exporter contact details",
-    POLICY_AND_EXPORT: "Type of policy and exports",
+    POLICY: "Type of policy",
     EXPORTER_BUSINESS: "About your business",
     BUYER: "Your buyer",
     ELIGIBILITY: "Eligibility"
@@ -3991,7 +3991,7 @@ var {
   FIELDS: FIELDS4
 } = XLSX;
 var CONTENT_STRINGS = {
-  ...POLICY_AND_EXPORTS_FIELDS
+  ...POLICY_FIELDS
 };
 var {
   EXPORTER_BUSINESS: {
@@ -4000,7 +4000,7 @@ var {
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { COUNTRY: COUNTRY2, NAME: BUYER_COMPANY_NAME2 }
   },
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE3 }
   }
 } = insurance_default;
@@ -4030,13 +4030,13 @@ var format_currency_default = formatCurrency;
 var mapMonthString = (answer) => answer === 1 ? `${answer} month` : `${answer} months`;
 var map_month_string_default = mapMonthString;
 
-// generate-xlsx/map-application-to-XLSX/map-policy-and-export/index.ts
+// generate-xlsx/map-application-to-XLSX/map-policy/index.ts
 var CONTENT_STRINGS2 = {
-  ...POLICY_AND_EXPORTS_FIELDS,
-  ...POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY,
-  ...POLICY_AND_EXPORTS_FIELDS.ABOUT_GOODS_OR_SERVICES,
-  SINGLE: POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY.SINGLE,
-  MULTIPLE: POLICY_AND_EXPORTS_FIELDS.CONTRACT_POLICY.MULTIPLE
+  ...POLICY_FIELDS,
+  ...POLICY_FIELDS.CONTRACT_POLICY,
+  ...POLICY_FIELDS.ABOUT_GOODS_OR_SERVICES,
+  SINGLE: POLICY_FIELDS.CONTRACT_POLICY.SINGLE,
+  MULTIPLE: POLICY_FIELDS.CONTRACT_POLICY.MULTIPLE
 };
 var {
   TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE4 },
@@ -4048,11 +4048,11 @@ var {
     POLICY_CURRENCY_CODE
   },
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_COUNTRY }
-} = insurance_default.POLICY_AND_EXPORTS;
-var mapPolicyAndExportIntro = (application2) => {
+} = insurance_default.POLICY;
+var mapPolicyIntro = (application2) => {
   const { policy } = application2;
   const mapped = [
-    xlsx_row_default(XLSX.SECTION_TITLES.POLICY_AND_EXPORT, ""),
+    xlsx_row_default(XLSX.SECTION_TITLES.POLICY, ""),
     xlsx_row_default(String(CONTENT_STRINGS2[POLICY_TYPE4].SUMMARY?.TITLE), policy[POLICY_TYPE4]),
     xlsx_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policy[REQUESTED_START_DATE], "dd-MMM-yy"))
   ];
@@ -4073,7 +4073,7 @@ var mapMultiplePolicyFields = (application2) => {
     xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
   ];
 };
-var mapPolicyAndExportOutro = (application2) => {
+var mapPolicyOutro = (application2) => {
   const { exportContract, policy } = application2;
   const mapped = [
     xlsx_row_default(String(CONTENT_STRINGS2[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policy[CREDIT_PERIOD_WITH_BUYER]),
@@ -4083,8 +4083,8 @@ var mapPolicyAndExportOutro = (application2) => {
   ];
   return mapped;
 };
-var mapPolicyAndExport = (application2) => {
-  let mapped = mapPolicyAndExportIntro(application2);
+var mapPolicy = (application2) => {
+  let mapped = mapPolicyIntro(application2);
   const policyType = application2.policy[POLICY_TYPE4];
   if (isSinglePolicyType(policyType)) {
     mapped = [...mapped, ...mapSinglePolicyFields(application2)];
@@ -4092,10 +4092,10 @@ var mapPolicyAndExport = (application2) => {
   if (isMultiplePolicyType(policyType)) {
     mapped = [...mapped, ...mapMultiplePolicyFields(application2)];
   }
-  mapped = [...mapped, ...mapPolicyAndExportOutro(application2)];
+  mapped = [...mapped, ...mapPolicyOutro(application2)];
   return mapped;
 };
-var map_policy_and_export_default = mapPolicyAndExport;
+var map_policy_default = mapPolicy;
 
 // generate-xlsx/map-application-to-XLSX/helpers/xlsx-new-line/index.ts
 var NEW_LINE = "\r\n";
@@ -4263,7 +4263,7 @@ var mapApplicationToXLSX = (application2) => {
       xlsx_row_seperator_default,
       ...map_secondary_key_information_default(application2),
       xlsx_row_seperator_default,
-      ...map_policy_and_export_default(application2),
+      ...map_policy_default(application2),
       xlsx_row_seperator_default,
       ...map_exporter_default(application2),
       xlsx_row_seperator_default,

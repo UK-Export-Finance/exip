@@ -1,4 +1,4 @@
-import mapPolicyAndExport from '.';
+import mapPolicy from '.';
 import { REFERENCE_NUMBER, DATE_SUBMITTED, TIME_SUBMITTED } from '../../../content-strings/fields/insurance';
 import { XLSX } from '../../../content-strings';
 import ACCOUNT from '../../../constants/field-ids/insurance/account';
@@ -13,7 +13,7 @@ const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-key-information', () => {
   it('should return an array of mapped key information', () => {
-    const result = mapPolicyAndExport(mockApplication);
+    const result = mapPolicy(mockApplication);
 
     const expected = [
       xlsxRow(REFERENCE_NUMBER.SUMMARY.TITLE, mockApplication.referenceNumber),

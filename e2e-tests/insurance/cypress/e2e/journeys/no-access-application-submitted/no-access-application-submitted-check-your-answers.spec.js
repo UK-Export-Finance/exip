@@ -42,7 +42,7 @@ context('Insurance - no access to application when application is submitted - ch
       cy.assertUrl(noAccessApplicationSubmittedUrl);
     });
 
-    it(`should redirect to ${NO_ACCESS_APPLICATION_SUBMITTED} when navigating to the Check your answers - Policy and exports page directly`, () => {
+    it(`should redirect to ${NO_ACCESS_APPLICATION_SUBMITTED} when navigating to the Check your answers - Policy page directly`, () => {
       const url = `${insuranceRoute}/${referenceNumber}${TYPE_OF_POLICY}`;
 
       cy.navigateToUrl(url);

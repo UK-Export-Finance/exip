@@ -15,7 +15,7 @@ const START_NEW_APPLICATION = {
   INSET: 'You can continue to make changes to your existing application until',
 };
 
-const POLICY_AND_EXPORTS = {
+const POLICY = {
   ...SHARED,
   PAGE_TITLE: 'Type of policy and exports',
 };
@@ -33,7 +33,7 @@ const YOUR_BUYER = {
 export default {
   ELIGIBILITY,
   START_NEW_APPLICATION,
-  POLICY_AND_EXPORTS,
+  POLICY,
   YOUR_BUSINESS,
   YOUR_BUYER,
 };

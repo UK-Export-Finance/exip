@@ -2,7 +2,7 @@ import ROW_SEPERATOR from './helpers/xlsx-row-seperator';
 import mapKeyInformation from './map-key-information';
 import mapExporterContactDetails from './map-exporter-contact-details';
 import mapSecondaryKeyInformation from './map-secondary-key-information';
-import mapPolicyAndExport from './map-policy-and-export';
+import mapPolicy from './map-policy';
 import mapExporter from './map-exporter';
 import mapBuyer from './map-buyer';
 import mapEligibility from './map-eligibility';
@@ -29,7 +29,7 @@ const mapApplicationToXLSX = (application: Application) => {
 
       ROW_SEPERATOR,
 
-      ...mapPolicyAndExport(application),
+      ...mapPolicy(application),
 
       ROW_SEPERATOR,
 

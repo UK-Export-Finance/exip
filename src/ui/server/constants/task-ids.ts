@@ -9,7 +9,7 @@ export const TASK_IDS = {
     ELIGIBILITY: 'eligibility',
   },
   PREPARE_APPLICATION: {
-    POLICY_TYPE_AND_EXPORTS: 'policyTypeAndExports',
+    POLICY: 'policy',
     EXPORTER_BUSINESS: 'business',
     BUYER: 'buyer',
   },

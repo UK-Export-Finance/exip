@@ -27,7 +27,7 @@ export const APPLICATION = {
     SINGLE: 'Single contract policy',
     MULTIPLE: 'Multiple contract policy',
   },
-  POLICY_AND_EXPORT: {
+  POLICY: {
     TOTAL_VALUE_OF_CONTRACT: {
       MINIMUM: 1,
       MAXIMUM: LATEST_VERSION.TOTAL_VALUE_OF_CONTRACT,

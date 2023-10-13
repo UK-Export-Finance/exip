@@ -6,7 +6,7 @@ import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { eligibilitySummaryList } from '../../../../helpers/summary-lists/eligibility';
-import requiredFields from '../../../../helpers/required-fields/policy-and-exports';
+import requiredFields from '../../../../helpers/required-fields/policy';
 import sectionStatus from '../../../../helpers/section-status';
 import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';

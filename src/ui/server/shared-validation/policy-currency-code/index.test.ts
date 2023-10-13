@@ -5,7 +5,7 @@ import emptyFieldValidation from '../empty-field';
 
 const {
   INSURANCE: {
-    POLICY_AND_EXPORTS: {
+    POLICY: {
       CONTRACT_POLICY: { POLICY_CURRENCY_CODE: FIELD_ID },
     },
   },
@@ -13,7 +13,7 @@ const {
 
 const {
   INSURANCE: {
-    POLICY_AND_EXPORTS: {
+    POLICY: {
       CONTRACT_POLICY: { [FIELD_ID]: ERROR_MESSAGE },
     },
   },

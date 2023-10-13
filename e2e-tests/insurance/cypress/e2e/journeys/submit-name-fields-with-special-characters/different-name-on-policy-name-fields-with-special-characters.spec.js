@@ -12,7 +12,7 @@ const {
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY_AND_EXPORTS: { DIFFERENT_NAME_ON_POLICY },
+  POLICY: { DIFFERENT_NAME_ON_POLICY },
 } = INSURANCE_ROUTES;
 
 const {
@@ -38,7 +38,7 @@ context('Insurance - Name fields - `Policy contact` name fields should render sp
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      tasks.policyTypeAndExports.link().click();
+      tasks.policy.link().click();
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
@@ -53,7 +53,7 @@ context('Insurance - Name fields - `Policy contact` name fields should render sp
     cy.deleteApplication(referenceNumber);
   });
 
-  describe("'policy and exports - policy contact' page", () => {
+  describe("'policy - policy contact' page", () => {
     describe('when submitting name fields with special characters and going back to the page', () => {
       beforeEach(() => {
         cy.saveSession();

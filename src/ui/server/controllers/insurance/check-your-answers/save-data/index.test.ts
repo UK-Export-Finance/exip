@@ -5,7 +5,7 @@ import { FIELD_IDS } from '../../../../constants';
 import { mockApplication } from '../../../../test-mocks';
 
 const {
-  CHECK_YOUR_ANSWERS: { POLICY_AND_EXPORT },
+  CHECK_YOUR_ANSWERS: { POLICY },
 } = FIELD_IDS.INSURANCE;
 
 describe('controllers/insurance/check-your-answers/save-data', () => {
@@ -13,7 +13,7 @@ describe('controllers/insurance/check-your-answers/save-data', () => {
   let updateApplicationSpy = jest.fn(() => Promise.resolve(mockUpdateApplicationResponse));
 
   const mockFormBody = {
-    [POLICY_AND_EXPORT]: 'true',
+    [POLICY]: 'true',
   };
 
   beforeEach(() => {

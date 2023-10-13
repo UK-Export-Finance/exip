@@ -1,12 +1,12 @@
 import save from '.';
 import api from '../../../../api';
-import generateValidationErrors from '../../policy-and-export/type-of-policy/validation';
+import generateValidationErrors from '../../policy/type-of-policy/validation';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { mockApplication } from '../../../../test-mocks';
 
 const {
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
   },
 } = INSURANCE_FIELD_IDS;

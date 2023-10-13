@@ -2,10 +2,7 @@ import express from 'express';
 import { CHECK_YOUR_ANSWERS } from '../../../constants/routes/insurance/check-your-answers';
 import { get as getCheckYourAnswersEligibility, post as postCheckYourAnswersEligibility } from '../../../controllers/insurance/check-your-answers/eligibility';
 import { get as getStartNewApplication } from '../../../controllers/insurance/check-your-answers/start-new-application';
-import {
-  get as getCheckYourAnswersPolicyAndExports,
-  post as postCheckYourAnswersPolicyAndExports,
-} from '../../../controllers/insurance/check-your-answers/policy-and-exports';
+import { get as getCheckYourAnswersPolicy, post as postCheckYourAnswersPolicy } from '../../../controllers/insurance/check-your-answers/policy';
 import {
   get as getCheckYourAnswersYourBusiness,
   post as postCheckYourAnswersYourBusiness,
@@ -21,8 +18,8 @@ insuranceCheckYourAnswersRouter.post(`/:referenceNumber${CHECK_YOUR_ANSWERS.ELIG
 
 insuranceCheckYourAnswersRouter.get(`/:referenceNumber${CHECK_YOUR_ANSWERS.START_NEW_APPLICATION}`, getStartNewApplication);
 
-insuranceCheckYourAnswersRouter.get(`/:referenceNumber${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, getCheckYourAnswersPolicyAndExports);
-insuranceCheckYourAnswersRouter.post(`/:referenceNumber${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, postCheckYourAnswersPolicyAndExports);
+insuranceCheckYourAnswersRouter.get(`/:referenceNumber${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, getCheckYourAnswersPolicy);
+insuranceCheckYourAnswersRouter.post(`/:referenceNumber${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, postCheckYourAnswersPolicy);
 insuranceCheckYourAnswersRouter.post(`/:referenceNumber${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY_SAVE_AND_BACK}`, saveAndBack);
 
 insuranceCheckYourAnswersRouter.get(`/:referenceNumber${CHECK_YOUR_ANSWERS.YOUR_BUSINESS}`, getCheckYourAnswersYourBusiness);

@@ -1,8 +1,8 @@
 import insurancePartials from '../../partials/insurance';
 import { LINKS } from '../../content-strings';
-import { POLICY_AND_EXPORT_FIELDS } from '../../content-strings/fields/insurance/policy-and-exports';
+import { POLICY_FIELDS } from '../../content-strings/fields/insurance/policy';
 import { SUPPORTED_CURRENCIES } from '../../constants';
-import { SHARED_CONTRACT_POLICY } from '../../constants/field-ids/insurance/policy-and-exports';
+import { SHARED_CONTRACT_POLICY } from '../../constants/field-ids/insurance/policy';
 
 const { POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 
@@ -10,7 +10,7 @@ const checkPolicyCurrencyCodeInput = () => {
   const fieldId = POLICY_CURRENCY_CODE;
   const field = insurancePartials.policyCurrencyCodeFormField;
 
-  const CONTENT_STRINGS = POLICY_AND_EXPORT_FIELDS.CONTRACT_POLICY[fieldId];
+  const CONTENT_STRINGS = POLICY_FIELDS.CONTRACT_POLICY[fieldId];
 
   field.label().invoke('text').then((text) => {
     expect(text.trim()).equal(CONTENT_STRINGS.LABEL);

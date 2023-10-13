@@ -25,7 +25,7 @@ const {
       HAS_MINIMUM_UK_GOODS_OR_SERVICES,
       VALID_EXPORTER_LOCATION,
     },
-    POLICY_AND_EXPORTS: {
+    POLICY: {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
         CREDIT_PERIOD_WITH_BUYER,
@@ -117,7 +117,7 @@ const application = {
     [PRE_CREDIT_PERIOD]: false,
     [ELIGIBILITY_COMPANIES_HOUSE_NUMBER]: true,
   },
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     [REQUESTED_START_DATE]: {
       day: '1',
       month: (startDate.getMonth() + 1),

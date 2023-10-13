@@ -1,10 +1,10 @@
 import canAccessSubmitYourApplicationRoutes from '.';
-import POLICY_AND_EXPORTS_FIELD_IDS from '../../constants/field-ids/insurance/policy-and-exports';
+import POLICY_FIELD_IDS from '../../constants/field-ids/insurance/policy';
 import { mockApplication } from '../../test-mocks';
 
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },
-} = POLICY_AND_EXPORTS_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 describe('helpers/can-access-submit-your-application-routes', () => {
   describe('when an application has all required fields/answers', () => {

@@ -23,7 +23,7 @@ const {
       NAME,
     },
   },
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     CONTRACT_POLICY: {
       SINGLE: { TOTAL_CONTRACT_VALUE },
       MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
@@ -93,15 +93,15 @@ context('Insurance - Dashboard - populated application', () => {
     });
   });
 
-  describe('when completing the `policy and exports - tell us about your policy` form - single policy type', () => {
+  describe('when completing the `policy - tell us about your policy` form - single policy type', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
       // go to application
       table.body.row(referenceNumber).submittedLink().click();
 
-      // go to the 'policy and exports' section via task list
-      const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+      // go to the 'policy' section via task list
+      const task = taskList.prepareApplication.tasks.policy;
 
       task.link().click();
 
@@ -117,21 +117,21 @@ context('Insurance - Dashboard - populated application', () => {
 
       const cell = table.body.row(referenceNumber).value();
 
-      const expected = formatCurrency(application.POLICY_AND_EXPORTS[TOTAL_CONTRACT_VALUE]);
+      const expected = formatCurrency(application.POLICY[TOTAL_CONTRACT_VALUE]);
 
       cy.checkText(cell, expected);
     });
   });
 
-  describe('when completing the `policy and exports - tell us about your policy` form - multiple policy type', () => {
+  describe('when completing the `policy - tell us about your policy` form - multiple policy type', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
       // go to application
       table.body.row(referenceNumber).submittedLink().click();
 
-      // go to the 'policy and exports' section via task list
-      const task = taskList.prepareApplication.tasks.policyTypeAndExports;
+      // go to the 'policy' section via task list
+      const task = taskList.prepareApplication.tasks.policy;
 
       task.link().click();
 
@@ -147,7 +147,7 @@ context('Insurance - Dashboard - populated application', () => {
 
       const cell = table.body.row(referenceNumber).value();
 
-      const expected = formatCurrency(application.POLICY_AND_EXPORTS[MAXIMUM_BUYER_WILL_OWE]);
+      const expected = formatCurrency(application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
 
       cy.checkText(cell, expected);
     });

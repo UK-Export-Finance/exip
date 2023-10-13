@@ -3,7 +3,7 @@ import { Application, ApplicationFlat, ApplicationPolicyContact } from '../../..
 import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 
 const {
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     NAME_ON_POLICY: { IS_SAME_AS_OWNER, POSITION, POLICY_CONTACT_EMAIL },
   },
   ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },

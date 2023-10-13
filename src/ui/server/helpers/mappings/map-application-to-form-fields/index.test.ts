@@ -9,7 +9,7 @@ import transformNumberToString from '../../transform-number-to-string';
 
 const {
   SUBMISSION_DEADLINE,
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
       SINGLE: { CONTRACT_COMPLETION_DATE },

@@ -5,7 +5,7 @@ import formatCurrency from '../../format-currency';
 import mockApplication, { mockSinglePolicy, mockMultiplePolicy } from '../../../test-mocks/mock-application';
 
 const {
-  POLICY_AND_EXPORTS: {
+  POLICY: {
     CONTRACT_POLICY: {
       SINGLE: { TOTAL_CONTRACT_VALUE },
       MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
