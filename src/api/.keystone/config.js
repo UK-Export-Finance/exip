@@ -2275,37 +2275,37 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
     console.info("Verifying account email address");
     const account2 = await get_account_by_field_default(context, VERIFICATION_HASH, variables.token);
-    console.info("temp logging - verifyAccountEmailAddress  - account ", account2);
-    if (account2) {
-      const { id } = account2;
-      const now = /* @__PURE__ */ new Date();
-      const canActivateAccount = (0, import_date_fns3.isBefore)(now, account2[VERIFICATION_EXPIRY]);
-      if (!canActivateAccount) {
-        console.info("Unable to verify account email - verification period has expired");
-        return {
-          expired: true,
-          success: false,
-          accountId: id
-        };
-      }
-      console.info("Verified account email - updating account to be verified");
-      const accountUpdate = {
-        isVerified: true,
-        verificationHash: "",
-        verificationExpiry: null
-      };
-      const updatedAccount = await update_account_default.account(context, id, accountUpdate);
-      console.info("temp logging - updatedAccount %O", updatedAccount);
+    console.info("temp logging - verifyAccountEmailAddress  - account %O", account2);
+    if (!account2) {
+      console.info("Unable to verify account email address - account does not exist");
       return {
-        success: true,
-        accountId: id,
-        emailRecipient: account2[EMAIL2]
+        success: false,
+        invalid: true
       };
     }
-    console.info("Unable to verify account email - no account found from the provided %s", VERIFICATION_HASH);
+    const { id } = account2;
+    const now = /* @__PURE__ */ new Date();
+    const canActivateAccount = (0, import_date_fns3.isBefore)(now, account2[VERIFICATION_EXPIRY]);
+    if (!canActivateAccount) {
+      console.info("Unable to verify account email - verification period has expired");
+      return {
+        expired: true,
+        success: false,
+        accountId: id
+      };
+    }
+    console.info("Verified account email - updating account to be verified");
+    const accountUpdate = {
+      isVerified: true,
+      verificationHash: "",
+      verificationExpiry: null
+    };
+    const updatedAccount = await update_account_default.account(context, id, accountUpdate);
+    console.info("temp logging - updatedAccount %O", updatedAccount);
     return {
-      success: false,
-      invalid: true
+      success: true,
+      accountId: id,
+      emailRecipient: account2[EMAIL2]
     };
   } catch (err) {
     console.error("Error verifying account email address %O", err);
