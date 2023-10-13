@@ -1,4 +1,4 @@
-import { isEmptyString, stripCommas } from '.';
+import { isEmptyString, stripCommas, isPopulatedString, stringsAreDefined, stringsAreEqual } from '.';
 
 describe('server/helpers/string', () => {
   describe('isEmptyString', () => {
@@ -15,6 +15,33 @@ describe('server/helpers/string', () => {
         const result = isEmptyString('Mock');
 
         expect(result).toEqual(false);
+      });
+    });
+  });
+
+  describe('isPopulatedString', () => {
+    describe('when a string is empty', () => {
+      it('should return false', () => {
+        const result = isPopulatedString('');
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when a string is undefined', () => {
+      it('should return false', () => {
+        // required to test if undefined
+        const result = isPopulatedString(undefined);
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('when a string is not empty', () => {
+      it('should return true', () => {
+        const result = isPopulatedString('test');
+
+        expect(result).toEqual(true);
       });
     });
   });
@@ -41,6 +68,50 @@ describe('server/helpers/string', () => {
         const result = stripCommas('123456');
 
         expect(result).toEqual('123456');
+      });
+    });
+  });
+
+  describe('stringsAreDefined', () => {
+    describe('both strings are defined', () => {
+      it('should return true', () => {
+        const result = stringsAreDefined('test', 'test');
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe('one string is defined', () => {
+      it('should return false', () => {
+        const result = stringsAreDefined('test', undefined);
+
+        expect(result).toEqual(false);
+      });
+    });
+
+    describe('both strings are undefined', () => {
+      it('should return false', () => {
+        const result = stringsAreDefined(undefined, undefined);
+
+        expect(result).toEqual(false);
+      });
+    });
+  });
+
+  describe('stringsAreEqual', () => {
+    describe('both strings are equal', () => {
+      it('should return true', () => {
+        const result = stringsAreEqual('test', 'test');
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe('one string is different', () => {
+      it('should return false', () => {
+        const result = stringsAreEqual('test1', 'test');
+
+        expect(result).toEqual(false);
       });
     });
   });

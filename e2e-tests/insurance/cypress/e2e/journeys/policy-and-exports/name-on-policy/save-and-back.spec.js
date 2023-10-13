@@ -4,6 +4,7 @@ import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
+import { TASKS } from '../../../../../../content-strings';
 
 const { taskList } = partials.insurancePartials;
 
@@ -28,6 +29,8 @@ const {
 const task = taskList.prepareApplication.tasks.policyTypeAndExports;
 
 const baseUrl = Cypress.config('baseUrl');
+
+const { IN_PROGRESS, COMPLETED } = TASKS.STATUS;
 
 context('Insurance - Policy and exports - Name on policy - Save and go back', () => {
   let referenceNumber;
@@ -68,6 +71,10 @@ context('Insurance - Policy and exports - Name on policy - Save and go back', ()
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.assertUrl(allSectionsUrl);
     });
+
+    it('should retain the status of task `type of policy and exports` as `in progress`', () => {
+      cy.checkText(task.status(), IN_PROGRESS);
+    });
   });
 
   describe('when submitting other name via `save and go back` button', () => {
@@ -80,6 +87,10 @@ context('Insurance - Policy and exports - Name on policy - Save and go back', ()
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.assertUrl(allSectionsUrl);
+    });
+
+    it('should retain the status of task `type of policy and exports` as `in progress`', () => {
+      cy.checkText(task.status(), IN_PROGRESS);
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
@@ -101,6 +112,10 @@ context('Insurance - Policy and exports - Name on policy - Save and go back', ()
       cy.assertUrl(allSectionsUrl);
     });
 
+    it('should retain the status of task `type of policy and exports` as `in progress`', () => {
+      cy.checkText(task.status(), IN_PROGRESS);
+    });
+
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
@@ -120,6 +135,10 @@ context('Insurance - Policy and exports - Name on policy - Save and go back', ()
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.assertUrl(allSectionsUrl);
+    });
+
+    it('should change the status of task `type of policy and exports` to `completed`', () => {
+      cy.checkText(task.status(), COMPLETED);
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {

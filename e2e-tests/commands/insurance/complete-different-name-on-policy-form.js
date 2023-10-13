@@ -22,15 +22,17 @@ const { POLICY_CONTACT } = mockApplication;
  * Runs through the different name on policy form in the "policy" section
  * @param {String} First name
  * @param {String} Last name
+ * @param {String} email
  */
 const completeDifferentNameOnPolicyForm = ({
   firstName = POLICY_CONTACT[FIRST_NAME],
   lastName = POLICY_CONTACT[LAST_NAME],
+  email = POLICY_CONTACT[EMAIL],
 }) => {
   cy.keyboardInput(field(FIRST_NAME).input(), firstName);
   cy.keyboardInput(field(LAST_NAME).input(), lastName);
 
-  cy.keyboardInput(field(EMAIL).input(), POLICY_CONTACT[EMAIL]);
+  cy.keyboardInput(field(EMAIL).input(), email);
 
   cy.keyboardInput(field(POSITION).input(), POLICY_CONTACT[POSITION]);
 };
