@@ -1,6 +1,7 @@
 import accounts from './accounts';
 import createAnEligibility from '../helpers/create-an-eligibility';
 import createABuyer from '../helpers/create-a-buyer';
+import createAPolicy from '../helpers/create-a-policy';
 import { FIELD_VALUES } from '../constants';
 import {
   mockApplicationEligibility,
@@ -52,7 +53,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
   // create a new application
   const application = (await context.query.Application.createOne({
     query:
-      'id referenceNumber submissionCount policy { id requestedStartDate } policyContact { id } exportContract { id } owner { id } company { id } business { id } broker { id } declaration { id }',
+      'id referenceNumber submissionCount policyContact { id } exportContract { id } owner { id } company { id } business { id } broker { id } declaration { id }',
     data: {
       owner: {
         connect: {
@@ -68,7 +69,15 @@ export const createFullApplication = async (context: Context, policyType?: strin
   // create buyer and associate with the application.
   const buyer = await createABuyer(context, country.id, application.id);
 
-  // update the application with eligibility and buyer IDs.
+  // create policy and associate with the application.
+  const policy = await createAPolicy(context, application.id);
+
+  /**
+   * update the application with:
+   * 1) Eligibility relationship ID
+   * 2) Buyer relationship ID
+   * 3) Policy relationship ID
+   */
   await context.db.Application.updateOne({
     where: { id: application.id },
     data: {
@@ -78,10 +87,12 @@ export const createFullApplication = async (context: Context, policyType?: strin
       buyer: {
         connect: { id: buyer.id },
       },
+      policy: {
+        connect: { id: policy.id },
+      },
     },
   });
 
-  // update the policy so we have a full data set.
   /**
    * Update the policy so we have a full data set.
    * If a multiple policy type is passed, use mock multiple policy data.
@@ -97,7 +108,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
 
   (await context.query.Policy.updateOne({
     where: {
-      id: application.policy.id,
+      id: policy.id,
     },
     data: policyData,
     query: 'id',
@@ -164,6 +175,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
     companySicCodes,
     owner: account,
     business,
+    policy,
     policyContact,
     buyer,
     company,
