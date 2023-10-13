@@ -26,12 +26,12 @@ const applicationQuery = gql`
           hasCompaniesHouseNumber
           otherPartiesInvolved
           paidByLetterOfCredit
-          needPreCreditPeriodCover
           wantCoverOverMaxAmount
           wantCoverOverMaxPeriod
         }
         policy {
           id
+          needPreCreditPeriodCover
           policyType
           requestedStartDate
           contractCompletionDate
