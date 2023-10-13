@@ -105,7 +105,7 @@ export const post = async (req: Request, res: Response) => {
   if (validationErrors) {
     /**
      * have to get name of owner to render radio (radio uses name and email of owner)
-     * combine with payload to ensure name shows on radio and submitted value before validatione error
+     * combine submitted answers with the payload to ensure that the name shows on the radio
      */
     const nameOfOwner = getNameEmailPositionFromOwnerAndPolicy(application.owner, application.policyContact);
 

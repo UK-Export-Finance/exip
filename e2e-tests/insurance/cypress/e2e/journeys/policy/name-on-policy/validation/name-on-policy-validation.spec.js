@@ -4,6 +4,7 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import account from '../../../../../../../fixtures/account';
 
 const { taskList } = partials.insurancePartials;
@@ -105,6 +106,10 @@ context('Insurance - Policy - Name on policy - Validation', () => {
     it(`should render the ${SAME_NAME} radio text`, () => {
       const nameAndEmail = `${account[FIRST_NAME]} ${account[LAST_NAME]} (${account[EMAIL]})`;
       cy.checkText(field(SAME_NAME).label(), nameAndEmail);
+    });
+
+    it(`should render the ${OTHER_NAME} radio text`, () => {
+      cy.checkText(field(OTHER_NAME).label(), FIELDS.NAME_ON_POLICY.OPTIONS.OTHER_NAME.TEXT);
     });
   });
 
