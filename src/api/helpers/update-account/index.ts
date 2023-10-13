@@ -5,7 +5,8 @@ import { Context } from '../../types';
  * Update an account
  * @param {Object} KeystoneJS context API
  * @param {String} Account ID
- * @returns {Object} Application
+ * @param {Object} Account update data
+ * @returns {Object} Updated account
  */
 const account = async (context: Context, accountId: string, updateData: object) => {
   try {
