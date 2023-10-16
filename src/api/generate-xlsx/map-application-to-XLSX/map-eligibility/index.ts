@@ -24,7 +24,7 @@ const {
  * @returns {Array} Array of objects for XLSX generation
  */
 const mapEligibility = (application: Application) => {
-  const { eligibility } = application;
+  const { eligibility, policy } = application;
 
   const mapped = [
     xlsxRow(XLSX.SECTION_TITLES.ELIGIBILITY, ''),
@@ -35,7 +35,7 @@ const mapEligibility = (application: Application) => {
     xlsxRow(CONTENT_STRINGS[WANT_COVER_OVER_MAX_PERIOD].SUMMARY?.TITLE, mapYesNoField(eligibility[WANT_COVER_OVER_MAX_PERIOD])),
     xlsxRow(CONTENT_STRINGS[OTHER_PARTIES_INVOLVED].SUMMARY?.TITLE, mapYesNoField(eligibility[OTHER_PARTIES_INVOLVED])),
     xlsxRow(CONTENT_STRINGS[LETTER_OF_CREDIT].SUMMARY?.TITLE, mapYesNoField(eligibility[LETTER_OF_CREDIT])),
-    xlsxRow(CONTENT_STRINGS[PRE_CREDIT_PERIOD].SUMMARY?.TITLE, mapYesNoField(eligibility[PRE_CREDIT_PERIOD])),
+    xlsxRow(CONTENT_STRINGS[PRE_CREDIT_PERIOD].SUMMARY?.TITLE, mapYesNoField(policy[PRE_CREDIT_PERIOD])),
     xlsxRow(CONTENT_STRINGS[COMPANIES_HOUSE_NUMBER].SUMMARY?.TITLE, mapYesNoField(eligibility[COMPANIES_HOUSE_NUMBER])),
   ];
 

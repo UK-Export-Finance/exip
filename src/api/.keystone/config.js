@@ -4239,7 +4239,7 @@ var {
   COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2
 } = insurance_default.ELIGIBILITY;
 var mapEligibility = (application2) => {
-  const { eligibility } = application2;
+  const { eligibility, policy } = application2;
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.ELIGIBILITY, ""),
     xlsx_row_default(FIELDS_ELIGIBILITY[BUYER_COUNTRY2].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY2].name),
@@ -4249,7 +4249,7 @@ var mapEligibility = (application2) => {
     xlsx_row_default(FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_PERIOD2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[WANT_COVER_OVER_MAX_PERIOD2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[OTHER_PARTIES_INVOLVED2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[OTHER_PARTIES_INVOLVED2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[LETTER_OF_CREDIT2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[LETTER_OF_CREDIT2])),
-    xlsx_row_default(FIELDS_ELIGIBILITY[PRE_CREDIT_PERIOD2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[PRE_CREDIT_PERIOD2])),
+    xlsx_row_default(FIELDS_ELIGIBILITY[PRE_CREDIT_PERIOD2].SUMMARY?.TITLE, map_yes_no_field_default(policy[PRE_CREDIT_PERIOD2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[COMPANIES_HOUSE_NUMBER2]))
   ];
   return mapped;
