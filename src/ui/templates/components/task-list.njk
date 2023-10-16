@@ -15,9 +15,12 @@
     {% endif %}
     
     <h2 class="{{ headingClass }}" data-cy="task-list-group-heading-{{ group.title }}">{{ loop.index }}. {{ group.title }}</h2>
-    <p class="{{ hintClass }}" data-cy="task-list-group-hint-{{ group.hint }}">{{ group.hint }}</p>
 
-    <dl class="govuk-summary-list ukef-task-list">
+    {% if group.hint %}
+      <p class="{{ hintClass }}" data-cy="task-list-group-hint-{{ group.hint }}">{{ group.hint }}</p>
+    {% endif %}
+
+    <dl class="govuk-summary-list govuk-!-margin-bottom-9 ukef-task-list">
       {% for task in group.tasks %}
 
         {{ taskListRow.render({
