@@ -10,7 +10,7 @@ const {
   START,
   ELIGIBILITY: {
     ELIGIBLE_TO_APPLY_ONLINE,
-    COMPANIES_HOUSE_NUMBER,
+    UK_GOODS_OR_SERVICES,
     ACCOUNT_TO_APPLY_ONLINE,
   },
 } = INSURANCE_ROUTES;
@@ -46,7 +46,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ELIGIBLE_TO_APPLY_ONLINE,
-      backLink: COMPANIES_HOUSE_NUMBER,
+      backLink: UK_GOODS_OR_SERVICES,
       submitButtonCopy: CONTENT_STRINGS.SUBMIT_BUTTON,
       assertAuthenticatedHeader: false,
     });

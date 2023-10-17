@@ -4,6 +4,7 @@ import './account';
 import '../analytics';
 import './assertions';
 import './click-events';
+import './eligibility';
 import './form';
 import './url';
 
