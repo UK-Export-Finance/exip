@@ -82,17 +82,6 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
         cy.checkBuyerCountryValidationErrors();
       });
 
-      // TODO: move this test to the first eligibility question
-      // it('renders a back link with correct url', () => {
-      //   const expectedHref = `${Cypress.config('baseUrl')}${BUYER_COUNTRY}`;
-
-      //   cy.checkLink(
-      //     backLink(),
-      //     expectedHref,
-      //     LINKS.BACK,
-      //   );
-      // });
-
       it('should focus on input when clicking summary error message', () => {
         cy.checkBuyerCountryFocusAfterSummaryErrorClick();
       });
