@@ -44,8 +44,6 @@ describe('helpers/create-an-eligibility', () => {
     expect(result.hasMinimumUkGoodsOrServices).toEqual(false);
     expect(result.validExporterLocation).toEqual(false);
     expect(result.hasCompaniesHouseNumber).toEqual(false);
-    // expect(result.otherPartiesInvolved).toEqual(false);
-    // expect(result.paidByLetterOfCredit).toEqual(false);
     expect(result.wantCoverOverMaxAmount).toEqual(false);
     expect(result.wantCoverOverMaxPeriod).toEqual(false);
   });

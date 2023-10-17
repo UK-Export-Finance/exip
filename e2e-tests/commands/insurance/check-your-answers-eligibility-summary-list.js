@@ -7,9 +7,6 @@ import getSummaryListField from './get-summary-list-field';
 const {
   WANT_COVER_OVER_MAX_AMOUNT,
   WANT_COVER_OVER_MAX_PERIOD,
-  OTHER_PARTIES_INVOLVED,
-  LETTER_OF_CREDIT,
-  PRE_CREDIT_PERIOD,
   COMPANIES_HOUSE_NUMBER,
   BUYER_COUNTRY,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
@@ -51,30 +48,6 @@ const checkYourAnswersEligibilitySummaryList = ({
   },
   [WANT_COVER_OVER_MAX_PERIOD]: () => {
     const fieldId = WANT_COVER_OVER_MAX_PERIOD;
-
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = FIELD_VALUES.NO;
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
-  },
-  [OTHER_PARTIES_INVOLVED]: () => {
-    const fieldId = OTHER_PARTIES_INVOLVED;
-
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = FIELD_VALUES.NO;
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
-  },
-  [LETTER_OF_CREDIT]: () => {
-    const fieldId = LETTER_OF_CREDIT;
-
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = FIELD_VALUES.NO;
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
-  },
-  [PRE_CREDIT_PERIOD]: () => {
-    const fieldId = PRE_CREDIT_PERIOD;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = FIELD_VALUES.NO;
