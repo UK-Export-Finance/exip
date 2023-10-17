@@ -6,7 +6,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import { mockReq, mockRes } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
-const buyerCountryRoute = ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY;
+const exporterLocationRoute = ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION;
 
 describe('controllers/insurance/eligibility/need-to-start-again', () => {
   let req: Request;
@@ -35,10 +35,10 @@ describe('controllers/insurance/eligibility/need-to-start-again', () => {
   });
 
   describe('post', () => {
-    it(`should redirect to ${buyerCountryRoute}`, async () => {
+    it(`should redirect to ${exporterLocationRoute}`, async () => {
       await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(buyerCountryRoute);
+      expect(res.redirect).toHaveBeenCalledWith(exporterLocationRoute);
     });
   });
 });
