@@ -11,7 +11,7 @@ const {
   INSURANCE: {
     INSURANCE_ROOT,
     ALL_SECTIONS,
-    ELIGIBILITY: { BUYER_COUNTRY },
+    ELIGIBILITY: { EXPORTER_LOCATION },
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
@@ -23,7 +23,7 @@ const {
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
-  START_NEW_APPLICATION_URL: BUYER_COUNTRY,
+  START_NEW_APPLICATION_URL: EXPORTER_LOCATION,
   RETURN_TO_APPLICATION_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
 });
 

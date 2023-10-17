@@ -24,7 +24,6 @@ context('Insurance - speak to UKEF EFM exit page', () => {
     cy.completeExporterLocationForm();
     cy.completeCompaniesHouseNumberForm();
     completeAndSubmitBuyerCountryForm();
-    cy.completeUkGoodsAndServicesForm();
     cy.completeInsuredAmountForm();
 
     let expectedUrl = `${baseUrl}${INSURED_PERIOD}`;

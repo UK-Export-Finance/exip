@@ -11,9 +11,11 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const { linkButtons } = checkYourAnswersNeedToStartNewApplication;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Check your answers - Need to start new application - start a new application', () => {
   let referenceNumber;
-  const dashboardUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+  const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
