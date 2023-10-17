@@ -32,7 +32,7 @@ export const get = (req: Request, res: Response) => {
     userName: getUserNameFromSession(req.session.user),
     submittedValues: req.session.submittedData.insuranceEligibility,
   });
-}
+};
 
 export const post = (req: Request, res: Response) => {
   const payload = constructPayload(req.body, [FIELD_ID]);

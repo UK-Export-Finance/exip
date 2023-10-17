@@ -4,8 +4,8 @@ import {
   completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
-  completeAndSubmitTellUsAboutYourSinglePolicyForm
-} from './forms'
+  completeAndSubmitTellUsAboutYourSinglePolicyForm,
+} from './forms';
 
 const submitAnswersHappyPathSinglePolicy = () => {
   completeAndSubmitBuyerCountryForm();

@@ -1,12 +1,19 @@
 import { completeAndSubmitBuyerCountryForm } from '../forms';
+import {
+  completeAndSubmitBuyerBodyForm,
+  completeAndSubmitExporterLocationForm,
+  completeAndSubmitUkContentForm,
+  completeAndSubmitPolicyTypeMultiForm,
+  completeAndSubmitTellUsAboutYourMultiPolicyForm,
+} from './forms';
 
 const submitAnswersHappyPathMultiplePolicy = () => {
   completeAndSubmitBuyerCountryForm();
-  cy.completeAndSubmitBuyerBodyForm();
-  cy.completeAndSubmitExporterLocationForm();
-  cy.completeAndSubmitUkContentForm();
-  cy.completeAndSubmitPolicyTypeMultiForm();
-  cy.completeAndSubmitTellUsAboutYourMultiPolicyForm();
+  completeAndSubmitBuyerBodyForm();
+  completeAndSubmitExporterLocationForm();
+  completeAndSubmitUkContentForm();
+  completeAndSubmitPolicyTypeMultiForm();
+  completeAndSubmitTellUsAboutYourMultiPolicyForm();
 };
 
 export default submitAnswersHappyPathMultiplePolicy;

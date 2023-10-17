@@ -39,7 +39,7 @@ context('Insurance - Insured amount page - I want to check if I can use online s
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT,
-      backLink: ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES,
+      backLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
       assertAuthenticatedHeader: false,
     });
   });
