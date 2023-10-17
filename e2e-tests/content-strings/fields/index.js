@@ -155,19 +155,6 @@ export const FIELDS = {
       TITLE: 'Policy length',
     },
   },
-  INSURANCE: {
-    ELIGIBILITY: {
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT]: {
-        HINT: 'This is known as the pre-credit period.',
-      },
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD]: {
-        HINT: 'This is known as the pre-credit period.',
-      },
-    },
-  },
-  [FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD]: {
-    HINT: 'This is known as the pre-credit period.',
-  },
   [FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE]: {
     HINT: "If you've applied online before, you'll already have an account.",
   },

@@ -3,18 +3,6 @@ import { insurance } from '../../../../../../pages';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import {
-  completeStartForm,
-  completeCheckIfEligibleForm,
-  completeExporterLocationForm,
-  completeUkGoodsAndServicesForm,
-  completeInsuredAmountForm,
-  completeInsuredPeriodForm,
-  completeOtherPartiesForm,
-  completeLetterOfCreditForm,
-  completePreCreditPeriodForm,
-  completeCompaniesHouseNumberForm,
-} from '../../../../../../commands/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
 
@@ -27,25 +15,25 @@ const {
   },
 } = INSURANCE_ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Eligibility - You are eligible to apply online page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction', () => {
   let url;
 
   before(() => {
     cy.navigateToUrl(START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
-    completeAndSubmitBuyerCountryForm();
-    completeExporterLocationForm();
-    completeUkGoodsAndServicesForm();
-    completeInsuredAmountForm();
-    completeInsuredPeriodForm();
-    completeOtherPartiesForm();
-    completeLetterOfCreditForm();
-    completePreCreditPeriodForm();
-    completeCompaniesHouseNumberForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
 
-    url = `${Cypress.config('baseUrl')}${ELIGIBLE_TO_APPLY_ONLINE}`;
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
+    completeAndSubmitBuyerCountryForm();
+    cy.completeInsuredAmountForm();
+    cy.completeInsuredPeriodForm();
+    cy.completeUkGoodsAndServicesForm();
+
+    url = `${baseUrl}${ELIGIBLE_TO_APPLY_ONLINE}`;
 
     cy.assertUrl(url);
   });
@@ -85,7 +73,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
       it(`should redirect to ${ACCOUNT_TO_APPLY_ONLINE}`, () => {
         submitButton().click();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${ACCOUNT_TO_APPLY_ONLINE}`;
+        const expectedUrl = `${baseUrl}${ACCOUNT_TO_APPLY_ONLINE}`;
 
         cy.assertUrl(expectedUrl);
       });

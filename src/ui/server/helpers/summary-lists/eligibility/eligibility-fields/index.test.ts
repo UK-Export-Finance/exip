@@ -11,9 +11,6 @@ const { ELIGIBILITY: FIELD_IDS } = INSURANCE_FIELD_IDS;
 const {
   WANT_COVER_OVER_MAX_AMOUNT,
   WANT_COVER_OVER_MAX_PERIOD,
-  OTHER_PARTIES_INVOLVED,
-  LETTER_OF_CREDIT,
-  PRE_CREDIT_PERIOD,
   COMPANIES_HOUSE_NUMBER,
   BUYER_COUNTRY,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
@@ -63,30 +60,6 @@ describe('server/helpers/summary-lists/eligibility/eligibility-fields', () => {
         renderChangeLink: false,
       },
       mapYesNoField(mockAnswers[WANT_COVER_OVER_MAX_PERIOD]),
-    ),
-    fieldGroupItem(
-      {
-        field: getFieldById(FIELDS_ELIGIBILITY, OTHER_PARTIES_INVOLVED),
-        data: mockAnswers,
-        renderChangeLink: false,
-      },
-      mapYesNoField(mockAnswers[OTHER_PARTIES_INVOLVED]),
-    ),
-    fieldGroupItem(
-      {
-        field: getFieldById(FIELDS_ELIGIBILITY, LETTER_OF_CREDIT),
-        data: mockAnswers,
-        renderChangeLink: false,
-      },
-      mapYesNoField(mockAnswers[LETTER_OF_CREDIT]),
-    ),
-    fieldGroupItem(
-      {
-        field: getFieldById(FIELDS_ELIGIBILITY, PRE_CREDIT_PERIOD),
-        data: mockAnswers,
-        renderChangeLink: false,
-      },
-      mapYesNoField(mockAnswers[PRE_CREDIT_PERIOD]),
     ),
     fieldGroupItem(
       {

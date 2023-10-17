@@ -1,16 +1,5 @@
 import { submitButton } from '../../../../../pages/shared';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms';
-import {
-  completeExporterLocationForm,
-  completeUkGoodsAndServicesForm,
-  completeInsuredAmountForm,
-  completeInsuredPeriodForm,
-  completeOtherPartiesForm,
-  completeLetterOfCreditForm,
-  completePreCreditPeriodForm,
-  completeCompaniesHouseNumberForm,
-  completeEligibleToApplyOnlineForm,
-} from '../../../../../commands/insurance/eligibility/forms';
 import { ROUTES } from '../../../../../constants';
 
 const {
@@ -39,16 +28,13 @@ context('Get a quote, complete insurance eligibility and then re-visit the quote
   it('allows an exporter to complete insurance eligibility when visiting the buyer country page directly', () => {
     cy.navigateToUrl(ELIGIBILITY.BUYER_COUNTRY);
 
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
     completeAndSubmitBuyerCountryForm();
-    completeExporterLocationForm();
-    completeUkGoodsAndServicesForm();
-    completeInsuredAmountForm();
-    completeInsuredPeriodForm();
-    completeOtherPartiesForm();
-    completeLetterOfCreditForm();
-    completePreCreditPeriodForm();
-    completeCompaniesHouseNumberForm();
-    completeEligibleToApplyOnlineForm();
+    cy.completeInsuredAmountForm();
+    cy.completeInsuredPeriodForm();
+    cy.completeUkGoodsAndServicesForm();
+    cy.completeEligibleToApplyOnlineForm();
   });
 
   it('allows an exporter to get another quote when visiting the buyer country page directly', () => {

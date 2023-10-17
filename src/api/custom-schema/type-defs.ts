@@ -175,9 +175,6 @@ const typeDefs = `
   input ApplicationEligibility {
     buyerCountryIsoCode: String!
     hasCompaniesHouseNumber: Boolean!
-    otherPartiesInvolved: Boolean!
-    paidByLetterOfCredit: Boolean!
-    needPreCreditPeriodCover: Boolean!
     wantCoverOverMaxAmount: Boolean!
     wantCoverOverMaxPeriod: Boolean!
     validExporterLocation: Boolean!

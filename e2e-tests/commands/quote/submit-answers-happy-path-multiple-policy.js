@@ -1,17 +1,12 @@
 import { completeAndSubmitBuyerCountryForm } from '../forms';
-import {
-  completeAndSubmitBuyerBodyForm,
-  completeAndSubmitExporterLocationForm,
-  completeAndSubmitUkContentForm,
-  completeAndSubmitPolicyTypeMultiForm,
-  completeAndSubmitTellUsAboutYourMultiPolicyForm,
-} from './forms';
 
-export default () => {
+const submitAnswersHappyPathMultiplePolicy = () => {
   completeAndSubmitBuyerCountryForm();
-  completeAndSubmitBuyerBodyForm();
-  completeAndSubmitExporterLocationForm();
-  completeAndSubmitUkContentForm();
-  completeAndSubmitPolicyTypeMultiForm();
-  completeAndSubmitTellUsAboutYourMultiPolicyForm();
+  cy.completeAndSubmitBuyerBodyForm();
+  cy.completeAndSubmitExporterLocationForm();
+  cy.completeAndSubmitUkContentForm();
+  cy.completeAndSubmitPolicyTypeMultiForm();
+  cy.completeAndSubmitTellUsAboutYourMultiPolicyForm();
 };
+
+export default submitAnswersHappyPathMultiplePolicy;

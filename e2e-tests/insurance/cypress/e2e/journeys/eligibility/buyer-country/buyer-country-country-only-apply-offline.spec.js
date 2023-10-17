@@ -1,7 +1,6 @@
 import { backLink, countryInput, submitButton } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { FIELD_IDS } from '../../../../../../constants';
-import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../../commands/insurance/eligibility/forms';
 import { COUNTRY_SUPPORTRED_BY_EMAIL } from '../../../../../../fixtures/countries';
 import { LINKS } from '../../../../../../content-strings';
 
@@ -21,8 +20,10 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
   before(() => {
     cy.navigateToUrl(START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
   });
 
   beforeEach(() => {

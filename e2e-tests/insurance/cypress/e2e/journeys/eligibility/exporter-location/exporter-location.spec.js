@@ -5,8 +5,6 @@ import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../../commands/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.EXPORTER_LOCATION;
 
@@ -29,9 +27,8 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
   beforeEach(() => {
     cy.navigateToUrl(START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
-    completeAndSubmitBuyerCountryForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
 
     const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;
 

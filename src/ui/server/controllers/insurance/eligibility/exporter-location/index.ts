@@ -52,5 +52,5 @@ export const post = (req: Request, res: Response) => {
     insuranceEligibility: updateSubmittedData({ [FIELD_ID]: answer }, req.session.submittedData.insuranceEligibility),
   };
 
-  return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
+  return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER);
 };

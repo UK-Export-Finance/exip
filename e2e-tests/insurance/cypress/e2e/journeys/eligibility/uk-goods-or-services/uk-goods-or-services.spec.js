@@ -10,7 +10,6 @@ import {
 import { FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import { completeStartForm, completeCheckIfEligibleForm, completeExporterLocationForm } from '../../../../../../commands/insurance/eligibility/forms';
 import {
   checkCalculateDescriptionSummaryText,
   checkCalculateDescriptionSummaryClickRevealsContent,
@@ -30,7 +29,7 @@ const {
 
 const {
   START,
-  ELIGIBILITY: { UK_GOODS_OR_SERVICES, EXPORTER_LOCATION, INSURED_AMOUNT },
+  ELIGIBILITY: { UK_GOODS_OR_SERVICES, ELIGIBLE_TO_APPLY_ONLINE, INSURED_PERIOD },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -41,10 +40,13 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
   before(() => {
     cy.navigateToUrl(START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
     completeAndSubmitBuyerCountryForm();
-    completeExporterLocationForm();
+    cy.completeInsuredAmountForm();
+    cy.completeInsuredPeriodForm();
 
     cy.assertUrl(url);
   });
@@ -57,7 +59,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: UK_GOODS_OR_SERVICES,
-      backLink: EXPORTER_LOCATION,
+      backLink: INSURED_PERIOD,
       assertAuthenticatedHeader: false,
     });
   });
@@ -141,8 +143,8 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
       submitButton().click();
     });
 
-    it(`should redirect to ${INSURED_AMOUNT}`, () => {
-      const expectedUrl = `${baseUrl}${INSURED_AMOUNT}`;
+    it(`should redirect to ${ELIGIBLE_TO_APPLY_ONLINE}`, () => {
+      const expectedUrl = `${baseUrl}${ELIGIBLE_TO_APPLY_ONLINE}`;
 
       cy.assertUrl(expectedUrl);
     });

@@ -6,7 +6,6 @@ import {
 import { PAGES, LINKS } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { FIELD_IDS } from '../../../../../constants';
-import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../commands/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 
@@ -25,8 +24,10 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
   beforeEach(() => {
     cy.navigateToUrl(START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
 
     cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_NAME_UNSUPPORTED);
     const results = countryInput.field(FIELD_ID).results();

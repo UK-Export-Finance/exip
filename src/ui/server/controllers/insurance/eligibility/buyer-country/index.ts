@@ -114,7 +114,7 @@ export const post = async (req: Request, res: Response) => {
         insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
       };
 
-      return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
+      return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT);
     }
 
     if (country.canApplyOffline) {

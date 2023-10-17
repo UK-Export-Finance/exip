@@ -1274,8 +1274,6 @@ var lists = {
       hasMinimumUkGoodsOrServices: (0, import_fields.checkbox)(),
       validExporterLocation: (0, import_fields.checkbox)(),
       hasCompaniesHouseNumber: (0, import_fields.checkbox)(),
-      otherPartiesInvolved: (0, import_fields.checkbox)(),
-      paidByLetterOfCredit: (0, import_fields.checkbox)(),
       wantCoverOverMaxAmount: (0, import_fields.checkbox)(),
       wantCoverOverMaxPeriod: (0, import_fields.checkbox)()
     },
@@ -1650,9 +1648,6 @@ var typeDefs = `
   input ApplicationEligibility {
     buyerCountryIsoCode: String!
     hasCompaniesHouseNumber: Boolean!
-    otherPartiesInvolved: Boolean!
-    paidByLetterOfCredit: Boolean!
-    needPreCreditPeriodCover: Boolean!
     wantCoverOverMaxAmount: Boolean!
     wantCoverOverMaxPeriod: Boolean!
     validExporterLocation: Boolean!
@@ -3914,7 +3909,7 @@ var XLSX = {
   SECTION_TITLES: {
     KEY_INFORMATION: "Key information",
     EXPORTER_CONTACT_DETAILS: "Exporter contact details",
-    POLICY: "Type of policy",
+    POLICY: "Type of policy and exports",
     EXPORTER_BUSINESS: "About your business",
     BUYER: "Your buyer",
     ELIGIBILITY: "Eligibility"

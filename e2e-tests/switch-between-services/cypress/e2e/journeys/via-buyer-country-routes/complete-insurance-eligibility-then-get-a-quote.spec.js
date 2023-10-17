@@ -1,16 +1,5 @@
 import { submitButton } from '../../../../../pages/shared';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms';
-import {
-  completeExporterLocationForm,
-  completeUkGoodsAndServicesForm,
-  completeInsuredAmountForm,
-  completeInsuredPeriodForm,
-  completeOtherPartiesForm,
-  completeLetterOfCreditForm,
-  completePreCreditPeriodForm,
-  completeCompaniesHouseNumberForm,
-  completeEligibleToApplyOnlineForm,
-} from '../../../../../commands/insurance/eligibility/forms';
 import { ROUTES } from '../../../../../constants';
 
 const {
@@ -29,16 +18,13 @@ context('Complete insurance eligibility, get a quote and then re-visit the insur
   before(() => {
     cy.navigateToUrl(BUYER_COUNTRY);
 
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
     completeAndSubmitBuyerCountryForm();
-    completeExporterLocationForm();
-    completeUkGoodsAndServicesForm();
-    completeInsuredAmountForm();
-    completeInsuredPeriodForm();
-    completeOtherPartiesForm();
-    completeLetterOfCreditForm();
-    completePreCreditPeriodForm();
-    completeCompaniesHouseNumberForm();
-    completeEligibleToApplyOnlineForm();
+    cy.completeInsuredAmountForm();
+    cy.completeInsuredPeriodForm();
+    cy.completeUkGoodsAndServicesForm();
+    cy.completeEligibleToApplyOnlineForm();
   });
 
   beforeEach(() => {

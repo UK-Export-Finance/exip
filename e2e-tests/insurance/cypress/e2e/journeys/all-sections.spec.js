@@ -15,7 +15,7 @@ context('Insurance - All sections - new application', () => {
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({ createApplicationViaApi: false }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;

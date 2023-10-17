@@ -1,5 +1,22 @@
 import { yesRadio, noRadio, submitButton } from '../../../pages/shared';
 
+/**
+ * selectRadioAndSubmit
+ * Select a yes or no radio and submit the form
+ * @param {String} Yes or no string
+ */
+const selectRadioAndSubmit = (answer) => {
+  if (answer === 'yes') {
+    yesRadio().input().click();
+  }
+
+  if (answer === 'no') {
+    noRadio().input().click();
+  }
+
+  submitButton().click();
+};
+
 export const completeStartForm = () => {
   submitButton().click();
 };
@@ -9,43 +26,23 @@ export const completeCheckIfEligibleForm = () => {
 };
 
 export const completeExporterLocationForm = () => {
-  yesRadio().input().click();
-  submitButton().click();
-};
-
-export const completeUkGoodsAndServicesForm = () => {
-  yesRadio().input().click();
-  submitButton().click();
-};
-
-export const completeInsuredAmountForm = () => {
-  noRadio().input().click();
-  submitButton().click();
-};
-
-export const completeInsuredPeriodForm = () => {
-  noRadio().input().click();
-  submitButton().click();
-};
-
-export const completeOtherPartiesForm = () => {
-  noRadio().input().click();
-  submitButton().click();
-};
-
-export const completeLetterOfCreditForm = () => {
-  noRadio().input().click();
-  submitButton().click();
-};
-
-export const completePreCreditPeriodForm = () => {
-  noRadio().input().click();
-  submitButton().click();
+  selectRadioAndSubmit('yes');
 };
 
 export const completeCompaniesHouseNumberForm = () => {
-  yesRadio().input().click();
-  submitButton().click();
+  selectRadioAndSubmit('yes');
+};
+
+export const completeInsuredAmountForm = () => {
+  selectRadioAndSubmit('no');
+};
+
+export const completeInsuredPeriodForm = () => {
+  selectRadioAndSubmit('no');
+};
+
+export const completeUkGoodsAndServicesForm = () => {
+  selectRadioAndSubmit('yes');
 };
 
 export const completeEligibleToApplyOnlineForm = () => {
@@ -53,6 +50,5 @@ export const completeEligibleToApplyOnlineForm = () => {
 };
 
 export const completeAccountToApplyOnlineForm = () => {
-  yesRadio().input().click();
-  submitButton().click();
+  selectRadioAndSubmit('yes');
 };

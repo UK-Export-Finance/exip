@@ -3,16 +3,6 @@ import { countryInput } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { ROUTES, FIELD_IDS } from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../commands/forms';
-import {
-  completeExporterLocationForm,
-  completeUkGoodsAndServicesForm,
-  completeInsuredAmountForm,
-  completeInsuredPeriodForm,
-  completeOtherPartiesForm,
-  completeLetterOfCreditForm,
-  completePreCreditPeriodForm,
-  completeCompaniesHouseNumberForm,
-} from '../../../../commands/insurance/eligibility/forms';
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
@@ -58,34 +48,22 @@ context('Insurance - Eligibility - start and complete for a second time after cr
 
     // exporter location question
     cy.assertUncheckedYesNoRadios();
-    completeExporterLocationForm();
+    cy.completeExporterLocationForm();
 
     // UK goods and services question
     cy.assertUncheckedYesNoRadios();
-    completeUkGoodsAndServicesForm();
+    cy.completeUkGoodsAndServicesForm();
 
     // insured amount question
     cy.assertUncheckedYesNoRadios();
-    completeInsuredAmountForm();
+    cy.completeInsuredAmountForm();
 
     // insured period question
     cy.assertUncheckedYesNoRadios();
-    completeInsuredPeriodForm();
-
-    // other parties question
-    cy.assertUncheckedYesNoRadios();
-    completeOtherPartiesForm();
-
-    // letter of credit question
-    cy.assertUncheckedYesNoRadios();
-    completeLetterOfCreditForm();
-
-    // pre-credit period question
-    cy.assertUncheckedYesNoRadios();
-    completePreCreditPeriodForm();
+    cy.completeInsuredPeriodForm();
 
     // companies house number question
     cy.assertUncheckedYesNoRadios();
-    completeCompaniesHouseNumberForm();
+    cy.completeCompaniesHouseNumberForm();
   });
 });

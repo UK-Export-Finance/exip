@@ -2,7 +2,6 @@ import { submitButton } from '../../../../../pages/shared';
 import { insurance } from '../../../../../pages';
 import { PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import { completeStartForm } from '../../../../../commands/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE;
 
@@ -19,7 +18,7 @@ context('Insurance Eligibility - check if eligible page', () => {
   before(() => {
     cy.navigateToUrl(START);
 
-    completeStartForm();
+    cy.completeStartForm();
 
     cy.assertUrl(url);
   });

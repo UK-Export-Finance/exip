@@ -3,8 +3,6 @@ import {
 } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../../commands/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 
@@ -21,9 +19,8 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
   before(() => {
     cy.navigateToUrl(START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
-    completeAndSubmitBuyerCountryForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
 
     cy.assertUrl(url);
   });

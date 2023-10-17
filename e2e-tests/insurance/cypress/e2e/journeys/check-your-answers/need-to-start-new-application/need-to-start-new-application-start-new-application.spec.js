@@ -42,7 +42,7 @@ context('Insurance - Check your answers - Need to start new application - start 
 
   describe('after completing eligibility for the new application', () => {
     before(() => {
-      cy.submitInsuranceEligibilityAnswersFromBuyerCountryHappyPath();
+      cy.submitInsuranceEligibilityAnswersFromExporterLocationHappyPath();
     });
 
     beforeEach(() => {

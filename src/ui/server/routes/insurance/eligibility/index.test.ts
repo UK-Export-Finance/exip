@@ -6,7 +6,6 @@ import { get as exporterLocationGet, post as exporterLocationPost } from '../../
 import { get as ukGoodsOrServicesGet, post as ukGoodsOrServicesPost } from '../../../controllers/insurance/eligibility/uk-goods-or-services';
 import { get as insuredAmountGet, post as insuredAmountPost } from '../../../controllers/insurance/eligibility/insured-amount';
 import { get as insuredPeriodGet, post as insuredPeriodPost } from '../../../controllers/insurance/eligibility/insured-period';
-import { get as letterOfCreditGet, post as letterOfCreditPost } from '../../../controllers/insurance/eligibility/letter-of-credit';
 import { get as companiesHouseNumberGet, post as companiesHouseNumberPost } from '../../../controllers/insurance/eligibility/companies-house-number';
 import { get as eligibleToApplyOnlineGet, post as eligibleToApplyOnlinePost } from '../../../controllers/insurance/eligibility/eligible-to-apply-online';
 import { get as alreadyHaveAccountGet, post as alreadyHaveAccountPost } from '../../../controllers/insurance/eligibility/account-to-apply-online';
@@ -23,8 +22,8 @@ describe('routes/insurance/eligibility', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(14);
-    expect(post).toHaveBeenCalledTimes(13);
+    expect(get).toHaveBeenCalledTimes(12);
+    expect(post).toHaveBeenCalledTimes(11);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE, checkIfEligibleGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE, checkIfEligiblePost);
@@ -43,9 +42,6 @@ describe('routes/insurance/eligibility', () => {
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD, insuredPeriodGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD, insuredPeriodPost);
-
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT, letterOfCreditGet);
-    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT, letterOfCreditPost);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER, companiesHouseNumberGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER, companiesHouseNumberPost);

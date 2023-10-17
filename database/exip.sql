@@ -610,8 +610,6 @@ CREATE TABLE IF NOT EXISTS `Eligibility` (
   `buyerCountry` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `hasMinimumUkGoodsOrServices` tinyint(1) NOT NULL DEFAULT '0',
   `validExporterLocation` tinyint(1) NOT NULL DEFAULT '0',
-  `otherPartiesInvolved` tinyint(1) NOT NULL DEFAULT '0',
-  `paidByLetterOfCredit` tinyint(1) NOT NULL DEFAULT '0',
   `wantCoverOverMaxAmount` tinyint(1) NOT NULL DEFAULT '0',
   `wantCoverOverMaxPeriod` tinyint(1) NOT NULL DEFAULT '0',
   `hasCompaniesHouseNumber` tinyint(1) NOT NULL DEFAULT '0',

@@ -6,9 +6,6 @@ import { get as exporterLocationGet, post as exporterLocationPost } from '../../
 import { get as ukGoodsOrServicesGet, post as ukGoodsOrServicesPost } from '../../../controllers/insurance/eligibility/uk-goods-or-services';
 import { get as insuredAmountGet, post as insuredAmountPost } from '../../../controllers/insurance/eligibility/insured-amount';
 import { get as insuredPeriodGet, post as insuredPeriodPost } from '../../../controllers/insurance/eligibility/insured-period';
-import { get as otherPartiesInvolvedGet, post as otherPartiesInvolvedPost } from '../../../controllers/insurance/eligibility/other-parties';
-import { get as letterOfCreditGet, post as letterOfCreditPost } from '../../../controllers/insurance/eligibility/letter-of-credit';
-import { get as preCreditPeriodGet, post as preCreditPeriodPost } from '../../../controllers/insurance/eligibility/pre-credit-period';
 import { get as companiesHouseNumberGet, post as companiesHouseNumberPost } from '../../../controllers/insurance/eligibility/companies-house-number';
 import { get as eligibleToApplyOnlineGet, post as eligibleToApplyOnlinePost } from '../../../controllers/insurance/eligibility/eligible-to-apply-online';
 import { get as alreadyHaveAccountGet, post as alreadyHaveAccountPost } from '../../../controllers/insurance/eligibility/account-to-apply-online';
@@ -29,23 +26,17 @@ insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, buye
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION, exporterLocationGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION, exporterLocationPost);
 
-insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, ukGoodsOrServicesGet);
-insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, ukGoodsOrServicesPost);
-
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT, insuredAmountGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT, insuredAmountPost);
 
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, ukGoodsOrServicesGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, ukGoodsOrServicesPost);
+
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, insuredAmountGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, insuredAmountPost);
+
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD, insuredPeriodGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD, insuredPeriodPost);
-
-insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED, otherPartiesInvolvedGet);
-insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED, otherPartiesInvolvedPost);
-
-insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT, letterOfCreditGet);
-insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT, letterOfCreditPost);
-
-insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD, preCreditPeriodGet);
-insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD, preCreditPeriodPost);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER, companiesHouseNumberGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER, companiesHouseNumberPost);

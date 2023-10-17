@@ -15,8 +15,6 @@ export const mockApplicationEligibility = {
   hasMinimumUkGoodsOrServices: true,
   validExporterLocation: true,
   hasCompaniesHouseNumber: true,
-  otherPartiesInvolved: false,
-  paidByLetterOfCredit: false,
   wantCoverOverMaxAmount: false,
   wantCoverOverMaxPeriod: false,
 };
