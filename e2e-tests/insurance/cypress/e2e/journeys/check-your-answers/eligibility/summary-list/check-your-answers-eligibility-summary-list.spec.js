@@ -12,9 +12,6 @@ const {
 const {
   WANT_COVER_OVER_MAX_AMOUNT,
   WANT_COVER_OVER_MAX_PERIOD,
-  OTHER_PARTIES_INVOLVED,
-  LETTER_OF_CREDIT,
-  PRE_CREDIT_PERIOD,
   COMPANIES_HOUSE_NUMBER,
   BUYER_COUNTRY,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
@@ -71,18 +68,6 @@ context('Insurance - Check your answers - Eligibility - Summary List', () => {
 
   it(`should render a ${WANT_COVER_OVER_MAX_PERIOD} summary list row`, () => {
     checkSummaryList[WANT_COVER_OVER_MAX_PERIOD]();
-  });
-
-  it(`should render a ${OTHER_PARTIES_INVOLVED} summary list row`, () => {
-    checkSummaryList[OTHER_PARTIES_INVOLVED]();
-  });
-
-  it(`should render a ${LETTER_OF_CREDIT} summary list row`, () => {
-    checkSummaryList[LETTER_OF_CREDIT]();
-  });
-
-  it(`should render a ${PRE_CREDIT_PERIOD} summary list row`, () => {
-    checkSummaryList[PRE_CREDIT_PERIOD]();
   });
 
   it(`should render a ${COMPANIES_HOUSE_NUMBER} summary list row`, () => {
