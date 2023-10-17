@@ -221,9 +221,6 @@ var INSURANCE_FIELD_IDS = {
     ...shared_eligibility_default,
     WANT_COVER_OVER_MAX_AMOUNT: "wantCoverOverMaxAmount",
     WANT_COVER_OVER_MAX_PERIOD: "wantCoverOverMaxPeriod",
-    OTHER_PARTIES_INVOLVED: "otherPartiesInvolved",
-    LETTER_OF_CREDIT: "paidByLetterOfCredit",
-    PRE_CREDIT_PERIOD: "needPreCreditPeriodCover",
     COMPANIES_HOUSE_NUMBER: "hasCompaniesHouseNumber",
     ACCOUNT_TO_APPLY_ONLINE: "alreadyHaveAnAccount"
   },
@@ -3559,9 +3556,6 @@ var {
   VALID_EXPORTER_LOCATION,
   WANT_COVER_OVER_MAX_AMOUNT,
   WANT_COVER_OVER_MAX_PERIOD,
-  OTHER_PARTIES_INVOLVED,
-  LETTER_OF_CREDIT,
-  PRE_CREDIT_PERIOD,
   COMPANIES_HOUSE_NUMBER
 } = insurance_default.ELIGIBILITY;
 var FIELDS_ELIGIBILITY = {
@@ -3589,21 +3583,6 @@ var FIELDS_ELIGIBILITY = {
   [WANT_COVER_OVER_MAX_PERIOD]: {
     SUMMARY: {
       TITLE: "Insured for more than 2 years"
-    }
-  },
-  [OTHER_PARTIES_INVOLVED]: {
-    SUMMARY: {
-      TITLE: "Other parties involved"
-    }
-  },
-  [LETTER_OF_CREDIT]: {
-    SUMMARY: {
-      TITLE: "Paid by letter of credit"
-    }
-  },
-  [PRE_CREDIT_PERIOD]: {
-    SUMMARY: {
-      TITLE: "Pre-credit period"
     }
   },
   [COMPANIES_HOUSE_NUMBER]: {
@@ -4228,9 +4207,6 @@ var {
   VALID_EXPORTER_LOCATION: VALID_EXPORTER_LOCATION2,
   WANT_COVER_OVER_MAX_AMOUNT: WANT_COVER_OVER_MAX_AMOUNT2,
   WANT_COVER_OVER_MAX_PERIOD: WANT_COVER_OVER_MAX_PERIOD2,
-  OTHER_PARTIES_INVOLVED: OTHER_PARTIES_INVOLVED2,
-  LETTER_OF_CREDIT: LETTER_OF_CREDIT2,
-  PRE_CREDIT_PERIOD: PRE_CREDIT_PERIOD2,
   COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2
 } = insurance_default.ELIGIBILITY;
 var mapEligibility = (application2) => {
@@ -4242,9 +4218,6 @@ var mapEligibility = (application2) => {
     xlsx_row_default(FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_AMOUNT2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[WANT_COVER_OVER_MAX_AMOUNT2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_PERIOD2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[WANT_COVER_OVER_MAX_PERIOD2])),
-    xlsx_row_default(FIELDS_ELIGIBILITY[OTHER_PARTIES_INVOLVED2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[OTHER_PARTIES_INVOLVED2])),
-    xlsx_row_default(FIELDS_ELIGIBILITY[LETTER_OF_CREDIT2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[LETTER_OF_CREDIT2])),
-    xlsx_row_default(FIELDS_ELIGIBILITY[PRE_CREDIT_PERIOD2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[PRE_CREDIT_PERIOD2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[COMPANIES_HOUSE_NUMBER2]))
   ];
   return mapped;

@@ -4,10 +4,10 @@ import partials from '../../../../partials';
 import { ROUTES, FIELD_IDS } from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../commands/forms';
 
-const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
+const BUYER_COUNTRY_FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
 const {
-  ELIGIBILITY: { BUYER_COUNTRY },
+  ELIGIBILITY: { EXPORTER_LOCATION },
 } = ROUTES.INSURANCE;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -15,7 +15,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Eligibility - start and complete for a second time after creating an application', () => {
   let referenceNumber;
 
-  const buyerCountryUrl = `${baseUrl}${BUYER_COUNTRY}`;
+  const exporterLocationUrl = `${baseUrl}${EXPORTER_LOCATION}`;
 
   before(() => {
     cy.deleteAccount();
@@ -27,14 +27,14 @@ context('Insurance - Eligibility - start and complete for a second time after cr
 
       dashboardPage.startNewApplicationButton().click();
 
-      cy.assertUrl(buyerCountryUrl);
+      cy.assertUrl(exporterLocationUrl);
     });
   });
 
   beforeEach(() => {
     cy.saveSession();
 
-    cy.navigateToUrl(buyerCountryUrl);
+    cy.navigateToUrl(exporterLocationUrl);
   });
 
   after(() => {
@@ -42,17 +42,17 @@ context('Insurance - Eligibility - start and complete for a second time after cr
   });
 
   it('should NOT have prepopulated answers', () => {
-    // buyer country question
-    cy.checkValue(countryInput.field(FIELD_ID), '');
-    completeAndSubmitBuyerCountryForm();
-
     // exporter location question
     cy.assertUncheckedYesNoRadios();
     cy.completeExporterLocationForm();
 
-    // UK goods and services question
+    // companies house number question
     cy.assertUncheckedYesNoRadios();
-    cy.completeUkGoodsAndServicesForm();
+    cy.completeCompaniesHouseNumberForm();
+
+    // buyer country question
+    cy.checkValue(countryInput.field(BUYER_COUNTRY_FIELD_ID), '');
+    completeAndSubmitBuyerCountryForm();
 
     // insured amount question
     cy.assertUncheckedYesNoRadios();
@@ -62,8 +62,8 @@ context('Insurance - Eligibility - start and complete for a second time after cr
     cy.assertUncheckedYesNoRadios();
     cy.completeInsuredPeriodForm();
 
-    // companies house number question
+    // UK goods and services question
     cy.assertUncheckedYesNoRadios();
-    cy.completeCompaniesHouseNumberForm();
+    cy.completeUkGoodsAndServicesForm();
   });
 });
