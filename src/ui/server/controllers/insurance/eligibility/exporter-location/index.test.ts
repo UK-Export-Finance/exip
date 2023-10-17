@@ -53,6 +53,42 @@ describe('controllers/insurance/eligibility/exporter-location', () => {
         submittedValues: req.session.submittedData.insuranceEligibility,
       });
     });
+
+    describe('when a there is no submittedData in req.session', () => {
+      it('should add empty submittedData.insuranceEligibility to the session', () => {
+        // @ts-ignore
+        req.session = {};
+
+        get(req, res);
+
+        const expected = {
+          ...req.session,
+          submittedData: {
+            insuranceEligibility: {},
+          },
+        };
+
+        expect(req.session).toEqual(expected);
+      });
+    });
+
+    describe('when a there is no insuranceEligibility in req.session.submittedData', () => {
+      it('should add empty submittedData.insuranceEligibility to the session and retain existing req.session.submittedData', () => {
+        // @ts-ignore
+        req.session.submittedData = {
+          quoteEligibility: {},
+        };
+
+        get(req, res);
+
+        const expected = {
+          ...req.session.submittedData,
+          insuranceEligibility: {},
+        };
+
+        expect(req.session.submittedData).toEqual(expected);
+      });
+    });
   });
 
   describe('post', () => {

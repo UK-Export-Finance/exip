@@ -26,15 +26,6 @@ const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 export const get = async (req: Request, res: Response) => {
   try {
-    const { submittedData } = req.session;
-
-    if (!submittedData || !objectHasProperty(submittedData, 'insuranceEligibility')) {
-      req.session.submittedData = {
-        ...req.session.submittedData,
-        insuranceEligibility: {},
-      };
-    }
-
     const countries = await api.keystone.APIM.getCisCountries();
 
     if (!isPopulatedArray(countries)) {
