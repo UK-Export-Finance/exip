@@ -33,8 +33,35 @@ __export(keystone_exports, {
   default: () => keystone_default
 });
 module.exports = __toCommonJS(keystone_exports);
-var import_config4 = require("dotenv/config");
+var import_config5 = require("dotenv/config");
 var import_core3 = require("@keystone-6/core");
+var import_overload_protection = __toESM(require("overload-protection"));
+
+// middleware/headers/security/index.ts
+var security = (req, res, next) => {
+  res.setHeader("Strict-Transport-Security", "max-age=15552000; includeSubDomains; preload");
+  res.setHeader("X-Frame-Options", "deny");
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'none';connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com;base-uri 'self';block-all-mixed-content;font-src 'self' data:;form-action 'self';frame-ancestors 'self';img-src 'self' https://*.google-analytics.com https://*.googletagmanager.com;object-src 'none';script-src 'self' https://*.google-analytics.com https://*.googletagmanager.com;script-src-attr 'self';style-src 'self';upgrade-insecure-requests"
+  );
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate, max-age=604800");
+  res.setHeader("Referrer-Policy", "same-origin");
+  res.setHeader("X-Download-Options", "noopen");
+  res.setHeader("X-DNS-Prefetch-Control", "on");
+  res.setHeader("Expect-CT", "max-age=0,enforce");
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+  res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
+  res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+  res.setHeader(
+    "Permissions-Policy",
+    "fullscreen=(self),microphone=(),camera=(),payment=(),geolocation=(),display-capture=(),battery=(),autoplay=(),gyroscope=(),accelerometer=(),web-share=(),usb=(),gamepad=(),magnetometer=(),midi=(),picture-in-picture=(),xr-spatial-tracking=()"
+  );
+  res.removeHeader("X-Powered-By");
+  next();
+};
+var security_default = security;
 
 // middleware/headers/check-api-key/index.ts
 var import_config = require("dotenv/config");
@@ -1454,7 +1481,7 @@ var session = (0, import_session.statelessSessions)({
   secret: sessionSecret
 });
 
-// apollo-plugins/index.ts
+// apollo/plugins/index.ts
 var requestDidStart = () => ({
   /**
    * The didResolveOperation event fires after the graphql library successfully determines the operation to execute.
@@ -1473,7 +1500,23 @@ var requestDidStart = () => ({
   }
 });
 var apolloPlugins = [{ requestDidStart }];
-var apollo_plugins_default = apolloPlugins;
+var plugins_default = apolloPlugins;
+
+// apollo/format-graphql-error/index.ts
+var import_config4 = require("dotenv/config");
+var import_apollo_server_express = require("apollo-server-express");
+var formatGraphQlError = (err) => {
+  const isDevEnvironment3 = process.env.NODE_ENV === "development";
+  if (!isDevEnvironment3) {
+    return new import_apollo_server_express.ValidationError("Invalid request");
+  }
+  return err;
+};
+var format_graphql_error_default = formatGraphQlError;
+
+// apollo/index.ts
+var apolloPlugins2 = plugins_default;
+var formatGraphQlError2 = format_graphql_error_default;
 
 // custom-schema/index.ts
 var import_schema = require("@graphql-tools/schema");
@@ -4937,6 +4980,8 @@ var keystone_default = withAuth(
     server: {
       port: Number(PORT),
       extendExpressApp: (app) => {
+        app.use((0, import_overload_protection.default)("express"));
+        app.use(security_default);
         app.use(check_api_key_default);
         if (isProdEnvironment) {
           app.use(rate_limiter_default);
@@ -4952,7 +4997,8 @@ var keystone_default = withAuth(
       playground: isDevEnvironment2,
       apolloConfig: {
         introspection: isDevEnvironment2,
-        plugins: apollo_plugins_default
+        plugins: apolloPlugins2,
+        formatError: formatGraphQlError2
       }
     },
     lists,
