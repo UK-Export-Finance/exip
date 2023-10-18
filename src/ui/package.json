@@ -27,7 +27,7 @@
     "@types/connect-flash": "^0.0.38",
     "@types/cookie-parser": "^1.4.4",
     "@types/csurf": "^1.11.3",
-    "@types/express-session": "^1.17.8",
+    "@types/express-session": "^1.17.9",
     "@types/google-libphonenumber": "^7.4.28",
     "@types/is-url": "^1.2.30",
     "@types/morgan": "^1.9.6",
