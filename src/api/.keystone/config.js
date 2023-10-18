@@ -42,6 +42,23 @@ var security = (req, res, next) => {
   res.setHeader("Strict-Transport-Security", "max-age=15552000; includeSubDomains; preload");
   res.setHeader("X-Frame-Options", "deny");
   res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'none';connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com;base-uri 'self';block-all-mixed-content;font-src 'self' data:;form-action 'self';frame-ancestors 'self';img-src 'self' https://*.google-analytics.com https://*.googletagmanager.com;object-src 'none';script-src 'self' https://*.google-analytics.com https://*.googletagmanager.com;script-src-attr 'self';style-src 'self';upgrade-insecure-requests"
+  );
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate, max-age=604800");
+  res.setHeader("Referrer-Policy", "same-origin");
+  res.setHeader("X-Download-Options", "noopen");
+  res.setHeader("X-DNS-Prefetch-Control", "on");
+  res.setHeader("Expect-CT", "max-age=0,enforce");
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+  res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
+  res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+  res.setHeader(
+    "Permissions-Policy",
+    "fullscreen=(self),microphone=(),camera=(),payment=(),geolocation=(),display-capture=(),battery=(),autoplay=(),gyroscope=(),accelerometer=(),web-share=(),usb=(),gamepad=(),magnetometer=(),midi=(),picture-in-picture=(),xr-spatial-tracking=()"
+  );
+  res.removeHeader("X-Powered-By");
   next();
 };
 var security_default = security;
