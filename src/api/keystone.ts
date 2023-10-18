@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import { config } from '@keystone-6/core';
 import protect from 'overload-protection';
+import securityHeaders from './middleware/headers/security';
 import checkApiKey from './middleware/headers/check-api-key';
 import rateLimiter from './middleware/rate-limiter';
 import { lists } from './schema';
@@ -46,7 +47,7 @@ export default withAuth(
       port: Number(PORT),
       extendExpressApp: (app) => {
         app.use(protect('express'));
-
+        app.use(securityHeaders);
         app.use(checkApiKey);
 
         if (isProdEnvironment) {

@@ -37,6 +37,15 @@ var import_config5 = require("dotenv/config");
 var import_core3 = require("@keystone-6/core");
 var import_overload_protection = __toESM(require("overload-protection"));
 
+// middleware/headers/security/index.ts
+var security = (req, res, next) => {
+  res.setHeader("Strict-Transport-Security", "max-age=15552000; includeSubDomains; preload");
+  res.setHeader("X-Frame-Options", "deny");
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  next();
+};
+var security_default = security;
+
 // middleware/headers/check-api-key/index.ts
 var import_config = require("dotenv/config");
 var { API_KEY } = process.env;
@@ -4955,6 +4964,7 @@ var keystone_default = withAuth(
       port: Number(PORT),
       extendExpressApp: (app) => {
         app.use((0, import_overload_protection.default)("express"));
+        app.use(security_default);
         app.use(check_api_key_default);
         if (isProdEnvironment) {
           app.use(rate_limiter_default);
