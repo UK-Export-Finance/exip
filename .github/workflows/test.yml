@@ -319,7 +319,7 @@ jobs:
       matrix:
         spec:
           [
-            "via-buyer-country-routes/**/*.spec.js",
+            "via-exporter-location-routes/**/*.spec.js",
             "via-start-now-routes/**/*.spec.js",
           ]
 
