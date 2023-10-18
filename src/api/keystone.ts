@@ -57,7 +57,7 @@ export default withAuth(
     db: {
       provider: 'mysql',
       url: String(DATABASE_URL),
-      // enableLogging: isDevEnvironment,
+      enableLogging: isDevEnvironment,
     },
     graphql: {
       playground: isDevEnvironment,

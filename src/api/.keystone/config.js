@@ -4963,8 +4963,8 @@ var keystone_default = withAuth(
     },
     db: {
       provider: "mysql",
-      url: String(DATABASE_URL)
-      // enableLogging: isDevEnvironment,
+      url: String(DATABASE_URL),
+      enableLogging: isDevEnvironment2
     },
     graphql: {
       playground: isDevEnvironment2,
