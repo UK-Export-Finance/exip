@@ -25,8 +25,8 @@ context('Get a quote, complete insurance eligibility and then re-visit the quote
     cy.saveSession();
   });
 
-  it('allows an exporter to complete insurance eligibility when visiting the buyer country page directly', () => {
-    cy.navigateToUrl(ELIGIBILITY.BUYER_COUNTRY);
+  it('allows an exporter to complete insurance eligibility when visiting the exporter location page directly', () => {
+    cy.navigateToUrl(ELIGIBILITY.EXPORTER_LOCATION);
 
     cy.completeExporterLocationForm();
     cy.completeCompaniesHouseNumberForm();

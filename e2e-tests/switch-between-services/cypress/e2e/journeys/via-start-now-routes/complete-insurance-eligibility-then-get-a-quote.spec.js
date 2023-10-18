@@ -1,5 +1,4 @@
 import { submitButton } from '../../../../../pages/shared';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms';
 import { ROUTES } from '../../../../../constants';
 
 const {
@@ -41,9 +40,9 @@ context('Complete insurance eligibility, get a quote and then re-visit the insur
 
     cy.completeStartForm();
     cy.completeCheckIfEligibleForm();
-    completeAndSubmitBuyerCountryForm();
+    cy.completeExporterLocationForm();
 
-    const expectedUrl = `${baseUrl}${ELIGIBILITY.EXPORTER_LOCATION}`;
+    const expectedUrl = `${baseUrl}${ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
 
     cy.assertUrl(expectedUrl);
   });
