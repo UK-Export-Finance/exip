@@ -33,7 +33,7 @@ __export(keystone_exports, {
   default: () => keystone_default
 });
 module.exports = __toCommonJS(keystone_exports);
-var import_config4 = require("dotenv/config");
+var import_config5 = require("dotenv/config");
 var import_core3 = require("@keystone-6/core");
 var import_overload_protection = __toESM(require("overload-protection"));
 
@@ -1455,7 +1455,7 @@ var session = (0, import_session.statelessSessions)({
   secret: sessionSecret
 });
 
-// apollo-plugins/index.ts
+// apollo/plugins/index.ts
 var requestDidStart = () => ({
   /**
    * The didResolveOperation event fires after the graphql library successfully determines the operation to execute.
@@ -1474,7 +1474,23 @@ var requestDidStart = () => ({
   }
 });
 var apolloPlugins = [{ requestDidStart }];
-var apollo_plugins_default = apolloPlugins;
+var plugins_default = apolloPlugins;
+
+// apollo/format-graphql-error/index.ts
+var import_config4 = require("dotenv/config");
+var import_apollo_server_express = require("apollo-server-express");
+var formatGraphQlError = (err) => {
+  const isDevEnvironment3 = process.env.NODE_ENV === "development";
+  if (!isDevEnvironment3) {
+    return new import_apollo_server_express.ValidationError("Invalid request");
+  }
+  return err;
+};
+var format_graphql_error_default = formatGraphQlError;
+
+// apollo/index.ts
+var apolloPlugins2 = plugins_default;
+var formatGraphQlError2 = format_graphql_error_default;
 
 // custom-schema/index.ts
 var import_schema = require("@graphql-tools/schema");
@@ -4947,14 +4963,15 @@ var keystone_default = withAuth(
     },
     db: {
       provider: "mysql",
-      url: String(DATABASE_URL),
-      enableLogging: isDevEnvironment2
+      url: String(DATABASE_URL)
+      // enableLogging: isDevEnvironment,
     },
     graphql: {
       playground: isDevEnvironment2,
       apolloConfig: {
         introspection: isDevEnvironment2,
-        plugins: apollo_plugins_default
+        plugins: apolloPlugins2,
+        formatError: formatGraphQlError2
       }
     },
     lists,

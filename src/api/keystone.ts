@@ -5,7 +5,7 @@ import checkApiKey from './middleware/headers/check-api-key';
 import rateLimiter from './middleware/rate-limiter';
 import { lists } from './schema';
 import { withAuth, session } from './auth';
-import apolloPlugins from './apollo-plugins';
+import { apolloPlugins, formatGraphQlError } from './apollo';
 import { extendGraphqlSchema } from './custom-schema';
 
 const { NODE_ENV, PORT, DATABASE_URL } = process.env;
@@ -57,13 +57,14 @@ export default withAuth(
     db: {
       provider: 'mysql',
       url: String(DATABASE_URL),
-      enableLogging: isDevEnvironment,
+      // enableLogging: isDevEnvironment,
     },
     graphql: {
       playground: isDevEnvironment,
       apolloConfig: {
         introspection: isDevEnvironment,
         plugins: apolloPlugins,
+        formatError: formatGraphQlError,
       },
     },
     lists,

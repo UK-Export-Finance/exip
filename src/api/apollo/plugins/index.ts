@@ -1,4 +1,4 @@
-import { ALLOWED_GRAPHQL_RESOLVERS } from '../constants';
+import { ALLOWED_GRAPHQL_RESOLVERS } from '../../constants';
 
 interface ApolloOperation {
   operationName?: string;
