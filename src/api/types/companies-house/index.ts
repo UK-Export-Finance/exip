@@ -1,3 +1,4 @@
+import { Address } from '../address';
 import { ConnectObj, SuccessResponse } from '../generic';
 
 export interface CompaniesHouseAccountReferenceDate {
@@ -43,15 +44,9 @@ export interface IndustrySector {
   ukefIndustryName: string;
 }
 
-export interface MappedCompaniesHouseAddress {
-  careOf?: string;
-  premises?: string;
-  addressLine1?: string;
-  addressLine2?: string;
+interface MappedCompaniesHouseAddress extends Address {
   locality?: string;
   region?: string;
-  postalCode?: string;
-  country?: string;
 }
 
 export interface MappedCompaniesHouseResponse {

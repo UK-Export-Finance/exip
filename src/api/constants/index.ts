@@ -191,3 +191,5 @@ export const DATE_FORMAT = {
   DEFAULT: 'd MMMM yyyy',
   HOURS_AND_MINUTES: 'HH:mm',
 };
+
+export const ORDNANCE_SURVEY_QUERY_URL = '/search/places/v1/postcode?postcode=';
