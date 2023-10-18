@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import { config } from '@keystone-6/core';
+import protect from 'overload-protection';
 import checkApiKey from './middleware/headers/check-api-key';
 import rateLimiter from './middleware/rate-limiter';
 import { lists } from './schema';
@@ -30,6 +31,7 @@ const isProdEnvironment = NODE_ENV === 'production';
  * KeystoneJS configuration
  * This file sets up the following:
  * - Server port
+ * - Custom express config, including overload protection, API key, rate limiter.
  * - Database provider, URL, logging
  * - GraphQL playground and apollo configuration
  * - KeystoneJS admin UI/CMS session configuration
@@ -43,6 +45,8 @@ export default withAuth(
     server: {
       port: Number(PORT),
       extendExpressApp: (app) => {
+        app.use(protect('express'));
+
         app.use(checkApiKey);
 
         if (isProdEnvironment) {

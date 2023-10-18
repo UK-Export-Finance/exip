@@ -35,6 +35,7 @@ __export(keystone_exports, {
 module.exports = __toCommonJS(keystone_exports);
 var import_config4 = require("dotenv/config");
 var import_core3 = require("@keystone-6/core");
+var import_overload_protection = __toESM(require("overload-protection"));
 
 // middleware/headers/check-api-key/index.ts
 var import_config = require("dotenv/config");
@@ -4937,6 +4938,7 @@ var keystone_default = withAuth(
     server: {
       port: Number(PORT),
       extendExpressApp: (app) => {
+        app.use((0, import_overload_protection.default)("express"));
         app.use(check_api_key_default);
         if (isProdEnvironment) {
           app.use(rate_limiter_default);
