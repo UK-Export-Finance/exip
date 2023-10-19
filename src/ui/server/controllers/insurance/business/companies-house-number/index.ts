@@ -11,7 +11,6 @@ import mapAndSave from '../map-and-save/company-details';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
-import companiesHouseSearch from './helpers/companies-house-search.helper';
 
 const {
   COMPANIES_HOUSE_NUMBER,
@@ -34,7 +33,7 @@ const {
 
 const { COMPANIES_HOUSE_NUMBER_SAVE_AND_BACK, COMPANIES_HOUSE_UNAVAILABLE, CHECK_YOUR_ANSWERS, COMPANY_DETAILS, NO_COMPANIES_HOUSE_NUMBER } = EXPORTER_BUSINESS;
 
-const { COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER_FIELDS } = FIELDS;
+// const { COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER_FIELDS } = FIELDS;
 
 const exitReason = {
   noCompaniesHouseNumber: PAGES.INSURANCE.APPLY_OFFLINE.REASON.NO_COMPANIES_HOUSE_NUMBER,
@@ -42,10 +41,10 @@ const exitReason = {
 
 const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
-    COMPANIES_HOUSE_NUMBER: {
-      ID: COMPANIES_HOUSE_NUMBER,
-      ...COMPANIES_HOUSE_NUMBER_FIELDS[COMPANIES_HOUSE_NUMBER],
-    },
+    // COMPANIES_HOUSE_NUMBER: {
+    //   ID: COMPANIES_HOUSE_NUMBER,
+    //   ...COMPANIES_HOUSE_NUMBER_FIELDS[COMPANIES_HOUSE_NUMBER],
+    // },
   },
   EXIT_PAGE_URL: `${INSURANCE_ROOT}/${referenceNumber}${NO_COMPANIES_HOUSE_NUMBER}`,
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANIES_HOUSE_NUMBER_SAVE_AND_BACK}`,
@@ -119,50 +118,50 @@ const post = async (req: Request, res: Response) => {
 
     const { referenceNumber } = application;
 
-    const payload = constructPayload(req.body, [COMPANIES_HOUSE_NUMBER]);
+    // const payload = constructPayload(req.body, [COMPANIES_HOUSE_NUMBER]);
 
     // runs companiesHouse validation and api call first for companiesHouse input
-    const response = await companiesHouseSearch(payload);
+    // const response = await companiesHouseSearch(payload);
 
-    const { apiError, companiesHouseNumber, company } = response;
+    // const { apiError, companiesHouseNumber, company } = response;
 
-    // if error, then there is problem with api/service to redirect
-    if (apiError) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${COMPANIES_HOUSE_UNAVAILABLE}`);
-    }
+    // // if error, then there is problem with api/service to redirect
+    // if (apiError) {
+    //   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${COMPANIES_HOUSE_UNAVAILABLE}`);
+    // }
 
-    const { validationErrors } = response;
+    // const { validationErrors } = response;
 
-    // populate submittedValues
-    const submittedValues = {
-      [COMPANIES_HOUSE_NUMBER]: companiesHouseNumber,
-    };
+    // // populate submittedValues
+    // const submittedValues = {
+    //   [COMPANIES_HOUSE_NUMBER]: companiesHouseNumber,
+    // };
 
     // if any errors then render template with errors
-    if (isPopulatedArray(Object.keys(validationErrors))) {
-      return res.render(TEMPLATE, {
-        ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: CONTENT_STRINGS,
-          BACK_LINK: req.headers.referer,
-        }),
-        userName: getUserNameFromSession(req.session.user),
-        ...pageVariables(application.referenceNumber),
-        validationErrors,
-        submittedValues,
-      });
-    }
+    // if (isPopulatedArray(Object.keys(validationErrors))) {
+    //   return res.render(TEMPLATE, {
+    //     ...insuranceCorePageVariables({
+    //       PAGE_CONTENT_STRINGS: CONTENT_STRINGS,
+    //       BACK_LINK: req.headers.referer,
+    //     }),
+    //     userName: getUserNameFromSession(req.session.user),
+    //     ...pageVariables(application.referenceNumber),
+    //     validationErrors,
+    //     submittedValues,
+    //   });
+    // }
 
-    const updateBody = {
-      ...payload,
-      ...company,
-    };
+    // const updateBody = {
+    //   ...payload,
+    //   ...company,
+    // };
 
-    // if no errors, then runs save api call to db
-    const saveResponse = await mapAndSave.companyDetails(updateBody, application);
+    // // if no errors, then runs save api call to db
+    // const saveResponse = await mapAndSave.companyDetails(updateBody, application);
 
-    if (!saveResponse) {
-      return res.redirect(PROBLEM_WITH_SERVICE);
-    }
+    // if (!saveResponse) {
+    //   return res.redirect(PROBLEM_WITH_SERVICE);
+    // }
 
     if (isChangeRoute(req.originalUrl)) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);

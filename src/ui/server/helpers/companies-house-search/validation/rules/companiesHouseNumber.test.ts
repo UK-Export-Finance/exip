@@ -1,14 +1,14 @@
 import companiesHouseNumber from './companiesHouseNumber';
-import { FIELD_IDS } from '../../../../../../../constants';
-import { RequestBody } from '../../../../../../../../types';
-import generateValidationErrors from '../../../../../../../helpers/validation';
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
+import { FIELD_IDS } from '../../../../constants';
+import { RequestBody } from '../../../../../types';
+import generateValidationErrors from '../../../validation';
+import { ERROR_MESSAGES } from '../../../../content-strings';
 
 const { COMPANIES_HOUSE_NUMBER } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 
-describe('controllers/insurance/business/companies-house-number/validation/companies-house/rules/companiesHouseNumber', () => {
+describe('helpers/companies-house-search/validation/rules/companiesHouseNumber', () => {
   const mockErrors = {
     summary: [],
     errorList: {},

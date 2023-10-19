@@ -1,6 +1,5 @@
 import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
 import { ROUTES } from '../../../../../constants';
-import companiesHouseSearch from '../helpers/companies-house-search.helper';
 import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/company-details';
 import { Request, Response } from '../../../../../../types';
@@ -30,25 +29,25 @@ const post = async (req: Request, res: Response) => {
     const { body } = req;
 
     // runs companiesHouse validation and api call first for companiesHouse input
-    const response = await companiesHouseSearch(body);
-    const { validationErrors } = response;
+    // const response = await companiesHouseSearch(body);
+    // const { validationErrors } = response;
 
-    const { company } = response;
+    // const { company } = response;
 
-    const payload = constructPayload(body, [FIELD_ID]);
+    // const payload = constructPayload(body, [FIELD_ID]);
 
-    // body for update containing companies house info and request body
-    const updateBody = {
-      ...payload,
-      ...company,
-    };
+    // // body for update containing companies house info and request body
+    // const updateBody = {
+    //   ...payload,
+    //   ...company,
+    // };
 
-    // runs save and go back command
-    const saveResponse = await mapAndSave.companyDetails(updateBody, application, validationErrors);
+    // // runs save and go back command
+    // const saveResponse = await mapAndSave.companyDetails(updateBody, application, validationErrors);
 
-    if (!saveResponse) {
-      return res.redirect(PROBLEM_WITH_SERVICE);
-    }
+    // if (!saveResponse) {
+    //   return res.redirect(PROBLEM_WITH_SERVICE);
+    // }
 
     // redirect to all sections page
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);

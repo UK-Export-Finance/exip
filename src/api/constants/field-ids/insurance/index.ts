@@ -9,9 +9,10 @@ import CHECK_YOUR_ANSWERS from './check-your-answers';
 const INSURANCE_FIELD_IDS = {
   ELIGIBILITY: {
     ...SHARED_ELIGIBILITY_FIELD_IDS,
+    HAS_COMPANIES_HOUSE_NUMBER: 'hasCompaniesHouseNumber',
+    COMPANIES_HOUSE_NUMBER: 'companiesHouseNumber',
     WANT_COVER_OVER_MAX_AMOUNT: 'wantCoverOverMaxAmount',
     WANT_COVER_OVER_MAX_PERIOD: 'wantCoverOverMaxPeriod',
-    COMPANIES_HOUSE_NUMBER: 'hasCompaniesHouseNumber',
     ACCOUNT_TO_APPLY_ONLINE: 'alreadyHaveAnAccount',
   },
   SUBMISSION_DEADLINE: 'submissionDeadline',

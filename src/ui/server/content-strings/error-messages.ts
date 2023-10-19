@@ -62,8 +62,11 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD]: {
         IS_EMPTY: `Select whether you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years`,
       },
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: {
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_COMPANIES_HOUSE_NUMBER]: {
         IS_EMPTY: 'Select whether you have a UK Companies House registration number or not',
+      },
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: {
+        IS_EMPTY: 'Enter a recognised Companies House number',
       },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE]: {
         IS_EMPTY: 'Select whether you have an account for UKEF export insurance',

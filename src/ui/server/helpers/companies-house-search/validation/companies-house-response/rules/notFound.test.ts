@@ -1,14 +1,14 @@
 import notFound from './notFound';
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_IDS } from '../../../../../../../constants';
-import generateValidationErrors from '../../../../../../../helpers/validation';
-import { CompanyHouseResponse } from '../../../../../../../../types';
+import { ERROR_MESSAGES } from '../../../../../content-strings';
+import { FIELD_IDS } from '../../../../../constants';
+import generateValidationErrors from '../../../../validation';
+import { CompanyHouseResponse } from '../../../../../../types';
 
 const { COMPANIES_HOUSE_NUMBER } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 
-describe('controllers/insurance/business/companies-house-number/validation/companies-house-response/rules/notFound', () => {
+describe('helpers/companies-house-search/validation/companies-house-response/rules/notFound', () => {
   const mockErrors = {
     summary: [],
     errorList: {},

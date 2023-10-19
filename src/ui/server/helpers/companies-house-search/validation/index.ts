@@ -1,6 +1,6 @@
 import validationRules from './rules';
-import combineValidationRules from '../../../../../../helpers/combine-validation-rules';
-import { RequestBody, ValidationErrors } from '../../../../../../../types';
+import combineValidationRules from '../../combine-validation-rules';
+import { RequestBody, ValidationErrors } from '../../../../types';
 
 /**
  * validates formBody for entered companies house number

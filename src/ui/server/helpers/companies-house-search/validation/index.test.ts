@@ -1,7 +1,7 @@
 import validation from '.';
 import validationRules from './rules';
-import { FIELD_IDS } from '../../../../../../constants';
-import combineValidationRules from '../../../../../../helpers/combine-validation-rules';
+import { FIELD_IDS } from '../../../constants';
+import combineValidationRules from '../../combine-validation-rules';
 
 const { COMPANIES_HOUSE_NUMBER } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 

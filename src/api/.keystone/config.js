@@ -122,7 +122,6 @@ var policy_default = POLICY;
 // constants/field-ids/insurance/business/index.ts
 var EXPORTER_BUSINESS = {
   COMPANY_HOUSE: {
-    SEARCH: "companiesHouseSearch",
     INPUT: "companiesHouseNumber",
     COMPANY_NAME: "companyName",
     COMPANY_ADDRESS: "registeredOfficeAddress",
@@ -219,9 +218,13 @@ var check_your_answers_default = CHECK_YOUR_ANSWERS;
 var INSURANCE_FIELD_IDS = {
   ELIGIBILITY: {
     ...shared_eligibility_default,
+    COMPANIES_HOUSE_NUMBER: "hasCompaniesHouseNumber",
     WANT_COVER_OVER_MAX_AMOUNT: "wantCoverOverMaxAmount",
     WANT_COVER_OVER_MAX_PERIOD: "wantCoverOverMaxPeriod",
-    COMPANIES_HOUSE_NUMBER: "hasCompaniesHouseNumber",
+    OTHER_PARTIES_INVOLVED: "otherPartiesInvolved",
+    LETTER_OF_CREDIT: "paidByLetterOfCredit",
+    PRE_CREDIT_PERIOD: "needPreCreditPeriodCover",
+    HAS_COMPANIES_HOUSE_NUMBER: "hasCompaniesHouseNumber",
     ACCOUNT_TO_APPLY_ONLINE: "alreadyHaveAnAccount"
   },
   SUBMISSION_DEADLINE: "submissionDeadline",

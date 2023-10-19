@@ -1,9 +1,9 @@
-import api from '../../../../../api';
-import companiesHouseValidation from '../validation/companies-house';
-import { isPopulatedArray } from '../../../../../helpers/array';
-import companyHouseResponseValidation from '../validation/companies-house-response';
-import { RequestBody, CompanyHouseResponse } from '../../../../../../types';
-import { FIELD_IDS } from '../../../../../constants';
+import api from '../../api';
+import companiesHouseValidation from './validation';
+import { isPopulatedArray } from '../array';
+import companyHouseResponseValidation from './validation/companies-house-response';
+import { RequestBody, CompanyHouseResponse } from '../../../types';
+import { FIELD_IDS } from '../../constants';
 
 const { COMPANIES_HOUSE_NUMBER } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
@@ -14,7 +14,7 @@ const { COMPANIES_HOUSE_NUMBER } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
  * @param {RequestBody} formBody
  * @returns {object} validationErrors, apiError flag, companiesHouseNumber and companyResponse
  */
-const companiesHouseSearch = async (formBody: RequestBody) => {
+const search = async (formBody: RequestBody) => {
   const { [COMPANIES_HOUSE_NUMBER]: companiesHouseNumber } = formBody;
 
   // checks input is correctly formatted
@@ -78,4 +78,6 @@ const companiesHouseSearch = async (formBody: RequestBody) => {
   };
 };
 
-export default companiesHouseSearch;
+const companiesHouse = { search };
+
+export default companiesHouse;

@@ -1,6 +1,8 @@
-import { FIELD_IDS } from '../../../constants';
+import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 
-const { ACCOUNT_TO_APPLY_ONLINE, BUYER_COUNTRY_ISO_CODE } = FIELD_IDS.INSURANCE.ELIGIBILITY;
+const {
+  ELIGIBILITY: { ACCOUNT_TO_APPLY_ONLINE, BUYER_COUNTRY_ISO_CODE, COMPANY_HOUSE, ...FIELD_IDS },
+} = INSURANCE_FIELD_IDS;
 
 /**
  * Required fields for the insurance - eligibility section
@@ -10,7 +12,7 @@ const { ACCOUNT_TO_APPLY_ONLINE, BUYER_COUNTRY_ISO_CODE } = FIELD_IDS.INSURANCE.
  * @returns {Array} Required field IDs
  */
 const requiredFields = (): Array<string> => {
-  const fieldIds = Object.values(FIELD_IDS.INSURANCE.ELIGIBILITY);
+  const fieldIds = Object.values(FIELD_IDS);
 
   const filtered = fieldIds.filter((fieldId) => fieldId !== ACCOUNT_TO_APPLY_ONLINE && fieldId !== BUYER_COUNTRY_ISO_CODE);
 

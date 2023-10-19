@@ -1,27 +1,38 @@
 import { generateRequiredData, requiredInsuranceEligibilityDataProvided } from '.';
-import { FIELD_IDS, ROUTES } from '../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { mockReq, mockRes, mockSession } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
-const { APPLY_OFFLINE, SPEAK_TO_UKEF_EFM, ELIGIBILITY, ACCOUNT } = ROUTES.INSURANCE;
+const { APPLY_OFFLINE, SPEAK_TO_UKEF_EFM, ELIGIBILITY, ACCOUNT } = INSURANCE_ROUTES;
 
 const {
+  ACCOUNT_TO_APPLY_ONLINE,
   CANNOT_APPLY,
   CHECK_IF_ELIGIBLE,
   NEED_TO_START_AGAIN,
-  ACCOUNT_TO_APPLY_ONLINE,
   BUYER_COUNTRY,
   EXPORTER_LOCATION,
   UK_GOODS_OR_SERVICES,
   INSURED_AMOUNT,
   INSURED_PERIOD,
   COMPANIES_HOUSE_NUMBER,
+  ENTER_COMPANIES_HOUSE_NUMBER,
+  COMPANY_DETAILS,
   ELIGIBLE_TO_APPLY_ONLINE,
 } = ELIGIBILITY;
 
 const {
-  ELIGIBILITY: { VALID_EXPORTER_LOCATION, HAS_MINIMUM_UK_GOODS_OR_SERVICES },
-} = FIELD_IDS;
+  ELIGIBILITY: {
+    VALID_EXPORTER_LOCATION,
+    HAS_COMPANIES_HOUSE_NUMBER,
+    BUYER_COUNTRY: BUYER_COUNTRY_FIELD_ID,
+    WANT_COVER_OVER_MAX_AMOUNT,
+    WANT_COVER_OVER_MAX_PERIOD,
+    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+  },
+  COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_NAME, COMPANY_SIC },
+} = INSURANCE_FIELD_IDS;
 
 describe('middleware/required-data-provided/insurance/eligibility', () => {
   let req: Request;
@@ -37,13 +48,17 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
 
       expected[COMPANIES_HOUSE_NUMBER] = [VALID_EXPORTER_LOCATION];
 
-      expected[BUYER_COUNTRY] = [...expected[COMPANIES_HOUSE_NUMBER], FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER];
+      expected[ENTER_COMPANIES_HOUSE_NUMBER] = [...expected[COMPANIES_HOUSE_NUMBER], HAS_COMPANIES_HOUSE_NUMBER];
 
-      expected[INSURED_AMOUNT] = [...expected[BUYER_COUNTRY], FIELD_IDS.INSURANCE.ELIGIBILITY.BUYER_COUNTRY];
+      expected[COMPANY_DETAILS] = [...expected[ENTER_COMPANIES_HOUSE_NUMBER], COMPANY_NUMBER, COMPANY_NAME, COMPANY_SIC];
 
-      expected[INSURED_PERIOD] = [...expected[INSURED_AMOUNT], FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT];
+      expected[BUYER_COUNTRY] = [...expected[COMPANY_DETAILS]];
 
-      expected[UK_GOODS_OR_SERVICES] = [...expected[INSURED_PERIOD], FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD];
+      expected[INSURED_AMOUNT] = [...expected[BUYER_COUNTRY], BUYER_COUNTRY_FIELD_ID];
+
+      expected[INSURED_PERIOD] = [...expected[INSURED_AMOUNT], WANT_COVER_OVER_MAX_AMOUNT];
+
+      expected[UK_GOODS_OR_SERVICES] = [...expected[INSURED_PERIOD], WANT_COVER_OVER_MAX_PERIOD];
 
       expected[ELIGIBLE_TO_APPLY_ONLINE] = [...expected[BUYER_COUNTRY], HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
@@ -197,7 +212,7 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
       });
     });
 
-    it('should call req.next', () => {
+    it('should call req.next when all required data is provided', () => {
       req.originalUrl = ELIGIBLE_TO_APPLY_ONLINE;
       req.session = mockSession;
 

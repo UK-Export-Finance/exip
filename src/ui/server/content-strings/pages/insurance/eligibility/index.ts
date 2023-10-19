@@ -16,8 +16,16 @@ const INSURED_PERIOD = {
   PAGE_TITLE: `Do you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years?`,
 };
 
-const COMPANIES_HOUSE_NUMBER = {
+const HAS_COMPANIES_HOUSE_NUMBER = {
   PAGE_TITLE: 'Do you have a UK Companies House registration number and is your company actively trading?',
+};
+
+const COMPANIES_HOUSE_NUMBER = {
+  PAGE_TITLE: 'Enter your Companies House number',
+};
+
+const COMPANY_DETAILS = {
+  PAGE_TITLE: 'Your company',
 };
 
 const ELIGIBLE_TO_APPLY_ONLINE = {
@@ -35,7 +43,9 @@ export default {
   CHECK_IF_ELIGIBLE,
   INSURED_AMOUNT,
   INSURED_PERIOD,
+  HAS_COMPANIES_HOUSE_NUMBER,
   COMPANIES_HOUSE_NUMBER,
+  COMPANY_DETAILS,
   ELIGIBLE_TO_APPLY_ONLINE,
   ACCOUNT_TO_APPLY_ONLINE,
 };

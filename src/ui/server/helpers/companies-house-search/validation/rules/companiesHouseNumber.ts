@@ -1,15 +1,18 @@
 import Joi from 'joi';
-
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_IDS } from '../../../../../../../constants';
-import generateValidationErrors from '../../../../../../../helpers/validation';
-import { RequestBody, ValidationErrors } from '../../../../../../../../types';
+import { ERROR_MESSAGES } from '../../../../content-strings';
+import { FIELD_IDS } from '../../../../constants';
+import generateValidationErrors from '../../../validation';
+import { RequestBody, ValidationErrors } from '../../../../../types';
 
 const { COMPANIES_HOUSE_NUMBER } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 
-// schema to check that number only contains letters and/or numbers and has a length greater than 6
+/**
+ * Schema to check that the number:
+ * - only contains letters and/or numbers
+ * - has a length greater than 6
+ */
 const schema = Joi.string().alphanum().min(6).required();
 
 /**

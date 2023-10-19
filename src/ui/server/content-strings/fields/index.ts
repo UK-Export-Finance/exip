@@ -166,31 +166,34 @@ export const FIELDS = {
   [FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE]: {
     HINT: "If you've applied online before, you'll already have an account.",
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NUMBER]: {
-    SUMMARY: {
-      TITLE: 'Companies House registration number',
-    },
+  [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: {
+    HINT: `<p>For example, 8989898 or SC907816. You'll find it on your incorporation certificate or on the <a class="govuk-link" href="${LINKS.EXTERNAL.COMPANIES_HOUSE}">Companies House website</a>.</p>`,
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NAME]: {
-    SUMMARY: {
-      TITLE: 'Company name',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_ADDRESS]: {
-    SUMMARY: {
-      TITLE: 'Registered office address',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_INCORPORATED]: {
-    SUMMARY: {
-      TITLE: 'Incorporated on',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_SIC]: {
-    SUMMARY: {
-      TITLE: 'Standard industrial classification (SIC) codes and nature of business',
-    },
-  },
+  // [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NUMBER]: {
+  //   SUMMARY: {
+  //     TITLE: 'Companies House registration number',
+  //   },
+  // },
+  // [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NAME]: {
+  //   SUMMARY: {
+  //     TITLE: 'Company name',
+  //   },
+  // },
+  // [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_ADDRESS]: {
+  //   SUMMARY: {
+  //     TITLE: 'Registered office address',
+  //   },
+  // },
+  // [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_INCORPORATED]: {
+  //   SUMMARY: {
+  //     TITLE: 'Incorporated on',
+  //   },
+  // },
+  // [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_SIC]: {
+  //   SUMMARY: {
+  //     TITLE: 'Standard industrial classification (SIC) codes and nature of business',
+  //   },
+  // },
   [FIELD_IDS.FEEDBACK.SATISFACTION]: {
     TITLE: 'Satisfaction survey',
     LABEL: 'Overall, how did you feel about the service you received today?',

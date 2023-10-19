@@ -1,6 +1,6 @@
 import validationRules from './rules';
-import combineValidationRules from '../../../../../../helpers/combine-validation-rules';
-import { CompanyHouseResponse, ValidationErrors } from '../../../../../../../types';
+import combineValidationRules from '../../../combine-validation-rules';
+import { CompanyHouseResponse, ValidationErrors } from '../../../../../types';
 
 /**
  * Validates company house API response
