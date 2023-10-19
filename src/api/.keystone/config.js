@@ -1967,11 +1967,11 @@ var callNotify = async (templateId, emailAddress, variables, file) => {
 };
 
 // emails/confirm-email-address/index.ts
-var confirmEmailAddress = async (emailAddress, urlOrigin, name, verificationHash) => {
+var confirmEmailAddress = async (emailAddress, urlOrigin, name, verificationHash, id) => {
   try {
     console.info("Sending confirm email address email");
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
-    const variables = { urlOrigin, name, confirmToken: verificationHash };
+    const variables = { urlOrigin, name, confirmToken: verificationHash, id };
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (err) {
@@ -2213,7 +2213,7 @@ var createAnAccount = async (root, variables, context) => {
       data: accountData
     });
     const name = get_full_name_string_default(creationResponse);
-    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash);
+    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash, creationResponse.id);
     if (emailResponse.success) {
       return {
         ...creationResponse,
