@@ -152,7 +152,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
 
   describe(`when no account is found from the provided ${ID}`, () => {
     test('it should return success=false and invalid=true', async () => {
-      variables.accountId = 'invalid';
+      variables[ID] = 'invalid';
 
       result = await verifyAccountEmailAddress({}, variables, context);
 

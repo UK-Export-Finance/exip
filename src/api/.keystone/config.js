@@ -2315,7 +2315,7 @@ var { ID, EMAIL: EMAIL2, VERIFICATION_EXPIRY } = account_default;
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
     console.info("Verifying account email address");
-    const account2 = await get_account_by_field_default(context, ID, variables.accountId);
+    const account2 = await get_account_by_field_default(context, ID, variables.id);
     if (!account2) {
       console.info("Unable to verify account email address - account does not exist");
       return {
@@ -2324,7 +2324,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
       };
     }
     if (account2.isVerified) {
-      console.info("Account email is already verified");
+      console.info("Account email address is already verified");
       return {
         success: true
       };
@@ -2333,14 +2333,14 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
     const now = /* @__PURE__ */ new Date();
     const canActivateAccount = (0, import_date_fns3.isBefore)(now, account2[VERIFICATION_EXPIRY]);
     if (!canActivateAccount) {
-      console.info("Unable to verify account email - verification period has expired");
+      console.info("Unable to verify account email address - verification period has expired");
       return {
         expired: true,
         success: false,
         accountId: id
       };
     }
-    console.info("Verified account email - updating account to be verified");
+    console.info("Verified account email address - updating account to be verified");
     const accountUpdate = {
       isVerified: true,
       verificationHash: "",

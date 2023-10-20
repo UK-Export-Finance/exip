@@ -18,7 +18,7 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
     console.info('Verifying account email address');
 
     // get the account by ID.
-    const account = (await getAccountByField(context, ID, variables.accountId)) as Account;
+    const account = (await getAccountByField(context, ID, variables.id)) as Account;
 
     if (!account) {
       console.info('Unable to verify account email address - account does not exist');
@@ -36,7 +36,7 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
      * and an account becomes verified, it would return success=false.
      */
     if (account.isVerified) {
-      console.info('Account email is already verified');
+      console.info('Account email address is already verified');
 
       return {
         success: true,
@@ -53,7 +53,7 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
     const canActivateAccount = isBefore(now, account[VERIFICATION_EXPIRY]);
 
     if (!canActivateAccount) {
-      console.info('Unable to verify account email - verification period has expired');
+      console.info('Unable to verify account email address - verification period has expired');
 
       return {
         expired: true,
@@ -66,7 +66,7 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
      * Mark the account as verified and
      * nullify the verification hash and expiry.
      */
-    console.info('Verified account email - updating account to be verified');
+    console.info('Verified account email address - updating account to be verified');
 
     const accountUpdate = {
       isVerified: true,
