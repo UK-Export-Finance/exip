@@ -17,7 +17,7 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF e
 
   let referenceNumbers;
   let firstReferenceNumber;
-  let url;
+  const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -25,18 +25,16 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF e
 
       firstReferenceNumber = refNumber;
 
-      url = `${baseUrl}${DASHBOARD}`;
-
       header.navigation.applications().click();
 
-      cy.assertUrl(url);
+      cy.assertUrl(dashboardUrl);
     });
   });
 
   beforeEach(() => {
     cy.saveSession();
 
-    cy.navigateToUrl(url);
+    cy.navigateToUrl(dashboardUrl);
   });
 
   after(() => {
@@ -59,13 +57,13 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF e
     cy.checkText(table.body.firstRow.referenceNumber(), expectedReferenceNumber);
   });
 
-  describe('when a different exporter logs in and creates an application', () => {
+  describe('when a different exporter signs in and creates an application', () => {
     let secondReferenceNumber;
 
     before(() => {
       cy.saveSession();
 
-      cy.navigateToUrl(url);
+      cy.navigateToUrl(dashboardUrl);
 
       // sign out of the current account
       header.navigation.signOut().click();
@@ -85,7 +83,7 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF e
       beforeEach(() => {
         cy.saveSession();
 
-        cy.navigateToUrl(url);
+        cy.navigateToUrl(dashboardUrl);
       });
 
       it('should have only one application', () => {

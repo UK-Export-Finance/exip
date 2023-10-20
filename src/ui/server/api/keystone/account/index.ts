@@ -72,11 +72,11 @@ const account = {
       throw new Error('Getting an account');
     }
   },
-  verifyEmailAddress: async (token: string) => {
+  verifyEmailAddress: async (token: string, id: string) => {
     try {
       console.info('Verifying account email address');
 
-      const variables = { token };
+      const variables = { token, id };
 
       const response = (await apollo('POST', verifyAccountEmailAddressMutation, variables)) as ApolloResponse;
 

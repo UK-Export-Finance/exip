@@ -36,18 +36,20 @@ describe('controllers/insurance/account/create/verify-email', () => {
     describe('when req.query.token exists', () => {
       beforeEach(() => {
         req.query.token = mockToken;
+        req.query.id = mockAccount.id;
       });
 
-      it('should call api.keystone.account.verifyEmailAddress', async () => {
+      it('should call api.keystone.account.verifyEmailAddress with token and ID', async () => {
         api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
 
         await get(req, res);
 
         const sanitisedToken = String(sanitiseValue({ value: mockToken }));
+        const sanitisedId = String(sanitiseValue({ value: mockAccount.id }));
 
         expect(verifyEmailAddressSpy).toHaveBeenCalledTimes(1);
 
-        expect(verifyEmailAddressSpy).toHaveBeenCalledWith(sanitisedToken);
+        expect(verifyEmailAddressSpy).toHaveBeenCalledWith(sanitisedToken, sanitisedId);
       });
 
       describe('when api.keystone.account.verifyEmailAddress returns success=true', () => {
@@ -120,7 +122,25 @@ describe('controllers/insurance/account/create/verify-email', () => {
 
     describe('when there is no req.query.token', () => {
       beforeEach(() => {
-        req.query = {};
+        req.query = {
+          id: mockAccount.id,
+        };
+
+        api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
+      });
+
+      it(`should redirect to ${VERIFY_EMAIL_INVALID_LINK}`, async () => {
+        await get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(VERIFY_EMAIL_INVALID_LINK);
+      });
+    });
+
+    describe('when there is no req.query.id', () => {
+      beforeEach(() => {
+        req.query = {
+          token: mockToken,
+        };
 
         api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;
       });
@@ -136,6 +156,8 @@ describe('controllers/insurance/account/create/verify-email', () => {
       describe('when there is an error', () => {
         beforeEach(() => {
           req.query.token = mockToken;
+          req.query.id = mockAccount.id;
+
           verifyEmailAddressSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
           api.keystone.account.verifyEmailAddress = verifyEmailAddressSpy;

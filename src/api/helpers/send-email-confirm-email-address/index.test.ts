@@ -40,7 +40,7 @@ describe('helpers/send-email-confirm-email-address', () => {
     const name = getFullNameString(account);
 
     expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
-    expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, mockUrlOrigin, name, verificationHash);
+    expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, mockUrlOrigin, name, verificationHash, account.id);
 
     const expected = {
       success: true,
