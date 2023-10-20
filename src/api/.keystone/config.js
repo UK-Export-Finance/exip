@@ -85,8 +85,25 @@ var SHARED_ELIGIBILITY = {
 };
 var shared_eligibility_default = SHARED_ELIGIBILITY;
 
-// types/account/index.ts
-var account_default = {};
+// constants/field-ids/insurance/account/index.ts
+var ACCOUNT = {
+  FIRST_NAME: "firstName",
+  LAST_NAME: "lastName",
+  EMAIL: "email",
+  PASSWORD: "password",
+  SALT: "salt",
+  HASH: "hash",
+  SECURITY_CODE: "securityCode",
+  IS_VERIFIED: "isVerified",
+  IS_BLOCKED: "isBlocked",
+  PASSWORD_RESET_HASH: "passwordResetHash",
+  PASSWORD_RESET_EXPIRY: "passwordResetExpiry",
+  REACTIVATION_HASH: "reactivationHash",
+  REACTIVATION_EXPIRY: "reactivationExpiry",
+  VERIFICATION_HASH: "verificationHash",
+  VERIFICATION_EXPIRY: "verificationExpiry"
+};
+var account_default = ACCOUNT;
 
 // constants/field-ids/insurance/policy/index.ts
 var SHARED_CONTRACT_POLICY = {
@@ -218,13 +235,10 @@ var check_your_answers_default = CHECK_YOUR_ANSWERS;
 var INSURANCE_FIELD_IDS = {
   ELIGIBILITY: {
     ...shared_eligibility_default,
-    COMPANIES_HOUSE_NUMBER: "hasCompaniesHouseNumber",
+    HAS_COMPANIES_HOUSE_NUMBER: "hasCompaniesHouseNumber",
+    COMPANIES_HOUSE_NUMBER: "companiesHouseNumber",
     WANT_COVER_OVER_MAX_AMOUNT: "wantCoverOverMaxAmount",
     WANT_COVER_OVER_MAX_PERIOD: "wantCoverOverMaxPeriod",
-    OTHER_PARTIES_INVOLVED: "otherPartiesInvolved",
-    LETTER_OF_CREDIT: "paidByLetterOfCredit",
-    PRE_CREDIT_PERIOD: "needPreCreditPeriodCover",
-    HAS_COMPANIES_HOUSE_NUMBER: "hasCompaniesHouseNumber",
     ACCOUNT_TO_APPLY_ONLINE: "alreadyHaveAnAccount"
   },
   SUBMISSION_DEADLINE: "submissionDeadline",
@@ -523,7 +537,7 @@ var DATE_30_MINUTES_FROM_NOW = () => {
   const future = new Date(now.getTime() + minutes * milliseconds);
   return future;
 };
-var ACCOUNT = {
+var ACCOUNT2 = {
   EMAIL: {
     VERIFICATION_EXPIRY: DATE_24_HOURS_FROM_NOW
   },
@@ -627,26 +641,6 @@ var DATE_FORMAT = {
   DEFAULT: "d MMMM yyyy",
   HOURS_AND_MINUTES: "HH:mm"
 };
-
-// constants/field-ids/insurance/account/index.ts
-var ACCOUNT2 = {
-  FIRST_NAME: "firstName",
-  LAST_NAME: "lastName",
-  EMAIL: "email",
-  PASSWORD: "password",
-  SALT: "salt",
-  HASH: "hash",
-  SECURITY_CODE: "securityCode",
-  IS_VERIFIED: "isVerified",
-  IS_BLOCKED: "isBlocked",
-  PASSWORD_RESET_HASH: "passwordResetHash",
-  PASSWORD_RESET_EXPIRY: "passwordResetExpiry",
-  REACTIVATION_HASH: "reactivationHash",
-  REACTIVATION_EXPIRY: "reactivationExpiry",
-  VERIFICATION_HASH: "verificationHash",
-  VERIFICATION_EXPIRY: "verificationExpiry"
-};
-var account_default2 = ACCOUNT2;
 
 // helpers/update-application/index.ts
 var timestamp = async (context, applicationId) => {
@@ -1108,7 +1102,7 @@ var lists = {
         if (operation === "create") {
           const { email } = resolvedData;
           const requestedEmail = String(email);
-          const account2 = await get_account_by_field_default(context, account_default2.EMAIL, requestedEmail);
+          const account2 = await get_account_by_field_default(context, account_default.EMAIL, requestedEmail);
           if (account2) {
             throw new Error(`Unable to create a new account for ${requestedEmail} - account already exists`);
           }
@@ -1810,7 +1804,7 @@ var type_defs_default = typeDefs;
 
 // helpers/encrypt-password/index.ts
 var import_crypto = __toESM(require("crypto"));
-var { ENCRYPTION } = ACCOUNT;
+var { ENCRYPTION } = ACCOUNT2;
 var {
   RANDOM_BYTES_SIZE,
   STRING_TYPE,
@@ -1831,7 +1825,7 @@ var encrypt_password_default = encryptPassword;
 
 // helpers/get-account-verification-hash/index.ts
 var import_crypto2 = __toESM(require("crypto"));
-var { EMAIL, ENCRYPTION: ENCRYPTION2 } = ACCOUNT;
+var { EMAIL, ENCRYPTION: ENCRYPTION2 } = ACCOUNT2;
 var {
   STRING_TYPE: STRING_TYPE2,
   PBKDF2: { ITERATIONS: ITERATIONS2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 },
@@ -2141,7 +2135,7 @@ var createAnAccount = async (root, variables, context) => {
   console.info("Creating new account for %s", variables.email);
   try {
     const { urlOrigin, firstName, lastName, email, password: password2 } = variables;
-    const account2 = await get_account_by_field_default(context, account_default2.EMAIL, email);
+    const account2 = await get_account_by_field_default(context, account_default.EMAIL, email);
     if (account2) {
       console.info("Unable to create a new account for %s - account already exists", variables.email);
       return { success: false };
@@ -2265,7 +2259,7 @@ var update = {
 var update_account_default = update;
 
 // custom-resolvers/mutations/verify-account-email-address/index.ts
-var { EMAIL: EMAIL2, VERIFICATION_HASH, VERIFICATION_EXPIRY } = account_default2;
+var { EMAIL: EMAIL2, VERIFICATION_HASH, VERIFICATION_EXPIRY } = account_default;
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
     console.info("Verifying account email address");
@@ -2382,7 +2376,7 @@ var send_email_confirm_email_address_default2 = sendEmailConfirmEmailAddressMuta
 
 // helpers/get-password-hash/index.ts
 var import_crypto3 = __toESM(require("crypto"));
-var { ENCRYPTION: ENCRYPTION3 } = ACCOUNT;
+var { ENCRYPTION: ENCRYPTION3 } = ACCOUNT2;
 var {
   STRING_TYPE: STRING_TYPE3,
   PBKDF2: { ITERATIONS: ITERATIONS3, DIGEST_ALGORITHM: DIGEST_ALGORITHM3 },
@@ -2441,7 +2435,7 @@ var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
 
 // helpers/should-block-account/index.ts
 var import_date_fns4 = require("date-fns");
-var { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT;
+var { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT2;
 var shouldBlockAccount = async (context, accountId) => {
   console.info("Checking account authentication retries %s", accountId);
   try {
@@ -2490,7 +2484,7 @@ var import_date_fns5 = require("date-fns");
 // helpers/generate-otp/index.ts
 var import_crypto4 = __toESM(require("crypto"));
 var import_otplib = require("otplib");
-var { ENCRYPTION: ENCRYPTION4, OTP } = ACCOUNT;
+var { ENCRYPTION: ENCRYPTION4, OTP } = ACCOUNT2;
 var {
   RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE2,
   STRING_TYPE: STRING_TYPE4,
@@ -2547,7 +2541,7 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
 var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
 
 // custom-resolvers/mutations/account-sign-in/account-checks/index.ts
-var { EMAIL: EMAIL3 } = ACCOUNT;
+var { EMAIL: EMAIL3 } = ACCOUNT2;
 var accountChecks = async (context, account2, urlOrigin) => {
   try {
     console.info("Signing in account - checking account");
@@ -2600,7 +2594,7 @@ var accountSignIn = async (root, variables, context) => {
   try {
     console.info("Signing in account");
     const { urlOrigin, email, password: password2 } = variables;
-    const accountData = await get_account_by_field_default(context, account_default2.EMAIL, email);
+    const accountData = await get_account_by_field_default(context, account_default.EMAIL, email);
     if (!accountData) {
       console.info("Unable to validate account - no account found");
       return { success: false };
@@ -2676,7 +2670,7 @@ var import_date_fns6 = require("date-fns");
 
 // helpers/is-valid-otp/index.ts
 var import_crypto5 = __toESM(require("crypto"));
-var { ENCRYPTION: ENCRYPTION5 } = ACCOUNT;
+var { ENCRYPTION: ENCRYPTION5 } = ACCOUNT2;
 var {
   STRING_TYPE: STRING_TYPE5,
   PBKDF2: { ITERATIONS: ITERATIONS5, DIGEST_ALGORITHM: DIGEST_ALGORITHM5 },
@@ -2727,7 +2721,7 @@ var {
     KEY: { SIGNATURE, ENCODING, STRING_ENCODING },
     TOKEN: { EXPIRY, ALGORITHM }
   }
-} = ACCOUNT;
+} = ACCOUNT2;
 var PRIV_KEY = Buffer.from(SIGNATURE, ENCODING).toString(STRING_ENCODING);
 var createJWT = (accountId) => {
   const sessionIdentifier = import_crypto6.default.randomBytes(RANDOM_BYTES_SIZE3).toString(STRING_TYPE6);
@@ -2752,7 +2746,7 @@ var create_jwt_default = create;
 // custom-resolvers/mutations/verify-account-sign-in-code/index.ts
 var {
   JWT: { SESSION_EXPIRY }
-} = ACCOUNT;
+} = ACCOUNT2;
 var verifyAccountSignInCode = async (root, variables, context) => {
   try {
     console.info("Verifying account sign in code");
@@ -2819,7 +2813,7 @@ var addAndGetOTP = async (root, variables, context) => {
   try {
     console.info("Adding OTP to an account");
     const { email } = variables;
-    const account2 = await get_account_by_field_default(context, account_default2.EMAIL, email);
+    const account2 = await get_account_by_field_default(context, account_default.EMAIL, email);
     if (!account2) {
       console.info("Unable to generate and add OTP to an account - no account found");
       return { success: false };
@@ -2846,12 +2840,12 @@ var {
       PBKDF2: { KEY_LENGTH: KEY_LENGTH6 }
     }
   }
-} = ACCOUNT;
+} = ACCOUNT2;
 var sendEmailPasswordResetLink = async (root, variables, context) => {
   try {
     console.info("Received a password reset request - checking account");
     const { urlOrigin, email } = variables;
-    const account2 = await get_account_by_field_default(context, account_default2.EMAIL, email);
+    const account2 = await get_account_by_field_default(context, account_default.EMAIL, email);
     if (!account2) {
       console.info("Unable to check account and send password reset email - no account found");
       return { success: false };
@@ -2881,7 +2875,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
     const passwordResetHash = import_crypto7.default.pbkdf2Sync(email, account2.salt, ITERATIONS6, KEY_LENGTH6, DIGEST_ALGORITHM6).toString(STRING_TYPE7);
     const accountUpdate = {
       passwordResetHash,
-      passwordResetExpiry: ACCOUNT.PASSWORD_RESET_EXPIRY()
+      passwordResetExpiry: ACCOUNT2.PASSWORD_RESET_EXPIRY()
     };
     console.info("Updating account for password reset");
     await update_account_default.account(context, accountId, accountUpdate);
@@ -2955,7 +2949,7 @@ var accountPasswordReset = async (root, variables, context) => {
   console.info("Resetting account password");
   try {
     const { token, password: newPassword } = variables;
-    const account2 = await get_account_by_field_default(context, account_default2.PASSWORD_RESET_HASH, token);
+    const account2 = await get_account_by_field_default(context, account_default.PASSWORD_RESET_HASH, token);
     if (!account2) {
       console.info("Unable to reset account password - account does not exist");
       return { success: false };
@@ -3035,7 +3029,7 @@ var {
       PBKDF2: { KEY_LENGTH: KEY_LENGTH7 }
     }
   }
-} = ACCOUNT;
+} = ACCOUNT2;
 var sendEmailReactivateAccountLink = async (root, variables, context) => {
   try {
     console.info("Received a request to send reactivate account email/link - checking account");
@@ -3050,7 +3044,7 @@ var sendEmailReactivateAccountLink = async (root, variables, context) => {
     const reactivationHash = import_crypto8.default.pbkdf2Sync(email, account2.salt, ITERATIONS7, KEY_LENGTH7, DIGEST_ALGORITHM7).toString(STRING_TYPE8);
     const accountUpdate = {
       reactivationHash,
-      reactivationExpiry: ACCOUNT.REACTIVATION_EXPIRY()
+      reactivationExpiry: ACCOUNT2.REACTIVATION_EXPIRY()
     };
     console.info("Updating account for reactivation");
     await update_account_default.account(context, accountId, accountUpdate);
@@ -3871,7 +3865,7 @@ var DEFAULT = {
 };
 
 // content-strings/XLSX.ts
-var { FIRST_NAME, LAST_NAME } = account_default2;
+var { FIRST_NAME, LAST_NAME } = account_default;
 var {
   CONTRACT_POLICY: {
     SINGLE: { CONTRACT_COMPLETION_DATE }
@@ -3933,7 +3927,7 @@ var format_time_of_day_default = formatTimeOfDay;
 
 // generate-xlsx/map-application-to-XLSX/map-key-information/index.ts
 var { FIELDS: FIELDS2 } = XLSX;
-var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL5 } = account_default2;
+var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL5 } = account_default;
 var mapKeyInformation = (application2) => {
   const mapped = [
     xlsx_row_default(REFERENCE_NUMBER.SUMMARY.TITLE, application2.referenceNumber),
@@ -3948,7 +3942,7 @@ var mapKeyInformation = (application2) => {
 var map_key_information_default = mapKeyInformation;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-contact-details/index.ts
-var { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL6 } = account_default2;
+var { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL6 } = account_default;
 var {
   SECTION_TITLES: { EXPORTER_CONTACT_DETAILS },
   FIELDS: FIELDS3
@@ -4455,7 +4449,7 @@ var getAccountPasswordResetToken = async (root, variables, context) => {
   console.info("Getting account password reset token");
   try {
     const { email } = variables;
-    const account2 = await get_account_by_field_default(context, account_default2.EMAIL, email);
+    const account2 = await get_account_by_field_default(context, account_default.EMAIL, email);
     if (!account2) {
       console.info("Unable to get account password reset token - account does not exist");
       return { success: false };
@@ -4828,7 +4822,7 @@ var get_companies_house_information_default = getCompaniesHouseInformation;
 
 // custom-resolvers/queries/verify-account-password-reset-token/index.ts
 var import_date_fns10 = require("date-fns");
-var { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY } = account_default2;
+var { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY } = account_default;
 var verifyAccountPasswordResetToken = async (root, variables, context) => {
   console.info("Verifying account password reset token");
   try {

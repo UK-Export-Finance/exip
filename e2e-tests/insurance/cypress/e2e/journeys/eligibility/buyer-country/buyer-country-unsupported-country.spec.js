@@ -28,6 +28,8 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
     cy.completeCheckIfEligibleForm();
     cy.completeExporterLocationForm();
     cy.completeCompaniesHouseNumberForm();
+    cy.completeAndSubmitCompaniesHouseSearchForm({});
+    cy.completeEligibilityCompanyDetailsForm();
 
     cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_UNSUPPORTRED.name);
 

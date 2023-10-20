@@ -28,6 +28,8 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
 
     cy.completeExporterLocationForm();
     cy.completeCompaniesHouseNumberForm();
+    cy.completeAndSubmitCompaniesHouseSearchForm({});
+    cy.completeEligibilityCompanyDetailsForm();
     completeAndSubmitBuyerCountryForm();
     cy.completeInsuredAmountForm();
     cy.completeInsuredPeriodForm();

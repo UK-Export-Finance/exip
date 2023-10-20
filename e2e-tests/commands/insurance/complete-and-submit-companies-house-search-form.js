@@ -9,11 +9,10 @@ const {
 /**
  * completeAndSubmitCompaniesHouseSearchForm
  * Complete and submit the companies house search form
- * @param {String} Application reference number
  * @param {String} Companies house number
  */
-const completeAndSubmitCompaniesHouseSearchForm = ({ referenceNumber, companyNumber = COMPANIES_HOUSE_NUMBER }) => {
-  cy.interceptCompaniesHousePost({ referenceNumber, companyNumber });
+const completeAndSubmitCompaniesHouseSearchForm = ({ companyNumber = COMPANIES_HOUSE_NUMBER }) => {
+  cy.interceptCompaniesHousePost({ companyNumber });
 
   cy.keyboardInput(field(FIELD_ID).input(), companyNumber);
   submitButton().click();

@@ -33,6 +33,10 @@ export const completeCompaniesHouseNumberForm = () => {
   selectRadioAndSubmit('yes');
 };
 
+export const completeCompanyDetailsForm = () => {
+  submitButton().click();
+};
+
 export const completeInsuredAmountForm = () => {
   selectRadioAndSubmit('no');
 };
