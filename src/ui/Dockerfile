@@ -41,7 +41,7 @@ RUN npm ci --legacy-peer-deps --omit=dev --ignore-scripts
 # 2. PRODUCTION
 ###################
 
-FROM node:20.8.1-alpine3.17 AS production
+FROM node:21.0.0-alpine3.17 AS production
 
 WORKDIR /app
 
