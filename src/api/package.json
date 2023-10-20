@@ -37,7 +37,7 @@
     "axios-mock-adapter": "^1.22.0",
     "date-fns": "^2.30.0",
     "dotenv": "16.3.1",
-    "exceljs": "^4.3.0",
+    "exceljs": "^4.4.0",
     "express-rate-limit": "^6.11.2",
     "jsonwebtoken": "^9.0.2",
     "notifications-node-client": "^7.0.3",
