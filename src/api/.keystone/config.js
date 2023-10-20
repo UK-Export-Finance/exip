@@ -657,6 +657,7 @@ var DATE_FORMAT = {
 
 // constants/field-ids/insurance/account/index.ts
 var ACCOUNT2 = {
+  ID: "id",
   FIRST_NAME: "firstName",
   LAST_NAME: "lastName",
   EMAIL: "email",
@@ -1746,6 +1747,7 @@ var typeDefs = `
     """ verify an account's email address """
     verifyAccountEmailAddress(
       token: String!
+      id: String!
     ): VerifyAccountEmailAddressResponse
 
     """ verify an account's reactivation token """
@@ -2313,17 +2315,22 @@ var update = {
 var update_account_default = update;
 
 // custom-resolvers/mutations/verify-account-email-address/index.ts
-var { EMAIL: EMAIL2, VERIFICATION_HASH, VERIFICATION_EXPIRY } = account_default2;
+var { ID, EMAIL: EMAIL2, VERIFICATION_EXPIRY } = account_default2;
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
     console.info("Verifying account email address");
-    const account2 = await get_account_by_field_default(context, VERIFICATION_HASH, variables.token);
-    console.info("temp logging - verifyAccountEmailAddress  - account %O", account2);
+    const account2 = await get_account_by_field_default(context, ID, variables.accountId);
     if (!account2) {
       console.info("Unable to verify account email address - account does not exist");
       return {
         success: false,
         invalid: true
+      };
+    }
+    if (account2.isVerified) {
+      console.info("Account email is already verified");
+      return {
+        success: true
       };
     }
     const { id } = account2;
@@ -2343,8 +2350,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
       verificationHash: "",
       verificationExpiry: null
     };
-    const updatedAccount = await update_account_default.account(context, id, accountUpdate);
-    console.info("temp logging - updatedAccount %O", updatedAccount);
+    await update_account_default.account(context, id, accountUpdate);
     return {
       success: true,
       accountId: id,
@@ -2395,9 +2401,9 @@ var send = async (context, urlOrigin, accountId) => {
       latestVerificationHash = verificationHash;
       await update_account_default.account(context, accountId, accountUpdate);
     }
-    const { email } = account2;
+    const { email, id } = account2;
     const name = get_full_name_string_default(account2);
-    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, latestVerificationHash);
+    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, latestVerificationHash, id);
     if (emailResponse.success) {
       return emailResponse;
     }

@@ -2,9 +2,9 @@ import { isBefore } from 'date-fns';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import update from '../../../helpers/update-account';
-import { Context, VerifyEmailAddressVariables, VerifyEmailAddressResponse } from '../../../types';
+import { Account, Context, VerifyEmailAddressVariables, VerifyEmailAddressResponse } from '../../../types';
 
-const { EMAIL, VERIFICATION_HASH, VERIFICATION_EXPIRY } = ACCOUNT_FIELD_IDS;
+const { ID, EMAIL, VERIFICATION_EXPIRY } = ACCOUNT_FIELD_IDS;
 
 /**
  * verifyAccountEmailAddress
@@ -17,10 +17,8 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
   try {
     console.info('Verifying account email address');
 
-    // get the account the token is associated with.
-    const account = await getAccountByField(context, VERIFICATION_HASH, variables.token);
-
-    console.info('temp logging - verifyAccountEmailAddress  - account %O', account);
+    // get the account by ID.
+    const account = (await getAccountByField(context, ID, variables.accountId)) as Account;
 
     if (!account) {
       console.info('Unable to verify account email address - account does not exist');
@@ -28,6 +26,20 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
       return {
         success: false,
         invalid: true,
+      };
+    }
+
+    /**
+     * Check if the account is already verified.
+     * If so, return success=true.
+     * Without this, if this resolver is called more than once,
+     * and an account becomes verified, it would return success=false.
+     */
+    if (account.isVerified) {
+      console.info('Account email is already verified');
+
+      return {
+        success: true,
       };
     }
 
@@ -62,9 +74,7 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
       verificationExpiry: null,
     };
 
-    const updatedAccount = await update.account(context, id, accountUpdate);
-
-    console.info('temp logging - updatedAccount %O', updatedAccount);
+    await update.account(context, id, accountUpdate);
 
     return {
       success: true,
