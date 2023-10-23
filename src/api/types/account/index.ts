@@ -157,6 +157,7 @@ export interface VerifyEmailAddressResponse extends SuccessResponse {
 
 export interface VerifyEmailAddressVariables {
   token: string;
+  accountId: string;
 }
 
 export default {};

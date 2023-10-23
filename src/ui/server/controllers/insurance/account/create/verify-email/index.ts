@@ -22,12 +22,13 @@ const {
  */
 export const get = async (req: Request, res: Response) => {
   try {
-    const { token } = req.query;
+    const { token, id } = req.query;
 
-    if (token) {
+    if (token && id) {
       const sanitisedToken = String(sanitiseValue({ value: token }));
+      const sanitisedId = String(sanitiseValue({ value: id }));
 
-      const response = await api.keystone.account.verifyEmailAddress(sanitisedToken);
+      const response = await api.keystone.account.verifyEmailAddress(sanitisedToken, sanitisedId);
 
       if (response.expired && response.accountId) {
         const url = `${VERIFY_EMAIL_EXPIRED_LINK}?id=${response.accountId}`;

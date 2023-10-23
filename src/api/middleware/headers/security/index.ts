@@ -1,13 +1,10 @@
-import isRequestHeaderOriginValid from './is-request-header-origin-valid';
-import { Request, Response } from '../../../../types';
+import { Request, Response, NextFunction } from 'express';
 
 /**
  * Global middleware, ensures myriads of imperative security headers.
- * - Sanitise request "referer" and "origin" headers
  * - `HSTS` - 1 Year
  * - `X-Frame-Options` - Clickjacking
- * - `XSS`
- * - `X-Content-Type-Options`
+ * - `X-Content-Type-Options` - Content-Type headers should be followed
  * - `CSP`
  * - `Cache-Control` - 7 days
  * - `Set-Cookie`
@@ -18,33 +15,17 @@ import { Request, Response } from '../../../../types';
  * - CORP
  * - Permissions Policy
  * - Removes `X-Powered-By`
- * @param {Object} req Request object
- * @param {Object} res Response object
- * @param {String} next Callback function name
+ * @param {Express.Request} req Request object
+ * @param {Express.Response} res Response object
+ * @returns {Function} next()
  */
-
-export const security = (req: Request, res: Response, next: () => void) => {
-  const { hostname } = req;
-
-  if (req.headers.referer) {
-    if (!isRequestHeaderOriginValid(hostname, req.headers.referer)) {
-      req.headers.referer = '';
-    }
-  }
-
-  if (req.headers.origin) {
-    if (!isRequestHeaderOriginValid(hostname, req.headers.origin)) {
-      req.headers.origin = '';
-    }
-  }
-
+const security = (req: Request, res: Response, next: NextFunction) => {
   res.setHeader('Strict-Transport-Security', 'max-age=15552000; includeSubDomains; preload');
   res.setHeader('X-Frame-Options', 'deny');
-  res.setHeader('X-XSS-Protection', '1; mode=block');
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader(
     'Content-Security-Policy',
-    "default-src 'none';connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com;base-uri 'self';font-src 'self' data:;form-action 'self';frame-ancestors 'self';img-src 'self' https://*.google-analytics.com https://*.googletagmanager.com;object-src 'none';script-src 'self' https://*.google-analytics.com https://*.googletagmanager.com;script-src-attr 'self';style-src 'self';upgrade-insecure-requests",
+    "default-src 'none';connect-src 'self';base-uri 'self';font-src 'self' data:;form-action 'self';frame-ancestors 'self';img-src 'self';object-src 'none';script-src 'self';script-src-attr 'self';style-src 'self';upgrade-insecure-requests",
   );
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=604800');
   res.setHeader('Referrer-Policy', 'same-origin');
@@ -63,3 +44,5 @@ export const security = (req: Request, res: Response, next: () => void) => {
 
   next();
 };
+
+export default security;

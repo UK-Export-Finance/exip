@@ -169,14 +169,14 @@ export const POLICY_FIELDS = {
       },
     },
     [NAME_ON_POLICY.POSITION]: {
-      LABEL: "What's your position at the company",
+      LABEL: "What's your position at the company?",
       SUMMARY: {
         TITLE: 'Position at company',
       },
     },
     [NAME_ON_POLICY.NAME]: {
       SUMMARY: {
-        TITLE: 'Name on policy',
+        TITLE: 'Name on the policy',
       },
     },
   },

@@ -50,7 +50,7 @@ context('Insurance - no access to application page - signed in - check your answ
       cy.clearCookie(COOKIE.NAME.SESSION);
 
       // sign into a different accont
-      cy.completeSignInAndGoToApplication({ email: secondAccountEmail }).then((refNumber) => {
+      cy.completeSignInAndGoToApplication({ email: secondAccountEmail }).then(({ referenceNumber: refNumber }) => {
         referenceNumbers = [...referenceNumbers, refNumber];
       });
     });

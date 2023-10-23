@@ -18,10 +18,10 @@ const verifyAccountEmail = () => {
   cy.getAccountByEmail(accountEmail).then((responseData) => {
     const [firstAccount] = responseData;
 
-    const { verificationHash } = firstAccount;
+    const { verificationHash, id } = firstAccount;
 
     // mimic clicking email verification link
-    cy.navigateToUrl(`${baseUrl}${VERIFY_EMAIL}?token=${verificationHash}`);
+    cy.navigateToUrl(`${baseUrl}${VERIFY_EMAIL}?token=${verificationHash}&id=${id}`);
 
     // User should be verified and therefore redirected to the "sign in" page.
     const expectedUrl = `${baseUrl}${SIGN_IN.ROOT}`;

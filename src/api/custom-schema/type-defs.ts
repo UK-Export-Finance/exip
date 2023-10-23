@@ -225,6 +225,7 @@ const typeDefs = `
     """ verify an account's email address """
     verifyAccountEmailAddress(
       token: String!
+      id: String!
     ): VerifyAccountEmailAddressResponse
 
     """ verify an account's reactivation token """

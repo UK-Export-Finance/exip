@@ -33,8 +33,35 @@ __export(keystone_exports, {
   default: () => keystone_default
 });
 module.exports = __toCommonJS(keystone_exports);
-var import_config4 = require("dotenv/config");
+var import_config5 = require("dotenv/config");
 var import_core3 = require("@keystone-6/core");
+var import_overload_protection = __toESM(require("overload-protection"));
+
+// middleware/headers/security/index.ts
+var security = (req, res, next) => {
+  res.setHeader("Strict-Transport-Security", "max-age=15552000; includeSubDomains; preload");
+  res.setHeader("X-Frame-Options", "deny");
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'none';connect-src 'self';base-uri 'self';font-src 'self' data:;form-action 'self';frame-ancestors 'self';img-src 'self';object-src 'none';script-src 'self';script-src-attr 'self';style-src 'self';upgrade-insecure-requests"
+  );
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate, max-age=604800");
+  res.setHeader("Referrer-Policy", "same-origin");
+  res.setHeader("X-Download-Options", "noopen");
+  res.setHeader("X-DNS-Prefetch-Control", "on");
+  res.setHeader("Expect-CT", "max-age=0,enforce");
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+  res.setHeader("Cross-Origin-Resource-Policy", "same-origin");
+  res.setHeader("Cross-Origin-Embedder-Policy", "require-corp");
+  res.setHeader(
+    "Permissions-Policy",
+    "fullscreen=(self),microphone=(),camera=(),payment=(),geolocation=(),display-capture=(),battery=(),autoplay=(),gyroscope=(),accelerometer=(),web-share=(),usb=(),gamepad=(),magnetometer=(),midi=(),picture-in-picture=(),xr-spatial-tracking=()"
+  );
+  res.removeHeader("X-Powered-By");
+  next();
+};
+var security_default = security;
 
 // middleware/headers/check-api-key/index.ts
 var import_config = require("dotenv/config");
@@ -87,6 +114,7 @@ var shared_eligibility_default = SHARED_ELIGIBILITY;
 
 // constants/field-ids/insurance/account/index.ts
 var ACCOUNT = {
+  ID: "id",
   FIRST_NAME: "firstName",
   LAST_NAME: "lastName",
   EMAIL: "email",
@@ -676,7 +704,6 @@ var getAccountByField = async (context, field, value) => {
       },
       take: 1
     });
-    console.info("temp logging - accountsArray ", accountsArray);
     if (!accountsArray?.length || !accountsArray[0]) {
       console.info("Getting account by field - no account exists with the provided field/value");
       return false;
@@ -1446,7 +1473,7 @@ var session = (0, import_session.statelessSessions)({
   secret: sessionSecret
 });
 
-// apollo-plugins/index.ts
+// apollo/plugins/index.ts
 var requestDidStart = () => ({
   /**
    * The didResolveOperation event fires after the graphql library successfully determines the operation to execute.
@@ -1465,7 +1492,23 @@ var requestDidStart = () => ({
   }
 });
 var apolloPlugins = [{ requestDidStart }];
-var apollo_plugins_default = apolloPlugins;
+var plugins_default = apolloPlugins;
+
+// apollo/format-graphql-error/index.ts
+var import_config4 = require("dotenv/config");
+var import_apollo_server_express = require("apollo-server-express");
+var formatGraphQlError = (err) => {
+  const isDevEnvironment3 = process.env.NODE_ENV === "development";
+  if (!isDevEnvironment3) {
+    return new import_apollo_server_express.ValidationError("Invalid request");
+  }
+  return err;
+};
+var format_graphql_error_default = formatGraphQlError;
+
+// apollo/index.ts
+var apolloPlugins2 = plugins_default;
+var formatGraphQlError2 = format_graphql_error_default;
 
 // custom-schema/index.ts
 var import_schema = require("@graphql-tools/schema");
@@ -1692,6 +1735,7 @@ var typeDefs = `
     """ verify an account's email address """
     verifyAccountEmailAddress(
       token: String!
+      id: String!
     ): VerifyAccountEmailAddressResponse
 
     """ verify an account's reactivation token """
@@ -1913,11 +1957,11 @@ var callNotify = async (templateId, emailAddress, variables, file) => {
 };
 
 // emails/confirm-email-address/index.ts
-var confirmEmailAddress = async (emailAddress, urlOrigin, name, verificationHash) => {
+var confirmEmailAddress = async (emailAddress, urlOrigin, name, verificationHash, id) => {
   try {
     console.info("Sending confirm email address email");
     const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
-    const variables = { urlOrigin, name, confirmToken: verificationHash };
+    const variables = { urlOrigin, name, confirmToken: verificationHash, id };
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (err) {
@@ -2159,7 +2203,7 @@ var createAnAccount = async (root, variables, context) => {
       data: accountData
     });
     const name = get_full_name_string_default(creationResponse);
-    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash);
+    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash, creationResponse.id);
     if (emailResponse.success) {
       return {
         ...creationResponse,
@@ -2259,12 +2303,11 @@ var update = {
 var update_account_default = update;
 
 // custom-resolvers/mutations/verify-account-email-address/index.ts
-var { EMAIL: EMAIL2, VERIFICATION_HASH, VERIFICATION_EXPIRY } = account_default;
+var { ID, EMAIL: EMAIL2, VERIFICATION_EXPIRY } = account_default;
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
     console.info("Verifying account email address");
-    const account2 = await get_account_by_field_default(context, VERIFICATION_HASH, variables.token);
-    console.info("temp logging - verifyAccountEmailAddress  - account %O", account2);
+    const account2 = await get_account_by_field_default(context, ID, variables.id);
     if (!account2) {
       console.info("Unable to verify account email address - account does not exist");
       return {
@@ -2272,25 +2315,30 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
         invalid: true
       };
     }
+    if (account2.isVerified) {
+      console.info("Account email address is already verified");
+      return {
+        success: true
+      };
+    }
     const { id } = account2;
     const now = /* @__PURE__ */ new Date();
     const canActivateAccount = (0, import_date_fns3.isBefore)(now, account2[VERIFICATION_EXPIRY]);
     if (!canActivateAccount) {
-      console.info("Unable to verify account email - verification period has expired");
+      console.info("Unable to verify account email address - verification period has expired");
       return {
         expired: true,
         success: false,
         accountId: id
       };
     }
-    console.info("Verified account email - updating account to be verified");
+    console.info("Verified account email address - updating account to be verified");
     const accountUpdate = {
       isVerified: true,
       verificationHash: "",
       verificationExpiry: null
     };
-    const updatedAccount = await update_account_default.account(context, id, accountUpdate);
-    console.info("temp logging - updatedAccount %O", updatedAccount);
+    await update_account_default.account(context, id, accountUpdate);
     return {
       success: true,
       accountId: id,
@@ -2341,9 +2389,9 @@ var send = async (context, urlOrigin, accountId) => {
       latestVerificationHash = verificationHash;
       await update_account_default.account(context, accountId, accountUpdate);
     }
-    const { email } = account2;
+    const { email, id } = account2;
     const name = get_full_name_string_default(account2);
-    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, latestVerificationHash);
+    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, latestVerificationHash, id);
     if (emailResponse.success) {
       return emailResponse;
     }
@@ -4902,6 +4950,8 @@ var keystone_default = withAuth(
     server: {
       port: Number(PORT),
       extendExpressApp: (app) => {
+        app.use((0, import_overload_protection.default)("express"));
+        app.use(security_default);
         app.use(check_api_key_default);
         if (isProdEnvironment) {
           app.use(rate_limiter_default);
@@ -4917,7 +4967,8 @@ var keystone_default = withAuth(
       playground: isDevEnvironment2,
       apolloConfig: {
         introspection: isDevEnvironment2,
-        plugins: apollo_plugins_default
+        plugins: apolloPlugins2,
+        formatError: formatGraphQlError2
       }
     },
     lists,
