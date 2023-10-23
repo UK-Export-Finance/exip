@@ -146,19 +146,6 @@ jobs:
             --sku ${{ vars.APP_SERVICE_PLAN }} \
             --tags ${{ env.TAGS }}
 
-      - name: Log analytics workspace 📝
-        uses: Azure/cli@v1.0.8
-        with:
-          inlineScript: |
-            az monitor log-analytics workspace create \
-            --name log-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --ingestion-access Disabled \
-            --query-access Disabled \
-            --quota 0.05 \
-            --retention-time ${{ vars.LOG_RETENTION_DAY }} \
-            --sku ${{ vars.LOG_ANALYTICS_PLAN }} \
-            --tags ${{ env.TAGS }}
-
       - name: Container registry 📦️
         uses: Azure/cli@v1.0.8
         with:
@@ -219,6 +206,7 @@ jobs:
             --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/ui:${{ env.TARGET }} \
             --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --subnet snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --https-only true \
             --tags ${{ env.TAGS }}
 
       - name: Web app - API 🌐
@@ -231,6 +219,7 @@ jobs:
             --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/api:${{ env.TARGET }} \
             --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --subnet snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --https-only true \
             --tags ${{ env.TAGS }}
 
   # 3. WebApp configuration
