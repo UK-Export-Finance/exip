@@ -1,12 +1,16 @@
 import notFound from './notFound';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
-import { FIELD_IDS } from '../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import generateValidationErrors from '../../../../validation';
 import { CompanyHouseResponse } from '../../../../../../types';
 
-const { COMPANIES_HOUSE_NUMBER } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+const {
+  ELIGIBILITY: {
+    COMPANY_HOUSE: { COMPANY_NUMBER: FIELD_ID },
+  },
+} = INSURANCE_FIELD_IDS;
 
-const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
+const { ELIGIBILITY } = ERROR_MESSAGES.INSURANCE;
 
 describe('helpers/companies-house-search/validation/companies-house-response/rules/notFound', () => {
   const mockErrors = {
@@ -21,8 +25,8 @@ describe('helpers/companies-house-search/validation/companies-house-response/rul
   it('should return validation error when success is false', () => {
     const result = notFound(mockBody, mockErrors);
 
-    const errorMessage = EXPORTER_BUSINESS[COMPANIES_HOUSE_NUMBER].NOT_FOUND;
-    const expected = generateValidationErrors(COMPANIES_HOUSE_NUMBER, errorMessage, mockErrors);
+    const errorMessage = ELIGIBILITY[FIELD_ID].NOT_FOUND;
+    const expected = generateValidationErrors(FIELD_ID, errorMessage, mockErrors);
 
     expect(result).toEqual(expected);
   });

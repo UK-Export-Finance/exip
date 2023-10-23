@@ -1,14 +1,18 @@
 import validation from '.';
 import validationRules from './rules';
-import { FIELD_IDS } from '../../../constants';
+import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import combineValidationRules from '../../combine-validation-rules';
 
-const { COMPANIES_HOUSE_NUMBER } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+const {
+  ELIGIBILITY: {
+    COMPANY_HOUSE: { COMPANY_NUMBER },
+  },
+} = INSURANCE_FIELD_IDS;
 
 describe('controllers/insurance/business/companies-house-number/validation/companies-house', () => {
   it('should return an array of results from rule functions', () => {
     const mockFormBody = {
-      [COMPANIES_HOUSE_NUMBER]: '123',
+      [COMPANY_NUMBER]: '123',
     };
 
     const result = validation(mockFormBody);

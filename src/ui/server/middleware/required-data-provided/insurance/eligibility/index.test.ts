@@ -18,6 +18,7 @@ const {
   INSURED_PERIOD,
   COMPANIES_HOUSE_NUMBER,
   ENTER_COMPANIES_HOUSE_NUMBER,
+  COMPANIES_HOUSE_UNAVAILABLE,
   COMPANY_DETAILS,
   ELIGIBLE_TO_APPLY_ONLINE,
 } = ELIGIBILITY;
@@ -125,6 +126,15 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
     describe(`when req.originalUrl is ${CHECK_IF_ELIGIBLE}`, () => {
       it('should call req.next', () => {
         req.originalUrl = CHECK_IF_ELIGIBLE;
+        requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
+
+        expect(nextSpy).toHaveBeenCalled();
+      });
+    });
+
+    describe(`when req.originalUrl is ${COMPANIES_HOUSE_UNAVAILABLE}`, () => {
+      it('should call req.next', () => {
+        req.originalUrl = COMPANIES_HOUSE_UNAVAILABLE;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();

@@ -2,10 +2,14 @@ import api from '../../api';
 import companiesHouseValidation from './validation';
 import { isPopulatedArray } from '../array';
 import companyHouseResponseValidation from './validation/companies-house-response';
+import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import { RequestBody, CompanyHouseResponse } from '../../../types';
-import { FIELD_IDS } from '../../constants';
 
-const { COMPANIES_HOUSE_NUMBER } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+const {
+  ELIGIBILITY: {
+    COMPANY_HOUSE: { COMPANY_NUMBER },
+  },
+} = INSURANCE_FIELD_IDS;
 
 /**
  * helper which takes formBody containing companies house number
@@ -15,29 +19,22 @@ const { COMPANIES_HOUSE_NUMBER } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
  * @returns {object} validationErrors, apiError flag, companiesHouseNumber and companyResponse
  */
 const search = async (formBody: RequestBody) => {
-  const { [COMPANIES_HOUSE_NUMBER]: companiesHouseNumber } = formBody;
-
-  // checks input is correctly formatted
-  const validationErrors = companiesHouseValidation(formBody);
-
-  if (validationErrors) {
-    return {
-      validationErrors,
-      companiesHouseNumber,
-    };
-  }
+  const { [COMPANY_NUMBER]: companyNumber } = formBody;
 
   let company = {} as CompanyHouseResponse;
 
-  // if number provided, then sends to companies house API as keystone query
-  if (companiesHouseNumber) {
+  /**
+   * if a company number is provided,
+   * Call companies house API (via our own API)
+   */
+  if (companyNumber) {
     try {
-      company = await api.keystone.getCompaniesHouseInformation(companiesHouseNumber);
+      company = await api.keystone.getCompaniesHouseInformation(companyNumber);
     } catch (err) {
       console.error('Error posting to companies house API %O', err);
       return {
         apiError: true,
-        companiesHouseNumber,
+        companyNumber,
         validationErrors: {},
       };
     }
@@ -49,7 +46,7 @@ const search = async (formBody: RequestBody) => {
     if (company?.apiError) {
       return {
         apiError: true,
-        companiesHouseNumber,
+        companyNumber,
         validationErrors: {},
       };
     }
@@ -60,20 +57,20 @@ const search = async (formBody: RequestBody) => {
     if (responseValidationErrors) {
       return {
         validationErrors: responseValidationErrors,
-        companiesHouseNumber,
+        companyNumber,
       };
     }
 
     return {
       company,
-      companiesHouseNumber,
-      validationErrors: {},
+      companyNumber,
+      // validationErrors: {},
     };
   }
 
   return {
     apiError: true,
-    companiesHouseNumber,
+    companyNumber,
     validationErrors: {},
   };
 };

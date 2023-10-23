@@ -158,31 +158,31 @@ export const FIELDS = {
   [FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE]: {
     HINT: "If you've applied online before, you'll already have an account.",
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NUMBER]: {
-    SUMMARY: {
-      TITLE: 'Companies House registration number',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NAME]: {
-    SUMMARY: {
-      TITLE: 'Company name',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_ADDRESS]: {
-    SUMMARY: {
-      TITLE: 'Registered office address',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_INCORPORATED]: {
-    SUMMARY: {
-      TITLE: 'Incorporated on',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_SIC]: {
-    SUMMARY: {
-      TITLE: 'Standard industrial classification (SIC) codes and nature of business',
-    },
-  },
+  // [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NUMBER]: {
+  //   SUMMARY: {
+  //     TITLE: 'Companies House registration number',
+  //   },
+  // },
+  // [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NAME]: {
+  //   SUMMARY: {
+  //     TITLE: 'Company name',
+  //   },
+  // },
+  // [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_ADDRESS]: {
+  //   SUMMARY: {
+  //     TITLE: 'Registered office address',
+  //   },
+  // },
+  // [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_INCORPORATED]: {
+  //   SUMMARY: {
+  //     TITLE: 'Incorporated on',
+  //   },
+  // },
+  // [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_SIC]: {
+  //   SUMMARY: {
+  //     TITLE: 'Standard industrial classification (SIC) codes and nature of business',
+  //   },
+  // },
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.PHONE_NUMBER]: {
     LABEL: 'Your UK telephone number (optional)',
     HINT: 'We may need to contact you about your application',

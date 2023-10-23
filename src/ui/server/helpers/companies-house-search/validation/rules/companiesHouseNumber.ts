@@ -1,12 +1,13 @@
 import Joi from 'joi';
 import { ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELD_IDS } from '../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { objectHasProperty } from '../../../object';
 import generateValidationErrors from '../../../validation';
 import { RequestBody, ValidationErrors } from '../../../../../types';
 
-const { COMPANIES_HOUSE_NUMBER } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+const { COMPANY_HOUSE: { COMPANY_NUMBER: FIELD_ID } } = INSURANCE_FIELD_IDS;
 
-const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
+const { ELIGIBILITY } = ERROR_MESSAGES.INSURANCE;
 
 /**
  * Schema to check that the number:
@@ -17,19 +18,27 @@ const schema = Joi.string().alphanum().min(6).required();
 
 /**
  * validates companies house input
- * throws validation errors if does not follow JOI schema for minimum length, if special characters or is blank
+ * 1) Check if a value has been provided.
+ * 2) Check if it follows JOI schema  - minimum length, no special characters or is blank
  * @param formBody containing an object with the companies house input
  * @returns object containing errors or blank object
  */
 const companiesHouseNumber = (formBody: RequestBody, errors: ValidationErrors) => {
   let updatedErrors = errors;
 
-  const validation = schema.validate(formBody[COMPANIES_HOUSE_NUMBER]);
+  if (!objectHasProperty(formBody, FIELD_ID)) {
+    const errorMessage = ELIGIBILITY[FIELD_ID].IS_EMPTY;
+    updatedErrors = generateValidationErrors(FIELD_ID, errorMessage, errors);
+
+    return updatedErrors;
+  }
+
+  const validation = schema.validate(formBody[FIELD_ID]);
 
   // if error, then has failed schema check
   if (validation.error) {
-    const errorMessage = EXPORTER_BUSINESS[COMPANIES_HOUSE_NUMBER].INCORRECT_FORMAT;
-    updatedErrors = generateValidationErrors(COMPANIES_HOUSE_NUMBER, errorMessage, errors);
+    const errorMessage = ELIGIBILITY[FIELD_ID].INCORRECT_FORMAT;
+    updatedErrors = generateValidationErrors(FIELD_ID, errorMessage, errors);
   }
 
   return updatedErrors;

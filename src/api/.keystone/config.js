@@ -236,7 +236,7 @@ var INSURANCE_FIELD_IDS = {
   ELIGIBILITY: {
     ...shared_eligibility_default,
     HAS_COMPANIES_HOUSE_NUMBER: "hasCompaniesHouseNumber",
-    COMPANIES_HOUSE_NUMBER: "companiesHouseNumber",
+    COMPANIES_HOUSE_NUMBER: "companyNumber",
     WANT_COVER_OVER_MAX_AMOUNT: "wantCoverOverMaxAmount",
     WANT_COVER_OVER_MAX_PERIOD: "wantCoverOverMaxPeriod",
     ACCOUNT_TO_APPLY_ONLINE: "alreadyHaveAnAccount"

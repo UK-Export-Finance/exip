@@ -1,11 +1,15 @@
 import { ERROR_MESSAGES } from '../../../../../content-strings';
-import { FIELD_IDS } from '../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import generateValidationErrors from '../../../../validation';
 import { CompanyHouseResponse } from '../../../../../../types';
 
-const { COMPANIES_HOUSE_NUMBER } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+const {
+  ELIGIBILITY: {
+    COMPANY_HOUSE: { COMPANY_NUMBER: FIELD_ID },
+  },
+} = INSURANCE_FIELD_IDS;
 
-const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
+const { ELIGIBILITY } = ERROR_MESSAGES.INSURANCE;
 
 /**
  * validates company house API response
@@ -22,9 +26,9 @@ const notFound = (responseBody: CompanyHouseResponse, errors: object) => {
    * the company cannot be found by companies house API.
    */
   if (responseBody.success === false && !responseBody.apiError) {
-    const errorMessage = EXPORTER_BUSINESS[COMPANIES_HOUSE_NUMBER].NOT_FOUND;
+    const errorMessage = ELIGIBILITY[FIELD_ID].NOT_FOUND;
 
-    updatedErrors = generateValidationErrors(COMPANIES_HOUSE_NUMBER, errorMessage, errors);
+    updatedErrors = generateValidationErrors(FIELD_ID, errorMessage, errors);
   }
 
   return updatedErrors;

@@ -8,15 +8,15 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insur
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER;
 
 const {
-  ELIGIBILITY: { COMPANIES_HOUSE_NUMBER: FIELD_ID },
+  ELIGIBILITY: { HAS_COMPANIES_HOUSE_NUMBER: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
 const insuranceStartRoute = ROUTES.INSURANCE.START;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Eligibility - Companies house number page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if I do not have UK Companies House Registration Number', () => {
-  let url;
+context('Insurance - Eligibility - Companies house number page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if I have UK Companies House Registration Number', () => {
+  const url = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
 
   before(() => {
     cy.navigateToUrl(insuranceStartRoute);
@@ -24,8 +24,6 @@ context('Insurance - Eligibility - Companies house number page - I want to check
     cy.completeStartForm();
     cy.completeCheckIfEligibleForm();
     cy.completeExporterLocationForm();
-
-    url = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
 
     cy.assertUrl(url);
   });
@@ -69,6 +67,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
     describe('when submitting an empty form', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
+
       });
 
       it('should render validation errors', () => {
@@ -91,8 +90,8 @@ context('Insurance - Eligibility - Companies house number page - I want to check
         submitButton().click();
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`, () => {
-        const expected = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY}`;
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER}`, () => {
+        const expected = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER}`;
 
         cy.assertUrl(expected);
       });

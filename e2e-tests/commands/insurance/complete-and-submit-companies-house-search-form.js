@@ -3,7 +3,7 @@ import { COMPANIES_HOUSE_NUMBER } from '../../constants/examples';
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 
 const {
-  EXPORTER_BUSINESS: { COMPANIES_HOUSE_NUMBER: FIELD_ID },
+  ELIGIBILITY: { COMPANIES_HOUSE_NUMBER: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
 /**

@@ -5,7 +5,6 @@ import getSicCodeIDsFromApplication from '../../../../../helpers/get-sic-code-id
 
 const {
   EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE_NUMBER,
     COMPANY_HOUSE: {
       COMPANY_NUMBER,
       COMPANY_INCORPORATED,
@@ -46,18 +45,18 @@ const mapSubmittedData = (formBody: RequestBody, application: Application): obje
   }
 
   // only delete existing sic codes if company has been inputted
-  if (objectHasProperty(populatedData, COMPANIES_HOUSE_NUMBER)) {
+  if (objectHasProperty(populatedData, COMPANY_NUMBER)) {
     // generates array of objects for sic codes to delete from existing application
     populatedData[OLD_SIC_CODES] = [...getSicCodeIDsFromApplication(application)];
   }
 
   // convert and populate company number and delete the companies house input field
-  if (objectHasProperty(populatedData, COMPANIES_HOUSE_NUMBER)) {
+  if (objectHasProperty(populatedData, COMPANY_NUMBER)) {
     if (populatedData[COMPANY_NUMBER]) {
       populatedData[COMPANY_NUMBER] = populatedData[COMPANY_NUMBER].toString();
     }
 
-    delete populatedData[COMPANIES_HOUSE_NUMBER];
+    delete populatedData[COMPANY_NUMBER];
   }
 
   if (objectHasProperty(populatedData, COMPANY_INCORPORATED)) {
