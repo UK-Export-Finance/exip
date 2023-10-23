@@ -18,7 +18,7 @@ const baseUrl = Cypress.config('baseUrl');
  * - Remove the delay of calling the API and waiting for a response.
  * Steps:
  * 1) Invoke cy.intercept() for the "post companies house number route"
- * 2) When the route is intercepted, return a redirect to the "company details" route, as per the user journey.
+ * 2) Depending on the company number, return a redirect to a route, as per the user journey.
  * @param {String} Company number - defaults to VALID_COMPANIES_HOUSE_NUMBER
  */
 const interceptCompaniesHousePost = ({ companyNumber = VALID_COMPANIES_HOUSE_NUMBER }) => {
@@ -37,7 +37,7 @@ const interceptCompaniesHousePost = ({ companyNumber = VALID_COMPANIES_HOUSE_NUM
    * If company number is "not found" - return a 404
    * Otherwise, redirect to GET company details route.
    */
-  cy.intercept({ url: postUrl, method: 'POST' }, async (req) => {    
+  cy.intercept({ url: postUrl, method: 'POST' }, async (req) => {
     if (companyNumber === COMPANIES_HOUSE_NUMBER_NOT_FOUND) {
       req.redirect(redirectUrl, 404);
     }

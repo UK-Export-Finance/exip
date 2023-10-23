@@ -1,4 +1,4 @@
-import { SHARED } from './shared';
+import SHARED from './shared';
 import { SHARED_ELIGIBILITY_FIELD_IDS } from './shared-eligibility';
 import { FEEDBACK_FIELD_IDS } from './feedback';
 import { INSURANCE_FIELD_IDS } from './insurance';

@@ -1,5 +1,5 @@
 import { SHARED_ELIGIBILITY_FIELD_IDS } from '../shared-eligibility';
-import { SHARED_FIELD_IDS } from '../shared';
+import SHARED_FIELD_IDS from './shared';
 import { ACCOUNT } from './account';
 import { POLICY } from './policy';
 import { EXPORTER_BUSINESS } from './business';

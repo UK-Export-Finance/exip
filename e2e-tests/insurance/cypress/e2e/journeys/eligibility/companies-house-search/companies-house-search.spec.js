@@ -1,12 +1,7 @@
-import {
-  field, yesRadio, yesRadioInput, noRadio, submitButton,
-} from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
+import { field, submitButton } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../../../content-strings/fields/insurance/eligibility';
 import {
   ROUTES,
-  FIELD_VALUES,
   COMPANIES_HOUSE_NUMBER as VALID_COMPANIES_HOUSE_NUMBER,
   COMPANIES_HOUSE_NUMBER_EMPTY,
   COMPANIES_HOUSE_NUMBER_TOO_SHORT,

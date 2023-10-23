@@ -56,12 +56,12 @@ export const get = (req: Request, res: Response) =>
   });
 
 /**
-* post
-* Post the "Companies house search" form
-* @param {Express.Request} Express request
-* @param {Express.Response} Express response
-* @returns {Express.Response.redirect} Next part of the flow or validation errors
-*/
+ * post
+ * Post the "Companies house search" form
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} Next part of the flow or validation errors
+ */
 export const post = async (req: Request, res: Response) => {
   try {
     const payload = constructPayload(req.body, [FIELD_ID]);

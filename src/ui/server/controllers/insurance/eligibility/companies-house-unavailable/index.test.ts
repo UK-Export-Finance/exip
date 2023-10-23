@@ -7,7 +7,9 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
-const { ELIGIBILITY: { ENTER_COMPANIES_HOUSE_NUMBER } } = INSURANCE_ROUTES;
+const {
+  ELIGIBILITY: { ENTER_COMPANIES_HOUSE_NUMBER },
+} = INSURANCE_ROUTES;
 
 describe('controllers/insurance/eligibility/companies-house-unavailable', () => {
   let req: Request;

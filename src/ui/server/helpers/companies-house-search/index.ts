@@ -1,5 +1,4 @@
 import api from '../../api';
-import companiesHouseValidation from './validation';
 import { isPopulatedArray } from '../array';
 import companyHouseResponseValidation from './validation/companies-house-response';
 import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';

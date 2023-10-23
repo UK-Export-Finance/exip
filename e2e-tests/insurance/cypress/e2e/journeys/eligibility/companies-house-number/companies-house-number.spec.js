@@ -67,7 +67,6 @@ context('Insurance - Eligibility - Companies house number page - I want to check
     describe('when submitting an empty form', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
-
       });
 
       it('should render validation errors', () => {

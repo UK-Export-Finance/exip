@@ -5,7 +5,9 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
 
-const { ELIGIBILITY: { ENTER_COMPANIES_HOUSE_NUMBER } } = INSURANCE_ROUTES;
+const {
+  ELIGIBILITY: { ENTER_COMPANIES_HOUSE_NUMBER },
+} = INSURANCE_ROUTES;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_UNAVAILABLE;
 
