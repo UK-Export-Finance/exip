@@ -155,7 +155,6 @@ jobs:
             --name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }} \
             --sku Standard \
             --admin-enabled true \
-            --workspace log-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --tags ${{ env.TAGS }}
 
       - name: Virtual network 🧵
