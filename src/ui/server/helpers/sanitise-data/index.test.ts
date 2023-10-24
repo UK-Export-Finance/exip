@@ -216,7 +216,7 @@ describe('server/helpers/sanitise-data', () => {
     it('should return the result of sanitiseValue for each property in the object', () => {
       const mockObject = {
         a: 'mock',
-        b: 'value',
+        b: 'test',
       };
 
       const result = sanitiseObject(mockObject);
@@ -227,6 +227,59 @@ describe('server/helpers/sanitise-data', () => {
       };
 
       expect(result).toEqual(expected);
+    });
+
+    describe('when an object contains a  null value', () => {
+      it('should NOT return the null value', () => {
+        const mockObject = {
+          a: 'mock',
+          b: null,
+        };
+
+        const result = sanitiseObject(mockObject);
+
+        const expected = {
+          a: sanitiseValue({ key: 'a', value: mockObject.a }),
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when an object contains a nested object', () => {
+      it('should return the result of sanitiseValue for each property in every object', () => {
+        const mockObject = {
+          a: 'mock',
+          b: { c: 'nested' },
+        };
+
+        const result = sanitiseObject(mockObject);
+
+        const expected = {
+          a: sanitiseValue({ key: 'a', value: mockObject.a }),
+          b: sanitiseObject(mockObject.b),
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when an object contains a nested array', () => {
+      it('should return the array with sanitiseArray', () => {
+        const mockObject = {
+          a: 'mock',
+          b: [{ mock: true }],
+        };
+
+        const result = sanitiseObject(mockObject);
+
+        const expected = {
+          a: sanitiseValue({ key: 'a', value: mockObject.a }),
+          b: sanitiseArray('b', mockObject.b),
+        };
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 

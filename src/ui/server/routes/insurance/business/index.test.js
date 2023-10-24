@@ -1,17 +1,7 @@
 import { get, post } from '../../../test-mocks/mock-router';
 import { ROUTES } from '../../../constants';
 
-import {
-  get as getCompaniesHouseNumber,
-  redirectToExitPage,
-  post as postCompaniesHouseNumber,
-} from '../../../controllers/insurance/business/companies-house-number';
-
-import { post as postCompaniesHouseNumberSaveAndBack } from '../../../controllers/insurance/business/companies-house-number/save-and-back';
-
 import { get as getCompanyDetails, post as postCompanyDetails } from '../../../controllers/insurance/business/company-details';
-
-import { get as getCompaniesHouseError } from '../../../controllers/insurance/business/companies-house-number/companies-house-unavailable';
 
 import { post as postCompanyDetailsSaveAndBack } from '../../../controllers/insurance/business/company-details/save-and-back';
 
@@ -40,14 +30,8 @@ describe('routes/insurance/your-business', () => {
     expect(get).toHaveBeenCalledTimes(19);
     expect(post).toHaveBeenCalledTimes(23);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER_ROOT, getCompaniesHouseNumber);
-    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER_ROOT, postCompaniesHouseNumber);
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.NO_COMPANIES_HOUSE_NUMBER, redirectToExitPage.noCompaniesHouseNumber);
-    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER_SAVE_AND_BACK, postCompaniesHouseNumberSaveAndBack);
-
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, getCompanyDetails);
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE_SEARCH, getCompanyDetails);
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_UNAVAILABLE, getCompaniesHouseError);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS_SAVE_AND_BACK, postCompanyDetailsSaveAndBack);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, postCompanyDetails);
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS_CHANGE, getCompanyDetails);

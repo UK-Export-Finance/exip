@@ -3,6 +3,7 @@ import { SubmittedDataInsuranceEligibility } from '../../../types';
 
 const { BUYER_COUNTRY_ISO_CODE } = FIELD_IDS.ELIGIBILITY;
 
+// TODO rename this? as its now eligibility answers, and company
 const mapEligibilityAnswers = (answers: SubmittedDataInsuranceEligibility) => {
   if (answers.buyerCountry) {
     const { buyerCountry, ...otherAnswers } = answers;

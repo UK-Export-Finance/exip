@@ -32,7 +32,7 @@ const {
     WANT_COVER_OVER_MAX_PERIOD,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   },
-  COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_NAME, COMPANY_SIC },
+  COMPANY,
 } = INSURANCE_FIELD_IDS;
 
 describe('middleware/required-data-provided/insurance/eligibility', () => {
@@ -51,7 +51,7 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
 
       expected[ENTER_COMPANIES_HOUSE_NUMBER] = [...expected[COMPANIES_HOUSE_NUMBER], HAS_COMPANIES_HOUSE_NUMBER];
 
-      expected[COMPANY_DETAILS] = [...expected[ENTER_COMPANIES_HOUSE_NUMBER], COMPANY_NUMBER, COMPANY_NAME, COMPANY_SIC];
+      expected[COMPANY_DETAILS] = [...expected[ENTER_COMPANIES_HOUSE_NUMBER], COMPANY];
 
       expected[BUYER_COUNTRY] = [...expected[COMPANY_DETAILS]];
 

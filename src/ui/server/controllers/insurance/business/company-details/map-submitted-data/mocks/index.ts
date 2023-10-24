@@ -1,12 +1,14 @@
 import { mockCompany } from '../../../../../../test-mocks';
-import { FIELD_IDS } from '../../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { RequestBody } from '../../../../../../../types';
 
-const { COMPANIES_HOUSE_NUMBER } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+const {
+  COMPANY_HOUSE: { COMPANY_NUMBER },
+} = INSURANCE_FIELD_IDS;
 
 export const mockBody = {
   _csrf: '1234',
-  [COMPANIES_HOUSE_NUMBER]: '8989898',
+  [COMPANY_NUMBER]: '8989898',
   __typename: 'CompaniesHouseResponse',
   ...mockCompany,
   address: {

@@ -129,7 +129,9 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
       it('should update the session with populated company object', async () => {
         await post(req, res);
 
-        const expectedPopulatedData = mapCompaniesHouseData(mockCompaniesHouseResponse.company);
+        const expectedPopulatedData = {
+          company: mapCompaniesHouseData(mockCompaniesHouseResponse.company),
+        };
 
         const expected = {
           ...req.session.submittedData,

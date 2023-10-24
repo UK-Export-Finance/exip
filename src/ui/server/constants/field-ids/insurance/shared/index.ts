@@ -1,4 +1,5 @@
 const SHARED_FIELD_IDS = {
+  COMPANY: 'company',
   COMPANY_HOUSE: {
     SEARCH: 'companiesHouseSearch',
     COMPANY_NAME: 'companyName',

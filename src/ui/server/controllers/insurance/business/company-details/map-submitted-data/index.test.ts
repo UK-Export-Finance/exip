@@ -7,8 +7,9 @@ import getSicCodeIDsFromApplication from '../../../../../helpers/get-sic-code-id
 
 const {
   EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE_NUMBER,
     COMPANY_HOUSE: {
+      COMPANY_NAME,
+      COMPANY_NUMBER,
       COMPANY_INCORPORATED,
       OLD_SIC_CODES,
       REGISTED_OFFICE_ADDRESS: { ADDRESS_LINE_1, ADDRESS_LINE_2, CARE_OF, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PREMISES },
@@ -18,13 +19,13 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 describe('controllers/insurance/business/company-details/map-submitted-data', () => {
-  describe(`when ${COMPANIES_HOUSE_NUMBER} success,and __typename fields are provided`, () => {
-    it(`should return the formBody without ${COMPANIES_HOUSE_NUMBER} success,and __typename fields and change null fields in address to empty strings`, () => {
+  describe(`when ${COMPANY_NUMBER} success,and __typename fields are provided`, () => {
+    it(`should return the formBody without ${COMPANY_NUMBER} success,and __typename fields and change null fields in address to empty strings`, () => {
       const response = mapSubmittedData(mockBody, mockApplication);
 
       const expected = {
-        companyName: mockBody.companyName,
-        companyNumber: mockBody.companyNumber.toString(),
+        [COMPANY_NAME]: mockBody[COMPANY_NAME],
+        [COMPANY_NUMBER]: mockBody[COMPANY_NUMBER].toString(),
         dateOfCreation: new Date(mockBody[COMPANY_INCORPORATED]).toISOString(),
         [ADDRESS]: {
           [CARE_OF]: '',
@@ -45,12 +46,12 @@ describe('controllers/insurance/business/company-details/map-submitted-data', ()
     });
   });
 
-  describe(`when ${COMPANIES_HOUSE_NUMBER} success, and __typename fields are not provided`, () => {
+  describe(`when ${COMPANY_NUMBER} success, and __typename fields are not provided`, () => {
     const mockBodyWithoutFields = {
       ...mockBody,
     } as RequestBody;
 
-    delete mockBodyWithoutFields[COMPANIES_HOUSE_NUMBER];
+    delete mockBodyWithoutFields[COMPANY_NUMBER];
     // eslint-disable-next-line no-underscore-dangle
     delete mockBodyWithoutFields.__typename;
     delete mockBodyWithoutFields.registeredOfficeAddress;
@@ -61,7 +62,7 @@ describe('controllers/insurance/business/company-details/map-submitted-data', ()
     delete mockBodyWithoutFields.sicCodes;
     delete mockBodyWithoutFields.industrySectorNames;
 
-    it(`should return the formBody without ${COMPANIES_HOUSE_NUMBER} success,and __typename fields and add an empty address object`, () => {
+    it(`should return the formBody without ${COMPANY_NUMBER} success,and __typename fields and add an empty address object`, () => {
       const response = mapSubmittedData(mockBodyWithoutFields, mockApplication);
 
       const { _csrf, ...expectedBody } = mockBodyWithoutFields;

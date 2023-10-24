@@ -4,13 +4,11 @@ import mockBody from './mocks';
 import { RequestBody } from '../../../../types';
 
 const {
-  EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: {
-      COMPANY_NUMBER,
-      COMPANY_INCORPORATED,
-      REGISTED_OFFICE_ADDRESS: { ADDRESS_LINE_1, ADDRESS_LINE_2, CARE_OF, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PREMISES },
-    },
-    YOUR_COMPANY: { ADDRESS },
+  COMPANY_HOUSE: {
+    COMPANY_ADDRESS,
+    COMPANY_NUMBER,
+    COMPANY_INCORPORATED,
+    REGISTED_OFFICE_ADDRESS: { ADDRESS_LINE_1, ADDRESS_LINE_2, CARE_OF, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PREMISES },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -23,7 +21,7 @@ describe('helpers/mappings/map-companies-house-data', () => {
         companyName: mockBody.companyName,
         companyNumber: mockBody.companyNumber.toString(),
         dateOfCreation: new Date(mockBody[COMPANY_INCORPORATED]).toISOString(),
-        [ADDRESS]: {
+        [COMPANY_ADDRESS]: {
           [CARE_OF]: '',
           [PREMISES]: '',
           [ADDRESS_LINE_1]: mockBody.registeredOfficeAddress[ADDRESS_LINE_1],
@@ -57,7 +55,7 @@ describe('helpers/mappings/map-companies-house-data', () => {
       const response = mapCompaniesHouseData(mockBodyWithoutFields);
 
       const { _csrf, ...expectedBody } = mockBodyWithoutFields;
-      expectedBody.address = {};
+      expectedBody[COMPANY_ADDRESS] = {};
 
       expect(response).toEqual(expectedBody);
     });

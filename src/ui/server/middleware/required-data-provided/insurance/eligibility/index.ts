@@ -31,7 +31,7 @@ const {
     WANT_COVER_OVER_MAX_PERIOD,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   },
-  COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_NAME, COMPANY_SIC },
+  COMPANY,
 } = INSURANCE_FIELD_IDS;
 
 export const generateRequiredData = (): RequiredDataStateInsuranceEligibility => {
@@ -47,10 +47,10 @@ export const generateRequiredData = (): RequiredDataStateInsuranceEligibility =>
    * Company details route requires:
    * - All data provided in previous forms, including companies house data.
    * It does not seem necessary to list every single companies house field.
-   * Instead, we can simply define that a company number, name and sic codes are required.
-   * These fields are only obtained from companies house.
+   * Instead, we can simply define that a company object is required.
+   * This object is only generated after successfully retrieving data from companies house.
    */
-  requiredData[COMPANY_DETAILS] = [...requiredData[ENTER_COMPANIES_HOUSE_NUMBER], COMPANY_NUMBER, COMPANY_NAME, COMPANY_SIC];
+  requiredData[COMPANY_DETAILS] = [...requiredData[ENTER_COMPANIES_HOUSE_NUMBER], COMPANY];
 
   requiredData[BUYER_COUNTRY] = [...requiredData[COMPANY_DETAILS]];
 

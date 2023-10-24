@@ -24,7 +24,7 @@ const mockSession = {
     insuranceEligibility: {
       [VALID_EXPORTER_LOCATION]: true,
       [FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_COMPANIES_HOUSE_NUMBER]: true,
-      ...mockCompany,
+      company: mockCompany,
       [BUYER_COUNTRY]: {
         ...mockCountries[0],
         canApplyOnline: true,

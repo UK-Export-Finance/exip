@@ -1,10 +1,14 @@
 import { isValid as isValidDate } from 'date-fns';
 import { isNumber } from '../number';
 import { isEmptyString, stripCommas } from '../string';
-import { objectHasKeysAndValues } from '../object';
+import { isAnObjectWithKeysAndValues } from '../object';
 import { FIELD_IDS } from '../../constants';
 import isValidWebsiteAddress from '../is-valid-website-address';
 import { SanitiseValueObjParams, RequestBody } from '../../../types';
+
+type ObjectType = {
+  [key: string]: any;
+};
 
 const {
   ACCOUNT: { SECURITY_CODE },
@@ -154,16 +158,27 @@ export const sanitiseValue = ({ key, value }: SanitiseValueObjParams) => {
 /**
  * sanitiseObject
  * Sanitise an object
+ * - If an object key value is an array, call sanitiseArray.
+ * - If an object key value is an object, call sanitiseObject.
+ * - Otherwise, sanitiseValue is used for each value in the object.
  * @param {Object}
  * @returns {Boolean}
  */
-export const sanitiseObject = (obj: object) => {
+export const sanitiseObject = (obj: ObjectType) => {
   const sanitised = {};
 
   Object.keys(obj).forEach((key) => {
     const value = obj[key];
 
-    sanitised[key] = sanitiseValue({ key, value });
+    if (value) {
+      sanitised[key] = sanitiseValue({ key, value });
+
+      if (Array.isArray(value)) {
+        sanitised[key] = sanitiseArray(key, value);
+      } else if (isAnObjectWithKeysAndValues(value)) {
+        sanitised[key] = sanitiseObject(value);
+      }
+    }
   });
 
   return sanitised;
@@ -177,9 +192,11 @@ export const sanitiseObject = (obj: object) => {
  * @returns {Array}
  */
 export const sanitiseArray = (key: string, arr: Array<string> | Array<object>) => {
-  const sanitised = arr.map((value) => {
-    if (typeof value === 'object' && objectHasKeysAndValues(value)) {
-      return sanitiseObject(value);
+  const sanitised = arr.map((value: string | object) => {
+    const objectWithKeysAndValues = isAnObjectWithKeysAndValues(value);
+
+    if (objectWithKeysAndValues) {
+      return sanitiseObject(objectWithKeysAndValues);
     }
 
     if (typeof value === 'string') {
@@ -235,7 +252,7 @@ export const shouldIncludeAndSanitiseField = (key: string, value: string) => {
  * @param {String | Boolean | Object | Array} Form field value
  * @returns {String | Boolean | Object | Array}
  */
-export const sanitiseFormField = (key: string, value: string | boolean | object | Array<string>) => {
+export const sanitiseFormField = (key: string, value: string | boolean | ObjectType | Array<string>) => {
   if (Array.isArray(value)) {
     return sanitiseArray(key, value);
   }
@@ -248,19 +265,17 @@ export const sanitiseFormField = (key: string, value: string | boolean | object 
     return sanitiseValue({ key, value });
   }
 
-  if (typeof value === 'object') {
-    if (objectHasKeysAndValues(value)) {
-      return sanitiseObject(value);
-    }
+  const objectWithKeysAndValues = isAnObjectWithKeysAndValues(value);
 
-    return {};
+  if (objectWithKeysAndValues) {
+    return sanitiseObject(objectWithKeysAndValues);
   }
 
   if (typeof value === 'boolean') {
     return value;
   }
 
-  return null;
+  return {};
 };
 
 /**

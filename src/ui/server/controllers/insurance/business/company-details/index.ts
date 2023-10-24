@@ -33,12 +33,12 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-const { COMPANY_DETAILS_SAVE_AND_BACK, NATURE_OF_BUSINESS_ROOT, CHECK_YOUR_ANSWERS, COMPANIES_HOUSE_NUMBER_ROOT } = EXPORTER_BUSINESS_ROUTES;
+const { COMPANY_DETAILS_SAVE_AND_BACK, NATURE_OF_BUSINESS_ROOT, CHECK_YOUR_ANSWERS, COMPANY_DETAILS_ROOT } = EXPORTER_BUSINESS_ROUTES;
 
 const pageVariables = (referenceNumber: number) => {
   return {
     SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
-    DIFFERENT_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${referenceNumber}${COMPANIES_HOUSE_NUMBER_ROOT}`,
+    DIFFERENT_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}`,
     FIELDS: BUSINESS_FIELD_IDS,
   };
 };
@@ -61,7 +61,7 @@ const get = (req: Request, res: Response) => {
 
     // if no company has been added to the db, then return to companies house number page
     if (!objectHasProperty(company, COMPANY_NUMBER)) {
-      return res.redirect(`${INSURANCE_ROOT}/${application.referenceNumber}${COMPANIES_HOUSE_NUMBER_ROOT}`);
+      return res.redirect(`${INSURANCE_ROOT}/${application.referenceNumber}${COMPANY_DETAILS_ROOT}`);
     }
 
     // values from application if they exist

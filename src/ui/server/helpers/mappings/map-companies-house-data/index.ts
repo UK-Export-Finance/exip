@@ -3,13 +3,11 @@ import { objectHasProperty } from '../../object';
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 
 const {
-  EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: {
-      COMPANY_NUMBER,
-      COMPANY_INCORPORATED,
-      REGISTED_OFFICE_ADDRESS: { ADDRESS_LINE_1, ADDRESS_LINE_2, CARE_OF, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PREMISES },
-    },
-    YOUR_COMPANY: { ADDRESS },
+  COMPANY_HOUSE: {
+    COMPANY_ADDRESS,
+    COMPANY_NUMBER,
+    COMPANY_INCORPORATED,
+    REGISTED_OFFICE_ADDRESS: { ADDRESS_LINE_1, ADDRESS_LINE_2, CARE_OF, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PREMISES },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -21,14 +19,14 @@ const {
 const mapCompaniesHouseData = (formBody: RequestBody): object => {
   const { __typename, success, _csrf, apiError, ...populatedData } = formBody;
 
-  if (!populatedData.registeredOfficeAddress) {
+  if (!populatedData[COMPANY_ADDRESS]) {
     // create empty companyAddress if not part of request
-    populatedData.address = {};
+    populatedData[COMPANY_ADDRESS] = {};
   } else {
     const { registeredOfficeAddress } = populatedData;
 
     // populates companyAddress for db with value or empty string if null
-    populatedData[ADDRESS] = {
+    populatedData[COMPANY_ADDRESS] = {
       [ADDRESS_LINE_1]: registeredOfficeAddress[ADDRESS_LINE_1] ?? '',
       [ADDRESS_LINE_2]: registeredOfficeAddress[ADDRESS_LINE_2] ?? '',
       [CARE_OF]: registeredOfficeAddress[CARE_OF] ?? '',
@@ -38,8 +36,6 @@ const mapCompaniesHouseData = (formBody: RequestBody): object => {
       [COUNTRY]: registeredOfficeAddress[COUNTRY] ?? '',
       [PREMISES]: registeredOfficeAddress[PREMISES] ?? '',
     };
-    // removes registeredOfficeAddress as not required for database
-    delete populatedData.registeredOfficeAddress;
   }
 
   if (objectHasProperty(populatedData, COMPANY_NUMBER)) {

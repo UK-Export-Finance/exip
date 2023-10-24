@@ -15,8 +15,6 @@ const mockCompany = {
   dateOfCreation: '2012-08-23',
   sicCodes: ['68201'],
   industrySectorNames: ['test description'],
-  success: true,
-  apiError: false,
 } as CompanyHouseResponse;
 
 export default mockCompany;

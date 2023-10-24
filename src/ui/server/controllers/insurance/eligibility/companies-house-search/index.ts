@@ -117,9 +117,11 @@ export const post = async (req: Request, res: Response) => {
 
     const mappedCompanyDetails = mapCompaniesHouseData(companyObj);
 
+    const sessionUpdate = { company: mappedCompanyDetails };
+
     req.session.submittedData = {
       ...req.session.submittedData,
-      insuranceEligibility: updateSubmittedData(mappedCompanyDetails, req.session.submittedData.insuranceEligibility),
+      insuranceEligibility: updateSubmittedData(sessionUpdate, req.session.submittedData.insuranceEligibility),
     };
 
     return res.redirect(COMPANY_DETAILS);
