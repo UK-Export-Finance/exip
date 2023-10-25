@@ -65,7 +65,9 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
     it(`should redirect to ${VERIFY_EMAIL_EXPIRED_LINK} and render core page elements and content`, () => {
       const { verificationHash } = updatedAccount;
 
-      cy.navigateToUrl(`${baseUrl}${VERIFY_EMAIL}?token=${verificationHash}`);
+      const verificationUrl = `${VERIFY_EMAIL}?token=${verificationHash}&id=${account.id}`;
+
+      cy.navigateToUrl(`${baseUrl}${verificationUrl}`);
 
       const expectedUrl = `${baseUrl}${VERIFY_EMAIL_EXPIRED_LINK}?id=${account.id}`;
 
@@ -73,7 +75,7 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
 
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-        currentHref: `${VERIFY_EMAIL}?token=${account.verificationHash}`,
+        currentHref: verificationUrl,
         backLink: `${CONFIRM_EMAIL}?id=${account.id}`,
         assertSubmitButton: false,
         assertAuthenticatedHeader: false,

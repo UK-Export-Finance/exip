@@ -76,12 +76,12 @@ describe('custom-resolvers/create-an-account', () => {
   });
 
   it('should call sendEmail.confirmEmailAddress', () => {
-    const { email, verificationHash } = account;
+    const { email, verificationHash, id } = account;
 
     const name = getFullNameString(account);
 
     expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
-    expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, variables.urlOrigin, name, verificationHash);
+    expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, variables.urlOrigin, name, verificationHash, id);
   });
 
   describe('when an account with the provided email already exists', () => {

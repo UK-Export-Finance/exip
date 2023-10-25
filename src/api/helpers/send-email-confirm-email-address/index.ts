@@ -49,11 +49,11 @@ const send = async (context: Context, urlOrigin: string, accountId: string): Pro
     }
 
     // send "confirm email" email.
-    const { email } = account;
+    const { email, id } = account;
 
     const name = getFullNameString(account);
 
-    const emailResponse = await sendEmail.confirmEmailAddress(email, urlOrigin, name, latestVerificationHash);
+    const emailResponse = await sendEmail.confirmEmailAddress(email, urlOrigin, name, latestVerificationHash, id);
 
     if (emailResponse.success) {
       return emailResponse;

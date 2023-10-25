@@ -61,7 +61,7 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
     // send "confirm email address" email
     const name = getFullNameString(creationResponse);
 
-    const emailResponse = await sendEmail.confirmEmailAddress(email, urlOrigin, name, verificationHash);
+    const emailResponse = await sendEmail.confirmEmailAddress(email, urlOrigin, name, verificationHash, creationResponse.id);
 
     if (emailResponse.success) {
       return {
