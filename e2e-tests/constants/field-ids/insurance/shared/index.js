@@ -1,4 +1,4 @@
-export const SHARED_FIELD_IDS = {
+const SHARED_FIELD_IDS = {
   COMPANY: 'company',
   COMPANY_HOUSE: {
     COMPANY_NAME: 'companyName',
@@ -23,3 +23,5 @@ export const SHARED_FIELD_IDS = {
     },
   },
 };
+
+export default SHARED_FIELD_IDS;

@@ -4,14 +4,12 @@ import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import getSicCodeIDsFromApplication from '../../../../../helpers/get-sic-code-ids-from-application';
 
 const {
-  EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: {
-      COMPANY_NUMBER,
-      COMPANY_INCORPORATED,
-      OLD_SIC_CODES,
-      REGISTED_OFFICE_ADDRESS: { ADDRESS_LINE_1, ADDRESS_LINE_2, CARE_OF, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PREMISES },
-    },
-    YOUR_COMPANY: { ADDRESS },
+  COMPANY_HOUSE: {
+    COMPANY_NUMBER,
+    COMPANY_INCORPORATED,
+    OLD_SIC_CODES,
+    COMPANY_ADDRESS,
+    REGISTED_OFFICE_ADDRESS: { ADDRESS_LINE_1, ADDRESS_LINE_2, CARE_OF, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PREMISES },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -30,7 +28,7 @@ const mapSubmittedData = (formBody: RequestBody, application: Application): obje
     const { registeredOfficeAddress } = populatedData;
 
     // populates companyAddress for db with value or empty string if null
-    populatedData[ADDRESS] = {
+    populatedData[COMPANY_ADDRESS] = {
       [ADDRESS_LINE_1]: registeredOfficeAddress[ADDRESS_LINE_1] ?? '',
       [ADDRESS_LINE_2]: registeredOfficeAddress[ADDRESS_LINE_2] ?? '',
       [CARE_OF]: registeredOfficeAddress[CARE_OF] ?? '',

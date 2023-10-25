@@ -1,6 +1,6 @@
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { ROUTES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
@@ -11,18 +11,16 @@ import generateChangeLink from '../../../generate-change-link';
 import { ApplicationCompany, SummaryListItemData } from '../../../../../types';
 import { DEFAULT } from '../../../../content-strings';
 
-const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
-
 const {
-  INSURANCE: {
-    EXPORTER_BUSINESS: { COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE },
-  },
-} = ROUTES;
+  EXPORTER_BUSINESS: { COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE },
+} = INSURANCE_ROUTES;
 
 const {
   COMPANY_HOUSE: { COMPANY_NAME, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS, FINANCIAL_YEAR_END_DATE },
-  YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, WEBSITE, PHONE_NUMBER },
-} = FIELD_IDS;
+  EXPORTER_BUSINESS: {
+    YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, WEBSITE, PHONE_NUMBER },
+  },
+} = INSURANCE_FIELD_IDS;
 
 const {
   TURNOVER: {

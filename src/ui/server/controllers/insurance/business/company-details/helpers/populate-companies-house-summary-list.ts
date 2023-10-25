@@ -1,13 +1,11 @@
 import { companyHouseSummaryList } from '../../../../../helpers/summary-lists/company-house-summary-list';
 import mapSicCodes from '../../../../../helpers/mappings/map-sic-codes';
-import { FIELD_IDS } from '../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import { ApplicationCompany } from '../../../../../../types';
 
 const {
-  EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_SIC, INDUSTRY_SECTOR_NAMES, SIC_CODE, INDUSTRY_SECTOR_NAME },
-  },
-} = FIELD_IDS.INSURANCE;
+  COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_SIC, INDUSTRY_SECTOR_NAMES, SIC_CODE, INDUSTRY_SECTOR_NAME },
+} = INSURANCE_FIELD_IDS;
 
 /**
  * maps database response and returns body in correct format for summary list

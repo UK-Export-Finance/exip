@@ -1,12 +1,10 @@
 import { Application, ApplicationExporterSicCodes } from '../../../types';
-import { FIELD_IDS } from '../../constants';
+import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import { objectHasProperty } from '../object';
 
 const {
-  EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { COMPANY_SIC },
-  },
-} = FIELD_IDS.INSURANCE;
+  COMPANY_HOUSE: { COMPANY_SIC },
+} = INSURANCE_FIELD_IDS;
 
 /**
  * gets sic codes from application and creates an array

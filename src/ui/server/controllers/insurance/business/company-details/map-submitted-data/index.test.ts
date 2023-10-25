@@ -6,15 +6,13 @@ import { mockApplication } from '../../../../../test-mocks';
 import getSicCodeIDsFromApplication from '../../../../../helpers/get-sic-code-ids-from-application';
 
 const {
-  EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: {
-      COMPANY_NAME,
-      COMPANY_NUMBER,
-      COMPANY_INCORPORATED,
-      OLD_SIC_CODES,
-      REGISTED_OFFICE_ADDRESS: { ADDRESS_LINE_1, ADDRESS_LINE_2, CARE_OF, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PREMISES },
-    },
-    YOUR_COMPANY: { ADDRESS },
+  COMPANY_HOUSE: {
+    COMPANY_NAME,
+    COMPANY_NUMBER,
+    COMPANY_INCORPORATED,
+    OLD_SIC_CODES,
+    COMPANY_ADDRESS,
+    REGISTED_OFFICE_ADDRESS: { ADDRESS_LINE_1, ADDRESS_LINE_2, CARE_OF, LOCALITY, REGION, POSTAL_CODE, COUNTRY, PREMISES },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -27,7 +25,7 @@ describe('controllers/insurance/business/company-details/map-submitted-data', ()
         [COMPANY_NAME]: mockBody[COMPANY_NAME],
         [COMPANY_NUMBER]: mockBody[COMPANY_NUMBER].toString(),
         dateOfCreation: new Date(mockBody[COMPANY_INCORPORATED]).toISOString(),
-        [ADDRESS]: {
+        [COMPANY_ADDRESS]: {
           [CARE_OF]: '',
           [PREMISES]: '',
           [ADDRESS_LINE_1]: mockBody.registeredOfficeAddress[ADDRESS_LINE_1],

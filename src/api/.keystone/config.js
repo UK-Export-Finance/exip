@@ -3764,44 +3764,13 @@ var POLICY_FIELDS = {
 // content-strings/fields/insurance/your-business/index.ts
 var { EXPORTER_BUSINESS: EXPORTER_BUSINESS2 } = insurance_default;
 var {
-  COMPANY_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS },
   YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
-  TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL4 }
 } = EXPORTER_BUSINESS2;
 var FIELDS = {
   COMPANY_DETAILS: {
-    [COMPANY_NUMBER]: {
-      SUMMARY: {
-        TITLE: "Companies House registration number"
-      }
-    },
-    [COMPANY_NAME]: {
-      SUMMARY: {
-        TITLE: "Company name"
-      }
-    },
-    [COMPANY_ADDRESS]: {
-      SUMMARY: {
-        TITLE: "Registered office address"
-      }
-    },
-    [COMPANY_INCORPORATED]: {
-      SUMMARY: {
-        TITLE: "Date incorporated"
-      }
-    },
-    [COMPANY_SIC]: {
-      SUMMARY: {
-        TITLE: "Standard industry classification (SIC) codes and nature of business"
-      }
-    },
-    [FINANCIAL_YEAR_END_DATE]: {
-      SUMMARY: {
-        TITLE: "Financial year end date"
-      }
-    },
     [TRADING_NAME]: {
       SUMMARY: {
         TITLE: "Different trading name?"
@@ -4209,7 +4178,7 @@ var CONTENT_STRINGS3 = {
   ...FIELDS.BROKER
 };
 var {
-  COMPANY_HOUSE: { COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_NAME: COMPANY_NAME2, COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
+  COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_NAME, COMPANY_ADDRESS, COMPANY_INCORPORATED, COMPANY_SIC, FINANCIAL_YEAR_END_DATE },
   YOUR_COMPANY: { TRADING_NAME: TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE3, PHONE_NUMBER: PHONE_NUMBER3 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL3 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
@@ -4243,20 +4212,20 @@ var mapBroker = (application2) => {
 var mapExporter = (application2) => {
   const { company, companySicCodes, business } = application2;
   let financialYearEndDate = "No data from Companies House";
-  if (company[FINANCIAL_YEAR_END_DATE2]) {
-    financialYearEndDate = format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM");
+  if (company[FINANCIAL_YEAR_END_DATE]) {
+    financialYearEndDate = format_date_default(company[FINANCIAL_YEAR_END_DATE], "d MMMM");
   }
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.EXPORTER_BUSINESS, ""),
     // company fields
-    xlsx_row_default(CONTENT_STRINGS3[COMPANY_NUMBER2].SUMMARY?.TITLE, company[COMPANY_NUMBER2]),
-    xlsx_row_default(XLSX.FIELDS[COMPANY_NAME2], company[COMPANY_NAME2]),
-    xlsx_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
-    xlsx_row_default(XLSX.FIELDS[COMPANY_ADDRESS2], map_address_default(company[COMPANY_ADDRESS2])),
+    xlsx_row_default(CONTENT_STRINGS3[COMPANY_NUMBER].SUMMARY?.TITLE, company[COMPANY_NUMBER]),
+    xlsx_row_default(XLSX.FIELDS[COMPANY_NAME], company[COMPANY_NAME]),
+    xlsx_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED], "dd-MMM-yy")),
+    xlsx_row_default(XLSX.FIELDS[COMPANY_ADDRESS], map_address_default(company[COMPANY_ADDRESS])),
     xlsx_row_default(CONTENT_STRINGS3[TRADING_NAME2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_NAME2])),
     xlsx_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_ADDRESS2])),
-    xlsx_row_default(XLSX.FIELDS[COMPANY_SIC2], mapSicCodes2(companySicCodes)),
-    xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, financialYearEndDate),
+    xlsx_row_default(XLSX.FIELDS[COMPANY_SIC], mapSicCodes2(companySicCodes)),
+    xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, financialYearEndDate),
     xlsx_row_default(XLSX.FIELDS[WEBSITE3], company[WEBSITE3]),
     xlsx_row_default(XLSX.FIELDS[PHONE_NUMBER3], company[PHONE_NUMBER3]),
     // business fields

@@ -1,7 +1,4 @@
-import { SHARED_FIELD_IDS } from '../shared';
-
 export const EXPORTER_BUSINESS = {
-  ...SHARED_FIELD_IDS,
   YOUR_COMPANY: {
     ADDRESS: 'address',
     YOUR_BUSINESS: 'yourBusiness',

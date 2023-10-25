@@ -1,15 +1,13 @@
 import { populateCompaniesHouseSummaryList, mapDatabaseResponse } from './populate-companies-house-summary-list';
 import mapSicCodes from '../../../../../helpers/mappings/map-sic-codes';
 import { companyHouseSummaryList } from '../../../../../helpers/summary-lists/company-house-summary-list';
-import { FIELD_IDS } from '../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import { mockApplication } from '../../../../../test-mocks';
 import { ApplicationCompany } from '../../../../../../types';
 
 const {
-  EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_SIC, INDUSTRY_SECTOR_NAMES, SIC_CODE, INDUSTRY_SECTOR_NAME },
-  },
-} = FIELD_IDS.INSURANCE;
+  COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_SIC, INDUSTRY_SECTOR_NAMES, SIC_CODE, INDUSTRY_SECTOR_NAME },
+} = INSURANCE_FIELD_IDS;
 
 describe('controllers/insurance/business/companies-details/helpers/populate-companies-house-summary-list', () => {
   describe('populateCompaniesHouseSummaryList', () => {
