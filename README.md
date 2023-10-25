@@ -24,8 +24,8 @@ Before getting started with this repository, ensure that you meet the following 
 
 This project utilizes various technologies and tools, including:
 
-- Node.js and NPM
-- TypeScript
+- [Node.js](https://nodejs.org) and [NPM](https://www.npmjs.com/)
+- [TypeScript](https://www.typescriptlang.org/)
 - [Keystone (GraphQL API, database)](keystonejs.com)
 - [Cypress (E2E tests)](https://www.cypress.io)
 - [GovUK design systems](design-system.service.gov.uk)
