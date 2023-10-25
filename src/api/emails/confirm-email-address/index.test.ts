@@ -7,7 +7,7 @@ import { mockAccount, mockSendEmailResponse, mockUrlOrigin } from '../../test-mo
 describe('emails/confirm-email-address', () => {
   const sendEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
-  const { email, verificationHash } = mockAccount;
+  const { email, verificationHash, id } = mockAccount;
 
   const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
 
@@ -26,7 +26,7 @@ describe('emails/confirm-email-address', () => {
   });
 
   test('it should call notify.sendEmail and return the response', async () => {
-    const result = await confirmEmailAddress(email, mockUrlOrigin, fullName, verificationHash);
+    const result = await confirmEmailAddress(email, mockUrlOrigin, fullName, verificationHash, id);
 
     expect(sendEmailSpy).toHaveBeenCalledTimes(1);
 
@@ -44,7 +44,7 @@ describe('emails/confirm-email-address', () => {
 
     test('should throw an error', async () => {
       try {
-        await confirmEmailAddress(email, mockUrlOrigin, fullName, verificationHash);
+        await confirmEmailAddress(email, mockUrlOrigin, fullName, verificationHash, id);
       } catch (err) {
         const expected = new Error(`Sending confirm email address email Error: Sending email ${mockErrorMessage}`);
 

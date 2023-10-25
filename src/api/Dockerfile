@@ -2,7 +2,7 @@
 # 1. BUILD
 ###################
 
-FROM node:20.8.0-alpine3.17 AS build
+FROM node:20.8.1-alpine3.17 AS build
 
 # Build variables
 ARG PORT
@@ -30,7 +30,7 @@ COPY --chown=node:node ./schema.graphql .
 COPY --chown=node:node ./schema.prisma .
 COPY --chown=node:node ./auth.ts .
 COPY --chown=node:node ./.keystone ./.keystone
-COPY --chown=node:node ./apollo-plugins ./apollo-plugins
+COPY --chown=node:node ./apollo ./apollo
 COPY --chown=node:node ./constants ./constants
 COPY --chown=node:node ./custom-resolvers ./custom-resolvers
 COPY --chown=node:node ./custom-schema ./custom-schema
@@ -61,7 +61,7 @@ USER node
 # 2. PRODUCTION
 ###################
 
-FROM node:20.8.0-alpine3.17 AS production
+FROM node:21.0.0-alpine3.17 AS production
 
 WORKDIR /app
 
@@ -76,7 +76,7 @@ COPY --chown=node:node --from=build /app/schema.prisma .
 COPY --chown=node:node --from=build /app/auth.ts .
 COPY --chown=node:node --from=build /app/node_modules ./node_modules
 COPY --chown=node:node --from=build /app/.keystone ./.keystone
-COPY --chown=node:node --from=build /app/apollo-plugins ./apollo-plugins
+COPY --chown=node:node --from=build /app/apollo ./apollo
 COPY --chown=node:node --from=build /app/constants ./constants
 COPY --chown=node:node --from=build /app/custom-resolvers ./custom-resolvers
 COPY --chown=node:node --from=build /app/custom-schema ./custom-schema

@@ -2048,7 +2048,7 @@ type Mutation {
   deleteAnAccount(email: String!): SuccessResponse
 
   """ verify an account's email address """
-  verifyAccountEmailAddress(token: String!): VerifyAccountEmailAddressResponse
+  verifyAccountEmailAddress(token: String!, id: String!): VerifyAccountEmailAddressResponse
 
   """ verify an account's reactivation token """
   verifyAccountReactivationToken(token: String!): VerifyAccountReactivationTokenResponse

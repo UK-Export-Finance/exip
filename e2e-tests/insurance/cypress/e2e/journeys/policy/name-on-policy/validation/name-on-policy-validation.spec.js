@@ -1,30 +1,35 @@
 import { field } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
+import account from '../../../../../../../fixtures/account';
 
 const { taskList } = partials.insurancePartials;
 
 const {
-  INSURANCE: {
-    ROOT: INSURANCE_ROOT,
-    POLICY: {
-      CHECK_YOUR_ANSWERS,
-      DIFFERENT_NAME_ON_POLICY,
-      NAME_ON_POLICY,
-    },
+  ROOT: INSURANCE_ROOT,
+  POLICY: {
+    CHECK_YOUR_ANSWERS,
+    DIFFERENT_NAME_ON_POLICY,
+    NAME_ON_POLICY,
   },
-} = ROUTES;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY: {
-      NAME_ON_POLICY: {
-        NAME, POSITION, SAME_NAME, OTHER_NAME,
-      },
+  POLICY: {
+    NAME_ON_POLICY: {
+      NAME, POSITION, SAME_NAME, OTHER_NAME,
     },
   },
-} = FIELD_IDS;
+  ACCOUNT: {
+    FIRST_NAME,
+    LAST_NAME,
+    EMAIL,
+  },
+} = INSURANCE_FIELD_IDS;
 
 const NAME_ON_POLICY_ERRORS = ERROR_MESSAGES.INSURANCE.POLICY.NAME_ON_POLICY;
 
@@ -80,11 +85,11 @@ context('Insurance - Policy - Name on policy - Validation', () => {
   describe(`${POSITION} not entered`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
+
+      field(SAME_NAME).input().click();
     });
 
     it('should display validation error', () => {
-      field(SAME_NAME).input().click();
-
       const expectedErrorsCount = 1;
       const expectedErrorMessage = NAME_ON_POLICY_ERRORS[POSITION].IS_EMPTY;
 
@@ -96,6 +101,15 @@ context('Insurance - Policy - Name on policy - Validation', () => {
         expectedErrorMessage,
         false,
       );
+    });
+
+    it(`should render the ${SAME_NAME} radio text`, () => {
+      const nameAndEmail = `${account[FIRST_NAME]} ${account[LAST_NAME]} (${account[EMAIL]})`;
+      cy.checkText(field(SAME_NAME).label(), nameAndEmail);
+    });
+
+    it(`should render the ${OTHER_NAME} radio text`, () => {
+      cy.checkText(field(OTHER_NAME).label(), FIELDS.NAME_ON_POLICY.OPTIONS.OTHER_NAME.TEXT);
     });
   });
 

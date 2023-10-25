@@ -21,7 +21,7 @@ const {
 
 const {
   INSURANCE: {
-    ACCOUNT: { EMAIL, IS_VERIFIED, VERIFICATION_HASH, VERIFICATION_EXPIRY },
+    ACCOUNT: { EMAIL, ID, IS_VERIFIED, VERIFICATION_HASH, VERIFICATION_EXPIRY },
   },
 } = FIELD_IDS;
 
@@ -112,6 +112,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
 
       const accountVerificationExpired = {
         ...mockAccount,
+        isVerified: false,
         verificationHash,
         [VERIFICATION_EXPIRY]: oneMinuteInThePast,
       };
@@ -130,9 +131,28 @@ describe('custom-resolvers/verify-account-email-address', () => {
     });
   });
 
-  describe(`when no account is found from the provided ${VERIFICATION_HASH}`, () => {
+  describe('when an account is already verified', () => {
+    test('it should return success=true', async () => {
+      const verifiedAccount = {
+        ...mockAccount,
+        [IS_VERIFIED]: true,
+      };
+
+      account = await accounts.create({ context, data: verifiedAccount });
+
+      result = await verifyAccountEmailAddress({}, variables, context);
+
+      const expected = {
+        success: true,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when no account is found from the provided ${ID}`, () => {
     test('it should return success=false and invalid=true', async () => {
-      variables.token = 'invalid';
+      variables[ID] = 'invalid';
 
       result = await verifyAccountEmailAddress({}, variables, context);
 

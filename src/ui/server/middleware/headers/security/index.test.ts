@@ -89,7 +89,7 @@ describe('middleware/security', () => {
     it('should set `Content-Security-Policy` header', () => {
       expect(setHeaderSpy).toHaveBeenCalledWith(
         'Content-Security-Policy',
-        "default-src 'none';connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com;base-uri 'self';block-all-mixed-content;font-src 'self' data:;form-action 'self';frame-ancestors 'self';img-src 'self' https://*.google-analytics.com https://*.googletagmanager.com;object-src 'none';script-src 'self' https://*.google-analytics.com https://*.googletagmanager.com;script-src-attr 'self';style-src 'self';upgrade-insecure-requests",
+        "default-src 'none';connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com;base-uri 'self';font-src 'self' data:;form-action 'self';frame-ancestors 'self';img-src 'self' https://*.google-analytics.com https://*.googletagmanager.com;object-src 'none';script-src 'self' https://*.google-analytics.com https://*.googletagmanager.com;script-src-attr 'self';style-src 'self';upgrade-insecure-requests",
       );
     });
 
