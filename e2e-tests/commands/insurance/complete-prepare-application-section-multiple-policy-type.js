@@ -13,13 +13,11 @@ const task = taskList.prepareApplication.tasks.policy;
  * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
  * - policyMaximumValue: should submit an application with the maximum value of 500000
  * - differentPolicyContact: Should submit an application with a different policy contact to the owner
- * - referenceNumber: Application reference number
  */
 const completePrepareApplicationMultiplePolicyType = ({
   usingBroker,
   policyMaximumValue = false,
   differentPolicyContact,
-  referenceNumber,
 }) => {
   task.link().click();
 
@@ -34,7 +32,6 @@ const completePrepareApplicationMultiplePolicyType = ({
 
   submitButton().click();
 
-  cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
   cy.completeAndSubmitCompanyDetails();
   cy.completeAndSubmitNatureOfYourBusiness();
   cy.completeAndSubmitTurnoverForm();

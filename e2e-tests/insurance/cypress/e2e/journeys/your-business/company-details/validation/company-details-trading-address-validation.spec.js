@@ -29,7 +29,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       task.link().click();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companiesHouseNumber: COMPANIES_HOUSE_NUMBER });
+      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companyNumber: COMPANIES_HOUSE_NUMBER });
 
       cy.assertUrl(url);
     });

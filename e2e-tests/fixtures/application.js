@@ -18,7 +18,7 @@ const {
     ELIGIBILITY: {
       WANT_COVER_OVER_MAX_AMOUNT,
       WANT_COVER_OVER_MAX_PERIOD,
-      COMPANIES_HOUSE_NUMBER: ELIGIBILITY_COMPANIES_HOUSE_NUMBER,
+      HAS_COMPANIES_HOUSE_NUMBER,
       HAS_MINIMUM_UK_GOODS_OR_SERVICES,
       VALID_EXPORTER_LOCATION,
     },
@@ -41,9 +41,7 @@ const {
         COMPANY_NUMBER,
         COMPANY_NAME,
         COMPANY_INCORPORATED,
-      },
-      YOUR_COMPANY: {
-        ADDRESS: YOUR_COMPANY_ADDRESS,
+        COMPANY_ADDRESS,
       },
       NATURE_OF_YOUR_BUSINESS: {
         GOODS_OR_SERVICES,
@@ -106,10 +104,10 @@ const application = {
   ELIGIBILITY: {
     buyerCountryIsoCode: mockCountries[1].isoCode,
     [VALID_EXPORTER_LOCATION]: true,
+    [HAS_COMPANIES_HOUSE_NUMBER]: true,
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
     [WANT_COVER_OVER_MAX_AMOUNT]: false,
     [WANT_COVER_OVER_MAX_PERIOD]: false,
-    [ELIGIBILITY_COMPANIES_HOUSE_NUMBER]: true,
   },
   POLICY: {
     [REQUESTED_START_DATE]: {
@@ -137,7 +135,7 @@ const application = {
     [COMPANY_NUMBER]: COMPANIES_HOUSE_NUMBER,
     [COMPANY_NAME]: 'DHG PROPERTY FINANCE LIMITED',
     [COMPANY_INCORPORATED]: '2014-04-10T00:00:00.000Z',
-    [YOUR_COMPANY_ADDRESS]: {
+    [COMPANY_ADDRESS]: {
       addressLine1: 'Unit 3 Lewis Court',
       addressLine2: 'Portmanmoor Road',
       careOf: '',

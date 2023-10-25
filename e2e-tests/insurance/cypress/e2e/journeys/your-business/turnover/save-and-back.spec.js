@@ -35,7 +35,6 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
 
       task.link().click();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitNatureOfYourBusiness();
 

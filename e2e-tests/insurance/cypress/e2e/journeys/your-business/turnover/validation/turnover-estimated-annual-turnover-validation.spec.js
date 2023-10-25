@@ -36,7 +36,6 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
 
       task.link().click();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitNatureOfYourBusiness();
 

@@ -1,5 +1,5 @@
 export const SHARED_FIELD_IDS = {
-  COMPANIES_HOUSE_NUMBER: 'companiesHouseNumber',
+  COMPANY: 'company',
   COMPANY_HOUSE: {
     COMPANY_NAME: 'companyName',
     COMPANY_ADDRESS: 'registeredOfficeAddress',

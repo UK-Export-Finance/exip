@@ -36,7 +36,6 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
       task.link().click();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;

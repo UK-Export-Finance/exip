@@ -55,7 +55,6 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
 
       task.link().click();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitNatureOfYourBusiness();
 
