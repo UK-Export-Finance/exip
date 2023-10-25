@@ -232,8 +232,6 @@ jobs:
             --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
             --plan appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/ui:${{ env.TARGET }} \
-            --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --subnet snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --https-only true \
             --tags ${{ env.TAGS }}
 
@@ -245,8 +243,6 @@ jobs:
             --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
             --plan appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/api:${{ env.TARGET }} \
-            --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --subnet snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --https-only true \
             --tags ${{ env.TAGS }}
 
@@ -265,6 +261,11 @@ jobs:
       - name: Production 💫
         if: ${{ 'prod' == env.TARGET }}
         run: echo "TYPE=Production" >> $GITHUB_ENV
+
+      - name: Tags 🏷️
+        run: echo TAGS='Environment=${{ env.TYPE }}' \
+          'Product=${{ env.PRODUCT }}' \
+          'Team=development' >> $GITHUB_ENV
 
       - name: Login 🔐
         uses: azure/login@v1
@@ -290,17 +291,15 @@ jobs:
             --connection-name private-link-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --subnet snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --group-id private-endpoint-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --tags ${{ env.TAGS }}
 
             #API
-            az network private-endpoint create \
+            az network private-endpoiT1_USER_1nt create \
             --name private-endpoint-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --private-connection-resource-id $(az webapp list --query '[?contains(name, `app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }}`)].id' -o tsv) \
             --connection-name private-link-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --subnet snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --group-id private-endpoint-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --tags ${{ env.TAGS }}
 
 
