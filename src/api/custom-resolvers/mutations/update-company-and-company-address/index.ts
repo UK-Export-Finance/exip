@@ -1,4 +1,4 @@
-import { mapSicCodes } from '../../../helpers/map-sic-codes';
+import mapSicCodes from '../../../helpers/map-sic-codes';
 import { Relationship, Context, UpdateCompanyAndCompanyAddressVariables } from '../../../types';
 
 /**

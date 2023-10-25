@@ -2,7 +2,7 @@ import { CompaniesHouseResponse } from '../types';
 
 const mockCompaniesHouseAPIResponse = {
   company_name: 'Mock company',
-  company_number: '123456',
+  company_number: '0123456',
   registered_office_address: {
     care_of: undefined,
     premises: undefined,

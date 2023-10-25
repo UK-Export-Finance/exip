@@ -844,23 +844,6 @@ var lists = {
                 id: exportContractId
               }
             };
-            const { id: companyId } = await context.db.Company.createOne({
-              data: {}
-            });
-            modifiedData.company = {
-              connect: {
-                id: companyId
-              }
-            };
-            await context.db.CompanyAddress.createOne({
-              data: {
-                company: {
-                  connect: {
-                    id: companyId
-                  }
-                }
-              }
-            });
             const { id: businessId } = await context.db.Business.createOne({
               data: {}
             });
@@ -921,7 +904,7 @@ var lists = {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
             const { referenceNumber } = item;
-            const { policyContactId, exportContractId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
+            const { policyContactId, exportContractId, businessId, brokerId, sectionReviewId, declarationId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -951,16 +934,6 @@ var lists = {
                   }
                 },
                 finalDestinationKnown: APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN
-              }
-            });
-            await context.db.Company.updateOne({
-              where: { id: companyId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
               }
             });
             await context.db.Business.updateOne({
@@ -1616,6 +1589,16 @@ var typeDefs = `
     oldSicCodes: [OldSicCodes]
   }
 
+  input CompanyInput {
+    companyName: String
+    companyNumber: String
+    dateOfCreation: String
+    sicCodes: [String]
+    industrySectorNames: [String]
+    financialYearEndDate: DateTime
+    registeredOfficeAddress: CompanyAddressInput
+  }
+
   type EmailResponse {
     success: Boolean
     emailRecipient: String
@@ -1725,6 +1708,7 @@ var typeDefs = `
     createAnApplication(
       accountId: String!
       eligibilityAnswers: ApplicationEligibility!
+      company: CompanyInput!
     ): CreateAnApplicationResponse
 
     """ delete an account """
@@ -3202,11 +3186,105 @@ var createAPolicy = async (context, applicationId) => {
 };
 var create_a_policy_default = createAPolicy;
 
+// helpers/create-a-company-address/index.ts
+var createACompanyAddress = async (context, addressData, companyId) => {
+  console.info("Creating a company address for ", companyId);
+  try {
+    const companyAddress = await context.db.CompanyAddress.createOne({
+      data: {
+        company: {
+          connect: {
+            id: companyId
+          }
+        },
+        ...addressData
+      }
+    });
+    return companyAddress;
+  } catch (err) {
+    console.error("Error creating a company address %O", err);
+    throw new Error(`Creating a company address ${err}`);
+  }
+};
+var create_a_company_address_default = createACompanyAddress;
+
+// helpers/map-sic-codes/index.ts
+var mapSicCodes = (sicCodes, industrySectorNames2, companyId) => {
+  const mapped = [];
+  if (!sicCodes.length) {
+    return mapped;
+  }
+  sicCodes.forEach((code, index) => {
+    let industrySectorName = "";
+    if (industrySectorNames2 && industrySectorNames2[index]) {
+      industrySectorName = industrySectorNames2[index];
+    }
+    const mappedCode = {
+      sicCode: code,
+      industrySectorName,
+      company: {
+        connect: {
+          id: companyId
+        }
+      }
+    };
+    mapped.push(mappedCode);
+  });
+  return mapped;
+};
+var map_sic_codes_default = mapSicCodes;
+
+// helpers/create-company-sic-codes/index.ts
+var createCompanySicCodes = async (context, sicCodes, industrySectorNames2, companyId) => {
+  console.info("Creating company SIC codes for ", companyId);
+  try {
+    const mappedSicCodes = map_sic_codes_default(sicCodes, industrySectorNames2, companyId);
+    let createdSicCodes = [];
+    if (sicCodes.length) {
+      createdSicCodes = await context.db.CompanySicCode.createMany({
+        data: mappedSicCodes
+      });
+    }
+    return createdSicCodes;
+  } catch (err) {
+    console.error("Error creating company SIC codes %O", err);
+    throw new Error(`Creating company SIC codes ${err}`);
+  }
+};
+var create_company_sic_codes_default = createCompanySicCodes;
+
+// helpers/create-a-company/index.ts
+var createACompany = async (context, applicationId, companyData) => {
+  console.info("Creating a company, address and SIC codes for ", applicationId);
+  try {
+    const { registeredOfficeAddress, sicCodes, industrySectorNames: industrySectorNames2, ...companyFields } = companyData;
+    const company = await context.db.Company.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        },
+        ...companyFields
+      }
+    });
+    const companyAddress = await create_a_company_address_default(context, registeredOfficeAddress, company.id);
+    const createdSicCodes = await create_company_sic_codes_default(context, sicCodes, industrySectorNames2, company.id);
+    return {
+      ...company,
+      registeredOfficeAddress: companyAddress,
+      sicCodes: createdSicCodes
+    };
+  } catch (err) {
+    console.error("Error creating a company, address and SIC codes %O", err);
+    throw new Error(`Creating a company, address and SIC codes ${err}`);
+  }
+};
+var create_a_company_default = createACompany;
+
 // custom-resolvers/mutations/create-an-application/index.ts
 var createAnApplication = async (root, variables, context) => {
   console.info("Creating application for ", variables.accountId);
   try {
-    const { accountId, eligibilityAnswers } = variables;
+    const { accountId, eligibilityAnswers, company: companyData } = variables;
     const account2 = await get_account_by_id_default(context, accountId);
     if (!account2) {
       return {
@@ -3226,6 +3304,7 @@ var createAnApplication = async (root, variables, context) => {
     const buyer = await create_a_buyer_default(context, country.id, applicationId);
     const eligibility = await create_an_eligibility_default(context, country.id, applicationId, otherEligibilityAnswers);
     const policy = await create_a_policy_default(context, applicationId);
+    const company = await create_a_company_default(context, applicationId, companyData);
     const updatedApplication = await context.db.Application.updateOne({
       where: {
         id: applicationId
@@ -3239,6 +3318,9 @@ var createAnApplication = async (root, variables, context) => {
         },
         policy: {
           connect: { id: policy.id }
+        },
+        company: {
+          connect: { id: company.id }
         }
       }
     });
@@ -3286,34 +3368,6 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 };
 var delete_application_by_reference_number_default = deleteApplicationByReferenceNumber;
 
-// types/index.ts
-var import_types2 = __toESM(require("@keystone-6/core/types"));
-
-// helpers/map-sic-codes/index.ts
-var mapSicCodes = (company, sicCodes, industrySectorNames2) => {
-  const mapped = [];
-  if (!sicCodes?.length) {
-    return mapped;
-  }
-  sicCodes.forEach((code, index) => {
-    let industrySectorName = "";
-    if (industrySectorNames2 && industrySectorNames2[index]) {
-      industrySectorName = industrySectorNames2[index];
-    }
-    const codeToAdd = {
-      sicCode: code,
-      industrySectorName,
-      company: {
-        connect: {
-          id: company.id
-        }
-      }
-    };
-    mapped.push(codeToAdd);
-  });
-  return mapped;
-};
-
 // custom-resolvers/mutations/update-company-and-company-address/index.ts
 var updateCompanyAndCompanyAddress = async (root, variables, context) => {
   try {
@@ -3330,7 +3384,7 @@ var updateCompanyAndCompanyAddress = async (root, variables, context) => {
       where: { id: variables.companyAddressId },
       data: address
     });
-    const mappedSicCodes = mapSicCodes(updatedCompany, sicCodes, industrySectorNames2);
+    const mappedSicCodes = map_sic_codes_default(updatedCompany, sicCodes, industrySectorNames2);
     if (company && oldSicCodes && oldSicCodes.length) {
       await context.db.CompanySicCode.deleteMany({
         where: oldSicCodes

@@ -106,6 +106,16 @@ const typeDefs = `
     oldSicCodes: [OldSicCodes]
   }
 
+  input CompanyInput {
+    companyName: String
+    companyNumber: String
+    dateOfCreation: String
+    sicCodes: [String]
+    industrySectorNames: [String]
+    financialYearEndDate: DateTime
+    registeredOfficeAddress: CompanyAddressInput
+  }
+
   type EmailResponse {
     success: Boolean
     emailRecipient: String
@@ -215,6 +225,7 @@ const typeDefs = `
     createAnApplication(
       accountId: String!
       eligibilityAnswers: ApplicationEligibility!
+      company: CompanyInput!
     ): CreateAnApplicationResponse
 
     """ delete an account """

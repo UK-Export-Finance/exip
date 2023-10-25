@@ -144,11 +144,6 @@ describe('Create an Application', () => {
     expect(typeof application.exportContract.id).toEqual('string');
   });
 
-  test('it should have a company id', () => {
-    expect(application.company).toBeDefined();
-    expect(typeof application.company.id).toEqual('string');
-  });
-
   test('it should have a business id', () => {
     expect(application.business).toBeDefined();
     expect(typeof application.business.id).toEqual('string');
@@ -208,17 +203,6 @@ describe('Create an Application', () => {
     expect(exportContract.finalDestinationKnown).toEqual(true);
   });
 
-  test('it should add the application ID to the company entry', async () => {
-    const company = await context.query.Company.findOne({
-      where: {
-        id: application.company.id,
-      },
-      query: 'id application { id }',
-    });
-
-    expect(company.application.id).toEqual(application.id);
-  });
-
   test('it should add the application ID to the broker entry', async () => {
     const broker = await context.query.Broker.findOne({
       where: {
@@ -228,24 +212,6 @@ describe('Create an Application', () => {
     });
 
     expect(broker.application.id).toEqual(application.id);
-  });
-
-  test('it should add the company ID to the company address entry', async () => {
-    const company = await context.query.Company.findOne({
-      where: {
-        id: application.company.id,
-      },
-      query: 'id application { id } registeredOfficeAddress { id }',
-    });
-
-    const companyAddress = await context.query.CompanyAddress.findOne({
-      where: {
-        id: company.registeredOfficeAddress.id,
-      },
-      query: 'id company { id }',
-    });
-
-    expect(companyAddress.company.id).toEqual(application.company.id);
   });
 
   test('it should add the application ID to the sectionReview entry', async () => {
@@ -352,13 +318,11 @@ describe('Application timestamp updates', () => {
       },
     });
 
-    // update the application with buyer ID.
-    await applications.update({
-      context,
-      applicationId: application.id,
+    // create company and associate with the application.
+    const company = await context.query.Company.createOne({
       data: {
-        buyer: {
-          connect: { id: buyer.id },
+        application: {
+          connect: { id: application.id },
         },
       },
     });
@@ -367,6 +331,9 @@ describe('Application timestamp updates', () => {
       ...application,
       buyer: {
         id: buyer.id,
+      },
+      company: {
+        id: company.id,
       },
       policy: {
         id: policy.id,

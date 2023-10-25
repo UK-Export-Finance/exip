@@ -2032,7 +2032,7 @@ type Mutation {
   createAnAccount(urlOrigin: String!, firstName: String!, lastName: String!, email: String!, password: String!): CreateAnAccountResponse
 
   """ create an application """
-  createAnApplication(accountId: String!, eligibilityAnswers: ApplicationEligibility!): CreateAnApplicationResponse
+  createAnApplication(accountId: String!, eligibilityAnswers: ApplicationEligibility!, company: CompanyInput!): CreateAnApplicationResponse
 
   """ delete an account """
   deleteAnAccount(email: String!): SuccessResponse
@@ -2385,6 +2385,16 @@ input CompanyAndCompanyAddressInput {
   phoneNumber: String
   financialYearEndDate: DateTime
   oldSicCodes: [OldSicCodes]
+}
+
+input CompanyInput {
+  companyName: String
+  companyNumber: String
+  dateOfCreation: String
+  sicCodes: [String]
+  industrySectorNames: [String]
+  financialYearEndDate: DateTime
+  registeredOfficeAddress: CompanyAddressInput
 }
 
 type EmailResponse {

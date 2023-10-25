@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { ACCOUNT, FIELD_IDS } from '../constants';
 import encryptPassword from '../helpers/encrypt-password';
 import application from './mock-application';
+import company from './mock-company';
 import companySicCode from './mock-company-sic-code';
 import { Account } from '../types';
 
@@ -35,10 +36,7 @@ export const mockOTP = {
 
 export const mockApplication = application;
 
-export const mockCompany = {
-  companyName: 'Mock company name',
-};
-
+export const mockCompany = company;
 export const mockCompanySicCode = companySicCode;
 
 export const mockBuyer = {

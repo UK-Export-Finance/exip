@@ -25,12 +25,7 @@ export interface ApplicationBuyer extends Relationship {
   exporterHasTradedWithBuyer?: boolean;
 }
 
-export interface ApplicationCompany {
-  id: string;
-  companyName?: string;
-}
-
-export interface ApplicationCompanyAddress extends Relationship {
+export interface ApplicationCompanyAddressCore {
   addressLine1?: string;
   addressLine2?: string;
   careOf?: string;
@@ -39,6 +34,24 @@ export interface ApplicationCompanyAddress extends Relationship {
   postalCode?: string;
   country?: string;
   premises?: string;
+}
+
+export interface ApplicationCompanyCore {
+  companyName: string;
+  companyNumber: string;
+  dateOfCreation: Date;
+  sicCodes: Array<string>;
+  industrySectorNames: Array<string>;
+  financialYearEndDate: Date;
+  registeredOfficeAddress: ApplicationCompanyAddressCore;
+}
+
+export interface ApplicationCompany extends ApplicationCompanyCore {
+  id: string;
+}
+
+export interface ApplicationCompanyAddress extends ApplicationCompanyAddressCore {
+  id: string;
 }
 
 export interface ApplicationCompanySicCode {
@@ -136,6 +149,8 @@ export interface ApplicationVersion {
 export interface CreateAnApplicationVariables {
   accountId: string;
   eligibilityAnswers: ApplicationEligibility;
+  // company: ApplicationCompanyCore;
+  company: ApplicationCompanyCore;
 }
 
 export interface DeleteApplicationByReferenceNumberVariables {
