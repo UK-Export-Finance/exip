@@ -196,6 +196,34 @@ jobs:
             --name vnet-peer-ami-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --query peeringState)"
 
+      - name: VNET Peer - APIM 🔀
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # API management (APIM) VNET peering
+
+            # Local VNET peer
+            az network vnet peering create \
+            --name vnet-peer-apim-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --remote-vnet $(az network vnet show --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_APIM }} --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_APIM }} --name ${{ secrets.REMOTE_VNET_NAME_APIM }} --query 'id' -o tsv) \
+            --allow-vnet-access 1
+
+            # Remote VNET peer
+            az network vnet peering create \
+            --name vnet-peer-apim-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name  ${{ secrets.REMOTE_VNET_NAME_APIM }} \
+            --remote-vnet $(az network vnet show --name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query 'id' -o tsv) \
+            --allow-vnet-access 1 \
+            --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_APIM }} \
+            --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_APIM }}
+
+            # Fetch peering state
+            echo "Peering state: $(az network vnet peering show \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --name vnet-peer-apim-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --query peeringState)"
+
       - name: Web app - UI 🌐
         uses: Azure/cli@v1.0.8
         with:
@@ -255,6 +283,17 @@ jobs:
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
+            #UI
+            az network private-endpoint create \
+            --name private-endpoint-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --private-connection-resource-id $(az webapp list --query '[?contains(name, `app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}`)].id' -o tsv) \
+            --connection-name private-link-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --subnet snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --group-id private-endpoint-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --tags ${{ env.TAGS }}
+
+            #API
             az network private-endpoint create \
             --name private-endpoint-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --private-connection-resource-id $(az webapp list --query '[?contains(name, `app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }}`)].id' -o tsv) \
