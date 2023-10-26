@@ -127,8 +127,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
 
     it(`should retain the ${GOODS_OR_SERVICES} input on the page and the other fields should be empty`, () => {
       task.link().click();
-      // submit companies house number form
-      submitButton().click();
+
       // company details submit
       submitButton().click();
 

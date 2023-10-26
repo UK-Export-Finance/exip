@@ -2,23 +2,12 @@ import { summaryList } from '../../pages/shared';
 import getSummaryListField from './get-summary-list-field';
 import { FIELD_IDS, FIELD_VALUES } from '../../constants';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../content-strings/fields/insurance/business';
-import { formatDate } from '../../helpers/date';
 import application from '../../fixtures/application';
 
 const {
   INSURANCE: {
     EXPORTER_BUSINESS: {
-      COMPANIES_HOUSE: {
-        COMPANY_NAME,
-        COMPANY_NUMBER,
-        COMPANY_ADDRESS,
-        COMPANY_INCORPORATED,
-        COMPANY_SIC,
-        INDUSTRY_SECTOR_NAMES,
-        FINANCIAL_YEAR_END_DATE,
-      },
       YOUR_COMPANY: {
-        ADDRESS,
         TRADING_NAME,
         TRADING_ADDRESS,
         WEBSITE,
@@ -48,84 +37,7 @@ const {
   },
 } = FIELD_IDS;
 
-const {
-  TURNOVER: {
-    [FINANCIAL_YEAR_END_DATE]: { DATE_FORMAT },
-  },
-} = FIELDS;
-
 const checkYourBusinessSummaryList = ({
-  [COMPANY_NUMBER]: () => {
-    const fieldId = COMPANY_NUMBER;
-
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.EXPORTER_COMPANY[fieldId];
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
-  },
-  [COMPANY_NAME]: () => {
-    const fieldId = COMPANY_NAME;
-
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.EXPORTER_COMPANY[fieldId];
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
-  },
-  [COMPANY_ADDRESS]: () => {
-    const fieldId = COMPANY_ADDRESS;
-    const expectedKey = FIELDS[fieldId].SUMMARY.TITLE;
-
-    const row = summaryList.field(fieldId);
-
-    cy.checkText(
-      row.key(),
-      expectedKey,
-    );
-
-    // as html, cannot use checkText so checking contains following fields
-    row.value().contains(application.EXPORTER_COMPANY[ADDRESS].addressLine1);
-    row.value().contains(application.EXPORTER_COMPANY[ADDRESS].addressLine2);
-    row.value().contains(application.EXPORTER_COMPANY[ADDRESS].locality);
-    row.value().contains(application.EXPORTER_COMPANY[ADDRESS].region);
-    row.value().contains(application.EXPORTER_COMPANY[ADDRESS].postalCode);
-
-    row.changeLink().should('not.exist');
-  },
-  [COMPANY_INCORPORATED]: () => {
-    const fieldId = COMPANY_INCORPORATED;
-
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-
-    const timestamp = application.EXPORTER_COMPANY[fieldId];
-    const expectedValue = formatDate(timestamp);
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
-  },
-  [COMPANY_SIC]: () => {
-    const fieldId = COMPANY_SIC;
-
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-
-    const values = application.EXPORTER_COMPANY;
-
-    const [sicCode] = values[fieldId];
-    const [industrySectorName] = values[INDUSTRY_SECTOR_NAMES];
-
-    const expectedValue = `${sicCode} - ${industrySectorName}`;
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
-  },
-  [FINANCIAL_YEAR_END_DATE]: () => {
-    const fieldId = FINANCIAL_YEAR_END_DATE;
-
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-
-    const timestamp = application.EXPORTER_COMPANY[fieldId];
-
-    const expectedValue = formatDate(timestamp, DATE_FORMAT);
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
-  },
   [TRADING_NAME]: () => {
     const fieldId = TRADING_NAME;
 

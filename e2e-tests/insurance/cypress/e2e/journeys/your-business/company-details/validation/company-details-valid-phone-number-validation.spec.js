@@ -1,6 +1,6 @@
 import { field, submitButton } from '../../../../../../../pages/shared';
 import {
-  ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES,
+  ROUTES, FIELD_IDS, VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES,
 } from '../../../../../../../constants';
 import partials from '../../../../../../../partials';
 
@@ -46,7 +46,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       task.link().click();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companyNumber: COMPANIES_HOUSE_NUMBER });
+      cy.completeCompanyDetailsForm({});
 
       cy.assertUrl(url);
     });

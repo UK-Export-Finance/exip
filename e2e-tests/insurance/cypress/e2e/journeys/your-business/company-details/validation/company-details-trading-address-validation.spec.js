@@ -2,7 +2,7 @@ import { companyDetails } from '../../../../../../../pages/your-business';
 import { submitButton, yesRadioInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import partials from '../../../../../../../partials';
-import { ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER } from '../../../../../../../constants';
+import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 
 const {
   EXPORTER_BUSINESS: {
@@ -29,7 +29,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       task.link().click();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companyNumber: COMPANIES_HOUSE_NUMBER });
+      cy.completeCompanyDetailsForm({});
 
       cy.assertUrl(url);
     });

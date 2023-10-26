@@ -12,14 +12,6 @@ const {
 const {
   INSURANCE: {
     EXPORTER_BUSINESS: {
-      COMPANIES_HOUSE: {
-        COMPANY_NAME,
-        COMPANY_NUMBER,
-        COMPANY_ADDRESS,
-        COMPANY_INCORPORATED,
-        COMPANY_SIC,
-        FINANCIAL_YEAR_END_DATE,
-      },
       YOUR_COMPANY: {
         TRADING_ADDRESS,
         TRADING_NAME,
@@ -77,30 +69,6 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
 
   after(() => {
     cy.deleteApplication(referenceNumber);
-  });
-
-  it(`should render a ${COMPANY_NUMBER} summary list row`, () => {
-    checkSummaryList[COMPANY_NUMBER]();
-  });
-
-  it(`should render a ${COMPANY_NAME} summary list row`, () => {
-    checkSummaryList[COMPANY_NAME]();
-  });
-
-  it(`should render a ${COMPANY_ADDRESS} summary list row`, () => {
-    checkSummaryList[COMPANY_ADDRESS]();
-  });
-
-  it(`should render a ${COMPANY_INCORPORATED} summary list row`, () => {
-    checkSummaryList[COMPANY_INCORPORATED]();
-  });
-
-  it(`should render a ${COMPANY_SIC} summary list row`, () => {
-    checkSummaryList[COMPANY_SIC]();
-  });
-
-  it(`should render a ${FINANCIAL_YEAR_END_DATE} summary list row`, () => {
-    checkSummaryList[FINANCIAL_YEAR_END_DATE]();
   });
 
   it(`should render a ${TRADING_NAME} summary list row`, () => {
