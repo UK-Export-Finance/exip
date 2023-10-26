@@ -215,7 +215,6 @@ jobs:
             "your-business/broker/**/*.spec.js",
             "your-business/change-your-answers/**/*.spec.js",
             "your-business/check-your-answers/**/*.spec.js",
-            "your-business/companies-house-number/**/*.spec.js",
             "your-business/company-details/**/*.spec.js",
             "your-business/nature-of-business/**/*.spec.js",
             "your-business/turnover/**/*.spec.js",

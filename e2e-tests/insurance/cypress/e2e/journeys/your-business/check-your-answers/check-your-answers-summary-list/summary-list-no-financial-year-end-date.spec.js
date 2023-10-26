@@ -1,6 +1,8 @@
 import partials from '../../../../../../../partials';
 import { summaryList } from '../../../../../../../pages/shared';
-import { FIELD_IDS, ROUTES, COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE } from '../../../../../../../constants';
+import { COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE } from '../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import getSummaryListField from '../../../../../../../commands/insurance/get-summary-list-field';
 import { DEFAULT } from '../../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/business';
@@ -10,21 +12,17 @@ const {
   EXPORTER_BUSINESS: {
     CHECK_YOUR_ANSWERS,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    EXPORTER_BUSINESS: {
-      COMPANIES_HOUSE: {
-        FINANCIAL_YEAR_END_DATE,
-      },
-    },
-  },
-} = FIELD_IDS;
+  COMPANIES_HOUSE: { FINANCIAL_YEAR_END_DATE },
+} = INSURANCE_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your business - Check your answers - Summary list - When a company does not have a financial year end date', () => {
   let referenceNumber;
@@ -42,7 +40,7 @@ context('Insurance - Your business - Check your answers - Summary list - When a 
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitBrokerForm({ usingBroker: true });
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 
