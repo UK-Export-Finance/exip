@@ -89,8 +89,6 @@ context('Insurance - Eligibility - Companies house search page - I want to check
         cy.navigateToUrl(url);
 
         companyNumber = COMPANIES_HOUSE_NUMBER_TOO_SHORT;
-
-        // cy.interceptCompaniesHousePost({ companyNumber });
       });
 
       it('should display the `incorrect format` error', () => {
