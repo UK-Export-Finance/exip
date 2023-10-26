@@ -5,9 +5,7 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
 import generateYourCompanyFields from '.';
-import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
-import mapSicCodes from '../map-sic-codes';
 import generateChangeLink from '../../../generate-change-link';
 import mockApplication, { mockCompany } from '../../../../test-mocks/mock-application';
 import { DEFAULT } from '../../../../content-strings';
@@ -18,7 +16,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  COMPANIES_HOUSE: { COMPANY_NAME, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS, FINANCIAL_YEAR_END_DATE },
+  COMPANIES_HOUSE: { FINANCIAL_YEAR_END_DATE },
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, WEBSITE, PHONE_NUMBER },
   },
@@ -31,43 +29,6 @@ const {
 } = FIELDS;
 
 const summaryList = (mockAnswers: ApplicationCompany, referenceNumber: number, financialYearEndDateValue: string, checkAndChange = false) => [
-  fieldGroupItem({
-    field: getFieldById(FIELDS.COMPANY_DETAILS, COMPANY_NAME),
-    data: mockAnswers,
-    renderChangeLink: false,
-  }),
-  fieldGroupItem(
-    {
-      field: getFieldById(FIELDS.COMPANY_DETAILS, COMPANY_ADDRESS),
-      data: mockAnswers,
-      renderChangeLink: false,
-    },
-    generateMultipleFieldHtml(mockAnswers[COMPANY_ADDRESS]),
-  ),
-  fieldGroupItem(
-    {
-      field: getFieldById(FIELDS.COMPANY_DETAILS, COMPANY_INCORPORATED),
-      data: mockAnswers,
-      renderChangeLink: false,
-    },
-    formatDate(mockAnswers[COMPANY_INCORPORATED]),
-  ),
-  fieldGroupItem(
-    {
-      field: getFieldById(FIELDS.COMPANY_DETAILS, COMPANY_SIC),
-      data: mockAnswers,
-      renderChangeLink: false,
-    },
-    mapSicCodes(mockAnswers[COMPANY_SIC]),
-  ),
-  fieldGroupItem(
-    {
-      field: getFieldById(FIELDS.COMPANY_DETAILS, FINANCIAL_YEAR_END_DATE),
-      data: mockAnswers,
-      renderChangeLink: false,
-    },
-    formatDate(mockAnswers[FINANCIAL_YEAR_END_DATE], DATE_FORMAT),
-  ),
   fieldGroupItem(
     {
       field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_NAME),
