@@ -1,10 +1,10 @@
 import dashboardPage from '../../../../pages/insurance/dashboard';
-import { countryInput, field, } from '../../../../pages/shared';
+import { countryInput, field } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { ROUTES, FIELD_IDS } from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../commands/forms';
 
-const { 
+const {
   INSURANCE: {
     COMPANIES_HOUSE: { COMPANY_NUMBER },
     ELIGIBILITY: {
