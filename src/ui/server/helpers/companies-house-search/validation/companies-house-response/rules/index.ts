@@ -1,4 +1,4 @@
-import notFound from './notFound';
+import notFound from './not-found';
 import { ValidationErrors } from '../../../../../../types';
 
 const rules = [notFound] as Array<() => ValidationErrors>;

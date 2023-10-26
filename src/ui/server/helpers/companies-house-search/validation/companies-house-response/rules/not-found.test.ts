@@ -1,4 +1,4 @@
-import notFound from './notFound';
+import notFound from './not-found';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import generateValidationErrors from '../../../../validation';
@@ -12,7 +12,7 @@ const {
 
 const { ELIGIBILITY } = ERROR_MESSAGES.INSURANCE;
 
-describe('helpers/companies-house-search/validation/companies-house-response/rules/notFound', () => {
+describe('helpers/companies-house-search/validation/companies-house-response/rules/not-found', () => {
   const mockErrors = {
     summary: [],
     errorList: {},
