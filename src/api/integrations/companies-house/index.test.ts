@@ -1,7 +1,7 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import companiesHouse from '.';
-import mockCompaniesHouseAPIResponse from '../../test-mocks/mock-company-api-response';
+import mockCompaniesHouseAPIResponse from '../../test-mocks/mock-companies-house-api-response';
 
 const companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
 

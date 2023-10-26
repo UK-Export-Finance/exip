@@ -2,7 +2,7 @@ import getCompaniesHouseInformation from '.';
 import companiesHouse from '../../../integrations/companies-house';
 import { mapCompaniesHouseFields } from '../../../helpers/map-companies-house-fields';
 import industrySectorNames from '../../../integrations/industry-sector';
-import mockCompanyAPIResponse from '../../../test-mocks/mock-company-api-response';
+import mockCompanyAPIResponse from '../../../test-mocks/mock-companies-house-api-response';
 import mockIndustrySectors from '../../../test-mocks/mock-industry-sectors';
 
 describe('custom-resolvers/get-companies-house-information', () => {
