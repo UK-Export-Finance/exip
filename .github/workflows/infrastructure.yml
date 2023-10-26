@@ -338,7 +338,7 @@ jobs:
             --name dns-vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --virtual-network vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --registration-enabled false \
-            --tags ${{ env.TAGS }
+            --tags ${{ env.TAGS }}
 
       - name: DNS Records 📝
         uses: Azure/cli@v1.0.8
