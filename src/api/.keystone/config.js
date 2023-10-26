@@ -112,6 +112,33 @@ var SHARED_ELIGIBILITY = {
 };
 var shared_eligibility_default = SHARED_ELIGIBILITY;
 
+// constants/field-ids/insurance/shared/index.ts
+var SHARED_FIELD_IDS = {
+  COMPANY: "company",
+  COMPANIES_HOUSE: {
+    COMPANY_NAME: "companyName",
+    COMPANY_ADDRESS: "registeredOfficeAddress",
+    COMPANY_NUMBER: "companyNumber",
+    COMPANY_INCORPORATED: "dateOfCreation",
+    SIC_CODE: "sicCode",
+    COMPANY_SIC: "sicCodes",
+    INDUSTRY_SECTOR_NAME: "industrySectorName",
+    INDUSTRY_SECTOR_NAMES: "industrySectorNames",
+    FINANCIAL_YEAR_END_DATE: "financialYearEndDate",
+    REGISTED_OFFICE_ADDRESS: {
+      ADDRESS_LINE_1: "addressLine1",
+      ADDRESS_LINE_2: "addressLine2",
+      CARE_OF: "careOf",
+      LOCALITY: "locality",
+      REGION: "region",
+      POSTAL_CODE: "postalCode",
+      COUNTRY: "country",
+      PREMISES: "premises"
+    }
+  }
+};
+var shared_default2 = SHARED_FIELD_IDS;
+
 // constants/field-ids/insurance/account/index.ts
 var ACCOUNT = {
   ID: "id",
@@ -263,12 +290,14 @@ var check_your_answers_default = CHECK_YOUR_ANSWERS;
 var INSURANCE_FIELD_IDS = {
   ELIGIBILITY: {
     ...shared_eligibility_default,
+    ...shared_default2,
     HAS_COMPANIES_HOUSE_NUMBER: "hasCompaniesHouseNumber",
     COMPANIES_HOUSE_NUMBER: "companyNumber",
     WANT_COVER_OVER_MAX_AMOUNT: "wantCoverOverMaxAmount",
     WANT_COVER_OVER_MAX_PERIOD: "wantCoverOverMaxPeriod",
     ACCOUNT_TO_APPLY_ONLINE: "alreadyHaveAnAccount"
   },
+  ...shared_default2,
   SUBMISSION_DEADLINE: "submissionDeadline",
   ACCOUNT: account_default,
   POLICY: policy_default,
@@ -3691,7 +3720,10 @@ var POLICY_FIELDS = {
 };
 
 // content-strings/fields/insurance/your-business/index.ts
-var { EXPORTER_BUSINESS: EXPORTER_BUSINESS2 } = insurance_default;
+var {
+  COMPANIES_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS, FINANCIAL_YEAR_END_DATE },
+  EXPORTER_BUSINESS: EXPORTER_BUSINESS2
+} = insurance_default;
 var {
   YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
@@ -3700,6 +3732,36 @@ var {
 } = EXPORTER_BUSINESS2;
 var FIELDS = {
   COMPANY_DETAILS: {
+    [COMPANY_NUMBER]: {
+      SUMMARY: {
+        TITLE: "Companies House registration number"
+      }
+    },
+    [COMPANY_NAME]: {
+      SUMMARY: {
+        TITLE: "Company name"
+      }
+    },
+    [COMPANY_ADDRESS]: {
+      SUMMARY: {
+        TITLE: "Registered office address"
+      }
+    },
+    [COMPANY_INCORPORATED]: {
+      SUMMARY: {
+        TITLE: "Date incorporated"
+      }
+    },
+    [COMPANY_SIC]: {
+      SUMMARY: {
+        TITLE: "Standard industry classification (SIC) codes and nature of business"
+      }
+    },
+    [FINANCIAL_YEAR_END_DATE]: {
+      SUMMARY: {
+        TITLE: "Financial year end date"
+      }
+    },
     [TRADING_NAME]: {
       SUMMARY: {
         TITLE: "Different trading name?"
@@ -4107,7 +4169,7 @@ var CONTENT_STRINGS3 = {
   ...FIELDS.BROKER
 };
 var {
-  COMPANIES_HOUSE: { COMPANY_NUMBER, COMPANY_NAME, COMPANY_ADDRESS, COMPANY_INCORPORATED, COMPANY_SIC, FINANCIAL_YEAR_END_DATE },
+  COMPANIES_HOUSE: { COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_NAME: COMPANY_NAME2, COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
   YOUR_COMPANY: { TRADING_NAME: TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE3, PHONE_NUMBER: PHONE_NUMBER3 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL3 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
@@ -4141,20 +4203,20 @@ var mapBroker = (application2) => {
 var mapExporter = (application2) => {
   const { company, companySicCodes, business } = application2;
   let financialYearEndDate = "No data from Companies House";
-  if (company[FINANCIAL_YEAR_END_DATE]) {
-    financialYearEndDate = format_date_default(company[FINANCIAL_YEAR_END_DATE], "d MMMM");
+  if (company[FINANCIAL_YEAR_END_DATE2]) {
+    financialYearEndDate = format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM");
   }
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.EXPORTER_BUSINESS, ""),
     // company fields
-    xlsx_row_default(CONTENT_STRINGS3[COMPANY_NUMBER].SUMMARY?.TITLE, company[COMPANY_NUMBER]),
-    xlsx_row_default(XLSX.FIELDS[COMPANY_NAME], company[COMPANY_NAME]),
-    xlsx_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED], "dd-MMM-yy")),
-    xlsx_row_default(XLSX.FIELDS[COMPANY_ADDRESS], map_address_default(company[COMPANY_ADDRESS])),
+    xlsx_row_default(CONTENT_STRINGS3[COMPANY_NUMBER2].SUMMARY?.TITLE, company[COMPANY_NUMBER2]),
+    xlsx_row_default(XLSX.FIELDS[COMPANY_NAME2], company[COMPANY_NAME2]),
+    xlsx_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
+    xlsx_row_default(XLSX.FIELDS[COMPANY_ADDRESS2], map_address_default(company[COMPANY_ADDRESS2])),
     xlsx_row_default(CONTENT_STRINGS3[TRADING_NAME2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_NAME2])),
     xlsx_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_ADDRESS2])),
-    xlsx_row_default(XLSX.FIELDS[COMPANY_SIC], mapSicCodes2(companySicCodes)),
-    xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, financialYearEndDate),
+    xlsx_row_default(XLSX.FIELDS[COMPANY_SIC2], mapSicCodes2(companySicCodes)),
+    xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, financialYearEndDate),
     xlsx_row_default(XLSX.FIELDS[WEBSITE3], company[WEBSITE3]),
     xlsx_row_default(XLSX.FIELDS[PHONE_NUMBER3], company[PHONE_NUMBER3]),
     // business fields
