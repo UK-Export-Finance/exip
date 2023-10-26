@@ -7,7 +7,6 @@ const SHARED_FIELD_IDS = {
     COMPANY_INCORPORATED: 'dateOfCreation',
     SIC_CODE: 'sicCode',
     COMPANY_SIC: 'sicCodes',
-    OLD_SIC_CODES: 'oldSicCodes',
     INDUSTRY_SECTOR_NAME: 'industrySectorName',
     INDUSTRY_SECTOR_NAMES: 'industrySectorNames',
     FINANCIAL_YEAR_END_DATE: 'financialYearEndDate',
