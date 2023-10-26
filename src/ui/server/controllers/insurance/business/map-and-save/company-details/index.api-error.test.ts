@@ -4,8 +4,8 @@ import { mockApplication } from '../../../../../test-mocks';
 import { FIELD_IDS } from '../../../../../constants';
 
 const {
+  COMPANIES_HOUSE: { COMPANY_NUMBER },
   EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE: { COMPANY_NUMBER },
     YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
   },
 } = FIELD_IDS.INSURANCE;

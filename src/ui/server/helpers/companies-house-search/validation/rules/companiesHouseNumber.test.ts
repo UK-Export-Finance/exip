@@ -8,7 +8,7 @@ const {
   COMPANIES_HOUSE: { COMPANY_NUMBER: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
-const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
+const { ELIGIBILITY } = ERROR_MESSAGES.INSURANCE;
 
 describe('helpers/companies-house-search/validation/rules/companiesHouseNumber', () => {
   const mockErrors = {
@@ -24,7 +24,7 @@ describe('helpers/companies-house-search/validation/rules/companiesHouseNumber',
     it('should return validation error when number is an empty string', () => {
       const result = companiesHouseNumber(mockBody, mockErrors);
 
-      const errorMessage = EXPORTER_BUSINESS[FIELD_ID].INCORRECT_FORMAT;
+      const errorMessage = ELIGIBILITY[FIELD_ID].IS_EMPTY;
       const expected = generateValidationErrors(FIELD_ID, errorMessage, mockErrors);
 
       expect(result).toEqual(expected);
@@ -34,7 +34,7 @@ describe('helpers/companies-house-search/validation/rules/companiesHouseNumber',
       mockBody[FIELD_ID] = '123';
       const result = companiesHouseNumber(mockBody, mockErrors);
 
-      const errorMessage = EXPORTER_BUSINESS[FIELD_ID].INCORRECT_FORMAT;
+      const errorMessage = ELIGIBILITY[FIELD_ID].INCORRECT_FORMAT;
       const expected = generateValidationErrors(FIELD_ID, errorMessage, mockErrors);
 
       expect(result).toEqual(expected);
@@ -44,7 +44,7 @@ describe('helpers/companies-house-search/validation/rules/companiesHouseNumber',
       mockBody[FIELD_ID] = '1235!?';
       const result = companiesHouseNumber(mockBody, mockErrors);
 
-      const errorMessage = EXPORTER_BUSINESS[FIELD_ID].INCORRECT_FORMAT;
+      const errorMessage = ELIGIBILITY[FIELD_ID].INCORRECT_FORMAT;
       const expected = generateValidationErrors(FIELD_ID, errorMessage, mockErrors);
 
       expect(result).toEqual(expected);
@@ -54,7 +54,7 @@ describe('helpers/companies-house-search/validation/rules/companiesHouseNumber',
       mockBody[FIELD_ID] = ' ';
       const result = companiesHouseNumber(mockBody, mockErrors);
 
-      const errorMessage = EXPORTER_BUSINESS[FIELD_ID].INCORRECT_FORMAT;
+      const errorMessage = ELIGIBILITY[FIELD_ID].INCORRECT_FORMAT;
       const expected = generateValidationErrors(FIELD_ID, errorMessage, mockErrors);
 
       expect(result).toEqual(expected);
@@ -64,7 +64,7 @@ describe('helpers/companies-house-search/validation/rules/companiesHouseNumber',
       mockBody[FIELD_ID] = '123456 ';
       const result = companiesHouseNumber(mockBody, mockErrors);
 
-      const errorMessage = EXPORTER_BUSINESS[FIELD_ID].INCORRECT_FORMAT;
+      const errorMessage = ELIGIBILITY[FIELD_ID].INCORRECT_FORMAT;
       const expected = generateValidationErrors(FIELD_ID, errorMessage, mockErrors);
 
       expect(result).toEqual(expected);
@@ -74,7 +74,7 @@ describe('helpers/companies-house-search/validation/rules/companiesHouseNumber',
       mockBody[FIELD_ID] = null;
       const result = companiesHouseNumber(mockBody, mockErrors);
 
-      const errorMessage = EXPORTER_BUSINESS[FIELD_ID].INCORRECT_FORMAT;
+      const errorMessage = ELIGIBILITY[FIELD_ID].IS_EMPTY;
       const expected = generateValidationErrors(FIELD_ID, errorMessage, mockErrors);
 
       expect(result).toEqual(expected);
