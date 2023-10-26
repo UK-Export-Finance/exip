@@ -16,8 +16,6 @@ const createACompany = async (context: Context, applicationId: string, companyDa
   try {
     const { registeredOfficeAddress, sicCodes, industrySectorNames, ...companyFields } = companyData;
 
-    // TODO - probably don't need "update company" mutation, types, related helpers etc now.
-
     /**
      * Create a company with provided data and application relationship
      */
