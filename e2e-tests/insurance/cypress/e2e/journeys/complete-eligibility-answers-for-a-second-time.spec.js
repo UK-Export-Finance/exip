@@ -1,10 +1,17 @@
 import dashboardPage from '../../../../pages/insurance/dashboard';
-import { countryInput } from '../../../../pages/shared';
+import { countryInput, field, } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { ROUTES, FIELD_IDS } from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../commands/forms';
 
-const BUYER_COUNTRY_FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
+const { 
+  INSURANCE: {
+    COMPANIES_HOUSE: { COMPANY_NUMBER },
+    ELIGIBILITY: {
+      BUYER_COUNTRY,
+    },
+  },
+} = FIELD_IDS;
 
 const {
   ELIGIBILITY: { EXPORTER_LOCATION },
@@ -50,8 +57,16 @@ context('Insurance - Eligibility - start and complete for a second time after cr
     cy.assertUncheckedYesNoRadios();
     cy.completeCompaniesHouseNumberForm();
 
+    // companies house search form
+    cy.checkValue(field(COMPANY_NUMBER), '');
+
+    cy.completeAndSubmitCompaniesHouseSearchForm({});
+
+    // company details form
+    cy.completeEligibilityCompanyDetailsForm();
+
     // buyer country question
-    cy.checkValue(countryInput.field(BUYER_COUNTRY_FIELD_ID), '');
+    cy.checkValue(countryInput.field(BUYER_COUNTRY), '');
     completeAndSubmitBuyerCountryForm();
 
     // insured amount question
