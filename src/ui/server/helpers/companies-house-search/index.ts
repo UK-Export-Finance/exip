@@ -63,7 +63,6 @@ const search = async (formBody: RequestBody) => {
     return {
       company,
       companyNumber,
-      // validationErrors: {},
     };
   }
 

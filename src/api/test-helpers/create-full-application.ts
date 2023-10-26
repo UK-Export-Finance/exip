@@ -129,19 +129,6 @@ export const createFullApplication = async (context: Context, policyType?: strin
     query: 'id',
   })) as ApplicationExportContract;
 
-  // // create a company SIC codes
-  // const companySicCodes = (await context.query.CompanySicCode.createOne({
-  //   data: {
-  //     ...mockCompanySicCode,
-  //     company: {
-  //       connect: {
-  //         id: company.id,
-  //       },
-  //     },
-  //   },
-  //   query: 'id',
-  // })) as ApplicationCompanySicCode;
-
   const policyContact = (await context.query.PolicyContact.updateOne({
     where: {
       id: application.policyContact.id,

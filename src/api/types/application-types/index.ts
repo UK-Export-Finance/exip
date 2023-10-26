@@ -149,7 +149,6 @@ export interface ApplicationVersion {
 export interface CreateAnApplicationVariables {
   accountId: string;
   eligibilityAnswers: ApplicationEligibility;
-  // company: ApplicationCompanyCore;
   company: ApplicationCompanyCore;
 }
 
