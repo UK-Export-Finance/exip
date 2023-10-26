@@ -163,10 +163,24 @@ jobs:
           inlineScript: |
             az network vnet create \
             --name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --address-prefix ${{ secrets.VNET_ADDRESS_PREFIX }} \
-            --subnet-name snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-            --subnet-prefixes ${{ secrets.VNET_SUBNET_PREFIX }} \
+            --address-prefix ${{ vars.VNET_ADDRESS_PREFIX }} \
             --tags ${{ env.TAGS }}
+
+      - name: Subnets 💫
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # WebApp
+            az network vnet subnet create \
+            --name snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --address-prefixes ${{ vars.VNET_SUBNET_WEBAPP_PREFIX }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+
+            # Private endpoint
+            az network vnet subnet create \
+            --name snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --address-prefixes ${{ vars.VNET_SUBNET_PRIVATE_PREFIX }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
       - name: VNET Peer - AMI 🔀
         uses: Azure/cli@v1.0.8
@@ -232,6 +246,8 @@ jobs:
             --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
             --plan appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/ui:${{ env.TARGET }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --subnet snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --https-only true \
             --tags ${{ env.TAGS }}
 
@@ -243,6 +259,8 @@ jobs:
             --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
             --plan appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/api:${{ env.TARGET }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --subnet snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --https-only true \
             --tags ${{ env.TAGS }}
 
@@ -286,22 +304,30 @@ jobs:
           inlineScript: |
             #UI
             az network private-endpoint create \
-            --name private-endpoint-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --name private-endpoint-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --private-connection-resource-id $(az webapp list --query '[?contains(name, `app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}`)].id' -o tsv) \
             --connection-name private-link-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --subnet snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --subnet snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --group-id ${{ env.PRODUCT }} \
+            --group-id sites \
             --tags ${{ env.TAGS }}
 
             #API
-            az network private-endpoiT1_USER_1nt create \
-            --name private-endpoint-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            az network private-endpoint create \
+            --name private-endpoint-api-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --private-connection-resource-id $(az webapp list --query '[?contains(name, `app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }}`)].id' -o tsv) \
             --connection-name private-link-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --subnet snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --subnet snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --group-id ${{ env.PRODUCT }} \
+            --group-id sites \
+            --tags ${{ env.TAGS }}
+
+      - name: Private DNS 🌍
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az network private-dns zone create \
+            --name dns-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --tags ${{ env.TAGS }}
 
 
