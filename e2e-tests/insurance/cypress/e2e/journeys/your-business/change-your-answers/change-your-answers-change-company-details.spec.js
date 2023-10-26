@@ -16,7 +16,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   COMPANIES_HOUSE_NUMBER,
-  COMPANY_HOUSE: {
+  COMPANIES_HOUSE: {
     COMPANY_NAME,
     COMPANY_NUMBER,
     COMPANY_INCORPORATED,

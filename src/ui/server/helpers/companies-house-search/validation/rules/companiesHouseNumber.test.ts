@@ -5,7 +5,7 @@ import generateValidationErrors from '../../../validation';
 import { ERROR_MESSAGES } from '../../../../content-strings';
 
 const {
-  COMPANY_HOUSE: { COMPANY_NUMBER: FIELD_ID },
+  COMPANIES_HOUSE: { COMPANY_NUMBER: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;

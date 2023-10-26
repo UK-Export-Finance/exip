@@ -13,7 +13,7 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insur
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER;
 
-const COMPANY_HOUSE_ERRORS = ERROR_MESSAGES.INSURANCE.ELIGIBILITY;
+const COMPANIES_HOUSE_ERRORS = ERROR_MESSAGES.INSURANCE.ELIGIBILITY;
 
 const {
   ELIGIBILITY: { COMPANIES_HOUSE_NUMBER: FIELD_ID },
@@ -68,7 +68,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       });
 
       it('should display the `is empty` error', () => {
-        cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].IS_EMPTY);
+        cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANIES_HOUSE_ERRORS[FIELD_ID].IS_EMPTY);
       });
     });
 
@@ -80,7 +80,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       });
 
       it('should display the `is empty` error', () => {
-        cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].IS_EMPTY);
+        cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANIES_HOUSE_ERRORS[FIELD_ID].IS_EMPTY);
       });
     });
 
@@ -92,7 +92,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       });
 
       it('should display the `incorrect format` error', () => {
-        cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
+        cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANIES_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
       });
     });
 
@@ -106,7 +106,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       });
 
       it('should display the `incorrect format` error', () => {
-        cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
+        cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANIES_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
       });
     });
 
@@ -118,7 +118,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       });
 
       it('should display the `incorrect format` error', () => {
-        cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
+        cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANIES_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
       });
     });
 
@@ -132,7 +132,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       });
 
       it('should display the `incorrect format` error', () => {
-        cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANY_HOUSE_ERRORS[FIELD_ID].NOT_FOUND);
+        cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANIES_HOUSE_ERRORS[FIELD_ID].NOT_FOUND);
       });
     });
 

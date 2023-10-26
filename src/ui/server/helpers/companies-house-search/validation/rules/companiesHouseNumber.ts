@@ -6,7 +6,7 @@ import generateValidationErrors from '../../../validation';
 import { RequestBody, ValidationErrors } from '../../../../../types';
 
 const {
-  COMPANY_HOUSE: { COMPANY_NUMBER: FIELD_ID },
+  COMPANIES_HOUSE: { COMPANY_NUMBER: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
 const { ELIGIBILITY } = ERROR_MESSAGES.INSURANCE;

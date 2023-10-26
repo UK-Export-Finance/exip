@@ -9,7 +9,7 @@ import generateMultipleFieldHtml from '../generate-multiple-field-html';
 import { stringArrayHasValue, isPopulatedArray } from '../array';
 
 const {
-  COMPANY_HOUSE: { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, INDUSTRY_SECTOR_NAMES },
+  COMPANIES_HOUSE: { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, INDUSTRY_SECTOR_NAMES },
 } = INSURANCE_FIELD_IDS;
 
 /**

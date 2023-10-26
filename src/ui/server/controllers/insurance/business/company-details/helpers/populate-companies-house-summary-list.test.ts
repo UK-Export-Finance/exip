@@ -6,7 +6,7 @@ import { mockApplication } from '../../../../../test-mocks';
 import { ApplicationCompany } from '../../../../../../types';
 
 const {
-  COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_SIC, INDUSTRY_SECTOR_NAMES, SIC_CODE, INDUSTRY_SECTOR_NAME },
+  COMPANIES_HOUSE: { COMPANY_NUMBER, COMPANY_SIC, INDUSTRY_SECTOR_NAMES, SIC_CODE, INDUSTRY_SECTOR_NAME },
 } = INSURANCE_FIELD_IDS;
 
 describe('controllers/insurance/business/companies-details/helpers/populate-companies-house-summary-list', () => {

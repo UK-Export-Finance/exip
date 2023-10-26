@@ -4,7 +4,7 @@ import { mockPhoneNumbers, mockBuyer } from '../../../test-mocks';
 
 const {
   ACCOUNT: { SECURITY_CODE },
-  COMPANY_HOUSE: { COMPANY_NUMBER, COMPANY_SIC },
+  COMPANIES_HOUSE: { COMPANY_NUMBER, COMPANY_SIC },
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: { PHONE_NUMBER },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES },

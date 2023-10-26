@@ -3,7 +3,7 @@ import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance
 import { RequestBody } from '../../../../../../../types';
 
 const {
-  COMPANY_HOUSE: { COMPANY_NUMBER },
+  COMPANIES_HOUSE: { COMPANY_NUMBER },
 } = INSURANCE_FIELD_IDS;
 
 export const mockBody = {

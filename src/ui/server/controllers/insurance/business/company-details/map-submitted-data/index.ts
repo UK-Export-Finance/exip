@@ -4,7 +4,7 @@ import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import getSicCodeIDsFromApplication from '../../../../../helpers/get-sic-code-ids-from-application';
 
 const {
-  COMPANY_HOUSE: {
+  COMPANIES_HOUSE: {
     COMPANY_NUMBER,
     COMPANY_INCORPORATED,
     OLD_SIC_CODES,

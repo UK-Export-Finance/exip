@@ -1,6 +1,6 @@
 const SHARED_FIELD_IDS = {
   COMPANY: 'company',
-  COMPANY_HOUSE: {
+  COMPANIES_HOUSE: {
     COMPANY_NAME: 'companyName',
     COMPANY_ADDRESS: 'registeredOfficeAddress',
     COMPANY_NUMBER: 'companyNumber',

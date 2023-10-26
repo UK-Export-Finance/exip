@@ -12,7 +12,7 @@ const {
 const {
   INSURANCE: {
     EXPORTER_BUSINESS: {
-      COMPANY_HOUSE: {
+      COMPANIES_HOUSE: {
         COMPANY_NAME,
         COMPANY_NUMBER,
         COMPANY_ADDRESS,

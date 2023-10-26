@@ -9,7 +9,7 @@ import { mockCompany } from '../../test-mocks';
 import generateMultipleFieldHtml from '../generate-multiple-field-html';
 
 const {
-  COMPANY_HOUSE: { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC },
+  COMPANIES_HOUSE: { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC },
 } = INSURANCE_FIELD_IDS;
 
 describe('server/helpers/summary-lists/company-house-summary-list', () => {

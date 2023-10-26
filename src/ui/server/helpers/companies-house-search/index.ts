@@ -6,7 +6,7 @@ import { RequestBody, CompanyHouseResponse } from '../../../types';
 
 const {
   ELIGIBILITY: {
-    COMPANY_HOUSE: { COMPANY_NUMBER },
+    COMPANIES_HOUSE: { COMPANY_NUMBER },
   },
 } = INSURANCE_FIELD_IDS;
 

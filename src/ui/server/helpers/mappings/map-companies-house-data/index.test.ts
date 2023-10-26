@@ -4,7 +4,7 @@ import mockBody from './mocks';
 import { RequestBody } from '../../../../types';
 
 const {
-  COMPANY_HOUSE: {
+  COMPANIES_HOUSE: {
     COMPANY_ADDRESS,
     COMPANY_NUMBER,
     COMPANY_INCORPORATED,

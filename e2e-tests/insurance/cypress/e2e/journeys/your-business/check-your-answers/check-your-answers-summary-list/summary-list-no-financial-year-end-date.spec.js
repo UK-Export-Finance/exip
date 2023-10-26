@@ -15,7 +15,7 @@ const {
 const {
   INSURANCE: {
     EXPORTER_BUSINESS: {
-      COMPANY_HOUSE: {
+      COMPANIES_HOUSE: {
         FINANCIAL_YEAR_END_DATE,
       },
     },

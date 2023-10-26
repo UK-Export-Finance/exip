@@ -6,7 +6,7 @@ import { CompanyHouseResponse } from '../../../../../../types';
 
 const {
   ELIGIBILITY: {
-    COMPANY_HOUSE: { COMPANY_NUMBER: FIELD_ID },
+    COMPANIES_HOUSE: { COMPANY_NUMBER: FIELD_ID },
   },
 } = INSURANCE_FIELD_IDS;
 

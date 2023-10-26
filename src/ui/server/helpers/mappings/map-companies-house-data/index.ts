@@ -3,7 +3,7 @@ import { objectHasProperty } from '../../object';
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 
 const {
-  COMPANY_HOUSE: {
+  COMPANIES_HOUSE: {
     COMPANY_ADDRESS,
     COMPANY_NUMBER,
     COMPANY_INCORPORATED,

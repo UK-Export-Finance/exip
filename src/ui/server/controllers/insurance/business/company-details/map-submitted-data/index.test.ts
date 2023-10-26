@@ -6,7 +6,7 @@ import { mockApplication } from '../../../../../test-mocks';
 import getSicCodeIDsFromApplication from '../../../../../helpers/get-sic-code-ids-from-application';
 
 const {
-  COMPANY_HOUSE: {
+  COMPANIES_HOUSE: {
     COMPANY_NAME,
     COMPANY_NUMBER,
     COMPANY_INCORPORATED,

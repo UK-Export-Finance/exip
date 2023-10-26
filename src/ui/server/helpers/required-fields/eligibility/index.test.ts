@@ -2,7 +2,7 @@ import requiredFields from '.';
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 
 const {
-  ELIGIBILITY: { ACCOUNT_TO_APPLY_ONLINE, BUYER_COUNTRY_ISO_CODE, COMPANY, COMPANY_HOUSE, COMPANIES_HOUSE_NUMBER, ...FIELD_IDS },
+  ELIGIBILITY: { ACCOUNT_TO_APPLY_ONLINE, BUYER_COUNTRY_ISO_CODE, COMPANY, COMPANIES_HOUSE, COMPANIES_HOUSE_NUMBER, ...FIELD_IDS },
 } = INSURANCE_FIELD_IDS;
 
 describe('server/helpers/required-fields/eligibility', () => {
