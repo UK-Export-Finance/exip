@@ -75,7 +75,7 @@ on:
 env:
   PRODUCT: exip
   ENVIRONMENT: infrastructure
-  TIMEZONE: '${{ vars.TIMEZONE }}'
+  TIMEZONE: "${{ vars.TIMEZONE }}"
   # Deployment environment target i.e., `development`, `staging`, `production`
   TARGET: ${{ vars.ENVIRONMENT }}
 
@@ -264,7 +264,6 @@ jobs:
             --https-only true \
             --tags ${{ env.TAGS }}
 
-
   # 3. Security
   security:
     name: Security 🔑
@@ -327,9 +326,37 @@ jobs:
         with:
           inlineScript: |
             az network private-dns zone create \
-            --name dns-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --name ${{ secrets.PRIVATE_DNS_ZONE_NAME }} \
             --tags ${{ env.TAGS }}
 
+      - name: DNS VNET ➕
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az network private-dns link vnet create \
+            --zone-name ${{ secrets.PRIVATE_DNS_ZONE_NAME }} \
+            --name dns-vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --virtual-network vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --registration-enabled false \
+            --tags ${{ env.TAGS }
+
+      - name: DNS Records 📝
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            #UI
+            az network private-endpoint dns-zone-group create \
+            --endpoint-name private-endpoint-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --name ${{ env.PRODUCT }} \
+            --private-dns-zone ${{ secrets.PRIVATE_DNS_ZONE_NAME }} \
+            --zone-name webapp
+
+            #API
+            az network private-endpoint dns-zone-group create \
+            --endpoint-name private-endpoint-api-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --name ${{ env.PRODUCT }} \
+            --private-dns-zone ${{ secrets.PRIVATE_DNS_ZONE_NAME }} \
+            --zone-name webapp
 
   # 4. WebApp configuration
   webapp:
