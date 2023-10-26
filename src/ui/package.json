@@ -31,7 +31,7 @@
     "@types/google-libphonenumber": "^7.4.29",
     "@types/is-url": "^1.2.31",
     "@types/morgan": "^1.9.7",
-    "@types/node": "^20.8.7",
+    "@types/node": "^20.8.9",
     "@types/nunjucks": "^3.2.5",
     "accessible-autocomplete": "^2.0.4",
     "apollo-cache-inmemory": "^1.6.6",
