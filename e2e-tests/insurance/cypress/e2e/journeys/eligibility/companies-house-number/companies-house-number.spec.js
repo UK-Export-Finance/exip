@@ -5,7 +5,7 @@ import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER;
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.HAS_COMPANIES_HOUSE_NUMBER;
 
 const {
   ELIGIBILITY: { HAS_COMPANIES_HOUSE_NUMBER: FIELD_ID },

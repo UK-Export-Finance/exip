@@ -52,7 +52,7 @@ export const get = (req: Request, res: Response) =>
     }),
     userName: getUserNameFromSession(req.session.user),
     ...PAGE_VARIABLES,
-    submittedValues: req.session.submittedData.insuranceEligibility,
+    submittedValues: req.session.submittedData.insuranceEligibility?.company || {},
   });
 
 /**

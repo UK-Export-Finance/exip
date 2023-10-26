@@ -9,7 +9,7 @@ const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
 const {
   START,
-  ELIGIBILITY: { BUYER_COUNTRY, COMPANIES_HOUSE_NUMBER, INSURED_AMOUNT },
+  ELIGIBILITY: { BUYER_COUNTRY, COMPANY_DETAILS, INSURED_AMOUNT },
 } = INSURANCE_ROUTES;
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
@@ -36,7 +36,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: BUYER_COUNTRY,
-      backLink: COMPANIES_HOUSE_NUMBER,
+      backLink: COMPANY_DETAILS,
       assertAuthenticatedHeader: false,
       lightHouseThresholds: {
         performance: 70,

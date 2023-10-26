@@ -77,7 +77,27 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         ...PAGE_VARIABLES,
-        submittedValues: req.session.submittedData.insuranceEligibility,
+        submittedValues: {},
+      });
+    });
+
+    describe('when req.session.submittedData.insuranceEligibility has a populated company object', () => {
+      it('should render template with insuranceEligibility.company as submittedValues', () => {
+        req.session.submittedData.insuranceEligibility = {
+          company: {},
+        };
+
+        get(req, res);
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+          }),
+          userName: getUserNameFromSession(req.session.user),
+          ...PAGE_VARIABLES,
+          submittedValues: req.session.submittedData.insuranceEligibility.company,
+        });
       });
     });
   });
