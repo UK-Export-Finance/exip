@@ -7,7 +7,7 @@ import {
   completeAndSubmitTellUsAboutYourSinglePolicyForm,
 } from './forms';
 
-export default () => {
+const submitAnswersHappyPathSinglePolicy = () => {
   completeAndSubmitBuyerCountryForm();
   completeAndSubmitBuyerBodyForm();
   completeAndSubmitExporterLocationForm();
@@ -15,3 +15,5 @@ export default () => {
   completeAndSubmitPolicyTypeSingleForm();
   completeAndSubmitTellUsAboutYourSinglePolicyForm();
 };
+
+export default submitAnswersHappyPathSinglePolicy;

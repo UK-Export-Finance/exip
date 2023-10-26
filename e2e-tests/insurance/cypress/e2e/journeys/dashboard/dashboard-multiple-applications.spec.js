@@ -39,7 +39,7 @@ context('Insurance - Dashboard - new application', () => {
     before(() => {
       dashboardPage.startNewApplicationButton().click();
 
-      cy.submitInsuranceEligibilityAnswersFromBuyerCountryHappyPath();
+      cy.submitInsuranceEligibilityAnswersFromExporterLocationHappyPath();
 
       // get the reference number and check we're on the "all sections" and not the "do you have an account" page
       cy.getReferenceNumber().then((refNumber) => {

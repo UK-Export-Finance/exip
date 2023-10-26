@@ -1,8 +1,7 @@
-import { backLink, countryInput, submitButton } from '../../../../../../pages/shared';
+import { countryInput, submitButton } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { FIELD_IDS } from '../../../../../../constants';
-import { PAGES, LINKS } from '../../../../../../content-strings';
-import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../../commands/insurance/eligibility/forms';
+import { PAGES } from '../../../../../../content-strings';
 import { COUNTRY_SUPPORTED_ONLINE } from '../../../../../../fixtures/countries';
 import checkAutocompleteInput from '../../../../../../commands/shared-commands/assertions/check-autocomplete-input';
 
@@ -10,7 +9,7 @@ const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
 const {
   START,
-  ELIGIBILITY: { BUYER_COUNTRY, CHECK_IF_ELIGIBLE, EXPORTER_LOCATION },
+  ELIGIBILITY: { BUYER_COUNTRY, COMPANIES_HOUSE_NUMBER, INSURED_AMOUNT },
 } = INSURANCE_ROUTES;
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
@@ -21,8 +20,10 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
   beforeEach(() => {
     cy.navigateToUrl(START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
 
     const expectedUrl = `${baseUrl}${BUYER_COUNTRY}`;
 
@@ -33,7 +34,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: BUYER_COUNTRY,
-      backLink: CHECK_IF_ELIGIBLE,
+      backLink: COMPANIES_HOUSE_NUMBER,
       assertAuthenticatedHeader: false,
       lightHouseThresholds: {
         performance: 70,
@@ -81,16 +82,6 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
         cy.checkBuyerCountryValidationErrors();
       });
 
-      it('renders a back link with correct url', () => {
-        const expectedHref = `${Cypress.config('baseUrl')}${BUYER_COUNTRY}`;
-
-        cy.checkLink(
-          backLink(),
-          expectedHref,
-          LINKS.BACK,
-        );
-      });
-
       it('should focus on input when clicking summary error message', () => {
         cy.checkBuyerCountryFocusAfterSummaryErrorClick();
       });
@@ -106,8 +97,8 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
         submitButton().click();
       });
 
-      it(`should redirect to ${EXPORTER_LOCATION}`, () => {
-        const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;
+      it(`should redirect to ${INSURED_AMOUNT}`, () => {
+        const expectedUrl = `${baseUrl}${INSURED_AMOUNT}`;
 
         cy.assertUrl(expectedUrl);
       });

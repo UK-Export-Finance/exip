@@ -1,18 +1,18 @@
 import { submitButton, needToStartAgainPage } from '../../../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../commands/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.NEED_TO_START_AGAIN_PAGE;
 
 const {
   START,
-  ELIGIBILITY: { BUYER_COUNTRY, PRE_CREDIT_PERIOD, NEED_TO_START_AGAIN },
+  ELIGIBILITY: { BUYER_COUNTRY, EXPORTER_LOCATION, NEED_TO_START_AGAIN },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
 const buyerCountryUrl = `${baseUrl}${BUYER_COUNTRY}`;
+const exporterLocationUrl = `${baseUrl}${EXPORTER_LOCATION}`;
 
 context('Insurance Eligibility - Need to start again exit page', () => {
   beforeEach(() => {
@@ -20,12 +20,10 @@ context('Insurance Eligibility - Need to start again exit page', () => {
 
     cy.saveSession();
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
 
-    cy.assertUrl(buyerCountryUrl);
-
-    cy.navigateToUrl(PRE_CREDIT_PERIOD);
+    cy.navigateToUrl(buyerCountryUrl);
 
     const expectedUrl = `${baseUrl}${NEED_TO_START_AGAIN}`;
 
@@ -48,10 +46,10 @@ context('Insurance Eligibility - Need to start again exit page', () => {
   });
 
   describe('clicking the submit button', () => {
-    it(`should redirect to ${BUYER_COUNTRY}`, () => {
+    it(`should redirect to ${EXPORTER_LOCATION}`, () => {
       submitButton().click();
 
-      cy.assertUrl(buyerCountryUrl);
+      cy.assertUrl(exporterLocationUrl);
     });
   });
 });

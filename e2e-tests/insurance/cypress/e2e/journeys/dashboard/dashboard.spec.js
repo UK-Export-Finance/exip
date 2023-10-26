@@ -162,7 +162,7 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
     });
 
     describe('`start new application` button', () => {
-      const expectedUrl = ELIGIBILITY.BUYER_COUNTRY;
+      const expectedUrl = ELIGIBILITY.EXPORTER_LOCATION;
 
       beforeEach(() => {
         cy.navigateToUrl(dashboardUrl);
