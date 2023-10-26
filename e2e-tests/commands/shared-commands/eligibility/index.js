@@ -10,11 +10,13 @@ import {
   completeAccountToApplyOnlineForm,
   completeCompanyDetailsForm,
 } from '../../insurance/eligibility/forms';
+import completeAndSubmitCompaniesHouseSearchForm from '../../insurance/complete-and-submit-companies-house-search-form';
 
 Cypress.Commands.add('completeStartForm', completeStartForm);
 Cypress.Commands.add('completeCheckIfEligibleForm', completeCheckIfEligibleForm);
 Cypress.Commands.add('completeExporterLocationForm', completeExporterLocationForm);
 Cypress.Commands.add('completeCompaniesHouseNumberForm', completeCompaniesHouseNumberForm);
+Cypress.Commands.add('completeAndSubmitCompaniesHouseSearchForm', completeAndSubmitCompaniesHouseSearchForm);
 Cypress.Commands.add('completeEligibilityCompanyDetailsForm', completeCompanyDetailsForm);
 Cypress.Commands.add('completeInsuredAmountForm', completeInsuredAmountForm);
 Cypress.Commands.add('completeInsuredPeriodForm', completeInsuredPeriodForm);
