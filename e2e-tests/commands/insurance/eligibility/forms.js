@@ -1,3 +1,4 @@
+import { FIELD_VALUES } from '../../../constants';
 import { yesRadio, noRadio, submitButton } from '../../../pages/shared';
 
 /**
@@ -6,11 +7,11 @@ import { yesRadio, noRadio, submitButton } from '../../../pages/shared';
  * @param {String} Yes or no string
  */
 const selectRadioAndSubmit = (answer) => {
-  if (answer === 'yes') {
+  if (answer === FIELD_VALUES.YES) {
     yesRadio().input().click();
   }
 
-  if (answer === 'no') {
+  if (answer === FIELD_VALUES.NO) {
     noRadio().input().click();
   }
 
@@ -26,23 +27,23 @@ export const completeCheckIfEligibleForm = () => {
 };
 
 export const completeExporterLocationForm = () => {
-  selectRadioAndSubmit('yes');
+  selectRadioAndSubmit(FIELD_VALUES.YES);
 };
 
 export const completeCompaniesHouseNumberForm = () => {
-  selectRadioAndSubmit('yes');
+  selectRadioAndSubmit(FIELD_VALUES.YES);
 };
 
 export const completeInsuredAmountForm = () => {
-  selectRadioAndSubmit('no');
+  selectRadioAndSubmit(FIELD_VALUES.NO);
 };
 
 export const completeInsuredPeriodForm = () => {
-  selectRadioAndSubmit('no');
+  selectRadioAndSubmit(FIELD_VALUES.NO);
 };
 
 export const completeUkGoodsAndServicesForm = () => {
-  selectRadioAndSubmit('yes');
+  selectRadioAndSubmit(FIELD_VALUES.YES);
 };
 
 export const completeEligibleToApplyOnlineForm = () => {
@@ -50,5 +51,5 @@ export const completeEligibleToApplyOnlineForm = () => {
 };
 
 export const completeAccountToApplyOnlineForm = () => {
-  selectRadioAndSubmit('yes');
+  selectRadioAndSubmit(FIELD_VALUES.YES);
 };
