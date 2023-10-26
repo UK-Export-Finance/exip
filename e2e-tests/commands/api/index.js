@@ -67,13 +67,6 @@ const queryStrings = {
       }
     }
   `,
-  updateCompanyAndCompanyAddress: () => gql`
-    mutation updateCompanyAndCompanyAddress($companyId: ID!, $companyAddressId: ID!, $data: CompanyAndCompanyAddressInput!) {
-      updateCompanyAndCompanyAddress(companyId: $companyId, companyAddressId: $companyAddressId, data: $data) {
-        id
-      }
-    }
-  `,
   addAndGetOTP: () => gql`
     mutation addAndGetOTP($email: String!) {
       addAndGetOTP(email: $email) {
@@ -300,34 +293,6 @@ const updateAccount = async (id, updateObj) => {
       },
       context: APOLLO_CONTEXT,
     }).then((response) => response.data.updateAccount);
-
-    return responseBody;
-  } catch (err) {
-    console.error(err);
-
-    throw new Error('Updating account', { err });
-  }
-};
-
-/**
- * updateCompanyAndCompanyAddress
- * Update an company and the companies address
- * @param {String} Company ID
- * @param {String} Company address ID
- * @param {String} Company address ID
- * @returns {Object} Updated company and company address
- */
-const updateCompanyAndCompanyAddress = async (companyId, companyAddressId, updateObj) => {
-  try {
-    const responseBody = await apollo.query({
-      query: queryStrings.updateCompanyAndCompanyAddress(),
-      variables: {
-        companyId,
-        companyAddressId,
-        data: updateObj,
-      },
-      context: APOLLO_CONTEXT,
-    }).then((response) => response.data.updateCompanyAndCompanyAddress);
 
     return responseBody;
   } catch (err) {
@@ -595,7 +560,6 @@ const api = {
   createApplications,
   getAccountByEmail,
   updateAccount,
-  updateCompanyAndCompanyAddress,
   deleteAnAccount,
   addAndGetOTP,
   getAccountPasswordResetToken,

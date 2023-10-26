@@ -295,6 +295,7 @@ var DEFAULT_RESOLVERS = [
   "updateBroker",
   "updateBusiness",
   "updateBuyer",
+  "updateCompany",
   "updateDeclaration",
   "updatePolicy",
   "updatePolicyContact",
@@ -331,7 +332,6 @@ var CUSTOM_RESOLVERS = [
   "deleteApplicationByReferenceNumber",
   "getCompaniesHouseInformation",
   "submitApplication",
-  "updateCompanyAndCompanyAddress",
   // feedback
   "createFeedbackAndSendEmail",
   "getApimCisCountries"
@@ -1562,33 +1562,6 @@ var typeDefs = `
     premises: String
   }
 
-  type CompanyAndCompanyAddress {
-    id: ID
-    registeredOfficeAddress: CompanyAddress
-    companyName: String
-    companyNumber: String
-    dateOfCreation: DateTime
-    hasDifferentTradingAddress: Boolean
-    hasDifferentTradingName: Boolean
-    companyWebsite: String
-    phoneNumber: String
-  }
-
-  input CompanyAndCompanyAddressInput {
-    address: CompanyAddressInput
-    sicCodes: [String]
-    industrySectorNames: [String]
-    companyName: String
-    companyNumber: String
-    dateOfCreation: DateTime
-    hasDifferentTradingAddress: Boolean
-    hasDifferentTradingName: Boolean
-    companyWebsite: String
-    phoneNumber: String
-    financialYearEndDate: DateTime
-    oldSicCodes: [OldSicCodes]
-  }
-
   input CompanyInput {
     companyName: String
     companyNumber: String
@@ -1774,13 +1747,6 @@ var typeDefs = `
       password: String!
       hasBeenUsedBefore: Boolean
     ): AccountPasswordResetResponse
-
-    """ update company and company address """
-    updateCompanyAndCompanyAddress(
-      companyId: ID!
-      companyAddressId: ID!
-      data: CompanyAndCompanyAddressInput!
-    ): CompanyAndCompanyAddress
 
     """ delete an application by reference number """
     deleteApplicationByReferenceNumber(
@@ -3368,43 +3334,6 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 };
 var delete_application_by_reference_number_default = deleteApplicationByReferenceNumber;
 
-// custom-resolvers/mutations/update-company-and-company-address/index.ts
-var updateCompanyAndCompanyAddress = async (root, variables, context) => {
-  try {
-    console.info("Updating application company and company address for %s", variables.companyId);
-    const { address, sicCodes, industrySectorNames: industrySectorNames2, oldSicCodes, ...company } = variables.data;
-    if (company?.companyNumber && !company?.financialYearEndDate) {
-      company.financialYearEndDate = null;
-    }
-    const updatedCompany = await context.db.Company.updateOne({
-      where: { id: variables.companyId },
-      data: company
-    });
-    await context.db.CompanyAddress.updateOne({
-      where: { id: variables.companyAddressId },
-      data: address
-    });
-    const mappedSicCodes = map_sic_codes_default(updatedCompany, sicCodes, industrySectorNames2);
-    if (company && oldSicCodes && oldSicCodes.length) {
-      await context.db.CompanySicCode.deleteMany({
-        where: oldSicCodes
-      });
-    }
-    if (mappedSicCodes?.length) {
-      await context.db.CompanySicCode.createMany({
-        data: mappedSicCodes
-      });
-    }
-    return {
-      id: variables.companyId
-    };
-  } catch (err) {
-    console.error("Error updating application - company and company address %O", err);
-    throw new Error(`Updating application - company and company address ${err}`);
-  }
-};
-var update_company_and_company_address_default = updateCompanyAndCompanyAddress;
-
 // custom-resolvers/mutations/submit-application/index.ts
 var import_date_fns8 = require("date-fns");
 
@@ -4943,7 +4872,6 @@ var customResolvers = {
     sendEmailReactivateAccountLink: send_email_reactivate_account_link_default,
     createAnApplication: create_an_application_default,
     deleteApplicationByReferenceNumber: delete_application_by_reference_number_default,
-    updateCompanyAndCompanyAddress: update_company_and_company_address_default,
     submitApplication: submit_application_default,
     createFeedbackAndSendEmail: create_feedback_default,
     verifyAccountReactivationToken: verify_account_reactivation_token_default

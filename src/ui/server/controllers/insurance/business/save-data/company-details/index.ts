@@ -20,11 +20,10 @@ const companyDetails = async (application: Application, formBody: RequestBody, e
   const sanitisedData = sanitiseData(dataToSave);
 
   const companyId = application.company?.id;
-  const companyAddressId = application.company?.registeredOfficeAddress?.id;
 
   try {
     // send the form data to the API for database update.
-    const saveResponse = await api.keystone.application.update.company(companyId, companyAddressId, sanitisedData);
+    const saveResponse = await api.keystone.application.update.company(companyId, sanitisedData);
     return saveResponse;
   } catch (err) {
     throw new Error("Updating application's companyDetails");

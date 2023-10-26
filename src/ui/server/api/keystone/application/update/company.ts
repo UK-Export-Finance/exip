@@ -9,13 +9,12 @@ import { ApolloResponse } from '../../../../../types';
  * @param {Object} Company update
  * @returns {Object} Updated company
  */
-const updateCompany = async (companyId: string, companyAddressId: string, update: object) => {
+const updateCompany = async (id: string, update: object) => {
   try {
     console.info('Updating application company');
 
     const variables = {
-      companyId,
-      companyAddressId,
+      where: { id },
       data: update,
     };
 
@@ -29,11 +28,12 @@ const updateCompany = async (companyId: string, companyAddressId: string, update
       console.error('GraphQL network error updating application company %O', response.networkError.result.errors);
     }
 
-    if (response?.data?.updateCompanyAndCompanyAddress) {
-      return response.data.updateCompanyAndCompanyAddress;
+    if (response?.data?.updateCompany) {
+      return response.data.updateCompany;
     }
 
     console.error('Error with GraphQL updateApplicationCompanyMutation %O', response);
+
     throw new Error('Updating application company');
   } catch (err) {
     console.error('Error updating application company %O', err);
