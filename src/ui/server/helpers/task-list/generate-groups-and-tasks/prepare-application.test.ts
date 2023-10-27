@@ -46,7 +46,7 @@ describe('server/helpers/task-list/prepare-application', () => {
         id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
         fields: businessRequiredFields(isUsingBroker),
         dependencies: expectedDependencies,
-      }; 
+      };
 
       const YOUR_BUYER = {
         href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_OR_ORGANISATION}`,
