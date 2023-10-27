@@ -33,6 +33,7 @@ const generateGroupsAndTasks = (
     ...groups,
     {
       title: PREPARE_APPLICATION.HEADING,
+      hint: PREPARE_APPLICATION.HINT,
       id: GROUP_IDS.PREPARE_APPLICATION,
       tasks: prepareApplicationTasks(referenceNumber, groups, policyType, isUsingBroker),
     },
