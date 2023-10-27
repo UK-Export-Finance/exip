@@ -35,6 +35,9 @@ const completePrepareYourApplicationSectionSingle = ({
   submitButton().click();
 
   cy.completeAndSubmitCompanyDetails();
+
+  cy.url().should('include', '/your-business/nature-of-business');
+
   cy.completeAndSubmitNatureOfYourBusiness();
   cy.completeAndSubmitTurnoverForm();
   cy.completeAndSubmitBrokerForm({ usingBroker });
