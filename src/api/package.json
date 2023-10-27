@@ -1,7 +1,7 @@
 {
   "name": "exip-api",
   "version": "1.0.0",
-  "description": "Export Insurance Policies API",
+  "description": "TEMP - debugging GHA - Export Insurance Policies API",
   "homepage": "https://github.com/UK-Export-Finance/exip#readme",
   "bugs": {
     "url": "https://github.com/UK-Export-Finance/exip/issues"
