@@ -422,7 +422,7 @@ jobs:
 
       - name: Setting 🧱
         env:
-          API_URL: $(az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv)
+          API_URL: az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv
         run: |
           # Set a web app's settings
 
@@ -444,6 +444,7 @@ jobs:
           COMPANIES_HOUSE_API_URL='${{ secrets.COMPANIES_HOUSE_API_URL }}' \
           COMPANIES_HOUSE_API_KEY='${{ secrets.COMPANIES_HOUSE_API_KEY }}' \
           API_URL='https://${{ env.API_URL }}/api/graphql' \
+          API_KEY='${{ secrets.API_KEY }}' \
           APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
           APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
           APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}'
