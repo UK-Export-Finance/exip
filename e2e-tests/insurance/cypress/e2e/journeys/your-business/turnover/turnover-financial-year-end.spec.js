@@ -18,10 +18,7 @@ const {
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE_NUMBER,
-    TURNOVER,
-  },
+  EXPORTER_BUSINESS: { TURNOVER },
 } = INSURANCE_ROUTES;
 
 const {
@@ -84,12 +81,13 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} does not ex
     cy.clearCookies();
     Cypress.session.clearAllSavedSessions();
 
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({
+      companyNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE,
+    }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       task.link().click();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companyNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE });
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitNatureOfYourBusiness();
 
@@ -107,60 +105,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} does not ex
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should not display ${FINANCIAL_YEAR_END_DATE} section`, () => {
-    field.input().should('not.exist');
-    field.hint().should('not.exist');
-    field.label().should('not.exist');
-  });
-});
-
-context(`Insurance - Your business - Turnover page - submitting a company with ${fieldId} and resubmitting with company without ${fieldId}`, () => {
-  let referenceNumber;
-
-  before(() => {
-    cy.clearCookies();
-    Cypress.session.clearAllSavedSessions();
-
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
-
-      task.link().click();
-
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
-      cy.completeAndSubmitCompanyDetails();
-      cy.completeAndSubmitNatureOfYourBusiness();
-
-      const url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
-
-      cy.assertUrl(url);
-    });
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-  });
-
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
-
-  it(`should display ${FINANCIAL_YEAR_END_DATE} section on company with ${FINANCIAL_YEAR_END_DATE}`, () => {
-    cy.checkText(turnoverPage[fieldId](), expectedValue);
-
-    cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
-
-    field.hint().contains(FIELDS.TURNOVER[fieldId].HINT);
-  });
-
-  it(`should not display ${FINANCIAL_YEAR_END_DATE} section when resubmitting companies house number without companies house number`, () => {
-    const url = `${baseUrl}${ROOT}/${referenceNumber}${COMPANIES_HOUSE_NUMBER}`;
-
-    cy.navigateToUrl(url);
-
-    cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companyNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE });
-    cy.completeAndSubmitCompanyDetails();
-    cy.completeAndSubmitNatureOfYourBusiness();
-
+  it(`should NOT display ${FINANCIAL_YEAR_END_DATE} section`, () => {
     field.input().should('not.exist');
     field.hint().should('not.exist');
     field.label().should('not.exist');

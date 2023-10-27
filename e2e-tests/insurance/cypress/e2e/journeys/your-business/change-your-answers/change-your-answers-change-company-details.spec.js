@@ -27,6 +27,7 @@ const {
 const {
   ROOT,
   EXPORTER_BUSINESS: {
+    COMPANY_DETAILS_ROOT,
     COMPANY_DETAILS_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
@@ -71,12 +72,12 @@ context('Insurance - Your business - Change your answers - Company details - As 
     const fieldId = TRADING_NAME;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
+      it(`should redirect to ${COMPANY_DETAILS_ROOT}`, () => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_DETAILS_CHANGE, fieldId);
+        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_DETAILS_ROOT, fieldId);
       });
     });
 
