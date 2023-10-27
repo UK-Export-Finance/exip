@@ -17,6 +17,7 @@ const {
   },
   EXPORTER_BUSINESS: {
     COMPANY_DETAILS_CHECK_AND_CHANGE,
+    COMPANY_DETAILS_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
@@ -84,15 +85,16 @@ context('Insurance - Check your answers - Company details - Your business - Summ
   describe(TRADING_NAME, () => {
     const fieldId = TRADING_NAME;
 
-    let fieldVariables = getFieldVariables(fieldId, referenceNumber);
+    let fieldVariables = getFieldVariables(fieldId, referenceNumber, COMPANY_DETAILS_CHANGE);
 
     describe('when clicking the `change` link', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
       });
 
-      it(`should redirect to ${COMPANY_DETAILS_CHECK_AND_CHANGE}`, () => {
+      it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
         cy.navigateToUrl(url);
+
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
         cy.checkChangeLinkUrl(fieldVariables, referenceNumber, fieldId);
