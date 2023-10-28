@@ -147,6 +147,20 @@ jobs:
             --sku ${{ vars.APP_SERVICE_PLAN }} \
             --tags ${{ env.TAGS }}
 
+      - name: Log analytics workspace 📝
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az monitor log-analytics workspace create \
+            --name log-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --ingestion-access Disabled \
+            --query-access Disabled \
+            --quota 0.05 \
+            --retention-time ${{ vars.LOG_RETENTION_DAY }} \
+            --sku ${{ vars.LOG_PLAN }} \
+            --capacity-reservation-level ${{ vars.LOG_CAPACITY_LEVEL }} \
+            --tags ${{ env.TAGS }}
+
       - name: Container registry 📦️
         uses: Azure/cli@v1.0.8
         with:
@@ -155,6 +169,7 @@ jobs:
             --name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }} \
             --sku Standard \
             --admin-enabled true \
+            --workspace log-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --tags ${{ env.TAGS }}
 
       - name: Virtual network 🧵
@@ -264,6 +279,34 @@ jobs:
             --https-only true \
             --tags ${{ env.TAGS }}
 
+      - name: Front Door 🚪
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # Profile
+            az afd profile create \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --sku ${{ secrets.AZURE_FRONT_DOOR_SKU }} \
+            --tags ${{ env.TAGS }}
+
+            # Endpoint
+            az afd endpoint create \
+            --endpoint-name ${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --tags ${{ env.TAGS }}
+
+            # Origin Group
+            az afd origin-group create \
+            --origin-group-name ui \
+            --probe-path ${{ vars.HEALTH_PROBE_PATH }} \
+            --probe-protocol ${{ vars.HEALTH_PROBE_PROTOCOL }} \
+            --probe-request-type ${{ vars.HEALTH_PROBE_HTTP_METHOD }} \
+            --additional-latency-in-milliseconds ${{ vars.HEALTH_PROBE_LATENCY }} \
+            --sample-size ${{ vars.LOAD_BALANCING_SAMPLE_SIZE }} \
+            --successful-samples-required ${{ vars.LOAD_BALANCING_SAMPLES }} \
+            --probe-interval-in-seconds ${{ vars.LOAD_BALANCING_INTERVAL }} \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+
   # 3. Security
   security:
     name: Security 🔑
@@ -357,6 +400,40 @@ jobs:
             --name ${{ env.PRODUCT }} \
             --private-dns-zone ${{ secrets.PRIVATE_DNS_ZONE_NAME }} \
             --zone-name webapp
+
+      - name: Front Door 🚪
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # Origin
+            az afd origin create \
+            --origin-name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --host-name $(az webapp show --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv) \
+            --origin-host-header $(az webapp show --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv) \
+            --priority 1 \
+            --weight 1000 \
+            --enable-private-link true \
+            --private-link-location ${{ vars.REGION }} \
+            --private-link-resource $(az webapp show --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) \
+            --private-link-request-message '${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}' \
+            --private-link-sub-resource-type $(az network private-link-resource list --id $(az webapp show --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) --query [].name -o tsv) \
+            --origin-group-name ui \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --enabled-state Enabled
+
+            # Route
+            az afd route create \
+            --route-name default \
+            --forwarding-protocol HttpsOnly \
+            --https-redirect Enabled \
+            --supported-protocols Http Https \
+            --enable-caching false \
+            --link-to-default-domain Enabled \
+            --origin-path ${{ vars.HEALTH_PROBE_PATH }} \
+            --origin-group ui \
+            --endpoint-name ${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --enabled-state Enabled
 
   # 4. WebApp configuration
   webapp:
