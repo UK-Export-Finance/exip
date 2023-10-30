@@ -434,7 +434,6 @@ jobs:
             az network front-door waf-policy managed-rules add \
             --version 2.1 \
             --type Microsoft_DefaultRuleSet \
-            --action Block \
             --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}
 
             # Managed rule - Bot
@@ -469,7 +468,7 @@ jobs:
             --name HTTPGetRateLimitRule \
             --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}
 
-      - name: WAF - Development 🔥
+      - name: VPN 🧱
         if: contains('["dev", "staging"]', env.TARGET)
         uses: Azure/cli@v1.0.8
         with:
