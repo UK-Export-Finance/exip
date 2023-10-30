@@ -1,5 +1,7 @@
 import { ELIGIBILITY } from '../../../../constants';
 import formatCurrency from '../../../../helpers/format-currency';
+import { ACTIONS } from '../../../actions';
+import { LINKS } from '../../../links';
 
 export const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP);
 
@@ -22,6 +24,29 @@ export const HAS_COMPANIES_HOUSE_NUMBER = {
 
 export const COMPANIES_HOUSE_NUMBER = {
   PAGE_TITLE: 'Enter your Companies House number',
+};
+
+export const NO_COMPANIES_HOUSE_NUMBER = {
+  PAGE_TITLE: 'You cannot apply for credit insurance',
+  BODY:
+    "This is because you do not have a UK Companies House registration number for a company that's actively trading.",
+  ACTIONS: {
+    ...ACTIONS,
+    UPDATE_COMPANY_DETAILS: {
+      TEXT: 'update your company details on',
+      LINK: {
+        TEXT: 'Companies House',
+        HREF: LINKS.EXTERNAL.COMPANIES_HOUSE,
+      },
+    },
+    CONTACT_EFM: {
+      LINK: {
+        TEXT: 'talk to your nearest export finance manager',
+        HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
+      },
+      TEXT: 'to find out more about your options',
+    },
+  },
 };
 
 export const COMPANIES_HOUSE_UNAVAILABLE = {

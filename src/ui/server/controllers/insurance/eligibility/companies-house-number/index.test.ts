@@ -82,17 +82,10 @@ describe('controllers/insurance/eligibility/companies-house-number', () => {
         };
       });
 
-      it(`should redirect to ${INSURANCE_ROUTES.APPLY_OFFLINE}`, () => {
+      it(`should redirect to ${INSURANCE_ROUTES.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(INSURANCE_ROUTES.APPLY_OFFLINE);
-      });
-
-      it('should add exitReason to req.flash', () => {
-        post(req, res);
-
-        const expectedReason = PAGES.INSURANCE.APPLY_OFFLINE.REASON.NO_COMPANIES_HOUSE_NUMBER;
-        expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
+        expect(res.redirect).toHaveBeenCalledWith(INSURANCE_ROUTES.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER);
       });
     });
 

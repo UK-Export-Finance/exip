@@ -16,6 +16,24 @@ const UK_GOODS_OR_SERVICES = {
   PAGE_TITLE: 'Is at least 20% of your export contract value made up from UK goods or services?',
 };
 
+const ACTIONS = {
+  INTRO: 'You can:',
+  ELIGIBILITY: {
+    TEXT: 'read about',
+    LINK: {
+      TEXT: 'eligibility',
+      HREF: LINKS.EXTERNAL.GUIDANCE,
+    },
+  },
+  CONTACT_APPROVED_BROKER: {
+    LINK: {
+      TEXT: 'contact an approved broker',
+      HREF: LINKS.EXTERNAL.APPROVED_BROKER_LIST,
+    },
+    TEXT: 'who may be able to help you get insurance from the private sector, if you`ve not tried already',
+  },
+};
+
 const CANNOT_APPLY = {
   PAGE_TITLE: 'You cannot apply for UKEF export insurance',
   REASON: {
@@ -25,23 +43,7 @@ const CANNOT_APPLY = {
     UNSUPPORTED_BUYER_COUNTRY_2: 'which we cannot provide cover for.',
     NOT_ENOUGH_UK_GOODS_OR_SERVICES: 'your export contract value is not made up from at least 20% UK goods or services.',
   },
-  ACTIONS: {
-    INTRO: 'You can:',
-    ELIGIBILITY: {
-      TEXT: 'read about',
-      LINK: {
-        TEXT: 'eligibility',
-        HREF: LINKS.EXTERNAL.GUIDANCE,
-      },
-    },
-    CONTACT_APPROVED_BROKER: {
-      LINK: {
-        TEXT: 'contact an approved broker',
-        HREF: LINKS.EXTERNAL.APPROVED_BROKER_LIST,
-      },
-      TEXT: 'who may be able to help you get insurance from the private sector, if you`ve not tried already',
-    },
-  },
+  ACTIONS,
 };
 
 const ACCESSIBILITY_STATEMENT_PAGE = {

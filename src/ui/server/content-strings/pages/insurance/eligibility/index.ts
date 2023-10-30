@@ -1,5 +1,7 @@
 import { GBP_CURRENCY_CODE, ELIGIBILITY } from '../../../../constants';
 import formatCurrency from '../../../../helpers/format-currency';
+import { ACTIONS } from '../../../actions';
+import { LINKS } from '../../../links';
 
 const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP, GBP_CURRENCY_CODE, 0);
 
@@ -22,6 +24,28 @@ const HAS_COMPANIES_HOUSE_NUMBER = {
 
 const COMPANIES_HOUSE_NUMBER = {
   PAGE_TITLE: 'Enter your Companies House number',
+};
+
+const NO_COMPANIES_HOUSE_NUMBER = {
+  PAGE_TITLE: 'You cannot apply for credit insurance',
+  BODY: "This is because you do not have a UK Companies House registration number for a company that's actively trading.",
+  ACTIONS: {
+    ...ACTIONS,
+    UPDATE_COMPANY_DETAILS: {
+      TEXT: 'update your company details on',
+      LINK: {
+        TEXT: 'Companies House',
+        HREF: LINKS.EXTERNAL.COMPANIES_HOUSE,
+      },
+    },
+    CONTACT_EFM: {
+      LINK: {
+        TEXT: 'talk to your nearest export finance manager',
+        HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
+      },
+      TEXT: 'to find out more about your options',
+    },
+  },
 };
 
 const COMPANIES_HOUSE_UNAVAILABLE = {
@@ -56,6 +80,7 @@ export default {
   INSURED_PERIOD,
   HAS_COMPANIES_HOUSE_NUMBER,
   COMPANIES_HOUSE_NUMBER,
+  NO_COMPANIES_HOUSE_NUMBER,
   COMPANIES_HOUSE_UNAVAILABLE,
   COMPANY_DETAILS,
   ELIGIBLE_TO_APPLY_ONLINE,
