@@ -1,5 +1,6 @@
 import QUOTE_PAGES from './quote';
 import INSURANCE_PAGES from './insurance';
+import { ACTIONS } from '../actions';
 import { LINKS } from '../links';
 import { CONTACT_DETAILS, ROUTES } from '../../constants';
 import { CUSTOMER_SERVICE_CONTACT_DETAILS } from '../contact';
@@ -14,24 +15,6 @@ const EXPORTER_LOCATION = {
 
 const UK_GOODS_OR_SERVICES = {
   PAGE_TITLE: 'Is at least 20% of your export contract value made up from UK goods or services?',
-};
-
-const ACTIONS = {
-  INTRO: 'You can:',
-  ELIGIBILITY: {
-    TEXT: 'read about',
-    LINK: {
-      TEXT: 'eligibility',
-      HREF: LINKS.EXTERNAL.GUIDANCE,
-    },
-  },
-  CONTACT_APPROVED_BROKER: {
-    LINK: {
-      TEXT: 'contact an approved broker',
-      HREF: LINKS.EXTERNAL.APPROVED_BROKER_LIST,
-    },
-    TEXT: 'who may be able to help you get insurance from the private sector, if you`ve not tried already',
-  },
 };
 
 const CANNOT_APPLY = {

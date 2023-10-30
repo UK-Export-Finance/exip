@@ -1,5 +1,6 @@
 import { noCompaniesHouseNumberPage } from '../../../../../../pages/insurance/eligibility';
-import { PAGES } from '../../../../../../content-strings';
+import { actions } from '../../../../../../pages/shared';
+import { LINKS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER;
@@ -57,29 +58,19 @@ context('Insurance - Eligibility - You cannot apply for credit insurance page (n
     });
 
     it('should render `eligibility` copy and link', () => {
-      cy.checkText(
-        noCompaniesHouseNumberPage.actions.eligibility(),
-        `${ACTIONS.ELIGIBILITY.TEXT} ${ACTIONS.ELIGIBILITY.LINK.TEXT}`,
-      );
+      cy.checkActionReadAboutEligibility();
+    });
 
-      cy.checkLink(
-        noCompaniesHouseNumberPage.actions.eligibilityLink(),
-        ACTIONS.ELIGIBILITY.LINK.HREF,
-        ACTIONS.ELIGIBILITY.LINK.TEXT,
-      );
+    describe('when clicking `eligibility` link', () => {
+      it(`should redirect to ${LINKS.EXTERNAL.GUIDANCE}`, () => {
+        actions.eligibilityLink().click();
+
+        cy.assertUrl(LINKS.EXTERNAL.GUIDANCE);
+      });
     });
 
     it('should render `contact an approved broker` copy and link', () => {
-      cy.checkText(
-        noCompaniesHouseNumberPage.actions.approvedBroker(),
-        `${ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT} ${ACTIONS.CONTACT_APPROVED_BROKER.TEXT}`,
-      );
-
-      cy.checkLink(
-        noCompaniesHouseNumberPage.actions.approvedBrokerLink(),
-        ACTIONS.CONTACT_APPROVED_BROKER.LINK.HREF,
-        ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT,
-      );
+      cy.checkActionContactApprovedBroker();
     });
 
     it('should render `talk to your nearest EFM` copy and link', () => {
