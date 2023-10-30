@@ -72,7 +72,6 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
-
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
