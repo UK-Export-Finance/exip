@@ -293,7 +293,7 @@ jobs:
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
       - name: Pre-production 💫
-        if: contains('["dev", "staging"]', env.TARGET)
+        if: contains('["development", "staging"]', env.TARGET)
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
@@ -437,11 +437,10 @@ jobs:
             --action Block \
             --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}
 
-            # Managed rule - BOT
+            # Managed rule - Bot
             az network front-door waf-policy managed-rules add \
             --version 1.0 \
             --type Microsoft_BotManagerRuleSet \
-            --action Block \
             --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}
 
             # Associate FD
@@ -471,7 +470,7 @@ jobs:
             --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}
 
       - name: WAF - Development 🔥
-        if: contains('["dev", "staging"]', env.TARGET)
+        if: contains('["development", "staging"]', env.TARGET)
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
@@ -501,7 +500,7 @@ jobs:
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
       - name: Pre-production 💫
-        if: contains('["dev", "staging"]', env.TARGET)
+        if: contains('["development", "staging"]', env.TARGET)
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
@@ -620,7 +619,7 @@ jobs:
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
       - name: Pre-production 💫
-        if: contains('["dev", "staging"]', env.TARGET)
+        if: contains('["development", "staging"]', env.TARGET)
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
