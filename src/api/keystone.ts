@@ -1,10 +1,12 @@
 import 'dotenv/config';
 import { config } from '@keystone-6/core';
+import protect from 'overload-protection';
+import securityHeaders from './middleware/headers/security';
 import checkApiKey from './middleware/headers/check-api-key';
 import rateLimiter from './middleware/rate-limiter';
 import { lists } from './schema';
 import { withAuth, session } from './auth';
-import apolloPlugins from './apollo-plugins';
+import { apolloPlugins, formatGraphQlError } from './apollo';
 import { extendGraphqlSchema } from './custom-schema';
 
 const { NODE_ENV, PORT, DATABASE_URL } = process.env;
@@ -30,6 +32,7 @@ const isProdEnvironment = NODE_ENV === 'production';
  * KeystoneJS configuration
  * This file sets up the following:
  * - Server port
+ * - Custom express config, including overload protection, API key, rate limiter.
  * - Database provider, URL, logging
  * - GraphQL playground and apollo configuration
  * - KeystoneJS admin UI/CMS session configuration
@@ -43,6 +46,8 @@ export default withAuth(
     server: {
       port: Number(PORT),
       extendExpressApp: (app) => {
+        app.use(protect('express'));
+        app.use(securityHeaders);
         app.use(checkApiKey);
 
         if (isProdEnvironment) {
@@ -60,6 +65,7 @@ export default withAuth(
       apolloConfig: {
         introspection: isDevEnvironment,
         plugins: apolloPlugins,
+        formatError: formatGraphQlError,
       },
     },
     lists,

@@ -24,8 +24,6 @@ const applicationQuery = gql`
           hasMinimumUkGoodsOrServices
           validExporterLocation
           hasCompaniesHouseNumber
-          otherPartiesInvolved
-          paidByLetterOfCredit
           wantCoverOverMaxAmount
           wantCoverOverMaxPeriod
         }

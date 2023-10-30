@@ -20,9 +20,6 @@ interface SubmittedDataQuoteEligibility extends SharedEligibility {
 
 interface InsuranceEligibilityCore extends SharedEligibility {
   hasCompaniesHouseNumber?: boolean;
-  otherPartiesInvolved?: boolean;
-  paidByLetterOfCredit?: boolean;
-  needPreCreditPeriodCover?: boolean;
   wantCoverOverMaxAmount?: boolean;
   wantCoverOverMaxPeriod?: boolean;
 }

@@ -292,8 +292,6 @@ model Eligibility {
   hasMinimumUkGoodsOrServices  Boolean       @default(false)
   validExporterLocation        Boolean       @default(false)
   hasCompaniesHouseNumber      Boolean       @default(false)
-  otherPartiesInvolved         Boolean       @default(false)
-  paidByLetterOfCredit         Boolean       @default(false)
   wantCoverOverMaxAmount       Boolean       @default(false)
   wantCoverOverMaxPeriod       Boolean       @default(false)
   from_Application_eligibility Application[] @relation("Application_eligibility")

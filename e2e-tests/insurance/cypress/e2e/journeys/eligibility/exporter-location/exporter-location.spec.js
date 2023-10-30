@@ -5,17 +5,15 @@ import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../../commands/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.EXPORTER_LOCATION;
 
 const {
   START,
   ELIGIBILITY: {
-    BUYER_COUNTRY,
+    CHECK_IF_ELIGIBLE,
     EXPORTER_LOCATION,
-    UK_GOODS_OR_SERVICES,
+    COMPANIES_HOUSE_NUMBER,
   },
 } = INSURANCE_ROUTES;
 
@@ -29,9 +27,8 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
   beforeEach(() => {
     cy.navigateToUrl(START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
-    completeAndSubmitBuyerCountryForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
 
     const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;
 
@@ -42,7 +39,7 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: EXPORTER_LOCATION,
-      backLink: BUYER_COUNTRY,
+      backLink: CHECK_IF_ELIGIBLE,
       assertAuthenticatedHeader: false,
     });
   });
@@ -83,8 +80,8 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
         submitButton().click();
       });
 
-      it(`should redirect to ${UK_GOODS_OR_SERVICES}`, () => {
-        const expectedUrl = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
+      it(`should redirect to ${COMPANIES_HOUSE_NUMBER}`, () => {
+        const expectedUrl = `${baseUrl}${COMPANIES_HOUSE_NUMBER}`;
 
         cy.assertUrl(expectedUrl);
       });

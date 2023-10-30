@@ -58,15 +58,6 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD]: {
         IS_EMPTY: `Select whether you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years`,
       },
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED]: {
-        IS_EMPTY: 'Select whether there are any other parties involved, apart from you and the buyer',
-      },
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT]: {
-        IS_EMPTY: "Select whether you'll be paid by a letter of credit or not",
-      },
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD]: {
-        IS_EMPTY: 'Select whether you need cover for a period before you supply the goods or services to the buyer',
-      },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: {
         IS_EMPTY: 'Select whether you have a UK Companies House registration number or not',
       },

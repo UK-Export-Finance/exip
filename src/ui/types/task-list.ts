@@ -16,6 +16,7 @@ type TaskListTask = {
 
 type TaskListDataGroup = {
   title: string;
+  hint?: string;
   id: string;
   tasks: Array<TaskListDataTask>;
 };

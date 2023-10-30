@@ -1,6 +1,6 @@
 import { queryParams } from '.';
 import { replaceCharactersWithCharacterCode } from '../../helpers/sanitise-data';
-import { mockReq, mockRes } from '../../test-mocks';
+import { mockAccount, mockReq, mockRes } from '../../test-mocks';
 import { Request, Response } from '../../../types';
 
 describe('middleware/query-params', () => {
@@ -53,25 +53,31 @@ describe('middleware/query-params', () => {
     });
   });
 
-  describe('when query params is populated with a multiple allowed params over MAXIMUM_PARAMS', () => {
-    // it('should sanitise and return only the first param', () => {
-    it('should return 400 status', () => {
+  describe('when query params is populated with a both  allowed params (token and ID)', () => {
+    it('should sanitise and return the params', () => {
       req.query = {
-        id: mockId,
         token: mockToken,
+        id: mockAccount.id,
       };
 
       queryParams(req, res, nextSpy);
 
-      expect(statusSpy).toHaveBeenCalledWith(400);
+      const expected = {
+        token: replaceCharactersWithCharacterCode(mockToken),
+        id: replaceCharactersWithCharacterCode(mockAccount.id),
+      };
+
+      expect(req.query).toEqual(expected);
     });
   });
 
-  describe('when query params is populated with a disallowed param', () => {
+  describe('when query params is populated with multiple params over MAXIMUM_PARAMS', () => {
     it('should return 400 status', () => {
       req.query = {
+        id: mockId,
+        token: mockToken,
         // @ts-ignore
-        notAllowed: mockId,
+        notAllowed: 'mock',
       };
 
       queryParams(req, res, nextSpy);

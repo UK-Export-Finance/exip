@@ -1389,8 +1389,6 @@ type Eligibility {
   hasMinimumUkGoodsOrServices: Boolean
   validExporterLocation: Boolean
   hasCompaniesHouseNumber: Boolean
-  otherPartiesInvolved: Boolean
-  paidByLetterOfCredit: Boolean
   wantCoverOverMaxAmount: Boolean
   wantCoverOverMaxPeriod: Boolean
 }
@@ -1409,8 +1407,6 @@ input EligibilityWhereInput {
   hasMinimumUkGoodsOrServices: BooleanFilter
   validExporterLocation: BooleanFilter
   hasCompaniesHouseNumber: BooleanFilter
-  otherPartiesInvolved: BooleanFilter
-  paidByLetterOfCredit: BooleanFilter
   wantCoverOverMaxAmount: BooleanFilter
   wantCoverOverMaxPeriod: BooleanFilter
 }
@@ -1420,8 +1416,6 @@ input EligibilityOrderByInput {
   hasMinimumUkGoodsOrServices: OrderDirection
   validExporterLocation: OrderDirection
   hasCompaniesHouseNumber: OrderDirection
-  otherPartiesInvolved: OrderDirection
-  paidByLetterOfCredit: OrderDirection
   wantCoverOverMaxAmount: OrderDirection
   wantCoverOverMaxPeriod: OrderDirection
 }
@@ -1432,8 +1426,6 @@ input EligibilityUpdateInput {
   hasMinimumUkGoodsOrServices: Boolean
   validExporterLocation: Boolean
   hasCompaniesHouseNumber: Boolean
-  otherPartiesInvolved: Boolean
-  paidByLetterOfCredit: Boolean
   wantCoverOverMaxAmount: Boolean
   wantCoverOverMaxPeriod: Boolean
 }
@@ -1449,8 +1441,6 @@ input EligibilityCreateInput {
   hasMinimumUkGoodsOrServices: Boolean
   validExporterLocation: Boolean
   hasCompaniesHouseNumber: Boolean
-  otherPartiesInvolved: Boolean
-  paidByLetterOfCredit: Boolean
   wantCoverOverMaxAmount: Boolean
   wantCoverOverMaxPeriod: Boolean
 }
@@ -2048,7 +2038,7 @@ type Mutation {
   deleteAnAccount(email: String!): SuccessResponse
 
   """ verify an account's email address """
-  verifyAccountEmailAddress(token: String!): VerifyAccountEmailAddressResponse
+  verifyAccountEmailAddress(token: String!, id: String!): VerifyAccountEmailAddressResponse
 
   """ verify an account's reactivation token """
   verifyAccountReactivationToken(token: String!): VerifyAccountReactivationTokenResponse
@@ -2484,9 +2474,6 @@ type AccountSendEmailReactivateAccountLinkResponse {
 input ApplicationEligibility {
   buyerCountryIsoCode: String!
   hasCompaniesHouseNumber: Boolean!
-  otherPartiesInvolved: Boolean!
-  paidByLetterOfCredit: Boolean!
-  needPreCreditPeriodCover: Boolean!
   wantCoverOverMaxAmount: Boolean!
   wantCoverOverMaxPeriod: Boolean!
   validExporterLocation: Boolean!

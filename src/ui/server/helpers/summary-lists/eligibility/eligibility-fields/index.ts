@@ -10,9 +10,6 @@ const { ELIGIBILITY: FIELD_IDS } = INSURANCE_FIELD_IDS;
 const {
   WANT_COVER_OVER_MAX_AMOUNT,
   WANT_COVER_OVER_MAX_PERIOD,
-  OTHER_PARTIES_INVOLVED,
-  LETTER_OF_CREDIT,
-  PRE_CREDIT_PERIOD,
   COMPANIES_HOUSE_NUMBER,
   BUYER_COUNTRY,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
@@ -66,30 +63,6 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
         renderChangeLink: false,
       },
       mapYesNoField(answers[WANT_COVER_OVER_MAX_PERIOD]),
-    ),
-    fieldGroupItem(
-      {
-        field: getFieldById(FIELDS_ELIGIBILITY, OTHER_PARTIES_INVOLVED),
-        data: answers,
-        renderChangeLink: false,
-      },
-      mapYesNoField(answers[OTHER_PARTIES_INVOLVED]),
-    ),
-    fieldGroupItem(
-      {
-        field: getFieldById(FIELDS_ELIGIBILITY, LETTER_OF_CREDIT),
-        data: answers,
-        renderChangeLink: false,
-      },
-      mapYesNoField(answers[LETTER_OF_CREDIT]),
-    ),
-    fieldGroupItem(
-      {
-        field: getFieldById(FIELDS_ELIGIBILITY, PRE_CREDIT_PERIOD),
-        data: answers,
-        renderChangeLink: false,
-      },
-      mapYesNoField(answers[PRE_CREDIT_PERIOD]),
     ),
     fieldGroupItem(
       {

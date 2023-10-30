@@ -47,6 +47,7 @@ export const generateSimplifiedTaskList = (taskList: TaskListData): Array<TaskLi
     (group) =>
       ({
         title: group.title,
+        hint: group.hint,
         tasks: group.tasks.map((task: TaskListDataTask) => ({
           id: task.id,
           href: task.href,

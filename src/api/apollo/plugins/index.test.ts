@@ -1,7 +1,7 @@
 import { requestDidStart } from '.';
-import { ALLOWED_GRAPHQL_RESOLVERS } from '../constants';
+import { ALLOWED_GRAPHQL_RESOLVERS } from '../../constants';
 
-describe('apollo-plugins/index', () => {
+describe('apollo/plugins/index', () => {
   describe("when a request's operationName is not allowed", () => {
     it('should throw an error', () => {
       const mockRequest = {

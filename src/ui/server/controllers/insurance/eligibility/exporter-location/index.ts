@@ -1,5 +1,6 @@
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { objectHasProperty } from '../../../../helpers/object';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
@@ -16,12 +17,22 @@ export const PAGE_VARIABLES = {
 
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION;
 
-export const get = (req: Request, res: Response) =>
-  res.render(TEMPLATE, {
+export const get = (req: Request, res: Response) => {
+  const { submittedData } = req.session;
+
+  if (!submittedData || !objectHasProperty(submittedData, 'insuranceEligibility')) {
+    req.session.submittedData = {
+      ...req.session.submittedData,
+      insuranceEligibility: {},
+    };
+  }
+
+  return res.render(TEMPLATE, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
     userName: getUserNameFromSession(req.session.user),
     submittedValues: req.session.submittedData.insuranceEligibility,
   });
+};
 
 export const post = (req: Request, res: Response) => {
   const payload = constructPayload(req.body, [FIELD_ID]);
@@ -52,5 +63,5 @@ export const post = (req: Request, res: Response) => {
     insuranceEligibility: updateSubmittedData({ [FIELD_ID]: answer }, req.session.submittedData.insuranceEligibility),
   };
 
-  return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
+  return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER);
 };

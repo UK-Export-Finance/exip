@@ -10,6 +10,7 @@ const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 const { REASON } = CONTENT_STRINGS;
 
 const {
+  START,
   ELIGIBILITY: { BUYER_COUNTRY, CANNOT_APPLY },
 } = INSURANCE_ROUTES;
 
@@ -18,12 +19,15 @@ const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Buyer country page - as an exporter, I want to check if UKEF offer export insurance policy for where my buyer is based - submit unsupported country', () => {
-  const url = `${baseUrl}${BUYER_COUNTRY}`;
-
   beforeEach(() => {
     cy.saveSession();
 
-    cy.navigateToUrl(url);
+    cy.navigateToUrl(START);
+
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
 
     cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_UNSUPPORTRED.name);
 

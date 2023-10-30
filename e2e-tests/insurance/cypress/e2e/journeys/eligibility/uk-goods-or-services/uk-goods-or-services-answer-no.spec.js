@@ -3,7 +3,6 @@ import {
 } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
-import { completeStartForm, completeCheckIfEligibleForm, completeExporterLocationForm } from '../../../../../../commands/insurance/eligibility/forms';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
@@ -12,10 +11,13 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
   beforeEach(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
     completeAndSubmitBuyerCountryForm();
-    completeExporterLocationForm();
+    cy.completeInsuredAmountForm();
+    cy.completeInsuredPeriodForm();
 
     noRadio().input().click();
     submitButton().click();

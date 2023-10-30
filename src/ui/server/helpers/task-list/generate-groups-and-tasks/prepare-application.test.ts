@@ -40,6 +40,22 @@ describe('server/helpers/task-list/prepare-application', () => {
 
       const expectedDependencies = getAllTasksFieldsInAGroup(previousGroups[0]);
 
+      const EXPORTER_BUSINESS = {
+        href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANIES_HOUSE_NUMBER_ROOT}`,
+        title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
+        id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
+        fields: businessRequiredFields(isUsingBroker),
+        dependencies: expectedDependencies,
+      };
+
+      const YOUR_BUYER = {
+        href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_OR_ORGANISATION}`,
+        title: PREPARE_APPLICATION.TASKS.BUYER,
+        id: TASK_IDS.PREPARE_APPLICATION.BUYER,
+        fields: yourBuyerRequiredFields(),
+        dependencies: expectedDependencies,
+      };
+
       const POLICY = {
         href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TYPE_OF_POLICY}`,
         title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY,
@@ -48,23 +64,15 @@ describe('server/helpers/task-list/prepare-application', () => {
         dependencies: expectedDependencies,
       };
 
-      const EXPORTER_BUSINESS = {
-        href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANIES_HOUSE_NUMBER_ROOT}`,
-        title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
-        id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
-        fields: businessRequiredFields(isUsingBroker),
-        dependencies: [...POLICY.dependencies],
+      const YOUR_EXPORT_CONTRACT = {
+        href: '#',
+        title: TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORT_CONTRACT,
+        id: TASK_IDS.PREPARE_APPLICATION.EXPORT_CONTRACT,
+        fields: [],
+        dependencies: expectedDependencies,
       };
 
-      const YOUR_BUYER = {
-        href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_OR_ORGANISATION}`,
-        title: PREPARE_APPLICATION.TASKS.BUYER,
-        id: TASK_IDS.PREPARE_APPLICATION.BUYER,
-        fields: yourBuyerRequiredFields(),
-        dependencies: [...POLICY.dependencies],
-      };
-
-      const expected = [POLICY, EXPORTER_BUSINESS, YOUR_BUYER];
+      const expected = [EXPORTER_BUSINESS, YOUR_BUYER, POLICY, YOUR_EXPORT_CONTRACT];
 
       expect(result).toEqual(expected);
     });

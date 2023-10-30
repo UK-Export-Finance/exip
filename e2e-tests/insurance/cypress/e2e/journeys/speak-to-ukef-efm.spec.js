@@ -2,13 +2,6 @@ import { yesRadio, submitButton } from '../../../../pages/shared';
 import { insurance } from '../../../../pages';
 import { PAGES } from '../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-import {
-  completeStartForm,
-  completeCheckIfEligibleForm,
-  completeExporterLocationForm,
-  completeUkGoodsAndServicesForm,
-  completeInsuredAmountForm,
-} from '../../../../commands/insurance/eligibility/forms';
 import { completeAndSubmitBuyerCountryForm } from '../../../../commands/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.SPEAK_TO_UKEF_EFM;
@@ -26,12 +19,12 @@ context('Insurance - speak to UKEF EFM exit page', () => {
   beforeEach(() => {
     cy.navigateToUrl(START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
     completeAndSubmitBuyerCountryForm();
-    completeExporterLocationForm();
-    completeUkGoodsAndServicesForm();
-    completeInsuredAmountForm();
+    cy.completeInsuredAmountForm();
 
     let expectedUrl = `${baseUrl}${INSURED_PERIOD}`;
     cy.assertUrl(expectedUrl);

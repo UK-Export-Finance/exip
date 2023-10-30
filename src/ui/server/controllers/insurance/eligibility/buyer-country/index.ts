@@ -26,15 +26,6 @@ const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 export const get = async (req: Request, res: Response) => {
   try {
-    const { submittedData } = req.session;
-
-    if (!submittedData || !objectHasProperty(submittedData, 'insuranceEligibility')) {
-      req.session.submittedData = {
-        ...req.session.submittedData,
-        insuranceEligibility: {},
-      };
-    }
-
     const countries = await api.keystone.APIM.getCisCountries();
 
     if (!isPopulatedArray(countries)) {
@@ -114,7 +105,7 @@ export const post = async (req: Request, res: Response) => {
         insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
       };
 
-      return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
+      return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT);
     }
 
     if (country.canApplyOffline) {

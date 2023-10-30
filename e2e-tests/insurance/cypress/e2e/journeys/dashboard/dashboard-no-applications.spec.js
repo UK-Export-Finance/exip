@@ -12,8 +12,9 @@ const {
 
 const CONTENT_STRINGS = PAGES.INSURANCE.DASHBOARD;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Dashboard - no applications', () => {
-  const baseUrl = Cypress.config('baseUrl');
   const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
   let referenceNumber;
@@ -51,17 +52,17 @@ context('Insurance - Dashboard - no applications', () => {
       const selector = dashboardPage.startNewApplicationButton();
 
       const expected = {
-        href: ELIGIBILITY.BUYER_COUNTRY,
+        href: ELIGIBILITY.EXPORTER_LOCATION,
         copy: CONTENT_STRINGS.START_NEW_APPLICATION.TEXT,
       };
 
       cy.checkLink(selector, expected.href, expected.copy);
     });
 
-    it(`should redirect to ${ELIGIBILITY.BUYER_COUNTRY}`, () => {
+    it(`should redirect to ${ELIGIBILITY.EXPORTER_LOCATION}`, () => {
       dashboardPage.startNewApplicationButton().click();
 
-      const expectedUrl = `${baseUrl}${ELIGIBILITY.BUYER_COUNTRY}`;
+      const expectedUrl = `${baseUrl}${ELIGIBILITY.EXPORTER_LOCATION}`;
 
       cy.assertUrl(expectedUrl);
     });

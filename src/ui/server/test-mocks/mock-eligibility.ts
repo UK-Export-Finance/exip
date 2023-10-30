@@ -6,9 +6,6 @@ const mockEligibility = {
   hasMinimumUkGoodsOrServices: true,
   validExporterLocation: true,
   hasCompaniesHouseNumber: true,
-  otherPartiesInvolved: false,
-  paidByLetterOfCredit: false,
-  needPreCreditPeriodCover: false,
   wantCoverOverMaxAmount: false,
   wantCoverOverMaxPeriod: false,
 } as InsuranceEligibility;

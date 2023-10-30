@@ -190,9 +190,6 @@ const typeDefs = `
   input ApplicationEligibility {
     buyerCountryIsoCode: String!
     hasCompaniesHouseNumber: Boolean!
-    otherPartiesInvolved: Boolean!
-    paidByLetterOfCredit: Boolean!
-    needPreCreditPeriodCover: Boolean!
     wantCoverOverMaxAmount: Boolean!
     wantCoverOverMaxPeriod: Boolean!
     validExporterLocation: Boolean!
@@ -243,6 +240,7 @@ const typeDefs = `
     """ verify an account's email address """
     verifyAccountEmailAddress(
       token: String!
+      id: String!
     ): VerifyAccountEmailAddressResponse
 
     """ verify an account's reactivation token """

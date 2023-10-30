@@ -36,7 +36,7 @@ const createAccount = ({
       .then((createdAccount) => {
         const { id: accountId, verificationHash } = createdAccount;
 
-        const verifyAccountUrl = `${urlOrigin}${VERIFY_EMAIL}?token=${verificationHash}`;
+        const verifyAccountUrl = `${urlOrigin}${VERIFY_EMAIL}?token=${verificationHash}&id=${accountId}`;
 
         return { accountId, verifyAccountUrl };
       }));

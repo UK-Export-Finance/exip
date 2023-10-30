@@ -60,8 +60,6 @@ export interface ApplicationDeclaration extends Relationship {
 export interface ApplicationEligibility extends Relationship {
   buyerCountryIsoCode: string;
   hasCompaniesHouseNumber: boolean;
-  otherPartiesInvolved: boolean;
-  paidByLetterOfCredit: boolean;
   needPreCreditPeriodCover: boolean;
   wantCoverOverMaxAmount: boolean;
   wantCoverOverMaxPeriod: boolean;

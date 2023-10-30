@@ -11,7 +11,7 @@ const {
   INSURANCE: {
     INSURANCE_ROOT,
     ALL_SECTIONS,
-    ELIGIBILITY: { BUYER_COUNTRY },
+    ELIGIBILITY: { EXPORTER_LOCATION },
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
@@ -32,7 +32,7 @@ describe('controllers/insurance/check-your-answers/start-new-application', () =>
       const result = pageVariables(mockApplication.referenceNumber);
 
       const expected = {
-        START_NEW_APPLICATION_URL: BUYER_COUNTRY,
+        START_NEW_APPLICATION_URL: EXPORTER_LOCATION,
         RETURN_TO_APPLICATION_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`,
       };
 

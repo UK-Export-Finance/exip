@@ -22,6 +22,8 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE;
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Eligibility - Account to apply online page - I want to confirm that I have an account for UKEF digital service so that I can get guidance on how to sign in to my digital account that I can use for UKEF Export Insurance Applications', () => {
   let url;
 
@@ -30,7 +32,7 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
 
     cy.submitInsuranceEligibilityAnswersHappyPath();
 
-    url = `${Cypress.config('baseUrl')}${ACCOUNT_TO_APPLY_ONLINE}`;
+    url = `${baseUrl}${ACCOUNT_TO_APPLY_ONLINE}`;
 
     cy.assertUrl(url);
   });
@@ -97,7 +99,7 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
         yesRadioInput().click();
         submitButton().click();
 
-        const expected = `${Cypress.config('baseUrl')}${SIGN_IN.ROOT}`;
+        const expected = `${baseUrl}${SIGN_IN.ROOT}`;
         cy.assertUrl(expected);
       });
     });

@@ -5,12 +5,6 @@ import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import {
-  completeStartForm,
-  completeCheckIfEligibleForm,
-  completeExporterLocationForm,
-  completeUkGoodsAndServicesForm,
-} from '../../../../../../commands/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT;
 
@@ -18,19 +12,21 @@ const {
   ELIGIBILITY: { WANT_COVER_OVER_MAX_AMOUNT: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Insured amount page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction that is less than the maximum amount of cover available online', () => {
   let url;
 
   before(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
     completeAndSubmitBuyerCountryForm();
-    completeExporterLocationForm();
-    completeUkGoodsAndServicesForm();
 
-    url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`;
+    url = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`;
 
     cy.assertUrl(url);
   });
@@ -43,7 +39,7 @@ context('Insurance - Insured amount page - I want to check if I can use online s
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT,
-      backLink: ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES,
+      backLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
       assertAuthenticatedHeader: false,
     });
   });
@@ -97,7 +93,7 @@ context('Insurance - Insured amount page - I want to check if I can use online s
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`, () => {
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`;
+        const expected = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`;
 
         cy.assertUrl(expected);
       });

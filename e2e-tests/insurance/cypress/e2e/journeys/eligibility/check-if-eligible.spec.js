@@ -2,13 +2,12 @@ import { submitButton } from '../../../../../pages/shared';
 import { insurance } from '../../../../../pages';
 import { PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import { completeStartForm } from '../../../../../commands/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE;
 
 const {
   START,
-  ELIGIBILITY: { CHECK_IF_ELIGIBLE, BUYER_COUNTRY },
+  ELIGIBILITY: { CHECK_IF_ELIGIBLE, EXPORTER_LOCATION },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -19,7 +18,7 @@ context('Insurance Eligibility - check if eligible page', () => {
   before(() => {
     cy.navigateToUrl(START);
 
-    completeStartForm();
+    cy.completeStartForm();
 
     cy.assertUrl(url);
   });
@@ -47,10 +46,10 @@ context('Insurance Eligibility - check if eligible page', () => {
     });
 
     context('form submission', () => {
-      it(`should redirect to ${BUYER_COUNTRY}`, () => {
+      it(`should redirect to ${EXPORTER_LOCATION}`, () => {
         submitButton().click();
 
-        const expectedUrl = `${baseUrl}${BUYER_COUNTRY}`;
+        const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;
 
         cy.assertUrl(expectedUrl);
       });

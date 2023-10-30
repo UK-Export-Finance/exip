@@ -597,8 +597,6 @@ export const lists = {
       hasMinimumUkGoodsOrServices: checkbox(),
       validExporterLocation: checkbox(),
       hasCompaniesHouseNumber: checkbox(),
-      otherPartiesInvolved: checkbox(),
-      paidByLetterOfCredit: checkbox(),
       wantCoverOverMaxAmount: checkbox(),
       wantCoverOverMaxPeriod: checkbox(),
     },
