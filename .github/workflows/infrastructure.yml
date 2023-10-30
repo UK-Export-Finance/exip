@@ -133,7 +133,7 @@ jobs:
         with:
           inlineScript: |
             az monitor log-analytics workspace create \
-            --name log-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --name log-workspace-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --quota ${{ vars.LOG_QUOTA }} \
             --retention-time ${{ vars.LOG_RETENTION_DAY }} \
             --sku ${{ vars.LOG_PLAN }} \
@@ -147,7 +147,7 @@ jobs:
             --name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }} \
             --sku Standard \
             --admin-enabled true \
-            --workspace log-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --workspace log-workspace-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --tags ${{ env.TAGS }}
 
       - name: Virtual network 🧵
