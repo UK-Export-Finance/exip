@@ -318,6 +318,12 @@ jobs:
             az configure --defaults location=${{ vars.REGION }}
             az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
+      - name: Extension ➕
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az extension add --name front-door
+
       - name: Private endpoint 🔏
         uses: Azure/cli@v1.0.8
         with:
@@ -414,7 +420,9 @@ jobs:
             --enabled-state Enabled
 
       - name: WAF 🔥
-        run: |
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
             # WAF
             az network front-door waf-policy create \
             --name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }} \
