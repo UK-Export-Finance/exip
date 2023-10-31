@@ -437,12 +437,14 @@ jobs:
             az network front-door waf-policy managed-rules add \
             --version 2.1 \
             --type Microsoft_DefaultRuleSet \
+            --action Block \
             --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}
 
             # Managed rule - Bot
             az network front-door waf-policy managed-rules add \
             --version 1.0 \
             --type Microsoft_BotManagerRuleSet \
+            --action Block \
             --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}
 
             # Associate FD
