@@ -1,5 +1,4 @@
-import { submitButton } from '../../../../../pages/shared';
-import { insurance } from '../../../../../pages';
+import { body, submitButton } from '../../../../../pages/shared';
 import { PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
@@ -42,7 +41,7 @@ context('Insurance Eligibility - check if eligible page', () => {
     });
 
     it('renders a body text', () => {
-      cy.checkText(insurance.eligibility.checkIfEligiblePage.body(), CONTENT_STRINGS.BODY);
+      cy.checkText(body(), CONTENT_STRINGS.BODY);
     });
 
     context('form submission', () => {

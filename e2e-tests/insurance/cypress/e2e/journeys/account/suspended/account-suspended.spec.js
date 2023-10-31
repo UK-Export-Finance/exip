@@ -1,4 +1,4 @@
-import { suspendedPage } from '../../../../../../pages/insurance/account/suspended';
+import { body } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -51,7 +51,7 @@ context('Insurance - Account - Suspended page - As an Exporter, I want to reacti
         assertSubmitButton: false,
       });
 
-      cy.checkText(suspendedPage.body(), CONTENT_STRINGS.BODY);
+      cy.checkText(body(), CONTENT_STRINGS.BODY);
     });
   });
 });
