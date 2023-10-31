@@ -3,8 +3,10 @@ import {
   FIELD_VALUES,
   WEBSITE_EXAMPLES,
 } from '../constants';
+import { COMPANIES_HOUSE_NUMBER } from '../constants/examples';
 import { GBP_CURRENCY_CODE } from './currencies';
 import mockCountries from './countries';
+import mockCompanies from './companies';
 
 const {
   INSURANCE: {
@@ -97,6 +99,7 @@ const application = {
     [WANT_COVER_OVER_MAX_AMOUNT]: false,
     [WANT_COVER_OVER_MAX_PERIOD]: false,
   },
+  COMPANY: mockCompanies[COMPANIES_HOUSE_NUMBER],
   POLICY: {
     [REQUESTED_START_DATE]: {
       day: '1',
