@@ -1,12 +1,10 @@
 import {
   FIELD_IDS,
   FIELD_VALUES,
-  COMPANIES_HOUSE_NUMBER,
   WEBSITE_EXAMPLES,
 } from '../constants';
 import { GBP_CURRENCY_CODE } from './currencies';
 import mockCountries from './countries';
-import sicCodes from './sic-codes';
 
 const {
   INSURANCE: {
@@ -14,15 +12,6 @@ const {
       FIRST_NAME: ACCOUNT_FIRST_NAME,
       LAST_NAME: ACCOUNT_LAST_NAME,
       EMAIL: ACCOUNT_EMAIL,
-    },
-    COMPANIES_HOUSE: {
-      COMPANY_SIC,
-      INDUSTRY_SECTOR_NAME,
-      INDUSTRY_SECTOR_NAMES,
-      COMPANY_NUMBER,
-      COMPANY_NAME,
-      COMPANY_INCORPORATED,
-      COMPANY_ADDRESS,
     },
     ELIGIBILITY: {
       WANT_COVER_OVER_MAX_AMOUNT,
@@ -50,7 +39,6 @@ const {
         EMPLOYEES_INTERNATIONAL,
       },
       TURNOVER: {
-        FINANCIAL_YEAR_END_DATE,
         ESTIMATED_ANNUAL_TURNOVER,
         PERCENTAGE_TURNOVER,
       },
@@ -130,24 +118,6 @@ const application = {
   EXPORT_CONTRACT: {
     [DESCRIPTION]: 'Mock description',
     [FINAL_DESTINATION]: mockCountries[1].isoCode,
-  },
-  EXPORTER_COMPANY: {
-    [COMPANY_NUMBER]: COMPANIES_HOUSE_NUMBER,
-    [COMPANY_NAME]: 'DHG PROPERTY FINANCE LIMITED',
-    [COMPANY_INCORPORATED]: '2014-04-10T00:00:00.000Z',
-    [COMPANY_ADDRESS]: {
-      addressLine1: 'Unit 3 Lewis Court',
-      addressLine2: 'Portmanmoor Road',
-      careOf: '',
-      locality: 'Cardiff',
-      region: 'South Glamorgan',
-      postalCode: 'CF24 5HQ',
-      country: '',
-      premises: '',
-    },
-    [COMPANY_SIC]: [sicCodes[0].code],
-    [INDUSTRY_SECTOR_NAMES]: [sicCodes[0][INDUSTRY_SECTOR_NAME]],
-    [FINANCIAL_YEAR_END_DATE]: '2023-07-31T00:00:00.000Z',
   },
   EXPORTER_BUSINESS: {
     [GOODS_OR_SERVICES]: 'abc',

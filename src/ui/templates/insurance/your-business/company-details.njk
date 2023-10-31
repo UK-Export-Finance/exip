@@ -38,30 +38,22 @@
       <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
-          <span class="govuk-caption-xl" data-cy="heading-caption">
-            {{CONTENT_STRINGS.HEADING_CAPTION}}
-          </span>
+        <span class="govuk-caption-xl" data-cy="heading-caption">
+          {{ CONTENT_STRINGS.HEADING_CAPTION }}
+        </span>
         <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
-      </div>
 
-      {% if SUMMARY_LIST %}
-        <div class="govuk-grid-column-three-quarters-from-desktop">
-          <h3 class="govuk-fieldset__legend--m" data-cy="{{FIELDS.YOUR_COMPANY.YOUR_BUSINESS}}-heading">{{CONTENT_STRINGS.YOUR_BUSINESS_HEADING}}</h3>
+        {{ govukSummaryList({
+          classes: 'govuk-!-margin-bottom-9',
+          rows: SUMMARY_LIST.COMPANY_DETAILS.ROWS,
+          attributes: {
+            'data-cy':  FIELDS.COMPANIES_HOUSE.SEARCH + '-summary-list'
+          }
+        }) }}
 
-          {{ govukSummaryList({
-            classes: 'govuk-!-margin-bottom-9',
-            rows: SUMMARY_LIST.COMPANY_DETAILS.ROWS,
-            attributes: {
-              'data-cy':  FIELDS.COMPANIES_HOUSE.SEARCH + '-summary-list'
-            }
-          }) }}
+        {# <p class="govuk-!-margin-bottom-6"><a class="govuk-link" href="{{ DIFFERENT_COMPANIES_HOUSE_NUMBER_URL }}" data-cy="different-companies-house-number">{{ CONTENT_STRINGS.DIFFERENT_COMPANIES_HOUSE_NUMBER }}</a></p> #}
+        <p class="govuk-body" data-cy="body">{{ CONTENT_STRINGS.BODY }}</p>
 
-          <p class="govuk-!-margin-bottom-6"><a class="govuk-link" href="{{DIFFERENT_COMPANIES_HOUSE_NUMBER}}" data-cy="different-companies-house-number">{{CONTENT_STRINGS.DIFFERENT_COMPANIES_HOUSE_NUMBER}}</a></p>
-        </div>
-      {% endif %}
-
-
-      <div class="govuk-grid-column-three-quarters-from-desktop">
         {{ yesNoRadioButtons.render({
           fieldId: FIELDS.YOUR_COMPANY.TRADING_NAME,
           legendText: CONTENT_STRINGS.TRADING_NAME,
@@ -71,21 +63,17 @@
           errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.TRADING_NAME],
           dataCyLegend: FIELDS.YOUR_COMPANY.TRADING_NAME + '-legend'
         }) }}
-      </div>
 
-      <div class="govuk-grid-column-three-quarters-from-desktop">
-          {{ yesNoRadioButtons.render({
-            fieldId: FIELDS.YOUR_COMPANY.TRADING_ADDRESS,
-            legendText: CONTENT_STRINGS.TRADING_ADDRESS,
-            legendClass: 'govuk-fieldset__legend--m',
-            legendSpan: true,
-            submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
-            errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
-            dataCyLegend: FIELDS.YOUR_COMPANY.TRADING_ADDRESS + '-legend'
-          }) }}
-      </div>
+        {{ yesNoRadioButtons.render({
+          fieldId: FIELDS.YOUR_COMPANY.TRADING_ADDRESS,
+          legendText: CONTENT_STRINGS.TRADING_ADDRESS,
+          legendClass: 'govuk-fieldset__legend--m',
+          legendSpan: true,
+          submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
+          errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
+          dataCyLegend: FIELDS.YOUR_COMPANY.TRADING_ADDRESS + '-legend'
+        }) }}
 
-      <div class="govuk-grid-column-three-quarters-from-desktop">
         {{ govukInput({
           label: {
             text: CONTENT_STRINGS.WEBSITE,

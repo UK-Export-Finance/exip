@@ -1,18 +1,18 @@
-import formatDate from '../date/format-date';
-import { generateSicCodesValue, generateFields, companyHouseSummaryList } from './company-house-summary-list';
-import generateSummaryListRows from './generate-summary-list-rows';
-import fieldGroupItem from './generate-field-group-item';
-import getFieldById from '../get-field-by-id';
-import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
-import { DEFAULT, FIELDS, PAGES } from '../../content-strings';
-import { mockCompany } from '../../test-mocks';
-import generateMultipleFieldHtml from '../generate-multiple-field-html';
+import formatDate from '../../date/format-date';
+import { generateSicCodesValue, generateFields, companiesHouseSummaryList } from '.';
+import generateSummaryListRows from '../generate-summary-list-rows';
+import fieldGroupItem from '../generate-field-group-item';
+import getFieldById from '../../get-field-by-id';
+import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
+import { DEFAULT, FIELDS } from '../../../content-strings';
+import { mockCompany } from '../../../test-mocks';
+import generateMultipleFieldHtml from '../../generate-multiple-field-html';
 
 const {
   COMPANIES_HOUSE: { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC },
 } = INSURANCE_FIELD_IDS;
 
-describe('server/helpers/summary-lists/company-house-summary-list', () => {
+describe('server/helpers/summary-lists/companies-house', () => {
   describe('generateSicCodesValue', () => {
     describe('when sicCodes and industrySectorNames both are populated', () => {
       it('should return sic code and description as a single string with line break', () => {
@@ -130,20 +130,27 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
     });
   });
 
-  describe('companyHouseSummaryList()', () => {
+  describe('companiesHouseSummaryList', () => {
     it('should return a mapped summary list for companies house response', () => {
       const fields = generateFields(mockCompany);
 
-      const result = companyHouseSummaryList(mockCompany);
+      const result = companiesHouseSummaryList(mockCompany);
 
       const expected = {
         COMPANY_DETAILS: {
-          GROUP_TITLE: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS.TABLE_HEADING,
           ROWS: generateSummaryListRows(fields),
         },
       };
 
       expect(result).toEqual(expected);
+    });
+
+    describe('when a company is not provided', () => {
+      it('should return an empty object', () => {
+        const result = companiesHouseSummaryList();
+
+        expect(result).toEqual({});
+      });
     });
   });
 });

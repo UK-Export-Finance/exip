@@ -7,7 +7,7 @@ import { PAGES } from '../../../../content-strings';
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/company-details';
-import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-house-summary-list';
+import { companiesHouseSummaryList } from '../../../../helpers/summary-lists/companies-house';
 import { Request, Response } from '../../../../../types';
 import companyDetailsValidation from './validation/company-details';
 import { mockReq, mockRes, mockApplication, mockPhoneNumbers } from '../../../../test-mocks';
@@ -97,7 +97,7 @@ describe('controllers/insurance/business/companies-details', () => {
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(referenceNumber),
           submittedValues,
-          SUMMARY_LIST: populateCompaniesHouseSummaryList(company),
+          SUMMARY_LIST: companiesHouseSummaryList(company),
         });
       });
     });
@@ -150,7 +150,7 @@ describe('controllers/insurance/business/companies-details', () => {
           ...pageVariables(mockApplication.referenceNumber),
           validationErrors,
           submittedValues: expectedSubmittedValues,
-          SUMMARY_LIST: populateCompaniesHouseSummaryList(mockApplication.company),
+          SUMMARY_LIST: companiesHouseSummaryList(mockApplication.company),
         });
       });
     });

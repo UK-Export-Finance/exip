@@ -2,7 +2,7 @@ import mapSicCodes from '.';
 import { DEFAULT } from '../../../../content-strings';
 import { ApplicationExporterSicCodes } from '../../../../../types';
 import { mockSicCodes } from '../../../../test-mocks';
-import { generateSicCodesValue } from '../../company-house-summary-list';
+import { generateSicCodesValue } from '../../companies-house';
 
 describe('helpers/summary-lists/your-business/sic-code-mapping', () => {
   it('should return a string with multiple sic codes if provided with more than one', () => {
