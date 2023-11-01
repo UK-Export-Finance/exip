@@ -51,7 +51,13 @@
           }
         }) }}
 
-        <p class="govuk-body" data-cy="body">{{ CONTENT_STRINGS.BODY }}</p>
+        {{ govukSummaryList({
+          classes: 'govuk-!-margin-bottom-9',
+          rows: SUMMARY_LIST.COMPANY_DETAILS.ROWS,
+          attributes: {
+            'data-cy':  FIELDS.COMPANIES_HOUSE.SEARCH + '-summary-list'
+          }
+        }) }}
 
         {{ yesNoRadioButtons.render({
           fieldId: FIELDS.YOUR_COMPANY.TRADING_NAME,

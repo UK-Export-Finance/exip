@@ -1,5 +1,5 @@
 import { isNumber } from '../../number';
-import { isEmptyString, stripCommas } from '../../string';
+import { isAString, isEmptyString, stripCommas } from '../../string';
 import isValidWebsiteAddress from '../../is-valid-website-address';
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import { SanitiseValueObjParams } from '../../../../types';
@@ -81,8 +81,8 @@ export const shouldChangeToNumber = ({ key, value }: SanitiseValueObjParams) => 
     }
   }
 
-  if (typeof value === 'string') {
-    const stripped = stripCommas(value);
+  if (isAString(value)) {
+    const stripped = stripCommas(String(value));
 
     if (isNumber(stripped)) {
       return true;

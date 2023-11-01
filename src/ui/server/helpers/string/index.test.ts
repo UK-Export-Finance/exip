@@ -1,6 +1,24 @@
-import { isEmptyString, stripCommas, isPopulatedString, stringsAreDefined, stringsAreEqual } from '.';
+import { isAString, isEmptyString, stripCommas, isPopulatedString, stringsAreDefined, stringsAreEqual } from '.';
 
 describe('server/helpers/string', () => {
+  describe('isAString', () => {
+    describe('when a value is a string', () => {
+      it('should return true', () => {
+        const result = isAString('mock');
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe('when a value is NOT a string', () => {
+      it('should return false', () => {
+        const result = isAString(1);
+
+        expect(result).toEqual(false);
+      });
+    });
+  });
+
   describe('isEmptyString', () => {
     describe('when a string is empty', () => {
       it('should return true', () => {

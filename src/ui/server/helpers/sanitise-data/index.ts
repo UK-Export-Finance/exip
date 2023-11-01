@@ -1,5 +1,5 @@
 import { isValid as isValidDate } from 'date-fns';
-import { isEmptyString } from '../string';
+import { isAString, isEmptyString } from '../string';
 import { isAnObjectWithKeysAndValues } from '../object';
 import sanitiseObject from './sanitise-object';
 import sanitiseArrayOfStrings from './sanitise-array-of-strings';
@@ -100,8 +100,8 @@ export const sanitiseFormField = (key: string, value: string | boolean | ObjectT
     return value;
   }
 
-  if (typeof value === 'string') {
-    return sanitiseValue({ key, value });
+  if (isAString(value)) {
+    return sanitiseValue({ key, value: String(value) });
   }
 
   const objectWithKeysAndValues = isAnObjectWithKeysAndValues(value);
