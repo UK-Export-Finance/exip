@@ -93,7 +93,7 @@ export const shouldIncludeAndSanitiseField = (key: string, value: string) => {
  */
 export const sanitiseFormField = (key: string, value: string | boolean | ObjectType | Array<string>) => {
   if (Array.isArray(value)) {
-    return sanitiseArrayOfStrings(value);
+    return sanitiseArrayOfStrings(key, value);
   }
 
   if (isValidDate(value)) {
