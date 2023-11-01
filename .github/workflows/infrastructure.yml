@@ -28,6 +28,7 @@ on:
   push:
     branches:
       - infrastructure
+      - feat/EMS-1715
 
     paths: [.github/workflows/infrastructure.yml]
 
