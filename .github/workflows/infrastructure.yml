@@ -759,7 +759,7 @@ jobs:
         with:
           inlineScript: |
             az monitor action-group create \
-            --action-group-name action-group-email-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --name action-group-email-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --short-name Email \
             --action email ${{ secrets.ACTION_GROUP_EMAIL }} \
             --location global \
