@@ -3,6 +3,7 @@ import { ROUTES } from '../../../constants';
 import { get as checkIfEligibleGet, post as checkIfEligiblePost } from '../../../controllers/insurance/eligibility/check-if-eligible';
 import { get as exporterLocationGet, post as exporterLocationPost } from '../../../controllers/insurance/eligibility/exporter-location';
 import { get as companiesHouseNumberGet, post as companiesHouseNumberPost } from '../../../controllers/insurance/eligibility/companies-house-number';
+import { get as noCompaniesHouseNumberGet } from '../../../controllers/insurance/eligibility/no-companies-house-number';
 import { get as companiesHouseSearchGet, post as companiesHouseSearchPost } from '../../../controllers/insurance/eligibility/companies-house-search';
 import { get as companiesHouseUnavailableGet } from '../../../controllers/insurance/eligibility/companies-house-unavailable';
 import { get as companyDetailsGet, post as companyDetailsPost } from '../../../controllers/insurance/eligibility/company-details';
@@ -25,7 +26,7 @@ describe('routes/insurance/eligibility', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(15);
+    expect(get).toHaveBeenCalledTimes(16);
     expect(post).toHaveBeenCalledTimes(13);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE, checkIfEligibleGet);
@@ -36,6 +37,8 @@ describe('routes/insurance/eligibility', () => {
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER, companiesHouseNumberGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER, companiesHouseNumberPost);
+
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER, noCompaniesHouseNumberGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER, companiesHouseSearchGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER, companiesHouseSearchPost);

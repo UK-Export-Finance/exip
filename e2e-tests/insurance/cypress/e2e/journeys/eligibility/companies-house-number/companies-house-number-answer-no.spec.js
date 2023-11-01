@@ -1,15 +1,12 @@
 import {
-  backLink, cannotApplyPage, noRadio, noRadioInput, submitButton,
+  backLink, noRadio, noRadioInput, submitButton,
 } from '../../../../../../pages/shared';
-import { PAGES, LINKS } from '../../../../../../content-strings';
+import { LINKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.APPLY_OFFLINE;
-
 const {
-  ELIGIBILITY: { COMPANIES_HOUSE_NUMBER },
+  ELIGIBILITY: { COMPANIES_HOUSE_NUMBER, NO_COMPANIES_HOUSE_NUMBER },
   START,
-  APPLY_OFFLINE,
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -34,13 +31,13 @@ context('Insurance - Eligibility - Companies house number page - I want to check
     submitButton().click();
   });
 
-  it('redirects to exit page', () => {
-    const expectedUrl = `${baseUrl}${APPLY_OFFLINE}`;
+  it(`should redirect to ${NO_COMPANIES_HOUSE_NUMBER} exit page`, () => {
+    const expectedUrl = `${baseUrl}${NO_COMPANIES_HOUSE_NUMBER}`;
 
     cy.assertUrl(expectedUrl);
   });
 
-  it('renders a back link with correct url', () => {
+  it('should render a back link with correct url', () => {
     const expectedHref = `${baseUrl}${COMPANIES_HOUSE_NUMBER}`;
 
     cy.checkLink(
@@ -48,11 +45,6 @@ context('Insurance - Eligibility - Companies house number page - I want to check
       expectedHref,
       LINKS.BACK,
     );
-  });
-
-  it('renders a specific reason', () => {
-    const expected = `${CONTENT_STRINGS.REASON.INTRO} ${CONTENT_STRINGS.REASON.NO_COMPANIES_HOUSE_NUMBER}`;
-    cy.checkText(cannotApplyPage.reason(), expected);
   });
 
   describe('when going back to the page', () => {

@@ -1,5 +1,6 @@
 import QUOTE_PAGES from './quote';
 import INSURANCE_PAGES from './insurance';
+import { ACTIONS } from '../actions';
 import { LINKS } from '../links';
 import { CONTACT_DETAILS, ROUTES } from '../../constants';
 import { CUSTOMER_SERVICE_CONTACT_DETAILS } from '../contact';
@@ -25,23 +26,7 @@ const CANNOT_APPLY = {
     UNSUPPORTED_BUYER_COUNTRY_2: 'which we cannot provide cover for.',
     NOT_ENOUGH_UK_GOODS_OR_SERVICES: 'your export contract value is not made up from at least 20% UK goods or services.',
   },
-  ACTIONS: {
-    INTRO: 'You can:',
-    ELIGIBILITY: {
-      TEXT: 'read about',
-      LINK: {
-        TEXT: 'eligibility',
-        HREF: LINKS.EXTERNAL.GUIDANCE,
-      },
-    },
-    CONTACT_APPROVED_BROKER: {
-      LINK: {
-        TEXT: 'contact an approved broker',
-        HREF: LINKS.EXTERNAL.APPROVED_BROKER_LIST,
-      },
-      TEXT: 'who may be able to help you get insurance from the private sector, if you`ve not tried already',
-    },
-  },
+  ACTIONS,
 };
 
 const ACCESSIBILITY_STATEMENT_PAGE = {

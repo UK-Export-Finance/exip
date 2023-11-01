@@ -47,13 +47,7 @@ export const post = (req: Request, res: Response) => {
   const answer = payload[FIELD_ID];
 
   if (answer === 'false') {
-    const { INSURANCE } = PAGES;
-    const { APPLY_OFFLINE } = INSURANCE;
-    const { REASON } = APPLY_OFFLINE;
-
-    req.flash('exitReason', REASON.NO_COMPANIES_HOUSE_NUMBER);
-
-    return res.redirect(INSURANCE_ROUTES.APPLY_OFFLINE);
+    return res.redirect(INSURANCE_ROUTES.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER);
   }
 
   req.session.submittedData = {
