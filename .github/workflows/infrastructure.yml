@@ -457,7 +457,7 @@ jobs:
             # Custom rule - RL 
             az network front-door waf-policy rule create \
             --action Block \
-            --name HTTPGetRateLimitRule \
+            --name HTTPRateLimitRule \
             --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }} \
             --priority 2 \
             --rule-type RateLimitRule \
@@ -467,10 +467,10 @@ jobs:
 
             # Custom rule - RL condition
             az network front-door waf-policy rule match-condition add \
-            --match-variable RequestMethod \
-            --operator Equal \
-            --values "GET" \
-            --name HTTPGetRateLimitRule \
+            --match-variable ${{ vars.WAF_RL_MATCH }} \
+            --operator GreaterThanOrEqual \
+            --values ${{ vars.WAF_RL_MATCH_VALUE }} \
+            --name HTTPRateLimitRule \
             --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}
 
       - name: VPN 🧱
@@ -615,7 +615,7 @@ jobs:
             UNDERWRITING_TEAM_EMAIL='${{ secrets.UNDERWRITING_TEAM_EMAIL }}' \
             FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}'
 
-  # 4. Log
+  # 5. Logs and dignostic settings
   log:
     name: Log 📒
     needs: [base, security, webapp]
@@ -668,6 +668,20 @@ jobs:
             --docker-container-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
             --web-server-logging ${{ vars.WEBAPP_LOG_DESTINATION }}
 
+      - name: Log 📄
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # UI
+            az webapp log config \
+            --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --detailed-error-messages true \
+            --failed-request-tracing true \
+            --level ${{ vars.WEBAPP_LOG_LEVEL }} \
+            --application-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
+            --docker-container-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
+            --web-server-logging ${{ vars.WEBAPP_LOG_DESTINATION }}
+
             # API
             az webapp log config \
             --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
@@ -706,3 +720,80 @@ jobs:
             --resource $(az network nic list --query ['?contains(name, `api`)'].id -o tsv) \
             --workspace $(az monitor log-analytics workspace list --query [].id -o tsv) \
             --metrics "[{category:allMetrics,enabled:true}]"
+
+  # 5. Health check alerts
+  alert:
+    name: Alert 📢
+    needs: [base, security, webapp]
+    environment: ${{ needs.base.outputs.environment }}
+    runs-on: [self-hosted, EXIP, infrastructure]
+    steps:
+      - name: Pre-production 💫
+        if: contains('["dev", "staging"]', env.TARGET)
+        run: echo "TYPE=Preproduction" >> $GITHUB_ENV
+
+      - name: Production 💫
+        if: ${{ 'prod' == env.TARGET }}
+        run: echo "TYPE=Production" >> $GITHUB_ENV
+
+      - name: Tags 🏷️
+        run: echo TAGS='Environment=${{ env.TYPE }}' \
+          'Product=${{ env.PRODUCT }}' \
+          'Team=development' >> $GITHUB_ENV
+
+      - name: Login 🔐
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Azure defaults ✨
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # Basic
+            az configure --defaults location=${{ vars.REGION }}
+            az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+
+      - name: Action group 📩
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az monitor action-group create \
+            --action-group-name action-group-email-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --short-name Email \
+            --action email ${{ secrets.ACTION_GROUP_EMAIL }} \
+            --location global \
+            --tags ${{ env.TAGS }}
+
+      - name: Alert 📩
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # Dimension
+            az monitor metrics alert dimension create \
+            --name "OriginGroup" \
+            --value "ui" \
+            --operator Include
+
+            # Condition
+            az monitor metrics alert condition create \
+            --type static \
+            --dimension "_where_ OriginGroup includes ui" \
+            --aggregation Minimum \
+            --metric OriginHealthPercentage \
+            --operator LessThan \
+            --threshold 100 \
+            --num-periods 1 \
+            --num-violations 5 \
+            --sensitivity High
+
+            # Alert
+            az monitor metrics alert create \
+            --name alert-healthcheck-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --description "1 minute health check" \
+            --condition  "min 'OriginHealthPercentage' < 100.0 where OriginGroup includes ui" \
+            --scope $(az afd profile list --query [].id -o tsv) \
+            --action $(az monitor action-group list --query [].id -o tsv) \
+            --auto-mitigate true \
+            --severity 0 \
+            --tags ${{ env.TAGS }}
