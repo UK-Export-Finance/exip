@@ -68,7 +68,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
       const expected = {
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
-        DIFFERENT_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_ROOT}`,
+        DIFFERENT_COMPANIES_HOUSE_NUMBER_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_ROOT}`,
         FIELDS: BUSINESS_FIELD_IDS,
       };
 
