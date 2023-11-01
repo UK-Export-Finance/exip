@@ -1,5 +1,6 @@
 import createAnApplication from '.';
 import { mockAccount, mockCountries } from '../../../test-mocks';
+import mockCompany from '../../../test-mocks/mock-company';
 import { Account, Context, SuccessResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 import accounts from '../../../test-helpers/accounts';
@@ -14,8 +15,12 @@ describe('custom-resolvers/create-an-application', () => {
     accountId: '',
     eligibilityAnswers: {
       buyerCountryIsoCode: mockCountries[0].isoCode,
+      hasCompaniesHouseNumber: true,
       needPreCreditPeriodCover: false,
+      wantCoverOverMaxAmount: false,
+      wantCoverOverMaxPeriod: false,
     },
+    company: mockCompany,
   };
 
   beforeAll(async () => {
@@ -50,7 +55,7 @@ describe('custom-resolvers/create-an-application', () => {
     expect(result.referenceNumber).toEqual(expected);
   });
 
-  test('it should create buyer, eligibility and policy relationships', async () => {
+  test('it should create buyer, eligibility, policy and company relationships', async () => {
     result = await createAnApplication({}, variables, context);
 
     const application = await applications.get({ context, applicationId: result.id });
@@ -59,11 +64,14 @@ describe('custom-resolvers/create-an-application', () => {
       buyerId: application.buyer.id,
       eligibilityId: application.eligibility.id,
       policyId: application.policy.id,
+      companyId: application.company.id,
     };
 
     expect(result.buyerId).toEqual(expected.buyerId);
     expect(result.eligibilityId).toEqual(expected.eligibilityId);
     expect(result.policyId).toEqual(expected.policyId);
+
+    expect(result.companyId).toEqual(expected.companyId);
   });
 
   describe('when there is no account for the provided accountId', () => {

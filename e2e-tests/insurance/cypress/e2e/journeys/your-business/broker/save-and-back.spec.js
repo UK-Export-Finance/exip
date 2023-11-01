@@ -31,6 +31,8 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your business - Broker page - Save and back', () => {
   let referenceNumber;
   let url;
@@ -42,13 +44,12 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
       task.link().click();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
-      allSectionsUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER}`;
+      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -144,8 +145,6 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
         task.link().click();
 
-        // submit companies house number form
-        submitButton().click();
         // submit company details form
         submitButton().click();
         // submit nature of business form
@@ -183,8 +182,6 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
         task.link().click();
 
-        // submit companies house number form
-        submitButton().click();
         // submit company details form
         submitButton().click();
         // submit nature of business form

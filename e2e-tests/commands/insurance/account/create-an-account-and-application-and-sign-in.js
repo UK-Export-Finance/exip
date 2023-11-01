@@ -8,14 +8,15 @@
  * 6) Complete and submit the "enter security code" form
  * 7) Check we are on the "all sections" application page.
  * @param {String} Account email address
+ * @param {String} Company number/companies house number to use for application creation
  */
-const createAnAccountAndApplicationAndSignIn = (emailAddress) =>
+const createAnAccountAndApplicationAndSignIn = (emailAddress, companyNumber) =>
   cy.createAccount({ emailAddress }).then(({ accountId, verifyAccountUrl }) => {
     // verify the account by navigating to the "verify account" page
     cy.navigateToUrl(verifyAccountUrl);
 
     // create an application directly via the API.
-    cy.createAnApplication(accountId).then((createdApplication) => {
+    cy.createAnApplication(accountId, companyNumber).then((createdApplication) => {
       const { referenceNumber } = createdApplication;
 
       /**

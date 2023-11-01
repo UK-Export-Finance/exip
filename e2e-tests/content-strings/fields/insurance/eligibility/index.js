@@ -1,4 +1,5 @@
 import { FIELD_IDS } from '../../../../constants';
+import { LINKS } from '../../../links';
 
 const {
   BUYER_COUNTRY,
@@ -37,6 +38,7 @@ export const FIELDS_ELIGIBILITY = {
     },
   },
   [COMPANIES_HOUSE_NUMBER]: {
+    HINT: `<p><span data-cy="hint-for-example">For example, 8989898 or SC907816. You'll find it on your incorporation certificate or on the </span><a class="govuk-link" href="${LINKS.EXTERNAL.COMPANIES_HOUSE}" data-cy="hint-link">Companies House website</a>.</p>`,
     SUMMARY: {
       TITLE: 'UK Companies House registration number and actively trading',
     },

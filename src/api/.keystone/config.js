@@ -112,6 +112,33 @@ var SHARED_ELIGIBILITY = {
 };
 var shared_eligibility_default = SHARED_ELIGIBILITY;
 
+// constants/field-ids/insurance/shared/index.ts
+var SHARED_FIELD_IDS = {
+  COMPANY: "company",
+  COMPANIES_HOUSE: {
+    COMPANY_NAME: "companyName",
+    COMPANY_ADDRESS: "registeredOfficeAddress",
+    COMPANY_NUMBER: "companyNumber",
+    COMPANY_INCORPORATED: "dateOfCreation",
+    SIC_CODE: "sicCode",
+    COMPANY_SIC: "sicCodes",
+    INDUSTRY_SECTOR_NAME: "industrySectorName",
+    INDUSTRY_SECTOR_NAMES: "industrySectorNames",
+    FINANCIAL_YEAR_END_DATE: "financialYearEndDate",
+    REGISTED_OFFICE_ADDRESS: {
+      ADDRESS_LINE_1: "addressLine1",
+      ADDRESS_LINE_2: "addressLine2",
+      CARE_OF: "careOf",
+      LOCALITY: "locality",
+      REGION: "region",
+      POSTAL_CODE: "postalCode",
+      COUNTRY: "country",
+      PREMISES: "premises"
+    }
+  }
+};
+var shared_default2 = SHARED_FIELD_IDS;
+
 // constants/field-ids/insurance/account/index.ts
 var ACCOUNT = {
   ID: "id",
@@ -166,8 +193,7 @@ var policy_default = POLICY;
 
 // constants/field-ids/insurance/business/index.ts
 var EXPORTER_BUSINESS = {
-  COMPANY_HOUSE: {
-    SEARCH: "companiesHouseSearch",
+  COMPANIES_HOUSE: {
     INPUT: "companiesHouseNumber",
     COMPANY_NAME: "companyName",
     COMPANY_ADDRESS: "registeredOfficeAddress",
@@ -264,11 +290,14 @@ var check_your_answers_default = CHECK_YOUR_ANSWERS;
 var INSURANCE_FIELD_IDS = {
   ELIGIBILITY: {
     ...shared_eligibility_default,
+    ...shared_default2,
+    HAS_COMPANIES_HOUSE_NUMBER: "hasCompaniesHouseNumber",
+    COMPANIES_HOUSE_NUMBER: "companyNumber",
     WANT_COVER_OVER_MAX_AMOUNT: "wantCoverOverMaxAmount",
     WANT_COVER_OVER_MAX_PERIOD: "wantCoverOverMaxPeriod",
-    COMPANIES_HOUSE_NUMBER: "hasCompaniesHouseNumber",
     ACCOUNT_TO_APPLY_ONLINE: "alreadyHaveAnAccount"
   },
+  ...shared_default2,
   SUBMISSION_DEADLINE: "submissionDeadline",
   ACCOUNT: account_default,
   POLICY: policy_default,
@@ -295,6 +324,7 @@ var DEFAULT_RESOLVERS = [
   "updateBroker",
   "updateBusiness",
   "updateBuyer",
+  "updateCompany",
   "updateDeclaration",
   "updatePolicy",
   "updatePolicyContact",
@@ -331,7 +361,6 @@ var CUSTOM_RESOLVERS = [
   "deleteApplicationByReferenceNumber",
   "getCompaniesHouseInformation",
   "submitApplication",
-  "updateCompanyAndCompanyAddress",
   // feedback
   "createFeedbackAndSendEmail",
   "getApimCisCountries"
@@ -844,23 +873,6 @@ var lists = {
                 id: exportContractId
               }
             };
-            const { id: companyId } = await context.db.Company.createOne({
-              data: {}
-            });
-            modifiedData.company = {
-              connect: {
-                id: companyId
-              }
-            };
-            await context.db.CompanyAddress.createOne({
-              data: {
-                company: {
-                  connect: {
-                    id: companyId
-                  }
-                }
-              }
-            });
             const { id: businessId } = await context.db.Business.createOne({
               data: {}
             });
@@ -921,7 +933,7 @@ var lists = {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
             const { referenceNumber } = item;
-            const { policyContactId, exportContractId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
+            const { policyContactId, exportContractId, businessId, brokerId, sectionReviewId, declarationId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -951,16 +963,6 @@ var lists = {
                   }
                 },
                 finalDestinationKnown: APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN
-              }
-            });
-            await context.db.Company.updateOne({
-              where: { id: companyId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
               }
             });
             await context.db.Business.updateOne({
@@ -1589,31 +1591,14 @@ var typeDefs = `
     premises: String
   }
 
-  type CompanyAndCompanyAddress {
-    id: ID
-    registeredOfficeAddress: CompanyAddress
+  input CompanyInput {
     companyName: String
     companyNumber: String
-    dateOfCreation: DateTime
-    hasDifferentTradingAddress: Boolean
-    hasDifferentTradingName: Boolean
-    companyWebsite: String
-    phoneNumber: String
-  }
-
-  input CompanyAndCompanyAddressInput {
-    address: CompanyAddressInput
+    dateOfCreation: String
     sicCodes: [String]
     industrySectorNames: [String]
-    companyName: String
-    companyNumber: String
-    dateOfCreation: DateTime
-    hasDifferentTradingAddress: Boolean
-    hasDifferentTradingName: Boolean
-    companyWebsite: String
-    phoneNumber: String
     financialYearEndDate: DateTime
-    oldSicCodes: [OldSicCodes]
+    registeredOfficeAddress: CompanyAddressInput
   }
 
   type EmailResponse {
@@ -1725,6 +1710,7 @@ var typeDefs = `
     createAnApplication(
       accountId: String!
       eligibilityAnswers: ApplicationEligibility!
+      company: CompanyInput!
     ): CreateAnApplicationResponse
 
     """ delete an account """
@@ -1790,13 +1776,6 @@ var typeDefs = `
       password: String!
       hasBeenUsedBefore: Boolean
     ): AccountPasswordResetResponse
-
-    """ update company and company address """
-    updateCompanyAndCompanyAddress(
-      companyId: ID!
-      companyAddressId: ID!
-      data: CompanyAndCompanyAddressInput!
-    ): CompanyAndCompanyAddress
 
     """ delete an application by reference number """
     deleteApplicationByReferenceNumber(
@@ -3202,11 +3181,105 @@ var createAPolicy = async (context, applicationId) => {
 };
 var create_a_policy_default = createAPolicy;
 
+// helpers/create-a-company-address/index.ts
+var createACompanyAddress = async (context, addressData, companyId) => {
+  console.info("Creating a company address for ", companyId);
+  try {
+    const companyAddress = await context.db.CompanyAddress.createOne({
+      data: {
+        company: {
+          connect: {
+            id: companyId
+          }
+        },
+        ...addressData
+      }
+    });
+    return companyAddress;
+  } catch (err) {
+    console.error("Error creating a company address %O", err);
+    throw new Error(`Creating a company address ${err}`);
+  }
+};
+var create_a_company_address_default = createACompanyAddress;
+
+// helpers/map-sic-codes/index.ts
+var mapSicCodes = (sicCodes, industrySectorNames2, companyId) => {
+  const mapped = [];
+  if (!sicCodes.length) {
+    return mapped;
+  }
+  sicCodes.forEach((code, index) => {
+    let industrySectorName = "";
+    if (industrySectorNames2 && industrySectorNames2[index]) {
+      industrySectorName = industrySectorNames2[index];
+    }
+    const mappedCode = {
+      sicCode: code,
+      industrySectorName,
+      company: {
+        connect: {
+          id: companyId
+        }
+      }
+    };
+    mapped.push(mappedCode);
+  });
+  return mapped;
+};
+var map_sic_codes_default = mapSicCodes;
+
+// helpers/create-company-sic-codes/index.ts
+var createCompanySicCodes = async (context, sicCodes, industrySectorNames2, companyId) => {
+  console.info("Creating company SIC codes for ", companyId);
+  try {
+    const mappedSicCodes = map_sic_codes_default(sicCodes, industrySectorNames2, companyId);
+    let createdSicCodes = [];
+    if (sicCodes.length) {
+      createdSicCodes = await context.db.CompanySicCode.createMany({
+        data: mappedSicCodes
+      });
+    }
+    return createdSicCodes;
+  } catch (err) {
+    console.error("Error creating company SIC codes %O", err);
+    throw new Error(`Creating company SIC codes ${err}`);
+  }
+};
+var create_company_sic_codes_default = createCompanySicCodes;
+
+// helpers/create-a-company/index.ts
+var createACompany = async (context, applicationId, companyData) => {
+  console.info("Creating a company, address and SIC codes for ", applicationId);
+  try {
+    const { registeredOfficeAddress, sicCodes, industrySectorNames: industrySectorNames2, ...companyFields } = companyData;
+    const company = await context.db.Company.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        },
+        ...companyFields
+      }
+    });
+    const companyAddress = await create_a_company_address_default(context, registeredOfficeAddress, company.id);
+    const createdSicCodes = await create_company_sic_codes_default(context, sicCodes, industrySectorNames2, company.id);
+    return {
+      ...company,
+      registeredOfficeAddress: companyAddress,
+      sicCodes: createdSicCodes
+    };
+  } catch (err) {
+    console.error("Error creating a company, address and SIC codes %O", err);
+    throw new Error(`Creating a company, address and SIC codes ${err}`);
+  }
+};
+var create_a_company_default = createACompany;
+
 // custom-resolvers/mutations/create-an-application/index.ts
 var createAnApplication = async (root, variables, context) => {
   console.info("Creating application for ", variables.accountId);
   try {
-    const { accountId, eligibilityAnswers } = variables;
+    const { accountId, eligibilityAnswers, company: companyData } = variables;
     const account2 = await get_account_by_id_default(context, accountId);
     if (!account2) {
       return {
@@ -3226,6 +3299,7 @@ var createAnApplication = async (root, variables, context) => {
     const buyer = await create_a_buyer_default(context, country.id, applicationId);
     const eligibility = await create_an_eligibility_default(context, country.id, applicationId, otherEligibilityAnswers);
     const policy = await create_a_policy_default(context, applicationId);
+    const company = await create_a_company_default(context, applicationId, companyData);
     const updatedApplication = await context.db.Application.updateOne({
       where: {
         id: applicationId
@@ -3239,6 +3313,9 @@ var createAnApplication = async (root, variables, context) => {
         },
         policy: {
           connect: { id: policy.id }
+        },
+        company: {
+          connect: { id: company.id }
         }
       }
     });
@@ -3285,71 +3362,6 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
   }
 };
 var delete_application_by_reference_number_default = deleteApplicationByReferenceNumber;
-
-// types/index.ts
-var import_types2 = __toESM(require("@keystone-6/core/types"));
-
-// helpers/map-sic-codes/index.ts
-var mapSicCodes = (company, sicCodes, industrySectorNames2) => {
-  const mapped = [];
-  if (!sicCodes?.length) {
-    return mapped;
-  }
-  sicCodes.forEach((code, index) => {
-    let industrySectorName = "";
-    if (industrySectorNames2 && industrySectorNames2[index]) {
-      industrySectorName = industrySectorNames2[index];
-    }
-    const codeToAdd = {
-      sicCode: code,
-      industrySectorName,
-      company: {
-        connect: {
-          id: company.id
-        }
-      }
-    };
-    mapped.push(codeToAdd);
-  });
-  return mapped;
-};
-
-// custom-resolvers/mutations/update-company-and-company-address/index.ts
-var updateCompanyAndCompanyAddress = async (root, variables, context) => {
-  try {
-    console.info("Updating application company and company address for %s", variables.companyId);
-    const { address, sicCodes, industrySectorNames: industrySectorNames2, oldSicCodes, ...company } = variables.data;
-    if (company?.companyNumber && !company?.financialYearEndDate) {
-      company.financialYearEndDate = null;
-    }
-    const updatedCompany = await context.db.Company.updateOne({
-      where: { id: variables.companyId },
-      data: company
-    });
-    await context.db.CompanyAddress.updateOne({
-      where: { id: variables.companyAddressId },
-      data: address
-    });
-    const mappedSicCodes = mapSicCodes(updatedCompany, sicCodes, industrySectorNames2);
-    if (company && oldSicCodes && oldSicCodes.length) {
-      await context.db.CompanySicCode.deleteMany({
-        where: oldSicCodes
-      });
-    }
-    if (mappedSicCodes?.length) {
-      await context.db.CompanySicCode.createMany({
-        data: mappedSicCodes
-      });
-    }
-    return {
-      id: variables.companyId
-    };
-  } catch (err) {
-    console.error("Error updating application - company and company address %O", err);
-    throw new Error(`Updating application - company and company address ${err}`);
-  }
-};
-var update_company_and_company_address_default = updateCompanyAndCompanyAddress;
 
 // custom-resolvers/mutations/submit-application/index.ts
 var import_date_fns8 = require("date-fns");
@@ -3708,12 +3720,14 @@ var POLICY_FIELDS = {
 };
 
 // content-strings/fields/insurance/your-business/index.ts
-var { EXPORTER_BUSINESS: EXPORTER_BUSINESS2 } = insurance_default;
 var {
-  COMPANY_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS },
+  COMPANIES_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS, FINANCIAL_YEAR_END_DATE },
+  EXPORTER_BUSINESS: EXPORTER_BUSINESS2
+} = insurance_default;
+var {
   YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
-  TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL4 }
 } = EXPORTER_BUSINESS2;
 var FIELDS = {
@@ -3920,7 +3934,7 @@ var {
   }
 } = policy_default;
 var {
-  COMPANY_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
+  COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
   YOUR_COMPANY: { WEBSITE: WEBSITE2, PHONE_NUMBER: PHONE_NUMBER2 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL2 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 },
@@ -4017,7 +4031,7 @@ var CONTENT_STRINGS = {
 };
 var {
   EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME2 }
+    COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME2 }
   },
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { COUNTRY: COUNTRY2, NAME: BUYER_COMPANY_NAME2 }
@@ -4155,7 +4169,7 @@ var CONTENT_STRINGS3 = {
   ...FIELDS.BROKER
 };
 var {
-  COMPANY_HOUSE: { COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_NAME: COMPANY_NAME2, COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
+  COMPANIES_HOUSE: { COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_NAME: COMPANY_NAME2, COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
   YOUR_COMPANY: { TRADING_NAME: TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE3, PHONE_NUMBER: PHONE_NUMBER3 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL3 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
@@ -4920,7 +4934,6 @@ var customResolvers = {
     sendEmailReactivateAccountLink: send_email_reactivate_account_link_default,
     createAnApplication: create_an_application_default,
     deleteApplicationByReferenceNumber: delete_application_by_reference_number_default,
-    updateCompanyAndCompanyAddress: update_company_and_company_address_default,
     submitApplication: submit_application_default,
     createFeedbackAndSendEmail: create_feedback_default,
     verifyAccountReactivationToken: verify_account_reactivation_token_default

@@ -2,7 +2,6 @@ import partials from '../../../../../../partials';
 import {
   VALID_PHONE_NUMBERS,
   WEBSITE_EXAMPLES,
-  COMPANY_EXAMPLE,
   FIELD_VALUES,
 } from '../../../../../../constants';
 import {
@@ -15,26 +14,19 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insur
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
-  COMPANIES_HOUSE_NUMBER,
-  COMPANY_HOUSE: {
-    COMPANY_NAME,
-    COMPANY_NUMBER,
-    COMPANY_INCORPORATED,
-    FINANCIAL_YEAR_END_DATE,
-    COMPANY_SIC,
+  EXPORTER_BUSINESS: {
+    YOUR_COMPANY: {
+      TRADING_ADDRESS,
+      TRADING_NAME,
+      WEBSITE,
+      PHONE_NUMBER,
+    },
   },
-  YOUR_COMPANY: {
-    TRADING_ADDRESS,
-    TRADING_NAME,
-    WEBSITE,
-    PHONE_NUMBER,
-  },
-} = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
+} = INSURANCE_FIELD_IDS;
 
 const {
   ROOT,
   EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE_NUMBER_CHANGE,
     COMPANY_DETAILS_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
@@ -58,7 +50,6 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
       task.link().click();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
@@ -74,56 +65,6 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
   after(() => {
     cy.deleteApplication(referenceNumber);
-  });
-
-  describe(COMPANY_NUMBER, () => {
-    const fieldId = COMPANY_NUMBER;
-
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${COMPANIES_HOUSE_NUMBER_CHANGE}#heading`;
-
-        cy.assertUrl(expectedUrl);
-      });
-    });
-
-    describe('form submission with a new answer', () => {
-      const newAnswer = '14440211';
-
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.keyboardInput(field(COMPANIES_HOUSE_NUMBER).input(), newAnswer);
-
-        submitButton().click();
-      });
-
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}#heading`;
-
-        cy.assertUrl(expectedUrl);
-      });
-
-      it('should render the new answer', () => {
-        const expected = newAnswer;
-
-        cy.assertSummaryListRowValue(summaryList, fieldId, expected);
-        cy.assertSummaryListRowValue(summaryList, COMPANY_NAME, COMPANY_EXAMPLE.COMPANY_NAME);
-        cy.assertSummaryListRowValue(summaryList, COMPANY_INCORPORATED, COMPANY_EXAMPLE.COMPANY_INCORPORATED);
-
-        cy.assertSummaryListRowValue(summaryList, COMPANY_SIC, `${COMPANY_EXAMPLE.COMPANY_SIC} ${COMPANY_EXAMPLE.COMPANY_SIC_DESCRIPTION}`);
-
-        cy.assertSummaryListRowValue(summaryList, FINANCIAL_YEAR_END_DATE, COMPANY_EXAMPLE.FINANCIAL_YEAR_END_DATE);
-        cy.assertSummaryListRowValue(summaryList, COMPANY_NAME, 'AUDI LTD');
-        cy.assertSummaryListRowValue(summaryList, COMPANY_INCORPORATED, '25 October 2022');
-      });
-    });
   });
 
   describe(TRADING_NAME, () => {

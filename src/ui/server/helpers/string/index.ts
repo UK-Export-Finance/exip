@@ -1,4 +1,12 @@
 /**
+ * isAString
+ * Check if a value is a string
+ * @param {String}
+ * @returns {Boolean}
+ */
+const isAString = (value: any) => typeof value === 'string';
+
+/**
  * isEmptyString
  * Check if a string is empty
  * @param {String}
@@ -40,4 +48,4 @@ const stringsAreDefined = (str1?: string, str2?: string) => isPopulatedString(st
  */
 const stringsAreEqual = (str1: string, str2: string) => str1 === str2;
 
-export { isEmptyString, stripCommas, isPopulatedString, stringsAreDefined, stringsAreEqual };
+export { isAString, isEmptyString, stripCommas, isPopulatedString, stringsAreDefined, stringsAreEqual };

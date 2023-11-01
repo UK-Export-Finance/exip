@@ -11,7 +11,7 @@ export const COMPANIES_HOUSE_NUMBER = {
 export const COMPANY_DETAILS = {
   ...SHARED,
   PAGE_TITLE: 'Your company details',
-  TABLE_NAME: 'Your company',
+  TABLE_HEADING: 'Your company',
 };
 
 export const COMPANIES_HOUSE_UNAVAILABLE = {

@@ -27,6 +27,14 @@ const submitAnswersFromExporterLocationHappyPath = (assertAuthenticatedHeader = 
 
   checkAuthHeader(assertAuthenticatedHeader);
 
+  cy.completeAndSubmitCompaniesHouseSearchForm({});
+
+  checkAuthHeader(assertAuthenticatedHeader);
+
+  cy.completeEligibilityCompanyDetailsForm();
+
+  checkAuthHeader(assertAuthenticatedHeader);
+
   completeAndSubmitBuyerCountryForm();
 
   checkAuthHeader(assertAuthenticatedHeader);

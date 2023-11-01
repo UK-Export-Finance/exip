@@ -35,7 +35,6 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
 
       task.link().click();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
       cy.completeAndSubmitCompanyDetails();
       cy.completeAndSubmitNatureOfYourBusiness();
 
@@ -124,8 +123,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
 
     it('should retain all the fields on the page', () => {
       task.link().click();
-      // submit companies house number form
-      submitButton().click();
+
       // submit company details form
       submitButton().click();
       // submit nature of business form

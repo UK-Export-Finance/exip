@@ -1,18 +1,18 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import companiesHouse from '.';
-import mockCompany from '../../test-mocks/mock-company';
+import mockCompaniesHouseAPIResponse from '../../test-mocks/mock-companies-house-api-response';
 
 const companiesHouseURL = process.env.COMPANIES_HOUSE_API_URL;
 
-const { companyNumber } = mockCompany;
+const { company_number: companyNumber } = mockCompaniesHouseAPIResponse;
 
 describe('integrations/companies-house', () => {
   describe('when a 200 status and data is returned', () => {
     test('it should return success=true and data', async () => {
       const mock = new MockAdapter(axios);
 
-      const mockResponse = mockCompany;
+      const mockResponse = mockCompaniesHouseAPIResponse;
 
       mock.onGet(`${companiesHouseURL}/company/${companyNumber}`).reply(200, mockResponse);
 

@@ -1,5 +1,5 @@
 import formatDate from '../date/format-date';
-import { FIELD_IDS } from '../../constants';
+import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import { DEFAULT, FIELDS, PAGES } from '../../content-strings';
 import generateSummaryListRows from './generate-summary-list-rows';
 import fieldGroupItem from './generate-field-group-item';
@@ -9,10 +9,8 @@ import generateMultipleFieldHtml from '../generate-multiple-field-html';
 import { stringArrayHasValue, isPopulatedArray } from '../array';
 
 const {
-  EXPORTER_BUSINESS: { COMPANY_HOUSE },
-} = FIELD_IDS.INSURANCE;
-
-const { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, INDUSTRY_SECTOR_NAMES } = COMPANY_HOUSE;
+  COMPANIES_HOUSE: { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, INDUSTRY_SECTOR_NAMES },
+} = INSURANCE_FIELD_IDS;
 
 /**
  * generateSicCodesValue
@@ -94,7 +92,7 @@ const companyHouseSummaryList = (companyDetails: CompanyHouseResponse | Applicat
 
   const summaryList = {
     COMPANY_DETAILS: {
-      GROUP_TITLE: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS.TABLE_NAME,
+      GROUP_TITLE: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS.TABLE_HEADING,
       ROWS: generateSummaryListRows(fields),
     },
   };

@@ -1,6 +1,7 @@
 import { FIELD_IDS, GBP_CURRENCY_CODE } from '../constants';
 import mockAnswers from './mock-answers';
 import mockCountries from './mock-countries';
+import mockCompany from './mock-company';
 import { RequestSession } from '../../types';
 
 const {
@@ -21,15 +22,16 @@ const mockSession = {
       },
     },
     insuranceEligibility: {
+      [VALID_EXPORTER_LOCATION]: true,
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_COMPANIES_HOUSE_NUMBER]: true,
+      company: mockCompany,
       [BUYER_COUNTRY]: {
         ...mockCountries[0],
         canApplyOnline: true,
       },
-      [VALID_EXPORTER_LOCATION]: true,
       [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
       [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT]: false,
       [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD]: false,
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: true,
     },
   },
 } as RequestSession;

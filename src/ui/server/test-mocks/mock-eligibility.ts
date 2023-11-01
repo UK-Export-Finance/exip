@@ -1,4 +1,5 @@
 import mockCountries from './mock-countries';
+import mockCompany from './mock-company';
 import { InsuranceEligibility } from '../../types';
 
 const mockEligibility = {
@@ -6,6 +7,7 @@ const mockEligibility = {
   hasMinimumUkGoodsOrServices: true,
   validExporterLocation: true,
   hasCompaniesHouseNumber: true,
+  companiesHouseNumber: mockCompany.companyNumber,
   wantCoverOverMaxAmount: false,
   wantCoverOverMaxPeriod: false,
 } as InsuranceEligibility;

@@ -85,6 +85,7 @@ export {
   InsuranceEligibilityCore,
   InsuranceFeedbackVariables,
   Next,
+  Object,
   PageContentStrings,
   PageVariablesContentStrings,
   PricingGrid,

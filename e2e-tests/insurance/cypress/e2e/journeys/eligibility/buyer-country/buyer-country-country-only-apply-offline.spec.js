@@ -24,6 +24,8 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
     cy.completeCheckIfEligibleForm();
     cy.completeExporterLocationForm();
     cy.completeCompaniesHouseNumberForm();
+    cy.completeAndSubmitCompaniesHouseSearchForm({});
+    cy.completeEligibilityCompanyDetailsForm();
   });
 
   beforeEach(() => {

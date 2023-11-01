@@ -9,7 +9,6 @@ export interface CompanyResponse {
 export interface UpdateCompanyAndCompanyAddressVariablesData {
   address?: ApplicationCompanyAddress;
   sicCodes?: [string];
-  oldSicCodes?: [string];
   industrySectorNames?: [string];
   company?: CompanyUpdateInput;
 }

@@ -3,6 +3,7 @@ import getCountryByField from '../../../helpers/get-country-by-field';
 import createAnEligibility from '../../../helpers/create-an-eligibility';
 import createABuyer from '../../../helpers/create-a-buyer';
 import createAPolicy from '../../../helpers/create-a-policy';
+import createACompany from '../../../helpers/create-a-company';
 import { CreateAnApplicationVariables, Context } from '../../../types';
 
 /**
@@ -22,7 +23,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
   console.info('Creating application for ', variables.accountId);
 
   try {
-    const { accountId, eligibilityAnswers } = variables;
+    const { accountId, eligibilityAnswers, company: companyData } = variables;
 
     /**
      * Check the account exists.
@@ -71,6 +72,8 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
 
     const policy = await createAPolicy(context, applicationId);
 
+    const company = await createACompany(context, applicationId, companyData);
+
     /**
      * Update the application with relationships for:
      * 1) Buyer
@@ -90,6 +93,9 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
         },
         policy: {
           connect: { id: policy.id },
+        },
+        company: {
+          connect: { id: company.id },
         },
       },
     });

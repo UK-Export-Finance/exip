@@ -4,7 +4,7 @@ import NEW_LINE from '../../helpers/xlsx-new-line';
 import { mockCompany } from '../../../../test-mocks/mock-application';
 
 const {
-  COMPANY_HOUSE: {
+  COMPANIES_HOUSE: {
     COMPANY_ADDRESS,
     REGISTED_OFFICE_ADDRESS: { ADDRESS_LINE_1, ADDRESS_LINE_2, LOCALITY, REGION, POSTAL_CODE },
   },

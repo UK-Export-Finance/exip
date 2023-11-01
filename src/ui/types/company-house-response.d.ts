@@ -20,4 +20,4 @@ interface CompanyHouseResponse {
   apiError: boolean;
 }
 
-export { CompanyHouseResponse };
+export { CompaniesHouseAddress, CompanyHouseResponse };

@@ -1,9 +1,11 @@
+import { CompaniesHouseAddress } from './company-house-response';
+
 interface CompanyDetails {
   companyRegistration?: string;
   companyName?: string;
   companyAddress?: string;
   companyIncorporated?: string;
-  companySIC?: string;
+  registeredOfficeAddress?: CompaniesHouseAddress;
 }
 
 interface SicCode {

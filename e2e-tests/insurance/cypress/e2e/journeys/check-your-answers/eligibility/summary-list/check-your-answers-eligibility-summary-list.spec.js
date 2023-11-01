@@ -12,7 +12,6 @@ const {
 const {
   WANT_COVER_OVER_MAX_AMOUNT,
   WANT_COVER_OVER_MAX_PERIOD,
-  COMPANIES_HOUSE_NUMBER,
   BUYER_COUNTRY,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_EXPORTER_LOCATION,
@@ -68,9 +67,5 @@ context('Insurance - Check your answers - Eligibility - Summary List', () => {
 
   it(`should render a ${WANT_COVER_OVER_MAX_PERIOD} summary list row`, () => {
     checkSummaryList[WANT_COVER_OVER_MAX_PERIOD]();
-  });
-
-  it(`should render a ${COMPANIES_HOUSE_NUMBER} summary list row`, () => {
-    checkSummaryList[COMPANIES_HOUSE_NUMBER]();
   });
 });

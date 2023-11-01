@@ -1,0 +1,72 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import '../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary,
+      attributes: {
+        'data-cy': 'error-summary'
+      }
+    }) }}
+  {% endif %}
+
+  <form method="POST" id="form" novalidate>
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="companies-house-search">
+
+          {{ govukInput({
+            hint: {
+              html: FIELD.HINT,
+              attributes: {
+                "data-cy": FIELD.ID + "-hint"
+              }
+            },
+            attributes: {
+              "data-cy": FIELD.ID + "-input"
+            },
+            id: FIELD.ID,
+            name: FIELD.ID,
+            value: submittedValues[FIELD.ID],
+            errorMessage: validationErrors.errorList[FIELD.ID] and {
+              text: validationErrors.errorList[FIELD.ID].text,
+              attributes: {
+                "data-cy": FIELD.ID + "-error-message"
+              }
+            }
+          }) }}
+        </div>
+      </div>
+    </div>
+
+    {{ submitButton.render({
+      text: CONTENT_STRINGS.BUTTONS.CONTINUE
+    }) }}
+  </form>
+
+{% endblock %}

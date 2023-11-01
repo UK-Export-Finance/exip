@@ -16,8 +16,27 @@ export const INSURED_PERIOD = {
   PAGE_TITLE: `Do you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years?`,
 };
 
-export const COMPANIES_HOUSE_NUMBER = {
+export const HAS_COMPANIES_HOUSE_NUMBER = {
   PAGE_TITLE: 'Do you have a UK Companies House registration number and is your company actively trading?',
+};
+
+export const COMPANIES_HOUSE_NUMBER = {
+  PAGE_TITLE: 'Enter your Companies House number',
+};
+
+export const COMPANIES_HOUSE_UNAVAILABLE = {
+  PAGE_TITLE: 'You cannot search for your Companies House registration number right now',
+  ERROR_REASON: 'This is due to technical issues with the Companies House search',
+  TRY_AGAIN_PREFIX: 'You can',
+  TRY_AGAIN: 'try again in a few minutes.',
+  CONTINUE_PREFIX: 'Or you can continue filling in',
+  CONTINUE_LINK: 'other sections of your application,',
+  CONTINUE_SUFFIX: 'until this problem is resolved',
+  INFORMATION: '(You may lose any information you entered on the previous page.)',
+};
+
+export const COMPANY_DETAILS = {
+  PAGE_TITLE: 'Your company',
 };
 
 export const ELIGIBLE_TO_APPLY_ONLINE = {

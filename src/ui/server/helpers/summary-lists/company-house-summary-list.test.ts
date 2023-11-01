@@ -3,16 +3,14 @@ import { generateSicCodesValue, generateFields, companyHouseSummaryList } from '
 import generateSummaryListRows from './generate-summary-list-rows';
 import fieldGroupItem from './generate-field-group-item';
 import getFieldById from '../get-field-by-id';
-import { FIELD_IDS } from '../../constants';
+import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import { DEFAULT, FIELDS, PAGES } from '../../content-strings';
 import { mockCompany } from '../../test-mocks';
 import generateMultipleFieldHtml from '../generate-multiple-field-html';
 
 const {
-  EXPORTER_BUSINESS: { COMPANY_HOUSE },
-} = FIELD_IDS.INSURANCE;
-
-const { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC } = COMPANY_HOUSE;
+  COMPANIES_HOUSE: { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC },
+} = INSURANCE_FIELD_IDS;
 
 describe('server/helpers/summary-lists/company-house-summary-list', () => {
   describe('generateSicCodesValue', () => {
@@ -140,7 +138,7 @@ describe('server/helpers/summary-lists/company-house-summary-list', () => {
 
       const expected = {
         COMPANY_DETAILS: {
-          GROUP_TITLE: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS.TABLE_NAME,
+          GROUP_TITLE: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS.TABLE_HEADING,
           ROWS: generateSummaryListRows(fields),
         },
       };

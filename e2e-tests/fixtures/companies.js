@@ -9,7 +9,7 @@ import mockApplication from './application';
 import mockSicCodes from './sic-codes';
 
 const {
-  COMPANY_HOUSE: { INDUSTRY_SECTOR_NAME, FINANCIAL_YEAR_END_DATE },
+  COMPANIES_HOUSE: { INDUSTRY_SECTOR_NAME, FINANCIAL_YEAR_END_DATE },
 } = EXPORTER_BUSINESS_FIELD_IDS;
 
 const baseCompany = mockApplication.EXPORTER_COMPANY;

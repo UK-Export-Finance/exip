@@ -20,6 +20,8 @@ context('Complete insurance eligibility, get a quote and then re-visit the insur
 
     cy.completeExporterLocationForm();
     cy.completeCompaniesHouseNumberForm();
+    cy.completeAndSubmitCompaniesHouseSearchForm({});
+    cy.completeEligibilityCompanyDetailsForm();
     completeAndSubmitBuyerCountryForm();
     cy.completeInsuredAmountForm();
     cy.completeInsuredPeriodForm();

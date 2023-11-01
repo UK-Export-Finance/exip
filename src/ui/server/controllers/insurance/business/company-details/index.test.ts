@@ -25,7 +25,6 @@ const {
   INSURANCE_ROOT,
   EXPORTER_BUSINESS: {
     COMPANY_DETAILS_SAVE_AND_BACK,
-    COMPANIES_HOUSE_NUMBER_ROOT,
     NATURE_OF_BUSINESS_ROOT,
     CHECK_YOUR_ANSWERS,
     COMPANY_DETAILS_CHANGE,
@@ -69,7 +68,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
       const expected = {
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
-        DIFFERENT_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANIES_HOUSE_NUMBER_ROOT}`,
+        DIFFERENT_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_ROOT}`,
         FIELDS: BUSINESS_FIELD_IDS,
       };
 
@@ -100,21 +99,6 @@ describe('controllers/insurance/business/companies-details', () => {
           submittedValues,
           SUMMARY_LIST: populateCompaniesHouseSummaryList(company),
         });
-      });
-    });
-
-    describe('when there is no company number', () => {
-      beforeEach(() => {
-        // @ts-ignore
-        res.locals.application.company.companyNumber = '';
-      });
-
-      it(`should redirect to ${COMPANIES_HOUSE_NUMBER_ROOT}`, () => {
-        get(req, res);
-
-        const expectedUrl = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANIES_HOUSE_NUMBER_ROOT}`;
-
-        expect(res.redirect).toHaveBeenCalledWith(expectedUrl);
       });
     });
 
