@@ -391,7 +391,7 @@ jobs:
             --supported-protocols Http Https \
             --enable-caching false \
             --link-to-default-domain Enabled \
-            --origin-path ${{ vars.HEALTH_PROBE_PATH }} \
+            --origin-path / \
             --origin-group ui \
             --endpoint-name ${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
             --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
