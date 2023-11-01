@@ -116,7 +116,7 @@ export const ACCOUNT = {
       STRING_ENCODING: 'ascii' as BufferEncoding,
     },
     TOKEN: {
-      EXPIRY: '8h',
+      EXPIRY: '12h',
       ALGORITHM: 'RS256' as Algorithm,
     },
     SESSION_EXPIRY: () => {

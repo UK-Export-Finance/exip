@@ -559,11 +559,11 @@ jobs:
             --min-tls-version '${{ vars.TLS_VERSION }}'
 
       - name: Setting 🧱
-        env:
-          API_URL: az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
+            echo "API_URL=$(az webapp show --name app-exip-api-dev-001 --query defaultHostName -o tsv)" >> GITHUB_ENV
+
             # UI
             az webapp config appsettings set \
             --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \

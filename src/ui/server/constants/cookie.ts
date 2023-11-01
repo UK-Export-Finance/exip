@@ -8,7 +8,7 @@ const NAME = {
 
 // Time to live
 const TTL = {
-  SESSION: 604800000, // 7 days
+  SESSION: 43200, // 12 hours
   CSRF: 43200, // 12 hours
 };
 
