@@ -1,35 +1,14 @@
-# This workflow is designed to perform several tasks related to infrastructure setup, security, and configuration for a product named "exip".
-# The workflow is organized into logical sections, and each section depends on the previous one, ensuring a sequence of tasks, makes extensive
-# use of # Azure CLI commands and integrates with Azure resources.
-# Here's a breakdown of what each section of the workflow does:
+# Introduction
+# ***************
+# This code snippet is a GitHub Actions workflow file that automates the setup and configuration of the EXIP project's infrastructure using Azure CLI commands.
+# It creates various Azure resources such as resource groups, app service plans, log analytics workspaces, container registries, virtual networks, subnets, VNET peerings,
+# web apps, front doors, private endpoints, DNS configurations, and diagnostic settings. It also sets environment variables and configures the web apps with app settings and logging options.
 #
+# Naming conventions
+# ******************
 # Standard Azure naming convention has been followed:
 # https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming
 # A minor modification to standard naming convention has been made to not include the region.
-#
-# Environment Setup:
-# ******************
-# This section sets up the environment and timezone.
-# It determines the deployment target environment, such as development, staging, or production.
-#
-# Base Infrastructure Creation:
-# ****************************
-# Creates various resources on Azure, such as resource groups, app service plans, log analytics workspaces, container registries, and virtual networks.
-# Sets up subnets and VNET peering for different components.
-# Deploys web apps (UI and API) and configures them.
-#
-# Security:
-# *********
-# Handles security-related tasks like setting up private endpoints and DNS, creating WAF policies, and defining rules for the Front Door.
-# In development and staging environments, it includes an IP Allow List rule for added security.
-#
-# Web App Configuration:
-# **********************
-# Performs further configuration on the web apps, including enabling continuous deployment (CD), setting environment variables, and configuring settings for both UI and API.
-#
-# Log Configuration:
-# ******************
-# Sets up diagnostic settings and logs for different components, including web apps, Front Door, and private links.
 #
 # Execution
 # *********
