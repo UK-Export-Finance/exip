@@ -523,6 +523,9 @@ jobs:
             # Basic
             az configure --defaults location=${{ vars.REGION }}
             az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+            
+            # Environment variable
+            echo "API_URL=$(az webapp show --name app-exip-api-dev-001 --query defaultHostName -o tsv)" >> GITHUB_ENV
 
       - name: CD 🔀
         uses: Azure/cli@v1.0.8
@@ -562,8 +565,6 @@ jobs:
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
-            echo "API_URL=$(az webapp show --name app-exip-api-dev-001 --query defaultHostName -o tsv)" >> GITHUB_ENV
-
             # UI
             az webapp config appsettings set \
             --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
