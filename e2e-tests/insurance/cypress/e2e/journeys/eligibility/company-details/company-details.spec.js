@@ -66,7 +66,7 @@ context('Insurance - Eligibility - Companies details page - I want to check if I
       cy.checkText(body(), CONTENT_STRINGS.BODY);
     });
 
-    it('should display the companies house summary list', () => {
+    it('should render the companies house summary list', () => {
       cy.checkText(summaryList.field(COMPANY_NUMBER).key(), FIELDS[COMPANY_NUMBER].SUMMARY.TITLE);
 
       cy.checkText(summaryList.field(COMPANY_NUMBER).value(), COMPANIES_HOUSE_NUMBER);
