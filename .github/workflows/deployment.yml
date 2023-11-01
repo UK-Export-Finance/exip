@@ -28,14 +28,14 @@ on:
       - production
 
     paths:
-      - 'src/**'
-      - 'database/**'
-      - '.github/workflows/deployment.yml'
+      - "src/**"
+      - "database/**"
+      - ".github/workflows/deployment.yml"
 
 env:
   PRODUCT: exip
   ENVIRONMENT: ${{ github.ref_name }}
-  TIMEZONE: 'Europe/London'
+  TIMEZONE: "Europe/London"
   # Base artifact
   FROM: latest
 
