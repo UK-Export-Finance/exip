@@ -40,50 +40,8 @@ Based on the user's selection, the script performs the following actions:
 - Clears the values of the `destination` and `branch` variables.
 - Runs an Azure CLI command to purge specific resources in an Azure Container Registry (ACR).
 
-## Infrastructure 🔨
+## IaC 🔨
 
-This is a GitHub Actions workflow for setting up the base infrastructure for the "EXIP" (name of the product) project.
-The workflow consists of several steps:
-
-### Setup 🔧
-This step sets up the environment variables for the workflow, including the environment name and timezone.
-
-### Base Infrastructure Creation 🧱
-This step creates the base infrastructure components using Azure CLI commands. It includes the creation of a resource group, an app service plan, a log analytics workspace, a container registry, a virtual network, VNET peering with an Azure Managed Instance (AMI) SQL DB, and two web apps (UI and API).
-
-### WebApp Configuration 🔧
-This step configures the created web apps. It enables continuous deployment via containers, sets various configuration settings, such as enabling HTTPS, setting DNS server and VNET routing, configuring app settings, and configuring logging options.
-The workflow uses Azure CLI and Azure Login actions to interact with the Azure resources. It also uses environment variables and secrets to provide configuration values for the Azure commands.
-Please note that this is a workflow written in YAML syntax for GitHub Actions, and it is meant to be executed within a GitHub repository with the appropriate Azure credentials and configurations.
-
-Standard Azure naming convention has been followed, however a minor modification to the standard naming convention has been made to not include the region.
-
-Following Azure services are consumed: 📦
-
-* Azure resource group - az group create
-* Azure app service plan - Azure App Service Plan
-* Azure container registry - az acr create
-* Azure virtual network - Azure Virtual Network
-* Azure virtual network peer - az network vnet peering
-* Azure web app - Azure Web App
-
-### Execution 🔀
-The workflow is only invoked when the following conditions are satisfied:
-
-* Push to the infrastructure branch only.
-* Exact file path matches .github/workflows/infrastructure.yml.
-
-### Flow 🌊
-* **setup**: This job sets up the environment and timezone variables and outputs them for other jobs to use.
-* **base**: This job creates the base infrastructure using Azure CLI commands. It creates a resource group, an app service plan, a log analytics workspace, a container registry, a virtual network, establishes VNET peering, and creates web apps for the UI and API.
-* **webapp**: This job configures the web app settings, such as continuous deployment via containers, configuration settings, environment variables, and logging.
-
-Each job consists of multiple steps that are executed in sequence.
-
-### Note 📌
-Azure CLI will merely ignore the new resource creation if already exist with the same name.
-It's important to note that this YAML code is specific to an EXIP project and relies on Azure CLI and Azure resources.
-It assumes the presence of certain secrets and environment variables, which should be configured accordingly for the workflow to work properly.
 
 ## Deployment 🚀
 
