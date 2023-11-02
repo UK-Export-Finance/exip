@@ -9,11 +9,16 @@ import {
   COMPANIES_HOUSE_NUMBER_WITH_SPACE,
   COMPANIES_HOUSE_NUMBER_NOT_FOUND,
 } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER;
 
 const COMPANIES_HOUSE_ERRORS = ERROR_MESSAGES.INSURANCE.ELIGIBILITY;
+
+const {
+  ELIGIBILITY: { COMPANIES_HOUSE_NUMBER, ENTER_COMPANIES_HOUSE_NUMBER, COMPANY_DETAILS },
+} = INSURANCE_ROUTES;
 
 const {
   ELIGIBILITY: { COMPANIES_HOUSE_NUMBER: FIELD_ID },
@@ -24,7 +29,7 @@ const insuranceStartRoute = ROUTES.INSURANCE.START;
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Eligibility - Companies house search page - I want to check if I can use online service to apply for UKEF Export Insurance Policy', () => {
-  const url = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER}`;
+  const url = `${baseUrl}${ENTER_COMPANIES_HOUSE_NUMBER}`;
   let companyNumber;
 
   before(() => {
@@ -45,8 +50,8 @@ context('Insurance - Eligibility - Companies house search page - I want to check
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER,
-      backLink: ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER,
+      currentHref: ENTER_COMPANIES_HOUSE_NUMBER,
+      backLink: COMPANIES_HOUSE_NUMBER,
       assertAuthenticatedHeader: false,
     });
   });
@@ -150,8 +155,8 @@ context('Insurance - Eligibility - Companies house search page - I want to check
         submitButton().click();
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.COMPANY_DETAILS}`, () => {
-        const expected = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.COMPANY_DETAILS}`;
+      it(`should redirect to ${COMPANY_DETAILS}`, () => {
+        const expected = `${baseUrl}${COMPANY_DETAILS}`;
 
         cy.assertUrl(expected);
       });
