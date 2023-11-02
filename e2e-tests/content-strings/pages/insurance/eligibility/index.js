@@ -69,6 +69,8 @@ export const COMPANY_NOT_ACTIVE = {
 
 export const COMPANY_DETAILS = {
   PAGE_TITLE: 'Your company',
+  BODY: 'These details come from Companies House.',
+  DIFFERENT_COMPANIES_HOUSE_NUMBER: 'Enter a different Companies House registration number',
 };
 
 export const ELIGIBLE_TO_APPLY_ONLINE = {

@@ -56,16 +56,19 @@ describe('server/helpers/sanitise-data/sanitise-object', () => {
 
   describe('when an object contains a nested array', () => {
     it('should return the result of sanitiseArrayOfStrings for each relevant property in object', () => {
+      const [mockKey1, mockKey2] = ['a', 'b'];
+      const [mockValue1, mockValue2] = ['mock', ['mockArrayItem']];
+
       const mockObject = {
-        a: 'mock',
-        b: ['mockArrayItem'],
+        [mockKey1]: mockValue1,
+        [mockKey2]: mockValue2,
       };
 
       const result = sanitiseObject(mockObject);
 
       const expected = {
-        a: sanitiseValue({ key: 'a', value: mockObject.a }),
-        b: sanitiseArrayOfStrings(mockObject.b),
+        a: sanitiseValue({ key: mockKey1, value: mockValue1 }),
+        b: sanitiseArrayOfStrings(mockKey2, mockValue2),
       };
 
       expect(result).toEqual(expected);

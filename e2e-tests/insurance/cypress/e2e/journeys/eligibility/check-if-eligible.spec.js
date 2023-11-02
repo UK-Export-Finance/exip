@@ -1,7 +1,7 @@
 import { submitButton } from '../../../../../pages/shared';
-import { insurance } from '../../../../../pages';
 import { PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
+import { checkIfEligiblePage } from '../../../../../pages/insurance/eligibility';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE;
 
@@ -9,8 +9,6 @@ const {
   START,
   ELIGIBILITY: { CHECK_IF_ELIGIBLE, EXPORTER_LOCATION },
 } = INSURANCE_ROUTES;
-
-const { checkIfEligiblePage } = insurance.eligibility;
 
 const baseUrl = Cypress.config('baseUrl');
 

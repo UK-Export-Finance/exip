@@ -1,12 +1,12 @@
-import formatDate from '../date/format-date';
-import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
-import { DEFAULT, FIELDS, PAGES } from '../../content-strings';
-import generateSummaryListRows from './generate-summary-list-rows';
-import fieldGroupItem from './generate-field-group-item';
-import getFieldById from '../get-field-by-id';
-import { ApplicationCompany, CompaniesHouseResponse, SummaryListItemData } from '../../../types';
-import generateMultipleFieldHtml from '../generate-multiple-field-html';
-import { stringArrayHasValue, isPopulatedArray } from '../array';
+import formatDate from '../../date/format-date';
+import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
+import { DEFAULT, FIELDS } from '../../../content-strings';
+import generateSummaryListRows from '../generate-summary-list-rows';
+import fieldGroupItem from '../generate-field-group-item';
+import getFieldById from '../../get-field-by-id';
+import generateMultipleFieldHtml from '../../generate-multiple-field-html';
+import { stringArrayHasValue, isPopulatedArray } from '../../array';
+import { ApplicationCompany, CompanyDetails, SummaryListItemData } from '../../../../types';
 
 const {
   COMPANIES_HOUSE: { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, INDUSTRY_SECTOR_NAMES },
@@ -45,7 +45,7 @@ const generateSicCodesValue = (sicCodes?: Array<string>, industrySectorNames?: A
  * @param {Object} Company details
  * @returns {Object} All quote values in an object structure for GOVUK summary list structure
  */
-const generateFields = (companyDetails: CompaniesHouseResponse | ApplicationCompany) => {
+const generateFields = (companyDetails: CompanyDetails | ApplicationCompany) => {
   const fields = [
     fieldGroupItem({
       field: getFieldById(FIELDS, COMPANY_NUMBER),
@@ -82,22 +82,25 @@ const generateFields = (companyDetails: CompaniesHouseResponse | ApplicationComp
 };
 
 /**
- * companyHouseSummaryList
+ * companiesHouseSummaryList
  * Create a group with govukSummaryList data structure
  * @param {Object} All quote content in a simple object.text structure
  * @returns {Object} A group with multiple fields/answers in govukSummaryList data structure
  */
-const companyHouseSummaryList = (companyDetails: CompaniesHouseResponse | ApplicationCompany) => {
-  const fields = generateFields(companyDetails);
+const companiesHouseSummaryList = (company?: CompanyDetails | ApplicationCompany) => {
+  if (company) {
+    const fields = generateFields(company);
 
-  const summaryList = {
-    COMPANY_DETAILS: {
-      GROUP_TITLE: PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS.TABLE_HEADING,
-      ROWS: generateSummaryListRows(fields),
-    },
-  };
+    const summaryList = {
+      COMPANY_DETAILS: {
+        ROWS: generateSummaryListRows(fields),
+      },
+    };
 
-  return summaryList;
+    return summaryList;
+  }
+
+  return {};
 };
 
-export { generateSicCodesValue, generateFields, companyHouseSummaryList };
+export { generateSicCodesValue, generateFields, companiesHouseSummaryList };

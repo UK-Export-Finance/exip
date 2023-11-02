@@ -8,7 +8,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import companyDetailsValidation from './validation/company-details';
 import { isPopulatedArray } from '../../../../helpers/array';
 import mapAndSave from '../map-and-save/company-details';
-import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-house-summary-list';
+import { companiesHouseSummaryList } from '../../../../helpers/summary-lists/companies-house';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
@@ -36,7 +36,7 @@ const { COMPANY_DETAILS_SAVE_AND_BACK, NATURE_OF_BUSINESS_ROOT, CHECK_YOUR_ANSWE
 const pageVariables = (referenceNumber: number) => {
   return {
     SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
-    DIFFERENT_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}`,
+    DIFFERENT_COMPANIES_HOUSE_NUMBER_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}`,
     FIELDS: BUSINESS_FIELD_IDS,
   };
 };
@@ -73,7 +73,7 @@ const get = (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       ...pageVariables(application.referenceNumber),
       submittedValues,
-      SUMMARY_LIST: populateCompaniesHouseSummaryList(company),
+      SUMMARY_LIST: companiesHouseSummaryList(company),
     });
   } catch (err) {
     console.error('Error getting company details %O', err);
@@ -123,7 +123,7 @@ const post = async (req: Request, res: Response) => {
         ...pageVariables(application.referenceNumber),
         validationErrors,
         submittedValues,
-        SUMMARY_LIST: populateCompaniesHouseSummaryList(company),
+        SUMMARY_LIST: companiesHouseSummaryList(company),
       });
     }
 

@@ -1,5 +1,6 @@
 import { PAGES } from '../../../../../../../content-strings';
 import { verifyEmailLinkExpiredPage } from '../../../../../../../pages/insurance/account/create';
+import { body } from '../../../../../../../pages/shared';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import api from '../../../../../../../commands/api';
 
@@ -82,7 +83,7 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
       });
 
       // assert body content
-      cy.checkText(verifyEmailLinkExpiredPage.body(), CONTENT_STRINGS.BODY);
+      cy.checkText(body(), CONTENT_STRINGS.BODY);
 
       // assert link to create an account
       cy.checkLink(verifyEmailLinkExpiredPage.createAccount(), CONTENT_STRINGS.CREATE_ACCOUNT.HREF, CONTENT_STRINGS.CREATE_ACCOUNT.TEXT);
