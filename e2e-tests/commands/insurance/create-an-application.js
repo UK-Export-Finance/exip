@@ -7,7 +7,7 @@ const {
   COMPANIES_HOUSE: { COMPANY_NUMBER, FINANCIAL_YEAR_END_DATE },
 } = INSURANCE_FIELD_IDS;
 
-const { ELIGIBILITY: mockEligibilityAnswers, EXPORTER_COMPANY: mockCompany } = mockApplication;
+const { ELIGIBILITY: mockEligibilityAnswers, COMPANY: mockCompany } = mockApplication;
 
 /**
  * createAnApplication

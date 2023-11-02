@@ -33,7 +33,7 @@ const task = taskList.prepareApplication.tasks.business;
 
 const financialYearEnd = {
   content: FIELDS.TURNOVER[FINANCIAL_YEAR_END_DATE],
-  timestamp: application.EXPORTER_COMPANY[FINANCIAL_YEAR_END_DATE],
+  timestamp: application.COMPANY[FINANCIAL_YEAR_END_DATE],
 };
 
 financialYearEnd.expectedValue = formatDate(financialYearEnd.timestamp, financialYearEnd.content.DATE_FORMAT);

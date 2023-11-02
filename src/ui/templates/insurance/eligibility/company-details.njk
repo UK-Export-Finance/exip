@@ -1,5 +1,6 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% import '../../components/submit-button.njk' as submitButton %}
 
@@ -21,7 +22,21 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters-from-desktop">
+
         <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+        <p class="govuk-body" data-cy="body">{{ CONTENT_STRINGS.BODY }}</p>
+
+        {{ govukSummaryList({
+          classes: 'govuk-!-margin-bottom-9',
+          rows: SUMMARY_LIST.COMPANY_DETAILS.ROWS,
+          attributes: {
+            'data-cy':  FIELDS.COMPANIES_HOUSE.SEARCH + '-summary-list'
+          }
+        }) }}
+
+        <p class="govuk-body govuk-!-margin-bottom-8"><a class="govuk-link" href="{{ DIFFERENT_COMPANIES_HOUSE_NUMBER_URL }}" data-cy="different-companies-house-number">{{ CONTENT_STRINGS.DIFFERENT_COMPANIES_HOUSE_NUMBER }}</a></p>
+
       </div>
     </div>
 

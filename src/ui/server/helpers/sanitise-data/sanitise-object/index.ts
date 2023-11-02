@@ -23,7 +23,7 @@ const sanitiseObject = (obj: ObjectType) => {
 
     if (value) {
       if (Array.isArray(value)) {
-        sanitised[key] = sanitiseArrayOfStrings(value);
+        sanitised[key] = sanitiseArrayOfStrings(key, value);
       } else if (isAnObjectWithKeysAndValues(value)) {
         sanitised[key] = sanitiseObject(value);
       } else {

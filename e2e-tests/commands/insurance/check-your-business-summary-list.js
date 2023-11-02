@@ -59,7 +59,7 @@ const checkYourBusinessSummaryList = ({
     const fieldId = WEBSITE;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.EXPORTER_COMPANY[fieldId];
+    const expectedValue = application.COMPANY[fieldId];
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
@@ -67,7 +67,7 @@ const checkYourBusinessSummaryList = ({
     const fieldId = PHONE_NUMBER;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.EXPORTER_COMPANY[fieldId];
+    const expectedValue = application.COMPANY[fieldId];
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },

@@ -36,7 +36,7 @@ const field = fieldSelector(fieldId);
 
 const baseUrl = Cypress.config('baseUrl');
 
-const timestamp = application.EXPORTER_COMPANY[fieldId];
+const timestamp = application.COMPANY[fieldId];
 const expectedValue = formatDate(timestamp, DATE_FORMAT);
 
 context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, () => {

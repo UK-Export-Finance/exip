@@ -101,7 +101,7 @@ describe('server/helpers/sanitise-data', () => {
 
         const result = sanitiseFormField(mockKey, mockValue);
 
-        const expected = sanitiseArrayOfStrings(mockValue);
+        const expected = sanitiseArrayOfStrings(mockKey, mockValue);
 
         expect(result).toEqual(expected);
       });
