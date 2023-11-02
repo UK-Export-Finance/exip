@@ -11,8 +11,9 @@ interface CompaniesHouseAddress {
 
 interface CompanyHouseResponse {
   companyName: string;
-  registeredOfficeAddress: CompaniesHouseAddress;
   companyNumber: string;
+  isActive: boolean;
+  registeredOfficeAddress: CompaniesHouseAddress;
   dateOfCreation: string;
   sicCodes: Array<string>;
   industrySectorNames: Array<string>;

@@ -20,7 +20,7 @@ const {
 const {
   PROBLEM_WITH_SERVICE,
   INSURANCE: {
-    ELIGIBILITY: { COMPANY_DETAILS, COMPANIES_HOUSE_UNAVAILABLE },
+    ELIGIBILITY: { COMPANY_DETAILS, COMPANY_NOT_ACTIVE, COMPANIES_HOUSE_UNAVAILABLE },
   },
 } = ROUTES;
 
@@ -166,6 +166,25 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
 
         expect(res.redirect).toHaveBeenCalledWith(COMPANY_DETAILS);
       });
+
+      describe('when companiesHouse.search returns isActive=false', () => {
+        it(`should redirect to ${COMPANY_NOT_ACTIVE}`, async () => {
+          req.body = validBody;
+
+          const mockResponse = {
+            companyNumber: mockCompaniesHouseResponse.companyNumber,
+            validationErrors: false,
+            apiError: false,
+            isActive: false
+          };
+
+          companiesHouse.search = jest.fn(() => Promise.resolve(mockResponse));
+
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(COMPANY_NOT_ACTIVE);
+        });
+      });
     });
 
     describe('api error handling', () => {
@@ -197,7 +216,7 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
         });
       });
 
-      describe('when companiesHouse.search returns apiError', () => {
+      describe('when companiesHouse.search returns apiError=true', () => {
         it(`should redirect to ${COMPANIES_HOUSE_UNAVAILABLE}`, async () => {
           req.body = validBody;
 

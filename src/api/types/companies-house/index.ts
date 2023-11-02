@@ -22,8 +22,9 @@ export interface CompaniesHouseAPIAddress {
 
 export interface CompaniesHouseResponse {
   company_name: string;
-  registered_office_address: CompaniesHouseAPIAddress;
   company_number: string;
+  company_status: string;
+  registered_office_address: CompaniesHouseAPIAddress;
   date_of_creation: string;
   sic_codes: Array<string>;
   accounts: CompaniesHouseAccounts;

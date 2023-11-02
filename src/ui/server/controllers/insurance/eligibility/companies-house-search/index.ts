@@ -20,7 +20,7 @@ const {
 const {
   PROBLEM_WITH_SERVICE,
   INSURANCE: {
-    ELIGIBILITY: { COMPANY_DETAILS, COMPANIES_HOUSE_UNAVAILABLE },
+    ELIGIBILITY: { COMPANY_DETAILS, COMPANY_NOT_ACTIVE, COMPANIES_HOUSE_UNAVAILABLE },
   },
 } = ROUTES;
 
@@ -109,11 +109,16 @@ export const post = async (req: Request, res: Response) => {
 
     /**
      * Companies house API call was successful
-     * 1) Map the returned company details.
+     * 1) If the company is not active, redirect to an exit page. Otherwise:
+     * 2) Map the returned company details.
      * 2) Add mapped data to the session.
      * 3) Redirect to the next part of the flow, COMPANY_DETAILS.
      */
     const companyObj = { ...response.company };
+
+    if (!companyObj.isActive) {
+      return res.redirect(COMPANY_NOT_ACTIVE);
+    }
 
     const mappedCompanyDetails = mapCompaniesHouseData(companyObj);
 
