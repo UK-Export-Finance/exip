@@ -539,7 +539,7 @@ jobs:
 
       - name: Variables ✨
         run: |
-          echo "API_URL=$(az webapp show --name app-exip-api-dev-001 --query defaultHostName -o tsv)" >> $GITHUB_ENV
+          echo "API_URL=$(az webapp show --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv)" >> $GITHUB_ENV
 
       - name: Setting 🧱
         uses: Azure/cli@v1.0.8
