@@ -9,7 +9,7 @@ import generateValidationErrors from '../../../../helpers/companies-house-search
 import companiesHouse from '../../../../helpers/companies-house-search';
 import mapCompaniesHouseData from '../../../../helpers/mappings/map-companies-house-data';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
-import { Request, Response } from '../../../../../types';
+import { CompanyHouseResponse, Request, Response } from '../../../../../types';
 
 const {
   ELIGIBILITY: {
@@ -64,7 +64,7 @@ export const get = (req: Request, res: Response) =>
  */
 export const post = async (req: Request, res: Response) => {
   try {
-    const payload = constructPayload(req.body, [FIELD_ID]);
+    const payload = constructPayload(req.body, [FIELD_ID]) as CompanyHouseResponse;
 
     /**
      * Check that a companies house number has been provided.

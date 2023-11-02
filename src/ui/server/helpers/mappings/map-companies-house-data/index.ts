@@ -17,7 +17,7 @@ const {
  * @returns {Object} populatedData
  */
 const mapCompaniesHouseData = (formBody: RequestBody): object => {
-  const { __typename, success, _csrf, apiError, ...populatedData } = formBody;
+  const { success, apiError, ...populatedData } = formBody;
 
   if (!populatedData[COMPANY_ADDRESS]) {
     // create empty companyAddress if not part of request
