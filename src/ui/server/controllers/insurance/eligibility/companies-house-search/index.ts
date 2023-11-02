@@ -70,9 +70,39 @@ export const post = async (req: Request, res: Response) => {
      * Check that a companies house number has been provided.
      * If not, render the template with validation errors.
      */
-    const validationErrors = generateValidationErrors(payload);
+    const formValidationErrors = generateValidationErrors(payload);
 
-    if (validationErrors) {
+    if (formValidationErrors) {
+      return res.render(TEMPLATE, {
+        ...insuranceCorePageVariables({
+          PAGE_CONTENT_STRINGS,
+          BACK_LINK: req.headers.referer,
+        }),
+        userName: getUserNameFromSession(req.session.user),
+        ...PAGE_VARIABLES,
+        validationErrors: formValidationErrors,
+      });
+    }
+
+    /**
+     * 1) Call companies house API (via our own API)
+     * 2) If apiError is returned, redirect to COMPANIES_HOUSE_UNAVAILABLE.
+     * 3) If the company is not active, redirect COMPANY_NOT_ACTIVE>
+     * 4) If validationErrors are returned, render the page with validation errors.
+     */
+    const response = await companiesHouse.search(payload);
+
+    if (response.apiError) {
+      return res.redirect(COMPANIES_HOUSE_UNAVAILABLE);
+    }
+
+    if (!response.company?.isActive) {
+      return res.redirect(COMPANY_NOT_ACTIVE);
+    }
+
+    if (response.validationErrors) {
+      const { validationErrors } = response;
+
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
@@ -85,40 +115,12 @@ export const post = async (req: Request, res: Response) => {
     }
 
     /**
-     * 1) Call companies house API (via our own API)
-     * 2) If apiError is returned, redirect to COMPANIES_HOUSE_UNAVAILABLE.
-     * 3) If validationErrors are returned, render the page with validation errors.
-     */
-    const response = await companiesHouse.search(payload);
-
-    if (response.apiError) {
-      return res.redirect(COMPANIES_HOUSE_UNAVAILABLE);
-    }
-
-    if (response.validationErrors) {
-      return res.render(TEMPLATE, {
-        ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS,
-          BACK_LINK: req.headers.referer,
-        }),
-        userName: getUserNameFromSession(req.session.user),
-        ...PAGE_VARIABLES,
-        validationErrors: response.validationErrors,
-      });
-    }
-
-    /**
-     * Companies house API call was successful
-     * 1) If the company is not active, redirect to an exit page. Otherwise:
-     * 2) Map the returned company details.
+     * Companies house API call was successful. No errors and the company is active.
+     * 1) Map the returned company details.
      * 2) Add mapped data to the session.
      * 3) Redirect to the next part of the flow, COMPANY_DETAILS.
      */
     const companyObj = { ...response.company };
-
-    if (!companyObj.isActive) {
-      return res.redirect(COMPANY_NOT_ACTIVE);
-    }
 
     const mappedCompanyDetails = mapCompaniesHouseData(companyObj);
 

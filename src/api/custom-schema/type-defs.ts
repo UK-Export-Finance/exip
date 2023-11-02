@@ -51,6 +51,7 @@ const typeDefs = `
     financialYearEndDate: DateTime
     success: Boolean
     apiError: Boolean
+    isActive: Boolean
   }
 
   type CompanyAddress {

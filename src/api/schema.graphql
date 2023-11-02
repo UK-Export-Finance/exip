@@ -2340,6 +2340,7 @@ type CompaniesHouseResponse {
   financialYearEndDate: DateTime
   success: Boolean
   apiError: Boolean
+  isActive: Boolean
 }
 
 input OldSicCodes {
