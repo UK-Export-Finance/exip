@@ -605,7 +605,7 @@ var ACCOUNT2 = {
       STRING_ENCODING: "ascii"
     },
     TOKEN: {
-      EXPIRY: "8h",
+      EXPIRY: "12h",
       ALGORITHM: "RS256"
     },
     SESSION_EXPIRY: () => {
@@ -2784,7 +2784,6 @@ var createJWT = (accountId) => {
   const expiresIn = EXPIRY;
   const payload = {
     sub: accountId,
-    iat: Date.now(),
     sessionIdentifier
   };
   const signedToken = import_jsonwebtoken.default.sign(payload, PRIV_KEY, { expiresIn, algorithm: ALGORITHM });

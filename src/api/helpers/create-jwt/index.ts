@@ -24,7 +24,6 @@ const createJWT = (accountId: string) => {
 
   const payload = {
     sub: accountId,
-    iat: Date.now(),
     sessionIdentifier,
   };
 

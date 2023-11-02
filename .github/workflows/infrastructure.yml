@@ -1,60 +1,20 @@
-# This GHA is responsible for `EXIP` supporting infrastructure
-# creation and configuration using `az cli` bash scripting.
+# Introduction
+# ***************
+# This code snippet is a GitHub Actions workflow file that automates the setup and configuration of the EXIP project's infrastructure using Azure CLI commands.
+# It creates various Azure resources such as resource groups, app service plans, log analytics workspaces, container registries, virtual networks, subnets, VNET peerings,
+# web apps, front doors, private endpoints, DNS configurations, and diagnostic settings. It also sets environment variables and configures the web apps with app settings and logging options.
 #
-# This is a GitHub Actions workflow for setting up the base infrastructure for the "EXIP" (name of the product) project. The workflow consists of several steps:
-#
-# Setup: This step sets up the environment variables for the workflow, including the environment name and timezone.
-# Base Infrastructure Creation: This step creates the base infrastructure components using Azure CLI commands. It includes the creation of a resource group, an app service plan,
-# a log analytics workspace, a container registry, a virtual network, VNET peering with an Azure Managed Instance (AMI) # SQL DB, and two web apps (UI and API).
-#
-# WebApp Configuration: This step configures the created web apps. It enables continuous deployment via containers, sets various configuration settings, such as enabling HTTPS, setting DNS server
-# and VNET routing, configuring app settings, and configuring logging options.
-# The workflow uses Azure CLI and Azure Login actions to interact with the Azure resources. It also uses environment variables and secrets to provide configuration values for the Azure commands.
-# Please note that this is a workflow written in YAML syntax for GitHub Actions, and it is meant to be executed within a GitHub repository with the appropriate Azure credentials and configurations.
-#
+# Naming conventions
+# ******************
 # Standard Azure naming convention has been followed:
 # https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming
 # A minor modification to standard naming convention has been made to not include the region.
-#
-#
-# Following Azure services are consumed:
-# 1. Azure resource group - https://learn.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az-group-create
-# 2. Azure app service plan - https://learn.microsoft.com/en-us/azure/app-service/overview-hosting-plans
-# 3. Azure container registry - https://learn.microsoft.com/en-us/cli/azure/acr?view=azure-cli-latest#az-acr-create
-# 4. Azure virtual network - https://learn.microsoft.com/en-us/azure/virtual-network/virtual-networks-overview
-# 5. Azure virtual network peer - https://learn.microsoft.com/en-us/cli/azure/network/vnet/peering?view=azure-cli-latest
-# 6. Azure web app - https://learn.microsoft.com/en-us/azure/app-service/overview
-#
 #
 # Execution
 # *********
 # GHA is only invoked when following conditions are satisfied:
 # 1. Push to the `infrastructure` branch only.
 # 2. Exact file path matches `.github/workflows/infrastructure.yml`.
-#
-# Flow
-# ****
-# Infrastructure 🔨
-# This is a GitHub workflow that builds and deploys infrastructure for EXIP.
-#
-# On:
-# Push to the infrastructure branch
-#
-# Jobs:
-# 1. Setup:
-# Sets up environment variables and timezone.
-#
-# 2. Base:
-# Creates a resource group, app service plan, log analytics workspace, container registry, virtual network, and VNET peering.
-# Creates a web app for the UI and API.
-#
-# 3. WebApp:
-# Configures continuous deployment for the UI and API.
-# Sets configuration and settings for the UI and API.
-#
-# 4. Outputs:
-# Environment: The name of the environment, e.g. development or production.
-# Timezone: The timezone referred from the GitHub environment variables.
 #
 # Note
 # ****
@@ -74,7 +34,7 @@ on:
 env:
   PRODUCT: exip
   ENVIRONMENT: infrastructure
-  TIMEZONE: '${{ vars.TIMEZONE }}'
+  TIMEZONE: "${{ vars.TIMEZONE }}"
   # Deployment environment target i.e., `development`, `staging`, `production`
   TARGET: ${{ vars.ENVIRONMENT }}
 
@@ -103,7 +63,7 @@ jobs:
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
       - name: Pre-production 💫
-        if: contains('["development", "staging"]', env.TARGET)
+        if: contains('["dev", "staging"]', env.TARGET)
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
@@ -151,12 +111,10 @@ jobs:
         with:
           inlineScript: |
             az monitor log-analytics workspace create \
-            --name log-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --ingestion-access Disabled \
-            --query-access Disabled \
-            --quota 0.05 \
+            --name log-workspace-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --quota ${{ vars.LOG_QUOTA }} \
             --retention-time ${{ vars.LOG_RETENTION_DAY }} \
-            --sku ${{ vars.LOG_ANALYTICS_PLAN }} \
+            --sku ${{ vars.LOG_PLAN }} \
             --tags ${{ env.TAGS }}
 
       - name: Container registry 📦️
@@ -167,7 +125,7 @@ jobs:
             --name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }} \
             --sku Standard \
             --admin-enabled true \
-            --workspace log-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --workspace log-workspace-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --tags ${{ env.TAGS }}
 
       - name: Virtual network 🧵
@@ -176,10 +134,24 @@ jobs:
           inlineScript: |
             az network vnet create \
             --name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --address-prefix ${{ secrets.VNET_ADDRESS_PREFIX }} \
-            --subnet-name snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-            --subnet-prefixes ${{ secrets.VNET_SUBNET_PREFIX }} \
+            --address-prefix ${{ vars.VNET_ADDRESS_PREFIX }} \
             --tags ${{ env.TAGS }}
+
+      - name: Subnets 💫
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # WebApp
+            az network vnet subnet create \
+            --name snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --address-prefixes ${{ vars.VNET_SUBNET_WEBAPP_PREFIX }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+
+            # Private endpoint
+            az network vnet subnet create \
+            --name snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --address-prefixes ${{ vars.VNET_SUBNET_PRIVATE_PREFIX }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
       - name: VNET Peer - AMI 🔀
         uses: Azure/cli@v1.0.8
@@ -209,6 +181,34 @@ jobs:
             --name vnet-peer-ami-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --query peeringState)"
 
+      - name: VNET Peer - APIM 🔀
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # API management (APIM) VNET peering
+
+            # Local VNET peer
+            az network vnet peering create \
+            --name vnet-peer-apim-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --remote-vnet $(az network vnet show --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_APIM }} --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_APIM }} --name ${{ secrets.REMOTE_VNET_NAME_APIM }} --query 'id' -o tsv) \
+            --allow-vnet-access 1
+
+            # Remote VNET peer
+            az network vnet peering create \
+            --name vnet-peer-apim-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name  ${{ secrets.REMOTE_VNET_NAME_APIM }} \
+            --remote-vnet $(az network vnet show --name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query 'id' -o tsv) \
+            --allow-vnet-access 1 \
+            --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_APIM }} \
+            --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_APIM }}
+
+            # Fetch peering state
+            echo "Peering state: $(az network vnet peering show \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --name vnet-peer-apim-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --query peeringState)"
+
       - name: Web app - UI 🌐
         uses: Azure/cli@v1.0.8
         with:
@@ -218,25 +218,266 @@ jobs:
             --plan appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/ui:${{ env.TARGET }} \
             --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --subnet snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --subnet snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --https-only true \
             --tags ${{ env.TAGS }}
 
       - name: Web app - API 🌐
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
-            az webapp create \
+            az webapp create  \
             --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
             --plan appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/api:${{ env.TARGET }} \
             --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --subnet snet-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --subnet snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --https-only true \
             --tags ${{ env.TAGS }}
 
-  # 3. WebApp configuration
+      - name: Front Door 🚪
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # Profile
+            az afd profile create \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --sku ${{ secrets.AZURE_FRONT_DOOR_SKU }} \
+            --tags ${{ env.TAGS }}
+
+            # Endpoint
+            az afd endpoint create \
+            --endpoint-name ${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --tags ${{ env.TAGS }}
+
+            # Origin Group
+            az afd origin-group create \
+            --origin-group-name ui \
+            --probe-path ${{ vars.HEALTH_PROBE_PATH }} \
+            --probe-protocol ${{ vars.HEALTH_PROBE_PROTOCOL }} \
+            --probe-request-type ${{ vars.HEALTH_PROBE_HTTP_METHOD }} \
+            --additional-latency-in-milliseconds ${{ vars.HEALTH_PROBE_LATENCY }} \
+            --sample-size ${{ vars.LOAD_BALANCING_SAMPLE_SIZE }} \
+            --successful-samples-required ${{ vars.LOAD_BALANCING_SAMPLES }} \
+            --probe-interval-in-seconds ${{ vars.LOAD_BALANCING_INTERVAL }} \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+
+  # 3. Security
+  security:
+    name: Security 🔑
+    needs: base
+    environment: ${{ needs.base.outputs.environment }}
+    runs-on: [self-hosted, EXIP, infrastructure]
+    steps:
+      - name: Pre-production 💫
+        if: contains('["dev", "staging"]', env.TARGET)
+        run: echo "TYPE=Preproduction" >> $GITHUB_ENV
+
+      - name: Production 💫
+        if: ${{ 'prod' == env.TARGET }}
+        run: echo "TYPE=Production" >> $GITHUB_ENV
+
+      - name: Tags 🏷️
+        run: echo TAGS='Environment=${{ env.TYPE }}' \
+          'Product=${{ env.PRODUCT }}' \
+          'Team=development' >> $GITHUB_ENV
+
+      - name: Login 🔐
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Azure defaults ✨
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # Basic
+            az configure --defaults location=${{ vars.REGION }}
+            az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+
+      - name: Extension ➕
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az extension add --name front-door
+
+      - name: Private endpoint 🔏
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            #UI
+            az network private-endpoint create \
+            --name private-endpoint-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --private-connection-resource-id $(az webapp list --query '[?contains(name, `app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}`)].id' -o tsv) \
+            --connection-name private-link-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --subnet snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --group-id sites \
+            --tags ${{ env.TAGS }}
+
+            #API
+            az network private-endpoint create \
+            --name private-endpoint-api-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --private-connection-resource-id $(az webapp list --query '[?contains(name, `app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }}`)].id' -o tsv) \
+            --connection-name private-link-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --subnet snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --group-id sites \
+            --tags ${{ env.TAGS }}
+
+      - name: Private DNS 🌍
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az network private-dns zone create \
+            --name ${{ secrets.PRIVATE_DNS_ZONE_NAME }} \
+            --tags ${{ env.TAGS }}
+
+      - name: DNS VNET ➕
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az network private-dns link vnet create \
+            --zone-name ${{ secrets.PRIVATE_DNS_ZONE_NAME }} \
+            --name dns-vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --virtual-network vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --registration-enabled false \
+            --tags ${{ env.TAGS }}
+
+      - name: DNS Records 📝
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            #UI
+            az network private-endpoint dns-zone-group create \
+            --endpoint-name private-endpoint-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --name ${{ env.PRODUCT }} \
+            --private-dns-zone ${{ secrets.PRIVATE_DNS_ZONE_NAME }} \
+            --zone-name webapp
+
+            #API
+            az network private-endpoint dns-zone-group create \
+            --endpoint-name private-endpoint-api-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --name ${{ env.PRODUCT }} \
+            --private-dns-zone ${{ secrets.PRIVATE_DNS_ZONE_NAME }} \
+            --zone-name webapp
+
+      - name: Front Door 🚪
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # Origin
+            az afd origin create \
+            --origin-name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --host-name $(az webapp show --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv) \
+            --origin-host-header $(az webapp show --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv) \
+            --priority 1 \
+            --weight 1000 \
+            --enable-private-link true \
+            --private-link-location ${{ vars.REGION }} \
+            --private-link-resource $(az webapp show --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) \
+            --private-link-request-message '${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}' \
+            --private-link-sub-resource-type $(az network private-link-resource list --id $(az webapp show --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) --query [].name -o tsv) \
+            --origin-group-name ui \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --enabled-state Enabled
+
+            # Route
+            az afd route create \
+            --route-name default \
+            --forwarding-protocol HttpsOnly \
+            --https-redirect Enabled \
+            --supported-protocols Http Https \
+            --enable-caching false \
+            --link-to-default-domain Enabled \
+            --origin-path / \
+            --origin-group ui \
+            --endpoint-name ${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --enabled-state Enabled
+
+      - name: WAF 🔥
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # WAF
+            az network front-door waf-policy create \
+            --name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }} \
+            --custom-block-response-body "${{ vars.WAF_BLOCK_MESSAGE }}" \
+            --custom-block-response-status-code ${{ vars.WAF_BLOCK_CODE }} \
+            --redirect-url ${{ vars.WAF_REDIRECT_URL }} \
+            --mode ${{ vars.WAF_MODE }} \
+            --sku ${{ secrets.AZURE_FRONT_DOOR_SKU }} \
+            --tags ${{ env.TAGS }}
+
+            # Managed rule - DR
+            az network front-door waf-policy managed-rules add \
+            --version 2.1 \
+            --type Microsoft_DefaultRuleSet \
+            --action Block \
+            --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}
+
+            # Managed rule - Bot
+            az network front-door waf-policy managed-rules add \
+            --version 1.0 \
+            --type Microsoft_BotManagerRuleSet \
+            --action Block \
+            --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}
+
+            # Associate FD
+            az afd security-policy create \
+            --security-policy-name security-policy-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --waf-policy $(az network front-door waf-policy list --query [].id -o tsv) \
+            --domains $(az afd endpoint list --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query [].id -o tsv) \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+
+            # Custom rule - RL 
+            az network front-door waf-policy rule create \
+            --action Block \
+            --name HTTPRateLimitRule \
+            --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }} \
+            --priority 2 \
+            --rule-type RateLimitRule \
+            --rate-limit-duration ${{ vars.WAF_RL_DURATION }} \
+            --rate-limit-threshold ${{ vars.WAF_RL_THRESHOLD }} \
+            --defer
+
+            # Custom rule - RL condition
+            az network front-door waf-policy rule match-condition add \
+            --match-variable ${{ vars.WAF_RL_MATCH }} \
+            --operator GreaterThanOrEqual \
+            --values ${{ vars.WAF_RL_MATCH_VALUE }} \
+            --name HTTPRateLimitRule \
+            --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}
+
+      - name: VPN 🧱
+        if: contains('["dev", "staging"]', env.TARGET)
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # Custom rule - IP 
+            az network front-door waf-policy rule create \
+            --action Redirect \
+            --name IPAllowListRule \
+            --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }} \
+            --priority 1 \
+            --rule-type MatchRule \
+            --defer
+
+            # Custom rule - IP condition
+            az network front-door waf-policy rule match-condition add \
+            --match-variable ${{ vars.WAF_IP_ADDRESS }} \
+            --operator IPMatch \
+            --values ${{ secrets.WAF_ALLOWED_IP }} \
+            --negate \
+            --name IPAllowListRule \
+            --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}
+
+  # 4. WebApp configuration
   webapp:
     name: Web App 🔧
-    needs: base
+    needs: [base, security]
     environment: ${{ needs.base.outputs.environment }}
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
@@ -262,115 +503,277 @@ jobs:
             az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
       - name: CD 🔀
-        run: |
-          # Configure continuous deployment via containers
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # UI
+            az webapp deployment container config \
+            --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --enable-cd true
 
-          # UI
-          az webapp deployment container config \
-          --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
-          --enable-cd true
-
-          # API
-          az webapp deployment container config \
-          --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
-          --enable-cd true
+            # API
+            az webapp deployment container config \
+            --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --enable-cd true
 
       - name: Configuration 🔨
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # UI
+            az webapp config set \
+            --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --always-on true \
+            --ftps-state Disabled \
+            --http20-enabled true \
+            --min-tls-version '${{ vars.TLS_VERSION }}'
+
+            # API
+            az webapp config set \
+            --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --always-on true \
+            --ftps-state Disabled \
+            --http20-enabled true \
+            --min-tls-version '${{ vars.TLS_VERSION }}'
+
+      - name: Variables ✨
         run: |
-          # Set a web app's configuration
-
-          # UI
-          az webapp config set \
-          --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
-          --always-on true \
-          --ftps-state Disabled \
-          --http20-enabled true \
-          --min-tls-version '${{ vars.TLS_VERSION }}'
-
-          # API
-          az webapp config set \
-          --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
-          --always-on true \
-          --ftps-state Disabled \
-          --http20-enabled true \
-          --min-tls-version '${{ vars.TLS_VERSION }}'
+          echo "API_URL=$(az webapp show --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv)" >> $GITHUB_ENV
 
       - name: Setting 🧱
-        env:
-          API_URL: $(az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv)
-        run: |
-          # Set a web app's settings
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # UI
+            az webapp config appsettings set \
+            --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --settings \
+            TZ='${{ vars.TIMEZONE }}' \
+            NODE_ENV='${{ vars.NODE_ENV }}' \
+            PORT='${{ vars.UI_PORT }}' \
+            WEBSITES_PORT='${{ vars.UI_PORT }}' \
+            TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
+            TLS_KEY='${{ secrets.TLS_KEY }}' \
+            WEBSITE_DNS_SERVER='${{ vars.WEBSITE_DNS_SERVER }}' \
+            WEBSITE_VNET_ROUTE_ALL=1 \
+            SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
+            GOOGLE_ANALYTICS_ID='${{ secrets.GOOGLE_ANALYTICS_ID }}' \
+            GOV_NOTIFY_API_KEY='${{ secrets.GOV_NOTIFY_API_KEY }}' \
+            COMPANIES_HOUSE_API_URL='${{ secrets.COMPANIES_HOUSE_API_URL }}' \
+            COMPANIES_HOUSE_API_KEY='${{ secrets.COMPANIES_HOUSE_API_KEY }}' \
+            API_URL='https://${{ env.API_URL }}/api/graphql' \
+            API_KEY='${{ secrets.API_KEY }}' \
+            APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
+            APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
+            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}'
 
-          # UI
-          az webapp config appsettings set \
-          --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
-          --settings \
-          TZ='${{ vars.TIMEZONE }}' \
-          NODE_ENV='${{ vars.NODE_ENV }}' \
-          PORT='${{ vars.UI_PORT }}' \
-          WEBSITES_PORT='${{ vars.UI_PORT }}' \
-          TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
-          TLS_KEY='${{ secrets.TLS_KEY }}' \
-          WEBSITE_DNS_SERVER='${{ vars.WEBSITE_DNS_SERVER }}' \
-          WEBSITE_VNET_ROUTE_ALL=1 \
-          SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
-          GOOGLE_ANALYTICS_ID='${{ secrets.GOOGLE_ANALYTICS_ID }}' \
-          GOV_NOTIFY_API_KEY='${{ secrets.GOV_NOTIFY_API_KEY }}' \
-          COMPANIES_HOUSE_API_URL='${{ secrets.COMPANIES_HOUSE_API_URL }}' \
-          COMPANIES_HOUSE_API_KEY='${{ secrets.COMPANIES_HOUSE_API_KEY }}' \
-          API_URL='https://${{ env.API_URL }}/api/graphql' \
-          APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
-          APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
-          APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}'
+            # API
+            az webapp config appsettings set \
+            --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --settings \
+            TZ='${{ vars.TIMEZONE }}' \
+            NODE_ENV='${{ vars.NODE_ENV }}' \
+            PORT='${{ vars.API_PORT }}' \
+            WEBSITES_PORT='${{ vars.API_PORT }}' \
+            TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
+            TLS_KEY='${{ secrets.TLS_KEY }}' \
+            WEBSITE_DNS_SERVER=${{ vars.WEBSITE_DNS_SERVER }} \
+            WEBSITE_VNET_ROUTE_ALL=1 \
+            DATABASE_URL='${{ secrets.DATABASE_URL }}' \
+            MYSQL_DATABASE='${{ secrets.MYSQL_DATABASE }}' \
+            MYSQL_ROOT_PASSWORD='${{ secrets.MYSQL_ROOT_PASSWORD }}' \
+            API_KEY='${{ secrets.API_KEY }}' \
+            APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
+            APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
+            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
+            SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
+            GOV_NOTIFY_API_KEY='${{ secrets.GOV_NOTIFY_API_KEY }}' \
+            COMPANIES_HOUSE_API_URL='${{ secrets.COMPANIES_HOUSE_API_URL }}' \
+            COMPANIES_HOUSE_API_KEY='${{ secrets.COMPANIES_HOUSE_API_KEY }}' \
+            JWT_SIGNING_KEY='${{ secrets.JWT_SIGNING_KEY }}' \
+            JWT_VALIDATING_KEY='${{ secrets.JWT_VALIDATING_KEY }}' \
+            UNDERWRITING_TEAM_EMAIL='${{ secrets.UNDERWRITING_TEAM_EMAIL }}' \
+            FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}'
 
-          # API
-          az webapp config appsettings set \
-          --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
-          --settings \
-          TZ='${{ vars.TIMEZONE }}' \
-          NODE_ENV='${{ vars.NODE_ENV }}' \
-          PORT='${{ vars.API_PORT }}' \
-          WEBSITES_PORT='${{ vars.API_PORT }}' \
-          TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
-          TLS_KEY='${{ secrets.TLS_KEY }}' \
-          WEBSITE_DNS_SERVER=${{ vars.WEBSITE_DNS_SERVER }} \
-          WEBSITE_VNET_ROUTE_ALL=1 \
-          DATABASE_URL='${{ secrets.DATABASE_URL }}' \
-          MYSQL_DATABASE='${{ secrets.MYSQL_DATABASE }}' \
-          MYSQL_ROOT_PASSWORD='${{ secrets.MYSQL_ROOT_PASSWORD }}' \
-          API_KEY='${{ secrets.API_KEY }}' \
-          APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
-          APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
-          APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
-          SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
-          GOV_NOTIFY_API_KEY='${{ secrets.GOV_NOTIFY_API_KEY }}' \
-          COMPANIES_HOUSE_API_URL='${{ secrets.COMPANIES_HOUSE_API_URL }}' \
-          COMPANIES_HOUSE_API_KEY='${{ secrets.COMPANIES_HOUSE_API_KEY }}' \
-          JWT_SIGNING_KEY='${{ secrets.JWT_SIGNING_KEY }}' \
-          JWT_VALIDATING_KEY='${{ secrets.JWT_VALIDATING_KEY }}' \
-          UNDERWRITING_TEAM_EMAIL='${{ secrets.UNDERWRITING_TEAM_EMAIL }}' \
-          FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}'
+  # 5. Logs and dignostic settings
+  log:
+    name: Log 📒
+    needs: [base, security, webapp]
+    environment: ${{ needs.base.outputs.environment }}
+    runs-on: [self-hosted, EXIP, infrastructure]
+    steps:
+      - name: Pre-production 💫
+        if: contains('["dev", "staging"]', env.TARGET)
+        run: echo "TYPE=Preproduction" >> $GITHUB_ENV
+
+      - name: Production 💫
+        if: ${{ 'prod' == env.TARGET }}
+        run: echo "TYPE=Production" >> $GITHUB_ENV
+
+      - name: Login 🔐
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Azure defaults ✨
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # Basic
+            az configure --defaults location=${{ vars.REGION }}
+            az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+
+      - name: Log analytics workspace 📝
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az monitor diagnostic-settings create \
+            --name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --resource $(az monitor log-analytics workspace list --query [].id -o tsv) \
+            --workspace $(az monitor log-analytics workspace list --query [].id -o tsv) \
+            --logs "[{categoryGroup:allLogs,enabled:true}]" \
+            --metrics "[{category:allMetrics,enabled:true}]"
+
+      - name: WebApp 🌐
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # UI
+            az webapp log config \
+            --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --detailed-error-messages true \
+            --failed-request-tracing true \
+            --level ${{ vars.WEBAPP_LOG_LEVEL }} \
+            --application-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
+            --docker-container-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
+            --web-server-logging ${{ vars.WEBAPP_LOG_DESTINATION }}
 
       - name: Log 📄
-        run: |
-          # Configure logging for a web app.
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # UI
+            az webapp log config \
+            --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --detailed-error-messages true \
+            --failed-request-tracing true \
+            --level ${{ vars.WEBAPP_LOG_LEVEL }} \
+            --application-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
+            --docker-container-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
+            --web-server-logging ${{ vars.WEBAPP_LOG_DESTINATION }}
 
-          # UI
-          az webapp log config \
-          --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
-          --detailed-error-messages true \
-          --failed-request-tracing true \
-          --level ${{ vars.WEBAPP_LOG_LEVEL }} \
-          --application-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
-          --docker-container-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
-          --web-server-logging ${{ vars.WEBAPP_LOG_DESTINATION }}
+            # API
+            az webapp log config \
+            --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --detailed-error-messages true \
+            --failed-request-tracing true \
+            --level ${{ vars.WEBAPP_LOG_LEVEL }} \
+            --application-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
+            --docker-container-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
+            --web-server-logging ${{ vars.WEBAPP_LOG_DESTINATION }}
 
-          # API
-          az webapp log config \
-          --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
-          --detailed-error-messages true \
-          --failed-request-tracing true \
-          --level ${{ vars.WEBAPP_LOG_LEVEL }} \
-          --application-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
-          --docker-container-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
-          --web-server-logging ${{ vars.WEBAPP_LOG_DESTINATION }}
+      - name: Front Door 🚪
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az monitor diagnostic-settings create \
+            --name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --resource $(az afd profile list --query [].id -o tsv) \
+            --workspace $(az monitor log-analytics workspace list --query [].id -o tsv) \
+            --logs "[{categoryGroup:allLogs,enabled:true}]" \
+            --metrics "[{category:allMetrics,enabled:true}]"
+
+      - name: Private links 🔏
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # UI
+            az monitor diagnostic-settings create \
+            --name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --resource $(az network nic list --query ['?contains(name, `ui`)'].id -o tsv) \
+            --workspace $(az monitor log-analytics workspace list --query [].id -o tsv) \
+            --metrics "[{category:allMetrics,enabled:true}]"
+
+            # API
+            az monitor diagnostic-settings create \
+            --name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --resource $(az network nic list --query ['?contains(name, `api`)'].id -o tsv) \
+            --workspace $(az monitor log-analytics workspace list --query [].id -o tsv) \
+            --metrics "[{category:allMetrics,enabled:true}]"
+
+  # 5. Health check alerts
+  alert:
+    name: Alert 📢
+    needs: [base, security, webapp]
+    environment: ${{ needs.base.outputs.environment }}
+    runs-on: [self-hosted, EXIP, infrastructure]
+    steps:
+      - name: Pre-production 💫
+        if: contains('["dev", "staging"]', env.TARGET)
+        run: echo "TYPE=Preproduction" >> $GITHUB_ENV
+
+      - name: Production 💫
+        if: ${{ 'prod' == env.TARGET }}
+        run: echo "TYPE=Production" >> $GITHUB_ENV
+
+      - name: Tags 🏷️
+        run: echo TAGS='Environment=${{ env.TYPE }}' \
+          'Product=${{ env.PRODUCT }}' \
+          'Team=development' >> $GITHUB_ENV
+
+      - name: Login 🔐
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Azure defaults ✨
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # Basic
+            az configure --defaults location=${{ vars.REGION }}
+            az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+
+      - name: Action group 📩
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az monitor action-group create \
+            --name action-group-email-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --short-name Email \
+            --action email ${{ secrets.ACTION_GROUP_EMAIL }} \
+            --location global \
+            --tags ${{ env.TAGS }}
+
+      - name: Alert 📩
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # Dimension
+            az monitor metrics alert dimension create \
+            --name "OriginGroup" \
+            --value "ui" \
+            --operator Include
+
+            # Condition
+            az monitor metrics alert condition create \
+            --type static \
+            --dimension "_where_ OriginGroup includes ui" \
+            --aggregation Minimum \
+            --metric OriginHealthPercentage \
+            --operator LessThan \
+            --threshold 100 \
+            --num-periods 1 \
+            --num-violations 5 \
+            --sensitivity High
+
+            # Alert
+            az monitor metrics alert create \
+            --name alert-healthcheck-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --description "1 minute health check" \
+            --condition  "min 'OriginHealthPercentage' < 100.0 where OriginGroup includes ui" \
+            --scope $(az afd profile list --query [].id -o tsv) \
+            --action $(az monitor action-group list --query [].id -o tsv) \
+            --auto-mitigate true \
+            --severity 0 \
+            --tags ${{ env.TAGS }}

@@ -116,14 +116,14 @@ export const ACCOUNT = {
       STRING_ENCODING: 'ascii' as BufferEncoding,
     },
     TOKEN: {
-      EXPIRY: '8h',
+      EXPIRY: '12h',
       ALGORITHM: 'RS256' as Algorithm,
     },
     SESSION_EXPIRY: () => {
-      // 8 hours from now
+      // 12 hours from now
       const now = new Date();
 
-      const hours = 8;
+      const hours = 12;
       const seconds = 60 * 60 * 1000;
 
       const future = new Date(now.getTime() + hours * seconds);
