@@ -175,7 +175,7 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
             companyNumber: mockCompaniesHouseResponse.companyNumber,
             validationErrors: false,
             apiError: false,
-            isActive: false
+            isActive: false,
           };
 
           companiesHouse.search = jest.fn(() => Promise.resolve(mockResponse));
