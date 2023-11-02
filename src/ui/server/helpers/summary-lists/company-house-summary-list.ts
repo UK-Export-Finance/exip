@@ -4,7 +4,7 @@ import { DEFAULT, FIELDS, PAGES } from '../../content-strings';
 import generateSummaryListRows from './generate-summary-list-rows';
 import fieldGroupItem from './generate-field-group-item';
 import getFieldById from '../get-field-by-id';
-import { ApplicationCompany, CompanyHouseResponse, SummaryListItemData } from '../../../types';
+import { ApplicationCompany, CompaniesHouseResponse, SummaryListItemData } from '../../../types';
 import generateMultipleFieldHtml from '../generate-multiple-field-html';
 import { stringArrayHasValue, isPopulatedArray } from '../array';
 
@@ -45,7 +45,7 @@ const generateSicCodesValue = (sicCodes?: Array<string>, industrySectorNames?: A
  * @param {Object} Company details
  * @returns {Object} All quote values in an object structure for GOVUK summary list structure
  */
-const generateFields = (companyDetails: CompanyHouseResponse | ApplicationCompany) => {
+const generateFields = (companyDetails: CompaniesHouseResponse | ApplicationCompany) => {
   const fields = [
     fieldGroupItem({
       field: getFieldById(FIELDS, COMPANY_NUMBER),
@@ -87,7 +87,7 @@ const generateFields = (companyDetails: CompanyHouseResponse | ApplicationCompan
  * @param {Object} All quote content in a simple object.text structure
  * @returns {Object} A group with multiple fields/answers in govukSummaryList data structure
  */
-const companyHouseSummaryList = (companyDetails: CompanyHouseResponse | ApplicationCompany) => {
+const companyHouseSummaryList = (companyDetails: CompaniesHouseResponse | ApplicationCompany) => {
   const fields = generateFields(companyDetails);
 
   const summaryList = {

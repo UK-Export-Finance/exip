@@ -1,7 +1,7 @@
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import generateValidationErrors from '../../../../validation';
-import { CompanyHouseResponse } from '../../../../../../types';
+import { CompaniesHouseResponse } from '../../../../../../types';
 
 const {
   ELIGIBILITY: {
@@ -12,13 +12,13 @@ const {
 const { ELIGIBILITY } = ERROR_MESSAGES.INSURANCE;
 
 /**
- * validates company house API response
+ * validates companies house API response
  * throws validation errors if success is false and if apiError is also false
  * only success: false returned if company not found
  * @param responseBody containing an object with the companies house API response
  * @returns object containing errors or blank object
  */
-const notFound = (responseBody: CompanyHouseResponse, errors: object) => {
+const notFound = (responseBody: CompaniesHouseResponse, errors: object) => {
   let updatedErrors = errors;
 
   /**

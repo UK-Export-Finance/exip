@@ -10,7 +10,7 @@ const {
 /**
  * maps database response and returns body in correct format for summary list
  * @param {object} company
- * @returns {CompanyHouseResponse} reformatted company
+ * @returns {CompaniesHouseResponse} reformatted company
  */
 const mapDatabaseResponse = (company: ApplicationCompany): ApplicationCompany => ({
   ...company,

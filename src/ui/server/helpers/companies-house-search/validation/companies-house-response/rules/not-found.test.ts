@@ -2,7 +2,7 @@ import notFound from './not-found';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import generateValidationErrors from '../../../../validation';
-import { CompanyHouseResponse } from '../../../../../../types';
+import { CompaniesHouseResponse } from '../../../../../../types';
 
 const {
   ELIGIBILITY: {
@@ -20,7 +20,7 @@ describe('helpers/companies-house-search/validation/companies-house-response/rul
 
   const mockBody = {
     success: false,
-  } as CompanyHouseResponse;
+  } as CompaniesHouseResponse;
 
   it('should return validation error when success is false', () => {
     const result = notFound(mockBody, mockErrors);
@@ -39,7 +39,7 @@ describe('helpers/companies-house-search/validation/companies-house-response/rul
   });
 
   it('should not return validation error when apiError is null', () => {
-    const mockBodyEmpty = {} as CompanyHouseResponse;
+    const mockBodyEmpty = {} as CompaniesHouseResponse;
     const result = notFound(mockBodyEmpty, mockErrors);
 
     expect(result).toEqual(mockErrors);

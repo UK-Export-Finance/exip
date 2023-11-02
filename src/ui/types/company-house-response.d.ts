@@ -9,7 +9,7 @@ interface CompaniesHouseAddress {
   country: string | null;
 }
 
-interface CompanyHouseResponse {
+interface CompaniesHouseResponse {
   companyName: string;
   companyNumber: string;
   isActive: boolean;
@@ -21,4 +21,4 @@ interface CompanyHouseResponse {
   apiError: boolean;
 }
 
-export { CompaniesHouseAddress, CompanyHouseResponse };
+export { CompaniesHouseAddress, CompaniesHouseResponse };

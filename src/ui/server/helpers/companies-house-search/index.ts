@@ -1,19 +1,19 @@
 import api from '../../api';
 import { isPopulatedArray } from '../array';
 import companyHouseResponseValidation from './validation/companies-house-response';
-import { CompanyHouseResponse } from '../../../types';
+import { CompaniesHouseResponse } from '../../../types';
 
 /**
  * helper which takes formBody containing companies house number
  * runs validation and makes api call to keystone getCompaniesHouseInformation
  * runs validation on response and returns companyResponse or validation errors or apiError
- * @param {CompanyHouseResponse} Companies House response
+ * @param {CompaniesHouseResponse} Companies House response
  * @returns {object} validationErrors, apiError flag, mapped company
  */
-const search = async (company: CompanyHouseResponse) => {
+const search = async (company: CompaniesHouseResponse) => {
   const { companyNumber } = company;
 
-  let mappedCompany = {} as CompanyHouseResponse;
+  let mappedCompany = {} as CompaniesHouseResponse;
 
   /**
    * if a company number is provided,

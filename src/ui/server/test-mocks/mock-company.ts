@@ -1,4 +1,4 @@
-import { CompanyHouseResponse } from '../../types';
+import { CompaniesHouseResponse } from '../../types';
 
 const mockCompany = {
   companyName: 'Mock company',
@@ -16,6 +16,6 @@ const mockCompany = {
   sicCodes: ['68201'],
   industrySectorNames: ['test description'],
   isActive: true,
-} as CompanyHouseResponse;
+} as CompaniesHouseResponse;
 
 export default mockCompany;
