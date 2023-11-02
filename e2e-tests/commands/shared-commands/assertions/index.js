@@ -6,6 +6,8 @@ import {
 } from './check-buyer-country-form';
 import { checkChangeLinkUrl, checkChangeAnswerRendered } from './check-summary-list-field-change';
 
+import { checkActionReadAboutEligibility, checkActionContactApprovedBroker } from './actions';
+
 Cypress.Commands.add('assertUrl', require('./assert-url'));
 
 Cypress.Commands.add('checkAnalyticsCookiesConsentAndAccept', analytics.checkAnalyticsCookiesConsentAndAccept);
@@ -65,3 +67,6 @@ Cypress.Commands.add('checkTaskStatusCompleted', require('./check-completed-task
 Cypress.Commands.add('checkText', require('./check-text'));
 
 Cypress.Commands.add('checkValue', require('./check-value'));
+
+Cypress.Commands.add('checkActionReadAboutEligibility', checkActionReadAboutEligibility);
+Cypress.Commands.add('checkActionContactApprovedBroker', checkActionContactApprovedBroker);

@@ -1,3 +1,4 @@
+import actions from './actions';
 import countryInput from './countryInput';
 import cannotApplyPage from './cannotApply';
 import exporterLocationPage from './exporterLocation';
@@ -34,6 +35,7 @@ const singleInputField = (fieldId) => ({
 });
 
 export {
+  actions,
   backLink,
   heading,
   headingCaption,

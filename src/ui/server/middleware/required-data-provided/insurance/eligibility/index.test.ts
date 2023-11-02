@@ -17,6 +17,7 @@ const {
   INSURED_AMOUNT,
   INSURED_PERIOD,
   COMPANIES_HOUSE_NUMBER,
+  NO_COMPANIES_HOUSE_NUMBER,
   ENTER_COMPANIES_HOUSE_NUMBER,
   COMPANIES_HOUSE_UNAVAILABLE,
   COMPANY_DETAILS,
@@ -126,6 +127,15 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
     describe(`when req.originalUrl is ${CHECK_IF_ELIGIBLE}`, () => {
       it('should call req.next', () => {
         req.originalUrl = CHECK_IF_ELIGIBLE;
+        requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
+
+        expect(nextSpy).toHaveBeenCalled();
+      });
+    });
+
+    describe(`when req.originalUrl is ${NO_COMPANIES_HOUSE_NUMBER}`, () => {
+      it('should call req.next', () => {
+        req.originalUrl = NO_COMPANIES_HOUSE_NUMBER;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
