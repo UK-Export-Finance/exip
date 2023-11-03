@@ -1,6 +1,5 @@
 export const accessibilityStatementPage = {
   heading: () => cy.get('[data-cy="heading"]'),
-  serviceLink: () => cy.get('[data-cy="service-link"]'),
   usingOurService: {
     heading: () => cy.get('[data-cy="using-our-service-heading"]'),
     intro: () => cy.get('[data-cy="using-our-service-intro"]'),
