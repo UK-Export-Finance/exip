@@ -4353,7 +4353,10 @@ var mapEligibility = (application2) => {
     xlsx_row_default(FIELDS_ELIGIBILITY[BUYER_COUNTRY2].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY2].name),
     xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[VALID_EXPORTER_LOCATION2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES2])),
-    xlsx_row_default(FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_AMOUNT2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[TOTAL_CONTRACT_VALUE_ELIGIBILITY].valueId === MORE_THAN_500K.DB_ID)),
+    xlsx_row_default(
+      FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_AMOUNT2].SUMMARY?.TITLE,
+      map_yes_no_field_default(eligibility[TOTAL_CONTRACT_VALUE_ELIGIBILITY].valueId === MORE_THAN_500K.DB_ID)
+    ),
     xlsx_row_default(FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_PERIOD2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[WANT_COVER_OVER_MAX_PERIOD2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[OTHER_PARTIES_INVOLVED2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[OTHER_PARTIES_INVOLVED2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[LETTER_OF_CREDIT2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[LETTER_OF_CREDIT2])),
