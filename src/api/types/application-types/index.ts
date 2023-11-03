@@ -63,7 +63,7 @@ export interface ApplicationEligibility extends Relationship {
   otherPartiesInvolved: boolean;
   paidByLetterOfCredit: boolean;
   needPreCreditPeriodCover: boolean;
-  wantCoverOverMaxAmount: boolean;
+  totalContractValueId: number;
   wantCoverOverMaxPeriod: boolean;
 }
 
@@ -133,6 +133,12 @@ export interface ApplicationVersion {
   TOTAL_VALUE_OF_CONTRACT: number;
   DEFAULT_FINAL_DESTINATION_KNOWN: boolean;
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: boolean;
+}
+
+export interface TotalContractValue {
+  id: string;
+  value: string;
+  valueId: number;
 }
 
 export interface CreateAnApplicationVariables {

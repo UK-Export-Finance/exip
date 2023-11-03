@@ -1,5 +1,6 @@
 import getAccountById from '../../../helpers/get-account-by-id';
 import getCountryByField from '../../../helpers/get-country-by-field';
+import getTotalContractValueByField from '../../../helpers/get-total-contract-value-by-field';
 import createAnEligibility from '../../../helpers/create-an-eligibility';
 import createABuyer from '../../../helpers/create-a-buyer';
 import createAPolicy from '../../../helpers/create-a-policy';
@@ -42,7 +43,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
      * 1) Eligibility buyer country relationship
      * 2) Buyer country relationship
      */
-    const { buyerCountryIsoCode, needPreCreditPeriodCover, ...otherEligibilityAnswers } = eligibilityAnswers;
+    const { buyerCountryIsoCode, needPreCreditPeriodCover, totalContractValueId, ...otherEligibilityAnswers } = eligibilityAnswers;
 
     const country = await getCountryByField(context, 'isoCode', buyerCountryIsoCode);
 
@@ -61,13 +62,16 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
     const { id: applicationId } = application;
 
     /**
-     * 1) Create a new eligibility with country and application relationship.
-     * 2) Create a new buyer with country and application relationship.
-     * 3) Create a new policy with application relationship.
+     * 1) Create a new buyer with country and application relationship.
+     * 2) Get a totalContractValue DB entry, for linking a relationship to eligibility.
+     * 3) Create a new eligibility with country and application relationship.
+     * 4) Create a new policy with application relationship.
      */
     const buyer = await createABuyer(context, country.id, applicationId);
 
-    const eligibility = await createAnEligibility(context, country.id, applicationId, otherEligibilityAnswers);
+    const totalContractValue = await getTotalContractValueByField(context, 'valueId', totalContractValueId);
+
+    const eligibility = await createAnEligibility(context, country.id, applicationId, totalContractValue.id, otherEligibilityAnswers);
 
     const policy = await createAPolicy(context, applicationId);
 

@@ -1,8 +1,9 @@
 import creatAnEligibility from '.';
 import { mockCountries } from '../../test-mocks';
-import { Application, Context } from '../../types';
+import { Application, Context, TotalContractValue } from '../../types';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import getCountryByField from '../get-country-by-field';
+import totalContractValueTestHelper from '../../test-helpers/total-contract-value';
 import applications from '../../test-helpers/applications';
 
 const invalidId = 'invalid-id';
@@ -17,6 +18,7 @@ describe('helpers/create-an-eligibility', () => {
   let context: Context;
   let application: Application;
   let country: object;
+  let totalContractValue: TotalContractValue;
 
   beforeAll(async () => {
     context = getKeystoneContext();
@@ -26,10 +28,12 @@ describe('helpers/create-an-eligibility', () => {
     const countryIsCode = mockCountries[0].isoCode;
 
     country = await getCountryByField(context, 'isoCode', countryIsCode);
+
+    totalContractValue = await totalContractValueTestHelper.create({ context });
   });
 
   test('it should return a eligibility with ID', async () => {
-    const result = await creatAnEligibility(context, country.id, application.id);
+    const result = await creatAnEligibility(context, country.id, application.id, totalContractValue.id);
 
     expect(result.id).toBeDefined();
     expect(typeof result.id).toEqual('string');
@@ -37,23 +41,23 @@ describe('helpers/create-an-eligibility', () => {
   });
 
   test('it should return empty eligibility fields', async () => {
-    const result = await creatAnEligibility(context, country.id, application.id);
+    const result = await creatAnEligibility(context, country.id, application.id, totalContractValue.id);
 
     expect(result.applicationId).toEqual(application.id);
     expect(result.buyerCountryId).toEqual(country.id);
+    expect(result.totalContractValueId).toEqual(totalContractValue.id);
     expect(result.hasMinimumUkGoodsOrServices).toEqual(false);
     expect(result.validExporterLocation).toEqual(false);
     expect(result.hasCompaniesHouseNumber).toEqual(false);
     expect(result.otherPartiesInvolved).toEqual(false);
     expect(result.paidByLetterOfCredit).toEqual(false);
-    expect(result.wantCoverOverMaxAmount).toEqual(false);
     expect(result.wantCoverOverMaxPeriod).toEqual(false);
   });
 
   describe('when an invalid country ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await creatAnEligibility(context, invalidId, application.id);
+        await creatAnEligibility(context, invalidId, application.id, totalContractValue.id);
       } catch (err) {
         assertError(err);
       }
@@ -63,7 +67,17 @@ describe('helpers/create-an-eligibility', () => {
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await creatAnEligibility(context, country.id, invalidId);
+        await creatAnEligibility(context, country.id, invalidId, totalContractValue.id);
+      } catch (err) {
+        assertError(err);
+      }
+    });
+  });
+
+  describe('when an invalid totalContractValue ID is passed', () => {
+    test('it should throw an error', async () => {
+      try {
+        await creatAnEligibility(context, country.id, application.id, invalidId);
       } catch (err) {
         assertError(err);
       }
@@ -74,7 +88,7 @@ describe('helpers/create-an-eligibility', () => {
     test('it should throw an error', async () => {
       try {
         // pass empty context object to force an error
-        await creatAnEligibility({}, country.id, application.id);
+        await creatAnEligibility({}, country.id, application.id, totalContractValue.id);
       } catch (err) {
         assertError(err);
       }

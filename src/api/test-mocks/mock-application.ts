@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { add, addMonths } from 'date-fns';
-import { APPLICATION } from '../constants';
+import { APPLICATION, TOTAL_CONTRACT_VALUE } from '../constants';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
 import { Application, ApplicationPolicyContact } from '../types';
@@ -17,7 +17,7 @@ export const mockApplicationEligibility = {
   hasCompaniesHouseNumber: true,
   otherPartiesInvolved: false,
   paidByLetterOfCredit: false,
-  wantCoverOverMaxAmount: false,
+  totalContractValueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
   wantCoverOverMaxPeriod: false,
 };
 

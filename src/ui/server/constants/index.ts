@@ -1,7 +1,7 @@
 export * from './tls';
 export * from './account';
-export * from './application';
 export * from './currencies';
+export * from './application';
 export * from './date-format';
 export * from './dates';
 export * from './external-apis';
@@ -15,10 +15,11 @@ export * from './routes';
 export * from './supported-currencies';
 export * from './task-ids';
 export * from './templates';
-export * from './ukef-contact-details';
+export * from './total-contract-value';
 export * from './integrity';
 export * from './cookie';
 export * from './environments';
+export * from './ukef-contact-details';
 
 // TODO: Refactor below constants
 export const SERVICE_NAME = 'EXIP';

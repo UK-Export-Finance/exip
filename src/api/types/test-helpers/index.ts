@@ -1,5 +1,5 @@
 import Context from '@keystone-6/core/types';
-import { ApplicationCreateInput, BuyerCreateInput, PolicyCreateInput } from '.keystone/types'; // eslint-disable-line
+import { ApplicationCreateInput, BuyerCreateInput, PolicyCreateInput, TotalContractValueCreateInput } from '.keystone/types'; // eslint-disable-line
 import { Account } from '../account';
 
 export interface TestHelperCreate {

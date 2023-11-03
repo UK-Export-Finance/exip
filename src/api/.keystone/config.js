@@ -265,6 +265,7 @@ var INSURANCE_FIELD_IDS = {
   ELIGIBILITY: {
     ...shared_eligibility_default,
     WANT_COVER_OVER_MAX_AMOUNT: "wantCoverOverMaxAmount",
+    TOTAL_CONTRACT_VALUE: "totalContractValue",
     WANT_COVER_OVER_MAX_PERIOD: "wantCoverOverMaxPeriod",
     OTHER_PARTIES_INVOLVED: "otherPartiesInvolved",
     LETTER_OF_CREDIT: "paidByLetterOfCredit",
@@ -610,7 +611,7 @@ var ACCOUNT2 = {
     },
     SESSION_EXPIRY: () => {
       const now = /* @__PURE__ */ new Date();
-      const hours = 8;
+      const hours = 12;
       const seconds = 60 * 60 * 1e3;
       const future = new Date(now.getTime() + hours * seconds);
       return future;
@@ -1015,6 +1016,16 @@ var lists = {
     },
     access: import_access.allowAll
   },
+  TotalContractValue: (0, import_core2.list)({
+    fields: {
+      // current phase: "want to be insured over 500k"?
+      // next phase: "What is the total value you want to insure?" less/over 250k
+      // eligibility: relationship({ ref: 'Eligibility' }),
+      valueId: (0, import_fields.integer)(),
+      value: (0, import_fields.text)()
+    },
+    access: import_access.allowAll
+  }),
   Policy: {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
@@ -1300,7 +1311,10 @@ var lists = {
       hasCompaniesHouseNumber: (0, import_fields.checkbox)(),
       otherPartiesInvolved: (0, import_fields.checkbox)(),
       paidByLetterOfCredit: (0, import_fields.checkbox)(),
-      wantCoverOverMaxAmount: (0, import_fields.checkbox)(),
+      // current phase: "want to be insured over 500k"?
+      // next phase: "What is the total value you want to insure?" less/over 250k
+      // wantCoverOverMaxAmount: checkbox(),
+      totalContractValue: (0, import_fields.relationship)({ ref: "TotalContractValue" }),
       wantCoverOverMaxPeriod: (0, import_fields.checkbox)()
     },
     access: import_access.allowAll
@@ -1693,7 +1707,7 @@ var typeDefs = `
     otherPartiesInvolved: Boolean!
     paidByLetterOfCredit: Boolean!
     needPreCreditPeriodCover: Boolean!
-    wantCoverOverMaxAmount: Boolean!
+    totalContractValueId: Int!
     wantCoverOverMaxPeriod: Boolean!
     validExporterLocation: Boolean!
     hasMinimumUkGoodsOrServices: Boolean!
@@ -3144,8 +3158,31 @@ var getCountryByField = async (context, field, value) => {
 };
 var get_country_by_field_default = getCountryByField;
 
+// helpers/get-total-contract-value-by-field/index.ts
+var getTotalContractValueByField = async (context, field, value) => {
+  try {
+    console.info("Getting totalContractValue by field/value $s", `${field}, ${value}`);
+    const totalContractValuesArray = await context.db.TotalContractValue.findMany({
+      where: {
+        [field]: { equals: value }
+      },
+      take: 1
+    });
+    if (!totalContractValuesArray?.length || !totalContractValuesArray[0]) {
+      console.info("Getting totalContractValue by field - no totalContractValue exists with the provided field/value");
+      return false;
+    }
+    const [totalContractValue] = totalContractValuesArray;
+    return totalContractValue;
+  } catch (err) {
+    console.error("Error getting totalContractValue by field/value %O", err);
+    throw new Error(`Getting totalContractValue by field/value ${err}`);
+  }
+};
+var get_total_contract_value_by_field_default = getTotalContractValueByField;
+
 // helpers/create-an-eligibility/index.ts
-var createAnEligibility = async (context, countryId, applicationId, data) => {
+var createAnEligibility = async (context, countryId, applicationId, totalContractValueId, data) => {
   console.info("Creating an eligibility for ", applicationId);
   try {
     const eligibility = await context.db.Eligibility.createOne({
@@ -3155,6 +3192,9 @@ var createAnEligibility = async (context, countryId, applicationId, data) => {
         },
         application: {
           connect: { id: applicationId }
+        },
+        totalContractValue: {
+          connect: { id: totalContractValueId }
         },
         ...data
       }
@@ -3220,7 +3260,7 @@ var createAnApplication = async (root, variables, context) => {
         success: false
       };
     }
-    const { buyerCountryIsoCode, needPreCreditPeriodCover, ...otherEligibilityAnswers } = eligibilityAnswers;
+    const { buyerCountryIsoCode, needPreCreditPeriodCover, totalContractValueId, ...otherEligibilityAnswers } = eligibilityAnswers;
     const country = await get_country_by_field_default(context, "isoCode", buyerCountryIsoCode);
     const application2 = await context.db.Application.createOne({
       data: {
@@ -3231,7 +3271,8 @@ var createAnApplication = async (root, variables, context) => {
     });
     const { id: applicationId } = application2;
     const buyer = await create_a_buyer_default(context, country.id, applicationId);
-    const eligibility = await create_an_eligibility_default(context, country.id, applicationId, otherEligibilityAnswers);
+    const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
+    const eligibility = await create_an_eligibility_default(context, country.id, applicationId, totalContractValue.id, otherEligibilityAnswers);
     const policy = await create_a_policy_default(context, applicationId);
     const updatedApplication = await context.db.Application.updateOne({
       where: {

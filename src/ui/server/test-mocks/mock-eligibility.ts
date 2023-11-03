@@ -11,6 +11,10 @@ const mockEligibility = {
   needPreCreditPeriodCover: false,
   wantCoverOverMaxAmount: false,
   wantCoverOverMaxPeriod: false,
+  totalContractValue: {
+    value: 'Mock value',
+    valueId: 1,
+  },
 } as InsuranceEligibility;
 
 export default mockEligibility;

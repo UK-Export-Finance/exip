@@ -307,6 +307,13 @@ export const lists = {
     },
     access: allowAll,
   },
+  TotalContractValue: list({
+    fields: {
+      valueId: integer(),
+      value: text(),
+    },
+    access: allowAll,
+  }),
   Policy: {
     fields: {
       application: relationship({ ref: 'Application' }),
@@ -599,7 +606,7 @@ export const lists = {
       hasCompaniesHouseNumber: checkbox(),
       otherPartiesInvolved: checkbox(),
       paidByLetterOfCredit: checkbox(),
-      wantCoverOverMaxAmount: checkbox(),
+      totalContractValue: relationship({ ref: 'TotalContractValue' }),
       wantCoverOverMaxPeriod: checkbox(),
     },
     access: allowAll,
