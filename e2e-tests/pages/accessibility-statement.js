@@ -40,6 +40,8 @@ export const accessibilityStatementPage = {
     intro: () => cy.get('[data-cy="compliance-status-intro"]'),
     link: () => cy.get('[data-cy="compliance-status-link"]'),
     outro: () => cy.get('[data-cy="compliance-status-outro"]'),
+    listItem1: () => cy.get('[data-cy="compliance-status-list-item-1"]'),
+    listItem2: () => cy.get('[data-cy="compliance-status-list-item-2"]'),
   },
   improvingAccessibility: {
     heading: () => cy.get('[data-cy="improving-accessibility-heading"]'),

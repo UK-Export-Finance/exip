@@ -17,7 +17,6 @@ const {
 const CONTENT_STRINGS = PAGES.ACCESSIBILITY_STATEMENT_PAGE;
 
 const {
-  SERVICE_LINK,
   USING_OUR_SERVICE,
   FEEDBACK_AND_CONTACT,
   REPORTING_PROBLEMS,
@@ -49,14 +48,6 @@ context('Accessibility statement page - Quote', () => {
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
     });
-  });
-
-  it('renders a service link', () => {
-    cy.checkLink(
-      accessibilityStatementPage.serviceLink(),
-      SERVICE_LINK.HREF,
-      SERVICE_LINK.TEXT,
-    );
   });
 
   describe('using our service', () => {
@@ -105,6 +96,44 @@ context('Accessibility statement page - Quote', () => {
         usingOurService.abilityNet.outro().invoke('text').then((text) => {
           expect(text.trim()).equal(USING_OUR_SERVICE.OUTRO.ABILITY_NET.DESCRIPTION);
         });
+      });
+    });
+  });
+
+  describe('compliance status', () => {
+    it('renders a heading', () => {
+      complianceStatus.heading().invoke('text').then((text) => {
+        expect(text.trim()).equal(COMPLIANCE_STATUS.HEADING);
+      });
+    });
+
+    it('renders an intro', () => {
+      complianceStatus.intro().invoke('text').then((text) => {
+        expect(text.trim()).equal(COMPLIANCE_STATUS.INTRO);
+      });
+    });
+
+    it('renders a link', () => {
+      cy.checkLink(
+        complianceStatus.link(),
+        COMPLIANCE_STATUS.GUIDLINES_LINK.HREF,
+        COMPLIANCE_STATUS.GUIDLINES_LINK.TEXT,
+      );
+    });
+
+    it('renders an outro', () => {
+      complianceStatus.outro().invoke('text').then((text) => {
+        expect(text.trim()).equal(COMPLIANCE_STATUS.OUTRO);
+      });
+    });
+
+    it('renders a list', () => {
+      complianceStatus.listItem1().invoke('text').then((text) => {
+        expect(text.trim()).equal(`${COMPLIANCE_STATUS.LIST[0]} ${COMPLIANCE_STATUS.LIST[1]}`);
+      });
+
+      complianceStatus.listItem2().invoke('text').then((text) => {
+        expect(text.trim()).equal(`${COMPLIANCE_STATUS.LIST[2]} ${COMPLIANCE_STATUS.LIST[3]}`);
       });
     });
   });
@@ -185,34 +214,6 @@ context('Accessibility statement page - Quote', () => {
     it('renders an description', () => {
       technicalInfo.description().invoke('text').then((text) => {
         expect(text.trim()).equal(TECHNICAL_INFO.DESCRIPTION);
-      });
-    });
-  });
-
-  describe('compliance status', () => {
-    it('renders a heading', () => {
-      complianceStatus.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(COMPLIANCE_STATUS.HEADING);
-      });
-    });
-
-    it('renders an intro', () => {
-      complianceStatus.intro().invoke('text').then((text) => {
-        expect(text.trim()).equal(COMPLIANCE_STATUS.INTRO);
-      });
-    });
-
-    it('renders a link', () => {
-      cy.checkLink(
-        complianceStatus.link(),
-        COMPLIANCE_STATUS.GUIDLINES_LINK.HREF,
-        COMPLIANCE_STATUS.GUIDLINES_LINK.TEXT,
-      );
-    });
-
-    it('renders an outro', () => {
-      complianceStatus.outro().invoke('text').then((text) => {
-        expect(text.trim()).equal(COMPLIANCE_STATUS.OUTRO);
       });
     });
   });

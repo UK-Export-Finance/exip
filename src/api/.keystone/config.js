@@ -610,7 +610,7 @@ var ACCOUNT2 = {
     },
     SESSION_EXPIRY: () => {
       const now = /* @__PURE__ */ new Date();
-      const hours = 8;
+      const hours = 12;
       const seconds = 60 * 60 * 1e3;
       const future = new Date(now.getTime() + hours * seconds);
       return future;
