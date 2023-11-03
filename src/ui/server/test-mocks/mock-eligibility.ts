@@ -1,4 +1,5 @@
 import mockCountries from './mock-countries';
+import { TOTAL_CONTRACT_VALUE } from '../constants';
 import { InsuranceEligibility } from '../../types';
 
 const mockEligibility = {
@@ -11,6 +12,10 @@ const mockEligibility = {
   needPreCreditPeriodCover: false,
   wantCoverOverMaxAmount: false,
   wantCoverOverMaxPeriod: false,
+  totalContractValue: {
+    value: 'Mock value',
+    valueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
+  },
 } as InsuranceEligibility;
 
 export default mockEligibility;

@@ -1,8 +1,13 @@
 import mapEligibilityAnswers from '.';
-import FIELD_IDS from '../../constants/field-ids/insurance';
+import { FIELD_IDS } from '../../constants';
+import mapTotalContractValue from '../map-total-contract-value';
 import { mockEligibility } from '../../test-mocks';
 
-const { BUYER_COUNTRY, BUYER_COUNTRY_ISO_CODE } = FIELD_IDS.ELIGIBILITY;
+const {
+  INSURANCE: {
+    ELIGIBILITY: { BUYER_COUNTRY, BUYER_COUNTRY_ISO_CODE, TOTAL_CONTRACT_VALUE_ID },
+  },
+} = FIELD_IDS;
 
 describe('server/helpers/map-eligibility-answers', () => {
   describe('when a buyerCountry is provided', () => {
@@ -11,11 +16,14 @@ describe('server/helpers/map-eligibility-answers', () => {
 
       const result = mapEligibilityAnswers(mockAnswers);
 
-      const { buyerCountry, ...otherAnswers } = mockAnswers;
+      const { buyerCountry, wantCoverOverMaxAmount, ...otherAnswers } = mockAnswers;
+
+      const wantCoverOverMaxAmountBoolean = Boolean(wantCoverOverMaxAmount);
 
       const expected = {
         ...otherAnswers,
         [BUYER_COUNTRY_ISO_CODE]: buyerCountry?.isoCode,
+        [TOTAL_CONTRACT_VALUE_ID]: mapTotalContractValue(wantCoverOverMaxAmountBoolean),
       };
 
       expect(result).toEqual(expected);

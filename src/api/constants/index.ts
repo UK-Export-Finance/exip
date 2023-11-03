@@ -7,6 +7,7 @@ export * from './answers';
 export * from './application';
 export * from './external-apis';
 export * from './field-values';
+export * from './total-contract-value';
 export * from './XLSX-CONFIG';
 
 dotenv.config();
