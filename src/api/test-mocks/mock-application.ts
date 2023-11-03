@@ -18,6 +18,9 @@ export const mockApplicationEligibility = {
   otherPartiesInvolved: false,
   paidByLetterOfCredit: false,
   totalContractValueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
+  totalContractValue: {
+    valueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
+  },
   wantCoverOverMaxPeriod: false,
 };
 

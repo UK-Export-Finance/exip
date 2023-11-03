@@ -472,6 +472,22 @@ var FIELD_VALUES = {
   NO: "No"
 };
 
+// constants/total-contract-value/index.ts
+var TOTAL_CONTRACT_VALUE = {
+  LESS_THAN_500K: {
+    DB_ID: 1
+  },
+  MORE_THAN_500K: {
+    DB_ID: 2
+  },
+  LESS_THAN_250k: {
+    DB_ID: 3
+  },
+  MORE_THAN_250k: {
+    DB_ID: 4
+  }
+};
+
 // helpers/policy-type/index.ts
 var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
 var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
@@ -3408,6 +3424,12 @@ var getPopulatedApplication = async (context, application2) => {
   if (!eligibility) {
     throw new Error(generateErrorMessage("eligibility", application2.id));
   }
+  const totalContractValue = await context.db.TotalContractValue.findOne({
+    where: { id: eligibility.totalContractValueId }
+  });
+  if (!totalContractValue) {
+    throw new Error(generateErrorMessage("totalContractValue", application2.id));
+  }
   const account2 = await get_account_by_id_default(context, ownerId);
   if (!account2) {
     throw new Error(generateErrorMessage("account", application2.id));
@@ -3482,6 +3504,11 @@ var getPopulatedApplication = async (context, application2) => {
   if (!buyerCountry) {
     throw new Error(generateErrorMessage("populated buyer", application2.id));
   }
+  const populatedEligibility = {
+    ...eligibility,
+    buyerCountry,
+    totalContractValue
+  };
   const populatedBuyer = {
     ...buyer,
     country: buyerCountry
@@ -3494,10 +3521,7 @@ var getPopulatedApplication = async (context, application2) => {
   }
   const populatedApplication = {
     ...application2,
-    eligibility: {
-      ...eligibility,
-      buyerCountry
-    },
+    eligibility: populatedEligibility,
     broker,
     business,
     buyer: populatedBuyer,
@@ -4125,7 +4149,7 @@ var {
   TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE4 },
   CONTRACT_POLICY: {
     REQUESTED_START_DATE,
-    SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2, TOTAL_CONTRACT_VALUE },
+    SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2, TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 },
     MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
     CREDIT_PERIOD_WITH_BUYER,
     POLICY_CURRENCY_CODE
@@ -4145,7 +4169,7 @@ var mapSinglePolicyFields = (application2) => {
   const { policy } = application2;
   return [
     xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[CONTRACT_COMPLETION_DATE2].SUMMARY?.TITLE), format_date_default(policy[CONTRACT_COMPLETION_DATE2], "dd-MMM-yy")),
-    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), format_currency_default(policy[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE))
+    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[TOTAL_CONTRACT_VALUE2].SUMMARY?.TITLE), format_currency_default(policy[TOTAL_CONTRACT_VALUE2], GBP_CURRENCY_CODE))
   ];
 };
 var mapMultiplePolicyFields = (application2) => {
@@ -4308,16 +4332,20 @@ var map_buyer_default = mapBuyer;
 
 // generate-xlsx/map-application-to-XLSX/map-eligibility/index.ts
 var {
-  BUYER_COUNTRY: BUYER_COUNTRY2,
-  HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2,
-  VALID_EXPORTER_LOCATION: VALID_EXPORTER_LOCATION2,
-  WANT_COVER_OVER_MAX_AMOUNT: WANT_COVER_OVER_MAX_AMOUNT2,
-  WANT_COVER_OVER_MAX_PERIOD: WANT_COVER_OVER_MAX_PERIOD2,
-  OTHER_PARTIES_INVOLVED: OTHER_PARTIES_INVOLVED2,
-  LETTER_OF_CREDIT: LETTER_OF_CREDIT2,
-  PRE_CREDIT_PERIOD: PRE_CREDIT_PERIOD2,
-  COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2
-} = insurance_default.ELIGIBILITY;
+  ELIGIBILITY: {
+    BUYER_COUNTRY: BUYER_COUNTRY2,
+    HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2,
+    VALID_EXPORTER_LOCATION: VALID_EXPORTER_LOCATION2,
+    WANT_COVER_OVER_MAX_AMOUNT: WANT_COVER_OVER_MAX_AMOUNT2,
+    TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_ELIGIBILITY,
+    WANT_COVER_OVER_MAX_PERIOD: WANT_COVER_OVER_MAX_PERIOD2,
+    OTHER_PARTIES_INVOLVED: OTHER_PARTIES_INVOLVED2,
+    LETTER_OF_CREDIT: LETTER_OF_CREDIT2,
+    PRE_CREDIT_PERIOD: PRE_CREDIT_PERIOD2,
+    COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2
+  }
+} = FIELD_IDS.INSURANCE;
+var { MORE_THAN_500K } = TOTAL_CONTRACT_VALUE;
 var mapEligibility = (application2) => {
   const { eligibility, policy } = application2;
   const mapped = [
@@ -4325,7 +4353,7 @@ var mapEligibility = (application2) => {
     xlsx_row_default(FIELDS_ELIGIBILITY[BUYER_COUNTRY2].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY2].name),
     xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[VALID_EXPORTER_LOCATION2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES2])),
-    xlsx_row_default(FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_AMOUNT2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[WANT_COVER_OVER_MAX_AMOUNT2])),
+    xlsx_row_default(FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_AMOUNT2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[TOTAL_CONTRACT_VALUE_ELIGIBILITY].valueId === MORE_THAN_500K.DB_ID)),
     xlsx_row_default(FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_PERIOD2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[WANT_COVER_OVER_MAX_PERIOD2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[OTHER_PARTIES_INVOLVED2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[OTHER_PARTIES_INVOLVED2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[LETTER_OF_CREDIT2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[LETTER_OF_CREDIT2])),
