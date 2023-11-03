@@ -1,4 +1,5 @@
-import { FIELD_IDS, TOTAL_CONTRACT_VALUE } from '../../constants';
+import { FIELD_IDS } from '../../constants';
+import mapTotalContractValue from '../map-total-contract-value';
 import { SubmittedDataInsuranceEligibility } from '../../../types';
 
 const {
@@ -7,22 +8,16 @@ const {
   },
 } = FIELD_IDS;
 
-export const mapTotalContractValue = (answer: boolean) => {
-  if (answer) {
-    return TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID;
-  }
-
-  return TOTAL_CONTRACT_VALUE.MORE_THAN_500K.DB_ID;
-};
-
 const mapEligibilityAnswers = (answers: SubmittedDataInsuranceEligibility) => {
   if (answers.buyerCountry) {
     const { buyerCountry, wantCoverOverMaxAmount, ...otherAnswers } = answers;
 
+    const wantCoverOverMaxAmountBoolean = Boolean(wantCoverOverMaxAmount);
+
     const mapped = {
       ...otherAnswers,
       [BUYER_COUNTRY_ISO_CODE]: buyerCountry?.isoCode,
-      [TOTAL_CONTRACT_VALUE_ID]: mapTotalContractValue(Boolean(wantCoverOverMaxAmount)),
+      [TOTAL_CONTRACT_VALUE_ID]: mapTotalContractValue(wantCoverOverMaxAmountBoolean),
     };
 
     return mapped;
