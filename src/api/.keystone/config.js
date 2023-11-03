@@ -266,6 +266,7 @@ var INSURANCE_FIELD_IDS = {
     ...shared_eligibility_default,
     WANT_COVER_OVER_MAX_AMOUNT: "wantCoverOverMaxAmount",
     TOTAL_CONTRACT_VALUE: "totalContractValue",
+    TOTAL_CONTRACT_VALUE_ID: "totalContractValueId",
     WANT_COVER_OVER_MAX_PERIOD: "wantCoverOverMaxPeriod",
     OTHER_PARTIES_INVOLVED: "otherPartiesInvolved",
     LETTER_OF_CREDIT: "paidByLetterOfCredit",
@@ -1018,9 +1019,6 @@ var lists = {
   },
   TotalContractValue: (0, import_core2.list)({
     fields: {
-      // current phase: "want to be insured over 500k"?
-      // next phase: "What is the total value you want to insure?" less/over 250k
-      // eligibility: relationship({ ref: 'Eligibility' }),
       valueId: (0, import_fields.integer)(),
       value: (0, import_fields.text)()
     },
@@ -1311,9 +1309,6 @@ var lists = {
       hasCompaniesHouseNumber: (0, import_fields.checkbox)(),
       otherPartiesInvolved: (0, import_fields.checkbox)(),
       paidByLetterOfCredit: (0, import_fields.checkbox)(),
-      // current phase: "want to be insured over 500k"?
-      // next phase: "What is the total value you want to insure?" less/over 250k
-      // wantCoverOverMaxAmount: checkbox(),
       totalContractValue: (0, import_fields.relationship)({ ref: "TotalContractValue" }),
       wantCoverOverMaxPeriod: (0, import_fields.checkbox)()
     },

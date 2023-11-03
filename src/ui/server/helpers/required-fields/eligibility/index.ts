@@ -1,6 +1,6 @@
 import { FIELD_IDS } from '../../../constants';
 
-const { ACCOUNT_TO_APPLY_ONLINE, BUYER_COUNTRY_ISO_CODE, WANT_COVER_OVER_MAX_AMOUNT } = FIELD_IDS.INSURANCE.ELIGIBILITY;
+const { ACCOUNT_TO_APPLY_ONLINE, BUYER_COUNTRY_ISO_CODE, TOTAL_CONTRACT_VALUE_ID, WANT_COVER_OVER_MAX_AMOUNT } = FIELD_IDS.INSURANCE.ELIGIBILITY;
 
 /**
  * Required fields for the insurance - eligibility section
@@ -15,7 +15,7 @@ const requiredFields = (): Array<string> => {
   const fieldIds = Object.values(FIELD_IDS.INSURANCE.ELIGIBILITY);
 
   const filtered = fieldIds.filter(
-    (fieldId) => fieldId !== ACCOUNT_TO_APPLY_ONLINE && fieldId !== BUYER_COUNTRY_ISO_CODE && fieldId !== WANT_COVER_OVER_MAX_AMOUNT,
+    (id) => id !== ACCOUNT_TO_APPLY_ONLINE && id !== BUYER_COUNTRY_ISO_CODE && id !== WANT_COVER_OVER_MAX_AMOUNT && id !== TOTAL_CONTRACT_VALUE_ID,
   );
 
   return filtered;

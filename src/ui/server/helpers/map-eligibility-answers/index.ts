@@ -3,7 +3,7 @@ import { SubmittedDataInsuranceEligibility } from '../../../types';
 
 const {
   INSURANCE: {
-    ELIGIBILITY: { BUYER_COUNTRY_ISO_CODE },
+    ELIGIBILITY: { BUYER_COUNTRY_ISO_CODE, TOTAL_CONTRACT_VALUE_ID },
   },
 } = FIELD_IDS;
 
@@ -22,7 +22,7 @@ const mapEligibilityAnswers = (answers: SubmittedDataInsuranceEligibility) => {
     const mapped = {
       ...otherAnswers,
       [BUYER_COUNTRY_ISO_CODE]: buyerCountry?.isoCode,
-      totalContractValueId: mapTotalContractValue(Boolean(wantCoverOverMaxAmount)),
+      [TOTAL_CONTRACT_VALUE_ID]: mapTotalContractValue(Boolean(wantCoverOverMaxAmount)),
     };
 
     return mapped;

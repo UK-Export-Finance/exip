@@ -11,6 +11,7 @@ const INSURANCE_FIELD_IDS = {
     ...SHARED_ELIGIBILITY_FIELD_IDS,
     WANT_COVER_OVER_MAX_AMOUNT: 'wantCoverOverMaxAmount',
     TOTAL_CONTRACT_VALUE: 'totalContractValue',
+    TOTAL_CONTRACT_VALUE_ID: 'totalContractValueId',
     WANT_COVER_OVER_MAX_PERIOD: 'wantCoverOverMaxPeriod',
     OTHER_PARTIES_INVOLVED: 'otherPartiesInvolved',
     LETTER_OF_CREDIT: 'paidByLetterOfCredit',
