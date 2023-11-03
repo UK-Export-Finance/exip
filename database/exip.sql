@@ -612,14 +612,16 @@ CREATE TABLE IF NOT EXISTS `Eligibility` (
   `validExporterLocation` tinyint(1) NOT NULL DEFAULT '0',
   `otherPartiesInvolved` tinyint(1) NOT NULL DEFAULT '0',
   `paidByLetterOfCredit` tinyint(1) NOT NULL DEFAULT '0',
-  `wantCoverOverMaxAmount` tinyint(1) NOT NULL DEFAULT '0',
+  `totalContractValue` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `wantCoverOverMaxPeriod` tinyint(1) NOT NULL DEFAULT '0',
   `hasCompaniesHouseNumber` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `Eligibility_application_idx` (`application`),
   KEY `Eligibility_buyerCountry_idx` (`buyerCountry`),
+  KEY `Eligibility_totalContractValue_idx` (`totalContractValue`),
   CONSTRAINT `Eligibility_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Eligibility_buyerCountry_fkey` FOREIGN KEY (`buyerCountry`) REFERENCES `Country` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `Eligibility_buyerCountry_fkey` FOREIGN KEY (`buyerCountry`) REFERENCES `Country` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Eligibility_totalContractValue_fkey` FOREIGN KEY (`totalContractValue`) REFERENCES `TotalContractValue` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -849,6 +851,33 @@ CREATE TABLE `SectionReview` (
   KEY `SectionReview_application_idx` (`application`),
   CONSTRAINT `SectionReview_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+
+# Dump of table TotalContractValue
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `TotalContractValue`;
+
+CREATE TABLE `TotalContractValue` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `valueId` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `TotalContractValue` WRITE;
+/*!40000 ALTER TABLE `TotalContractValue` DISABLE KEYS */;
+
+INSERT INTO `TotalContractValue` (`id`, `value`, `valueId`)
+VALUES
+	('cloijs2bq0019grkcismou66a','Less than 500k',1),
+	('cloijs2bq0019grkcismou66b','More than 500k',2),
+	('cloijs2bq0019grkcismou66c','Less than 250k',3),
+	('cloijs2bq0019grkcismou66d','More than 250k',4);
+
+/*!40000 ALTER TABLE `TotalContractValue` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 
