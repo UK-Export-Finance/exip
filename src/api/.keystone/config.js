@@ -2098,6 +2098,9 @@ var unlink = async (filePath) => {
   try {
     console.info("Deleting file %s", filePath);
     const file = await readFile(filePath);
+    if (file) {
+      await import_fs.promises.unlink(filePath);
+    }
     return false;
   } catch (err) {
     console.error("Error deleting file %O", err);
@@ -3470,7 +3473,6 @@ var getPopulatedApplication = async (context, application2) => {
   const coverPeriod = await context.db.CoverPeriod.findOne({
     where: { id: eligibility.coverPeriodId }
   });
-  console.log("-------- coverPeriod ", coverPeriod);
   if (!coverPeriod) {
     throw new Error(generateErrorMessage("coverPeriod", application2.id));
   }
@@ -4401,9 +4403,6 @@ var { MORE_THAN_2_YEARS } = COVER_PERIOD;
 var { MORE_THAN_500K } = TOTAL_CONTRACT_VALUE;
 var mapEligibility = (application2) => {
   const { eligibility, policy } = application2;
-  console.log("********* map eligibility  - eligibility", eligibility);
-  console.log("********* map eligibility  - eligibility[COVER_PERIOD_ELIGIBILITY].valueId", eligibility[COVER_PERIOD_ELIGIBILITY].valueId);
-  console.log("********* map eligibility  - MORE_THAN_2_YEARS", MORE_THAN_2_YEARS);
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.ELIGIBILITY, ""),
     xlsx_row_default(FIELDS_ELIGIBILITY[BUYER_COUNTRY2].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY2].name),
