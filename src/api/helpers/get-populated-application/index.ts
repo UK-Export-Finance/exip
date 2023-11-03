@@ -26,6 +26,14 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('eligibility', application.id));
   }
 
+  const coverPeriod = await context.db.CoverPeriod.findOne({
+    where: { id: eligibility.coverPeriodId },
+  });
+
+  if (!coverPeriod) {
+    throw new Error(generateErrorMessage('coverPeriod', application.id));
+  }
+
   const totalContractValue = await context.db.TotalContractValue.findOne({
     where: { id: eligibility.totalContractValueId },
   });
@@ -135,6 +143,7 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
   const populatedEligibility = {
     ...eligibility,
     buyerCountry,
+    coverPeriod,
     totalContractValue,
   };
 

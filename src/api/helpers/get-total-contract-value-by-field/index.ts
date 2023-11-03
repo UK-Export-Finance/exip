@@ -5,7 +5,7 @@ const getTotalContractValueByField = async (context: Context, field: string, val
     console.info('Getting totalContractValue by field/value $s', `${field}, ${value}`);
 
     /**
-     * Get an totalContractValue by a particular field and value.
+     * Get a totalContractValue by a particular field and value.
      * NOTE: Keystone has a limitation where you can't findOne by a field that is NOT the id.
      * Therefore we have to use findMany, which has a performance impact.
      * Because this is low volume service, there is no need to improve this.

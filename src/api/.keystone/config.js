@@ -268,6 +268,8 @@ var INSURANCE_FIELD_IDS = {
     TOTAL_CONTRACT_VALUE: "totalContractValue",
     TOTAL_CONTRACT_VALUE_ID: "totalContractValueId",
     WANT_COVER_OVER_MAX_PERIOD: "wantCoverOverMaxPeriod",
+    COVER_PERIOD: "coverPeriod",
+    COVER_PERIOD_ID: "coverPeriodId",
     OTHER_PARTIES_INVOLVED: "otherPartiesInvolved",
     LETTER_OF_CREDIT: "paidByLetterOfCredit",
     PRE_CREDIT_PERIOD: "needPreCreditPeriodCover",
@@ -412,6 +414,16 @@ var APPLICATION = {
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: LATEST_VERSION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER
 };
 var application_default = APPLICATION;
+
+// constants/cover-period/index.ts
+var COVER_PERIOD = {
+  LESS_THAN_2_YEARS: {
+    DB_ID: 1
+  },
+  MORE_THAN_2_YEARS: {
+    DB_ID: 2
+  }
+};
 
 // constants/external-apis.ts
 var EXTERNAL_API_DEFINITIONS = {
@@ -1040,6 +1052,13 @@ var lists = {
     },
     access: import_access.allowAll
   }),
+  CoverPeriod: (0, import_core2.list)({
+    fields: {
+      valueId: (0, import_fields.integer)(),
+      value: (0, import_fields.text)()
+    },
+    access: import_access.allowAll
+  }),
   Policy: {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
@@ -1326,7 +1345,7 @@ var lists = {
       otherPartiesInvolved: (0, import_fields.checkbox)(),
       paidByLetterOfCredit: (0, import_fields.checkbox)(),
       totalContractValue: (0, import_fields.relationship)({ ref: "TotalContractValue" }),
-      wantCoverOverMaxPeriod: (0, import_fields.checkbox)()
+      coverPeriod: (0, import_fields.relationship)({ ref: "CoverPeriod" })
     },
     access: import_access.allowAll
   }),
@@ -1719,7 +1738,7 @@ var typeDefs = `
     paidByLetterOfCredit: Boolean!
     needPreCreditPeriodCover: Boolean!
     totalContractValueId: Int!
-    wantCoverOverMaxPeriod: Boolean!
+    coverPeriodId: Int!
     validExporterLocation: Boolean!
     hasMinimumUkGoodsOrServices: Boolean!
   }
@@ -2079,9 +2098,6 @@ var unlink = async (filePath) => {
   try {
     console.info("Deleting file %s", filePath);
     const file = await readFile(filePath);
-    if (file) {
-      await import_fs.promises.unlink(filePath);
-    }
     return false;
   } catch (err) {
     console.error("Error deleting file %O", err);
@@ -3169,6 +3185,29 @@ var getCountryByField = async (context, field, value) => {
 };
 var get_country_by_field_default = getCountryByField;
 
+// helpers/get-cover-period-value-by-field/index.ts
+var getCoverPeriodValueByField = async (context, field, value) => {
+  try {
+    console.info("Getting coverPeriod by field/value $s", `${field}, ${value}`);
+    const coverPeriodsArray = await context.db.CoverPeriod.findMany({
+      where: {
+        [field]: { equals: value }
+      },
+      take: 1
+    });
+    if (!coverPeriodsArray?.length || !coverPeriodsArray[0]) {
+      console.info("Getting coverPeriod by field - no coverPeriod exists with the provided field/value");
+      return false;
+    }
+    const [coverPeriod] = coverPeriodsArray;
+    return coverPeriod;
+  } catch (err) {
+    console.error("Error getting coverPeriod by field/value %O", err);
+    throw new Error(`Getting coverPeriod by field/value ${err}`);
+  }
+};
+var get_cover_period_value_by_field_default = getCoverPeriodValueByField;
+
 // helpers/get-total-contract-value-by-field/index.ts
 var getTotalContractValueByField = async (context, field, value) => {
   try {
@@ -3193,7 +3232,7 @@ var getTotalContractValueByField = async (context, field, value) => {
 var get_total_contract_value_by_field_default = getTotalContractValueByField;
 
 // helpers/create-an-eligibility/index.ts
-var createAnEligibility = async (context, countryId, applicationId, totalContractValueId, data) => {
+var createAnEligibility = async (context, countryId, applicationId, coverPeriodId, totalContractValueId, data) => {
   console.info("Creating an eligibility for ", applicationId);
   try {
     const eligibility = await context.db.Eligibility.createOne({
@@ -3203,6 +3242,9 @@ var createAnEligibility = async (context, countryId, applicationId, totalContrac
         },
         application: {
           connect: { id: applicationId }
+        },
+        coverPeriod: {
+          connect: { id: coverPeriodId }
         },
         totalContractValue: {
           connect: { id: totalContractValueId }
@@ -3271,7 +3313,7 @@ var createAnApplication = async (root, variables, context) => {
         success: false
       };
     }
-    const { buyerCountryIsoCode, needPreCreditPeriodCover, totalContractValueId, ...otherEligibilityAnswers } = eligibilityAnswers;
+    const { buyerCountryIsoCode, needPreCreditPeriodCover, totalContractValueId, coverPeriodId, ...otherEligibilityAnswers } = eligibilityAnswers;
     const country = await get_country_by_field_default(context, "isoCode", buyerCountryIsoCode);
     const application2 = await context.db.Application.createOne({
       data: {
@@ -3283,7 +3325,8 @@ var createAnApplication = async (root, variables, context) => {
     const { id: applicationId } = application2;
     const buyer = await create_a_buyer_default(context, country.id, applicationId);
     const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
-    const eligibility = await create_an_eligibility_default(context, country.id, applicationId, totalContractValue.id, otherEligibilityAnswers);
+    const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
+    const eligibility = await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
     const policy = await create_a_policy_default(context, applicationId);
     const updatedApplication = await context.db.Application.updateOne({
       where: {
@@ -3424,6 +3467,13 @@ var getPopulatedApplication = async (context, application2) => {
   if (!eligibility) {
     throw new Error(generateErrorMessage("eligibility", application2.id));
   }
+  const coverPeriod = await context.db.CoverPeriod.findOne({
+    where: { id: eligibility.coverPeriodId }
+  });
+  console.log("-------- coverPeriod ", coverPeriod);
+  if (!coverPeriod) {
+    throw new Error(generateErrorMessage("coverPeriod", application2.id));
+  }
   const totalContractValue = await context.db.TotalContractValue.findOne({
     where: { id: eligibility.totalContractValueId }
   });
@@ -3507,6 +3557,7 @@ var getPopulatedApplication = async (context, application2) => {
   const populatedEligibility = {
     ...eligibility,
     buyerCountry,
+    coverPeriod,
     totalContractValue
   };
   const populatedBuyer = {
@@ -4337,6 +4388,7 @@ var {
     HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2,
     VALID_EXPORTER_LOCATION: VALID_EXPORTER_LOCATION2,
     WANT_COVER_OVER_MAX_AMOUNT: WANT_COVER_OVER_MAX_AMOUNT2,
+    COVER_PERIOD: COVER_PERIOD_ELIGIBILITY,
     TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_ELIGIBILITY,
     WANT_COVER_OVER_MAX_PERIOD: WANT_COVER_OVER_MAX_PERIOD2,
     OTHER_PARTIES_INVOLVED: OTHER_PARTIES_INVOLVED2,
@@ -4345,9 +4397,13 @@ var {
     COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2
   }
 } = FIELD_IDS.INSURANCE;
+var { MORE_THAN_2_YEARS } = COVER_PERIOD;
 var { MORE_THAN_500K } = TOTAL_CONTRACT_VALUE;
 var mapEligibility = (application2) => {
   const { eligibility, policy } = application2;
+  console.log("********* map eligibility  - eligibility", eligibility);
+  console.log("********* map eligibility  - eligibility[COVER_PERIOD_ELIGIBILITY].valueId", eligibility[COVER_PERIOD_ELIGIBILITY].valueId);
+  console.log("********* map eligibility  - MORE_THAN_2_YEARS", MORE_THAN_2_YEARS);
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.ELIGIBILITY, ""),
     xlsx_row_default(FIELDS_ELIGIBILITY[BUYER_COUNTRY2].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY2].name),
@@ -4357,7 +4413,10 @@ var mapEligibility = (application2) => {
       FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_AMOUNT2].SUMMARY?.TITLE,
       map_yes_no_field_default(eligibility[TOTAL_CONTRACT_VALUE_ELIGIBILITY].valueId === MORE_THAN_500K.DB_ID)
     ),
-    xlsx_row_default(FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_PERIOD2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[WANT_COVER_OVER_MAX_PERIOD2])),
+    xlsx_row_default(
+      FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_PERIOD2].SUMMARY?.TITLE,
+      map_yes_no_field_default(eligibility[COVER_PERIOD_ELIGIBILITY].valueId === MORE_THAN_2_YEARS.DB_ID)
+    ),
     xlsx_row_default(FIELDS_ELIGIBILITY[OTHER_PARTIES_INVOLVED2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[OTHER_PARTIES_INVOLVED2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[LETTER_OF_CREDIT2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[LETTER_OF_CREDIT2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[PRE_CREDIT_PERIOD2].SUMMARY?.TITLE, map_yes_no_field_default(policy[PRE_CREDIT_PERIOD2])),

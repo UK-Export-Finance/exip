@@ -57,8 +57,12 @@ export interface ApplicationDeclaration extends Relationship {
   agreeHowDataWillBeUsed?: boolean;
 }
 
-export interface TotalContractValue {
-  id: string;
+export interface TotalContractValue extends Relationship {
+  value: string;
+  valueId: number;
+}
+
+export interface CoverPeriod extends Relationship {
   value: string;
   valueId: number;
 }
@@ -71,7 +75,8 @@ export interface ApplicationEligibility extends Relationship {
   needPreCreditPeriodCover: boolean;
   totalContractValueId: number;
   totalContractValue: TotalContractValue;
-  wantCoverOverMaxPeriod: boolean;
+  coverPeriodId: number;
+  coverPeriod: CoverPeriod;
 }
 
 export interface ApplicationExportContract extends Relationship {

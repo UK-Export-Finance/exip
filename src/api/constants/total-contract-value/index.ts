@@ -1,6 +1,6 @@
 /**
  * List of custom "total contract value" database IDs.
- * Each object contains a DB_ID that equals the database's manually created IDS.
+ * Each object contains a DB_ID that equals the database's manually created ID.
  */
 export const TOTAL_CONTRACT_VALUE = {
   LESS_THAN_500K: {

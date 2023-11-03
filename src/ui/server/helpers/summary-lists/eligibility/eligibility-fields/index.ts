@@ -1,5 +1,5 @@
 import { FIELDS_ELIGIBILITY } from '../../../../content-strings/fields/insurance';
-import { TOTAL_CONTRACT_VALUE } from '../../../../constants';
+import { COVER_PERIOD, TOTAL_CONTRACT_VALUE } from '../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
@@ -10,6 +10,7 @@ const { ELIGIBILITY: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
 const {
   WANT_COVER_OVER_MAX_AMOUNT,
+  COVER_PERIOD: COVER_PERIOD_ELIGIBILITY,
   TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_ELIGIBILITY,
   WANT_COVER_OVER_MAX_PERIOD,
   OTHER_PARTIES_INVOLVED,
@@ -21,6 +22,7 @@ const {
   VALID_EXPORTER_LOCATION,
 } = FIELD_IDS;
 
+const { MORE_THAN_2_YEARS } = COVER_PERIOD;
 const { MORE_THAN_500K } = TOTAL_CONTRACT_VALUE;
 
 /**
@@ -69,7 +71,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
         data: answers,
         renderChangeLink: false,
       },
-      mapYesNoField(answers[WANT_COVER_OVER_MAX_PERIOD]),
+      mapYesNoField(answers[COVER_PERIOD_ELIGIBILITY].valueId === MORE_THAN_2_YEARS.DB_ID),
     ),
     fieldGroupItem(
       {

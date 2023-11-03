@@ -314,6 +314,13 @@ export const lists = {
     },
     access: allowAll,
   }),
+  CoverPeriod: list({
+    fields: {
+      valueId: integer(),
+      value: text(),
+    },
+    access: allowAll,
+  }),
   Policy: {
     fields: {
       application: relationship({ ref: 'Application' }),
@@ -607,7 +614,7 @@ export const lists = {
       otherPartiesInvolved: checkbox(),
       paidByLetterOfCredit: checkbox(),
       totalContractValue: relationship({ ref: 'TotalContractValue' }),
-      wantCoverOverMaxPeriod: checkbox(),
+      coverPeriod: relationship({ ref: 'CoverPeriod' }),
     },
     access: allowAll,
   }),

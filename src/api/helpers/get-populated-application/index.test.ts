@@ -43,6 +43,7 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.buyer.id).toEqual(application.buyer.id);
     expect(result.declaration.id).toEqual(application.declaration.id);
     expect(result.eligibility.id).toEqual(application.eligibility.id);
+    expect(result.eligibility.coverPeriod.id).toEqual(application.eligibility.coverPeriodId);
     expect(result.eligibility.totalContractValue.id).toEqual(application.eligibility.totalContractValueId);
     expect(result.exportContract.id).toEqual(application.exportContract.id);
     expect(result.owner.id).toEqual(application.owner.id);

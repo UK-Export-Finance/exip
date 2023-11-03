@@ -1,18 +1,34 @@
-import requiredFields from '.';
-import { FIELD_IDS } from '../../../constants';
+import requiredFields, { irrelevantFields } from '.';
+import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 
-const { ACCOUNT_TO_APPLY_ONLINE, BUYER_COUNTRY_ISO_CODE, TOTAL_CONTRACT_VALUE_ID, WANT_COVER_OVER_MAX_AMOUNT } = FIELD_IDS.INSURANCE.ELIGIBILITY;
+const { ACCOUNT_TO_APPLY_ONLINE, BUYER_COUNTRY_ISO_CODE } = INSURANCE_FIELD_IDS.ELIGIBILITY;
+const { TOTAL_CONTRACT_VALUE_ID, WANT_COVER_OVER_MAX_AMOUNT, WANT_COVER_OVER_MAX_PERIOD, COVER_PERIOD_ID } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
 describe('server/helpers/required-fields/eligibility', () => {
-  it('should return array of required fields', () => {
-    const result = requiredFields();
+  describe('irrelevantFields', () => {
+    it('should return array of irrelevant fields', () => {
+      const expected = [
+        ACCOUNT_TO_APPLY_ONLINE,
+        BUYER_COUNTRY_ISO_CODE,
+        WANT_COVER_OVER_MAX_AMOUNT,
+        TOTAL_CONTRACT_VALUE_ID,
+        WANT_COVER_OVER_MAX_PERIOD,
+        COVER_PERIOD_ID,
+      ];
 
-    const fieldIds = Object.values(FIELD_IDS.INSURANCE.ELIGIBILITY);
+      expect(irrelevantFields).toEqual(expected);
+    });
+  });
 
-    const expected = fieldIds.filter(
-      (id) => id !== ACCOUNT_TO_APPLY_ONLINE && id !== BUYER_COUNTRY_ISO_CODE && id !== WANT_COVER_OVER_MAX_AMOUNT && id !== TOTAL_CONTRACT_VALUE_ID,
-    );
+  describe('requiredFields', () => {
+    it('should return array of required fields', () => {
+      const result = requiredFields();
 
-    expect(result).toEqual(expected);
+      const fieldIds = Object.values(INSURANCE_FIELD_IDS.ELIGIBILITY);
+
+      const expected = fieldIds.filter((id) => !irrelevantFields.includes(id));
+
+      expect(result).toEqual(expected);
+    });
   });
 });

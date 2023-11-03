@@ -2,6 +2,7 @@ export * from './cookies';
 export * from './account';
 export * from './api';
 export * from './application';
+export * from './cover-period';
 export * from './date-format';
 export * from './dates';
 export * from './examples';
