@@ -15,11 +15,11 @@ describe('helpers/get-total-contract-value-by-field', () => {
 
   beforeEach(async () => {
     // wipe the table so we have a clean slate.
-    const countries = await context.query.TotalContractValue.findMany();
+    const totalContractValues = await context.query.TotalContractValue.findMany();
 
-    if (countries.length) {
+    if (totalContractValues.length) {
       await context.query.TotalContractValue.deleteMany({
-        where: countries,
+        where: totalContractValues,
       });
     }
 
