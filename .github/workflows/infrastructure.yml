@@ -14,7 +14,6 @@
 # *********
 # GHA is only invoked when following conditions are satisfied:
 # 1. Push to the `infrastructure` branch only.
-# 2. Exact file path matches `.github/workflows/infrastructure.yml`.
 #
 # Note
 # ****
@@ -28,8 +27,6 @@ on:
   push:
     branches:
       - infrastructure
-
-    paths: [.github/workflows/infrastructure.yml]
 
 env:
   PRODUCT: exip
@@ -67,7 +64,7 @@ jobs:
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
-        if: ${{ 'prod' == env.TARGET }}
+        if: ${{ 'production' == env.TARGET }}
         run: echo "TYPE=Production" >> $GITHUB_ENV
 
       - name: Tags 🏷️
@@ -275,7 +272,7 @@ jobs:
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
-        if: ${{ 'prod' == env.TARGET }}
+        if: ${{ 'production' == env.TARGET }}
         run: echo "TYPE=Production" >> $GITHUB_ENV
 
       - name: Tags 🏷️
@@ -486,7 +483,7 @@ jobs:
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
-        if: ${{ 'prod' == env.TARGET }}
+        if: ${{ 'production' == env.TARGET }}
         run: echo "TYPE=Production" >> $GITHUB_ENV
 
       - name: Login 🔐
@@ -538,7 +535,7 @@ jobs:
 
       - name: Variables ✨
         run: |
-          echo "API_URL=$(az webapp show --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv)" >> $GITHUB_ENV
+          echo "API_URL=$(az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv)" >> $GITHUB_ENV
 
       - name: Setting 🧱
         uses: Azure/cli@v1.0.8
@@ -554,13 +551,8 @@ jobs:
             WEBSITES_PORT='${{ vars.UI_PORT }}' \
             TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
             TLS_KEY='${{ secrets.TLS_KEY }}' \
-            WEBSITE_DNS_SERVER='${{ vars.WEBSITE_DNS_SERVER }}' \
-            WEBSITE_VNET_ROUTE_ALL=1 \
             SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
             GOOGLE_ANALYTICS_ID='${{ secrets.GOOGLE_ANALYTICS_ID }}' \
-            GOV_NOTIFY_API_KEY='${{ secrets.GOV_NOTIFY_API_KEY }}' \
-            COMPANIES_HOUSE_API_URL='${{ secrets.COMPANIES_HOUSE_API_URL }}' \
-            COMPANIES_HOUSE_API_KEY='${{ secrets.COMPANIES_HOUSE_API_KEY }}' \
             API_URL='https://${{ env.API_URL }}/api/graphql' \
             API_KEY='${{ secrets.API_KEY }}' \
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
@@ -577,8 +569,6 @@ jobs:
             WEBSITES_PORT='${{ vars.API_PORT }}' \
             TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
             TLS_KEY='${{ secrets.TLS_KEY }}' \
-            WEBSITE_DNS_SERVER=${{ vars.WEBSITE_DNS_SERVER }} \
-            WEBSITE_VNET_ROUTE_ALL=1 \
             DATABASE_URL='${{ secrets.DATABASE_URL }}' \
             MYSQL_DATABASE='${{ secrets.MYSQL_DATABASE }}' \
             MYSQL_ROOT_PASSWORD='${{ secrets.MYSQL_ROOT_PASSWORD }}' \
@@ -591,7 +581,6 @@ jobs:
             COMPANIES_HOUSE_API_URL='${{ secrets.COMPANIES_HOUSE_API_URL }}' \
             COMPANIES_HOUSE_API_KEY='${{ secrets.COMPANIES_HOUSE_API_KEY }}' \
             JWT_SIGNING_KEY='${{ secrets.JWT_SIGNING_KEY }}' \
-            JWT_VALIDATING_KEY='${{ secrets.JWT_VALIDATING_KEY }}' \
             UNDERWRITING_TEAM_EMAIL='${{ secrets.UNDERWRITING_TEAM_EMAIL }}' \
             FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}'
 
@@ -607,7 +596,7 @@ jobs:
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
-        if: ${{ 'prod' == env.TARGET }}
+        if: ${{ 'production' == env.TARGET }}
         run: echo "TYPE=Production" >> $GITHUB_ENV
 
       - name: Login 🔐
@@ -713,7 +702,7 @@ jobs:
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
-        if: ${{ 'prod' == env.TARGET }}
+        if: ${{ 'production' == env.TARGET }}
         run: echo "TYPE=Production" >> $GITHUB_ENV
 
       - name: Tags 🏷️
@@ -764,7 +753,7 @@ jobs:
             --operator LessThan \
             --threshold 100 \
             --num-periods 1 \
-            --num-violations 5 \
+            --num-violations 1 \
             --sensitivity High
 
             # Alert
