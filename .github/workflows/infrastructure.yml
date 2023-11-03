@@ -764,7 +764,7 @@ jobs:
             --operator LessThan \
             --threshold 100 \
             --num-periods 1 \
-            --num-violations 5 \
+            --num-violations 1 \
             --sensitivity High
 
             # Alert
