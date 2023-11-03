@@ -612,11 +612,13 @@ CREATE TABLE IF NOT EXISTS `Eligibility` (
   `validExporterLocation` tinyint(1) NOT NULL DEFAULT '0',
   `otherPartiesInvolved` tinyint(1) NOT NULL DEFAULT '0',
   `paidByLetterOfCredit` tinyint(1) NOT NULL DEFAULT '0',
+  `totalContractValue` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `wantCoverOverMaxPeriod` tinyint(1) NOT NULL DEFAULT '0',
   `hasCompaniesHouseNumber` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `Eligibility_application_idx` (`application`),
   KEY `Eligibility_buyerCountry_idx` (`buyerCountry`),
+  KEY `Eligibility_totalContractValue_idx` (`totalContractValue`),
   CONSTRAINT `Eligibility_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Eligibility_buyerCountry_fkey` FOREIGN KEY (`buyerCountry`) REFERENCES `Country` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Eligibility_totalContractValue_fkey` FOREIGN KEY (`totalContractValue`) REFERENCES `TotalContractValue` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
