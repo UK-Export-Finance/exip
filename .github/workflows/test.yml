@@ -45,7 +45,6 @@ env:
   FEEDBACK_EMAIL_RECIPIENT: ${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
   MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
   JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
-  JWT_VALIDATING_KEY: ${{ secrets.JWT_VALIDATING_KEY }}
 
 jobs:
   # 1. Setup test infrastructure
@@ -154,7 +153,6 @@ jobs:
           FEEDBACK_EMAIL_RECIPIENT: ${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
           JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
-          JWT_VALIDATING_KEY: ${{ secrets.JWT_VALIDATING_KEY }}
         run: |
           docker-compose up --build -d
           npm ci --legacy-peer-deps --prefix ./src/api
