@@ -612,7 +612,6 @@ CREATE TABLE IF NOT EXISTS `Eligibility` (
   `validExporterLocation` tinyint(1) NOT NULL DEFAULT '0',
   `otherPartiesInvolved` tinyint(1) NOT NULL DEFAULT '0',
   `paidByLetterOfCredit` tinyint(1) NOT NULL DEFAULT '0',
-  `wantCoverOverMaxAmount` tinyint(1) NOT NULL DEFAULT '0',
   `wantCoverOverMaxPeriod` tinyint(1) NOT NULL DEFAULT '0',
   `hasCompaniesHouseNumber` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
