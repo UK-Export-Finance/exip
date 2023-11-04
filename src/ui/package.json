@@ -67,7 +67,8 @@
     "typescript": "^5.2.2",
     "webpack": "^5.89.0",
     "webpack-cli": "^5.1.4",
-    "webpack-merge": "^5.10.0"
+    "webpack-merge": "^5.10.0",
+    "optimize-css-assets-webpack-plugin": "^6.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
@@ -89,7 +90,6 @@
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-prettier": "5.0.1",
     "jest": "29.6.2",
-    "optimize-css-assets-webpack-plugin": "^6.0.1",
     "prettier": "^3.0.3",
     "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
