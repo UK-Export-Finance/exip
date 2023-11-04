@@ -13,6 +13,8 @@ const INSURANCE_FIELD_IDS = {
     TOTAL_CONTRACT_VALUE: 'totalContractValue',
     TOTAL_CONTRACT_VALUE_ID: 'totalContractValueId',
     WANT_COVER_OVER_MAX_PERIOD: 'wantCoverOverMaxPeriod',
+    COVER_PERIOD: 'coverPeriod',
+    COVER_PERIOD_ID: 'coverPeriodId',
     OTHER_PARTIES_INVOLVED: 'otherPartiesInvolved',
     LETTER_OF_CREDIT: 'paidByLetterOfCredit',
     PRE_CREDIT_PERIOD: 'needPreCreditPeriodCover',

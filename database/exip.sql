@@ -473,6 +473,31 @@ VALUES
 UNLOCK TABLES;
 
 
+# Dump of table CoverPeriod
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `CoverPeriod`;
+
+CREATE TABLE `CoverPeriod` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `valueId` int DEFAULT NULL,
+  `value` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+LOCK TABLES `CoverPeriod` WRITE;
+/*!40000 ALTER TABLE `CoverPeriod` DISABLE KEYS */;
+
+INSERT INTO `CoverPeriod` (`id`, `valueId`, `value`)
+VALUES
+	('cloiparaj000doq73pmr6blua',1,'Less than 2 years'),
+	('cloiparaj000doq73pmr6blub',2,'More than 2 years');
+
+/*!40000 ALTER TABLE `CoverPeriod` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
 # Dump of table Declaration
 # ------------------------------------------------------------
 
@@ -613,7 +638,7 @@ CREATE TABLE IF NOT EXISTS `Eligibility` (
   `otherPartiesInvolved` tinyint(1) NOT NULL DEFAULT '0',
   `paidByLetterOfCredit` tinyint(1) NOT NULL DEFAULT '0',
   `totalContractValue` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `wantCoverOverMaxPeriod` tinyint(1) NOT NULL DEFAULT '0',
+  `coverPeriod` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `hasCompaniesHouseNumber` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `Eligibility_application_idx` (`application`),
@@ -621,6 +646,7 @@ CREATE TABLE IF NOT EXISTS `Eligibility` (
   KEY `Eligibility_totalContractValue_idx` (`totalContractValue`),
   CONSTRAINT `Eligibility_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Eligibility_buyerCountry_fkey` FOREIGN KEY (`buyerCountry`) REFERENCES `Country` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Eligibility_coverPeriod_fkey` FOREIGN KEY (`coverPeriod`) REFERENCES `CoverPeriod` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Eligibility_totalContractValue_fkey` FOREIGN KEY (`totalContractValue`) REFERENCES `TotalContractValue` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -861,7 +887,7 @@ DROP TABLE IF EXISTS `TotalContractValue`;
 
 CREATE TABLE `TotalContractValue` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `value` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `valueId` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

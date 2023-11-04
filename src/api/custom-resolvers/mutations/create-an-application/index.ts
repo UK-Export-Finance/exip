@@ -1,5 +1,6 @@
 import getAccountById from '../../../helpers/get-account-by-id';
 import getCountryByField from '../../../helpers/get-country-by-field';
+import getCreditPeriodValueByField from '../../../helpers/get-cover-period-value-by-field';
 import getTotalContractValueByField from '../../../helpers/get-total-contract-value-by-field';
 import createAnEligibility from '../../../helpers/create-an-eligibility';
 import createABuyer from '../../../helpers/create-a-buyer';
@@ -43,7 +44,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
      * 1) Eligibility buyer country relationship
      * 2) Buyer country relationship
      */
-    const { buyerCountryIsoCode, needPreCreditPeriodCover, totalContractValueId, ...otherEligibilityAnswers } = eligibilityAnswers;
+    const { buyerCountryIsoCode, needPreCreditPeriodCover, totalContractValueId, coverPeriodId, ...otherEligibilityAnswers } = eligibilityAnswers;
 
     const country = await getCountryByField(context, 'isoCode', buyerCountryIsoCode);
 
@@ -71,7 +72,9 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
 
     const totalContractValue = await getTotalContractValueByField(context, 'valueId', totalContractValueId);
 
-    const eligibility = await createAnEligibility(context, country.id, applicationId, totalContractValue.id, otherEligibilityAnswers);
+    const coverPeriod = await getCreditPeriodValueByField(context, 'valueId', coverPeriodId);
+
+    const eligibility = await createAnEligibility(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
 
     const policy = await createAPolicy(context, applicationId);
 

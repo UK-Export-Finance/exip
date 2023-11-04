@@ -84,8 +84,15 @@ model Application {
 model TotalContractValue {
   id                                  String        @id @default(cuid())
   valueId                             Int?
-  value                               String        @default("")
+  value                               String        @default("") @mysql.VarChar(70)
   from_Eligibility_totalContractValue Eligibility[] @relation("Eligibility_totalContractValue")
+}
+
+model CoverPeriod {
+  id                           String        @id @default(cuid())
+  valueId                      Int?
+  value                        String        @default("") @mysql.VarChar(70)
+  from_Eligibility_coverPeriod Eligibility[] @relation("Eligibility_coverPeriod")
 }
 
 model Policy {
@@ -303,12 +310,14 @@ model Eligibility {
   paidByLetterOfCredit         Boolean             @default(false)
   totalContractValue           TotalContractValue? @relation("Eligibility_totalContractValue", fields: [totalContractValueId], references: [id])
   totalContractValueId         String?             @map("totalContractValue")
-  wantCoverOverMaxPeriod       Boolean             @default(false)
+  coverPeriod                  CoverPeriod?        @relation("Eligibility_coverPeriod", fields: [coverPeriodId], references: [id])
+  coverPeriodId                String?             @map("coverPeriod")
   from_Application_eligibility Application[]       @relation("Application_eligibility")
 
   @@index([applicationId])
   @@index([buyerCountryId])
   @@index([totalContractValueId])
+  @@index([coverPeriodId])
 }
 
 model SectionReview {

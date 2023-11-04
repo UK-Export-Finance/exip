@@ -9,11 +9,19 @@ import { Context } from '../../types';
  * @param {Object} KeystoneJS context API
  * @param {String} Country ID
  * @param {String} Application ID
+ * @param {String} Cover period value ID
  * @param {String} Total contract value ID
  * @param {Object} Optional eligibility data
  * @returns {Object} Created eligibility
  */
-const createAnEligibility = async (context: Context, countryId: string, applicationId: string, totalContractValueId: string, data?: object) => {
+const createAnEligibility = async (
+  context: Context,
+  countryId: string,
+  applicationId: string,
+  coverPeriodId: string,
+  totalContractValueId: string,
+  data?: object,
+) => {
   console.info('Creating an eligibility for ', applicationId);
 
   try {
@@ -24,6 +32,9 @@ const createAnEligibility = async (context: Context, countryId: string, applicat
         },
         application: {
           connect: { id: applicationId },
+        },
+        coverPeriod: {
+          connect: { id: coverPeriodId },
         },
         totalContractValue: {
           connect: { id: totalContractValueId },

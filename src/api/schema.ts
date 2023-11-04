@@ -310,7 +310,18 @@ export const lists = {
   TotalContractValue: list({
     fields: {
       valueId: integer(),
-      value: text(),
+      value: text({
+        db: { nativeType: 'VarChar(70)' },
+      }),
+    },
+    access: allowAll,
+  }),
+  CoverPeriod: list({
+    fields: {
+      valueId: integer(),
+      value: text({
+        db: { nativeType: 'VarChar(70)' },
+      }),
     },
     access: allowAll,
   }),
@@ -607,7 +618,7 @@ export const lists = {
       otherPartiesInvolved: checkbox(),
       paidByLetterOfCredit: checkbox(),
       totalContractValue: relationship({ ref: 'TotalContractValue' }),
-      wantCoverOverMaxPeriod: checkbox(),
+      coverPeriod: relationship({ ref: 'CoverPeriod' }),
     },
     access: allowAll,
   }),

@@ -429,6 +429,46 @@ input TotalContractValueCreateInput {
   value: String
 }
 
+type CoverPeriod {
+  id: ID!
+  valueId: Int
+  value: String
+}
+
+input CoverPeriodWhereUniqueInput {
+  id: ID
+}
+
+input CoverPeriodWhereInput {
+  AND: [CoverPeriodWhereInput!]
+  OR: [CoverPeriodWhereInput!]
+  NOT: [CoverPeriodWhereInput!]
+  id: IDFilter
+  valueId: IntNullableFilter
+  value: StringFilter
+}
+
+input CoverPeriodOrderByInput {
+  id: OrderDirection
+  valueId: OrderDirection
+  value: OrderDirection
+}
+
+input CoverPeriodUpdateInput {
+  valueId: Int
+  value: String
+}
+
+input CoverPeriodUpdateArgs {
+  where: CoverPeriodWhereUniqueInput!
+  data: CoverPeriodUpdateInput!
+}
+
+input CoverPeriodCreateInput {
+  valueId: Int
+  value: String
+}
+
 type Policy {
   id: ID!
   application: Application
@@ -1432,7 +1472,7 @@ type Eligibility {
   otherPartiesInvolved: Boolean
   paidByLetterOfCredit: Boolean
   totalContractValue: TotalContractValue
-  wantCoverOverMaxPeriod: Boolean
+  coverPeriod: CoverPeriod
 }
 
 input EligibilityWhereUniqueInput {
@@ -1452,7 +1492,7 @@ input EligibilityWhereInput {
   otherPartiesInvolved: BooleanFilter
   paidByLetterOfCredit: BooleanFilter
   totalContractValue: TotalContractValueWhereInput
-  wantCoverOverMaxPeriod: BooleanFilter
+  coverPeriod: CoverPeriodWhereInput
 }
 
 input EligibilityOrderByInput {
@@ -1462,7 +1502,6 @@ input EligibilityOrderByInput {
   hasCompaniesHouseNumber: OrderDirection
   otherPartiesInvolved: OrderDirection
   paidByLetterOfCredit: OrderDirection
-  wantCoverOverMaxPeriod: OrderDirection
 }
 
 input EligibilityUpdateInput {
@@ -1474,12 +1513,18 @@ input EligibilityUpdateInput {
   otherPartiesInvolved: Boolean
   paidByLetterOfCredit: Boolean
   totalContractValue: TotalContractValueRelateToOneForUpdateInput
-  wantCoverOverMaxPeriod: Boolean
+  coverPeriod: CoverPeriodRelateToOneForUpdateInput
 }
 
 input TotalContractValueRelateToOneForUpdateInput {
   create: TotalContractValueCreateInput
   connect: TotalContractValueWhereUniqueInput
+  disconnect: Boolean
+}
+
+input CoverPeriodRelateToOneForUpdateInput {
+  create: CoverPeriodCreateInput
+  connect: CoverPeriodWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -1497,12 +1542,17 @@ input EligibilityCreateInput {
   otherPartiesInvolved: Boolean
   paidByLetterOfCredit: Boolean
   totalContractValue: TotalContractValueRelateToOneForCreateInput
-  wantCoverOverMaxPeriod: Boolean
+  coverPeriod: CoverPeriodRelateToOneForCreateInput
 }
 
 input TotalContractValueRelateToOneForCreateInput {
   create: TotalContractValueCreateInput
   connect: TotalContractValueWhereUniqueInput
+}
+
+input CoverPeriodRelateToOneForCreateInput {
+  create: CoverPeriodCreateInput
+  connect: CoverPeriodWhereUniqueInput
 }
 
 type SectionReview {
@@ -1958,6 +2008,12 @@ type Mutation {
   updateTotalContractValues(data: [TotalContractValueUpdateArgs!]!): [TotalContractValue]
   deleteTotalContractValue(where: TotalContractValueWhereUniqueInput!): TotalContractValue
   deleteTotalContractValues(where: [TotalContractValueWhereUniqueInput!]!): [TotalContractValue]
+  createCoverPeriod(data: CoverPeriodCreateInput!): CoverPeriod
+  createCoverPeriods(data: [CoverPeriodCreateInput!]!): [CoverPeriod]
+  updateCoverPeriod(where: CoverPeriodWhereUniqueInput!, data: CoverPeriodUpdateInput!): CoverPeriod
+  updateCoverPeriods(data: [CoverPeriodUpdateArgs!]!): [CoverPeriod]
+  deleteCoverPeriod(where: CoverPeriodWhereUniqueInput!): CoverPeriod
+  deleteCoverPeriods(where: [CoverPeriodWhereUniqueInput!]!): [CoverPeriod]
   createPolicy(data: PolicyCreateInput!): Policy
   createPolicies(data: [PolicyCreateInput!]!): [Policy]
   updatePolicy(where: PolicyWhereUniqueInput!, data: PolicyUpdateInput!): Policy
@@ -2173,6 +2229,9 @@ type Query {
   totalContractValues(where: TotalContractValueWhereInput! = {}, orderBy: [TotalContractValueOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TotalContractValueWhereUniqueInput): [TotalContractValue!]
   totalContractValue(where: TotalContractValueWhereUniqueInput!): TotalContractValue
   totalContractValuesCount(where: TotalContractValueWhereInput! = {}): Int
+  coverPeriods(where: CoverPeriodWhereInput! = {}, orderBy: [CoverPeriodOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CoverPeriodWhereUniqueInput): [CoverPeriod!]
+  coverPeriod(where: CoverPeriodWhereUniqueInput!): CoverPeriod
+  coverPeriodsCount(where: CoverPeriodWhereInput! = {}): Int
   policies(where: PolicyWhereInput! = {}, orderBy: [PolicyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyWhereUniqueInput): [Policy!]
   policy(where: PolicyWhereUniqueInput!): Policy
   policiesCount(where: PolicyWhereInput! = {}): Int
@@ -2529,7 +2588,7 @@ input ApplicationEligibility {
   paidByLetterOfCredit: Boolean!
   needPreCreditPeriodCover: Boolean!
   totalContractValueId: Int!
-  wantCoverOverMaxPeriod: Boolean!
+  coverPeriodId: Int!
   validExporterLocation: Boolean!
   hasMinimumUkGoodsOrServices: Boolean!
 }

@@ -30,7 +30,10 @@ const applicationQuery = gql`
             id
             value
           }
-          wantCoverOverMaxPeriod
+          coverPeriod {
+            id
+            value
+          }
         }
         policy {
           id

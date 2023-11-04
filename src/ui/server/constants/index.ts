@@ -1,5 +1,6 @@
 export * from './tls';
 export * from './account';
+export * from './cover-period';
 export * from './currencies';
 export * from './application';
 export * from './date-format';

@@ -5,6 +5,7 @@ export * from './field-ids';
 export * from './allowed-graphql-resolvers';
 export * from './answers';
 export * from './application';
+export * from './cover-period';
 export * from './external-apis';
 export * from './field-values';
 export * from './total-contract-value';

@@ -179,7 +179,7 @@ const typeDefs = `
     paidByLetterOfCredit: Boolean!
     needPreCreditPeriodCover: Boolean!
     totalContractValueId: Int!
-    wantCoverOverMaxPeriod: Boolean!
+    coverPeriodId: Int!
     validExporterLocation: Boolean!
     hasMinimumUkGoodsOrServices: Boolean!
   }
