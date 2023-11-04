@@ -76,7 +76,7 @@
     "typescript": "^5.2.2"
   },
   "engines": {
-    "node": ">=18",
+    "node": ">=21",
     "npm": ">=9.5.0"
   },
   "engineStrict": true

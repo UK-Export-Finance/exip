@@ -2,7 +2,7 @@
   "name": "generate-exip-pricing-grid",
   "versio": "1.0.0",
   "engines": {
-    "node": ">=18",
+    "node": ">=21",
     "npm": ">=9.5.0"
   },
   "repository": {
