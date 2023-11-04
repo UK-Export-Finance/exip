@@ -113,20 +113,28 @@ jobs:
         with:
           inlineScript: |
             az webapp config appsettings set \
-            --name app-${{ env.PRODUCT }}-ui-${{ github.ref_name }}-${{ vars.VERSION }} \
+            --name app-${{ env.PRODUCT }}-${{ env.NAME }}-${{ github.ref_name }}-${{ vars.VERSION }} \
             --settings \
             TZ='${{ vars.TIMEZONE }}' \
             NODE_ENV='${{ vars.NODE_ENV }}' \
-            PORT='${{ vars.UI_PORT }}' \
-            WEBSITES_PORT='${{ vars.UI_PORT }}' \
+            PORT='${{ vars.API_PORT }}' \
+            WEBSITES_PORT='${{ vars.API_PORT }}' \
             TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
             TLS_KEY='${{ secrets.TLS_KEY }}' \
-            SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
-            GOOGLE_ANALYTICS_ID='${{ secrets.GOOGLE_ANALYTICS_ID }}' \
+            DATABASE_URL='${{ secrets.DATABASE_URL }}' \
+            MYSQL_DATABASE='${{ secrets.MYSQL_DATABASE }}' \
+            MYSQL_ROOT_PASSWORD='${{ secrets.MYSQL_ROOT_PASSWORD }}' \
             API_KEY='${{ secrets.API_KEY }}' \
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
-            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}'
+            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
+            SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
+            GOV_NOTIFY_API_KEY='${{ secrets.GOV_NOTIFY_API_KEY }}' \
+            COMPANIES_HOUSE_API_URL='${{ secrets.COMPANIES_HOUSE_API_URL }}' \
+            COMPANIES_HOUSE_API_KEY='${{ secrets.COMPANIES_HOUSE_API_KEY }}' \
+            JWT_SIGNING_KEY='${{ secrets.JWT_SIGNING_KEY }}' \
+            UNDERWRITING_TEAM_EMAIL='${{ secrets.UNDERWRITING_TEAM_EMAIL }}' \
+            FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}'
 
       - name: Slot 🔀
         uses: azure/cli@v1.0.8
@@ -214,28 +222,20 @@ jobs:
         with:
           inlineScript: |
             az webapp config appsettings set \
-            --name app-${{ env.PRODUCT }}-api-${{ github.ref_name }}-${{ vars.VERSION }} \
+            --name app-${{ env.PRODUCT }}-${{ env.NAME }}-${{ github.ref_name }}-${{ vars.VERSION }} \
             --settings \
             TZ='${{ vars.TIMEZONE }}' \
             NODE_ENV='${{ vars.NODE_ENV }}' \
-            PORT='${{ vars.API_PORT }}' \
-            WEBSITES_PORT='${{ vars.API_PORT }}' \
+            PORT='${{ vars.UI_PORT }}' \
+            WEBSITES_PORT='${{ vars.UI_PORT }}' \
             TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
             TLS_KEY='${{ secrets.TLS_KEY }}' \
-            DATABASE_URL='${{ secrets.DATABASE_URL }}' \
-            MYSQL_DATABASE='${{ secrets.MYSQL_DATABASE }}' \
-            MYSQL_ROOT_PASSWORD='${{ secrets.MYSQL_ROOT_PASSWORD }}' \
+            SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
+            GOOGLE_ANALYTICS_ID='${{ secrets.GOOGLE_ANALYTICS_ID }}' \
             API_KEY='${{ secrets.API_KEY }}' \
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
-            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
-            SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
-            GOV_NOTIFY_API_KEY='${{ secrets.GOV_NOTIFY_API_KEY }}' \
-            COMPANIES_HOUSE_API_URL='${{ secrets.COMPANIES_HOUSE_API_URL }}' \
-            COMPANIES_HOUSE_API_KEY='${{ secrets.COMPANIES_HOUSE_API_KEY }}' \
-            JWT_SIGNING_KEY='${{ secrets.JWT_SIGNING_KEY }}' \
-            UNDERWRITING_TEAM_EMAIL='${{ secrets.UNDERWRITING_TEAM_EMAIL }}' \
-            FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}'
+            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}'
 
       - name: Slot 🔀
         uses: azure/cli@v1.0.8
