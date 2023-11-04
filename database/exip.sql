@@ -481,7 +481,7 @@ DROP TABLE IF EXISTS `CoverPeriod`;
 CREATE TABLE `CoverPeriod` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `valueId` int DEFAULT NULL,
-  `value` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `value` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -887,7 +887,7 @@ DROP TABLE IF EXISTS `TotalContractValue`;
 
 CREATE TABLE `TotalContractValue` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `value` varchar(70) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `valueId` int DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

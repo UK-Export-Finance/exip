@@ -1048,14 +1048,18 @@ var lists = {
   TotalContractValue: (0, import_core2.list)({
     fields: {
       valueId: (0, import_fields.integer)(),
-      value: (0, import_fields.text)()
+      value: (0, import_fields.text)({
+        db: { nativeType: "VarChar(70)" }
+      })
     },
     access: import_access.allowAll
   }),
   CoverPeriod: (0, import_core2.list)({
     fields: {
       valueId: (0, import_fields.integer)(),
-      value: (0, import_fields.text)()
+      value: (0, import_fields.text)({
+        db: { nativeType: "VarChar(70)" }
+      })
     },
     access: import_access.allowAll
   }),

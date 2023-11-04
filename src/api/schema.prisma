@@ -84,14 +84,14 @@ model Application {
 model TotalContractValue {
   id                                  String        @id @default(cuid())
   valueId                             Int?
-  value                               String        @default("")
+  value                               String        @default("") @mysql.VarChar(70)
   from_Eligibility_totalContractValue Eligibility[] @relation("Eligibility_totalContractValue")
 }
 
 model CoverPeriod {
   id                           String        @id @default(cuid())
   valueId                      Int?
-  value                        String        @default("")
+  value                        String        @default("") @mysql.VarChar(70)
   from_Eligibility_coverPeriod Eligibility[] @relation("Eligibility_coverPeriod")
 }
 
