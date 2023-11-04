@@ -113,7 +113,7 @@ jobs:
         with:
           inlineScript: |
             az webapp config appsettings set \
-            --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --name app-${{ env.PRODUCT }}-ui-${{ github.ref_name }}-${{ vars.VERSION }} \
             --settings \
             TZ='${{ vars.TIMEZONE }}' \
             NODE_ENV='${{ vars.NODE_ENV }}' \
@@ -214,7 +214,7 @@ jobs:
         with:
           inlineScript: |
             az webapp config appsettings set \
-            --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --name app-${{ env.PRODUCT }}-api-${{ github.ref_name }}-${{ vars.VERSION }} \
             --settings \
             TZ='${{ vars.TIMEZONE }}' \
             NODE_ENV='${{ vars.NODE_ENV }}' \
