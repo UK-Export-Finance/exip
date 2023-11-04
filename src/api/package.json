@@ -13,7 +13,7 @@
   "license": "MIT",
   "author": "UK Export Finance",
   "scripts": {
-    "build": "keystone build --no-ui",
+    "build": "NODE_ENV=dev keystone build --no-ui",
     "dev": "keystone dev  --no-ui",
     "documentation": "npx spectaql -t ./documentation/output ./documentation/config.yml",
     "lint": "eslint ./",
