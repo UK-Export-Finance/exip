@@ -748,19 +748,19 @@ jobs:
             az monitor metrics alert condition create \
             --type static \
             --dimension "_where_ OriginGroup includes ui" \
-            --aggregation Minimum \
+            --aggregation Average \
             --metric OriginHealthPercentage \
-            --operator LessThan \
-            --threshold 100 \
+            --operator LessThanOrEqual \
+            --threshold 99 \
             --num-periods 1 \
-            --num-violations 1 \
+            --num-violations 5 \
             --sensitivity High
 
             # Alert
             az monitor metrics alert create \
             --name alert-healthcheck-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --description "1 minute health check" \
-            --condition  "min 'OriginHealthPercentage' < 100.0 where OriginGroup includes ui" \
+            --condition  "avg 'OriginHealthPercentage' <= 99.0 where OriginGroup includes ui" \
             --scope $(az afd profile list --query [].id -o tsv) \
             --action $(az monitor action-group list --query [].id -o tsv) \
             --auto-mitigate true \
