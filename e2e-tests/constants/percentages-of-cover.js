@@ -1,4 +1,4 @@
-const PERCENTAGES_OF_COVER = [
+export const PERCENTAGES_OF_COVER = [
   70,
   75,
   80,
@@ -6,5 +6,3 @@ const PERCENTAGES_OF_COVER = [
   90,
   95,
 ];
-
-module.exports = PERCENTAGES_OF_COVER;

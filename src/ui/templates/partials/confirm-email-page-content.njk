@@ -1,0 +1,34 @@
+{% if accountEmail %}
+  <p data-cy="we-sent-link-to">{{ CONTENT_STRINGS.WE_SENT_LINK_TO }} {{ accountEmail }}</p>
+{% endif %}
+
+<p class="govuk-!-margin-bottom-9" data-cy="check-your-email">{{ CONTENT_STRINGS.CHECK_YOUR_EMAIL }}</p>
+
+<h2 class="govuk-heading-s" data-cy="having-problems-heading">{{ CONTENT_STRINGS.HAVING_PROBLEMS.HEADING }}</h2>
+
+{% set REQUEST_NEW = CONTENT_STRINGS.HAVING_PROBLEMS.REQUEST_NEW %}
+
+<p>
+  <span data-cy="request-new-you-can">{{ REQUEST_NEW.YOU_CAN }}</span>
+  <a
+    class="govuk-link"
+    href="{{ REQUEST_NEW.LINK.HREF }}?id={{ accountId }}"
+    data-cy="request-new-link"
+  >
+    {{ REQUEST_NEW.LINK.TEXT }}
+  </a>
+  <span data-cy="request-new-if-not-received">&nbsp;{{ REQUEST_NEW.IF_NOT_RECEIVED }}</span>
+</p>
+
+{% set WRONG_EMAIL = CONTENT_STRINGS.HAVING_PROBLEMS.WRONG_EMAIL %}
+
+<p>
+  <span data-cy="entered-incorrectly">{{ WRONG_EMAIL.ENTERED_INCORRECTLY }}</span>
+  <a
+    class="govuk-link"
+    href={{ WRONG_EMAIL.CREATE_ACCOUNT_AGAIN.HREF }}
+    data-cy="create-account-again-link"
+  >
+    {{ WRONG_EMAIL.CREATE_ACCOUNT_AGAIN.TEXT }}
+  </a>
+</p>

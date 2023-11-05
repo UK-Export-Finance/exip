@@ -1,26 +1,21 @@
-const BUTTONS = require('./buttons');
-const COOKIES_CONSENT = require('./cookies-consent');
-const ERROR_MESSAGES = require('./error-messages');
-const FOOTER = require('./footer');
-const FIELDS = require('./fields');
-const LINKS = require('./links');
-const PAGES = require('./pages');
-const PRODUCT = require('./product');
-const QUOTE_TITLES = require('./quote-titles');
-const SUMMARY_ANSWERS = require('./summary-answers');
+import PAGE_STRINGS from './pages';
 
-const ORGANISATION = 'UK Export Finance';
+export * from './buttons';
+export * from './contact';
+export * from './cookies-consent';
+export * from './default';
+export * from './error-messages';
+export * from './footer';
+export * from './fields';
+export * from './header';
+export * from './links';
+export * from './product';
+export * from './phase-banner';
+export * from './quote-titles';
+export * from './summary-answers';
+export * from './tasks';
+export * from './uk-goods-and-services-calculate-description';
+export * from './uk-goods-and-services-description';
 
-module.exports = {
-  BUTTONS,
-  COOKIES_CONSENT,
-  ERROR_MESSAGES,
-  FIELDS,
-  FOOTER,
-  LINKS,
-  ORGANISATION,
-  PAGES,
-  PRODUCT,
-  QUOTE_TITLES,
-  SUMMARY_ANSWERS,
-};
+export const ORGANISATION = 'UK Export Finance';
+export const PAGES = PAGE_STRINGS;

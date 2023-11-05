@@ -1,0 +1,48 @@
+.counter-list--bold {
+  > li::before {
+    font-weight: bold;
+  }
+}
+
+.counter-list-item {
+  > span {
+    display: block;
+    margin-left: 2em;
+  }
+}
+
+.lower-alpha-counter-list {
+  padding-left: 3em;
+  counter-reset: count;
+
+  > li {
+    position: relative;
+    list-style: none;
+    counter-increment: count;
+  }
+
+  > li::before {
+    content: '(' counter(count, lower-alpha) ') ';
+    position: absolute;
+    top: 0;
+    left: -1em;
+  }
+}
+
+.lower-roman-counter-list {
+  padding-left: 3em;
+  counter-reset: count;
+
+  > li {
+    position: relative;
+    list-style: none;
+    counter-increment: count;
+  }
+
+  > li::before {
+    content: '(' counter(count, lower-roman) ') ';
+    position: absolute;
+    top: 0;
+    left: -1em;
+  }
+}

@@ -1,0 +1,31 @@
+{% from "govuk/components/tag/macro.njk" import govukTag %}
+
+{% macro render(params) %}
+
+  {% set status = params.status %}
+  {% set dataCy = params.dataCy %}
+ 
+  {% set classes %}
+  {% endset %}
+
+  {% if status === "Cannot start yet" or status === "Not started yet" %}
+    {% set classes = "govuk-tag--grey" %}
+  {% endif %}
+
+  {% if status === "In progress" %}
+    {% set classes = "govuk-tag--blue" %}
+  {% endif %}
+
+  {% if status === "Submitted to UKEF" %}
+    {% set classes = "govuk-tag--purple" %}
+  {% endif %}
+
+  {{ govukTag({
+    text: status,
+    classes: classes,
+    attributes: {
+      "data-cy": dataCy
+    }
+  }) }}
+
+{% endmacro %}

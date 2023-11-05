@@ -1,0 +1,29 @@
+{% import './great-great-great-grand-child.njk' as greatGreatGreatGrandChildListItem %}
+
+{% macro render(params) %}
+
+  {% set child = params.child %}
+  {% set class = params.class %}
+  {% set loopIndex = params.loopIndex %}
+
+  {% if child.children %}
+
+    {% for greatGreatGreatGrandChild in child.children %}
+
+      {{ greatGreatGreatGrandChildListItem.render({
+        child: greatGreatGreatGrandChild,
+        class: class,
+        loopIndex: loopIndex
+      }) }}
+
+    {% endfor %}
+
+    {% else %}
+
+      <li data-cy="list-level-2-item-{{ loopIndex }}">
+        <span>{{ child.text }}</span>
+      </li>
+
+  {% endif %}
+
+{% endmacro %}

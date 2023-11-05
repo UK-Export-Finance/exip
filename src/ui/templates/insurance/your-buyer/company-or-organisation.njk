@@ -1,0 +1,297 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from 'govuk/components/label/macro.njk' import govukLabel %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+{% import '../../components/submit-button.njk' as submitButton %}
+{% import '../../components/fieldset-legend.njk' as fieldsetLegend %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full-from-desktop">
+      <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+      <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+    </div>
+  </div>
+
+  <form method="POST" id="form" novalidate="novalidate">
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-cy="{{FIELDS.COUNTRY.ID}}-heading">{{ FIELDS.COUNTRY.LABEL }}</h2>
+
+        <p class="govuk-body-l" data-cy="{{FIELDS.COUNTRY.ID}}">{{ application.eligibility.buyerCountry.name }}</p>
+
+        {{ govukInput({
+          label: {
+            text:  FIELDS.NAME.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+            attributes: {
+              id: FIELDS.NAME.ID + '-label',
+              'data-cy': FIELDS.NAME.ID + '-label'
+            }
+          },
+          classes: "govuk-!-width-one-half",
+          attributes: {
+            'data-cy': FIELDS.NAME.ID + '-input'
+          },
+          id: FIELDS.NAME.ID,
+          name: FIELDS.NAME.ID,
+          value: submittedValues[FIELDS.NAME.ID] or application.buyer[FIELDS.NAME.ID],
+          errorMessage: validationErrors.errorList[FIELDS.NAME.ID] and {
+            text: validationErrors.errorList[FIELDS.NAME.ID].text,
+            attributes: {
+              "data-cy": FIELDS.NAME.ID + "-error-message"
+            }
+          }
+        }) }}
+
+
+        {{ govukCharacterCount({
+          name: FIELDS.ADDRESS.ID,
+          id: FIELDS.ADDRESS.ID,
+          maxlength: FIELDS.ADDRESS.MAXIMUM,
+          classes: "govuk-!-width-one-half",
+          attributes: {
+            'data-cy': FIELDS.ADDRESS.ID + '-input'
+          },
+          value: submittedValues[FIELDS.ADDRESS.ID] or application.buyer[FIELDS.ADDRESS.ID],
+          errorMessage: validationErrors.errorList[FIELDS.ADDRESS.ID] and {
+            text: validationErrors.errorList[FIELDS.ADDRESS.ID].text,
+            attributes: {
+              "data-cy": FIELDS.ADDRESS.ID + "-error-message"
+            }
+          },
+          label: {
+            text: FIELDS.ADDRESS.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+            attributes: {
+              id: FIELDS.ADDRESS.ID + '-label',
+              'data-cy': FIELDS.ADDRESS.ID + '-label'
+            }
+          }
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text:  FIELDS.REGISTRATION_NUMBER.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+            attributes: {
+              id: FIELDS.REGISTRATION_NUMBER.ID + '-label',
+              'data-cy': FIELDS.REGISTRATION_NUMBER.ID + '-label'
+            }
+          },
+          classes: "govuk-!-width-one-half",
+          attributes: {
+            'data-cy': FIELDS.REGISTRATION_NUMBER.ID + '-input'
+          },
+          id: FIELDS.REGISTRATION_NUMBER.ID,
+          name: FIELDS.REGISTRATION_NUMBER.ID,
+          value: submittedValues[FIELDS.REGISTRATION_NUMBER.ID] or application.buyer[FIELDS.REGISTRATION_NUMBER.ID],
+          errorMessage: validationErrors.errorList[FIELDS.REGISTRATION_NUMBER.ID] and {
+            text: validationErrors.errorList[FIELDS.REGISTRATION_NUMBER.ID].text,
+            attributes: {
+              "data-cy": FIELDS.REGISTRATION_NUMBER.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text:  FIELDS.WEBSITE.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+            attributes: {
+              id: FIELDS.WEBSITE.ID + '-label',
+              'data-cy': FIELDS.WEBSITE.ID + '-label'
+            }
+          },
+          classes: "govuk-!-width-one-half",
+          attributes: {
+            'data-cy': FIELDS.WEBSITE.ID + '-input'
+          },
+          id: FIELDS.WEBSITE.ID,
+          name: FIELDS.WEBSITE.ID,
+          value: submittedValues[FIELDS.WEBSITE.ID] or application.buyer[FIELDS.WEBSITE.ID],
+          errorMessage: validationErrors.errorList[FIELDS.WEBSITE.ID] and {
+            text: validationErrors.errorList[FIELDS.WEBSITE.ID].text,
+            attributes: {
+              "data-cy": FIELDS.WEBSITE.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {% call govukFieldset({
+          legend: {
+            html: fieldsetLegend.render({ id: FIELDS.FIRST_NAME.ID, legendText: FIELDS.FIRST_NAME.LEGEND }),
+            isPageHeading: false
+          }
+        }) %}
+
+          {{ govukHint({
+            text: FIELDS.FIRST_NAME.HINT,
+            attributes: {
+            "data-cy": FIELDS.FIRST_NAME.ID + "-hint"
+            }
+          }) }}
+
+          {{ govukInput({
+            label: {
+              text:  FIELDS.FIRST_NAME.LABEL,
+              classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+              attributes: {
+                id: FIELDS.FIRST_NAME.ID + '-label',
+                'data-cy': FIELDS.FIRST_NAME.ID + '-label'
+              }
+            },
+            classes: "govuk-!-width-one-half",
+            attributes: {
+              'data-cy': FIELDS.FIRST_NAME.ID + '-input'
+            },
+            id: FIELDS.FIRST_NAME.ID,
+            name: FIELDS.FIRST_NAME.ID,
+            value: submittedValues[FIELDS.FIRST_NAME.ID] or application.buyer[FIELDS.FIRST_NAME.ID],
+            errorMessage: validationErrors.errorList[FIELDS.FIRST_NAME.ID] and {
+              text: validationErrors.errorList[FIELDS.FIRST_NAME.ID].text,
+              attributes: {
+                "data-cy": FIELDS.FIRST_NAME.ID + "-error-message"
+              }
+            }
+          }) }}
+
+          {{ govukInput({
+            label: {
+              text:  FIELDS.LAST_NAME.LABEL,
+              classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+              attributes: {
+                id: FIELDS.LAST_NAME.ID + '-label',
+                'data-cy': FIELDS.LAST_NAME.ID + '-label'
+              }
+            },
+            classes: "govuk-!-width-one-half",
+            attributes: {
+              'data-cy': FIELDS.LAST_NAME.ID + '-input'
+            },
+            id: FIELDS.LAST_NAME.ID,
+            name: FIELDS.LAST_NAME.ID,
+            value: submittedValues[FIELDS.LAST_NAME.ID] or application.buyer[FIELDS.LAST_NAME.ID],
+            errorMessage: validationErrors.errorList[FIELDS.LAST_NAME.ID] and {
+              text: validationErrors.errorList[FIELDS.LAST_NAME.ID].text,
+              attributes: {
+                "data-cy": FIELDS.LAST_NAME.ID + "-error-message"
+              }
+            }
+          }) }}
+
+          {{ govukInput({
+            label: {
+              text:  FIELDS.POSITION.LABEL,
+              classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+              attributes: {
+                id: FIELDS.POSITION.ID + '-label',
+                'data-cy': FIELDS.POSITION.ID + '-label'
+              }
+            },
+            classes: "govuk-!-width-one-half",
+            attributes: {
+              'data-cy': FIELDS.POSITION.ID + '-input'
+            },
+            id: FIELDS.POSITION.ID,
+            name: FIELDS.POSITION.ID,
+            value: submittedValues[FIELDS.POSITION.ID] or application.buyer[FIELDS.POSITION.ID],
+            errorMessage: validationErrors.errorList[FIELDS.POSITION.ID] and {
+              text: validationErrors.errorList[FIELDS.POSITION.ID].text,
+              attributes: {
+                "data-cy": FIELDS.POSITION.ID + "-error-message"
+              }
+            }
+          }) }}
+
+          {{ govukInput({
+            label: {
+              text:  FIELDS.EMAIL.LABEL,
+              classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
+              attributes: {
+                id: FIELDS.EMAIL.ID + '-label',
+                'data-cy': FIELDS.EMAIL.ID + '-label'
+              }
+            },
+            classes: "govuk-!-width-one-half",
+            attributes: {
+              'data-cy': FIELDS.EMAIL.ID + '-input'
+            },
+            id: FIELDS.EMAIL.ID,
+            name: FIELDS.EMAIL.ID,
+            value: submittedValues[FIELDS.EMAIL.ID] or application.buyer[FIELDS.EMAIL.ID],
+            errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID] and {
+              text: validationErrors.errorList[FIELDS.EMAIL.ID].text,
+              attributes: {
+                "data-cy": FIELDS.EMAIL.ID + "-error-message"
+              }
+            }
+          }) }}
+
+        {% endcall %}
+
+
+        {{ yesNoRadioButtons.render({
+          fieldId: FIELDS.CAN_CONTACT_BUYER.ID,
+          legendText: FIELDS.CAN_CONTACT_BUYER.LABEL,
+          legendClass: 'govuk-fieldset__legend--m',
+          legendSpan: true,
+          hintText: FIELDS.CAN_CONTACT_BUYER.HINT,
+          submittedAnswer: submittedValues[FIELDS.CAN_CONTACT_BUYER.ID] or application.buyer[FIELDS.CAN_CONTACT_BUYER.ID],
+          errorMessage: validationErrors.errorList[FIELDS.CAN_CONTACT_BUYER.ID],
+          dataCyLegend: FIELDS.CAN_CONTACT_BUYER.ID + '-label'
+        }) }}
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="govuk-button-group">
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE
+          }) }}
+
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button',
+              'formaction': SAVE_AND_BACK_URL
+            }
+          }) }}
+        </div>
+      </div>
+    </div>
+  </form>
+
+{% endblock %}

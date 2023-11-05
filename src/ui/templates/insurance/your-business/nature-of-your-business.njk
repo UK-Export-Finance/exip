@@ -1,0 +1,197 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% import '../../components/submit-button.njk' as submitButton %}
+{% import '../../components/fieldset-legend.njk' as fieldsetLegend %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary,
+      attributes: {
+        'data-cy': 'error-summary'
+      }
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <form method="POST" id="form" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <span class="govuk-caption-xl" data-cy="heading-caption">
+          {{CONTENT_STRINGS.HEADING_CAPTION}}
+        </span>
+        <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        {{ govukCharacterCount({
+          name: FIELDS.GOODS_OR_SERVICES.ID,
+          id: FIELDS.GOODS_OR_SERVICES.ID,
+          maxlength: FIELDS.GOODS_OR_SERVICES.MAXIMUM,
+          value: submittedValues[FIELDS.GOODS_OR_SERVICES.ID] or application.business[FIELDS.GOODS_OR_SERVICES.ID],
+          label: {
+            text: FIELDS.GOODS_OR_SERVICES.LABEL,
+            classes: "govuk-label--m",
+            isPageHeading: false,
+            attributes: {
+              id: FIELDS.GOODS_OR_SERVICES.ID + '-label',
+              "data-cy": FIELDS.GOODS_OR_SERVICES.ID + "-label"
+            }
+          },
+          hint: {
+            text: FIELDS.GOODS_OR_SERVICES.HINT,
+            attributes: {
+              "data-cy": FIELDS.GOODS_OR_SERVICES.ID + "-hint"
+            }
+          },
+          attributes: {
+            "data-cy": FIELDS.GOODS_OR_SERVICES.ID
+          },
+          errorMessage: validationErrors.errorList[FIELDS.GOODS_OR_SERVICES.ID] and {
+            text: validationErrors.errorList[FIELDS.GOODS_OR_SERVICES.ID].text,
+            attributes: {
+              "data-cy": FIELDS.GOODS_OR_SERVICES.ID + "-error-message"
+            }
+          }
+        }) }}
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        {{ govukInput({
+          id: FIELDS.YEARS_EXPORTING.ID,
+          name: FIELDS.YEARS_EXPORTING.ID,
+          value: submittedValues[FIELDS.YEARS_EXPORTING.ID] or application.business[FIELDS.YEARS_EXPORTING.ID],
+          label: {
+            text: FIELDS.YEARS_EXPORTING.LABEL,
+            classes: "govuk-label--m",
+            isPageHeading: false,
+             attributes: {
+              id: FIELDS.YEARS_EXPORTING.ID + '-label',
+              "data-cy": FIELDS.YEARS_EXPORTING.ID + "-label"
+            }
+          },
+          suffix: {
+            text: FIELDS.YEARS_EXPORTING.SUFFIX,
+            attributes: {
+              "data-cy": FIELDS.YEARS_EXPORTING.ID + "-suffix"
+            }
+          },
+          hint: {
+            text: FIELDS.YEARS_EXPORTING.HINT,
+            attributes: {
+              "data-cy": FIELDS.YEARS_EXPORTING.ID + "-hint"
+            }
+          },
+          classes: "govuk-input--width-5",
+          attributes: {
+            "data-cy": FIELDS.YEARS_EXPORTING.ID + "-input"
+          },
+          errorMessage: validationErrors.errorList[FIELDS.YEARS_EXPORTING.ID] and {
+            text: validationErrors.errorList[FIELDS.YEARS_EXPORTING.ID].text,
+              attributes: {
+                "data-cy": FIELDS.YEARS_EXPORTING.ID + "-error-message"
+              }
+            }
+          }) }}
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        {% call govukFieldset({
+          legend: {
+            html: fieldsetLegend.render({ id: FIELDS.EMPLOYEES_UK.ID, legendText: FIELDS.EMPLOYEES_UK.LEGEND }),
+            isPageHeading: false
+          }
+        }) %}
+
+          {{ govukInput({
+            id: FIELDS.EMPLOYEES_UK.ID,
+            name: FIELDS.EMPLOYEES_UK.ID,
+            value: submittedValues[FIELDS.EMPLOYEES_UK.ID] or application.business[FIELDS.EMPLOYEES_UK.ID],
+            label: {
+              text: FIELDS.EMPLOYEES_UK.LABEL,
+              classes: "govuk-body",
+              isPageHeading: false,
+              attributes: {
+                id: FIELDS.EMPLOYEES_UK.ID + '-label',
+                "data-cy": FIELDS.EMPLOYEES_UK.ID + "-label"
+              }
+            },
+            classes: "govuk-input--width-10",
+            attributes: {
+              "data-cy": FIELDS.EMPLOYEES_UK.ID + "-input"
+            },
+            errorMessage: validationErrors.errorList[FIELDS.EMPLOYEES_UK.ID] and {
+              text: validationErrors.errorList[FIELDS.EMPLOYEES_UK.ID].text,
+              attributes: {
+                "data-cy": FIELDS.EMPLOYEES_UK.ID + "-error-message"
+              }
+            }
+          }) }}
+
+          {{ govukInput({
+            id: FIELDS.EMPLOYEES_INTERNATIONAL.ID,
+            name: FIELDS.EMPLOYEES_INTERNATIONAL.ID,
+            value: submittedValues[FIELDS.EMPLOYEES_INTERNATIONAL.ID] or application.business[FIELDS.EMPLOYEES_INTERNATIONAL.ID],
+            label: {
+              text: FIELDS.EMPLOYEES_INTERNATIONAL.LABEL,
+              classes: "govuk-body",
+              isPageHeading: false,
+              attributes: {
+                id: FIELDS.EMPLOYEES_INTERNATIONAL.ID + '-label',
+                "data-cy": FIELDS.EMPLOYEES_INTERNATIONAL.ID + "-label"
+              }
+            },
+            classes: "govuk-input--width-10",
+            attributes: {
+              "data-cy": FIELDS.EMPLOYEES_INTERNATIONAL.ID + "-input"
+            },
+            errorMessage: validationErrors.errorList[FIELDS.EMPLOYEES_INTERNATIONAL.ID] and {
+              text: validationErrors.errorList[FIELDS.EMPLOYEES_INTERNATIONAL.ID].text,
+              attributes: {
+                "data-cy": FIELDS.EMPLOYEES_INTERNATIONAL.ID + "-error-message"
+              }
+            }
+          }) }}
+        {% endcall %}
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="govuk-button-group">
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE
+          }) }}
+
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button',
+              'formaction': POST_ROUTES.SAVE_AND_BACK_URL
+            }
+          }) }}
+        </div>
+      </div>
+    </form>
+  </div>
+
+{% endblock %}

@@ -1,13 +1,18 @@
-import { hasDisllowedCharacters, costRules } from './cost';
+import { hasDisallowedCharacters, costRules } from './cost';
 import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
 
+const {
+  ELIGIBILITY: { CONTRACT_VALUE, MAX_AMOUNT_OWED },
+  POLICY_TYPE,
+} = FIELD_IDS;
+
 describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', () => {
-  describe('hasDisllowedCharacters', () => {
+  describe('hasDisallowedCharacters', () => {
     describe('with character that is not a number or comma', () => {
       it('should return true', () => {
-        const result = hasDisllowedCharacters('£123.45');
+        const result = hasDisallowedCharacters('£123.45');
 
         expect(result).toEqual(true);
       });
@@ -15,7 +20,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
 
     describe('with a character that is a number or comma', () => {
       it('should return false', () => {
-        const result = hasDisllowedCharacters('123,456,78');
+        const result = hasDisallowedCharacters('123,456,78');
 
         expect(result).toEqual(false);
       });
@@ -29,76 +34,76 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
     };
 
     describe('when policy type is single', () => {
-      describe(`when ${FIELD_IDS.CONTRACT_VALUE} is not provided`, () => {
+      describe(`when ${CONTRACT_VALUE} is not provided`, () => {
         it('should return validation error', () => {
           const mockSubmittedData = {
-            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-            [FIELD_IDS.CONTRACT_VALUE]: '',
+            [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+            [CONTRACT_VALUE]: '',
           };
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(FIELD_IDS.CONTRACT_VALUE, ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].IS_EMPTY, mockErrors);
+          const expected = generateValidationErrors(CONTRACT_VALUE, ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].IS_EMPTY, mockErrors);
 
           expect(result).toEqual(expected);
         });
       });
 
-      describe(`when ${FIELD_IDS.CONTRACT_VALUE} is not a whole number`, () => {
+      describe(`when ${CONTRACT_VALUE} is not a whole number`, () => {
         it('should return validation error', () => {
           const mockSubmittedData = {
-            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-            [FIELD_IDS.CONTRACT_VALUE]: '123,456.78',
+            [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+            [CONTRACT_VALUE]: '123,456.78',
           };
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(FIELD_IDS.CONTRACT_VALUE, ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_WHOLE_NUMBER, mockErrors);
+          const expected = generateValidationErrors(CONTRACT_VALUE, ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_WHOLE_NUMBER, mockErrors);
 
           expect(result).toEqual(expected);
         });
       });
 
-      describe(`when ${FIELD_IDS.CONTRACT_VALUE} has invalid characters`, () => {
+      describe(`when ${CONTRACT_VALUE} has invalid characters`, () => {
         it('should return validation error', () => {
           const mockSubmittedData = {
-            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-            [FIELD_IDS.CONTRACT_VALUE]: '£123,456',
+            [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+            [CONTRACT_VALUE]: '£123,456',
           };
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(FIELD_IDS.CONTRACT_VALUE, ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_NUMBER, mockErrors);
+          const expected = generateValidationErrors(CONTRACT_VALUE, ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_NUMBER, mockErrors);
 
           expect(result).toEqual(expected);
         });
       });
 
-      describe(`when ${FIELD_IDS.CONTRACT_VALUE} is not a number`, () => {
+      describe(`when ${CONTRACT_VALUE} is not a number`, () => {
         it('should return validation error', () => {
           const mockSubmittedData = {
-            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-            [FIELD_IDS.CONTRACT_VALUE]: 'invalid',
+            [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+            [CONTRACT_VALUE]: 'invalid',
           };
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(FIELD_IDS.CONTRACT_VALUE, ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].NOT_A_NUMBER, mockErrors);
+          const expected = generateValidationErrors(CONTRACT_VALUE, ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].NOT_A_NUMBER, mockErrors);
 
           expect(result).toEqual(expected);
         });
       });
 
-      describe(`when ${FIELD_IDS.CONTRACT_VALUE} is below the minimum`, () => {
+      describe(`when ${CONTRACT_VALUE} is below the minimum`, () => {
         it('should return validation error', () => {
           const mockSubmittedData = {
-            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-            [FIELD_IDS.CONTRACT_VALUE]: '0',
+            [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+            [CONTRACT_VALUE]: '0',
           };
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(FIELD_IDS.CONTRACT_VALUE, ERROR_MESSAGES[FIELD_IDS.CONTRACT_VALUE].BELOW_MINIMUM, mockErrors);
+          const expected = generateValidationErrors(CONTRACT_VALUE, ERROR_MESSAGES.ELIGIBILITY[CONTRACT_VALUE].BELOW_MINIMUM, mockErrors);
 
           expect(result).toEqual(expected);
         });
@@ -107,8 +112,8 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
       describe('when there are no validation errors', () => {
         it('should return the already provided errors', () => {
           const mockSubmittedData = {
-            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
-            [FIELD_IDS.CONTRACT_VALUE]: '1,234,567',
+            [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+            [CONTRACT_VALUE]: '1,234,567',
           };
 
           const result = costRules(mockSubmittedData, mockErrors);
@@ -118,77 +123,77 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
       });
     });
 
-    describe('when policy type is multi', () => {
-      describe(`when ${FIELD_IDS.MAX_AMOUNT_OWED} is not provided`, () => {
+    describe('when policy type is multiple', () => {
+      describe(`when ${MAX_AMOUNT_OWED} is not provided`, () => {
         it('should return validation error', () => {
           const mockSubmittedData = {
-            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-            [FIELD_IDS.MAX_AMOUNT_OWED]: '',
+            [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+            [MAX_AMOUNT_OWED]: '',
           };
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(FIELD_IDS.MAX_AMOUNT_OWED, ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].IS_EMPTY, mockErrors);
+          const expected = generateValidationErrors(MAX_AMOUNT_OWED, ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].IS_EMPTY, mockErrors);
 
           expect(result).toEqual(expected);
         });
       });
 
-      describe(`when ${FIELD_IDS.MAX_AMOUNT_OWED} is not a whole number`, () => {
+      describe(`when ${MAX_AMOUNT_OWED} is not a whole number`, () => {
         it('should return validation error', () => {
           const mockSubmittedData = {
-            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-            [FIELD_IDS.MAX_AMOUNT_OWED]: '123,456.78',
+            [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+            [MAX_AMOUNT_OWED]: '123,456.78',
           };
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(FIELD_IDS.MAX_AMOUNT_OWED, ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER, mockErrors);
+          const expected = generateValidationErrors(MAX_AMOUNT_OWED, ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_WHOLE_NUMBER, mockErrors);
 
           expect(result).toEqual(expected);
         });
       });
 
-      describe(`when ${FIELD_IDS.MAX_AMOUNT_OWED} has invalid characters`, () => {
+      describe(`when ${MAX_AMOUNT_OWED} has invalid characters`, () => {
         it('should return validation error', () => {
           const mockSubmittedData = {
-            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-            [FIELD_IDS.MAX_AMOUNT_OWED]: '£123,456',
+            [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+            [MAX_AMOUNT_OWED]: '£123,456',
           };
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(FIELD_IDS.MAX_AMOUNT_OWED, ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_NUMBER, mockErrors);
+          const expected = generateValidationErrors(MAX_AMOUNT_OWED, ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_NUMBER, mockErrors);
 
           expect(result).toEqual(expected);
         });
       });
 
-      describe(`when ${FIELD_IDS.MAX_AMOUNT_OWED} is not a number`, () => {
+      describe(`when ${MAX_AMOUNT_OWED} is not a number`, () => {
         it('should return validation error', () => {
           const mockSubmittedData = {
-            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-            [FIELD_IDS.MAX_AMOUNT_OWED]: 'invalid',
+            [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+            [MAX_AMOUNT_OWED]: 'invalid',
           };
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(FIELD_IDS.MAX_AMOUNT_OWED, ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].NOT_A_NUMBER, mockErrors);
+          const expected = generateValidationErrors(MAX_AMOUNT_OWED, ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].NOT_A_NUMBER, mockErrors);
 
           expect(result).toEqual(expected);
         });
       });
 
-      describe(`when ${FIELD_IDS.MAX_AMOUNT_OWED} is below the minimum`, () => {
+      describe(`when ${MAX_AMOUNT_OWED} is below the minimum`, () => {
         it('should return validation error', () => {
           const mockSubmittedData = {
-            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-            [FIELD_IDS.MAX_AMOUNT_OWED]: '0',
+            [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+            [MAX_AMOUNT_OWED]: '0',
           };
 
           const result = costRules(mockSubmittedData, mockErrors);
 
-          const expected = generateValidationErrors(FIELD_IDS.MAX_AMOUNT_OWED, ERROR_MESSAGES[FIELD_IDS.MAX_AMOUNT_OWED].BELOW_MINIMUM, mockErrors);
+          const expected = generateValidationErrors(MAX_AMOUNT_OWED, ERROR_MESSAGES.ELIGIBILITY[MAX_AMOUNT_OWED].BELOW_MINIMUM, mockErrors);
 
           expect(result).toEqual(expected);
         });
@@ -197,8 +202,8 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/cost', ()
       describe('when there are no validation errors', () => {
         it('should return the already provided errors', () => {
           const mockSubmittedData = {
-            [FIELD_IDS.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-            [FIELD_IDS.MAX_AMOUNT_OWED]: '1,234,567',
+            [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+            [MAX_AMOUNT_OWED]: '1,234,567',
           };
 
           const result = costRules(mockSubmittedData, mockErrors);

@@ -1,17 +1,17 @@
 import { getAvailableCover, getResultAndExpected } from './index.test';
-import { API, FIELD_VALUES } from '../../constants';
+import { EXTERNAL_API_MAPPINGS, FIELD_VALUES } from '../../constants';
 
-const veryHighRisk2Months = getAvailableCover('MULTI_POLICY', 'VERY_HIGH', 2);
-const veryHighRisk3Months = getAvailableCover('MULTI_POLICY', 'VERY_HIGH', 3);
+const veryHighRisk2Months = getAvailableCover('MULTIPLE_POLICY', 'VERY_HIGH', 2);
+const veryHighRisk3Months = getAvailableCover('MULTIPLE_POLICY', 'VERY_HIGH', 3);
 
 describe('server/generate-quote/get-premium-rate', () => {
   const mockBase = {
-    policyType: FIELD_VALUES.POLICY_TYPE.MULTI,
+    policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
     insuredFor: 70,
   };
 
-  describe('multi policy - very high risk', () => {
-    const riskCategory = API.MAPPINGS.RISK.VERY_HIGH;
+  describe('multiple policy - very high risk', () => {
+    const riskCategory = EXTERNAL_API_MAPPINGS.CIS.RISK.VERY_HIGH;
     const mock = {
       ...mockBase,
       riskCategory,

@@ -1,0 +1,36 @@
+{% extends 'index.njk' %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% import '../../components/customer-service-helpline.njk' as customerServiceHelpline %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      <p class="govuk-body" data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
+
+      <h2 class="govuk-heading-m govuk-!-margin-top-9" data-cy="customer-service-heading">{{ CONTENT_STRINGS.CUSTOMER_SERVICE.HEADING }}</h2>
+
+      {{ customerServiceHelpline.render({
+        content: CONTENT_STRINGS.CUSTOMER_SERVICE
+      }) }}
+
+    </div>
+  </div>
+      
+{% endblock %}

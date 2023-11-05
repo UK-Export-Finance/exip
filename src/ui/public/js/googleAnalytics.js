@@ -1,0 +1,2 @@
+var EXIP;!function(){const a=document.querySelector("script[data-campaign]").getAttribute("data-campaign");function t(){dataLayer.push(arguments)}console.info("Intialising Google Analytics with ID:",a),window.dataLayer=window.dataLayer||[],t("js",new Date),t("config",a),(EXIP=void 0===EXIP?{}:EXIP).googleAnalytics={}}();
+//# sourceMappingURL=googleAnalytics.js.map

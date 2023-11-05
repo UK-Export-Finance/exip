@@ -1,0 +1,34 @@
+{% import '../components/status-tag.njk' as statusTag %}
+
+{% macro render(params) %}
+
+  {% set task = params.task %}
+  {% set groupTitle = params.groupTitle %}
+ 
+  <div class="govuk-summary-list__row">
+
+    <dt class="ukef-task-list--key-cell">
+      <p class="govuk-body govuk-!-margin-bottom-0">
+        {% if task.href %}
+          <a class="govuk-link govuk-link--no-visited-state" href="{{ task.href }}" data-cy="task-list-group-{{ groupTitle }}-task-{{ task.title }}-link">
+            {{ task.title }}
+          </a>
+
+          {% else %}
+            <span data-cy="task-list-group-{{ groupTitle }}-task-{{ task.title }}">
+              {{ task.title }}
+            </span>
+        {% endif %}
+      </p>
+    </dt>
+
+    <dd class="govuk-summary-list__actions">
+      {{ statusTag.render({
+        status: task.status,
+        href: task.href,
+        dataCy: "task-list-group-" + groupTitle + "-task-" + task.title + "-status"
+      }) }}
+    </dd>
+  </div>
+
+{% endmacro %}

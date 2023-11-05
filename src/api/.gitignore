@@ -1,0 +1,8 @@
+.vscode
+.DS_Store
+.env
+*.log
+node_modules
+.keystone/admin
+/coverage
+/documentation/output

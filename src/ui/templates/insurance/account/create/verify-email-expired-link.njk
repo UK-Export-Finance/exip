@@ -1,0 +1,25 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <p data-cy="body">{{ CONTENT_STRINGS.BODY }}</p>
+
+  <a class="govuk-button" href="{{ CONTENT_STRINGS.CREATE_ACCOUNT.HREF }}" data-cy="create-account">{{ CONTENT_STRINGS.CREATE_ACCOUNT.TEXT }}</a>
+
+{% endblock %}

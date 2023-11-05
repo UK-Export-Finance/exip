@@ -1,46 +1,26 @@
-import { PAGE_VARIABLES, getBackLink, get, post } from '.';
+import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, getBackLink, get, post } from '.';
 import { LINKS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
-import singleInputPageVariables from '../../../helpers/single-input-page-variables';
-import { validation as generateValidationErrors } from './validation';
+import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../helpers/construct-payload';
+import { validation as generateValidationErrors } from '../../../shared-validation/buyer-country';
 import isChangeRoute from '../../../helpers/is-change-route';
 import getCountryByName from '../../../helpers/get-country-by-name';
+import mapSubmittedEligibilityCountry from '../../../helpers/mappings/map-submitted-eligibility-country';
 import api from '../../../api';
-import { mapCountries } from '../../../helpers/mappings/map-countries';
-import { updateSubmittedData } from '../../../helpers/update-submitted-data';
-import { mockReq, mockRes, mockAnswers, mockSession } from '../../../test-mocks';
-import { Request, Response } from '../../../../types';
+import mapCountries from '../../../helpers/mappings/map-countries';
+import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
+import { mockReq, mockRes, mockSession, mockCountries } from '../../../test-mocks';
+import { Country, Request, Response } from '../../../../types';
 
 describe('controllers/quote/buyer-country', () => {
   let req: Request;
   let res: Response;
 
-  const mockCountriesResponse = [
-    {
-      marketName: 'Abu Dhabi',
-      isoCode: 'XAD',
-      shortTermCoverAvailabilityDesc: 'No',
-      ESRAClassificationDesc: 'Standard risk',
-      NBIIssue: 'N',
-    },
-    {
-      marketName: 'Algeria',
-      isoCode: 'DZA',
-      shortTermCoverAvailabilityDesc: 'Yes',
-      ESRAClassificationDesc: 'Standard Risk',
-      NBIIssue: 'Y',
-    },
-    {
-      marketName: 'Egypt',
-      isoCode: 'EGY',
-      shortTermCoverAvailabilityDesc: 'Yes',
-      ESRAClassificationDesc: 'Standard Risk',
-      NBIIssue: 'N',
-    },
-  ];
+  let mockCountriesResponse = mockCountries;
 
-  const countryUnsupported = mockCountriesResponse[0];
-  const countrySupportedViaEmailOnly = mockCountriesResponse[2];
+  const { 0: countryUnsupported, 1: countryQuoteOnline, 2: countryQuoteByEmail } = mockCountriesResponse;
 
   const mockFlash = jest.fn();
 
@@ -55,14 +35,28 @@ describe('controllers/quote/buyer-country', () => {
     jest.resetAllMocks();
   });
 
+  describe('FIELD_ID', () => {
+    it('should have the correct ID', () => {
+      const expected = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
+
+      expect(FIELD_ID).toEqual(expected);
+    });
+  });
+
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.BUYER_COUNTRY,
-        PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY_PAGE,
+        FIELD_ID,
+        PAGE_CONTENT_STRINGS: PAGES.BUYER_COUNTRY,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
+    });
+  });
+
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY);
     });
   });
 
@@ -112,31 +106,67 @@ describe('controllers/quote/buyer-country', () => {
   });
 
   describe('get', () => {
-    let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+    let getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
     beforeEach(() => {
-      delete req.session.submittedData[FIELD_IDS.BUYER_COUNTRY];
-      api.getCountries = getCountriesSpy;
+      delete req.session.submittedData.quoteEligibility[FIELD_ID];
+      api.keystone.APIM.getCisCountries = getCisCountriesSpy;
     });
 
-    it('should call api.getCountries', async () => {
+    it('should call api.keystone.APIM.getCisCountries', async () => {
       await get(req, res);
 
-      expect(getCountriesSpy).toHaveBeenCalledTimes(1);
+      expect(getCisCountriesSpy).toHaveBeenCalledTimes(1);
     });
 
     it('should render template', async () => {
       await get(req, res);
 
       const expectedVariables = {
-        ...singleInputPageVariables(PAGE_VARIABLES),
-        BACK_LINK: getBackLink(req.headers.referer),
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer), ORIGINAL_URL: req.originalUrl }),
+        userName: getUserNameFromSession(req.session.user),
         countries: mapCountries(mockCountriesResponse),
-        submittedValues: req.session.submittedData,
+        submittedValues: req.session.submittedData.quoteEligibility,
         isChangeRoute: isChangeRoute(req.originalUrl),
       };
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.BUYER_COUNTRY, expectedVariables);
+      expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, expectedVariables);
+    });
+
+    describe('when a there is no submittedData in req.session', () => {
+      it('should add empty submittedData.quoteEligibility to the session', async () => {
+        // @ts-ignore
+        req.session = {};
+
+        await get(req, res);
+
+        const expected = {
+          ...req.session,
+          submittedData: {
+            quoteEligibility: {},
+          },
+        };
+
+        expect(req.session).toEqual(expected);
+      });
+    });
+
+    describe('when a there is no quoteEligibility in req.session.submittedData', () => {
+      it('should add empty submittedData.quoteEligibility to the session and retain existing req.session.submittedData', async () => {
+        // @ts-ignore
+        req.session.submittedData = {
+          insuranceEligibility: {},
+        };
+
+        await get(req, res);
+
+        const expected = {
+          ...req.session.submittedData,
+          quoteEligibility: {},
+        };
+
+        expect(req.session.submittedData).toEqual(expected);
+      });
     });
 
     describe('when a country has been submitted', () => {
@@ -145,83 +175,92 @@ describe('controllers/quote/buyer-country', () => {
 
         await get(req, res);
 
-        const expectedCountries = mapCountries(mockCountriesResponse, req.session.submittedData[FIELD_IDS.BUYER_COUNTRY].isoCode);
+        const expectedCountries = mapCountries(mockCountriesResponse, req.session.submittedData.quoteEligibility[FIELD_ID].isoCode);
 
         const expectedVariables = {
-          ...singleInputPageVariables(PAGE_VARIABLES),
-          BACK_LINK: getBackLink(req.headers.referer),
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer), ORIGINAL_URL: req.originalUrl }),
+          userName: getUserNameFromSession(req.session.user),
           countries: expectedCountries,
-          submittedValues: req.session.submittedData,
+          submittedValues: req.session.submittedData.quoteEligibility,
           isChangeRoute: isChangeRoute(req.originalUrl),
         };
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.BUYER_COUNTRY, expectedVariables);
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, expectedVariables);
       });
     });
 
-    describe('when the CIS (country information system) API has no data', () => {
-      beforeEach(() => {
-        // @ts-ignore
-        getCountriesSpy = jest.fn(() => Promise.resolve());
-        api.getCountries = getCountriesSpy;
+    describe('api error handling', () => {
+      describe('when the get CIS countries API call fails', () => {
+        beforeEach(() => {
+          getCisCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          api.keystone.APIM.getCisCountries = getCisCountriesSpy;
+        });
+
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
+      describe('when the get CIS countries API call does not return a populated array', () => {
+        beforeEach(() => {
+          getCisCountriesSpy = jest.fn(() => Promise.resolve([]));
+          api.keystone.APIM.getCisCountries = getCisCountriesSpy;
+        });
 
-    describe('when the CIS (country information system) API does not return an array', () => {
-      beforeEach(() => {
-        // @ts-ignore
-        getCountriesSpy = jest.fn(() => Promise.resolve({}));
-        api.getCountries = getCountriesSpy;
-      });
-
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
-
-    describe('when the CIS (country information system) API does not return a populated array', () => {
-      beforeEach(() => {
-        getCountriesSpy = jest.fn(() => Promise.resolve([]));
-        api.getCountries = getCountriesSpy;
-      });
-
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await get(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });
 
   describe('post', () => {
-    let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+    let getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
     beforeEach(() => {
-      api.getCountries = getCountriesSpy;
+      api.keystone.APIM.getCisCountries = getCisCountriesSpy;
     });
 
     describe('when there are validation errors', () => {
-      it('should render template with validation errors', async () => {
+      it('should render template with validation errors from constructPayload function', async () => {
         await post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.BUYER_COUNTRY, {
-          ...singleInputPageVariables(PAGE_VARIABLES),
-          BACK_LINK: getBackLink(req.headers.referer),
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, {
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer), ORIGINAL_URL: req.originalUrl }),
+          userName: getUserNameFromSession(req.session.user),
           countries: mapCountries(mockCountriesResponse),
-          validationErrors: generateValidationErrors(req.body),
+          validationErrors: generateValidationErrors(payload),
           isChangeRoute: isChangeRoute(req.originalUrl),
         });
       });
     });
 
     describe('when the submitted country can only get a quote via email', () => {
+      const selectedCountryName = countryQuoteByEmail.name;
+
+      mockCountriesResponse = [countryQuoteByEmail];
+
+      getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
       beforeEach(() => {
-        req.body[FIELD_IDS.BUYER_COUNTRY] = countrySupportedViaEmailOnly.marketName;
+        req.body[FIELD_ID] = countryQuoteByEmail.name;
+      });
+
+      it('should update the session with submitted data, populated with country object', async () => {
+        await post(req, res);
+
+        const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
+
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, selectedCountry.canApplyOnline);
+
+        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
+
+        expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });
 
       it('should add previousRoute, exitReason and exitDescription to req.flash', async () => {
@@ -231,8 +270,8 @@ describe('controllers/quote/buyer-country', () => {
 
         expect(mockFlash.mock.calls[0]).toEqual(['previousRoute', ROUTES.QUOTE.BUYER_COUNTRY]);
 
-        const { GET_A_QUOTE_BY_EMAIL_PAGE } = PAGES;
-        const { REASON } = GET_A_QUOTE_BY_EMAIL_PAGE;
+        const { GET_A_QUOTE_BY_EMAIL } = PAGES.QUOTE;
+        const { REASON } = GET_A_QUOTE_BY_EMAIL;
 
         expect(mockFlash.mock.calls[1]).toEqual(['exitReason', REASON.BUYER_COUNTRY]);
         expect(mockFlash.mock.calls[2]).toEqual(['exitDescription', REASON.BUYER_COUNTRY_DESCRIPTION]);
@@ -247,19 +286,39 @@ describe('controllers/quote/buyer-country', () => {
 
     describe('when the submitted country is not found', () => {
       beforeEach(() => {
-        req.body[FIELD_IDS.BUYER_COUNTRY] = 'Country not in the mock response';
+        req.body[FIELD_ID] = 'Country not in the mock response';
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.CANNOT_OBTAIN_COVER}`, async () => {
+      it(`should redirect to ${ROUTES.QUOTE.CANNOT_APPLY}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY);
       });
     });
 
     describe('when the submitted country is not supported', () => {
+      const selectedCountryName = countryUnsupported.name;
+
       beforeEach(() => {
-        req.body[FIELD_IDS.BUYER_COUNTRY] = countryUnsupported.marketName;
+        req.body[FIELD_ID] = selectedCountryName;
+
+        mockCountriesResponse = [countryUnsupported];
+
+        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
+      });
+
+      it('should update the session with submitted data, populated with country object', async () => {
+        await post(req, res);
+
+        const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
+
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, selectedCountry.canApplyOnline);
+
+        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
+
+        expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });
 
       it('should add previousRoute and exitReason to req.flash', async () => {
@@ -267,52 +326,50 @@ describe('controllers/quote/buyer-country', () => {
 
         expect(req.flash).toHaveBeenCalledWith('previousRoute', ROUTES.QUOTE.BUYER_COUNTRY);
 
-        const countryName = countryUnsupported.marketName;
+        const countryName = selectedCountryName;
 
-        const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;
-        const { REASON } = CANNOT_OBTAIN_COVER_PAGE;
+        const { CANNOT_APPLY } = PAGES;
+        const { REASON } = CANNOT_APPLY;
 
         const expectedReason = `${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${countryName}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
 
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
 
-      it(`should redirect to ${ROUTES.QUOTE.CANNOT_OBTAIN_COVER}`, async () => {
+      it(`should redirect to ${ROUTES.QUOTE.CANNOT_APPLY}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CANNOT_APPLY);
       });
     });
 
     describe('when the country is supported for an online quote and there are no validation errors', () => {
-      const selectedCountryName = mockAnswers[FIELD_IDS.BUYER_COUNTRY];
-      const mappedCountries = mapCountries(mockCountriesResponse);
-
-      const selectedCountry = getCountryByName(mappedCountries, selectedCountryName);
+      const selectedCountryName = countryQuoteOnline.name;
 
       const validBody = {
-        [FIELD_IDS.BUYER_COUNTRY]: selectedCountryName,
+        [FIELD_ID]: selectedCountryName,
       };
 
       beforeEach(() => {
         req.body = validBody;
+
+        mockCountriesResponse = [countryQuoteOnline];
+
+        getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
+
+        api.keystone.APIM.getCisCountries = getCisCountriesSpy;
       });
 
-      it('should update the session with submitted data, popluated with country object', async () => {
+      it('should update the session with submitted data, populated with country object', async () => {
         await post(req, res);
 
-        const expectedPopulatedData = {
-          ...validBody,
-          [FIELD_IDS.BUYER_COUNTRY]: {
-            name: selectedCountry?.name,
-            isoCode: selectedCountry?.isoCode,
-            riskCategory: selectedCountry?.riskCategory,
-          },
-        };
+        const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
 
-        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData);
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, selectedCountry.canApplyOnline);
 
-        expect(req.session.submittedData).toEqual(expected);
+        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
+
+        expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });
 
       it(`should redirect to ${ROUTES.QUOTE.BUYER_BODY}`, async () => {
@@ -332,89 +389,30 @@ describe('controllers/quote/buyer-country', () => {
       });
     });
 
-    describe(`when the country is supported for an online quote, submitted with ${FIELD_IDS.BUYER_COUNTRY} (no JS) and there are no validation errors`, () => {
-      const selectedCountryName = mockAnswers[FIELD_IDS.BUYER_COUNTRY];
-      const mappedCountries = mapCountries(mockCountriesResponse);
+    describe('api error handling', () => {
+      describe('when the get CIS countries API call fails', () => {
+        beforeEach(() => {
+          getCisCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          api.keystone.APIM.getCisCountries = getCisCountriesSpy;
+        });
 
-      const selectedCountry = getCountryByName(mappedCountries, selectedCountryName);
-
-      const validBody = {
-        [FIELD_IDS.BUYER_COUNTRY]: selectedCountryName,
-      };
-
-      beforeEach(() => {
-        req.body = validBody;
-      });
-
-      it('should update the session with submitted data, popluated with country object', async () => {
-        await post(req, res);
-
-        const expectedPopulatedData = {
-          ...validBody,
-          [FIELD_IDS.BUYER_COUNTRY]: {
-            name: selectedCountry?.name,
-            isoCode: selectedCountry?.isoCode,
-            riskCategory: selectedCountry?.riskCategory,
-          },
-        };
-
-        const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData);
-
-        expect(req.session.submittedData).toEqual(expected);
-      });
-
-      it(`should redirect to ${ROUTES.QUOTE.BUYER_BODY}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.BUYER_BODY);
-      });
-
-      describe("when the url's last substring is `change`", () => {
-        it(`should redirect to ${ROUTES.QUOTE.CHECK_YOUR_ANSWERS}`, async () => {
-          req.originalUrl = 'mock/change';
-
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
           await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
         });
       });
-    });
 
-    describe('when the CIS (country information system) API has no data', () => {
-      beforeEach(() => {
-        // @ts-ignore
-        getCountriesSpy = jest.fn(() => Promise.resolve());
-        api.getCountries = getCountriesSpy;
-      });
+      describe('when the get CIS countries API call does not return a populated array', () => {
+        beforeEach(() => {
+          getCisCountriesSpy = jest.fn(() => Promise.resolve([]));
+          api.keystone.APIM.getCisCountries = getCisCountriesSpy;
+        });
 
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
-
-    describe('when the CIS (country information system) API does not return an array', () => {
-      beforeEach(() => {
-        // @ts-ignore
-        getCountriesSpy = jest.fn(() => Promise.resolve({}));
-        api.getCountries = getCountriesSpy;
-      });
-
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
-      });
-    });
-
-    describe('when the CIS (country information system) API does not return a populated array', () => {
-      beforeEach(() => {
-        getCountriesSpy = jest.fn(() => Promise.resolve([]));
-        api.getCountries = getCountriesSpy;
-      });
-
-      it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+          expect(res.redirect).toHaveBeenCalledWith(ROUTES.PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });

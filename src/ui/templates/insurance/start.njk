@@ -1,0 +1,73 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% import '../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <p class="govuk-body" data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
+
+  <p class="govuk-body" data-cy="list-intro">{{ CONTENT_STRINGS.LIST.INTRO }}</p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    {% for item in CONTENT_STRINGS.LIST.ITEMS %}
+      <li data-cy="list-item-{{ loop.index }}">{{ item }}</li>
+    {% endfor %}
+  </ul>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <p class="govuk-body" data-cy="body-1">{{ CONTENT_STRINGS.BODY_1 }}</p>
+      <p class="govuk-body" data-cy="body-2">{{ CONTENT_STRINGS.BODY_2 }}</p>
+      <p class="govuk-body" data-cy="body-3">{{ CONTENT_STRINGS.BODY_3 }}</p>
+      <p class="govuk-body" data-cy="body-4">{{ CONTENT_STRINGS.BODY_4 }}</p>
+    </div>
+  </div>
+
+  <form method="POST" id="form" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    {{ submitButton.render({
+      text: CONTENT_STRINGS.BUTTONS.START_NOW,
+      isStartButton: true
+    }) }}
+
+  </form>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+        <p class="govuk-body" data-cy="sign-in">
+          <span data-cy="sign-in-you-can">{{ CONTENT_STRINGS.SIGN_IN.YOU_CAN }}</span>
+          <a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.SIGN_IN.LINK.HREF }}" data-cy="sign-in-link">{{ CONTENT_STRINGS.SIGN_IN.LINK.TEXT }}</a>
+          <span data-cy="sign-in-to-continue-application">{{ CONTENT_STRINGS.SIGN_IN.TO_CONTINUE_APPLICATION }}</span>
+        </p>
+
+        <p class="govuk-body" data-cy="find-out-more">
+          <span data-cy="find-out-more-you-can">{{ CONTENT_STRINGS.FIND_OUT_MORE.YOU_CAN }}</span>
+          <a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.FIND_OUT_MORE.LINK.HREF }}" data-cy="find-out-more-link">{{ CONTENT_STRINGS.FIND_OUT_MORE.LINK.TEXT }}</a>,
+          <span data-cy="find-out-more-to-find-out-more">{{ CONTENT_STRINGS.FIND_OUT_MORE.TO_FIND_OUT_MORE }}</span>
+        </p>
+
+        <p class="govuk-body" data-cy="get-a-quote">
+          <span data-cy="get-a-quote-you-can">{{ CONTENT_STRINGS.QUOTE.YOU_CAN }}</span>
+          <a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.QUOTE.LINK.HREF }}" data-cy="get-a-quote-link">{{ CONTENT_STRINGS.QUOTE.LINK.TEXT }}</a>,
+          <span data-cy="get-a-quote-if-you-need">{{ CONTENT_STRINGS.QUOTE.IF_YOU_NEED }}</span>
+        </p>
+    </div>
+  </div>
+
+{% endblock %}

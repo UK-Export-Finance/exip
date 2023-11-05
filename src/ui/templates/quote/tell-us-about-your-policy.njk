@@ -5,8 +5,8 @@
 {% from "govuk/components/hint/macro.njk" import govukHint %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+{% import '../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -18,13 +18,13 @@
     text: CONTENT_STRINGS.LINKS.BACK,
     href: BACK_LINK,
     attributes: {
-      "data-cy": "back-link"
+      "data-cy": DATA_CY.BACK_LINK
     }
   }) }}
 
   {% if validationErrors.summary %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
       errorList: validationErrors.summary
     }) }}
   {% endif %}
@@ -34,16 +34,55 @@
 
         <div class="govuk-grid-row">
           <div class="govuk-grid-column-three-quarters-from-desktop">
-            <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
+            <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
           </div>
         </div>
 
       </div>
     </div>
 
-    <form method="POST" novalidate>
+    <form method="POST" id="form" novalidate>
 
       <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+
+      {% if isSinglePolicyType %}
+        {{ govukInput({
+          label: {
+            text: FIELDS.POLICY_LENGTH.LABEL,
+            attributes: {
+              id: FIELDS.POLICY_LENGTH.ID + '-label',
+              'data-cy': FIELDS.POLICY_LENGTH.ID + '-label'
+            },
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24"
+          },
+          hint: {
+            text: FIELDS.POLICY_LENGTH.HINT,
+            attributes: {
+              'data-cy': FIELDS.POLICY_LENGTH.ID + '-hint'
+            }
+          },
+          classes: "govuk-input--width-4 govuk-!-margin-bottom-4",
+          attributes: {
+            'data-cy': FIELDS.POLICY_LENGTH.ID + '-input'
+          },
+          id: FIELDS.POLICY_LENGTH.ID,
+          name: FIELDS.POLICY_LENGTH.ID,
+          inputmode: "numeric",
+          pattern: "[0-9]*",
+          suffix: {
+            text: "months"
+          },
+          spellcheck: false,
+          errorMessage: validationErrors.errorList[FIELDS.POLICY_LENGTH.ID]and {
+            text: validationErrors.errorList[FIELDS.POLICY_LENGTH.ID].text,
+            attributes: {
+              "data-cy": FIELDS.POLICY_LENGTH.ID + "-error-message"
+            }
+          },
+          value: submittedValues[FIELDS.POLICY_LENGTH.ID]
+        }) }}
+      {% endif %}
 
       <fieldset class="govuk-fieldset">
         <div class="govuk-grid-row">
@@ -117,7 +156,7 @@
           }) }}
         {% endif %}
 
-        {% if isMultiPolicyType %}
+        {% if isMultiplePolicyType %}
           {{ govukInput({
             label: {
               text: FIELDS.MAX_AMOUNT_OWED.LABEL,
@@ -181,7 +220,7 @@
         }
       }) }}
 
-      {% if FIELDS.CREDIT_PERIOD %}
+      {% if isMultiplePolicyType %}
 
         {% set creditPeriodHintHtml %}
           <div class="govuk-grid-row">
@@ -220,11 +259,8 @@
 
       {% endif %}
 
-      {{ govukButton({
-        text: CONTENT_STRINGS.BUTTONS.CONTINUE,
-        attributes: {
-          'data-cy': 'submit-button'
-        }
+      {{ submitButton.render({
+        text: CONTENT_STRINGS.BUTTONS.CONTINUE
       }) }}
 
     </form>

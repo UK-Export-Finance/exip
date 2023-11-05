@@ -1,0 +1,46 @@
+{% import './great-great-grand-child.njk' as greatGreatGrandChildListItem %}
+
+{% macro render(params) %}
+
+  {% set child = params.child %}
+  {% set class = params.class %}
+  {% set loopIndex = params.loopIndex %}
+  {% set thirdLevelListClass = params.thirdLevelListClass %}
+
+  {% if child.type === 'ordered-list' %}
+
+    <ol class="{{ thirdLevelListClass }}">
+
+      {% for greatGreatGrandChild in child.children %}
+
+        {{ greatGreatGrandChildListItem.render({
+          child: greatGreatGrandChild,
+          class: class,
+          loopIndex: loop.index
+        }) }}
+
+      {% endfor %}
+
+    </ol>
+
+    {% elif child.text %}
+
+      <li class="govuk-!-margin-bottom-7 {{ class }}" data-cy="list-level-1-item-{{ loopIndex }}">
+        <span>{{ child.text }}</span>
+      </li>
+
+  {% endif %}
+
+  {% if child.type === 'list-item-content' %}
+
+    {% for greatGreatGrandChild in child.children %}
+
+      <li class="govuk-!-margin-bottom-7 {{ class }}" data-cy="list-level-2-item-{{ loopIndex }}">
+        <span>{{ greatGreatGrandChild.text }}</span>
+      </li>
+
+    {% endfor %}
+
+  {% endif %}
+
+{% endmacro %}

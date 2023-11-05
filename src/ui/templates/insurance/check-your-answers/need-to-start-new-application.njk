@@ -1,0 +1,44 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}  
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+
+      {% set insetHtml %}
+        <p class="govuk-body">
+          <span data-cy="inset-intro">{{ CONTENT_STRINGS.INSET }}</span>&nbsp;
+          <span data-cy="inset-application-deadline">{{ formattedSubmissionDeadline }}</span>.
+        </p>
+      {% endset %}
+
+      {{ govukInsetText({
+        html: insetHtml
+      }) }}
+
+    </div>
+  </div>
+
+  <div class="govuk-button-group">
+    <a class="govuk-button" href="{{ START_NEW_APPLICATION_URL }}" data-cy="start-new-application-link-button">{{ CONTENT_STRINGS.BUTTONS.START_A_NEW_APPLICATION }}</a>
+
+    <a class="govuk-button govuk-button--secondary" href="{{ RETURN_TO_APPLICATION_URL }}" data-cy="return-to-existing-application-link-button">{{ CONTENT_STRINGS.BUTTONS.RETURN_TO_EXISTING_APPLICATION }}</a>
+  </div>
+
+{% endblock %}

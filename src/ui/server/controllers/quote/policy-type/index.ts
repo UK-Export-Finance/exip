@@ -1,29 +1,22 @@
-import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
+import { FIELDS, PAGES } from '../../../content-strings';
+import { ROUTES, TEMPLATES } from '../../../constants';
+import SHARED_FIELD_IDS from '../../../constants/field-ids/shared';
+import corePageVariables from '../../../helpers/page-variables/core/quote';
 import generateValidationErrors from './validation';
-import { isSinglePolicyType } from '../../../helpers/policy-type';
-import { updateSubmittedData } from '../../../helpers/update-submitted-data';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../helpers/construct-payload';
+import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
 
-const { MULTI_POLICY_TYPE, POLICY_LENGTH, POLICY_TYPE, SINGLE_POLICY_LENGTH, SINGLE_POLICY_TYPE } = FIELD_IDS;
+const { MULTIPLE_POLICY_TYPE, POLICY_TYPE, SINGLE_POLICY_TYPE } = SHARED_FIELD_IDS;
 
-const PAGE_VARIABLES = {
-  CONTENT_STRINGS: {
-    BUTTONS,
-    COOKIES_CONSENT,
-    LINKS,
-    FOOTER,
-    PRODUCT,
-    ...PAGES.POLICY_TYPE_PAGE,
-  },
+export const FIELD_IDS = [POLICY_TYPE, MULTIPLE_POLICY_TYPE];
+
+export const PAGE_VARIABLES = {
   FIELDS: {
-    MULTI_POLICY_TYPE: {
-      ID: MULTI_POLICY_TYPE,
+    MULTIPLE_POLICY_TYPE: {
+      ID: MULTIPLE_POLICY_TYPE,
       ...FIELDS[POLICY_TYPE],
-    },
-    POLICY_LENGTH: {
-      ID: POLICY_LENGTH,
-      ...FIELDS[POLICY_LENGTH],
     },
     POLICY_TYPE: {
       ID: POLICY_TYPE,
@@ -33,44 +26,39 @@ const PAGE_VARIABLES = {
       ID: SINGLE_POLICY_TYPE,
       ...FIELDS[POLICY_TYPE],
     },
-    SINGLE_POLICY_LENGTH: {
-      ID: SINGLE_POLICY_LENGTH,
-      ...FIELDS[SINGLE_POLICY_LENGTH],
-    },
   },
 };
 
-const get = (req: Request, res: Response) =>
-  res.render(TEMPLATES.QUOTE.POLICY_TYPE, {
+export const TEMPLATE = TEMPLATES.QUOTE.POLICY_TYPE;
+
+export const get = (req: Request, res: Response) =>
+  res.render(TEMPLATE, {
+    ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
+    userName: getUserNameFromSession(req.session.user),
     ...PAGE_VARIABLES,
-    BACK_LINK: req.headers.referer,
-    submittedValues: req.session.submittedData,
+    submittedValues: req.session.submittedData.quoteEligibility,
   });
 
-const post = (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body);
+export const post = (req: Request, res: Response) => {
+  const payload = constructPayload(req.body, FIELD_IDS);
+
+  const validationErrors = generateValidationErrors(payload);
 
   if (validationErrors) {
-    return res.render(TEMPLATES.QUOTE.POLICY_TYPE, {
+    return res.render(TEMPLATE, {
+      ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
+      userName: getUserNameFromSession(req.session.user),
       ...PAGE_VARIABLES,
-      BACK_LINK: req.headers.referer,
       validationErrors,
-      submittedValues: req.body,
+      submittedValues: payload,
     });
   }
 
-  let populatedData = req.body;
+  const populatedData = {
+    [POLICY_TYPE]: payload[POLICY_TYPE],
+  };
 
-  if (isSinglePolicyType(req.body[POLICY_TYPE])) {
-    populatedData = {
-      [POLICY_TYPE]: req.body[POLICY_TYPE],
-      [POLICY_LENGTH]: req.body[SINGLE_POLICY_LENGTH],
-    };
-  }
-
-  req.session.submittedData = updateSubmittedData(populatedData, req.session.submittedData);
+  req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
   return res.redirect(ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY);
 };
-
-export { PAGE_VARIABLES, get, post };

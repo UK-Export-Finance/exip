@@ -1,0 +1,155 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import '../../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {% if renderBackLink %}
+    {{ govukBackLink({
+      text: CONTENT_STRINGS.LINKS.BACK,
+      href: BACK_LINK,
+      attributes: {
+        "data-cy": DATA_CY.BACK_LINK
+      }
+    }) }}
+  {% endif %}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  {% if renderSuccessBanner %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        {% set html %}
+        <h3 class="govuk-notification-banner__heading" data-cy="success-banner-heading">{{ CONTENT_STRINGS.SUCCESS_BANNER.HEADING }}</h3>
+        <p class="govuk-heading-m" data-cy="success-banner-continue">{{ CONTENT_STRINGS.SUCCESS_BANNER.SIGN_IN_TO_CONTINUE }}</p>
+        {% endset %}
+
+        {{ govukNotificationBanner({
+          html: html,
+          type: 'success',
+          attributes: {
+            'data-cy': 'success-banner'
+          }
+        }) }}
+
+      </div>
+    </div>
+  {% endif %}
+
+  {% if renderImportantBanner %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        {% set html %}
+        <p class="govuk-notification-banner__heading" data-cy="important-banner-heading">{{ CONTENT_STRINGS.IMPORTANT_BANNER.SUCCESSFULLY_SIGNED_OUT }}</p>
+        {% endset %}
+
+        {{ govukNotificationBanner({
+          html: html,
+          type: 'important',
+          attributes: {
+            'data-cy': 'important-banner'
+          }
+        }) }}
+
+      </div>
+    </div>
+  {% endif %}
+
+  <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <p data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
+
+  <form method="POST" id="form" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half-from-desktop">
+
+        {{ govukInput({
+          label: {
+            text: FIELDS.EMAIL.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              id: FIELDS.EMAIL.ID + '-label',
+              'data-cy': FIELDS.EMAIL.ID + '-label'
+            }
+          },
+          attributes: {
+            'data-cy': FIELDS.EMAIL.ID + '-input'
+          },
+          id: FIELDS.EMAIL.ID,
+          name: FIELDS.EMAIL.ID,
+          value: submittedValues[FIELDS.EMAIL.ID],
+          errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID] and {
+            text: validationErrors.errorList[FIELDS.EMAIL.ID].text,
+            attributes: {
+              "data-cy": FIELDS.EMAIL.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text: FIELDS.PASSWORD.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              id: FIELDS.PASSWORD.ID + '-label',
+              'data-cy': FIELDS.PASSWORD.ID + '-label'
+            }
+          },
+          attributes: {
+            'data-cy': FIELDS.PASSWORD.ID + '-input',
+            'data-module': 'moj-password-reveal'
+          },
+          id: FIELDS.PASSWORD.ID,
+          name: FIELDS.PASSWORD.ID,
+          type: 'password',
+          hint: {
+            html: passwordHintHtml
+          },
+          value: submittedValues[FIELDS.PASSWORD.ID],
+          errorMessage: validationErrors.errorList[FIELDS.PASSWORD.ID] and {
+            text: validationErrors.errorList[FIELDS.PASSWORD.ID].text,
+            attributes: {
+              "data-cy": FIELDS.PASSWORD.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        <div class="govuk-button-group">
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE
+          }) }}
+        </div>
+
+      </div>
+    </div>
+
+    <a class="govuk-link" href="{{ CONTENT_STRINGS.PASSWORD_RESET.HREF }}" data-cy="reset-password">{{ CONTENT_STRINGS.PASSWORD_RESET.TEXT }}</a>
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <h2 class="govuk-heading-m" data-cy="need-to-create-account">{{ CONTENT_STRINGS.NEED_TO_CREATE_ACCOUNT.HEADING }}</h2>
+
+    <a class="govuk-button govuk-button--secondary" href="{{ CONTENT_STRINGS.NEED_TO_CREATE_ACCOUNT.LINK.HREF }}" data-cy="create-account">{{ CONTENT_STRINGS.NEED_TO_CREATE_ACCOUNT.LINK.TEXT }}</a>
+
+  </form>
+
+  <script src="/assets/js/mojFrontend.js" type="text/javascript" integrity="{{ SRI.MOJ }}" crossorigin="anonymous"></script>
+
+{% endblock %}

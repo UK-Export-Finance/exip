@@ -1,0 +1,64 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {% set titleHtml %}
+    <span class="govuk-!-display-inline-block ukef-white-text ukef-application-submitted" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</span>
+  {% endset %}
+
+  {% set panelHtml %}
+      <p class="govuk-body govuk-!-font-size-24 ukef-white-text" data-cy="your-reference">{{ CONTENT_STRINGS.YOUR_REFERENCE }}</p>
+
+      <p class="govuk-body govuk-!-font-weight-bold govuk-!-font-size-36 ukef-white-text" data-cy="reference-number">{{ application.referenceNumber }}</p>
+  {% endset %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+
+      {{ govukPanel({
+        titleHtml: titleHtml,
+        html: panelHtml,
+        classes: "govuk-!-margin-bottom-9"
+      }) }}
+
+      <p class="govuk-body" data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
+
+      <h3 class="govuk-heading-m" data-cy="what-happens-next-heading">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.HEADING}}</h3>
+
+      <p class="govuk-body" data-cy="what-happens-next-intro">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.WILL_CONTACT_YOU.INTRO }}</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        {% for item in CONTENT_STRINGS.WHAT_HAPPENS_NEXT.WILL_CONTACT_YOU.LIST %}
+          <li data-cy="what-happens-next-list-item-{{ loop.index }}">{{ item }}</li>
+        {% endfor %}
+      </ul>
+
+      <p class="govuk-body" data-cy="what-happens-next-climate-change-factors">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.CLIMATE_CHANGE_FACTORS }}</p>
+
+      <h3 class="govuk-heading-m" data-cy="decision-from-us-heading">{{ CONTENT_STRINGS.DECISION_FROM_US.HEADING}}</h3>
+
+      <p class="govuk-body" data-cy="decision-from-us-timeframe">{{ CONTENT_STRINGS.DECISION_FROM_US.TIMEFRAME }}</p>
+
+      <p class="govuk-body" data-cy="decision-from-us-extra-info">{{ CONTENT_STRINGS.DECISION_FROM_US.EXTRA_INFO }}</p>
+
+      <p><a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.ACTIONS.START_NEW_APPLICATION.HREF }}" data-cy="start-new-application">{{ CONTENT_STRINGS.ACTIONS.START_NEW_APPLICATION.TEXT }}</a></p>
+
+      <p><a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.ACTIONS.GIVE_FEEDBACK.HREF }}" data-cy="give-feedback">{{ CONTENT_STRINGS.ACTIONS.GIVE_FEEDBACK.TEXT }}</a></p>
+
+      <h3 class="govuk-heading-m" data-cy="research-heading">{{ CONTENT_STRINGS.RESEARCH.HEADING}}</h3>
+      
+      <p class="govuk-body">
+        <span data-cy="research-carry-out">{{ CONTENT_STRINGS.RESEARCH.CARRY_OUT }}</span>
+        <a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.RESEARCH.TAKE_PART.HREF }}" data-cy="research-take-part-link">{{ CONTENT_STRINGS.RESEARCH.TAKE_PART.TEXT }}</a>
+        <span data-cy="research-if-you-like">{{ CONTENT_STRINGS.RESEARCH.IF_YOU_LIKE }}</span>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}

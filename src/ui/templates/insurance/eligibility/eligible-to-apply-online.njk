@@ -1,0 +1,47 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% import '../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+
+      {{ govukInsetText({
+        text: CONTENT_STRINGS.INSET,
+        attributes: {
+          'data-cy': 'inset-text'
+        }
+      }) }}
+
+      <p class="govuk-body" data-cy="body">{{ CONTENT_STRINGS.BODY }}</p>
+
+    </div>
+  </div>
+
+  <form method="POST" id="form" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    {{ submitButton.render({
+      text: CONTENT_STRINGS.SUBMIT_BUTTON
+    }) }}
+
+  </form>
+
+{% endblock %}

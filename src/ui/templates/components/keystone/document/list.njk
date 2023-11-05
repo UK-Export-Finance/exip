@@ -1,0 +1,41 @@
+{% import './list-item/index.njk' as listItem %}
+
+{% macro render(params) %}
+
+  {% if params.type === 'ordered' %}
+    <ol class="govuk-list govuk-list--number {{ params.firstLevelListClass }}">
+
+      {% for child in params.content %}
+
+        {{ listItem.render({
+          content: child,
+          loopIndex: loop.index,
+          class: params.listItemClass,
+          secondLevelListClass: params.secondLevelListClass,
+          thirdLevelListClass: params.thirdLevelListClass
+        }) }}
+        
+      {% endfor %}
+
+    </ol>
+  {% endif %}
+
+  {% if params.type === 'unordered' %}
+    <ul class="govuk-list govuk-list--bullet">
+
+      {% for child in params.content %}
+
+        {{ listItem.render({
+          content: child,
+          loopIndex: loop.index,
+          class: params.listItemClass,
+          secondLevelListClass: params.secondLevelListClass,
+          thirdLevelListClass: params.thirdLevelListClass
+        }) }}
+
+      {% endfor %}
+
+    </ul>
+  {% endif %}
+
+{% endmacro %}

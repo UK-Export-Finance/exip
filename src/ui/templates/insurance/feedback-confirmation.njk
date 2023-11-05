@@ -1,0 +1,26 @@
+{% extends 'index.njk' %}
+{% import '../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+        <p data-cy="feedback-confirmation">{{ CONTENT_STRINGS.FEEDBACK_TEXT }} </p>
+
+        <div class="govuk-button-group govuk-!-margin-top-5">
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.BACK_TO_SERVICE,
+            href: BACK_TO_SERVICE_URL
+          }) }}
+        </div>
+    </div>
+  </div>
+
+
+{% endblock %}

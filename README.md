@@ -1,160 +1,207 @@
-# Export Insurance Policies
+# Export Insurance Policies (EXIP) :briefcase:
+Welcome to the Export Insurance Policies repository! This repository houses the code for the UK Export Finance (UKEF) EXIP service, a public-facing application that offers various features to exporters:
 
-This repository contains the code for the UK Export Finance EXIP service - a public facing application that allows exporters to:
+- Obtain a quote for Export Insurance Policies (EXIP) from UKEF.
+- Create and log in to an EXIP account.
+- Create an application for Export Insurance Policies (EXIP) and submit it to UKEF.
 
-- Get a quote for export insurance cover with UKEF.
-- Create and login to an EXIP account.
-- Create an application for export insurance cover and submit it to UKEF.
+The repository is based on the [template-typescript-package](https://github.com/UK-Export-Finance/template-typescript-package).
 
-This repo is based on [template-typescript-package](https://github.com/UK-Export-Finance/template-typescript-package).
+:warning: Currently, only the "Get a quote" tool, available in the `main` branch, is live. The full application/MVP is developed in the `main-application` branch.
 
-:warning: Currently, the only live part of this repository it the "Get a quote" tool which is in the main branch. The full application/MVP is built in the main-application branch.
+## Prerequisites :gear:
 
-##  Prerequisite
+Before getting started with this repository, ensure that you meet the following prerequisites:
 
-- Node version 16 or highr with a corresponding `npm`.
-- Make sure you have an `.env` Use `.env.sample` as a base. Some sensitive variables need to be shared from the team.
-- Run `npm install` in the root directory
-- Run `npm install` in the `src/ui`
+- Node.js version 16 or higher, along with the corresponding `npm` package manager.
+- An `.env` file with the required environment variables. Some sensitive variables may need to be provided by the team.
+- Run `npm install` in the root directory.
+- Additionally, in the `src/ui` directory, run `npm install --legacy-peer-deps`.
 
-## Tech stack
+:warning: Due to certain issues, the `--legacy-peer-deps` flag is required for the installation in the `src/ui` directory.
 
-- Node, NPM
-- Typescript
-- Keystone (GraphQL API, database)
-- Cypress (E2E tests)
-- GovUK design systems
-- Nunjucks (UI templates)
-- Webpack
-- Jest
-- ESlint, Prettier
-- Husky, commitlint, lint-staged
-- release-please-action
-- Github actions
+## Tech Stack :computer:
 
-## Running locally
+This project utilizes various technologies and tools, including:
 
-1. Execute `docker-compose up` (requires `--build` for first time usage) from the root directory
-2. Visit [http://localhost:5000](http://localhost:5000) in your browser
+- [Node.js](https://nodejs.org) and [NPM](https://www.npmjs.com)
+- [TypeScript](https://www.typescriptlang.org)
+- [Keystone (GraphQL API, database)](keystonejs.com)
+- [Cypress (E2E tests)](https://www.cypress.io)
+- [GovUK design systems](design-system.service.gov.uk)
+- [Nunjucks (UI templates)](https://mozilla.github.io/nunjucks/templating.html)
+- [Webpack](https://webpack.js.org)
+- [Jest](https://jestjs.io/)
+- [ESlint](https://eslint.org), [Prettier](https://prettier.io)
+- [Husky](https://typicode.github.io/husky), [commitlint](https://commitlint.js.org), [lint-staged](https://github.com/okonet/lint-staged)
+- [release-please-action](https://github.com/google-github-actions/release-please-action)
+- [GitHub Actions](https://github.com/features/actions)
 
-Alternatively, run via npm in each microservice.
+## Running Locally :computer:
 
-In one terminal:
+To run the project locally, follow these steps:
 
-1. `cd src/ui`
-2. `npm start`
-3. Or for hot reloading: `npm run dev`
+1. Execute `docker-compose up` from the root directory. Use `--build` for the first-time usage.
+2. Visit [https://localhost:5000](https://localhost:5000) in your web browser.
+3. If presented with the certificate not trusted error, then please accept and proceed with certificate is self-signed for domain `localhost`.
 
-In another terminal:
+Alternatively, you can run each microservice via npm:
 
-1. `cd src/api`
-2. `npm start`
-3. Or for hot reloading: `npm run dev`
+- In one terminal, navigate to `src/ui`:
+  1. `cd src/ui`
+  2. `npm start`
+  3. For hot reloading: `npm run dev`
 
-Note that we use [express-basic-auth](https://www.npmjs.com/package/express-basic-auth) in every environment except for production. This is because we do not want anyone to see work in progress before it is live. For example, some real-world users may obtain the password in a dev/test environment for user testing. We do not want this to then be shared.
+- In another terminal, navigate to `src/api`:
+  1. `cd src/api`
+  2. `npm start`
+  3. For hot reloading: `npm run dev`
 
-## Testing
+To run the full application flow without Docker, set up a MySQL database, update the `DATABASE_URL`, `MYSQL_DATABASE`, and `MYSQL_ROOT_PASSWORD` environment variables, and import the [MySQL dump](https://github.com/UK-Export-Finance/exip/blob/main-application/database/exip.sql) to populate the database.
 
-### Run the unit tests
+## Testing :microscope:
+
+### Run the Unit Tests
+
+To run unit tests for the UI, navigate to the `src/ui` directory and execute:
 
 ```shell
-cd src/ui
 npm run test
 ```
 
-### Run the E2E tests
-
-Navigate to to the E2E tests directory `/e2e-tests` and execute any of the following commands to start Cypress.
-
-#### **Run the entire E2E test suite**
+To run unit tests for the API, navigate to the `src/api` directory and execute:
 
 ```shell
-npx cypress run --config video=false
+npm run test
 ```
 
-#### **Run a single E2E test**
+### Run the E2E Tests
+
+E2E tests are located in the `/e2e-tests` directory. To run the entire E2E test suite, execute:
 
 ```shell
-npx cypress run --spec "cypress/e2e/journeys/example.spec.js" --config video=false
+npx cypress run
 ```
 
-#### **For live debugging, open the GUI and select the test**
+To run a specific E2E test, use the following command, replacing the path with the test file you want to run:
+
+```shell
+npx cypress run --spec "cypress/e2e/journeys/example.spec.js"
+```
+
+For live debugging, open the Cypress GUI and select the test:
 
 ```shell
 npx cypress open .
 ```
 
-### Run the API tests
+### Linting :wrench:
 
-Navigate to to the API directory `/src/api` and excute any of the following commands:
+Linting can be run from the root of the repository or in specific directories such as `ui`, `api`, or `e2e-tests`.
 
-#### **Run the entire API test suite**
-
-```shell
-npm run test
-```
-
-#### **Run a single API test**
-
-```shell
-npm run test path/to/file.test.ts
-```
-
-### Run the UI tests
-
-Navigate to to the UI directory `/src/ui` and excute any of the following commands:
-
-#### **Run the entire UI test suite**
-
-```shell
-npm run test
-```
-
-#### **Run a single UI test**
-
-```shell
-npm run test path/to/file.test.ts
-```
-
-## Linting
-
-Linting can be run from the root of the repo, or specifically in the ui/api/e2e-tests directories.
-
-### Run eslint & prettier
+To run ESLint and Prettier:
 
 ```shell
 npm run lint
 ```
 
-### Automatically fix lint/prettier issues
+To automatically fix lint and Prettier issues:
 
 ```shell
 npm run lint:fix
 ```
 
-## Core principles
+## What is Keystone? :key:
 
-As a development team, in order to build and maintain a product/service, we need to make sure that the codebase is clean, consistent and scalable. The EXIP codebase aims to define a new, standardised approach with patterns and techniques that can be applied to other digital UKEF services.
+Keystone is a powerful headless CMS that simplifies data management and GraphQL API development. With Keystone, you can define a schema that automatically generates a GraphQL schema, resolvers, and database tables based on your schema configuration. For instance, if you define a `Currencies` schema:
 
-As part of UKEF, we do not want to be siloed - we want other developers to be aware of and feedback on certain approaches and structures we propose and put in place.
+```js
+export const lists = {
+  Currencies: {
+    fields: {
+      name: text(),
+      isoCode: text(),
+    },
+  },
+};
+```
 
-- Be DRY and consistent
-- Make sure that the code is easy to read and maintain
-- Build it well from the start - don't cut any corners or introduce "workarounds"
-- It's ok to create a ticket to improve a part of the codebase, but we want to avoid this as much as possible
-- Aim for 100% test coverage
-- Always add documentation
-- At least one technical improvement ticket in each sprint
+Keystone will generate GraphQL resolvers for common CRUD operations like `createCurrency`, `updateCurrency`, and `deleteCurrency`, as well as corresponding database tables and queries.
 
-## Bug fixing
+Keystone also supports hooks, allowing you to perform actions before or after data operations. For example, the `resolveInput` hook can modify data before saving it to the database, and the `afterOperation` hook can trigger actions after data is saved.
 
-As an agile team, we want to move tickets across the sprint board as much as possible. Inevitably, as we have new features tested by QA, bugs will be found. Instead of blocking the sprint ticket and then going back and forth, we create a separate bug ticket. Depending on the sprint status and developer/QA preference, the bug is usually prioritised and fixed in the next sprint, or we bring it into the current sprint.
+Learn more about Keystone hooks in the [official documentation](https://keystonejs.com/docs/guides/hooks).
 
-When a new sprint starts - once an "in progress" ticket is ready for PR review, instead of picking up a new feature ticket, we prioritise bug fixes before picking up a new feature ticket. This is to ensure that everything works as expected and we don't end up with a large list of bugs in the backlog.
+## Why We Use Keystone :rocket:
 
-Recommened: When fixing a bug, write an E2E test first and then fix it. We need a test to make sure the bug doesn't happen again.
+The choice to use Keystone was driven by its ability to provide extensive functionality out of the box. Instead of building a CRUD API from scratch, Keystone allows us to define schemas and effortlessly generate GraphQL APIs, complete with features like pagination.
 
-## Keeping page and fields separated
+Keystone also offers an admin UI for managing data, which, although not extensively used, can be valuable for non-technical users.
+
+### Requirements for Submitting a Form :clipboard:
+
+In most pages, there are two submit buttons, each with different requirements:
+
+#### "Save and Continue"
+
+- These primary buttons check for validation errors. If errors are found, the page is reloaded with validation errors.
+- If no validation errors exist, the user is redirected to the next page in the user flow.
+
+#### "Save and Go Back"
+
+- These secondary buttons check for validation errors. If errors are found, invalid fields are removed and only valid fields are saved.
+- Regardless of validation errors, users are redirected to the main home page of an application.
+
+## How and When the UI Calls the API :calling:
+
+### When an Application Page Is Loaded :page_facing_up:
+
+Middleware fetches the application from the API when a page is loaded. This middleware uses Apollo to make a GraphQL query to the API. The API automatically handles the request and returns the application data, which is then assigned to `res.locals` for use by the subsequent controller.
+
+### When a User Submits a Form in the Application Flow :computer:
+
+When a user submits a form, the following process occurs:
+
+1. The UI's POST controller checks for validation errors.
+
+2. If no errors are found, a "map and save" function is called. This function maps the submitted form data to a suitable data structure and sends it to the save function.
+
+3. The save data function filters out invalid fields (if error messages are provided), sanitizes other fields, and calls the API. The actual API call is made using Apollo to run a GraphQL mutation.
+
+4. The API automatically handles the request, updating the specified application's database columns based on the GraphQL mutation.
+
+## Core Principles :star:
+
+As a development team, certain core principles guide our work:
+
+- Keep code DRY (Don't Repeat Yourself) and consistent.
+- Ensure that the codebase is easy to read and maintain.
+- Build the codebase well from the start; avoid cutting corners or introducing workarounds.
+- Strive for 100% test coverage.
+- Add documentation for clarity.
+- Aim to have at least one technical improvement ticket in each sprint.
+
+## Bug Fixing :bug:
+
+In an agile team, the goal is to move tickets across the sprint board efficiently. As new features are tested by QA, bugs may surface. Instead of blocking the sprint ticket, we create separate bug tickets. These bugs are typically prioritized and fixed in the next sprint, or they are brought into the current sprint if the team's preference aligns.
+
+When fixing a bug, it's recommended to write an E2E test first to ensure the bug doesn't reoccur.
+
+## Keeping Page and Fields Separated :bookmark_tabs:
+
+Each page and field has content specific to its purpose. To avoid hardcoding content in templates, referencing field IDs or values through hardcoding, and to maintain a single source of truth, we keep content in separate files. This approach simplifies content updates and allows for easier content management.
+
+Content files include:
+
+- [Global content strings](https://github.com/UK-Export-Finance/exip/tree/main-application/src/ui/server/content-strings) for buttons, links, etc.
+- [Page content strings](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/content-strings/pages/index.ts).
+- [Field content strings](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/content-strings/fields/index.ts).
+
+Field IDs are stored in [constants](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/constants) rather than content strings because an ID is not a content string.
+
+## DRY UI Controllers and Rendering :repeat:
+
+To maintain consistency and avoid repetition, a common pattern is followed for controllers. Page variables and templates are defined separately. Additionally, page variable functions are used to achieve DRY (Don't Repeat Yourself) code and facilitate testing.
 
 Each page and field has content specific to that page or field. We keep these in their own files, separated from the code itself for several reasons:
 
@@ -174,9 +221,35 @@ The files can be found  here:
 
 Note: field IDs are in [constants](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/constants) because an ID is not a content string.
 
-## DRY UI controllers and rendering
+Here's a simplified example of how it works:
 
-Every page/controller requires the same content and links in order to meet design. For example, every page has a header, footer, service name and a back link. To save repetition, we've introduced **page variables functions** that should be used in every single controller.
+```js
+const { POLICY_LENGTH, POLICY_TYPE } = FIELD_IDS;
+
+export const PAGE_VARIABLES = {
+  FIELDS: {
+    POLICY_TYPE: {
+      ID: POLICY_TYPE,
+      ...FIELDS[POLICY_TYPE],
+    },
+    POLICY_LENGTH: {
+      ID: POLICY_LENGTH,
+      ...FIELDS[POLICY_LENGTH],
+    },
+  },
+};
+
+export const TEMPLATE = TEMPLATES.EXAMPLE;
+
+export const get = (req: Request, res: Response) =>
+  res.render(TEMPLATE, {
+    ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.EXAMPLE, BACK_LINK: req.headers.referer }),
+    ...PAGE_VARIABLES,
+    application: req.application,
+  });
+```
+
+A more complete example with validation handling and a POST request can be found [here](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/controllers/insurance/policy/type-of-policy/index.ts).
 
 ### Quote tool controllers
 
@@ -239,86 +312,60 @@ const get = (req: Request, res: Response) =>
 
 Note: `corePageVariables` is actually consumed by all other page variable functions.
 
-## Consistent UI controllers
+## Git Workflow :octocat:
 
-As the codebase grows, we need to ensure that different areas of the code are following the same patterns/approach. Controllers are a great example - we follow this pattern where we define page variables, and the templates separately. Combined with page variables functions, this approach keeps things DRY and allows for easier testing.
+The project follows a Git workflow for collaborative development:
 
-```js
-const { POLICY_LENGTH, POLICY_TYPE } = FIELD_IDS;
+1. Create a branch and a pull request (PR) that clearly describes the change and includes the associated Jira ticket number.
+2. The PR runs tests for the affected services.
+3. Once the PR tests pass, another engineer reviews and approves the PR.
+4. Finally, the PR is merged into either the `main` or `main-application` branch.
 
-export const PAGE_VARIABLES = {
-  FIELDS: {
-    POLICY_TYPE: {
-      ID: POLICY_TYPE,
-      ...FIELDS[POLICY_TYPE],
-    },
-    POLICY_LENGTH: {
-      ID: POLICY_LENGTH,
-      ...FIELDS[POLICY_LENGTH],
-    },
-  },
-};
+GitHub Actions automates the build and deployment process, pushing container images to Azure, where they are automatically deployed to the Development environment.
 
-export const TEMPLATE = TEMPLATES.EXAMPLE;
+E2E tests for GitHub Actions run in parallel, and instances are numbered for reference.
 
-export const get = (req: Request, res: Response) =>
-  res.render(TEMPLATE, {
-    ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.EXAMPLE, BACK_LINK: req.headers.referer }),
-    ...PAGE_VARIABLES,
-    application: req.application,
-  });
-```
+## Eligibility :chart_with_upwards_trend:
 
-A complete example with validation handling and a POST can be found [here](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/controllers/insurance/policy-and-export/type-of-policy/index.ts).
+The EXIP product defines eligibility rules and questions that determine whether an exporter is eligible to apply for coverage. Eligibility questions are part of the user flow and exist in two areas:
 
-Note: Pages with a single form field (for example eligibility pages) are a little simpler and use `FIELD_ID` instead of `FIELDS`. An example can be found [here](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/controllers/insurance/eligibility/exporter-location/index.ts).
-
-## Git workflow
-
-:warning: Currently, the only live part of this repository it the "Get a quote" tool which is in the main branch. The full application/MVP is built in the main-application branch.
-
-1. Create a branch and PR clearly describing the change, along with Jira ticket number
-2. PR will run tests for the affected services
-3. PR tests will pass, another engineer reviews & approves the PR
-4. PR is merged into main or main-application branch
-
-Github actions will then run a build and push of container images to Azure, which will be picked up and deployed automatically by the Dev environment.
-
-E2E tests for GHA have been setup to run in parallel. When these run you will see duplicates of each job with a number denoting the instance.
-
-## Deployment
-
-Currently, there is only a single staging environment.
-
-A docker image needs to be built, tagged and pushed to docker hub. Then the azure app can be restarted to pick up the latest.
-
-Contact the team for more information.
-
-## Product definitions for eligibility
-
-The EXIP product has a series of rules/questions that determine if an exporter can apply for cover.
-
-These questions are asked in the eligibility sections of the user flow. The product has 2 eligibility sections:
-
-- In the "Get a quote" flow: `/quote/*`
-- In the beginning of the application flow, before an application can be created: `/insurance/eligibility/*`
+1. In the "Get a quote" flow: `/quote/*`
+2. At the beginning of the application flow, before an application can be created: `/insurance/eligibility/*`
 
 Key points and differences:
 
-- An Exporter must pass eligibility before they can obtain a quote or begin to create an application to apply for cover.
-- The application eligibility is a lot more comprehensive than the quote eligibility. Both eligibility flows share a few questions.
-- The majority of the eligibility questions are "yes or no" answers.
+- Exporters must pass eligibility before obtaining a quote or starting an application.
+- Application/insurance eligibility is more comprehensive than quote eligibility, covering a wider range of questions.
+- Most eligibility questions have binary "yes or no" answers.
 
-### "Maximum" definitions
+### "Maximum" Definitions :triangular_ruler:
 
-The application eligibility has two questions asking if the exporter's desired cover period and cover amount is over X.
+The application/insurance eligibility includes questions about whether
 
-If an exporter would like a cover period or cover amount that exceeds the maximum, they cannot apply online and must either apply offline or speak to UKEF.
+ the exporter's desired cover period and cover amount exceed certain limits ("maximums"). If an exporter's request exceeds these maximums, they cannot proceed with the online application and must apply offline or contact UKEF directly.
 
-These maximum definitions could change in the future. Therefore, they are stored and rendered in the UI dynamically. These can be found in the [product constants](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/constants/product.ts).
+These maximum definitions are dynamic and can change. They are stored and rendered dynamically in the UI. You can find these definitions in the [eligibility constants](https://github.com/UK-Export-Finance/exip/blob/main-application/src/ui/server/constants/eligibility.ts).
 
-If these definitions need to change, only the product constants need to be updated.
+The maximum cover period URL references the maximum cover period, and the route is created dynamically by referencing the cover period definition.
 
-Note that the cover period URL references the maximum cover period. The route is created dynamically by referencing the cover period definition.
+Field IDs for these questions are generic and do not directly reference the actual maximum value. For example, we use `wantCoverOverMaxPeriod` instead of `wantCoverOver2Years`.
 
-Also note that the field IDs that we use for the answers to these questions are generic and do not refer to the actual maximum. I.e, `wantCoverOverMaxPeriod` instead of `wantCoverOver2Years`.
+## Application Versioning :bookmark:
+
+As the EXIP product evolves, the support it offers to exporters may change. Application versions are used to track what support the product provided at the time of creation or submission. This helps when viewing historical applications or when determining the available support for a specific application.
+
+Application versions are defined in [version constants](https://github.com/UK-Export-Finance/exip/blob/main-application/src/api/constants/application/versions/index.ts) and [latest version definitions](https://github.com/UK-Export-Finance/exip/blob/main-application/src/api/constants/application/versions/latest.ts). New applications automatically use the latest version number.
+
+For example, different versions could include:
+
+- Version 1: MVP with support for applications under £100.
+- Version 2: Added support for applications over £100.
+- Version 3: Integration with payment processing.
+
+When entering a new phase where the application will change, a new application version number should be added.
+
+This approach simplifies the handling of different versions of the application and avoids complex logic in the codebase or other internal systems.
+
+These are the key aspects of the UK Export Finance EXIP service codebase and development process. If you have specific questions or need more details about any particular aspect, feel free to ask!
+
+---

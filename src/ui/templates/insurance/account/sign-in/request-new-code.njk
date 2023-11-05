@@ -1,0 +1,66 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% import '../../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+
+      <p data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
+
+      <form method="POST" id="form" novalidate>
+
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+        <div class="govuk-button-group">
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.SEND_NEW_SECURITY_CODE
+          }) }}
+        </div>
+
+      </form>
+
+      {% set doNotHaveEmailAccessHtml %}
+
+      <p class="govuk-body">
+        <span data-cy="do-not-have-email-access-cannot-access">{{ CONTENT_STRINGS.DO_NOT_HAVE_EMAIL_ACCESS.CANNOT_ACCESS }}</span>
+        <a
+          class="govuk-link"
+          href="{{ CONTENT_STRINGS.DO_NOT_HAVE_EMAIL_ACCESS.CONTACT_US.HREF }}"
+          data-cy="do-not-have-email-access-contact-link"
+        >
+          {{ CONTENT_STRINGS.DO_NOT_HAVE_EMAIL_ACCESS.CONTACT_US.TEXT }}
+        </a>
+        <span data-cy="do-not-have-email-access-outro">&nbsp;{{ CONTENT_STRINGS.DO_NOT_HAVE_EMAIL_ACCESS.OUTRO }}</span>
+      </p>
+
+      {% endset %}
+
+      {{ govukDetails({
+        summaryText: CONTENT_STRINGS.DO_NOT_HAVE_EMAIL_ACCESS.INTRO,
+        html: doNotHaveEmailAccessHtml,
+        attributes: {
+          "data-cy": "do-not-have-email-access"
+        }
+      }) }}
+
+    </div>
+  </div>
+
+{% endblock %}

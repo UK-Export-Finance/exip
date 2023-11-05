@@ -2,14 +2,14 @@
 export {};
 import { SubmittedData } from '../submitted-data';
 import { Quote } from '../quote';
+import { Application } from '../application';
 
-interface RequestSession {
-  submittedData: SubmittedData;
-  quote?: Quote;
-  cookieConsentNewDecision?: boolean;
+interface Next {
+  (err?: any): void;
 }
 
 interface RequestBody {
+  _csrf?: string;
   [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
@@ -19,14 +19,67 @@ interface RequestCookies {
 
 interface RequestHeaders {
   referer: string;
+  origin: string;
+  host: string;
+}
+
+interface SRI {
+  JS: string;
+  GOVUK: string;
+  MOJ: string;
+  FORM: string;
+  COOKIES: string;
+  ACCESSIBILITY: string;
+  GA: string;
+}
+
+interface MetaData {
+  URL: string;
+  TITLE: string;
+  ORGANISATION: string;
 }
 
 interface ResponseLocals {
+  application?: Application;
   csrfToken: string;
   cookieConsent?: boolean;
   cookieConsentDecision?: boolean;
   cookieConsentNewDecision?: boolean;
   googleAnalyticsId?: string;
+  meta: MetaData;
+  SRI: SRI;
+}
+
+interface RequestParams {
+  referenceNumber?: string;
+  pageNumber?: string;
+}
+
+interface RequestQuery {
+  token?: string;
+  id?: string;
+}
+
+interface RequestSessionUser {
+  firstName: string;
+  lastName: string;
+  email: string;
+  id: string;
+  token?: string;
+  expires: string;
+}
+
+interface RequestSession {
+  submittedData: SubmittedData;
+  quote?: Quote;
+  cookieConsentNewDecision?: boolean;
+  accountIdToConfirm?: string;
+  accountId?: string;
+  user?: RequestSessionUser;
+  emailAddressForPasswordReset?: string;
+  passwordResetSuccess?: boolean;
+  emailAddressForAccountReactivation?: string;
+  returnToServiceUrl?: string;
 }
 
 interface Request {
@@ -35,9 +88,13 @@ interface Request {
   csrfToken: () => string;
   flash: (str1: string, str2?: string) => string;
   headers: RequestHeaders;
+  hostname: string;
   method: string;
   originalUrl: string;
+  baseUrl: string;
   redirect: (str: string) => any;
+  params: RequestParams;
+  query: RequestQuery;
   session: RequestSession;
 }
 
@@ -47,6 +104,7 @@ interface Response {
   locals: ResponseLocals;
   setHeader: (str1: string, str2?: string) => any; // eslint-disable-line @typescript-eslint/no-explicit-any
   removeHeader: (str1: string) => any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  status: (status: number) => any;
 }
 
 declare module 'express-session' {
@@ -55,4 +113,4 @@ declare module 'express-session' {
   }
 }
 
-export { Request, RequestBody, RequestSession, Response };
+export { Next, Request, RequestBody, RequestSession, RequestSessionUser, Response };

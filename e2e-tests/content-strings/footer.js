@@ -1,35 +1,32 @@
-const { ROUTES } = require('../constants');
+import { ROUTES } from '../constants';
+import { LINKS } from './links';
 
-const FOOTER = {
-  HEADING: 'Contact us',
-  EMAIL: {
-    HEADING: 'Email',
-    VALUE: 'customer.service@ukexportfinance.gov.uk',
-  },
-  PHONE: {
-    HEADING: 'Phone',
-    VALUE: '+44 (0)207 271 8010',
-  },
-  OPENING_TIMES: {
-    HEADING: 'Opening times',
-    VALUE: 'Monday to Friday, 9am to 5pm (excluding public holidays)',
-  },
+const { INSURANCE } = ROUTES;
+
+export const FOOTER = {
   SUPPORT_LINKS_HEADING: 'Support Links',
   ACCESSIBILITY_STATEMENT: {
     TEXT: 'Accessibility statement',
-    HREF: ROUTES.ACCESSIBILITY_STATEMENT,
+    QUOTE_HREF: ROUTES.ACCESSIBILITY_STATEMENT,
+    INSURANCE_HREF: INSURANCE.ACCESSIBILITY_STATEMENT,
   },
   PRIVACY: {
     TEXT: 'Privacy',
-    HREF: 'https://www.gov.uk/government/publications/ukef-privacy-notice',
+    HREF: LINKS.EXTERNAL.PRIVACY,
   },
   COOKIES: {
     TEXT: 'Cookies',
-    HREF: ROUTES.COOKIES,
+    QUOTE_HREF: ROUTES.COOKIES,
+    INSURANCE_HREF: INSURANCE.COOKIES,
   },
   REPORT_VULNERABILITY: {
     TEXT: 'Report a vulnerability',
     HREF: 'https://www.gov.uk/guidance/report-a-vulnerability-on-a-ukef-system',
+  },
+  CONTACT: {
+    TEXT: 'Contact',
+    QUOTE_HREF: ROUTES.CONTACT_US,
+    INSURANCE_HREF: INSURANCE.CONTACT_US,
   },
   OGL_LICENCE: {
     INTRO: 'All content is available under the',
@@ -42,5 +39,3 @@ const FOOTER = {
     HREF: 'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',
   },
 };
-
-module.exports = FOOTER;

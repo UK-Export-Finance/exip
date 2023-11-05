@@ -1,0 +1,50 @@
+{% import './grand-child.njk' as grandChildListItem %}
+
+{% macro render(params) %}
+
+  {% set child = params.child %}
+  {% set class = params.class %}
+  {% set loopIndex = params.loopIndex %}
+  {% set secondLevelListClass = params.secondLevelListClass %}
+  {% set thirdLevelListClass = params.thirdLevelListClass %}
+
+  {% if child.type === 'ordered-list' %}
+
+    <ol class="{{ secondLevelListClass }}">
+
+      {% for grandChild in child.children %}
+
+        {{ grandChildListItem.render({
+          child: grandChild,
+          class: class,
+          loopIndex: loop.index,
+          thirdLevelListClass:  thirdLevelListClass
+        }) }}
+
+      {% endfor %}
+
+    </ol>
+
+  {% endif %}
+      
+  {% for grandChild in child.children %}
+
+    {% if grandChild.type === 'link' %}
+
+      <a class="govuk-link" href={{ grandChild.href }}>
+        {% for child in grandChild.children %}
+          {{ child.text }}
+        {% endfor %}
+      </a>
+
+      {% elif grandChild.text %}
+
+      <li class="govuk-!-margin-bottom-7 {{ class }}" data-cy="list-level-1-item-{{ loopIndex }}">
+        <span>{{ grandChild.text }}</span>    
+      </li>
+
+    {% endif %}
+
+  {% endfor %}
+
+{% endmacro %}

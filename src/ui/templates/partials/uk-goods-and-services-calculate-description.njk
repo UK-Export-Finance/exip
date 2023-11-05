@@ -1,0 +1,22 @@
+<p data-cy="goods-and-services-calculate-list-intro">{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION.LIST_INTRO }}</p>
+
+<ol class="govuk-list govuk-list--number">
+
+  {% for item in CONTENT_STRINGS.UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION.LIST %}
+    <li>
+      <span data-cy="goods-and-services-calculate-list-item-{{ loop.index }}">{{ item.TEXT }}</span>
+
+      {% if item.CHILD_LIST %}
+
+        {% set parentIndex = loop.index %}
+
+        <ul class="govuk-list govuk-list--bullet">
+          {% for childItem in item.CHILD_LIST %}
+            <li data-cy="goods-and-services-calculate-list-item-{{ parentIndex }}-child-list-item-{{ loop.index }}">{{ childItem.TEXT }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </li>
+  {% endfor %}
+
+</ol>

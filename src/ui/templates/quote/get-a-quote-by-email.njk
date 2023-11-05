@@ -12,13 +12,13 @@
     text: CONTENT_STRINGS.LINKS.BACK,
     href: BACK_LINK,
     attributes: {
-      "data-cy": "back-link"
+      "data-cy": DATA_CY.BACK_LINK
     }
   }) }}
 
-  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
+  <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
-  {% if EXIT_REASON %}
+  {% if EXIT_REASON.length %}
     <p class="govuk-body" data-cy="reason">{{ CONTENT_STRINGS.REASON.INTRO }} {{ EXIT_REASON }}</p>
   {% endif %}
 

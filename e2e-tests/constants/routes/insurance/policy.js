@@ -1,0 +1,26 @@
+const POLICY_ROOT = '/policy';
+
+export const POLICY = {
+  ROOT: POLICY_ROOT,
+  TYPE_OF_POLICY: `${POLICY_ROOT}/type-of-policy`,
+  TYPE_OF_POLICY_CHANGE: `${POLICY_ROOT}/type-of-policy/change`,
+  TYPE_OF_POLICY_CHECK_AND_CHANGE: `${POLICY_ROOT}/type-of-policy/check-and-change`,
+  SINGLE_CONTRACT_POLICY: `${POLICY_ROOT}/single-contract-policy`,
+  SINGLE_CONTRACT_POLICY_CHANGE: `${POLICY_ROOT}/single-contract-policy/change`,
+  SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE: `${POLICY_ROOT}/single-contract-policy/check-and-change`,
+  MULTIPLE_CONTRACT_POLICY: `${POLICY_ROOT}/multi-contract-policy`,
+  MULTIPLE_CONTRACT_POLICY_CHANGE: `${POLICY_ROOT}/multi-contract-policy/change`,
+  MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE: `${POLICY_ROOT}/multi-contract-policy/check-and-change`,
+  ABOUT_GOODS_OR_SERVICES: `${POLICY_ROOT}/about-goods-or-services`,
+  ABOUT_GOODS_OR_SERVICES_CHANGE: `${POLICY_ROOT}/about-goods-or-services/change`,
+  ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE: `${POLICY_ROOT}/about-goods-or-services/check-and-change`,
+  NAME_ON_POLICY: `${POLICY_ROOT}/name-on-policy`,
+  NAME_ON_POLICY_SAVE_AND_BACK: `${POLICY_ROOT}/name-on-policy/save-and-go-back`,
+  NAME_ON_POLICY_CHANGE: `${POLICY_ROOT}/name-on-policy/change`,
+  NAME_ON_POLICY_CHECK_AND_CHANGE: `${POLICY_ROOT}/name-on-policy/check-and-change`,
+  DIFFERENT_NAME_ON_POLICY: `${POLICY_ROOT}/different-name-on-policy`,
+  DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK: `${POLICY_ROOT}/different-name-on-policy/save-and-go-back`,
+  DIFFERENT_NAME_ON_POLICY_CHANGE: `${POLICY_ROOT}/different-name-on-policy/change`,
+  DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE: `${POLICY_ROOT}/different-name-on-policy/check-and-change`,
+  CHECK_YOUR_ANSWERS: `${POLICY_ROOT}/check-your-answers`,
+};

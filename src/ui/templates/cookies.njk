@@ -1,10 +1,9 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from 'govuk/components/radios/macro.njk' import govukRadios %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
+{% import './components/submit-button.njk' as submitButton %}
 {% import './components/text-list.njk' as textList %}
 
 {% block pageTitle %}
@@ -17,38 +16,18 @@
     text: CONTENT_STRINGS.LINKS.BACK,
     href: BACK_LINK,
     attributes: {
-      "data-cy": "back-link"
+      "data-cy": DATA_CY.BACK_LINK
     }
   }) }}
 
   {% if validationErrors.summary %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
       errorList: validationErrors.summary
     }) }}
   {% endif %}
 
-  {% if showSuccessMessage %}
-    {% set html %}
-      <h3 class="govuk-notification-banner__heading" data-cy="success-message-heading">{{ CONTENT_STRINGS.SUCCESS_BANNER.HEADING }}</h3>
-      <p class="govuk-body" data-cy="success-message-body">{{ CONTENT_STRINGS.SUCCESS_BANNER.BODY }}</p>
-
-      {% if showSuccessMessageGoBackLink %}
-        <p class="govuk-body"><a class="govuk-notification-banner__link" href="{{ BACK_LINK }}" data-cy="success-message-go-back-link">{{ CONTENT_STRINGS.SUCCESS_BANNER.GO_BACK }}</a></p>
-      {% endif %}
-    {% endset %}
-
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds-from-desktop">
-        {{ govukNotificationBanner({
-          html: html,
-          type: 'success'
-        }) }}
-      </div>
-    </div>
-  {% endif %}
-
-  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
+  <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
   <p class="govuk-body" data-cy="body-1">{{ CONTENT_STRINGS.BODY_1 }}</p>
   <p class="govuk-body" data-cy="body-2">{{ CONTENT_STRINGS.BODY_2 }}</p>
@@ -137,7 +116,7 @@
     dataCy: 'analytics-info-list'
   }) }}
 
-  <form method="POST" novalidate>
+  <form method="POST" id="form" novalidate>
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
@@ -182,12 +161,9 @@
       }
     }) }}
     
-    {{ govukButton({
+    {{ submitButton.render({
       text: CONTENT_STRINGS.BUTTONS.SAVE_CHANGES,
-      classes: "change-cookies-submit-button",
-      attributes: {
-        'data-cy': 'submit-button'
-      }
+      classes: "change-cookies-submit-button"
     }) }}
 
   </form>

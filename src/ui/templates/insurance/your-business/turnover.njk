@@ -1,0 +1,151 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% import '../../components/submit-button.njk' as submitButton %}
+{% import '../../components/fieldset-legend.njk' as fieldsetLegend %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary,
+      attributes: {
+        'data-cy': 'error-summary'
+      }
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <form method="POST" id="form" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <span class="govuk-caption-xl" data-cy="heading-caption">
+          {{CONTENT_STRINGS.HEADING_CAPTION}}
+        </span>
+        <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+      </div>
+
+      {% if application.company[FIELDS.FINANCIAL_YEAR_END_DATE.ID] %}
+        <div class="govuk-grid-column-three-quarters-from-desktop">
+          <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-cy="{{FIELDS.FINANCIAL_YEAR_END_DATE.ID}}-label">{{ FIELDS.FINANCIAL_YEAR_END_DATE.LABEL }}</h2>
+
+          {{ govukHint({
+            text: FIELDS.FINANCIAL_YEAR_END_DATE.HINT,
+            attributes: {
+            "data-cy": FIELDS.FINANCIAL_YEAR_END_DATE.ID + "-hint"
+            }
+          }) }}
+
+          <p class="govuk-body" data-cy="{{FIELDS.FINANCIAL_YEAR_END_DATE.ID}}">{{ application.company[FIELDS.FINANCIAL_YEAR_END_DATE.ID] }}</p>
+        </div>
+      {% endif %}
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        {% call govukFieldset({
+          legend: {
+            html: fieldsetLegend.render({ id: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID, legendText: FIELDS.ESTIMATED_ANNUAL_TURNOVER.LEGEND }),
+            isPageHeading: false
+          }
+        }) %}
+
+          {{ govukInput({
+            id: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID,
+            name: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID,
+            value: submittedValues[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID] or application.business[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID],
+            label: {
+              text: FIELDS.ESTIMATED_ANNUAL_TURNOVER.LABEL,
+              classes: "govuk-body",
+              attributes: {
+                "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + "-label"
+              }
+            },
+            prefix: {
+              text: FIELDS.ESTIMATED_ANNUAL_TURNOVER.PREFIX,
+              attributes: {
+                id: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + '-label',
+                "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + "-prefix"
+              }
+            },
+            classes: "govuk-input--width-5",
+            attributes: {
+              "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + "-input"
+            },
+            errorMessage: validationErrors.errorList[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID] and {
+              text: validationErrors.errorList[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID].text,
+              attributes: {
+                "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + "-error-message"
+              }
+            }
+          }) }}
+
+          {{ govukInput({
+            id: FIELDS.PERCENTAGE_TURNOVER.ID,
+            name: FIELDS.PERCENTAGE_TURNOVER.ID,
+            value: submittedValues[FIELDS.PERCENTAGE_TURNOVER.ID] or application.business[FIELDS.PERCENTAGE_TURNOVER.ID],
+            label: {
+              text: FIELDS.PERCENTAGE_TURNOVER.LABEL,
+              classes: "govuk-body",
+              attributes: {
+                id: FIELDS.PERCENTAGE_TURNOVER.ID + '-label',
+                "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID + "-label"
+              }
+            },
+            suffix: {
+              text: FIELDS.PERCENTAGE_TURNOVER.SUFFIX,
+              attributes: {
+                "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID + "-suffix"
+              }
+            },
+            classes: "govuk-input--width-5",
+            attributes: {
+              "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID + "-input"
+            },
+            errorMessage: validationErrors.errorList[FIELDS.PERCENTAGE_TURNOVER.ID] and {
+              text: validationErrors.errorList[FIELDS.PERCENTAGE_TURNOVER.ID].text,
+              attributes: {
+                "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID + "-error-message"
+              }
+            }
+          }) }}
+        {% endcall %}
+      </div>
+
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="govuk-button-group">
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE
+          }) }}
+
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button',
+              'formaction': SAVE_AND_BACK_URL
+            }
+          }) }}
+        </div>
+      </div>
+    </form>
+  </div>
+
+{% endblock %}

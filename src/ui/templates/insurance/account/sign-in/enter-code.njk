@@ -1,0 +1,97 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import '../../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  {% if renderSuccessBanner %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        {% set html %}
+          <p class="govuk-heading-m" data-cy="success-banner-new-code-sent">{{ CONTENT_STRINGS.SUCCESS_BANNER.NEW_CODE_SENT }}</p>
+        {% endset %}
+
+        {{ govukNotificationBanner({
+          html: html,
+          type: 'success',
+          attributes: {
+            'data-cy': 'success-banner'
+          }
+        }) }}
+      </div>
+    </div>
+  {% endif %}
+
+  <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <p data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
+
+  <form method="POST" id="form" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        {{ govukInput({
+          label: {
+            text: FIELD.LABEL,
+            attributes: {
+              'data-cy': FIELD.ID + '-label'
+            }
+          },
+          classes: "govuk-input--width-4 govuk-input--extra-letter-spacing",
+          attributes: {
+            'data-cy': FIELD.ID + '-input'
+          },
+          id: FIELD.ID,
+          name: FIELD.ID,
+          inputmode: "numeric",
+          pattern: "[0-9]*",
+          spellcheck: false,
+          errorMessage: validationErrors.errorList[FIELD.ID] and {
+            text: validationErrors.errorList[FIELD.ID].text,
+            attributes: {
+              "data-cy": FIELD.ID + "-error-message"
+            }
+          },
+          value: submittedValues[FIELD.ID]
+        }) }}
+
+        <div class="govuk-button-group">
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE
+          }) }}
+        </div>
+
+      </div>
+    </div>
+
+    <a class="govuk-link" href="{{ CONTENT_STRINGS.REQUEST_NEW_CODE.HREF }}" data-cy="request-new-code">{{ CONTENT_STRINGS.REQUEST_NEW_CODE.TEXT }}</a>
+
+  </form>
+
+{% endblock %}

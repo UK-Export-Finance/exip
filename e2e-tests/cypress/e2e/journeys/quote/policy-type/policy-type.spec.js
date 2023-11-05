@@ -146,7 +146,6 @@ context('Policy type page - as an exporter, I want to get UKEF export insurance 
         const multiPolicyType = policyTypePage[POLICY_TYPE].multi;
         multiPolicyType.label().click();
 
-
         const field = FIELDS[POLICY_TYPE];
 
         const insetText = field.OPTIONS.MULTI.INSET[0];

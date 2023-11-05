@@ -1,0 +1,171 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{%- from "moj/components/search/macro.njk" import mojSearch -%}
+{% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+{% import '../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary,
+      attributes: {
+        'data-cy': 'error-summary'
+      }
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <form method="POST" id="form" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+          <span class="govuk-caption-xl" data-cy="heading-caption">
+            {{CONTENT_STRINGS.HEADING_CAPTION}}
+          </span>
+        <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+      </div>
+
+      {% if SUMMARY_LIST %}
+        <div class="govuk-grid-column-three-quarters-from-desktop">
+          <h3 class="govuk-fieldset__legend--m" data-cy="{{FIELDS.YOUR_COMPANY.YOUR_BUSINESS}}-heading">{{CONTENT_STRINGS.YOUR_BUSINESS_HEADING}}</h3>
+
+          {{ govukSummaryList({
+            classes: 'govuk-!-margin-bottom-9',
+            rows: SUMMARY_LIST.COMPANY_DETAILS.ROWS,
+            attributes: {
+              'data-cy':  FIELDS.COMPANY_HOUSE.SEARCH + '-summary-list'
+            }
+          }) }}
+
+          <p class="govuk-!-margin-bottom-6"><a class="govuk-link" href="{{DIFFERENT_COMPANIES_HOUSE_NUMBER}}" data-cy="different-companies-house-number">{{CONTENT_STRINGS.DIFFERENT_COMPANIES_HOUSE_NUMBER}}</a></p>
+        </div>
+      {% endif %}
+
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        {{ yesNoRadioButtons.render({
+          fieldId: FIELDS.YOUR_COMPANY.TRADING_NAME,
+          legendText: CONTENT_STRINGS.TRADING_NAME,
+          legendClass: 'govuk-fieldset__legend--m',
+          legendSpan: true,
+          submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.TRADING_NAME],
+          errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.TRADING_NAME],
+          dataCyLegend: FIELDS.YOUR_COMPANY.TRADING_NAME + '-legend'
+        }) }}
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+          {{ yesNoRadioButtons.render({
+            fieldId: FIELDS.YOUR_COMPANY.TRADING_ADDRESS,
+            legendText: CONTENT_STRINGS.TRADING_ADDRESS,
+            legendClass: 'govuk-fieldset__legend--m',
+            legendSpan: true,
+            submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
+            errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
+            dataCyLegend: FIELDS.YOUR_COMPANY.TRADING_ADDRESS + '-legend'
+          }) }}
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        {{ govukInput({
+          label: {
+            text: CONTENT_STRINGS.WEBSITE,
+            classes: "govuk-label--m",
+            isPageHeading: false,
+            attributes: {
+              id: FIELDS.YOUR_COMPANY.WEBSITE.ID + '-label',
+              'data-cy': FIELDS.YOUR_COMPANY.WEBSITE + '-label'
+            }
+          },
+          id: FIELDS.YOUR_COMPANY.WEBSITE,
+          name: FIELDS.YOUR_COMPANY.WEBSITE,
+          classes: "companies-house-input-width",
+          attributes: {
+            'data-cy': FIELDS.YOUR_COMPANY.WEBSITE + '-input',
+            'aria-label': CONTENT_STRINGS.WEBSITE
+          },
+          value: submittedValues[FIELDS.YOUR_COMPANY.WEBSITE],
+          errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.WEBSITE] and {
+            text: validationErrors.errorList[FIELDS.YOUR_COMPANY.WEBSITE].text,
+            attributes: {
+              "data-cy": FIELDS.YOUR_COMPANY.WEBSITE + "-error-message"
+            }
+          }
+        }) }}
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        {{ govukInput({
+          label: {
+            text: CONTENT_STRINGS.PHONE_NUMBER,
+            classes: "govuk-label--m",
+            isPageHeading: false,
+            attributes: {
+              id: FIELDS.YOUR_COMPANY.PHONE_NUMBER.ID + '-label',
+            'data-cy': FIELDS.YOUR_COMPANY.PHONE_NUMBER + '-label'
+            }
+          },
+          hint: {
+            text: CONTENT_STRINGS.PHONE_NUMBER_HINT,
+            attributes: {
+              'data-cy': FIELDS.YOUR_COMPANY.PHONE_NUMBER + '-hint'
+            }
+          },
+          id: FIELDS.YOUR_COMPANY.PHONE_NUMBER,
+          name: FIELDS.YOUR_COMPANY.PHONE_NUMBER,
+          type: "tel",
+          autocomplete: "tel",
+          value: submittedValues[FIELDS.YOUR_COMPANY.PHONE_NUMBER],
+          classes: "companies-house-input-width",
+          attributes: {
+            'data-cy': FIELDS.YOUR_COMPANY.PHONE_NUMBER + '-input',
+            'aria-label': CONTENT_STRINGS.PHONE_NUMBER
+          },
+           errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.PHONE_NUMBER] and {
+            text: validationErrors.errorList[FIELDS.YOUR_COMPANY.PHONE_NUMBER].text,
+            attributes: {
+              "data-cy": FIELDS.YOUR_COMPANY.PHONE_NUMBER + "-error-message"
+            }
+          }
+        }) }}
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="govuk-button-group">
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE
+          }) }}
+
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button',
+              formaction : SAVE_AND_BACK_URL
+            }
+          }) }}
+        </div>
+      </div>
+    </form>
+  </div>
+
+{% endblock %}

@@ -7,8 +7,11 @@ module.exports = {
     main: './scripts/main.js',
     jsEnabled: './scripts/js-enabled.js',
     govukFrontend: './scripts/govuk-frontend.js',
+    mojFrontend: './scripts/moj-frontend.js',
     accessibleAutocomplete: './scripts/accessible-autocomplete.js',
     cookies: './scripts/cookies.js',
+    formSubmission: './scripts/form-submission.js',
+    googleAnalytics: './scripts/google-analytics.js',
   },
   output: {
     path: path.join(__dirname, 'public/js'),

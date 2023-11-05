@@ -1,0 +1,13 @@
+{% extends 'index.njk' %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <a class="govuk-button" href="{{ SIGN_IN_LINK }}" data-cy="sign-in">{{ CONTENT_STRINGS.BUTTONS.SIGN_IN }}</a>
+      
+{% endblock %}

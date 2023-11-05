@@ -1,7 +1,7 @@
 import root from './root';
 import quote from './quote';
-import application from './application';
+import insurance from './insurance';
 
 export const rootRoute = root;
 export const quoteRoutes = quote;
-export const applicationRoutes = application;
+export const insuranceRoutes = insurance;
