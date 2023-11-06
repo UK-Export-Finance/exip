@@ -313,7 +313,7 @@ jobs:
             #DB
             az network private-endpoint create \
             --name private-endpoint-db-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --private-connection-resource-id $(az webapp list --query '[?contains(name, `app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}`)].id' -o tsv) \
+            --private-connection-resource-id $(az mysql flexible-server list --query [].id -o tsv) \
             --connection-name private-link-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --subnet snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
