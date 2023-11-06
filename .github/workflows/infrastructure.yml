@@ -27,6 +27,7 @@ on:
   push:
     branches:
       - infrastructure
+      - feat/iac-database
 
 env:
   PRODUCT: exip
@@ -138,6 +139,12 @@ jobs:
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
+            # Database
+            az network vnet subnet create \
+            --name snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --address-prefixes ${{ vars.VNET_SUBNET_DATABASE_PREFIX }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+
             # WebApp
             az network vnet subnet create \
             --name snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
@@ -205,6 +212,19 @@ jobs:
             --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --name vnet-peer-apim-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --query peeringState)"
+
+      - name: Database 📂
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az mysql flexible-server create \
+            --name sqldb-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --database-name ${{ env.PRODUCT }} \
+            --sku-name Standard_B1ms \
+            --tier Burstable \
+            --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --subnet snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --tags ${{ env.TAGS }}
 
       - name: Web app - UI 🌐
         uses: Azure/cli@v1.0.8
@@ -303,6 +323,16 @@ jobs:
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
+            #DB
+            az network private-endpoint create \
+            --name private-endpoint-db-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --private-connection-resource-id $(az webapp list --query '[?contains(name, `app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }}`)].id' -o tsv) \
+            --connection-name private-link-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --subnet snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --group-id mysqlServer \
+            --tags ${{ env.TAGS }}
+
             #UI
             az network private-endpoint create \
             --name private-endpoint-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
@@ -346,6 +376,13 @@ jobs:
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
+            #DB
+            az network private-endpoint dns-zone-group create \
+            --endpoint-name private-endpoint-db-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --name ${{ env.PRODUCT }} \
+            --private-dns-zone ${{ secrets.PRIVATE_DNS_ZONE_NAME }} \
+            --zone-name webapp
+
             #UI
             az network private-endpoint dns-zone-group create \
             --endpoint-name private-endpoint-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
