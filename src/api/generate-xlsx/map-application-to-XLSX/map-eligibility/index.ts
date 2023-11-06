@@ -32,7 +32,7 @@ const { MORE_THAN_500K } = TOTAL_CONTRACT_VALUE;
  */
 const mapEligibility = (application: Application) => {
   const { eligibility, policy } = application;
-
+  
   const mapped = [
     xlsxRow(XLSX.SECTION_TITLES.ELIGIBILITY, ''),
     xlsxRow(CONTENT_STRINGS[BUYER_COUNTRY].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY].name),
