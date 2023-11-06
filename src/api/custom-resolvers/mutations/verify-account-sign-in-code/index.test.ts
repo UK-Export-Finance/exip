@@ -90,7 +90,7 @@ describe('custom-resolvers/verify-account-sign-in-code', () => {
   describe('session expiry date', () => {
     const now = new Date();
 
-    const hours = 8;
+    const hours = 12;
     const expected = new Date(now.getTime() + hours * 60 * 60 * 1000);
 
     const expectedDay = expected.getDay();

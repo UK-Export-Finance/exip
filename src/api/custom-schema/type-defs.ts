@@ -158,8 +158,11 @@ const typeDefs = `
   input ApplicationEligibility {
     buyerCountryIsoCode: String!
     hasCompaniesHouseNumber: Boolean!
-    wantCoverOverMaxAmount: Boolean!
-    wantCoverOverMaxPeriod: Boolean!
+    otherPartiesInvolved: Boolean!
+    paidByLetterOfCredit: Boolean!
+    needPreCreditPeriodCover: Boolean!
+    totalContractValueId: Int!
+    coverPeriodId: Int!
     validExporterLocation: Boolean!
     hasMinimumUkGoodsOrServices: Boolean!
   }
