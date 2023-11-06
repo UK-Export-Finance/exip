@@ -12,7 +12,8 @@ const {
     WANT_COVER_OVER_MAX_AMOUNT,
     WANT_COVER_OVER_MAX_PERIOD,
     COVER_PERIOD_ID,
-    ...FIELD_IDS },
+    ...FIELD_IDS
+  },
 } = INSURANCE_FIELD_IDS;
 
 describe('server/helpers/required-fields/eligibility', () => {
