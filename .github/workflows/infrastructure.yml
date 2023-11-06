@@ -213,6 +213,22 @@ jobs:
             --name vnet-peer-apim-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --query peeringState)"
 
+      - name: Database 📂
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # az mysql flexible-server create \
+            # --name sqldb-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            # --database-name ${{ env.PRODUCT }} \
+            # --sku-name Standard_B1ms \
+            # --tier Burstable \
+            # --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            # --subnet snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            # --private-dns-zone ${{ secrets.PRIVATE_DNS_ZONE_NAME }} \
+            # --backup-retention 30 \
+            # --yes \
+            # --tags ${{ env.TAGS }}
+
       - name: Web app - UI 🌐
         uses: Azure/cli@v1.0.8
         with:
@@ -311,14 +327,14 @@ jobs:
         with:
           inlineScript: |
             #DB
-            az network private-endpoint create \
-            --name private-endpoint-db-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --private-connection-resource-id $(az mysql flexible-server list --query [].id -o tsv) \
-            --connection-name private-link-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --subnet snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --group-id mysqlServer \
-            --tags ${{ env.TAGS }}
+            # az network private-endpoint create \
+            # --name private-endpoint-db-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            # --private-connection-resource-id $(az mysql flexible-server list --query [].id -o tsv) \
+            # --connection-name private-link-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            # --subnet snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            # --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            # --group-id mysqlServer \
+            # --tags ${{ env.TAGS }}
 
             #UI
             az network private-endpoint create \
@@ -364,11 +380,11 @@ jobs:
         with:
           inlineScript: |
             #DB
-            az network private-endpoint dns-zone-group create \
-            --endpoint-name private-endpoint-db-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --name ${{ env.PRODUCT }} \
-            --private-dns-zone ${{ secrets.PRIVATE_DNS_ZONE_NAME }} \
-            --zone-name webapp
+            # az network private-endpoint dns-zone-group create \
+            # --endpoint-name private-endpoint-db-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            # --name ${{ env.PRODUCT }} \
+            # --private-dns-zone ${{ secrets.PRIVATE_DNS_ZONE_NAME }} \
+            # --zone-name webapp
 
             #UI
             az network private-endpoint dns-zone-group create \
@@ -534,17 +550,6 @@ jobs:
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
-            az mysql flexible-server create \
-            --name sqldb-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --database-name ${{ env.PRODUCT }} \
-            --sku-name Standard_B1ms \
-            --tier Burstable \
-            --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --subnet snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-            --private-dns-zone ${{ secrets.PRIVATE_DNS_ZONE_NAME }} \
-            --backup-retention 30 \
-            --yes \
-            --tags ${{ env.TAGS }}
 
   # 5. WebApp configuration
   webapp:
