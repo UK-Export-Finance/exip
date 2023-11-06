@@ -213,20 +213,6 @@ jobs:
             --name vnet-peer-apim-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --query peeringState)"
 
-      - name: Database 📂
-        uses: Azure/cli@v1.0.8
-        with:
-          inlineScript: |
-            az mysql flexible-server create \
-            --name sqldb-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --database-name ${{ env.PRODUCT }} \
-            --sku-name Standard_B1ms \
-            --tier Burstable \
-            --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --subnet snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-            --yes \
-            --tags ${{ env.TAGS }}
-
       - name: Web app - UI 🌐
         uses: Azure/cli@v1.0.8
         with:
@@ -509,7 +495,58 @@ jobs:
             --name IPAllowListRule \
             --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}
 
-  # 4. WebApp configuration
+  # 4. Database
+  database:
+    name: Database 💾
+    needs: [base, security]
+    environment: ${{ needs.setup.outputs.environment }}
+    outputs:
+      environment: ${{ env.ENVIRONMENT }}
+    runs-on: [self-hosted, EXIP, infrastructure]
+    steps:
+      - name: Pre-production 💫
+        if: contains('["dev", "staging"]', env.TARGET)
+        run: echo "TYPE=Preproduction" >> $GITHUB_ENV
+
+      - name: Production 💫
+        if: ${{ 'production' == env.TARGET }}
+        run: echo "TYPE=Production" >> $GITHUB_ENV
+
+      - name: Tags 🏷️
+        run: echo TAGS='Environment=${{ env.TYPE }}' \
+          'Product=${{ env.PRODUCT }}' \
+          'Team=development' >> $GITHUB_ENV
+
+      - name: Login 🔐
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Azure defaults ✨
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # Basic
+            az configure --defaults location=${{ vars.REGION }}
+            az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+
+      - name: Database 📂
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az mysql flexible-server create \
+            --name sqldb-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --database-name ${{ env.PRODUCT }} \
+            --sku-name Standard_B1ms \
+            --tier Burstable \
+            --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --subnet snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --private-dns-zone ${{ secrets.PRIVATE_DNS_ZONE_NAME }} \
+            --backup-retention 30 \
+            --yes \
+            --tags ${{ env.TAGS }}
+
+  # 5. WebApp configuration
   webapp:
     name: Web App 🔧
     needs: [base, security]
@@ -622,10 +659,10 @@ jobs:
             UNDERWRITING_TEAM_EMAIL='${{ secrets.UNDERWRITING_TEAM_EMAIL }}' \
             FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}'
 
-  # 5. Logs and dignostic settings
+  # 6. Logs and dignostic settings
   log:
     name: Log 📒
-    needs: [base, security, webapp]
+    needs: [base, security, database, webapp]
     environment: ${{ needs.base.outputs.environment }}
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
@@ -661,21 +698,18 @@ jobs:
             --logs "[{categoryGroup:allLogs,enabled:true}]" \
             --metrics "[{category:allMetrics,enabled:true}]"
 
-      - name: WebApp 🌐
+      - name: Database 📂
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
-            # UI
-            az webapp log config \
-            --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --detailed-error-messages true \
-            --failed-request-tracing true \
-            --level ${{ vars.WEBAPP_LOG_LEVEL }} \
-            --application-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
-            --docker-container-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
-            --web-server-logging ${{ vars.WEBAPP_LOG_DESTINATION }}
+            az monitor diagnostic-settings create \
+            --name sqldb-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --resource $(az mysql flexible-server list --query [].id -o tsv) \
+            --workspace $(az monitor log-analytics workspace list --query [].id -o tsv) \
+            --logs "[{categoryGroup:allLogs,enabled:true}]" \
+            --metrics "[{category:allMetrics,enabled:true}]"
 
-      - name: Log 📄
+      - name: WebApp 🌐
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
@@ -731,7 +765,7 @@ jobs:
   # 5. Health check alerts
   alert:
     name: Alert 📢
-    needs: [base, security, webapp]
+    needs: [base, security, database, webapp]
     environment: ${{ needs.base.outputs.environment }}
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
