@@ -23,6 +23,7 @@ export const INSURANCE_FIELD_IDS = {
     PRE_CREDIT_PERIOD: 'needPreCreditPeriodCover',
     ACCOUNT_TO_APPLY_ONLINE: 'alreadyHaveAnAccount',
   },
+  ...SHARED_FIELD_IDS,
   SUBMISSION_DEADLINE: 'submissionDeadline',
   ACCOUNT,
   POLICY,
