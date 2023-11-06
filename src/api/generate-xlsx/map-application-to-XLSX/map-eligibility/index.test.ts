@@ -26,7 +26,7 @@ const { MORE_THAN_2_YEARS } = COVER_PERIOD;
 const { MORE_THAN_500K } = TOTAL_CONTRACT_VALUE;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-eligibility', () => {
-  it('should return an array of mapped buyer fields', () => {
+  it('should return an array of mapped eligibility fields', () => {
     const result = mapEligibility(mockApplication);
 
     const { eligibility, policy } = mockApplication;
