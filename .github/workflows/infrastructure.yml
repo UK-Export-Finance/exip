@@ -141,7 +141,7 @@ jobs:
           inlineScript: |
             # Database
             az network vnet subnet create \
-            --name snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --name snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --address-prefixes ${{ vars.VNET_SUBNET_DATABASE_PREFIX }} \
             --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
@@ -223,7 +223,8 @@ jobs:
             --sku-name Standard_B1ms \
             --tier Burstable \
             --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --subnet snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --subnet snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --yes \
             --tags ${{ env.TAGS }}
 
       - name: Web app - UI 🌐
