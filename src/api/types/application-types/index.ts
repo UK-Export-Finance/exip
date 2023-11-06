@@ -83,7 +83,6 @@ export interface CoverPeriod extends Relationship {
 export interface ApplicationEligibility extends Relationship {
   buyerCountryIsoCode: string;
   hasCompaniesHouseNumber: boolean;
-  needPreCreditPeriodCover: boolean;
   totalContractValueId: number;
   totalContractValue: TotalContractValue;
   coverPeriodId: number;

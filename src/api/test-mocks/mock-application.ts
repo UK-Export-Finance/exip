@@ -31,7 +31,6 @@ const mockGenericPolicy = {
   requestedStartDate: add(new Date(), { months: 1 }),
   creditPeriodWithBuyer: ' Mock free text',
   policyCurrencyCode: mockCurrencies[0].isoCode,
-  needPreCreditPeriodCover: false,
 };
 
 export const mockSinglePolicy = {

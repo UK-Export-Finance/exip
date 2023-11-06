@@ -1720,9 +1720,6 @@ var typeDefs = `
   input ApplicationEligibility {
     buyerCountryIsoCode: String!
     hasCompaniesHouseNumber: Boolean!
-    otherPartiesInvolved: Boolean!
-    paidByLetterOfCredit: Boolean!
-    needPreCreditPeriodCover: Boolean!
     totalContractValueId: Int!
     coverPeriodId: Int!
     validExporterLocation: Boolean!
