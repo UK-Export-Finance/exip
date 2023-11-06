@@ -299,9 +299,6 @@ var INSURANCE_FIELD_IDS = {
     WANT_COVER_OVER_MAX_PERIOD: "wantCoverOverMaxPeriod",
     COVER_PERIOD: "coverPeriod",
     COVER_PERIOD_ID: "coverPeriodId",
-    OTHER_PARTIES_INVOLVED: "otherPartiesInvolved",
-    LETTER_OF_CREDIT: "paidByLetterOfCredit",
-    PRE_CREDIT_PERIOD: "needPreCreditPeriodCover",
     ACCOUNT_TO_APPLY_ONLINE: "alreadyHaveAnAccount"
   },
   ...shared_default2,
