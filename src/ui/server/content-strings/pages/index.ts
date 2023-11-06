@@ -69,8 +69,8 @@ const ACCESSIBILITY_STATEMENT_PAGE = {
     },
   },
   COMPLIANCE_STATUS: {
-    HEADING: 'Compliance status',
-    INTRO: 'This website is compliant with the',
+    HEADING: 'Compliance',
+    INTRO: 'This service is partially compliant with the',
     GUIDLINES_LINK: {
       TEXT: 'Web Content Accessibility Guidelines version 2.1',
       HREF: LINKS.EXTERNAL.ACCESSIBILITY_GUIDLINES,
@@ -104,7 +104,7 @@ const ACCESSIBILITY_STATEMENT_PAGE = {
   ENFORCEMENT_PROCEDURE: {
     HEADING: 'Enforcement procedure',
     DESCRIPTION:
-      "The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the'accessibility regulations'). If you're not happy with how we respond to your complaint,",
+      "The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the 'accessibility regulations'). If you're not happy with how we respond to your complaint,",
     CONTACT: {
       TEXT: 'contact the Equality Advisory and Support Service (EASS)',
       HREF: LINKS.EXTERNAL.EQUALITY_ADVISORY_SERVICE,
