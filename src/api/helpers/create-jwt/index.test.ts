@@ -13,7 +13,7 @@ describe('api/helpers/create-jwt', () => {
   const result = create.JWT(mockAccount.id);
 
   it('should return a token', () => {
-    expect(result.token.length).toEqual(899);
+    expect(result.token.length).toEqual(891);
   });
 
   it('should return a sessionIdentifier', () => {

@@ -24,8 +24,16 @@ const applicationQuery = gql`
           hasMinimumUkGoodsOrServices
           validExporterLocation
           hasCompaniesHouseNumber
-          wantCoverOverMaxAmount
-          wantCoverOverMaxPeriod
+          otherPartiesInvolved
+          paidByLetterOfCredit
+          totalContractValue {
+            id
+            value
+          }
+          coverPeriod {
+            id
+            value
+          }
         }
         policy {
           id
