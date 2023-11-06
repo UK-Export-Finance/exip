@@ -69,8 +69,8 @@ const ACCESSIBILITY_STATEMENT_PAGE = {
     },
   },
   COMPLIANCE_STATUS: {
-    HEADING: 'Compliance status',
-    INTRO: 'This website is compliant with the',
+    HEADING: 'Compliance',
+    INTRO: 'This service is partially compliant with the',
     GUIDLINES_LINK: {
       TEXT: 'Web Content Accessibility Guidelines version 2.1',
       HREF: LINKS.EXTERNAL.ACCESSIBILITY_GUIDLINES,
