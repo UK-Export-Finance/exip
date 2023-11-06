@@ -17,8 +17,6 @@ describe('custom-resolvers/create-an-application', () => {
       buyerCountryIsoCode: mockCountries[0].isoCode,
       hasCompaniesHouseNumber: true,
       needPreCreditPeriodCover: false,
-      wantCoverOverMaxAmount: false,
-      wantCoverOverMaxPeriod: false,
     },
     company: mockCompany,
   };
