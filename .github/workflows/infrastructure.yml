@@ -58,7 +58,7 @@ jobs:
     environment: ${{ needs.setup.outputs.environment }}
     outputs:
       environment: ${{ env.ENVIRONMENT }}
-    runs-on: [self-hosted, EXIP, infrastructure]
+    runs-on: ubuntu-latest
     steps:
       - name: Pre-production 💫
         if: contains('["dev", "staging"]', env.TARGET)
