@@ -1,5 +1,6 @@
 import { PAGES } from '../../../../content-strings';
-import { TEMPLATES, ROUTES } from '../../../../constants';
+import { FIELD_VALUES, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -20,18 +21,22 @@ const {
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { COMPANY_DETAILS: COMPANY_DETAILS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
+const {
+  INSURANCE_ROOT,
+  EXPORTER_BUSINESS: {
+    COMPANY_DETAILS_SAVE_AND_BACK,
+    ALTERNATIVE_TRADING_ADDRESS_ROOT,
+    NATURE_OF_BUSINESS_ROOT,
+    CHECK_YOUR_ANSWERS,
+    COMPANY_DETAILS_ROOT
+  },
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
+
 export const TEMPLATE = COMPANY_DETAILS_TEMPLATE;
 
 export const FIELD_IDS = [TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER];
-
-const {
-  INSURANCE_ROOT,
-  EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES,
-  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
-  PROBLEM_WITH_SERVICE,
-} = ROUTES.INSURANCE;
-
-const { COMPANY_DETAILS_SAVE_AND_BACK, NATURE_OF_BUSINESS_ROOT, CHECK_YOUR_ANSWERS, COMPANY_DETAILS_ROOT } = EXPORTER_BUSINESS_ROUTES;
 
 const pageVariables = (referenceNumber: number) => {
   return {
@@ -132,6 +137,14 @@ const post = async (req: Request, res: Response) => {
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    /**
+     * If "different trading address" has been submitted,
+     * Redirect to the "alternative trading address" route.
+     */
+    if (payload[TRADING_ADDRESS] === FIELD_VALUES.YES) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`); 
     }
 
     if (isChangeRoute(req.originalUrl)) {
