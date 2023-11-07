@@ -9,9 +9,7 @@ import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: {
-    NATURE_OF_BUSINESS_ROOT,
-  },
+  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_ROOT },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 

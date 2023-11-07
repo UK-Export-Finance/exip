@@ -11,14 +11,11 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: {
-    NATURE_OF_BUSINESS_ROOT,
-  },
+  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_ROOT },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
 const { ALTERNATIVE_TRADING_ADDRESS } = BUSINESS_FIELD_IDS;
-
 
 describe('controllers/insurance/business/alternative-trading-address', () => {
   let req: Request;
@@ -85,7 +82,6 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
       const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });
-
 
     describe('when there is no application', () => {
       beforeEach(() => {

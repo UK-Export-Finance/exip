@@ -5,7 +5,10 @@ import { get as getCompanyDetails, post as postCompanyDetails } from '../../../c
 
 import { post as postCompanyDetailsSaveAndBack } from '../../../controllers/insurance/business/company-details/save-and-back';
 
-import { get as getAlternativeTradingAddress, post as postAlternativeTradingAddress } from '../../../controllers/insurance/business/alternative-trading-address';
+import {
+  get as getAlternativeTradingAddress,
+  post as postAlternativeTradingAddress,
+} from '../../../controllers/insurance/business/alternative-trading-address';
 
 import { get as getNatureOfBusiness, post as postNatureOfBusiness } from '../../../controllers/insurance/business/nature-of-business';
 import { post as postNatureOfBusinessSaveAndBack } from '../../../controllers/insurance/business/nature-of-business/save-and-back';
