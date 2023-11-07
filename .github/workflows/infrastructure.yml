@@ -86,203 +86,203 @@ jobs:
             az configure --defaults location=${{ vars.REGION }}
             az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
-      # - name: Resource group 🏗️
-      #   uses: Azure/cli@v1.0.8
-      #   with:
-      #     inlineScript: |
-      #       az group create \
-      #       --name rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --tags ${{ env.TAGS }}
+      - name: Resource group 🏗️
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az group create \
+            --name rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --tags ${{ env.TAGS }}
 
-      # - name: Plan 📝
-      #   uses: Azure/cli@v1.0.8
-      #   with:
-      #     inlineScript: |
-      #       az appservice plan create \
-      #       --name appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --is-linux \
-      #       --sku ${{ vars.APP_SERVICE_PLAN }} \
-      #       --tags ${{ env.TAGS }}
+      - name: Plan 📝
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az appservice plan create \
+            --name appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --is-linux \
+            --sku ${{ vars.APP_SERVICE_PLAN }} \
+            --tags ${{ env.TAGS }}
 
-      # - name: Log analytics workspace 📝
-      #   uses: Azure/cli@v1.0.8
-      #   with:
-      #     inlineScript: |
-      #       az monitor log-analytics workspace create \
-      #       --name log-workspace-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --quota ${{ vars.LOG_QUOTA }} \
-      #       --retention-time ${{ vars.LOG_RETENTION_DAY }} \
-      #       --sku ${{ vars.LOG_PLAN }} \
-      #       --tags ${{ env.TAGS }}
+      - name: Log analytics workspace 📝
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az monitor log-analytics workspace create \
+            --name log-workspace-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --quota ${{ vars.LOG_QUOTA }} \
+            --retention-time ${{ vars.LOG_RETENTION_DAY }} \
+            --sku ${{ vars.LOG_PLAN }} \
+            --tags ${{ env.TAGS }}
 
-      # - name: Container registry 📦️
-      #   uses: Azure/cli@v1.0.8
-      #   with:
-      #     inlineScript: |
-      #       az acr create \
-      #       --name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }} \
-      #       --sku Standard \
-      #       --admin-enabled true \
-      #       --workspace log-workspace-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --tags ${{ env.TAGS }}
+      - name: Container registry 📦️
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az acr create \
+            --name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }} \
+            --sku Standard \
+            --admin-enabled true \
+            --workspace log-workspace-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --tags ${{ env.TAGS }}
 
-      # - name: Virtual network 🧵
-      #   uses: Azure/cli@v1.0.8
-      #   with:
-      #     inlineScript: |
-      #       az network vnet create \
-      #       --name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --address-prefix ${{ vars.VNET_ADDRESS_PREFIX }} \
-      #       --tags ${{ env.TAGS }}
+      - name: Virtual network 🧵
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az network vnet create \
+            --name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --address-prefix ${{ vars.VNET_ADDRESS_PREFIX }} \
+            --tags ${{ env.TAGS }}
 
-      # - name: Subnets 💫
-      #   uses: Azure/cli@v1.0.8
-      #   with:
-      #     inlineScript: |
-      #       # Database
-      #       az network vnet subnet create \
-      #       --name snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-      #       --address-prefixes ${{ vars.VNET_SUBNET_DATABASE_PREFIX }} \
-      #       --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+      - name: Subnets 💫
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # Database
+            az network vnet subnet create \
+            --name snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --address-prefixes ${{ vars.VNET_SUBNET_DATABASE_PREFIX }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
-      #       # WebApp
-      #       az network vnet subnet create \
-      #       --name snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-      #       --address-prefixes ${{ vars.VNET_SUBNET_WEBAPP_PREFIX }} \
-      #       --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+            # WebApp
+            az network vnet subnet create \
+            --name snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --address-prefixes ${{ vars.VNET_SUBNET_WEBAPP_PREFIX }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
-      #       # Private endpoint
-      #       az network vnet subnet create \
-      #       --name snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-      #       --address-prefixes ${{ vars.VNET_SUBNET_PRIVATE_PREFIX }} \
-      #       --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+            # Private endpoint
+            az network vnet subnet create \
+            --name snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --address-prefixes ${{ vars.VNET_SUBNET_PRIVATE_PREFIX }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
-      # - name: VNET Peer - AMI 🔀
-      #   uses: Azure/cli@v1.0.8
-      #   with:
-      #     inlineScript: |
-      #       # Azure Managed Instance (AMI) SQL DB VNET peering
+      - name: VNET Peer - AMI 🔀
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # Azure Managed Instance (AMI) SQL DB VNET peering
 
-      #       # Local VNET peer
-      #       az network vnet peering create \
-      #       --name vnet-peer-ami-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-      #       --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --remote-vnet $(az network vnet show --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_AMI }} --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_AMI }} --name ${{ secrets.REMOTE_VNET_NAME_AMI }} --query 'id' -o tsv) \
-      #       --allow-vnet-access 1
+            # Local VNET peer
+            az network vnet peering create \
+            --name vnet-peer-ami-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --remote-vnet $(az network vnet show --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_AMI }} --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_AMI }} --name ${{ secrets.REMOTE_VNET_NAME_AMI }} --query 'id' -o tsv) \
+            --allow-vnet-access 1
 
-      #       # Remote VNET peer
-      #       az network vnet peering create \
-      #       --name vnet-peer-ami-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-      #       --vnet-name  ${{ secrets.REMOTE_VNET_NAME_AMI }} \
-      #       --remote-vnet $(az network vnet show --name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query 'id' -o tsv) \
-      #       --allow-vnet-access 1 \
-      #       --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_AMI }} \
-      #       --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_AMI }}
+            # Remote VNET peer
+            az network vnet peering create \
+            --name vnet-peer-ami-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name  ${{ secrets.REMOTE_VNET_NAME_AMI }} \
+            --remote-vnet $(az network vnet show --name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query 'id' -o tsv) \
+            --allow-vnet-access 1 \
+            --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_AMI }} \
+            --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_AMI }}
 
-      #       # Fetch peering state
-      #       echo "Peering state: $(az network vnet peering show \
-      #       --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --name vnet-peer-ami-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-      #       --query peeringState)"
+            # Fetch peering state
+            echo "Peering state: $(az network vnet peering show \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --name vnet-peer-ami-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --query peeringState)"
 
-      # - name: VNET Peer - APIM 🔀
-      #   uses: Azure/cli@v1.0.8
-      #   with:
-      #     inlineScript: |
-      #       # API management (APIM) VNET peering
+      - name: VNET Peer - APIM 🔀
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # API management (APIM) VNET peering
 
-      #       # Local VNET peer
-      #       az network vnet peering create \
-      #       --name vnet-peer-apim-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-      #       --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --remote-vnet $(az network vnet show --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_APIM }} --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_APIM }} --name ${{ secrets.REMOTE_VNET_NAME_APIM }} --query 'id' -o tsv) \
-      #       --allow-vnet-access 1
+            # Local VNET peer
+            az network vnet peering create \
+            --name vnet-peer-apim-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --remote-vnet $(az network vnet show --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_APIM }} --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_APIM }} --name ${{ secrets.REMOTE_VNET_NAME_APIM }} --query 'id' -o tsv) \
+            --allow-vnet-access 1
 
-      #       # Remote VNET peer
-      #       az network vnet peering create \
-      #       --name vnet-peer-apim-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-      #       --vnet-name  ${{ secrets.REMOTE_VNET_NAME_APIM }} \
-      #       --remote-vnet $(az network vnet show --name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query 'id' -o tsv) \
-      #       --allow-vnet-access 1 \
-      #       --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_APIM }} \
-      #       --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_APIM }}
+            # Remote VNET peer
+            az network vnet peering create \
+            --name vnet-peer-apim-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name  ${{ secrets.REMOTE_VNET_NAME_APIM }} \
+            --remote-vnet $(az network vnet show --name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query 'id' -o tsv) \
+            --allow-vnet-access 1 \
+            --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_APIM }} \
+            --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_APIM }}
 
-      #       # Fetch peering state
-      #       echo "Peering state: $(az network vnet peering show \
-      #       --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --name vnet-peer-apim-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-      #       --query peeringState)"
+            # Fetch peering state
+            echo "Peering state: $(az network vnet peering show \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --name vnet-peer-apim-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --query peeringState)"
 
-      # - name: Database 💾
-      #   uses: Azure/cli@v1.0.8
-      #   with:
-      #     inlineScript: |
-      #       az mysql flexible-server create \
-      #       --name sqldb-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --admin-user ${{ secrets.MYSQL_USER }} \
-      #       --admin-password ${{ secrets.MYSQL_PASSWORD }} \
-      #       --database-name ${{ env.PRODUCT }} \
-      #       --sku-name Standard_B1ms \
-      #       --tier Burstable \
-      #       --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --subnet snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-      #       --backup-retention 30 \
-      #       --yes \
-      #       --tags ${{ env.TAGS }}
+      - name: Database 💾
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az mysql flexible-server create \
+            --name sqldb-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --admin-user ${{ secrets.MYSQL_USER }} \
+            --admin-password ${{ secrets.MYSQL_PASSWORD }} \
+            --database-name ${{ env.PRODUCT }} \
+            --sku-name Standard_B1ms \
+            --tier Burstable \
+            --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --subnet snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --backup-retention 30 \
+            --yes \
+            --tags ${{ env.TAGS }}
 
-      # - name: Web app - UI 🌐
-      #   uses: Azure/cli@v1.0.8
-      #   with:
-      #     inlineScript: |
-      #       az webapp create \
-      #       --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --plan appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/ui:${{ env.TARGET }} \
-      #       --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --subnet snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-      #       --https-only true \
-      #       --tags ${{ env.TAGS }}
+      - name: Web app - UI 🌐
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az webapp create \
+            --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --plan appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/ui:${{ env.TARGET }} \
+            --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --subnet snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --https-only true \
+            --tags ${{ env.TAGS }}
 
-      # - name: Web app - API 🌐
-      #   uses: Azure/cli@v1.0.8
-      #   with:
-      #     inlineScript: |
-      #       az webapp create  \
-      #       --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --plan appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/api:${{ env.TARGET }} \
-      #       --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --subnet snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-      #       --https-only true \
-      #       --tags ${{ env.TAGS }}
+      - name: Web app - API 🌐
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az webapp create  \
+            --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --plan appservice-plan-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --deployment-container-image-name cr${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}.azurecr.io/api:${{ env.TARGET }} \
+            --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --subnet snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --https-only true \
+            --tags ${{ env.TAGS }}
 
-      # - name: Front Door 🚪
-      #   uses: Azure/cli@v1.0.8
-      #   with:
-      #     inlineScript: |
-      #       # Profile
-      #       az afd profile create \
-      #       --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --sku ${{ secrets.AZURE_FRONT_DOOR_SKU }} \
-      #       --tags ${{ env.TAGS }}
+      - name: Front Door 🚪
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # Profile
+            az afd profile create \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --sku ${{ secrets.AZURE_FRONT_DOOR_SKU }} \
+            --tags ${{ env.TAGS }}
 
-      #       # Endpoint
-      #       az afd endpoint create \
-      #       --endpoint-name ${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-      #       --tags ${{ env.TAGS }}
+            # Endpoint
+            az afd endpoint create \
+            --endpoint-name ${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --tags ${{ env.TAGS }}
 
-      #       # Origin Group
-      #       az afd origin-group create \
-      #       --origin-group-name ui \
-      #       --probe-path ${{ vars.HEALTH_PROBE_PATH }} \
-      #       --probe-protocol ${{ vars.HEALTH_PROBE_PROTOCOL }} \
-      #       --probe-request-type ${{ vars.HEALTH_PROBE_HTTP_METHOD }} \
-      #       --additional-latency-in-milliseconds ${{ vars.HEALTH_PROBE_LATENCY }} \
-      #       --sample-size ${{ vars.LOAD_BALANCING_SAMPLE_SIZE }} \
-      #       --successful-samples-required ${{ vars.LOAD_BALANCING_SAMPLES }} \
-      #       --probe-interval-in-seconds ${{ vars.LOAD_BALANCING_INTERVAL }} \
-      #       --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
+            # Origin Group
+            az afd origin-group create \
+            --origin-group-name ui \
+            --probe-path ${{ vars.HEALTH_PROBE_PATH }} \
+            --probe-protocol ${{ vars.HEALTH_PROBE_PROTOCOL }} \
+            --probe-request-type ${{ vars.HEALTH_PROBE_HTTP_METHOD }} \
+            --additional-latency-in-milliseconds ${{ vars.HEALTH_PROBE_LATENCY }} \
+            --sample-size ${{ vars.LOAD_BALANCING_SAMPLE_SIZE }} \
+            --successful-samples-required ${{ vars.LOAD_BALANCING_SAMPLES }} \
+            --probe-interval-in-seconds ${{ vars.LOAD_BALANCING_INTERVAL }} \
+            --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
       - name: Extension ➕
         uses: Azure/cli@v1.0.8
