@@ -1,3 +1,4 @@
+import { isPopulatedArray } from '../array';
 import { ValidationErrors } from '../../../types';
 
 /**
@@ -8,7 +9,7 @@ import { ValidationErrors } from '../../../types';
  * @param {Object} Existing validation errors
  * @returns {ValidationErrors} Error count, error list and summary
  */
-const generateValidationErrors = (fieldId: string, errorText: string, errors: ValidationErrors = { errorList: {}, summary: [] }) => {
+const generateValidationErrors = (fieldId: string, errorText: string, errors: ValidationErrors = { errorList: {}, summary: [] }): ValidationErrors => {
   let summary = [
     {
       text: errorText,
@@ -16,7 +17,7 @@ const generateValidationErrors = (fieldId: string, errorText: string, errors: Va
     },
   ];
 
-  if (errors && errors.summary && errors.summary.length) {
+  if (errors.summary && isPopulatedArray(errors.summary)) {
     summary = [
       ...errors.summary,
       {
@@ -26,7 +27,7 @@ const generateValidationErrors = (fieldId: string, errorText: string, errors: Va
     ];
   }
 
-  const keys = Object.keys(errors.errorList || {});
+  const keys = Object.keys(errors.errorList ?? {});
 
   const result = {
     count: keys.length + 1,

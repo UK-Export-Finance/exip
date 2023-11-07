@@ -1,0 +1,201 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% import '../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary,
+      attributes: {
+        'data-cy': 'error-summary'
+      }
+    }) }}
+  {% endif %}
+
+  {% set legendHtml %}
+    <legend class="govuk-fieldset__legend " data-cy="{{ FIELDS.SATISFACTION.ID }}-label">{{ FIELDS.SATISFACTION.LABEL }}</legend>
+  {% endset %}
+
+  <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <div class="govuk-grid-row">
+    <form method="POST" id="form" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <h2 class="govuk-heading-m" data-cy="{{ FIELDS.SATISFACTION.ID }}-heading">{{ FIELDS.SATISFACTION.TITLE }}</h2>
+
+        {{ govukRadios({
+          name: FIELDS.SATISFACTION.ID,
+           fieldset: {
+            legend: {
+              html: legendHtml
+            }
+          },
+          items: [
+            {
+              label: {
+                attributes: {
+                  id: FIELDS.SATISFACTION.OPTIONS.VERY_SATISFIED + '-label',
+                  'data-cy': FIELDS.SATISFACTION.OPTIONS.VERY_SATISFIED + '-label'
+                }
+              },
+              value: FIELDS.SATISFACTION.OPTIONS.VERY_SATISFIED,
+              text: FIELDS.SATISFACTION.VERY_SATISFIED,
+              attributes: {
+                "data-cy": FIELDS.SATISFACTION.OPTIONS.VERY_SATISFIED + '-input'
+              }
+            },
+            {
+              label: {
+                attributes: {
+                  id: FIELDS.SATISFACTION.OPTIONS.SATISFIED + '-label',
+                  'data-cy': FIELDS.SATISFACTION.OPTIONS.SATISFIED + '-label'
+                }
+              },
+              value: FIELDS.SATISFACTION.OPTIONS.SATISFIED,
+              text: FIELDS.SATISFACTION.SATISFIED,
+              attributes: {
+                "data-cy": FIELDS.SATISFACTION.OPTIONS.SATISFIED + '-input'
+              }
+            },
+            {
+              label: {
+                attributes: {
+                  id: FIELDS.SATISFACTION.OPTIONS.NEITHER + '-label',
+                  'data-cy': FIELDS.SATISFACTION.OPTIONS.NEITHER + '-label'
+                }
+              },
+              value: FIELDS.SATISFACTION.OPTIONS.NEITHER,
+              text: FIELDS.SATISFACTION.NEITHER,
+              attributes: {
+                "data-cy": FIELDS.SATISFACTION.OPTIONS.NEITHER + '-input'
+              }
+            },
+            {
+              label: {
+                attributes: {
+                  id: FIELDS.SATISFACTION.OPTIONS.DISSATISFIED + '-label',
+                  'data-cy': FIELDS.SATISFACTION.OPTIONS.DISSATISFIED + '-label'
+                }
+              },
+              value: FIELDS.SATISFACTION.OPTIONS.DISSATISFIED,
+              text: FIELDS.SATISFACTION.DISSATISFIED,
+              attributes: {
+                "data-cy": FIELDS.SATISFACTION.OPTIONS.DISSATISFIED + '-input'
+              }
+            },
+            {
+              label: {
+                attributes: {
+                  id: FIELDS.SATISFACTION.OPTIONS.VERY_DISSATISIFED + '-label',
+                  'data-cy': FIELDS.SATISFACTION.OPTIONS.VERY_DISSATISIFED + '-label'
+                }
+              },
+              value: FIELDS.SATISFACTION.OPTIONS.VERY_DISSATISIFED,
+              text: FIELDS.SATISFACTION.VERY_DISSATISIFED,
+              attributes: {
+                "data-cy": FIELDS.SATISFACTION.OPTIONS.VERY_DISSATISIFED + '-input'
+              }
+            }
+          ]
+        }) }}
+
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop govuk-!-margin-top-5">
+
+        {{ govukCharacterCount({
+          name: FIELDS.IMPROVEMENT.ID,
+          id: FIELDS.IMPROVEMENT.ID,
+          maxlength: MAXIMUM,
+          value: submittedValues[FIELDS.IMPROVEMENT.ID],
+          label: {
+            text: FIELDS.IMPROVEMENT.LABEL,
+            classes: "govuk-label--m",
+            attributes: {
+              'data-cy': FIELDS.IMPROVEMENT.ID + '-label'
+            }
+          },
+          hint: {
+            text: FIELDS.IMPROVEMENT.HINT,
+            attributes: {
+              'data-cy': FIELDS.IMPROVEMENT.ID + '-hint'
+            }
+          },
+          errorMessage: validationErrors.errorList[FIELDS.IMPROVEMENT.ID] and {
+            text: validationErrors.errorList[FIELDS.IMPROVEMENT.ID].text,
+            attributes: {
+              "data-cy": FIELDS.IMPROVEMENT.ID + "-error-message"
+            }
+          },
+          attributes: {
+            'data-cy': FIELDS.IMPROVEMENT.ID
+          }
+        }) }}
+
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop govuk-!-margin-top-5">
+
+        {{ govukCharacterCount({
+          name: FIELDS.OTHER_COMMENTS.ID,
+          id: FIELDS.OTHER_COMMENTS.ID,
+          maxlength: MAXIMUM,
+          value: submittedValues[FIELDS.OTHER_COMMENTS.ID],
+          label: {
+            text: FIELDS.OTHER_COMMENTS.LABEL,
+            classes: "govuk-label--m",
+            attributes: {
+              'data-cy': FIELDS.OTHER_COMMENTS.ID + '-label'
+            }
+          },
+          hint: {
+            text: FIELDS.OTHER_COMMENTS.HINT,
+            attributes: {
+              'data-cy': FIELDS.OTHER_COMMENTS.ID + '-hint'
+            }
+          },
+          errorMessage: validationErrors.errorList[FIELDS.OTHER_COMMENTS.ID] and {
+            text: validationErrors.errorList[FIELDS.OTHER_COMMENTS.ID].text,
+            attributes: {
+              "data-cy": FIELDS.OTHER_COMMENTS.ID + "-error-message"
+            }
+          },
+          attributes: {
+            'data-cy': FIELDS.OTHER_COMMENTS.ID
+          }
+        }) }}
+
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="govuk-button-group">
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.SEND_FEEDBACK
+          }) }}
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+
+{% endblock %}

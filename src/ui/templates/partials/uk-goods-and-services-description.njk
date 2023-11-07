@@ -1,0 +1,30 @@
+<p data-cy="goods-services-includes-intro">{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.INCLUDES.INTRO }}</p>
+
+<ul class="govuk-!-margin-bottom-7">
+  <li data-cy="goods-services-includes-item-1">{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.INCLUDES.PRODUCTS }}</li>
+  <li data-cy="goods-services-includes-item-2">{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.INCLUDES.MANUFACTURED }}</li>
+  <li data-cy="goods-services-includes-item-3"><a class="govuk-link" data-cy="goods-services-includes-item-3-link" href="{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.INCLUDES.STAFFING_COSTS.LINK.HREF }}">{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.INCLUDES.STAFFING_COSTS.LINK.TEXT }}</a> {{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.INCLUDES.STAFFING_COSTS.TEXT }}</li>
+  <li data-cy="goods-services-includes-item-4"><a class="govuk-link"  data-cy="goods-services-includes-item-4-link" href="{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.INCLUDES.NON_PHYSICAL_ASSETS.LINK.HREF }}">{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.INCLUDES.NON_PHYSICAL_ASSETS.LINK.TEXT }}</a> {{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.INCLUDES.NON_PHYSICAL_ASSETS.TEXT }}</li>
+</ul>
+
+<p data-cy="goods-services-includes-can-count-as">{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.INCLUDES.CAN_COUNT_AS }}</p>
+
+<h2 class="govuk-heading-s"  data-cy="goods-services-does-not-count-heading">{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.DOES_NOT_COUNT.HEADING }}</h2>
+<p data-cy="goods-services-does-not-count-copy">{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.DOES_NOT_COUNT.TEXT }}</p>
+
+<h2 class="govuk-heading-s" id="staffing-costs" data-cy="goods-services-staffing-costs-heading">{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.STAFFING_COSTS.HEADING }}</h2>
+<p data-cy="goods-services-staffing-costs-copy">{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.STAFFING_COSTS.TEXT }}</p>
+
+<ul>
+  {% for item in CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.STAFFING_COSTS.LIST %}
+    <li data-cy="goods-services-staffing-costs-list-item-{{ loop.index }}">{{ item.TEXT }}</li>
+  {% endfor %}
+</ul>
+
+<h2 class="govuk-heading-s" id="non-physical-assets" data-cy="goods-services-non-physical-assets-heading">{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.NON_PHYSICAL_ASSETS.HEADING }}</h2>
+<p data-cy="goods-services-non-physical-assets-copy">{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.NON_PHYSICAL_ASSETS.TEXT }}</p>
+
+
+<h2 class="govuk-heading-s" data-cy="goods-services-not-sure-heading">{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.NOT_SURE.HEADING }}</h2>
+
+<p data-cy="goods-services-not-sure">{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.NOT_SURE.BODY_1 }} <a class="govuk-link" data-cy="goods-services-not-sure-link" href="{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.NOT_SURE.LINK.HREF }}">{{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.NOT_SURE.LINK.TEXT }}</a> {{ CONTENT_STRINGS.UK_GOODS_AND_SERVICES_DESCRIPTION.NOT_SURE.BODY_2 }}</p>

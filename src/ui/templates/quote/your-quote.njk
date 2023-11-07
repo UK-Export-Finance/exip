@@ -2,7 +2,6 @@
 {% from "govuk/components/panel/macro.njk" import govukPanel %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
-{% import "../components/details-text.njk" as detailsText %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -14,7 +13,7 @@
     <div class="govuk-grid-column-three-quarters-from-desktop">
 
       {% set titleHtml %}
-        <span class="govuk-heading-xl govuk-!-display-inline-block ukef-white-text" data-cy="heading">{{ CONTENT_STRINGS.QUOTE.HEADING }}</span>
+        <span class="govuk-heading-xl govuk-!-display-inline-block ukef-white-text" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</span>
       {% endset %}
 
       {% set panelHtml %}
@@ -48,22 +47,30 @@
 
   <h3 class="govuk-heading-m" data-cy="what-happens-next-heading">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.HEADING }}</h3>
 
-  {{ detailsText.render({
-    items: CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO
-  }) }}
+  <p class="govuk-body">
+    <span data-cy="what-happens-next-intro-you-can">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO.CAN_NOW_SUBMIT }}</span>
+    <a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO.FULL_APPLICATION.HREF }}" data-cy="what-happens-next-full-application-link">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO.FULL_APPLICATION.TEXT }}</a>.
+  </p>
+
+  <p class="govuk-body" data-cy="what-happens-next-intro-timeframe">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO.TIMEFRAME }}</p>
+  <p class="govuk-body" data-cy="what-happens-next-intro-can-get-help">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO.CAN_GET_HELP }}</p>
 
   <h4 data-cy="what-happens-next-finance-managers-heading">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.EXPORT_FINANCE_MANAGERS.HEADING }}</h4>
 
-  {{ detailsText.render({
-    items: CONTENT_STRINGS.WHAT_HAPPENS_NEXT.EXPORT_FINANCE_MANAGERS.ITEMS
-  }) }}
-
+  <p class="govuk-body">
+    <span data-cy="what-happens-next-finance-managers-available">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.EXPORT_FINANCE_MANAGERS.AVAILABLE }}</span>
+    <a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.EXPORT_FINANCE_MANAGERS.NEAREST_EFM.HREF }}" data-cy="what-happens-next-finance-managers-link">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.EXPORT_FINANCE_MANAGERS.NEAREST_EFM.TEXT }}</a>.
+  </p>
 
   <h4 data-cy="what-happens-next-brokers-heading">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.HEADING }}</h4>
 
-  {{ detailsText.render({
-    items: CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.ITEMS
-  }) }}
+  <p class="govuk-body" data-cy="what-happens-next-brokers-act-as">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.ACT_AS }}</p>
+  
+  <p class="govuk-body">
+    <span data-cy="what-happens-next-brokers-they-receive-intro">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.THEY_RECEIVE.INTRO }}</span>
+    <a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.THEY_RECEIVE.LINK.HREF }}" data-cy="what-happens-next-brokers-link">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.THEY_RECEIVE.LINK.TEXT }}</a>
+    <span data-cy="what-happens-next-brokers-outro">{{ CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.THEY_RECEIVE.OUTRO }}</span>
+  </p>
 
   <p><a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.LINKS.START_AGAIN.HREF }}" data-cy="start-again">{{ CONTENT_STRINGS.LINKS.START_AGAIN.TEXT }}</a></p>
   <p><a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.LINKS.EXTERNAL.FEEDBACK }}" data-cy="feedback">{{ CONTENT_STRINGS.LINKS.GIVE_FEEDBACK }}</a></p>

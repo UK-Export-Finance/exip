@@ -1,25 +1,33 @@
-import { PAGE_VARIABLES, get, post } from '.';
-import { FIELDS, PAGES } from '../../../content-strings';
+import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
+import { ERROR_MESSAGES, FIELDS, PAGES } from '../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../constants';
-import { mockReq, mockRes } from '../../../test-mocks';
+import singleInputPageVariables from '../../../helpers/page-variables/single-input';
+import constructPayload from '../../../helpers/construct-payload';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
 import { Request, Response } from '../../../../types';
-import singleInputPageVariables from '../../../helpers/single-input-page-variables';
-import generateValidationErrors from './validation';
+import { mockReq, mockRes } from '../../../test-mocks';
+
+const { COOKIES_SAVED, INSURANCE } = ROUTES;
 
 describe('controllers/root/cookies', () => {
   let req: Request;
   let res: Response;
 
-  const mockFlash = jest.fn();
-
   beforeEach(() => {
     req = mockReq();
-    req.flash = mockFlash;
-
     res = mockRes();
   });
 
-  describe('get', () => {
+  describe('FIELD_ID', () => {
+    it('should have the correct ID', () => {
+      const expected = FIELD_IDS.OPTIONAL_COOKIES;
+
+      expect(FIELD_ID).toEqual(expected);
+    });
+  });
+
+  describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_ID: FIELD_IDS.OPTIONAL_COOKIES,
@@ -30,37 +38,43 @@ describe('controllers/root/cookies', () => {
     });
   });
 
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.COOKIES);
+    });
+  });
+
   describe('get', () => {
+    it('should add req.headers.referer to req.session.returnToServiceUrl', () => {
+      get(req, res);
+
+      expect(req.session.returnToServiceUrl).toEqual(req.headers.referer);
+    });
+
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.COOKIES, {
-        ...singleInputPageVariables(PAGE_VARIABLES),
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+        userName: getUserNameFromSession(req.session.user),
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
         FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
-        BACK_LINK: req.headers.referer,
         submittedValue: req.cookies.optionalCookies,
       });
-    });
-
-    it('should store the previous URL in req.flash', () => {
-      get(req, res);
-
-      expect(mockFlash).toHaveBeenCalledTimes(1);
-
-      expect(mockFlash.mock.calls[0]).toEqual(['previousUrl', req.headers.referer]);
     });
   });
 
   describe('post', () => {
     describe('when there are validation errors', () => {
-      it('should render template with validation errors and submittedValue', () => {
+      it('should render template with validation errors and submittedValue from constructPayload function', () => {
         post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.COOKIES, {
-          ...singleInputPageVariables(PAGE_VARIABLES),
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          userName: getUserNameFromSession(req.session.user),
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
           FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
-          BACK_LINK: req.headers.referer,
-          validationErrors: generateValidationErrors(req.body),
+          validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES[PAGE_VARIABLES.FIELD_ID]),
         });
       });
     });
@@ -71,76 +85,19 @@ describe('controllers/root/cookies', () => {
         req.cookies.optionalCookies = 'true';
       });
 
-      it('should render template with flags and submittedValue', () => {
+      it(`should redirect to ${COOKIES_SAVED}`, () => {
         post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.COOKIES, {
-          ...singleInputPageVariables(PAGE_VARIABLES),
-          FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
-          BACK_LINK: req.headers.referer,
-          submittedValue: req.cookies.optionalCookies,
-          showSuccessMessage: true,
-          showSuccessMessageGoBackLink: undefined,
-        });
+        expect(res.redirect).toHaveBeenCalledWith(COOKIES_SAVED);
       });
 
-      describe(`when req.flash('previousUrl') does NOT include ${ROUTES.COOKIES}`, () => {
-        const mockPreviousUrl = '/mock';
-
-        beforeEach(() => {
-          req.headers.referer = mockPreviousUrl;
-
-          req.flash = (property: string) => {
-            const obj = {
-              previousUrl: [mockPreviousUrl],
-            };
-
-            return obj[property];
-          };
-        });
-
-        it('should render template with showSuccessMessageGoBackLink flag as true', async () => {
-          await post(req, res);
-
-          expect(res.render).toHaveBeenCalledWith(TEMPLATES.COOKIES, {
-            ...singleInputPageVariables(PAGE_VARIABLES),
-            FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
-            BACK_LINK: mockPreviousUrl,
-            submittedValue: req.cookies.optionalCookies,
-            showSuccessMessage: true,
-            showSuccessMessageGoBackLink: true,
-          });
-        });
-      });
-
-      describe(`when req.flash('previousUrl') includes ${ROUTES.COOKIES}`, () => {
-        const mockPreviousUrl = ROUTES.COOKIES;
-
-        beforeEach(() => {
-          req.headers.referer = mockPreviousUrl;
-
-          req.flash = (property: string) => {
-            const obj = {
-              previousUrl: [mockPreviousUrl],
-            };
-
-            return obj[property];
-          };
-        });
-
-        it('should render template with showSuccessMessageGoBackLink flag as false', () => {
-          req.flash('previousUrl', ROUTES.COOKIES);
+      describe('when req.originalUrl is an insurance route', () => {
+        it(`should redirect to ${INSURANCE.COOKIES_SAVED}`, () => {
+          req.originalUrl = INSURANCE.CONTACT_US;
 
           post(req, res);
 
-          expect(res.render).toHaveBeenCalledWith(TEMPLATES.COOKIES, {
-            ...singleInputPageVariables(PAGE_VARIABLES),
-            FIELD: FIELDS[FIELD_IDS.OPTIONAL_COOKIES],
-            BACK_LINK: ROUTES.COOKIES,
-            submittedValue: req.cookies.optionalCookies,
-            showSuccessMessage: true,
-            showSuccessMessageGoBackLink: false,
-          });
+          expect(res.redirect).toHaveBeenCalledWith(INSURANCE.COOKIES_SAVED);
         });
       });
     });

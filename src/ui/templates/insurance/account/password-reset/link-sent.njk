@@ -1,0 +1,44 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+
+      <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+      <p class="govuk-body" data-cy="check-inbox">{{ CONTENT_STRINGS.CHECK_YOUR_INBOX }} {{ accountEmail }}</p>
+
+      <p class="govuk-body govuk-!-margin-bottom-8" data-cy="follow-the-link">{{ CONTENT_STRINGS.FOLLOW_THE_LINK }}</p>
+
+      <h2 class="govuk-heading-s" data-cy="not-received-anything-heading">{{ CONTENT_STRINGS.NOT_RECEIVED_ANYTHING.HEADING}}</h2>
+
+      <p class="govuk-body">
+        <span data-cy="not-received-anything-you-can">{{ CONTENT_STRINGS.NOT_RECEIVED_ANYTHING.YOU_CAN }}</span>
+        <a class="govuk-link" href="{{ CONTENT_STRINGS.NOT_RECEIVED_ANYTHING.LINK.HREF }}" data-cy="not-received-anything-link">{{ CONTENT_STRINGS.NOT_RECEIVED_ANYTHING.LINK.TEXT }}</a>
+      </p>
+
+      <h2 class="govuk-heading-s" data-cy="not-your-email-address-heading">{{ CONTENT_STRINGS.NOT_YOUR_EMAIL_ADDRESS.HEADING}}</h2>
+
+      <p class="govuk-body">
+        <span data-cy="not-your-email-address-need-to">{{ CONTENT_STRINGS.NOT_YOUR_EMAIL_ADDRESS.NEED_TO }}</span>
+        <a class="govuk-link" href="{{ CONTENT_STRINGS.NOT_YOUR_EMAIL_ADDRESS.LINK.HREF }}" data-cy="not-your-email-address-link">{{ CONTENT_STRINGS.NOT_YOUR_EMAIL_ADDRESS.LINK.TEXT }}</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}

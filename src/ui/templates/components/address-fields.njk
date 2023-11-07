@@ -1,0 +1,55 @@
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import './address-field-input.njk' as addressFieldInput %}
+
+{% macro render(params) %}
+
+  {% set ADDRESS_LINE_ONE_FIELD = params.addressLineOne %}
+  {% set ADDRESS_LINE_TWO_FIELD = params.addressLineTwo %}
+  {% set COUNTY_FIELD = params.country %}
+  {% set TOWN_FIELD = params.town %}
+  {% set POSTCODE_FIELD = params.postcode %}
+  {% set validationErrors = params.validationErrors %}
+  {% set application = params.application %}
+  {% set submittedValues = params.submittedValues %}
+
+  {{ addressFieldInput.render({
+    id: ADDRESS_LINE_ONE_FIELD.ID,
+    label: ADDRESS_LINE_ONE_FIELD.LABEL,
+    submittedValues: submittedValues,
+    application: application,
+    validationErrors: validationErrors
+  }) }}
+
+  {{ addressFieldInput.render({
+    id: ADDRESS_LINE_TWO_FIELD.ID,
+    label: ADDRESS_LINE_TWO_FIELD.LABEL,
+    submittedValues: submittedValues,
+    application: application,
+    validationErrors: validationErrors
+  }) }}
+
+  {{ addressFieldInput.render({
+    id: TOWN_FIELD.ID,
+    label: TOWN_FIELD.LABEL,
+    submittedValues: submittedValues,
+    application: application,
+    validationErrors: validationErrors
+  }) }}
+
+  {{ addressFieldInput.render({
+    id: COUNTY_FIELD.ID,
+    label: COUNTY_FIELD.LABEL,
+    submittedValues: submittedValues,
+    application: application,
+    validationErrors: validationErrors
+  }) }}
+
+  {{ addressFieldInput.render({
+    id: POSTCODE_FIELD.ID,
+    label: POSTCODE_FIELD.LABEL,
+    submittedValues: submittedValues,
+    application: application,
+    validationErrors: validationErrors
+  }) }}
+
+{% endmacro %}

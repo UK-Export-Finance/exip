@@ -1,0 +1,58 @@
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% macro render(params) %}
+
+  {% set intro = params.CONTENT.INTRO %}
+  {% set headers = params.CONTENT.TABLE.HEADERS %}
+  {% set tableBody = params.CONTENT.TABLE.BODY %}
+
+  {% set tableHtml %}
+    <table class="govuk-table">
+
+      <thead>
+        <tr>
+          <th class="govuk-table__header" data-cy="header-term">{{ headers.TERM }}</th>
+          <th class="govuk-table__header" data-cy="header-definition">{{ headers.DEFINITION }}</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for row in tableBody %}
+          {% set rowIndex = loop.index %}
+
+          <tr class="govuk-table__row">
+
+            <td class="govuk-table__cell declarations-anti-bribery-cell--term" data-cy="row-{{ loop.index }}-cell-term">
+              {{ row.TERM }}
+            </td>
+
+            <td class="govuk-table__cell" data-cy="row-{{ loop.index }}-cell-definition">
+              <ul class="govuk-!-padding-left-0 govuk-!-margin-top-0">
+                {% for item in row.DEFINITION %}
+                  <li
+                    class="govuk-!-margin-bottom-5 declarations-anti-bribery-definition--list-item"
+                    data-cy="row-{{ rowIndex }}-cell-definition-list-item-{{ loop.index }}"
+                  >
+                    {{ item }}
+                  </li>
+                {% endfor %}
+              </ul>
+            </td>
+
+          </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+
+  {% endset %}
+
+  {{ govukDetails({
+    summaryText: intro,
+    html: tableHtml,
+    attributes: {
+      "data-cy": "definition-of-terms"
+    }
+  }) }}
+
+{% endmacro %}

@@ -1,17 +1,18 @@
 import { FIELD_IDS } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
-import generateValidationErrors from '../../../../../helpers/validation';
-import { objectHasProperty } from '../../../../../helpers/object';
-import { RequestBody } from '../../../../../../types';
+import emptyFieldValidation from '../../../../../shared-validation/empty-field';
+import { RequestBody, ValidationErrors } from '../../../../../../types';
 
-const currencyRules = (formBody: RequestBody, errors: object) => {
-  let updatedErrors = errors;
+const { CURRENCY: FIELD_ID } = FIELD_IDS.ELIGIBILITY;
+const ERROR_MESSAGE = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
 
-  if (!objectHasProperty(formBody, FIELD_IDS.CURRENCY)) {
-    updatedErrors = generateValidationErrors(FIELD_IDS.CURRENCY, ERROR_MESSAGES[FIELD_IDS.CURRENCY].IS_EMPTY, errors);
-  }
-
-  return updatedErrors;
-};
+/**
+ * currencyRules
+ * Returns the result of emptyFieldValidation
+ * @param {Express.Response.body} Express response body
+ * @param {Object} Errors object from previous validation errors
+ * @returns {Object} Validation errors
+ */
+const currencyRules = (formBody: RequestBody, errors: object): ValidationErrors => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
 
 export default currencyRules;

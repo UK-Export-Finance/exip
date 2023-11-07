@@ -1,0 +1,90 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import '../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary,
+      attributes: {
+        'data-cy': 'error-summary'
+      }
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <form method="POST" id="form" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+          <span class="govuk-caption-xl" data-cy="heading-caption">
+            {{CONTENT_STRINGS.HEADING_CAPTION}}
+          </span>
+        <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="companies-house-search">
+
+          {{ govukInput({
+            hint: {
+              html: FIELDS.COMPANIES_HOUSE_NUMBER.HINT,
+              attributes: {
+                "data-cy": FIELDS.COMPANIES_HOUSE_NUMBER.ID + "-hint"
+              }
+            },
+            attributes: {
+              "data-cy": FIELDS.COMPANIES_HOUSE_NUMBER.ID + "-input"
+            },
+            id: FIELDS.COMPANIES_HOUSE_NUMBER.ID,
+            name: FIELDS.COMPANIES_HOUSE_NUMBER.ID,
+            value: submittedValues[FIELDS.COMPANIES_HOUSE_NUMBER.ID],
+            errorMessage: validationErrors.errorList[FIELDS.COMPANIES_HOUSE_NUMBER.ID] and {
+              text: validationErrors.errorList[FIELDS.COMPANIES_HOUSE_NUMBER.ID].text,
+              attributes: {
+                "data-cy": FIELDS.COMPANIES_HOUSE_NUMBER.ID + "-error-message"
+              }
+            }
+          }) }}
+        </div>
+
+        <p class="govuk-!-margin-bottom-6"><a class="govuk-link" href="{{EXIT_PAGE_URL}}" data-cy="do-not-have-number">{{CONTENT_STRINGS.NO_COMPANIES_HOUSE_NUMBER}}</a></p>
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="govuk-button-group">
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE
+          }) }}
+
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button',
+              'formaction': SAVE_AND_BACK_URL
+            }
+          }) }}
+        </div>
+      </div>
+    </form>
+  </div>
+
+{% endblock %}

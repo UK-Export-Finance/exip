@@ -1,5 +1,9 @@
 {% from "govuk/components/phase-banner/macro.njk" import govukPhaseBanner %}
 
+{% set bannerHtml %}
+  <span data-cy="phase-banner-text">{{ CONTENT_STRINGS.PHASE_BANNER.PREFIX }} <a class="govuk-link" href="{{ FEEDBACK_ROUTE }}" data-cy="phase-banner-feedback-link">{{ CONTENT_STRINGS.PHASE_BANNER.LINK_TEXT }}</a> {{CONTENT_STRINGS.PHASE_BANNER.SUFFIX}}</span>
+{% endset %}
+
 <div class="govuk-width-container" role="complementary">
   {{ govukPhaseBanner({
     tag: {
@@ -8,6 +12,6 @@
     attributes: {
       "data-cy": "phase-banner"
     },
-    html: '<span data-cy="phase-banner-text">This is a new service - your <a class="govuk-link" href="https://forms.office.com/r/TacytrRCgJ" data-cy="phase-banner-feedback-link">feedback</a> will help us to improve it.</span>'
+    html: bannerHtml
   }) }}
 </div>

@@ -1,0 +1,72 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% import '../components/dashboard-table.njk' as dashboardTable %}
+{% import '../components/pagination.njk' as pagination %}
+
+{% set renderPagination = false %}
+
+{% if pages.length %}
+  {% set renderPagination = true %}
+{% endif %}
+
+
+{% if renderPagination %}
+  {% set PAGE_TITLE %}
+    {{ CONTENT_STRINGS.PAGE_TITLE }} (Page {{ currentPageNumber }} of {{ pages.length }})
+  {% endset %}
+
+  {% else %}
+
+  {% set PAGE_TITLE %}
+    {{ CONTENT_STRINGS.PAGE_TITLE }}
+  {% endset %}
+{% endif %}
+
+{% block pageTitle %}
+  {{ PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  {% if applications.length %}
+
+    {{ dashboardTable.render({
+      tableHeaders: CONTENT_STRINGS.TABLE_HEADERS,
+      applications: applications,
+      insuranceRoute: ROUTES.INSURANCE_ROOT,
+      allSectionsRoute: ROUTES.ALL_SECTIONS,
+      submittedStatus: SUBMITTED_STATUS
+    }) }}
+
+    {% if renderPagination %}
+      {{ pagination.render({
+        currentPageNumber: currentPageNumber,
+        totalPages: pages.length,
+        pages: pages
+      }) }}
+    {% endif %}
+
+    {% else %}
+
+    <p class="govuk-body" data-cy="no-applications">{{ CONTENT_STRINGS.NO_APPLICATIONS }}</p>
+
+  {% endif %}
+
+  <div class="govuk-button-group">
+    <a class="govuk-button govuk-button--secondary" href="{{ CONTENT_STRINGS.START_NEW_APPLICATION.HREF }}" data-cy="start-new-application-button">{{ CONTENT_STRINGS.START_NEW_APPLICATION.TEXT }}</a>
+
+    <a class="govuk-button govuk-button--secondary" href="{{ CONTENT_STRINGS.GET_A_QUOTE.HREF }}" data-cy="get-a-quote-button">{{ CONTENT_STRINGS.GET_A_QUOTE.TEXT }}</a>
+  </div>
+
+
+{% endblock %}

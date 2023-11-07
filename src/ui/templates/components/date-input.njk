@@ -1,0 +1,71 @@
+{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+
+{% macro render(params) %}
+
+  {% set fieldId = params.fieldId %}
+  {% set label = params.label %}
+  {% set hint = params.hint %}
+  {% set submittedAnswers = params.submittedAnswers %}
+  {% set error = params.error %}
+
+  {% set dayId = fieldId + '-day' %}
+  {% set monthId = fieldId + '-month' %}
+  {% set yearId = fieldId + '-year' %}
+
+  {{ govukDateInput({
+    id: fieldId,
+    namePrefix: fieldId,
+    fieldset: {
+      legend: {
+        html: "<span
+                class='govuk-fieldset__legend govuk-!-font-weight-bold govuk-!-font-size-24'
+                id='" + fieldId + "-label'
+                data-cy='" + fieldId + "-label'>" 
+                + label 
+                + "</span>"
+      }
+    },
+    hint: {
+      text: hint,
+      attributes: {
+        'data-cy': fieldId + '-hint'
+      }
+    },
+    attributes: {
+      'data-cy': fieldId + '-input'
+    },
+    items: [
+      {
+        name: 'day',
+        value: submittedAnswers[dayId],
+        classes: 'govuk-input--width-2',
+        attributes: {
+          'data-cy': fieldId + '-day-input'
+        }
+      },
+      {
+        name: 'month',
+        value: submittedAnswers[monthId],
+        classes: 'govuk-input--width-2',
+        attributes: {
+          'data-cy': fieldId + '-month-input'
+        }
+      },
+      {
+        name: 'year',
+        value: submittedAnswers[yearId],
+        classes: 'govuk-input--width-4',
+        attributes: {
+          'data-cy': fieldId + '-year-input'
+        }
+      }
+    ],
+    errorMessage: error and {
+      text: error.text,
+      attributes: {
+        'data-cy': fieldId + '-error-message'
+      }
+    }
+  }) }}
+
+{% endmacro %}

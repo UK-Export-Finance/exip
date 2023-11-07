@@ -4,8 +4,13 @@ import mapPolicyLength from './map-policy-length';
 import formatCurrency from '../format-currency';
 import { Quote, QuoteContent } from '../../../types';
 import mapCost from './map-cost';
+import mapPercentage from '../map-percentage';
 
-const { BUYER_COUNTRY, CURRENCY, PERCENTAGE_OF_COVER, QUOTE } = FIELD_IDS;
+const {
+  ELIGIBILITY: { BUYER_COUNTRY, CURRENCY, PERCENTAGE_OF_COVER },
+  POLICY_TYPE,
+  QUOTE,
+} = FIELD_IDS;
 
 const { ESTIMATED_COST, INSURED_FOR, PREMIUM_RATE_PERCENTAGE } = QUOTE;
 
@@ -20,22 +25,13 @@ const mapQuoteToContent = (quote: Quote): QuoteContent => {
 
   const mapped = {
     ...mapCost(quote),
-    percentageOfCover: {
-      text: `${quote[PERCENTAGE_OF_COVER]}%`,
-    },
-    insuredFor: {
-      text: formatCurrency(quote[INSURED_FOR], currencyCode, 2),
-    },
-    premiumRatePercentage: {
-      text: `${quote[PREMIUM_RATE_PERCENTAGE]}%`,
-    },
-    estimatedCost: {
-      text: formatCurrency(quote[ESTIMATED_COST], currencyCode, 2),
-    },
+    percentageOfCover: mapPercentage(quote[PERCENTAGE_OF_COVER]),
+    insuredFor: formatCurrency(quote[INSURED_FOR], currencyCode, 2),
+    premiumRatePercentage: mapPercentage(quote[PREMIUM_RATE_PERCENTAGE]),
+    estimatedCost: formatCurrency(quote[ESTIMATED_COST], currencyCode, 2),
     ...mapPolicyLength(quote),
-    buyerCountry: {
-      text: mapCountry(quote[BUYER_COUNTRY]),
-    },
+    buyerCountry: mapCountry(quote[BUYER_COUNTRY]),
+    [POLICY_TYPE]: quote[POLICY_TYPE],
   };
 
   return mapped;

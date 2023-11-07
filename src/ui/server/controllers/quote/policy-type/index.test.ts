@@ -1,10 +1,16 @@
-import { PAGE_VARIABLES, get, post } from '.';
-import { BUTTONS, COOKIES_CONSENT, FIELDS, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
+import { FIELD_IDS, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
+import { FIELDS, PAGES } from '../../../content-strings';
+import { FIELD_VALUES, ROUTES, TEMPLATES } from '../../../constants';
+import SHARED_FIELD_IDS from '../../../constants/field-ids/shared';
+import corePageVariables from '../../../helpers/page-variables/core/quote';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import { updateSubmittedData } from '../../../helpers/update-submitted-data';
-import { mockReq, mockRes, mockAnswers } from '../../../test-mocks';
+import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
+import { mockReq, mockRes } from '../../../test-mocks';
 import { Request, Response } from '../../../../types';
+
+const { MULTIPLE_POLICY_TYPE, POLICY_TYPE, SINGLE_POLICY_TYPE } = SHARED_FIELD_IDS;
 
 describe('controllers/quote/policy-type', () => {
   let req: Request;
@@ -19,37 +25,29 @@ describe('controllers/quote/policy-type', () => {
     jest.resetAllMocks();
   });
 
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      const expected = [POLICY_TYPE, MULTIPLE_POLICY_TYPE];
+
+      expect(FIELD_IDS).toEqual(expected);
+    });
+  });
+
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        CONTENT_STRINGS: {
-          BUTTONS,
-          COOKIES_CONSENT,
-          LINKS,
-          FOOTER,
-          PRODUCT,
-          ...PAGES.POLICY_TYPE_PAGE,
-        },
         FIELDS: {
-          MULTI_POLICY_TYPE: {
-            ID: FIELD_IDS.MULTI_POLICY_TYPE,
-            ...FIELDS[FIELD_IDS.POLICY_TYPE],
-          },
-          POLICY_LENGTH: {
-            ID: FIELD_IDS.POLICY_LENGTH,
-            ...FIELDS[FIELD_IDS.POLICY_LENGTH],
+          MULTIPLE_POLICY_TYPE: {
+            ID: MULTIPLE_POLICY_TYPE,
+            ...FIELDS[POLICY_TYPE],
           },
           POLICY_TYPE: {
-            ID: FIELD_IDS.POLICY_TYPE,
-            ...FIELDS[FIELD_IDS.POLICY_TYPE],
+            ID: POLICY_TYPE,
+            ...FIELDS[POLICY_TYPE],
           },
           SINGLE_POLICY_TYPE: {
-            ID: FIELD_IDS.SINGLE_POLICY_TYPE,
-            ...FIELDS[FIELD_IDS.POLICY_TYPE],
-          },
-          SINGLE_POLICY_LENGTH: {
-            ID: FIELD_IDS.SINGLE_POLICY_LENGTH,
-            ...FIELDS[FIELD_IDS.SINGLE_POLICY_LENGTH],
+            ID: SINGLE_POLICY_TYPE,
+            ...FIELDS[POLICY_TYPE],
           },
         },
       };
@@ -58,41 +56,59 @@ describe('controllers/quote/policy-type', () => {
     });
   });
 
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.QUOTE.POLICY_TYPE);
+    });
+  });
+
   describe('get', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.POLICY_TYPE, {
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
+        userName: getUserNameFromSession(req.session.user),
         ...PAGE_VARIABLES,
-        BACK_LINK: req.headers.referer,
-        submittedValues: req.session.submittedData,
+        submittedValues: req.session.submittedData.quoteEligibility,
       });
     });
   });
 
   describe('post', () => {
     describe('when there are validation errors', () => {
-      it('should render template with validation errors and submitted values', () => {
+      it('should render template with validation errors and submitted values from constructPayload function', () => {
         post(req, res);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.POLICY_TYPE, {
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
+          userName: getUserNameFromSession(req.session.user),
           ...PAGE_VARIABLES,
-          BACK_LINK: req.headers.referer,
-          validationErrors: generateValidationErrors(req.body),
-          submittedValues: req.body,
+          validationErrors: generateValidationErrors(payload),
+          submittedValues: payload,
         });
       });
 
-      describe('when a currency code has been submitted', () => {
-        it('should render template with mapped submitted currency', () => {
-          req.body[FIELD_IDS.CURRENCY] = mockAnswers[FIELD_IDS.CURRENCY];
+      describe('when the submitted answer is not a recognised policy type', () => {
+        beforeEach(() => {
+          req.body = {
+            [POLICY_TYPE]: 'Unrecognised policy type',
+          };
+        });
+
+        it('should render template with validation errors from constructPayload function', async () => {
           post(req, res);
 
-          expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.POLICY_TYPE, {
+          const payload = constructPayload(req.body, FIELD_IDS);
+
+          expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+            ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.POLICY_TYPE, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
+            userName: getUserNameFromSession(req.session.user),
             ...PAGE_VARIABLES,
-            BACK_LINK: req.headers.referer,
-            validationErrors: generateValidationErrors(req.body),
-            submittedValues: req.body,
+            validationErrors: generateValidationErrors(payload),
+            submittedValues: payload,
           });
         });
       });
@@ -100,8 +116,7 @@ describe('controllers/quote/policy-type', () => {
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.POLICY_LENGTH]: '40',
-        [FIELD_IDS.POLICY_TYPE]: 'mock',
+        [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
       };
 
       beforeEach(() => {
@@ -111,9 +126,15 @@ describe('controllers/quote/policy-type', () => {
       it('should update the session with submitted data', () => {
         post(req, res);
 
-        const expected = updateSubmittedData(req.body, req.session.submittedData);
+        const payload = constructPayload(req.body, FIELD_IDS);
 
-        expect(req.session.submittedData).toEqual(expected);
+        const populatedData = {
+          [POLICY_TYPE]: payload[POLICY_TYPE],
+        };
+
+        const expected = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
+
+        expect(req.session.submittedData.quoteEligibility).toEqual(expected);
       });
 
       it(`should redirect to ${ROUTES.QUOTE.TELL_US_ABOUT_YOUR_POLICY}`, () => {

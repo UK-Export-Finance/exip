@@ -1,0 +1,26 @@
+{% extends 'index.njk' %}
+{% import '../../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <p class="govuk-body" data-cy="body">{{ CONTENT_STRINGS.BODY }} </p>
+
+  <form method="POST" id="form" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-button-group">
+      {{ submitButton.render({
+        text: CONTENT_STRINGS.BUTTONS.REACTIVATE_ACCOUNT
+      }) }}
+    </div>
+
+  </form>
+      
+{% endblock %}

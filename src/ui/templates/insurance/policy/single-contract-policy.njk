@@ -1,0 +1,200 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% import '../../components/date-input.njk' as dateInput %}
+{% import '../../components/policy-currency-code-hint.njk' as policyCurrencyCodeHint %}
+{% import '../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <div class="govuk-grid-column-three-quarters-from-desktop govuk-!-padding-right-0 govuk-!-padding-left-0">
+        <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+        <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+      </div>
+    </div>
+  </div>
+
+  <form method="POST" id="form" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        {% set dayId = FIELDS.REQUESTED_START_DATE.ID + '-day' %}
+        {% set monthId = FIELDS.REQUESTED_START_DATE.ID + '-month' %}
+        {% set yearId = FIELDS.REQUESTED_START_DATE.ID + '-year' %}
+
+        {{dateInput.render({
+          fieldId: FIELDS.REQUESTED_START_DATE.ID,
+          label: FIELDS.REQUESTED_START_DATE.LABEL,
+          hint: FIELDS.REQUESTED_START_DATE.HINT,
+          error: validationErrors.errorList[FIELDS.REQUESTED_START_DATE.ID],
+          submittedAnswers: submittedValues or application.policy
+        }) }}
+
+        {{dateInput.render({
+          fieldId: FIELDS.CONTRACT_COMPLETION_DATE.ID,
+          label: FIELDS.CONTRACT_COMPLETION_DATE.LABEL,
+          hint: FIELDS.CONTRACT_COMPLETION_DATE.HINT,
+          error: validationErrors.errorList[FIELDS.CONTRACT_COMPLETION_DATE.ID],
+          submittedAnswers: submittedValues or application.policy
+        }) }}
+
+        {% set totalContractValueHintHtml %}
+          <p class="govuk-!-margin-bottom-0">
+            <span data-cy="{{ FIELDS.TOTAL_CONTRACT_VALUE.ID }}-hint-need-more-cover">{{ FIELDS.TOTAL_CONTRACT_VALUE.HINT.NEED_MORE_COVER }}</span>
+            <a
+              class="govuk-link"
+              href="{{ FIELDS.TOTAL_CONTRACT_VALUE.HINT.FILL_IN_FORM.HREF }}"
+              data-cy="{{ FIELDS.TOTAL_CONTRACT_VALUE.ID }}-hint-link"
+            >{{ FIELDS.TOTAL_CONTRACT_VALUE.HINT.FILL_IN_FORM.TEXT }}</a>
+          </p>
+          <p class="govuk-!-margin-top-0" data-cy="{{ FIELDS.TOTAL_CONTRACT_VALUE.ID }}-hint-no-decimals">{{ FIELDS.TOTAL_CONTRACT_VALUE.HINT.NO_DECIMALS }}</p>
+        {% endset %}
+
+        {{ govukInput({
+          label: {
+            text: FIELDS.TOTAL_CONTRACT_VALUE.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              id: FIELDS.TOTAL_CONTRACT_VALUE.ID + '-label',
+              'data-cy': FIELDS.TOTAL_CONTRACT_VALUE.ID + '-label'
+            }
+          },
+          hint: {
+            html: totalContractValueHintHtml
+          },
+          classes: "govuk-input--width-10 govuk-!-margin-bottom-4",
+          attributes: {
+            'data-cy': FIELDS.TOTAL_CONTRACT_VALUE.ID + '-input'
+          },
+          id: FIELDS.TOTAL_CONTRACT_VALUE.ID,
+          name: FIELDS.TOTAL_CONTRACT_VALUE.ID,
+          inputmode: "numeric",
+          pattern: "[0-9]*",
+          prefix: {
+            text: "£",
+            attributes: {
+              'data-cy': FIELDS.TOTAL_CONTRACT_VALUE.ID + '-prefix'
+            }
+          },
+          spellcheck: false,
+          value: submittedValues[FIELDS.TOTAL_CONTRACT_VALUE.ID] or application.policy[FIELDS.TOTAL_CONTRACT_VALUE.ID],
+          errorMessage: validationErrors.errorList[FIELDS.TOTAL_CONTRACT_VALUE.ID] and {
+            text: validationErrors.errorList[FIELDS.TOTAL_CONTRACT_VALUE.ID].text,
+            attributes: {
+              "data-cy": FIELDS.TOTAL_CONTRACT_VALUE.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukCharacterCount({
+          name: FIELDS.CREDIT_PERIOD_WITH_BUYER.ID,
+          id: FIELDS.CREDIT_PERIOD_WITH_BUYER.ID,
+          label: {
+            text: FIELDS.CREDIT_PERIOD_WITH_BUYER.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              'data-cy': FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + '-label'
+            }
+          },
+          hint: {
+            text: FIELDS.CREDIT_PERIOD_WITH_BUYER.HINT,
+            attributes: {
+              'data-cy': FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + '-hint'
+            }
+          },
+          attributes: {
+            'data-cy': FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + '-input'
+          },
+          maxlength: FIELDS.CREDIT_PERIOD_WITH_BUYER.MAXIMUM,
+          value: submittedValues[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID] or application.policy[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID],
+          errorMessage: validationErrors.errorList[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID] and {
+            text: validationErrors.errorList[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID].text,
+            attributes: {
+              "data-cy": FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {% set currencyCodeHintHtml %}
+          {{ policyCurrencyCodeHint.render({
+            id: FIELDS.POLICY_CURRENCY_CODE.ID,
+            hint: FIELDS.POLICY_CURRENCY_CODE.HINT
+          }) }}
+        {% endset %}
+
+        {{ govukSelect({
+          id: FIELDS.POLICY_CURRENCY_CODE.ID,
+          name: FIELDS.POLICY_CURRENCY_CODE.ID,
+          label: {
+            text: FIELDS.POLICY_CURRENCY_CODE.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              'data-cy': FIELDS.POLICY_CURRENCY_CODE.ID + '-label'
+            }
+          },
+          hint: {
+            html: currencyCodeHintHtml
+          },
+          items: currencies,
+          classes: "govuk-grid-column-one-quarter-from-desktop",
+          attributes: {
+            "data-cy": FIELDS.POLICY_CURRENCY_CODE.ID + "-input"
+          },
+          errorMessage: validationErrors.errorList[FIELDS.POLICY_CURRENCY_CODE.ID] and {
+            text: validationErrors.errorList[FIELDS.POLICY_CURRENCY_CODE.ID].text,
+            attributes: {
+              "data-cy": FIELDS.POLICY_CURRENCY_CODE.ID + "-error-message"
+            }
+          }
+        }) }}
+
+      </div>
+    </div>
+
+    <div class="govuk-button-group">
+      {{ submitButton.render({
+        text: CONTENT_STRINGS.BUTTONS.CONTINUE
+      }) }}
+
+      {{ govukButton({
+        text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+        classes: "govuk-button--secondary",
+        attributes: {
+          formaction: SAVE_AND_BACK_URL,
+          'data-cy': 'save-and-back-button'
+        }
+      }) }}
+    </div>
+
+  </form>
+
+{% endblock %}

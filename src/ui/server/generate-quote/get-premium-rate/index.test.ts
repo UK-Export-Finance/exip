@@ -1,5 +1,5 @@
 import { PRICING_GRID_MAP, getPremiumRate } from '.';
-import { API, FIELD_VALUES } from '../../constants';
+import { EXTERNAL_API_MAPPINGS, FIELD_VALUES } from '../../constants';
 import PRICING_GRID from '../pricing-grid.json';
 import { PricingGridMonth, PricingGridRate } from '../../../types';
 
@@ -35,9 +35,9 @@ const getAvailableCover = (policyType: string, risk: string, coverMonths: number
 describe('server/generate-quote/get-premium-rate', () => {
   it('returns a number', () => {
     const mock = {
-      policyType: FIELD_VALUES.POLICY_TYPE.MULTI,
+      policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
       insuredFor: 80,
-      riskCategory: API.MAPPINGS.RISK.STANDARD,
+      riskCategory: EXTERNAL_API_MAPPINGS.CIS.RISK.STANDARD,
       totalMonths: 2,
     };
 

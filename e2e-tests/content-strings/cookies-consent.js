@@ -1,5 +1,5 @@
-const COOKIES_CONSENT = {
-  HEADING: 'Cookies on Get a quote for UKEF export insurance',
+export const COOKIES_CONSENT = {
+  HEADING_INTRO: 'Cookies on',
   HIDE_BUTTON: 'Hide this message',
   COOKIES_LINK: 'cookies link',
   QUESTION: {
@@ -10,13 +10,11 @@ const COOKIES_CONSENT = {
     VIEW_COOKIES: 'View cookies',
   },
   ACCEPTED: {
-    COPY_1: "You've accepted analytics cookies.You can change your cookie settings at any time by using the",
+    COPY_1: "You've accepted analytics cookies. You can change your cookie preferences at any time by using the",
     COPY_2: 'in our footer.',
   },
   REJECTED: {
-    COPY_1: "You've rejected analytics cookies.You can change your cookie settings at any time by using the",
+    COPY_1: "You've rejected analytics cookies. You can change your cookie preferences at any time by using the",
     COPY_2: 'in our footer.',
   },
 };
-
-module.exports = COOKIES_CONSENT;

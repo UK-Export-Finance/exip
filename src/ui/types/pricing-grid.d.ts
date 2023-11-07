@@ -22,7 +22,7 @@ type PricingGridMultiPolicy = {
 
 interface PricingGrid {
   SINGLE_POLICY: PricingGridSinglePolicy;
-  MULTI_POLICY: PricingGridMultiPolicy;
+  MULTIPLE_POLICY: PricingGridMultiPolicy;
 }
 
 export { PricingGrid, PricingGridMonth, PricingGridRate };

@@ -1,0 +1,25 @@
+{% macro render(params) %}
+
+  {% set child = params.child %}
+  {% set class = params.class %}
+  {% set loopIndex = params.loopIndex %}
+
+  {% if child.children %}
+
+    {% for child in child.children %}
+
+      <li class="govuk-!-margin-bottom-7 {{ class }}" data-cy="list-level-3-item-{{ loopIndex }}">
+        <span>{{ child.text }}</span>
+      </li>
+
+    {% endfor %}
+
+    {% else %}
+
+      <li class="govuk-!-margin-bottom-7 {{ class }}">
+        <span>{{ child.text }}</span>
+      </li>
+
+  {% endif %}
+
+{% endmacro %}

@@ -1,9 +1,9 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from 'govuk/components/radios/macro.njk' import govukRadios %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
-{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% import '../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+{% import '../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -15,91 +15,55 @@
     text: CONTENT_STRINGS.LINKS.BACK,
     href: BACK_LINK,
     attributes: {
-      "data-cy": "back-link"
+      "data-cy": DATA_CY.BACK_LINK
     }
   }) }}
 
   {% if validationErrors.summary %}
     {{ govukErrorSummary({
-      titleText: "There is a problem",
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
       errorList: validationErrors.summary
     }) }}
   {% endif %}
 
-  <form method="POST" novalidate>
+  <form method="POST" id="form" novalidate>
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters-from-desktop">
-        {{ govukRadios({
-          classes: "govuk-radios--inline",
-          idPrefix: FIELD_ID,
-          name: FIELD_ID,
-          fieldset: {
-            legend: {
-              html: "<h1 class='govuk-heading-l' id='heading' data-cy='heading'>" + CONTENT_STRINGS.HEADING + "</h1>"
-            }
-          },
-          items: [
-            {
-              value: true,
-              text: "Yes",
-              label: {
-                attributes: {
-                  "data-cy": FIELD_ID + "-yes"
-                }
-              },
-              attributes: {
-                "data-cy": FIELD_ID + "-yes-input"
-              },
-              checked: submittedValues[FIELD_ID] === false
-            },
-            {
-              value: false,
-              text: "No",
-              label: {
-                attributes: {
-                  "data-cy": FIELD_ID + "-no"
-                }
-              },
-              checked: submittedValues[FIELD_ID] === true
-            }
-          ],
-          errorMessage: validationErrors.errorList[FIELD_ID]and {
-            text: validationErrors.errorList[FIELD_ID].text,
-            attributes: {
-              "data-cy": FIELD_ID + "-error-message"
-            }
-          }
+
+        {{ yesNoRadioButtons.render({
+          fieldId: FIELD_ID,
+          legendText: CONTENT_STRINGS.PAGE_TITLE,
+          submittedAnswer: submittedValues[FIELD_ID],
+          errorMessage: validationErrors.errorList[FIELD_ID]
         }) }}
+
       </div>
     </div>
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters-from-desktop">
 
-      {% set detailsHtml %}
-        <p data-cy="details-body-1">{{ CONTENT_STRINGS.DETAILS.BODY_1 }}</p>
-        <p data-cy="details-body-2">{{ CONTENT_STRINGS.DETAILS.BODY_2 }}</p>
-      {% endset %}
+        {% set detailsHtml %}
+          <p data-cy="details-body-1">{{ CONTENT_STRINGS.DETAILS.BODY_1 }}</p>
+          <p data-cy="details-body-2">{{ CONTENT_STRINGS.DETAILS.BODY_2 }}</p>
+        {% endset %}
 
         {{ govukDetails({
           summaryText: CONTENT_STRINGS.DETAILS.INTRO,
           html: detailsHtml,
           attributes: {
-            "data-cy": "details"
+            "data-cy": "buyer-body"
           }
         }) }}
 
       </div>
     </div>
 
-    {{ govukButton({
-      text: CONTENT_STRINGS.BUTTONS.CONTINUE,
-      attributes: {
-        'data-cy': 'submit-button'
-      }
+    {{ submitButton.render({
+      text: CONTENT_STRINGS.BUTTONS.CONTINUE
     }) }}
 
   </form>

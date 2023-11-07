@@ -1,0 +1,108 @@
+{% from 'govuk/components/radios/macro.njk' import govukRadios %}
+
+{% macro render(params) %}
+
+  {% set fieldId = params.fieldId %}
+  {% set legendText = params.legendText %}
+  {% set hintText = params.hintText %}
+  {% set hintHtml = params.hintHtml %}
+  {% set submittedAnswer = params.submittedAnswer %}
+  {% set errorMessage = params.errorMessage %}
+  {% set conditionalYesHtml = params.conditionalYesHtml %}
+  {% set conditionalNoHtml = params.conditionalNoHtml %}
+
+  {% if params.headingLevel %}
+    {% set headingLevel = params.headingLevel %}
+  {% else %}
+    {% set headingLevel = 1 %}
+  {% endif %}
+
+  {% if params.legendClass %}
+    {% set legendClass = params.legendClass %}
+  {% else %}
+    {% set legendClass = 'govuk-heading-l' %}
+  {% endif %}
+
+  {% if params.dataCyLegend %}
+    {% set dataCyLegend = params.dataCyLegend %}
+  {% else %}
+    {% set dataCyLegend = 'heading' %}
+  {% endif %}
+
+  {% if params.legendSpan %}
+    {% set legendHtml = "<span data-cy='" + dataCyLegend + "' class='" + legendClass + "'>" + legendText + "</span>" %}
+  {% else %}
+    {% set legendHtml = "<h" + headingLevel + " class=" + legendClass + " id='heading' data-cy='" + dataCyLegend + "'>" + legendText + "</h" + headingLevel + ">" %}
+  {% endif %}
+
+  {% if params.dataCyHint %}
+    {% set dataCyHint = params.dataCyHint %}
+  {% else %}
+    {% set dataCyHint = 'yes-no-input-hint' %}
+  {% endif %}
+
+  {% if not params.horizontalRadios %}
+    {% set radioClass = 'govuk-radios--inline' %}
+  {% endif %}
+
+  {{ govukRadios({
+    classes: radioClass,
+    idPrefix: fieldId,
+    name: fieldId,
+    fieldset: {
+      legend: {
+        html: legendHtml
+      }
+    },
+    hint: {
+      text: hintText,
+      html: hintHtml,
+      attributes: {
+        'data-cy': dataCyHint
+      }
+    },
+    items: [
+      {
+        value: true,
+        text: "Yes",
+        label: {
+          attributes: {
+            "data-cy": "yes"
+          }
+        },
+        conditional: {
+          html: conditionalYesHtml
+        },
+        attributes: {
+          "data-cy": "yes-input",
+          'aria-label': legendText + ' Yes'
+        },
+        checked: submittedAnswer === true
+      },
+      {
+        value: false,
+        text: "No",
+        label: {
+          attributes: {
+            "data-cy": "no"
+          }
+        },
+        conditional: {
+          html: conditionalNoHtml
+        },
+        attributes: {
+          "data-cy": "no-input",
+          'aria-label': legendText + ' No'
+        },
+        checked: submittedAnswer === false
+      }
+    ],
+    errorMessage: errorMessage and {
+      text: errorMessage.text,
+      attributes: {
+        "data-cy": fieldId + "-error-message"
+      }
+    }
+  }) }}
+
+{% endmacro %}

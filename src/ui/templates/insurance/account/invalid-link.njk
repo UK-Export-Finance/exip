@@ -1,0 +1,21 @@
+{% extends 'index.njk' %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+
+      <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+      <p class="govuk-body" data-cy="body">{{ CONTENT_STRINGS.BODY }}</p>
+
+      <a class="govuk-button" href="{{ SIGN_IN_URL }}" data-cy="return-to-sign-in-link-button">{{ CONTENT_STRINGS.BUTTONS.RETURN_TO_SIGN_IN }}</a>
+
+    </div>
+  </div>
+
+{% endblock %}

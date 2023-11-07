@@ -1,0 +1,26 @@
+{% extends 'index.njk' %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <p class="govuk-body" data-cy="typed-address">{{ CONTENT_STRINGS.TYPED_ADDRESS }}</p>
+  <p class="govuk-body" data-cy="pasted-address">{{ CONTENT_STRINGS.PASTED_ADDRESS }}</p>
+
+  {% set contactLinkHtml %}
+    <a class="govuk-link govuk-link--no-visited-state" href="{{ CONTENT_STRINGS.CONTACT.LINK.INSURANCE_HREF }}" data-cy="contact-link">{{ CONTENT_STRINGS.CONTACT.LINK.TEXT }}</a>
+  {% endset %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <p class="govuk-body">
+        <span data-cy="contact-1">{{ CONTENT_STRINGS.CONTACT.TEXT }}</span> <span data-cy="contact-2">{{ contactLinkHtml | safe }}</span> <span data-cy="contact-3">{{ CONTENT_STRINGS.CONTACT.OUTRO }}</span>
+        </p>
+    </div>
+  </div>
+
+{% endblock %}

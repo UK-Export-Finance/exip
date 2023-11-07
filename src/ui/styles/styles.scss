@@ -1,7 +1,10 @@
 $govuk-new-link-styles: true;
 
 @import 'node_modules/govuk-frontend/govuk/all';
+@import 'node_modules/@ministryofjustice/frontend/moj/all';
 @import './accessible-autocomplete.min.scss';
+@import './task-list.scss';
+@import './declarations.scss';
 
 .ukef-white-text {
   color: govuk-colour('white');
@@ -13,20 +16,34 @@ $govuk-new-link-styles: true;
   }
 }
 
-.ukef-list-item-dash {
-  list-style-type: none;
-  position: relative;
-  padding: 0 25px;
-  &::before {
-    content: '—';
-    position: absolute;
-    left: 0;
-    overflow: hidden;
-    width: 20px;
-    color: govuk-colour('blue');
+.ukef-all-sections-second-column {
+  @include govuk-media-query($from: desktop) {
+    float: right;
   }
 }
 
-.ukef-multi-policy-length-hint {
-  max-width: 97%;
+.ukef-task-list-column {
+  @include govuk-media-query($from: desktop) {
+    max-width: 630px;
+  }
+}
+
+.companies-house-input-width {
+  width: 50%;
+}
+
+.companies-house-search {
+  flex: 1;
+  margin-bottom: 0;
+  vertical-align: top;
+  align-items: flex-end;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.ukef-application-submitted {
+  max-width: 360px;
 }

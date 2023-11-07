@@ -1,0 +1,33 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  {% if EXIT_REASON.length %}
+    <p class="govuk-body" data-cy="reason">{{ CONTENT_STRINGS.REASON.INTRO }} {{ EXIT_REASON }}</p>
+  {% endif %}
+
+  <p class="govuk-body" data-cy="actions-intro">{{ CONTENT_STRINGS.ACTIONS.INTRO }}</p>
+
+  <ul class="govuk-list govuk-list--bullet" data-cy="actions-list">
+    <li data-cy="action-eligibility">{{ CONTENT_STRINGS.ACTIONS.ELIGIBILITY.TEXT }} <a class="govuk-link" data-cy="action-eligibility-link" href="{{ CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF }}">{{ CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.TEXT }}</a></li>
+    <li data-cy="action-approved-broker">
+      <a class="govuk-link" data-cy="action-approved-broker-link"href="{{ CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.HREF }}">{{ CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT }}</a> {{ CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.TEXT }}
+    </li>
+  </ul>
+ 
+{% endblock %}

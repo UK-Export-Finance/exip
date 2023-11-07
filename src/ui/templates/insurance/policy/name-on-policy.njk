@@ -1,0 +1,138 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% import '../../components/submit-button.njk' as submitButton %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from 'govuk/components/radios/macro.njk' import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+      <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+    </div>
+  </div>
+
+   {{ govukHint({
+    text: CONTENT_STRINGS.HINT,
+    attributes: {
+    "data-cy": FIELDS.NAME_ON_POLICY.ID + "-hint"
+    }
+  }) }}
+
+
+  <form method="POST" id="form" novalidate>
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    {% set positionHTML %}
+
+      {{ govukInput({
+        id: FIELDS.POSITION.ID,
+        name: FIELDS.POSITION.ID,
+        value: submittedValues[FIELDS.POSITION.ID],
+        label: {
+          text:FIELDS.POSITION.LABEL,
+          classes: "govuk-body govuk-!-font-weight-bold",
+          attributes: {
+            id: FIELDS.POSITION.ID + '-label',
+            "data-cy": FIELDS.POSITION.ID + "-label"
+          }
+        },
+        classes: "govuk-input--width-20",
+        attributes: {
+          "data-cy": FIELDS.POSITION.ID + "-input"
+        },
+        errorMessage: validationErrors.errorList[FIELDS.POSITION.ID] and {
+          text: validationErrors.errorList[FIELDS.POSITION.ID].text,
+          attributes: {
+            "data-cy": FIELDS.POSITION.ID + "-error-message"
+          }
+        }
+      }) }}
+
+    {% endset %}
+
+    {{ govukRadios({
+      idPrefix: FIELDS.NAME_ON_POLICY.ID,
+      name: FIELDS.NAME_ON_POLICY.ID,
+      items: [
+        {
+          label: {
+            attributes: {
+              id: FIELDS.NAME_ON_POLICY.OPTIONS.SAME_NAME.ID + '-label',
+              'data-cy': FIELDS.NAME_ON_POLICY.OPTIONS.SAME_NAME.ID + '-label'
+            }
+          },
+          value: FIELDS.NAME_ON_POLICY.OPTIONS.SAME_NAME.VALUE ,
+          text: submittedValues[FIELDS.NAME_ON_POLICY.OPTIONS.SAME_NAME.ID],
+          attributes: {
+            "data-cy": FIELDS.NAME_ON_POLICY.OPTIONS.SAME_NAME.ID + "-input"
+          },
+          checked: submittedValues[FIELDS.NAME_ON_POLICY.ID] === FIELDS.NAME_ON_POLICY.OPTIONS.SAME_NAME.VALUE,
+          conditional: {
+            html: positionHTML
+          }
+        },
+        {
+          label: {
+            attributes: {
+              id: FIELDS.NAME_ON_POLICY.OPTIONS.OTHER_NAME.ID  + '-label',
+              'data-cy': FIELDS.NAME_ON_POLICY.OPTIONS.OTHER_NAME.ID + '-label'
+            }
+          },
+          value: FIELDS.NAME_ON_POLICY.OPTIONS.OTHER_NAME.VALUE,
+          text: FIELDS.NAME_ON_POLICY.OPTIONS.OTHER_NAME.TEXT,
+          attributes: {
+            "data-cy": FIELDS.NAME_ON_POLICY.OPTIONS.OTHER_NAME.ID + "-input"
+          },
+          checked: submittedValues[FIELDS.NAME_ON_POLICY.ID] === FIELDS.NAME_ON_POLICY.OPTIONS.OTHER_NAME.VALUE
+        }
+      ],
+      errorMessage: validationErrors.errorList[FIELDS.NAME_ON_POLICY.ID]and {
+        text: validationErrors.errorList[FIELDS.NAME_ON_POLICY.ID].text,
+        attributes: {
+          "data-cy": FIELDS.NAME_ON_POLICY.OPTIONS.SAME_NAME.ID + "-error-message"
+        }
+      }
+    }) }}
+
+    <div class="govuk-button-group">
+      {{ submitButton.render({
+        text: CONTENT_STRINGS.BUTTONS.CONTINUE
+      }) }}
+
+      {{ govukButton({
+        text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+        classes: "govuk-button--secondary",
+        attributes: {
+          formaction: SAVE_AND_BACK_URL,
+          'data-cy': 'save-and-back-button'
+        }
+      }) }}
+    </div>
+
+  </form>
+
+{% endblock %}

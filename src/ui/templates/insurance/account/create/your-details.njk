@@ -1,0 +1,184 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import '../../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <p data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
+
+  <form method="POST" id="form" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half-from-desktop">
+
+        {{ govukInput({
+          label: {
+            text: FIELDS.FIRST_NAME.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              id: FIELDS.FIRST_NAME.ID + '-label',
+              'data-cy': FIELDS.FIRST_NAME.ID + '-label'
+            }
+          },
+          attributes: {
+            'data-cy': FIELDS.FIRST_NAME.ID + '-input'
+          },
+          id: FIELDS.FIRST_NAME.ID,
+          name: FIELDS.FIRST_NAME.ID,
+          value: submittedValues[FIELDS.FIRST_NAME.ID],
+          errorMessage: validationErrors.errorList[FIELDS.FIRST_NAME.ID] and {
+            text: validationErrors.errorList[FIELDS.FIRST_NAME.ID].text,
+            attributes: {
+              "data-cy": FIELDS.FIRST_NAME.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text: FIELDS.LAST_NAME.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              id: FIELDS.LAST_NAME.ID + '-label',
+              'data-cy': FIELDS.LAST_NAME.ID + '-label'
+            }
+          },
+          attributes: {
+            'data-cy': FIELDS.LAST_NAME.ID + '-input'
+          },
+          id: FIELDS.LAST_NAME.ID,
+          name: FIELDS.LAST_NAME.ID,
+          value: submittedValues[FIELDS.LAST_NAME.ID],
+          errorMessage: validationErrors.errorList[FIELDS.LAST_NAME.ID] and {
+            text: validationErrors.errorList[FIELDS.LAST_NAME.ID].text,
+            attributes: {
+              "data-cy": FIELDS.LAST_NAME.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text: FIELDS.EMAIL.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              id: FIELDS.EMAIL.ID + '-label',
+              'data-cy': FIELDS.EMAIL.ID + '-label'
+            }
+          },
+          attributes: {
+            'data-cy': FIELDS.EMAIL.ID + '-input'
+          },
+          id: FIELDS.EMAIL.ID,
+          name: FIELDS.EMAIL.ID,
+          value: submittedValues[FIELDS.EMAIL.ID],
+          errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID] and {
+            text: validationErrors.errorList[FIELDS.EMAIL.ID].text,
+            attributes: {
+              "data-cy": FIELDS.EMAIL.ID + "-error-message"
+            }
+          }
+        }) }}
+
+      </div>
+    </div>
+
+    {% set PASSWORD_FIELD_ID = FIELDS.PASSWORD.ID %}
+
+    {% set passwordHintHtml %}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        <p class="govuk-hint" data-cy="{{ PASSWORD_FIELD_ID }}-hint-intro">{{ FIELDS.PASSWORD.HINT.INTRO }}</p>
+
+        <ul>
+          {% for rule in FIELDS.PASSWORD.HINT.RULES %}
+            <li data-cy="{{ PASSWORD_FIELD_ID }}-hint-list-item-{{ loop.index }}">{{ rule }}</li>
+          {% endfor %}
+        </ul>
+
+      </div>
+    </div>
+    {% endset %}
+
+    {{ govukInput({
+      label: {
+        text: FIELDS.PASSWORD.LABEL,
+        classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+        attributes: {
+          id: PASSWORD_FIELD_ID + '-label',
+          'data-cy': PASSWORD_FIELD_ID + '-label'
+        }
+      },
+      attributes: {
+        'data-cy': PASSWORD_FIELD_ID + '-input',
+        'data-module': 'moj-password-reveal'
+      },
+      id: PASSWORD_FIELD_ID,
+      name: PASSWORD_FIELD_ID,
+      type: 'password',
+      hint: {
+        html: passwordHintHtml
+      },
+      classes: "govuk-!-width-one-half",
+      value: submittedValues[PASSWORD_FIELD_ID],
+      errorMessage: validationErrors.errorList[PASSWORD_FIELD_ID] and {
+        text: validationErrors.errorList[PASSWORD_FIELD_ID].text,
+        attributes: {
+          "data-cy": PASSWORD_FIELD_ID + "-error-message"
+        }
+      }
+    }) }}
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <h2 class="govuk-heading-m" data-cy="privacy-notice-heading">{{ CONTENT_STRINGS.PRIVACY.HEADING }}</h1>
+
+        <p class="govuk-body" data-cy="privacy-notice-text">
+          {{ CONTENT_STRINGS.PRIVACY.MAIN_TEXT }} <a class="govuk-link" data-cy="privacy-notice-link" href="{{ CONTENT_STRINGS.PRIVACY.LINK.HREF }}">{{ CONTENT_STRINGS.PRIVACY.LINK.TEXT }}</a>
+        </p>
+      </div>
+    </div>
+
+    <div class="govuk-button-group govuk-!-margin-top-5">
+      {{ submitButton.render({
+        text: CONTENT_STRINGS.BUTTONS.CONTINUE
+      }) }}
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+    <h2 class="govuk-heading-m" data-cy="already-got-an-account">{{ CONTENT_STRINGS.ALREADY_GOT_AN_ACCOUNT }}</h2>
+
+    <a class="govuk-button govuk-button--secondary" href="{{ SIGN_IN_LINK }}" data-cy="sign-in">{{ CONTENT_STRINGS.BUTTONS.SIGN_IN }}</a>
+
+  </form>
+
+  <script src="/assets/js/mojFrontend.js" type="text/javascript" integrity="{{ SRI.MOJ }}" crossorigin="anonymous"></script>
+
+{% endblock %}

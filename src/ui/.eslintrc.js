@@ -11,7 +11,7 @@ module.exports = {
   plugins: ['@typescript-eslint', 'import', 'prettier'],
 
   parserOptions: {
-    project: './tsconfig.eslint.json',
+    project: './tsconfig.json',
     tsconfigRootDir: __dirname,
     ecmaVersion: 2020,
     sourceType: 'module',
@@ -30,7 +30,7 @@ module.exports = {
     },
   },
   rules: {
-    'import/no-unresolved': 'error',
+    'import/no-unresolved': [2, { caseSensitive: false }],
     '@typescript-eslint/indent': ['error', 2],
     'prettier/prettier': [
       'error',
@@ -74,5 +74,12 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    'prefer-destructuring': [
+      'error',
+      {
+        array: true,
+        object: true,
+      },
+    ],
   },
 };

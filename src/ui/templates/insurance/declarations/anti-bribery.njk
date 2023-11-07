@@ -1,0 +1,103 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% import '../../components/keystone/document/index.njk' as keystoneDocument %}
+{% import '../../components/declarations/anti-bribery/expandable-content.njk' as expandableContent %}
+{% import '../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+  <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+
+      {{ keystoneDocument.render({
+        document: documentContent,
+        listItemClass: documentConfig.listItemClass,
+        firstLevelListClass: documentConfig.firstLevelListClass,
+        secondLevelListClass: documentConfig.secondLevelListClass,
+        thirdLevelListClass: documentConfig.thirdLevelListClass
+      }) }}
+
+    </div>
+  </div>
+
+  {{ expandableContent.render({
+    CONTENT: CONTENT_STRINGS.EXPANDABLE
+  }) }}
+
+  <form method="POST" id="form" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    {% set legendHtml %}
+      <span class="govuk-fieldset__legend govuk-fieldset__legend--m" data-cy="{{ FIELD.ID }}-label">{{ FIELD.LABEL }}</span>
+    {% endset %}
+
+    {{ govukCheckboxes({
+      name: FIELD.ID,
+      classes: "govuk-checkboxes--small",
+      fieldset: {
+        legend: {
+          html: legendHtml
+        }
+      },
+      items: [
+        {
+          text: FIELD.OPTION.TEXT,
+          value: FIELD.OPTION.VALUE,
+          attributes: {
+            'data-cy': FIELD.ID + '-input'
+          },
+          checked: application.declaration[FIELD.ID]
+        }
+      ],
+      errorMessage: validationErrors.errorList[FIELD.ID] and {
+        text: validationErrors.errorList[FIELD.ID].text,
+        attributes: {
+          "data-cy": FIELD.ID + "-error-message"
+        }
+      }
+    }) }}
+
+    <div class="govuk-button-group">
+      {{ submitButton.render({
+        text: CONTENT_STRINGS.BUTTONS.CONTINUE
+      }) }}
+
+      {{ govukButton({
+        text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+        classes: "govuk-button--secondary",
+        attributes: {
+          formaction: SAVE_AND_BACK_URL,
+          'data-cy': 'save-and-back-button'
+        }
+      }) }}
+    </div>
+
+  </form>
+
+{% endblock %}

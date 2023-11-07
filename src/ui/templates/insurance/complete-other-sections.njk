@@ -1,0 +1,24 @@
+{% extends 'index.njk' %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      
+      <p class="govuk-body" data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
+
+      <p class="govuk-body">
+        <span data-cy="can-access-other-sections">{{ CONTENT_STRINGS.CAN_ACCESS_OTHER_SECTIONS }}</span>
+        <a class="govuk-link" href="{{ TASK_LIST_URL }}" data-cy="task-list-link">{{ CONTENT_STRINGS.TASK_LIST }}</a>
+      </p>
+
+    </div>
+  </div>
+
+{% endblock %}

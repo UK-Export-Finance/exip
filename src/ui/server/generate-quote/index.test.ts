@@ -4,7 +4,12 @@ import { getPremiumRate } from './get-premium-rate';
 import { getPercentageOfNumber } from '../helpers/number';
 import { mockSession } from '../test-mocks';
 
-const { BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, POLICY_TYPE, POLICY_LENGTH, QUOTE } = FIELD_IDS;
+const {
+  ELIGIBILITY: { BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
+  QUOTE,
+  POLICY_TYPE,
+  POLICY_LENGTH,
+} = FIELD_IDS;
 
 describe('server/generate-quote/index', () => {
   describe('getContractValue', () => {
@@ -24,11 +29,11 @@ describe('server/generate-quote/index', () => {
       });
     });
 
-    describe('when policy type is multi', () => {
+    describe('when policy type is multiple', () => {
       it('should return max amount owed', () => {
         const mockSubmittedData = {
           [MAX_AMOUNT_OWED]: 5678,
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         };
 
         const result = getContractValue(mockSubmittedData);
@@ -49,29 +54,33 @@ describe('server/generate-quote/index', () => {
 
   describe('getInsuredFor', () => {
     describe('when policy type is single', () => {
-      it('should return pecentage of contract value', () => {
+      it('should return percentage of contract value', () => {
         const mockSubmittedData = {
-          [CONTRACT_VALUE]: 1234,
-          [PERCENTAGE_OF_COVER]: 80,
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+          quoteEligibility: {
+            [CONTRACT_VALUE]: 1234,
+            [PERCENTAGE_OF_COVER]: 80,
+            [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+          },
         };
 
-        const result = getInsuredFor(mockSubmittedData);
+        const result = getInsuredFor(mockSubmittedData.quoteEligibility);
         const expected = Number(getPercentageOfNumber(80, 1234));
 
         expect(result).toEqual(expected);
       });
     });
 
-    describe('when policy type is multi', () => {
-      it('should return pecentage of max amount owed', () => {
+    describe('when policy type is multiple', () => {
+      it('should return percentage of max amount owed', () => {
         const mockSubmittedData = {
-          [MAX_AMOUNT_OWED]: 5678,
-          [PERCENTAGE_OF_COVER]: 80,
-          [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
+          quoteEligibility: {
+            [MAX_AMOUNT_OWED]: 5678,
+            [PERCENTAGE_OF_COVER]: 80,
+            [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+          },
         };
 
-        const result = getInsuredFor(mockSubmittedData);
+        const result = getInsuredFor(mockSubmittedData.quoteEligibility);
         const expected = Number(getPercentageOfNumber(80, 5678));
 
         expect(result).toEqual(expected);
@@ -99,10 +108,10 @@ describe('server/generate-quote/index', () => {
       });
     });
 
-    describe('when policy type is multi', () => {
+    describe('when policy type is multiple', () => {
       it('should return the total of credit period + policy length + business buffer months', () => {
-        const mockPolicyType = FIELD_VALUES.POLICY_TYPE.MULTI;
-        const mockPolicyLength = FIELD_VALUES.POLICY_LENGTH.MULTI;
+        const mockPolicyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+        const mockPolicyLength = FIELD_VALUES.POLICY_LENGTH.MULTIPLE;
         const mockCreditPeriod = 2;
 
         const result = getTotalMonths(mockPolicyType, mockPolicyLength, mockCreditPeriod);
@@ -113,7 +122,7 @@ describe('server/generate-quote/index', () => {
       });
     });
 
-    describe('when policy type is not single or multi (invalid)', () => {
+    describe('when policy type is not single or multiple(invalid)', () => {
       it('should return 0', () => {
         const mockPolicyType = 'incorrect';
         const mockPolicyLength = 1;
@@ -147,29 +156,30 @@ describe('server/generate-quote/index', () => {
 
       const mockPercentageOfCover = 90;
 
-      const expectedTotalMonths = getTotalMonths(mockSubmittedData[POLICY_TYPE], mockSubmittedData[POLICY_LENGTH], mockSubmittedData[CREDIT_PERIOD]);
+      const { quoteEligibility } = mockSubmittedData;
+      const expectedTotalMonths = getTotalMonths(quoteEligibility[POLICY_TYPE], quoteEligibility[POLICY_LENGTH], quoteEligibility[CREDIT_PERIOD]);
 
       const expectedPremiumRate = getPremiumRate(
-        mockSubmittedData[POLICY_TYPE],
-        mockSubmittedData[BUYER_COUNTRY].riskCategory,
+        mockSubmittedData.quoteEligibility[POLICY_TYPE],
+        mockSubmittedData.quoteEligibility[BUYER_COUNTRY].riskCategory,
         expectedTotalMonths,
         mockPercentageOfCover,
       );
 
       const expected = {
-        ...getContractValue(mockSubmittedData),
-        [PERCENTAGE_OF_COVER]: mockSubmittedData[PERCENTAGE_OF_COVER],
-        [QUOTE.INSURED_FOR]: getInsuredFor(mockSubmittedData),
-        [QUOTE.BUYER_LOCATION]: mockSubmittedData[BUYER_COUNTRY],
-        [CURRENCY]: mockSubmittedData[CURRENCY],
-        [CREDIT_PERIOD]: mockSubmittedData[CREDIT_PERIOD],
-        [POLICY_TYPE]: mockSubmittedData[POLICY_TYPE],
-        [POLICY_LENGTH]: mockSubmittedData[POLICY_LENGTH],
+        ...getContractValue(mockSubmittedData.quoteEligibility),
+        [PERCENTAGE_OF_COVER]: mockSubmittedData.quoteEligibility[PERCENTAGE_OF_COVER],
+        [QUOTE.INSURED_FOR]: getInsuredFor(mockSubmittedData.quoteEligibility),
+        [QUOTE.BUYER_LOCATION]: mockSubmittedData.quoteEligibility[BUYER_COUNTRY],
+        [CURRENCY]: mockSubmittedData.quoteEligibility[CURRENCY],
+        [CREDIT_PERIOD]: mockSubmittedData.quoteEligibility[CREDIT_PERIOD],
+        [POLICY_TYPE]: mockSubmittedData.quoteEligibility[POLICY_TYPE],
+        [POLICY_LENGTH]: mockSubmittedData.quoteEligibility[POLICY_LENGTH],
       };
 
       expected[QUOTE.PREMIUM_RATE_PERCENTAGE] = expectedPremiumRate;
 
-      const contractValueAmount = Object.values(getContractValue(mockSubmittedData))[0];
+      const [contractValueAmount] = Object.values(getContractValue(mockSubmittedData.quoteEligibility));
 
       expected[QUOTE.ESTIMATED_COST] = calculateEstimatedCost(expectedPremiumRate, contractValueAmount);
 

@@ -1,0 +1,86 @@
+{% extends 'index.njk' %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% import '../../components/status-tag.njk' as statusTag %}
+{% import '../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% set html %}
+    <p class="govuk-notification-banner__heading" data-cy="change-eligibility-banner">{{ CONTENT_STRINGS.CHANGE_ELIGIBILITY }} <a class="govuk-notification-banner__link" href="{{ START_NEW_APPLICATION }}" data-cy="change-eligibility-link">{{ CONTENT_STRINGS.CHANGE_ELIGIBILITY_LINK }}</a></p>
+  {% endset %}
+
+  {% if renderNotificationBanner %}
+    {{ govukNotificationBanner({
+      html: html
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full-from-desktop">
+      <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+      <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full-from-desktop govuk-!-margin-bottom-5">
+      {{ statusTag.render({
+        status: status,
+        dataCy: "status"
+      }) }}
+    </div>
+  </div>
+
+  {{ govukSummaryList({
+    rows: SUMMARY_LIST
+  }) }}
+
+  <form method="POST" id="form" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <input type="hidden" name="{{ FIELD.ID }}" value="{{ FIELD.VALUE }}">
+
+    <div class="govuk-button-group">
+      {{ submitButton.render({
+        text: CONTENT_STRINGS.BUTTONS.CONFIRM_AND_CONTINUE
+      }) }}
+
+      {% if eligibility %}
+
+      <a class="govuk-button govuk-button--secondary" href="{{ START_NEW_APPLICATION }}" data-cy="save-and-back-button">{{ CONTENT_STRINGS.CHANGE_ANSWERS }}</a>
+
+      {% else %}
+
+      {{ govukButton({
+        text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+        classes: "govuk-button--secondary",
+        attributes: {
+          formaction: SAVE_AND_BACK_URL,
+          'data-cy': 'save-and-back-button'
+        }
+      }) }}
+
+      {% endif %}
+    </div>
+
+  </form>
+
+
+{% endblock %}

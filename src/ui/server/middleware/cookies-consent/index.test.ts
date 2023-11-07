@@ -2,6 +2,7 @@ import * as dotenv from 'dotenv';
 import { mockNext, mockReq, mockRes } from '../../test-mocks';
 import { Request, Response } from '../../../types';
 import { cookiesConsent } from '.';
+import { COOKIE } from '../../constants';
 
 dotenv.config();
 
@@ -22,9 +23,42 @@ describe('middleware/cookies-consent', () => {
     });
   });
 
+  describe("when req.cookies['__Secure-optionalCookies'] exists", () => {
+    beforeEach(() => {
+      req.cookies[COOKIE.NAME.OPTION] = 'mock';
+      req.cookies.optionalCookies = undefined;
+    });
+
+    it('should add cookieConsentDecision=true to res.locals', () => {
+      cookiesConsent(req, res, next);
+
+      expect(res.locals.cookieConsentDecision).toEqual(true);
+    });
+  });
+
   describe('when req.cookies.optionalCookies is `true`', () => {
     beforeEach(() => {
       req.cookies.optionalCookies = 'true';
+      req.cookies[COOKIE.NAME.OPTION] = undefined;
+    });
+
+    it('should add cookieConsent=true to res.locals', () => {
+      cookiesConsent(req, res, next);
+
+      expect(res.locals.cookieConsent).toEqual(true);
+    });
+
+    it('should add process.env.GOOGLE_ANALYTICS_ID to res.locals.googleAnalyticsId', () => {
+      cookiesConsent(req, res, next);
+
+      expect(res.locals.googleAnalyticsId).toEqual(process.env.GOOGLE_ANALYTICS_ID);
+    });
+  });
+
+  describe("when req.cookies['__Secure-optionalCookies'] is `true`", () => {
+    beforeEach(() => {
+      req.cookies[COOKIE.NAME.OPTION] = 'true';
+      req.cookies.optionalCookies = undefined;
     });
 
     it('should add cookieConsent=true to res.locals', () => {
@@ -43,6 +77,7 @@ describe('middleware/cookies-consent', () => {
   describe('when req.cookies.optionalCookies is NOT `true`', () => {
     beforeEach(() => {
       req.cookies.optionalCookies = 'false';
+      req.cookies[COOKIE.NAME.OPTION] = undefined;
     });
 
     it('should add cookieConsent=false to res.locals', () => {

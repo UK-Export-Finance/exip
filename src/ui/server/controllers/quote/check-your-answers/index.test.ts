@@ -1,31 +1,39 @@
-import { PAGE_VARIABLES, get, post } from '.';
-import { BUTTONS, COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
-import { FIELD_IDS, FIELD_VALUES, ROUTES, TEMPLATES } from '../../../constants';
+import { TEMPLATE, get, post } from '.';
+import { PAGES } from '../../../content-strings';
+import { FIELD_IDS, FIELD_VALUES, GBP_CURRENCY_CODE, ROUTES, TEMPLATES } from '../../../constants';
 import { mapAnswersToContent } from '../../../helpers/data-content-mappings/map-answers-to-content';
 import { answersSummaryList } from '../../../helpers/summary-lists/answers-summary-list';
-import { mockAnswers, mockReq, mockRes } from '../../../test-mocks';
+import corePageVariables from '../../../helpers/page-variables/core/quote';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
+import { mockAnswers, mockReq, mockRes } from '../../../test-mocks';
 
-const { BUYER_COUNTRY, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, POLICY_TYPE, HAS_MINIMUM_UK_GOODS_OR_SERVICES, VALID_COMPANY_BASE } = FIELD_IDS;
+const {
+  ELIGIBILITY: { BUYER_COUNTRY, CREDIT_PERIOD, CURRENCY, MAX_AMOUNT_OWED, HAS_MINIMUM_UK_GOODS_OR_SERVICES, VALID_EXPORTER_LOCATION },
+  POLICY_TYPE,
+} = FIELD_IDS;
 
 describe('controllers/quote/check-your-answers', () => {
   let req: Request;
   let res: Response;
 
   const mockSessionData = {
-    [BUYER_COUNTRY]: {
-      name: mockAnswers[BUYER_COUNTRY],
-      isoCode: 'FRA',
+    quoteEligibility: {
+      [BUYER_COUNTRY]: {
+        name: mockAnswers[BUYER_COUNTRY],
+        isoCode: 'FRA',
+      },
+      [CREDIT_PERIOD]: 2,
+      [CURRENCY]: {
+        name: 'UK Sterling',
+        isoCode: GBP_CURRENCY_CODE,
+      },
+      [MAX_AMOUNT_OWED]: 1234,
+      [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+      [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
+      [VALID_EXPORTER_LOCATION]: true,
     },
-    [CREDIT_PERIOD]: 2,
-    [CURRENCY]: {
-      name: 'UK Sterling',
-      isoCode: 'GBP',
-    },
-    [MAX_AMOUNT_OWED]: 1234,
-    [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.MULTI,
-    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
-    [VALID_COMPANY_BASE]: true,
+    insuranceEligibility: {},
   };
 
   beforeEach(() => {
@@ -37,20 +45,9 @@ describe('controllers/quote/check-your-answers', () => {
     res = mockRes();
   });
 
-  describe('PAGE_VARIABLES', () => {
-    it('should have correct properties', () => {
-      const expected = {
-        CONTENT_STRINGS: {
-          BUTTONS,
-          COOKIES_CONSENT,
-          FOOTER,
-          LINKS,
-          PRODUCT,
-          ...PAGES.CHECK_YOUR_ANSWERS_PAGE,
-        },
-      };
-
-      expect(PAGE_VARIABLES).toEqual(expected);
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.QUOTE.CHECK_YOUR_ANSWERS);
     });
   });
 
@@ -58,13 +55,13 @@ describe('controllers/quote/check-your-answers', () => {
     it('should render template', () => {
       get(req, res);
 
-      const answers = mapAnswersToContent(mockSessionData);
+      const answers = mapAnswersToContent(mockSessionData.quoteEligibility);
 
       const expectedSummaryList = answersSummaryList(answers);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATES.QUOTE.CHECK_YOUR_ANSWERS, {
-        ...PAGE_VARIABLES,
-        BACK_LINK: req.headers.referer,
+        ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.CHECK_YOUR_ANSWERS, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
+        userName: getUserNameFromSession(req.session.user),
         SUMMARY_LIST: expectedSummaryList,
       });
     });

@@ -1,32 +1,23 @@
-import { BUTTONS, COOKIES_CONSENT, FOOTER, LINKS, PAGES, PRODUCT } from '../../../content-strings';
+import { PAGES } from '../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../constants';
 import { mapAnswersToContent } from '../../../helpers/data-content-mappings/map-answers-to-content';
 import { answersSummaryList } from '../../../helpers/summary-lists/answers-summary-list';
+import corePageVariables from '../../../helpers/page-variables/core/quote';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
 
-const PAGE_VARIABLES = {
-  CONTENT_STRINGS: {
-    BUTTONS,
-    COOKIES_CONSENT,
-    FOOTER,
-    LINKS,
-    PRODUCT,
-    ...PAGES.CHECK_YOUR_ANSWERS_PAGE,
-  },
-};
+export const TEMPLATE = TEMPLATES.QUOTE.CHECK_YOUR_ANSWERS;
 
-const get = async (req: Request, res: Response) => {
-  const answers = mapAnswersToContent(req.session.submittedData);
+export const get = (req: Request, res: Response) => {
+  const answers = mapAnswersToContent(req.session.submittedData.quoteEligibility);
 
   const summaryList = answersSummaryList(answers);
 
-  return res.render(TEMPLATES.QUOTE.CHECK_YOUR_ANSWERS, {
-    ...PAGE_VARIABLES,
-    BACK_LINK: req.headers.referer,
+  return res.render(TEMPLATE, {
+    ...corePageVariables({ PAGE_CONTENT_STRINGS: PAGES.QUOTE.CHECK_YOUR_ANSWERS, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
+    userName: getUserNameFromSession(req.session.user),
     SUMMARY_LIST: summaryList,
   });
 };
 
-const post = (req: Request, res: Response) => res.redirect(ROUTES.QUOTE.YOUR_QUOTE);
-
-export { PAGE_VARIABLES, get, post };
+export const post = (req: Request, res: Response) => res.redirect(ROUTES.QUOTE.YOUR_QUOTE);

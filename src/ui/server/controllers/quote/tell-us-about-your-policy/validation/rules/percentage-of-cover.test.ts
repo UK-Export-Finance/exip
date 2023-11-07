@@ -1,25 +1,29 @@
-import rule from './percentage-of-cover';
+import percentageOfCoverRules from './percentage-of-cover';
 import { FIELD_IDS } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
-import generateValidationErrors from '../../../../../helpers/validation';
+import emptyFieldValidation from '../../../../../shared-validation/empty-field';
+
+const {
+  ELIGIBILITY: { PERCENTAGE_OF_COVER: FIELD_ID },
+} = FIELD_IDS;
+
+const ERROR_MESSAGE = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
 
 describe('controllers/quote/tell-us-about-your-policy/validation/rules/percentage-of-cover', () => {
+  const mockBody = {
+    [FIELD_ID]: '',
+  };
+
   const mockErrors = {
     summary: [],
     errorList: {},
   };
 
-  describe(`when ${FIELD_IDS.PERCENTAGE_OF_COVER} is not provided`, () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {
-        [FIELD_IDS.PERCENTAGE_OF_COVER]: '',
-      };
+  it('should return the result of emptyFieldValidation', () => {
+    const result = percentageOfCoverRules(mockBody, mockErrors);
 
-      const result = rule(mockSubmittedData, mockErrors);
+    const expected = emptyFieldValidation(mockBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_IDS.PERCENTAGE_OF_COVER, ERROR_MESSAGES[FIELD_IDS.PERCENTAGE_OF_COVER].IS_EMPTY, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
+    expect(result).toEqual(expected);
   });
 });

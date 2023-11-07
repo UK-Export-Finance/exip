@@ -1,22 +1,97 @@
-version: "3"
+version: '3.8'
+
 services:
-  ui:
-    build: ./src/ui
-    image: exip/src/ui
+  database:
+    image: mysql
+    container_name: exip_db
     restart: always
+    command: --default-authentication-plugin=mysql_native_password
     ports:
-      - "5000:5000"
+      - '${DATABASE_PORT}:${DATABASE_PORT}'
+    volumes:
+      - ./database/exip.sql:/docker-entrypoint-initdb.d/database.sql:rw
+    environment:
+      MYSQL_DATABASE:
+      MYSQL_ROOT_PASSWORD:
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      retries: 3
+      interval: 60s
+      timeout: 10s
+      start_period: 60s
+
+  api:
+    build:
+      context: ./src/api
+      args:
+        PORT: ${API_PORT}
+        SESSION_SECRET: ${SESSION_SECRET}
+        GOV_NOTIFY_API_KEY: ${GOV_NOTIFY_API_KEY}
+    image: api
+    container_name: exip_api
+    restart: always
+    command: npm run start
+    depends_on:
+      - database
+    ports:
+      - '${API_PORT}:${API_PORT}'
+    volumes:
+      - ./.api/src:/app/src:ro
+      - ./.api/src/.keystone:/app/src/.keystone:ro
+    environment:
+      TLS_CERTIFICATE:
+      TLS_KEY:
+      NODE_ENV:
+      TZ:
+      PORT: ${API_PORT}
+      DATABASE_URL:
+      API_KEY:
+      SESSION_SECRET:
+      COMPANIES_HOUSE_API_URL:
+      COMPANIES_HOUSE_API_KEY:
+      JWT_SIGNING_KEY:
+      GOV_NOTIFY_API_KEY:
+      GOV_NOTIFY_EMAIL_RECIPIENT_1:
+      GOV_NOTIFY_EMAIL_RECIPIENT_2:
+      UNDERWRITING_TEAM_EMAIL:
+      FEEDBACK_EMAIL_RECIPIENT:
+      MOCK_ACCOUNT_PASSWORD:
+      APIM_MDM_URL:
+      APIM_MDM_KEY:
+      APIM_MDM_VALUE:
+
+  ui:
+    build:
+      context: ./src/ui
+      args:
+        PORT: ${UI_PORT}
+    image: ui
+    container_name: exip_ui
+    restart: always
+    depends_on:
+      - database
+      - api
+    ports:
+      - '${UI_PORT}:${UI_PORT}'
     volumes:
       - ./src/ui/server:/app/server:ro
       - ./src/ui/public:/app/public:ro
       - ./src/ui/templates:/app/templates:ro
     environment:
-      - PORT=5000
-      - NODE_ENV
-      - BASIC_AUTH_KEY
-      - BASIC_AUTH_SECRET
-      - GOOGLE_ANALYTICS_ID
-      - APIM_MDM_URL
-      - APIM_MDM_KEY
-      - APIM_MDM_VALUE
-    entrypoint: npx nodemon src/index.ts -L
+      TLS_CERTIFICATE:
+      TLS_KEY:
+      NODE_ENV:
+      TZ:
+      PORT: ${UI_PORT}
+      API_URL:
+      API_KEY:
+      SESSION_SECRET:
+      APIM_MDM_URL:
+      APIM_MDM_KEY:
+      APIM_MDM_VALUE:
+      GOOGLE_ANALYTICS_ID:
+      GOV_NOTIFY_EMAIL_RECIPIENT_1:
+      GOV_NOTIFY_EMAIL_RECIPIENT_2:
+      UNDERWRITING_TEAM_EMAIL:
+      MOCK_ACCOUNT_PASSWORD:
+    command: npx nodemon server/index.ts -L

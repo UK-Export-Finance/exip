@@ -2,6 +2,7 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% import '../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -13,11 +14,11 @@
     text: CONTENT_STRINGS.LINKS.BACK,
     href: BACK_LINK,
     attributes: {
-      "data-cy": "back-link"
+      "data-cy": DATA_CY.BACK_LINK
     }
   }) }}
 
-  <h1 class="govuk-heading-l" data-cy="heading">{{ CONTENT_STRINGS.HEADING }}</h1>
+  <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
   <h2 class="govuk-heading-m" data-cy="summaryList-heading-export">{{ SUMMARY_LIST.EXPORT.GROUP_TITLE }}</h2>
 
@@ -33,15 +34,12 @@
     rows: SUMMARY_LIST.POLICY.ROWS
   }) }}
 
-  <form method="POST" novalidate>
+  <form method="POST" id="form" novalidate>
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
-    {{ govukButton({
-      text: CONTENT_STRINGS.SUBMIT_BUTTON,
-      attributes: {
-        'data-cy': 'submit-button'
-      }
+    {{ submitButton.render({
+      text: CONTENT_STRINGS.SUBMIT_BUTTON
     }) }}
 
   </form>

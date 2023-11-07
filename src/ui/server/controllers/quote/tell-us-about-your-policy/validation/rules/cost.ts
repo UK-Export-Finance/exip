@@ -1,6 +1,6 @@
 import { FIELD_IDS } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
-import { isSinglePolicyType, isMultiPolicyType } from '../../../../../helpers/policy-type';
+import { isSinglePolicyType, isMultiplePolicyType } from '../../../../../helpers/policy-type';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { objectHasProperty } from '../../../../../helpers/object';
 import { numberHasDecimal } from '../../../../../helpers/number';
@@ -9,10 +9,15 @@ import { RequestBody } from '../../../../../../types';
 
 const MINIMUM = 1;
 
-const hasDisllowedCharacters = (str: string) => {
-  const disllowedValues = str.replace(/[0-9,]/g, '');
+const {
+  ELIGIBILITY: { CONTRACT_VALUE, MAX_AMOUNT_OWED },
+  POLICY_TYPE,
+} = FIELD_IDS;
 
-  if (disllowedValues.length) {
+const hasDisallowedCharacters = (str: string) => {
+  const disallowedValues = str.replace(/[0-9,]/g, '');
+
+  if (disallowedValues.length) {
     return true;
   }
 
@@ -24,36 +29,37 @@ const costRules = (formBody: RequestBody, errors: object) => {
 
   let fieldId!: string;
 
-  if (isSinglePolicyType(formBody[FIELD_IDS.POLICY_TYPE])) {
-    fieldId = FIELD_IDS.CONTRACT_VALUE;
+  if (isSinglePolicyType(formBody[POLICY_TYPE])) {
+    fieldId = CONTRACT_VALUE;
   }
 
-  if (isMultiPolicyType(formBody[FIELD_IDS.POLICY_TYPE])) {
-    fieldId = FIELD_IDS.MAX_AMOUNT_OWED;
+  if (isMultiplePolicyType(formBody[POLICY_TYPE])) {
+    fieldId = MAX_AMOUNT_OWED;
   }
 
   if (!objectHasProperty(formBody, fieldId)) {
-    updatedErrors = generateValidationErrors(fieldId, ERROR_MESSAGES[fieldId].IS_EMPTY, errors);
+    updatedErrors = generateValidationErrors(fieldId, ERROR_MESSAGES.ELIGIBILITY[fieldId].IS_EMPTY, errors);
 
     return updatedErrors;
   }
 
   if (numberHasDecimal(formBody[fieldId])) {
-    updatedErrors = generateValidationErrors(fieldId, ERROR_MESSAGES[fieldId].NOT_A_WHOLE_NUMBER, errors);
+    updatedErrors = generateValidationErrors(fieldId, ERROR_MESSAGES.ELIGIBILITY[fieldId].NOT_A_WHOLE_NUMBER, errors);
 
     return updatedErrors;
   }
 
-  if (hasDisllowedCharacters(formBody[fieldId])) {
-    updatedErrors = generateValidationErrors(fieldId, ERROR_MESSAGES[fieldId].NOT_A_NUMBER, errors);
+  if (hasDisallowedCharacters(formBody[fieldId])) {
+    updatedErrors = generateValidationErrors(fieldId, ERROR_MESSAGES.ELIGIBILITY[fieldId].NOT_A_NUMBER, errors);
 
     return updatedErrors;
   }
 
+  // strip commas - commas are valid.
   const cleanString = stripCommas(formBody[fieldId]);
 
   if (Number(cleanString) < MINIMUM) {
-    updatedErrors = generateValidationErrors(fieldId, ERROR_MESSAGES[fieldId].BELOW_MINIMUM, errors);
+    updatedErrors = generateValidationErrors(fieldId, ERROR_MESSAGES.ELIGIBILITY[fieldId].BELOW_MINIMUM, errors);
 
     return updatedErrors;
   }
@@ -61,4 +67,4 @@ const costRules = (formBody: RequestBody, errors: object) => {
   return updatedErrors;
 };
 
-export { hasDisllowedCharacters, costRules };
+export { hasDisallowedCharacters, costRules };

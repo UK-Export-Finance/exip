@@ -1,0 +1,348 @@
+# EXIP Git Hub Actions
+#####################################
+# This GHA is responsible for initiating various test suites
+# upon a PR creation, to ensure PR is healthy, bug-free and
+# adheres to pre-written unit, API and E2E tests.
+
+name: Quality Assurance - Tests
+run-name: Executing test QA on ${{ github.repository }} 🚀
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/test.yml"
+      - "src/**"
+      - "e2e-tests/**"
+      - "generate-exip-pricing-grid/**"
+      - "package*.json"
+
+env:
+  environment: "qa"
+  timezone: "Europe/London"
+  NODE_ENV: ${{ vars.NODE_ENV }}
+  TLS_CERTIFICATE: "${{ secrets.TLS_CERTIFICATE }}"
+  TLS_KEY: "${{ secrets.TLS_KEY }}"
+  DATABASE_PORT: ${{ vars.DATABASE_PORT }}
+  API_PORT: ${{ vars.API_PORT }}
+  UI_PORT: ${{ vars.UI_PORT }}
+  API_URL: ${{ secrets.API_URL }}
+  API_KEY: ${{ secrets.API_KEY }}
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+  MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+  SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+  APIM_MDM_URL: ${{ secrets.APIM_MDM_URL }}
+  APIM_MDM_KEY: ${{ secrets.APIM_MDM_KEY }}
+  APIM_MDM_VALUE: ${{ secrets.APIM_MDM_VALUE }}
+  GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
+  GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
+  COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
+  COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
+  GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
+  GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
+  UNDERWRITING_TEAM_EMAIL: ${{ secrets.UNDERWRITING_TEAM_EMAIL }}
+  FEEDBACK_EMAIL_RECIPIENT: ${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
+  MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+  JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
+
+jobs:
+  # 1. Setup test infrastructure
+  setup:
+    name: Infrastructure setup 🔧
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ env.environment }}
+      timezone: ${{ env.timezone }}
+    steps:
+      - name: Environment 🧪
+        run: echo 'Environment set to ${{ env.environment }}'
+
+      - name: Timezone 🌐
+        run: echo 'Timezone set to ${{ env.timezone }}'
+
+  # 2. UI - Unit test cases
+  unit-tests:
+    name: Unit 👷
+    needs: [setup]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: unit-tests-${{ github.workflow }}-${{ github.workflow_ref }}
+      cancel-in-progress: true
+
+    steps:
+      - name: Timezone
+        uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Repository
+        uses: actions/checkout@v4
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: UI
+        working-directory: ./src/ui
+        env:
+          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+          GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
+          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
+          GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
+          MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+        run: |
+          npm ci --legacy-peer-deps
+          npm run test
+
+  # 3. API - API test cases
+  api-tests:
+    name: API 👷
+    needs: [setup]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: api-tests-${{ github.workflow }}-${{ github.workflow_ref }}
+      cancel-in-progress: true
+
+    steps:
+      - name: Timezone
+        uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Repository
+        uses: actions/checkout@v4
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
+      - name: API
+        working-directory: ./
+        env:
+          NODE_ENV: ${{ vars.NODE_ENV }}
+          TLS_CERTIFICATE: "${{ secrets.TLS_CERTIFICATE }}"
+          TLS_KEY: "${{ secrets.TLS_KEY }}"
+          DATABASE_PORT: ${{ vars.DATABASE_PORT }}
+          API_PORT: ${{ vars.API_PORT }}
+          UI_PORT: ${{ vars.UI_PORT }}
+          API_URL: ${{ secrets.API_URL_LOCAL }}
+          API_KEY: ${{ secrets.API_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL_LOCAL }}
+          MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_ROOT_PASSWORD }}
+          SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+          APIM_MDM_URL: ${{ secrets.APIM_MDM_URL }}
+          APIM_MDM_KEY: ${{ secrets.APIM_MDM_KEY }}
+          APIM_MDM_VALUE: ${{ secrets.APIM_MDM_VALUE }}
+          GOOGLE_ANALYTICS_ID: ${{ secrets.GOOGLE_ANALYTICS_ID }}
+          GOV_NOTIFY_API_KEY: ${{ secrets.GOV_NOTIFY_API_KEY }}
+          COMPANIES_HOUSE_API_URL: ${{ secrets.COMPANIES_HOUSE_API_URL }}
+          COMPANIES_HOUSE_API_KEY: ${{ secrets.COMPANIES_HOUSE_API_KEY }}
+          GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
+          GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
+          UNDERWRITING_TEAM_EMAIL: ${{ secrets.UNDERWRITING_TEAM_EMAIL }}
+          FEEDBACK_EMAIL_RECIPIENT: ${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}
+          MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
+          JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
+        run: |
+          docker-compose up --build -d
+          npm ci --legacy-peer-deps --prefix ./src/api
+          npm run test --prefix ./src/api
+
+  # 4. E2E - Insurance
+  e2e-tests-insurance:
+    name: E2E Insurance 👷
+    needs: [setup]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
+      # Single dimension matrix
+      matrix:
+        spec:
+          [
+            "/*.spec.js",
+            "account/create/**/*.spec.js",
+            "account/manage/**/*.spec.js",
+            "account/password-reset/**/*.spec.js",
+            "account/reactivated/**/*.spec.js",
+            "account/sign-in/**/*.spec.js",
+            "account/sign-out/**/*.spec.js",
+            "account/suspended/**/*.spec.js",
+            "application-submission/*.spec.js",
+            "application-submission/multiple-policy-type/**/*.spec.js",
+            "application-submission/single-policy-type/**/*.spec.js",
+            "cannot-skip-flow/**/*.spec.js",
+            "check-your-answers/eligibility/**/*.spec.js",
+            "check-your-answers/need-to-start-new-application/**/*.spec.js",
+            "check-your-answers/policy/**/*.spec.js",
+            "check-your-answers/your-business/**/*.spec.js",
+            "check-your-answers/your-buyer/**/*.spec.js",
+            "dashboard/**/*.spec.js",
+            "declarations/anti-bribery/**/*.spec.js",
+            "declarations/confidentiality/**/*.spec.js",
+            "declarations/confirmation-and-acknowledgements/**/*.spec.js",
+            "declarations/how-your-data-will-be-used/**/*.spec.js",
+            "eligibility/**/*.spec.js",
+            "feedback/**/*.spec.js",
+            "no-access-application-submitted/**/*.spec.js",
+            "no-access-to-application/**/*.spec.js",
+            "policy/*.spec.js",
+            "policy/about-goods-or-services/**/*.spec.js",
+            "policy/change-your-answers/**/*.spec.js",
+            "policy/check-your-answers/**/*.spec.js",
+            "policy/different-name-on-policy/**/*.spec.js",
+            "policy/multiple-contract-policy/**/*.spec.js",
+            "policy/name-on-policy/**/*.spec.js",
+            "policy/single-contract-policy/**/*.spec.js",
+            "policy/type-of-policy/**/*.spec.js",
+            "submit-name-fields-with-special-characters/**/*.spec.js",
+            "task-list/**/*.spec.js",
+            "your-business/broker/**/*.spec.js",
+            "your-business/change-your-answers/**/*.spec.js",
+            "your-business/check-your-answers/**/*.spec.js",
+            "your-business/companies-house-number/**/*.spec.js",
+            "your-business/company-details/**/*.spec.js",
+            "your-business/nature-of-business/**/*.spec.js",
+            "your-business/turnover/**/*.spec.js",
+            "your-buyer/**/*.spec.js",
+          ]
+
+    concurrency:
+      group: e2e-tests-insurance-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Timezone
+        uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Dependencies
+        working-directory: ./
+        run: npm ci --legacy-peer-deps
+
+      - name: Docker
+        run: docker-compose up --build -d
+
+      - name: Wait
+        run: sleep 30s
+
+      - name: Execute
+        working-directory: ./e2e-tests/insurance
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+
+  # 5. E2E - Quote
+  e2e-tests-quote:
+    name: E2E Quote 👷
+    needs: [setup]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
+      # Single dimension matrix
+      matrix:
+        spec:
+          [
+            "/*.spec.js",
+            "cookies-consent/**/*.spec.js",
+            "quote/*.spec.js",
+            "quote/buyer-body/*.spec.js",
+            "quote/buyer-country/*.spec.js",
+            "quote/cannot-skip-flow/*.spec.js",
+            "quote/change-your-answers/*.spec.js",
+            "quote/check-your-answers/*.spec.js",
+            "quote/exporter-location/*.spec.js",
+            "quote/policy-type/*.spec.js",
+            "quote/tell-us-about-your-policy/*.spec.js",
+            "quote/uk-goods-or-services/*.spec.js",
+            "quote/your-quote/*.spec.js",
+          ]
+
+    concurrency:
+      group: e2e-tests-quote-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Timezone
+        uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Dependencies
+        working-directory: ./
+        run: npm ci --legacy-peer-deps
+
+      - name: Docker
+        run: docker-compose up --build -d
+
+      - name: Wait
+        run: sleep 30s
+
+      - name: Execute
+        working-directory: ./e2e-tests/quote
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+
+  # 6. E2E - Switch
+  e2e-tests-switch:
+    name: E2E Switch 👷
+    needs: [setup]
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      # Do not cancel in-progress jobs upon failure
+      fail-fast: false
+      # Single dimension matrix
+      matrix:
+        spec:
+          [
+            "via-buyer-country-routes/**/*.spec.js",
+            "via-start-now-routes/**/*.spec.js",
+          ]
+
+    concurrency:
+      group: e2e-tests-switch-${{ github.workflow }}-${{ github.workflow_ref }}-${{ matrix.spec }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Timezone
+        uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Dependencies
+        working-directory: ./
+        run: npm ci --legacy-peer-deps
+
+      - name: Docker
+        run: docker-compose up --build -d
+
+      - name: Wait
+        run: sleep 30s
+
+      - name: Execute
+        working-directory: ./e2e-tests/switch-between-services
+        run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"

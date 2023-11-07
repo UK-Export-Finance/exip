@@ -69,7 +69,7 @@ const createEmptyGrid = () => {
       [RISK_FIELDS.HIGH]: [],
       [RISK_FIELDS.VERY_HIGH]: [],
     },
-    MULTI_POLICY: {
+    MULTIPLE_POLICY: {
       [RISK_FIELDS.STANDARD]: [],
       [RISK_FIELDS.HIGH]: [],
       [RISK_FIELDS.VERY_HIGH]: [],
@@ -219,7 +219,7 @@ const createJson = (data) => {
 /**
  * run
  * Executes everything.
- * - Get work sheeets
+ * - Get work sheets
  * - Create empty pricing grid
  * - Map and add all policy types to the create
  * - Create a JSON file.
@@ -228,7 +228,7 @@ const run = () => {
   const sheets = getWorkSheets();
   let grid = createEmptyGrid();
 
-  grid = addPolicyToGrid(grid, 'MULTI_POLICY', sheets.multiPolicy.data);
+  grid = addPolicyToGrid(grid, 'MULTIPLE_POLICY', sheets.multiPolicy.data);
   grid = addPolicyToGrid(grid, 'SINGLE_POLICY', sheets.singlePolicy.data);
 
   createJson(grid);

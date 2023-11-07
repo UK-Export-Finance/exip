@@ -1,0 +1,92 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from 'govuk/components/label/macro.njk' import govukLabel %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+{% import '../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <form method="POST" id="form" novalidate>
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+    <input type="hidden" name="{{ HIDDEN_FIELD_ID }}" id="{{ HIDDEN_FIELD_ID }}" value="{{ submittedValues[HIDDEN_FIELD_ID].name }}">
+
+    {{ govukLabel({
+      for: FIELD_ID_COUNTRY,
+      classes: "govuk-heading-l",
+      html: "<h1 class='govuk-heading-l' id='heading'><label for='" + FIELD_ID + "'>" + CONTENT_STRINGS.PAGE_TITLE + "</label></h1>",
+      attributes: {
+        "data-cy": DATA_CY.HEADING
+      }
+    }) }}
+
+    {{ govukHint({
+      id: FIELD_ID + "-hint",
+      text: FIELD_HINT,
+      attributes: {
+        "data-cy": FIELD_ID + "-hint"
+      }
+    }) }}
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half-from-desktop">
+
+        {% set class = "govuk-form-group" %}
+
+        {% if validationErrors.errorList[FIELD_ID] %}
+          {% set class = "govuk-form-group govuk-form-group--error-message" %}
+        {% endif %}
+
+        <div class="{{ class }}">
+          {{ govukErrorMessage({
+            text: validationErrors.errorList[FIELD_ID].text,
+            attributes: {
+              "data-cy": FIELD_ID + "-error-message"
+            }
+          }) }}
+
+          <select class="govuk-select" id="{{ FIELD_ID }}" name="{{ FIELD_ID }}">
+            <option value="" disabled selected></option>
+
+            {% for country in countries %}
+              {% if country.selected %}
+                <option value="{{ country.text }}" selected>{{ country.text }}</option>
+              {% else %}
+                <option value="{{ country.text }}">{{ country.text }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+
+      </div>
+    </div>
+
+    {{ submitButton.render({
+      text: CONTENT_STRINGS.BUTTONS.CONTINUE
+    }) }}
+
+  </form>
+
+  <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript" integrity="{{ SRI.ACCESSIBILITY }}" crossorigin="anonymous"></script>
+
+{% endblock %}

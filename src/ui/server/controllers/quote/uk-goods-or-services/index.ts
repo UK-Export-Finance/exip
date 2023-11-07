@@ -1,50 +1,67 @@
-import { PAGES } from '../../../content-strings';
+import { PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
-import singleInputPageVariables from '../../../helpers/single-input-page-variables';
-import generateValidationErrors from './validation';
-import { updateSubmittedData } from '../../../helpers/update-submitted-data';
+import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
+import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../helpers/construct-payload';
+import generateValidationErrors from '../../../shared-validation/yes-no-radios-form';
+import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import isChangeRoute from '../../../helpers/is-change-route';
 import { Request, Response } from '../../../../types';
 
-const PAGE_VARIABLES = {
-  FIELD_ID: FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-  PAGE_CONTENT_STRINGS: PAGES.HAS_MINIMUM_UK_GOODS_OR_SERVICES_PAGE,
+export const FIELD_ID = FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES;
+
+export const PAGE_VARIABLES = {
+  FIELD_ID,
+  PAGE_CONTENT_STRINGS: {
+    ...PAGES.UK_GOODS_OR_SERVICES,
+    ...PAGES.QUOTE.UK_GOODS_OR_SERVICES,
+    UK_GOODS_AND_SERVICES_DESCRIPTION,
+  },
 };
 
-const get = (req: Request, res: Response) =>
-  res.render(TEMPLATES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {
-    ...singleInputPageVariables(PAGE_VARIABLES),
+export const TEMPLATE = TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES;
+
+export const get = (req: Request, res: Response) =>
+  res.render(TEMPLATE, {
+    userName: getUserNameFromSession(req.session.user),
+    ...singleInputPageVariables({
+      ...PAGE_VARIABLES,
+      ORIGINAL_URL: req.originalUrl,
+    }),
     BACK_LINK: req.headers.referer,
-    submittedValues: req.session.submittedData,
+    submittedValues: req.session.submittedData.quoteEligibility,
   });
 
-const post = (req: Request, res: Response) => {
-  const validationErrors = generateValidationErrors(req.body);
+export const post = (req: Request, res: Response) => {
+  const payload = constructPayload(req.body, [FIELD_ID]);
+
+  const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
-    return res.render(TEMPLATES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES, {
+    return res.render(TEMPLATE, {
+      userName: getUserNameFromSession(req.session.user),
       ...singleInputPageVariables(PAGE_VARIABLES),
       BACK_LINK: req.headers.referer,
       validationErrors,
     });
   }
 
-  const answer = req.body[FIELD_IDS.HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+  const answer = payload[FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
   const redirectToExitPage = answer === 'false';
 
   if (redirectToExitPage) {
-    req.flash('previousRoute', ROUTES.QUOTE.HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    req.flash('previousRoute', ROUTES.QUOTE.UK_GOODS_OR_SERVICES);
 
-    const { CANNOT_OBTAIN_COVER_PAGE } = PAGES;
-    const { REASON } = CANNOT_OBTAIN_COVER_PAGE;
+    const { CANNOT_APPLY } = PAGES;
+    const { REASON } = CANNOT_APPLY;
 
-    req.flash('exitReason', REASON.NOT_ENOUGH_HAS_MINIMUM_UK_GOODS_OR_SERVICES);
+    req.flash('exitReason', REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES);
 
-    return res.redirect(ROUTES.QUOTE.CANNOT_OBTAIN_COVER);
+    return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);
   }
 
-  req.session.submittedData = updateSubmittedData(req.body, req.session.submittedData);
+  req.session.submittedData.quoteEligibility = updateSubmittedData(payload, req.session.submittedData.quoteEligibility);
 
   if (isChangeRoute(req.originalUrl)) {
     return res.redirect(ROUTES.QUOTE.CHECK_YOUR_ANSWERS);
@@ -52,5 +69,3 @@ const post = (req: Request, res: Response) => {
 
   return res.redirect(ROUTES.QUOTE.POLICY_TYPE);
 };
-
-export { PAGE_VARIABLES, get, post };

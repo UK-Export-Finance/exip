@@ -1,17 +1,27 @@
 import { FIELD_IDS } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
-import generateValidationErrors from '../../../../../helpers/validation';
-import { objectHasProperty } from '../../../../../helpers/object';
+import { isValidPolicyType } from '../../../../../helpers/policy-type';
+import emptyFieldValidation from '../../../../../shared-validation/empty-field';
 import { RequestBody } from '../../../../../../types';
 
-const policyTypeRules = (formBody: RequestBody, errors: object) => {
-  let updatedErrors = errors;
+const { POLICY_TYPE: FIELD_ID } = FIELD_IDS;
+const ERROR_MESSAGE = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
 
-  if (!objectHasProperty(formBody, FIELD_IDS.POLICY_TYPE)) {
-    updatedErrors = generateValidationErrors(FIELD_IDS.SINGLE_POLICY_TYPE, ERROR_MESSAGES[FIELD_IDS.POLICY_TYPE], errors);
+/**
+ * policyTypeRules
+ * Check if the policy type is a valid type and not empty
+ * @param {Express.Response.body} Express response body
+ * @param {Object} Errors object from previous validation errors
+ * @returns {Object} Validation errors
+ */
+const policyTypeRules = (formBody: RequestBody, errors: object) => {
+  const value = formBody[FIELD_ID];
+
+  if (!isValidPolicyType(value)) {
+    return emptyFieldValidation({}, FIELD_ID, ERROR_MESSAGE, errors);
   }
 
-  return updatedErrors;
+  return emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE, errors);
 };
 
 export default policyTypeRules;
