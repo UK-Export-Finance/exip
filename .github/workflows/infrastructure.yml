@@ -293,17 +293,6 @@ jobs:
       - name: Repository 🗃️
         uses: actions/checkout@v4
 
-      - name: Import ⬇
-        uses: Azure/cli@v1.0.8
-        with:
-          inlineScript: |
-            az mysql flexible-server execute \
-            --name sqldb-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --admin-user ${{ secrets.MYSQL_USER }} \
-            --admin-password ${{ secrets.MYSQL_PASSWORD }} \
-            --database-name ${{ env.PRODUCT }} \
-            --file-path "./database/exip.sql"
-
       - name: Database 💾
         uses: Azure/cli@v1.0.8
         with:
