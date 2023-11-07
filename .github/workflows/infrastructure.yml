@@ -217,17 +217,18 @@ jobs:
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
-            # az mysql flexible-server create \
-            # --name sqldb-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            # --database-name ${{ env.PRODUCT }} \
-            # --sku-name Standard_B1ms \
-            # --tier Burstable \
-            # --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            # --subnet snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-            # --private-dns-zone ${{ secrets.PRIVATE_DNS_ZONE_NAME }} \
-            # --backup-retention 30 \
-            # --yes \
-            # --tags ${{ env.TAGS }}
+            az mysql flexible-server create \
+            --name sqldb-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --admin-user ${{ secrets.MYSQL_USER }} \
+            --admin-password ${{ secrets.MYSQL_PASSWORD }} \
+            --database-name ${{ env.PRODUCT }} \
+            --sku-name Standard_B1ms \
+            --tier Burstable \
+            --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --subnet snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --backup-retention 30 \
+            --yes \
+            --tags ${{ env.TAGS }}
 
       - name: Web app - UI 🌐
         uses: Azure/cli@v1.0.8
@@ -326,16 +327,6 @@ jobs:
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
-            #DB
-            # az network private-endpoint create \
-            # --name private-endpoint-db-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            # --private-connection-resource-id $(az mysql flexible-server list --query [].id -o tsv) \
-            # --connection-name private-link-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            # --subnet snet-private-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-            # --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            # --group-id mysqlServer \
-            # --tags ${{ env.TAGS }}
-
             #UI
             az network private-endpoint create \
             --name private-endpoint-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
@@ -379,13 +370,6 @@ jobs:
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
-            #DB
-            # az network private-endpoint dns-zone-group create \
-            # --endpoint-name private-endpoint-db-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            # --name ${{ env.PRODUCT }} \
-            # --private-dns-zone ${{ secrets.PRIVATE_DNS_ZONE_NAME }} \
-            # --zone-name webapp
-
             #UI
             az network private-endpoint dns-zone-group create \
             --endpoint-name private-endpoint-ui-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
@@ -546,10 +530,29 @@ jobs:
             az configure --defaults location=${{ vars.REGION }}
             az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
-      - name: Database 📂
+      - name: Connection 🔗
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
+            az mysql flexible-server connect \
+            --name sqldb-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --admin-user ${{ secrets.MYSQL_USER }} \
+            --admin-password ${{ secrets.MYSQL_PASSWORD }} \
+            --database-name ${{ env.PRODUCT }}
+
+      - name: Repository 🗃️
+        uses: actions/checkout@v4
+
+      - name: Import ⬇
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az mysql flexible-server execute \
+            --name sqldb-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --admin-user ${{ secrets.MYSQL_USER }} \
+            --admin-password ${{ secrets.MYSQL_PASSWORD }} \
+            --database-name ${{ env.PRODUCT }} \
+            --file-path "database/exip.sql"
 
   # 5. WebApp configuration
   webapp:
@@ -650,8 +653,6 @@ jobs:
             TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
             TLS_KEY='${{ secrets.TLS_KEY }}' \
             DATABASE_URL='${{ secrets.DATABASE_URL }}' \
-            MYSQL_DATABASE='${{ secrets.MYSQL_DATABASE }}' \
-            MYSQL_ROOT_PASSWORD='${{ secrets.MYSQL_ROOT_PASSWORD }}' \
             API_KEY='${{ secrets.API_KEY }}' \
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
@@ -663,6 +664,18 @@ jobs:
             JWT_SIGNING_KEY='${{ secrets.JWT_SIGNING_KEY }}' \
             UNDERWRITING_TEAM_EMAIL='${{ secrets.UNDERWRITING_TEAM_EMAIL }}' \
             FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}'
+
+      - name: Database 💾
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az webapp connection create mysql-flexible \
+            --source-id $(az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) \
+            --target-id $(az mysql flexible-server list --query [].id -o tsv)/databases/${{ env.PRODUCT }} \
+            --connection webapp_api_mysqlflexible_${{ env.PRODUCT }}_${{ env.TARGET }}_${{ vars.VERSION }} \
+            --secret name= ${{ secrets.MYSQL_USER }} \
+            --secret secret= ${{ secrets.MYSQL_PASSWORD }} \
+            --client-type nodejs
 
   # 6. Logs and dignostic settings
   log:
@@ -703,7 +716,7 @@ jobs:
             --logs "[{categoryGroup:allLogs,enabled:true}]" \
             --metrics "[{category:allMetrics,enabled:true}]"
 
-      - name: Database 📂
+      - name: Database 💾
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
