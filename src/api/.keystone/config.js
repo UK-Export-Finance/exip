@@ -1569,6 +1569,7 @@ var typeDefs = `
     success: Boolean
     apiError: Boolean
     isActive: Boolean
+    notFound: Boolean
   }
 
   type CompanyAddress {
@@ -4842,6 +4843,12 @@ var companiesHouse = {
           return acceptableStatus.includes(status);
         }
       });
+      if (response.status === 404) {
+        return {
+          success: false,
+          notFound: true
+        };
+      }
       if (!response.data || response.status !== 200) {
         return {
           success: false
@@ -4868,7 +4875,8 @@ var getCompaniesHouseInformation = async (root, variables) => {
     const response = await companies_house_default.get(sanitisedRegNo);
     if (!response.success || !response.data) {
       return {
-        success: false
+        success: false,
+        notFound: response.notFound
       };
     }
     const industrySectors = await industry_sector_default.get();

@@ -5,10 +5,6 @@ export interface CompaniesHouseAccountReferenceDate {
   day: string;
 }
 
-export interface CompaniesHouseAccounts {
-  accounting_reference_date: CompaniesHouseAccountReferenceDate;
-}
-
 export interface CompaniesHouseAPIAddress {
   care_of?: string;
   premises?: string;
@@ -20,6 +16,10 @@ export interface CompaniesHouseAPIAddress {
   country?: string;
 }
 
+export interface CompaniesHouseAccounts {
+  accounting_reference_date: CompaniesHouseAccountReferenceDate;
+}
+
 export interface CompaniesHouseResponse {
   company_name: string;
   company_number: string;
@@ -28,10 +28,12 @@ export interface CompaniesHouseResponse {
   date_of_creation: string;
   sic_codes: Array<string>;
   accounts: CompaniesHouseAccounts;
+  notFound?: boolean;
 }
 
 export interface CompaniesHouseAPIResponse extends SuccessResponse {
   data?: CompaniesHouseResponse;
+  notFound?: boolean;
 }
 
 export interface GetCompaniesHouseInformationVariables {

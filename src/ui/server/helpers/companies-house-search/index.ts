@@ -1,6 +1,5 @@
 import api from '../../api';
 import { isPopulatedArray } from '../array';
-import companyHouseResponseValidation from './validation/companies-house-response';
 import { CompaniesHouseResponse } from '../../../types';
 
 /**
@@ -8,7 +7,7 @@ import { CompaniesHouseResponse } from '../../../types';
  * runs validation and makes api call to keystone getCompaniesHouseInformation
  * runs validation on response and returns companyResponse or validation errors or apiError
  * @param {CompaniesHouseResponse} Companies House response
- * @returns {object} validationErrors, apiError flag, mapped company
+ * @returns {object} apiError flag, mapped company
  */
 const search = async (company: CompaniesHouseResponse) => {
   const { companyNumber } = company;
@@ -27,7 +26,6 @@ const search = async (company: CompaniesHouseResponse) => {
       return {
         apiError: true,
         companyNumber,
-        validationErrors: {},
       };
     }
   }
@@ -39,17 +37,12 @@ const search = async (company: CompaniesHouseResponse) => {
       return {
         apiError: true,
         companyNumber,
-        validationErrors: {},
       };
     }
 
-    // checks that success flag is not false
-    const responseValidationErrors = companyHouseResponseValidation(company);
-
-    if (responseValidationErrors) {
+    if (mappedCompany.notFound) {
       return {
-        validationErrors: responseValidationErrors,
-        companyNumber,
+        notFound: true,
       };
     }
 

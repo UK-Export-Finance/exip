@@ -19,6 +19,7 @@ interface CompaniesHouseResponse {
   industrySectorNames: Array<string>;
   success: boolean;
   apiError: boolean;
+  notFound: boolean;
 }
 
 export { CompaniesHouseAddress, CompaniesHouseResponse };

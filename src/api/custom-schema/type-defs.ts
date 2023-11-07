@@ -52,6 +52,7 @@ const typeDefs = `
     success: Boolean
     apiError: Boolean
     isActive: Boolean
+    notFound: Boolean
   }
 
   type CompanyAddress {

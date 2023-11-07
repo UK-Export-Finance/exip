@@ -81,28 +81,20 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         ...PAGE_VARIABLES,
         validationErrors: formValidationErrors,
+        submittedValues: req.body,
       });
     }
 
     /**
      * 1) Call companies house API (via our own API)
+     * 4) If validationErrors are returned, render the page with validation errors.
      * 2) If apiError is returned, redirect to COMPANIES_HOUSE_UNAVAILABLE.
      * 3) If the company is not active, redirect to COMPANY_NOT_ACTIVE.
      * 4) If validationErrors are returned, render the page with validation errors.
      */
     const response = await companiesHouse.search(payload);
 
-    if (response.apiError) {
-      return res.redirect(COMPANIES_HOUSE_UNAVAILABLE);
-    }
-
-    if (!response.company?.isActive) {
-      return res.redirect(COMPANY_NOT_ACTIVE);
-    }
-
-    if (response.validationErrors) {
-      const { validationErrors } = response;
-
+    if (response.notFound) {
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
@@ -110,8 +102,17 @@ export const post = async (req: Request, res: Response) => {
         }),
         userName: getUserNameFromSession(req.session.user),
         ...PAGE_VARIABLES,
-        validationErrors,
+        validationErrors: generateValidationErrors({}),
+        submittedValues: req.body,
       });
+    }
+
+    if (response.apiError) {
+      return res.redirect(COMPANIES_HOUSE_UNAVAILABLE);
+    }
+
+    if (!response.company?.isActive) {
+      return res.redirect(COMPANY_NOT_ACTIVE);
     }
 
     /**

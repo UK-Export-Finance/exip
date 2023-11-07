@@ -22,6 +22,7 @@ const companiesHouseQuery = gql`
       isActive
       success
       apiError
+      notFound
     }
   }
 `;

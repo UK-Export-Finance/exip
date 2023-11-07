@@ -2341,6 +2341,7 @@ type CompaniesHouseResponse {
   success: Boolean
   apiError: Boolean
   isActive: Boolean
+  notFound: Boolean
 }
 
 input OldSicCodes {

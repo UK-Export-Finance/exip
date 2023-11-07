@@ -128,6 +128,7 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
           userName: getUserNameFromSession(req.session.user),
           ...PAGE_VARIABLES,
           validationErrors: generateValidationErrors(payload),
+          submittedValues: req.body,
         });
       });
     });
@@ -188,16 +189,12 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
     });
 
     describe('api error handling', () => {
-      describe('when companiesHouse.search returns validationErrors', () => {
-        it('should render template with validation errors from the response', async () => {
+      describe('when companiesHouse.search returns notFound=true', () => {
+        it('should render template with validation errors', async () => {
           req.body = validBody;
 
-          const mockValidationErrors = generateValidationErrors({});
-
           const mockResponse = {
-            companyNumber: mockCompaniesHouseResponse.companyNumber,
-            validationErrors: mockValidationErrors,
-            apiError: false,
+            notFound: true,
           };
 
           companiesHouse.search = jest.fn(() => Promise.resolve(mockResponse));
@@ -211,7 +208,8 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
             }),
             userName: getUserNameFromSession(req.session.user),
             ...PAGE_VARIABLES,
-            validationErrors: mockResponse.validationErrors,
+            validationErrors: generateValidationErrors({}),
+            submittedValues: req.body,
           });
         });
       });
