@@ -213,7 +213,7 @@ jobs:
             --name vnet-peer-apim-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --query peeringState)"
 
-      - name: Database 📂
+      - name: Database 💾
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
@@ -498,10 +498,8 @@ jobs:
   # 4. Database
   database:
     name: Database 💾
-    needs: [base, security]
-    environment: ${{ needs.setup.outputs.environment }}
-    outputs:
-      environment: ${{ env.ENVIRONMENT }}
+    needs: [base]
+    environment: ${{ needs.base.outputs.environment }}
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
       - name: Pre-production 💫
@@ -557,7 +555,7 @@ jobs:
   # 5. WebApp configuration
   webapp:
     name: Web App 🔧
-    needs: [base, security]
+    needs: [base, security, database]
     environment: ${{ needs.base.outputs.environment }}
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
@@ -652,7 +650,7 @@ jobs:
             WEBSITES_PORT='${{ vars.API_PORT }}' \
             TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
             TLS_KEY='${{ secrets.TLS_KEY }}' \
-            DATABASE_URL='${{ secrets.DATABASE_URL }}' \
+            DATABASE_URL='mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@$(az mysql flexible-server list --query [].fullyQualifiedDomainName -o tsv):${{ vars.DB_PORT }}/${{ vars.PRODUCT }}' \
             API_KEY='${{ secrets.API_KEY }}' \
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
@@ -673,8 +671,8 @@ jobs:
             --source-id $(az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) \
             --target-id $(az mysql flexible-server list --query [].id -o tsv)/databases/${{ env.PRODUCT }} \
             --connection webapp_api_mysqlflexible_${{ env.PRODUCT }}_${{ env.TARGET }}_${{ vars.VERSION }} \
-            --secret name= ${{ secrets.MYSQL_USER }} \
-            --secret secret= ${{ secrets.MYSQL_PASSWORD }} \
+            --secret name=${{ secrets.MYSQL_USER }} \
+            --secret secret=${{ secrets.MYSQL_PASSWORD }} \
             --client-type nodejs
 
   # 6. Logs and dignostic settings
@@ -780,7 +778,7 @@ jobs:
             --workspace $(az monitor log-analytics workspace list --query [].id -o tsv) \
             --metrics "[{category:allMetrics,enabled:true}]"
 
-  # 5. Health check alerts
+  # 7. Health check alerts
   alert:
     name: Alert 📢
     needs: [base, security, database, webapp]
