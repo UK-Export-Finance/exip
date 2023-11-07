@@ -528,6 +528,12 @@ jobs:
             az configure --defaults location=${{ vars.REGION }}
             az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
+      - name: Extension ➕
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az config set extension.use_dynamic_install=yes_without_prompt
+
       - name: Connection 🔗
         uses: Azure/cli@v1.0.8
         with:
