@@ -28,7 +28,7 @@
     "@ministryofjustice/frontend": "^1.8.0",
     "@types/compression": "^1.7.4",
     "@types/connect-flash": "^0.0.38",
-    "@types/cookie-parser": "^1.4.5",
+    "@types/cookie-parser": "^1.4.6",
     "@types/csurf": "^1.11.4",
     "@types/express-session": "^1.17.9",
     "@types/google-libphonenumber": "^7.4.29",
