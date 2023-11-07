@@ -301,8 +301,7 @@ jobs:
             --source-id $(az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) \
             --target-id $(az mysql flexible-server list --query [].id -o tsv)/databases/${{ env.PRODUCT }} \
             --connection webapp_api_mysqlflexible_${{ env.PRODUCT }}_${{ env.TARGET }}_${{ vars.VERSION }} \
-            --secret name=${{ secrets.MYSQL_USER }} \
-            --secret secret=${{ secrets.MYSQL_PASSWORD }} \
+            --secret name=${{ secrets.MYSQL_USER }} secret=${{ secrets.MYSQL_PASSWORD }} \
             --client-type nodejs
 
   # 3. Security
