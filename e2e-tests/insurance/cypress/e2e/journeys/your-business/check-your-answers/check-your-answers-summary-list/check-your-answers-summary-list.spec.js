@@ -52,7 +52,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
 
       task.link().click();
 
-      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitBrokerForm({ usingBroker: true });

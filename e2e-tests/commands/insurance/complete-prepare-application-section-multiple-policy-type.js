@@ -10,11 +10,13 @@ const task = taskList.prepareApplication.tasks.policy;
  * completePrepareApplicationMultiplePolicyType
  * Runs through the full prepare your application journey for multiple policy type
  * @param {Object} Object with flags on how to complete specific parts of the application
+ * - differentTradingAddress: Should submit "yes" to "trade from a different address" in the "your business - company details" form. Defaults to false.
  * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
  * - policyMaximumValue: should submit an application with the maximum value of 500000
  * - differentPolicyContact: Should submit an application with a different policy contact to the owner
  */
 const completePrepareApplicationMultiplePolicyType = ({
+  differentTradingAddress = false,
   usingBroker,
   policyMaximumValue = false,
   differentPolicyContact,
@@ -32,7 +34,12 @@ const completePrepareApplicationMultiplePolicyType = ({
 
   submitButton().click();
 
-  cy.completeAndSubmitCompanyDetails();
+  cy.completeAndSubmitCompanyDetails({ differentTradingAddress });
+
+  if (differentTradingAddress) {
+    cy.completeAndSubmitAlternativeTradingAddress();
+  }
+
   cy.completeAndSubmitNatureOfYourBusiness();
   cy.completeAndSubmitTurnoverForm();
   cy.completeAndSubmitBrokerForm({ usingBroker });

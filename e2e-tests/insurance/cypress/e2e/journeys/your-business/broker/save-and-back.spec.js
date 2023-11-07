@@ -44,7 +44,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
       task.link().click();
 
-      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
 

@@ -1,5 +1,5 @@
 import { PAGES } from '../../../../content-strings';
-import { FIELD_VALUES, TEMPLATES } from '../../../../constants';
+import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -134,10 +134,10 @@ const post = async (req: Request, res: Response) => {
     }
 
     /**
-     * If "different trading address" has been submitted,
+     * If "different trading address" has been submitted as "yes"/true,
      * Redirect to the "alternative trading address" route.
      */
-    if (payload[TRADING_ADDRESS] === FIELD_VALUES.YES) {
+    if (submittedValues[TRADING_ADDRESS]) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`);
     }
 

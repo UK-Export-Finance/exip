@@ -52,7 +52,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
 
       task.link().click();
 
-      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
@@ -88,7 +88,7 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} does not ex
 
       task.link().click();
 
-      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
       const url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
