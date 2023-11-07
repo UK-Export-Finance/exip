@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { add, addMonths } from 'date-fns';
-import { APPLICATION } from '../constants';
+import { APPLICATION, COVER_PERIOD, TOTAL_CONTRACT_VALUE } from '../constants';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
 import { Application, ApplicationPolicyContact } from '../types';
@@ -15,15 +15,22 @@ export const mockApplicationEligibility = {
   hasMinimumUkGoodsOrServices: true,
   validExporterLocation: true,
   hasCompaniesHouseNumber: true,
-  wantCoverOverMaxAmount: false,
-  wantCoverOverMaxPeriod: false,
+  otherPartiesInvolved: false,
+  paidByLetterOfCredit: false,
+  coverPeriodId: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
+  coverPeriod: {
+    valueId: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
+  },
+  totalContractValueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
+  totalContractValue: {
+    valueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
+  },
 };
 
 const mockGenericPolicy = {
   requestedStartDate: add(new Date(), { months: 1 }),
   creditPeriodWithBuyer: ' Mock free text',
   policyCurrencyCode: mockCurrencies[0].isoCode,
-  needPreCreditPeriodCover: false,
 };
 
 export const mockSinglePolicy = {

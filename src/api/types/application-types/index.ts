@@ -70,12 +70,23 @@ export interface ApplicationDeclaration extends Relationship {
   agreeHowDataWillBeUsed?: boolean;
 }
 
+export interface TotalContractValue extends Relationship {
+  value: string;
+  valueId: number;
+}
+
+export interface CoverPeriod extends Relationship {
+  value: string;
+  valueId: number;
+}
+
 export interface ApplicationEligibility extends Relationship {
   buyerCountryIsoCode: string;
   hasCompaniesHouseNumber: boolean;
-  needPreCreditPeriodCover: boolean;
-  wantCoverOverMaxAmount: boolean;
-  wantCoverOverMaxPeriod: boolean;
+  totalContractValueId: number;
+  totalContractValue: TotalContractValue;
+  coverPeriodId: number;
+  coverPeriod: CoverPeriod;
 }
 
 export interface ApplicationExportContract extends Relationship {

@@ -273,6 +273,24 @@ export const lists = {
     },
     access: allowAll,
   },
+  TotalContractValue: list({
+    fields: {
+      valueId: integer(),
+      value: text({
+        db: { nativeType: 'VarChar(70)' },
+      }),
+    },
+    access: allowAll,
+  }),
+  CoverPeriod: list({
+    fields: {
+      valueId: integer(),
+      value: text({
+        db: { nativeType: 'VarChar(70)' },
+      }),
+    },
+    access: allowAll,
+  }),
   Policy: {
     fields: {
       application: relationship({ ref: 'Application' }),
@@ -563,8 +581,10 @@ export const lists = {
       hasMinimumUkGoodsOrServices: checkbox(),
       validExporterLocation: checkbox(),
       hasCompaniesHouseNumber: checkbox(),
-      wantCoverOverMaxAmount: checkbox(),
-      wantCoverOverMaxPeriod: checkbox(),
+      otherPartiesInvolved: checkbox(),
+      paidByLetterOfCredit: checkbox(),
+      totalContractValue: relationship({ ref: 'TotalContractValue' }),
+      coverPeriod: relationship({ ref: 'CoverPeriod' }),
     },
     access: allowAll,
   }),
