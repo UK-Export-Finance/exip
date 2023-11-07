@@ -58,7 +58,7 @@ jobs:
     environment: ${{ needs.setup.outputs.environment }}
     outputs:
       environment: ${{ env.ENVIRONMENT }}
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, EXIP, infrastructure]
     steps:
       - name: Pre-production 💫
         if: contains('["dev", "staging"]', env.TARGET)
@@ -283,26 +283,6 @@ jobs:
             --successful-samples-required ${{ vars.LOAD_BALANCING_SAMPLES }} \
             --probe-interval-in-seconds ${{ vars.LOAD_BALANCING_INTERVAL }} \
             --profile-name frontdoor-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
-
-      - name: Extension ➕
-        uses: Azure/cli@v1.0.8
-        with:
-          inlineScript: |
-            az config set extension.use_dynamic_install=yes_without_prompt
-
-      - name: Repository 🗃️
-        uses: actions/checkout@v4
-
-      - name: Database 💾
-        uses: Azure/cli@v1.0.8
-        with:
-          inlineScript: |
-            az webapp connection create mysql-flexible \
-            --source-id $(az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) \
-            --target-id $(az mysql flexible-server list --query [].id -o tsv)/databases/${{ env.PRODUCT }} \
-            --connection webapp_api_mysqlflexible_${{ env.PRODUCT }}_${{ env.TARGET }}_${{ vars.VERSION }} \
-            --secret name=${{ secrets.MYSQL_USER }} secret=${{ secrets.MYSQL_PASSWORD }} \
-            --client-type nodejs
 
   # 3. Security
   security:
@@ -580,6 +560,7 @@ jobs:
       - name: Variables ✨
         run: |
           echo "API_URL=$(az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv)" >> $GITHUB_ENV
+          echo "MYSQL_URL=$(az mysql flexible-server list --query [].fullyQualifiedDomainName -o tsv)" >> $GITHUB_ENV
 
       - name: Setting 🧱
         uses: Azure/cli@v1.0.8
@@ -613,7 +594,7 @@ jobs:
             WEBSITES_PORT='${{ vars.API_PORT }}' \
             TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
             TLS_KEY='${{ secrets.TLS_KEY }}' \
-            DATABASE_URL='mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@$(az mysql flexible-server list --query [].fullyQualifiedDomainName -o tsv):${{ vars.DB_PORT }}/${{ vars.PRODUCT }}' \
+            DATABASE_URL='mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@${{ env.MYSQL_URL }}:${{ vars.DB_PORT }}/${{ env.PRODUCT }}' \
             API_KEY='${{ secrets.API_KEY }}' \
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
@@ -626,6 +607,15 @@ jobs:
             UNDERWRITING_TEAM_EMAIL='${{ secrets.UNDERWRITING_TEAM_EMAIL }}' \
             FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}'
 
+      - name: Extension ➕
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az config set extension.use_dynamic_install=yes_without_prompt
+
+      - name: Repository 🗃️
+        uses: actions/checkout@v4
+
       - name: Database 💾
         uses: Azure/cli@v1.0.8
         with:
@@ -634,8 +624,7 @@ jobs:
             --source-id $(az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) \
             --target-id $(az mysql flexible-server list --query [].id -o tsv)/databases/${{ env.PRODUCT }} \
             --connection webapp_api_mysqlflexible_${{ env.PRODUCT }}_${{ env.TARGET }}_${{ vars.VERSION }} \
-            --secret name=${{ secrets.MYSQL_USER }} \
-            --secret secret=${{ secrets.MYSQL_PASSWORD }} \
+            --secret name=${{ secrets.MYSQL_USER }} secret=${{ secrets.MYSQL_PASSWORD }} \
             --client-type nodejs
 
   # 5. Logs and dignostic settings
