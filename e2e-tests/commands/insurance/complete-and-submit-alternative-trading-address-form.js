@@ -1,11 +1,11 @@
 import { submitButton } from '../../pages/shared';
 
 /**
- * completeAndSubmitAlternativeTradingAddress
+ * completeAndSubmitAlternativeTradingAddressForm
  * Complet and submit the "alternative trading address" form in the "your business" section.
  */
-const completeAndSubmitAlternativeTradingAddress = () => {
+const completeAndSubmitAlternativeTradingAddressForm = () => {
   submitButton().click();
 };
 
-export default completeAndSubmitAlternativeTradingAddress;
+export default completeAndSubmitAlternativeTradingAddressForm;

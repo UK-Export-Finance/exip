@@ -37,7 +37,7 @@ const completePrepareApplicationMultiplePolicyType = ({
   cy.completeAndSubmitCompanyDetails({ differentTradingAddress });
 
   if (differentTradingAddress) {
-    cy.completeAndSubmitAlternativeTradingAddress();
+    cy.completeAndSubmitAlternativeTradingAddressForm();
   }
 
   cy.completeAndSubmitNatureOfYourBusiness();

@@ -39,7 +39,7 @@ const completePrepareYourApplicationSectionSingle = ({
   cy.completeAndSubmitCompanyDetails({ differentTradingAddress });
 
   if (differentTradingAddress) {
-    cy.completeAndSubmitAlternativeTradingAddress();
+    cy.completeAndSubmitAlternativeTradingAddressForm();
   }
 
   cy.completeAndSubmitNatureOfYourBusiness();
