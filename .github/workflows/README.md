@@ -1,6 +1,9 @@
 # Git Hub Actions (GHA) 🚀
+
 GitHub Actions has been widely used to define custom workflows (using YAML syntax) to build, test, lint and deploy out code directly from our public GitHub repositories.
+
 ## Script
+
 ### CICD 📝
 
 This Bash script represents a Continuous Integration and Continuous Deployment (CICD) process.
@@ -40,50 +43,81 @@ Based on the user's selection, the script performs the following actions:
 - Clears the values of the `destination` and `branch` variables.
 - Runs an Azure CLI command to purge specific resources in an Azure Container Registry (ACR).
 
-## Infrastructure 🔨
+## IaC 🔨
 
-This is a GitHub Actions workflow for setting up the base infrastructure for the "EXIP" (name of the product) project.
-The workflow consists of several steps:
+### Overview
 
-### Setup 🔧
-This step sets up the environment variables for the workflow, including the environment name and timezone.
+This documentation outlines the setup and configuration of the EXIP project's infrastructure automation using GitHub Actions. This automation aims to streamline the deployment process, ensure security, and maintain consistency across various environments.
 
-### Base Infrastructure Creation 🧱
-This step creates the base infrastructure components using Azure CLI commands. It includes the creation of a resource group, an app service plan, a log analytics workspace, a container registry, a virtual network, VNET peering with an Azure Managed Instance (AMI) SQL DB, and two web apps (UI and API).
+### Workflow Structure 📋
 
-### WebApp Configuration 🔧
-This step configures the created web apps. It enables continuous deployment via containers, sets various configuration settings, such as enabling HTTPS, setting DNS server and VNET routing, configuring app settings, and configuring logging options.
-The workflow uses Azure CLI and Azure Login actions to interact with the Azure resources. It also uses environment variables and secrets to provide configuration values for the Azure commands.
-Please note that this is a workflow written in YAML syntax for GitHub Actions, and it is meant to be executed within a GitHub repository with the appropriate Azure credentials and configurations.
+The infrastructure automation workflow consists of several stages, each with a specific focus and associated tasks:
 
-Standard Azure naming convention has been followed, however a minor modification to the standard naming convention has been made to not include the region.
+1. **Setup 🔧**: This stage sets up environment variables and prepares the workflow for execution.
 
-Following Azure services are consumed: 📦
+2. **Base 🧱**: In this stage, the base infrastructure components are created, providing a foundation for the project.
 
-* Azure resource group - az group create
-* Azure app service plan - Azure App Service Plan
-* Azure container registry - az acr create
-* Azure virtual network - Azure Virtual Network
-* Azure virtual network peer - az network vnet peering
-* Azure web app - Azure Web App
+3. **Security 🔑**: Security measures and configurations are implemented to safeguard the infrastructure.
 
-### Execution 🔀
-The workflow is only invoked when the following conditions are satisfied:
+4. **Web App 🔧**: Configure web applications and services required for the project.
 
-* Push to the infrastructure branch only.
-* Exact file path matches .github/workflows/infrastructure.yml.
+5. **Logs and Diagnostic Settings 📒**: Set up logging and diagnostic settings for monitoring and debugging purposes.
 
-### Flow 🌊
-* **setup**: This job sets up the environment and timezone variables and outputs them for other jobs to use.
-* **base**: This job creates the base infrastructure using Azure CLI commands. It creates a resource group, an app service plan, a log analytics workspace, a container registry, a virtual network, establishes VNET peering, and creates web apps for the UI and API.
-* **webapp**: This job configures the web app settings, such as continuous deployment via containers, configuration settings, environment variables, and logging.
+6. **Alerts 📢**: Notifies the relevant team when the origin is unhealthy for every defined minute over defined minutes interval.
 
-Each job consists of multiple steps that are executed in sequence.
+### Workflow Triggers 🔄
 
-### Note 📌
-Azure CLI will merely ignore the new resource creation if already exist with the same name.
-It's important to note that this YAML code is specific to an EXIP project and relies on Azure CLI and Azure resources.
-It assumes the presence of certain secrets and environment variables, which should be configured accordingly for the workflow to work properly.
+This workflow is automatically triggered under specific conditions:
+
+- **Push to Infrastructure Branch**: The workflow triggers when there is a push event to the "infrastructure" branch.
+
+- **Changes to Workflow Configuration**: It also triggers when there are changes to the `.github/workflows/infrastructure.yml` file.
+
+### Environment Variables 🌐
+
+The following environment variables are used throughout the workflow:
+
+- **PRODUCT**: The name of the product, which is "exip."
+
+- **ENVIRONMENT**: The current environment, which is "infrastructure."
+
+- **TIMEZONE**: The timezone used for timestamping.
+
+- **TARGET**: The deployment environment target (e.g., development, staging, production).
+
+- (Add other relevant environment variables)
+
+### Workflow Jobs and Tasks 🚦
+
+Each stage in the workflow is associated with one or more jobs that contain specific tasks to achieve the desired outcome:
+
+- **Setup 🔧**: This job handles the initial setup tasks and environment variable configuration.
+
+- **Base 🧱**: The base infrastructure job creates foundational components.
+
+- **Security 🔑**: Security measures are implemented in this job.
+
+- **Web App 🔧**: This job configures web applications and related services.
+
+- **Logs and Diagnostic Settings 📒**: Configure logging and diagnostic settings for monitoring and troubleshooting.
+
+- **Alerts 📢**: Dispatched alerts to the respective action group when a specific condition on the selected dimension is met.
+
+### Usage 🛠️
+
+To run this infrastructure automation workflow, follow these steps:
+
+1. Ensure you are on the "infrastructure" branch in your repository.
+
+2. Make changes to the workflow configuration in `.github/workflows/infrastructure.yml` if needed.
+
+3. Push your changes to the repository to trigger the workflow.
+
+### Conclusion 🎉
+
+The EXIP Infrastructure Automation workflow streamlines the process of setting up infrastructure components, enhancing security, and configuring web applications. With the automation in place, you can maintain consistent environments for development, staging, and production, and deploy with confidence.
+
+If you have any questions or need further assistance, please don't hesitate to reach out to the development team. Happy automating! 🤖✨
 
 ## Deployment 🚀
 
@@ -97,6 +131,7 @@ The workflow is triggered on pushes to the `dev`, `staging`, and `production` br
 - `FROM`: Base artifact version (latest).
 
 ### Jobs
+
 #### Job: Setup 🔧
 
 This job sets up the environment variables and outputs them for other jobs to use.
@@ -112,38 +147,39 @@ This job deploys the API. It checks out the repository, logs in to Azure, config
 #### Job: UI 📦️
 
 This job deploys the UI. It checks out the repository, logs in to Azure, configures Azure defaults, and sets up Azure Container Registry (ACR) variables. It builds and pushes Docker images, creates a temporary deployment slot, swaps the slot, and restarts the web app.
+
 ## Source Code Analysis 🚨
 
 This workflow will run a source code analysis (SCA) on your code whenever a pull request is submitted. The SCA will use the Codacy and Fossa tools to check for any potential security vulnerabilities and licensing issues in your code. If any vulnerabilities or issues are found.
 
 **Environment variables:**
 
-* `environment`: The name of the environment to run the workflow in.
-* `timezone`: The timezone to use for the workflow.
+- `environment`: The name of the environment to run the workflow in.
+- `timezone`: The timezone to use for the workflow.
 
 **Steps:**
 
 1. **Setup test infrastructure**
 
-    * 🔨 Set the environment and timezone variables.
-    * 💾 Clone the repository.
+   - 🔨 Set the environment and timezone variables.
+   - 💾 Clone the repository.
 
 2. **Codacy**
 
-    * 🔍️ Run the Codacy SCA on the code.
-    * 🚨 Report any potential security vulnerabilities to the console.
+   - 🔍️ Run the Codacy SCA on the code.
+   - 🚨 Report any potential security vulnerabilities to the console.
 
 3. **Fossa**
 
-    * ⚖️ Run the Fossa SCA on the code.
-    * 📝 Report any potential licensing issues to the console.
+   - ⚖️ Run the Fossa SCA on the code.
+   - 📝 Report any potential licensing issues to the console.
 
 **Tips:**
 
-* 🧹 Use SCA tools that are appropriate for the language you are using.
-* ⚙️ Configure the SCA tools to report all potential vulnerabilities and issues.
-* 🔨 Fix any vulnerabilities or issues that the SCA tools report.
-* 🔌 Add the SCA tools to your pre-commit hook so that they are run before you commit your code.
+- 🧹 Use SCA tools that are appropriate for the language you are using.
+- ⚙️ Configure the SCA tools to report all potential vulnerabilities and issues.
+- 🔨 Fix any vulnerabilities or issues that the SCA tools report.
+- 🔌 Add the SCA tools to your pre-commit hook so that they are run before you commit your code.
 
 By using SCA tools, you can help to ensure that your code is secure and compliant with all applicable licenses.
 
@@ -153,35 +189,36 @@ This workflow will run a linting check on your code whenever a pull request is s
 
 **Environment variables:**
 
-* `environment` : The name of the environment to run the workflow in.
-* `timezone` : The timezone to use for the workflow.
+- `environment` : The name of the environment to run the workflow in.
+- `timezone` : The timezone to use for the workflow.
 
 **Steps:**
 
 1. **Setup test infrastructure**
 
-    * 🔨 Set the environment and timezone variables.
-    * 💾 Clone the repository.
+   - 🔨 Set the environment and timezone variables.
+   - 💾 Clone the repository.
 
 2. **Lint**
 
-    * 🎨 Run the linting check on the code.
-    * 🚨 Report any errors or warnings to the console.
+   - 🎨 Run the linting check on the code.
+   - 🚨 Report any errors or warnings to the console.
 
 **Tips:**
 
-* 🧹 Use a linter that is appropriate for the language you are using.
-* ⚙️ Configure the linter to report all errors and warnings.
-* 🔨 Fix any errors or warnings that the linter reports.
-* 🔌 Add the linter to your pre-commit hook so that it is run before you commit your code.
+- 🧹 Use a linter that is appropriate for the language you are using.
+- ⚙️ Configure the linter to report all errors and warnings.
+- 🔨 Fix any errors or warnings that the linter reports.
+- 🔌 Add the linter to your pre-commit hook so that it is run before you commit your code.
 
 By using linters, you can help to ensure that your code is clean, consistent, and easy to read.
 
 ## Revision 📑
+
 This workflow automates the release process by:
 
-* 📑 Update `package.json`, `README.md`, and `CHANGELOG.md`
-* 🚀 Create a new release
-* 📂 Upload the release assets
+- 📑 Update `package.json`, `README.md`, and `CHANGELOG.md`
+- 🚀 Create a new release
+- 📂 Upload the release assets
 
 ---

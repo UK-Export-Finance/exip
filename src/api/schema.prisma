@@ -81,6 +81,20 @@ model Application {
   @@index([policyContactId])
 }
 
+model TotalContractValue {
+  id                                  String        @id @default(cuid())
+  valueId                             Int?
+  value                               String        @default("") @mysql.VarChar(70)
+  from_Eligibility_totalContractValue Eligibility[] @relation("Eligibility_totalContractValue")
+}
+
+model CoverPeriod {
+  id                           String        @id @default(cuid())
+  valueId                      Int?
+  value                        String        @default("") @mysql.VarChar(70)
+  from_Eligibility_coverPeriod Eligibility[] @relation("Eligibility_coverPeriod")
+}
+
 model Policy {
   id                       String        @id @default(cuid())
   application              Application?  @relation("Policy_application", fields: [applicationId], references: [id])
@@ -284,20 +298,26 @@ model Country {
 }
 
 model Eligibility {
-  id                           String        @id @default(cuid())
-  application                  Application?  @relation("Eligibility_application", fields: [applicationId], references: [id])
-  applicationId                String?       @map("application")
-  buyerCountry                 Country?      @relation("Eligibility_buyerCountry", fields: [buyerCountryId], references: [id])
-  buyerCountryId               String?       @map("buyerCountry")
-  hasMinimumUkGoodsOrServices  Boolean       @default(false)
-  validExporterLocation        Boolean       @default(false)
-  hasCompaniesHouseNumber      Boolean       @default(false)
-  wantCoverOverMaxAmount       Boolean       @default(false)
-  wantCoverOverMaxPeriod       Boolean       @default(false)
-  from_Application_eligibility Application[] @relation("Application_eligibility")
+  id                           String              @id @default(cuid())
+  application                  Application?        @relation("Eligibility_application", fields: [applicationId], references: [id])
+  applicationId                String?             @map("application")
+  buyerCountry                 Country?            @relation("Eligibility_buyerCountry", fields: [buyerCountryId], references: [id])
+  buyerCountryId               String?             @map("buyerCountry")
+  hasMinimumUkGoodsOrServices  Boolean             @default(false)
+  validExporterLocation        Boolean             @default(false)
+  hasCompaniesHouseNumber      Boolean             @default(false)
+  otherPartiesInvolved         Boolean             @default(false)
+  paidByLetterOfCredit         Boolean             @default(false)
+  totalContractValue           TotalContractValue? @relation("Eligibility_totalContractValue", fields: [totalContractValueId], references: [id])
+  totalContractValueId         String?             @map("totalContractValue")
+  coverPeriod                  CoverPeriod?        @relation("Eligibility_coverPeriod", fields: [coverPeriodId], references: [id])
+  coverPeriodId                String?             @map("coverPeriod")
+  from_Application_eligibility Application[]       @relation("Application_eligibility")
 
   @@index([applicationId])
   @@index([buyerCountryId])
+  @@index([totalContractValueId])
+  @@index([coverPeriodId])
 }
 
 model SectionReview {

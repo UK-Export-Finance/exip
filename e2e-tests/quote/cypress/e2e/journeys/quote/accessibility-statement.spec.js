@@ -17,7 +17,6 @@ const {
 const CONTENT_STRINGS = PAGES.ACCESSIBILITY_STATEMENT_PAGE;
 
 const {
-  SERVICE_LINK,
   USING_OUR_SERVICE,
   FEEDBACK_AND_CONTACT,
   REPORTING_PROBLEMS,
@@ -51,47 +50,21 @@ context('Accessibility statement page - Quote', () => {
     });
   });
 
-  it('renders a service link', () => {
-    cy.checkLink(
-      accessibilityStatementPage.serviceLink(),
-      SERVICE_LINK.HREF,
-      SERVICE_LINK.TEXT,
-    );
-  });
-
   describe('using our service', () => {
     it('renders a heading', () => {
-      usingOurService.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(USING_OUR_SERVICE.HEADING);
-      });
+      cy.checkText(usingOurService.heading(), USING_OUR_SERVICE.HEADING);
     });
 
     it('renders an intro', () => {
-      usingOurService.intro().invoke('text').then((text) => {
-        expect(text.trim()).equal(USING_OUR_SERVICE.INTRO);
-      });
+      cy.checkText(usingOurService.intro(), USING_OUR_SERVICE.INTRO);
     });
 
     it('renders a list', () => {
-      usingOurService.listItem1().invoke('text').then((text) => {
-        expect(text.trim()).equal(USING_OUR_SERVICE.LIST[0]);
-      });
-
-      usingOurService.listItem2().invoke('text').then((text) => {
-        expect(text.trim()).equal(USING_OUR_SERVICE.LIST[1]);
-      });
-
-      usingOurService.listItem3().invoke('text').then((text) => {
-        expect(text.trim()).equal(USING_OUR_SERVICE.LIST[2]);
-      });
-
-      usingOurService.listItem4().invoke('text').then((text) => {
-        expect(text.trim()).equal(USING_OUR_SERVICE.LIST[3]);
-      });
-
-      usingOurService.listItem5().invoke('text').then((text) => {
-        expect(text.trim()).equal(USING_OUR_SERVICE.LIST[4]);
-      });
+      cy.checkText(usingOurService.listItem1(), USING_OUR_SERVICE.LIST[0]);
+      cy.checkText(usingOurService.listItem2(), USING_OUR_SERVICE.LIST[1]);
+      cy.checkText(usingOurService.listItem3(), USING_OUR_SERVICE.LIST[2]);
+      cy.checkText(usingOurService.listItem4(), USING_OUR_SERVICE.LIST[3]);
+      cy.checkText(usingOurService.listItem5(), USING_OUR_SERVICE.LIST[4]);
     });
 
     describe('outro', () => {
@@ -102,68 +75,74 @@ context('Accessibility statement page - Quote', () => {
           USING_OUR_SERVICE.OUTRO.ABILITY_NET.LINK.TEXT,
         );
 
-        usingOurService.abilityNet.outro().invoke('text').then((text) => {
-          expect(text.trim()).equal(USING_OUR_SERVICE.OUTRO.ABILITY_NET.DESCRIPTION);
-        });
+        cy.checkText(usingOurService.abilityNet.outro(), USING_OUR_SERVICE.OUTRO.ABILITY_NET.DESCRIPTION);
       });
+    });
+  });
+
+  describe('compliance status', () => {
+    it('renders a heading', () => {
+      cy.checkText(complianceStatus.heading(), COMPLIANCE_STATUS.HEADING);
+    });
+
+    it('renders an intro', () => {
+      cy.checkText(complianceStatus.intro(), COMPLIANCE_STATUS.INTRO);
+    });
+
+    it('renders a link', () => {
+      cy.checkLink(
+        complianceStatus.link(),
+        COMPLIANCE_STATUS.GUIDLINES_LINK.HREF,
+        COMPLIANCE_STATUS.GUIDLINES_LINK.TEXT,
+      );
+    });
+
+    it('renders an outro', () => {
+      cy.checkText(complianceStatus.outro(), COMPLIANCE_STATUS.OUTRO);
+    });
+
+    it('renders a list', () => {
+      cy.checkText(complianceStatus.listItem1(), `${COMPLIANCE_STATUS.LIST[0]} ${COMPLIANCE_STATUS.LIST[1]}`);
+      cy.checkText(complianceStatus.listItem2(), `${COMPLIANCE_STATUS.LIST[2]} ${COMPLIANCE_STATUS.LIST[3]}`);
     });
   });
 
   describe('feedback and contact', () => {
     it('renders a heading', () => {
-      feedbackAndContact.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(FEEDBACK_AND_CONTACT.HEADING);
-      });
+      cy.checkText(feedbackAndContact.heading(), FEEDBACK_AND_CONTACT.HEADING);
     });
 
     it('renders an intro', () => {
-      feedbackAndContact.intro().invoke('text').then((text) => {
-        expect(text.trim()).equal(FEEDBACK_AND_CONTACT.INTRO);
-      });
+      cy.checkText(feedbackAndContact.intro(), FEEDBACK_AND_CONTACT.INTRO);
     });
 
     it('renders an outro', () => {
-      feedbackAndContact.outro().invoke('text').then((text) => {
-        expect(text.trim()).equal(FEEDBACK_AND_CONTACT.OUTRO);
-      });
+      cy.checkText(feedbackAndContact.outro(), FEEDBACK_AND_CONTACT.OUTRO);
     });
 
     it('renders a list', () => {
-      feedbackAndContact.listItem1().invoke('text').then((text) => {
-        expect(text.trim()).equal(FEEDBACK_AND_CONTACT.LIST[0]);
-      });
-
-      feedbackAndContact.listItem2().invoke('text').then((text) => {
-        expect(text.trim()).equal(FEEDBACK_AND_CONTACT.LIST[1]);
-      });
+      cy.checkText(feedbackAndContact.listItem1(), FEEDBACK_AND_CONTACT.LIST[0]);
+      cy.checkText(feedbackAndContact.listItem2(), FEEDBACK_AND_CONTACT.LIST[1]);
     });
   });
 
   describe('reporting problems', () => {
     it('renders a heading', () => {
-      reportingProblems.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(REPORTING_PROBLEMS.HEADING);
-      });
+      cy.checkText(reportingProblems.heading(), REPORTING_PROBLEMS.HEADING);
     });
 
     it('renders an description', () => {
-      reportingProblems.description().invoke('text').then((text) => {
-        expect(text.trim()).equal(REPORTING_PROBLEMS.DESCRIPTION);
-      });
+      cy.checkText(reportingProblems.description(), REPORTING_PROBLEMS.DESCRIPTION);
     });
   });
 
   describe('enforcement procedure', () => {
     it('renders a heading', () => {
-      enforcementProcedure.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(ENFORCEMENT_PROCEDURE.HEADING);
-      });
+      cy.checkText(enforcementProcedure.heading(), ENFORCEMENT_PROCEDURE.HEADING);
     });
 
     it('renders an description', () => {
-      enforcementProcedure.description().invoke('text').then((text) => {
-        expect(text.trim()).equal(ENFORCEMENT_PROCEDURE.DESCRIPTION);
-      });
+      cy.checkText(enforcementProcedure.description(), ENFORCEMENT_PROCEDURE.DESCRIPTION);
     });
 
     it('renders a link', () => {
@@ -177,75 +156,32 @@ context('Accessibility statement page - Quote', () => {
 
   describe('technical info', () => {
     it('renders a heading', () => {
-      technicalInfo.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(TECHNICAL_INFO.HEADING);
-      });
+      cy.checkText(technicalInfo.heading(), TECHNICAL_INFO.HEADING);
     });
 
     it('renders an description', () => {
-      technicalInfo.description().invoke('text').then((text) => {
-        expect(text.trim()).equal(TECHNICAL_INFO.DESCRIPTION);
-      });
-    });
-  });
-
-  describe('compliance status', () => {
-    it('renders a heading', () => {
-      complianceStatus.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(COMPLIANCE_STATUS.HEADING);
-      });
-    });
-
-    it('renders an intro', () => {
-      complianceStatus.intro().invoke('text').then((text) => {
-        expect(text.trim()).equal(COMPLIANCE_STATUS.INTRO);
-      });
-    });
-
-    it('renders a link', () => {
-      cy.checkLink(
-        complianceStatus.link(),
-        COMPLIANCE_STATUS.GUIDLINES_LINK.HREF,
-        COMPLIANCE_STATUS.GUIDLINES_LINK.TEXT,
-      );
-    });
-
-    it('renders an outro', () => {
-      complianceStatus.outro().invoke('text').then((text) => {
-        expect(text.trim()).equal(COMPLIANCE_STATUS.OUTRO);
-      });
+      cy.checkText(technicalInfo.description(), TECHNICAL_INFO.DESCRIPTION);
     });
   });
 
   describe('improving accessibility', () => {
     it('renders a heading', () => {
-      improvingAccessibility.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(IMPROVING_ACCESSIBILITY.HEADING);
-      });
+      cy.checkText(improvingAccessibility.heading(), IMPROVING_ACCESSIBILITY.HEADING);
     });
 
     it('renders an description', () => {
-      improvingAccessibility.description().invoke('text').then((text) => {
-        expect(text.trim()).equal(IMPROVING_ACCESSIBILITY.DESCRIPTION);
-      });
+      cy.checkText(improvingAccessibility.description(), IMPROVING_ACCESSIBILITY.DESCRIPTION);
     });
   });
 
   describe('preperation of statement', () => {
     it('renders a heading', () => {
-      preperationOfStatement.heading().invoke('text').then((text) => {
-        expect(text.trim()).equal(PREPERATION_OF_STATEMENT.HEADING);
-      });
+      cy.checkText(preperationOfStatement.heading(), PREPERATION_OF_STATEMENT.HEADING);
     });
 
     it('renders a list', () => {
-      preperationOfStatement.listItem1().invoke('text').then((text) => {
-        expect(text.trim()).equal(PREPERATION_OF_STATEMENT.LIST[0]);
-      });
-
-      preperationOfStatement.listItem2().invoke('text').then((text) => {
-        expect(text.trim()).equal(PREPERATION_OF_STATEMENT.LIST[1]);
-      });
+      cy.checkText(preperationOfStatement.listItem1(), PREPERATION_OF_STATEMENT.LIST[0]);
+      cy.checkText(preperationOfStatement.listItem2(), PREPERATION_OF_STATEMENT.LIST[1]);
     });
   });
 });

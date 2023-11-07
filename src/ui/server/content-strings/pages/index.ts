@@ -30,12 +30,8 @@ const CANNOT_APPLY = {
 };
 
 const ACCESSIBILITY_STATEMENT_PAGE = {
-  PAGE_TITLE: 'Accessibility Statement for the EXIP Get a Quote Service',
-  HEADING: 'Accessibility Statement for the EXIP Get a Quote Service',
-  SERVICE_LINK: {
-    TEXT: 'Get a quote for UKEF export insurance - GOV.UK (www.gov.uk)',
-    HREF: LINKS.EXTERNAL.BEFORE_YOU_START,
-  },
+  PAGE_TITLE: 'Apply for export insurance - accessibility statement',
+  HEADING: 'Apply for export insurance - accessibility statement',
   USING_OUR_SERVICE: {
     HEADING: 'Using our service',
     INTRO: 'This service is run by UK Export Finance. We want as many people as possible to use this service. For example, that means you should be able to:',
@@ -57,6 +53,28 @@ const ACCESSIBILITY_STATEMENT_PAGE = {
       },
     },
   },
+  COMPLIANCE_STATUS: {
+    HEADING: 'Compliance',
+    INTRO: 'This service is partially compliant with the',
+    GUIDLINES_LINK: {
+      TEXT: 'Web Content Accessibility Guidelines version 2.1',
+      HREF: LINKS.EXTERNAL.ACCESSIBILITY_GUIDLINES,
+    },
+    OUTRO: 'AA standard due to the non-compliances listed below.',
+    LIST: [
+      'Focus order.',
+      "Once a user has selected 'skipped to main content' on a page, for subsequent pages viewed on this website, the focus order will also skip to the main content as opposed to starting at the top of the page. This should not stop users completing the service, however it may be confusing at points.",
+      'PDF form.',
+      'In some instances, users will be directed to complete a PDF form to continue their application. Some PDFs do not meet accessibility standards: for example, they may not be marked up to make them accessible to a screen reader.',
+    ],
+  },
+  IMPROVING_ACCESSIBILITY: {
+    HEADING: "What we're doing to improve accessibility",
+    DESCRIPTION:
+      'UK Export Finance is committed to address any issues with the service. The team responsible for the service regularly tests and monitors the accessibility of the service.',
+    OUTRO:
+      'We will address the non-compliant points with future development work, including removing as far as possible any need to complete the PDF version of the application.',
+  },
   FEEDBACK_AND_CONTACT: {
     HEADING: 'Feedback and contact information',
     INTRO: 'If you need information on this website in a different format like accessible PDF, large print, easy read, contact us:',
@@ -71,7 +89,7 @@ const ACCESSIBILITY_STATEMENT_PAGE = {
   ENFORCEMENT_PROCEDURE: {
     HEADING: 'Enforcement procedure',
     DESCRIPTION:
-      "The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the'accessibility regulations'). If you're not happy with how we respond to your complaint,",
+      "The Equality and Human Rights Commission (EHRC) is responsible for enforcing the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018 (the 'accessibility regulations'). If you're not happy with how we respond to your complaint,",
     CONTACT: {
       TEXT: 'contact the Equality Advisory and Support Service (EASS)',
       HREF: LINKS.EXTERNAL.EQUALITY_ADVISORY_SERVICE,
@@ -82,25 +100,11 @@ const ACCESSIBILITY_STATEMENT_PAGE = {
     DESCRIPTION:
       'UK Export Finance is committed to making its website accessible, in accordance with the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018.',
   },
-  COMPLIANCE_STATUS: {
-    HEADING: 'Compliance status',
-    INTRO: 'This website is compliant with the',
-    GUIDLINES_LINK: {
-      TEXT: 'Web Content Accessibility Guidelines version 2.1',
-      HREF: LINKS.EXTERNAL.ACCESSIBILITY_GUIDLINES,
-    },
-    OUTRO: 'AA standard.',
-  },
-  IMPROVING_ACCESSIBILITY: {
-    HEADING: "What we're doing to improve accessibility",
-    DESCRIPTION:
-      'UK Export Finance is committed to address any issues with the service. The team responsible for the service regularly tests and monitors the accessibility of the service.',
-  },
   PREPERATION_OF_STATEMENT: {
     HEADING: 'Preparation of this accessibility statement',
     LIST: [
-      'This statement was prepared 17th February 2023. It was last reviewed on 17th February 2023.',
-      'This website was last tested on 17th February 2023. The test was carried out by UK Export Finance.',
+      'This statement was prepared 1st November 2023. It was last reviewed on 1st November 2023.',
+      'This website was last tested on 28th June 2023. The test was carried out by UK Export Finance and Digital Accessibility Centre (DAC).',
     ],
   },
 };
