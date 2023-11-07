@@ -1,5 +1,34 @@
 # Changelog
 
+## [2.0.0](https://github.com/UK-Export-Finance/exip/compare/v1.15.2...v2.0.0) (2023-11-07)
+
+
+### Features
+
+* **apim:** mulesoft to apim migration ([129a63b](https://github.com/UK-Export-Finance/exip/commit/129a63bec366dbc158eb61c398f87e7d353d94bd))
+* **EMS-1789:** get a quote - pricing grid update ([a58629a](https://github.com/UK-Export-Finance/exip/commit/a58629a80daa3b5c34709cc9687d1517c63abb62))
+* **EMS-1789:** quote tool - pricing grid generation - add condition to row mapping ([85e3d2d](https://github.com/UK-Export-Finance/exip/commit/85e3d2d611039bd7f44d925c0f8a4f158cd8e349))
+* **EMS-1789:** quote tool - update README.md ([f2419ed](https://github.com/UK-Export-Finance/exip/commit/f2419ed4ec104b09c5b328f8eb5c6ef0576d8da7))
+* **merge:** `main-application` merged to `main` ([#1256](https://github.com/UK-Export-Finance/exip/issues/1256)) ([ec99b24](https://github.com/UK-Export-Finance/exip/commit/ec99b24649af4852089e7800799dc41d1f409e6a))
+
+
+### Bug Fixes
+
+* **apim:** added NODE_ENV + public runner execution ([fb78612](https://github.com/UK-Export-Finance/exip/commit/fb786127a3c6abf667975ce33aacb8fcee94f901))
+* **apim:** concurency execution ([91590ea](https://github.com/UK-Export-Finance/exip/commit/91590ea5374180268dda031475202936f40c755c))
+* **apim:** property name correction ([34b0d32](https://github.com/UK-Export-Finance/exip/commit/34b0d327ac2c9a788d1748172af82421125c85f5))
+* **apim:** public runner execution ([615dbec](https://github.com/UK-Export-Finance/exip/commit/615dbec8e536bc09eb34757c9fd010d8a697edc8))
+* **apim:** self hosted execution ([3f6dfa3](https://github.com/UK-Export-Finance/exip/commit/3f6dfa32c1717f7a1c29a875e46c81fc14fc5f1a))
+* **cicd:** updated GHA env ([cbca375](https://github.com/UK-Export-Finance/exip/commit/cbca375123663ab8a8ba9972ccb5aa3bbed76761))
+* **deps:** various dependencies updates ([a5b24d5](https://github.com/UK-Export-Finance/exip/commit/a5b24d5033a66fe023d8c520f7ca4312d1a41350))
+* **e2e:** private runner execution ([2f0696c](https://github.com/UK-Export-Finance/exip/commit/2f0696c0f632bcc27b7f787c03da83863c7f1904))
+
+
+### Miscellaneous
+
+* **deps:** dependencies updates ([445435b](https://github.com/UK-Export-Finance/exip/commit/445435ba9508fc61f56e92093fc01a0059d2c20f))
+* **deps:** dependencies updates ([bc40363](https://github.com/UK-Export-Finance/exip/commit/bc40363fadc34177f9dac86a81304774b93efd39))
+
 ## [1.16.0](https://github.com/UK-Export-Finance/exip/compare/v1.15.2...v1.16.0) (2023-07-07)
 
 
