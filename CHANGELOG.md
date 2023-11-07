@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.16.0](https://github.com/UK-Export-Finance/exip/compare/v1.15.2...v1.16.0) (2023-11-07)
+## [2.0.0](https://github.com/UK-Export-Finance/exip/compare/v1.15.2...v2.0.0) (2023-11-07)
 
 
 ### Features
