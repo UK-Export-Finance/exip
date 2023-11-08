@@ -1,4 +1,4 @@
-import { field, saveAndBackButton, yesRadioInput } from '../../../../../../pages/shared';
+import { field, saveAndBackButton, yesRadioInput, noRadioInput } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import {
   INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, VALID_PHONE_NUMBERS,
@@ -97,7 +97,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       cy.navigateToUrl(url);
 
       yesRadioInput().first().should('be.checked');
-      yesRadioInput().eq(1).should('be.checked');
+      noRadioInput().eq(1).should('be.checked');
       field(PHONE_NUMBER).input().should('be.empty');
     });
   });
@@ -121,7 +121,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       cy.navigateToUrl(url);
 
       yesRadioInput().first().should('be.checked');
-      yesRadioInput().eq(1).should('be.checked');
+      noRadioInput().eq(1).should('be.checked');
 
       cy.checkValue(field(PHONE_NUMBER), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
 
@@ -148,7 +148,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       cy.navigateToUrl(url);
 
       yesRadioInput().first().should('be.checked');
-      yesRadioInput().eq(1).should('be.checked');
+      noRadioInput().eq(1).should('be.checked');
       cy.checkValue(field(PHONE_NUMBER), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
       cy.checkValue(field(WEBSITE), WEBSITE_EXAMPLES.VALID);
     });

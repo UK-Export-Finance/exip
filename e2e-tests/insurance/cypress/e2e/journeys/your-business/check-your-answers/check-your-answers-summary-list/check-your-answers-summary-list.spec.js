@@ -42,6 +42,8 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your business - Check your answers - Summary list - your business', () => {
   let referenceNumber;
   let url;
@@ -57,7 +59,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitBrokerForm({ usingBroker: true });
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 
