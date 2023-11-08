@@ -25,6 +25,10 @@ const EXPORTER_BUSINESS = {
     CONTINUE_SUFFIX: 'until this problem is resolved',
     INFORMATION: '(You may lose any information you entered on the previous page.)',
   },
+  ALTERNATIVE_TRADING_ADDRESS: {
+    ...SHARED,
+    PAGE_TITLE: 'Alternative trading address',
+  },
   NATURE_OF_YOUR_BUSINESS: {
     ...SHARED,
     PAGE_TITLE: 'Nature of your business',
