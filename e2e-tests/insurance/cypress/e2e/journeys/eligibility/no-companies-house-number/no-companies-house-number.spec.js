@@ -1,4 +1,4 @@
-import { noCompaniesHouseNumberPage } from '../../../../../../pages/insurance/eligibility';
+import { actions, body } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -44,7 +44,7 @@ context('Insurance - Eligibility - You cannot apply for credit insurance page (n
 
     it('should render body copy', () => {
       cy.checkText(
-        noCompaniesHouseNumberPage.body(),
+        body(),
         CONTENT_STRINGS.BODY,
       );
     });
@@ -52,12 +52,12 @@ context('Insurance - Eligibility - You cannot apply for credit insurance page (n
     describe('actions', () => {
       it('should render `update company details` copy and link', () => {
         cy.checkText(
-          noCompaniesHouseNumberPage.actions.updateCompanyDetails(),
+          actions.updateCompanyDetails(),
           `${ACTIONS.UPDATE_COMPANY_DETAILS.TEXT} ${ACTIONS.UPDATE_COMPANY_DETAILS.LINK.TEXT}`,
         );
 
         cy.checkLink(
-          noCompaniesHouseNumberPage.actions.updateCompanyDetailsLink(),
+          actions.updateCompanyDetailsLink(),
           ACTIONS.UPDATE_COMPANY_DETAILS.LINK.HREF,
           ACTIONS.UPDATE_COMPANY_DETAILS.LINK.TEXT,
         );
