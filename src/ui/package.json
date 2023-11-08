@@ -32,7 +32,7 @@
     "@types/csurf": "^1.11.4",
     "@types/express-session": "^1.17.9",
     "@types/google-libphonenumber": "^7.4.29",
-    "@types/is-url": "^1.2.31",
+    "@types/is-url": "^1.2.32",
     "@types/morgan": "^1.9.7",
     "@types/node": "^20.8.10",
     "@types/nunjucks": "^3.2.5",
