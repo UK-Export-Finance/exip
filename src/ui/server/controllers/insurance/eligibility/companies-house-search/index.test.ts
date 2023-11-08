@@ -130,7 +130,7 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
           userName: getUserNameFromSession(req.session.user),
           ...PAGE_VARIABLES,
           validationErrors: generateValidationErrors(payload),
-          submittedValues: req.body,
+          submittedValues: payload,
         });
       });
     });
@@ -203,6 +203,8 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
 
           await post(req, res);
 
+          const payload = constructPayload(req.body, [FIELD_ID]);
+
           expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
             ...insuranceCorePageVariables({
               PAGE_CONTENT_STRINGS,
@@ -211,7 +213,7 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
             userName: getUserNameFromSession(req.session.user),
             ...PAGE_VARIABLES,
             validationErrors: generateValidationErrors({}),
-            submittedValues: req.body,
+            submittedValues: payload,
           });
         });
       });

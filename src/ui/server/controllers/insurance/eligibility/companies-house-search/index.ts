@@ -81,7 +81,7 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         ...PAGE_VARIABLES,
         validationErrors: formValidationErrors,
-        submittedValues: req.body,
+        submittedValues: payload,
       });
     }
 
@@ -103,7 +103,7 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         ...PAGE_VARIABLES,
         validationErrors: generateValidationErrors({}),
-        submittedValues: req.body,
+        submittedValues: payload,
       });
     }
 
