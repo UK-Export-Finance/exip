@@ -9,7 +9,7 @@ const mockEligibility = {
   validExporterLocation: true,
   hasCompaniesHouseNumber: true,
   companiesHouseNumber: mockCompany.companyNumber,
-  wantCoverOverMaxAmount: false,
+  totalValueInsured: 3,
   wantCoverOverMaxPeriod: false,
   coverPeriod: {
     value: 'Mock value',

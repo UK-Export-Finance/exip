@@ -1,4 +1,4 @@
-import { FIELD_IDS } from '../../../../constants';
+import { FIELD_IDS, TOTAL_CONTRACT_VALUE } from '../../../../constants';
 import { LINKS } from '../../../links';
 
 const {
@@ -8,6 +8,7 @@ const {
   WANT_COVER_OVER_MAX_AMOUNT,
   WANT_COVER_OVER_MAX_PERIOD,
   COMPANIES_HOUSE_NUMBER,
+  TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID,
 } = FIELD_IDS.INSURANCE.ELIGIBILITY;
 
 export const FIELDS_ELIGIBILITY = {
@@ -41,6 +42,20 @@ export const FIELDS_ELIGIBILITY = {
     HINT: `<p><span data-cy="hint-for-example">For example, 8989898 or SC907816. You'll find it on your incorporation certificate or on the </span><a class="govuk-link" href="${LINKS.EXTERNAL.COMPANIES_HOUSE}" data-cy="hint-link">Companies House website</a>.</p>`,
     SUMMARY: {
       TITLE: 'UK Companies House registration number and actively trading',
+    },
+  },
+  [TOTAL_CONTRACT_VALUE_FIELD_ID]: {
+    OPTIONS: {
+      ABOVE: {
+        ID: TOTAL_CONTRACT_VALUE.MORE_THAN_250k.DB_ID,
+        VALUE: TOTAL_CONTRACT_VALUE.MORE_THAN_250k.DB_ID,
+        TEXT: '£250,000 and above',
+      },
+      BELOW: {
+        ID: TOTAL_CONTRACT_VALUE.LESS_THAN_250k.DB_ID,
+        VALUE: TOTAL_CONTRACT_VALUE.LESS_THAN_250k.DB_ID,
+        TEXT: 'Less than £250,000',
+      },
     },
   },
 };

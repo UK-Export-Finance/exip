@@ -15,8 +15,9 @@ export const CHECK_IF_ELIGIBLE = {
     "The eligibility check should only take a few minutes to complete and you'll get an answer immediately. If your export is eligible, you can apply right away.",
 };
 
-export const INSURED_AMOUNT = {
-  PAGE_TITLE: `Do you want to be insured for more than ${MAX_COVER_AMOUNT}?`,
+export const TOTAL_VALUE_INSURED = {
+  PAGE_TITLE: 'What is the total value you want to insure?',
+  HINT: "We'll ask you for more information if your export is over £250,000.",
 };
 
 export const INSURED_PERIOD = {

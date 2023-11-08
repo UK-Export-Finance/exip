@@ -1,4 +1,5 @@
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
+import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -7,22 +8,45 @@ import generateValidationErrors from '../../../../shared-validation/yes-no-radio
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
 
-export const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT;
+export const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.TOTAL_CONTRACT_VALUE;
 
+/**
+ * page variables for total value insured
+ * FIELD is TOTAL_CONTRACT_VALUE and options for radio
+ */
 export const PAGE_VARIABLES = {
   FIELD_ID,
-  PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT,
+  PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED,
+  FIELD: {
+    ID: FIELD_ID,
+    ...FIELDS[FIELD_ID],
+  },
 };
 
-export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT;
+export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED;
 
+/**
+ * get
+ * Render the "total value insured" page
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.render} total value insured page
+ */
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
     userName: getUserNameFromSession(req.session.user),
     submittedValues: req.session.submittedData.insuranceEligibility,
+    ...PAGE_VARIABLES,
   });
 
+/**
+ * post
+ * Post the "total value insured" form
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} Next part of the flow or validation errors
+ */
 export const post = (req: Request, res: Response) => {
   const payload = constructPayload(req.body, [FIELD_ID]);
 
@@ -36,20 +60,11 @@ export const post = (req: Request, res: Response) => {
       }),
       userName: getUserNameFromSession(req.session.user),
       validationErrors,
+      ...PAGE_VARIABLES,
     });
   }
 
-  const answer = req.body[FIELD_ID];
-
-  if (answer === 'true') {
-    const { INSURANCE } = PAGES;
-    const { APPLY_OFFLINE } = INSURANCE;
-    const { REASON } = APPLY_OFFLINE;
-
-    req.flash('exitReason', REASON.WANT_COVER_OVER_MAX_AMOUNT);
-
-    return res.redirect(ROUTES.INSURANCE.APPLY_OFFLINE);
-  }
+  const answer = payload[FIELD_ID];
 
   req.session.submittedData = {
     ...req.session.submittedData,

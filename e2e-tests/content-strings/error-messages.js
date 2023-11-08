@@ -1,7 +1,7 @@
 import { FIELD_IDS, ELIGIBILITY } from '../constants';
 import formatCurrency from '../helpers/format-currency';
 
-export const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP);
+export const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.COVER_EXCEED_AMOUNT);
 
 export const ERROR_MESSAGES = {
   THERE_IS_A_PROBLEM: 'There is a problem',
@@ -52,8 +52,8 @@ export const ERROR_MESSAGES = {
   [FIELD_IDS.FEEDBACK.OTHER_COMMENTS]: 'Anything else you would like to tell us cannot be more than 1200 characters',
   INSURANCE: {
     ELIGIBILITY: {
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT]: {
-        IS_EMPTY: `Select whether you want to be insured for more than ${MAX_COVER_AMOUNT}`,
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.TOTAL_CONTRACT_VALUE]: {
+        IS_EMPTY: `Select if the the total value of your contract exceeds ${MAX_COVER_AMOUNT} or not`,
       },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD]: {
         IS_EMPTY: `Select whether you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years`,

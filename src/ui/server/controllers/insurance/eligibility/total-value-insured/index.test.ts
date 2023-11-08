@@ -1,4 +1,5 @@
 import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
+import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
@@ -9,7 +10,7 @@ import { updateSubmittedData } from '../../../../helpers/update-submitted-data/i
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
-describe('controllers/insurance/eligibility/insured-amount', () => {
+describe('controllers/insurance/eligibility/total-value-insured', () => {
   let req: Request;
   let res: Response;
 
@@ -20,7 +21,7 @@ describe('controllers/insurance/eligibility/insured-amount', () => {
 
   describe('FIELD_ID', () => {
     it('should have the correct ID', () => {
-      const expected = FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT;
+      const expected = FIELD_IDS.INSURANCE.ELIGIBILITY.TOTAL_CONTRACT_VALUE;
 
       expect(FIELD_ID).toEqual(expected);
     });
@@ -28,9 +29,15 @@ describe('controllers/insurance/eligibility/insured-amount', () => {
 
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
+      const fieldId = FIELD_IDS.INSURANCE.ELIGIBILITY.TOTAL_CONTRACT_VALUE;
+
       const expected = {
-        FIELD_ID: FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT,
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT,
+        FIELD_ID: fieldId,
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED,
+        FIELD: {
+          ID: fieldId,
+          ...FIELDS[fieldId],
+        },
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -39,7 +46,7 @@ describe('controllers/insurance/eligibility/insured-amount', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED);
     });
   });
 
@@ -51,6 +58,7 @@ describe('controllers/insurance/eligibility/insured-amount', () => {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
         userName: getUserNameFromSession(req.session.user),
         submittedValues: req.session.submittedData.insuranceEligibility,
+        ...PAGE_VARIABLES,
       });
     });
   });
@@ -66,34 +74,14 @@ describe('controllers/insurance/eligibility/insured-amount', () => {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
           userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.INSURANCE.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
+          ...PAGE_VARIABLES,
         });
-      });
-    });
-
-    describe('when submitted answer is true', () => {
-      beforeEach(() => {
-        req.body = {
-          [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT]: 'true',
-        };
-      });
-
-      it(`should redirect to ${ROUTES.INSURANCE.APPLY_OFFLINE}`, async () => {
-        await post(req, res);
-
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.APPLY_OFFLINE);
-      });
-
-      it('should add exitReason to req.flash', async () => {
-        await post(req, res);
-
-        const expectedReason = PAGES.INSURANCE.APPLY_OFFLINE.REASON.WANT_COVER_OVER_MAX_AMOUNT;
-        expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
     });
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT]: 'false',
+        [FIELD_ID]: 3,
       };
 
       beforeEach(() => {
@@ -104,7 +92,7 @@ describe('controllers/insurance/eligibility/insured-amount', () => {
         post(req, res);
 
         const expectedPopulatedData = {
-          [PAGE_VARIABLES.FIELD_ID]: validBody[PAGE_VARIABLES.FIELD_ID],
+          [FIELD_ID]: validBody[FIELD_ID],
         };
 
         const expected = {

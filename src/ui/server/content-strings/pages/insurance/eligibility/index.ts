@@ -1,9 +1,6 @@
-import { GBP_CURRENCY_CODE, ELIGIBILITY } from '../../../../constants';
-import formatCurrency from '../../../../helpers/format-currency';
+import { ELIGIBILITY } from '../../../../constants';
 import { ACTIONS } from '../../../actions';
 import { LINKS } from '../../../links';
-
-const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP, GBP_CURRENCY_CODE, 0);
 
 const CHECK_IF_ELIGIBLE = {
   PAGE_TITLE: 'Check you can apply for credit insurance for your export',
@@ -15,8 +12,9 @@ const CHECK_IF_ELIGIBLE = {
     "The eligibility check should only take a few minutes to complete and you'll get an answer immediately. If your export is eligible, you can apply right away.",
 };
 
-const INSURED_AMOUNT = {
-  PAGE_TITLE: `Do you want to be insured for more than ${MAX_COVER_AMOUNT}?`,
+const TOTAL_VALUE_INSURED = {
+  PAGE_TITLE: 'What is the total value you want to insure?',
+  HINT: "We'll ask you for more information if your export is over £250,000.",
 };
 
 const INSURED_PERIOD = {
@@ -83,7 +81,7 @@ const ACCOUNT_TO_APPLY_ONLINE = {
 
 export default {
   CHECK_IF_ELIGIBLE,
-  INSURED_AMOUNT,
+  TOTAL_VALUE_INSURED,
   INSURED_PERIOD,
   HAS_COMPANIES_HOUSE_NUMBER,
   COMPANIES_HOUSE_NUMBER,

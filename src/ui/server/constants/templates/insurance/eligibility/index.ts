@@ -1,7 +1,7 @@
 export const ELIGIBILITY_TEMPLATES = {
   CHECK_IF_ELIGIBLE: 'insurance/eligibility/check-if-eligible.njk',
   UK_GOODS_OR_SERVICES: 'insurance/eligibility/uk-goods-or-services.njk',
-  INSURED_AMOUNT: 'insurance/eligibility/insured-amount.njk',
+  TOTAL_VALUE_INSURED: 'insurance/eligibility/total-value-insured.njk',
   INSURED_PERIOD: 'insurance/eligibility/insured-period.njk',
   COMPANIES_HOUSE_NUMBER: 'insurance/eligibility/companies-house-number.njk',
   NO_COMPANIES_HOUSE_NUMBER: 'insurance/eligibility/no-companies-house-number.njk',
