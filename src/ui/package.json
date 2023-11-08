@@ -27,7 +27,7 @@
     "@babel/preset-env": "^7.23.2",
     "@ministryofjustice/frontend": "^1.8.0",
     "@types/compression": "^1.7.4",
-    "@types/connect-flash": "^0.0.38",
+    "@types/connect-flash": "^0.0.40",
     "@types/cookie-parser": "^1.4.5",
     "@types/csurf": "^1.11.4",
     "@types/express-session": "^1.17.9",
