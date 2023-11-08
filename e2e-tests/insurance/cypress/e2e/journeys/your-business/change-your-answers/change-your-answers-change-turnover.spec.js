@@ -32,7 +32,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
 
       task.link().click();
 
-      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitBrokerForm({});

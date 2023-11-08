@@ -1,23 +1,34 @@
-import { FIELD_IDS } from '../../constants';
-import { field, yesRadioInput } from '../../pages/shared';
+import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
+import { field, yesRadioInput, noRadioInput } from '../../pages/shared';
 
 const {
-  YOUR_COMPANY: {
-    WEBSITE,
-    PHONE_NUMBER,
+  EXPORTER_BUSINESS: {
+    YOUR_COMPANY: {
+      WEBSITE,
+      PHONE_NUMBER,
+    },
   },
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+} = INSURANCE_FIELD_IDS;
 
 /**
  * completeCompaniesDetailsForm
  * fills in the company details form
- * fills in optional fields if they are provided
- * does not submit the form
- * @param {Object} variables - phoneNumber and website
+ * @param {Boolean} differentTradingAddress
+ * @param {String} phoneNumber
+ * @param {String} companyWebsite
  */
-const completeCompaniesDetailsForm = ({ phoneNumber, companyWebsite }) => {
+const completeCompaniesDetailsForm = ({
+  differentTradingAddress = false,
+  phoneNumber,
+  companyWebsite,
+}) => {
   yesRadioInput().first().click();
-  yesRadioInput().eq(1).click();
+
+  if (differentTradingAddress) {
+    yesRadioInput().eq(1).click();
+  } else {
+    noRadioInput().eq(1).click();
+  }
 
   if (phoneNumber) {
     cy.keyboardInput(field(PHONE_NUMBER).input(), phoneNumber);

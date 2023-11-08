@@ -45,7 +45,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
 
       task.link().click();
 
-      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitCompanyDetails({});
 
       natureOfBusinessUrl = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
 

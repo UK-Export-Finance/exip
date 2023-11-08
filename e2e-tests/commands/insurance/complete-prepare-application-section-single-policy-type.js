@@ -10,12 +10,14 @@ const task = taskList.prepareApplication.tasks.policy;
  * completePrepareYourApplicationSectionSingle
  * Runs through the full prepare your application journey for a single policy type
  * @param {Object} Object with flags on how to complete specific parts of the application
+ * - differentTradingAddress: Should submit "yes" to "trade from a different address" in the "your business - company details" form. Defaults to false.
  * - exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form. Defaults to "yes".
  * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
  * - policyMaximumValue: Should submit an application with the maximum value of 500000
  * - differentPolicyContact: Should submit an application with a different policy contact to the owner
  */
 const completePrepareYourApplicationSectionSingle = ({
+  differentTradingAddress = false,
   exporterHasTradedWithBuyer,
   usingBroker,
   policyMaximumValue = false,
@@ -34,9 +36,11 @@ const completePrepareYourApplicationSectionSingle = ({
 
   submitButton().click();
 
-  cy.completeAndSubmitCompanyDetails();
+  cy.completeAndSubmitCompanyDetails({ differentTradingAddress });
 
-  cy.url().should('include', '/your-business/nature-of-business');
+  if (differentTradingAddress) {
+    cy.completeAndSubmitAlternativeTradingAddressForm();
+  }
 
   cy.completeAndSubmitNatureOfYourBusiness();
   cy.completeAndSubmitTurnoverForm();

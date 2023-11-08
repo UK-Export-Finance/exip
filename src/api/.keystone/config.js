@@ -219,6 +219,7 @@ var EXPORTER_BUSINESS = {
     WEBSITE: "companyWebsite",
     PHONE_NUMBER: "phoneNumber"
   },
+  ALTERNATIVE_TRADING_ADDRESS: "alternativeTradingAddress",
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES: "goodsOrServicesSupplied",
     YEARS_EXPORTING: "totalYearsExporting",
@@ -3844,6 +3845,7 @@ var {
 } = insurance_default;
 var {
   YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
+  ALTERNATIVE_TRADING_ADDRESS,
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL4 }
@@ -3900,6 +3902,9 @@ var FIELDS = {
         TITLE: "UK telephone number (optional)"
       }
     }
+  },
+  [ALTERNATIVE_TRADING_ADDRESS]: {
+    LABEL: "What's your alternative trading address?"
   },
   NATURE_OF_YOUR_BUSINESS: {
     [GOODS_OR_SERVICES]: {
