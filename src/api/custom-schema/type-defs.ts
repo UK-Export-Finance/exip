@@ -29,18 +29,6 @@ const typeDefs = `
     verificationHash: String
   }
 
-  # fields from registered_office_address object
-  type CompaniesHouseExporterCompanyAddress {
-    addressLine1: String
-    addressLine2: String
-    careOf: String
-    locality: String
-    region: String
-    postalCode: String
-    country: String
-    premises: String
-  }
-
   type CompaniesHouseResponse {
     companyName: String
     registeredOfficeAddress: CompanyAddress
@@ -56,12 +44,31 @@ const typeDefs = `
   type CompanyAddress {
     addressLine1: String
     addressLine2: String
-    careOf: String
+    postalCode: String
+    country: String
     locality: String
     region: String
     postalCode: String
-    country: String
+    careOf: String
     premises: String
+  }
+
+  type OrdnanceSurveyAddress {
+    addressLine1: String
+    addressLine2: String
+    postalCode: String
+    country: String
+    county: String
+    town: String
+  }
+
+  input OrdnanceAddressInput  {
+    addressLine1: String
+    addressLine2: String
+    postalCode: String
+    country: String
+    county: String
+    town: String
   }
 
   input OldSicCodes {
@@ -87,6 +94,14 @@ const typeDefs = `
     industrySectorNames: [String]
     financialYearEndDate: DateTime
     registeredOfficeAddress: CompanyAddressInput
+  }
+
+   type OrdnanceSurveyResponse {
+    success: Boolean
+    addresses: [OrdnanceSurveyAddress]
+    apiError: Boolean
+    noAddressesFound: Boolean
+    invalidPostcode: Boolean
   }
 
   type EmailResponse {
@@ -302,13 +317,19 @@ const typeDefs = `
       token: String!
     ): AccountPasswordResetTokenResponse
 
+    """ get CIS countries from APIM """
+    getApimCisCountries: [MappedCisCountry]
+
     """ get companies house information """
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
 
-    """ get CIS countries from APIM """
-    getApimCisCountries: [MappedCisCountry]
+    """ get Ordnance Survey address """
+    getOrdnanceSurveyAddress(
+      postcode: String!
+      houseNameOrNumber: String!
+    ): OrdnanceSurveyResponse
   }
 `;
 
