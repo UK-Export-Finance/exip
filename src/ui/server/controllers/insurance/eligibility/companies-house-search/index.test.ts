@@ -108,6 +108,8 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
     };
 
     const mockCompaniesHouseResponse = {
+      __typename: 'CompaniesHouseResponse',
+      isActive: true,
       company: mockCompany,
       companyNumber: mockCompany.companyNumber,
     };

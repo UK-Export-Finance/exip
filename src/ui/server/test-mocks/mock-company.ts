@@ -16,6 +16,7 @@ const mockCompany = {
   sicCodes: ['68201'],
   industrySectorNames: ['test description'],
   isActive: true,
+  __typename: 'CompaniesHouseResponse',
 } as CompaniesHouseResponse;
 
 export default mockCompany;

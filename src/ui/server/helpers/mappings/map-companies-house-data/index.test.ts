@@ -17,17 +17,19 @@ describe('helpers/mappings/map-companies-house-data', () => {
     it(`should return the formBody without ${COMPANY_NUMBER} success,and __typename fields and change null fields in address to empty strings`, () => {
       const result = mapCompaniesHouseData(mockCompany);
 
+      const { __typename, isActive, ...company } = mockCompany;
+
       const expected = {
-        ...mockCompany,
-        dateOfCreation: new Date(mockCompany[COMPANY_INCORPORATED]).toISOString(),
+        ...company,
+        dateOfCreation: new Date(company[COMPANY_INCORPORATED]).toISOString(),
         [COMPANY_ADDRESS]: {
           [CARE_OF]: '',
           [PREMISES]: '',
-          [ADDRESS_LINE_1]: mockCompany.registeredOfficeAddress[ADDRESS_LINE_1],
+          [ADDRESS_LINE_1]: company.registeredOfficeAddress[ADDRESS_LINE_1],
           [ADDRESS_LINE_2]: '',
-          [LOCALITY]: mockCompany.registeredOfficeAddress[LOCALITY],
-          [REGION]: mockCompany.registeredOfficeAddress[REGION],
-          [POSTAL_CODE]: mockCompany.registeredOfficeAddress[POSTAL_CODE],
+          [LOCALITY]: company.registeredOfficeAddress[LOCALITY],
+          [REGION]: company.registeredOfficeAddress[REGION],
+          [POSTAL_CODE]: company.registeredOfficeAddress[POSTAL_CODE],
           [COUNTRY]: '',
         },
       };

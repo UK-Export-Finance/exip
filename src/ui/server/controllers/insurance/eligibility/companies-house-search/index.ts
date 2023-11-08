@@ -121,9 +121,7 @@ export const post = async (req: Request, res: Response) => {
      * 2) Add mapped data to the session.
      * 3) Redirect to the next part of the flow, COMPANY_DETAILS.
      */
-    const companyObj = { ...response.company };
-
-    const mappedCompanyDetails = mapCompaniesHouseData(companyObj);
+    const mappedCompanyDetails = mapCompaniesHouseData(response.company);
 
     const sessionUpdate = { company: mappedCompanyDetails };
 

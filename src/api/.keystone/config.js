@@ -1656,6 +1656,7 @@ var typeDefs = `
     industrySectorNames: [String]
     financialYearEndDate: DateTime
     registeredOfficeAddress: CompanyAddressInput
+    isActive: Boolean
   }
 
   type EmailResponse {

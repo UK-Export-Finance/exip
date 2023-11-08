@@ -20,6 +20,7 @@ interface CompaniesHouseResponse {
   success: boolean;
   apiError: boolean;
   notFound: boolean;
+  __typename: string;
 }
 
 export { CompaniesHouseAddress, CompaniesHouseResponse };
