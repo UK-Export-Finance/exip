@@ -94,6 +94,10 @@
   pointer-events: none;
 }
 
+.autocomplete__option > span {
+  visibility: hidden;
+}
+
 .autocomplete__option:first-of-type {
   border-top-width: 0;
 }
