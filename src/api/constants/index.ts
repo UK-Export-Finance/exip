@@ -5,8 +5,10 @@ export * from './field-ids';
 export * from './allowed-graphql-resolvers';
 export * from './answers';
 export * from './application';
+export * from './cover-period';
 export * from './external-apis';
 export * from './field-values';
+export * from './total-contract-value';
 export * from './XLSX-CONFIG';
 
 dotenv.config();
@@ -116,14 +118,14 @@ export const ACCOUNT = {
       STRING_ENCODING: 'ascii' as BufferEncoding,
     },
     TOKEN: {
-      EXPIRY: '8h',
+      EXPIRY: '12h',
       ALGORITHM: 'RS256' as Algorithm,
     },
     SESSION_EXPIRY: () => {
-      // 8 hours from now
+      // 12 hours from now
       const now = new Date();
 
-      const hours = 8;
+      const hours = 12;
       const seconds = 60 * 60 * 1000;
 
       const future = new Date(now.getTime() + hours * seconds);

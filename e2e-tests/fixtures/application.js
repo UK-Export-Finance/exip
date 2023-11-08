@@ -1,12 +1,14 @@
 import {
   FIELD_IDS,
   FIELD_VALUES,
-  COMPANIES_HOUSE_NUMBER,
+  COVER_PERIOD as COVER_PERIOD_CONSTANTS,
+  TOTAL_CONTRACT_VALUE as TOTAL_CONTRACT_VALUE_CONSTANTS,
   WEBSITE_EXAMPLES,
 } from '../constants';
+import { COMPANIES_HOUSE_NUMBER } from '../constants/examples';
 import { GBP_CURRENCY_CODE } from './currencies';
 import mockCountries from './countries';
-import sicCodes from './sic-codes';
+import mockCompanies from './companies';
 
 const {
   INSURANCE: {
@@ -16,9 +18,9 @@ const {
       EMAIL: ACCOUNT_EMAIL,
     },
     ELIGIBILITY: {
-      WANT_COVER_OVER_MAX_AMOUNT,
-      WANT_COVER_OVER_MAX_PERIOD,
-      COMPANIES_HOUSE_NUMBER: ELIGIBILITY_COMPANIES_HOUSE_NUMBER,
+      HAS_COMPANIES_HOUSE_NUMBER,
+      COVER_PERIOD_ID,
+      TOTAL_CONTRACT_VALUE_ID,
       HAS_MINIMUM_UK_GOODS_OR_SERVICES,
       VALID_EXPORTER_LOCATION,
     },
@@ -34,17 +36,6 @@ const {
       DIFFERENT_NAME_ON_POLICY: { POSITION: CONTACT_POSITION },
     },
     EXPORTER_BUSINESS: {
-      COMPANY_HOUSE: {
-        COMPANY_SIC,
-        INDUSTRY_SECTOR_NAME,
-        INDUSTRY_SECTOR_NAMES,
-        COMPANY_NUMBER,
-        COMPANY_NAME,
-        COMPANY_INCORPORATED,
-      },
-      YOUR_COMPANY: {
-        ADDRESS: YOUR_COMPANY_ADDRESS,
-      },
       NATURE_OF_YOUR_BUSINESS: {
         GOODS_OR_SERVICES,
         YEARS_EXPORTING,
@@ -52,7 +43,6 @@ const {
         EMPLOYEES_INTERNATIONAL,
       },
       TURNOVER: {
-        FINANCIAL_YEAR_END_DATE,
         ESTIMATED_ANNUAL_TURNOVER,
         PERCENTAGE_TURNOVER,
       },
@@ -106,11 +96,12 @@ const application = {
   ELIGIBILITY: {
     buyerCountryIsoCode: mockCountries[1].isoCode,
     [VALID_EXPORTER_LOCATION]: true,
+    [HAS_COMPANIES_HOUSE_NUMBER]: true,
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
-    [WANT_COVER_OVER_MAX_AMOUNT]: false,
-    [WANT_COVER_OVER_MAX_PERIOD]: false,
-    [ELIGIBILITY_COMPANIES_HOUSE_NUMBER]: true,
+    [COVER_PERIOD_ID]: TOTAL_CONTRACT_VALUE_CONSTANTS.LESS_THAN_500K.DB_ID,
+    [TOTAL_CONTRACT_VALUE_ID]: COVER_PERIOD_CONSTANTS.LESS_THAN_2_YEARS.DB_ID,
   },
+  COMPANY: mockCompanies[COMPANIES_HOUSE_NUMBER],
   POLICY: {
     [REQUESTED_START_DATE]: {
       day: '1',
@@ -132,24 +123,6 @@ const application = {
   EXPORT_CONTRACT: {
     [DESCRIPTION]: 'Mock description',
     [FINAL_DESTINATION]: mockCountries[1].isoCode,
-  },
-  EXPORTER_COMPANY: {
-    [COMPANY_NUMBER]: COMPANIES_HOUSE_NUMBER,
-    [COMPANY_NAME]: 'DHG PROPERTY FINANCE LIMITED',
-    [COMPANY_INCORPORATED]: '2014-04-10T00:00:00.000Z',
-    [YOUR_COMPANY_ADDRESS]: {
-      addressLine1: 'Unit 3 Lewis Court',
-      addressLine2: 'Portmanmoor Road',
-      careOf: '',
-      locality: 'Cardiff',
-      region: 'South Glamorgan',
-      postalCode: 'CF24 5HQ',
-      country: '',
-      premises: '',
-    },
-    [COMPANY_SIC]: [sicCodes[0].code],
-    [INDUSTRY_SECTOR_NAMES]: [sicCodes[0][INDUSTRY_SECTOR_NAME]],
-    [FINANCIAL_YEAR_END_DATE]: '2023-07-31T00:00:00.000Z',
   },
   EXPORTER_BUSINESS: {
     [GOODS_OR_SERVICES]: 'abc',

@@ -1,19 +1,4 @@
 export const EXPORTER_BUSINESS = {
-  COMPANIES_HOUSE_NUMBER: 'companiesHouseNumber',
-  COMPANY_HOUSE: {
-    SEARCH: 'companiesHouseSearch',
-    COMPANY_NAME: 'companyName',
-    COMPANY_ADDRESS: 'registeredOfficeAddress',
-    COMPANY_NUMBER: 'companyNumber',
-    COMPANY_INCORPORATED: 'dateOfCreation',
-    SIC_CODE: 'sicCode',
-    COMPANY_SIC: 'sicCodes',
-    OLD_SIC_CODES: 'oldSicCodes',
-    INDUSTRY_SECTOR_NAME: 'industrySectorName',
-    INDUSTRY_SECTOR_NAMES: 'industrySectorNames',
-    FINANCIAL_YEAR_END_DATE: 'financialYearEndDate',
-    SUMMARY_LIST: 'summaryList',
-  },
   YOUR_COMPANY: {
     ADDRESS: 'address',
     YOUR_BUSINESS: 'yourBusiness',

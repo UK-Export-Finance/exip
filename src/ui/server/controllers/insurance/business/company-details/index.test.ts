@@ -7,7 +7,7 @@ import { PAGES } from '../../../../content-strings';
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseValue } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/company-details';
-import { populateCompaniesHouseSummaryList } from './helpers/populate-companies-house-summary-list';
+import { companiesHouseSummaryList } from '../../../../helpers/summary-lists/companies-house';
 import { Request, Response } from '../../../../../types';
 import companyDetailsValidation from './validation/company-details';
 import { mockReq, mockRes, mockApplication, mockPhoneNumbers } from '../../../../test-mocks';
@@ -25,7 +25,6 @@ const {
   INSURANCE_ROOT,
   EXPORTER_BUSINESS: {
     COMPANY_DETAILS_SAVE_AND_BACK,
-    COMPANIES_HOUSE_NUMBER_ROOT,
     NATURE_OF_BUSINESS_ROOT,
     CHECK_YOUR_ANSWERS,
     COMPANY_DETAILS_CHANGE,
@@ -69,7 +68,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
       const expected = {
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
-        DIFFERENT_COMPANIES_HOUSE_NUMBER: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANIES_HOUSE_NUMBER_ROOT}`,
+        DIFFERENT_COMPANIES_HOUSE_NUMBER_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_ROOT}`,
         FIELDS: BUSINESS_FIELD_IDS,
       };
 
@@ -98,23 +97,8 @@ describe('controllers/insurance/business/companies-details', () => {
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(referenceNumber),
           submittedValues,
-          SUMMARY_LIST: populateCompaniesHouseSummaryList(company),
+          SUMMARY_LIST: companiesHouseSummaryList(company),
         });
-      });
-    });
-
-    describe('when there is no company number', () => {
-      beforeEach(() => {
-        // @ts-ignore
-        res.locals.application.company.companyNumber = '';
-      });
-
-      it(`should redirect to ${COMPANIES_HOUSE_NUMBER_ROOT}`, () => {
-        get(req, res);
-
-        const expectedUrl = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANIES_HOUSE_NUMBER_ROOT}`;
-
-        expect(res.redirect).toHaveBeenCalledWith(expectedUrl);
       });
     });
 
@@ -166,7 +150,7 @@ describe('controllers/insurance/business/companies-details', () => {
           ...pageVariables(mockApplication.referenceNumber),
           validationErrors,
           submittedValues: expectedSubmittedValues,
-          SUMMARY_LIST: populateCompaniesHouseSummaryList(mockApplication.company),
+          SUMMARY_LIST: companiesHouseSummaryList(mockApplication.company),
         });
       });
     });

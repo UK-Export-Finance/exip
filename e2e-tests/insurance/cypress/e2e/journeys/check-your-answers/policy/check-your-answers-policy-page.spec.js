@@ -6,7 +6,7 @@ import {
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { BUTTONS, PAGES, TASKS } from '../../../../../../content-strings';
-import { ROUTES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -16,13 +16,15 @@ const {
     TYPE_OF_POLICY,
     YOUR_BUSINESS,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.CHECK_YOUR_ANSWERS.POLICY;
 
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Check your answers - Policy - I want to confirm my selection for the policy section of my export insurance application', () => {
   let referenceNumber;
@@ -40,9 +42,9 @@ context('Insurance - Check your answers - Policy - I want to confirm my selectio
       // To get past "Eligibility" check your answers page
       cy.submitCheckYourAnswersForm();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
-      allSectionsUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      allSectionsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -89,7 +91,7 @@ context('Insurance - Check your answers - Policy - I want to confirm my selectio
 
       submitButton().click();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
       cy.assertUrl(expectedUrl);
     });
 

@@ -1,7 +1,10 @@
 import accounts from './accounts';
+import coverPeriodTestHelper from './cover-period';
+import totalContractValueTestHelper from './total-contract-value';
 import createAnEligibility from '../helpers/create-an-eligibility';
 import createABuyer from '../helpers/create-a-buyer';
 import createAPolicy from '../helpers/create-a-policy';
+import createACompany from '../helpers/create-a-company';
 import { FIELD_VALUES } from '../constants';
 import {
   mockApplicationEligibility,
@@ -11,13 +14,12 @@ import {
   mockBusiness,
   mockPolicyContact,
 } from '../test-mocks/mock-application';
-import { mockCompany, mockCompanySicCode, mockApplicationDeclaration } from '../test-mocks';
+import { mockApplicationDeclaration } from '../test-mocks';
+import mockCompany from '../test-mocks/mock-company';
 import mockCountries from '../test-mocks/mock-countries';
 import {
   Application,
   ApplicationBusiness,
-  ApplicationCompany,
-  ApplicationCompanySicCode,
   ApplicationDeclaration,
   ApplicationExportContract,
   ApplicationPolicy,
@@ -35,7 +37,7 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @returns {Object} Application
  */
 export const createFullApplication = async (context: Context, policyType?: string) => {
-  const { buyerCountry, ...otherEligibilityAnswers } = mockApplicationEligibility;
+  const { buyerCountry, totalContractValue, totalContractValueId, coverPeriod, coverPeriodId, ...otherEligibilityAnswers } = mockApplicationEligibility;
 
   const countries = await context.query.Country.createMany({
     data: mockCountries,
@@ -63,14 +65,30 @@ export const createFullApplication = async (context: Context, policyType?: strin
     },
   })) as Application;
 
+  // create a coverPeriod DB entry.
+  const createdCoverPeriod = await coverPeriodTestHelper.create({ context });
+
+  // create a totalContractValue DB entry.
+  const createdTotalContractValue = await totalContractValueTestHelper.create({ context });
+
   // create eligibility and associate with the application.
-  const eligibility = await createAnEligibility(context, country.id, application.id, otherEligibilityAnswers);
+  const eligibility = await createAnEligibility(
+    context,
+    country.id,
+    application.id,
+    createdCoverPeriod.id,
+    createdTotalContractValue.id,
+    otherEligibilityAnswers,
+  );
 
   // create buyer and associate with the application.
   const buyer = await createABuyer(context, country.id, application.id);
 
   // create policy and associate with the application.
   const policy = await createAPolicy(context, application.id);
+
+  // create company and associate with the application.
+  const company = await createACompany(context, application.id, mockCompany);
 
   /**
    * update the application with:
@@ -89,6 +107,9 @@ export const createFullApplication = async (context: Context, policyType?: strin
       },
       policy: {
         connect: { id: policy.id },
+      },
+      company: {
+        connect: { id: company.id },
       },
     },
   });
@@ -123,28 +144,6 @@ export const createFullApplication = async (context: Context, policyType?: strin
     query: 'id',
   })) as ApplicationExportContract;
 
-  // update the company so we have a company name
-  const company = (await context.query.Company.updateOne({
-    where: {
-      id: application.company.id,
-    },
-    data: mockCompany,
-    query: 'id',
-  })) as ApplicationCompany;
-
-  // create a company SIC codes
-  const companySicCodes = (await context.query.CompanySicCode.createOne({
-    data: {
-      ...mockCompanySicCode,
-      company: {
-        connect: {
-          id: company.id,
-        },
-      },
-    },
-    query: 'id',
-  })) as ApplicationCompanySicCode;
-
   const policyContact = (await context.query.PolicyContact.updateOne({
     where: {
       id: application.policyContact.id,
@@ -172,7 +171,6 @@ export const createFullApplication = async (context: Context, policyType?: strin
 
   return {
     ...application,
-    companySicCodes,
     owner: account,
     business,
     policy,

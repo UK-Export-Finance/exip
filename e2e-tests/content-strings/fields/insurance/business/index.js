@@ -1,54 +1,6 @@
 import { FIELD_IDS } from '../../../../constants';
 
 export const EXPORTER_BUSINESS_FIELDS = {
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.SUMMARY_LIST]: {
-    LABEL: 'Your company',
-    COMPANY_NUMBER: {
-      text: 'Companies House registration number',
-    },
-    COMPANY_NAME: {
-      text: 'Company name',
-    },
-    COMPANY_ADDRESS: {
-      text: 'Registered office address',
-    },
-    COMPANY_INCORPORATED: {
-      text: 'Incorporated on',
-    },
-    COMPANY_SIC: {
-      text: 'Standard industrial classification (SIC) codes and nature of business',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NUMBER]: {
-    SUMMARY: {
-      TITLE: 'Companies House registration number',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NAME]: {
-    SUMMARY: {
-      TITLE: 'Company name',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_ADDRESS]: {
-    SUMMARY: {
-      TITLE: 'Registered office address',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_INCORPORATED]: {
-    SUMMARY: {
-      TITLE: 'Date incorporated',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_SIC]: {
-    SUMMARY: {
-      TITLE: 'Standard industry classification (SIC) codes and nature of business',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.FINANCIAL_YEAR_END_DATE]: {
-    SUMMARY: {
-      TITLE: 'Financial year end date',
-    },
-  },
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_NAME]: {
     LABEL: 'Do you use a different trading name for this company?',
     SUMMARY: {

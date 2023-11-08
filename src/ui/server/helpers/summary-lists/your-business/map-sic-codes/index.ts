@@ -1,4 +1,4 @@
-import { generateSicCodesValue } from '../../company-house-summary-list';
+import { generateSicCodesValue } from '../../companies-house';
 import { DEFAULT } from '../../../../content-strings';
 import { ApplicationExporterSicCodes } from '../../../../../types';
 import { isPopulatedArray } from '../../../array';

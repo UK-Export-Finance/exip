@@ -26,6 +26,22 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('eligibility', application.id));
   }
 
+  const coverPeriod = await context.db.CoverPeriod.findOne({
+    where: { id: eligibility.coverPeriodId },
+  });
+
+  if (!coverPeriod) {
+    throw new Error(generateErrorMessage('coverPeriod', application.id));
+  }
+
+  const totalContractValue = await context.db.TotalContractValue.findOne({
+    where: { id: eligibility.totalContractValueId },
+  });
+
+  if (!totalContractValue) {
+    throw new Error(generateErrorMessage('totalContractValue', application.id));
+  }
+
   const account = await getAccountById(context, ownerId);
 
   if (!account) {
@@ -124,6 +140,13 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('populated buyer', application.id));
   }
 
+  const populatedEligibility = {
+    ...eligibility,
+    buyerCountry,
+    coverPeriod,
+    totalContractValue,
+  };
+
   const populatedBuyer = {
     ...buyer,
     country: buyerCountry,
@@ -139,10 +162,7 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
 
   const populatedApplication = {
     ...application,
-    eligibility: {
-      ...eligibility,
-      buyerCountry,
-    },
+    eligibility: populatedEligibility,
     broker,
     business,
     buyer: populatedBuyer,

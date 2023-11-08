@@ -25,6 +25,8 @@ context('Insurance - Insured amount page - I want to check if I can use online s
     cy.completeCheckIfEligibleForm();
     cy.completeExporterLocationForm();
     cy.completeCompaniesHouseNumberForm();
+    cy.completeAndSubmitCompaniesHouseSearchForm({});
+    cy.completeEligibilityCompanyDetailsForm();
     completeAndSubmitBuyerCountryForm();
   });
 

@@ -1,3 +1,5 @@
+import { isAString } from '../string';
+
 /**
  * replaceCharacterCodesWithCharacters
  * Replace certain character codes with characters
@@ -5,7 +7,7 @@
  * @returns {String | null}
  */
 const replaceCharacterCodesWithCharacters = (str?: string): string | null => {
-  if (str && typeof str === 'string') {
+  if (str && isAString(str)) {
     return str
       .replace(/&lt;/g, '<')
       .replace(/&gt;/g, '>')

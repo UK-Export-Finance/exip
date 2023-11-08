@@ -1,8 +1,11 @@
 import getAccountById from '../../../helpers/get-account-by-id';
 import getCountryByField from '../../../helpers/get-country-by-field';
+import getCreditPeriodValueByField from '../../../helpers/get-cover-period-value-by-field';
+import getTotalContractValueByField from '../../../helpers/get-total-contract-value-by-field';
 import createAnEligibility from '../../../helpers/create-an-eligibility';
 import createABuyer from '../../../helpers/create-a-buyer';
 import createAPolicy from '../../../helpers/create-a-policy';
+import createACompany from '../../../helpers/create-a-company';
 import { CreateAnApplicationVariables, Context } from '../../../types';
 
 /**
@@ -22,7 +25,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
   console.info('Creating application for ', variables.accountId);
 
   try {
-    const { accountId, eligibilityAnswers } = variables;
+    const { accountId, eligibilityAnswers, company: companyData } = variables;
 
     /**
      * Check the account exists.
@@ -42,7 +45,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
      * 1) Eligibility buyer country relationship
      * 2) Buyer country relationship
      */
-    const { buyerCountryIsoCode, needPreCreditPeriodCover, ...otherEligibilityAnswers } = eligibilityAnswers;
+    const { buyerCountryIsoCode, needPreCreditPeriodCover, totalContractValueId, coverPeriodId, ...otherEligibilityAnswers } = eligibilityAnswers;
 
     const country = await getCountryByField(context, 'isoCode', buyerCountryIsoCode);
 
@@ -61,15 +64,22 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
     const { id: applicationId } = application;
 
     /**
-     * 1) Create a new eligibility with country and application relationship.
-     * 2) Create a new buyer with country and application relationship.
-     * 3) Create a new policy with application relationship.
+     * 1) Create a new buyer with country and application relationship.
+     * 2) Get a totalContractValue DB entry, for linking a relationship to eligibility.
+     * 3) Create a new eligibility with country and application relationship.
+     * 4) Create a new policy with application relationship.
      */
     const buyer = await createABuyer(context, country.id, applicationId);
 
-    const eligibility = await createAnEligibility(context, country.id, applicationId, otherEligibilityAnswers);
+    const totalContractValue = await getTotalContractValueByField(context, 'valueId', totalContractValueId);
+
+    const coverPeriod = await getCreditPeriodValueByField(context, 'valueId', coverPeriodId);
+
+    const eligibility = await createAnEligibility(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
 
     const policy = await createAPolicy(context, applicationId);
+
+    const company = await createACompany(context, applicationId, companyData);
 
     /**
      * Update the application with relationships for:
@@ -90,6 +100,9 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
         },
         policy: {
           connect: { id: policy.id },
+        },
+        company: {
+          connect: { id: company.id },
         },
       },
     });

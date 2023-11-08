@@ -1,5 +1,6 @@
 import generateEligibilityFields from '.';
 import { FIELDS_ELIGIBILITY } from '../../../../content-strings/fields/insurance';
+import { COVER_PERIOD, TOTAL_CONTRACT_VALUE } from '../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
@@ -10,12 +11,17 @@ const { ELIGIBILITY: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
 const {
   WANT_COVER_OVER_MAX_AMOUNT,
+  COVER_PERIOD: COVER_PERIOD_ELIGIBILITY,
+  TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_ELIGIBILITY,
   WANT_COVER_OVER_MAX_PERIOD,
   COMPANIES_HOUSE_NUMBER,
   BUYER_COUNTRY,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_EXPORTER_LOCATION,
 } = FIELD_IDS;
+
+const { MORE_THAN_2_YEARS } = COVER_PERIOD;
+const { MORE_THAN_500K } = TOTAL_CONTRACT_VALUE;
 
 describe('server/helpers/summary-lists/eligibility/eligibility-fields', () => {
   const mockAnswers = mockApplication.eligibility;
@@ -51,7 +57,7 @@ describe('server/helpers/summary-lists/eligibility/eligibility-fields', () => {
         data: mockAnswers,
         renderChangeLink: false,
       },
-      mapYesNoField(mockAnswers[WANT_COVER_OVER_MAX_AMOUNT]),
+      mapYesNoField(mockAnswers[TOTAL_CONTRACT_VALUE_ELIGIBILITY].valueId === MORE_THAN_500K.DB_ID),
     ),
     fieldGroupItem(
       {
@@ -59,7 +65,7 @@ describe('server/helpers/summary-lists/eligibility/eligibility-fields', () => {
         data: mockAnswers,
         renderChangeLink: false,
       },
-      mapYesNoField(mockAnswers[WANT_COVER_OVER_MAX_PERIOD]),
+      mapYesNoField(mockAnswers[COVER_PERIOD_ELIGIBILITY].valueId === MORE_THAN_2_YEARS.DB_ID),
     ),
     fieldGroupItem(
       {

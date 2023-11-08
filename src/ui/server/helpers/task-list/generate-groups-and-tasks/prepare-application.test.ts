@@ -13,7 +13,7 @@ import { mockApplication } from '../../../test-mocks';
 const {
   INSURANCE_ROOT,
   POLICY: { TYPE_OF_POLICY },
-  EXPORTER_BUSINESS: { COMPANIES_HOUSE_NUMBER_ROOT },
+  EXPORTER_BUSINESS: { COMPANY_DETAILS_ROOT },
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
 } = INSURANCE_ROUTES;
 
@@ -41,7 +41,7 @@ describe('server/helpers/task-list/prepare-application', () => {
       const expectedDependencies = getAllTasksFieldsInAGroup(previousGroups[0]);
 
       const EXPORTER_BUSINESS = {
-        href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANIES_HOUSE_NUMBER_ROOT}`,
+        href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_ROOT}`,
         title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
         id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
         fields: businessRequiredFields(isUsingBroker),

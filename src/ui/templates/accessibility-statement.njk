@@ -17,9 +17,6 @@
 
   <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.HEADING }}</h1>
 
-  <p><a class="govuk-link" data-cy="service-link" href="{{ CONTENT_STRINGS.SERVICE_LINK.HREF }}">{{ CONTENT_STRINGS.SERVICE_LINK.TEXT }}</a></p>
-
-
   <h2 class="govuk-heading-m" data-cy="using-our-service-heading">{{ CONTENT_STRINGS.USING_OUR_SERVICE.HEADING }}</h2>
 
   <p class="govuk-body" data-cy="using-our-service-intro">{{ CONTENT_STRINGS.USING_OUR_SERVICE.INTRO }}</p>
@@ -39,6 +36,23 @@
 
     <span data-cy="using-our-service-outro-abilityNet-description">{{ CONTENT_STRINGS.USING_OUR_SERVICE.OUTRO.ABILITY_NET.DESCRIPTION }}</span>
   </p>
+
+  <h2 class="govuk-heading-m" data-cy="compliance-status-heading">{{ CONTENT_STRINGS.COMPLIANCE_STATUS.HEADING }}</h2>
+
+  <p class="govuk-body">
+    <span data-cy="compliance-status-intro">{{ CONTENT_STRINGS.COMPLIANCE_STATUS.INTRO }}</span>
+    <a class="govuk-link" data-cy="compliance-status-link" href="{{ CONTENT_STRINGS.COMPLIANCE_STATUS.GUIDLINES_LINK.HREF }}">{{ CONTENT_STRINGS.COMPLIANCE_STATUS.GUIDLINES_LINK.TEXT }}</a>
+    <span data-cy="compliance-status-outro">{{ CONTENT_STRINGS.COMPLIANCE_STATUS.OUTRO }}</span>
+    <ul class="govuk-list govuk-list--bullet">
+      <li data-cy="compliance-status-list-item-1"><strong>{{ CONTENT_STRINGS.COMPLIANCE_STATUS.LIST[0] }}</strong> {{ CONTENT_STRINGS.COMPLIANCE_STATUS.LIST[1] }}</li>
+      <li data-cy="compliance-status-list-item-2"><strong>{{ CONTENT_STRINGS.COMPLIANCE_STATUS.LIST[2] }}</strong> {{ CONTENT_STRINGS.COMPLIANCE_STATUS.LIST[3] }}</li>
+    </ul>
+  </p>
+
+   <h2 class="govuk-heading-m" data-cy="improving-accessibility-heading">{{ CONTENT_STRINGS.IMPROVING_ACCESSIBILITY.HEADING }}</h2>
+
+  <p class="govuk-body" data-cy="improving-accessibility-description">{{ CONTENT_STRINGS.IMPROVING_ACCESSIBILITY.DESCRIPTION }}</p>
+  <p class="govuk-body" data-cy="improving-accessibility-outro">{{ CONTENT_STRINGS.IMPROVING_ACCESSIBILITY.OUTRO }}</p>
 
   <h2 class="govuk-heading-m" data-cy="feedback-and-contact-heading">{{ CONTENT_STRINGS.FEEDBACK_AND_CONTACT.HEADING }}</h2>
 
@@ -66,18 +80,6 @@
   <h2 class="govuk-heading-m" data-cy="technical-info-heading">{{ CONTENT_STRINGS.TECHNICAL_INFO.HEADING }}</h2>
 
   <p class="govuk-body" data-cy="technical-info-description">{{ CONTENT_STRINGS.TECHNICAL_INFO.DESCRIPTION }}</p>
-
-  <h2 class="govuk-heading-m" data-cy="compliance-status-heading">{{ CONTENT_STRINGS.COMPLIANCE_STATUS.HEADING }}</h2>
-
-  <p class="govuk-body">
-    <span data-cy="compliance-status-intro">{{ CONTENT_STRINGS.COMPLIANCE_STATUS.INTRO }}</span>
-    <a class="govuk-link" data-cy="compliance-status-link" href="{{ CONTENT_STRINGS.COMPLIANCE_STATUS.GUIDLINES_LINK.HREF }}">{{ CONTENT_STRINGS.COMPLIANCE_STATUS.GUIDLINES_LINK.TEXT }}</a>
-    <span data-cy="compliance-status-outro">{{ CONTENT_STRINGS.COMPLIANCE_STATUS.OUTRO }}</span>
-  </p>
-
-  <h2 class="govuk-heading-m" data-cy="improving-accessibility-heading">{{ CONTENT_STRINGS.IMPROVING_ACCESSIBILITY.HEADING }}</h2>
-
-  <p class="govuk-body" data-cy="improving-accessibility-description">{{ CONTENT_STRINGS.IMPROVING_ACCESSIBILITY.DESCRIPTION }}</p>
 
   <h2 class="govuk-heading-m" data-cy="preperation-of-statement-heading">{{ CONTENT_STRINGS.PREPERATION_OF_STATEMENT.HEADING }}</h2>
 

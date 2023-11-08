@@ -58,19 +58,20 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD]: {
         IS_EMPTY: `Select whether you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years`,
       },
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: {
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_COMPANIES_HOUSE_NUMBER]: {
         IS_EMPTY: 'Select whether you have a UK Companies House registration number or not',
+      },
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: {
+        IS_EMPTY: 'Enter a recognised Companies House number',
+        INCORRECT_FORMAT: 'Enter your Companies House registration number in the correct format - for example, 8989898 or SC907816',
+        NOT_FOUND: 'The number you entered does not match any company in Companies House - try again',
+        TECHNICAL_ISSUES: 'Due to technical issues, you cannot search for your Companies House registration number right now - try again in few minutes',
       },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE]: {
         IS_EMPTY: 'Select whether you have an account for UKEF export insurance',
       },
     },
     EXPORTER_BUSINESS: {
-      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER]: {
-        INCORRECT_FORMAT: 'Enter your Companies House registration number in the correct format - for example, 8989898 or SC907816',
-        NOT_FOUND: 'The number you entered does not match any company in Companies House - try again',
-        TECHNICAL_ISSUES: 'Due to technical issues, you cannot search for your Companies House registration number right now - try again in few minutes',
-      },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_NAME]: {
         IS_EMPTY: 'Select whether you use a different trading name for this company',
       },

@@ -3,8 +3,8 @@ import { mockSicCodes } from '../../test-mocks';
 import { FIELD_IDS } from '../../constants';
 
 const {
-  COMPANY_HOUSE: { SIC_CODE, INDUSTRY_SECTOR_NAME },
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+  COMPANIES_HOUSE: { SIC_CODE, INDUSTRY_SECTOR_NAME },
+} = FIELD_IDS.INSURANCE;
 
 describe('server/helpers/mappings/map-sic-codes', () => {
   describe('when sic codes array is populated', () => {

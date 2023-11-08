@@ -34,6 +34,10 @@ export const completeCompaniesHouseNumberForm = () => {
   selectRadioAndSubmit(FIELD_VALUES.YES);
 };
 
+export const completeCompanyDetailsForm = () => {
+  submitButton().click();
+};
+
 export const completeInsuredAmountForm = () => {
   selectRadioAndSubmit(FIELD_VALUES.NO);
 };

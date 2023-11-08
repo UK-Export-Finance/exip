@@ -57,7 +57,7 @@ describe('server/helpers/replace-character-codes-with-characters', () => {
     expect(result).toEqual(expected);
   });
 
-  describe('when no value is passed', () => {
+  describe('when no value is provided', () => {
     it('should return null', () => {
       const result = replaceCharacterCodesWithCharacters();
 

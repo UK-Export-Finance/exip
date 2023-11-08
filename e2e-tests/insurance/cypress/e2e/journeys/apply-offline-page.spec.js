@@ -27,6 +27,8 @@ context('Insurance - apply offline exit page', () => {
     cy.completeCheckIfEligibleForm();
     cy.completeExporterLocationForm();
     cy.completeCompaniesHouseNumberForm();
+    cy.completeAndSubmitCompaniesHouseSearchForm({});
+    cy.completeEligibilityCompanyDetailsForm();
 
     cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_NAME_APPLY_OFFLINE_ONLY);
 

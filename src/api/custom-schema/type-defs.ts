@@ -86,31 +86,14 @@ const typeDefs = `
     premises: String
   }
 
-  type CompanyAndCompanyAddress {
-    id: ID
-    registeredOfficeAddress: CompanyAddress
+  input CompanyInput {
     companyName: String
     companyNumber: String
-    dateOfCreation: DateTime
-    hasDifferentTradingAddress: Boolean
-    hasDifferentTradingName: Boolean
-    companyWebsite: String
-    phoneNumber: String
-  }
-
-  input CompanyAndCompanyAddressInput {
-    address: CompanyAddressInput
+    dateOfCreation: String
     sicCodes: [String]
     industrySectorNames: [String]
-    companyName: String
-    companyNumber: String
-    dateOfCreation: DateTime
-    hasDifferentTradingAddress: Boolean
-    hasDifferentTradingName: Boolean
-    companyWebsite: String
-    phoneNumber: String
     financialYearEndDate: DateTime
-    oldSicCodes: [OldSicCodes]
+    registeredOfficeAddress: CompanyAddressInput
   }
 
    type OrdnanceSurveyResponse {
@@ -190,8 +173,8 @@ const typeDefs = `
   input ApplicationEligibility {
     buyerCountryIsoCode: String!
     hasCompaniesHouseNumber: Boolean!
-    wantCoverOverMaxAmount: Boolean!
-    wantCoverOverMaxPeriod: Boolean!
+    totalContractValueId: Int!
+    coverPeriodId: Int!
     validExporterLocation: Boolean!
     hasMinimumUkGoodsOrServices: Boolean!
   }
@@ -230,6 +213,7 @@ const typeDefs = `
     createAnApplication(
       accountId: String!
       eligibilityAnswers: ApplicationEligibility!
+      company: CompanyInput!
     ): CreateAnApplicationResponse
 
     """ delete an account """
@@ -295,13 +279,6 @@ const typeDefs = `
       password: String!
       hasBeenUsedBefore: Boolean
     ): AccountPasswordResetResponse
-
-    """ update company and company address """
-    updateCompanyAndCompanyAddress(
-      companyId: ID!
-      companyAddressId: ID!
-      data: CompanyAndCompanyAddressInput!
-    ): CompanyAndCompanyAddress
 
     """ delete an application by reference number """
     deleteApplicationByReferenceNumber(

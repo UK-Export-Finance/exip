@@ -1,13 +1,12 @@
 import mapAndSave from '.';
 import save from '../../save-data/company-details';
-import mapCompanyDetailsSubmittedData from '../../company-details/map-submitted-data';
 import { mockApplication } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { FIELD_IDS } from '../../../../../constants';
 
 const {
+  COMPANIES_HOUSE: { COMPANY_NUMBER },
   EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { COMPANY_NUMBER },
     YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
   },
 } = FIELD_IDS.INSURANCE;
@@ -34,11 +33,7 @@ describe('controllers/insurance/business/map-and-save/company-details', () => {
         await mapAndSave.companyDetails(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(save.companyDetails).toHaveBeenCalledTimes(1);
-        expect(save.companyDetails).toHaveBeenCalledWith(
-          mockApplication,
-          mapCompanyDetailsSubmittedData(mockFormBody, mockApplication),
-          mockValidationErrors?.errorList,
-        );
+        expect(save.companyDetails).toHaveBeenCalledWith(mockApplication, mockFormBody, mockValidationErrors?.errorList);
       });
 
       it('should return true', async () => {
@@ -53,7 +48,7 @@ describe('controllers/insurance/business/map-and-save/company-details', () => {
         await mapAndSave.companyDetails(mockFormBody, mockApplication);
 
         expect(save.companyDetails).toHaveBeenCalledTimes(1);
-        expect(save.companyDetails).toHaveBeenCalledWith(mockApplication, mapCompanyDetailsSubmittedData(mockFormBody, mockApplication));
+        expect(save.companyDetails).toHaveBeenCalledWith(mockApplication, mockFormBody);
       });
 
       it('should return true', async () => {

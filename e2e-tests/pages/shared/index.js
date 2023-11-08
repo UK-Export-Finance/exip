@@ -1,3 +1,4 @@
+import actions from './actions';
 import countryInput from './countryInput';
 import cannotApplyPage from './cannotApply';
 import exporterLocationPage from './exporterLocation';
@@ -7,6 +8,7 @@ import ukGoodsOrServicesPage from './ukGoodsOrServices';
 import field from './field';
 
 const backLink = () => cy.get('[data-cy="back-link"]');
+const body = () => cy.get('[data-cy="body"]');
 const heading = () => cy.get('[data-cy="heading"]');
 const headingCaption = () => cy.get('[data-cy="heading-caption"]');
 const yesNoRadioHint = () => cy.get('[data-cy="yes-no-input-hint"]');
@@ -34,7 +36,9 @@ const singleInputField = (fieldId) => ({
 });
 
 export {
+  actions,
   backLink,
+  body,
   heading,
   headingCaption,
   yesNoRadioHint,

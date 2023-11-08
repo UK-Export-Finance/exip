@@ -1,9 +1,7 @@
 import { INSURANCE_FIELD_IDS } from '../constants/field-ids/insurance';
 
 const {
-  EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { INDUSTRY_SECTOR_NAME },
-  },
+  COMPANIES_HOUSE: { INDUSTRY_SECTOR_NAME },
 } = INSURANCE_FIELD_IDS;
 
 const mockSicCodes = [

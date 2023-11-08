@@ -1,4 +1,4 @@
-import { submitButton } from '../../../../../../pages/shared';
+import { body, submitButton } from '../../../../../../pages/shared';
 import { insurance } from '../../../../../../pages';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -28,6 +28,8 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
 
     cy.completeExporterLocationForm();
     cy.completeCompaniesHouseNumberForm();
+    cy.completeAndSubmitCompaniesHouseSearchForm({});
+    cy.completeEligibilityCompanyDetailsForm();
     completeAndSubmitBuyerCountryForm();
     cy.completeInsuredAmountForm();
     cy.completeInsuredPeriodForm();
@@ -64,9 +66,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
     });
 
     it('renders body text', () => {
-      insurance.eligibility.eligibleToApplyOnlinePage.body().should('exist');
-
-      cy.checkText(insurance.eligibility.eligibleToApplyOnlinePage.body(), CONTENT_STRINGS.BODY);
+      cy.checkText(body(), CONTENT_STRINGS.BODY);
     });
 
     describe('form submission', () => {

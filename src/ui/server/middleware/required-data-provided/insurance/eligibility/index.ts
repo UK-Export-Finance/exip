@@ -1,10 +1,12 @@
-import { FIELD_IDS, ROUTES } from '../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { Request, RequiredDataStateInsuranceEligibility, Response } from '../../../../../types';
 import { getRoutesAsArray, routeIsKnown, hasRequiredData } from '../../helpers';
 
-const { APPLY_OFFLINE, SPEAK_TO_UKEF_EFM, ELIGIBILITY, ACCOUNT } = ROUTES.INSURANCE;
+const { APPLY_OFFLINE, SPEAK_TO_UKEF_EFM, ELIGIBILITY, ACCOUNT } = INSURANCE_ROUTES;
 
 const {
+  ACCOUNT_TO_APPLY_ONLINE,
   CANNOT_APPLY,
   CHECK_IF_ELIGIBLE,
   NEED_TO_START_AGAIN,
@@ -14,13 +16,24 @@ const {
   INSURED_AMOUNT,
   INSURED_PERIOD,
   COMPANIES_HOUSE_NUMBER,
+  NO_COMPANIES_HOUSE_NUMBER,
+  ENTER_COMPANIES_HOUSE_NUMBER,
+  COMPANIES_HOUSE_UNAVAILABLE,
+  COMPANY_DETAILS,
   ELIGIBLE_TO_APPLY_ONLINE,
-  ACCOUNT_TO_APPLY_ONLINE,
 } = ELIGIBILITY;
 
 const {
-  ELIGIBILITY: { VALID_EXPORTER_LOCATION, HAS_MINIMUM_UK_GOODS_OR_SERVICES },
-} = FIELD_IDS;
+  ELIGIBILITY: {
+    VALID_EXPORTER_LOCATION,
+    HAS_COMPANIES_HOUSE_NUMBER,
+    BUYER_COUNTRY: BUYER_COUNTRY_FIELD_ID,
+    WANT_COVER_OVER_MAX_AMOUNT,
+    WANT_COVER_OVER_MAX_PERIOD,
+    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+  },
+  COMPANY,
+} = INSURANCE_FIELD_IDS;
 
 export const generateRequiredData = (): RequiredDataStateInsuranceEligibility => {
   const requiredData = {} as RequiredDataStateInsuranceEligibility;
@@ -29,13 +42,24 @@ export const generateRequiredData = (): RequiredDataStateInsuranceEligibility =>
 
   requiredData[COMPANIES_HOUSE_NUMBER] = [VALID_EXPORTER_LOCATION];
 
-  requiredData[BUYER_COUNTRY] = [...requiredData[COMPANIES_HOUSE_NUMBER], FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER];
+  requiredData[ENTER_COMPANIES_HOUSE_NUMBER] = [...requiredData[COMPANIES_HOUSE_NUMBER], HAS_COMPANIES_HOUSE_NUMBER];
 
-  requiredData[INSURED_AMOUNT] = [...requiredData[BUYER_COUNTRY], FIELD_IDS.INSURANCE.ELIGIBILITY.BUYER_COUNTRY];
+  /**
+   * Company details route requires:
+   * - All data provided in previous forms, including companies house data.
+   * It does not seem necessary to list every single companies house field.
+   * Instead, we can simply define that a company object is required.
+   * This object is only generated after successfully retrieving data from companies house.
+   */
+  requiredData[COMPANY_DETAILS] = [...requiredData[ENTER_COMPANIES_HOUSE_NUMBER], COMPANY];
 
-  requiredData[INSURED_PERIOD] = [...requiredData[INSURED_AMOUNT], FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT];
+  requiredData[BUYER_COUNTRY] = [...requiredData[COMPANY_DETAILS]];
 
-  requiredData[UK_GOODS_OR_SERVICES] = [...requiredData[INSURED_PERIOD], FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD];
+  requiredData[INSURED_AMOUNT] = [...requiredData[BUYER_COUNTRY], BUYER_COUNTRY_FIELD_ID];
+
+  requiredData[INSURED_PERIOD] = [...requiredData[INSURED_AMOUNT], WANT_COVER_OVER_MAX_AMOUNT];
+
+  requiredData[UK_GOODS_OR_SERVICES] = [...requiredData[INSURED_PERIOD], WANT_COVER_OVER_MAX_PERIOD];
 
   requiredData[ELIGIBLE_TO_APPLY_ONLINE] = [...requiredData[BUYER_COUNTRY], HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
@@ -55,7 +79,7 @@ export const requiredInsuranceEligibilityDataProvided = (req: Request, res: Resp
   const { originalUrl: url, method } = req;
 
   // get all defined routes as an array
-  const routesArray = getRoutesAsArray(ROUTES.INSURANCE.ELIGIBILITY);
+  const routesArray = getRoutesAsArray(INSURANCE_ROUTES.ELIGIBILITY);
 
   // array of routes that do not require any data checks.
   const irrelevantRoutes = [
@@ -63,6 +87,8 @@ export const requiredInsuranceEligibilityDataProvided = (req: Request, res: Resp
     APPLY_OFFLINE,
     SPEAK_TO_UKEF_EFM,
     CHECK_IF_ELIGIBLE,
+    NO_COMPANIES_HOUSE_NUMBER,
+    COMPANIES_HOUSE_UNAVAILABLE,
     NEED_TO_START_AGAIN,
     ACCOUNT_TO_APPLY_ONLINE,
     ACCOUNT.CREATE.YOUR_DETAILS,

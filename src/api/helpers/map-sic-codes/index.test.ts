@@ -1,37 +1,30 @@
-import { mapSicCodes } from '.';
-import { CompanyResponse } from '../../types';
+import mapSicCodes from '.';
 import mockSectors from '../../test-mocks/mock-industry-sectors';
 
 describe('mapSicCodes', () => {
-  let mockSicCodes = [] as Array<string>;
-  let mockCompanyResponse = {} as CompanyResponse;
+  const mockSicCodes = ['12345', '98765'];
+  const mockIndustrySectorNames = [mockSectors[0].ukefIndustryName, mockSectors[1].ukefIndustryName];
+  const mockCompanyId = '100';
 
   it('should map sic codes into correct format if array is not empty', () => {
-    mockSicCodes = ['12345', '98765'];
-    mockCompanyResponse = {
-      id: '123',
-      applicationId: '321',
-    };
-    const industrySectorNames = [mockSectors[0].ukefIndustryName, mockSectors[1].ukefIndustryName];
-
-    const response = mapSicCodes(mockCompanyResponse, mockSicCodes, industrySectorNames);
+    const response = mapSicCodes(mockSicCodes, mockIndustrySectorNames, mockCompanyId);
 
     const expected = [
       {
         sicCode: mockSicCodes[0],
-        industrySectorName: industrySectorNames[0],
+        industrySectorName: mockIndustrySectorNames[0],
         company: {
           connect: {
-            id: mockCompanyResponse.id,
+            id: mockCompanyId,
           },
         },
       },
       {
         sicCode: mockSicCodes[1],
-        industrySectorName: industrySectorNames[1],
+        industrySectorName: mockIndustrySectorNames[1],
         company: {
           connect: {
-            id: mockCompanyResponse.id,
+            id: mockCompanyId,
           },
         },
       },
@@ -40,26 +33,40 @@ describe('mapSicCodes', () => {
     expect(response).toEqual(expected);
   });
 
-  it('should return empty array if sicCodes are empty', () => {
-    mockSicCodes = [];
-    mockCompanyResponse = {
-      id: '123',
-      applicationId: '321',
-    };
+  describe('when sicCodes are not populated', () => {
+    it('should return an empty array', () => {
+      const response = mapSicCodes([], mockIndustrySectorNames, mockCompanyId);
 
-    const response = mapSicCodes(mockCompanyResponse, mockSicCodes);
-
-    expect(response).toEqual([]);
+      expect(response).toEqual([]);
+    });
   });
 
-  it('should return empty array if sicCodes is null', () => {
-    mockCompanyResponse = {
-      id: '123',
-      applicationId: '321',
-    };
+  describe('when industrySectorNames are not populated', () => {
+    it('should return an array of sicCodes without industry sector names', () => {
+      const response = mapSicCodes(mockSicCodes, [], mockCompanyId);
 
-    const response = mapSicCodes(mockCompanyResponse);
+      const expected = [
+        {
+          sicCode: mockSicCodes[0],
+          industrySectorName: '',
+          company: {
+            connect: {
+              id: mockCompanyId,
+            },
+          },
+        },
+        {
+          sicCode: mockSicCodes[1],
+          industrySectorName: '',
+          company: {
+            connect: {
+              id: mockCompanyId,
+            },
+          },
+        },
+      ];
 
-    expect(response).toEqual([]);
+      expect(response).toEqual(expected);
+    });
   });
 });

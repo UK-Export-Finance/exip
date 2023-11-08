@@ -10,7 +10,7 @@ import yourBuyerRequiredFields from '../../required-fields/your-buyer';
 const {
   INSURANCE_ROOT,
   POLICY: { TYPE_OF_POLICY },
-  EXPORTER_BUSINESS: { COMPANIES_HOUSE_NUMBER_ROOT },
+  EXPORTER_BUSINESS: { COMPANY_DETAILS_ROOT },
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
 } = INSURANCE_ROUTES;
 
@@ -37,7 +37,7 @@ const createPrepareApplicationTasks = (
   const dependencies = [...allInitialChecksFields];
 
   const EXPORTER_BUSINESS = {
-    href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANIES_HOUSE_NUMBER_ROOT}`,
+    href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}`,
     title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
     id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
     fields: businessRequiredFields(isUsingBroker),
