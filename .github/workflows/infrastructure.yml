@@ -226,6 +226,8 @@ jobs:
             --tier Burstable \
             --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --subnet snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --address-prefixes ${{ vars.VNET_ADDRESS_PREFIX }} \
+            --subnet-prefix ${{ vars.VNET_SUBNET_DATABASE_PREFIX }} \
             --backup-retention 30 \
             --yes \
             --tags ${{ env.TAGS }}
@@ -594,7 +596,7 @@ jobs:
             WEBSITES_PORT='${{ vars.API_PORT }}' \
             TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
             TLS_KEY='${{ secrets.TLS_KEY }}' \
-            DATABASE_URL='mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@${{ env.MYSQL_URL }}:${{ vars.DB_PORT }}/${{ env.PRODUCT }}' \
+            DATABASE_URL='mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@${{ env.MYSQL_URL }}/${{ env.PRODUCT }}' \
             API_KEY='${{ secrets.API_KEY }}' \
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
