@@ -31,7 +31,7 @@
     "@types/cookie-parser": "^1.4.5",
     "@types/csurf": "^1.11.4",
     "@types/express-session": "^1.17.9",
-    "@types/google-libphonenumber": "^7.4.29",
+    "@types/google-libphonenumber": "^7.4.30",
     "@types/is-url": "^1.2.31",
     "@types/morgan": "^1.9.7",
     "@types/node": "^20.8.10",
