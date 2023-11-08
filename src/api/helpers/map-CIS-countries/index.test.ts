@@ -37,6 +37,10 @@ describe('helpers/map-CIS-countries', () => {
           ...mockCountryBase,
           marketName: 'Third Country',
         },
+        {
+          ...mockCountryBase,
+          marketName: 'Eastern and Southern African Trade and Development Bank',
+        },
       ];
 
       const result = filterCisCountries(mockCountriesWithInvalid);
