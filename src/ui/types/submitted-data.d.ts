@@ -23,7 +23,7 @@ interface InsuranceEligibilityCore extends SharedEligibility {
   hasCompaniesHouseNumber?: boolean;
   companyNumber?: string;
   company?: CompanyDetails;
-  totalValueInsured?: number;
+  totalContractValue?: number;
   wantCoverOverMaxPeriod?: boolean;
 }
 
