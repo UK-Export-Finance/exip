@@ -1,6 +1,9 @@
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { TOTAL_CONTRACT_VALUE } from '../../../../constants';
+import { TOTAL_CONTRACT_VALUE, GBP_CURRENCY_CODE } from '../../../../constants';
 import { LINKS } from '../../../links';
+import formatCurrency from '../../../../helpers/format-currency';
+
+const MAX_COVER_AMOUNT = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
 
 const { BUYER_COUNTRY, HAS_MINIMUM_UK_GOODS_OR_SERVICES } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
@@ -41,12 +44,12 @@ export const FIELDS_ELIGIBILITY = {
       ABOVE: {
         ID: TOTAL_CONTRACT_VALUE.MORE_THAN_250k.DB_ID,
         VALUE: TOTAL_CONTRACT_VALUE.MORE_THAN_250k.DB_ID,
-        TEXT: '£250,000 and above',
+        TEXT: `${MAX_COVER_AMOUNT} and above`,
       },
       BELOW: {
         ID: TOTAL_CONTRACT_VALUE.LESS_THAN_250k.DB_ID,
         VALUE: TOTAL_CONTRACT_VALUE.LESS_THAN_250k.DB_ID,
-        TEXT: 'Less than £250,000',
+        TEXT: `Less than ${MAX_COVER_AMOUNT}`,
       },
     },
   },

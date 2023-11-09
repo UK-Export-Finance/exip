@@ -1,7 +1,7 @@
-import { FIELD_IDS, ELIGIBILITY } from '../constants';
+import { FIELD_IDS, ELIGIBILITY, TOTAL_CONTRACT_VALUE } from '../constants';
 import formatCurrency from '../helpers/format-currency';
 
-export const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.COVER_EXCEED_AMOUNT);
+export const MAX_COVER_AMOUNT = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K);
 
 export const ERROR_MESSAGES = {
   THERE_IS_A_PROBLEM: 'There is a problem',

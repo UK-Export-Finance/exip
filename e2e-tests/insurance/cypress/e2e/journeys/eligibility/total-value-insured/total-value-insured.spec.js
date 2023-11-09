@@ -13,8 +13,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-const fieldOptionsAbove = FIELDS_ELIGIBILITY[FIELD_ID].OPTIONS.ABOVE;
-const fieldOptionsBelow = FIELDS_ELIGIBILITY[FIELD_ID].OPTIONS.BELOW;
+const { ABOVE, BELOW } = FIELDS_ELIGIBILITY[FIELD_ID].OPTIONS;
 
 context('Insurance - Total value insured page - I want to enter the value that I want my export to be insured for so that I can obtain UKEF Credit Insurance for my export', () => {
   let url;
@@ -58,19 +57,19 @@ context('Insurance - Total value insured page - I want to enter the value that I
     });
 
     it('renders a `above 250k` radio button', () => {
-      const fieldId = `${FIELD_ID}-${fieldOptionsAbove.ID}`;
+      const fieldId = `${FIELD_ID}-${ABOVE.ID}`;
 
       field(fieldId).input().should('exist');
 
-      cy.checkText(field(fieldId).label(), fieldOptionsAbove.TEXT);
+      cy.checkText(field(fieldId).label(), ABOVE.TEXT);
     });
 
     it('renders a `below 250k` radio button', () => {
-      const fieldId = `${FIELD_ID}-${fieldOptionsBelow.ID}`;
+      const fieldId = `${FIELD_ID}-${BELOW.ID}`;
 
       field(fieldId).input().should('exist');
 
-      cy.checkText(field(fieldId).label(), fieldOptionsBelow.TEXT);
+      cy.checkText(field(fieldId).label(), BELOW.TEXT);
     });
   });
 
@@ -81,7 +80,7 @@ context('Insurance - Total value insured page - I want to enter the value that I
       });
 
       it('should render validation errors', () => {
-        const fieldId = `${FIELD_ID}-${fieldOptionsAbove.ID}`;
+        const fieldId = `${FIELD_ID}-${ABOVE.ID}`;
 
         const expectedErrorsCount = 1;
 
@@ -94,13 +93,13 @@ context('Insurance - Total value insured page - I want to enter the value that I
       });
     });
 
-    describe('when submitting the answer as `no`', () => {
-      const fieldId = `${FIELD_ID}-${fieldOptionsBelow.ID}`;
+    describe('when submitting the answer as the second option', () => {
+      const fieldId = `${FIELD_ID}-${BELOW.ID}`;
 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.completeTotalValueInsuredForm({ aboveUpperValue: false });
+        cy.completeAndSubmitTotalValueInsuredForm({ secondOption: true });
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`, () => {
@@ -118,13 +117,13 @@ context('Insurance - Total value insured page - I want to enter the value that I
       });
     });
 
-    describe('when submitting the answer as `yes`', () => {
-      const fieldId = `${FIELD_ID}-${fieldOptionsAbove.ID}`;
+    describe('when submitting the answer as as the first option', () => {
+      const fieldId = `${FIELD_ID}-${ABOVE.ID}`;
 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.completeTotalValueInsuredForm({});
+        cy.completeAndSubmitTotalValueInsuredForm({});
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`, () => {

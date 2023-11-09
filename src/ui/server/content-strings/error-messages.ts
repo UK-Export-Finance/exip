@@ -1,11 +1,11 @@
-import { FIELD_IDS, GBP_CURRENCY_CODE, ELIGIBILITY } from '../constants';
+import { FIELD_IDS, GBP_CURRENCY_CODE, ELIGIBILITY, TOTAL_CONTRACT_VALUE } from '../constants';
 import formatCurrency from '../helpers/format-currency';
 
 type ErrorMessage = {
   [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 };
 
-const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.COVER_EXCEED_AMOUNT, GBP_CURRENCY_CODE, 0);
+const MAX_COVER_AMOUNT = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
 
 export const ERROR_MESSAGES = {
   THERE_IS_A_PROBLEM: 'There is a problem',

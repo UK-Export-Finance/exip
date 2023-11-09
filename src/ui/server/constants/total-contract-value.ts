@@ -15,4 +15,5 @@ export const TOTAL_CONTRACT_VALUE = {
   MORE_THAN_250k: {
     DB_ID: 4,
   },
+  AMOUNT_250K: 250000,
 };

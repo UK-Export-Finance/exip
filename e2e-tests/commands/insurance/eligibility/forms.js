@@ -8,6 +8,9 @@ import { FIELDS_ELIGIBILITY } from '../../../content-strings/fields/insurance/el
 const {
   ELIGIBILITY: { TOTAL_CONTRACT_VALUE },
 } = INSURANCE_FIELD_IDS;
+
+const { ABOVE, BELOW } = FIELDS_ELIGIBILITY[TOTAL_CONTRACT_VALUE].OPTIONS;
+
 /**
  * selectRadioAndSubmit
  * Select a yes or no radio and submit the form
@@ -46,19 +49,16 @@ export const completeCompanyDetailsForm = () => {
 };
 
 /**
- * completeTotalValueInsuredForm
+ * completeAndSubmitTotalValueInsuredForm
  * completes and submits the total value insured form
  * either selects above or below 250k based on param
  * @param {Boolean} aboveUpperValue - if above or below 250k radio should be selected
  */
-export const completeTotalValueInsuredForm = ({ aboveUpperValue = true }) => {
-  const fieldOptionsAbove = FIELDS_ELIGIBILITY[TOTAL_CONTRACT_VALUE].OPTIONS.ABOVE;
-  const fieldOptionsBelow = FIELDS_ELIGIBILITY[TOTAL_CONTRACT_VALUE].OPTIONS.BELOW;
+export const completeAndSubmitTotalValueInsuredForm = ({ secondOption = false }) => {
+  let fieldId = `${TOTAL_CONTRACT_VALUE}-${ABOVE.ID}`;
 
-  let fieldId = `${TOTAL_CONTRACT_VALUE}-${fieldOptionsBelow.ID}`;
-
-  if (aboveUpperValue) {
-    fieldId = `${TOTAL_CONTRACT_VALUE}-${fieldOptionsAbove.ID}`;
+  if (secondOption) {
+    fieldId = `${TOTAL_CONTRACT_VALUE}-${BELOW.ID}`;
   }
 
   field(fieldId).input().click();
