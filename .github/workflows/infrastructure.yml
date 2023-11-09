@@ -213,6 +213,34 @@ jobs:
             --name vnet-peer-apim-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --query peeringState)"
 
+      - name: VNET Peer - UKS 🔀
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # UKS VNET peering
+
+            # Local VNET peer
+            az network vnet peering create \
+            --name vnet-peer-uks-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --remote-vnet $(az network vnet show --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_UKS }} --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_UKS }} --name ${{ secrets.REMOTE_VNET_NAME_UKS }} --query 'id' -o tsv) \
+            --allow-vnet-access 1
+
+            # Remote VNET peer
+            az network vnet peering create \
+            --name vnet-peer-uks-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --vnet-name  ${{ secrets.REMOTE_VNET_NAME_UKS }} \
+            --remote-vnet $(az network vnet show --name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query 'id' -o tsv) \
+            --allow-vnet-access 1 \
+            --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_UKS }} \
+            --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_UKS }}
+
+            # Fetch peering state
+            echo "Peering state: $(az network vnet peering show \
+            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --name vnet-peer-uks-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
+            --query peeringState)"
+
       - name: Database 💾
         uses: Azure/cli@v1.0.8
         with:
@@ -562,7 +590,7 @@ jobs:
       - name: Variables ✨
         run: |
           echo "API_URL=$(az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv)" >> $GITHUB_ENV
-          echo "MYSQL_URL=$(az mysql flexible-server list --query [].fullyQualifiedDomainName -o tsv)" >> $GITHUB_ENV
+          echo "MYSQL_URL=$(az network private-dns zone list --query ['?contains(name, `sql`)'].name -o tsv)" >> $GITHUB_ENV
 
       - name: Setting 🧱
         uses: Azure/cli@v1.0.8
