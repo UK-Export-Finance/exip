@@ -130,7 +130,8 @@
         "UNSUPPORTRED",
         "alphanum",
         "hrefs",
-        "occured"
+        "occured",
+        "sqldb"
     ],
     "dictionaries": [
         "en-gb",
