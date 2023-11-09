@@ -47,6 +47,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
+      cy.completeAndSubmitCreditControlForm();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;

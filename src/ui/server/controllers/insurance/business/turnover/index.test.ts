@@ -24,7 +24,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-const { TURNOVER_SAVE_AND_BACK, BROKER_ROOT, CHECK_YOUR_ANSWERS, TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE } = EXPORTER_BUSINESS_ROUTES;
+const { TURNOVER_SAVE_AND_BACK, CREDIT_CONTROL, CHECK_YOUR_ANSWERS, TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE } = EXPORTER_BUSINESS_ROUTES;
 
 const { TURNOVER: TURNOVER_FIELDS } = FIELDS;
 
@@ -147,7 +147,7 @@ describe('controllers/insurance/business/turnover', () => {
 
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_ROOT}`;
+        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CREDIT_CONTROL}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 

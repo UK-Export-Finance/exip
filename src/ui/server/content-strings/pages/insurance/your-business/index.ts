@@ -37,6 +37,10 @@ const EXPORTER_BUSINESS = {
     ...SHARED,
     PAGE_TITLE: 'Turnover',
   },
+  CREDIT_CONTROL: {
+    ...SHARED,
+    PAGE_TITLE: 'Do you have a process for dealing with late payments?',
+  },
   BROKER: {
     ...SHARED,
     PAGE_TITLE: 'Are you using a broker to get this insurance?',

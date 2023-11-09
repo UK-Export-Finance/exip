@@ -50,6 +50,11 @@ export const TURNOVER = {
   PAGE_TITLE: 'Turnover',
 };
 
+export const CREDIT_CONTROL = {
+  ...SHARED,
+  PAGE_TITLE: 'Do you have a process for dealing with late payments?',
+};
+
 export const BROKER = {
   ...SHARED,
   PAGE_TITLE: 'Are you using a broker to get this insurance?',

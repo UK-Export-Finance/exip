@@ -40,6 +40,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitBrokerForm({});
+      cy.completeAndSubmitCreditControlForm();
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });

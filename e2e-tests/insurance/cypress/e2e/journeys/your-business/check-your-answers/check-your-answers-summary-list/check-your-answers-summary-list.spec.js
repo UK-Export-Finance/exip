@@ -58,6 +58,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitBrokerForm({ usingBroker: true });
+      cy.completeAndSubmitCreditControlForm();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });

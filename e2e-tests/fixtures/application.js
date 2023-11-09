@@ -46,6 +46,7 @@ const {
         ESTIMATED_ANNUAL_TURNOVER,
         PERCENTAGE_TURNOVER,
       },
+      CREDIT_CONTROL,
       BROKER: {
         USING_BROKER,
         NAME,
@@ -131,6 +132,7 @@ const application = {
     [EMPLOYEES_UK]: '2000',
     [ESTIMATED_ANNUAL_TURNOVER]: '65000',
     [PERCENTAGE_TURNOVER]: '0',
+    [CREDIT_CONTROL]: true,
   },
   EXPORTER_BROKER: {
     [USING_BROKER]: FIELD_VALUES.YES,
