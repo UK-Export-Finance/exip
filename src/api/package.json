@@ -43,6 +43,7 @@
     "notifications-node-client": "^7.0.3",
     "otplib": "^12.0.1",
     "overload-protection": "^1.2.3",
+    "postcode-validator": "^3.8.14",
     "typescript": "^5.2.2"
   },
   "devDependencies": {
