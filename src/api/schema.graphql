@@ -2307,11 +2307,14 @@ type Query {
   """ verify an account's password reset token """
   verifyAccountPasswordResetToken(token: String!): AccountPasswordResetTokenResponse
 
+  """ get CIS countries from APIM """
+  getApimCisCountries: [MappedCisCountry]
+
   """ get companies house information """
   getCompaniesHouseInformation(companiesHouseNumber: String!): CompaniesHouseResponse
 
-  """ get CIS countries from APIM """
-  getApimCisCountries: [MappedCisCountry]
+  """ get Ordnance Survey address """
+  getOrdnanceSurveyAddress(postcode: String!, houseNameOrNumber: String!): OrdnanceSurveyResponse
 }
 
 union AuthenticatedItem = User
@@ -2447,17 +2450,6 @@ type CreateAnAccountResponse {
   verificationHash: String
 }
 
-type CompaniesHouseExporterCompanyAddress {
-  addressLine1: String
-  addressLine2: String
-  careOf: String
-  locality: String
-  region: String
-  postalCode: String
-  country: String
-  premises: String
-}
-
 type CompaniesHouseResponse {
   companyName: String
   registeredOfficeAddress: CompanyAddress
@@ -2470,6 +2462,24 @@ type CompaniesHouseResponse {
   apiError: Boolean
   isActive: Boolean
   notFound: Boolean
+}
+
+type OrdnanceSurveyAddress {
+  addressLine1: String
+  addressLine2: String
+  postalCode: String
+  country: String
+  county: String
+  town: String
+}
+
+input OrdnanceAddressInput {
+  addressLine1: String
+  addressLine2: String
+  postalCode: String
+  country: String
+  county: String
+  town: String
 }
 
 input OldSicCodes {
@@ -2496,6 +2506,14 @@ input CompanyInput {
   financialYearEndDate: DateTime
   registeredOfficeAddress: CompanyAddressInput
   isActive: Boolean
+}
+
+type OrdnanceSurveyResponse {
+  success: Boolean
+  addresses: [OrdnanceSurveyAddress]
+  apiError: Boolean
+  noAddressesFound: Boolean
+  invalidPostcode: Boolean
 }
 
 type EmailResponse {

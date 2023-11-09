@@ -1,5 +1,5 @@
 import { pageVariables, get, post, TEMPLATE, FIELD_IDS } from '.';
-import { ROUTES, TEMPLATES } from '../../../../constants';
+import { FIELD_VALUES, ROUTES, TEMPLATES } from '../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -25,6 +25,7 @@ const {
   INSURANCE_ROOT,
   EXPORTER_BUSINESS: {
     COMPANY_DETAILS_SAVE_AND_BACK,
+    ALTERNATIVE_TRADING_ADDRESS_ROOT,
     NATURE_OF_BUSINESS_ROOT,
     CHECK_YOUR_ANSWERS,
     COMPANY_DETAILS_CHANGE,
@@ -179,6 +180,20 @@ describe('controllers/insurance/business/companies-details', () => {
         const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(mapAndSave.companyDetails).toHaveBeenCalledWith(payload, mockApplication);
+      });
+
+      describe(`when req.body has ${TRADING_ADDRESS} with a value of '${FIELD_VALUES.YES}'`, () => {
+        it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_ROOT}`, async () => {
+          req.body = {
+            ...validBody,
+            [TRADING_ADDRESS]: FIELD_VALUES.YES,
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
 
       describe("when the url's last substring is `change`", () => {

@@ -35,6 +35,11 @@ export const CONTACT = {
   },
 };
 
+export const ALTERNATIVE_TRADING_ADDRESS = {
+  ...SHARED,
+  PAGE_TITLE: 'Alternative trading address',
+};
+
 export const NATURE_OF_YOUR_BUSINESS = {
   ...SHARED,
   PAGE_TITLE: 'Nature of your business',

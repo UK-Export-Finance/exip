@@ -51,7 +51,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
 
       task.link().click();
 
-      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;

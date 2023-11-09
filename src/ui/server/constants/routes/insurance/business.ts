@@ -1,5 +1,6 @@
 const ROOT = '/your-business';
 const COMPANY_DETAILS_ROOT = `${ROOT}/company-details`;
+const ALTERNATIVE_TRADING_ADDRESS_ROOT = `${ROOT}/alternative-trading-address`;
 const NATURE_OF_BUSINESS_ROOT = `${ROOT}/nature-of-business`;
 const TURNOVER_ROOT = `${ROOT}/turnover`;
 const BROKER_ROOT = `${ROOT}/broker`;
@@ -12,6 +13,7 @@ export const EXPORTER_BUSINESS = {
   COMPANY_DETAILS_CHANGE: `${COMPANY_DETAILS_ROOT}/change`,
   COMPANY_DETAILS_CHECK_AND_CHANGE: `${COMPANY_DETAILS_ROOT}/check-and-change`,
   COMPANY_DETAILS_SAVE_AND_BACK: `${COMPANY_DETAILS_ROOT}/save-and-back`,
+  ALTERNATIVE_TRADING_ADDRESS_ROOT,
   NATURE_OF_BUSINESS_ROOT,
   NATURE_OF_BUSINESS_CHANGE: `${NATURE_OF_BUSINESS_ROOT}/change`,
   NATURE_OF_BUSINESS_CHECK_AND_CHANGE: `${NATURE_OF_BUSINESS_ROOT}/check-and-change`,
