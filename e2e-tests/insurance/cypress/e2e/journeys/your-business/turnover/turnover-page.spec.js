@@ -22,6 +22,7 @@ const {
   ROOT,
   EXPORTER_BUSINESS: {
     TURNOVER,
+    TURNOVER_CURRENCY,
     NATURE_OF_BUSINESS,
     CREDIT_CONTROL,
   },
@@ -97,14 +98,14 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       field.hint().contains(financialYearEnd.content.HINT);
     });
 
-    it('should display turnover fieldset legend', () => {
+    it('should render turnover fieldset legend', () => {
       const fieldId = ESTIMATED_ANNUAL_TURNOVER;
       const field = fieldSelector(fieldId);
 
       cy.checkText(field.legend(), FIELDS.TURNOVER[fieldId].LEGEND);
     });
 
-    it(`should display ${ESTIMATED_ANNUAL_TURNOVER} section`, () => {
+    it(`should render ${ESTIMATED_ANNUAL_TURNOVER} section`, () => {
       const fieldId = ESTIMATED_ANNUAL_TURNOVER;
       const field = fieldSelector(fieldId);
 
@@ -115,7 +116,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       cy.checkText(field.prefix(), FIELDS.TURNOVER[fieldId].PREFIX);
     });
 
-    it(`should display ${PERCENTAGE_TURNOVER} section`, () => {
+    it(`should render ${PERCENTAGE_TURNOVER} section`, () => {
       const fieldId = PERCENTAGE_TURNOVER;
       const field = fieldSelector(fieldId);
 
@@ -126,7 +127,15 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       cy.checkText(field.suffix(), FIELDS.TURNOVER[fieldId].SUFFIX);
     });
 
-    it('should display save and go back button', () => {
+    it('should render a `provide alternative currency` link', () => {
+      cy.checkLink(
+        turnoverPage.provideAlternativeCurrencyLink(),
+        `${ROOT}/${referenceNumber}${TURNOVER_CURRENCY}`,
+        CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY,
+      );
+    });
+
+    it('should render save and go back button', () => {
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });
