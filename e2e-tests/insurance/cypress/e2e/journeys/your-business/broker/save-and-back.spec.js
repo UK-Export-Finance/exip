@@ -98,14 +98,14 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
       task.link().click();
 
-      // submit companies house number form
-      submitButton().click();
       // submit company details form
       submitButton().click();
       // submit nature of business form
       submitButton().click();
       // submit turnover form
       submitButton().click();
+      // submit credit control form
+      cy.completeAndSubmitCreditControlForm();
 
       brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
       cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
@@ -152,6 +152,8 @@ context('Insurance - Your business - Broker page - Save and back', () => {
         submitButton().click();
         // submit turnover form
         submitButton().click();
+        // submit credit control form
+        cy.completeAndSubmitCreditControlForm();
 
         brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
         cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
@@ -189,6 +191,8 @@ context('Insurance - Your business - Broker page - Save and back', () => {
         submitButton().click();
         // submit turnover form
         submitButton().click();
+        // submit credit control form
+        cy.completeAndSubmitCreditControlForm();
 
         brokerPage[USING_BROKER].noRadioInput().should('be.checked');
       });

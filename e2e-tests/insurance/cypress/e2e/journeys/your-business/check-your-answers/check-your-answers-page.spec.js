@@ -42,8 +42,8 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
-      cy.completeAndSubmitBrokerForm({});
       cy.completeAndSubmitCreditControlForm();
+      cy.completeAndSubmitBrokerForm({});
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 

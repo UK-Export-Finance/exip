@@ -44,8 +44,8 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
-      cy.completeAndSubmitBrokerForm({ usingBroker: true });
       cy.completeAndSubmitCreditControlForm();
+      cy.completeAndSubmitBrokerForm({ usingBroker: true });
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
