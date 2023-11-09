@@ -71,7 +71,7 @@ context('Insurance - Eligibility - start and complete for a second time after cr
 
     // insured amount question
     cy.assertUncheckedYesNoRadios();
-    cy.completeInsuredAmountForm();
+    cy.completeTotalValueInsuredForm({});
 
     // insured period question
     cy.assertUncheckedYesNoRadios();

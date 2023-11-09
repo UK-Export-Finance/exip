@@ -1,6 +1,4 @@
-import {
-  submitButton, field,
-} from '../../../../../../pages/shared';
+import { field } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -102,8 +100,7 @@ context('Insurance - Total value insured page - I want to enter the value that I
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        field(fieldId).input().click();
-        submitButton().click();
+        cy.completeTotalValueInsuredForm({ aboveUpperValue: false });
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`, () => {
@@ -127,8 +124,7 @@ context('Insurance - Total value insured page - I want to enter the value that I
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        field(fieldId).input().click();
-        submitButton().click();
+        cy.completeTotalValueInsuredForm({});
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`, () => {

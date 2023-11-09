@@ -47,7 +47,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     cy.completeAndSubmitCompaniesHouseSearchForm({});
     cy.completeEligibilityCompanyDetailsForm();
     completeAndSubmitBuyerCountryForm();
-    cy.completeInsuredAmountForm();
+    cy.completeTotalValueInsuredForm({});
     cy.completeInsuredPeriodForm();
 
     cy.assertUrl(url);
