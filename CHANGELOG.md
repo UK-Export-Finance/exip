@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/UK-Export-Finance/exip/compare/v2.0.0...v2.1.0) (2023-11-09)
+
+
+### Features
+
+* **iac:** database iac addition ([66ba033](https://github.com/UK-Export-Finance/exip/commit/66ba0338dc97522e3596324eac502bb5e4ad647d))
+
 ## [2.0.0](https://github.com/UK-Export-Finance/exip/compare/v1.15.2...v2.0.0) (2023-11-07)
 
 
