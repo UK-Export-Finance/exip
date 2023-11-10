@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.1](https://github.com/UK-Export-Finance/exip/compare/v2.2.0...v2.2.1) (2023-11-10)
+
+
+### Bug Fixes
+
+* **EMS-2236:** Application - update credit period hint text ([#1313](https://github.com/UK-Export-Finance/exip/issues/1313)) ([d8c1577](https://github.com/UK-Export-Finance/exip/commit/d8c1577a499b753c4f06a2fbf7c50474700c5bb2))
+
 ## [2.2.0](https://github.com/UK-Export-Finance/exip/compare/v2.1.1...v2.2.0) (2023-11-10)
 
 
