@@ -1,7 +1,7 @@
-import { ACTIONS } from '../../../../content-strings';
+import { ACTIONS, LINKS } from '../../../../content-strings';
 import { actions as actionSelectors } from '../../../../pages/shared';
 
-const { ELIGIBILITY, CONTACT_APPROVED_BROKER } = ACTIONS;
+const { ELIGIBILITY, CONTACT_APPROVED_BROKER, CONTACT_EFM } = ACTIONS;
 
 /**
  * checkActionReadAboutEligibility
@@ -21,6 +21,16 @@ export const checkActionReadAboutEligibility = () => {
 };
 
 /**
+ * checkActionReadAboutEligibilityLinkRedirect
+ * Check "read about eligibility" action URL redirection
+ */
+export const checkActionReadAboutEligibilityLinkRedirect = () => {
+  actionSelectors.eligibilityLink().click();
+
+  cy.assertUrl(LINKS.EXTERNAL.GUIDANCE);
+};
+
+/**
  * checkActionContactApprovedBroker
  * Check "contact approved broker" action content.
  */
@@ -34,5 +44,22 @@ export const checkActionContactApprovedBroker = () => {
     actionSelectors.approvedBrokerLink(),
     CONTACT_APPROVED_BROKER.LINK.HREF,
     CONTACT_APPROVED_BROKER.LINK.TEXT,
+  );
+};
+
+/**
+ * checkActionTalkToYourNearestEFM
+ * Check "talk to your nearest EFM" action content.
+ */
+export const checkActionTalkToYourNearestEFM = () => {
+  cy.checkText(
+    actionSelectors.contactEFM(),
+    `${CONTACT_EFM.LINK.TEXT} ${CONTACT_EFM.TEXT}`,
+  );
+
+  cy.checkLink(
+    actionSelectors.contactEFMLink(),
+    CONTACT_EFM.LINK.HREF,
+    CONTACT_EFM.LINK.TEXT,
   );
 };

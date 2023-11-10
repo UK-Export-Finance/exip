@@ -64,7 +64,7 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: {
         IS_EMPTY: 'Enter a recognised Companies House number',
         INCORRECT_FORMAT: 'Enter your Companies House registration number in the correct format - for example, 8989898 or SC907816',
-        NOT_FOUND: 'The number you entered does not match any company in Companies House - try again',
+        NOT_FOUND: 'Enter a recognised Companies House number',
         TECHNICAL_ISSUES: 'Due to technical issues, you cannot search for your Companies House registration number right now - try again in few minutes',
       },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE]: {

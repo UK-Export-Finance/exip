@@ -9,15 +9,18 @@ interface CompaniesHouseAddress {
   country: string | null;
 }
 
-interface CompanyHouseResponse {
+interface CompaniesHouseResponse {
   companyName: string;
-  registeredOfficeAddress: CompaniesHouseAddress;
   companyNumber: string;
+  isActive: boolean;
+  registeredOfficeAddress: CompaniesHouseAddress;
   dateOfCreation: string;
   sicCodes: Array<string>;
   industrySectorNames: Array<string>;
   success: boolean;
   apiError: boolean;
+  notFound: boolean;
+  __typename: string;
 }
 
-export { CompaniesHouseAddress, CompanyHouseResponse };
+export { CompaniesHouseAddress, CompaniesHouseResponse };

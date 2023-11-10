@@ -136,7 +136,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
         cy.interceptCompaniesHousePost({ companyNumber });
       });
 
-      it('should display the `incorrect format` error', () => {
+      it('should display the `not found` error', () => {
         cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANIES_HOUSE_ERRORS[FIELD_ID].NOT_FOUND);
       });
     });

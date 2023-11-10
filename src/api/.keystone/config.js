@@ -472,6 +472,11 @@ var EXTERNAL_API_DEFINITIONS = {
       NO: "N"
     },
     INVALID_COUNTRIES: ["EC Market n/k", "Non EC Market n/k", "Non UK", "Third Country"]
+  },
+  COMPANIES_HOUSE: {
+    COMPANY_STATUS: {
+      ACTIVE: "active"
+    }
   }
 };
 var EXTERNAL_API_MAPPINGS = {
@@ -729,6 +734,7 @@ var DATE_FORMAT = {
   DEFAULT: "d MMMM yyyy",
   HOURS_AND_MINUTES: "HH:mm"
 };
+var ORDNANCE_SURVEY_QUERY_URL = "/search/places/v1/postcode?postcode=";
 
 // helpers/update-application/index.ts
 var timestamp = async (context, applicationId) => {
@@ -1592,18 +1598,6 @@ var typeDefs = `
     verificationHash: String
   }
 
-  # fields from registered_office_address object
-  type CompaniesHouseExporterCompanyAddress {
-    addressLine1: String
-    addressLine2: String
-    careOf: String
-    locality: String
-    region: String
-    postalCode: String
-    country: String
-    premises: String
-  }
-
   type CompaniesHouseResponse {
     companyName: String
     registeredOfficeAddress: CompanyAddress
@@ -1614,17 +1608,38 @@ var typeDefs = `
     financialYearEndDate: DateTime
     success: Boolean
     apiError: Boolean
+    isActive: Boolean
+    notFound: Boolean
   }
 
   type CompanyAddress {
     addressLine1: String
     addressLine2: String
-    careOf: String
+    postalCode: String
+    country: String
     locality: String
     region: String
     postalCode: String
-    country: String
+    careOf: String
     premises: String
+  }
+
+  type OrdnanceSurveyAddress {
+    addressLine1: String
+    addressLine2: String
+    postalCode: String
+    country: String
+    county: String
+    town: String
+  }
+
+  input OrdnanceAddressInput  {
+    addressLine1: String
+    addressLine2: String
+    postalCode: String
+    country: String
+    county: String
+    town: String
   }
 
   input OldSicCodes {
@@ -1650,6 +1665,15 @@ var typeDefs = `
     industrySectorNames: [String]
     financialYearEndDate: DateTime
     registeredOfficeAddress: CompanyAddressInput
+    isActive: Boolean
+  }
+
+   type OrdnanceSurveyResponse {
+    success: Boolean
+    addresses: [OrdnanceSurveyAddress]
+    apiError: Boolean
+    noAddressesFound: Boolean
+    invalidPostcode: Boolean
   }
 
   type EmailResponse {
@@ -1865,13 +1889,19 @@ var typeDefs = `
       token: String!
     ): AccountPasswordResetTokenResponse
 
+    """ get CIS countries from APIM """
+    getApimCisCountries: [MappedCisCountry]
+
     """ get companies house information """
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
 
-    """ get CIS countries from APIM """
-    getApimCisCountries: [MappedCisCountry]
+    """ get Ordnance Survey address """
+    getOrdnanceSurveyAddress(
+      postcode: String!
+      houseNameOrNumber: String!
+    ): OrdnanceSurveyResponse
   }
 `;
 var type_defs_default = typeDefs;
@@ -4880,30 +4910,35 @@ var mapSicCodeDescriptions = (sicCodes, sectors) => {
 var map_sic_code_descriptions_default = mapSicCodeDescriptions;
 
 // helpers/map-companies-house-fields/index.ts
-var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => {
-  return {
-    companyName: companiesHouseResponse.company_name,
-    registeredOfficeAddress: {
-      careOf: companiesHouseResponse.registered_office_address.care_of,
-      premises: companiesHouseResponse.registered_office_address.premises,
-      addressLine1: companiesHouseResponse.registered_office_address.address_line_1,
-      addressLine2: companiesHouseResponse.registered_office_address.address_line_2,
-      locality: companiesHouseResponse.registered_office_address.locality,
-      region: companiesHouseResponse.registered_office_address.region,
-      postalCode: companiesHouseResponse.registered_office_address.postal_code,
-      country: companiesHouseResponse.registered_office_address.country
-    },
-    companyNumber: companiesHouseResponse.company_number,
-    dateOfCreation: companiesHouseResponse.date_of_creation,
-    sicCodes: companiesHouseResponse.sic_codes,
-    industrySectorNames: map_sic_code_descriptions_default(companiesHouseResponse.sic_codes, sectors),
-    // creates timestamp for financialYearEndDate from day and month if exist
-    financialYearEndDate: create_full_timestamp_from_day_month_default(
-      companiesHouseResponse.accounts?.accounting_reference_date?.day,
-      companiesHouseResponse.accounts?.accounting_reference_date?.month
-    )
-  };
-};
+var {
+  COMPANIES_HOUSE: { COMPANY_STATUS }
+} = EXTERNAL_API_DEFINITIONS;
+var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => ({
+  companyName: companiesHouseResponse.company_name,
+  registeredOfficeAddress: {
+    careOf: companiesHouseResponse.registered_office_address.care_of,
+    premises: companiesHouseResponse.registered_office_address.premises,
+    addressLine1: companiesHouseResponse.registered_office_address.address_line_1,
+    addressLine2: companiesHouseResponse.registered_office_address.address_line_2,
+    locality: companiesHouseResponse.registered_office_address.locality,
+    region: companiesHouseResponse.registered_office_address.region,
+    postalCode: companiesHouseResponse.registered_office_address.postal_code,
+    country: companiesHouseResponse.registered_office_address.country
+  },
+  companyNumber: companiesHouseResponse.company_number,
+  dateOfCreation: companiesHouseResponse.date_of_creation,
+  sicCodes: companiesHouseResponse.sic_codes,
+  industrySectorNames: map_sic_code_descriptions_default(companiesHouseResponse.sic_codes, sectors),
+  /**
+   * Create a timestamp for financialYearEndDate
+   * If day and month exist
+   */
+  financialYearEndDate: create_full_timestamp_from_day_month_default(
+    companiesHouseResponse.accounts?.accounting_reference_date?.day,
+    companiesHouseResponse.accounts?.accounting_reference_date?.month
+  ),
+  isActive: companiesHouseResponse.company_status === COMPANY_STATUS.ACTIVE
+});
 
 // integrations/industry-sector/index.ts
 var import_axios2 = __toESM(require("axios"));
@@ -4966,6 +5001,12 @@ var companiesHouse = {
           return acceptableStatus.includes(status);
         }
       });
+      if (response.status === 404) {
+        return {
+          success: false,
+          notFound: true
+        };
+      }
       if (!response.data || response.status !== 200) {
         return {
           success: false
@@ -4992,7 +5033,8 @@ var getCompaniesHouseInformation = async (root, variables) => {
     const response = await companies_house_default.get(sanitisedRegNo);
     if (!response.success || !response.data) {
       return {
-        success: false
+        success: false,
+        notFound: response.notFound
       };
     }
     const industrySectors = await industry_sector_default.get();
@@ -5016,6 +5058,112 @@ var getCompaniesHouseInformation = async (root, variables) => {
   }
 };
 var get_companies_house_information_default = getCompaniesHouseInformation;
+
+// integrations/ordnance-survey/index.ts
+var import_axios4 = __toESM(require("axios"));
+var import_dotenv8 = __toESM(require("dotenv"));
+import_dotenv8.default.config();
+var { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
+var ordnanceSurvey = {
+  get: async (postcode) => {
+    try {
+      const response = await (0, import_axios4.default)({
+        method: "get",
+        url: `${ORDNANCE_SURVEY_API_URL}${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`,
+        validateStatus(status) {
+          const acceptableStatus = [200, 404];
+          return acceptableStatus.includes(status);
+        }
+      });
+      if (!response?.data?.results || response.status !== 200) {
+        return {
+          success: false
+        };
+      }
+      return {
+        success: true,
+        data: response.data.results
+      };
+    } catch (err) {
+      console.error("Error calling Ordnance Survey API %O", err);
+      throw new Error(`Calling Ordnance Survey API. Unable to search for address ${err}`);
+    }
+  }
+};
+var ordnance_survey_default = ordnanceSurvey;
+
+// helpers/is-valid-postcode/index.ts
+var import_postcode_validator = require("postcode-validator");
+var isValidPostcode = (postcode) => (0, import_postcode_validator.postcodeValidator)(postcode, "GB");
+
+// helpers/map-address/index.ts
+var mapAddress = (address) => ({
+  addressLine1: `${address.DPA.ORGANISATION_NAME ?? ""} ${address.DPA.BUILDING_NAME ?? ""} ${address.DPA.BUILDING_NUMBER ?? ""} ${address.DPA.THOROUGHFARE_NAME ?? ""}`.trim(),
+  addressLine2: address.DPA.DEPENDENT_LOCALITY,
+  town: address.DPA.POST_TOWN,
+  postalCode: address.DPA.POSTCODE
+});
+var map_address_default2 = mapAddress;
+
+// helpers/map-and-filter-address/index.ts
+var mapAndFilterAddress = (houseNameOrNumber, ordnanceSurveyResponse) => {
+  const filtered = ordnanceSurveyResponse.filter(
+    (eachAddress) => eachAddress.DPA.BUILDING_NUMBER === houseNameOrNumber || eachAddress.DPA.BUILDING_NAME === houseNameOrNumber
+  );
+  if (!filtered.length) {
+    return [];
+  }
+  const mappedFilteredAddresses = [];
+  filtered.forEach((address) => {
+    mappedFilteredAddresses.push(map_address_default2(address));
+  });
+  return mappedFilteredAddresses;
+};
+var map_and_filter_address_default = mapAndFilterAddress;
+
+// helpers/remove-white-space/index.ts
+var removeWhiteSpace = (string) => string.replace(" ", "");
+var remove_white_space_default = removeWhiteSpace;
+
+// custom-resolvers/queries/get-ordnance-survey-address/index.ts
+var getOrdnanceSurveyAddress = async (root, variables) => {
+  try {
+    const { postcode, houseNameOrNumber } = variables;
+    console.info("Getting Ordnance Survey address for postcode: %s, houseNameOrNumber: %s", postcode, houseNameOrNumber);
+    const noWhitespacePostcode = remove_white_space_default(postcode);
+    if (!isValidPostcode(noWhitespacePostcode)) {
+      console.error("Invalid postcode: %s", postcode);
+      return {
+        success: false,
+        invalidPostcode: true
+      };
+    }
+    const response = await ordnance_survey_default.get(postcode);
+    if (!response.success || !response.data) {
+      return {
+        success: false
+      };
+    }
+    const mappedAddresses = map_and_filter_address_default(houseNameOrNumber, response.data);
+    if (!mappedAddresses.length) {
+      return {
+        success: false,
+        noAddressesFound: true
+      };
+    }
+    return {
+      addresses: mappedAddresses,
+      success: true
+    };
+  } catch (err) {
+    console.error("Error getting Ordnance Survey address results %O", err);
+    return {
+      apiError: true,
+      success: false
+    };
+  }
+};
+var get_ordnance_survey_address_default = getOrdnanceSurveyAddress;
 
 // custom-resolvers/queries/verify-account-password-reset-token/index.ts
 var import_date_fns10 = require("date-fns");
@@ -5077,6 +5225,7 @@ var customResolvers = {
     getAccountPasswordResetToken: get_account_password_reset_token_default,
     getApimCisCountries: get_APIM_CIS_countries_default,
     getCompaniesHouseInformation: get_companies_house_information_default,
+    getOrdnanceSurveyAddress: get_ordnance_survey_address_default,
     verifyAccountPasswordResetToken: verify_account_password_reset_token_default
   }
 };

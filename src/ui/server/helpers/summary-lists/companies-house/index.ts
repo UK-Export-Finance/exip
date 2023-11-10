@@ -4,9 +4,9 @@ import { DEFAULT, FIELDS } from '../../../content-strings';
 import generateSummaryListRows from '../generate-summary-list-rows';
 import fieldGroupItem from '../generate-field-group-item';
 import getFieldById from '../../get-field-by-id';
-import { ApplicationCompany, CompanyDetails, SummaryListItemData } from '../../../../types';
 import generateMultipleFieldHtml from '../../generate-multiple-field-html';
 import { stringArrayHasValue, isPopulatedArray } from '../../array';
+import { ApplicationCompany, CompanyDetails, SummaryListItemData } from '../../../../types';
 
 const {
   COMPANIES_HOUSE: { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, INDUSTRY_SECTOR_NAMES },
