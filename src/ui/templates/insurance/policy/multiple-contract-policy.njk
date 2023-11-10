@@ -8,6 +8,7 @@
 {% from 'govuk/components/button/macro.njk' import govukButton %}
 {% import '../../components/date-input.njk' as dateInput %}
 {% import '../../components/policy-currency-code-hint.njk' as policyCurrencyCodeHint %}
+{% import '../../components/credit-period-with-buyer-hint.njk' as creditPeriodWithBuyerHint %}
 {% import '../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
@@ -173,6 +174,13 @@
           }
         }) }}
 
+        {% set creditPeriodWithBuyerHintHtml %}
+          {{ creditPeriodWithBuyerHint.render({
+            id: FIELDS.CREDIT_PERIOD_WITH_BUYER.ID,
+            hint: FIELDS.CREDIT_PERIOD_WITH_BUYER.HINT
+          }) }}
+        {% endset %}
+
         {{ govukCharacterCount({
           name: FIELDS.CREDIT_PERIOD_WITH_BUYER.ID,
           id: FIELDS.CREDIT_PERIOD_WITH_BUYER.ID,
@@ -185,10 +193,7 @@
             }
           },
           hint: {
-            text: FIELDS.CREDIT_PERIOD_WITH_BUYER.HINT,
-            attributes: {
-              'data-cy': FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + '-hint'
-            }
+            html: creditPeriodWithBuyerHintHtml
           },
           attributes: {
             'data-cy': FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + '-input'
