@@ -20,6 +20,7 @@ import {
 } from '../../../../../../constants';
 import application from '../../../../../../fixtures/application';
 import checkPolicyCurrencyCodeInput from '../../../../../../commands/insurance/check-policy-currency-code-input';
+import checkCreditPeriodWithBuyerInput from '../../../../../../commands/insurance/check-credit-period-with-buyer-input';
 
 const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
@@ -153,15 +154,8 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       field.input().should('exist');
     });
 
-    it('renders `buyer credit period` label, hint and input', () => {
-      const fieldId = CREDIT_PERIOD_WITH_BUYER;
-      const field = fieldSelector(fieldId);
-
-      cy.checkText(field.label(), FIELDS.CONTRACT_POLICY[fieldId].LABEL);
-
-      cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY[fieldId].HINT);
-
-      field.input().should('exist');
+    it('renders `credit period with buyer` label, hint and input', () => {
+      checkCreditPeriodWithBuyerInput();
     });
 
     describe('currency', () => {
