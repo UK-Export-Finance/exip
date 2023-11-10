@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/UK-Export-Finance/exip/compare/v2.1.0...v2.1.1) (2023-11-10)
+
+
+### Bug Fixes
+
+* **deployment:** deployment script ([c644c5e](https://github.com/UK-Export-Finance/exip/commit/c644c5e2217379f06851b25334dc9b56d3f8531d))
+
 ## [2.1.0](https://github.com/UK-Export-Finance/exip/compare/v2.0.0...v2.1.0) (2023-11-09)
 
 
