@@ -50,7 +50,15 @@ export const POLICY_FIELDS = {
     },
     [CONTRACT_POLICY.CREDIT_PERIOD_WITH_BUYER]: {
       LABEL: 'What credit period do you have with your buyer?',
-      HINT: 'For example: 90 days after invoicing your buyer or, 60 days after dispatching goods from your premises or, 15 days after goods arrive at the destination port or, some other terms of payment. Please express clearly below.',
+      HINT: {
+        INTRO: 'For example:',
+        LIST: [
+          '90 days after invoicing your buyer',
+          '60 days after dispatching goods from your premises',
+          '15 days after goods arrive at the destination port',
+          'some other terms of payment.'
+        ],
+      },
       MAXIMUM: 1000,
       SUMMARY: {
         TITLE: 'Credit period',

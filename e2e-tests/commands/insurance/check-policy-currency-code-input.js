@@ -6,6 +6,10 @@ import { SHARED_CONTRACT_POLICY } from '../../constants/field-ids/insurance/poli
 
 const { POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 
+/**
+ * checkPolicyCurrencyCodeInput
+ * Check "policy currency code" label, hint and input.
+ */
 const checkPolicyCurrencyCodeInput = () => {
   const fieldId = POLICY_CURRENCY_CODE;
   const field = insurancePartials.policyCurrencyCodeFormField;
