@@ -41,7 +41,7 @@ financialYearEnd.expectedValue = formatDate(financialYearEnd.timestamp, financia
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your business - Turnover page - As an Exporter I want to enter the I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
+context('Insurance - Your business - Turnover page - As an Exporter I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
   let referenceNumber;
   let url;
   let creditControlUrl;
