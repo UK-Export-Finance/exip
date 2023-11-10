@@ -5,12 +5,6 @@
 # https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming
 #
 #
-# Following Azure services are consumed:
-# 1. Azure resource group - https://learn.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az-group-create
-# 2. Azure container registry - https://learn.microsoft.com/en-us/cli/azure/acr?view=azure-cli-latest#az-acr-create
-# 3. Azure WebApp - https://learn.microsoft.com/en-us/azure/app-service/overview
-#
-#
 # Execution
 # *********
 # GHA is only invoked when following conditions are satisfied:
@@ -58,7 +52,7 @@ jobs:
     name: Database 💾
     needs: setup
     environment: ${{ needs.setup.outputs.environment }}
-    if: contains('["1"]', vars.DATABASE)
+    if: ${{ '1' == vars.DATABASE }}
     env:
       ENVIRONMENT: ${{ needs.setup.outputs.environment }}
     runs-on: [self-hosted, EXIP, deployment]
