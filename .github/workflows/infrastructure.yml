@@ -589,7 +589,7 @@ jobs:
       - name: Variables ✨
         run: |
           echo "API_URL=$(az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv)" >> $GITHUB_ENV
-          echo "MYSQL_URL=$(az network private-dns zone list --query ['?contains(name, `sql`)'].name -o tsv)" >> $GITHUB_ENV
+          echo "MYSQL_URL=$(az mysql flexible-server list --query [].fullyQualifiedDomainName -o tsv)" >> $GITHUB_ENV
 
       - name: Setting 🧱
         uses: Azure/cli@v1.0.8
@@ -623,7 +623,7 @@ jobs:
             WEBSITES_PORT='${{ vars.API_PORT }}' \
             TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
             TLS_KEY='${{ secrets.TLS_KEY }}' \
-            DATABASE_URL='mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@${{ env.MYSQL_URL }}/${{ env.PRODUCT }}' \
+            DATABASE_URL='mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@${{ env.MYSQL_URL }}:${{ vars.DATABASE_PORT }}/${{ env.PRODUCT }}' \
             API_KEY='${{ secrets.API_KEY }}' \
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
