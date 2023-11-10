@@ -1,6 +1,6 @@
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import mapCompaniesHouseData from '.';
-import mockBody from './mocks';
+import { mockCompany } from '../../../test-mocks';
 import { RequestBody } from '../../../../types';
 
 const {
@@ -15,49 +15,41 @@ const {
 describe('helpers/mappings/map-companies-house-data', () => {
   describe(`when ${COMPANY_NUMBER} success fields are provided`, () => {
     it(`should return the formBody without ${COMPANY_NUMBER} success,and __typename fields and change null fields in address to empty strings`, () => {
-      const response = mapCompaniesHouseData(mockBody);
+      const result = mapCompaniesHouseData(mockCompany);
+
+      const { __typename, isActive, ...company } = mockCompany;
 
       const expected = {
-        companyName: mockBody.companyName,
-        companyNumber: mockBody.companyNumber.toString(),
-        dateOfCreation: new Date(mockBody[COMPANY_INCORPORATED]).toISOString(),
+        ...company,
+        dateOfCreation: new Date(company[COMPANY_INCORPORATED]).toISOString(),
         [COMPANY_ADDRESS]: {
           [CARE_OF]: '',
           [PREMISES]: '',
-          [ADDRESS_LINE_1]: mockBody.registeredOfficeAddress[ADDRESS_LINE_1],
+          [ADDRESS_LINE_1]: company.registeredOfficeAddress[ADDRESS_LINE_1],
           [ADDRESS_LINE_2]: '',
-          [LOCALITY]: mockBody.registeredOfficeAddress[LOCALITY],
-          [REGION]: mockBody.registeredOfficeAddress[REGION],
-          [POSTAL_CODE]: mockBody.registeredOfficeAddress[POSTAL_CODE],
+          [LOCALITY]: company.registeredOfficeAddress[LOCALITY],
+          [REGION]: company.registeredOfficeAddress[REGION],
+          [POSTAL_CODE]: company.registeredOfficeAddress[POSTAL_CODE],
           [COUNTRY]: '',
         },
-        sicCodes: mockBody.sicCodes,
-        industrySectorNames: mockBody.industrySectorNames,
       };
 
-      expect(response).toEqual(expected);
+      expect(result).toEqual(expected);
     });
   });
 
   describe(`when ${COMPANY_NUMBER} is NOT provided`, () => {
     const mockBodyWithoutFields = {} as RequestBody;
 
-    beforeEach(() => {
-      delete mockBodyWithoutFields[COMPANY_NUMBER];
-      delete mockBodyWithoutFields.registeredOfficeAddress;
-      delete mockBodyWithoutFields.dateOfCreation;
-      delete mockBodyWithoutFields.companyNumber;
-      delete mockBodyWithoutFields.sicCodes;
-      delete mockBodyWithoutFields.industrySectorNames;
-    });
-
     it(`should return the formBody without ${COMPANY_NUMBER} and an empty address object`, () => {
-      const response = mapCompaniesHouseData(mockBodyWithoutFields);
+      const result = mapCompaniesHouseData(mockBodyWithoutFields);
 
-      const { _csrf, ...expectedBody } = mockBodyWithoutFields;
-      expectedBody[COMPANY_ADDRESS] = {};
+      const expected = {
+        ...mockBodyWithoutFields,
+        [COMPANY_ADDRESS]: {},
+      };
 
-      expect(response).toEqual(expectedBody);
+      expect(result).toEqual(expected);
     });
   });
 });

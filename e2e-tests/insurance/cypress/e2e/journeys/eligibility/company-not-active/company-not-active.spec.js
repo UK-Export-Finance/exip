@@ -1,35 +1,40 @@
-import { actions, body } from '../../../../../../pages/shared';
+import { body } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
+import { COMPANIES_HOUSE_NUMBER_NOT_ACTIVE } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER;
-
-const { ACTIONS } = CONTENT_STRINGS;
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANY_NOT_ACTIVE;
 
 const {
-  ELIGIBILITY: { NO_COMPANIES_HOUSE_NUMBER },
+  START,
+  ELIGIBILITY: { COMPANY_NOT_ACTIVE, ENTER_COMPANIES_HOUSE_NUMBER },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Eligibility - You cannot apply for credit insurance page (no companies house number)', () => {
-  const url = `${baseUrl}${NO_COMPANIES_HOUSE_NUMBER}`;
+context('Insurance - Eligibility - Company not active - I want to check if I can use online service to apply for UKEF Export Insurance Policy', () => {
+  const url = `${baseUrl}${COMPANY_NOT_ACTIVE}`;
 
   before(() => {
-    cy.navigateToUrl(url);
-  });
+    cy.navigateToUrl(START);
 
-  beforeEach(() => {
-    cy.saveSession();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
 
-    cy.navigateToUrl(url);
+    cy.completeAndSubmitCompaniesHouseSearchForm({
+      companyNumber: COMPANIES_HOUSE_NUMBER_NOT_ACTIVE,
+    });
+
+    cy.assertUrl(url);
   });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: NO_COMPANIES_HOUSE_NUMBER,
-      assertBackLink: false,
+      currentHref: COMPANY_NOT_ACTIVE,
+      backLink: ENTER_COMPANIES_HOUSE_NUMBER,
       assertAuthenticatedHeader: false,
       assertSubmitButton: false,
     });
@@ -43,26 +48,10 @@ context('Insurance - Eligibility - You cannot apply for credit insurance page (n
     });
 
     it('should render body copy', () => {
-      cy.checkText(
-        body(),
-        CONTENT_STRINGS.BODY,
-      );
+      cy.checkText(body(), CONTENT_STRINGS.BODY);
     });
 
     describe('actions', () => {
-      it('should render `update company details` copy and link', () => {
-        cy.checkText(
-          actions.updateCompanyDetails(),
-          `${ACTIONS.UPDATE_COMPANY_DETAILS.TEXT} ${ACTIONS.UPDATE_COMPANY_DETAILS.LINK.TEXT}`,
-        );
-
-        cy.checkLink(
-          actions.updateCompanyDetailsLink(),
-          ACTIONS.UPDATE_COMPANY_DETAILS.LINK.HREF,
-          ACTIONS.UPDATE_COMPANY_DETAILS.LINK.TEXT,
-        );
-      });
-
       it('should render `eligibility` copy and link', () => {
         cy.checkActionReadAboutEligibility();
       });

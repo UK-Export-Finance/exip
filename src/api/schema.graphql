@@ -2460,6 +2460,8 @@ type CompaniesHouseResponse {
   financialYearEndDate: DateTime
   success: Boolean
   apiError: Boolean
+  isActive: Boolean
+  notFound: Boolean
 }
 
 type OrdnanceSurveyAddress {
@@ -2503,6 +2505,7 @@ input CompanyInput {
   industrySectorNames: [String]
   financialYearEndDate: DateTime
   registeredOfficeAddress: CompanyAddressInput
+  isActive: Boolean
 }
 
 type OrdnanceSurveyResponse {

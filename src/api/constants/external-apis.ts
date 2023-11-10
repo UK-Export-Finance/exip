@@ -20,6 +20,11 @@ export const EXTERNAL_API_DEFINITIONS = {
     },
     INVALID_COUNTRIES: ['EC Market n/k', 'Non EC Market n/k', 'Non UK', 'Third Country', 'Eastern and Southern African Trade and Development Bank'],
   },
+  COMPANIES_HOUSE: {
+    COMPANY_STATUS: {
+      ACTIVE: 'active',
+    },
+  },
 };
 
 export const EXTERNAL_API_MAPPINGS = {

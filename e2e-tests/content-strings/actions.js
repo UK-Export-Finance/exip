@@ -16,6 +16,13 @@ export const ACTIONS = {
     },
     TEXT: 'who may be able to help you get insurance from the private sector, if you`ve not tried already',
   },
+  CONTACT_EFM: {
+    LINK: {
+      TEXT: 'talk to your nearest export finance manager',
+      HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
+    },
+    TEXT: 'to find out more about your options',
+  },
 };
 
 export default ACTIONS;

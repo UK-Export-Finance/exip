@@ -18,7 +18,7 @@ import {
 } from './application';
 import { ApolloResponse } from './apollo';
 import { CompanyDetails, SicCode } from './company-details';
-import { CompanyHouseResponse } from './company-house-response';
+import { CompaniesHouseResponse } from './company-house-response';
 import { Connect } from './connect';
 import { Country } from './country';
 import { Currency } from './currency';
@@ -72,7 +72,7 @@ export {
   ApplicationOwner,
   ApplicationPolicyContact,
   CompanyDetails,
-  CompanyHouseResponse,
+  CompaniesHouseResponse,
   Connect,
   CorePageVariablesInitialInput,
   CorePageVariablesInput,

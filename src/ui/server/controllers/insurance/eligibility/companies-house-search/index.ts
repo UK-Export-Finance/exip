@@ -9,7 +9,7 @@ import generateValidationErrors from '../../../../helpers/companies-house-search
 import companiesHouse from '../../../../helpers/companies-house-search';
 import mapCompaniesHouseData from '../../../../helpers/mappings/map-companies-house-data';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
-import { Request, Response } from '../../../../../types';
+import { CompaniesHouseResponse, Request, Response } from '../../../../../types';
 
 const {
   ELIGIBILITY: {
@@ -20,7 +20,7 @@ const {
 const {
   PROBLEM_WITH_SERVICE,
   INSURANCE: {
-    ELIGIBILITY: { COMPANY_DETAILS, COMPANIES_HOUSE_UNAVAILABLE },
+    ELIGIBILITY: { COMPANY_DETAILS, COMPANY_NOT_ACTIVE, COMPANIES_HOUSE_UNAVAILABLE },
   },
 } = ROUTES;
 
@@ -64,15 +64,15 @@ export const get = (req: Request, res: Response) =>
  */
 export const post = async (req: Request, res: Response) => {
   try {
-    const payload = constructPayload(req.body, [FIELD_ID]);
+    const payload = constructPayload(req.body, [FIELD_ID]) as CompaniesHouseResponse;
 
     /**
      * Check that a companies house number has been provided.
      * If not, render the template with validation errors.
      */
-    const validationErrors = generateValidationErrors(payload);
+    const formValidationErrors = generateValidationErrors(payload);
 
-    if (validationErrors) {
+    if (formValidationErrors) {
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
@@ -80,22 +80,21 @@ export const post = async (req: Request, res: Response) => {
         }),
         userName: getUserNameFromSession(req.session.user),
         ...PAGE_VARIABLES,
-        validationErrors,
+        validationErrors: formValidationErrors,
+        submittedValues: payload,
       });
     }
 
     /**
      * 1) Call companies house API (via our own API)
+     * 4) If validationErrors are returned, render the page with validation errors.
      * 2) If apiError is returned, redirect to COMPANIES_HOUSE_UNAVAILABLE.
-     * 3) If validationErrors are returned, render the page with validation errors.
+     * 3) If the company is not active, redirect to COMPANY_NOT_ACTIVE.
+     * 4) If validationErrors are returned, render the page with validation errors.
      */
     const response = await companiesHouse.search(payload);
 
-    if (response.apiError) {
-      return res.redirect(COMPANIES_HOUSE_UNAVAILABLE);
-    }
-
-    if (response.validationErrors) {
+    if (response.notFound) {
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
@@ -103,19 +102,26 @@ export const post = async (req: Request, res: Response) => {
         }),
         userName: getUserNameFromSession(req.session.user),
         ...PAGE_VARIABLES,
-        validationErrors: response.validationErrors,
+        validationErrors: generateValidationErrors({}),
+        submittedValues: payload,
       });
     }
 
+    if (response.apiError) {
+      return res.redirect(COMPANIES_HOUSE_UNAVAILABLE);
+    }
+
+    if (!response.company?.isActive) {
+      return res.redirect(COMPANY_NOT_ACTIVE);
+    }
+
     /**
-     * Companies house API call was successful
+     * Companies house API call was successful. No errors and the company is active.
      * 1) Map the returned company details.
      * 2) Add mapped data to the session.
      * 3) Redirect to the next part of the flow, COMPANY_DETAILS.
      */
-    const companyObj = { ...response.company };
-
-    const mappedCompanyDetails = mapCompaniesHouseData(companyObj);
+    const mappedCompanyDetails = mapCompaniesHouseData(response.company);
 
     const sessionUpdate = { company: mappedCompanyDetails };
 
