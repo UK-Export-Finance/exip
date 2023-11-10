@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.0](https://github.com/UK-Export-Finance/exip/compare/v2.1.1...v2.2.0) (2023-11-10)
+
+
+### Features
+
+* **EMS-2217:** Country autocomplete - visually hide list item text, update invalid CIS countries list ([#1306](https://github.com/UK-Export-Finance/exip/issues/1306)) ([d6b2b13](https://github.com/UK-Export-Finance/exip/commit/d6b2b13ef78d3fef273cd02a23d4da1d0ebb9944))
+
 ## [2.1.1](https://github.com/UK-Export-Finance/exip/compare/v2.1.0...v2.1.1) (2023-11-10)
 
 
