@@ -27,10 +27,10 @@ export const pageVariables = (referenceNumber: number) => ({
 
 /**
  * get
- * Render the credit control page
+ * Render the "Your business - start" page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} Credit control page
+ * @returns {Express.Response.render} Your business - start page
  */
 export const get = (req: Request, res: Response) => {
   try {
