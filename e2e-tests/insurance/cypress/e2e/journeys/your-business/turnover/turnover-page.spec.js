@@ -21,7 +21,7 @@ const {
 const {
   ROOT,
   EXPORTER_BUSINESS: {
-    TURNOVER,
+    TURNOVER_ROOT,
     TURNOVER_CURRENCY,
     NATURE_OF_BUSINESS_ROOT,
     CREDIT_CONTROL,
@@ -51,7 +51,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
       creditControlUrl = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
 
       cy.assertUrl(url);
@@ -69,7 +69,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${TURNOVER}`,
+      currentHref: `${ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
       backLink: `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`,
     });
   });

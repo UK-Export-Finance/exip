@@ -96,7 +96,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
     it(`should retain the ${NAME} input on the page and the other fields should be empty`, () => {
       cy.navigateToUrl(allSectionsUrl);
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       // submit company details form
       submitButton().click();
@@ -144,7 +144,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       it('should retain all the fields on the page', () => {
         cy.navigateToUrl(allSectionsUrl);
 
-        task.link().click();
+        cy.startYourBusinessSection();
 
         // submit company details form
         submitButton().click();
@@ -183,7 +183,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       it('should retain all the relevant fields on the page', () => {
         cy.navigateToUrl(allSectionsUrl);
 
-        task.link().click();
+        cy.startYourBusinessSection();
 
         // submit company details form
         submitButton().click();

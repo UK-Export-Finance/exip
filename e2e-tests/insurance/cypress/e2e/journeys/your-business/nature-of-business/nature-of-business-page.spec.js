@@ -22,7 +22,7 @@ const {
 const {
   ROOT,
   EXPORTER_BUSINESS: {
-    TURNOVER,
+    TURNOVER_ROOT,
     NATURE_OF_BUSINESS_ROOT,
     COMPANY_DETAILS,
   },
@@ -45,7 +45,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
 
       natureOfBusinessUrl = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
-      turnoverUrl = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
+      turnoverUrl = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
 
       cy.assertUrl(natureOfBusinessUrl);
     });
@@ -133,7 +133,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${TURNOVER}`, () => {
+    it(`should redirect to ${TURNOVER_ROOT}`, () => {
       cy.navigateToUrl(natureOfBusinessUrl);
 
       cy.completeAndSubmitNatureOfYourBusiness();

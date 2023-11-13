@@ -13,7 +13,6 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insur
 
 const {
   ROOT,
-  ALL_SECTIONS,
   EXPORTER_BUSINESS: { COMPANY_DETAILS },
 } = INSURANCE_ROUTES;
 
@@ -21,6 +20,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS;
 
 const {
   EXPORTER_BUSINESS: {
+    ROOT: EXPORTER_BUSINESS_ROOT,
     YOUR_COMPANY: {
       TRADING_ADDRESS,
       TRADING_NAME,
@@ -60,7 +60,7 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${COMPANY_DETAILS}`,
-      backLink: `${ROOT}/${referenceNumber}${ALL_SECTIONS}`,
+      backLink: `${ROOT}/${referenceNumber}${EXPORTER_BUSINESS_ROOT}`,
       lightHouseThresholds: {
         'best-practices': 93,
       },

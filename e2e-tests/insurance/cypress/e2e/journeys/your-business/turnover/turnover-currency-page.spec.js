@@ -6,7 +6,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY;
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: { TURNOVER, TURNOVER_CURRENCY },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_CURRENCY },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -44,7 +44,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${TURNOVER_CURRENCY}`,
-      backLink: `${ROOT}/${referenceNumber}${TURNOVER}`,
+      backLink: `${ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
       assertSubmitButton: false,
     });
   });

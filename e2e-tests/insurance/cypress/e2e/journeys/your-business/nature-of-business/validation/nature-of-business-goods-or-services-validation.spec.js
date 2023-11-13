@@ -28,7 +28,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
       cy.completeAndSubmitCompanyDetails({});
 
-      url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
+      url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS_ROOT}`;
 
       cy.assertUrl(url);
     });
