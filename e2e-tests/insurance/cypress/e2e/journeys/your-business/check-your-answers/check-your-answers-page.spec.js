@@ -3,7 +3,6 @@ import {
   submitButton,
   saveAndBackButton,
 } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import {
   BUTTONS,
   PAGES,
@@ -25,10 +24,6 @@ const {
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.CHECK_YOUR_ANSWERS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
-
 context('Insurance - Your Business - Check your answers - As an exporter, I want to check my answers to the your business section', () => {
   let referenceNumber;
   let url;
@@ -37,7 +32,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();

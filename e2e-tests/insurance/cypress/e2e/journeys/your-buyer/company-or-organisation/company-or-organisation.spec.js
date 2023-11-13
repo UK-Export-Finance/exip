@@ -4,7 +4,6 @@ import {
   headingCaption,
   saveAndBackButton,
 } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
@@ -34,10 +33,6 @@ const {
   YOUR_BUYER: { WORKING_WITH_BUYER, COMPANY_OR_ORGANISATION },
 } = ROUTES.INSURANCE;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.buyer;
-
 context('Insurance - Your Buyer - Company or organisation page - As an exporter, I want to enter the buyer details', () => {
   let referenceNumber;
   let url;
@@ -47,7 +42,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`;
 

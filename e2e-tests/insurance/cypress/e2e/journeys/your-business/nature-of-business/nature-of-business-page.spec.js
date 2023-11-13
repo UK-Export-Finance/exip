@@ -23,14 +23,10 @@ const {
   ROOT,
   EXPORTER_BUSINESS: {
     TURNOVER,
-    NATURE_OF_BUSINESS,
+    NATURE_OF_BUSINESS_ROOT,
     COMPANY_DETAILS,
   },
 } = INSURANCE_ROUTES;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -43,11 +39,11 @@ context('Insurance - Your business - Nature of your business page - As an Export
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeAndSubmitCompanyDetails({});
 
-      natureOfBusinessUrl = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
+      natureOfBusinessUrl = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
       turnoverUrl = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
 
@@ -66,7 +62,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`,
+      currentHref: `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`,
       backLink: `${ROOT}/${referenceNumber}${COMPANY_DETAILS}`,
     });
   });

@@ -1,5 +1,4 @@
 import { headingCaption, submitButton } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import {
   BUTTONS,
   PAGES,
@@ -18,10 +17,6 @@ const {
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CHECK_YOUR_ANSWERS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.buyer;
-
 context('Insurance - Your buyer - Check your answers - As an exporter, I want to check my answers to the your buyer section', () => {
   let referenceNumber;
   let url;
@@ -30,7 +25,7 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitWorkingWithBuyerForm({});

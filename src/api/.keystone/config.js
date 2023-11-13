@@ -471,7 +471,7 @@ var EXTERNAL_API_DEFINITIONS = {
       YES: "Y",
       NO: "N"
     },
-    INVALID_COUNTRIES: ["EC Market n/k", "Non EC Market n/k", "Non UK", "Third Country"]
+    INVALID_COUNTRIES: ["EC Market n/k", "Non EC Market n/k", "Non UK", "Third Country", "Eastern and Southern African Trade and Development Bank"]
   },
   COMPANIES_HOUSE: {
     COMPANY_STATUS: {

@@ -24,10 +24,6 @@ const {
 const ERROR_MESSAGE_FIRST_NAME = COMPANY_OR_ORG_ERROR_MESSAGES[FIRST_NAME_FIELD_ID];
 const ERROR_MESSAGE_LAST_NAME = COMPANY_OR_ORG_ERROR_MESSAGES[LAST_NAME_FIELD_ID];
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.buyer;
-
 context('Insurance - Your Buyer - Company or organisation page - form validation - first and last name', () => {
   let referenceNumber;
   let url;
@@ -36,7 +32,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
 

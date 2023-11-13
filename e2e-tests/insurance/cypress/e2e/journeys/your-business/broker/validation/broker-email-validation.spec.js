@@ -1,6 +1,5 @@
 import { brokerPage } from '../../../../../../../pages/your-business';
 import { field as fieldSelector } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
 import { ROUTES } from '../../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
@@ -18,10 +17,6 @@ const {
     BROKER,
   },
 } = ROUTES.INSURANCE;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
 
 const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
@@ -45,7 +40,9 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
+
+      // TODO - seems this is failing, but not being run in GHA.
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
     });

@@ -1,5 +1,4 @@
 import { submitButton } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -18,10 +17,6 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
-
 const baseUrl = Cypress.config('baseUrl');
 
 describe(`Insurance - Your business - Company details page - submit ${TRADING_ADDRESS} as '${FIELD_VALUES.YES}'`, () => {
@@ -36,7 +31,7 @@ describe(`Insurance - Your business - Company details page - submit ${TRADING_AD
       url = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
       alternativeTradingAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeCompanyDetailsForm({});
 

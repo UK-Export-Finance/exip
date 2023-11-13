@@ -18,10 +18,6 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your business - Credit control page', () => {
@@ -33,7 +29,7 @@ context('Insurance - Your business - Credit control page', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();

@@ -30,10 +30,6 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your business - Company details page - As an Exporter I want to my companies details So that I can apply for UKEF Export Insurance policy', () => {
@@ -44,7 +40,7 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
 

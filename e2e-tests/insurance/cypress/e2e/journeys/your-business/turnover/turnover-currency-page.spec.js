@@ -1,4 +1,3 @@
-import partials from '../../../../../../partials';
 import { turnoverPage } from '../../../../../../pages/your-business';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -10,10 +9,6 @@ const {
   EXPORTER_BUSINESS: { TURNOVER, TURNOVER_CURRENCY },
 } = INSURANCE_ROUTES;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your business - Turnover currency page - As an Exporter I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
@@ -24,7 +19,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();

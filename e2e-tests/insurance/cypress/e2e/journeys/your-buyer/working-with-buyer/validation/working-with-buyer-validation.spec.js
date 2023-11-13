@@ -26,10 +26,6 @@ const ERROR_MESSAGE_TRADED_WITH_BUYER = WORKING_WITH_BUYER_ERROR_MESSAGES[TRADED
 
 const { WORKING_WITH_BUYER } = ROUTES.INSURANCE.YOUR_BUYER;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.buyer;
-
 context('Insurance - Your Buyer - Working with buyer page - form validation', () => {
   let referenceNumber;
   let url;
@@ -38,7 +34,7 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
 

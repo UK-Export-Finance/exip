@@ -17,7 +17,7 @@ const {
   ROOT,
   ALL_SECTIONS,
   EXPORTER_BUSINESS: {
-    NATURE_OF_BUSINESS,
+    NATURE_OF_BUSINESS_ROOT,
   },
 } = ROUTES.INSURANCE;
 
@@ -35,11 +35,11 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeAndSubmitCompanyDetails({});
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
       cy.assertUrl(url);
     });

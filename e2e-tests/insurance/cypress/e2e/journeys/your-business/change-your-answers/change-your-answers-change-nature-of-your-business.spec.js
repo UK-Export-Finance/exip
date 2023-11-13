@@ -1,4 +1,3 @@
-import partials from '../../../../../../partials';
 import { field, submitButton, summaryList } from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -20,10 +19,6 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
-
 context('Insurance - Your business - Change your answers - Nature of your business- As an exporter, I want to change my answers to the nature of your business section', () => {
   let referenceNumber;
   let url;
@@ -34,7 +29,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();

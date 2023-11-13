@@ -20,9 +20,6 @@ const companyDetailsFormVariables = {
   [WEBSITE]: WEBSITE_EXAMPLES.VALID,
 };
 
-const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.business;
-
 const completeAllFields = (phoneNumber) => {
   companyDetailsFormVariables.phoneNumber = phoneNumber;
 
@@ -44,7 +41,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       natureOfBusinessUrl = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeCompanyDetailsForm({});
 
