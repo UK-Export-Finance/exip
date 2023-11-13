@@ -14,7 +14,7 @@ const {
   ROOT,
   ALL_SECTIONS,
   EXPORTER_BUSINESS: {
-    BROKER,
+    BROKER_ROOT,
     CHECK_YOUR_ANSWERS,
   },
   YOUR_BUYER: {
@@ -58,7 +58,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${BROKER}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`,
       submitButtonCopy: BUTTONS.CONTINUE_NEXT_SECTION,
     });
   });

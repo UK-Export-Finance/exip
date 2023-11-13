@@ -12,7 +12,7 @@ const { CREDIT_CONTROL: FIELD_ID } = FIELD_IDS;
 const {
   ROOT,
   EXPORTER_BUSINESS: {
-    BROKER,
+    BROKER_ROOT,
     CREDIT_CONTROL,
     TURNOVER,
   },
@@ -36,7 +36,7 @@ context('Insurance - Your business - Credit control page', () => {
       cy.completeAndSubmitTurnoverForm();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
-      brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER}`;
+      brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -81,7 +81,7 @@ context('Insurance - Your business - Credit control page', () => {
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${BROKER}`, () => {
+    it(`should redirect to ${BROKER_ROOT}`, () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitCreditControlForm();

@@ -16,7 +16,7 @@ const {
 const {
   ROOT,
   EXPORTER_BUSINESS: {
-    BROKER,
+    BROKER_ROOT,
   },
 } = INSURANCE_ROUTES;
 
@@ -49,7 +49,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitCreditControlForm();
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
 
       cy.assertUrl(url);
     });

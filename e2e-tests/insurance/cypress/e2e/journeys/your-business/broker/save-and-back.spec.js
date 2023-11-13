@@ -23,7 +23,7 @@ const {
   ROOT,
   ALL_SECTIONS,
   EXPORTER_BUSINESS: {
-    BROKER,
+    BROKER_ROOT,
   },
 } = ROUTES.INSURANCE;
 
@@ -49,7 +49,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitCreditControlForm();
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);

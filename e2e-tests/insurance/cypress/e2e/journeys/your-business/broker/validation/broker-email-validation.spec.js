@@ -14,7 +14,7 @@ const {
 const {
   ROOT,
   EXPORTER_BUSINESS: {
-    BROKER,
+    BROKER_ROOT,
   },
 } = ROUTES.INSURANCE;
 
@@ -42,9 +42,12 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
 
       cy.startYourBusinessSection();
 
-      // TODO - seems this is failing, but not being run in GHA.
+      cy.completeAndSubmitCompanyDetails({});
+      cy.completeAndSubmitNatureOfYourBusiness();
+      cy.completeAndSubmitTurnoverForm();
+      cy.completeAndSubmitCreditControlForm();
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
     });
   });
 

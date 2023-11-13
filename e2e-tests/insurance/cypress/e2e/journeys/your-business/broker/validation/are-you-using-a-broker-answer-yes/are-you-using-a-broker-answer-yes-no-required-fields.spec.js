@@ -16,7 +16,7 @@ const {
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: { BROKER },
+  EXPORTER_BUSINESS: { BROKER_ROOT },
 } = INSURANCE_ROUTES;
 
 const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -43,7 +43,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitCreditControlForm();
 
-      const url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER}`;
+      const url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
 
       cy.assertUrl(url);
     });
