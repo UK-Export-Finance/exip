@@ -13,14 +13,16 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insur
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: { COMPANY_DETAILS },
+  EXPORTER_BUSINESS: {
+    ROOT: EXPORTER_BUSINESS_ROOT,
+    COMPANY_DETAILS_ROOT,
+  },
 } = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS;
 
 const {
   EXPORTER_BUSINESS: {
-    ROOT: EXPORTER_BUSINESS_ROOT,
     YOUR_COMPANY: {
       TRADING_ADDRESS,
       TRADING_NAME,
@@ -42,7 +44,7 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
 
       cy.startYourBusinessSection();
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -59,8 +61,9 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${COMPANY_DETAILS}`,
+      currentHref: `${ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}`,
       backLink: `${ROOT}/${referenceNumber}${EXPORTER_BUSINESS_ROOT}`,
+      // backLink: `testing`,
       lightHouseThresholds: {
         'best-practices': 93,
       },

@@ -1,3 +1,4 @@
+import partials from '../../../../../../partials';
 import {
   FIELD_IDS,
   FIELD_VALUES,
@@ -35,6 +36,10 @@ const {
   },
 } = ROUTES.INSURANCE;
 
+const { taskList } = partials.insurancePartials;
+
+const task = taskList.prepareApplication.tasks.buyer;
+
 context('Insurance - Your buyer - Change your answers - Company or organisation - As an exporter, I want to change my answers to the company or organisation section', () => {
   let referenceNumber;
   let url;
@@ -43,7 +48,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection();
+      task.link().click();
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitWorkingWithBuyerForm({});
