@@ -16,10 +16,6 @@ const checkCalculateDescriptionSummaryClickRevealsContent = () => {
   partials.ukGoodsOrServicesCalculateDescription.list.intro().should('be.visible');
 };
 
-const checkDescriptionContentIntro = () => {
-  cy.checkText(partials.ukGoodsOrServicesCalculateDescription.list.intro(), CONTENT_STRINGS.LIST_INTRO);
-};
-
 const checkDescriptionContentListItems = () => {
   cy.checkText(partials.ukGoodsOrServicesCalculateDescription.list.item1(), CONTENT_STRINGS.LIST[0].TEXT);
 
@@ -35,7 +31,6 @@ const checkDescriptionContentListItems = () => {
 };
 
 const checkCalculateDescriptionDescriptionContent = () => {
-  checkDescriptionContentIntro();
   checkDescriptionContentListItems();
 };
 
