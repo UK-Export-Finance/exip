@@ -29,10 +29,12 @@ const applicationQuery = gql`
           totalContractValue {
             id
             value
+            valueId
           }
           coverPeriod {
             id
             value
+            valueId
           }
         }
         policy {

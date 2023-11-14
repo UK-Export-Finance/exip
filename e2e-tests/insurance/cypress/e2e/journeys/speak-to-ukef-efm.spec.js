@@ -26,7 +26,7 @@ context('Insurance - speak to UKEF EFM exit page', () => {
     cy.completeAndSubmitCompaniesHouseSearchForm({});
     cy.completeEligibilityCompanyDetailsForm();
     completeAndSubmitBuyerCountryForm();
-    cy.completeInsuredAmountForm();
+    cy.completeAndSubmitTotalValueInsuredForm({});
 
     let expectedUrl = `${baseUrl}${INSURED_PERIOD}`;
     cy.assertUrl(expectedUrl);

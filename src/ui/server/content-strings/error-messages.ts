@@ -1,11 +1,11 @@
-import { FIELD_IDS, GBP_CURRENCY_CODE, ELIGIBILITY } from '../constants';
+import { FIELD_IDS, GBP_CURRENCY_CODE, ELIGIBILITY, TOTAL_CONTRACT_VALUE } from '../constants';
 import formatCurrency from '../helpers/format-currency';
 
 type ErrorMessage = {
   [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 };
 
-const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP, GBP_CURRENCY_CODE, 0);
+const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
 
 export const ERROR_MESSAGES = {
   THERE_IS_A_PROBLEM: 'There is a problem',
@@ -56,8 +56,8 @@ export const ERROR_MESSAGES = {
   [FIELD_IDS.FEEDBACK.OTHER_COMMENTS]: 'Anything else you would like to tell us cannot be more than 1200 characters',
   INSURANCE: {
     ELIGIBILITY: {
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT]: {
-        IS_EMPTY: `Select whether you want to be insured for more than ${MAX_COVER_AMOUNT}`,
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.TOTAL_CONTRACT_VALUE]: {
+        IS_EMPTY: `Select if the the total value of your contract exceeds ${THRESHOLD} or not`,
       },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD]: {
         IS_EMPTY: `Select whether you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years`,

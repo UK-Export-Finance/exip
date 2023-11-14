@@ -203,10 +203,10 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`, async () => {
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED);
       });
     });
 

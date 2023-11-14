@@ -5,7 +5,7 @@ import { country } from '../../fixtures/application';
 import getSummaryListField from './get-summary-list-field';
 
 const {
-  WANT_COVER_OVER_MAX_AMOUNT,
+  TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID,
   WANT_COVER_OVER_MAX_PERIOD,
   COMPANIES_HOUSE_NUMBER,
   BUYER_COUNTRY,
@@ -38,11 +38,11 @@ const checkYourAnswersEligibilitySummaryList = ({
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
-  [WANT_COVER_OVER_MAX_AMOUNT]: () => {
-    const fieldId = WANT_COVER_OVER_MAX_AMOUNT;
+  [TOTAL_CONTRACT_VALUE_FIELD_ID]: () => {
+    const fieldId = TOTAL_CONTRACT_VALUE_FIELD_ID;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = FIELD_VALUES.NO;
+    const expectedValue = FIELDS[fieldId].SUMMARY.BELOW;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
