@@ -1,4 +1,5 @@
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
+import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { objectHasProperty } from '../../../../helpers/object';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
@@ -12,6 +13,7 @@ export const FIELD_ID = FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION;
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
+  FIELD: FIELDS[FIELD_ID],
   PAGE_CONTENT_STRINGS: PAGES.EXPORTER_LOCATION,
 };
 

@@ -1,9 +1,11 @@
 import {
   yesRadio,
+  yesNoRadioHint,
   noRadio,
   submitButton,
 } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
+import { FIELDS } from '../../../../../../content-strings/fields';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import { completeAndSubmitBuyerBodyForm } from '../../../../../../commands/quote/forms';
@@ -43,6 +45,10 @@ context('Exporter location page - as an exporter, I want to check if my company 
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
     });
+  });
+
+  it('renders a hint', () => {
+    cy.checkText(yesNoRadioHint(), FIELDS[FIELD_ID].HINT);
   });
 
   it('renders `yes` radio button', () => {
