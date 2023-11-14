@@ -30,8 +30,8 @@ const {
   ROOT,
   EXPORTER_BUSINESS: {
     BROKER,
-    TURNOVER,
     CHECK_YOUR_ANSWERS,
+    CREDIT_CONTROL,
   },
 } = INSURANCE_ROUTES;
 
@@ -66,6 +66,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
+      cy.completeAndSubmitCreditControlForm();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -86,7 +87,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${BROKER}`,
-      backLink: `${ROOT}/${referenceNumber}${TURNOVER}`,
+      backLink: `${ROOT}/${referenceNumber}${CREDIT_CONTROL}`,
       assertSubmitButton: true,
       lightHouseThresholds: {
         // accessibility threshold is reduced here because

@@ -43,6 +43,23 @@ describe('integrations/companies-house', () => {
     });
   });
 
+  describe('when a 404 status is returned', () => {
+    test('it should return success=false and notFound=true', async () => {
+      const mock = new MockAdapter(axios);
+
+      mock.onGet(`${companiesHouseURL}/company/${companyNumber}`).reply(404);
+
+      const result = await companiesHouse.get(companyNumber);
+
+      const expected = {
+        success: false,
+        notFound: true,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('when a 200 status is not returned', () => {
     test('it should throw an error', async () => {
       const mock = new MockAdapter(axios);

@@ -27,7 +27,9 @@ context('Insurance - Eligibility - Companies details page - company with multipl
     cy.completeCheckIfEligibleForm();
     cy.completeExporterLocationForm();
     cy.completeCompaniesHouseNumberForm();
-    cy.completeAndSubmitCompaniesHouseSearchForm({ companyNumber: COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES });
+    cy.completeAndSubmitCompaniesHouseSearchForm({
+      companyNumber: COMPANIES_HOUSE_NUMBER_MULTIPLE_SIC_CODES,
+    });
 
     cy.assertUrl(url);
   });
@@ -40,15 +42,13 @@ context('Insurance - Eligibility - Companies details page - company with multipl
 
   it('should render multiple SIC codes in the summary list', () => {
     const expectedSicCodes = [
-      `${sicCodes[1].code} - ${sicCodes[1][INDUSTRY_SECTOR_NAME]}`,
-      `${sicCodes[2].code} - ${sicCodes[2][INDUSTRY_SECTOR_NAME]}`,
-      `${sicCodes[3].code} - ${sicCodes[3][INDUSTRY_SECTOR_NAME]}`,
-      `${sicCodes[4].code} - ${sicCodes[4][INDUSTRY_SECTOR_NAME]}`,
+      `${sicCodes[5].code} - ${sicCodes[5][INDUSTRY_SECTOR_NAME]}`,
+      `${sicCodes[6].code} - ${sicCodes[6][INDUSTRY_SECTOR_NAME]}`,
+      `${sicCodes[7].code} - ${sicCodes[7][INDUSTRY_SECTOR_NAME]}`,
     ];
 
     summaryList.field(COMPANY_SIC).value().contains(expectedSicCodes[0]);
     summaryList.field(COMPANY_SIC).value().contains(expectedSicCodes[1]);
     summaryList.field(COMPANY_SIC).value().contains(expectedSicCodes[2]);
-    summaryList.field(COMPANY_SIC).value().contains(expectedSicCodes[3]);
   });
 });

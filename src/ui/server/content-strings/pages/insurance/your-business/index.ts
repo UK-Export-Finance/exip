@@ -36,6 +36,15 @@ const EXPORTER_BUSINESS = {
   TURNOVER: {
     ...SHARED,
     PAGE_TITLE: 'Turnover',
+    PROVIDE_ALTERNATIVE_CURRENCY: 'Provide turnover in an alternative currency',
+  },
+  TURNOVER_CURRENCY: {
+    ...SHARED,
+    PAGE_TITLE: 'What currency is your turnover in?',
+  },
+  CREDIT_CONTROL: {
+    ...SHARED,
+    PAGE_TITLE: 'Do you have a process for dealing with late payments?',
   },
   BROKER: {
     ...SHARED,

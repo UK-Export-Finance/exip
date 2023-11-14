@@ -32,12 +32,15 @@ export const COMPANIES_HOUSE_NUMBER = {
   PAGE_TITLE: 'Enter your Companies House number',
 };
 
-export const NO_COMPANIES_HOUSE_NUMBER = {
+const COMPANIES_HOUSE_EXIT = {
   PAGE_TITLE: 'You cannot apply for credit insurance',
-  BODY:
-    "This is because you do not have a UK Companies House registration number for a company that's actively trading.",
+  ACTIONS,
+};
+
+export const NO_COMPANIES_HOUSE_NUMBER = {
+  ...COMPANIES_HOUSE_EXIT,
   ACTIONS: {
-    ...ACTIONS,
+    ...COMPANIES_HOUSE_EXIT.ACTIONS,
     UPDATE_COMPANY_DETAILS: {
       TEXT: 'update your company details on',
       LINK: {
@@ -45,14 +48,8 @@ export const NO_COMPANIES_HOUSE_NUMBER = {
         HREF: LINKS.EXTERNAL.COMPANIES_HOUSE,
       },
     },
-    CONTACT_EFM: {
-      LINK: {
-        TEXT: 'talk to your nearest export finance manager',
-        HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
-      },
-      TEXT: 'to find out more about your options',
-    },
   },
+  BODY: "This is because you do not have a UK Companies House registration number for a company that's actively trading.",
 };
 
 export const COMPANIES_HOUSE_UNAVAILABLE = {
@@ -64,6 +61,11 @@ export const COMPANIES_HOUSE_UNAVAILABLE = {
   CONTINUE_LINK: 'other sections of your application,',
   CONTINUE_SUFFIX: 'until this problem is resolved',
   INFORMATION: '(You may lose any information you entered on the previous page.)',
+};
+
+export const COMPANY_NOT_ACTIVE = {
+  ...COMPANIES_HOUSE_EXIT,
+  BODY: "This is because you do not have a UK Companies House registration number for a company that's actively trading.",
 };
 
 export const COMPANY_DETAILS = {

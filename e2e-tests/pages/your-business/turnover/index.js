@@ -8,6 +8,7 @@ const {
 
 const turnover = {
   [FINANCIAL_YEAR_END_DATE]: () => cy.get(`[data-cy="${FINANCIAL_YEAR_END_DATE}`),
+  provideAlternativeCurrencyLink: () => cy.get('[data-cy="provide-alternative-currency-link"]'),
 };
 
 export default turnover;

@@ -470,7 +470,12 @@ var EXTERNAL_API_DEFINITIONS = {
       YES: "Y",
       NO: "N"
     },
-    INVALID_COUNTRIES: ["EC Market n/k", "Non EC Market n/k", "Non UK", "Third Country"]
+    INVALID_COUNTRIES: ["EC Market n/k", "Non EC Market n/k", "Non UK", "Third Country", "Eastern and Southern African Trade and Development Bank"]
+  },
+  COMPANIES_HOUSE: {
+    COMPANY_STATUS: {
+      ACTIVE: "active"
+    }
   }
 };
 var EXTERNAL_API_MAPPINGS = {
@@ -1603,6 +1608,8 @@ var typeDefs = `
     financialYearEndDate: DateTime
     success: Boolean
     apiError: Boolean
+    isActive: Boolean
+    notFound: Boolean
   }
 
   type CompanyAddress {
@@ -1658,6 +1665,7 @@ var typeDefs = `
     industrySectorNames: [String]
     financialYearEndDate: DateTime
     registeredOfficeAddress: CompanyAddressInput
+    isActive: Boolean
   }
 
    type OrdnanceSurveyResponse {
@@ -4939,30 +4947,35 @@ var mapSicCodeDescriptions = (sicCodes, sectors) => {
 var map_sic_code_descriptions_default = mapSicCodeDescriptions;
 
 // helpers/map-companies-house-fields/index.ts
-var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => {
-  return {
-    companyName: companiesHouseResponse.company_name,
-    registeredOfficeAddress: {
-      careOf: companiesHouseResponse.registered_office_address.care_of,
-      premises: companiesHouseResponse.registered_office_address.premises,
-      addressLine1: companiesHouseResponse.registered_office_address.address_line_1,
-      addressLine2: companiesHouseResponse.registered_office_address.address_line_2,
-      locality: companiesHouseResponse.registered_office_address.locality,
-      region: companiesHouseResponse.registered_office_address.region,
-      postalCode: companiesHouseResponse.registered_office_address.postal_code,
-      country: companiesHouseResponse.registered_office_address.country
-    },
-    companyNumber: companiesHouseResponse.company_number,
-    dateOfCreation: companiesHouseResponse.date_of_creation,
-    sicCodes: companiesHouseResponse.sic_codes,
-    industrySectorNames: map_sic_code_descriptions_default(companiesHouseResponse.sic_codes, sectors),
-    // creates timestamp for financialYearEndDate from day and month if exist
-    financialYearEndDate: create_full_timestamp_from_day_month_default(
-      companiesHouseResponse.accounts?.accounting_reference_date?.day,
-      companiesHouseResponse.accounts?.accounting_reference_date?.month
-    )
-  };
-};
+var {
+  COMPANIES_HOUSE: { COMPANY_STATUS }
+} = EXTERNAL_API_DEFINITIONS;
+var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => ({
+  companyName: companiesHouseResponse.company_name,
+  registeredOfficeAddress: {
+    careOf: companiesHouseResponse.registered_office_address.care_of,
+    premises: companiesHouseResponse.registered_office_address.premises,
+    addressLine1: companiesHouseResponse.registered_office_address.address_line_1,
+    addressLine2: companiesHouseResponse.registered_office_address.address_line_2,
+    locality: companiesHouseResponse.registered_office_address.locality,
+    region: companiesHouseResponse.registered_office_address.region,
+    postalCode: companiesHouseResponse.registered_office_address.postal_code,
+    country: companiesHouseResponse.registered_office_address.country
+  },
+  companyNumber: companiesHouseResponse.company_number,
+  dateOfCreation: companiesHouseResponse.date_of_creation,
+  sicCodes: companiesHouseResponse.sic_codes,
+  industrySectorNames: map_sic_code_descriptions_default(companiesHouseResponse.sic_codes, sectors),
+  /**
+   * Create a timestamp for financialYearEndDate
+   * If day and month exist
+   */
+  financialYearEndDate: create_full_timestamp_from_day_month_default(
+    companiesHouseResponse.accounts?.accounting_reference_date?.day,
+    companiesHouseResponse.accounts?.accounting_reference_date?.month
+  ),
+  isActive: companiesHouseResponse.company_status === COMPANY_STATUS.ACTIVE
+});
 
 // integrations/industry-sector/index.ts
 var import_axios2 = __toESM(require("axios"));
@@ -5025,6 +5038,12 @@ var companiesHouse = {
           return acceptableStatus.includes(status);
         }
       });
+      if (response.status === 404) {
+        return {
+          success: false,
+          notFound: true
+        };
+      }
       if (!response.data || response.status !== 200) {
         return {
           success: false
@@ -5051,7 +5070,8 @@ var getCompaniesHouseInformation = async (root, variables) => {
     const response = await companies_house_default.get(sanitisedRegNo);
     if (!response.success || !response.data) {
       return {
-        success: false
+        success: false,
+        notFound: response.notFound
       };
     }
     const industrySectors = await industry_sector_default.get();

@@ -22,8 +22,9 @@ const {
   ROOT,
   EXPORTER_BUSINESS: {
     TURNOVER,
+    TURNOVER_CURRENCY,
     NATURE_OF_BUSINESS,
-    BROKER,
+    CREDIT_CONTROL,
   },
 } = INSURANCE_ROUTES;
 
@@ -40,10 +41,10 @@ financialYearEnd.expectedValue = formatDate(financialYearEnd.timestamp, financia
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your business - Turnover page - As an Exporter I want to enter the I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
+context('Insurance - Your business - Turnover page - As an Exporter I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
   let referenceNumber;
   let url;
-  let brokerUrl;
+  let creditControlUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -55,7 +56,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       cy.completeAndSubmitNatureOfYourBusiness();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
-      brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER}`;
+      creditControlUrl = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
 
       cy.assertUrl(url);
     });
@@ -97,14 +98,14 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       field.hint().contains(financialYearEnd.content.HINT);
     });
 
-    it('should display turnover fieldset legend', () => {
+    it('should render turnover fieldset legend', () => {
       const fieldId = ESTIMATED_ANNUAL_TURNOVER;
       const field = fieldSelector(fieldId);
 
       cy.checkText(field.legend(), FIELDS.TURNOVER[fieldId].LEGEND);
     });
 
-    it(`should display ${ESTIMATED_ANNUAL_TURNOVER} section`, () => {
+    it(`should render ${ESTIMATED_ANNUAL_TURNOVER} section`, () => {
       const fieldId = ESTIMATED_ANNUAL_TURNOVER;
       const field = fieldSelector(fieldId);
 
@@ -115,7 +116,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       cy.checkText(field.prefix(), FIELDS.TURNOVER[fieldId].PREFIX);
     });
 
-    it(`should display ${PERCENTAGE_TURNOVER} section`, () => {
+    it(`should render ${PERCENTAGE_TURNOVER} section`, () => {
       const fieldId = PERCENTAGE_TURNOVER;
       const field = fieldSelector(fieldId);
 
@@ -126,18 +127,26 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       cy.checkText(field.suffix(), FIELDS.TURNOVER[fieldId].SUFFIX);
     });
 
-    it('should display save and go back button', () => {
+    it('should render a `provide alternative currency` link', () => {
+      cy.checkLink(
+        turnoverPage.provideAlternativeCurrencyLink(),
+        `${ROOT}/${referenceNumber}${TURNOVER_CURRENCY}`,
+        CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY,
+      );
+    });
+
+    it('should render save and go back button', () => {
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${BROKER}`, () => {
+    it(`should redirect to ${CREDIT_CONTROL}`, () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitTurnoverForm();
 
-      cy.assertUrl(brokerUrl);
+      cy.assertUrl(creditControlUrl);
     });
   });
 

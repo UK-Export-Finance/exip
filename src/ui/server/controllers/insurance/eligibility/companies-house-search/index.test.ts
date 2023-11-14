@@ -20,7 +20,7 @@ const {
 const {
   PROBLEM_WITH_SERVICE,
   INSURANCE: {
-    ELIGIBILITY: { COMPANY_DETAILS, COMPANIES_HOUSE_UNAVAILABLE },
+    ELIGIBILITY: { COMPANY_DETAILS, COMPANY_NOT_ACTIVE, COMPANIES_HOUSE_UNAVAILABLE },
   },
 } = ROUTES;
 
@@ -108,6 +108,8 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
     };
 
     const mockCompaniesHouseResponse = {
+      __typename: 'CompaniesHouseResponse',
+      isActive: true,
       company: mockCompany,
       companyNumber: mockCompany.companyNumber,
     };
@@ -128,6 +130,7 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
           userName: getUserNameFromSession(req.session.user),
           ...PAGE_VARIABLES,
           validationErrors: generateValidationErrors(payload),
+          submittedValues: payload,
         });
       });
     });
@@ -166,24 +169,41 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
 
         expect(res.redirect).toHaveBeenCalledWith(COMPANY_DETAILS);
       });
-    });
 
-    describe('api error handling', () => {
-      describe('when companiesHouse.search returns validationErrors', () => {
-        it('should render template with validation errors from the response', async () => {
+      describe('when companiesHouse.search returns isActive=false', () => {
+        it(`should redirect to ${COMPANY_NOT_ACTIVE}`, async () => {
           req.body = validBody;
-
-          const mockValidationErrors = generateValidationErrors({});
 
           const mockResponse = {
             companyNumber: mockCompaniesHouseResponse.companyNumber,
-            validationErrors: mockValidationErrors,
+            validationErrors: false,
             apiError: false,
+            isActive: false,
           };
 
           companiesHouse.search = jest.fn(() => Promise.resolve(mockResponse));
 
           await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(COMPANY_NOT_ACTIVE);
+        });
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('when companiesHouse.search returns notFound=true', () => {
+        it('should render template with validation errors', async () => {
+          req.body = validBody;
+
+          const mockResponse = {
+            notFound: true,
+          };
+
+          companiesHouse.search = jest.fn(() => Promise.resolve(mockResponse));
+
+          await post(req, res);
+
+          const payload = constructPayload(req.body, [FIELD_ID]);
 
           expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
             ...insuranceCorePageVariables({
@@ -192,12 +212,13 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
             }),
             userName: getUserNameFromSession(req.session.user),
             ...PAGE_VARIABLES,
-            validationErrors: mockResponse.validationErrors,
+            validationErrors: generateValidationErrors({}),
+            submittedValues: payload,
           });
         });
       });
 
-      describe('when companiesHouse.search returns apiError', () => {
+      describe('when companiesHouse.search returns apiError=true', () => {
         it(`should redirect to ${COMPANIES_HOUSE_UNAVAILABLE}`, async () => {
           req.body = validBody;
 

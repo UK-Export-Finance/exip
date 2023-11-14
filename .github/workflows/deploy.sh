@@ -19,12 +19,12 @@ if [ -n "$selection" ]; then
     if [ "$selection" = "0" ]
     then
     destination=infrastructure
-    branch=main-application
+    branch=main
     ############### DEPLOYMENT ###############
     elif [ "$selection" = "1" ]
     then
     read destination
-    branch=main-application
+    branch=main
     ############### ACR PURGE ###############
     elif [ "$selection" = "2" ]
     then

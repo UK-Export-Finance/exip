@@ -1,6 +1,6 @@
 {
   "name": "@uk-export-finance/exip",
-  "version": "1.16.0",
+  "version": "2.2.1",
   "description": "Export Insurance Policies",
   "homepage": "https://github.com/UK-Export-Finance/exip#readme",
   "bugs": {
@@ -54,7 +54,7 @@
     "@types/node": "^20.8.10",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
-    "commitlint": "^18.2.0",
+    "commitlint": "^18.4.0",
     "cspell": "^7.3.8",
     "eslint": "^8.52.0",
     "eslint-config-airbnb": "^19.0.4",

@@ -39,6 +39,8 @@ const typeDefs = `
     financialYearEndDate: DateTime
     success: Boolean
     apiError: Boolean
+    isActive: Boolean
+    notFound: Boolean
   }
 
   type CompanyAddress {
@@ -94,6 +96,7 @@ const typeDefs = `
     industrySectorNames: [String]
     financialYearEndDate: DateTime
     registeredOfficeAddress: CompanyAddressInput
+    isActive: Boolean
   }
 
    type OrdnanceSurveyResponse {

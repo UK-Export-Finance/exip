@@ -19,8 +19,10 @@ const companiesHouseQuery = gql`
       sicCodes
       industrySectorNames
       financialYearEndDate
+      isActive
       success
       apiError
+      notFound
     }
   }
 `;

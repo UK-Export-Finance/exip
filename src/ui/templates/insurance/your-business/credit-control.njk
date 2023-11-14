@@ -1,0 +1,65 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+{% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+{% import '../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <form method="POST" id="form" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        {{ yesNoRadioButtons.render({
+          fieldId: FIELD_ID,
+          legendText: CONTENT_STRINGS.PAGE_TITLE,
+          hintText: FIELD_HINT,
+          submittedAnswer: submittedValues[FIELD_ID],
+          errorMessage: validationErrors.errorList[FIELD_ID]
+        }) }}
+      </div>
+    </div>
+
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <div class="govuk-button-group">
+        {{ submitButton.render({
+          text: CONTENT_STRINGS.BUTTONS.CONTINUE
+        }) }}
+
+        {{ govukButton({
+          text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+          classes: "govuk-button--secondary",
+          attributes: {
+            'data-cy': 'save-and-back-button',
+            'formaction': SAVE_AND_BACK_URL
+          }
+        }) }}
+      </div>
+    </div>
+
+  </form>
+
+{% endblock %}
