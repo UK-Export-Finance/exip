@@ -3,7 +3,7 @@ import {
   completeCheckIfEligibleForm,
   completeExporterLocationForm,
   completeCompaniesHouseNumberForm,
-  completeInsuredAmountForm,
+  completeAndSubmitTotalValueInsuredForm,
   completeInsuredPeriodForm,
   completeUkGoodsAndServicesForm,
   completeEligibleToApplyOnlineForm,
@@ -18,7 +18,7 @@ Cypress.Commands.add('completeExporterLocationForm', completeExporterLocationFor
 Cypress.Commands.add('completeCompaniesHouseNumberForm', completeCompaniesHouseNumberForm);
 Cypress.Commands.add('completeAndSubmitCompaniesHouseSearchForm', completeAndSubmitCompaniesHouseSearchForm);
 Cypress.Commands.add('completeEligibilityCompanyDetailsForm', completeCompanyDetailsForm);
-Cypress.Commands.add('completeInsuredAmountForm', completeInsuredAmountForm);
+Cypress.Commands.add('completeAndSubmitTotalValueInsuredForm', completeAndSubmitTotalValueInsuredForm);
 Cypress.Commands.add('completeInsuredPeriodForm', completeInsuredPeriodForm);
 Cypress.Commands.add('completeUkGoodsAndServicesForm', completeUkGoodsAndServicesForm);
 Cypress.Commands.add('completeEligibleToApplyOnlineForm', completeEligibleToApplyOnlineForm);

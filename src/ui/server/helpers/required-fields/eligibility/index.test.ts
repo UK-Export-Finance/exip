@@ -9,7 +9,7 @@ const {
     COMPANIES_HOUSE,
     COMPANIES_HOUSE_NUMBER,
     TOTAL_CONTRACT_VALUE_ID,
-    WANT_COVER_OVER_MAX_AMOUNT,
+    TOTAL_CONTRACT_VALUE,
     WANT_COVER_OVER_MAX_PERIOD,
     COVER_PERIOD_ID,
     ...FIELD_IDS
@@ -22,7 +22,7 @@ describe('server/helpers/required-fields/eligibility', () => {
       const expected = [
         ACCOUNT_TO_APPLY_ONLINE,
         BUYER_COUNTRY_ISO_CODE,
-        WANT_COVER_OVER_MAX_AMOUNT,
+        TOTAL_CONTRACT_VALUE,
         TOTAL_CONTRACT_VALUE_ID,
         WANT_COVER_OVER_MAX_PERIOD,
         COVER_PERIOD_ID,

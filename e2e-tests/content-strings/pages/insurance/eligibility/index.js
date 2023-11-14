@@ -1,9 +1,9 @@
-import { ELIGIBILITY } from '../../../../constants';
+import { ELIGIBILITY, TOTAL_CONTRACT_VALUE } from '../../../../constants';
 import formatCurrency from '../../../../helpers/format-currency';
 import { ACTIONS } from '../../../actions';
 import { LINKS } from '../../../links';
 
-export const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP);
+export const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K);
 
 export const CHECK_IF_ELIGIBLE = {
   PAGE_TITLE: 'Check you can apply for credit insurance for your export',
@@ -15,8 +15,9 @@ export const CHECK_IF_ELIGIBLE = {
     "The eligibility check should only take a few minutes to complete and you'll get an answer immediately. If your export is eligible, you can apply right away.",
 };
 
-export const INSURED_AMOUNT = {
-  PAGE_TITLE: `Do you want to be insured for more than ${MAX_COVER_AMOUNT}?`,
+export const TOTAL_VALUE_INSURED = {
+  PAGE_TITLE: 'What is the total value you want to insure?',
+  HINT: `We'll ask you for more information if your export is over ${THRESHOLD}.`,
 };
 
 export const INSURED_PERIOD = {

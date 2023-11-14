@@ -33,7 +33,7 @@ context('Get a quote, complete insurance eligibility and then re-visit the quote
     cy.completeAndSubmitCompaniesHouseSearchForm({});
     cy.completeEligibilityCompanyDetailsForm();
     completeAndSubmitBuyerCountryForm();
-    cy.completeInsuredAmountForm();
+    cy.completeAndSubmitTotalValueInsuredForm({});
     cy.completeInsuredPeriodForm();
     cy.completeUkGoodsAndServicesForm();
     cy.completeEligibleToApplyOnlineForm();

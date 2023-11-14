@@ -39,7 +39,7 @@ const submitAnswersFromExporterLocationHappyPath = (assertAuthenticatedHeader = 
 
   checkAuthHeader(assertAuthenticatedHeader);
 
-  cy.completeInsuredAmountForm();
+  cy.completeAndSubmitTotalValueInsuredForm({});
 
   checkAuthHeader(assertAuthenticatedHeader);
 

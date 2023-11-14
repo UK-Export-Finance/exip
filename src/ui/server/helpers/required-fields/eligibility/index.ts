@@ -8,8 +8,8 @@ const {
     COMPANIES_HOUSE,
     COMPANIES_HOUSE_NUMBER,
     TOTAL_CONTRACT_VALUE_ID,
-    WANT_COVER_OVER_MAX_AMOUNT,
     WANT_COVER_OVER_MAX_PERIOD,
+    TOTAL_CONTRACT_VALUE,
     COVER_PERIOD_ID,
     ...FIELD_IDS
   },
@@ -21,7 +21,7 @@ const {
 export const irrelevantFields = [
   ACCOUNT_TO_APPLY_ONLINE,
   BUYER_COUNTRY_ISO_CODE,
-  WANT_COVER_OVER_MAX_AMOUNT,
+  TOTAL_CONTRACT_VALUE,
   TOTAL_CONTRACT_VALUE_ID,
   WANT_COVER_OVER_MAX_PERIOD,
   COVER_PERIOD_ID,
@@ -33,7 +33,7 @@ export const irrelevantFields = [
  * Therefore, we do not want these fields in the list of required eligibility fields.
  * 1) ACCOUNT_TO_APPLY_ONLINE field - has no data/value.
  * 2) BUYER_COUNTRY_ISO_CODE field - data is saved as BUYER_COUNTRY relationship object.
- * 3) WANT_COVER_OVER_MAX_AMOUNT field - data is saved as TOTAL_CONTRACT_VALUE relationship object.
+ * 3) TOTAL_CONTRACT_VALUE_ID field - data is saved as TOTAL_CONTRACT_VALUE relationship object.
  * 4) WANT_COVER_OVER_MAX_PERIOD - data is saved as COVER_PERIOD relationship object.
  * @returns {Array} Required field IDs
  */

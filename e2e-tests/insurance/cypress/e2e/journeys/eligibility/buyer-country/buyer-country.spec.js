@@ -9,7 +9,7 @@ const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
 const {
   START,
-  ELIGIBILITY: { BUYER_COUNTRY, COMPANY_DETAILS, INSURED_AMOUNT },
+  ELIGIBILITY: { BUYER_COUNTRY, COMPANY_DETAILS, TOTAL_VALUE_INSURED },
 } = INSURANCE_ROUTES;
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
@@ -99,8 +99,8 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
         submitButton().click();
       });
 
-      it(`should redirect to ${INSURED_AMOUNT}`, () => {
-        const expectedUrl = `${baseUrl}${INSURED_AMOUNT}`;
+      it(`should redirect to ${TOTAL_VALUE_INSURED}`, () => {
+        const expectedUrl = `${baseUrl}${TOTAL_VALUE_INSURED}`;
 
         cy.assertUrl(expectedUrl);
       });

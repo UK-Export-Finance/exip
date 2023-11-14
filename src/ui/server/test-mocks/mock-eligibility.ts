@@ -9,16 +9,13 @@ const mockEligibility = {
   validExporterLocation: true,
   hasCompaniesHouseNumber: true,
   companiesHouseNumber: mockCompany.companyNumber,
-  wantCoverOverMaxAmount: false,
+  totalValueInsured: 3,
   wantCoverOverMaxPeriod: false,
   coverPeriod: {
     value: 'Mock value',
     valueId: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
   },
-  totalContractValue: {
-    value: 'Mock value',
-    valueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
-  },
+  totalContractValue: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
 } as InsuranceEligibility;
 
 export default mockEligibility;
