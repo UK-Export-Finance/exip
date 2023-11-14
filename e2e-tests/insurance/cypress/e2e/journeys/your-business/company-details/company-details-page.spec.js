@@ -63,7 +63,6 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}`,
       backLink: `${ROOT}/${referenceNumber}${EXPORTER_BUSINESS_ROOT}`,
-      // backLink: `testing`,
       lightHouseThresholds: {
         'best-practices': 93,
       },

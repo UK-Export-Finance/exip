@@ -27,7 +27,7 @@ const task = taskList.prepareApplication.tasks.business;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your business - Alternative trading address page - I want to input information on an alternative business trading address So that I can provide necessary business information to support my application for Export Insurance', () => {
+context('Insurance - Your business - start page - As an Exporter, I want to provide details about my business, So that I can provide necessary business information to support my application for Export Insurance', () => {
   let referenceNumber;
   let yourBusinessRootUrl;
   let companyDetailsUrl;
