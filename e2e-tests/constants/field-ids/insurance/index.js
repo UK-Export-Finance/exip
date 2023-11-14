@@ -12,7 +12,6 @@ export const INSURANCE_FIELD_IDS = {
     ...SHARED_FIELD_IDS,
     HAS_COMPANIES_HOUSE_NUMBER: 'hasCompaniesHouseNumber',
     COMPANIES_HOUSE_NUMBER: 'companyNumber',
-    WANT_COVER_OVER_MAX_AMOUNT: 'wantCoverOverMaxAmount',
     TOTAL_CONTRACT_VALUE: 'totalContractValue',
     TOTAL_CONTRACT_VALUE_ID: 'totalContractValueId',
     WANT_COVER_OVER_MAX_PERIOD: 'wantCoverOverMaxPeriod',

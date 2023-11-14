@@ -9,10 +9,10 @@ export const TOTAL_CONTRACT_VALUE = {
   MORE_THAN_500K: {
     DB_ID: 2,
   },
-  LESS_THAN_250k: {
+  LESS_THAN_250K: {
     DB_ID: 3,
   },
-  MORE_THAN_250k: {
+  MORE_THAN_250K: {
     DB_ID: 4,
   },
   AMOUNT_250K: 250000,

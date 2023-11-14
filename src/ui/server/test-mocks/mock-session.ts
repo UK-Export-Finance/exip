@@ -1,4 +1,4 @@
-import { FIELD_IDS, GBP_CURRENCY_CODE } from '../constants';
+import { FIELD_IDS, GBP_CURRENCY_CODE, TOTAL_CONTRACT_VALUE } from '../constants';
 import mockAnswers from './mock-answers';
 import mockCountries from './mock-countries';
 import mockCompany from './mock-company';
@@ -30,7 +30,7 @@ const mockSession = {
         canApplyOnline: true,
       },
       [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.TOTAL_CONTRACT_VALUE]: 3,
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.TOTAL_CONTRACT_VALUE]: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.DB_ID,
       [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD]: false,
     },
   },

@@ -94,8 +94,6 @@ context('Insurance - Total value insured page - I want to enter the value that I
     });
 
     describe('when submitting the answer as the second option', () => {
-      const fieldId = `${FIELD_ID}-${BELOW.ID}`;
-
       beforeEach(() => {
         cy.navigateToUrl(url);
 
@@ -112,14 +110,12 @@ context('Insurance - Total value insured page - I want to enter the value that I
         it('should have the originally submitted answer selected', () => {
           cy.clickBackLink();
 
-          field(fieldId).input().should('be.checked');
+          cy.assertTotalValueInsuredRadios({ secondOption: true });
         });
       });
     });
 
     describe('when submitting the answer as as the first option', () => {
-      const fieldId = `${FIELD_ID}-${ABOVE.ID}`;
-
       beforeEach(() => {
         cy.navigateToUrl(url);
 
@@ -136,7 +132,7 @@ context('Insurance - Total value insured page - I want to enter the value that I
         it('should have the originally submitted answer selected', () => {
           cy.clickBackLink();
 
-          field(fieldId).input().should('be.checked');
+          cy.assertTotalValueInsuredRadios({});
         });
       });
     });

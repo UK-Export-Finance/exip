@@ -294,7 +294,6 @@ var INSURANCE_FIELD_IDS = {
     ...shared_default2,
     HAS_COMPANIES_HOUSE_NUMBER: "hasCompaniesHouseNumber",
     COMPANIES_HOUSE_NUMBER: "companyNumber",
-    WANT_COVER_OVER_MAX_AMOUNT: "wantCoverOverMaxAmount",
     TOTAL_CONTRACT_VALUE: "totalContractValue",
     TOTAL_CONTRACT_VALUE_ID: "totalContractValueId",
     WANT_COVER_OVER_MAX_PERIOD: "wantCoverOverMaxPeriod",
@@ -519,12 +518,13 @@ var TOTAL_CONTRACT_VALUE = {
   MORE_THAN_500K: {
     DB_ID: 2
   },
-  LESS_THAN_250k: {
+  LESS_THAN_250K: {
     DB_ID: 3
   },
-  MORE_THAN_250k: {
+  MORE_THAN_250K: {
     DB_ID: 4
-  }
+  },
+  AMOUNT_250K: 25e4
 };
 
 // helpers/policy-type/index.ts
@@ -3747,15 +3747,25 @@ var xlsx_row_default = xlsxRow;
 var ROW_SEPERATOR = xlsx_row_default("", "");
 var xlsx_row_seperator_default = ROW_SEPERATOR;
 
+// helpers/format-currency/index.ts
+var formatCurrency = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
+  style: "currency",
+  currency: currencyCode,
+  minimumFractionDigits: decimalPoints ?? 0,
+  maximumFractionDigits: decimalPoints ?? 0
+});
+var format_currency_default = formatCurrency;
+
 // content-strings/fields/insurance/eligibility/index.ts
 var {
   BUYER_COUNTRY,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_EXPORTER_LOCATION,
-  WANT_COVER_OVER_MAX_AMOUNT,
   WANT_COVER_OVER_MAX_PERIOD,
-  COMPANIES_HOUSE_NUMBER
+  COMPANIES_HOUSE_NUMBER,
+  TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID
 } = insurance_default.ELIGIBILITY;
+var MAX_COVER_AMOUNT = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
 var FIELDS_ELIGIBILITY = {
   [BUYER_COUNTRY]: {
     SUMMARY: {
@@ -3773,11 +3783,6 @@ var FIELDS_ELIGIBILITY = {
     },
     ANSWER: "At least 20%"
   },
-  [WANT_COVER_OVER_MAX_AMOUNT]: {
-    SUMMARY: {
-      TITLE: "Insured for more than \xA3500,000"
-    }
-  },
   [WANT_COVER_OVER_MAX_PERIOD]: {
     SUMMARY: {
       TITLE: "Insured for more than 2 years"
@@ -3786,6 +3791,25 @@ var FIELDS_ELIGIBILITY = {
   [COMPANIES_HOUSE_NUMBER]: {
     SUMMARY: {
       TITLE: "UK Companies House registration number and actively trading"
+    }
+  },
+  [TOTAL_CONTRACT_VALUE_FIELD_ID]: {
+    OPTIONS: {
+      ABOVE: {
+        ID: TOTAL_CONTRACT_VALUE.MORE_THAN_250K.DB_ID,
+        VALUE: TOTAL_CONTRACT_VALUE.MORE_THAN_250K.DB_ID,
+        TEXT: `${MAX_COVER_AMOUNT} and above`
+      },
+      BELOW: {
+        ID: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.DB_ID,
+        VALUE: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.DB_ID,
+        TEXT: `Less than ${MAX_COVER_AMOUNT}`
+      }
+    },
+    SUMMARY: {
+      TITLE: "Total value to insure",
+      ABOVE: `Above ${MAX_COVER_AMOUNT}`,
+      BELOW: `Below ${MAX_COVER_AMOUNT}`
     }
   }
 };
@@ -4199,13 +4223,13 @@ var mapSecondaryKeyInformation = (application2) => {
 var map_secondary_key_information_default = mapSecondaryKeyInformation;
 
 // generate-xlsx/map-application-to-XLSX/helpers/format-currency/index.ts
-var formatCurrency = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
+var formatCurrency2 = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
   style: "currency",
   currency: currencyCode,
   minimumFractionDigits: decimalPoints ?? 0,
   maximumFractionDigits: decimalPoints ?? 0
 });
-var format_currency_default = formatCurrency;
+var format_currency_default2 = formatCurrency2;
 
 // generate-xlsx/map-application-to-XLSX/helpers/map-month-string/index.ts
 var mapMonthString = (answer) => answer === 1 ? `${answer} month` : `${answer} months`;
@@ -4243,15 +4267,15 @@ var mapSinglePolicyFields = (application2) => {
   const { policy } = application2;
   return [
     xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[CONTRACT_COMPLETION_DATE2].SUMMARY?.TITLE), format_date_default(policy[CONTRACT_COMPLETION_DATE2], "dd-MMM-yy")),
-    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[TOTAL_CONTRACT_VALUE2].SUMMARY?.TITLE), format_currency_default(policy[TOTAL_CONTRACT_VALUE2], GBP_CURRENCY_CODE))
+    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[TOTAL_CONTRACT_VALUE2].SUMMARY?.TITLE), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], GBP_CURRENCY_CODE))
   ];
 };
 var mapMultiplePolicyFields = (application2) => {
   const { policy } = application2;
   return [
     xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), map_month_string_default(policy[TOTAL_MONTHS_OF_COVER])),
-    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
-    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
+    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default2(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
+    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default2(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
   ];
 };
 var mapPolicyOutro = (application2) => {
@@ -4369,7 +4393,7 @@ var mapExporter = (application2) => {
     xlsx_row_default(XLSX.FIELDS[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
     xlsx_row_default(XLSX.FIELDS[EMPLOYEES_UK3], business[EMPLOYEES_UK3]),
     xlsx_row_default(XLSX.FIELDS[EMPLOYEES_INTERNATIONAL3], business[EMPLOYEES_INTERNATIONAL3]),
-    xlsx_row_default(XLSX.FIELDS[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
+    xlsx_row_default(XLSX.FIELDS[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default2(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
     xlsx_row_default(CONTENT_STRINGS3[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
     // broker fields
     ...mapBroker(application2)
@@ -4404,13 +4428,27 @@ var mapBuyer = (application2) => {
 };
 var map_buyer_default = mapBuyer;
 
+// generate-xlsx/map-application-to-XLSX/helpers/map-total-contract-value/index.ts
+var FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.TOTAL_CONTRACT_VALUE;
+var { LESS_THAN_250K, MORE_THAN_250K } = TOTAL_CONTRACT_VALUE;
+var { ABOVE, BELOW } = FIELDS_ELIGIBILITY[FIELD_ID].SUMMARY;
+var mapTotalContractValueField = (answer) => {
+  if (answer === MORE_THAN_250K.DB_ID) {
+    return ABOVE;
+  }
+  if (answer === LESS_THAN_250K.DB_ID) {
+    return BELOW;
+  }
+  return DEFAULT.EMPTY;
+};
+var map_total_contract_value_default = mapTotalContractValueField;
+
 // generate-xlsx/map-application-to-XLSX/map-eligibility/index.ts
 var {
   ELIGIBILITY: {
     BUYER_COUNTRY: BUYER_COUNTRY2,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2,
     VALID_EXPORTER_LOCATION: VALID_EXPORTER_LOCATION2,
-    WANT_COVER_OVER_MAX_AMOUNT: WANT_COVER_OVER_MAX_AMOUNT2,
     COVER_PERIOD: COVER_PERIOD_ELIGIBILITY,
     TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_ELIGIBILITY,
     WANT_COVER_OVER_MAX_PERIOD: WANT_COVER_OVER_MAX_PERIOD2,
@@ -4418,7 +4456,6 @@ var {
   }
 } = FIELD_IDS.INSURANCE;
 var { MORE_THAN_2_YEARS } = COVER_PERIOD;
-var { MORE_THAN_500K } = TOTAL_CONTRACT_VALUE;
 var mapEligibility = (application2) => {
   const { eligibility } = application2;
   const mapped = [
@@ -4427,8 +4464,8 @@ var mapEligibility = (application2) => {
     xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[VALID_EXPORTER_LOCATION2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES2])),
     xlsx_row_default(
-      FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_AMOUNT2].SUMMARY?.TITLE,
-      map_yes_no_field_default(eligibility[TOTAL_CONTRACT_VALUE_ELIGIBILITY].valueId === MORE_THAN_500K.DB_ID)
+      FIELDS_ELIGIBILITY[TOTAL_CONTRACT_VALUE_ELIGIBILITY].SUMMARY?.TITLE,
+      map_total_contract_value_default(eligibility[TOTAL_CONTRACT_VALUE_ELIGIBILITY].valueId)
     ),
     xlsx_row_default(
       FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_PERIOD2].SUMMARY?.TITLE,

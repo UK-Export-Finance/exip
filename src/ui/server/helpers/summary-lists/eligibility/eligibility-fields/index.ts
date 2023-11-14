@@ -4,6 +4,7 @@ import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
+import mapTotalContractValueField from '../../../mappings/map-total-contract-value';
 import { InsuranceEligibility, SummaryListItemData } from '../../../../../types';
 
 const { ELIGIBILITY: FIELD_IDS } = INSURANCE_FIELD_IDS;
@@ -15,6 +16,7 @@ const {
   BUYER_COUNTRY,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_EXPORTER_LOCATION,
+  TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_ELIGIBILITY,
 } = FIELD_IDS;
 
 const { MORE_THAN_2_YEARS } = COVER_PERIOD;
@@ -50,6 +52,14 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
         renderChangeLink: false,
       },
       FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES].ANSWER,
+    ),
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS_ELIGIBILITY, TOTAL_CONTRACT_VALUE_ELIGIBILITY),
+        data: answers,
+        renderChangeLink: false,
+      },
+      mapTotalContractValueField(answers[TOTAL_CONTRACT_VALUE_ELIGIBILITY].valueId),
     ),
     fieldGroupItem(
       {

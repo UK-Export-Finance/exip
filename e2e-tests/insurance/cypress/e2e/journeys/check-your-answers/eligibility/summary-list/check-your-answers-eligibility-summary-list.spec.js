@@ -10,7 +10,7 @@ const {
 } = ROUTES.INSURANCE;
 
 const {
-  WANT_COVER_OVER_MAX_AMOUNT,
+  TOTAL_CONTRACT_VALUE,
   WANT_COVER_OVER_MAX_PERIOD,
   BUYER_COUNTRY,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
@@ -61,8 +61,8 @@ context('Insurance - Check your answers - Eligibility - Summary List', () => {
     checkSummaryList[HAS_MINIMUM_UK_GOODS_OR_SERVICES]();
   });
 
-  it(`should render a ${WANT_COVER_OVER_MAX_AMOUNT} summary list row`, () => {
-    checkSummaryList[WANT_COVER_OVER_MAX_AMOUNT]();
+  it(`should render a ${TOTAL_CONTRACT_VALUE} summary list row`, () => {
+    checkSummaryList[TOTAL_CONTRACT_VALUE]();
   });
 
   it(`should render a ${WANT_COVER_OVER_MAX_PERIOD} summary list row`, () => {

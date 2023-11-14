@@ -5,7 +5,7 @@ import { mockEligibility } from '../../test-mocks';
 
 const {
   INSURANCE: {
-    ELIGIBILITY: { BUYER_COUNTRY, BUYER_COUNTRY_ISO_CODE, COVER_PERIOD_ID },
+    ELIGIBILITY: { BUYER_COUNTRY, BUYER_COUNTRY_ISO_CODE, COVER_PERIOD_ID, TOTAL_CONTRACT_VALUE_ID },
   },
 } = FIELD_IDS;
 
@@ -16,7 +16,7 @@ describe('server/helpers/map-eligibility-answers', () => {
 
       const result = mapEligibilityAnswers(mockAnswers);
 
-      const { buyerCountry, wantCoverOverMaxPeriod, totalValueInsured, ...otherAnswers } = mockAnswers;
+      const { buyerCountry, wantCoverOverMaxPeriod, totalContractValue, ...otherAnswers } = mockAnswers;
 
       const wantCoverOverMaxPeriodBoolean = Boolean(wantCoverOverMaxPeriod);
 
@@ -24,6 +24,7 @@ describe('server/helpers/map-eligibility-answers', () => {
         ...otherAnswers,
         [BUYER_COUNTRY_ISO_CODE]: buyerCountry?.isoCode,
         [COVER_PERIOD_ID]: mapCoverPeriodId(wantCoverOverMaxPeriodBoolean),
+        [TOTAL_CONTRACT_VALUE_ID]: totalContractValue,
       };
 
       expect(result).toEqual(expected);

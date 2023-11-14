@@ -15,10 +15,7 @@ const mockEligibility = {
     value: 'Mock value',
     valueId: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
   },
-  totalContractValue: {
-    value: 'Mock value',
-    valueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
-  },
+  totalContractValue: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
 } as InsuranceEligibility;
 
 export default mockEligibility;
