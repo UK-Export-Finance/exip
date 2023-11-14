@@ -28,7 +28,6 @@ const {
 const ERROR_MESSAGE = COMPANY_OR_ORG_ERROR_MESSAGES[FIELD_ID];
 
 const { taskList } = partials.insurancePartials;
-
 const task = taskList.prepareApplication.tasks.buyer;
 
 const baseUrl = Cypress.config('baseUrl');

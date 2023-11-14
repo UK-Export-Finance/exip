@@ -1,4 +1,3 @@
-import partials from '../../../../../../partials';
 import { turnoverPage } from '../../../../../../pages/your-business';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -7,12 +6,8 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY;
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: { TURNOVER, TURNOVER_CURRENCY },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_CURRENCY },
 } = INSURANCE_ROUTES;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -24,7 +19,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
@@ -49,7 +44,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${TURNOVER_CURRENCY}`,
-      backLink: `${ROOT}/${referenceNumber}${TURNOVER}`,
+      backLink: `${ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
       assertSubmitButton: false,
     });
   });

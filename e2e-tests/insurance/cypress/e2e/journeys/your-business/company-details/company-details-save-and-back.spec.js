@@ -45,7 +45,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeCompanyDetailsForm({});
 

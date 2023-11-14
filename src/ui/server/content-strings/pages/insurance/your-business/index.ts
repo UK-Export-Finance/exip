@@ -5,6 +5,19 @@ const SHARED = {
 };
 
 const EXPORTER_BUSINESS = {
+  ROOT: {
+    PAGE_TITLE: 'Tell us about your business',
+    INTRO: 'In this section, we want to understand more about your business and the types of products or services you export.',
+    LIST: {
+      INTRO: "We'll ask you to tell us:",
+      ITEMS: [
+        'what your estimated annual turnover is for this year',
+        'if you have any credit management processes',
+        'about any other credit insurance you have in place',
+      ],
+    },
+    OUTRO: 'It should only take a few minutes to complete.',
+  },
   COMPANIES_HOUSE_NUMBER: {
     ...SHARED,
     PAGE_TITLE: 'Enter your Companies House registration number (CRN)',

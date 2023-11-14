@@ -22,7 +22,6 @@ const {
 } = ROUTES.INSURANCE;
 
 const { taskList } = partials.insurancePartials;
-
 const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your buyer - Working with buyer - Save and back', () => {

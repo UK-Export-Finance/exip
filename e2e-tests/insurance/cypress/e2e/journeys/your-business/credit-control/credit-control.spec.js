@@ -12,15 +12,11 @@ const { CREDIT_CONTROL: FIELD_ID } = FIELD_IDS;
 const {
   ROOT,
   EXPORTER_BUSINESS: {
-    BROKER,
+    BROKER_ROOT,
     CREDIT_CONTROL,
     TURNOVER,
   },
 } = INSURANCE_ROUTES;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -33,14 +29,14 @@ context('Insurance - Your business - Credit control page', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
-      brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER}`;
+      brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -85,7 +81,7 @@ context('Insurance - Your business - Credit control page', () => {
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${BROKER}`, () => {
+    it(`should redirect to ${BROKER_ROOT}`, () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitCreditControlForm();

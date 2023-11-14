@@ -14,7 +14,7 @@ const {
   ROOT,
   POLICY,
   EXPORTER_BUSINESS: {
-    COMPANY_DETAILS_ROOT,
+    ROOT: EXPORTER_BUSINESS_ROOT,
   },
 } = INSURANCE_ROUTES;
 
@@ -75,12 +75,12 @@ context('Insurance - Policy - Check your answers - As an exporter, I want to che
     });
 
     describe('form submission', () => {
-      it(`should redirect to ${COMPANY_DETAILS_ROOT}`, () => {
+      it(`should redirect to ${EXPORTER_BUSINESS_ROOT}`, () => {
         cy.navigateToUrl(url);
 
         submitButton().click();
 
-        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}`;
+        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${EXPORTER_BUSINESS_ROOT}`;
         cy.assertUrl(expectedUrl);
       });
     });

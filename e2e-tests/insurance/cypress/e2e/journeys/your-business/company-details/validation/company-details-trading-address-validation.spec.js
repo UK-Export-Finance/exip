@@ -1,7 +1,6 @@
 import { companyDetails } from '../../../../../../../pages/your-business';
 import { submitButton, yesRadioInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import partials from '../../../../../../../partials';
 import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 
 const {
@@ -14,9 +13,6 @@ const {
 
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
-const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.business;
-
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - trading address validation", () => {
   let referenceNumber;
   let url;
@@ -27,7 +23,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeCompanyDetailsForm({});
 

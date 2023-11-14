@@ -8,3 +8,5 @@ Cypress.Commands.add('createApplications', require('../../../../commands/insuran
 
 Cypress.Commands.add('deleteApplication', require('../../../../commands/insurance/delete-application'));
 Cypress.Commands.add('deleteApplications', require('../../../../commands/insurance/delete-applications'));
+
+Cypress.Commands.add('startYourBusinessSection', require('../../../../commands/insurance/start-your-business-section'));

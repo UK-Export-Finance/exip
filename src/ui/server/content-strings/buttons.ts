@@ -21,6 +21,7 @@ export const BUTTONS = {
   START_APPLICATION: 'Start an application',
   START_NEW_APPLICATION: 'Start new application',
   START_A_NEW_APPLICATION: 'Start a new application',
+  START_DIFFERENT_SECTION: 'Start a different section',
   START_NOW: 'Start now',
   SUBMIT: 'Submit',
   SUBMIT_APPLICATION: 'Submit application',

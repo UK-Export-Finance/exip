@@ -25,7 +25,6 @@ const ERROR_MESSAGE_FIRST_NAME = COMPANY_OR_ORG_ERROR_MESSAGES[FIRST_NAME_FIELD_
 const ERROR_MESSAGE_LAST_NAME = COMPANY_OR_ORG_ERROR_MESSAGES[LAST_NAME_FIELD_ID];
 
 const { taskList } = partials.insurancePartials;
-
 const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your Buyer - Company or organisation page - form validation - first and last name', () => {

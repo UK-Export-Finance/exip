@@ -93,7 +93,7 @@ context('Insurance - All sections - new application', () => {
         it('should render a `your business` task with link and `not started` status', () => {
           const task = taskList.prepareApplication.tasks.business;
 
-          const expectedHref = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+          const expectedHref = `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.ROOT}`;
           const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS;
 
           cy.checkLink(

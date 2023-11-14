@@ -1,6 +1,5 @@
 import { field } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import partials from '../../../../../../../partials';
 import { INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -26,10 +25,6 @@ const companyDetailsFormVariables = {
   [WEBSITE]: WEBSITE_EXAMPLES.VALID,
 };
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
-
 const completeAllFields = () => {
   cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 };
@@ -47,7 +42,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeCompanyDetailsForm({});
 

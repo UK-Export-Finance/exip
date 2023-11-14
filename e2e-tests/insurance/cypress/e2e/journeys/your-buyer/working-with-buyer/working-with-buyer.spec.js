@@ -1,5 +1,5 @@
-import { headingCaption, saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
+import { headingCaption, saveAndBackButton } from '../../../../../../pages/shared';
 import { workingWithBuyerPage } from '../../../../../../pages/insurance/your-buyer';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
@@ -21,7 +21,6 @@ const {
 } = ROUTES.INSURANCE;
 
 const { taskList } = partials.insurancePartials;
-
 const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your Buyer - Working with buyer page - As an exporter, I want to confirm my buyer details', () => {

@@ -30,7 +30,6 @@ const {
 } = ROUTES.INSURANCE;
 
 const { taskList } = partials.insurancePartials;
-
 const task = taskList.prepareApplication.tasks.buyer;
 
 const { BUYER } = application;

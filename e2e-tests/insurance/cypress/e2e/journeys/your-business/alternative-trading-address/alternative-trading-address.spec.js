@@ -18,26 +18,22 @@ const {
   EXPORTER_BUSINESS: {
     ALTERNATIVE_TRADING_ADDRESS_ROOT,
     COMPANY_DETAILS,
-    NATURE_OF_BUSINESS,
+    NATURE_OF_BUSINESS_ROOT,
   },
 } = INSURANCE_ROUTES;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
 
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your business - Alternative trading address page - I want to input information on an alternative business trading address So that I can provide necessary business information to support my application for Export Insurance', () => {
   let referenceNumber;
-  let natureOfBusinessUrl;
   let alternativeAddressUrl;
+  let natureOfBusinessUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeAndSubmitCompanyDetails({
         differentTradingAddress: true,
@@ -45,7 +41,7 @@ context('Insurance - Your business - Alternative trading address page - I want t
 
       alternativeAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`;
 
-      natureOfBusinessUrl = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
+      natureOfBusinessUrl = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
       cy.assertUrl(alternativeAddressUrl);
     });
@@ -90,7 +86,7 @@ context('Insurance - Your business - Alternative trading address page - I want t
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${NATURE_OF_BUSINESS}`, () => {
+    it(`should redirect to ${NATURE_OF_BUSINESS_ROOT}`, () => {
       cy.navigateToUrl(alternativeAddressUrl);
 
       cy.completeAndSubmitAlternativeTradingAddressForm();
