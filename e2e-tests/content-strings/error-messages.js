@@ -68,7 +68,7 @@ export const ERROR_MESSAGES = {
         TECHNICAL_ISSUES: 'Due to technical issues, you cannot search for your Companies House registration number right now - try again in few minutes',
       },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE]: {
-        IS_EMPTY: 'Select whether you have an account for UKEF export insurance',
+        IS_EMPTY: 'Select if you have a UK Export Finance account',
       },
     },
     EXPORTER_BUSINESS: {
