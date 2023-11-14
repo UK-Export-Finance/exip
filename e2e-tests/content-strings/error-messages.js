@@ -82,7 +82,7 @@ export const ERROR_MESSAGES = {
         INCORRECT_FORMAT: 'Enter your company website in a valid format - like www.example.com',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.PHONE_NUMBER]: {
-        INCORRECT_FORMAT: 'Enter a UK telephone number',
+        INCORRECT_FORMAT: 'Enter a valid UK telephone number',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {
         IS_EMPTY: 'Enter the goods or services that your company supplies',
