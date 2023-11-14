@@ -32,7 +32,7 @@
     "@keystone-6/fields-document": "^8.0.2",
     "@types/express": "^4.17.20",
     "@types/overload-protection": "^1.2.3",
-    "apollo-server-express": "^3.12.1",
+    "apollo-server-express": "^3.13.0",
     "axios": "^1.6.0",
     "axios-mock-adapter": "^1.22.0",
     "date-fns": "^2.30.0",
