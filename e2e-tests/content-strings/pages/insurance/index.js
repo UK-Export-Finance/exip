@@ -10,9 +10,6 @@ import * as DECLARATIONS from './declarations';
 import * as CHECK_YOUR_ANSWERS from './check-your-answers';
 import COMPLETE_OTHER_SECTIONS from './complete-other-sections';
 import * as APPLICATION_SUBMITTED from './application-submitted';
-import formatCurrency from '../../../helpers/format-currency';
-
-export const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP);
 
 const DASHBOARD = {
   PAGE_TITLE: 'Your applications',
@@ -45,7 +42,6 @@ const APPLY_OFFLINE = {
   PAGE_TITLE: 'You need to apply using our form',
   REASON: {
     INTRO: 'This is because',
-    WANT_COVER_OVER_MAX_AMOUNT: `you want to be insured for more than ${MAX_COVER_AMOUNT} and we need to make extra checks.`,
     OTHER_PARTIES_INVOLVED: 'there are other parties involved in your exports and we need to make extra checks.',
     WILL_BE_PAID_BY_LETTER_OF_CREDIT: "you'll be paid by a letter of credit.",
     NEED_PRE_CREDIT_PERIOD_COVER: 'you need pre-credit cover and we need to make extra checks.',

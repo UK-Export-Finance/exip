@@ -1,4 +1,4 @@
-import { GBP_CURRENCY_CODE, ELIGIBILITY, ROUTES, CONTACT_DETAILS } from '../../../constants';
+import { ELIGIBILITY, ROUTES, CONTACT_DETAILS } from '../../../constants';
 import { LINKS } from '../../links';
 import { BUTTONS } from '../../buttons';
 import ELIGIBILITY_CONTENT_STRINGS from './eligibility';
@@ -10,9 +10,6 @@ import DECLARATIONS from './declarations';
 import CHECK_YOUR_ANSWERS from './check-your-answers';
 import COMPLETE_OTHER_SECTIONS from './complete-other-sections';
 import APPLICATION_SUBMITTED from './application-submitted';
-import formatCurrency from '../../../helpers/format-currency';
-
-const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP, GBP_CURRENCY_CODE, 0);
 
 const DASHBOARD = {
   PAGE_TITLE: 'Your applications',
@@ -45,7 +42,6 @@ const APPLY_OFFLINE = {
   PAGE_TITLE: 'You need to apply using our form',
   REASON: {
     INTRO: 'This is because',
-    WANT_COVER_OVER_MAX_AMOUNT: `you want to be insured for more than ${MAX_COVER_AMOUNT} and we need to make extra checks.`,
     OTHER_PARTIES_INVOLVED: 'there are other parties involved in your exports and we need to make extra checks.',
     WILL_BE_PAID_BY_LETTER_OF_CREDIT: "you'll be paid by a letter of credit.",
     NEED_PRE_CREDIT_PERIOD_COVER: 'you need pre-credit cover and we need to make extra checks.',
