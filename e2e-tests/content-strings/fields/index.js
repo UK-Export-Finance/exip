@@ -31,6 +31,7 @@ export const FIELDS = {
     },
   },
   [FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION]: {
+    HINT: 'UKEF provides credit insurance for payments from overseas territories.',
     SUMMARY: {
       TITLE: 'Your company',
     },
