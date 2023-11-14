@@ -3773,7 +3773,7 @@ var {
   COMPANIES_HOUSE_NUMBER,
   TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID
 } = insurance_default.ELIGIBILITY;
-var MAX_COVER_AMOUNT = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
+var THRESHOLD = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
 var FIELDS_ELIGIBILITY = {
   [BUYER_COUNTRY]: {
     SUMMARY: {
@@ -3806,18 +3806,18 @@ var FIELDS_ELIGIBILITY = {
       ABOVE: {
         ID: TOTAL_CONTRACT_VALUE.MORE_THAN_250K.DB_ID,
         VALUE: TOTAL_CONTRACT_VALUE.MORE_THAN_250K.DB_ID,
-        TEXT: `${MAX_COVER_AMOUNT} and above`
+        TEXT: `${THRESHOLD} and above`
       },
       BELOW: {
         ID: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.DB_ID,
         VALUE: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.DB_ID,
-        TEXT: `Less than ${MAX_COVER_AMOUNT}`
+        TEXT: `Less than ${THRESHOLD}`
       }
     },
     SUMMARY: {
       TITLE: "Total value to insure",
-      ABOVE: `Above ${MAX_COVER_AMOUNT}`,
-      BELOW: `Below ${MAX_COVER_AMOUNT}`
+      ABOVE: `Above ${THRESHOLD}`,
+      BELOW: `Below ${THRESHOLD}`
     }
   }
 };

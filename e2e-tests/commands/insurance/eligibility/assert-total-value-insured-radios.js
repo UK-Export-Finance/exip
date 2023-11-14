@@ -10,15 +10,14 @@ const { ABOVE, BELOW } = FIELDS_ELIGIBILITY[TOTAL_CONTRACT_VALUE].OPTIONS;
 
 /**
  * assertTotalValueInsuredRadios
- * assert if total value insured radio is checked or not
- * can assert first or second radio and if checked or not
- * @param {Boolean} secondOption if first or second radio
+ * can assert above or below threshold radio and if checked or not
+ * @param {Boolean} underThreshold if under set threshold - default true
  * @param {Boolean} checked if radio is checked or not
  */
-const assertTotalValueInsuredRadios = ({ secondOption = false, checked = true }) => {
+const assertTotalValueInsuredRadios = ({ underThreshold = true, checked = true }) => {
   let fieldId = `${TOTAL_CONTRACT_VALUE}-${ABOVE.ID}`;
 
-  if (secondOption) {
+  if (underThreshold) {
     fieldId = `${TOTAL_CONTRACT_VALUE}-${BELOW.ID}`;
   }
 

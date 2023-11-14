@@ -51,13 +51,13 @@ export const completeCompanyDetailsForm = () => {
 /**
  * completeAndSubmitTotalValueInsuredForm
  * completes and submits the total value insured form
- * either selects above or below 250k based on param
- * @param {Boolean} aboveUpperValue - if above or below 250k radio should be selected
+ * either selects above or below maximum value based on param
+ * @param {Boolean} underThreshold - if above or below maximum value radio should be selected
  */
-export const completeAndSubmitTotalValueInsuredForm = ({ secondOption = false }) => {
+export const completeAndSubmitTotalValueInsuredForm = ({ underThreshold = true }) => {
   let fieldId = `${TOTAL_CONTRACT_VALUE}-${ABOVE.ID}`;
 
-  if (secondOption) {
+  if (underThreshold) {
     fieldId = `${TOTAL_CONTRACT_VALUE}-${BELOW.ID}`;
   }
 

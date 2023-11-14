@@ -3,7 +3,7 @@ import { ACTIONS } from '../../../actions';
 import { LINKS } from '../../../links';
 import formatCurrency from '../../../../helpers/format-currency';
 
-const MAX_COVER_AMOUNT = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
+const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
 
 const CHECK_IF_ELIGIBLE = {
   PAGE_TITLE: 'Check you can apply for credit insurance for your export',
@@ -17,7 +17,7 @@ const CHECK_IF_ELIGIBLE = {
 
 const TOTAL_VALUE_INSURED = {
   PAGE_TITLE: 'What is the total value you want to insure?',
-  HINT: `We'll ask you for more information if your export is over ${MAX_COVER_AMOUNT}.`,
+  HINT: `We'll ask you for more information if your export is over ${THRESHOLD}.`,
 };
 
 const INSURED_PERIOD = {

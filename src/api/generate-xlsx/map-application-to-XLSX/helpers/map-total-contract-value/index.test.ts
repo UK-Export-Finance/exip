@@ -8,7 +8,7 @@ const { LESS_THAN_250K, MORE_THAN_250K } = TOTAL_CONTRACT_VALUE;
 
 const { ABOVE, BELOW } = FIELDS_ELIGIBILITY[FIELD_ID].SUMMARY;
 
-describe('api/generate-xlsx/map-application-to-xlsx/helpers/map-yes-no-field', () => {
+describe('api/generate-xlsx/map-application-to-xlsx/helpers/map-total-contract-value', () => {
   describe(`when answer is ${MORE_THAN_250K.DB_ID}`, () => {
     const value = MORE_THAN_250K.DB_ID;
 

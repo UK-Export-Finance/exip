@@ -1,7 +1,7 @@
 import { FIELD_IDS, ELIGIBILITY, TOTAL_CONTRACT_VALUE } from '../constants';
 import formatCurrency from '../helpers/format-currency';
 
-export const MAX_COVER_AMOUNT = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K);
+export const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K);
 
 export const ERROR_MESSAGES = {
   THERE_IS_A_PROBLEM: 'There is a problem',
@@ -53,7 +53,7 @@ export const ERROR_MESSAGES = {
   INSURANCE: {
     ELIGIBILITY: {
       [FIELD_IDS.INSURANCE.ELIGIBILITY.TOTAL_CONTRACT_VALUE]: {
-        IS_EMPTY: `Select if the the total value of your contract exceeds ${MAX_COVER_AMOUNT} or not`,
+        IS_EMPTY: `Select if the the total value of your contract exceeds ${THRESHOLD} or not`,
       },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD]: {
         IS_EMPTY: `Select whether you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years`,

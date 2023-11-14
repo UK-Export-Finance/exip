@@ -48,20 +48,7 @@
             }
           },
           items: [
-            {
-              label: {
-                attributes: {
-                  id: FIELD.OPTIONS.ABOVE.ID  + '-label',
-                  'data-cy': FIELD_ID + '-' + FIELD.OPTIONS.ABOVE.ID + '-label'
-                }
-              },
-              value: FIELD.OPTIONS.ABOVE.VALUE,
-              text: FIELD.OPTIONS.ABOVE.TEXT,
-              checked: submittedValues[FIELD_ID] === FIELD.OPTIONS.ABOVE.ID,
-              attributes: {
-                "data-cy": FIELD_ID + '-' + FIELD.OPTIONS.ABOVE.ID + "-input"
-              }
-            },
+
             {
               label: {
                 attributes: {
@@ -75,12 +62,26 @@
               attributes: {
                 "data-cy": FIELD_ID + '-' + FIELD.OPTIONS.BELOW.ID + "-input"
               }
+            },
+            {
+              label: {
+                attributes: {
+                  id: FIELD.OPTIONS.ABOVE.ID  + '-label',
+                  'data-cy': FIELD_ID + '-' + FIELD.OPTIONS.ABOVE.ID + '-label'
+                }
+              },
+              value: FIELD.OPTIONS.ABOVE.VALUE,
+              text: FIELD.OPTIONS.ABOVE.TEXT,
+              checked: submittedValues[FIELD_ID] === FIELD.OPTIONS.ABOVE.ID,
+              attributes: {
+                "data-cy": FIELD_ID + '-' + FIELD.OPTIONS.ABOVE.ID + "-input"
+              }
             }
           ],
           errorMessage: validationErrors.errorList[FIELD_ID]and {
             text: validationErrors.errorList[FIELD_ID].text,
             attributes: {
-              "data-cy": FIELD_ID + '-' + FIELD.OPTIONS.ABOVE.ID + "-error-message"
+              "data-cy": FIELD_ID + '-' + FIELD.OPTIONS.BELOW.ID + "-error-message"
             }
           }
         }) }}

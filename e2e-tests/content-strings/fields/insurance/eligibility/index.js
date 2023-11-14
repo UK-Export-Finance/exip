@@ -2,7 +2,7 @@ import { FIELD_IDS, TOTAL_CONTRACT_VALUE } from '../../../../constants';
 import { LINKS } from '../../../links';
 import formatCurrency from '../../../../helpers/format-currency';
 
-const MAX_COVER_AMOUNT = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K);
+const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K);
 
 const {
   BUYER_COUNTRY,
@@ -46,18 +46,18 @@ export const FIELDS_ELIGIBILITY = {
       ABOVE: {
         ID: TOTAL_CONTRACT_VALUE.MORE_THAN_250K.DB_ID,
         VALUE: TOTAL_CONTRACT_VALUE.MORE_THAN_250K.DB_ID,
-        TEXT: `${MAX_COVER_AMOUNT} and above`,
+        TEXT: `${THRESHOLD} and above`,
       },
       BELOW: {
         ID: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.DB_ID,
         VALUE: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.DB_ID,
-        TEXT: `Less than ${MAX_COVER_AMOUNT}`,
+        TEXT: `Less than ${THRESHOLD}`,
       },
     },
     SUMMARY: {
       TITLE: 'Total value to insure',
-      ABOVE: `Above ${MAX_COVER_AMOUNT}`,
-      BELOW: `Below ${MAX_COVER_AMOUNT}`,
+      ABOVE: `Above ${THRESHOLD}`,
+      BELOW: `Below ${THRESHOLD}`,
     },
   },
 };

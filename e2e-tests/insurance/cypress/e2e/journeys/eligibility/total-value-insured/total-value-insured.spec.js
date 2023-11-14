@@ -80,7 +80,7 @@ context('Insurance - Total value insured page - I want to enter the value that I
       });
 
       it('should render validation errors', () => {
-        const fieldId = `${FIELD_ID}-${ABOVE.ID}`;
+        const fieldId = `${FIELD_ID}-${BELOW.ID}`;
 
         const expectedErrorsCount = 1;
 
@@ -93,11 +93,11 @@ context('Insurance - Total value insured page - I want to enter the value that I
       });
     });
 
-    describe('when submitting the answer as the second option', () => {
+    describe('when submitting the answer as under threshold', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitTotalValueInsuredForm({ secondOption: true });
+        cy.completeAndSubmitTotalValueInsuredForm({ underThreshold: true });
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`, () => {
@@ -110,16 +110,16 @@ context('Insurance - Total value insured page - I want to enter the value that I
         it('should have the originally submitted answer selected', () => {
           cy.clickBackLink();
 
-          cy.assertTotalValueInsuredRadios({ secondOption: true });
+          cy.assertTotalValueInsuredRadios({ underThreshold: true });
         });
       });
     });
 
-    describe('when submitting the answer as as the first option', () => {
+    describe('when submitting the answer as over threshold', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitTotalValueInsuredForm({});
+        cy.completeAndSubmitTotalValueInsuredForm({ underThreshold: false });
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`, () => {
@@ -132,7 +132,7 @@ context('Insurance - Total value insured page - I want to enter the value that I
         it('should have the originally submitted answer selected', () => {
           cy.clickBackLink();
 
-          cy.assertTotalValueInsuredRadios({});
+          cy.assertTotalValueInsuredRadios({ underThreshold: false });
         });
       });
     });

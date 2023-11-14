@@ -69,9 +69,9 @@ context('Insurance - Eligibility - start and complete for a second time after cr
     cy.checkValue(countryInput.field(BUYER_COUNTRY), '');
     completeAndSubmitBuyerCountryForm();
 
-    // insured amount question
-    cy.assertTotalValueInsuredRadios({ checked: false });
-    cy.assertTotalValueInsuredRadios({ secondOption: true, checked: false });
+    // total value insured question
+    cy.assertTotalValueInsuredRadios({ underThreshold: true, checked: false });
+    cy.assertTotalValueInsuredRadios({ underThreshold: false, checked: false });
     cy.completeAndSubmitTotalValueInsuredForm({});
 
     // insured period question
