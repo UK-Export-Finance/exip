@@ -1,7 +1,12 @@
 import {
-  yesRadio, yesRadioInput, noRadio, submitButton,
+  yesRadio,
+  yesRadioInput,
+  yesNoRadioHint,
+  noRadio,
+  submitButton,
 } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
+import { FIELDS } from '../../../../../../content-strings/fields';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -42,6 +47,10 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
       backLink: CHECK_IF_ELIGIBLE,
       assertAuthenticatedHeader: false,
     });
+  });
+
+  it('renders a hint', () => {
+    cy.checkText(yesNoRadioHint(), FIELDS[FIELD_ID].HINT);
   });
 
   it('renders `yes` radio button', () => {

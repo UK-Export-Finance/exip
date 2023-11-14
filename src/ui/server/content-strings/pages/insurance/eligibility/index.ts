@@ -34,16 +34,7 @@ const COMPANIES_HOUSE_NUMBER = {
 
 const COMPANIES_HOUSE_EXIT = {
   PAGE_TITLE: 'You cannot apply for credit insurance',
-  ACTIONS: {
-    ...ACTIONS,
-    CONTACT_EFM: {
-      LINK: {
-        TEXT: 'talk to your nearest export finance manager',
-        HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
-      },
-      TEXT: 'to find out more about your options',
-    },
-  },
+  ACTIONS,
 };
 
 const NO_COMPANIES_HOUSE_NUMBER = {

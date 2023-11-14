@@ -10,7 +10,7 @@ const BUYER_COUNTRY = {
 };
 
 const EXPORTER_LOCATION = {
-  PAGE_TITLE: 'Are you exporting from a business base inside the UK, Channel Islands or Isle of Man?',
+  PAGE_TITLE: 'Are you exporting from the UK, Channel Islands or Isle of Man?',
 };
 
 const UK_GOODS_OR_SERVICES = {
@@ -21,7 +21,8 @@ const CANNOT_APPLY = {
   PAGE_TITLE: 'You cannot apply for UKEF export insurance',
   REASON: {
     INTRO: 'This is because',
-    UNSUPPORTED_COMPANY_COUNTRY: 'your company is not based in the UK, Channel Islands or Isle of Man.',
+    UNSUPPORTED_COMPANY_COUNTRY:
+      "you're not exporting from a business base in the UK, Channel Islands or Isle of Man.We can only provide cover for UK businesses.",
     UNSUPPORTED_BUYER_COUNTRY_1: 'your buyer is based in',
     UNSUPPORTED_BUYER_COUNTRY_2: 'which we cannot provide cover for.',
     NOT_ENOUGH_UK_GOODS_OR_SERVICES: 'your export contract value is not made up from at least 20% UK goods or services.',

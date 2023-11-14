@@ -63,7 +63,7 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: `Select whether you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years`,
       },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_COMPANIES_HOUSE_NUMBER]: {
-        IS_EMPTY: 'Select whether you have a UK Companies House registration number or not',
+        IS_EMPTY: 'Select whether you have a UK Companies House number and whether your company is actively trading',
       },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: {
         IS_EMPTY: 'Enter a recognised Companies House number',

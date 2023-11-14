@@ -59,6 +59,10 @@ context('Cannot apply exit page', () => {
     it('should render `contact an approved broker` copy and link', () => {
       cy.checkActionContactApprovedBroker();
     });
+
+    it('should render `talk to your nearest EFM` copy and link', () => {
+      cy.checkActionTalkToYourNearestEFM();
+    });
   });
 
   describe('when clicking `eligibility` link', () => {
