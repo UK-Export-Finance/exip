@@ -12,12 +12,6 @@ const checkCalculateDescriptionSummaryText = () => {
 const checkCalculateDescriptionSummaryClickRevealsContent = () => {
   partials.ukGoodsOrServicesCalculateDescription.summary().click();
   partials.ukGoodsOrServicesCalculateDescription.details().should('have.attr', 'open');
-
-  partials.ukGoodsOrServicesCalculateDescription.list.intro().should('be.visible');
-};
-
-const checkDescriptionContentIntro = () => {
-  cy.checkText(partials.ukGoodsOrServicesCalculateDescription.list.intro(), CONTENT_STRINGS.LIST_INTRO);
 };
 
 const checkDescriptionContentListItems = () => {
@@ -35,7 +29,6 @@ const checkDescriptionContentListItems = () => {
 };
 
 const checkCalculateDescriptionDescriptionContent = () => {
-  checkDescriptionContentIntro();
   checkDescriptionContentListItems();
 };
 
