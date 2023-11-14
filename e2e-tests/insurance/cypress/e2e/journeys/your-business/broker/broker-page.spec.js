@@ -29,15 +29,11 @@ const {
 const {
   ROOT,
   EXPORTER_BUSINESS: {
-    BROKER,
+    BROKER_ROOT,
     CHECK_YOUR_ANSWERS,
     CREDIT_CONTROL,
   },
 } = INSURANCE_ROUTES;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
 
 const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 const ERROR_MESSAGE_BROKER = BROKER_ERRORS[USING_BROKER];
@@ -61,14 +57,14 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitCreditControlForm();
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
       cy.assertUrl(url);
@@ -86,7 +82,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${BROKER}`,
+      currentHref: `${ROOT}/${referenceNumber}${BROKER_ROOT}`,
       backLink: `${ROOT}/${referenceNumber}${CREDIT_CONTROL}`,
       assertSubmitButton: true,
       lightHouseThresholds: {

@@ -13,8 +13,10 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insur
 
 const {
   ROOT,
-  ALL_SECTIONS,
-  EXPORTER_BUSINESS: { COMPANY_DETAILS },
+  EXPORTER_BUSINESS: {
+    ROOT: EXPORTER_BUSINESS_ROOT,
+    COMPANY_DETAILS_ROOT,
+  },
 } = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS;
@@ -30,10 +32,6 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your business - Company details page - As an Exporter I want to my companies details So that I can apply for UKEF Export Insurance policy', () => {
@@ -44,9 +42,9 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -63,8 +61,8 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${COMPANY_DETAILS}`,
-      backLink: `${ROOT}/${referenceNumber}${ALL_SECTIONS}`,
+      currentHref: `${ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}`,
+      backLink: `${ROOT}/${referenceNumber}${EXPORTER_BUSINESS_ROOT}`,
       lightHouseThresholds: {
         'best-practices': 93,
       },

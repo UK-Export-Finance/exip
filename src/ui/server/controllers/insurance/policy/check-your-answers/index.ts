@@ -14,7 +14,7 @@ const { POLICY } = FIELD_IDS.INSURANCE;
 const {
   INSURANCE: {
     POLICY: { CHECK_YOUR_ANSWERS_SAVE_AND_BACK },
-    EXPORTER_BUSINESS: { COMPANY_DETAILS_ROOT },
+    EXPORTER_BUSINESS: { ROOT: EXPORTER_BUSINESS_ROOT },
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
@@ -84,5 +84,5 @@ export const get = async (req: Request, res: Response) => {
 export const post = (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}`);
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${EXPORTER_BUSINESS_ROOT}`);
 };

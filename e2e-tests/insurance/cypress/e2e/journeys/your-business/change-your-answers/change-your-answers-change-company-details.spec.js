@@ -1,4 +1,3 @@
-import partials from '../../../../../../partials';
 import {
   VALID_PHONE_NUMBERS,
   WEBSITE_EXAMPLES,
@@ -32,10 +31,6 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your business - Change your answers - Company details - As an exporter, I want to change my answers to the company details section', () => {
@@ -48,7 +43,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();

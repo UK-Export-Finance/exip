@@ -15,10 +15,6 @@ const {
 
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
-
 const expectedErrors = 1;
 const errorIndex = 0;
 const errorMessage = COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT;
@@ -36,9 +32,9 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       referenceNumber = refNumber;
 
       url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
-      natureOfBusinessUrl = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
+      natureOfBusinessUrl = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS_ROOT}`;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeCompanyDetailsForm({});
 

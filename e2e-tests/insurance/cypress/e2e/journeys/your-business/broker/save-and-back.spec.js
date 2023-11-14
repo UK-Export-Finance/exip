@@ -23,7 +23,7 @@ const {
   ROOT,
   ALL_SECTIONS,
   EXPORTER_BUSINESS: {
-    BROKER,
+    BROKER_ROOT,
   },
 } = ROUTES.INSURANCE;
 
@@ -42,14 +42,14 @@ context('Insurance - Your business - Broker page - Save and back', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitCreditControlForm();
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
@@ -96,7 +96,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
     it(`should retain the ${NAME} input on the page and the other fields should be empty`, () => {
       cy.navigateToUrl(allSectionsUrl);
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       // submit company details form
       submitButton().click();
@@ -144,7 +144,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       it('should retain all the fields on the page', () => {
         cy.navigateToUrl(allSectionsUrl);
 
-        task.link().click();
+        cy.startYourBusinessSection();
 
         // submit company details form
         submitButton().click();
@@ -183,7 +183,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       it('should retain all the relevant fields on the page', () => {
         cy.navigateToUrl(allSectionsUrl);
 
-        task.link().click();
+        cy.startYourBusinessSection();
 
         // submit company details form
         submitButton().click();

@@ -6,10 +6,6 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 
 const NATURE_OF_BUSINESS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
-
 const {
   EXPORTER_BUSINESS: {
     NATURE_OF_YOUR_BUSINESS: {
@@ -21,7 +17,7 @@ const {
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS },
+  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_ROOT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -34,11 +30,11 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeAndSubmitCompanyDetails({});
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
       cy.assertUrl(url);
     });

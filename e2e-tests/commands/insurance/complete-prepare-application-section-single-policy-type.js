@@ -1,4 +1,4 @@
-import { submitButton } from '../../pages/shared';
+import { submitButton, startNowLink } from '../../pages/shared';
 import partials from '../../partials';
 import { FIELD_VALUES } from '../../constants';
 
@@ -34,7 +34,11 @@ const completePrepareYourApplicationSectionSingle = ({
     cy.completeAndSubmitDifferentNameOnPolicyForm({});
   }
 
+  // submit "policy and exports - check your answers" form
   submitButton().click();
+
+  // start "your business" section
+  startNowLink().click();
 
   cy.completeAndSubmitCompanyDetails({ differentTradingAddress });
 

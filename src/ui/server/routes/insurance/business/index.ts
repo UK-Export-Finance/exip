@@ -1,6 +1,8 @@
 import express from 'express';
 import { ROUTES } from '../../../constants';
 
+import { get as getYourBusiness } from '../../../controllers/insurance/business';
+
 import { get as getCompanyDetails, post as postCompanyDetails } from '../../../controllers/insurance/business/company-details';
 
 import { post as postCompanyDetailsSaveAndBack } from '../../../controllers/insurance/business/company-details/save-and-back';
@@ -28,6 +30,8 @@ import { post as postCheckYourAnswersSaveAndBack } from '../../../controllers/in
 
 // @ts-ignore
 const insuranceBusinessRouter = express.Router();
+
+insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.ROOT}`, getYourBusiness);
 
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`, getCompanyDetails);
 insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS_SAVE_AND_BACK}`, postCompanyDetailsSaveAndBack);

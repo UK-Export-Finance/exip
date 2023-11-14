@@ -1,4 +1,3 @@
-import partials from '../../../../../../partials';
 import { field as fieldSelector } from '../../../../../../pages/shared';
 import { turnoverPage } from '../../../../../../pages/your-business';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
@@ -18,7 +17,7 @@ const {
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: { TURNOVER },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT },
 } = INSURANCE_ROUTES;
 
 const {
@@ -26,10 +25,6 @@ const {
     [FINANCIAL_YEAR_END_DATE]: { DATE_FORMAT },
   },
 } = FIELDS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
 
 const fieldId = FINANCIAL_YEAR_END_DATE;
 const field = fieldSelector(fieldId);
@@ -50,12 +45,12 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} exists`, ()
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -86,12 +81,12 @@ context(`Insurance - Your business - Turnover page - when ${fieldId} does not ex
     }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
-      const url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
+      const url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
 
       cy.assertUrl(url);
     });

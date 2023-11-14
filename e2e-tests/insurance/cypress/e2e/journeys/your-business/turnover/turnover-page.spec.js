@@ -21,16 +21,12 @@ const {
 const {
   ROOT,
   EXPORTER_BUSINESS: {
-    TURNOVER,
+    TURNOVER_ROOT,
     TURNOVER_CURRENCY,
-    NATURE_OF_BUSINESS,
+    NATURE_OF_BUSINESS_ROOT,
     CREDIT_CONTROL,
   },
 } = INSURANCE_ROUTES;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
 
 const financialYearEnd = {
   content: FIELDS.TURNOVER[FINANCIAL_YEAR_END_DATE],
@@ -50,12 +46,12 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
       creditControlUrl = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
 
       cy.assertUrl(url);
@@ -73,8 +69,8 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${TURNOVER}`,
-      backLink: `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`,
+      currentHref: `${ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
+      backLink: `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`,
     });
   });
 

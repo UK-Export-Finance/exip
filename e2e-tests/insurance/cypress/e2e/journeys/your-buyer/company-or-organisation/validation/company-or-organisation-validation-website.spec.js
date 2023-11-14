@@ -22,7 +22,6 @@ const {
 const ERROR_MESSAGE = COMPANY_OR_ORG_ERROR_MESSAGES[FIELD_ID];
 
 const { taskList } = partials.insurancePartials;
-
 const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your Buyer - Company or organisation page - form validation - website', () => {

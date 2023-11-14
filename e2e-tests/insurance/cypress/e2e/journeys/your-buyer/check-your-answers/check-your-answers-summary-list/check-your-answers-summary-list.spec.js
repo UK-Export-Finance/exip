@@ -29,7 +29,6 @@ const {
 } = FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
-
 const task = taskList.prepareApplication.tasks.buyer;
 
 const baseUrl = Cypress.config('baseUrl');

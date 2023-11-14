@@ -1,7 +1,6 @@
 import { companyDetails } from '../../../../../../pages/your-business';
 import { field as fieldSelector, submitButton } from '../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import partials from '../../../../../../partials';
 import {
   INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, VALID_PHONE_NUMBERS,
 } from '../../../../../../constants';
@@ -23,15 +22,11 @@ const {
   ROOT,
   EXPORTER_BUSINESS: {
     COMPANY_DETAILS,
-    NATURE_OF_BUSINESS,
+    NATURE_OF_BUSINESS_ROOT,
   },
 } = INSURANCE_ROUTES;
 
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
 
 const INVALID_PHONE_NUMBER = INVALID_PHONE_NUMBERS.LANDLINE.LONG;
 
@@ -49,9 +44,9 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       referenceNumber = refNumber;
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
-      natureOfBusinessUrl = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
+      natureOfBusinessUrl = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
       cy.completeCompanyDetailsForm({});
 
