@@ -27,6 +27,9 @@ const {
 
 const ERROR_MESSAGE = COMPANY_OR_ORG_ERROR_MESSAGES[FIELD_ID];
 
+const { taskList } = partials.insurancePartials;
+const task = taskList.prepareApplication.tasks.buyer;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your Buyer - Company or organisation page - form validation - email', () => {
@@ -37,7 +40,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection();
+      task.link().click();
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`;
 

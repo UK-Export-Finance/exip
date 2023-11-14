@@ -30,7 +30,6 @@ const {
 } = ROUTES.INSURANCE;
 
 const { taskList } = partials.insurancePartials;
-
 const task = taskList.prepareApplication.tasks.buyer;
 
 const { BUYER } = application;
@@ -43,7 +42,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection();
+      task.link().click();
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`;
 
