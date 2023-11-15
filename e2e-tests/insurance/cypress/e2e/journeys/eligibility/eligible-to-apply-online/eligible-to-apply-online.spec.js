@@ -10,7 +10,7 @@ const {
   START,
   ELIGIBILITY: {
     ELIGIBLE_TO_APPLY_ONLINE,
-    UK_GOODS_OR_SERVICES,
+    CHECK_YOUR_ANSWERS,
     ACCOUNT_TO_APPLY_ONLINE,
   },
 } = INSURANCE_ROUTES;
@@ -34,6 +34,8 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
     cy.completeAndSubmitTotalValueInsuredForm({});
     cy.completeInsuredPeriodForm();
     cy.completeUkGoodsAndServicesForm();
+    cy.completeEndBuyerForm();
+    cy.submitCheckYourAnswers();
 
     url = `${baseUrl}${ELIGIBLE_TO_APPLY_ONLINE}`;
 
@@ -48,7 +50,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ELIGIBLE_TO_APPLY_ONLINE,
-      backLink: UK_GOODS_OR_SERVICES,
+      backLink: CHECK_YOUR_ANSWERS,
       submitButtonCopy: CONTENT_STRINGS.SUBMIT_BUTTON,
       assertAuthenticatedHeader: false,
     });
