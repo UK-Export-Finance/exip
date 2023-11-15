@@ -4,7 +4,6 @@ import { Relationship } from '../relationship';
 export interface ApplicationBusiness extends Relationship {
   goodsOrServicesSupplied: string;
   totalYearsExporting: string;
-  totalEmployeesInternational: string;
   totalEmployeesUK: string;
   estimatedAnnualTurnover: string;
   exportsTurnoverPercentage: string;

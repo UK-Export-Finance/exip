@@ -31,8 +31,8 @@ export const EXPORTER_BUSINESS_FIELDS = {
   },
   NATURE_OF_YOUR_BUSINESS: {
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {
-      LABEL: 'What goods or services does your company supply?',
-      HINT: 'Give a general overview rather than just the exports you want to insure',
+      LABEL: 'Tell us about your business',
+      HINT: "Give us an overview of the work you do, as well as the products or services you're getting credit insurance for.",
       MAXIMUM: 1000,
       SUMMARY: {
         TITLE: 'Goods or services your business supplies',
@@ -47,16 +47,9 @@ export const EXPORTER_BUSINESS_FIELDS = {
       },
     },
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_UK]: {
-      LEGEND: 'How many employees do you have?',
-      LABEL: 'In the UK',
+      LEGEND: 'How many employees do you have in the UK?',
       SUMMARY: {
         TITLE: 'UK employees',
-      },
-    },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_INTERNATIONAL]: {
-      LABEL: 'Worldwide including UK',
-      SUMMARY: {
-        TITLE: 'Worldwide employees including UK employees',
       },
     },
   },

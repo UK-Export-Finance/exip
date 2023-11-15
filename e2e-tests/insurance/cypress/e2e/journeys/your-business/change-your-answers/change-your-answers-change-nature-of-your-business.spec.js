@@ -6,7 +6,6 @@ const {
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES,
     YEARS_EXPORTING,
-    EMPLOYEES_INTERNATIONAL,
     EMPLOYEES_UK,
   },
 } = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
@@ -136,42 +135,6 @@ context('Insurance - Your business - Change your answers - Nature of your busine
 
     describe('form submission with a new answer', () => {
       const newAnswer = '26';
-
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.keyboardInput(field(fieldId).input(), newAnswer);
-
-        submitButton().click();
-      });
-
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
-      });
-
-      it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
-      });
-    });
-  });
-
-  describe(EMPLOYEES_INTERNATIONAL, () => {
-    const fieldId = EMPLOYEES_INTERNATIONAL;
-
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${NATURE_OF_BUSINESS_CHANGE}`, () => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.assertChangeAnswersPageUrl(referenceNumber, NATURE_OF_BUSINESS_CHANGE, fieldId);
-      });
-    });
-
-    describe('form submission with a new answer', () => {
-      const newAnswer = '35';
 
       beforeEach(() => {
         cy.navigateToUrl(url);
