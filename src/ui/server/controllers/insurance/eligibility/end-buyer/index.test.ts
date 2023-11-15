@@ -1,5 +1,6 @@
 import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
+import { FIELDS_ELIGIBILITY } from '../../../../content-strings/fields/insurance/eligibility';
 import { FIELD_IDS, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
@@ -34,6 +35,10 @@ describe('controllers/insurance/eligibility/end-buyer', () => {
       const expected = {
         FIELD_ID,
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.END_BUYER,
+        FIELD: {
+          ID: FIELD_ID,
+          ...FIELDS_ELIGIBILITY[FIELD_ID],
+        },
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);

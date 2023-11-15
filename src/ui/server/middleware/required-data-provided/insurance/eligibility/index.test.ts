@@ -22,7 +22,9 @@ const {
   NO_COMPANIES_HOUSE_NUMBER,
   ENTER_COMPANIES_HOUSE_NUMBER,
   COMPANIES_HOUSE_UNAVAILABLE,
+  COMPANY_NOT_ACTIVE,
   COMPANY_DETAILS,
+  CANNOT_APPLY_MULTIPLE_RISKS,
   ELIGIBLE_TO_APPLY_ONLINE,
 } = ELIGIBILITY;
 
@@ -152,6 +154,24 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
     describe(`when req.originalUrl is ${COMPANIES_HOUSE_UNAVAILABLE}`, () => {
       it('should call req.next', () => {
         req.originalUrl = COMPANIES_HOUSE_UNAVAILABLE;
+        requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
+
+        expect(nextSpy).toHaveBeenCalled();
+      });
+    });
+
+    describe(`when req.originalUrl is ${COMPANY_NOT_ACTIVE}`, () => {
+      it('should call req.next', () => {
+        req.originalUrl = COMPANY_NOT_ACTIVE;
+        requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
+
+        expect(nextSpy).toHaveBeenCalled();
+      });
+    });
+
+    describe(`when req.originalUrl is ${CANNOT_APPLY_MULTIPLE_RISKS}`, () => {
+      it('should call req.next', () => {
+        req.originalUrl = CANNOT_APPLY_MULTIPLE_RISKS;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
