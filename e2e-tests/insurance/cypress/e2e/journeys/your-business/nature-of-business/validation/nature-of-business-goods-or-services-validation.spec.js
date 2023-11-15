@@ -16,8 +16,6 @@ const { MAXIMUM } = FIELDS.NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES];
 
 const baseUrl = Cypress.config('baseUrl');
 
-const expectedErrorsCorrectValidation = 2;
-
 describe('Insurance - Your business - Nature of your business page - As an Exporter I want to enter details about the nature of my business - goods or services input validation', () => {
   let referenceNumber;
   let url;
@@ -104,7 +102,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       submitButton().click();
 
       cy.checkErrorSummaryListHeading();
-      partials.errorSummaryListItems().should('have.length', expectedErrorsCorrectValidation);
+      partials.errorSummaryListItems().should('have.length', 2);
     });
   });
 });

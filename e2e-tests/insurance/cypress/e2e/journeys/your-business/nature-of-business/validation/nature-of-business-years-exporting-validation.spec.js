@@ -15,7 +15,6 @@ const fieldId = YEARS_EXPORTING;
 const field = fieldSelector(fieldId);
 
 const expectedErrorsCount = 3;
-const expectedErrorsCorrectValidation = 2;
 
 describe('Insurance - Your business - Nature of your business page - As an Exporter I want to enter details about the nature of my business - years exporting input validation', () => {
   let referenceNumber;
@@ -121,7 +120,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       submitButton().click();
 
       cy.checkErrorSummaryListHeading();
-      partials.errorSummaryListItems().should('have.length', expectedErrorsCorrectValidation);
+      partials.errorSummaryListItems().should('have.length', 2);
     });
   });
 
@@ -133,7 +132,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       submitButton().click();
 
       cy.checkErrorSummaryListHeading();
-      partials.errorSummaryListItems().should('have.length', expectedErrorsCorrectValidation);
+      partials.errorSummaryListItems().should('have.length', 2);
     });
   });
 });

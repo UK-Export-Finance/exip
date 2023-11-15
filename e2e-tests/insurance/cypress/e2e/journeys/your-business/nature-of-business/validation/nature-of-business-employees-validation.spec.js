@@ -21,8 +21,6 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-const expectedErrorsCorrectValidation = 2;
-
 describe('Insurance - Your business - Nature of your business page - As an Exporter I want to enter details about the nature of my business - number of employees input validation', () => {
   let referenceNumber;
   let url;
@@ -115,7 +113,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
         cy.keyboardInput(field.input(), '0');
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', expectedErrorsCorrectValidation);
+        partials.errorSummaryListItems().should('have.length', 2);
       });
     });
 
@@ -128,7 +126,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
         cy.keyboardInput(field.input(), '5');
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', expectedErrorsCorrectValidation);
+        partials.errorSummaryListItems().should('have.length', 2);
       });
     });
 
@@ -141,7 +139,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
         cy.keyboardInput(field.input(), '5,000');
         submitButton().click();
-        partials.errorSummaryListItems().should('have.length', expectedErrorsCorrectValidation);
+        partials.errorSummaryListItems().should('have.length', 2);
       });
     });
   });
