@@ -9,7 +9,7 @@ const { BUYER_COUNTRY, HAS_MINIMUM_UK_GOODS_OR_SERVICES } = INSURANCE_FIELD_IDS.
 
 const { WANT_COVER_OVER_MAX_PERIOD, COMPANIES_HOUSE_NUMBER, VALID_EXPORTER_LOCATION } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
-const { TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID } = INSURANCE_FIELD_IDS.ELIGIBILITY;
+const { TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID, HAS_END_BUYER } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
 export const FIELDS_ELIGIBILITY = {
   [BUYER_COUNTRY]: {
@@ -27,6 +27,12 @@ export const FIELDS_ELIGIBILITY = {
       TITLE: 'UK goods or services',
     },
     ANSWER: 'At least 20%',
+  },
+  [HAS_END_BUYER]: {
+    HINT: "Sometimes, exporters supply goods to a client in an overseas market who will then sell them on. The exporter will not get paid by the buyer until they have been paid by this third party. We call this third party an 'end buyer'.",
+    SUMMARY: {
+      TITLE: 'Mock title',
+    },
   },
   [WANT_COVER_OVER_MAX_PERIOD]: {
     SUMMARY: {

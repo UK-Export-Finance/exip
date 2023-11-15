@@ -74,6 +74,15 @@ const COMPANY_DETAILS = {
   DIFFERENT_COMPANIES_HOUSE_NUMBER: 'Enter a different Companies House registration number',
 };
 
+const END_BUYER = {
+  PAGE_TITLE: 'Does your buyer need to be paid by someone else before they can pay you?',
+};
+
+const CHECK_YOUR_ANSWERS = {
+  HEADING_CAPTION: 'Eligibility',
+  PAGE_TITLE: 'Check your answers',
+};
+
 const ELIGIBLE_TO_APPLY_ONLINE = {
   PAGE_TITLE: "You're eligible to apply online",
   INSET: 'This does not automatically guarantee cover.',
@@ -95,6 +104,8 @@ export default {
   COMPANIES_HOUSE_UNAVAILABLE,
   COMPANY_NOT_ACTIVE,
   COMPANY_DETAILS,
+  END_BUYER,
+  CHECK_YOUR_ANSWERS,
   ELIGIBLE_TO_APPLY_ONLINE,
   ACCOUNT_TO_APPLY_ONLINE,
 };

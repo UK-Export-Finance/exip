@@ -25,6 +25,7 @@ interface InsuranceEligibilityCore extends SharedEligibility {
   company?: CompanyDetails;
   totalContractValue?: number;
   wantCoverOverMaxPeriod?: boolean;
+  hasEndBuyer?: boolean;
 }
 
 interface InsuranceEligibility extends InsuranceEligibilityCore {

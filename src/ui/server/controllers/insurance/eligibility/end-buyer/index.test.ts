@@ -1,6 +1,7 @@
 import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
-import { PAGES, UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
+import { FIELD_IDS, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
@@ -9,7 +10,9 @@ import { updateSubmittedData } from '../../../../helpers/update-submitted-data/i
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
-describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
+const { CANNOT_APPLY_MULTIPLE_RISKS, CHECK_YOUR_ANSWERS } = INSURANCE_ROUTES.ELIGIBILITY;
+
+describe('controllers/insurance/eligibility/end-buyer', () => {
   let req: Request;
   let res: Response;
 
@@ -20,7 +23,7 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
 
   describe('FIELD_ID', () => {
     it('should have the correct ID', () => {
-      const expected = FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES;
+      const expected = FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_END_BUYER;
 
       expect(FIELD_ID).toEqual(expected);
     });
@@ -29,12 +32,8 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-        PAGE_CONTENT_STRINGS: {
-          ...PAGES.UK_GOODS_OR_SERVICES,
-          UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION,
-          UK_GOODS_AND_SERVICES_DESCRIPTION,
-        },
+        FIELD_ID,
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.END_BUYER,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -43,7 +42,7 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.END_BUYER);
     });
   });
 
@@ -51,7 +50,7 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, {
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
         userName: getUserNameFromSession(req.session.user),
         submittedValues: req.session.submittedData.insuranceEligibility,
@@ -66,38 +65,31 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
 
         const payload = constructPayload(req.body, [FIELD_ID]);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, {
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
           userName: getUserNameFromSession(req.session.user),
-          validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
+          validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.INSURANCE.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
         });
       });
     });
 
-    describe('when submitted answer is false', () => {
+    describe('when submitted answer is true', () => {
       beforeEach(() => {
         req.body = {
-          [FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: 'false',
+          [FIELD_ID]: 'true',
         };
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY}`, async () => {
-        await post(req, res);
+      it(`should redirect to ${CANNOT_APPLY_MULTIPLE_RISKS}`, () => {
+        post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
-      });
-
-      it('should add exitReason to req.flash', async () => {
-        await post(req, res);
-
-        const expectedReason = PAGES.CANNOT_APPLY.REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES;
-        expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
+        expect(res.redirect).toHaveBeenCalledWith(CANNOT_APPLY_MULTIPLE_RISKS);
       });
     });
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: 'true',
+        [FIELD_ID]: 'false',
       };
 
       beforeEach(() => {
@@ -108,7 +100,7 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
         post(req, res);
 
         const expectedPopulatedData = {
-          [PAGE_VARIABLES.FIELD_ID]: validBody[PAGE_VARIABLES.FIELD_ID],
+          [FIELD_ID]: validBody[FIELD_ID],
         };
 
         const expected = {
@@ -119,10 +111,10 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.END_BUYER}`, () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER);
+        expect(res.redirect).toHaveBeenCalledWith(CHECK_YOUR_ANSWERS);
       });
     });
   });

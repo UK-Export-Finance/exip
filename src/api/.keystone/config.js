@@ -299,6 +299,7 @@ var INSURANCE_FIELD_IDS = {
     WANT_COVER_OVER_MAX_PERIOD: "wantCoverOverMaxPeriod",
     COVER_PERIOD: "coverPeriod",
     COVER_PERIOD_ID: "coverPeriodId",
+    HAS_END_BUYER: "hasEndBuyer",
     ACCOUNT_TO_APPLY_ONLINE: "alreadyHaveAnAccount"
   },
   ...shared_default2,
@@ -3771,7 +3772,8 @@ var {
   VALID_EXPORTER_LOCATION,
   WANT_COVER_OVER_MAX_PERIOD,
   COMPANIES_HOUSE_NUMBER,
-  TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID
+  TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID,
+  HAS_END_BUYER
 } = insurance_default.ELIGIBILITY;
 var THRESHOLD = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
 var FIELDS_ELIGIBILITY = {
@@ -3790,6 +3792,12 @@ var FIELDS_ELIGIBILITY = {
       TITLE: "UK goods or services"
     },
     ANSWER: "At least 20%"
+  },
+  [HAS_END_BUYER]: {
+    HINT: "Sometimes, exporters supply goods to a client in an overseas market who will then sell them on. The exporter will not get paid by the buyer until they have been paid by this third party. We call this third party an 'end buyer'.",
+    SUMMARY: {
+      TITLE: "Mock title"
+    }
   },
   [WANT_COVER_OVER_MAX_PERIOD]: {
     SUMMARY: {
@@ -3819,6 +3827,9 @@ var FIELDS_ELIGIBILITY = {
       ABOVE: `Above ${THRESHOLD}`,
       BELOW: `Below ${THRESHOLD}`
     }
+  },
+  [HAS_END_BUYER]: {
+    HINT: "Sometimes, exporters supply goods to a client in an overseas market who will then sell them on. The exporter will not get paid by the buyer until they have been paid by this third party. We call this third party an 'end buyer'."
   }
 };
 

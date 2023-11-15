@@ -74,6 +74,15 @@ export const COMPANY_DETAILS = {
   DIFFERENT_COMPANIES_HOUSE_NUMBER: 'Enter a different Companies House registration number',
 };
 
+export const END_BUYER = {
+  PAGE_TITLE: 'Does your buyer need to be paid by someone else before they can pay you?',
+};
+
+export const CHECK_YOUR_ANSWERS = {
+  HEADING_CAPTION: 'Eligibility',
+  PAGE_TITLE: 'Check your answers',
+};
+
 export const ELIGIBLE_TO_APPLY_ONLINE = {
   PAGE_TITLE: "You're eligible to apply online",
   INSET: 'This does not automatically guarantee cover.',

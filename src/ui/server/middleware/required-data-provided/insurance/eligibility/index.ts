@@ -13,6 +13,8 @@ const {
   BUYER_COUNTRY,
   EXPORTER_LOCATION,
   UK_GOODS_OR_SERVICES,
+  END_BUYER,
+  CHECK_YOUR_ANSWERS,
   TOTAL_VALUE_INSURED,
   INSURED_PERIOD,
   COMPANIES_HOUSE_NUMBER,
@@ -32,6 +34,7 @@ const {
     TOTAL_CONTRACT_VALUE,
     WANT_COVER_OVER_MAX_PERIOD,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+    HAS_END_BUYER,
   },
   COMPANY,
 } = INSURANCE_FIELD_IDS;
@@ -62,7 +65,11 @@ export const generateRequiredData = (): RequiredDataStateInsuranceEligibility =>
 
   requiredData[UK_GOODS_OR_SERVICES] = [...requiredData[INSURED_PERIOD], WANT_COVER_OVER_MAX_PERIOD];
 
-  requiredData[ELIGIBLE_TO_APPLY_ONLINE] = [...requiredData[BUYER_COUNTRY], HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+  requiredData[END_BUYER] = [...requiredData[UK_GOODS_OR_SERVICES], HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+
+  requiredData[CHECK_YOUR_ANSWERS] = [...requiredData[END_BUYER], HAS_END_BUYER];
+
+  requiredData[ELIGIBLE_TO_APPLY_ONLINE] = [...requiredData[CHECK_YOUR_ANSWERS]];
 
   return requiredData;
 };

@@ -14,6 +14,8 @@ const {
   BUYER_COUNTRY,
   EXPORTER_LOCATION,
   UK_GOODS_OR_SERVICES,
+  END_BUYER,
+  CHECK_YOUR_ANSWERS,
   TOTAL_VALUE_INSURED,
   INSURED_PERIOD,
   COMPANIES_HOUSE_NUMBER,
@@ -32,6 +34,7 @@ const {
     WANT_COVER_OVER_MAX_PERIOD,
     TOTAL_CONTRACT_VALUE,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+    HAS_END_BUYER,
   },
   COMPANY,
 } = INSURANCE_FIELD_IDS;
@@ -62,7 +65,11 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
 
       expected[UK_GOODS_OR_SERVICES] = [...expected[INSURED_PERIOD], WANT_COVER_OVER_MAX_PERIOD];
 
-      expected[ELIGIBLE_TO_APPLY_ONLINE] = [...expected[BUYER_COUNTRY], HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+      expected[END_BUYER] = [...expected[UK_GOODS_OR_SERVICES], HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+
+      expected[CHECK_YOUR_ANSWERS] = [...expected[END_BUYER], HAS_END_BUYER];
+
+      expected[ELIGIBLE_TO_APPLY_ONLINE] = [...expected[CHECK_YOUR_ANSWERS]];
 
       expect(result).toEqual(expected);
     });

@@ -1,5 +1,6 @@
-import { PAGES, UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
+import { FIELD_IDS, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
@@ -7,19 +8,24 @@ import generateValidationErrors from '../../../../shared-validation/yes-no-radio
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
 
-export const FIELD_ID = FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES;
+const { CANNOT_APPLY_MULTIPLE_RISKS, CHECK_YOUR_ANSWERS } = INSURANCE_ROUTES.ELIGIBILITY;
+
+export const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_END_BUYER;
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
-  PAGE_CONTENT_STRINGS: {
-    ...PAGES.UK_GOODS_OR_SERVICES,
-    UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION,
-    UK_GOODS_AND_SERVICES_DESCRIPTION,
-  },
+  PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.END_BUYER,
 };
 
-export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES;
+export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.END_BUYER;
 
+/**
+ * get
+ * Render the "End buyer" page
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.render} End buyer page
+ */
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
     ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
@@ -27,10 +33,17 @@ export const get = (req: Request, res: Response) =>
     submittedValues: req.session.submittedData.insuranceEligibility,
   });
 
+/**
+ * post
+ * Check "End buyer" validation errors and if successful, redirect to the next part of the flow.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} Next part of the flow or error page
+ */
 export const post = (req: Request, res: Response) => {
   const payload = constructPayload(req.body, [FIELD_ID]);
 
-  const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[FIELD_ID].IS_EMPTY);
+  const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
@@ -43,15 +56,10 @@ export const post = (req: Request, res: Response) => {
     });
   }
 
-  const answer = req.body[FIELD_ID];
+  const answer = payload[FIELD_ID];
 
-  if (answer === 'false') {
-    const { CANNOT_APPLY } = PAGES;
-    const { REASON } = CANNOT_APPLY;
-
-    req.flash('exitReason', REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES);
-
-    return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+  if (answer === 'true') {
+    return res.redirect(CANNOT_APPLY_MULTIPLE_RISKS);
   }
 
   req.session.submittedData = {
@@ -59,5 +67,5 @@ export const post = (req: Request, res: Response) => {
     insuranceEligibility: updateSubmittedData({ [FIELD_ID]: answer }, req.session.submittedData.insuranceEligibility),
   };
 
-  return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER);
+  return res.redirect(CHECK_YOUR_ANSWERS);
 };

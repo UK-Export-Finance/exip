@@ -18,6 +18,7 @@ const INSURANCE_FIELD_IDS = {
     WANT_COVER_OVER_MAX_PERIOD: 'wantCoverOverMaxPeriod',
     COVER_PERIOD: 'coverPeriod',
     COVER_PERIOD_ID: 'coverPeriodId',
+    HAS_END_BUYER: 'hasEndBuyer',
     ACCOUNT_TO_APPLY_ONLINE: 'alreadyHaveAnAccount',
   },
   ...SHARED_FIELD_IDS,
