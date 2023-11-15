@@ -28,15 +28,7 @@ context('Get a quote, complete insurance eligibility and then re-visit the quote
   it('allows an exporter to complete insurance eligibility when visiting the exporter location page directly', () => {
     cy.navigateToUrl(ELIGIBILITY.EXPORTER_LOCATION);
 
-    cy.completeExporterLocationForm();
-    cy.completeCompaniesHouseNumberForm();
-    cy.completeAndSubmitCompaniesHouseSearchForm({});
-    cy.completeEligibilityCompanyDetailsForm();
-    completeAndSubmitBuyerCountryForm();
-    cy.completeAndSubmitTotalValueInsuredForm({});
-    cy.completeInsuredPeriodForm();
-    cy.completeUkGoodsAndServicesForm();
-    cy.completeEligibleToApplyOnlineForm();
+    cy.submitInsuranceEligibilityAnswersFromExporterLocationHappyPath();
   });
 
   it('allows an exporter to get another quote when visiting the buyer country page directly', () => {

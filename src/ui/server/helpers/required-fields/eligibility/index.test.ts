@@ -12,6 +12,7 @@ const {
     TOTAL_CONTRACT_VALUE,
     WANT_COVER_OVER_MAX_PERIOD,
     COVER_PERIOD_ID,
+    HAS_END_BUYER,
     ...FIELD_IDS
   },
 } = INSURANCE_FIELD_IDS;
@@ -19,7 +20,15 @@ const {
 describe('server/helpers/required-fields/eligibility', () => {
   describe('irrelevantFields', () => {
     it('should return array of irrelevant fields', () => {
-      const expected = [HAVE_AN_ACCOUNT, BUYER_COUNTRY_ISO_CODE, TOTAL_CONTRACT_VALUE, TOTAL_CONTRACT_VALUE_ID, WANT_COVER_OVER_MAX_PERIOD, COVER_PERIOD_ID];
+      const expected = [
+        HAVE_AN_ACCOUNT,
+        BUYER_COUNTRY_ISO_CODE,
+        TOTAL_CONTRACT_VALUE,
+        TOTAL_CONTRACT_VALUE_ID,
+        WANT_COVER_OVER_MAX_PERIOD,
+        COVER_PERIOD_ID,
+        HAS_END_BUYER,
+      ];
 
       expect(irrelevantFields).toEqual(expected);
     });

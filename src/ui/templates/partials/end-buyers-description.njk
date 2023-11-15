@@ -1,0 +1,24 @@
+<p data-cy="end-buyers-description-list-intro">{{ CONTENT_STRINGS.END_BUYERS_DESCRIPTION.LIST_INTRO }}</p>
+
+<ol class="govuk-list govuk-list--number">
+  {% for item in CONTENT_STRINGS.END_BUYERS_DESCRIPTION.LIST %}
+    <li data-cy="end-buyers-description-list-item-{{ loop.index }}">{{ item }}</li>
+    </li>
+  {% endfor %}
+</ol>
+
+<p>
+  <span data-cy="end-buyers-description-outro-single-risk-only">
+    {{ CONTENT_STRINGS.END_BUYERS_DESCRIPTION.OUTRO.SINGLE_RISK_ONLY }}
+  </span>
+
+  <span data-cy="end-buyers-description-outro-trying-multiple-risks">
+    {{ CONTENT_STRINGS.END_BUYERS_DESCRIPTION.OUTRO.IF_TRYING_MULTIPLE_RISKS }}
+  </span>
+
+  <a class="govuk-link" data-cy="action-contact-efm-link" href="{{ CONTENT_STRINGS.END_BUYERS_DESCRIPTION.OUTRO.CONTACT_EFM.LINK.HREF }}">{{ CONTENT_STRINGS.END_BUYERS_DESCRIPTION.OUTRO.CONTACT_EFM.LINK.TEXT }}</a>
+
+  <span data-cy="end-buyers-description-outro-to-find-out-more">
+    {{ CONTENT_STRINGS.END_BUYERS_DESCRIPTION.OUTRO.TO_FIND_OUT_MORE }}
+  </span>
+</p>

@@ -51,6 +51,14 @@ const submitAnswersFromExporterLocationHappyPath = (assertAuthenticatedHeader = 
 
   checkAuthHeader(assertAuthenticatedHeader);
 
+  cy.completeEndBuyerForm();
+
+  checkAuthHeader(assertAuthenticatedHeader);
+
+  cy.submitCheckYourAnswers();
+
+  checkAuthHeader(assertAuthenticatedHeader);
+
   cy.completeEligibleToApplyOnlineForm();
 
   checkAuthHeader(assertAuthenticatedHeader);

@@ -17,6 +17,7 @@ export const INSURANCE_FIELD_IDS = {
     WANT_COVER_OVER_MAX_PERIOD: 'wantCoverOverMaxPeriod',
     COVER_PERIOD: 'coverPeriod',
     COVER_PERIOD_ID: 'coverPeriodId',
+    HAS_END_BUYER: 'hasEndBuyer',
     HAVE_AN_ACCOUNT: 'haveAnAccount',
   },
   ...SHARED_FIELD_IDS,

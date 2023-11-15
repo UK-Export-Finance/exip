@@ -10,6 +10,7 @@ import {
   checkActionReadAboutEligibilityLinkRedirect,
   checkActionContactApprovedBroker,
   checkActionTalkToYourNearestEFM,
+  checkActionTalkToYourNearestEFMLink,
 } from './actions';
 
 Cypress.Commands.add('assertUrl', require('./assert-url'));
@@ -76,3 +77,4 @@ Cypress.Commands.add('checkActionReadAboutEligibility', checkActionReadAboutElig
 Cypress.Commands.add('checkActionReadAboutEligibilityLinkRedirect', checkActionReadAboutEligibilityLinkRedirect);
 Cypress.Commands.add('checkActionContactApprovedBroker', checkActionContactApprovedBroker);
 Cypress.Commands.add('checkActionTalkToYourNearestEFM', checkActionTalkToYourNearestEFM);
+Cypress.Commands.add('checkActionTalkToYourNearestEFMLink', checkActionTalkToYourNearestEFMLink);

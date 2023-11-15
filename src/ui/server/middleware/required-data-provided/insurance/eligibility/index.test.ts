@@ -14,13 +14,17 @@ const {
   BUYER_COUNTRY,
   EXPORTER_LOCATION,
   UK_GOODS_OR_SERVICES,
+  END_BUYER,
+  CHECK_YOUR_ANSWERS,
   TOTAL_VALUE_INSURED,
   INSURED_PERIOD,
   COMPANIES_HOUSE_NUMBER,
   NO_COMPANIES_HOUSE_NUMBER,
   ENTER_COMPANIES_HOUSE_NUMBER,
   COMPANIES_HOUSE_UNAVAILABLE,
+  COMPANY_NOT_ACTIVE,
   COMPANY_DETAILS,
+  CANNOT_APPLY_MULTIPLE_RISKS,
   ELIGIBLE_TO_APPLY_ONLINE,
 } = ELIGIBILITY;
 
@@ -32,6 +36,7 @@ const {
     WANT_COVER_OVER_MAX_PERIOD,
     TOTAL_CONTRACT_VALUE,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+    HAS_END_BUYER,
   },
   COMPANY,
 } = INSURANCE_FIELD_IDS;
@@ -62,7 +67,11 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
 
       expected[UK_GOODS_OR_SERVICES] = [...expected[INSURED_PERIOD], WANT_COVER_OVER_MAX_PERIOD];
 
-      expected[ELIGIBLE_TO_APPLY_ONLINE] = [...expected[BUYER_COUNTRY], HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+      expected[END_BUYER] = [...expected[UK_GOODS_OR_SERVICES], HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+
+      expected[CHECK_YOUR_ANSWERS] = [...expected[END_BUYER], HAS_END_BUYER];
+
+      expected[ELIGIBLE_TO_APPLY_ONLINE] = [...expected[CHECK_YOUR_ANSWERS]];
 
       expect(result).toEqual(expected);
     });
@@ -145,6 +154,24 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
     describe(`when req.originalUrl is ${COMPANIES_HOUSE_UNAVAILABLE}`, () => {
       it('should call req.next', () => {
         req.originalUrl = COMPANIES_HOUSE_UNAVAILABLE;
+        requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
+
+        expect(nextSpy).toHaveBeenCalled();
+      });
+    });
+
+    describe(`when req.originalUrl is ${COMPANY_NOT_ACTIVE}`, () => {
+      it('should call req.next', () => {
+        req.originalUrl = COMPANY_NOT_ACTIVE;
+        requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
+
+        expect(nextSpy).toHaveBeenCalled();
+      });
+    });
+
+    describe(`when req.originalUrl is ${CANNOT_APPLY_MULTIPLE_RISKS}`, () => {
+      it('should call req.next', () => {
+        req.originalUrl = CANNOT_APPLY_MULTIPLE_RISKS;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();

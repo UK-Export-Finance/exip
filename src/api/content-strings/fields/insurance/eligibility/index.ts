@@ -9,6 +9,7 @@ const {
   WANT_COVER_OVER_MAX_PERIOD,
   COMPANIES_HOUSE_NUMBER,
   TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID,
+  HAS_END_BUYER,
 } = FIELD_IDS.ELIGIBILITY;
 
 const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
@@ -29,6 +30,12 @@ export const FIELDS_ELIGIBILITY = {
       TITLE: 'UK goods or services',
     },
     ANSWER: 'At least 20%',
+  },
+  [HAS_END_BUYER]: {
+    HINT: "Sometimes, exporters supply goods to a client in an overseas market who will then sell them on. The exporter will not get paid by the buyer until they have been paid by this third party. We call this third party an 'end buyer'.",
+    SUMMARY: {
+      TITLE: 'Mock title',
+    },
   },
   [WANT_COVER_OVER_MAX_PERIOD]: {
     SUMMARY: {
@@ -58,5 +65,8 @@ export const FIELDS_ELIGIBILITY = {
       ABOVE: `Above ${THRESHOLD}`,
       BELOW: `Below ${THRESHOLD}`,
     },
+  },
+  [HAS_END_BUYER]: {
+    HINT: "Sometimes, exporters supply goods to a client in an overseas market who will then sell them on. The exporter will not get paid by the buyer until they have been paid by this third party. We call this third party an 'end buyer'.",
   },
 };

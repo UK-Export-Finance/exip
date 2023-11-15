@@ -6,6 +6,7 @@ import { InsuranceEligibility } from '../../types';
 const mockEligibility = {
   buyerCountry: mockCountries[0],
   hasMinimumUkGoodsOrServices: true,
+  hasEndBuyer: false,
   validExporterLocation: true,
   hasCompaniesHouseNumber: true,
   companiesHouseNumber: mockCompany.companyNumber,

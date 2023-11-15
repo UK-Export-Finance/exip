@@ -73,6 +73,14 @@ export const completeUkGoodsAndServicesForm = () => {
   selectRadioAndSubmit(FIELD_VALUES.YES);
 };
 
+export const completeEndBuyerForm = () => {
+  selectRadioAndSubmit(FIELD_VALUES.NO);
+};
+
+export const submitCheckYourAnswers = () => {
+  submitButton().click();
+};
+
 export const completeEligibleToApplyOnlineForm = () => {
   submitButton().click();
 };

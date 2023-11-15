@@ -71,6 +71,9 @@ export const ERROR_MESSAGES = {
         NOT_FOUND: 'Enter a recognised Companies House number',
         TECHNICAL_ISSUES: 'Due to technical issues, you cannot search for your Companies House registration number right now - try again in few minutes',
       },
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_END_BUYER]: {
+        IS_EMPTY: 'Select if there will be an end buyer for this export contract',
+      },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT]: {
         IS_EMPTY: 'Select if you have a UK Export Finance account',
       },

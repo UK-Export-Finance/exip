@@ -1,13 +1,15 @@
 import checkIfEligiblePage from './checkIfEligible';
-import otherPartiesPage from './otherParties';
-import eligibleToApplyOnlinePage from './eligibleToApplyOnline';
 import companiesHouseUnavailablePage from './companiesHouseUnavailable';
 import companyDetailsPage from './companyDetails';
+import eligibleToApplyOnlinePage from './eligibleToApplyOnline';
+import endBuyerPage from './endBuyer';
+import otherPartiesPage from './otherParties';
 
 export {
   checkIfEligiblePage,
-  otherPartiesPage,
-  eligibleToApplyOnlinePage,
   companiesHouseUnavailablePage,
   companyDetailsPage,
+  eligibleToApplyOnlinePage,
+  endBuyerPage,
+  otherPartiesPage,
 };
