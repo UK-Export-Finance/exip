@@ -1,7 +1,8 @@
 import {
   yesNoRadioHint, yesRadio, noRadio, noRadioInput, submitButton,
 } from '../../../../../../pages/shared';
-import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
+import { endBuyerPage } from '../../../../../../pages/insurance/eligibility';
+import { PAGES, END_BUYERS_DESCRIPTION, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELDS_ELIGIBILITY } from '../../../../../../content-strings/fields/insurance/eligibility';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -75,6 +76,32 @@ context('Insurance - End buyer page - as an exporter, I want to confirm if payme
       cy.checkText(noRadio().label(), FIELD_VALUES.NO);
 
       cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
+    });
+
+    describe('expandable details - why do we need to know about end buyers', () => {
+      it('renders summary text', () => {
+        cy.checkText(endBuyerPage.summary(), END_BUYERS_DESCRIPTION.INTRO);
+
+        endBuyerPage.details().should('not.have.attr', 'open');
+      });
+
+      describe('when clicking the summary text', () => {
+        it('should expand the collapsed `details` content', () => {
+          endBuyerPage.summary().click();
+          endBuyerPage.details().should('have.attr', 'open');
+
+          cy.checkText(endBuyerPage.list.intro(), END_BUYERS_DESCRIPTION.LIST_INTRO);
+          cy.checkText(endBuyerPage.list.item(1), END_BUYERS_DESCRIPTION.LIST[0]);
+          cy.checkText(endBuyerPage.list.item(2), END_BUYERS_DESCRIPTION.LIST[1]);
+
+          cy.checkText(endBuyerPage.outro.singleRiskOnly(), END_BUYERS_DESCRIPTION.OUTRO.SINGLE_RISK_ONLY);
+          cy.checkText(endBuyerPage.outro.tryingMultipleRisk(), END_BUYERS_DESCRIPTION.OUTRO.IF_TRYING_MULTIPLE_RISKS);
+
+          cy.checkActionTalkToYourNearestEFMLink();
+
+          cy.checkText(endBuyerPage.outro.toFindOutMore(), END_BUYERS_DESCRIPTION.OUTRO.TO_FIND_OUT_MORE);
+        });
+      });
     });
   });
 

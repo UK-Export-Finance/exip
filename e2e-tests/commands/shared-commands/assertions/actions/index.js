@@ -48,6 +48,19 @@ export const checkActionContactApprovedBroker = () => {
 };
 
 /**
+ * checkActionTalkToYourNearestEFMLink
+ * Check "talk to your nearest EFM" action content link.
+ */
+export const checkActionTalkToYourNearestEFMLink = () => {
+  cy.checkLink(
+    actionSelectors.contactEFMLink(),
+    CONTACT_EFM.LINK.HREF,
+    CONTACT_EFM.LINK.TEXT,
+  );
+};
+
+
+/**
  * checkActionTalkToYourNearestEFM
  * Check "talk to your nearest EFM" action content.
  */
@@ -57,9 +70,5 @@ export const checkActionTalkToYourNearestEFM = () => {
     `${CONTACT_EFM.LINK.TEXT} ${CONTACT_EFM.TEXT}`,
   );
 
-  cy.checkLink(
-    actionSelectors.contactEFMLink(),
-    CONTACT_EFM.LINK.HREF,
-    CONTACT_EFM.LINK.TEXT,
-  );
+  checkActionTalkToYourNearestEFMLink();
 };

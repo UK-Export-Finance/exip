@@ -5,6 +5,7 @@ export * from './buttons';
 export * from './contact';
 export * from './cookies-consent';
 export * from './default';
+export * from './end-buyers-description';
 export * from './error-messages';
 export * from './footer';
 export * from './fields';

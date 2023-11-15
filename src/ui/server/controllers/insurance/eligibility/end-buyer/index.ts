@@ -1,4 +1,4 @@
-import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
+import { PAGES, END_BUYERS_DESCRIPTION, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELDS_ELIGIBILITY } from '../../../../content-strings/fields/insurance/eligibility';
 import { FIELD_IDS, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -15,7 +15,10 @@ export const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_END_BUYER;
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
-  PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.END_BUYER,
+  PAGE_CONTENT_STRINGS: {
+    ...PAGES.INSURANCE.ELIGIBILITY.END_BUYER,
+    END_BUYERS_DESCRIPTION,
+  },
   FIELD: {
     ID: FIELD_ID,
     ...FIELDS_ELIGIBILITY[FIELD_ID],
