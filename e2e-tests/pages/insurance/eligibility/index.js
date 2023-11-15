@@ -6,7 +6,8 @@ import endBuyerPage from './endBuyer';
 import otherPartiesPage from './otherParties';
 
 export {
-  checkIfEligiblePage, companiesHouseUnavailablePage,
+  checkIfEligiblePage,
+  companiesHouseUnavailablePage,
   companyDetailsPage,
   eligibleToApplyOnlinePage,
   endBuyerPage,
