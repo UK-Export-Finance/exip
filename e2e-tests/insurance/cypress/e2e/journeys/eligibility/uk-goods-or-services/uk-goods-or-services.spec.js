@@ -29,7 +29,7 @@ const {
 
 const {
   START,
-  ELIGIBILITY: { UK_GOODS_OR_SERVICES, ELIGIBLE_TO_APPLY_ONLINE, INSURED_PERIOD },
+  ELIGIBILITY: { UK_GOODS_OR_SERVICES, END_BUYER, INSURED_PERIOD },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -145,8 +145,8 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
       submitButton().click();
     });
 
-    it(`should redirect to ${ELIGIBLE_TO_APPLY_ONLINE}`, () => {
-      const expectedUrl = `${baseUrl}${ELIGIBLE_TO_APPLY_ONLINE}`;
+    it(`should redirect to ${END_BUYER}`, () => {
+      const expectedUrl = `${baseUrl}${END_BUYER}`;
 
       cy.assertUrl(expectedUrl);
     });

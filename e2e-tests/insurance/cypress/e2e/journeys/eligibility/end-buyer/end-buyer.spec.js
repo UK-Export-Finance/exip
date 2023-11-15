@@ -1,5 +1,5 @@
 import {
-  yesNoRadioHint, yesRadio, yesRadioInput, noRadio, noRadioInput, submitButton,
+  yesNoRadioHint, yesRadio, noRadio, noRadioInput, submitButton,
 } from '../../../../../../pages/shared';
 import { endBuyerPage } from '../../../../../../pages/insurance/eligibility';
 import { PAGES, END_BUYERS_DESCRIPTION, ERROR_MESSAGES } from '../../../../../../content-strings';
@@ -157,14 +157,6 @@ context('Insurance - End buyer page - as an exporter, I want to confirm if payme
       const expectedUrl = `${baseUrl}${CANNOT_APPLY_MULTIPLE_RISKS}`;
 
       cy.assertUrl(expectedUrl);
-    });
-
-    describe('when going back to the page', () => {
-      it('should have the originally submitted answer selected', () => {
-        cy.clickBackLink();
-
-        yesRadioInput().should('be.checked');
-      });
     });
   });
 });
