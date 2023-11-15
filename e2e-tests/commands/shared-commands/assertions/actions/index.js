@@ -59,7 +59,6 @@ export const checkActionTalkToYourNearestEFMLink = () => {
   );
 };
 
-
 /**
  * checkActionTalkToYourNearestEFM
  * Check "talk to your nearest EFM" action content.
