@@ -81,7 +81,7 @@ const ELIGIBLE_TO_APPLY_ONLINE = {
   SUBMIT_BUTTON: 'Continue to application',
 };
 
-const ACCOUNT_TO_APPLY_ONLINE = {
+const HAVE_AN_ACCOUNT = {
   PAGE_TITLE: 'Do you have an account with us?',
 };
 
@@ -96,5 +96,5 @@ export default {
   COMPANY_NOT_ACTIVE,
   COMPANY_DETAILS,
   ELIGIBLE_TO_APPLY_ONLINE,
-  ACCOUNT_TO_APPLY_ONLINE,
+  HAVE_AN_ACCOUNT,
 };

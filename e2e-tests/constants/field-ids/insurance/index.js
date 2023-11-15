@@ -17,7 +17,7 @@ export const INSURANCE_FIELD_IDS = {
     WANT_COVER_OVER_MAX_PERIOD: 'wantCoverOverMaxPeriod',
     COVER_PERIOD: 'coverPeriod',
     COVER_PERIOD_ID: 'coverPeriodId',
-    ACCOUNT_TO_APPLY_ONLINE: 'alreadyHaveAnAccount',
+    HAVE_AN_ACCOUNT: 'alreadyHaveAnAccount',
   },
   ...SHARED_FIELD_IDS,
   SUBMISSION_DEADLINE: 'submissionDeadline',

@@ -13,7 +13,7 @@ const {
   INSURANCE: {
     INSURANCE_ROOT,
     ALL_SECTIONS,
-    ELIGIBILITY: { ACCOUNT_TO_APPLY_ONLINE },
+    ELIGIBILITY: { HAVE_AN_ACCOUNT },
     DASHBOARD,
     PROBLEM_WITH_SERVICE,
   },
@@ -55,10 +55,10 @@ describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
   });
 
   describe('post', () => {
-    it(`should redirect to ${ACCOUNT_TO_APPLY_ONLINE}`, async () => {
+    it(`should redirect to ${HAVE_AN_ACCOUNT}`, async () => {
       await post(req, res);
 
-      const expected = `${ACCOUNT_TO_APPLY_ONLINE}`;
+      const expected = `${HAVE_AN_ACCOUNT}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

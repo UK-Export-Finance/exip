@@ -6,7 +6,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { Request, Response } from '../../../../../types';
 
-export const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE;
+export const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT;
 
 const {
   ACCOUNT: { SIGN_IN, CREATE },
@@ -14,10 +14,10 @@ const {
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
-  PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE,
+  PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT,
 };
 
-export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE;
+export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT;
 
 /**
  * get

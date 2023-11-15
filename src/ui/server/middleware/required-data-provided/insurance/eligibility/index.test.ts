@@ -7,7 +7,7 @@ import { Request, Response } from '../../../../../types';
 const { APPLY_OFFLINE, SPEAK_TO_UKEF_EFM, ELIGIBILITY, ACCOUNT } = INSURANCE_ROUTES;
 
 const {
-  ACCOUNT_TO_APPLY_ONLINE,
+  HAVE_AN_ACCOUNT,
   CANNOT_APPLY,
   CHECK_IF_ELIGIBLE,
   NEED_TO_START_AGAIN,
@@ -160,9 +160,9 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
       });
     });
 
-    describe(`when req.originalUrl is ${ACCOUNT_TO_APPLY_ONLINE}`, () => {
+    describe(`when req.originalUrl is ${HAVE_AN_ACCOUNT}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = ACCOUNT_TO_APPLY_ONLINE;
+        req.originalUrl = HAVE_AN_ACCOUNT;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();

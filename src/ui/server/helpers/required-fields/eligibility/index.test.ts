@@ -3,7 +3,7 @@ import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 
 const {
   ELIGIBILITY: {
-    ACCOUNT_TO_APPLY_ONLINE,
+    HAVE_AN_ACCOUNT,
     BUYER_COUNTRY_ISO_CODE,
     COMPANY,
     COMPANIES_HOUSE,
@@ -19,14 +19,7 @@ const {
 describe('server/helpers/required-fields/eligibility', () => {
   describe('irrelevantFields', () => {
     it('should return array of irrelevant fields', () => {
-      const expected = [
-        ACCOUNT_TO_APPLY_ONLINE,
-        BUYER_COUNTRY_ISO_CODE,
-        TOTAL_CONTRACT_VALUE,
-        TOTAL_CONTRACT_VALUE_ID,
-        WANT_COVER_OVER_MAX_PERIOD,
-        COVER_PERIOD_ID,
-      ];
+      const expected = [HAVE_AN_ACCOUNT, BUYER_COUNTRY_ISO_CODE, TOTAL_CONTRACT_VALUE, TOTAL_CONTRACT_VALUE_ID, WANT_COVER_OVER_MAX_PERIOD, COVER_PERIOD_ID];
 
       expect(irrelevantFields).toEqual(expected);
     });
