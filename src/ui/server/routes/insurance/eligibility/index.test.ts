@@ -13,7 +13,7 @@ import { get as totalValueInsuredGet, post as totalValueInsuredPost } from '../.
 import { get as insuredPeriodGet, post as insuredPeriodPost } from '../../../controllers/insurance/eligibility/insured-period';
 import { get as ukGoodsOrServicesGet, post as ukGoodsOrServicesPost } from '../../../controllers/insurance/eligibility/uk-goods-or-services';
 import { get as eligibleToApplyOnlineGet, post as eligibleToApplyOnlinePost } from '../../../controllers/insurance/eligibility/eligible-to-apply-online';
-import { get as alreadyHaveAccountGet, post as alreadyHaveAccountPost } from '../../../controllers/insurance/eligibility/account-to-apply-online';
+import { get as haveAnAccountGet, post as haveAnAccountPost } from '../../../controllers/insurance/eligibility/do-you-have-an-account';
 import { get as cannotApplyGet } from '../../../controllers/insurance/eligibility/cannot-apply';
 import { get as needToStartAgainGet, post as needToStartAgainPost } from '../../../controllers/insurance/eligibility/need-to-start-again';
 
@@ -65,8 +65,8 @@ describe('routes/insurance/eligibility', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE, eligibleToApplyOnlineGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE, eligibleToApplyOnlinePost);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE, alreadyHaveAccountGet);
-    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE, alreadyHaveAccountPost);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT, haveAnAccountGet);
+    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT, haveAnAccountPost);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY, cannotApplyGet);
 

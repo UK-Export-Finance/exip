@@ -12,5 +12,5 @@ export const ELIGIBILITY_TEMPLATES = {
   COMPANY_NOT_ACTIVE: COMPANIES_HOUSE_EXIT_PAGE,
   COMPANY_DETAILS: 'insurance/eligibility/company-details.njk',
   ELIGIBLE_TO_APPLY_ONLINE: 'insurance/eligibility/eligible-to-apply-online.njk',
-  ACCOUNT_TO_APPLY_ONLINE: 'insurance/eligibility/account-to-apply-online.njk',
+  HAVE_AN_ACCOUNT: 'insurance/eligibility/have-an-account.njk',
 };

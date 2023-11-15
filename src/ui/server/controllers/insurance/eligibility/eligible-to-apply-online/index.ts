@@ -12,7 +12,7 @@ const {
   INSURANCE: {
     INSURANCE_ROOT,
     ALL_SECTIONS,
-    ELIGIBILITY: { ACCOUNT_TO_APPLY_ONLINE },
+    ELIGIBILITY: { HAVE_AN_ACCOUNT },
     DASHBOARD,
     PROBLEM_WITH_SERVICE,
   },
@@ -68,7 +68,7 @@ export const post = async (req: Request, res: Response) => {
      * User is not signed in.
      * Therefore, redirect to account creation/sign in flow.
      */
-    return res.redirect(ACCOUNT_TO_APPLY_ONLINE);
+    return res.redirect(HAVE_AN_ACCOUNT);
   } catch (err) {
     console.error('Error creating application %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);

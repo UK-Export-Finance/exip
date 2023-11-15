@@ -11,7 +11,7 @@ const {
   ELIGIBILITY: {
     ELIGIBLE_TO_APPLY_ONLINE,
     UK_GOODS_OR_SERVICES,
-    ACCOUNT_TO_APPLY_ONLINE,
+    HAVE_AN_ACCOUNT,
   },
 } = INSURANCE_ROUTES;
 
@@ -70,10 +70,10 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
     });
 
     describe('form submission', () => {
-      it(`should redirect to ${ACCOUNT_TO_APPLY_ONLINE}`, () => {
+      it(`should redirect to ${HAVE_AN_ACCOUNT}`, () => {
         submitButton().click();
 
-        const expectedUrl = `${baseUrl}${ACCOUNT_TO_APPLY_ONLINE}`;
+        const expectedUrl = `${baseUrl}${HAVE_AN_ACCOUNT}`;
 
         cy.assertUrl(expectedUrl);
       });

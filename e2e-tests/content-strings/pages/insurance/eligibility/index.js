@@ -81,6 +81,6 @@ export const ELIGIBLE_TO_APPLY_ONLINE = {
   SUBMIT_BUTTON: 'Continue to application',
 };
 
-export const ACCOUNT_TO_APPLY_ONLINE = {
-  PAGE_TITLE: 'Do you already have an account with us?',
+export const HAVE_AN_ACCOUNT = {
+  PAGE_TITLE: 'Do you have an account with us?',
 };

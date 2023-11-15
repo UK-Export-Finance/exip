@@ -3,18 +3,18 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   START,
-  ELIGIBILITY: { ACCOUNT_TO_APPLY_ONLINE }, ACCOUNT: { CREATE },
+  ELIGIBILITY: { HAVE_AN_ACCOUNT }, ACCOUNT: { CREATE },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Eligibility - Account to apply online page - I want to confirm if I am eligible to use UKEF digital service for this Export Insurance Application so that I can be sure of the correct process that I can follow to complete my Export Insurance Application', () => {
+context('Insurance - Eligibility - Have an account page - I want to confirm if I am eligible to use UKEF digital service for this Export Insurance Application so that I can be sure of the correct process that I can follow to complete my Export Insurance Application', () => {
   before(() => {
     cy.navigateToUrl(START);
 
     cy.submitInsuranceEligibilityAnswersHappyPath();
 
-    const expected = `${baseUrl}${ACCOUNT_TO_APPLY_ONLINE}`;
+    const expected = `${baseUrl}${HAVE_AN_ACCOUNT}`;
 
     cy.assertUrl(expected);
   });
