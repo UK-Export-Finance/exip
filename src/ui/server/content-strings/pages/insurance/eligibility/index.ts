@@ -82,7 +82,7 @@ const ELIGIBLE_TO_APPLY_ONLINE = {
 };
 
 const ACCOUNT_TO_APPLY_ONLINE = {
-  PAGE_TITLE: 'Do you already have an account with us?',
+  PAGE_TITLE: 'Do you have an account with us?',
 };
 
 export default {
