@@ -78,7 +78,6 @@ export const mockBusiness = {
   id: 'clcyyopna0158m8noaglyy9gg',
   goodsOrServicesSupplied: 'ABC',
   totalYearsExporting: '20',
-  totalEmployeesInternational: '1000',
   totalEmployeesUK: '400',
   estimatedAnnualTurnover: '155220',
   exportsTurnoverPercentage: '20',

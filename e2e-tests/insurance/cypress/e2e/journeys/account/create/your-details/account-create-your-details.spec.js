@@ -9,7 +9,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS;
 
 const {
   START,
-  ELIGIBILITY: { ACCOUNT_TO_APPLY_ONLINE },
+  ELIGIBILITY: { HAVE_AN_ACCOUNT },
   ACCOUNT: { CREATE: { YOUR_DETAILS, CONFIRM_EMAIL }, SIGN_IN },
 } = ROUTES;
 
@@ -47,7 +47,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: YOUR_DETAILS,
-      backLink: ACCOUNT_TO_APPLY_ONLINE,
+      backLink: HAVE_AN_ACCOUNT,
       assertAuthenticatedHeader: false,
       lightHouseThresholds: {
         performance: 70,

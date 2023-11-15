@@ -19,7 +19,7 @@ const INSURANCE_FIELD_IDS = {
     COVER_PERIOD: 'coverPeriod',
     COVER_PERIOD_ID: 'coverPeriodId',
     HAS_END_BUYER: 'hasEndBuyer',
-    ACCOUNT_TO_APPLY_ONLINE: 'alreadyHaveAnAccount',
+    HAVE_AN_ACCOUNT: 'haveAnAccount',
   },
   ...SHARED_FIELD_IDS,
   SUBMISSION_DEADLINE: 'submissionDeadline',

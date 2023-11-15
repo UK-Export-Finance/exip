@@ -156,8 +156,8 @@ export const FIELDS = {
       TITLE: 'Policy length',
     },
   },
-  [FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE]: {
-    HINT: "If you've applied online before, you'll already have an account.",
+  [FIELD_IDS.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT]: {
+    HINT: "If you've applied for credit insurance using this service in the past, you should have an account with us.",
   },
   [FIELD_IDS.INSURANCE.COMPANIES_HOUSE.COMPANY_NUMBER]: {
     SUMMARY: {

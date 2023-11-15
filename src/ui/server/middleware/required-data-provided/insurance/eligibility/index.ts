@@ -6,7 +6,7 @@ import { getRoutesAsArray, routeIsKnown, hasRequiredData } from '../../helpers';
 const { APPLY_OFFLINE, SPEAK_TO_UKEF_EFM, ELIGIBILITY, ACCOUNT } = INSURANCE_ROUTES;
 
 const {
-  ACCOUNT_TO_APPLY_ONLINE,
+  HAVE_AN_ACCOUNT,
   CANNOT_APPLY,
   CHECK_IF_ELIGIBLE,
   NEED_TO_START_AGAIN,
@@ -101,7 +101,7 @@ export const requiredInsuranceEligibilityDataProvided = (req: Request, res: Resp
     COMPANY_NOT_ACTIVE,
     CANNOT_APPLY_MULTIPLE_RISKS,
     NEED_TO_START_AGAIN,
-    ACCOUNT_TO_APPLY_ONLINE,
+    HAVE_AN_ACCOUNT,
     ACCOUNT.CREATE.YOUR_DETAILS,
     ACCOUNT.SIGN_IN.ROOT,
   ];

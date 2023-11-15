@@ -16,7 +16,6 @@ const {
       NATURE_OF_YOUR_BUSINESS: {
         YEARS_EXPORTING,
         GOODS_OR_SERVICES,
-        EMPLOYEES_INTERNATIONAL,
         EMPLOYEES_UK,
       },
       TURNOVER: {
@@ -89,14 +88,6 @@ const checkYourBusinessSummaryList = ({
   },
   [EMPLOYEES_UK]: () => {
     const fieldId = EMPLOYEES_UK;
-
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.NATURE_OF_YOUR_BUSINESS);
-    const expectedValue = application.EXPORTER_BUSINESS[fieldId];
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
-  },
-  [EMPLOYEES_INTERNATIONAL]: () => {
-    const fieldId = EMPLOYEES_INTERNATIONAL;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.NATURE_OF_YOUR_BUSINESS);
     const expectedValue = application.EXPORTER_BUSINESS[fieldId];

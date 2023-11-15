@@ -30,7 +30,6 @@ const EXPORTER_BUSINESS = {
     GOODS_OR_SERVICES: 'goodsOrServicesSupplied',
     YEARS_EXPORTING: 'totalYearsExporting',
     EMPLOYEES_UK: 'totalEmployeesUK',
-    EMPLOYEES_INTERNATIONAL: 'totalEmployeesInternational',
   },
   TURNOVER: {
     FINANCIAL_YEAR_END_DATE: 'financialYearEndDate',

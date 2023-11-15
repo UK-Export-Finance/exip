@@ -16,7 +16,7 @@ const {
     },
   },
   EXPORTER_BUSINESS: {
-    NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK },
+    NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_UK },
     TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   },
 } = FIELD_IDS.INSURANCE;
@@ -65,7 +65,6 @@ const mapApplicationToFormFields = (application?: Application): object => {
         ...mapped.business,
         [YEARS_EXPORTING]: transformNumberToString(application.business[YEARS_EXPORTING]),
         [EMPLOYEES_UK]: transformNumberToString(application.business[EMPLOYEES_UK]),
-        [EMPLOYEES_INTERNATIONAL]: transformNumberToString(application.business[EMPLOYEES_INTERNATIONAL]),
         [PERCENTAGE_TURNOVER]: transformNumberToString(application.business[PERCENTAGE_TURNOVER]),
         [ESTIMATED_ANNUAL_TURNOVER]: transformNumberToString(application.business[ESTIMATED_ANNUAL_TURNOVER]),
       };

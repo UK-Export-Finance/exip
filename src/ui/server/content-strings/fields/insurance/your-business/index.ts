@@ -5,7 +5,7 @@ const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const {
   YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
   ALTERNATIVE_TRADING_ADDRESS,
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
   TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   BROKER: { LEGEND, USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN, EMAIL },
 } = EXPORTER_BUSINESS;
@@ -38,8 +38,8 @@ export const FIELDS = {
   },
   NATURE_OF_YOUR_BUSINESS: {
     [GOODS_OR_SERVICES]: {
-      LABEL: 'What goods or services does your company supply?',
-      HINT: 'Give a general overview rather than just the exports you want to insure',
+      LABEL: 'Tell us about your business',
+      HINT: "Give us an overview of the work you do, as well as the products or services you're getting credit insurance for.",
       SUMMARY: {
         TITLE: 'Goods or services your business supplies',
       },
@@ -53,16 +53,9 @@ export const FIELDS = {
       },
     },
     [EMPLOYEES_UK]: {
-      LEGEND: 'How many employees do you have?',
-      LABEL: 'In the UK',
+      LEGEND: 'How many employees do you have in the UK?',
       SUMMARY: {
         TITLE: 'UK employees',
-      },
-    },
-    [EMPLOYEES_INTERNATIONAL]: {
-      LABEL: 'Worldwide including UK',
-      SUMMARY: {
-        TITLE: 'Worldwide employees including UK employees',
       },
     },
   },

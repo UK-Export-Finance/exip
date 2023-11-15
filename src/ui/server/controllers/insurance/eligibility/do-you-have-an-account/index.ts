@@ -6,7 +6,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { Request, Response } from '../../../../../types';
 
-export const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE;
+export const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT;
 
 const {
   ACCOUNT: { SIGN_IN, CREATE },
@@ -14,23 +14,23 @@ const {
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
-  PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE,
+  PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT,
 };
 
-export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE;
+export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT;
 
 /**
  * get
- * Render the Do you already have an account page
+ * Render the Do you have an account page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} Do you already have an account page
+ * @returns {Express.Response.render} Do you have an account page
  */
 export const get = (req: Request, res: Response) => res.render(TEMPLATE, singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }));
 
 /**
  * post
- * Check Do you already have an account validation errors and if successful, redirect to the next part of the flow.
+ * Check Do you have an account validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page

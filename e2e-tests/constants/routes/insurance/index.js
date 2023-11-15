@@ -30,7 +30,7 @@ export const INSURANCE_ROUTES = {
     CANNOT_APPLY_MULTIPLE_RISKS: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/multiple-risks`,
     CHECK_YOUR_ANSWERS: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/check-your-answers`,
     ELIGIBLE_TO_APPLY_ONLINE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/eligible-to-apply-online`,
-    ACCOUNT_TO_APPLY_ONLINE: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/account-to-apply-online`,
+    HAVE_AN_ACCOUNT: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/do-you-have-an-account`,
     NEED_TO_START_AGAIN: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/need-to-start-again`,
   },
   APPLY_OFFLINE: `${INSURANCE_ROOT}/apply-using-our-form`,

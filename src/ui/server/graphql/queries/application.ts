@@ -101,7 +101,6 @@ const applicationQuery = gql`
           goodsOrServicesSupplied
           totalYearsExporting
           totalEmployeesUK
-          totalEmployeesInternational
           estimatedAnnualTurnover
           exportsTurnoverPercentage
         }

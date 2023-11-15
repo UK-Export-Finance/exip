@@ -70,8 +70,8 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_END_BUYER]: {
         IS_EMPTY: 'Select if there will be an end buyer for this export contract',
       },
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE]: {
-        IS_EMPTY: 'Select whether you have an account for UKEF export insurance',
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT]: {
+        IS_EMPTY: 'Select if you have a UK Export Finance account',
       },
     },
     EXPORTER_BUSINESS: {
@@ -85,7 +85,7 @@ export const ERROR_MESSAGES = {
         INCORRECT_FORMAT: 'Enter your company website in a valid format - like www.example.com',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.PHONE_NUMBER]: {
-        INCORRECT_FORMAT: 'Enter a UK telephone number',
+        INCORRECT_FORMAT: 'Enter a valid UK telephone number',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {
         IS_EMPTY: 'Enter the goods or services that your company supplies',
@@ -98,12 +98,6 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_UK]: {
         IS_EMPTY: 'Enter how many employees you have in the UK as a whole number - for example, 100',
         INCORRECT_FORMAT: 'Enter how many employees you have in the UK as a whole number. You cannot enter letters or special characters',
-      },
-      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_INTERNATIONAL]: {
-        IS_EMPTY: 'Enter how many employees you have worldwide, including UK, as a whole number - for example, 100',
-        INCORRECT_FORMAT: 'Enter how many employees you have worldwide, including UK, as a whole number. You cannot enter  letters or special characters',
-        BELOW_UK: 'Number of employees worldwide including UK must be greater or equal to the number of employees in the UK',
-        BELOW_MINIMUM: 'Number of employees worldwide must be more than 0',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.ESTIMATED_ANNUAL_TURNOVER]: {
         IS_EMPTY: 'Enter your estimated annual turnover for this current financial year',

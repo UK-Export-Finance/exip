@@ -84,14 +84,14 @@ const CHECK_YOUR_ANSWERS = {
 };
 
 const ELIGIBLE_TO_APPLY_ONLINE = {
-  PAGE_TITLE: "You're eligible to apply online",
+  PAGE_TITLE: "You're eligible to apply for insurance",
   INSET: 'This does not automatically guarantee cover.',
   BODY: 'You now need to fill in the application so we can assess the risks around your exports and your buyer.',
   SUBMIT_BUTTON: 'Continue to application',
 };
 
-const ACCOUNT_TO_APPLY_ONLINE = {
-  PAGE_TITLE: 'Do you already have an account for UKEF export insurance?',
+const HAVE_AN_ACCOUNT = {
+  PAGE_TITLE: 'Do you have an account with us?',
 };
 
 export default {
@@ -107,5 +107,5 @@ export default {
   END_BUYER,
   CHECK_YOUR_ANSWERS,
   ELIGIBLE_TO_APPLY_ONLINE,
-  ACCOUNT_TO_APPLY_ONLINE,
+  HAVE_AN_ACCOUNT,
 };

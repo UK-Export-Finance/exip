@@ -14,5 +14,5 @@ export const ELIGIBILITY_TEMPLATES = {
   END_BUYER: 'insurance/eligibility/end-buyer.njk',
   CHECK_YOUR_ANSWERS: 'insurance/eligibility/check-your-answers.njk',
   ELIGIBLE_TO_APPLY_ONLINE: 'insurance/eligibility/eligible-to-apply-online.njk',
-  ACCOUNT_TO_APPLY_ONLINE: 'insurance/eligibility/account-to-apply-online.njk',
+  HAVE_AN_ACCOUNT: 'insurance/eligibility/have-an-account.njk',
 };

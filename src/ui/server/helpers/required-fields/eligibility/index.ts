@@ -2,7 +2,7 @@ import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 
 const {
   ELIGIBILITY: {
-    ACCOUNT_TO_APPLY_ONLINE,
+    HAVE_AN_ACCOUNT,
     BUYER_COUNTRY_ISO_CODE,
     COMPANY,
     COMPANIES_HOUSE,
@@ -20,7 +20,7 @@ const {
  * List of field IDs that are not relevant.
  */
 export const irrelevantFields = [
-  ACCOUNT_TO_APPLY_ONLINE,
+  HAVE_AN_ACCOUNT,
   BUYER_COUNTRY_ISO_CODE,
   TOTAL_CONTRACT_VALUE,
   TOTAL_CONTRACT_VALUE_ID,
@@ -33,7 +33,7 @@ export const irrelevantFields = [
  * Required fields for the insurance - eligibility section
  * Strip out the following fields that are part of eligibility, but do not require data checks.
  * Therefore, we do not want these fields in the list of required eligibility fields.
- * 1) ACCOUNT_TO_APPLY_ONLINE field - has no data/value.
+ * 1) HAVE_AN_ACCOUNT field - has no data/value.
  * 2) BUYER_COUNTRY_ISO_CODE field - data is saved as BUYER_COUNTRY relationship object.
  * 3) TOTAL_CONTRACT_VALUE_ID field - data is saved as TOTAL_CONTRACT_VALUE relationship object.
  * 4) WANT_COVER_OVER_MAX_PERIOD - data is saved as COVER_PERIOD relationship object.

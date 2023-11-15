@@ -7,7 +7,7 @@ import { FIELD_IDS } from '../../../../../constants';
 
 const {
   EXPORTER_BUSINESS: {
-    NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
+    NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -19,7 +19,6 @@ describe('controllers/insurance/business/map-and-save/nature-of-business', () =>
     [GOODS_OR_SERVICES]: 'test',
     [YEARS_EXPORTING]: '5O',
     [EMPLOYEES_UK]: '3',
-    [EMPLOYEES_INTERNATIONAL]: '25',
   };
 
   const mockSaveBusiness = jest.fn(() => Promise.resolve({}));
@@ -49,7 +48,6 @@ describe('controllers/insurance/business/map-and-save/nature-of-business', () =>
         [GOODS_OR_SERVICES]: 'test',
         [YEARS_EXPORTING]: '5',
         [EMPLOYEES_UK]: '3',
-        [EMPLOYEES_INTERNATIONAL]: '25',
       };
 
       it('should call save.business with application and populated submitted data', async () => {
