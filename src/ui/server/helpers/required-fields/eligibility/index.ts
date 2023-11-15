@@ -11,6 +11,7 @@ const {
     WANT_COVER_OVER_MAX_PERIOD,
     TOTAL_CONTRACT_VALUE,
     COVER_PERIOD_ID,
+    HAS_END_BUYER,
     ...FIELD_IDS
   },
 } = INSURANCE_FIELD_IDS;
@@ -25,6 +26,7 @@ export const irrelevantFields = [
   TOTAL_CONTRACT_VALUE_ID,
   WANT_COVER_OVER_MAX_PERIOD,
   COVER_PERIOD_ID,
+  HAS_END_BUYER,
 ];
 
 /**

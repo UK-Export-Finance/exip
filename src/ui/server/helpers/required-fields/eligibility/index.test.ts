@@ -12,6 +12,7 @@ const {
     TOTAL_CONTRACT_VALUE,
     WANT_COVER_OVER_MAX_PERIOD,
     COVER_PERIOD_ID,
+    HAS_END_BUYER,
     ...FIELD_IDS
   },
 } = INSURANCE_FIELD_IDS;
@@ -26,6 +27,7 @@ describe('server/helpers/required-fields/eligibility', () => {
         TOTAL_CONTRACT_VALUE_ID,
         WANT_COVER_OVER_MAX_PERIOD,
         COVER_PERIOD_ID,
+        HAS_END_BUYER,
       ];
 
       expect(irrelevantFields).toEqual(expected);

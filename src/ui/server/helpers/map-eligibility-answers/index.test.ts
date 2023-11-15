@@ -5,7 +5,7 @@ import { mockEligibility } from '../../test-mocks';
 
 const {
   INSURANCE: {
-    ELIGIBILITY: { BUYER_COUNTRY, BUYER_COUNTRY_ISO_CODE, COVER_PERIOD_ID, TOTAL_CONTRACT_VALUE_ID },
+    ELIGIBILITY: { BUYER_COUNTRY, BUYER_COUNTRY_ISO_CODE, COVER_PERIOD_ID, TOTAL_CONTRACT_VALUE_ID, HAS_END_BUYER },
   },
 } = FIELD_IDS;
 
@@ -26,6 +26,10 @@ describe('server/helpers/map-eligibility-answers', () => {
         [COVER_PERIOD_ID]: mapCoverPeriodId(wantCoverOverMaxPeriodBoolean),
         [TOTAL_CONTRACT_VALUE_ID]: totalContractValue,
       };
+
+      // TODO: EMS-2227
+      // temporarily exclude HAS_END_BUYER until the DB/API has been updated.
+      delete expected[HAS_END_BUYER];
 
       expect(result).toEqual(expected);
     });
