@@ -5,7 +5,7 @@ import { stripCommas } from '../../../../../helpers/string';
 
 const {
   EXPORTER_BUSINESS: {
-    NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
+    NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_UK },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -24,10 +24,6 @@ const mapSubmittedData = (formBody: RequestBody): object => {
 
   if (objectHasProperty(populatedData, EMPLOYEES_UK)) {
     populatedData[EMPLOYEES_UK] = stripCommas(populatedData[EMPLOYEES_UK]);
-  }
-
-  if (objectHasProperty(populatedData, EMPLOYEES_INTERNATIONAL)) {
-    populatedData[EMPLOYEES_INTERNATIONAL] = stripCommas(populatedData[EMPLOYEES_INTERNATIONAL]);
   }
 
   return populatedData;

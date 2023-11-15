@@ -5,7 +5,7 @@ import { mockBusinessNatureOfBusiness } from '../../../../../test-mocks';
 import { stripCommas } from '../../../../../helpers/string';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
-const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
+const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
 
 describe('controllers/insurance/business/nature-of-business/map-submitted-data', () => {
   describe('when all fields are provided and all number fields contain a comma', () => {
@@ -21,7 +21,6 @@ describe('controllers/insurance/business/nature-of-business/map-submitted-data',
         [GOODS_OR_SERVICES]: mockBody[GOODS_OR_SERVICES],
         [YEARS_EXPORTING]: stripCommas(mockBody[YEARS_EXPORTING]),
         [EMPLOYEES_UK]: stripCommas(mockBody[EMPLOYEES_UK]),
-        [EMPLOYEES_INTERNATIONAL]: stripCommas(mockBody[EMPLOYEES_INTERNATIONAL]),
       };
 
       expect(response).toEqual(expected);
@@ -34,7 +33,6 @@ describe('controllers/insurance/business/nature-of-business/map-submitted-data',
         _csrf: '1234',
         [GOODS_OR_SERVICES]: 'ABC',
         [YEARS_EXPORTING]: '20',
-        [EMPLOYEES_INTERNATIONAL]: '1000',
         [EMPLOYEES_UK]: '400',
       } as RequestBody;
 
@@ -44,7 +42,6 @@ describe('controllers/insurance/business/nature-of-business/map-submitted-data',
         [GOODS_OR_SERVICES]: mockBody[GOODS_OR_SERVICES],
         [YEARS_EXPORTING]: mockBody[YEARS_EXPORTING],
         [EMPLOYEES_UK]: mockBody[EMPLOYEES_UK],
-        [EMPLOYEES_INTERNATIONAL]: mockBody[EMPLOYEES_INTERNATIONAL],
       };
 
       expect(response).toEqual(expected);
@@ -57,7 +54,6 @@ describe('controllers/insurance/business/nature-of-business/map-submitted-data',
         _csrf: '1234',
         [GOODS_OR_SERVICES]: 'ABC',
         [YEARS_EXPORTING]: '',
-        [EMPLOYEES_INTERNATIONAL]: '',
         [EMPLOYEES_UK]: '',
       } as RequestBody;
 
@@ -67,7 +63,6 @@ describe('controllers/insurance/business/nature-of-business/map-submitted-data',
         [GOODS_OR_SERVICES]: mockBody[GOODS_OR_SERVICES],
         [YEARS_EXPORTING]: mockBody[YEARS_EXPORTING],
         [EMPLOYEES_UK]: mockBody[EMPLOYEES_UK],
-        [EMPLOYEES_INTERNATIONAL]: mockBody[EMPLOYEES_INTERNATIONAL],
       };
 
       expect(response).toEqual(expected);
@@ -80,7 +75,6 @@ describe('controllers/insurance/business/nature-of-business/map-submitted-data',
         _csrf: '1234',
         [GOODS_OR_SERVICES]: '',
         [YEARS_EXPORTING]: '',
-        [EMPLOYEES_INTERNATIONAL]: '',
         [EMPLOYEES_UK]: '',
       } as RequestBody;
 
@@ -90,7 +84,6 @@ describe('controllers/insurance/business/nature-of-business/map-submitted-data',
         [GOODS_OR_SERVICES]: mockBody[GOODS_OR_SERVICES],
         [YEARS_EXPORTING]: mockBody[YEARS_EXPORTING],
         [EMPLOYEES_UK]: mockBody[EMPLOYEES_UK],
-        [EMPLOYEES_INTERNATIONAL]: mockBody[EMPLOYEES_INTERNATIONAL],
       };
 
       expect(response).toEqual(expected);

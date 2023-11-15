@@ -9,7 +9,6 @@ const {
     GOODS_OR_SERVICES,
     YEARS_EXPORTING,
     EMPLOYEES_UK,
-    EMPLOYEES_INTERNATIONAL,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
@@ -101,7 +100,6 @@ context('Insurance - Your business - Nature of your business page - Save and bac
       field(GOODS_OR_SERVICES).textarea().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
       field(YEARS_EXPORTING).input().should('have.value', '');
       field(EMPLOYEES_UK).input().should('have.value', '');
-      field(EMPLOYEES_INTERNATIONAL).input().should('have.value', '');
     });
   });
 
@@ -112,7 +110,6 @@ context('Insurance - Your business - Nature of your business page - Save and bac
       cy.keyboardInput(field(GOODS_OR_SERVICES).textarea(), application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
       cy.keyboardInput(field(YEARS_EXPORTING).input(), application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
       cy.keyboardInput(field(EMPLOYEES_UK).input(), application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
-      cy.keyboardInput(field(EMPLOYEES_INTERNATIONAL).input(), application.EXPORTER_BUSINESS[EMPLOYEES_INTERNATIONAL]);
 
       saveAndBackButton().click();
     });
@@ -135,7 +132,6 @@ context('Insurance - Your business - Nature of your business page - Save and bac
       field(GOODS_OR_SERVICES).textarea().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
       field(YEARS_EXPORTING).input().should('have.value', application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
       field(EMPLOYEES_UK).input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
-      field(EMPLOYEES_INTERNATIONAL).input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_INTERNATIONAL]);
     });
   });
 });

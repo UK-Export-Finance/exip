@@ -86,7 +86,6 @@ interface ApplicationBusiness {
   goodsOrServices?: string;
   totalYearsExporting?: string;
   totalEmployeesUK?: string;
-  totalEmployeesInternational?: string;
 }
 
 interface ApplicationBroker {

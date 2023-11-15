@@ -20,7 +20,6 @@ const {
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES,
     YEARS_EXPORTING,
-    EMPLOYEES_INTERNATIONAL,
     EMPLOYEES_UK,
   },
   TURNOVER: {
@@ -99,10 +98,6 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
 
   it(`should render a ${EMPLOYEES_UK} summary list row`, () => {
     checkSummaryList[EMPLOYEES_UK]();
-  });
-
-  it(`should render a ${EMPLOYEES_INTERNATIONAL} summary list row`, () => {
-    checkSummaryList[EMPLOYEES_INTERNATIONAL]();
   });
 
   it(`should render a ${ESTIMATED_ANNUAL_TURNOVER} summary list row`, () => {

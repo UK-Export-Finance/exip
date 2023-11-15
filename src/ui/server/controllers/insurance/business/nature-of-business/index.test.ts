@@ -12,7 +12,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
-const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_INTERNATIONAL, EMPLOYEES_UK } = BUSINESS_FIELD_IDS.NATURE_OF_YOUR_BUSINESS;
+const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK } = BUSINESS_FIELD_IDS.NATURE_OF_YOUR_BUSINESS;
 
 const { NATURE_OF_YOUR_BUSINESS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -60,7 +60,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      expect(FIELD_IDS).toEqual([GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL]);
+      expect(FIELD_IDS).toEqual([GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK]);
     });
   });
 
@@ -82,10 +82,6 @@ describe('controllers/insurance/business/nature-of-business', () => {
           EMPLOYEES_UK: {
             ID: EMPLOYEES_UK,
             ...NATURE_OF_YOUR_BUSINESS_FIELDS[EMPLOYEES_UK],
-          },
-          EMPLOYEES_INTERNATIONAL: {
-            ID: EMPLOYEES_INTERNATIONAL,
-            ...NATURE_OF_YOUR_BUSINESS_FIELDS[EMPLOYEES_INTERNATIONAL],
           },
         },
         POST_ROUTES: {
@@ -158,7 +154,6 @@ describe('controllers/insurance/business/nature-of-business', () => {
         [GOODS_OR_SERVICES]: 'test',
         [YEARS_EXPORTING]: '5',
         [EMPLOYEES_UK]: '3',
-        [EMPLOYEES_INTERNATIONAL]: '25',
       };
 
       it('should redirect to next page', async () => {

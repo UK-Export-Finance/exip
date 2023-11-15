@@ -5,7 +5,7 @@ import { mockApplication } from '../../../../../test-mocks';
 
 const {
   EXPORTER_BUSINESS: {
-    NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
+    NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -17,7 +17,6 @@ describe('controllers/insurance/business/save-data/business - API error', () => 
     [GOODS_OR_SERVICES]: 'test',
     [YEARS_EXPORTING]: '5',
     [EMPLOYEES_UK]: '3',
-    [EMPLOYEES_INTERNATIONAL]: '25',
   };
 
   beforeEach(() => {

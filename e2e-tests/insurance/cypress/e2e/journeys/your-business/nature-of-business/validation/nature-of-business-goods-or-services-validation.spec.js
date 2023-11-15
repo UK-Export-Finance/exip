@@ -48,7 +48,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
   const field = fieldSelector(fieldId);
   const textareaField = { ...field, input: field.textarea };
 
-  const expectedErrorsCount = 4;
+  const expectedErrorsCount = 3;
 
   describe(`when ${GOODS_OR_SERVICES} is left empty`, () => {
     it('should display validation errors', () => {
@@ -102,7 +102,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       submitButton().click();
 
       cy.checkErrorSummaryListHeading();
-      partials.errorSummaryListItems().should('have.length', 3);
+      partials.errorSummaryListItems().should('have.length', 2);
     });
   });
 });
