@@ -31,7 +31,7 @@ const { TABLE_HEADERS } = CONTENT_STRINGS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Dashboard - new application - As an Exporter, I want to access my UKEF export insurance application from my dashboard, So that I can easily complete my application', () => {
+context('Insurance - Dashboard - new application - As an Exporter, I want to access my UKEF credit insurance application from my dashboard, So that I can easily complete my application', () => {
   let referenceNumber;
   const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 

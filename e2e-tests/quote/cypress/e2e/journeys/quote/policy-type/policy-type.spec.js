@@ -23,7 +23,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Policy type page - as an exporter, I want to get UKEF export insurance quote based on the export policy - provide policy type', () => {
+context('Policy type page - as an exporter, I want to get UKEF credit insurance quote based on the export policy - provide policy type', () => {
   const url = `${baseUrl}${POLICY_TYPE_ROUTE}`;
 
   before(() => {

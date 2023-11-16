@@ -31,7 +31,7 @@ const CHECK_YOUR_ANSWERS = {
 };
 
 const CANNOT_APPLY = {
-  PAGE_TITLE: 'You cannot apply for UKEF export insurance',
+  PAGE_TITLE: 'You cannot apply for UKEF credit insurance',
   REASON: {
     INTRO: 'This is because',
     UNSUPPORTED_COMPANY_COUNTRY: "you're not exporting from a business base in the UK, Channel Islands or Isle of Man.We can only provide cover for UK businesses.",
@@ -87,7 +87,7 @@ const GET_A_QUOTE_BY_EMAIL = {
 };
 
 const YOUR_QUOTE = {
-  PAGE_TITLE: 'You can apply for UKEF export insurance',
+  PAGE_TITLE: 'You can apply for UKEF credit insurance',
   QUOTE: {
     SUB_HEADING: 'Your quote',
   },

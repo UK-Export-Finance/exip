@@ -24,7 +24,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Your quote page - change answers (policy type and length from multiple to single) - as an exporter, I want to get an Export insurance quote', () => {
+context('Your quote page - change answers (policy type and length from multiple to single) - as an exporter, I want to get an Credit insurance quote', () => {
   const url = `${baseUrl}${YOUR_QUOTE}`;
 
   before(() => {

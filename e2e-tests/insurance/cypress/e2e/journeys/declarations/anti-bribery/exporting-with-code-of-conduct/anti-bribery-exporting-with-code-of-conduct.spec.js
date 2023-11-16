@@ -28,7 +28,7 @@ const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.WILL_EXPORT_WITH_CODE_OF_CONDU
 
 const baseUrl = Cypress.config('baseUrl');
 
-context("Insurance - Declarations - Anti-bribery - Exporting with code of conduct page - As an Exporter, I want to confirm if I will use my company's anti - bribery code of conduct for my export insurance application, So that UKEF can refer to it as applicable when processing my export insurance application", () => {
+context("Insurance - Declarations - Anti-bribery - Exporting with code of conduct page - As an Exporter, I want to confirm if I will use my company's anti - bribery code of conduct for my credit insurance application, So that UKEF can refer to it as applicable when processing my credit insurance application", () => {
   let referenceNumber;
   let url;
 

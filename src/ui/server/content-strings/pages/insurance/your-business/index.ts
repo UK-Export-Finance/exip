@@ -67,7 +67,7 @@ const EXPORTER_BUSINESS = {
     LINE_2: 'You can find your nearest one on',
     LINK_TEXT: "UKEF's list of approved brokers.",
     LINE_3: 'Alternatively, you can use any broker you prefer. They do not have to be approved by UKEF.',
-    LINE_4: 'Appointing a broker does not change the cost to you of any UKEF export insurance policy.',
+    LINE_4: 'Appointing a broker does not change the cost to you of any UKEF credit insurance policy.',
   },
   CHECK_YOUR_ANSWERS: {
     ...SHARED,

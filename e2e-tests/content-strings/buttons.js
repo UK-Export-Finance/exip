@@ -5,7 +5,7 @@ export const BUTTONS = {
   CONTINUE_NEXT_SECTION: 'Continue to next section',
   CONFIRM_AND_CONTINUE: 'Confirm and continue',
   CONTINUE_TO_SIGN_IN: 'Continue to sign in',
-  GET_A_QUOTE_FOR_INSURANCE: 'Get a quote for export insurance',
+  GET_A_QUOTE_FOR_INSURANCE: 'Get a quote for credit insurance',
   NEXT: 'Next',
   PREVIOUS: 'Previous',
   REACTIVATE_ACCOUNT: 'Reactivate account',

@@ -26,7 +26,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Policy - I want to confirm my selection for the policy section of my export insurance application', () => {
+context('Insurance - Check your answers - Policy - I want to confirm my selection for the policy section of my credit insurance application', () => {
   let referenceNumber;
   let url;
   let allSectionsUrl;

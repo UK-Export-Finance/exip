@@ -33,7 +33,7 @@ const DASHBOARD = {
 };
 
 const ALL_SECTIONS = {
-  PAGE_TITLE: 'Apply for UKEF export insurance',
+  PAGE_TITLE: 'Apply for UKEF credit insurance',
   DEADLINE_TO_SUBMIT: 'Deadline to submit',
   REFERENCE_NUMBER: 'Your reference',
 };
@@ -89,8 +89,8 @@ const SPEAK_TO_UKEF_EFM = {
 };
 
 const START = {
-  PAGE_TITLE: 'Apply for UKEF export insurance',
-  INTRO: 'Use this service to make a full application for export insurance from UK Export Finance (UKEF).',
+  PAGE_TITLE: 'Apply for UKEF credit insurance',
+  INTRO: 'Use this service to make a full application for credit insurance from UK Export Finance (UKEF).',
   LIST: {
     INTRO: "You'll need your:",
     ITEMS: [
@@ -115,7 +115,7 @@ const START = {
   FIND_OUT_MORE: {
     YOU_CAN: 'You can',
     LINK: {
-      TEXT: 'find out more about UKEF export insurance',
+      TEXT: 'find out more about UKEF credit insurance',
       HREF: LINKS.EXTERNAL.GUIDANCE,
     },
     TO_FIND_OUT_MORE: "if you want to know who's eligible and what's covered.",
