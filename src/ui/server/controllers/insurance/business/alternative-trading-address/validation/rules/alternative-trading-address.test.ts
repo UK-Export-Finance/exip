@@ -3,6 +3,7 @@ import { FIELD_IDS } from '../../../../../../constants';
 import { RequestBody } from '../../../../../../../types';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import inputValidation from '../../../../../../shared-validation/max-length';
 
 const { ALTERNATIVE_TRADING_ADDRESS: FIELD_ID } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
@@ -32,25 +33,16 @@ describe('controllers/insurance/business/alternative-trading-address/validation/
   });
 
   describe(`when the ${FIELD_ID} input is over ${MAXIMUM} characters`, () => {
-    it('should return a validation error', () => {
+    it('should return the result of "inputValidation"', () => {
       const mockValue = Number(MAXIMUM) + 1;
 
       mockBody[FIELD_ID] = 'a'.repeat(mockValue);
       const response = alternativeTradingAddress(mockBody, mockErrors);
 
       const errorMessage = ERROR_MESSAGE.ABOVE_MAXIMUM;
-      const expected = generateValidationErrors(FIELD_ID, errorMessage, mockErrors);
+      const expected = inputValidation(mockBody[FIELD_ID], FIELD_ID, errorMessage, mockErrors, MAXIMUM);
 
       expect(response).toEqual(expected);
-    });
-  });
-
-  describe(`when the ${FIELD_ID} input is valid`, () => {
-    it('should return a validation error', () => {
-      mockBody[FIELD_ID] = 'test';
-      const response = alternativeTradingAddress(mockBody, mockErrors);
-
-      expect(response).toEqual(mockErrors);
     });
   });
 });

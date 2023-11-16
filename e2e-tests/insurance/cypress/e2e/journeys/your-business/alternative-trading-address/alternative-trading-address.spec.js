@@ -97,8 +97,6 @@ context('Insurance - Your business - Alternative trading address page - I want t
     });
 
     it(`should display validation errors if ${ALTERNATIVE_TRADING_ADDRESS} is left empty`, () => {
-      cy.navigateToUrl(alternativeAddressUrl);
-
       const errorMessage = ERRORS[ALTERNATIVE_TRADING_ADDRESS].IS_EMPTY;
 
       cy.submitAndAssertFieldErrors(
