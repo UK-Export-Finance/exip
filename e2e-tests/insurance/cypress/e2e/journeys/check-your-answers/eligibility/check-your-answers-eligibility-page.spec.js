@@ -25,7 +25,7 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-context('Insurance - Check your answers - Eligibility page - I want to confirm my selection for the eligibility section of my export insurance application ', () => {
+context('Insurance - Check your answers - Eligibility page - I want to confirm my selection for the eligibility section of my credit insurance application ', () => {
   let referenceNumber;
   let url;
   let allSectionsUrl;

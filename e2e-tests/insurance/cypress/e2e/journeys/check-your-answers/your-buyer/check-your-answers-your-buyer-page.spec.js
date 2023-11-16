@@ -23,7 +23,7 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-context('Insurance - Check your answers - Your buyer page - I want to confirm my selection for the your buyer section of my export insurance application', () => {
+context('Insurance - Check your answers - Your buyer page - I want to confirm my selection for the your buyer section of my credit insurance application', () => {
   let referenceNumber;
   let url;
   let allSectionsUrl;

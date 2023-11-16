@@ -48,7 +48,7 @@ const ERROR_ASSERTIONS = {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your business - Broker Page - As an Exporter I want to confirm if I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my export insurance', () => {
+context('Insurance - Your business - Broker Page - As an Exporter I want to confirm if I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my credit insurance', () => {
   let referenceNumber;
   let url;
   let checkYourAnswersUrl;

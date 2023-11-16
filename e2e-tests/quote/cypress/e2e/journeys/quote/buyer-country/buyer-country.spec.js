@@ -14,7 +14,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based', () => {
+context('Buyer country page - as an exporter, I want to check if UKEF issue credit insurance cover for where my buyer is based', () => {
   beforeEach(() => {
     cy.login();
 

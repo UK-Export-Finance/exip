@@ -37,7 +37,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Tell us about your multiple policy page - as an exporter, I want to provide my Export insurance policy details', () => {
+context('Tell us about your multiple policy page - as an exporter, I want to provide my Credit insurance policy details', () => {
   const url = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 
   before(() => {

@@ -18,7 +18,7 @@ const UK_GOODS_OR_SERVICES = {
 };
 
 const CANNOT_APPLY = {
-  PAGE_TITLE: 'You cannot apply for UKEF export insurance',
+  PAGE_TITLE: 'You cannot apply for UKEF credit insurance',
   REASON: {
     INTRO: 'This is because',
     UNSUPPORTED_COMPANY_COUNTRY:
@@ -31,8 +31,8 @@ const CANNOT_APPLY = {
 };
 
 const ACCESSIBILITY_STATEMENT_PAGE = {
-  PAGE_TITLE: 'Apply for export insurance - accessibility statement',
-  HEADING: 'Apply for export insurance - accessibility statement',
+  PAGE_TITLE: 'Apply for credit insurance - accessibility statement',
+  HEADING: 'Apply for credit insurance - accessibility statement',
   USING_OUR_SERVICE: {
     HEADING: 'Using our service',
     INTRO: 'This service is run by UK Export Finance. We want as many people as possible to use this service. For example, that means you should be able to:',

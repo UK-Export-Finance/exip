@@ -14,7 +14,7 @@ const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based - submit country that can only apply offline/via a physical form', () => {
+context('Buyer country page - as an exporter, I want to check if UKEF issue credit insurance cover for where my buyer is based - submit country that can only apply offline/via a physical form', () => {
   const buyerCountryUrl = BUYER_COUNTRY;
 
   before(() => {

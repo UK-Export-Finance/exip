@@ -34,7 +34,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover', () => {
+context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF credit insurance cover', () => {
   const url = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
 
   before(() => {

@@ -13,7 +13,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Exporter location page - as an exporter, I want to check if my company can get UKEF issue export insurance cover - submit `not based inside the UK`', () => {
+context('Insurance - Exporter location page - as an exporter, I want to check if my company can get UKEF issue credit insurance cover - submit `not based inside the UK`', () => {
   const url = `${baseUrl}${EXPORTER_LOCATION}`;
 
   before(() => {

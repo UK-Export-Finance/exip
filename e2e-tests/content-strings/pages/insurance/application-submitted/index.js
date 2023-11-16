@@ -12,7 +12,7 @@ const APPLICATION_SUBMITTED = {
       INTRO: "We'll contact you by email shortly if you told us you have:",
       LIST: ['an anti-bribery code of conduct', 'a trading history with the buyer'],
     },
-    CLIMATE_CHANGE_FACTORS: 'We also take climate change factors into account before deciding if we can offer export insurance for your business. We may contact you with extra questions if we need to assess the environmental impact of your exports.',
+    CLIMATE_CHANGE_FACTORS: 'We also take climate change factors into account before deciding if we can offer credit insurance for your business. We may contact you with extra questions if we need to assess the environmental impact of your exports.',
   },
   DECISION_FROM_US: {
     HEADING: "When you'll get a decision from us",

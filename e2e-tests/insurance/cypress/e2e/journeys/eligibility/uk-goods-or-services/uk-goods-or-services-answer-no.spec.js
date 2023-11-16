@@ -7,7 +7,7 @@ import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/fo
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 
-context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover - submit `no - UK goods/services is below the minimum`', () => {
+context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF credit insurance cover - submit `no - UK goods/services is below the minimum`', () => {
   beforeEach(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
 
