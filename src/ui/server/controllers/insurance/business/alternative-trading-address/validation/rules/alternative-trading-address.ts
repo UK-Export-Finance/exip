@@ -3,6 +3,7 @@ import { FIELD_IDS } from '../../../../../../constants';
 import { RequestBody } from '../../../../../../../types';
 import { objectHasProperty } from '../../../../../../helpers/object';
 import generateValidationErrors from '../../../../../../helpers/validation';
+import inputValidation from '../../../../../../shared-validation/max-length';
 
 const { ALTERNATIVE_TRADING_ADDRESS: FIELD_ID } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
@@ -25,12 +26,7 @@ const alternativeTradingAddress = (responseBody: RequestBody, errors: object) =>
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
   }
 
-  // check if the field is above the maximum
-  if (responseBody[FIELD_ID].length > MAXIMUM) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors);
-  }
-
-  return errors;
+  return inputValidation(responseBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors, MAXIMUM);
 };
 
 export default alternativeTradingAddress;
