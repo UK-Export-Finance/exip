@@ -23,6 +23,13 @@ export const ACTIONS = {
     },
     TEXT: 'to find out more about your options',
   },
+  FIND_EFM: {
+    LINK: {
+      TEXT: 'Find your nearest export finance manager',
+      HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
+    },
+    TEXT: 'to discuss this.',
+  },
 };
 
 export default ACTIONS;
