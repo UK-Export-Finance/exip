@@ -32,15 +32,12 @@ const COMPANIES_HOUSE_NUMBER = {
   PAGE_TITLE: 'Enter your Companies House number',
 };
 
-const COMPANIES_HOUSE_EXIT = {
-  PAGE_TITLE: 'You cannot apply for credit insurance',
-  ACTIONS,
-};
-
 const NO_COMPANIES_HOUSE_NUMBER = {
-  ...COMPANIES_HOUSE_EXIT,
+  PAGE_TITLE: 'You cannot apply for credit insurance',
   ACTIONS: {
-    ...COMPANIES_HOUSE_EXIT.ACTIONS,
+    ELIGIBILITY: ACTIONS.ELIGIBILITY,
+    CONTACT_APPROVED_BROKER: ACTIONS.CONTACT_APPROVED_BROKER,
+    CONTACT_EFM: ACTIONS.CONTACT_EFM,
     UPDATE_COMPANY_DETAILS: {
       TEXT: 'update your company details on',
       LINK: {
@@ -64,8 +61,12 @@ const COMPANIES_HOUSE_UNAVAILABLE = {
 };
 
 const COMPANY_NOT_ACTIVE = {
-  ...COMPANIES_HOUSE_EXIT,
+  PAGE_TITLE: 'You need to speak with an export finance manager',
   BODY: "This is because you do not have a UK Companies House registration number for a company that's actively trading.",
+  ACTIONS: {
+    INTRO: 'You can still apply. But you should talk to a export finance manager before you try again.',
+    FIND_EFM: ACTIONS.FIND_EFM,
+  },
 };
 
 const COMPANY_DETAILS = {
