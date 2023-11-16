@@ -78,6 +78,22 @@ export const END_BUYER = {
   PAGE_TITLE: 'Does your buyer need to be paid by someone else before they can pay you?',
 };
 
+export const CANNOT_APPLY_MULTIPLE_RISKS = {
+  PAGE_TITLE: 'You cannot apply for credit insurance',
+  INTRO: 'We can only provide cover for a single risk. As your buyer is reliant on an end buyer, it means that we would have to cover two risks:',
+  LIST: ['your buyer not paying you', 'your buyer not being paid by their end buyer'],
+  ACTIONS: {
+    MAYBE_ABLE_TO_GET_COVER: 'You may still be able to get cover, but not through this service. Contact',
+    CONTACT_EFM: {
+      LINK: {
+        TEXT: 'your nearest export finance manager',
+        HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
+      },
+      TEXT: 'to find out more about your options.',
+    },
+  },
+};
+
 export const CHECK_YOUR_ANSWERS = {
   HEADING_CAPTION: 'Eligibility',
   PAGE_TITLE: 'Check your answers',

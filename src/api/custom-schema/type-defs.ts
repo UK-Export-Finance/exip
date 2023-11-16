@@ -175,11 +175,12 @@ const typeDefs = `
 
   input ApplicationEligibility {
     buyerCountryIsoCode: String!
-    hasCompaniesHouseNumber: Boolean!
-    totalContractValueId: Int!
     coverPeriodId: Int!
-    validExporterLocation: Boolean!
+    hasCompaniesHouseNumber: Boolean!
+    hasEndBuyer: Boolean!
     hasMinimumUkGoodsOrServices: Boolean!
+    totalContractValueId: Int!
+    validExporterLocation: Boolean!
   }
 
   type CreateAnApplicationResponse {

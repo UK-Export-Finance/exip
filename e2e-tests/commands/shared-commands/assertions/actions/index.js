@@ -50,24 +50,41 @@ export const checkActionContactApprovedBroker = () => {
 /**
  * checkActionTalkToYourNearestEFMLink
  * Check "talk to your nearest EFM" action content link.
+ * @param {String} Expected link href
+ * @param {String} Expected link text
  */
-export const checkActionTalkToYourNearestEFMLink = () => {
+export const checkActionTalkToYourNearestEFMLink = ({
+  expectedHref,
+  expectedText,
+}) => {
   cy.checkLink(
     actionSelectors.contactEFMLink(),
-    CONTACT_EFM.LINK.HREF,
-    CONTACT_EFM.LINK.TEXT,
+    expectedHref || CONTACT_EFM.LINK.HREF,
+    expectedText || CONTACT_EFM.LINK.TEXT,
   );
 };
 
 /**
  * checkActionTalkToYourNearestEFM
  * Check "talk to your nearest EFM" action content.
+ * @param {String} Expected text
+ * @param {String} Expected link href
+ * @param {String} Expected link text
  */
-export const checkActionTalkToYourNearestEFM = () => {
+export const checkActionTalkToYourNearestEFM = ({
+  expectedText,
+  expectedLinkHref,
+  expectedLinkText,
+}) => {
+  const textAssertion = expectedText || `${CONTACT_EFM.LINK.TEXT} ${CONTACT_EFM.TEXT}`;
+
   cy.checkText(
     actionSelectors.contactEFM(),
-    `${CONTACT_EFM.LINK.TEXT} ${CONTACT_EFM.TEXT}`,
+    textAssertion,
   );
 
-  checkActionTalkToYourNearestEFMLink();
+  checkActionTalkToYourNearestEFMLink({
+    expectedHref: expectedLinkHref,
+    expectedText: expectedLinkText,
+  });
 };

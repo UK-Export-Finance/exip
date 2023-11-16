@@ -1348,13 +1348,14 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       buyerCountry: (0, import_fields.relationship)({ ref: "Country" }),
+      coverPeriod: (0, import_fields.relationship)({ ref: "CoverPeriod" }),
+      hasEndBuyer: (0, import_fields.checkbox)(),
       hasMinimumUkGoodsOrServices: (0, import_fields.checkbox)(),
-      validExporterLocation: (0, import_fields.checkbox)(),
       hasCompaniesHouseNumber: (0, import_fields.checkbox)(),
       otherPartiesInvolved: (0, import_fields.checkbox)(),
       paidByLetterOfCredit: (0, import_fields.checkbox)(),
       totalContractValue: (0, import_fields.relationship)({ ref: "TotalContractValue" }),
-      coverPeriod: (0, import_fields.relationship)({ ref: "CoverPeriod" })
+      validExporterLocation: (0, import_fields.checkbox)()
     },
     access: import_access.allowAll
   }),
@@ -1743,11 +1744,12 @@ var typeDefs = `
 
   input ApplicationEligibility {
     buyerCountryIsoCode: String!
-    hasCompaniesHouseNumber: Boolean!
-    totalContractValueId: Int!
     coverPeriodId: Int!
-    validExporterLocation: Boolean!
+    hasCompaniesHouseNumber: Boolean!
+    hasEndBuyer: Boolean!
     hasMinimumUkGoodsOrServices: Boolean!
+    totalContractValueId: Int!
+    validExporterLocation: Boolean!
   }
 
   type CreateAnApplicationResponse {
