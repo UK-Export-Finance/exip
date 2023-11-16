@@ -64,7 +64,7 @@ context('Insurance - Eligibility - Company not active - I want to check if I can
         cy.checkActionTalkToYourNearestEFM({
           expectedText: `${FIND_EFM.LINK.TEXT} ${FIND_EFM.TEXT}`,
           expectedLinkHref: FIND_EFM.LINK.HREF,
-          expectedLinkText: FIND_EFM.LINK.TEXT
+          expectedLinkText: FIND_EFM.LINK.TEXT,
         });
       });
     });
