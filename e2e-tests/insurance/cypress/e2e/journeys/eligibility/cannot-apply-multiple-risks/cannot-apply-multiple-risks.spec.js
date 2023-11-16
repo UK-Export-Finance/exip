@@ -21,7 +21,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('TODO - Insurance - Cannot apply - multiple risks page - as an exporter, I want to confirm if payment by the buyer of my export depends on payment from an end buyer, So that I can UKEF have clarity of my export transaction', () => {
+context('Insurance - Cannot apply - multiple risks page - as an exporter, I want to confirm if payment by the buyer of my export depends on payment from an end buyer, So that I can UKEF have clarity of my export transaction', () => {
   const url = `${baseUrl}${CANNOT_APPLY_MULTIPLE_RISKS}`;
 
   before(() => {
