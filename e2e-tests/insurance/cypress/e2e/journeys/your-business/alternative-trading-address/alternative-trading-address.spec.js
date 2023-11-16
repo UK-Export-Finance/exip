@@ -60,9 +60,9 @@ context('Insurance - Your business - Alternative trading address page - I want t
     cy.saveSession();
   });
 
-  // after(() => {
-  //   cy.deleteApplication(referenceNumber);
-  // });
+  after(() => {
+    cy.deleteApplication(referenceNumber);
+  });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
