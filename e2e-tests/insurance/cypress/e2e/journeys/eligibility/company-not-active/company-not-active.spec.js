@@ -1,9 +1,13 @@
-import { body } from '../../../../../../pages/shared';
+import { body, actions } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { COMPANIES_HOUSE_NUMBER_NOT_ACTIVE } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANY_NOT_ACTIVE;
+
+const {
+  ACTIONS: { FIND_EFM },
+} = CONTENT_STRINGS;
 
 const {
   START,
@@ -52,22 +56,16 @@ context('Insurance - Eligibility - Company not active - I want to check if I can
     });
 
     describe('actions', () => {
-      it('should render `eligibility` copy and link', () => {
-        cy.checkActionReadAboutEligibility();
+      it('should render an intro', () => {
+        cy.checkText(actions.intro(), CONTENT_STRINGS.ACTIONS.INTRO);
       });
 
-      describe('when clicking `eligibility` link', () => {
-        it('should redirect to an external URL', () => {
-          cy.checkActionReadAboutEligibilityLinkRedirect();
+      it('should render `find your nearest EFM` copy and link', () => {
+        cy.checkActionTalkToYourNearestEFM({
+          expectedText: `${FIND_EFM.LINK.TEXT} ${FIND_EFM.TEXT}`,
+          expectedLinkHref: FIND_EFM.LINK.HREF,
+          expectedLinkText: FIND_EFM.LINK.TEXT,
         });
-      });
-
-      it('should render `contact an approved broker` copy and link', () => {
-        cy.checkActionContactApprovedBroker();
-      });
-
-      it('should render `talk to your nearest EFM` copy and link', () => {
-        cy.checkActionTalkToYourNearestEFM({});
       });
     });
   });
