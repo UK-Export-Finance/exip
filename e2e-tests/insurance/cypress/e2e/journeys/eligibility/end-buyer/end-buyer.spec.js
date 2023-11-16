@@ -97,7 +97,7 @@ context('Insurance - End buyer page - as an exporter, I want to confirm if payme
           cy.checkText(endBuyerPage.outro.singleRiskOnly(), END_BUYERS_DESCRIPTION.OUTRO.SINGLE_RISK_ONLY);
           cy.checkText(endBuyerPage.outro.tryingMultipleRisk(), END_BUYERS_DESCRIPTION.OUTRO.IF_TRYING_MULTIPLE_RISKS);
 
-          cy.checkActionTalkToYourNearestEFMLink();
+          cy.checkActionTalkToYourNearestEFMLink({});
 
           cy.checkText(endBuyerPage.outro.toFindOutMore(), END_BUYERS_DESCRIPTION.OUTRO.TO_FIND_OUT_MORE);
         });
