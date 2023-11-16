@@ -21,8 +21,13 @@ const applicationQuery = gql`
             isoCode
             name
           }
+          coverPeriod {
+            id
+            value
+            valueId
+          }
           hasMinimumUkGoodsOrServices
-          validExporterLocation
+          hasEndBuyer
           hasCompaniesHouseNumber
           otherPartiesInvolved
           paidByLetterOfCredit
@@ -31,11 +36,7 @@ const applicationQuery = gql`
             value
             valueId
           }
-          coverPeriod {
-            id
-            value
-            valueId
-          }
+          validExporterLocation
         }
         policy {
           id

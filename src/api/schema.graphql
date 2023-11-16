@@ -1461,13 +1461,14 @@ type Eligibility {
   id: ID!
   application: Application
   buyerCountry: Country
+  coverPeriod: CoverPeriod
+  hasEndBuyer: Boolean
   hasMinimumUkGoodsOrServices: Boolean
-  validExporterLocation: Boolean
   hasCompaniesHouseNumber: Boolean
   otherPartiesInvolved: Boolean
   paidByLetterOfCredit: Boolean
   totalContractValue: TotalContractValue
-  coverPeriod: CoverPeriod
+  validExporterLocation: Boolean
 }
 
 input EligibilityWhereUniqueInput {
@@ -1481,45 +1482,48 @@ input EligibilityWhereInput {
   id: IDFilter
   application: ApplicationWhereInput
   buyerCountry: CountryWhereInput
+  coverPeriod: CoverPeriodWhereInput
+  hasEndBuyer: BooleanFilter
   hasMinimumUkGoodsOrServices: BooleanFilter
-  validExporterLocation: BooleanFilter
   hasCompaniesHouseNumber: BooleanFilter
   otherPartiesInvolved: BooleanFilter
   paidByLetterOfCredit: BooleanFilter
   totalContractValue: TotalContractValueWhereInput
-  coverPeriod: CoverPeriodWhereInput
+  validExporterLocation: BooleanFilter
 }
 
 input EligibilityOrderByInput {
   id: OrderDirection
+  hasEndBuyer: OrderDirection
   hasMinimumUkGoodsOrServices: OrderDirection
-  validExporterLocation: OrderDirection
   hasCompaniesHouseNumber: OrderDirection
   otherPartiesInvolved: OrderDirection
   paidByLetterOfCredit: OrderDirection
+  validExporterLocation: OrderDirection
 }
 
 input EligibilityUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   buyerCountry: CountryRelateToOneForUpdateInput
+  coverPeriod: CoverPeriodRelateToOneForUpdateInput
+  hasEndBuyer: Boolean
   hasMinimumUkGoodsOrServices: Boolean
-  validExporterLocation: Boolean
   hasCompaniesHouseNumber: Boolean
   otherPartiesInvolved: Boolean
   paidByLetterOfCredit: Boolean
   totalContractValue: TotalContractValueRelateToOneForUpdateInput
-  coverPeriod: CoverPeriodRelateToOneForUpdateInput
-}
-
-input TotalContractValueRelateToOneForUpdateInput {
-  create: TotalContractValueCreateInput
-  connect: TotalContractValueWhereUniqueInput
-  disconnect: Boolean
+  validExporterLocation: Boolean
 }
 
 input CoverPeriodRelateToOneForUpdateInput {
   create: CoverPeriodCreateInput
   connect: CoverPeriodWhereUniqueInput
+  disconnect: Boolean
+}
+
+input TotalContractValueRelateToOneForUpdateInput {
+  create: TotalContractValueCreateInput
+  connect: TotalContractValueWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -1531,23 +1535,24 @@ input EligibilityUpdateArgs {
 input EligibilityCreateInput {
   application: ApplicationRelateToOneForCreateInput
   buyerCountry: CountryRelateToOneForCreateInput
+  coverPeriod: CoverPeriodRelateToOneForCreateInput
+  hasEndBuyer: Boolean
   hasMinimumUkGoodsOrServices: Boolean
-  validExporterLocation: Boolean
   hasCompaniesHouseNumber: Boolean
   otherPartiesInvolved: Boolean
   paidByLetterOfCredit: Boolean
   totalContractValue: TotalContractValueRelateToOneForCreateInput
-  coverPeriod: CoverPeriodRelateToOneForCreateInput
-}
-
-input TotalContractValueRelateToOneForCreateInput {
-  create: TotalContractValueCreateInput
-  connect: TotalContractValueWhereUniqueInput
+  validExporterLocation: Boolean
 }
 
 input CoverPeriodRelateToOneForCreateInput {
   create: CoverPeriodCreateInput
   connect: CoverPeriodWhereUniqueInput
+}
+
+input TotalContractValueRelateToOneForCreateInput {
+  create: TotalContractValueCreateInput
+  connect: TotalContractValueWhereUniqueInput
 }
 
 type SectionReview {
@@ -2579,11 +2584,12 @@ type AccountSendEmailReactivateAccountLinkResponse {
 
 input ApplicationEligibility {
   buyerCountryIsoCode: String!
-  hasCompaniesHouseNumber: Boolean!
-  totalContractValueId: Int!
   coverPeriodId: Int!
-  validExporterLocation: Boolean!
+  hasCompaniesHouseNumber: Boolean!
+  hasEndBuyer: Boolean!
   hasMinimumUkGoodsOrServices: Boolean!
+  totalContractValueId: Int!
+  validExporterLocation: Boolean!
 }
 
 type CreateAnApplicationResponse {
