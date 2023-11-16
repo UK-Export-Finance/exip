@@ -1,11 +1,13 @@
 import partials from '../../../../../../partials';
 import { field as fieldSelector, saveAndBackButton } from '../../../../../../pages/shared';
-import { PAGES, BUTTONS } from '../../../../../../content-strings';
+import { PAGES, BUTTONS, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS;
+
+const ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
 const {
   EXPORTER_BUSINESS: {
@@ -23,6 +25,13 @@ const {
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
+
+const fieldId = ALTERNATIVE_TRADING_ADDRESS;
+const field = fieldSelector(fieldId);
+const textareaField = { ...field, input: field.textarea };
+const expectedErrorsCount = 1;
+
+const { MAXIMUM } = FIELDS[fieldId];
 
 context('Insurance - Your business - Alternative trading address page - I want to input information on an alternative business trading address So that I can provide necessary business information to support my application for Export Insurance', () => {
   let referenceNumber;
@@ -51,9 +60,9 @@ context('Insurance - Your business - Alternative trading address page - I want t
     cy.saveSession();
   });
 
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
+  // after(() => {
+  //   cy.deleteApplication(referenceNumber);
+  // });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
@@ -73,15 +82,50 @@ context('Insurance - Your business - Alternative trading address page - I want t
     });
 
     it(`should display ${ALTERNATIVE_TRADING_ADDRESS} label and input`, () => {
-      const fieldId = ALTERNATIVE_TRADING_ADDRESS;
-      const field = fieldSelector(fieldId);
-
       field.textarea().should('exist');
       cy.checkText(field.label(), FIELDS[fieldId].LABEL);
     });
 
     it('should display save and go back button', () => {
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    });
+  });
+
+  describe('form validation', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(alternativeAddressUrl);
+    });
+
+    it(`should display validation errors if ${ALTERNATIVE_TRADING_ADDRESS} is left empty`, () => {
+      cy.navigateToUrl(alternativeAddressUrl);
+
+      cy.navigateToUrl(alternativeAddressUrl);
+
+      const errorMessage = ERRORS[ALTERNATIVE_TRADING_ADDRESS].IS_EMPTY;
+
+      cy.submitAndAssertFieldErrors(
+        textareaField,
+        null,
+        0,
+        expectedErrorsCount,
+        errorMessage,
+        true,
+      );
+    });
+
+    it(`should display validation errors if ${ALTERNATIVE_TRADING_ADDRESS} is over ${MAXIMUM} characters`, () => {
+      const errorMessage = ERRORS[ALTERNATIVE_TRADING_ADDRESS].ABOVE_MAXIMUM;
+
+      const submittedValue = 'a'.repeat(MAXIMUM + 1);
+
+      cy.submitAndAssertFieldErrors(
+        textareaField,
+        submittedValue,
+        0,
+        expectedErrorsCount,
+        errorMessage,
+        true,
+      );
     });
   });
 
