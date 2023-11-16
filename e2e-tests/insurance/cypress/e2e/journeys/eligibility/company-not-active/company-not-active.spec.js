@@ -67,7 +67,7 @@ context('Insurance - Eligibility - Company not active - I want to check if I can
       });
 
       it('should render `talk to your nearest EFM` copy and link', () => {
-        cy.checkActionTalkToYourNearestEFM();
+        cy.checkActionTalkToYourNearestEFM({});
       });
     });
   });

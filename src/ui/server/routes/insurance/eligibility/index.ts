@@ -13,6 +13,7 @@ import { get as totalValueInsuredGet, post as totalValueInsuredPost } from '../.
 import { get as insuredPeriodGet, post as insuredPeriodPost } from '../../../controllers/insurance/eligibility/insured-period';
 import { get as ukGoodsOrServicesGet, post as ukGoodsOrServicesPost } from '../../../controllers/insurance/eligibility/uk-goods-or-services';
 import { get as endBuyerGet, post as endBuyerPost } from '../../../controllers/insurance/eligibility/end-buyer';
+import { get as cannotApplyMultipleRisksGet } from '../../../controllers/insurance/eligibility/cannot-apply-multiple-risks';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/eligibility/check-your-answers';
 import { get as eligibleToApplyOnlineGet, post as eligibleToApplyOnlinePost } from '../../../controllers/insurance/eligibility/eligible-to-apply-online';
 import { get as haveAnAccountGet, post as haveAnAccountPost } from '../../../controllers/insurance/eligibility/do-you-have-an-account';
@@ -59,6 +60,8 @@ insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICE
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER, endBuyerGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER, endBuyerPost);
+
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_MULTIPLE_RISKS, cannotApplyMultipleRisksGet);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CHECK_YOUR_ANSWERS, checkYourAnswersGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.CHECK_YOUR_ANSWERS, checkYourAnswersPost);

@@ -12,19 +12,20 @@ dotenv.config();
 
 export const mockApplicationEligibility = {
   buyerCountry: mockCountries[0],
-  hasMinimumUkGoodsOrServices: true,
-  validExporterLocation: true,
-  hasCompaniesHouseNumber: true,
-  otherPartiesInvolved: false,
-  paidByLetterOfCredit: false,
-  coverPeriodId: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
   coverPeriod: {
     valueId: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
   },
-  totalContractValueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
+  coverPeriodId: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
+  hasCompaniesHouseNumber: true,
+  hasEndBuyer: false,
+  hasMinimumUkGoodsOrServices: true,
+  otherPartiesInvolved: false,
+  paidByLetterOfCredit: false,
   totalContractValue: {
     valueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
   },
+  totalContractValueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
+  validExporterLocation: true,
 };
 
 const mockGenericPolicy = {

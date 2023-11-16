@@ -67,7 +67,7 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
     });
 
     it('should render `talk to your nearest EFM` copy and link', () => {
-      cy.checkActionTalkToYourNearestEFM();
+      cy.checkActionTalkToYourNearestEFM({});
     });
   });
 

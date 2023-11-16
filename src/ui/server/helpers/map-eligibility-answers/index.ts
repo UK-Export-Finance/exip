@@ -4,17 +4,13 @@ import { SubmittedDataInsuranceEligibility } from '../../../types';
 
 const {
   INSURANCE: {
-    ELIGIBILITY: { BUYER_COUNTRY_ISO_CODE, COVER_PERIOD_ID, TOTAL_CONTRACT_VALUE_ID, HAS_END_BUYER },
+    ELIGIBILITY: { BUYER_COUNTRY_ISO_CODE, COVER_PERIOD_ID, TOTAL_CONTRACT_VALUE_ID },
   },
 } = FIELD_IDS;
 
 const mapEligibilityAnswers = (answers: SubmittedDataInsuranceEligibility) => {
   if (answers.buyerCountry) {
     const { buyerCountry, wantCoverOverMaxPeriod, totalContractValue, ...otherAnswers } = answers;
-
-    // TODO: EMS-2227
-    // temporarily exclude HAS_END_BUYER until the DB/API has been updated.
-    delete otherAnswers[HAS_END_BUYER];
 
     const wantCoverOverMaxPeriodBoolean = Boolean(wantCoverOverMaxPeriod);
 

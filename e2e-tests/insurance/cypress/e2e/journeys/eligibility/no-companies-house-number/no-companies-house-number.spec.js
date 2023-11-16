@@ -78,7 +78,7 @@ context('Insurance - Eligibility - You cannot apply for credit insurance page (n
       });
 
       it('should render `talk to your nearest EFM` copy and link', () => {
-        cy.checkActionTalkToYourNearestEFM();
+        cy.checkActionTalkToYourNearestEFM({});
       });
     });
   });

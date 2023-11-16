@@ -13,6 +13,7 @@ import { get as totalValueInsuredGet, post as totalValueInsuredPost } from '../.
 import { get as insuredPeriodGet, post as insuredPeriodPost } from '../../../controllers/insurance/eligibility/insured-period';
 import { get as ukGoodsOrServicesGet, post as ukGoodsOrServicesPost } from '../../../controllers/insurance/eligibility/uk-goods-or-services';
 import { get as endBuyerGet, post as endBuyerPost } from '../../../controllers/insurance/eligibility/end-buyer';
+import { get as cannotApplyMultipleRisksGet } from '../../../controllers/insurance/eligibility/cannot-apply-multiple-risks';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/eligibility/check-your-answers';
 import { get as eligibleToApplyOnlineGet, post as eligibleToApplyOnlinePost } from '../../../controllers/insurance/eligibility/eligible-to-apply-online';
 import { get as haveAnAccountGet, post as haveAnAccountPost } from '../../../controllers/insurance/eligibility/do-you-have-an-account';
@@ -29,7 +30,7 @@ describe('routes/insurance/eligibility', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(18);
+    expect(get).toHaveBeenCalledTimes(19);
     expect(post).toHaveBeenCalledTimes(14);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE, checkIfEligibleGet);
@@ -66,6 +67,8 @@ describe('routes/insurance/eligibility', () => {
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER, endBuyerGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER, endBuyerPost);
+
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_MULTIPLE_RISKS, cannotApplyMultipleRisksGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CHECK_YOUR_ANSWERS, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CHECK_YOUR_ANSWERS, checkYourAnswersPost);
