@@ -55,6 +55,7 @@ export const post = (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       userName: getUserNameFromSession(req.session.user),
+      ...PAGE_VARIABLES,
       validationErrors,
     });
   }

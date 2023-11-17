@@ -1,4 +1,4 @@
-import { ELIGIBILITY, GBP_CURRENCY_CODE, TOTAL_CONTRACT_VALUE } from '../../../../constants';
+import { GBP_CURRENCY_CODE, TOTAL_CONTRACT_VALUE } from '../../../../constants';
 import { ACTIONS } from '../../../actions';
 import { LINKS } from '../../../links';
 import formatCurrency from '../../../../helpers/format-currency';
@@ -21,7 +21,8 @@ const TOTAL_VALUE_INSURED = {
 };
 
 const COVER_PERIOD = {
-  PAGE_TITLE: `Do you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years?`,
+  PAGE_TITLE: 'How long do you need cover for?',
+  HINT: 'This should be the total length of your contract.',
 };
 
 const HAS_COMPANIES_HOUSE_NUMBER = {

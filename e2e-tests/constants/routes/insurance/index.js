@@ -1,4 +1,3 @@
-import { ELIGIBILITY } from '../../eligibility';
 import { ACCOUNT } from './account';
 import { POLICY } from './policy';
 import { EXPORTER_BUSINESS } from './business';
@@ -24,7 +23,7 @@ export const INSURANCE_ROUTES = {
     COMPANY_DETAILS: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/company-details`,
     BUYER_COUNTRY: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/buyer-location`,
     TOTAL_VALUE_INSURED: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/total-value-insured`,
-    COVER_PERIOD: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/insured-over-${ELIGIBILITY.MAX_COVER_PERIOD_YEARS}-years`,
+    COVER_PERIOD: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/cover-period`,
     UK_GOODS_OR_SERVICES: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/uk-goods-services`,
     END_BUYER: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/end-buyer`,
     CANNOT_APPLY_MULTIPLE_RISKS: `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}/multiple-risks`,

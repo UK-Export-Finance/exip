@@ -71,6 +71,7 @@ describe('controllers/insurance/eligibility/cover-period', () => {
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
           userName: getUserNameFromSession(req.session.user),
+          ...PAGE_VARIABLES,
           validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.INSURANCE.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
         });
       });

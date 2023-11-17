@@ -1,4 +1,4 @@
-import { ELIGIBILITY, TOTAL_CONTRACT_VALUE } from '../../../../constants';
+import { TOTAL_CONTRACT_VALUE } from '../../../../constants';
 import formatCurrency from '../../../../helpers/format-currency';
 import { ACTIONS } from '../../../actions';
 import { LINKS } from '../../../links';
@@ -17,11 +17,11 @@ export const CHECK_IF_ELIGIBLE = {
 
 export const TOTAL_VALUE_INSURED = {
   PAGE_TITLE: 'What is the total value you want to insure?',
-  HINT: `We'll ask you for more information if your export is over ${THRESHOLD}.`,
 };
 
 export const COVER_PERIOD = {
-  PAGE_TITLE: `Do you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years?`,
+  PAGE_TITLE: 'How long do you need cover for?',
+  HINT: 'This should be the total length of your contract.',
 };
 
 export const HAS_COMPANIES_HOUSE_NUMBER = {
