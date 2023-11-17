@@ -440,6 +440,18 @@ var APPLICATION = {
 };
 var application_default = APPLICATION;
 
+// constants/cover-period/index.ts
+var COVER_PERIOD = {
+  LESS_THAN_2_YEARS: {
+    DB_ID: 1,
+    VALUE: "1 to 24 months"
+  },
+  MORE_THAN_2_YEARS: {
+    DB_ID: 2,
+    VALUE: "More than 2 years"
+  }
+};
+
 // constants/external-apis.ts
 var EXTERNAL_API_DEFINITIONS = {
   CIS: {
@@ -3789,8 +3801,20 @@ var FIELDS_ELIGIBILITY = {
     }
   },
   [COVER_PERIOD_FIELD_ID]: {
+    OPTIONS: {
+      BELOW: {
+        ID: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
+        VALUE: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
+        TEXT: COVER_PERIOD.LESS_THAN_2_YEARS.VALUE
+      },
+      ABOVE: {
+        ID: COVER_PERIOD.MORE_THAN_2_YEARS.DB_ID,
+        VALUE: COVER_PERIOD.MORE_THAN_2_YEARS.DB_ID,
+        TEXT: COVER_PERIOD.MORE_THAN_2_YEARS.VALUE
+      }
+    },
     SUMMARY: {
-      TITLE: "Insured for more than 2 years"
+      TITLE: "Length of policy"
     }
   },
   [COMPANIES_HOUSE_NUMBER]: {
@@ -4429,11 +4453,11 @@ var mapBuyer = (application2) => {
 };
 var map_buyer_default = mapBuyer;
 
-// generate-xlsx/map-application-to-XLSX/helpers/map-total-contract-value/index.ts
+// generate-xlsx/map-application-to-XLSX/helpers/map-total-contract-field/index.ts
 var FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.TOTAL_CONTRACT_VALUE;
 var { LESS_THAN_250K, MORE_THAN_250K } = TOTAL_CONTRACT_VALUE;
 var { ABOVE, BELOW } = FIELDS_ELIGIBILITY[FIELD_ID].SUMMARY;
-var mapTotalContractValueField = (answer) => {
+var mapTotalContractField = (answer) => {
   if (answer === MORE_THAN_250K.DB_ID) {
     return ABOVE;
   }
@@ -4442,7 +4466,22 @@ var mapTotalContractValueField = (answer) => {
   }
   return DEFAULT.EMPTY;
 };
-var map_total_contract_value_default = mapTotalContractValueField;
+var map_total_contract_field_default = mapTotalContractField;
+
+// generate-xlsx/map-application-to-XLSX/helpers/map-cover-period-field/index.ts
+var FIELD_ID2 = FIELD_IDS.INSURANCE.ELIGIBILITY.COVER_PERIOD;
+var { LESS_THAN_2_YEARS, MORE_THAN_2_YEARS } = COVER_PERIOD;
+var { ABOVE: ABOVE2, BELOW: BELOW2 } = FIELDS_ELIGIBILITY[FIELD_ID2].OPTIONS;
+var mapCoverPeriodField = (answer) => {
+  if (answer === MORE_THAN_2_YEARS.DB_ID) {
+    return ABOVE2.TEXT;
+  }
+  if (answer === LESS_THAN_2_YEARS.DB_ID) {
+    return BELOW2.TEXT;
+  }
+  return DEFAULT.EMPTY;
+};
+var map_cover_period_field_default = mapCoverPeriodField;
 
 // generate-xlsx/map-application-to-XLSX/map-eligibility/index.ts
 var {
@@ -4452,7 +4491,7 @@ var {
     VALID_EXPORTER_LOCATION: VALID_EXPORTER_LOCATION2,
     COVER_PERIOD: COVER_PERIOD_ELIGIBILITY,
     TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE3,
-    COVER_PERIOD,
+    COVER_PERIOD: COVER_PERIOD2,
     COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2
   }
 } = FIELD_IDS.INSURANCE;
@@ -4463,8 +4502,8 @@ var mapEligibility = (application2) => {
     xlsx_row_default(FIELDS_ELIGIBILITY[BUYER_COUNTRY2].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY2].name),
     xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[VALID_EXPORTER_LOCATION2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES2])),
-    xlsx_row_default(FIELDS_ELIGIBILITY[TOTAL_CONTRACT_VALUE3].SUMMARY?.TITLE, map_total_contract_value_default(eligibility[TOTAL_CONTRACT_VALUE3].valueId)),
-    xlsx_row_default(FIELDS_ELIGIBILITY[COVER_PERIOD].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[COVER_PERIOD_ELIGIBILITY].valueId === "TEMP - TODO")),
+    xlsx_row_default(FIELDS_ELIGIBILITY[TOTAL_CONTRACT_VALUE3].SUMMARY?.TITLE, map_total_contract_field_default(eligibility[TOTAL_CONTRACT_VALUE3].valueId)),
+    xlsx_row_default(FIELDS_ELIGIBILITY[COVER_PERIOD2].SUMMARY?.TITLE, map_cover_period_field_default(eligibility[COVER_PERIOD_ELIGIBILITY].valueId)),
     xlsx_row_default(FIELDS_ELIGIBILITY[COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[COMPANIES_HOUSE_NUMBER2]))
   ];
   return mapped;

@@ -1,5 +1,5 @@
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { TOTAL_CONTRACT_VALUE, GBP_CURRENCY_CODE } from '../../../../constants';
+import { COVER_PERIOD, TOTAL_CONTRACT_VALUE, GBP_CURRENCY_CODE } from '../../../../constants';
 import formatCurrency from '../../../../helpers/format-currency';
 
 const {
@@ -38,8 +38,20 @@ export const FIELDS_ELIGIBILITY = {
     },
   },
   [COVER_PERIOD_FIELD_ID]: {
+    OPTIONS: {
+      BELOW: {
+        ID: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
+        VALUE: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
+        TEXT: COVER_PERIOD.LESS_THAN_2_YEARS.VALUE,
+      },
+      ABOVE: {
+        ID: COVER_PERIOD.MORE_THAN_2_YEARS.DB_ID,
+        VALUE: COVER_PERIOD.MORE_THAN_2_YEARS.DB_ID,
+        TEXT: COVER_PERIOD.MORE_THAN_2_YEARS.VALUE,
+      },
+    },
     SUMMARY: {
-      TITLE: 'Insured for more than 2 years',
+      TITLE: 'Length of policy',
     },
   },
   [COMPANIES_HOUSE_NUMBER]: {
