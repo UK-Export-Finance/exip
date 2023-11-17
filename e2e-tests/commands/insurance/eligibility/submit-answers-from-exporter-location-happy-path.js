@@ -43,7 +43,7 @@ const submitAnswersFromExporterLocationHappyPath = (assertAuthenticatedHeader = 
 
   checkAuthHeader(assertAuthenticatedHeader);
 
-  cy.completeCoverPeriodForm();
+  cy.completeCoverPeriodForm({});
 
   checkAuthHeader(assertAuthenticatedHeader);
 

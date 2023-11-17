@@ -4463,14 +4463,8 @@ var mapEligibility = (application2) => {
     xlsx_row_default(FIELDS_ELIGIBILITY[BUYER_COUNTRY2].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY2].name),
     xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[VALID_EXPORTER_LOCATION2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES2])),
-    xlsx_row_default(
-      FIELDS_ELIGIBILITY[TOTAL_CONTRACT_VALUE3].SUMMARY?.TITLE,
-      map_total_contract_value_default(eligibility[TOTAL_CONTRACT_VALUE3].valueId)
-    ),
-    xlsx_row_default(
-      FIELDS_ELIGIBILITY[COVER_PERIOD].SUMMARY?.TITLE,
-      map_yes_no_field_default(eligibility[COVER_PERIOD_ELIGIBILITY].valueId === "TEMP - TODO")
-    ),
+    xlsx_row_default(FIELDS_ELIGIBILITY[TOTAL_CONTRACT_VALUE3].SUMMARY?.TITLE, map_total_contract_value_default(eligibility[TOTAL_CONTRACT_VALUE3].valueId)),
+    xlsx_row_default(FIELDS_ELIGIBILITY[COVER_PERIOD].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[COVER_PERIOD_ELIGIBILITY].valueId === "TEMP - TODO")),
     xlsx_row_default(FIELDS_ELIGIBILITY[COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[COMPANIES_HOUSE_NUMBER2]))
   ];
   return mapped;

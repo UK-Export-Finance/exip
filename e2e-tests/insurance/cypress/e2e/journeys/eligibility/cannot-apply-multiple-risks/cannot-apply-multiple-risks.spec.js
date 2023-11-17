@@ -35,7 +35,7 @@ context('Insurance - Cannot apply - multiple risks page - as an exporter, I want
     cy.completeEligibilityCompanyDetailsForm();
     completeAndSubmitBuyerCountryForm();
     cy.completeAndSubmitTotalValueInsuredForm({});
-    cy.completeCoverPeriodForm();
+    cy.completeCoverPeriodForm({});
     cy.completeUkGoodsAndServicesForm();
 
     yesRadio().input().click();

@@ -79,7 +79,7 @@ context('Insurance - Eligibility - start and complete for a second time after cr
 
     // insured period question
     cy.assertUncheckedYesNoRadios();
-    cy.completeCoverPeriodForm();
+    cy.completeCoverPeriodForm({});
 
     // UK goods and services question
     cy.assertUncheckedYesNoRadios();
