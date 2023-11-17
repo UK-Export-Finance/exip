@@ -1,6 +1,6 @@
 import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { COVER_PERIOD, FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -77,10 +77,10 @@ describe('controllers/insurance/eligibility/cover-period', () => {
       });
     });
 
-    describe('when submitted answer is true', () => {
+    describe(`when submitted answer is NOT '${COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID}'`, () => {
       beforeEach(() => {
         req.body = {
-          [FIELD_IDS.INSURANCE.ELIGIBILITY.COVER_PERIOD]: 'true',
+          [FIELD_ID]: 'true',
         };
       });
 
@@ -100,7 +100,7 @@ describe('controllers/insurance/eligibility/cover-period', () => {
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.INSURANCE.ELIGIBILITY.COVER_PERIOD]: 'false',
+        [FIELD_ID]: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
       };
 
       beforeEach(() => {

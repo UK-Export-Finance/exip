@@ -1,5 +1,5 @@
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { COVER_PERIOD, FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -62,7 +62,7 @@ export const post = (req: Request, res: Response) => {
 
   const answer = req.body[FIELD_ID];
 
-  if (answer === 'true') {
+  if (answer !== COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID) {
     const { INSURANCE } = PAGES;
     const { SPEAK_TO_UKEF_EFM } = INSURANCE;
     const { REASON } = SPEAK_TO_UKEF_EFM;
