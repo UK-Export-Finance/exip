@@ -69,7 +69,7 @@ describe('server/helpers/task-helpers', () => {
   describe('areTaskDependenciesMet', () => {
     describe('when all dependencies are in submitted data', () => {
       it('should return true', () => {
-        const mockDeps = ['hasCompaniesHouseNumber', 'wantCoverOverMaxPeriod'];
+        const mockDeps = ['hasCompaniesHouseNumber', 'hasEndBuyer'];
 
         const result = areTaskDependenciesMet(mockDeps, mockApplicationFlat);
 
@@ -112,7 +112,7 @@ describe('server/helpers/task-helpers', () => {
           id: 'mock',
           href: '#',
           fields: ['fieldA', 'fieldB'],
-          dependencies: ['hasCompaniesHouseNumber', 'wantCoverOverMaxPeriod'],
+          dependencies: ['hasCompaniesHouseNumber', 'hasEndBuyer'],
         };
 
         const result = taskStatus(mockTask, mockApplicationFlat);
@@ -149,7 +149,7 @@ describe('server/helpers/task-helpers', () => {
           title: 'Mock',
           id: 'mock',
           href: '#',
-          fields: ['hasCompaniesHouseNumber', 'wantCoverOverMaxPeriod'],
+          fields: ['hasCompaniesHouseNumber', 'hasEndBuyer'],
           dependencies: [],
         };
 

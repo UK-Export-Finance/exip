@@ -21,7 +21,7 @@ describe('server/helpers/get-submitted-fields', () => {
 
       describe('when the field value is false boolean', () => {
         it('should return true', () => {
-          const result = hasSubmittedField(mockApplicationFlat, 'wantCoverOverMaxPeriod');
+          const result = hasSubmittedField(mockApplicationFlat, 'hasEndBuyer');
 
           expect(result).toEqual(true);
         });
@@ -54,11 +54,11 @@ describe('server/helpers/get-submitted-fields', () => {
 
   describe('getSubmittedFields', () => {
     it('should return fields that are provided and also in provided submitted fields', () => {
-      const mockFields = ['totalValueInsured', 'wantCoverOverMaxPeriod', 'mockField'];
+      const mockFields = ['totalValueInsured', 'hasEndBuyer', 'mockField'];
 
       const result = getSubmittedFields(mockFields, mockApplicationFlat);
 
-      const expected = ['totalValueInsured', 'wantCoverOverMaxPeriod'];
+      const expected = ['totalValueInsured', 'hasEndBuyer'];
 
       expect(result).toEqual(expected);
     });

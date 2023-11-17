@@ -24,7 +24,7 @@ interface InsuranceEligibilityCore extends SharedEligibility {
   companyNumber?: string;
   company?: CompanyDetails;
   totalContractValue?: number;
-  coverPeriod?: boolean;
+  coverPeriod?: number;
   hasEndBuyer?: boolean;
 }
 
