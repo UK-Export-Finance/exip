@@ -20,7 +20,7 @@ const TOTAL_VALUE_INSURED = {
   HINT: `We'll ask you for more information if your export is over ${THRESHOLD}.`,
 };
 
-const INSURED_PERIOD = {
+const COVER_PERIOD = {
   PAGE_TITLE: `Do you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years?`,
 };
 
@@ -114,7 +114,7 @@ const HAVE_AN_ACCOUNT = {
 export default {
   CHECK_IF_ELIGIBLE,
   TOTAL_VALUE_INSURED,
-  INSURED_PERIOD,
+  COVER_PERIOD,
   HAS_COMPANIES_HOUSE_NUMBER,
   COMPANIES_HOUSE_NUMBER,
   NO_COMPANIES_HOUSE_NUMBER,

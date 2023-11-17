@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../constants';
 import generateValidationErrors from '../../helpers/validation';
 
 describe('shared-validation/yes-no-radios-form', () => {
-  const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD;
+  const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.COVER_PERIOD;
   const mockErrorMessage = 'mock';
 
   describe('when no values are provided in the formBody', () => {

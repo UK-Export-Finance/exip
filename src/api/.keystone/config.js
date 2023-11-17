@@ -295,7 +295,6 @@ var INSURANCE_FIELD_IDS = {
     COMPANIES_HOUSE_NUMBER: "companyNumber",
     TOTAL_CONTRACT_VALUE: "totalContractValue",
     TOTAL_CONTRACT_VALUE_ID: "totalContractValueId",
-    WANT_COVER_OVER_MAX_PERIOD: "wantCoverOverMaxPeriod",
     COVER_PERIOD: "coverPeriod",
     COVER_PERIOD_ID: "coverPeriodId",
     HAS_END_BUYER: "hasEndBuyer",
@@ -440,16 +439,6 @@ var APPLICATION = {
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: LATEST_VERSION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER
 };
 var application_default = APPLICATION;
-
-// constants/cover-period/index.ts
-var COVER_PERIOD = {
-  LESS_THAN_2_YEARS: {
-    DB_ID: 1
-  },
-  MORE_THAN_2_YEARS: {
-    DB_ID: 2
-  }
-};
 
 // constants/external-apis.ts
 var EXTERNAL_API_DEFINITIONS = {
@@ -3770,7 +3759,7 @@ var {
   BUYER_COUNTRY,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_EXPORTER_LOCATION,
-  WANT_COVER_OVER_MAX_PERIOD,
+  COVER_PERIOD: COVER_PERIOD_FIELD_ID,
   COMPANIES_HOUSE_NUMBER,
   TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID,
   HAS_END_BUYER
@@ -3799,7 +3788,7 @@ var FIELDS_ELIGIBILITY = {
       TITLE: "Mock title"
     }
   },
-  [WANT_COVER_OVER_MAX_PERIOD]: {
+  [COVER_PERIOD_FIELD_ID]: {
     SUMMARY: {
       TITLE: "Insured for more than 2 years"
     }
@@ -4462,12 +4451,11 @@ var {
     HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2,
     VALID_EXPORTER_LOCATION: VALID_EXPORTER_LOCATION2,
     COVER_PERIOD: COVER_PERIOD_ELIGIBILITY,
-    TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_ELIGIBILITY,
-    WANT_COVER_OVER_MAX_PERIOD: WANT_COVER_OVER_MAX_PERIOD2,
+    TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE3,
+    COVER_PERIOD,
     COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2
   }
 } = FIELD_IDS.INSURANCE;
-var { MORE_THAN_2_YEARS } = COVER_PERIOD;
 var mapEligibility = (application2) => {
   const { eligibility } = application2;
   const mapped = [
@@ -4476,12 +4464,12 @@ var mapEligibility = (application2) => {
     xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[VALID_EXPORTER_LOCATION2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES2])),
     xlsx_row_default(
-      FIELDS_ELIGIBILITY[TOTAL_CONTRACT_VALUE_ELIGIBILITY].SUMMARY?.TITLE,
-      map_total_contract_value_default(eligibility[TOTAL_CONTRACT_VALUE_ELIGIBILITY].valueId)
+      FIELDS_ELIGIBILITY[TOTAL_CONTRACT_VALUE3].SUMMARY?.TITLE,
+      map_total_contract_value_default(eligibility[TOTAL_CONTRACT_VALUE3].valueId)
     ),
     xlsx_row_default(
-      FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_PERIOD2].SUMMARY?.TITLE,
-      map_yes_no_field_default(eligibility[COVER_PERIOD_ELIGIBILITY].valueId === MORE_THAN_2_YEARS.DB_ID)
+      FIELDS_ELIGIBILITY[COVER_PERIOD].SUMMARY?.TITLE,
+      map_yes_no_field_default(eligibility[COVER_PERIOD_ELIGIBILITY].valueId === "TEMP - TODO")
     ),
     xlsx_row_default(FIELDS_ELIGIBILITY[COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[COMPANIES_HOUSE_NUMBER2]))
   ];

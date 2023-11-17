@@ -11,7 +11,7 @@ const {
 
 const {
   TOTAL_CONTRACT_VALUE,
-  WANT_COVER_OVER_MAX_PERIOD,
+  COVER_PERIOD,
   BUYER_COUNTRY,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_EXPORTER_LOCATION,
@@ -65,7 +65,7 @@ context('Insurance - Check your answers - Eligibility - Summary List', () => {
     checkSummaryList[TOTAL_CONTRACT_VALUE]();
   });
 
-  it(`should render a ${WANT_COVER_OVER_MAX_PERIOD} summary list row`, () => {
-    checkSummaryList[WANT_COVER_OVER_MAX_PERIOD]();
+  it(`should render a ${COVER_PERIOD} summary list row`, () => {
+    checkSummaryList[COVER_PERIOD]();
   });
 });

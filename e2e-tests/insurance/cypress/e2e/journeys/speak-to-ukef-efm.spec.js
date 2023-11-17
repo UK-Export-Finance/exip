@@ -9,7 +9,7 @@ const { ACTIONS } = CONTENT_STRINGS;
 
 const {
   START,
-  ELIGIBILITY: { INSURED_PERIOD },
+  ELIGIBILITY: { COVER_PERIOD },
   SPEAK_TO_UKEF_EFM,
 } = INSURANCE_ROUTES;
 
@@ -28,7 +28,7 @@ context('Insurance - speak to UKEF EFM exit page', () => {
     completeAndSubmitBuyerCountryForm();
     cy.completeAndSubmitTotalValueInsuredForm({});
 
-    let expectedUrl = `${baseUrl}${INSURED_PERIOD}`;
+    let expectedUrl = `${baseUrl}${COVER_PERIOD}`;
     cy.assertUrl(expectedUrl);
 
     yesRadio().input().click();
@@ -43,7 +43,7 @@ context('Insurance - speak to UKEF EFM exit page', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: SPEAK_TO_UKEF_EFM,
-      backLink: INSURED_PERIOD,
+      backLink: COVER_PERIOD,
       assertSubmitButton: false,
       assertAuthenticatedHeader: false,
     });

@@ -1,6 +1,7 @@
 import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
@@ -9,7 +10,7 @@ import { updateSubmittedData } from '../../../../helpers/update-submitted-data/i
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
-describe('controllers/insurance/eligibility/insured-period', () => {
+describe('controllers/insurance/eligibility/cover-period', () => {
   let req: Request;
   let res: Response;
 
@@ -20,7 +21,7 @@ describe('controllers/insurance/eligibility/insured-period', () => {
 
   describe('FIELD_ID', () => {
     it('should have the correct ID', () => {
-      const expected = FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD;
+      const expected = FIELD_IDS.INSURANCE.ELIGIBILITY.COVER_PERIOD;
 
       expect(FIELD_ID).toEqual(expected);
     });
@@ -29,8 +30,12 @@ describe('controllers/insurance/eligibility/insured-period', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD,
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.INSURED_PERIOD,
+        FIELD_ID: FIELD_IDS.INSURANCE.ELIGIBILITY.COVER_PERIOD,
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.COVER_PERIOD,
+        FIELD: {
+          ID: FIELD_ID,
+          ...FIELDS[FIELD_ID],
+        },
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -39,7 +44,7 @@ describe('controllers/insurance/eligibility/insured-period', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.INSURED_PERIOD);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.COVER_PERIOD);
     });
   });
 
@@ -73,7 +78,7 @@ describe('controllers/insurance/eligibility/insured-period', () => {
     describe('when submitted answer is true', () => {
       beforeEach(() => {
         req.body = {
-          [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD]: 'true',
+          [FIELD_IDS.INSURANCE.ELIGIBILITY.COVER_PERIOD]: 'true',
         };
       });
 
@@ -93,7 +98,7 @@ describe('controllers/insurance/eligibility/insured-period', () => {
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD]: 'false',
+        [FIELD_IDS.INSURANCE.ELIGIBILITY.COVER_PERIOD]: 'false',
       };
 
       beforeEach(() => {

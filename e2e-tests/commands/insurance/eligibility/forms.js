@@ -65,7 +65,7 @@ export const completeAndSubmitTotalValueInsuredForm = ({ underThreshold = true }
   submitButton().click();
 };
 
-export const completeInsuredPeriodForm = () => {
+export const completeCoverPeriodForm = () => {
   selectRadioAndSubmit(FIELD_VALUES.NO);
 };
 

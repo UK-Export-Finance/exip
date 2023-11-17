@@ -20,7 +20,7 @@ export const TOTAL_VALUE_INSURED = {
   HINT: `We'll ask you for more information if your export is over ${THRESHOLD}.`,
 };
 
-export const INSURED_PERIOD = {
+export const COVER_PERIOD = {
   PAGE_TITLE: `Do you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years?`,
 };
 

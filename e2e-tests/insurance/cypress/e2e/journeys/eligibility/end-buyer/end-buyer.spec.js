@@ -38,7 +38,7 @@ context('Insurance - End buyer page - as an exporter, I want to confirm if payme
     cy.completeEligibilityCompanyDetailsForm();
     completeAndSubmitBuyerCountryForm();
     cy.completeAndSubmitTotalValueInsuredForm({});
-    cy.completeInsuredPeriodForm();
+    cy.completeCoverPeriodForm();
     cy.completeUkGoodsAndServicesForm();
 
     cy.assertUrl(url);
