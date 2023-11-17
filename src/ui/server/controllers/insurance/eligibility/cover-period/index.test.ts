@@ -55,6 +55,7 @@ describe('controllers/insurance/eligibility/cover-period', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
         userName: getUserNameFromSession(req.session.user),
+        ...PAGE_VARIABLES,
         submittedValues: req.session.submittedData.insuranceEligibility,
       });
     });
