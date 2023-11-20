@@ -25,7 +25,7 @@
     "@babel/core": "^7.23.2",
     "@babel/plugin-transform-runtime": "^7.23.2",
     "@babel/preset-env": "^7.23.2",
-    "@ministryofjustice/frontend": "^1.8.0",
+    "@ministryofjustice/frontend": "^1.8.1",
     "@types/compression": "^1.7.4",
     "@types/connect-flash": "^0.0.38",
     "@types/cookie-parser": "^1.4.5",
