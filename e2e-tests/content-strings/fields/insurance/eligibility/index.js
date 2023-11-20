@@ -1,4 +1,4 @@
-import { FIELD_IDS, TOTAL_CONTRACT_VALUE } from '../../../../constants';
+import { COVER_PERIOD, FIELD_IDS, TOTAL_CONTRACT_VALUE } from '../../../../constants';
 import { LINKS } from '../../../links';
 import formatCurrency from '../../../../helpers/format-currency';
 
@@ -8,7 +8,7 @@ const {
   BUYER_COUNTRY,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_EXPORTER_LOCATION,
-  WANT_COVER_OVER_MAX_PERIOD,
+  COVER_PERIOD: COVER_PERIOD_FIELD_ID,
   COMPANIES_HOUSE_NUMBER,
   TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID,
   HAS_END_BUYER,
@@ -37,9 +37,21 @@ export const FIELDS_ELIGIBILITY = {
       TITLE: 'Mock title',
     },
   },
-  [WANT_COVER_OVER_MAX_PERIOD]: {
+  [COVER_PERIOD_FIELD_ID]: {
+    OPTIONS: {
+      BELOW: {
+        ID: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
+        VALUE: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
+        TEXT: COVER_PERIOD.LESS_THAN_2_YEARS.VALUE,
+      },
+      ABOVE: {
+        ID: COVER_PERIOD.MORE_THAN_2_YEARS.DB_ID,
+        VALUE: COVER_PERIOD.MORE_THAN_2_YEARS.DB_ID,
+        TEXT: COVER_PERIOD.MORE_THAN_2_YEARS.VALUE,
+      },
+    },
     SUMMARY: {
-      TITLE: 'Insured for more than 2 years',
+      TITLE: 'Length of policy',
     },
   },
   [COMPANIES_HOUSE_NUMBER]: {

@@ -1,6 +1,6 @@
+import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
-import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -57,8 +57,8 @@ describe('controllers/insurance/eligibility/total-value-insured', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
         userName: getUserNameFromSession(req.session.user),
-        submittedValues: req.session.submittedData.insuranceEligibility,
         ...PAGE_VARIABLES,
+        submittedValues: req.session.submittedData.insuranceEligibility,
       });
     });
   });
@@ -73,8 +73,8 @@ describe('controllers/insurance/eligibility/total-value-insured', () => {
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
           userName: getUserNameFromSession(req.session.user),
-          validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.INSURANCE.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
           ...PAGE_VARIABLES,
+          validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.INSURANCE.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
         });
       });
     });
@@ -103,10 +103,10 @@ describe('controllers/insurance/eligibility/total-value-insured', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`, () => {
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD);
       });
     });
   });

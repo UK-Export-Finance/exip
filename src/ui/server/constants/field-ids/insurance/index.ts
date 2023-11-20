@@ -15,7 +15,6 @@ const INSURANCE_FIELD_IDS = {
     COMPANIES_HOUSE_NUMBER: 'companyNumber',
     TOTAL_CONTRACT_VALUE: 'totalContractValue',
     TOTAL_CONTRACT_VALUE_ID: 'totalContractValueId',
-    WANT_COVER_OVER_MAX_PERIOD: 'wantCoverOverMaxPeriod',
     COVER_PERIOD: 'coverPeriod',
     COVER_PERIOD_ID: 'coverPeriodId',
     HAS_END_BUYER: 'hasEndBuyer',

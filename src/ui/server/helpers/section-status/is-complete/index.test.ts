@@ -8,7 +8,7 @@ describe('server/helpers/section-status/is-complete', () => {
   describe('sectionIsComplete', () => {
     describe('when all relevant fields have been submitted', () => {
       it('should return true', () => {
-        const mockFields = ['totalValueInsured', 'wantCoverOverMaxPeriod'];
+        const mockFields = ['totalValueInsured', 'hasEndBuyer'];
 
         const result = sectionIsComplete(mockFields, mockApplicationFlat);
 
@@ -18,7 +18,7 @@ describe('server/helpers/section-status/is-complete', () => {
 
     describe('when all relevant fields have NOT been submitted', () => {
       it('should return false', () => {
-        const mockFields = ['totalValueInsured', 'wantCoverOverMaxPeriod', 'mockField'];
+        const mockFields = ['totalValueInsured', 'hasEndBuyer', 'mockField'];
 
         const result = sectionIsComplete(mockFields, mockApplicationFlat);
 
