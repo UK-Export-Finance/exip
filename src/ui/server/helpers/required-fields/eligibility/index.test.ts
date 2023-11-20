@@ -20,7 +20,7 @@ const {
 describe('server/helpers/required-fields/eligibility', () => {
   describe('irrelevantFields', () => {
     it('should return array of irrelevant fields', () => {
-      const expected = [BUYER_COUNTRY_ISO_CODE, COVER_PERIOD, COVER_PERIOD_ID, HAVE_AN_ACCOUNT, TOTAL_CONTRACT_VALUE, TOTAL_CONTRACT_VALUE_ID];
+      const expected = [BUYER_COUNTRY_ISO_CODE, COVER_PERIOD_ID, HAVE_AN_ACCOUNT, TOTAL_CONTRACT_VALUE_ID];
 
       expect(irrelevantFields).toEqual(expected);
     });

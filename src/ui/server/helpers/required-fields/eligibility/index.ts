@@ -16,12 +16,10 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-// TODO - this does not seem right now.
-// cover period and total contract value should have 1 field required at least.
 /**
  * List of field IDs that are not relevant.
  */
-export const irrelevantFields = [BUYER_COUNTRY_ISO_CODE, COVER_PERIOD, COVER_PERIOD_ID, HAVE_AN_ACCOUNT, TOTAL_CONTRACT_VALUE, TOTAL_CONTRACT_VALUE_ID];
+export const irrelevantFields = [BUYER_COUNTRY_ISO_CODE, COVER_PERIOD_ID, HAVE_AN_ACCOUNT, TOTAL_CONTRACT_VALUE_ID];
 
 /**
  * Required fields for the insurance - eligibility section
