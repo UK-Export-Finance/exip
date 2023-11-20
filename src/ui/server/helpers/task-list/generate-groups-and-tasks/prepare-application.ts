@@ -29,6 +29,7 @@ const createPrepareApplicationTasks = (
   otherGroups: TaskListData,
   policyType?: string,
   isUsingBroker?: boolean,
+  hasDifferentTradingName?: boolean,
 ): Array<TaskListDataTask> => {
   const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
 
@@ -40,7 +41,7 @@ const createPrepareApplicationTasks = (
     href: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTER_BUSINESS_ROOT}`,
     title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
     id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
-    fields: businessRequiredFields(isUsingBroker),
+    fields: businessRequiredFields(isUsingBroker, hasDifferentTradingName),
     dependencies,
   };
 

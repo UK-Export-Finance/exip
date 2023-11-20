@@ -6,6 +6,7 @@ const {
     YOUR_COMPANY: {
       WEBSITE,
       PHONE_NUMBER,
+      ALTERNATIVE_TRADING_NAME,
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -18,11 +19,20 @@ const {
  * @param {String} companyWebsite
  */
 const completeCompaniesDetailsForm = ({
+  differentTradingName = false,
   differentTradingAddress = false,
   phoneNumber,
   companyWebsite,
 }) => {
-  yesRadioInput().first().click();
+  if (differentTradingName) {
+    yesRadioInput().first().click();
+  } else {
+    noRadioInput().first().click();
+  }
+
+  if (differentTradingName) {
+    field(ALTERNATIVE_TRADING_NAME).input().type('test');
+  }
 
   if (differentTradingAddress) {
     yesRadioInput().eq(1).click();

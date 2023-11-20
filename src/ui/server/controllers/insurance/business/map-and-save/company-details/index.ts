@@ -1,6 +1,7 @@
 import hasFormData from '../../../../../helpers/has-form-data';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
 import save from '../../save-data/company-details';
+import mapSubmittedData from '../../map-submitted-data/company-details';
 
 /**
  * maps company details request and calls save function
@@ -15,10 +16,12 @@ const companyDetails = async (formBody: RequestBody, application: Application, v
     if (hasFormData(formBody)) {
       let saveResponse;
 
+      const populatedData = mapSubmittedData(formBody);
+
       if (validationErrors) {
-        saveResponse = await save.companyDetails(application, formBody, validationErrors.errorList);
+        saveResponse = await save.companyDetails(application, populatedData, validationErrors.errorList);
       } else {
-        saveResponse = await save.companyDetails(application, formBody);
+        saveResponse = await save.companyDetails(application, populatedData);
       }
 
       if (!saveResponse) {

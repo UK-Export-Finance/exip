@@ -1177,6 +1177,7 @@ type Company {
   companyNumber: String
   dateOfCreation: DateTime
   hasDifferentTradingAddress: Boolean
+  alternativeTradingName: String
   hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String
@@ -1198,6 +1199,7 @@ input CompanyWhereInput {
   companyName: StringFilter
   companyNumber: StringFilter
   dateOfCreation: DateTimeNullableFilter
+  alternativeTradingName: StringFilter
   companyWebsite: StringFilter
   phoneNumber: StringFilter
   financialYearEndDate: DateTimeNullableFilter
@@ -1214,6 +1216,7 @@ input CompanyOrderByInput {
   companyName: OrderDirection
   companyNumber: OrderDirection
   dateOfCreation: OrderDirection
+  alternativeTradingName: OrderDirection
   companyWebsite: OrderDirection
   phoneNumber: OrderDirection
   financialYearEndDate: OrderDirection
@@ -1227,6 +1230,7 @@ input CompanyUpdateInput {
   companyNumber: String
   dateOfCreation: DateTime
   hasDifferentTradingAddress: Boolean
+  alternativeTradingName: String
   hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String
@@ -1259,6 +1263,7 @@ input CompanyCreateInput {
   companyNumber: String
   dateOfCreation: DateTime
   hasDifferentTradingAddress: Boolean
+  alternativeTradingName: String
   hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String

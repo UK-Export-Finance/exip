@@ -5,6 +5,8 @@ const COMPANY_DETAILS = {
   WEBSITE: 'Enter your company website, if you have one (optional)',
   PHONE_NUMBER: 'Your UK telephone number (optional)',
   PHONE_NUMBER_HINT: 'We may need to contact you about your application',
+  ALTERNATIVE_TRADING_NAME: "What's your organisation's alternative trading name?",
+  ALTERNATIVE_TRADING_NAME_HINT: 'Your official trading name will still be on the policy.',
 };
 
 export { COMPANY_DETAILS };

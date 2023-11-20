@@ -7,6 +7,7 @@ const EXPORTER_BUSINESS = {
     TRADING_NAME: 'hasDifferentTradingName',
     WEBSITE: 'companyWebsite',
     PHONE_NUMBER: 'phoneNumber',
+    ALTERNATIVE_TRADING_NAME: 'alternativeTradingName',
   },
   ALTERNATIVE_TRADING_ADDRESS: 'alternativeTradingAddress',
   NATURE_OF_YOUR_BUSINESS: {

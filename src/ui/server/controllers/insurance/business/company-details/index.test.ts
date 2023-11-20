@@ -13,7 +13,7 @@ import companyDetailsValidation from './validation/company-details';
 import { mockReq, mockRes, mockApplication, mockPhoneNumbers } from '../../../../test-mocks';
 
 const {
-  YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
+  YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, ALTERNATIVE_TRADING_NAME },
 } = BUSINESS_FIELD_IDS;
 
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -57,7 +57,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER];
+      const expected = [TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, ALTERNATIVE_TRADING_NAME];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -88,6 +88,7 @@ describe('controllers/insurance/business/companies-details', () => {
           [TRADING_ADDRESS]: company?.[TRADING_ADDRESS],
           [WEBSITE]: company?.[WEBSITE],
           [PHONE_NUMBER]: company?.[PHONE_NUMBER],
+          [ALTERNATIVE_TRADING_NAME]: company?.[ALTERNATIVE_TRADING_NAME],
         };
 
         expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
@@ -123,6 +124,7 @@ describe('controllers/insurance/business/companies-details', () => {
       [TRADING_NAME]: 'true',
       [TRADING_ADDRESS]: 'false',
       [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
+      [ALTERNATIVE_TRADING_NAME]: 'test',
     };
 
     describe('when there are validation errors', () => {
@@ -136,6 +138,7 @@ describe('controllers/insurance/business/companies-details', () => {
           [TRADING_ADDRESS]: sanitiseValue({ key: TRADING_ADDRESS, value: payload[TRADING_ADDRESS] }),
           [WEBSITE]: payload[WEBSITE],
           [PHONE_NUMBER]: payload[PHONE_NUMBER],
+          [ALTERNATIVE_TRADING_NAME]: payload[ALTERNATIVE_TRADING_NAME],
         };
 
         await post(req, res);

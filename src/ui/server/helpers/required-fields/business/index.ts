@@ -4,7 +4,7 @@ const {
   EXPORTER_BUSINESS: { YOUR_COMPANY, NATURE_OF_YOUR_BUSINESS, TURNOVER, BROKER },
 } = FIELD_IDS;
 
-const { ADDRESS, PHONE_NUMBER, WEBSITE, YOUR_BUSINESS, ...YOUR_COMPANY_FIELDS } = YOUR_COMPANY;
+const { TRADING_NAME, ALTERNATIVE_TRADING_NAME, TRADING_ADDRESS } = YOUR_COMPANY;
 
 const { FINANCIAL_YEAR_END_DATE, ...TURNOVER_FIELDS } = TURNOVER;
 
@@ -25,17 +25,31 @@ export const getBrokerTasks = (isUsingBroker?: boolean): Array<string> => {
 };
 
 /**
+ * getBrokerTasks
+ * Get broker section tasks depending on the isUsingBroker field
+ * @param {Boolean} Application "Is using broker" flag
+ * @returns {Array} Array of tasks
+ */
+export const getYourCompanyTasks = (hasDifferentTradingName?: boolean): Array<string> => {
+  if (hasDifferentTradingName) {
+    return [TRADING_NAME, ALTERNATIVE_TRADING_NAME, TRADING_ADDRESS];
+  }
+
+  return [TRADING_NAME, TRADING_ADDRESS];
+};
+
+/**
  * Required fields for the insurance - business section
  * @param {Boolean} Is using broker
  * @returns {Array} Required field IDs
  */
-const requiredFields = (isUsingBroker?: boolean): Array<string> => {
+const requiredFields = (isUsingBroker?: boolean, hasDifferentTradingName?: boolean): Array<string> => {
   let fields = {
-    ...YOUR_COMPANY_FIELDS,
+    ...getYourCompanyTasks(hasDifferentTradingName),
     ...NATURE_OF_YOUR_BUSINESS,
     ...TURNOVER_FIELDS,
     USING_BROKER,
-  };
+  } as Array<string>;
 
   if (isUsingBroker) {
     fields = {

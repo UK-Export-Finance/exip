@@ -38,14 +38,14 @@ describe('controllers/insurance/business/companies-details', () => {
 
   describe('post', () => {
     const validBody = {
-      [TRADING_NAME]: 'true',
+      [TRADING_NAME]: 'false',
       [TRADING_ADDRESS]: 'false',
       [PHONE_NUMBER]: VALID_PHONE_NUMBERS.MOBILE,
     };
 
     describe('when there are validation errors', () => {
       const body = {
-        [TRADING_NAME]: 'true',
+        [TRADING_NAME]: 'false',
         [TRADING_ADDRESS]: 'false',
         [PHONE_NUMBER]: INVALID_PHONE_NUMBERS.TOO_SHORT_SPECIAL_CHAR,
       };

@@ -82,6 +82,9 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_NAME]: {
         IS_EMPTY: 'Select whether you use a different trading name for this company',
       },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.ALTERNATIVE_TRADING_NAME]: {
+        IS_EMPTY: 'Select whether you use a different trading name for this company',
+      },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_ADDRESS]: {
         IS_EMPTY: 'Select whether you use a different trading address for this company',
       },

@@ -1284,6 +1284,7 @@ var lists = {
       companyNumber: (0, import_fields.text)(),
       dateOfCreation: (0, import_fields.timestamp)(),
       hasDifferentTradingAddress: nullable_checkbox_default(),
+      alternativeTradingName: (0, import_fields.text)(),
       hasDifferentTradingName: nullable_checkbox_default(),
       companyWebsite: (0, import_fields.text)(),
       phoneNumber: (0, import_fields.text)(),

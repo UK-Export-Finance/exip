@@ -7,6 +7,10 @@ export const EXPORTER_BUSINESS_FIELDS = {
       TITLE: 'Different trading name?',
     },
   },
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.ALTERNATIVE_TRADING_NAME]: {
+    LABEL: "What's your organisation's alternative trading name?",
+    HINT: 'Your official trading name will still be on the policy.',
+  },
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_ADDRESS]: {
     LABEL: 'Do you trade from a different address to your registered office address for this company?',
     SUMMARY: {
