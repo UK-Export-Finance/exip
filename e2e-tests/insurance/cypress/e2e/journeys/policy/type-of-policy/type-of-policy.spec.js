@@ -1,6 +1,7 @@
 import {
   field,
   headingCaption,
+  intro,
   submitButton,
   saveAndBackButton,
 } from '../../../../../../pages/shared';
@@ -77,7 +78,7 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
     });
 
     it('renders an intro paragraph', () => {
-      cy.checkText(insurance.policy.typeOfPolicyPage.intro(), CONTENT_STRINGS.INTRO);
+      cy.checkText(intro(), CONTENT_STRINGS.INTRO);
     });
 
     it('renders `single` radio input with label and hint text list', () => {

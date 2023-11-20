@@ -1,5 +1,4 @@
 const requestNewCodePage = {
-  intro: () => cy.get('[data-cy="intro"]'),
   doNotHaveAccessToEmail: {
     summary: () => cy.get('[data-cy="do-not-have-email-access"] summary'),
     details: () => cy.get('[data-cy="do-not-have-email-access"]'),
