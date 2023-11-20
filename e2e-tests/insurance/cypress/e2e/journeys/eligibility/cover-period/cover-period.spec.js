@@ -1,23 +1,24 @@
 import { field } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { TOTAL_CONTRACT_VALUE } from '../../../../../../constants';
+import { COVER_PERIOD } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import { FIELDS_ELIGIBILITY } from '../../../../../../content-strings/fields/insurance/eligibility';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED;
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COVER_PERIOD;
 
 const {
-  ELIGIBILITY: { TOTAL_CONTRACT_VALUE: FIELD_ID },
+  ELIGIBILITY: { COVER_PERIOD: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
 const {
   START,
   ELIGIBILITY: {
-    BUYER_COUNTRY,
+    COVER_PERIOD: COVER_PERIOD_ROUTE,
+    LONG_TERM_COVER,
     TOTAL_VALUE_INSURED,
-    COVER_PERIOD,
+    UK_GOODS_OR_SERVICES,
   },
 } = INSURANCE_ROUTES;
 
@@ -25,7 +26,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 const { ABOVE, BELOW } = FIELDS_ELIGIBILITY[FIELD_ID].OPTIONS;
 
-context('Insurance - Total value insured page - I want to enter the value that I want my export to be insured for so that I can obtain UKEF Credit Insurance for my export', () => {
+context('Insurance - Cover period page - I want to enter the length of my export contract, So that I can cover my exposure for the period of the contract', () => {
   let url;
 
   before(() => {
@@ -38,8 +39,9 @@ context('Insurance - Total value insured page - I want to enter the value that I
     cy.completeAndSubmitCompaniesHouseSearchForm({});
     cy.completeEligibilityCompanyDetailsForm();
     completeAndSubmitBuyerCountryForm();
+    cy.completeAndSubmitTotalValueInsuredForm({});
 
-    url = `${baseUrl}${TOTAL_VALUE_INSURED}`;
+    url = `${baseUrl}${COVER_PERIOD_ROUTE}`;
 
     cy.assertUrl(url);
   });
@@ -51,8 +53,8 @@ context('Insurance - Total value insured page - I want to enter the value that I
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: TOTAL_VALUE_INSURED,
-      backLink: BUYER_COUNTRY,
+      currentHref: COVER_PERIOD_ROUTE,
+      backLink: TOTAL_VALUE_INSURED,
       assertAuthenticatedHeader: false,
     });
   });
@@ -66,7 +68,7 @@ context('Insurance - Total value insured page - I want to enter the value that I
       cy.checkText(field(FIELD_ID).hint(), CONTENT_STRINGS.HINT);
     });
 
-    it(`renders a '${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE}' radio button`, () => {
+    it(`renders a '${COVER_PERIOD.LESS_THAN_2_YEARS.VALUE}' radio button`, () => {
       const fieldId = `${FIELD_ID}-${ABOVE.ID}`;
 
       field(fieldId).input().should('exist');
@@ -74,7 +76,7 @@ context('Insurance - Total value insured page - I want to enter the value that I
       cy.checkText(field(fieldId).label(), ABOVE.TEXT);
     });
 
-    it(`renders a '${TOTAL_CONTRACT_VALUE.LESS_THAN_250K.VALUE}' radio button`, () => {
+    it(`renders a '${COVER_PERIOD.MORE_THAN_2_YEARS.VALUE}' radio button`, () => {
       const fieldId = `${FIELD_ID}-${BELOW.ID}`;
 
       field(fieldId).input().should('exist');
@@ -103,15 +105,15 @@ context('Insurance - Total value insured page - I want to enter the value that I
       });
     });
 
-    describe('when submitting the answer as under the threshold', () => {
+    describe('when submitting the answer as over the threshold', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitTotalValueInsuredForm({ underThreshold: true });
+        cy.completeCoverPeriodForm({ underThreshold: true });
       });
 
-      it(`should redirect to ${COVER_PERIOD}`, () => {
-        const expected = `${baseUrl}${COVER_PERIOD}`;
+      it(`should redirect to ${UK_GOODS_OR_SERVICES}`, () => {
+        const expected = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
 
         cy.assertUrl(expected);
       });
@@ -120,7 +122,7 @@ context('Insurance - Total value insured page - I want to enter the value that I
         it('should have the originally submitted answer selected', () => {
           cy.clickBackLink();
 
-          cy.assertTotalValueInsuredRadios({ underThreshold: true });
+          cy.assertCoverPeriodRadios({ underThreshold: true });
         });
       });
     });
@@ -129,11 +131,11 @@ context('Insurance - Total value insured page - I want to enter the value that I
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitTotalValueInsuredForm({ underThreshold: false });
+        cy.completeCoverPeriodForm({ underThreshold: false });
       });
 
-      it(`should redirect to ${COVER_PERIOD}`, () => {
-        const expected = `${baseUrl}${COVER_PERIOD}`;
+      it(`should redirect to ${LONG_TERM_COVER}`, () => {
+        const expected = `${baseUrl}${LONG_TERM_COVER}`;
 
         cy.assertUrl(expected);
       });
@@ -142,7 +144,7 @@ context('Insurance - Total value insured page - I want to enter the value that I
         it('should have the originally submitted answer selected', () => {
           cy.clickBackLink();
 
-          cy.assertTotalValueInsuredRadios({ underThreshold: false });
+          cy.assertCoverPeriodRadios({ underThreshold: false });
         });
       });
     });
