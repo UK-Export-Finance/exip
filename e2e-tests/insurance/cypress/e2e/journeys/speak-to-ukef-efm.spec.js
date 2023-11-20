@@ -1,4 +1,3 @@
-import { yesRadio, submitButton } from '../../../../pages/shared';
 import { insurance } from '../../../../pages';
 import { PAGES } from '../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -31,8 +30,7 @@ context('Insurance - speak to UKEF EFM exit page', () => {
     let expectedUrl = `${baseUrl}${COVER_PERIOD}`;
     cy.assertUrl(expectedUrl);
 
-    yesRadio().input().click();
-    submitButton().click();
+    cy.completeCoverPeriodForm({ underThreshold: false });
 
     expectedUrl = `${baseUrl}${SPEAK_TO_UKEF_EFM}`;
 

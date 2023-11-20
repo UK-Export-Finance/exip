@@ -60,7 +60,7 @@ export const post = (req: Request, res: Response) => {
     });
   }
 
-  const answer = req.body[FIELD_ID];
+  const answer = Number(req.body[FIELD_ID]);
 
   if (answer !== COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID) {
     const { INSURANCE } = PAGES;
