@@ -55,6 +55,7 @@ insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD, insuredPeriodGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD, insuredPeriodPost);
 
+
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, ukGoodsOrServicesGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, ukGoodsOrServicesPost);
 

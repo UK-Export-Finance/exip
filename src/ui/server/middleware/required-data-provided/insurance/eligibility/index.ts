@@ -3,7 +3,7 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { Request, RequiredDataStateInsuranceEligibility, Response } from '../../../../../types';
 import { getRoutesAsArray, routeIsKnown, hasRequiredData } from '../../helpers';
 
-const { APPLY_OFFLINE, SPEAK_TO_UKEF_EFM, ELIGIBILITY, ACCOUNT } = INSURANCE_ROUTES;
+const { APPLY_OFFLINE, ELIGIBILITY, ACCOUNT } = INSURANCE_ROUTES;
 
 const {
   HAVE_AN_ACCOUNT,
@@ -94,7 +94,6 @@ export const requiredInsuranceEligibilityDataProvided = (req: Request, res: Resp
   const irrelevantRoutes = [
     CANNOT_APPLY,
     APPLY_OFFLINE,
-    SPEAK_TO_UKEF_EFM,
     CHECK_IF_ELIGIBLE,
     NO_COMPANIES_HOUSE_NUMBER,
     COMPANIES_HOUSE_UNAVAILABLE,

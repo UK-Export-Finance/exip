@@ -4,7 +4,7 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { mockReq, mockRes, mockSession } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
-const { APPLY_OFFLINE, SPEAK_TO_UKEF_EFM, ELIGIBILITY, ACCOUNT } = INSURANCE_ROUTES;
+const { APPLY_OFFLINE, ELIGIBILITY, ACCOUNT } = INSURANCE_ROUTES;
 
 const {
   HAVE_AN_ACCOUNT,
@@ -118,15 +118,6 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
     describe(`when req.originalUrl is ${APPLY_OFFLINE}`, () => {
       it('should call req.next', () => {
         req.originalUrl = APPLY_OFFLINE;
-        requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
-
-        expect(nextSpy).toHaveBeenCalled();
-      });
-    });
-
-    describe(`when req.originalUrl is ${SPEAK_TO_UKEF_EFM}`, () => {
-      it('should call req.next', () => {
-        req.originalUrl = SPEAK_TO_UKEF_EFM;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();

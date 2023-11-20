@@ -1,4 +1,4 @@
-import { ELIGIBILITY, ROUTES, CONTACT_DETAILS } from '../../../constants';
+import { ROUTES, CONTACT_DETAILS } from '../../../constants';
 import { LINKS } from '../../links';
 import { BUTTONS } from '../../buttons';
 import ELIGIBILITY_CONTENT_STRINGS from './eligibility';
@@ -61,30 +61,6 @@ const APPLY_OFFLINE = {
         HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
       },
     },
-  },
-};
-
-const SPEAK_TO_UKEF_EFM = {
-  PAGE_TITLE: 'You need to speak with a UKEF export finance manager',
-  REASON: {
-    INTRO: 'This is because',
-    WANT_COVER_OVER_MAX_PERIOD: `you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years.`,
-  },
-  ACTIONS: {
-    FIND_EFM: [
-      [
-        {
-          text: 'Find ',
-        },
-        {
-          text: 'your nearest export finance manager',
-          href: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
-        },
-        {
-          text: ' to discuss this.',
-        },
-      ],
-    ],
   },
 };
 
@@ -154,7 +130,6 @@ export default {
   ELIGIBILITY: ELIGIBILITY_CONTENT_STRINGS,
   NO_ACCESS_TO_APPLICATION_PAGE,
   POLICY,
-  SPEAK_TO_UKEF_EFM,
   YOUR_BUYER,
   DECLARATIONS,
   CHECK_YOUR_ANSWERS,
