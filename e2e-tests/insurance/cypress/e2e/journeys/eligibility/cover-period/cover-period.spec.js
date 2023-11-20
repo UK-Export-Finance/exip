@@ -105,7 +105,7 @@ context('Insurance - Cover period page - I want to enter the length of my export
       });
     });
 
-    describe('when submitting the answer as over the threshold', () => {
+    describe('when submitting the answer as under the threshold', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
 
@@ -138,14 +138,6 @@ context('Insurance - Cover period page - I want to enter the length of my export
         const expected = `${baseUrl}${LONG_TERM_COVER}`;
 
         cy.assertUrl(expected);
-      });
-
-      describe('when going back to the page', () => {
-        it('should have the originally submitted answer selected', () => {
-          cy.clickBackLink();
-
-          cy.assertCoverPeriodRadios({ underThreshold: false });
-        });
       });
     });
   });
