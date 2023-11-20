@@ -29,7 +29,7 @@ const {
 
 const {
   START,
-  ELIGIBILITY: { UK_GOODS_OR_SERVICES, END_BUYER, INSURED_PERIOD },
+  ELIGIBILITY: { UK_GOODS_OR_SERVICES, END_BUYER, COVER_PERIOD },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -48,7 +48,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     cy.completeEligibilityCompanyDetailsForm();
     completeAndSubmitBuyerCountryForm();
     cy.completeAndSubmitTotalValueInsuredForm({});
-    cy.completeInsuredPeriodForm();
+    cy.completeCoverPeriodForm({});
 
     cy.assertUrl(url);
   });
@@ -61,7 +61,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: UK_GOODS_OR_SERVICES,
-      backLink: INSURED_PERIOD,
+      backLink: COVER_PERIOD,
       assertAuthenticatedHeader: false,
     });
   });

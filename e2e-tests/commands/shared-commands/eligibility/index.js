@@ -4,7 +4,7 @@ import {
   completeExporterLocationForm,
   completeCompaniesHouseNumberForm,
   completeAndSubmitTotalValueInsuredForm,
-  completeInsuredPeriodForm,
+  completeCoverPeriodForm,
   completeUkGoodsAndServicesForm,
   completeEndBuyerForm,
   submitCheckYourAnswers,
@@ -21,7 +21,7 @@ Cypress.Commands.add('completeCompaniesHouseNumberForm', completeCompaniesHouseN
 Cypress.Commands.add('completeAndSubmitCompaniesHouseSearchForm', completeAndSubmitCompaniesHouseSearchForm);
 Cypress.Commands.add('completeEligibilityCompanyDetailsForm', completeCompanyDetailsForm);
 Cypress.Commands.add('completeAndSubmitTotalValueInsuredForm', completeAndSubmitTotalValueInsuredForm);
-Cypress.Commands.add('completeInsuredPeriodForm', completeInsuredPeriodForm);
+Cypress.Commands.add('completeCoverPeriodForm', completeCoverPeriodForm);
 Cypress.Commands.add('completeUkGoodsAndServicesForm', completeUkGoodsAndServicesForm);
 Cypress.Commands.add('completeEndBuyerForm', completeEndBuyerForm);
 Cypress.Commands.add('submitCheckYourAnswers', submitCheckYourAnswers);

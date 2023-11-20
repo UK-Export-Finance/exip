@@ -9,7 +9,7 @@ describe('server/helpers/section-status/in-progress', () => {
   describe('sectionIsInProgress', () => {
     describe('when all relevant fields have NOT been submitted', () => {
       it('should return true', () => {
-        const mockFields = ['hasCompaniesHouseNumber', 'wantCoverOverMaxPeriod'];
+        const mockFields = ['hasCompaniesHouseNumber', 'hasEndBuyer'];
 
         const mockApplicationIncomplete = {
           hasCompaniesHouseNumber: mockApplicationFlat.hasCompaniesHouseNumber,
@@ -23,7 +23,7 @@ describe('server/helpers/section-status/in-progress', () => {
 
     describe('when all relevant fields have been submitted', () => {
       it('should return false', () => {
-        const mockFields = ['hasCompaniesHouseNumber', 'wantCoverOverMaxPeriod'];
+        const mockFields = ['hasCompaniesHouseNumber', 'hasEndBuyer'];
 
         const result = sectionIsInProgress(mockFields, mockApplicationFlat);
 

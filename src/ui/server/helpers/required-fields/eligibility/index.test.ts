@@ -7,12 +7,12 @@ const {
     COMPANY,
     COMPANIES_HOUSE,
     COMPANIES_HOUSE_NUMBER,
+    COVER_PERIOD,
     COVER_PERIOD_ID,
     HAVE_AN_ACCOUNT,
     HAS_END_BUYER,
     TOTAL_CONTRACT_VALUE_ID,
     TOTAL_CONTRACT_VALUE,
-    WANT_COVER_OVER_MAX_PERIOD,
     ...FIELD_IDS
   },
 } = INSURANCE_FIELD_IDS;
@@ -20,7 +20,7 @@ const {
 describe('server/helpers/required-fields/eligibility', () => {
   describe('irrelevantFields', () => {
     it('should return array of irrelevant fields', () => {
-      const expected = [BUYER_COUNTRY_ISO_CODE, COVER_PERIOD_ID, HAVE_AN_ACCOUNT, TOTAL_CONTRACT_VALUE, TOTAL_CONTRACT_VALUE_ID, WANT_COVER_OVER_MAX_PERIOD];
+      const expected = [BUYER_COUNTRY_ISO_CODE, COVER_PERIOD_ID, HAVE_AN_ACCOUNT, TOTAL_CONTRACT_VALUE_ID];
 
       expect(irrelevantFields).toEqual(expected);
     });

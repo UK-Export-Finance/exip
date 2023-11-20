@@ -77,9 +77,13 @@ context('Insurance - Eligibility - start and complete for a second time after cr
     cy.assertTotalValueInsuredRadios({ underThreshold: false, checked: false });
     cy.completeAndSubmitTotalValueInsuredForm({});
 
-    // insured period question
-    cy.assertUncheckedYesNoRadios();
-    cy.completeInsuredPeriodForm();
+    /**
+     * cover period question
+     * check that both 2x radios are NOT checked.
+     */
+    cy.assertCoverPeriodRadios({ underThreshold: true, checked: false });
+    cy.assertCoverPeriodRadios({ underThreshold: false, checked: false });
+    cy.completeCoverPeriodForm({});
 
     // UK goods and services question
     cy.assertUncheckedYesNoRadios();

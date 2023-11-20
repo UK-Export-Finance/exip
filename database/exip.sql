@@ -490,7 +490,7 @@ LOCK TABLES `CoverPeriod` WRITE;
 
 INSERT INTO `CoverPeriod` (`id`, `valueId`, `value`)
 VALUES
-	('cloiparaj000doq73pmr6blua',1,'Less than 2 years'),
+	('cloiparaj000doq73pmr6blua',1,'1 to 24 months'),
 	('cloiparaj000doq73pmr6blub',2,'More than 2 years');
 
 /*!40000 ALTER TABLE `CoverPeriod` ENABLE KEYS */;

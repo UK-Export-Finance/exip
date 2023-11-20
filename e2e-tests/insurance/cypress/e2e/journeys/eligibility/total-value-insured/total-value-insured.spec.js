@@ -100,8 +100,8 @@ context('Insurance - Total value insured page - I want to enter the value that I
         cy.completeAndSubmitTotalValueInsuredForm({ underThreshold: true });
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`, () => {
-        const expected = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`;
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD}`, () => {
+        const expected = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD}`;
 
         cy.assertUrl(expected);
       });
@@ -122,8 +122,8 @@ context('Insurance - Total value insured page - I want to enter the value that I
         cy.completeAndSubmitTotalValueInsuredForm({ underThreshold: false });
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`, () => {
-        const expected = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.INSURED_PERIOD}`;
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD}`, () => {
+        const expected = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD}`;
 
         cy.assertUrl(expected);
       });
