@@ -38,6 +38,10 @@ describe(`Insurance - Your business - Company details page - submit ${ALTERNATIV
     });
   });
 
+  beforeEach(() => {
+    cy.saveSession();
+  });
+
   after(() => {
     cy.deleteApplication(referenceNumber);
   });

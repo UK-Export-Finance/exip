@@ -98,7 +98,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      yesRadioInput().first().should('be.checked');
+      noRadioInput().first().should('be.checked');
       noRadioInput().eq(1).should('be.checked');
       field(PHONE_NUMBER).input().should('be.empty');
     });
@@ -122,7 +122,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      yesRadioInput().first().should('be.checked');
+      noRadioInput().first().should('be.checked');
       noRadioInput().eq(1).should('be.checked');
 
       cy.checkValue(field(PHONE_NUMBER), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
@@ -149,7 +149,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      yesRadioInput().first().should('be.checked');
+      noRadioInput().first().should('be.checked');
       noRadioInput().eq(1).should('be.checked');
       cy.checkValue(field(PHONE_NUMBER), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
       cy.checkValue(field(WEBSITE), WEBSITE_EXAMPLES.VALID);
