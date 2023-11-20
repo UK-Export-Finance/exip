@@ -1,0 +1,44 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}  
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+    </div>
+  </div>
+
+  
+  <p class="govuk-body" data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
+
+  <p class="govuk-body">
+    <span data-cy="action-pdf-form">
+      {{ CONTENT_STRINGS.ACTIONS.PDF_FORM.INTRO }} <a class="govuk-link" data-cy="action-pdf-form-link" href="{{ CONTENT_STRINGS.ACTIONS.PDF_FORM.LINK.HREF }}">{{ CONTENT_STRINGS.ACTIONS.PDF_FORM.LINK.TEXT }}</a>.
+    </span>
+  </p>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <p class="govuk-body">
+        <span data-cy="action-contact-efm">
+          {{ CONTENT_STRINGS.ACTIONS.CONTACT_EFM.INTRO }} <a class="govuk-link" data-cy="action-contact-efm-link" href="{{ CONTENT_STRINGS.ACTIONS.CONTACT_EFM.LINK.HREF }}">{{ CONTENT_STRINGS.ACTIONS.CONTACT_EFM.LINK.TEXT }}</a>
+        </span>
+        <span data-cy="action-contact-ukef-team">{{ CONTENT_STRINGS.ACTIONS.CONTACT_UKEF_TEAM }}</span>
+      </p>
+    </div>
+  </div>
+
+{% endblock %}

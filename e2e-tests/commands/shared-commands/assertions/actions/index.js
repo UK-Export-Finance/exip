@@ -88,3 +88,41 @@ export const checkActionTalkToYourNearestEFM = ({
     expectedText: expectedLinkText,
   });
 };
+
+/**
+ * checkActionApplyThroughPDF
+ * Check "apply through PDF" action content and link.
+ * @param {String} Expected text
+ * @param {String} Expected link href
+ * @param {String} Expected link text
+ */
+export const checkActionApplyThroughPDF = ({
+  expectedText,
+  expectedLinkHref,
+  expectedLinkText,
+}) => {
+  cy.checkText(
+    actionSelectors.pdfForm(),
+    expectedText,
+  );
+
+  cy.checkLink(
+    actionSelectors.pdfFormLink(),
+    expectedLinkHref,
+    expectedLinkText,
+  );
+};
+
+/**
+ * checkActionApplyThroughPDF
+ * Check "contact UKEF team" action content.
+ * @param {String} Expected text
+ */
+export const checkActionContactUKEFTeam = ({
+  expectedText,
+}) => {
+  cy.checkText(
+    actionSelectors.contactUKEFTeam(),
+    expectedText,
+  );
+};

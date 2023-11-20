@@ -18,6 +18,7 @@ const {
   CHECK_YOUR_ANSWERS,
   TOTAL_VALUE_INSURED,
   COVER_PERIOD,
+  LONG_TERM_COVER,
   COMPANIES_HOUSE_NUMBER,
   NO_COMPANIES_HOUSE_NUMBER,
   ENTER_COMPANIES_HOUSE_NUMBER,
@@ -100,6 +101,15 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
     describe(`when req.originalUrl is ${NEED_TO_START_AGAIN}`, () => {
       it('should call req.next', () => {
         req.originalUrl = NEED_TO_START_AGAIN;
+        requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
+
+        expect(nextSpy).toHaveBeenCalled();
+      });
+    });
+
+    describe(`when req.originalUrl is ${LONG_TERM_COVER}`, () => {
+      it('should call req.next', () => {
+        req.originalUrl = LONG_TERM_COVER;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
