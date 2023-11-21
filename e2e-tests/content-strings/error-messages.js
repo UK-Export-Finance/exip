@@ -108,12 +108,12 @@ export const ERROR_MESSAGES = {
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.ESTIMATED_ANNUAL_TURNOVER]: {
         IS_EMPTY: 'Enter your estimated annual turnover for this current financial year',
-        INCORRECT_FORMAT: 'Enter your estimated annual turnover for the current financial year in the correct format, like whole numbers only',
+        INCORRECT_FORMAT: 'Enter your estimated annual turnover for the current financial year in the correct format - for example, whole numbers only',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.PERCENTAGE_TURNOVER]: {
         IS_EMPTY: 'Enter your estimated percentage of turnover from exports',
         INCORRECT_FORMAT:
-        'Enter your estimated percentage of turnover from exports in the correct format, without special characters - for example, a whole number like 50',
+          'Enter your estimated percentage of turnover from exports in the correct format, without special characters - for example, a whole number like 50',
         BELOW_MINIMUM: 'Your percentage of turnover from exports must be a number between 0 to 100',
         ABOVE_MAXIMUM: 'Your percentage of turnover from exports must be a number between 0 to 100',
       },
