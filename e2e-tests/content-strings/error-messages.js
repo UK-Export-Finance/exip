@@ -99,8 +99,8 @@ export const ERROR_MESSAGES = {
         ABOVE_MAXIMUM: 'The description of your business cannot be more than a 1000 characters',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.YEARS_EXPORTING]: {
-        IS_EMPTY: "Enter how many years you've been exporting for as a whole number - for example, 3 or 7",
-        INCORRECT_FORMAT: 'Enter how many years you have been trading as a whole number - do not enter decimals',
+        IS_EMPTY: 'Enter how many years you have been exporting for as a whole number',
+        INCORRECT_FORMAT: 'Enter how many years you have been exporting for as a whole number - do not enter decimals',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_UK]: {
         IS_EMPTY: 'Enter how many employees you have in the UK as a whole number - for example, 100',
