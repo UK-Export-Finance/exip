@@ -5,7 +5,7 @@ import mapNbiIssueAvailable from './map-NBI-issue-available';
 import canGetAQuoteOnline from './can-get-a-quote-online';
 import canGetAQuoteByEmail from './can-get-a-quote-by-email';
 import cannotGetAQuote from './cannot-get-a-quote';
-import canApplyOnline from './can-apply-online';
+import applyForInsuranceOnline from './can-apply-for-insurance-online';
 import canApplyOffline from './can-apply-offline';
 import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../../constants';
 import mockCisCountries from '../../../test-mocks/mock-CIS-countries';
@@ -47,7 +47,7 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
     mapped.canGetAQuoteByEmail = canGetAQuoteByEmail(mapped);
     mapped.cannotGetAQuote = cannotGetAQuote(mapped);
 
-    mapped.canApplyForInsuranceOnline = canApplyOnline(mockCountryBase.shortTermCoverAvailabilityDesc);
+    mapped.canApplyForInsuranceOnline = applyForInsuranceOnline(mockCountryBase.shortTermCoverAvailabilityDesc);
     mapped.canApplyForInsuranceOffline = canApplyOffline(mockCountryBase.shortTermCoverAvailabilityDesc);
 
     const noQuoteSupport = !mapped.canGetAQuoteOnline && !mapped.canGetAQuoteOffline;
