@@ -46,7 +46,6 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
     mapped.canGetAQuoteOffline = canApplyOffline(mockCountryBase.shortTermCoverAvailabilityDesc);
     mapped.canGetAQuoteByEmail = canGetAQuoteByEmail(mapped);
     mapped.cannotGetAQuote = cannotGetAQuote(mapped);
-    mapped.cannotGetAQuote = cannotGetAQuote(mapped);
 
     mapped.canApplyForInsuranceOnline = canApplyOnline(mockCountryBase.shortTermCoverAvailabilityDesc);
     mapped.canApplyForInsuranceOffline = canApplyOffline(mockCountryBase.shortTermCoverAvailabilityDesc);
