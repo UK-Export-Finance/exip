@@ -2,7 +2,7 @@
 # 1. BUILD
 ###################
 
-FROM node:20.8.1-alpine3.17 AS build
+FROM node:21.2.0-alpine3.17 AS build
 
 # Build variables
 ARG PORT
