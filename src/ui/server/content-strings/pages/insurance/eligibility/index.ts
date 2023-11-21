@@ -85,7 +85,7 @@ const COMPANIES_HOUSE_UNAVAILABLE = {
 
 const COMPANY_NOT_ACTIVE = {
   PAGE_TITLE: 'You need to speak with an export finance manager',
-  BODY: "This is because the company you entered is no longer active on Companies House and we cannot process your application.",
+  BODY: 'This is because the company you entered is no longer active on Companies House and we cannot process your application.',
   ACTIONS: {
     INTRO: 'You can still apply. But you should talk to a export finance manager before you try again.',
     FIND_EFM: ACTIONS.FIND_EFM,
