@@ -4,6 +4,8 @@ import { RequestBody } from '../../../../../../../types';
 import wholeNumberValidation from '../../../../../../helpers/whole-number-validation';
 import { objectHasProperty } from '../../../../../../helpers/object';
 import generateValidationErrors from '../../../../../../helpers/validation';
+import { stripCommas } from '../../../../../../helpers/string';
+import { isNumberBelowMinimum } from '../../../../../../helpers/number';
 
 const {
   NATURE_OF_YOUR_BUSINESS: { EMPLOYEES_UK: FIELD_ID },
@@ -12,6 +14,8 @@ const {
 const {
   EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGE },
 } = ERROR_MESSAGES.INSURANCE;
+
+const MINIMUM = 1;
 
 /**
  * validates number of uk employees input
@@ -23,6 +27,16 @@ const {
 const employeesUK = (responseBody: RequestBody, errors: object) => {
   if (!objectHasProperty(responseBody, FIELD_ID)) {
     const errorMessage = ERROR_MESSAGE.IS_EMPTY;
+
+    return generateValidationErrors(FIELD_ID, errorMessage, errors);
+  }
+
+  const value = responseBody[FIELD_ID];
+  const valueWithoutCommas = stripCommas(value);
+
+  // checks if value is below set minimum
+  if (isNumberBelowMinimum(Number(valueWithoutCommas), MINIMUM)) {
+    const errorMessage = ERROR_MESSAGE.BELOW_MINIMUM;
 
     return generateValidationErrors(FIELD_ID, errorMessage, errors);
   }

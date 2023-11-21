@@ -39,7 +39,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     cy.navigateToUrl(url);
 
-    cy.completeAndSubmitCompanyDetails({ differentTradingName: true, completedifferentTradingName: false });
+    cy.completeAndSubmitCompanyDetails({ differentTradingName: true, completeDifferentTradingName: false });
   });
 
   after(() => {
