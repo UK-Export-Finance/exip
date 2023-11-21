@@ -3,6 +3,7 @@ export * from './account';
 export * from './api';
 export * from './application';
 export * from './cover-period';
+export * from './currencies';
 export * from './date-format';
 export * from './dates';
 export * from './examples';

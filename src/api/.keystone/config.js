@@ -519,16 +519,20 @@ var FIELD_VALUES = {
 // constants/total-contract-value/index.ts
 var TOTAL_CONTRACT_VALUE = {
   LESS_THAN_500K: {
-    DB_ID: 1
+    DB_ID: 1,
+    VALUE: "Less than 500k"
   },
   MORE_THAN_500K: {
-    DB_ID: 2
+    DB_ID: 2,
+    VALUE: "More than 500k"
   },
   LESS_THAN_250K: {
-    DB_ID: 3
+    DB_ID: 3,
+    VALUE: "Less than 250k"
   },
   MORE_THAN_250K: {
-    DB_ID: 4
+    DB_ID: 4,
+    VALUE: "More than 250k"
   },
   AMOUNT_250K: 25e4
 };

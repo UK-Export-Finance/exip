@@ -3,7 +3,6 @@ const applicationSubmittedPage = {
     yourReference: () => cy.get('[data-cy="your-reference"]'),
     referenceNumber: () => cy.get('[data-cy="reference-number"]'),
   },
-  intro: () => cy.get('[data-cy="intro"]'),
   whatHappensNext: {
     heading: () => cy.get('[data-cy="what-happens-next-heading"]'),
     intro: () => cy.get('[data-cy="what-happens-next-intro"]'),

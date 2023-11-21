@@ -5,6 +5,7 @@ export const ELIGIBILITY_TEMPLATES = {
   UK_GOODS_OR_SERVICES: 'insurance/eligibility/uk-goods-or-services.njk',
   TOTAL_VALUE_INSURED: 'insurance/eligibility/total-value-insured.njk',
   COVER_PERIOD: 'insurance/eligibility/cover-period.njk',
+  LONG_TERM_COVER: 'insurance/eligibility/long-term-cover.njk',
   COMPANIES_HOUSE_NUMBER: 'insurance/eligibility/companies-house-number.njk',
   NO_COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_EXIT_PAGE,
   COMPANIES_HOUSE_SEARCH: 'insurance/eligibility/companies-house-search.njk',

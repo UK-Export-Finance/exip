@@ -1,5 +1,5 @@
 import { insurance } from '../../../../pages';
-import { submitButton } from '../../../../pages/shared';
+import { intro, submitButton } from '../../../../pages/shared';
 import { BUTTONS, PAGES } from '../../../../content-strings';
 import { ROUTES } from '../../../../constants';
 
@@ -34,7 +34,7 @@ context('Insurance Eligibility - start page', () => {
     });
 
     it('renders an intro', () => {
-      cy.checkText(startPage.intro(), CONTENT_STRINGS.INTRO);
+      cy.checkText(intro(), CONTENT_STRINGS.INTRO);
     });
 
     describe('`you will need` list', () => {
