@@ -16,7 +16,7 @@ const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
       TRADING_ADDRESS,
-      TRADING_NAME,
+      HAS_DIFFERENT_TRADING_NAME,
       WEBSITE,
       PHONE_NUMBER,
     },
@@ -63,8 +63,8 @@ context('Insurance - Your business - Change your answers - Company details - As 
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(TRADING_NAME, () => {
-    const fieldId = TRADING_NAME;
+  describe(HAS_DIFFERENT_TRADING_NAME, () => {
+    const fieldId = HAS_DIFFERENT_TRADING_NAME;
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {

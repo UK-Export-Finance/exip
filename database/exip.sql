@@ -727,6 +727,7 @@ CREATE TABLE IF NOT EXISTS `Company` (
   `dateOfCreation` datetime(3) DEFAULT NULL,
   `hasDifferentTradingAddress` tinyint(1) DEFAULT NULL,
   `hasDifferentTradingName` tinyint(1) DEFAULT NULL,
+  `differentTradingName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `companyWebsite` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `phoneNumber` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 	`registeredOfficeAddress` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,

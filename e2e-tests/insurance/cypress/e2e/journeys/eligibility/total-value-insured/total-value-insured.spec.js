@@ -1,6 +1,7 @@
 import { field } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { ROUTES } from '../../../../../../constants';
+import { TOTAL_CONTRACT_VALUE } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import { FIELDS_ELIGIBILITY } from '../../../../../../content-strings/fields/insurance/eligibility';
@@ -11,6 +12,15 @@ const {
   ELIGIBILITY: { TOTAL_CONTRACT_VALUE: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
+const {
+  START,
+  ELIGIBILITY: {
+    BUYER_COUNTRY,
+    TOTAL_VALUE_INSURED,
+    COVER_PERIOD,
+  },
+} = INSURANCE_ROUTES;
+
 const baseUrl = Cypress.config('baseUrl');
 
 const { ABOVE, BELOW } = FIELDS_ELIGIBILITY[FIELD_ID].OPTIONS;
@@ -19,7 +29,7 @@ context('Insurance - Total value insured page - I want to enter the value that I
   let url;
 
   before(() => {
-    cy.navigateToUrl(ROUTES.INSURANCE.START);
+    cy.navigateToUrl(START);
 
     cy.completeStartForm();
     cy.completeCheckIfEligibleForm();
@@ -29,7 +39,7 @@ context('Insurance - Total value insured page - I want to enter the value that I
     cy.completeEligibilityCompanyDetailsForm();
     completeAndSubmitBuyerCountryForm();
 
-    url = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED}`;
+    url = `${baseUrl}${TOTAL_VALUE_INSURED}`;
 
     cy.assertUrl(url);
   });
@@ -41,8 +51,8 @@ context('Insurance - Total value insured page - I want to enter the value that I
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: ROUTES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED,
-      backLink: ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY,
+      currentHref: TOTAL_VALUE_INSURED,
+      backLink: BUYER_COUNTRY,
       assertAuthenticatedHeader: false,
     });
   });
@@ -56,7 +66,7 @@ context('Insurance - Total value insured page - I want to enter the value that I
       cy.checkText(field(FIELD_ID).hint(), CONTENT_STRINGS.HINT);
     });
 
-    it('renders a `above 250k` radio button', () => {
+    it(`renders a '${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE}' radio button`, () => {
       const fieldId = `${FIELD_ID}-${ABOVE.ID}`;
 
       field(fieldId).input().should('exist');
@@ -64,7 +74,7 @@ context('Insurance - Total value insured page - I want to enter the value that I
       cy.checkText(field(fieldId).label(), ABOVE.TEXT);
     });
 
-    it('renders a `below 250k` radio button', () => {
+    it(`renders a '${TOTAL_CONTRACT_VALUE.LESS_THAN_250K.VALUE}' radio button`, () => {
       const fieldId = `${FIELD_ID}-${BELOW.ID}`;
 
       field(fieldId).input().should('exist');
@@ -93,15 +103,15 @@ context('Insurance - Total value insured page - I want to enter the value that I
       });
     });
 
-    describe('when submitting the answer as under threshold', () => {
+    describe('when submitting the answer as under the threshold', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
 
         cy.completeAndSubmitTotalValueInsuredForm({ underThreshold: true });
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD}`, () => {
-        const expected = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD}`;
+      it(`should redirect to ${COVER_PERIOD}`, () => {
+        const expected = `${baseUrl}${COVER_PERIOD}`;
 
         cy.assertUrl(expected);
       });
@@ -115,15 +125,15 @@ context('Insurance - Total value insured page - I want to enter the value that I
       });
     });
 
-    describe('when submitting the answer as over threshold', () => {
+    describe('when submitting the answer as over the threshold', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
 
         cy.completeAndSubmitTotalValueInsuredForm({ underThreshold: false });
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD}`, () => {
-        const expected = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD}`;
+      it(`should redirect to ${COVER_PERIOD}`, () => {
+        const expected = `${baseUrl}${COVER_PERIOD}`;
 
         cy.assertUrl(expected);
       });

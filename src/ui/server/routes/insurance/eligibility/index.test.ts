@@ -10,7 +10,8 @@ import { get as companyNotActiveGet } from '../../../controllers/insurance/eligi
 import { get as companyDetailsGet, post as companyDetailsPost } from '../../../controllers/insurance/eligibility/company-details';
 import { get as buyerCountryGet, post as buyerCountryPost } from '../../../controllers/insurance/eligibility/buyer-country';
 import { get as totalValueInsuredGet, post as totalValueInsuredPost } from '../../../controllers/insurance/eligibility/total-value-insured';
-import { get as insuredPeriodGet, post as insuredPeriodPost } from '../../../controllers/insurance/eligibility/cover-period';
+import { get as coverPeriodGet, post as coverPeriodPost } from '../../../controllers/insurance/eligibility/cover-period';
+import { get as longTermCoverGet } from '../../../controllers/insurance/eligibility/long-term-cover';
 import { get as ukGoodsOrServicesGet, post as ukGoodsOrServicesPost } from '../../../controllers/insurance/eligibility/uk-goods-or-services';
 import { get as endBuyerGet, post as endBuyerPost } from '../../../controllers/insurance/eligibility/end-buyer';
 import { get as cannotApplyMultipleRisksGet } from '../../../controllers/insurance/eligibility/cannot-apply-multiple-risks';
@@ -30,7 +31,7 @@ describe('routes/insurance/eligibility', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(19);
+    expect(get).toHaveBeenCalledTimes(20);
     expect(post).toHaveBeenCalledTimes(14);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE, checkIfEligibleGet);
@@ -59,8 +60,10 @@ describe('routes/insurance/eligibility', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED, totalValueInsuredGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED, totalValueInsuredPost);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD, insuredPeriodGet);
-    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD, insuredPeriodPost);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD, coverPeriodGet);
+    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD, coverPeriodPost);
+
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER, longTermCoverGet);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, ukGoodsOrServicesGet);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, ukGoodsOrServicesPost);

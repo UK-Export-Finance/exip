@@ -25,7 +25,7 @@ const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
       TRADING_ADDRESS,
-      TRADING_NAME,
+      HAS_DIFFERENT_TRADING_NAME,
       WEBSITE,
       PHONE_NUMBER,
     },
@@ -82,8 +82,8 @@ context('Insurance - Check your answers - Company details - Your business - Summ
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(TRADING_NAME, () => {
-    const fieldId = TRADING_NAME;
+  describe(HAS_DIFFERENT_TRADING_NAME, () => {
+    const fieldId = HAS_DIFFERENT_TRADING_NAME;
 
     let fieldVariables = getFieldVariables(fieldId, referenceNumber, COMPANY_DETAILS_CHANGE);
 

@@ -1,4 +1,5 @@
 import completeOtherSectionsPage from '../../../../pages/insurance/complete-other-sections';
+import { intro } from '../../../../pages/shared';
 import { PAGES } from '../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 
@@ -53,7 +54,7 @@ context('Insurance - Complete other sections page', () => {
     });
 
     it('renders intro copy', () => {
-      cy.checkText(completeOtherSectionsPage.intro(), CONTENT_STRINGS.INTRO);
+      cy.checkText(intro(), CONTENT_STRINGS.INTRO);
     });
 
     it('renders `can access other sections` copy', () => {

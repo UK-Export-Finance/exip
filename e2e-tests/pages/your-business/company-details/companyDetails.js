@@ -3,7 +3,7 @@ import { yesRadioInput, noRadioInput } from '../../shared';
 
 const {
   YOUR_COMPANY: {
-    TRADING_NAME,
+    HAS_DIFFERENT_TRADING_NAME,
     TRADING_ADDRESS,
     YOUR_BUSINESS,
   },
@@ -12,11 +12,11 @@ const {
 const companyDetails = {
   differentCompaniesHouseNumber: () => cy.get('[data-cy="different-companies-house-number"]'),
   yourBusinessHeading: () => cy.get(`[data-cy="${YOUR_BUSINESS}-heading`),
-  [TRADING_NAME]: {
-    label: () => cy.get(`[data-cy="${TRADING_NAME}-legend"]`),
+  [HAS_DIFFERENT_TRADING_NAME]: {
+    label: () => cy.get(`[data-cy="${HAS_DIFFERENT_TRADING_NAME}-legend"]`),
     yesRadioInput: () => yesRadioInput().first(),
     noRadioInput: () => noRadioInput().first(),
-    errorMessage: () => cy.get(`[data-cy="${TRADING_NAME}-error-message"]`),
+    errorMessage: () => cy.get(`[data-cy="${HAS_DIFFERENT_TRADING_NAME}-error-message"]`),
   },
   [TRADING_ADDRESS]: {
     label: () => cy.get(`[data-cy="${TRADING_ADDRESS}-legend"]`),

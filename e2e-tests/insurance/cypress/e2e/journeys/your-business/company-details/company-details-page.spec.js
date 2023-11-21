@@ -25,9 +25,10 @@ const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
       TRADING_ADDRESS,
-      TRADING_NAME,
+      HAS_DIFFERENT_TRADING_NAME,
       WEBSITE,
       PHONE_NUMBER,
+      DIFFERENT_TRADING_NAME,
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -79,11 +80,24 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     });
 
     it('should display the trading name radios', () => {
-      cy.checkText(companyDetails[TRADING_NAME].label(), EXPORTER_BUSINESS_FIELDS[TRADING_NAME].LABEL);
+      cy.checkText(companyDetails[HAS_DIFFERENT_TRADING_NAME].label(), EXPORTER_BUSINESS_FIELDS[HAS_DIFFERENT_TRADING_NAME].LABEL);
 
-      cy.checkRadioInputYesAriaLabel(EXPORTER_BUSINESS_FIELDS[TRADING_NAME].LABEL);
+      cy.checkRadioInputYesAriaLabel(EXPORTER_BUSINESS_FIELDS[HAS_DIFFERENT_TRADING_NAME].LABEL);
 
-      cy.checkRadioInputNoAriaLabel(EXPORTER_BUSINESS_FIELDS[TRADING_NAME].LABEL);
+      cy.checkRadioInputNoAriaLabel(EXPORTER_BUSINESS_FIELDS[HAS_DIFFERENT_TRADING_NAME].LABEL);
+    });
+
+    it(`should NOT display conditional ${DIFFERENT_TRADING_NAME} input without selecting the trading name "yes" radio`, () => {
+      field(DIFFERENT_TRADING_NAME).input().should('not.be.visible');
+    });
+
+    it(`should display conditional ${DIFFERENT_TRADING_NAME} input when selecting the trading name "yes" radio`, () => {
+      yesRadioInput().first().click();
+
+      field(DIFFERENT_TRADING_NAME).input().should('be.visible');
+
+      cy.checkText(field(DIFFERENT_TRADING_NAME).label(), EXPORTER_BUSINESS_FIELDS[DIFFERENT_TRADING_NAME].LABEL);
+      cy.checkText(field(DIFFERENT_TRADING_NAME).hint(), EXPORTER_BUSINESS_FIELDS[DIFFERENT_TRADING_NAME].HINT);
     });
 
     it('should display the trading address radios', () => {

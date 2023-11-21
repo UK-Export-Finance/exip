@@ -6,7 +6,7 @@ import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
-      TRADING_NAME,
+      HAS_DIFFERENT_TRADING_NAME,
     },
   },
 } = FIELD_IDS.INSURANCE;
@@ -46,13 +46,13 @@ describe("Insurance - Your business - Company details page- As an Exporter I wan
   });
 
   it('should display validation errors if trading name question is not answered', () => {
-    const field = companyDetails[TRADING_NAME];
+    const field = companyDetails[HAS_DIFFERENT_TRADING_NAME];
 
     const radioField = {
       ...field,
       input: field.yesRadioInput,
     };
 
-    cy.submitAndAssertRadioErrors(radioField, 0, 1, COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
+    cy.submitAndAssertRadioErrors(radioField, 0, 1, COMPANY_DETAILS_ERRORS[HAS_DIFFERENT_TRADING_NAME].IS_EMPTY);
   });
 });

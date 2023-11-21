@@ -1,5 +1,4 @@
 const yourDetailsPage = {
-  intro: () => cy.get('[data-cy="intro"]'),
   alreadyGotAnAccountHeading: () => cy.get('[data-cy="already-got-an-account"]'),
   signInButtonLink: () => cy.get('[data-cy="sign-in"]'),
   privacyNotice: {

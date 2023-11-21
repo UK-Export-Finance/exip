@@ -76,6 +76,7 @@ const applicationQuery = gql`
           companyNumber
           companyWebsite
           hasDifferentTradingName
+          differentTradingName
           hasDifferentTradingAddress
           dateOfCreation
           phoneNumber

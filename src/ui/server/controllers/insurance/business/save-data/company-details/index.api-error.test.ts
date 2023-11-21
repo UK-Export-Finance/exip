@@ -5,7 +5,7 @@ import { mockApplication } from '../../../../../test-mocks';
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -14,7 +14,7 @@ describe('controllers/insurance/business/save-data/company-details - API error',
   let updateApplicationSpy = jest.fn(() => Promise.resolve(mockUpdateApplicationResponse));
 
   const mockFormBody = {
-    [TRADING_NAME]: 'true',
+    [HAS_DIFFERENT_TRADING_NAME]: 'true',
     [TRADING_ADDRESS]: 'false',
     [PHONE_NUMBER]: '*99',
   };

@@ -5,7 +5,7 @@ import emptyFieldValidation from '../../../../../../../shared-validation/empty-f
 import { RequestBody } from '../../../../../../../../types';
 
 const {
-  YOUR_COMPANY: { TRADING_NAME: FIELD_ID },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: FIELD_ID },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;

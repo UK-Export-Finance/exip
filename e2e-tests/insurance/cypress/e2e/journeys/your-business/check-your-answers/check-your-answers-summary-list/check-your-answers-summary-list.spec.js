@@ -13,7 +13,7 @@ const {
     EXPORTER_BUSINESS: {
       YOUR_COMPANY: {
         TRADING_ADDRESS,
-        TRADING_NAME,
+        HAS_DIFFERENT_TRADING_NAME,
         WEBSITE,
         PHONE_NUMBER,
       },
@@ -68,8 +68,8 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should render a ${TRADING_NAME} summary list row`, () => {
-    checkSummaryList[TRADING_NAME]();
+  it(`should render a ${HAS_DIFFERENT_TRADING_NAME} summary list row`, () => {
+    checkSummaryList[HAS_DIFFERENT_TRADING_NAME]();
   });
 
   it(`should render a ${TRADING_ADDRESS} summary list row`, () => {

@@ -1,6 +1,6 @@
 import partials from '../../../../../../partials';
 import manageAccountPage from '../../../../../../pages/insurance/account/manage';
-import { field, submitButton } from '../../../../../../pages/shared';
+import { field, intro, submitButton } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
@@ -92,7 +92,7 @@ context('Insurance - Account - Manage - As an Exporter, I want the service to ha
 
       it('renders an introduction', () => {
         cy.checkText(
-          manageAccountPage.intro(),
+          intro(),
           INTRO,
         );
       });

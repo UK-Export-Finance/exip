@@ -59,14 +59,48 @@
           }
         }) }}
 
+        {% set conditionalYesHtml %}
+          {{ govukInput({
+            id: FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME,
+            name: FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME,
+            value: submittedValues[FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME],
+            label: {
+              text: CONTENT_STRINGS.DIFFERENT_TRADING_NAME,
+              classes: "govuk-label--m",
+              attributes: {
+                id: FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME + '-label',
+                "data-cy": FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME + "-label"
+              }
+            },
+            hint: {
+            text: CONTENT_STRINGS.DIFFERENT_TRADING_NAME_HINT,
+            attributes: {
+              'data-cy': FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME + '-hint'
+              }
+            },
+            classes: "govuk-input--width-20",
+            attributes: {
+              "data-cy": FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME + "-input"
+            },
+            errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME] and {
+              text: validationErrors.errorList[FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME].text,
+              attributes: {
+                "data-cy": FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME + "-error-message"
+              }
+            }
+          }) }}
+        {% endset %}
+
         {{ yesNoRadioButtons.render({
-          fieldId: FIELDS.YOUR_COMPANY.TRADING_NAME,
-          legendText: CONTENT_STRINGS.TRADING_NAME,
+          fieldId: FIELDS.YOUR_COMPANY.HAS_DIFFERENT_TRADING_NAME,
+          legendText: CONTENT_STRINGS.HAS_DIFFERENT_TRADING_NAME,
           legendClass: 'govuk-fieldset__legend--m',
           legendSpan: true,
-          submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.TRADING_NAME],
-          errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.TRADING_NAME],
-          dataCyLegend: FIELDS.YOUR_COMPANY.TRADING_NAME + '-legend'
+          submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.HAS_DIFFERENT_TRADING_NAME],
+          errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.HAS_DIFFERENT_TRADING_NAME],
+          dataCyLegend: FIELDS.YOUR_COMPANY.HAS_DIFFERENT_TRADING_NAME + '-legend',
+          conditionalYesHtml: conditionalYesHtml,
+          horizontalRadios: true
         }) }}
 
         {{ yesNoRadioButtons.render({
@@ -76,7 +110,8 @@
           legendSpan: true,
           submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
           errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
-          dataCyLegend: FIELDS.YOUR_COMPANY.TRADING_ADDRESS + '-legend'
+          dataCyLegend: FIELDS.YOUR_COMPANY.TRADING_ADDRESS + '-legend',
+          horizontalRadios: true
         }) }}
 
         {{ govukInput({

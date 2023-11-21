@@ -1,4 +1,5 @@
 import applicationSubmittedPage from '../../../../../pages/insurance/applicationSubmitted';
+import { intro } from '../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
@@ -68,7 +69,7 @@ context('Insurance - application submitted page', () => {
     });
 
     it('renders intro copy', () => {
-      cy.checkText(applicationSubmittedPage.intro(), CONTENT_STRINGS.INTRO);
+      cy.checkText(intro(), CONTENT_STRINGS.INTRO);
     });
 
     describe('what happens next', () => {

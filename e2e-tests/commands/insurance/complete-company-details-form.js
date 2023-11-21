@@ -1,11 +1,15 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { field, yesRadioInput, noRadioInput } from '../../pages/shared';
+import application from '../../fixtures/application';
+
+const { YOUR_COMPANY } = application;
 
 const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
       WEBSITE,
       PHONE_NUMBER,
+      DIFFERENT_TRADING_NAME,
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -13,16 +17,28 @@ const {
 /**
  * completeCompaniesDetailsForm
  * fills in the company details form
+ * @param {Boolean} differentTradingName
  * @param {Boolean} differentTradingAddress
  * @param {String} phoneNumber
  * @param {String} companyWebsite
+ * @param {Boolean} completedifferentTradingName
  */
 const completeCompaniesDetailsForm = ({
+  differentTradingName = false,
   differentTradingAddress = false,
   phoneNumber,
   companyWebsite,
+  completedifferentTradingName = true,
 }) => {
-  yesRadioInput().first().click();
+  if (differentTradingName) {
+    yesRadioInput().first().click();
+  } else {
+    noRadioInput().first().click();
+  }
+
+  if (differentTradingName && completedifferentTradingName) {
+    field(DIFFERENT_TRADING_NAME).input().type(YOUR_COMPANY[DIFFERENT_TRADING_NAME]);
+  }
 
   if (differentTradingAddress) {
     yesRadioInput().eq(1).click();

@@ -26,6 +26,7 @@ describe('server/helpers/task-list/prepare-application', () => {
   describe('createPrepareApplicationTasks', () => {
     const initialChecksTasks = createInitialChecksTasks();
     const isUsingBroker = true;
+    const hasDifferentTradingName = false;
 
     const previousGroups = [
       {
@@ -44,7 +45,7 @@ describe('server/helpers/task-list/prepare-application', () => {
         href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${EXPORTER_BUSINESS_ROOT}`,
         title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
         id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
-        fields: businessRequiredFields(isUsingBroker),
+        fields: businessRequiredFields(isUsingBroker, hasDifferentTradingName),
         dependencies: expectedDependencies,
       };
 

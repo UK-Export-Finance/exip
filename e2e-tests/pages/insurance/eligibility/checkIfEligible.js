@@ -1,5 +1,4 @@
 const checkIfEligiblePage = {
-  intro: () => cy.get('[data-cy="intro"]'),
   willAskQuestions: {
     listItem: (itemNumber) => cy.get(`[data-cy="will-ask-questions-list-item-${itemNumber}"]`),
   },

@@ -513,6 +513,7 @@ export const lists = {
       companyNumber: text(),
       dateOfCreation: timestamp(),
       hasDifferentTradingAddress: nullableCheckbox(),
+      differentTradingName: text(),
       hasDifferentTradingName: nullableCheckbox(),
       companyWebsite: text(),
       phoneNumber: text(),
