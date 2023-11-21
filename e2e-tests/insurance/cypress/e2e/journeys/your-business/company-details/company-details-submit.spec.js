@@ -10,7 +10,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
-      TRADING_NAME,
+      HAS_DIFFERENT_TRADING_NAME,
       TRADING_ADDRESS,
       WEBSITE,
       PHONE_NUMBER,
@@ -71,14 +71,14 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
   describe('all page errors', () => {
     it('should display the validation error for trading name in radio error summary', () => {
-      const field = companyDetails[TRADING_NAME];
+      const field = companyDetails[HAS_DIFFERENT_TRADING_NAME];
 
       const radioField = {
         ...field,
         input: field.yesRadioInput,
       };
 
-      cy.submitAndAssertRadioErrors(radioField, 0, expectedErrors, COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
+      cy.submitAndAssertRadioErrors(radioField, 0, expectedErrors, COMPANY_DETAILS_ERRORS[HAS_DIFFERENT_TRADING_NAME].IS_EMPTY);
     });
 
     it('should display the validation error for trading address in radio error summary', () => {

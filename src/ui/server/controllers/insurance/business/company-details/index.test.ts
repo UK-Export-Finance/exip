@@ -13,7 +13,7 @@ import companyDetailsValidation from './validation/company-details';
 import { mockReq, mockRes, mockApplication, mockPhoneNumbers } from '../../../../test-mocks';
 
 const {
-  YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME },
 } = BUSINESS_FIELD_IDS;
 
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -57,7 +57,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER];
+      const expected = [HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -84,10 +84,11 @@ describe('controllers/insurance/business/companies-details', () => {
         const { company, referenceNumber } = mockApplication;
 
         const submittedValues = {
-          [TRADING_NAME]: company?.[TRADING_NAME],
+          [HAS_DIFFERENT_TRADING_NAME]: company?.[HAS_DIFFERENT_TRADING_NAME],
           [TRADING_ADDRESS]: company?.[TRADING_ADDRESS],
           [WEBSITE]: company?.[WEBSITE],
           [PHONE_NUMBER]: company?.[PHONE_NUMBER],
+          [DIFFERENT_TRADING_NAME]: company?.[DIFFERENT_TRADING_NAME],
         };
 
         expect(res.render).toHaveBeenCalledWith(companyDetailsTemplate, {
@@ -120,9 +121,10 @@ describe('controllers/insurance/business/companies-details', () => {
     mapAndSave.companyDetails = jest.fn(() => Promise.resolve(true));
 
     const validBody = {
-      [TRADING_NAME]: 'true',
+      [HAS_DIFFERENT_TRADING_NAME]: 'true',
       [TRADING_ADDRESS]: 'false',
       [PHONE_NUMBER]: VALID_PHONE_NUMBERS.LANDLINE,
+      [DIFFERENT_TRADING_NAME]: 'test',
     };
 
     describe('when there are validation errors', () => {
@@ -132,10 +134,11 @@ describe('controllers/insurance/business/companies-details', () => {
         const payload = constructPayload(req.body, FIELD_IDS);
 
         const expectedSubmittedValues = {
-          [TRADING_NAME]: sanitiseValue({ key: TRADING_NAME, value: payload[TRADING_NAME] }),
+          [HAS_DIFFERENT_TRADING_NAME]: sanitiseValue({ key: HAS_DIFFERENT_TRADING_NAME, value: payload[HAS_DIFFERENT_TRADING_NAME] }),
           [TRADING_ADDRESS]: sanitiseValue({ key: TRADING_ADDRESS, value: payload[TRADING_ADDRESS] }),
           [WEBSITE]: payload[WEBSITE],
           [PHONE_NUMBER]: payload[PHONE_NUMBER],
+          [DIFFERENT_TRADING_NAME]: payload[DIFFERENT_TRADING_NAME],
         };
 
         await post(req, res);
