@@ -4,7 +4,7 @@ import { RequestBody } from '../../../../../../../../types';
 import emptyFieldValidation from '../../../../../../../shared-validation/empty-field';
 
 const {
-  YOUR_COMPANY: { ALTERNATIVE_TRADING_NAME: FIELD_ID, TRADING_NAME },
+  YOUR_COMPANY: { DIFFERENT_TRADING_NAME: FIELD_ID, HAS_DIFFERENT_TRADING_NAME },
 } = FIELD_IDS;
 
 const {
@@ -18,13 +18,13 @@ const {
  * @param {object} errors
  * @returns {object} errors
  */
-const alternativeTradingName = (responseBody: RequestBody, errors: object) => {
-  // if TRADING_NAME radio is yes then check validation
-  if (responseBody[TRADING_NAME] === 'true') {
+const differentTradingName = (responseBody: RequestBody, errors: object) => {
+  // if HAS_DIFFERENT_TRADING_NAME radio is yes then check validation
+  if (responseBody[HAS_DIFFERENT_TRADING_NAME] === 'true') {
     return emptyFieldValidation(responseBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
   }
 
   return errors;
 };
 
-export default alternativeTradingName;
+export default differentTradingName;

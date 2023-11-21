@@ -1,11 +1,11 @@
-import brokerName from './alternative-trading-name';
+import brokerName from './different-trading-name';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/business';
 import { RequestBody } from '../../../../../../../../types';
 import emptyFieldValidation from '../../../../../../../shared-validation/empty-field';
 
 const {
-  YOUR_COMPANY: { ALTERNATIVE_TRADING_NAME: FIELD_ID, TRADING_NAME },
+  YOUR_COMPANY: { DIFFERENT_TRADING_NAME: FIELD_ID, HAS_DIFFERENT_TRADING_NAME },
 } = FIELD_IDS;
 
 const {
@@ -22,8 +22,8 @@ describe('controllers/insurance/business/company-details/validation/rules/altern
     [FIELD_ID]: '',
   } as RequestBody;
 
-  it(`should return the result of emptyFieldValidation if ${TRADING_NAME} is true`, () => {
-    mockBody[TRADING_NAME] = 'true';
+  it(`should return the result of emptyFieldValidation if ${HAS_DIFFERENT_TRADING_NAME} is true`, () => {
+    mockBody[HAS_DIFFERENT_TRADING_NAME] = 'true';
 
     const response = brokerName(mockBody, mockErrors);
 
@@ -32,16 +32,16 @@ describe('controllers/insurance/business/company-details/validation/rules/altern
     expect(response).toEqual(expected);
   });
 
-  it(`should return the mockErrors if ${TRADING_NAME} is false`, () => {
-    mockBody[TRADING_NAME] = 'false';
+  it(`should return the mockErrors if ${HAS_DIFFERENT_TRADING_NAME} is false`, () => {
+    mockBody[HAS_DIFFERENT_TRADING_NAME] = 'false';
 
     const response = brokerName(mockBody, mockErrors);
 
     expect(response).toEqual(mockErrors);
   });
 
-  it(`should return the mockErrors if ${TRADING_NAME} is "null"`, () => {
-    mockBody[TRADING_NAME] = null;
+  it(`should return the mockErrors if ${HAS_DIFFERENT_TRADING_NAME} is "null"`, () => {
+    mockBody[HAS_DIFFERENT_TRADING_NAME] = null;
 
     const response = brokerName(mockBody, mockErrors);
 

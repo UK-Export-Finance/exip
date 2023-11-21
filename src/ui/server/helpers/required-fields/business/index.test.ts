@@ -6,7 +6,7 @@ const {
   EXPORTER_BUSINESS: { YOUR_COMPANY, NATURE_OF_YOUR_BUSINESS, TURNOVER, BROKER },
 } = FIELD_IDS;
 
-const { TRADING_NAME, ALTERNATIVE_TRADING_NAME, TRADING_ADDRESS } = YOUR_COMPANY;
+const { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, TRADING_ADDRESS } = YOUR_COMPANY;
 const { FINANCIAL_YEAR_END_DATE, ...TURNOVER_FIELDS } = TURNOVER;
 const { USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL } = BROKER;
 
@@ -50,7 +50,7 @@ describe('server/helpers/required-fields/business', () => {
 
         const result = getYourCompanyTasks(hasDifferentTradingName);
 
-        const expected = [TRADING_NAME, ALTERNATIVE_TRADING_NAME, TRADING_ADDRESS];
+        const expected = [HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, TRADING_ADDRESS];
 
         expect(result).toEqual(expected);
       });
@@ -60,7 +60,7 @@ describe('server/helpers/required-fields/business', () => {
       it('should return an empty array', () => {
         const result = getYourCompanyTasks();
 
-        const expected = [TRADING_NAME, TRADING_ADDRESS];
+        const expected = [HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS];
 
         expect(result).toEqual(expected);
       });
@@ -72,7 +72,7 @@ describe('server/helpers/required-fields/business', () => {
 
         const result = getYourCompanyTasks(hasDifferentTradingName);
 
-        const expected = [TRADING_NAME, TRADING_ADDRESS];
+        const expected = [HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS];
 
         expect(result).toEqual(expected);
       });

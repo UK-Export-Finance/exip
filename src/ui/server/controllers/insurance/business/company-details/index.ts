@@ -15,7 +15,7 @@ import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route
 import { Request, Response } from '../../../../../types';
 
 const {
-  YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, ALTERNATIVE_TRADING_NAME },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME },
 } = BUSINESS_FIELD_IDS;
 
 const { COMPANY_DETAILS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -30,7 +30,7 @@ const {
 
 export const TEMPLATE = COMPANY_DETAILS_TEMPLATE;
 
-export const FIELD_IDS = [TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, ALTERNATIVE_TRADING_NAME];
+export const FIELD_IDS = [HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME];
 
 const pageVariables = (referenceNumber: number) => {
   return {
@@ -58,11 +58,11 @@ const get = (req: Request, res: Response) => {
 
     // values from application if they exist
     const submittedValues = {
-      [TRADING_NAME]: company?.[TRADING_NAME],
+      [HAS_DIFFERENT_TRADING_NAME]: company?.[HAS_DIFFERENT_TRADING_NAME],
       [TRADING_ADDRESS]: company?.[TRADING_ADDRESS],
       [WEBSITE]: company?.[WEBSITE],
       [PHONE_NUMBER]: company?.[PHONE_NUMBER],
-      [ALTERNATIVE_TRADING_NAME]: company?.[ALTERNATIVE_TRADING_NAME],
+      [DIFFERENT_TRADING_NAME]: company?.[DIFFERENT_TRADING_NAME],
     };
 
     return res.render(TEMPLATE, {
@@ -103,11 +103,11 @@ const post = async (req: Request, res: Response) => {
     // populate submittedValues
     const submittedValues = {
       // if trading name is string true, then convert to boolean true
-      [TRADING_NAME]: sanitiseValue({ key: TRADING_NAME, value: payload[TRADING_NAME] }),
+      [HAS_DIFFERENT_TRADING_NAME]: sanitiseValue({ key: HAS_DIFFERENT_TRADING_NAME, value: payload[HAS_DIFFERENT_TRADING_NAME] }),
       [TRADING_ADDRESS]: sanitiseValue({ key: TRADING_ADDRESS, value: payload[TRADING_ADDRESS] }),
       [WEBSITE]: payload[WEBSITE],
       [PHONE_NUMBER]: payload[PHONE_NUMBER],
-      [ALTERNATIVE_TRADING_NAME]: payload[ALTERNATIVE_TRADING_NAME],
+      [DIFFERENT_TRADING_NAME]: payload[DIFFERENT_TRADING_NAME],
     };
 
     // run validation on other fields on page

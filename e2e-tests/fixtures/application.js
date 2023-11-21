@@ -58,7 +58,7 @@ const {
         EMAIL,
       },
       YOUR_COMPANY: {
-        ALTERNATIVE_TRADING_NAME,
+        DIFFERENT_TRADING_NAME,
       },
     },
     YOUR_BUYER: {
@@ -108,7 +108,7 @@ const application = {
   },
   COMPANY: mockCompanies[COMPANIES_HOUSE_NUMBER],
   YOUR_COMPANY: {
-    [ALTERNATIVE_TRADING_NAME]: 'test',
+    [DIFFERENT_TRADING_NAME]: 'test',
   },
   POLICY: {
     [REQUESTED_START_DATE]: {

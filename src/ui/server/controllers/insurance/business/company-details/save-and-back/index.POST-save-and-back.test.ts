@@ -9,7 +9,7 @@ import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockApplication, mockPhoneNumbers, mockCompany } from '../../../../../test-mocks';
 
 const {
-  YOUR_COMPANY: { TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, PHONE_NUMBER },
 } = BUSINESS_FIELD_IDS;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
@@ -38,14 +38,14 @@ describe('controllers/insurance/business/companies-details', () => {
 
   describe('post', () => {
     const validBody = {
-      [TRADING_NAME]: 'false',
+      [HAS_DIFFERENT_TRADING_NAME]: 'false',
       [TRADING_ADDRESS]: 'false',
       [PHONE_NUMBER]: VALID_PHONE_NUMBERS.MOBILE,
     };
 
     describe('when there are validation errors', () => {
       const body = {
-        [TRADING_NAME]: 'false',
+        [HAS_DIFFERENT_TRADING_NAME]: 'false',
         [TRADING_ADDRESS]: 'false',
         [PHONE_NUMBER]: INVALID_PHONE_NUMBERS.TOO_SHORT_SPECIAL_CHAR,
       };

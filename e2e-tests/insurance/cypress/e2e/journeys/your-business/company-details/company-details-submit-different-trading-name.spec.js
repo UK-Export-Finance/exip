@@ -8,7 +8,7 @@ import application from '../../../../../../fixtures/application';
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { ALTERNATIVE_TRADING_NAME },
+    YOUR_COMPANY: { DIFFERENT_TRADING_NAME },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -23,7 +23,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 const { YOUR_COMPANY } = application;
 
-describe(`Insurance - Your business - Company details page - submit ${ALTERNATIVE_TRADING_NAME} as '${FIELD_VALUES.YES}'`, () => {
+describe(`Insurance - Your business - Company details page - submit ${DIFFERENT_TRADING_NAME} as '${FIELD_VALUES.YES}'`, () => {
   let referenceNumber;
   let url;
 
@@ -49,7 +49,7 @@ describe(`Insurance - Your business - Company details page - submit ${ALTERNATIV
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(`when submitting ${ALTERNATIVE_TRADING_NAME} as '${FIELD_VALUES.YES}'`, () => {
+  describe(`when submitting ${DIFFERENT_TRADING_NAME} as '${FIELD_VALUES.YES}'`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
@@ -63,29 +63,29 @@ describe(`Insurance - Your business - Company details page - submit ${ALTERNATIV
 
       yesRadioInput().first().should('be.checked');
 
-      cy.checkValue(field(ALTERNATIVE_TRADING_NAME), YOUR_COMPANY[ALTERNATIVE_TRADING_NAME]);
+      cy.checkValue(field(DIFFERENT_TRADING_NAME), YOUR_COMPANY[DIFFERENT_TRADING_NAME]);
     });
   });
 
-  describe(`when submitting ${ALTERNATIVE_TRADING_NAME} as '${FIELD_VALUES.NO}'`, () => {
+  describe(`when submitting ${DIFFERENT_TRADING_NAME} as '${FIELD_VALUES.NO}'`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitCompanyDetails({});
     });
 
-    it(`should not have ${ALTERNATIVE_TRADING_NAME} input populated`, () => {
+    it(`should not have ${DIFFERENT_TRADING_NAME} input populated`, () => {
       cy.navigateToUrl(url);
 
       noRadioInput().first().should('be.checked');
 
       // check input is not populated
       yesRadioInput().first().click();
-      cy.checkValue(field(ALTERNATIVE_TRADING_NAME), '');
+      cy.checkValue(field(DIFFERENT_TRADING_NAME), '');
     });
   });
 
-  describe(`when changing ${ALTERNATIVE_TRADING_NAME} to '${FIELD_VALUES.NO}'`, () => {
+  describe(`when changing ${DIFFERENT_TRADING_NAME} to '${FIELD_VALUES.NO}'`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
@@ -99,12 +99,12 @@ describe(`Insurance - Your business - Company details page - submit ${ALTERNATIV
       cy.completeAndSubmitCompanyDetails({});
     });
 
-    it(`should not have ${ALTERNATIVE_TRADING_NAME} input populated`, () => {
+    it(`should not have ${DIFFERENT_TRADING_NAME} input populated`, () => {
       cy.navigateToUrl(url);
 
       // check input is not populated
       yesRadioInput().first().click();
-      cy.checkValue(field(ALTERNATIVE_TRADING_NAME), '');
+      cy.checkValue(field(DIFFERENT_TRADING_NAME), '');
     });
   });
 });

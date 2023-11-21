@@ -12,7 +12,7 @@ import { TASKS } from '../../../../../../content-strings';
 const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
-      TRADING_NAME,
+      HAS_DIFFERENT_TRADING_NAME,
       TRADING_ADDRESS,
       WEBSITE,
       PHONE_NUMBER,
@@ -61,7 +61,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(`when only ${TRADING_ADDRESS} and ${TRADING_NAME} fields are completed`, () => {
+  describe(`when only ${TRADING_ADDRESS} and ${HAS_DIFFERENT_TRADING_NAME} fields are completed`, () => {
     it('should not display validation errors and redirect to task list with status of "In progress"', () => {
       cy.navigateToUrl(url);
 

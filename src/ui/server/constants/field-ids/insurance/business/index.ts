@@ -4,10 +4,10 @@ const EXPORTER_BUSINESS = {
     ADDRESS: 'address',
     YOUR_BUSINESS: 'yourBusiness',
     TRADING_ADDRESS: 'hasDifferentTradingAddress',
-    TRADING_NAME: 'hasDifferentTradingName',
+    HAS_DIFFERENT_TRADING_NAME: 'hasDifferentTradingName',
     WEBSITE: 'companyWebsite',
     PHONE_NUMBER: 'phoneNumber',
-    ALTERNATIVE_TRADING_NAME: 'alternativeTradingName',
+    DIFFERENT_TRADING_NAME: 'differentTradingName',
   },
   ALTERNATIVE_TRADING_ADDRESS: 'alternativeTradingAddress',
   NATURE_OF_YOUR_BUSINESS: {

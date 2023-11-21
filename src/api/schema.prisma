@@ -246,7 +246,7 @@ model Company {
   companyNumber              String           @default("")
   dateOfCreation             DateTime?
   hasDifferentTradingAddress Boolean?
-  alternativeTradingName     String           @default("")
+  differentTradingName     String           @default("")
   hasDifferentTradingName    Boolean?
   companyWebsite             String           @default("")
   phoneNumber                String           @default("")

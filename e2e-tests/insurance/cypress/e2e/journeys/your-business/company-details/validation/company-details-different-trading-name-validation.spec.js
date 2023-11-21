@@ -5,7 +5,7 @@ import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
-      ALTERNATIVE_TRADING_NAME,
+      DIFFERENT_TRADING_NAME,
     },
   },
 } = FIELD_IDS.INSURANCE;
@@ -16,7 +16,7 @@ const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - alternative trading name validation", () => {
+describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - different trading name validation", () => {
   let referenceNumber;
   let url;
 
@@ -48,11 +48,11 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
   it('should display validation errors if trading name question is not answered', () => {
     cy.submitAndAssertFieldErrors(
-      field(ALTERNATIVE_TRADING_NAME),
+      field(DIFFERENT_TRADING_NAME),
       null,
       0,
       1,
-      COMPANY_DETAILS_ERRORS[ALTERNATIVE_TRADING_NAME].IS_EMPTY,
+      COMPANY_DETAILS_ERRORS[DIFFERENT_TRADING_NAME].IS_EMPTY,
     );
   });
 });

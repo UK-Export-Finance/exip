@@ -4,7 +4,7 @@ const {
   EXPORTER_BUSINESS: { YOUR_COMPANY, NATURE_OF_YOUR_BUSINESS, TURNOVER, BROKER },
 } = FIELD_IDS;
 
-const { TRADING_NAME, ALTERNATIVE_TRADING_NAME, TRADING_ADDRESS } = YOUR_COMPANY;
+const { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, TRADING_ADDRESS } = YOUR_COMPANY;
 
 const { FINANCIAL_YEAR_END_DATE, ...TURNOVER_FIELDS } = TURNOVER;
 
@@ -32,10 +32,10 @@ export const getBrokerTasks = (isUsingBroker?: boolean): Array<string> => {
  */
 export const getYourCompanyTasks = (hasDifferentTradingName?: boolean): Array<string> => {
   if (hasDifferentTradingName) {
-    return [TRADING_NAME, ALTERNATIVE_TRADING_NAME, TRADING_ADDRESS];
+    return [HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, TRADING_ADDRESS];
   }
 
-  return [TRADING_NAME, TRADING_ADDRESS];
+  return [HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS];
 };
 
 /**

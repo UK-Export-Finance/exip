@@ -18,7 +18,7 @@ const {
 const {
   COMPANIES_HOUSE: { FINANCIAL_YEAR_END_DATE },
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, WEBSITE, PHONE_NUMBER },
+    YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -31,12 +31,12 @@ const {
 const summaryList = (mockAnswers: ApplicationCompany, referenceNumber: number, financialYearEndDateValue: string, checkAndChange = false) => [
   fieldGroupItem(
     {
-      field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_NAME),
+      field: getFieldById(FIELDS.COMPANY_DETAILS, HAS_DIFFERENT_TRADING_NAME),
       data: mockAnswers,
-      href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${TRADING_NAME}-label`, referenceNumber, checkAndChange),
+      href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${HAS_DIFFERENT_TRADING_NAME}-label`, referenceNumber, checkAndChange),
       renderChangeLink: true,
     },
-    mapYesNoField(mockAnswers[TRADING_NAME]),
+    mapYesNoField(mockAnswers[HAS_DIFFERENT_TRADING_NAME]),
   ),
   fieldGroupItem(
     {

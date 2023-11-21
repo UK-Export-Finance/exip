@@ -8,7 +8,7 @@ const {
   INSURANCE: {
     EXPORTER_BUSINESS: {
       YOUR_COMPANY: {
-        TRADING_NAME,
+        HAS_DIFFERENT_TRADING_NAME,
         TRADING_ADDRESS,
         WEBSITE,
         PHONE_NUMBER,
@@ -37,8 +37,8 @@ const {
 } = FIELD_IDS;
 
 const checkYourBusinessSummaryList = ({
-  [TRADING_NAME]: () => {
-    const fieldId = TRADING_NAME;
+  [HAS_DIFFERENT_TRADING_NAME]: () => {
+    const fieldId = HAS_DIFFERENT_TRADING_NAME;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = FIELD_VALUES.NO;

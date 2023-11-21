@@ -9,7 +9,7 @@ const {
     YOUR_COMPANY: {
       WEBSITE,
       PHONE_NUMBER,
-      ALTERNATIVE_TRADING_NAME,
+      DIFFERENT_TRADING_NAME,
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -37,7 +37,7 @@ const completeCompaniesDetailsForm = ({
   }
 
   if (differentTradingName && completeAlternativeTradingName) {
-    field(ALTERNATIVE_TRADING_NAME).input().type(YOUR_COMPANY[ALTERNATIVE_TRADING_NAME]);
+    field(DIFFERENT_TRADING_NAME).input().type(YOUR_COMPANY[DIFFERENT_TRADING_NAME]);
   }
 
   if (differentTradingAddress) {
