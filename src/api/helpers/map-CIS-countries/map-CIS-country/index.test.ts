@@ -34,21 +34,27 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
       shortTermCover: mapShortTermCoverAvailable(mockCountryBase.shortTermCoverAvailabilityDesc),
       nbiIssueAvailable: mapNbiIssueAvailable(mockCountryBase.NBIIssue),
       canGetAQuoteOnline: false,
+      canGetAQuoteOffline: false,
       canGetAQuoteByEmail: false,
       cannotGetAQuote: false,
-      canApplyOnline: false,
-      canApplyOffline: false,
-      cannotApply: false,
+      canApplyForInsuranceOnline: false,
+      canApplyForInsuranceOffline: false,
+      cannotGetAQuoteOrApplyForInsurance: false,
     } as MappedCisCountry;
 
     mapped.canGetAQuoteOnline = canGetAQuoteOnline(mapped);
+    mapped.canGetAQuoteOffline = canApplyOffline(mockCountryBase.shortTermCoverAvailabilityDesc);
     mapped.canGetAQuoteByEmail = canGetAQuoteByEmail(mapped);
-
     mapped.cannotGetAQuote = cannotGetAQuote(mapped);
-    mapped.canApplyOnline = canApplyOnline(mockCountryBase.shortTermCoverAvailabilityDesc);
-    mapped.canApplyOffline = canApplyOffline(mockCountryBase.shortTermCoverAvailabilityDesc);
+    mapped.cannotGetAQuote = cannotGetAQuote(mapped);
 
-    mapped.cannotApply = !mapped.canApplyOnline && !mapped.canApplyOffline;
+    mapped.canApplyForInsuranceOnline = canApplyOnline(mockCountryBase.shortTermCoverAvailabilityDesc);
+    mapped.canApplyForInsuranceOffline = canApplyOffline(mockCountryBase.shortTermCoverAvailabilityDesc);
+
+    const noQuoteSupport = !mapped.canGetAQuoteOnline && !mapped.canGetAQuoteOffline;
+    const noInsuranceSupport = !mapped.canApplyForInsuranceOnline && !mapped.canApplyForInsuranceOffline;
+
+    mapped.cannotGetAQuoteOrApplyForInsurance = !noQuoteSupport && !noInsuranceSupport;
 
     expect(result).toEqual(mapped);
   });

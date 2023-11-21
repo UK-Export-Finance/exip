@@ -193,7 +193,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
         const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
 
-        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, selectedCountry.canApplyOnline);
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, selectedCountry.canApplyForInsuranceOnline);
 
         const expected = {
           ...req.session.submittedData,
@@ -228,7 +228,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
         const selectedCountry = getCountryByName(mockCountriesResponse, countryApplyOffline.name) as Country;
 
-        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, selectedCountry.canApplyOnline);
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, selectedCountry.canApplyForInsuranceOnline);
 
         const expected = {
           ...req.session.submittedData,
@@ -263,7 +263,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
         const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
 
-        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, countryCannotApply.canApplyOnline);
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, countryCannotApply.canApplyForInsuranceOnline);
 
         const expected = {
           ...req.session.submittedData,

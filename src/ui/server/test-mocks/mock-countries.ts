@@ -8,15 +8,20 @@ const {
 // mock base country that can get a quote and apply online.
 const baseCountry = {
   canGetAQuoteOnline: true,
+  canGetAQuoteOffline: false,
   canGetAQuoteByEmail: false,
   cannotGetAQuote: false,
-  canApplyOnline: true,
-  canApplyOffline: false,
-  cannotApply: false,
+  canApplyForInsuranceOnline: true,
+  canApplyForInsuranceOffline: false,
+  cannotGetAQuoteOrApplyForInsurance: false,
 };
 
 const mockCountries = [
-  // mock country that cannot get a quote
+  /**
+   * mock country that:
+   * - cannot get a quote online
+   * - cannot apply for insurance
+   */
   {
     name: 'Abu Dhabi',
     isoCode: 'XAD',
@@ -24,6 +29,7 @@ const mockCountries = [
     shortTermCover: false,
     ...baseCountry,
     canGetAQuoteOnline: false,
+    canApplyForInsuranceOnline: false,
     cannotGetAQuote: true,
   },
   {
@@ -32,7 +38,11 @@ const mockCountries = [
     riskCategory: RISK.STANDARD,
     ...baseCountry,
   },
-  // mock country that cannot get a quote online, but can get a quote by email
+  /**
+   * mock country that:
+   * - cannot get a quote online
+   * - can get a quote by email
+   */
   {
     name: 'Egypt',
     isoCode: 'EGY',
@@ -41,24 +51,34 @@ const mockCountries = [
     canGetAQuoteOnline: false,
     canGetAQuoteByEmail: true,
   },
-  // mock country that can only apply for an application offline
+  /**
+   * mock country that:
+   * - can only apply for insurance offline
+   */
   {
     name: 'Gabon',
     isoCode: 'GAB',
     riskCategory: RISK.VERY_HIGH,
     ...baseCountry,
     canGetAQuoteOnline: false,
-    canApplyOnline: false,
-    canApplyOffline: true,
+    canApplyForInsuranceOnline: false,
+    canApplyForInsuranceOffline: true,
   },
+  /**
+   * mock country that:
+   * - cannot get a quote, online or offline
+   * - cannot apply for insurance, online or offline
+   */
   {
     name: 'Gibraltar',
     isoCode: 'GIB',
     ...baseCountry,
     riskCategory: RISK.STANDARD,
     canGetAQuoteOnline: false,
-    canApplyOnline: false,
-    cannotApply: true,
+    canGetAQuoteOffline: false,
+    canApplyForInsuranceOnline: false,
+    canApplyForInsuranceOffline: false,
+    cannotGetAQuoteOrApplyForInsurance: true,
   },
 ] as Array<Country>;
 

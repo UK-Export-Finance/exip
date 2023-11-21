@@ -97,8 +97,10 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
     }
 
-    if (country.canApplyOnline) {
-      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
+    if (country.canApplyForInsuranceOnline) {
+      // TODO - this can just consume one country property.
+
+      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyForInsuranceOnline);
 
       req.session.submittedData = {
         ...req.session.submittedData,
@@ -108,8 +110,8 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED);
     }
 
-    if (country.canApplyOffline) {
-      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
+    if (country.canApplyForInsuranceOffline) {
+      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyForInsuranceOnline);
 
       req.session.submittedData = {
         ...req.session.submittedData,
@@ -119,8 +121,8 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.INSURANCE.APPLY_OFFLINE);
     }
 
-    if (country.cannotApply) {
-      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
+    if (country.cannotGetAQuoteOrApplyForInsurance) {
+      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyForInsuranceOnline);
 
       req.session.submittedData = {
         ...req.session.submittedData,

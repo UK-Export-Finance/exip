@@ -4844,15 +4844,6 @@ var mapNbiIssueAvailable = (str) => {
 };
 var map_NBI_issue_available_default = mapNbiIssueAvailable;
 
-// helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-online/index.ts
-var canGetAQuoteOnline = (country) => {
-  if (country.riskCategory && country.shortTermCover && country.nbiIssueAvailable) {
-    return true;
-  }
-  return false;
-};
-var can_get_a_quote_online_default = canGetAQuoteOnline;
-
 // helpers/map-CIS-countries/map-CIS-country/can-get-a-quote-by-email/index.ts
 var canGetAQuoteByEmail = (country) => {
   if (country.riskCategory && country.shortTermCover && !country.nbiIssueAvailable) {
@@ -4906,12 +4897,15 @@ var mapCisCountry = (country) => {
     shortTermCover: map_short_term_cover_available_default(country.shortTermCoverAvailabilityDesc),
     nbiIssueAvailable: map_NBI_issue_available_default(country.NBIIssue)
   };
-  mapped.canGetAQuoteOnline = can_get_a_quote_online_default(mapped);
+  mapped.canGetAQuoteOnline = can_apply_online_default(country.shortTermCoverAvailabilityDesc);
+  mapped.canGetAQuoteOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
   mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default(mapped);
   mapped.cannotGetAQuote = cannot_get_a_quote_default(mapped);
-  mapped.canApplyOnline = can_apply_online_default(country.shortTermCoverAvailabilityDesc);
-  mapped.canApplyOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
-  mapped.cannotApply = !mapped.canApplyOnline && !mapped.canApplyOffline;
+  mapped.canApplyForInsuranceOnline = can_apply_online_default(country.shortTermCoverAvailabilityDesc);
+  mapped.canApplyForInsuranceOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
+  const noQuoteSupport = !mapped.canGetAQuoteOnline && !mapped.canGetAQuoteOffline;
+  const noInsuranceSupport = !mapped.canApplyForInsuranceOnline && !mapped.canApplyForInsuranceOffline;
+  mapped.cannotGetAQuoteOrApplyForInsurance = !noQuoteSupport && !noInsuranceSupport;
   return mapped;
 };
 var map_CIS_country_default = mapCisCountry;
