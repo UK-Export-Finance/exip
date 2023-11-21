@@ -66,7 +66,7 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'Select whether you have a UK Companies House number and whether your company is actively trading',
       },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: {
-        IS_EMPTY: 'Enter a recognised Companies House number',
+        IS_EMPTY: 'Enter your UK Companies House number registration number',
         INCORRECT_FORMAT: 'Enter your Companies House registration number in the correct format - for example, 8989898 or SC907816',
         NOT_FOUND: 'Enter a recognised Companies House number',
         TECHNICAL_ISSUES: 'Due to technical issues, you cannot search for your Companies House registration number right now - try again in few minutes',
