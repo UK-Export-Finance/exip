@@ -85,7 +85,7 @@ export const COMPANIES_HOUSE_UNAVAILABLE = {
 
 export const COMPANY_NOT_ACTIVE = {
   PAGE_TITLE: 'You need to speak with an export finance manager',
-  BODY: "This is because you do not have a UK Companies House registration number for a company that's actively trading.",
+  BODY: "This is because the company you entered is no longer active on Companies House and we cannot process your application.",
   ACTIONS: {
     INTRO: 'You can still apply. But you should talk to a export finance manager before you try again.',
     FIND_EFM: ACTIONS.FIND_EFM,
