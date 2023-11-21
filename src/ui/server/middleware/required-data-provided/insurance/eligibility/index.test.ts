@@ -4,7 +4,7 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { mockReq, mockRes, mockSession } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
-const { APPLY_OFFLINE, SPEAK_TO_UKEF_EFM, ELIGIBILITY, ACCOUNT } = INSURANCE_ROUTES;
+const { APPLY_OFFLINE, ELIGIBILITY, ACCOUNT } = INSURANCE_ROUTES;
 
 const {
   HAVE_AN_ACCOUNT,
@@ -18,6 +18,7 @@ const {
   CHECK_YOUR_ANSWERS,
   TOTAL_VALUE_INSURED,
   COVER_PERIOD,
+  LONG_TERM_COVER,
   COMPANIES_HOUSE_NUMBER,
   NO_COMPANIES_HOUSE_NUMBER,
   ENTER_COMPANIES_HOUSE_NUMBER,
@@ -106,6 +107,15 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
       });
     });
 
+    describe(`when req.originalUrl is ${LONG_TERM_COVER}`, () => {
+      it('should call req.next', () => {
+        req.originalUrl = LONG_TERM_COVER;
+        requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
+
+        expect(nextSpy).toHaveBeenCalled();
+      });
+    });
+
     describe(`when req.originalUrl is ${CANNOT_APPLY}`, () => {
       it('should call req.next', () => {
         req.originalUrl = CANNOT_APPLY;
@@ -118,15 +128,6 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
     describe(`when req.originalUrl is ${APPLY_OFFLINE}`, () => {
       it('should call req.next', () => {
         req.originalUrl = APPLY_OFFLINE;
-        requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
-
-        expect(nextSpy).toHaveBeenCalled();
-      });
-    });
-
-    describe(`when req.originalUrl is ${SPEAK_TO_UKEF_EFM}`, () => {
-      it('should call req.next', () => {
-        req.originalUrl = SPEAK_TO_UKEF_EFM;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();

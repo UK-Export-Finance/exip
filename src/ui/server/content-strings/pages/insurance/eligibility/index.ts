@@ -1,4 +1,4 @@
-import { GBP_CURRENCY_CODE, TOTAL_CONTRACT_VALUE } from '../../../../constants';
+import { CONTACT_DETAILS, GBP_CURRENCY_CODE, TOTAL_CONTRACT_VALUE } from '../../../../constants';
 import { ACTIONS } from '../../../actions';
 import { LINKS } from '../../../links';
 import formatCurrency from '../../../../helpers/format-currency';
@@ -23,6 +23,28 @@ const TOTAL_VALUE_INSURED = {
 const COVER_PERIOD = {
   PAGE_TITLE: 'How long do you need cover for?',
   HINT: 'This should be the total length of your contract.',
+};
+
+const LONG_TERM_COVER = {
+  PAGE_TITLE: 'You need to apply through the PDF form instead',
+  INTRO: "Currently, this service doesn't provide credit insurance for contracts that are longer than two years.",
+  ACTIONS: {
+    PDF_FORM: {
+      INTRO: "You can still apply, but you'll need to do so through",
+      LINK: {
+        TEXT: 'this PDF form instead',
+        HREF: LINKS.EXTERNAL.NBI_FORM,
+      },
+    },
+    CONTACT_EFM: {
+      INTRO: 'You should contact',
+      LINK: {
+        TEXT: 'your nearest export finance manager',
+        HREF: ACTIONS.CONTACT_EFM.LINK.HREF,
+      },
+    },
+    CONTACT_UKEF_TEAM: `or our team at ${CONTACT_DETAILS.EMAIL.UNDERWRITING} if you have any questions.`,
+  },
 };
 
 const HAS_COMPANIES_HOUSE_NUMBER = {
@@ -116,6 +138,7 @@ export default {
   CHECK_IF_ELIGIBLE,
   TOTAL_VALUE_INSURED,
   COVER_PERIOD,
+  LONG_TERM_COVER,
   HAS_COMPANIES_HOUSE_NUMBER,
   COMPANIES_HOUSE_NUMBER,
   NO_COMPANIES_HOUSE_NUMBER,

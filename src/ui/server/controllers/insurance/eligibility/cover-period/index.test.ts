@@ -84,17 +84,10 @@ describe('controllers/insurance/eligibility/cover-period', () => {
         };
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.SPEAK_TO_UKEF_EFM}`, async () => {
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.SPEAK_TO_UKEF_EFM);
-      });
-
-      it('should add exitReason to req.flash', async () => {
-        await post(req, res);
-
-        const expectedReason = PAGES.INSURANCE.SPEAK_TO_UKEF_EFM.REASON.WANT_COVER_OVER_MAX_PERIOD;
-        expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER);
       });
     });
 

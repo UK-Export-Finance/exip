@@ -63,13 +63,7 @@ export const post = (req: Request, res: Response) => {
   const answer = Number(req.body[FIELD_ID]);
 
   if (answer !== COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID) {
-    const { INSURANCE } = PAGES;
-    const { SPEAK_TO_UKEF_EFM } = INSURANCE;
-    const { REASON } = SPEAK_TO_UKEF_EFM;
-
-    req.flash('exitReason', REASON.WANT_COVER_OVER_MAX_PERIOD);
-
-    return res.redirect(ROUTES.INSURANCE.SPEAK_TO_UKEF_EFM);
+    return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER);
   }
 
   req.session.submittedData = {

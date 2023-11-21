@@ -1,4 +1,4 @@
-import { submitButton } from '../../../../../pages/shared';
+import { intro, submitButton } from '../../../../../pages/shared';
 import { PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { checkIfEligiblePage } from '../../../../../pages/insurance/eligibility';
@@ -42,7 +42,7 @@ context('Insurance Eligibility - check if eligible page', () => {
     });
 
     it('should render intro text', () => {
-      cy.checkText(checkIfEligiblePage.intro(), CONTENT_STRINGS.INTRO);
+      cy.checkText(intro(), CONTENT_STRINGS.INTRO);
     });
 
     it('should render `we will ask questions` list items', () => {
