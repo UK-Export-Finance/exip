@@ -98,9 +98,7 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (country.canApplyForInsuranceOnline) {
-      // TODO - this can just consume one country property.
-
-      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyForInsuranceOnline);
+      const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData = {
         ...req.session.submittedData,
@@ -111,7 +109,7 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (country.canApplyForInsuranceOffline) {
-      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyForInsuranceOnline);
+      const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData = {
         ...req.session.submittedData,
@@ -122,7 +120,7 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (country.cannotGetAQuoteOrApplyForInsurance) {
-      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyForInsuranceOnline);
+      const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData = {
         ...req.session.submittedData,

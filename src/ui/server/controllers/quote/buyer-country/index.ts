@@ -133,8 +133,7 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (country.canGetAQuoteOnline) {
-      // TODO - this can just consume one country property.
-      const populatedData = mapSubmittedEligibilityCountry(country, country.canGetAQuoteOnline);
+      const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
@@ -146,7 +145,7 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (country.canGetAQuoteByEmail) {
-      const populatedData = mapSubmittedEligibilityCountry(country, country.canGetAQuoteOnline);
+      const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
@@ -162,7 +161,7 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (country.cannotGetAQuote) {
-      const populatedData = mapSubmittedEligibilityCountry(country, country.canGetAQuoteOnline);
+      const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
 
