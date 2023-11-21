@@ -54,8 +54,7 @@ const search = async (company: CompaniesHouseResponse) => {
 
   return {
     apiError: true,
-    companyNumber,
-    validationErrors: {},
+    companyNumber
   };
 };
 
