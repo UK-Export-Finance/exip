@@ -21,14 +21,14 @@ const {
  * @param {Boolean} differentTradingAddress
  * @param {String} phoneNumber
  * @param {String} companyWebsite
- * @param {Boolean} completedDifferentTradingName
+ * @param {Boolean} completeDifferentTradingName
  */
 const completeCompaniesDetailsForm = ({
   differentTradingName = false,
   differentTradingAddress = false,
   phoneNumber,
   companyWebsite,
-  completedDifferentTradingName = true,
+  completeDifferentTradingName = true,
 }) => {
   if (differentTradingName) {
     yesRadioInput().first().click();
@@ -36,7 +36,7 @@ const completeCompaniesDetailsForm = ({
     noRadioInput().first().click();
   }
 
-  if (differentTradingName && completedDifferentTradingName) {
+  if (differentTradingName && completeDifferentTradingName) {
     field(DIFFERENT_TRADING_NAME).input().type(YOUR_COMPANY[DIFFERENT_TRADING_NAME]);
   }
 
