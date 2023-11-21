@@ -33,7 +33,13 @@ const summaryList = (mockAnswers: ApplicationCompany, referenceNumber: number, f
     {
       field: getFieldById(FIELDS.COMPANY_DETAILS, HAS_DIFFERENT_TRADING_NAME),
       data: mockAnswers,
-      href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${HAS_DIFFERENT_TRADING_NAME}-label`, referenceNumber, checkAndChange),
+      href: generateChangeLink(
+        COMPANY_DETAILS_CHANGE,
+        COMPANY_DETAILS_CHECK_AND_CHANGE,
+        `#${HAS_DIFFERENT_TRADING_NAME}-label`,
+        referenceNumber,
+        checkAndChange,
+      ),
       renderChangeLink: true,
     },
     mapYesNoField(mockAnswers[HAS_DIFFERENT_TRADING_NAME]),

@@ -31,7 +31,13 @@ const generateYourCompanyFields = (answers: ApplicationCompany, referenceNumber:
       {
         field: getFieldById(FIELDS.COMPANY_DETAILS, HAS_DIFFERENT_TRADING_NAME),
         data: answers,
-        href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${HAS_DIFFERENT_TRADING_NAME}-label`, referenceNumber, checkAndChange),
+        href: generateChangeLink(
+          COMPANY_DETAILS_CHANGE,
+          COMPANY_DETAILS_CHECK_AND_CHANGE,
+          `#${HAS_DIFFERENT_TRADING_NAME}-label`,
+          referenceNumber,
+          checkAndChange,
+        ),
         renderChangeLink: true,
       },
       mapYesNoField(answers[HAS_DIFFERENT_TRADING_NAME]),
