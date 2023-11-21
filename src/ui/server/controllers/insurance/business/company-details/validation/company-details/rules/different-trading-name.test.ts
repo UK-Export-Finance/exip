@@ -12,7 +12,7 @@ const {
   EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGE },
 } = ERROR_MESSAGES.INSURANCE;
 
-describe('controllers/insurance/business/company-details/validation/rules/alternative-trading-name', () => {
+describe('controllers/insurance/business/company-details/validation/rules/different-trading-name', () => {
   const mockErrors = {
     summary: [],
     errorList: {},
