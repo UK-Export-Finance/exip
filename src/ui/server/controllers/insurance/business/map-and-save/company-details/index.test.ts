@@ -3,6 +3,7 @@ import save from '../../save-data/company-details';
 import { mockApplication } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { FIELD_IDS } from '../../../../../constants';
+import mapSubmittedData from '../../map-submitted-data/company-details';
 
 const {
   COMPANIES_HOUSE: { COMPANY_NUMBER },
@@ -29,11 +30,11 @@ describe('controllers/insurance/business/map-and-save/company-details', () => {
 
   describe('when the form has data', () => {
     describe('when the form has validation errors', () => {
-      it('should call save.companyDetails with application, populated submitted data and validationErrors.errorList', async () => {
+      it('should call save.companyDetails with application, mapped submitted data and validationErrors.errorList', async () => {
         await mapAndSave.companyDetails(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(save.companyDetails).toHaveBeenCalledTimes(1);
-        expect(save.companyDetails).toHaveBeenCalledWith(mockApplication, mockFormBody, mockValidationErrors?.errorList);
+        expect(save.companyDetails).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody), mockValidationErrors?.errorList);
       });
 
       it('should return true', async () => {
@@ -44,11 +45,11 @@ describe('controllers/insurance/business/map-and-save/company-details', () => {
     });
 
     describe('when the form does NOT have validation errors ', () => {
-      it('should call save.companyDetails with application and populated submitted data', async () => {
+      it('should call save.companyDetails with application and mapped submitted data', async () => {
         await mapAndSave.companyDetails(mockFormBody, mockApplication);
 
         expect(save.companyDetails).toHaveBeenCalledTimes(1);
-        expect(save.companyDetails).toHaveBeenCalledWith(mockApplication, mockFormBody);
+        expect(save.companyDetails).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody));
       });
 
       it('should return true', async () => {

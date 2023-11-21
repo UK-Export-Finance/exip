@@ -1,9 +1,10 @@
 import {
-  submitButton, yesRadioInput, noRadioInput, field,
+  yesRadioInput, noRadioInput, field,
 } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import application from '../../../../../../fixtures/application';
 
 const {
   EXPORTER_BUSINESS: {
@@ -19,6 +20,8 @@ const {
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
+
+const { YOUR_COMPANY } = application;
 
 describe(`Insurance - Your business - Company details page - submit ${ALTERNATIVE_TRADING_NAME} as '${FIELD_VALUES.YES}'`, () => {
   let referenceNumber;
@@ -50,11 +53,9 @@ describe(`Insurance - Your business - Company details page - submit ${ALTERNATIV
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeCompanyDetailsForm({
+      cy.completeAndSubmitCompanyDetails({
         differentTradingName: true,
       });
-
-      submitButton().click();
     });
 
     it('should render valid submitted values when going back to the page', () => {
@@ -62,7 +63,7 @@ describe(`Insurance - Your business - Company details page - submit ${ALTERNATIV
 
       yesRadioInput().first().should('be.checked');
 
-      cy.checkValue(field(ALTERNATIVE_TRADING_NAME), 'test');
+      cy.checkValue(field(ALTERNATIVE_TRADING_NAME), YOUR_COMPANY[ALTERNATIVE_TRADING_NAME]);
     });
   });
 
@@ -70,9 +71,7 @@ describe(`Insurance - Your business - Company details page - submit ${ALTERNATIV
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeCompanyDetailsForm({});
-
-      submitButton().click();
+      cy.completeAndSubmitCompanyDetails({});
     });
 
     it(`should not have ${ALTERNATIVE_TRADING_NAME} input populated`, () => {
@@ -90,17 +89,14 @@ describe(`Insurance - Your business - Company details page - submit ${ALTERNATIV
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeCompanyDetailsForm({
+      cy.completeAndSubmitCompanyDetails({
         differentTradingName: true,
       });
-
-      submitButton().click();
 
       // back to page
       cy.navigateToUrl(url);
       // change answer to no
-      cy.completeCompanyDetailsForm({});
-      submitButton().click();
+      cy.completeAndSubmitCompanyDetails({});
     });
 
     it(`should not have ${ALTERNATIVE_TRADING_NAME} input populated`, () => {

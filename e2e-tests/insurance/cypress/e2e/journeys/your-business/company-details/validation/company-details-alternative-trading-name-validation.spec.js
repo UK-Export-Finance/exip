@@ -1,4 +1,4 @@
-import { submitButton, yesRadioInput, field } from '../../../../../../../pages/shared';
+import { field } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 
@@ -10,9 +10,13 @@ const {
   },
 } = FIELD_IDS.INSURANCE;
 
+const { COMPANY_DETAILS } = ROUTES.INSURANCE.EXPORTER_BUSINESS;
+
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
-describe("Insurance - Your business - Company details page- As an Exporter I want to enter details about my business in 'your business' section - alternative trading name validation", () => {
+const baseUrl = Cypress.config('baseUrl');
+
+describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - alternative trading name validation", () => {
   let referenceNumber;
   let url;
 
@@ -20,7 +24,7 @@ describe("Insurance - Your business - Company details page- As an Exporter I wan
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
+      url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
 
       cy.startYourBusinessSection();
 
@@ -35,11 +39,7 @@ describe("Insurance - Your business - Company details page- As an Exporter I wan
 
     cy.navigateToUrl(url);
 
-    yesRadioInput().first().click();
-
-    yesRadioInput().eq(1).click();
-
-    submitButton().click();
+    cy.completeAndSubmitCompanyDetails({ differentTradingName: true, completeAlternativeTradingName: false });
   });
 
   after(() => {

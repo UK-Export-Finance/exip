@@ -57,6 +57,9 @@ const {
         POSTCODE,
         EMAIL,
       },
+      YOUR_COMPANY: {
+        ALTERNATIVE_TRADING_NAME,
+      },
     },
     YOUR_BUYER: {
       COMPANY_OR_ORGANISATION: {
@@ -104,6 +107,9 @@ const application = {
     [VALID_EXPORTER_LOCATION]: true,
   },
   COMPANY: mockCompanies[COMPANIES_HOUSE_NUMBER],
+  YOUR_COMPANY: {
+    [ALTERNATIVE_TRADING_NAME]: 'test',
+  },
   POLICY: {
     [REQUESTED_START_DATE]: {
       day: '1',

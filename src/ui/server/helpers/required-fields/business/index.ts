@@ -25,9 +25,9 @@ export const getBrokerTasks = (isUsingBroker?: boolean): Array<string> => {
 };
 
 /**
- * getBrokerTasks
- * Get broker section tasks depending on the isUsingBroker field
- * @param {Boolean} Application "Is using broker" flag
+ * getYourCompanyTasks
+ * Get your company tasks depending on the hasDifferentTradingName field
+ * @param {Boolean} hasDifferentTradingName "has different trading name" flag
  * @returns {Array} Array of tasks
  */
 export const getYourCompanyTasks = (hasDifferentTradingName?: boolean): Array<string> => {
@@ -41,6 +41,7 @@ export const getYourCompanyTasks = (hasDifferentTradingName?: boolean): Array<st
 /**
  * Required fields for the insurance - business section
  * @param {Boolean} Is using broker
+ * @param {Boolean} hasDifferentTradingName flag
  * @returns {Array} Required field IDs
  */
 const requiredFields = (isUsingBroker?: boolean, hasDifferentTradingName?: boolean): Array<string> => {
