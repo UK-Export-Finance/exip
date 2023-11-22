@@ -1,4 +1,4 @@
-import { RequestBody } from '../../../../types';
+import { Company, CompaniesHouseResponse } from '../../../../types';
 import { objectHasProperty } from '../../object';
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 
@@ -13,19 +13,21 @@ const {
 
 /**
  * maps companyDetails formBody and returns fields in correct format
- * @param {RequestBody} formBody
+ * @param {CompaniesHouseResponse} Companies House response
  * @returns {Object} populatedData
  */
-const mapCompaniesHouseData = (formBody: RequestBody): object => {
-  const { success, apiError, __typename, isActive, ...populatedData } = formBody;
+const mapCompaniesHouseData = (apiResponse: CompaniesHouseResponse): Company => {
+  const { __typename, isActive, registeredOfficeAddress, ...data } = apiResponse;
 
-  if (!populatedData[COMPANY_ADDRESS]) {
-    // create empty companyAddress if not part of request
+  const populatedData = data as Company;
+
+  /**
+   * If an address is unavailable, generate an empty object.
+   * Otherwise, populate an object.
+   */
+  if (!registeredOfficeAddress) {
     populatedData[COMPANY_ADDRESS] = {};
   } else {
-    const { registeredOfficeAddress } = populatedData;
-
-    // populates companyAddress for db with value or empty string if null
     populatedData[COMPANY_ADDRESS] = {
       [ADDRESS_LINE_1]: registeredOfficeAddress[ADDRESS_LINE_1] ?? '',
       [ADDRESS_LINE_2]: registeredOfficeAddress[ADDRESS_LINE_2] ?? '',
@@ -38,12 +40,16 @@ const mapCompaniesHouseData = (formBody: RequestBody): object => {
     };
   }
 
-  if (objectHasProperty(populatedData, COMPANY_NUMBER)) {
-    populatedData[COMPANY_NUMBER] = populatedData[COMPANY_NUMBER].toString();
-  }
+  /**
+   * Convert the COMPANY_NUMBER to a string.
+   */
+  populatedData[COMPANY_NUMBER] = populatedData[COMPANY_NUMBER].toString();
 
+  /**
+   * if the company has COMPANY_INCORPORATED,
+   * convert COMPANY_INCORPORATED into a string.
+   */
   if (objectHasProperty(populatedData, COMPANY_INCORPORATED)) {
-    // convert from string to timestamp
     populatedData[COMPANY_INCORPORATED] = new Date(populatedData[COMPANY_INCORPORATED]).toISOString();
   }
 

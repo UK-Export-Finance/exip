@@ -1,6 +1,5 @@
 import mapSicCodes from '.';
 import { DEFAULT } from '../../../../content-strings';
-import { ApplicationExporterSicCodes } from '../../../../../types';
 import { mockSicCodes } from '../../../../test-mocks';
 import { generateSicCodesValue } from '../../companies-house';
 
@@ -32,9 +31,7 @@ describe('helpers/summary-lists/your-business/sic-code-mapping', () => {
   });
 
   it(`should return ${DEFAULT.EMPTY} if provide with an empty array`, () => {
-    const sicCodes = [] as Array<ApplicationExporterSicCodes>;
-
-    const response = mapSicCodes(sicCodes);
+    const response = mapSicCodes([]);
 
     expect(response).toEqual(DEFAULT.EMPTY);
   });

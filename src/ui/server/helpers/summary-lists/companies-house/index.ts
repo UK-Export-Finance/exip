@@ -6,7 +6,7 @@ import fieldGroupItem from '../generate-field-group-item';
 import getFieldById from '../../get-field-by-id';
 import generateMultipleFieldHtml from '../../generate-multiple-field-html';
 import { stringArrayHasValue, isPopulatedArray } from '../../array';
-import { ApplicationCompany, CompanyDetails, SummaryListItemData } from '../../../../types';
+import { ApplicationCompany, Company, SummaryListItemData } from '../../../../types';
 
 const {
   COMPANIES_HOUSE: { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, INDUSTRY_SECTOR_NAMES },
@@ -37,7 +37,6 @@ const generateSicCodesValue = (sicCodes?: Array<string>, industrySectorNames?: A
 
   return DEFAULT.EMPTY;
 };
-
 /**
  * Create all field groups for govukSummaryList
  * The following fields depend on the response from companies house api:
@@ -45,36 +44,38 @@ const generateSicCodesValue = (sicCodes?: Array<string>, industrySectorNames?: A
  * @param {Object} Company details
  * @returns {Object} All quote values in an object structure for GOVUK summary list structure
  */
-const generateFields = (companyDetails: CompanyDetails | ApplicationCompany) => {
+const generateFields = (company: Company | ApplicationCompany) => {
+  const data = company;
+
   const fields = [
     fieldGroupItem({
       field: getFieldById(FIELDS, COMPANY_NUMBER),
-      data: companyDetails,
+      data,
     }),
     fieldGroupItem({
       field: getFieldById(FIELDS, COMPANY_NAME),
-      data: companyDetails,
+      data,
     }),
     fieldGroupItem(
       {
         field: getFieldById(FIELDS, COMPANY_ADDRESS),
-        data: companyDetails,
+        data,
       },
-      generateMultipleFieldHtml(companyDetails[COMPANY_ADDRESS]),
+      generateMultipleFieldHtml(company[COMPANY_ADDRESS]),
     ),
     fieldGroupItem(
       {
         field: getFieldById(FIELDS, COMPANY_INCORPORATED),
-        data: companyDetails,
+        data,
       },
-      formatDate(companyDetails[COMPANY_INCORPORATED]),
+      formatDate(company[COMPANY_INCORPORATED]),
     ),
     fieldGroupItem(
       {
         field: getFieldById(FIELDS, COMPANY_SIC),
-        data: companyDetails,
+        data,
       },
-      generateSicCodesValue(companyDetails[COMPANY_SIC], companyDetails[INDUSTRY_SECTOR_NAMES]),
+      generateSicCodesValue(company[COMPANY_SIC], company[INDUSTRY_SECTOR_NAMES]),
     ),
   ] as Array<SummaryListItemData>;
 
@@ -87,7 +88,7 @@ const generateFields = (companyDetails: CompanyDetails | ApplicationCompany) => 
  * @param {Object} All quote content in a simple object.text structure
  * @returns {Object} A group with multiple fields/answers in govukSummaryList data structure
  */
-const companiesHouseSummaryList = (company?: CompanyDetails | ApplicationCompany) => {
+const companiesHouseSummaryList = (company?: Company | ApplicationCompany) => {
   if (company) {
     const fields = generateFields(company);
 

@@ -1,6 +1,6 @@
 import { generateSicCodesValue } from '../../companies-house';
 import { DEFAULT } from '../../../../content-strings';
-import { ApplicationExporterSicCodes } from '../../../../../types';
+import { SicCode } from '../../../../../types';
 import { isPopulatedArray } from '../../../array';
 
 /**
@@ -9,7 +9,7 @@ import { isPopulatedArray } from '../../../array';
  * @param {Array<ApplicationExporterSicCodes>} applicationSicCodes
  * @returns {String} sicCodes
  */
-const mapSicCodes = (applicationSicCodes: Array<ApplicationExporterSicCodes>) => {
+const mapSicCodes = (applicationSicCodes: Array<SicCode>) => {
   if (isPopulatedArray(applicationSicCodes)) {
     const sicCodes = applicationSicCodes.map((eachSicCode) => String(eachSicCode.sicCode));
     const industrySectorNames = applicationSicCodes.map((eachSicCode) => String(eachSicCode.industrySectorName));

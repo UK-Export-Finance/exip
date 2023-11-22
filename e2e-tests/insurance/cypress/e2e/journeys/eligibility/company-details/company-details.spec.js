@@ -66,34 +66,44 @@ context('Insurance - Eligibility - Companies details page - I want to check if I
       cy.checkText(body(), CONTENT_STRINGS.BODY);
     });
 
-    it('should render the companies house summary list', () => {
-      cy.checkText(summaryList.field(COMPANY_NUMBER).key(), FIELDS[COMPANY_NUMBER].SUMMARY.TITLE);
+    describe('companies house summary list', () => {
+      it(`should render '${COMPANY_NUMBER}' key and value`, () => {
+        cy.checkText(summaryList.field(COMPANY_NUMBER).key(), FIELDS[COMPANY_NUMBER].SUMMARY.TITLE);
 
-      cy.checkText(summaryList.field(COMPANY_NUMBER).value(), COMPANIES_HOUSE_NUMBER);
+        cy.checkText(summaryList.field(COMPANY_NUMBER).value(), COMPANIES_HOUSE_NUMBER);
+      });
 
-      cy.checkText(summaryList.field(COMPANY_NAME).key(), FIELDS[COMPANY_NAME].SUMMARY.TITLE);
+      it(`should render '${COMPANY_NAME}' key and value`, () => {
+        cy.checkText(summaryList.field(COMPANY_NAME).key(), FIELDS[COMPANY_NAME].SUMMARY.TITLE);
 
-      cy.checkText(summaryList.field(COMPANY_NAME).value(), mockCompany[COMPANY_NAME]);
+        cy.checkText(summaryList.field(COMPANY_NAME).value(), mockCompany[COMPANY_NAME]);
+      });
 
-      cy.checkText(summaryList.field(COMPANY_ADDRESS).key(), FIELDS[COMPANY_ADDRESS].SUMMARY.TITLE);
+      it(`should render '${COMPANY_ADDRESS}' key and value`, () => {
+        cy.checkText(summaryList.field(COMPANY_ADDRESS).key(), FIELDS[COMPANY_ADDRESS].SUMMARY.TITLE);
 
-      summaryList.field(COMPANY_ADDRESS).value().contains(mockCompany[COMPANY_ADDRESS].addressLine1);
-      summaryList.field(COMPANY_ADDRESS).value().contains(mockCompany[COMPANY_ADDRESS].locality);
-      summaryList.field(COMPANY_ADDRESS).value().contains(mockCompany[COMPANY_ADDRESS].region);
-      summaryList.field(COMPANY_ADDRESS).value().contains(mockCompany[COMPANY_ADDRESS].postalCode);
+        summaryList.field(COMPANY_ADDRESS).value().contains(mockCompany[COMPANY_ADDRESS].addressLine1);
+        summaryList.field(COMPANY_ADDRESS).value().contains(mockCompany[COMPANY_ADDRESS].locality);
+        summaryList.field(COMPANY_ADDRESS).value().contains(mockCompany[COMPANY_ADDRESS].region);
+        summaryList.field(COMPANY_ADDRESS).value().contains(mockCompany[COMPANY_ADDRESS].postalCode);
+      });
 
-      cy.checkText(summaryList.field(COMPANY_INCORPORATED).key(), FIELDS[COMPANY_INCORPORATED].SUMMARY.TITLE);
+      it(`should render '${COMPANY_INCORPORATED}' key and value`, () => {
+        cy.checkText(summaryList.field(COMPANY_INCORPORATED).key(), FIELDS[COMPANY_INCORPORATED].SUMMARY.TITLE);
 
-      const timestamp = mockCompany[COMPANY_INCORPORATED];
-      const expectedDate = format(new Date(timestamp), DATE_FORMAT.DEFAULT);
+        const timestamp = mockCompany[COMPANY_INCORPORATED];
+        const expectedDate = format(new Date(timestamp), DATE_FORMAT.DEFAULT);
 
-      cy.checkText(summaryList.field(COMPANY_INCORPORATED).value(), expectedDate);
+        cy.checkText(summaryList.field(COMPANY_INCORPORATED).value(), expectedDate);
+      });
 
-      cy.checkText(summaryList.field(COMPANY_SIC).key(), FIELDS[COMPANY_SIC].SUMMARY.TITLE);
+      it(`should render '${COMPANY_SIC}' key and value`, () => {
+        cy.checkText(summaryList.field(COMPANY_SIC).key(), FIELDS[COMPANY_SIC].SUMMARY.TITLE);
 
-      const expectedSicCodeValue = `${mockCompany[COMPANY_SIC][0]} - ${mockCompany[INDUSTRY_SECTOR_NAMES][0]}`;
+        const expectedSicCodeValue = `${mockCompany[COMPANY_SIC][0]} - ${mockCompany[INDUSTRY_SECTOR_NAMES][0]}`;
 
-      cy.checkText(summaryList.field(COMPANY_SIC).value(), expectedSicCodeValue);
+        cy.checkText(summaryList.field(COMPANY_SIC).value(), expectedSicCodeValue);
+      });
     });
 
     it('should render `enter different companies house number` link', () => {

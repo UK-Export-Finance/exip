@@ -92,7 +92,7 @@ export const post = async (req: Request, res: Response) => {
      * 3) If the company is not active, redirect to COMPANY_NOT_ACTIVE.
      * 4) If validationErrors are returned, render the page with validation errors.
      */
-    const response = await companiesHouse.search(payload);
+    const response = await companiesHouse.search(payload[FIELD_ID]);
 
     if (response.notFound) {
       return res.render(TEMPLATE, {
@@ -111,7 +111,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(COMPANIES_HOUSE_UNAVAILABLE);
     }
 
-    if (!response.company?.isActive) {
+    if (!response.isActive) {
       return res.redirect(COMPANY_NOT_ACTIVE);
     }
 
@@ -121,7 +121,7 @@ export const post = async (req: Request, res: Response) => {
      * 2) Add mapped data to the session.
      * 3) Redirect to the next part of the flow, COMPANY_DETAILS.
      */
-    const mappedCompanyDetails = mapCompaniesHouseData(response.company);
+    const mappedCompanyDetails = mapCompaniesHouseData(response);
 
     const sessionUpdate = { company: mappedCompanyDetails };
 

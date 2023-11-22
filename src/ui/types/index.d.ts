@@ -17,7 +17,7 @@ import {
   ApplicationPolicyContact,
 } from './application';
 import { ApolloResponse } from './apollo';
-import { CompanyDetails, SicCode } from './company-details';
+import { Company } from './company';
 import { CompaniesHouseResponse } from './company-house-response';
 import { Connect } from './connect';
 import { Country } from './country';
@@ -29,6 +29,7 @@ import { RequiredDataStateInsuranceEligibility, RequiredDataStateQuoteEligibilit
 import { PricingGrid, PricingGridMonth, PricingGridRate } from './pricing-grid';
 import { Quote, QuoteContent } from './quote';
 import { SelectOption } from './select-option';
+import { SicCode } from './sic-code';
 import {
   SubmittedDataQuoteEligibility,
   InsuranceEligibility,
@@ -71,7 +72,7 @@ export {
   ApolloResponse,
   ApplicationOwner,
   ApplicationPolicyContact,
-  CompanyDetails,
+  Company,
   CompaniesHouseResponse,
   Connect,
   CorePageVariablesInitialInput,

@@ -1,62 +1,30 @@
 import api from '../../api';
-import { isPopulatedArray } from '../array';
 import { CompaniesHouseResponse } from '../../../types';
 
 /**
- * helper which takes formBody containing companies house number
- * runs validation and makes api call to keystone getCompaniesHouseInformation
+ * helper which takes a companies house number and makes api call to get data from companies house.
  * runs validation on response and returns companyResponse or validation errors or apiError
- * @param {CompaniesHouseResponse} Companies House response
- * @returns {object} apiError flag, mapped company
+ * @param {Integer} Companies House number
+ * @returns {object} Mapped company, with or without an apiError flag
  */
-const search = async (company: CompaniesHouseResponse) => {
-  const { companyNumber } = company;
-
-  let mappedCompany = {} as CompaniesHouseResponse;
+const search = async (companyNumber: string): Promise<CompaniesHouseResponse> => {
+  let response = {} as CompaniesHouseResponse;
 
   /**
-   * if a company number is provided,
    * Call companies house API (via our own API)
+   * With the provided company number
    */
-  if (companyNumber) {
-    try {
-      mappedCompany = await api.keystone.getCompaniesHouseInformation(companyNumber);
-    } catch (err) {
-      console.error('Error posting to companies house API %O', err);
-      return {
-        apiError: true,
-        companyNumber,
-      };
-    }
-  }
+  try {
+    response = await api.keystone.getCompaniesHouseInformation(companyNumber);
 
-  // if company exists and has a value
-  if (company && isPopulatedArray(Object.keys(company))) {
-    // if apiError is set to true, return as redirects to error page
-    if (company?.apiError) {
-      return {
-        apiError: true,
-        companyNumber,
-      };
-    }
-
-    if (mappedCompany.notFound) {
-      return {
-        notFound: true,
-      };
-    }
-
+    return response;
+  } catch (err) {
+    console.error('Error posting to companies house API %O', err);
     return {
-      company: mappedCompany,
-      companyNumber,
+      ...response,
+      apiError: true,
     };
   }
-
-  return {
-    apiError: true,
-    companyNumber,
-    validationErrors: {},
-  };
 };
 
 const companiesHouse = { search };

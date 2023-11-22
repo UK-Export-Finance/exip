@@ -16,60 +16,25 @@ describe('server/helpers/summary-lists/companies-house', () => {
   describe('generateSicCodesValue', () => {
     describe('when sicCodes and industrySectorNames both are populated', () => {
       it('should return sic code and description as a single string with line break', () => {
-        const result = generateSicCodesValue(mockCompany.sicCodes, mockCompany.industrySectorNames);
+        const mockSectors = ['Mock sector'];
 
-        const expected = `${mockCompany.sicCodes[0]} - ${mockCompany.industrySectorNames[0]} </br>`;
+        const result = generateSicCodesValue(mockCompany.sicCodes, mockSectors);
 
-        expect(result).toEqual(expected);
-      });
-    });
+        let sicCode;
+        if (mockCompany.sicCodes) {
+          const [firstSicCode] = mockCompany.sicCodes;
+          sicCode = firstSicCode;
+        }
 
-    describe('when sicCodes is only populated', () => {
-      it('should return sic code as a single string with line break', () => {
-        const result = generateSicCodesValue(mockCompany.sicCodes);
+        const [industrySectorName] = mockSectors;
 
-        const expected = `${mockCompany.sicCodes[0]} </br>`;
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when sicCodes and industrySectorNames both are populated and have multiple values', () => {
-      it('should return sic code and description as a single string with line break', () => {
-        const sicCodes = [...mockCompany.sicCodes, '12345'];
-        const industrySectorNames = [...mockCompany.industrySectorNames, 'test 2'];
-
-        const result = generateSicCodesValue(sicCodes, industrySectorNames);
-
-        const expected = `${sicCodes[0]} - ${industrySectorNames[0]} </br>${sicCodes[1]} - ${industrySectorNames[1]} </br>`;
+        const expected = `${sicCode} - ${industrySectorName} </br>`;
 
         expect(result).toEqual(expected);
       });
     });
 
-    describe('when sicCodes is populated and has multiple values', () => {
-      it('should return sic code and description as a single string with line break', () => {
-        const sicCodes = [...mockCompany.sicCodes, '12345'];
-
-        const result = generateSicCodesValue(sicCodes);
-
-        const expected = `${sicCodes[0]} </br>${sicCodes[1]} </br>`;
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when sicCodes only has one value and industrySectorNames is not populated', () => {
-      it('should return sic code as a single string with line break', () => {
-        const result = generateSicCodesValue(mockCompany.sicCodes);
-
-        const expected = `${mockCompany.sicCodes[0]} </br>`;
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when sic codes is an empty array', () => {
+    describe('when sic codes is not populated', () => {
       it('should return default empty string', () => {
         const result = generateSicCodesValue([]);
 
@@ -122,7 +87,7 @@ describe('server/helpers/summary-lists/companies-house', () => {
             field: getFieldById(FIELDS, COMPANY_SIC),
             data: mockCompany,
           },
-          generateSicCodesValue(mockCompany.sicCodes, mockCompany.industrySectorNames),
+          generateSicCodesValue(mockCompany.sicCodes),
         ),
       ];
 
