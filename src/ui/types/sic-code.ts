@@ -4,4 +4,4 @@ interface SicCode {
   industrySectorName: string;
 }
 
-export { SicCode }
+export { SicCode };

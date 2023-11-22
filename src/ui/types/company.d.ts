@@ -10,7 +10,7 @@ interface Company {
   sicCodes?: Array<string>;
   industrySectorNames?: Array<string>;
   isActive?: boolean;
-  __typename?: String;
+  __typename?: string;
 }
 
 export { Company };
