@@ -1,14 +1,8 @@
-import { format } from 'date-fns';
-import { body, submitButton, summaryList } from '../../../../../../pages/shared';
-import { FIELDS, PAGES } from '../../../../../../content-strings';
-import { DATE_FORMAT } from '../../../../../../constants';
-import { COMPANIES_HOUSE_NUMBER } from '../../../../../../constants/examples';
+import { body, submitButton } from '../../../../../../pages/shared';
+import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { companyDetailsPage } from '../../../../../../pages/insurance/eligibility';
-import mockCompanies from '../../../../../../fixtures/companies';
-
-const mockCompany = mockCompanies[COMPANIES_HOUSE_NUMBER];
+import assertCompaniesHouseSummaryList from '../../../../../../commands/insurance/assert-companies-house-summary-list';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANY_DETAILS;
 
@@ -20,12 +14,6 @@ const {
     ENTER_COMPANIES_HOUSE_NUMBER,
   },
 } = INSURANCE_ROUTES;
-
-const {
-  COMPANIES_HOUSE: {
-    COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_NAME, COMPANY_INCORPORATED, COMPANY_SIC, INDUSTRY_SECTOR_NAMES,
-  },
-} = INSURANCE_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -67,42 +55,24 @@ context('Insurance - Eligibility - Companies details page - I want to check if I
     });
 
     describe('companies house summary list', () => {
-      it(`should render '${COMPANY_NUMBER}' key and value`, () => {
-        cy.checkText(summaryList.field(COMPANY_NUMBER).key(), FIELDS[COMPANY_NUMBER].SUMMARY.TITLE);
-
-        cy.checkText(summaryList.field(COMPANY_NUMBER).value(), COMPANIES_HOUSE_NUMBER);
+      it('should render `company number` key and value', () => {
+        assertCompaniesHouseSummaryList.number();
       });
 
-      it(`should render '${COMPANY_NAME}' key and value`, () => {
-        cy.checkText(summaryList.field(COMPANY_NAME).key(), FIELDS[COMPANY_NAME].SUMMARY.TITLE);
-
-        cy.checkText(summaryList.field(COMPANY_NAME).value(), mockCompany[COMPANY_NAME]);
+      it('should render `company name` key and value', () => {
+        assertCompaniesHouseSummaryList.name();
       });
 
-      it(`should render '${COMPANY_ADDRESS}' key and value`, () => {
-        cy.checkText(summaryList.field(COMPANY_ADDRESS).key(), FIELDS[COMPANY_ADDRESS].SUMMARY.TITLE);
-
-        summaryList.field(COMPANY_ADDRESS).value().contains(mockCompany[COMPANY_ADDRESS].addressLine1);
-        summaryList.field(COMPANY_ADDRESS).value().contains(mockCompany[COMPANY_ADDRESS].locality);
-        summaryList.field(COMPANY_ADDRESS).value().contains(mockCompany[COMPANY_ADDRESS].region);
-        summaryList.field(COMPANY_ADDRESS).value().contains(mockCompany[COMPANY_ADDRESS].postalCode);
+      it('should render `company address` key and value', () => {
+        assertCompaniesHouseSummaryList.address();
       });
 
-      it(`should render '${COMPANY_INCORPORATED}' key and value`, () => {
-        cy.checkText(summaryList.field(COMPANY_INCORPORATED).key(), FIELDS[COMPANY_INCORPORATED].SUMMARY.TITLE);
-
-        const timestamp = mockCompany[COMPANY_INCORPORATED];
-        const expectedDate = format(new Date(timestamp), DATE_FORMAT.DEFAULT);
-
-        cy.checkText(summaryList.field(COMPANY_INCORPORATED).value(), expectedDate);
+      it('should render `company incorporated` key and value', () => {
+        assertCompaniesHouseSummaryList.incorporated();
       });
 
-      it(`should render '${COMPANY_SIC}' key and value`, () => {
-        cy.checkText(summaryList.field(COMPANY_SIC).key(), FIELDS[COMPANY_SIC].SUMMARY.TITLE);
-
-        const expectedSicCodeValue = `${mockCompany[COMPANY_SIC][0]} - ${mockCompany[INDUSTRY_SECTOR_NAMES][0]}`;
-
-        cy.checkText(summaryList.field(COMPANY_SIC).value(), expectedSicCodeValue);
+      it('should render `company SIC codes` key and value', () => {
+        assertCompaniesHouseSummaryList.sicCodes();
       });
     });
 
