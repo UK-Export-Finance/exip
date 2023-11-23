@@ -36,7 +36,6 @@ describe('server/helpers/summary-lists/companies-house/generate-sic-codes-value/
 
   describe('when sicCodes is not populated', () => {
     it(`should return '${DEFAULT.EMPTY}'`, () => {
-
       const result = mapApplicationSicCodeValues([]);
 
       expect(result).toEqual(DEFAULT.EMPTY);
