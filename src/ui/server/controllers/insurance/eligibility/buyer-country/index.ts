@@ -75,9 +75,9 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const mappedCountries = mapCountries(countries);
-
     if (validationErrors) {
+      const mappedCountries = mapCountries(countries);
+
       return res.render(TEMPLATE, {
         ...singleInputPageVariables({
           ...PAGE_VARIABLES,

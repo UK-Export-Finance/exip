@@ -7,11 +7,13 @@ const getApimCisCountries = gql`
       name
       riskCategory
       canGetAQuoteOnline
+      canGetAQuoteOffline
       canGetAQuoteByEmail
       cannotGetAQuote
-      canApplyOnline
-      canApplyOffline
       cannotApply
+      canApplyForInsuranceOnline
+      canApplyForInsuranceOffline
+      noInsuranceSupport
     }
   }
 `;
