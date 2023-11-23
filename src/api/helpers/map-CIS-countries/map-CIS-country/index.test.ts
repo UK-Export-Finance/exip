@@ -39,7 +39,7 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
       cannotGetAQuote: false,
       canApplyForInsuranceOnline: false,
       canApplyForInsuranceOffline: false,
-      cannotGetAQuoteOrApplyForInsurance: false,
+      noInsuranceSupport: false,
     } as MappedCisCountry;
 
     mapped.canGetAQuoteOnline = canGetAQuoteOnline(mapped);
@@ -50,10 +50,7 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
     mapped.canApplyForInsuranceOnline = applyForInsuranceOnline(mockCountryBase.shortTermCoverAvailabilityDesc);
     mapped.canApplyForInsuranceOffline = canApplyOffline(mockCountryBase.shortTermCoverAvailabilityDesc);
 
-    const noQuoteSupport = !mapped.canGetAQuoteOnline && !mapped.canGetAQuoteOffline;
-    const noInsuranceSupport = !mapped.canApplyForInsuranceOnline && !mapped.canApplyForInsuranceOffline;
-
-    mapped.cannotGetAQuoteOrApplyForInsurance = !noQuoteSupport && !noInsuranceSupport;
+    mapped.noInsuranceSupport = !mapped.canApplyForInsuranceOnline && !mapped.canApplyForInsuranceOffline;
 
     expect(result).toEqual(mapped);
   });

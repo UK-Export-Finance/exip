@@ -11,7 +11,7 @@ interface Country {
   cannotGetAQuote: boolean;
   canApplyForInsuranceOnline: boolean;
   canApplyForInsuranceOffline: boolean;
-  cannotGetAQuoteOrApplyForInsurance: boolean;
+  noInsuranceSupport: boolean;
 }
 
 export { Country };

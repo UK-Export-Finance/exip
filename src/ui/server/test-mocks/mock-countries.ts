@@ -13,7 +13,7 @@ const baseCountry = {
   cannotGetAQuote: false,
   canApplyForInsuranceOnline: true,
   canApplyForInsuranceOffline: false,
-  cannotGetAQuoteOrApplyForInsurance: false,
+  noInsuranceSupport: false,
 };
 
 const mockCountries = [
@@ -78,7 +78,7 @@ const mockCountries = [
     canGetAQuoteOffline: false,
     canApplyForInsuranceOnline: false,
     canApplyForInsuranceOffline: false,
-    cannotGetAQuoteOrApplyForInsurance: true,
+    noInsuranceSupport: true,
   },
 ] as Array<Country>;
 

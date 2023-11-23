@@ -8,7 +8,7 @@ const baseCountry = {
   cannotGetAQuote: false,
   canApplyForInsuranceOnline: true,
   canApplyForInsuranceOffline: true,
-  cannotGetAQuoteOrApplyForInsurance: false,
+  noInsuranceSupport: false,
 };
 
 const mockCountries = [

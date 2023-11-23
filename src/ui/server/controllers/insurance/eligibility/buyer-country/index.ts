@@ -119,7 +119,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.INSURANCE.APPLY_OFFLINE);
     }
 
-    if (country.cannotGetAQuoteOrApplyForInsurance) {
+    if (country.noInsuranceSupport) {
       const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData = {

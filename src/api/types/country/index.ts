@@ -21,7 +21,7 @@ export interface Country extends Relationship {
   cannotGetAQuote?: boolean;
   canApplyForInsuranceOnline?: boolean;
   canApplyForInsuranceOffline?: boolean;
-  cannotGetAQuoteOrApplyForInsurance?: boolean;
+  noInsuranceSupport?: boolean;
 }
 
 export interface GetApimCisCountriesResponse {
@@ -41,5 +41,5 @@ export interface MappedCisCountry {
   cannotGetAQuote: boolean;
   canApplyForInsuranceOnline: boolean;
   canApplyForInsuranceOffline: boolean;
-  cannotGetAQuoteOrApplyForInsurance: boolean;
+  noInsuranceSupport: boolean;
 }

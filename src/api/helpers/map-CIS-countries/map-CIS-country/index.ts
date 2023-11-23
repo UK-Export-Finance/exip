@@ -31,10 +31,7 @@ export const mapCisCountry = (country: CisCountry): MappedCisCountry => {
   mapped.canApplyForInsuranceOnline = applyForInsuranceOnline(country.shortTermCoverAvailabilityDesc);
   mapped.canApplyForInsuranceOffline = canApplyOffline(country.shortTermCoverAvailabilityDesc);
 
-  const noQuoteSupport = !mapped.canGetAQuoteOnline && !mapped.canGetAQuoteOffline;
-  const noInsuranceSupport = !mapped.canApplyForInsuranceOnline && !mapped.canApplyForInsuranceOffline;
-
-  mapped.cannotGetAQuoteOrApplyForInsurance = !noQuoteSupport && !noInsuranceSupport;
+  mapped.noInsuranceSupport = !mapped.canApplyForInsuranceOnline && !mapped.canApplyForInsuranceOffline;
 
   return mapped;
 };
