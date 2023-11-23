@@ -1,4 +1,5 @@
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
+import { DEFAULT } from '../../../../../content-strings';
 import mapApplicationSicCodeValues from '.';
 
 const {
@@ -30,6 +31,15 @@ describe('server/helpers/summary-lists/companies-house/generate-sic-codes-value/
       const expected = `${expectedFirst}${expectedSecond}`;
 
       expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when sicCodes is not populated', () => {
+    it(`should return '${DEFAULT.EMPTY}'`, () => {
+
+      const result = mapApplicationSicCodeValues([]);
+
+      expect(result).toEqual(DEFAULT.EMPTY);
     });
   });
 });
