@@ -22,11 +22,11 @@
 
       <p class="govuk-body" data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
 
-      <ul class="govuk-list govuk-list--bullet">
+      <ol class="govuk-list govuk-list--number">
         {% for ITEM in CONTENT_STRINGS.LIST %}
           <li data-cy="list-item-{{ loop.index }}">{{ ITEM }}</li>
         {% endfor %}
-      </ul> 
+      </ol> 
 
       <p class="govuk-body">
         <span data-cy="action-intro">{{ CONTENT_STRINGS.ACTIONS.INTRO }}</span>
