@@ -1,4 +1,4 @@
-import { CompaniesHouseResponse } from '../../types';
+import { Company } from '../../types';
 
 const mockCompany = {
   companyName: 'Mock company',
@@ -7,6 +7,7 @@ const mockCompany = {
     careOf: null,
     premises: null,
     addressLine1: 'Test road',
+    addressLine2: '',
     locality: 'Test',
     region: 'Test',
     postalCode: 'SW1A 2HQ',
@@ -14,9 +15,9 @@ const mockCompany = {
   },
   dateOfCreation: '2012-08-23',
   sicCodes: ['68201'],
-  industrySectorNames: ['test description'],
+  industrySectorNames: [],
   isActive: true,
-  __typename: 'CompaniesHouseResponse',
-} as CompaniesHouseResponse;
+  __typename: 'Company',
+} as Company;
 
 export default mockCompany;

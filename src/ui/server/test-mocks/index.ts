@@ -5,6 +5,7 @@ import mockSession from './mock-session';
 import mockQuote from './mock-quote';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
+import mockCompaniesHouseResponse from './mock-companies-house-response';
 import mockCompany from './mock-company';
 import mockApplication, { mockBusiness } from './mock-application';
 import mockApplications from './mock-applications';
@@ -100,6 +101,7 @@ export {
   mockBusinessTurnover,
   mockBuyer,
   mockCountries,
+  mockCompaniesHouseResponse,
   mockCompany,
   mockCurrencies,
   mockDeclarations,

@@ -36,6 +36,8 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
+const IS_APPLICATION_SUMMARY_LIST = true;
+
 describe('controllers/insurance/business/companies-details', () => {
   let req: Request;
   let res: Response;
@@ -99,7 +101,7 @@ describe('controllers/insurance/business/companies-details', () => {
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(referenceNumber),
           submittedValues,
-          SUMMARY_LIST: companiesHouseSummaryList(company),
+          SUMMARY_LIST: companiesHouseSummaryList(company, IS_APPLICATION_SUMMARY_LIST),
         });
       });
     });
@@ -154,7 +156,7 @@ describe('controllers/insurance/business/companies-details', () => {
           ...pageVariables(mockApplication.referenceNumber),
           validationErrors,
           submittedValues: expectedSubmittedValues,
-          SUMMARY_LIST: companiesHouseSummaryList(mockApplication.company),
+          SUMMARY_LIST: companiesHouseSummaryList(mockApplication.company, IS_APPLICATION_SUMMARY_LIST),
         });
       });
     });

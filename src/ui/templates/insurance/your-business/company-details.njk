@@ -51,14 +51,6 @@
           }
         }) }}
 
-        {{ govukSummaryList({
-          classes: 'govuk-!-margin-bottom-9',
-          rows: SUMMARY_LIST.COMPANY_DETAILS.ROWS,
-          attributes: {
-            'data-cy':  FIELDS.COMPANIES_HOUSE.SEARCH + '-summary-list'
-          }
-        }) }}
-
         {% set conditionalYesHtml %}
           {{ govukInput({
             id: FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME,

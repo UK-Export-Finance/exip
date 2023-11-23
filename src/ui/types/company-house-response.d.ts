@@ -1,3 +1,5 @@
+import { SicCode } from './sic-code';
+
 interface CompaniesHouseAddress {
   careOf: string | null;
   premises: string | null;
@@ -10,17 +12,18 @@ interface CompaniesHouseAddress {
 }
 
 interface CompaniesHouseResponse {
-  companyName: string;
+  companyRegistration?: string;
+  companyName?: string;
   companyNumber: string;
-  isActive: boolean;
+  companyAddress?: string;
+  companyIncorporated?: string;
   registeredOfficeAddress: CompaniesHouseAddress;
-  dateOfCreation: string;
-  sicCodes: Array<string>;
-  industrySectorNames: Array<string>;
-  success: boolean;
-  apiError: boolean;
-  notFound: boolean;
-  __typename: string;
+  sicCodes?: Array<SicCode>;
+  isActive?: boolean;
+  success?: boolean;
+  apiError?: boolean;
+  notFound?: boolean;
+  __typename?: string;
 }
 
 export { CompaniesHouseAddress, CompaniesHouseResponse };

@@ -1,42 +1,17 @@
 import formatDate from '../../date/format-date';
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
-import { DEFAULT, FIELDS } from '../../../content-strings';
+import { FIELDS } from '../../../content-strings';
 import generateSummaryListRows from '../generate-summary-list-rows';
 import fieldGroupItem from '../generate-field-group-item';
 import getFieldById from '../../get-field-by-id';
 import generateMultipleFieldHtml from '../../generate-multiple-field-html';
-import { stringArrayHasValue, isPopulatedArray } from '../../array';
-import { ApplicationCompany, CompanyDetails, SummaryListItemData } from '../../../../types';
+import { ApplicationCompany, Company, SummaryListItemData } from '../../../../types';
+
+import generateSicCodesValue from './generate-sic-codes-value';
 
 const {
-  COMPANIES_HOUSE: { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, INDUSTRY_SECTOR_NAMES },
+  COMPANIES_HOUSE: { COMPANY_NAME, COMPANY_ADDRESS, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC },
 } = INSURANCE_FIELD_IDS;
-
-/**
- * generateSicCodesValue
- * generates string with sicCode and description with line breaks
- * maps through sicCodes, and if there is a description at that index, string will contain description
- * @param {Array<string>} sicCodes
- * @param {Array<string>} industrySectorNames
- * @returns {String} Sic codes as a single string or default empty string
- */
-const generateSicCodesValue = (sicCodes?: Array<string>, industrySectorNames?: Array<string>): string => {
-  if (sicCodes && isPopulatedArray(sicCodes)) {
-    const string = [] as Array<string>;
-
-    sicCodes.forEach((sicCode, index) => {
-      if (industrySectorNames && stringArrayHasValue(index, industrySectorNames)) {
-        string.push(`${sicCode} - ${industrySectorNames[index]} </br>`);
-      } else {
-        string.push(`${sicCode} </br>`);
-      }
-    });
-
-    return string.join('');
-  }
-
-  return DEFAULT.EMPTY;
-};
 
 /**
  * Create all field groups for govukSummaryList
@@ -45,36 +20,38 @@ const generateSicCodesValue = (sicCodes?: Array<string>, industrySectorNames?: A
  * @param {Object} Company details
  * @returns {Object} All quote values in an object structure for GOVUK summary list structure
  */
-const generateFields = (companyDetails: CompanyDetails | ApplicationCompany) => {
+export const generateFields = (company: Company | ApplicationCompany, isApplicationData?: boolean) => {
+  const data = company;
+
   const fields = [
     fieldGroupItem({
       field: getFieldById(FIELDS, COMPANY_NUMBER),
-      data: companyDetails,
+      data,
     }),
     fieldGroupItem({
       field: getFieldById(FIELDS, COMPANY_NAME),
-      data: companyDetails,
+      data,
     }),
     fieldGroupItem(
       {
         field: getFieldById(FIELDS, COMPANY_ADDRESS),
-        data: companyDetails,
+        data,
       },
-      generateMultipleFieldHtml(companyDetails[COMPANY_ADDRESS]),
+      generateMultipleFieldHtml(company[COMPANY_ADDRESS]),
     ),
     fieldGroupItem(
       {
         field: getFieldById(FIELDS, COMPANY_INCORPORATED),
-        data: companyDetails,
+        data,
       },
-      formatDate(companyDetails[COMPANY_INCORPORATED]),
+      formatDate(company[COMPANY_INCORPORATED]),
     ),
     fieldGroupItem(
       {
         field: getFieldById(FIELDS, COMPANY_SIC),
-        data: companyDetails,
+        data,
       },
-      generateSicCodesValue(companyDetails[COMPANY_SIC], companyDetails[INDUSTRY_SECTOR_NAMES]),
+      generateSicCodesValue(company, isApplicationData),
     ),
   ] as Array<SummaryListItemData>;
 
@@ -87,9 +64,9 @@ const generateFields = (companyDetails: CompanyDetails | ApplicationCompany) => 
  * @param {Object} All quote content in a simple object.text structure
  * @returns {Object} A group with multiple fields/answers in govukSummaryList data structure
  */
-const companiesHouseSummaryList = (company?: CompanyDetails | ApplicationCompany) => {
+export const companiesHouseSummaryList = (company?: Company | ApplicationCompany, isApplicationData?: boolean) => {
   if (company) {
-    const fields = generateFields(company);
+    const fields = generateFields(company, isApplicationData);
 
     const summaryList = {
       COMPANY_DETAILS: {
@@ -102,5 +79,3 @@ const companiesHouseSummaryList = (company?: CompanyDetails | ApplicationCompany
 
   return {};
 };
-
-export { generateSicCodesValue, generateFields, companiesHouseSummaryList };

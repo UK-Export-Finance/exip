@@ -32,6 +32,8 @@ export const TEMPLATE = COMPANY_DETAILS_TEMPLATE;
 
 export const FIELD_IDS = [HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME];
 
+const IS_APPLICATION_SUMMARY_LIST = true;
+
 const pageVariables = (referenceNumber: number) => {
   return {
     SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
@@ -73,7 +75,7 @@ const get = (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       ...pageVariables(application.referenceNumber),
       submittedValues,
-      SUMMARY_LIST: companiesHouseSummaryList(company),
+      SUMMARY_LIST: companiesHouseSummaryList(company, IS_APPLICATION_SUMMARY_LIST),
     });
   } catch (err) {
     console.error('Error getting company details %O', err);
@@ -124,7 +126,7 @@ const post = async (req: Request, res: Response) => {
         ...pageVariables(application.referenceNumber),
         validationErrors,
         submittedValues,
-        SUMMARY_LIST: companiesHouseSummaryList(company),
+        SUMMARY_LIST: companiesHouseSummaryList(company, IS_APPLICATION_SUMMARY_LIST),
       });
     }
 
