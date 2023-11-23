@@ -28,7 +28,7 @@ export const mapCisCountry = (country: CisCountry): MappedCisCountry => {
   mapped.canGetAQuoteByEmail = canGetAQuoteByEmail(mapped);
   mapped.cannotGetAQuote = cannotGetAQuote(mapped);
 
-  mapped.canApplyForInsuranceOnline = applyForInsuranceOnline(country.shortTermCoverAvailabilityDesc);
+  mapped.canApplyForInsuranceOnline = applyForInsuranceOnline(country.shortTermCoverAvailabilityDesc, mapped.riskCategory);
   mapped.canApplyForInsuranceOffline = canApplyOffline(country.shortTermCoverAvailabilityDesc);
 
   mapped.noInsuranceSupport = !mapped.canApplyForInsuranceOnline && !mapped.canApplyForInsuranceOffline;
