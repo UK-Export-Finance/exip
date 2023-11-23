@@ -9,10 +9,9 @@ const {
  * mapSubmittedEligibilityCountry
  * Map a submitted eligibility country and canApplyOnline into an object with BUYER_COUNTRY
  * @param {Object} Country
- * @param {Boolean} Flag if the country can get a quote online
  * @returns {Object} Object with BUYER_COUNTRY object, country fields and canApplyOnline flag
  */
-const mapSubmittedEligibilityCountry = (country: Country, canApplyOnline: boolean) => {
+const mapSubmittedEligibilityCountry = (country: Country) => {
   const { name, isoCode, riskCategory } = country;
 
   const mapped = {
@@ -20,7 +19,7 @@ const mapSubmittedEligibilityCountry = (country: Country, canApplyOnline: boolea
       name,
       isoCode,
       riskCategory,
-      canApplyOnline,
+      canApplyOnline: country.canGetAQuoteOnline || country.canApplyForInsuranceOnline,
     },
   };
 

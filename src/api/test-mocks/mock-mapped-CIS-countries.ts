@@ -3,11 +3,12 @@ import { MappedCisCountry } from '../types';
 // mock base country that can get a quote and apply online.
 const baseCountry = {
   canGetAQuoteOnline: true,
-  canGetAQuoteByEmail: false,
+  canGetAQuoteOffline: true,
+  canGetAQuoteByEmail: true,
   cannotGetAQuote: false,
-  canApplyOnline: true,
-  canApplyOffline: false,
-  cannotApply: false,
+  canApplyForInsuranceOnline: true,
+  canApplyForInsuranceOffline: true,
+  noInsuranceSupport: false,
 };
 
 const mockCountries = [

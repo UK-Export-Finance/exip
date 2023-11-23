@@ -1771,11 +1771,13 @@ var typeDefs = `
     riskCategory: String
     nbiIssueAvailable: Boolean
     canGetAQuoteOnline: Boolean
+    canGetAQuoteOffline: Boolean
     canGetAQuoteByEmail: Boolean
     cannotGetAQuote: Boolean
-    canApplyOnline: Boolean
-    canApplyOffline: Boolean
     cannotApply: Boolean
+    canApplyForInsuranceOnline: Boolean
+    canApplyForInsuranceOffline: Boolean
+    noInsuranceSupport: Boolean
   }
 
   type Mutation {
@@ -4876,15 +4878,15 @@ var cannotGetAQuote = (country) => {
 };
 var cannot_get_a_quote_default = cannotGetAQuote;
 
-// helpers/map-CIS-countries/map-CIS-country/can-apply-online/index.ts
+// helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/index.ts
 var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
-var canApplyOnline = (originalShortTermCover) => {
+var canApplyForInsuranceOnline = (originalShortTermCover) => {
   if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.YES) {
     return true;
   }
   return false;
 };
-var can_apply_online_default = canApplyOnline;
+var can_apply_for_insurance_online_default = canApplyForInsuranceOnline;
 
 // helpers/map-CIS-countries/map-CIS-country/can-apply-offline/index.ts
 var { CIS: CIS4 } = EXTERNAL_API_DEFINITIONS;
@@ -4912,11 +4914,12 @@ var mapCisCountry = (country) => {
     nbiIssueAvailable: map_NBI_issue_available_default(country.NBIIssue)
   };
   mapped.canGetAQuoteOnline = can_get_a_quote_online_default(mapped);
+  mapped.canGetAQuoteOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
   mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default(mapped);
   mapped.cannotGetAQuote = cannot_get_a_quote_default(mapped);
-  mapped.canApplyOnline = can_apply_online_default(country.shortTermCoverAvailabilityDesc);
-  mapped.canApplyOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
-  mapped.cannotApply = !mapped.canApplyOnline && !mapped.canApplyOffline;
+  mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(country.shortTermCoverAvailabilityDesc);
+  mapped.canApplyForInsuranceOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
+  mapped.noInsuranceSupport = !mapped.canApplyForInsuranceOnline && !mapped.canApplyForInsuranceOffline;
   return mapped;
 };
 var map_CIS_country_default = mapCisCountry;
