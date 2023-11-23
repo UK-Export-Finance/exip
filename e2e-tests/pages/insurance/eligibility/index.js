@@ -4,11 +4,9 @@ import companyDetailsPage from './companyDetails';
 import eligibleToApplyOnlinePage from './eligibleToApplyOnline';
 import endBuyerPage from './endBuyer';
 import otherPartiesPage from './otherParties';
-import checkYourAnswersPage from './checkYourAnswers';
 
 export {
   checkIfEligiblePage,
-  checkYourAnswersPage,
   companiesHouseUnavailablePage,
   companyDetailsPage,
   eligibleToApplyOnlinePage,

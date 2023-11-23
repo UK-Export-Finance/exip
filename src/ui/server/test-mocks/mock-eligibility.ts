@@ -15,7 +15,7 @@ const mockEligibility = {
   totalContractValue: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
   company: {
     id: 'clcyyopn40148m8noyar9wxrn',
-    companyName: 'Test Name',
+    companyName: 'Mock ',
     companyNumber: '0123456',
     companyWebsite: '',
     hasDifferentTradingName: false,
@@ -36,6 +36,7 @@ const mockEligibility = {
     financialYearEndDate: new Date(),
     __typename: 'Company',
   },
+  hasReviewedEligibility: true,
 } as InsuranceEligibility;
 
 export default mockEligibility;
