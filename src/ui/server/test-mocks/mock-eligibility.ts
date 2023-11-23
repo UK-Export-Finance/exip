@@ -15,7 +15,7 @@ const mockEligibility = {
   totalContractValue: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
   company: {
     id: 'clcyyopn40148m8noyar9wxrn',
-    companyName: 'Mock name',
+    companyName: 'Mock company',
     companyNumber: '0123456',
     companyWebsite: '',
     hasDifferentTradingName: false,
