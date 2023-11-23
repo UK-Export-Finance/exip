@@ -15,7 +15,7 @@ describe('helpers/mappings/map-companies-house-data', () => {
   it(`should return the formBody without ${COMPANY_NUMBER} success, __typename fields and null address fields as empty strings`, () => {
     const result = mapCompaniesHouseData(mockCompaniesHouseResponse);
 
-    const { __typename, isActive, registeredOfficeAddress, ...data } = mockCompaniesHouseResponse;
+    const { __typename, success, isActive, registeredOfficeAddress, ...data } = mockCompaniesHouseResponse;
 
     const expected = {
       ...data,

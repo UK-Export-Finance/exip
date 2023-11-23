@@ -17,7 +17,7 @@ const {
  * @returns {Object} populatedData
  */
 const mapCompaniesHouseData = (apiResponse: CompaniesHouseResponse): Company => {
-  const { __typename, isActive, registeredOfficeAddress, ...data } = apiResponse;
+  const { __typename, success, isActive, registeredOfficeAddress, ...data } = apiResponse;
 
   const populatedData = data as Company;
 
