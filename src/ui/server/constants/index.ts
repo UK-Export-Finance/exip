@@ -1,6 +1,7 @@
 export * from './tls';
 export * from './account';
 export * from './application';
+export * from './companies-house-number-examples';
 export * from './cover-period';
 export * from './currencies';
 export * from './date-format';

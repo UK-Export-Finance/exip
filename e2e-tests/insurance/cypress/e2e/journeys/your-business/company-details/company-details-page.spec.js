@@ -10,6 +10,7 @@ import { PAGES, BUTTONS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import assertCompaniesHouseSummaryList from '../../../../../../commands/insurance/assert-companies-house-summary-list';
 
 const {
   ROOT,
@@ -77,6 +78,28 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
 
     it('renders a heading caption', () => {
       cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
+
+    describe('companies house summary list', () => {
+      it('should render `company number` key and value', () => {
+        assertCompaniesHouseSummaryList.number();
+      });
+
+      it('should render `company name` key and value', () => {
+        assertCompaniesHouseSummaryList.name();
+      });
+
+      it('should render `company address` key and value', () => {
+        assertCompaniesHouseSummaryList.address();
+      });
+
+      it('should render `company incorporated` key and value', () => {
+        assertCompaniesHouseSummaryList.incorporated();
+      });
+
+      it('should render `company SIC codes` key and value', () => {
+        assertCompaniesHouseSummaryList.sicCodes();
+      });
     });
 
     it('should display the trading name radios', () => {

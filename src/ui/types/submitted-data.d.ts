@@ -1,4 +1,4 @@
-import { CompanyDetails } from './company-details';
+import { Company } from './company';
 import { Country } from './country';
 import { Currency } from './currency';
 
@@ -22,7 +22,7 @@ interface SubmittedDataQuoteEligibility extends SharedEligibility {
 interface InsuranceEligibilityCore extends SharedEligibility {
   hasCompaniesHouseNumber?: boolean;
   companyNumber?: string;
-  company?: CompanyDetails;
+  company?: Company;
   totalContractValue?: number;
   coverPeriod?: number;
   hasEndBuyer?: boolean;

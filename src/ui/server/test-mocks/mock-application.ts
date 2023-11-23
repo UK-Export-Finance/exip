@@ -56,6 +56,7 @@ export const mockCompany = {
     {
       id: 'clcyyxldc0634m8novkr94spo',
       sicCode: '64999',
+      industrySectorName: 'Mock industry',
     },
   ],
   registeredOfficeAddress: {

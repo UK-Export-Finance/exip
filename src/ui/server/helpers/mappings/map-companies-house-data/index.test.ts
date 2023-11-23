@@ -1,7 +1,6 @@
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import mapCompaniesHouseData from '.';
-import { mockCompany } from '../../../test-mocks';
-import { RequestBody } from '../../../../types';
+import { mockCompaniesHouseResponse } from '../../../test-mocks';
 
 const {
   COMPANIES_HOUSE: {
@@ -13,43 +12,37 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 describe('helpers/mappings/map-companies-house-data', () => {
-  describe(`when ${COMPANY_NUMBER} success fields are provided`, () => {
-    it(`should return the formBody without ${COMPANY_NUMBER} success,and __typename fields and change null fields in address to empty strings`, () => {
-      const result = mapCompaniesHouseData(mockCompany);
+  it(`should return the formBody without ${COMPANY_NUMBER} success, __typename fields and null address fields as empty strings`, () => {
+    const result = mapCompaniesHouseData(mockCompaniesHouseResponse);
 
-      const { __typename, isActive, ...company } = mockCompany;
+    const { __typename, success, isActive, registeredOfficeAddress, ...data } = mockCompaniesHouseResponse;
 
-      const expected = {
-        ...company,
-        dateOfCreation: new Date(company[COMPANY_INCORPORATED]).toISOString(),
-        [COMPANY_ADDRESS]: {
-          [CARE_OF]: '',
-          [PREMISES]: '',
-          [ADDRESS_LINE_1]: company.registeredOfficeAddress[ADDRESS_LINE_1],
-          [ADDRESS_LINE_2]: '',
-          [LOCALITY]: company.registeredOfficeAddress[LOCALITY],
-          [REGION]: company.registeredOfficeAddress[REGION],
-          [POSTAL_CODE]: company.registeredOfficeAddress[POSTAL_CODE],
-          [COUNTRY]: '',
-        },
-      };
+    const expected = {
+      ...data,
+      dateOfCreation: new Date(data[COMPANY_INCORPORATED]).toISOString(),
+      [COMPANY_ADDRESS]: {
+        [CARE_OF]: '',
+        [PREMISES]: '',
+        [ADDRESS_LINE_1]: registeredOfficeAddress[ADDRESS_LINE_1],
+        [ADDRESS_LINE_2]: '',
+        [LOCALITY]: registeredOfficeAddress[LOCALITY],
+        [REGION]: registeredOfficeAddress[REGION],
+        [POSTAL_CODE]: registeredOfficeAddress[POSTAL_CODE],
+        [COUNTRY]: '',
+      },
+    };
 
-      expect(result).toEqual(expected);
-    });
+    expect(result).toEqual(expected);
   });
 
-  describe(`when ${COMPANY_NUMBER} is NOT provided`, () => {
-    const mockBodyWithoutFields = {} as RequestBody;
+  describe(`when a company does not have ${COMPANY_ADDRESS}`, () => {
+    it(`should return an empty ${COMPANY_ADDRESS} object`, () => {
+      const result = mapCompaniesHouseData({
+        ...mockCompaniesHouseResponse,
+        [COMPANY_ADDRESS]: null,
+      });
 
-    it(`should return the formBody without ${COMPANY_NUMBER} and an empty address object`, () => {
-      const result = mapCompaniesHouseData(mockBodyWithoutFields);
-
-      const expected = {
-        ...mockBodyWithoutFields,
-        [COMPANY_ADDRESS]: {},
-      };
-
-      expect(result).toEqual(expected);
+      expect(result[COMPANY_ADDRESS]).toEqual({});
     });
   });
 });

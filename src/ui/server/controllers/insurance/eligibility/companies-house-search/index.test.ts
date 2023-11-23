@@ -12,8 +12,8 @@ import generateValidationErrorsHelper from '../../../../helpers/validation';
 import companiesHouse from '../../../../helpers/companies-house-search';
 import mapCompaniesHouseData from '../../../../helpers/mappings/map-companies-house-data';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
-import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockCompany } from '../../../../test-mocks';
+import { CompaniesHouseResponse, Request, Response } from '../../../../../types';
+import { mockReq, mockRes, mockCompaniesHouseResponse, mockCompany } from '../../../../test-mocks';
 
 const {
   ELIGIBILITY: { COMPANIES_HOUSE_NUMBER },
@@ -86,7 +86,7 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
     describe('when req.session.submittedData.insuranceEligibility has a populated company object', () => {
       it('should render template with insuranceEligibility.company as submittedValues', () => {
         req.session.submittedData.insuranceEligibility = {
-          company: {},
+          company: mockCompany,
         };
 
         get(req, res);
@@ -107,13 +107,6 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
   describe('post', () => {
     const validBody = {
       [FIELD_ID]: mockCompany.companyNumber,
-    };
-
-    const mockCompaniesHouseResponse = {
-      __typename: 'CompaniesHouseResponse',
-      isActive: true,
-      company: mockCompany,
-      companyNumber: mockCompany.companyNumber,
     };
 
     companiesHouse.search = jest.fn(() => Promise.resolve(mockCompaniesHouseResponse));
@@ -148,14 +141,14 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
         const payload = constructPayload(req.body, [FIELD_ID]);
 
         expect(companiesHouse.search).toHaveBeenCalledTimes(1);
-        expect(companiesHouse.search).toHaveBeenCalledWith(payload);
+        expect(companiesHouse.search).toHaveBeenCalledWith(payload[FIELD_ID]);
       });
 
       it('should update the session with populated company object', async () => {
         await post(req, res);
 
         const expectedPopulatedData = {
-          company: mapCompaniesHouseData(mockCompaniesHouseResponse.company),
+          company: mapCompaniesHouseData(mockCompaniesHouseResponse),
         };
 
         const expected = {
@@ -177,11 +170,10 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
           req.body = validBody;
 
           const mockResponse = {
-            companyNumber: mockCompaniesHouseResponse.companyNumber,
-            validationErrors: false,
+            ...mockCompaniesHouseResponse,
             apiError: false,
             isActive: false,
-          };
+          } as CompaniesHouseResponse;
 
           companiesHouse.search = jest.fn(() => Promise.resolve(mockResponse));
 
@@ -198,8 +190,9 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
           req.body = validBody;
 
           const mockResponse = {
+            ...mockCompaniesHouseResponse,
             notFound: true,
-          };
+          } as CompaniesHouseResponse;
 
           companiesHouse.search = jest.fn(() => Promise.resolve(mockResponse));
 
@@ -227,10 +220,9 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
           req.body = validBody;
 
           const mockResponse = {
-            companyNumber: mockCompaniesHouseResponse.companyNumber,
-            validationErrors: {},
+            ...mockCompaniesHouseResponse,
             apiError: true,
-          };
+          } as CompaniesHouseResponse;
 
           companiesHouse.search = jest.fn(() => Promise.resolve(mockResponse));
 
