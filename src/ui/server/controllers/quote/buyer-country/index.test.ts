@@ -256,7 +256,7 @@ describe('controllers/quote/buyer-country', () => {
 
         const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
 
-        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, selectedCountry.canApplyOnline);
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
 
         const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
 
@@ -314,7 +314,7 @@ describe('controllers/quote/buyer-country', () => {
 
         const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
 
-        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, selectedCountry.canApplyOnline);
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
 
         const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
 
@@ -365,7 +365,7 @@ describe('controllers/quote/buyer-country', () => {
 
         const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
 
-        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry, selectedCountry.canApplyOnline);
+        const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
 
         const expected = updateSubmittedData(expectedPopulatedData, req.session.submittedData.quoteEligibility);
 

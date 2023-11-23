@@ -3,12 +3,12 @@ import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
 const { CIS } = EXTERNAL_API_DEFINITIONS;
 
 /**
- * canApplyOnline
- * Check if a country can apply online
+ * canApplyForInsuranceOnline
+ * Check if a country can apply for insurance online
  * @param {String} Country original short term cover definition from CIS API.
  * @returns {Boolean}
  */
-export const canApplyOnline = (originalShortTermCover: string) => {
+export const canApplyForInsuranceOnline = (originalShortTermCover: string) => {
   if (originalShortTermCover === CIS.SHORT_TERM_COVER_AVAILABLE.YES) {
     return true;
   }
@@ -16,4 +16,4 @@ export const canApplyOnline = (originalShortTermCover: string) => {
   return false;
 };
 
-export default canApplyOnline;
+export default canApplyForInsuranceOnline;
