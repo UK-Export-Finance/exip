@@ -1,12 +1,14 @@
 import { FIELD_ID, PAGE_VARIABLES, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
+import { ERROR_MESSAGES } from '../../../../content-strings/error-messages';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../helpers/companies-house-search/validation';
+import generateValidationErrorsHelper from '../../../../helpers/validation';
 import companiesHouse from '../../../../helpers/companies-house-search';
 import mapCompaniesHouseData from '../../../../helpers/mappings/map-companies-house-data';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
@@ -198,6 +200,8 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
 
           const payload = constructPayload(req.body, [FIELD_ID]);
 
+          const expectedErrorMessage = ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].NOT_FOUND;
+
           expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
             ...insuranceCorePageVariables({
               PAGE_CONTENT_STRINGS,
@@ -205,7 +209,7 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
             }),
             userName: getUserNameFromSession(req.session.user),
             ...PAGE_VARIABLES,
-            validationErrors: generateValidationErrors({}),
+            validationErrors: generateValidationErrorsHelper(FIELD_ID, expectedErrorMessage, {}),
             submittedValues: payload,
           });
         });

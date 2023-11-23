@@ -104,16 +104,31 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       });
     });
 
-    describe(`when ${EMPLOYEES_UK} is correctly entered as 0`, () => {
-      it(`should not display  ${EMPLOYEES_UK} validation errors`, () => {
-        cy.navigateToUrl(url);
+    describe(`when ${EMPLOYEES_UK} is below 0`, () => {
+      const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_UK].BELOW_MINIMUM;
 
+      it(`should display validation errors for ${EMPLOYEES_UK}`, () => {
         const fieldId = EMPLOYEES_UK;
         const field = fieldSelector(fieldId);
 
-        cy.keyboardInput(field.input(), '0');
-        submitButton().click();
-        partials.errorSummaryListItems().should('have.length', 2);
+        const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
+        const value = '-5';
+
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, expectedErrorsCount, errorMessage);
+      });
+    });
+
+    describe(`when ${EMPLOYEES_UK} is entered as 0`, () => {
+      const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_UK].BELOW_MINIMUM;
+
+      it(`should display validation errors for ${EMPLOYEES_UK}`, () => {
+        const fieldId = EMPLOYEES_UK;
+        const field = fieldSelector(fieldId);
+
+        const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
+        const value = '0';
+
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, expectedErrorsCount, errorMessage);
       });
     });
 

@@ -1,11 +1,13 @@
 import { PAGES } from '../../../../content-strings';
 import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
+import { ERROR_MESSAGES } from '../../../../content-strings/error-messages';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../helpers/companies-house-search/validation';
+import generateValidationErrorsHelper from '../../../../helpers/validation';
 import companiesHouse from '../../../../helpers/companies-house-search';
 import mapCompaniesHouseData from '../../../../helpers/mappings/map-companies-house-data';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
@@ -87,14 +89,15 @@ export const post = async (req: Request, res: Response) => {
 
     /**
      * 1) Call companies house API (via our own API)
-     * 4) If validationErrors are returned, render the page with validation errors.
+     * 4) If notFound is returned, render the page with validation errors.
      * 2) If apiError is returned, redirect to COMPANIES_HOUSE_UNAVAILABLE.
      * 3) If the company is not active, redirect to COMPANY_NOT_ACTIVE.
-     * 4) If validationErrors are returned, render the page with validation errors.
      */
     const response = await companiesHouse.search(payload[FIELD_ID]);
 
     if (response.notFound) {
+      const errorMessage = ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].NOT_FOUND;
+
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
@@ -102,7 +105,7 @@ export const post = async (req: Request, res: Response) => {
         }),
         userName: getUserNameFromSession(req.session.user),
         ...PAGE_VARIABLES,
-        validationErrors: generateValidationErrors({}),
+        validationErrors: generateValidationErrorsHelper(FIELD_ID, errorMessage, {}),
         submittedValues: payload,
       });
     }

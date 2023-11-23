@@ -95,16 +95,17 @@ export const ERROR_MESSAGES = {
         ABOVE_MAXIMUM: 'The alternative address cannot be more than a 1000 characters',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {
-        IS_EMPTY: 'Enter the goods or services that your company supplies',
-        ABOVE_MAXIMUM: 'Description of goods and services that your company supplies cannot be more than 1000 characters',
+        IS_EMPTY: 'Enter the information about your business and the products or services you distribute',
+        ABOVE_MAXIMUM: 'The description of your business cannot be more than a 1000 characters',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.YEARS_EXPORTING]: {
-        IS_EMPTY: "Enter how many years you've been exporting for as a whole number - for example, 3 or 7",
-        INCORRECT_FORMAT: "Enter how many years you've been exporting for as a whole number. You cannot enter letters or special characters",
+        IS_EMPTY: 'Enter how many years you have been exporting for as a whole number',
+        INCORRECT_FORMAT: 'Enter how many years you have been exporting for as a whole number - do not enter decimals',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_UK]: {
         IS_EMPTY: 'Enter how many employees you have in the UK as a whole number - for example, 100',
         INCORRECT_FORMAT: 'Enter how many employees you have in the UK as a whole number. You cannot enter letters or special characters',
+        BELOW_MINIMUM: 'Number of employees in the UK must be more than 0',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.ESTIMATED_ANNUAL_TURNOVER]: {
         IS_EMPTY: 'Enter your estimated annual turnover for this current financial year',
