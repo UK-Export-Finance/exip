@@ -1,10 +1,11 @@
 import formatDate from '../../date/format-date';
-import { generateSicCodesValue, generateFields, companiesHouseSummaryList } from '.';
+import { generateFields, companiesHouseSummaryList } from '.';
+import generateSicCodesValue from './generate-sic-codes-value';
 import generateSummaryListRows from '../generate-summary-list-rows';
 import fieldGroupItem from '../generate-field-group-item';
 import getFieldById from '../../get-field-by-id';
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
-import { DEFAULT, FIELDS } from '../../../content-strings';
+import { FIELDS } from '../../../content-strings';
 import { mockCompany } from '../../../test-mocks';
 import generateMultipleFieldHtml from '../../generate-multiple-field-html';
 
@@ -13,51 +14,10 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 describe('server/helpers/summary-lists/companies-house', () => {
-  describe('generateSicCodesValue', () => {
-    describe('when sicCodes and industrySectorNames both are populated', () => {
-      it('should return sic code and description as a single string with line break', () => {
-        const mockSectors = ['Mock sector'];
-
-        const result = generateSicCodesValue(mockCompany.sicCodes, mockSectors);
-
-        let sicCode;
-        if (mockCompany.sicCodes) {
-          const [firstSicCode] = mockCompany.sicCodes;
-          sicCode = firstSicCode;
-        }
-
-        const [industrySectorName] = mockSectors;
-
-        const expected = `${sicCode} - ${industrySectorName} </br>`;
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when sic codes is not populated', () => {
-      it('should return default empty string', () => {
-        const result = generateSicCodesValue([]);
-
-        const expected = DEFAULT.EMPTY;
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when there are no sic codes (undefined)', () => {
-      it('should return default empty string', () => {
-        const result = generateSicCodesValue();
-
-        const expected = DEFAULT.EMPTY;
-
-        expect(result).toEqual(expected);
-      });
-    });
-  });
-
   describe('generateFields', () => {
     it('should populate field groups when provided with companyDetails', () => {
-      const result = generateFields(mockCompany);
+      const isApplicationData = true;
+      const result = generateFields(mockCompany, isApplicationData);
 
       const expected = [
         fieldGroupItem({
@@ -87,7 +47,7 @@ describe('server/helpers/summary-lists/companies-house', () => {
             field: getFieldById(FIELDS, COMPANY_SIC),
             data: mockCompany,
           },
-          generateSicCodesValue(mockCompany.sicCodes),
+          generateSicCodesValue(mockCompany, isApplicationData),
         ),
       ];
 

@@ -84,7 +84,7 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
     describe('when req.session.submittedData.insuranceEligibility has a populated company object', () => {
       it('should render template with insuranceEligibility.company as submittedValues', () => {
         req.session.submittedData.insuranceEligibility = {
-          company: {},
+          company: mockCompany,
         };
 
         get(req, res);
