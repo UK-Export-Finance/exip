@@ -39,7 +39,7 @@ describe('middleware/insurance/application-status/is-submit-your-application-rou
   describe('isSubmitYourApplicationRoute', () => {
     describe('when a route includes a "submit your application" route', () => {
       it('should return true', () => {
-        const mockUrl = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS.YOUR_BUSINESS}`;
+        const mockUrl = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`;
 
         const result = isSubmitYourApplicationRoute(mockUrl, referenceNumber);
 

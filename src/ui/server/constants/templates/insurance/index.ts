@@ -17,7 +17,6 @@ export const INSURANCE_TEMPLATES = {
   YOUR_BUYER: YOUR_BUYER_TEMPLATES,
   DECLARATIONS: DECLARATIONS_TEMPLATES,
   CHECK_YOUR_ANSWERS: 'insurance/check-your-answers/check-your-answers.njk',
-  NEED_TO_START_NEW_APPLICATION: 'insurance/check-your-answers/need-to-start-new-application.njk',
   PAGE_NOT_FOUND: 'insurance/page-not-found.njk',
   NO_ACCESS_TO_APPLICATION: 'insurance/do-not-have-application-access.njk',
   NO_ACCESS_APPLICATION_SUBMITTED: 'insurance/cannot-access-application-submitted.njk',

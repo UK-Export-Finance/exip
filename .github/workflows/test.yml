@@ -185,8 +185,6 @@ jobs:
             "application-submission/multiple-policy-type/**/*.spec.js",
             "application-submission/single-policy-type/**/*.spec.js",
             "cannot-skip-flow/**/*.spec.js",
-            "check-your-answers/eligibility/**/*.spec.js",
-            "check-your-answers/need-to-start-new-application/**/*.spec.js",
             "check-your-answers/policy/**/*.spec.js",
             "check-your-answers/your-business/**/*.spec.js",
             "check-your-answers/your-buyer/**/*.spec.js",

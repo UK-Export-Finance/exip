@@ -1,6 +1,5 @@
 import { get, post } from '../../../test-mocks/mock-router';
 import { ROUTES } from '../../../constants';
-import { get as getStartNewApplication } from '../../../controllers/insurance/check-your-answers/start-new-application';
 import { get as getCheckYourAnswersPolicy, post as postCheckYourAnswersPolicy } from '../../../controllers/insurance/check-your-answers/policy';
 import {
   get as getCheckYourAnswersYourBusiness,
@@ -19,10 +18,8 @@ describe('routes/insurance/check-your-answers', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(4);
+    expect(get).toHaveBeenCalledTimes(3);
     expect(post).toHaveBeenCalledTimes(6);
-
-    expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.START_NEW_APPLICATION}`, getStartNewApplication);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, getCheckYourAnswersPolicy);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, postCheckYourAnswersPolicy);

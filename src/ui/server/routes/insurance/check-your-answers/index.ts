@@ -1,6 +1,5 @@
 import express from 'express';
 import { CHECK_YOUR_ANSWERS } from '../../../constants/routes/insurance/check-your-answers';
-import { get as getStartNewApplication } from '../../../controllers/insurance/check-your-answers/start-new-application';
 import { get as getCheckYourAnswersPolicy, post as postCheckYourAnswersPolicy } from '../../../controllers/insurance/check-your-answers/policy';
 import {
   get as getCheckYourAnswersYourBusiness,
@@ -11,8 +10,6 @@ import { post as saveAndBack } from '../../../controllers/insurance/check-your-a
 
 // @ts-ignore
 const insuranceCheckYourAnswersRouter = express.Router();
-
-insuranceCheckYourAnswersRouter.get(`/:referenceNumber${CHECK_YOUR_ANSWERS.START_NEW_APPLICATION}`, getStartNewApplication);
 
 insuranceCheckYourAnswersRouter.get(`/:referenceNumber${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, getCheckYourAnswersPolicy);
 insuranceCheckYourAnswersRouter.post(`/:referenceNumber${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, postCheckYourAnswersPolicy);

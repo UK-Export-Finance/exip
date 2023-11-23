@@ -50,9 +50,6 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
 
       task.link().click();
 
-      // To get past "Eligibility" check your answers page
-      cy.submitCheckYourAnswersForm();
-
       // To get past "Policy" check your answers page
       cy.submitCheckYourAnswersForm();
 
