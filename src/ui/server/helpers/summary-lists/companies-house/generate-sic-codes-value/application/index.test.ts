@@ -11,12 +11,12 @@ describe('server/helpers/summary-lists/companies-house/generate-sic-codes-value/
       const mockSicCodes = [
         {
           id: '1234',
-          [SIC_CODE]: '100',
-          [INDUSTRY_SECTOR_NAME]: 'Mock',
+          sicCode: '100',
+          industrySectorName: 'Mock',
         },
         {
           id: '5678',
-          [SIC_CODE]: '200',
+          sicCode: '200',
         },
       ];
 

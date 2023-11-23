@@ -1,6 +1,7 @@
 import { InsuranceEligibilityCore } from './submitted-data';
 import { Connect } from './connect';
 import { Country } from './country';
+import { SicCode } from './sic-code';
 
 interface ApplicationOwner {
   id: string;
@@ -59,12 +60,6 @@ interface ApplicationCompanyAddress {
   premises?: string;
 }
 
-interface ApplicationSicCode {
-  id: string;
-  sicCode?: string;
-  industrySectorName?: string;
-}
-
 interface ApplicationExporterindustrySectorNames {
   id: string;
   industrySectorNames?: string;
@@ -78,7 +73,7 @@ interface ApplicationCompany {
   hasDifferentTradingName?: boolean;
   hasDifferentTradingAddress?: boolean;
   registeredOfficeAddress: ApplicationCompanyAddress;
-  sicCodes: Array<ApplicationSicCode>;
+  sicCodes: Array<SicCode>;
 }
 
 interface ApplicationBusiness {
@@ -191,7 +186,6 @@ export {
   ApplicationCompany,
   ApplicationFlat,
   ApplicationPolicy,
-  ApplicationSicCode,
   ApplicationExporterindustrySectorNames,
   ApplicationBusiness,
   ApplicationBroker,
