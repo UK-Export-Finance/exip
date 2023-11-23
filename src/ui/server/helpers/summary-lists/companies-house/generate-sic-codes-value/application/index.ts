@@ -1,5 +1,5 @@
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
-import { ApplicationSicCodes } from '../../../../../../types';
+import { ApplicationSicCode } from '../../../../../../types';
 
 const {
   COMPANIES_HOUSE: { INDUSTRY_SECTOR_NAME, SIC_CODE },
@@ -9,10 +9,10 @@ const {
  * mapApplicationSicCodeValues
  * Map company SIC codes in an application.
  * This is used to render in an application's summary list.
- * @param {Array<ApplicationSicCodes>} sicCodes: SIC codes
+ * @param {Array<ApplicationSicCode>} sicCodes: SIC codes
  * @returns {String} Mapped SIC codes
  */
-const mapApplicationSicCodeValues = (sicCodes: Array<ApplicationSicCodes>) => {
+const mapApplicationSicCodeValues = (sicCodes: Array<ApplicationSicCode>) => {
   const arr = [] as Array<string>;
 
   sicCodes.forEach((sicCode) => {

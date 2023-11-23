@@ -59,7 +59,7 @@ interface ApplicationCompanyAddress {
   premises?: string;
 }
 
-interface ApplicationSicCodes {
+interface ApplicationSicCode {
   id: string;
   sicCode?: string;
   industrySectorName?: string;
@@ -78,7 +78,7 @@ interface ApplicationCompany {
   hasDifferentTradingName?: boolean;
   hasDifferentTradingAddress?: boolean;
   registeredOfficeAddress: ApplicationCompanyAddress;
-  sicCodes: Array<ApplicationSicCodes>;
+  sicCodes: Array<ApplicationSicCode>;
 }
 
 interface ApplicationBusiness {
@@ -191,7 +191,7 @@ export {
   ApplicationCompany,
   ApplicationFlat,
   ApplicationPolicy,
-  ApplicationSicCodes,
+  ApplicationSicCode,
   ApplicationExporterindustrySectorNames,
   ApplicationBusiness,
   ApplicationBroker,
