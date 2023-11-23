@@ -21,7 +21,7 @@ const assertCompaniesHouseSummaryList = {
   number: () => {
     cy.checkText(summaryList.field(COMPANY_NUMBER).key(), FIELDS[COMPANY_NUMBER].SUMMARY.TITLE);
 
-    cy.checkText(summaryList.field(COMPANY_NUMBER).value(), COMPANIES_HOUSE_NUMBER);
+    cy.checkText(summaryList.field(COMPANY_NUMBER).value(), mockCompany[COMPANY_NUMBER]);
   },
   name: () => {
     cy.checkText(summaryList.field(COMPANY_NAME).key(), FIELDS[COMPANY_NAME].SUMMARY.TITLE);
