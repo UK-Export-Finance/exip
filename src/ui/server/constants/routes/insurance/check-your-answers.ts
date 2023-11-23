@@ -5,7 +5,6 @@ const YOUR_BUYER_ROOT = `${ROOT}/your-buyer`;
 
 export const CHECK_YOUR_ANSWERS = {
   ROOT,
-  ELIGIBILITY: `${ROOT}/eligibility`,
   START_NEW_APPLICATION: `${ROOT}/start-a-new-application`,
   TYPE_OF_POLICY: TYPE_OF_POLICY_ROOT,
   TYPE_OF_POLICY_SAVE_AND_BACK: `${TYPE_OF_POLICY_ROOT}/save-and-back`,

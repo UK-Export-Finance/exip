@@ -12,6 +12,7 @@ const {
     HAS_END_BUYER,
     TOTAL_CONTRACT_VALUE,
     TOTAL_CONTRACT_VALUE_ID,
+    HAS_REVIEWED_ELIGIBILITY,
     ...FIELD_IDS
   },
 } = INSURANCE_FIELD_IDS;
@@ -19,7 +20,7 @@ const {
 /**
  * List of field IDs that are not relevant.
  */
-export const irrelevantFields = [BUYER_COUNTRY_ISO_CODE, COVER_PERIOD_ID, HAVE_AN_ACCOUNT, TOTAL_CONTRACT_VALUE_ID];
+export const irrelevantFields = [BUYER_COUNTRY_ISO_CODE, COVER_PERIOD_ID, HAVE_AN_ACCOUNT, TOTAL_CONTRACT_VALUE_ID, HAS_REVIEWED_ELIGIBILITY];
 
 /**
  * Required fields for the insurance - eligibility section

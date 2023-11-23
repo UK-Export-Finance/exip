@@ -22,7 +22,7 @@ describe('middleware/insurance/application-status/is-check-your-answers-route', 
   describe('isCheckYourAnswersRoute', () => {
     describe('when a route includes a "check your answers" route', () => {
       it('should return true', () => {
-        const mockUrl = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS.ELIGIBILITY}`;
+        const mockUrl = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS.YOUR_BUSINESS}`;
 
         const result = isCheckYourAnswersRoute(mockUrl, referenceNumber);
 

@@ -1,8 +1,10 @@
 import { FIELD_IDS, FIELD_VALUES } from '../../constants';
 import { summaryList } from '../../pages/shared';
 import { FIELDS_ELIGIBILITY as FIELDS } from '../../content-strings/fields/insurance/eligibility';
-import { country } from '../../fixtures/application';
+import application, { country } from '../../fixtures/application';
 import getSummaryListField from './get-summary-list-field';
+
+const { COMPANY } = application;
 
 const {
   TOTAL_CONTRACT_VALUE,
@@ -11,7 +13,11 @@ const {
   BUYER_COUNTRY,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_EXPORTER_LOCATION,
+  HAS_COMPANIES_HOUSE_NUMBER,
+  HAS_END_BUYER,
 } = FIELD_IDS.INSURANCE.ELIGIBILITY;
+
+const { COMPANY_NAME } = FIELD_IDS.INSURANCE.COMPANIES_HOUSE;
 
 const checkYourAnswersEligibilitySummaryList = ({
   [BUYER_COUNTRY]: () => {
@@ -50,7 +56,23 @@ const checkYourAnswersEligibilitySummaryList = ({
     const fieldId = COVER_PERIOD;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = FIELD_VALUES.NO;
+    const expectedValue = FIELDS[fieldId].OPTIONS.BELOW.TEXT;
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
+  },
+  [HAS_COMPANIES_HOUSE_NUMBER]: () => {
+    const fieldId = HAS_COMPANIES_HOUSE_NUMBER;
+
+    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
+    const expectedValue = FIELD_VALUES.YES;
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
+  },
+  [COMPANY_NAME]: () => {
+    const fieldId = COMPANY_NAME;
+
+    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
+    const expectedValue = COMPANY[COMPANY_NAME];
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
@@ -58,7 +80,15 @@ const checkYourAnswersEligibilitySummaryList = ({
     const fieldId = COMPANIES_HOUSE_NUMBER;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = FIELD_VALUES.YES;
+    const expectedValue = COMPANY[COMPANIES_HOUSE_NUMBER];
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
+  },
+  [HAS_END_BUYER]: () => {
+    const fieldId = HAS_END_BUYER;
+
+    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
+    const expectedValue = FIELD_VALUES.NO;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
