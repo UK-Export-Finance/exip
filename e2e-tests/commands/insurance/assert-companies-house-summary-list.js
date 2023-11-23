@@ -13,6 +13,10 @@ const {
 
 const mockCompany = mockCompanies[COMPANIES_HOUSE_NUMBER];
 
+/**
+ * assertCompaniesHouseSummaryList
+ * Object structured tests for a Companies House summary list.
+ */
 const assertCompaniesHouseSummaryList = {
   number: () => {
     cy.checkText(summaryList.field(COMPANY_NUMBER).key(), FIELDS[COMPANY_NUMBER].SUMMARY.TITLE);
