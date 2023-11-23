@@ -13,6 +13,29 @@ const mockEligibility = {
   totalValueInsured: 3,
   coverPeriod: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
   totalContractValue: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
+  company: {
+    id: 'clcyyopn40148m8noyar9wxrn',
+    companyName: 'Test Name',
+    companyNumber: '0123456',
+    companyWebsite: '',
+    hasDifferentTradingName: false,
+    hasDifferentTradingAddress: false,
+    dateOfCreation: '2014-04-10T00:00:00.000Z',
+    registeredOfficeAddress: {
+      id: 'clcyyopna0158m8noaglyy94t',
+      addressLine1: 'Line 1',
+      addressLine2: 'Line 2',
+      careOf: '',
+      locality: 'Locality',
+      region: 'Region',
+      postalCode: 'Post code',
+      country: '',
+      premises: '',
+      __typename: 'CompanyAddress',
+    },
+    financialYearEndDate: new Date(),
+    __typename: 'Company',
+  },
 } as InsuranceEligibility;
 
 export default mockEligibility;

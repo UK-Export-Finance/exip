@@ -4,7 +4,6 @@ const {
   ROOT: INSURANCE_ROOT,
   COMPLETE_OTHER_SECTIONS,
   CHECK_YOUR_ANSWERS: {
-    ELIGIBILITY,
     TYPE_OF_POLICY,
     YOUR_BUSINESS,
     YOUR_BUYER,
@@ -31,14 +30,6 @@ context('Insurance - Check your answers - cannot skip to any Check your answers 
 
   after(() => {
     cy.deleteApplication();
-  });
-
-  it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Check your answers - Eligibility page directly`, () => {
-    const url = `${insuranceRoute}/${referenceNumber}${ELIGIBILITY}`;
-
-    cy.navigateToUrl(url);
-
-    cy.assertUrl(completeOtherSectionsUrl);
   });
 
   it(`should redirect to ${COMPLETE_OTHER_SECTIONS} when navigating to the Check your answers - Policy page directly`, () => {

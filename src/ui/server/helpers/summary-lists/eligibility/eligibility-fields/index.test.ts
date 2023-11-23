@@ -103,8 +103,6 @@ describe('server/helpers/summary-lists/eligibility/eligibility-fields', () => {
   ];
 
   it('should return fields and values from the submitted data/mockAnswers', () => {
-    mockAnswers.company = mockApplication.company;
-
     const result = generateEligibilityFields(mockAnswers);
 
     expect(result).toEqual(expectedBase);
