@@ -5,6 +5,7 @@ import canGetAQuoteOnline from './can-get-a-quote-online';
 import canGetAQuoteByEmail from './can-get-a-quote-by-email';
 import cannotGetAQuote from './cannot-get-a-quote';
 import applyForInsuranceOnline from './can-apply-for-insurance-online';
+import applyForInsuranceOffline from './can-apply-for-insurance-offline';
 import canApplyOffline from './can-apply-offline';
 import { CisCountry, MappedCisCountry } from '../../../types';
 
@@ -29,7 +30,7 @@ export const mapCisCountry = (country: CisCountry): MappedCisCountry => {
   mapped.cannotGetAQuote = cannotGetAQuote(mapped);
 
   mapped.canApplyForInsuranceOnline = applyForInsuranceOnline(country.shortTermCoverAvailabilityDesc, mapped.riskCategory);
-  mapped.canApplyForInsuranceOffline = canApplyOffline(country.shortTermCoverAvailabilityDesc);
+  mapped.canApplyForInsuranceOffline = applyForInsuranceOffline(country.shortTermCoverAvailabilityDesc);
 
   mapped.noInsuranceSupport = !mapped.canApplyForInsuranceOnline && !mapped.canApplyForInsuranceOffline;
 

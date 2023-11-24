@@ -6,6 +6,7 @@ import canGetAQuoteOnline from './can-get-a-quote-online';
 import canGetAQuoteByEmail from './can-get-a-quote-by-email';
 import cannotGetAQuote from './cannot-get-a-quote';
 import applyForInsuranceOnline from './can-apply-for-insurance-online';
+import applyForInsuranceOffline from './can-apply-for-insurance-offline';
 import canApplyOffline from './can-apply-offline';
 import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../../constants';
 import mockCisCountries from '../../../test-mocks/mock-CIS-countries';
@@ -48,7 +49,7 @@ describe('helpers/map-CIS-countries/map-CIS-country', () => {
     mapped.cannotGetAQuote = cannotGetAQuote(mapped);
 
     mapped.canApplyForInsuranceOnline = applyForInsuranceOnline(mockCountryBase.shortTermCoverAvailabilityDesc);
-    mapped.canApplyForInsuranceOffline = canApplyOffline(mockCountryBase.shortTermCoverAvailabilityDesc);
+    mapped.canApplyForInsuranceOffline = applyForInsuranceOffline(mockCountryBase.shortTermCoverAvailabilityDesc);
 
     mapped.noInsuranceSupport = !mapped.canApplyForInsuranceOnline && !mapped.canApplyForInsuranceOffline;
 

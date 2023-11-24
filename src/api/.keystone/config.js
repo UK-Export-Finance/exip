@@ -4879,14 +4879,33 @@ var cannotGetAQuote = (country) => {
 var cannot_get_a_quote_default = cannotGetAQuote;
 
 // helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/index.ts
-var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
-var canApplyForInsuranceOnline = (originalShortTermCover) => {
-  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.YES) {
-    return true;
+var {
+  CIS: {
+    SHORT_TERM_COVER_AVAILABLE: { YES, ILC, CILC, REFER }
   }
-  return false;
+} = EXTERNAL_API_DEFINITIONS;
+var canApplyForInsuranceOnline = (originalShortTermCover, riskCategory) => {
+  switch (originalShortTermCover) {
+    case (riskCategory && YES):
+      return true;
+    case (riskCategory && ILC):
+      return true;
+    case (riskCategory && CILC):
+      return true;
+    case (riskCategory && REFER):
+      return true;
+    case (riskCategory && "TBC-UNLISTED"):
+      return true;
+    default:
+      return false;
+  }
 };
 var can_apply_for_insurance_online_default = canApplyForInsuranceOnline;
+
+// helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-offline/index.ts
+var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
+var canApplyForInsuranceOffline = (originalShortTermCover) => originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.NO;
+var can_apply_for_insurance_offline_default = canApplyForInsuranceOffline;
 
 // helpers/map-CIS-countries/map-CIS-country/can-apply-offline/index.ts
 var { CIS: CIS4 } = EXTERNAL_API_DEFINITIONS;
@@ -4917,8 +4936,8 @@ var mapCisCountry = (country) => {
   mapped.canGetAQuoteOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
   mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default(mapped);
   mapped.cannotGetAQuote = cannot_get_a_quote_default(mapped);
-  mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(country.shortTermCoverAvailabilityDesc);
-  mapped.canApplyForInsuranceOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
+  mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(country.shortTermCoverAvailabilityDesc, mapped.riskCategory);
+  mapped.canApplyForInsuranceOffline = can_apply_for_insurance_offline_default(country.shortTermCoverAvailabilityDesc);
   mapped.noInsuranceSupport = !mapped.canApplyForInsuranceOnline && !mapped.canApplyForInsuranceOffline;
   return mapped;
 };

@@ -11,7 +11,7 @@ const {
 const mockRiskCategory = VERY_HIGH;
 
 describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online', () => {
-  describe(`when a country has a riskCategory and originalShortTermCover is ${YES}`, () => {
+  describe(`when a country has a riskCategory and originalShortTermCover is '${YES}'`, () => {
     it('should return true', () => {
       const result = canApplyForInsuranceOnline(YES, mockRiskCategory);
 
@@ -19,7 +19,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-onli
     });
   });
 
-  describe(`when a country has a riskCategory and originalShortTermCover is ${ILC}`, () => {
+  describe(`when a country has a riskCategory and originalShortTermCover is '${ILC}'`, () => {
     it('should return true', () => {
       const result = canApplyForInsuranceOnline(ILC, mockRiskCategory);
 
@@ -27,7 +27,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-onli
     });
   });
 
-  describe(`when a country has a riskCategory and originalShortTermCover is ${CILC}`, () => {
+  describe(`when a country has a riskCategory and originalShortTermCover is '${CILC}'`, () => {
     it('should return true', () => {
       const result = canApplyForInsuranceOnline(CILC, mockRiskCategory);
 
@@ -35,7 +35,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-onli
     });
   });
 
-  describe(`when a country has a riskCategory and originalShortTermCover is ${REFER}`, () => {
+  describe(`when a country has a riskCategory and originalShortTermCover is '${REFER}'`, () => {
     it('should return true', () => {
       const result = canApplyForInsuranceOnline(REFER, mockRiskCategory);
 
@@ -43,7 +43,7 @@ describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-onli
     });
   });
 
-  describe('when a country has a riskCategory and originalShortTermCover is TBC-UNLISTED', () => {
+  describe('when a country has a riskCategory and originalShortTermCover is `TBC-UNLISTED`', () => {
     it('should return true', () => {
       const result = canApplyForInsuranceOnline('TBC-UNLISTED', mockRiskCategory);
 
