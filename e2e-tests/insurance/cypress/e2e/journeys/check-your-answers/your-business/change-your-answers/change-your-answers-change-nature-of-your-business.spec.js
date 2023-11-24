@@ -49,9 +49,6 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
 
       task.link().click();
 
-      // To get past "Eligibility" check your answers page
-      cy.submitCheckYourAnswersForm();
-
       // To get past "Policy" check your answers page
       cy.submitCheckYourAnswersForm();
 

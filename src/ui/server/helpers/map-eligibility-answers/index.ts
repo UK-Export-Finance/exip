@@ -9,7 +9,7 @@ const {
 
 const mapEligibilityAnswers = (answers: SubmittedDataInsuranceEligibility) => {
   if (answers.buyerCountry) {
-    const { buyerCountry, totalContractValue, coverPeriod, ...otherAnswers } = answers;
+    const { buyerCountry, totalContractValue, coverPeriod, hasReviewedEligibility, ...otherAnswers } = answers;
 
     const mapped = {
       ...otherAnswers,

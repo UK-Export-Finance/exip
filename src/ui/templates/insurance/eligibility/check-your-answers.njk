@@ -1,6 +1,8 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% import '../../components/submit-button.njk' as submitButton %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -16,22 +18,35 @@
     }
   }) }}
 
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
 
-  <form method="POST" id="form" novalidate>
-    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+      <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+      <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-three-quarters-from-desktop">
+      {{ govukSummaryList({
+        rows: SUMMARY_LIST
+      }) }}
 
-        <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
-        <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+      {{ govukWarningText({
+        text: CONTENT_STRINGS.WARNING,
+        iconFallbackText: "Warning",
+        attributes: {
+          "data-cy": 'warning'
+        }
+      }) }}
+
+      <p class="govuk-body" data-cy="body">{{ CONTENT_STRINGS.CANNOT_CHANGE }}</p>
+
+      <form method="POST" id="form" novalidate>
+        <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
         {{ submitButton.render({
           text: CONTENT_STRINGS.BUTTONS.CONFIRM_AND_CONTINUE
         }) }}
 
-      </div>
+      </form>
     </div>
-  </form>
+  </div>
 
 {% endblock %}

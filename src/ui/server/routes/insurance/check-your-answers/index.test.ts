@@ -1,7 +1,5 @@
 import { get, post } from '../../../test-mocks/mock-router';
 import { ROUTES } from '../../../constants';
-import { get as getCheckYourAnswersEligibility, post as postCheckYourAnswersEligibility } from '../../../controllers/insurance/check-your-answers/eligibility';
-import { get as getStartNewApplication } from '../../../controllers/insurance/check-your-answers/start-new-application';
 import { get as getCheckYourAnswersPolicy, post as postCheckYourAnswersPolicy } from '../../../controllers/insurance/check-your-answers/policy';
 import {
   get as getCheckYourAnswersYourBusiness,
@@ -20,13 +18,8 @@ describe('routes/insurance/check-your-answers', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(5);
-    expect(post).toHaveBeenCalledTimes(7);
-
-    expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY}`, getCheckYourAnswersEligibility);
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.ELIGIBILITY}`, postCheckYourAnswersEligibility);
-
-    expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.START_NEW_APPLICATION}`, getStartNewApplication);
+    expect(get).toHaveBeenCalledTimes(3);
+    expect(post).toHaveBeenCalledTimes(6);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, getCheckYourAnswersPolicy);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${ROUTES.INSURANCE.CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, postCheckYourAnswersPolicy);

@@ -43,9 +43,6 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
 
       task.link().click();
 
-      // To get past "Eligibility" check your answers page
-      cy.submitCheckYourAnswersForm();
-
       checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`;
       cy.assertUrl(checkYourAnswersUrl);
     });
