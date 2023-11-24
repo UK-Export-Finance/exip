@@ -6,7 +6,7 @@ import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import { mockApplication } from '../../../../test-mocks';
 import mapTotalContractValueField from '../../../mappings/map-total-contract-value';
-import mapLengthOfPolicyField from '../../../mappings/map-length-of-policy';
+import mapLengthOfPolicyField from '../../../mappings/map-cover-period';
 
 const { ELIGIBILITY: FIELD_IDS, COMPANIES_HOUSE } = INSURANCE_FIELD_IDS;
 

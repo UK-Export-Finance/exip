@@ -20,7 +20,7 @@ const {
 /**
  * List of field IDs that are not relevant.
  */
-export const irrelevantFields = [BUYER_COUNTRY_ISO_CODE, COVER_PERIOD_ID, HAVE_AN_ACCOUNT, TOTAL_CONTRACT_VALUE_ID, HAS_REVIEWED_ELIGIBILITY];
+export const irrelevantFields = [BUYER_COUNTRY_ISO_CODE, COVER_PERIOD_ID, HAVE_AN_ACCOUNT, TOTAL_CONTRACT_VALUE_ID];
 
 /**
  * Required fields for the insurance - eligibility section

@@ -47,7 +47,7 @@ export const mockOwner = {
 export const mockCompany = {
   id: 'clcyyopn40148m8noyar9wxrn',
   companyName: 'Mock company',
-  companyNumber: '0123456',
+  companyNumber: '123456',
   companyWebsite: '',
   hasDifferentTradingName: false,
   hasDifferentTradingAddress: false,

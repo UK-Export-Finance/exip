@@ -4,7 +4,7 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import mapTotalContractValueField from '../../../mappings/map-total-contract-value';
-import mapLengthOfPolicyField from '../../../mappings/map-length-of-policy';
+import mapLengthOfPolicyField from '../../../mappings/map-cover-period';
 import { Company, InsuranceEligibility, SummaryListItemData } from '../../../../../types';
 
 const { ELIGIBILITY: FIELD_IDS, COMPANIES_HOUSE } = INSURANCE_FIELD_IDS;

@@ -1,4 +1,4 @@
-import mapLengthOfPolicyField from './map-length-of-policy';
+import mapLengthOfPolicyField from './map-cover-period';
 import { COVER_PERIOD } from '../../constants';
 import { DEFAULT } from '../../content-strings';
 
@@ -26,10 +26,8 @@ describe('server/helpers/mappings/map-length-of-policy', () => {
   });
 
   describe('when answer is undefined', () => {
-    const value = undefined;
-
     it(`should return "${DEFAULT.EMPTY}"`, () => {
-      const response = mapLengthOfPolicyField(value);
+      const response = mapLengthOfPolicyField();
 
       expect(response).toEqual(DEFAULT.EMPTY);
     });

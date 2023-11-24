@@ -18,6 +18,7 @@ export const INSURANCE_FIELD_IDS = {
     COVER_PERIOD_ID: 'coverPeriodId',
     HAS_END_BUYER: 'hasEndBuyer',
     HAVE_AN_ACCOUNT: 'haveAnAccount',
+    HAS_REVIEWED_ELIGIBILITY: 'hasReviewedEligibility',
   },
   ...SHARED_FIELD_IDS,
   SUBMISSION_DEADLINE: 'submissionDeadline',

@@ -4,12 +4,12 @@ import { COVER_PERIOD } from '../../constants';
 const { LESS_THAN_2_YEARS, MORE_THAN_2_YEARS } = COVER_PERIOD;
 
 /**
- * mapLengthOfPolicyField
- * maps length of policy based on database id
+ * mapCoverPeriodField
+ * maps cover period based on database id
  * @param {Number} answer
  * @returns {String} Less or more than 2 years value
  */
-const mapLengthOfPolicyField = (answer?: number) => {
+const mapCoverPeriodField = (answer?: number) => {
   if (answer === LESS_THAN_2_YEARS.DB_ID) {
     return LESS_THAN_2_YEARS.VALUE;
   }
@@ -21,4 +21,4 @@ const mapLengthOfPolicyField = (answer?: number) => {
   return DEFAULT.EMPTY;
 };
 
-export default mapLengthOfPolicyField;
+export default mapCoverPeriodField;
