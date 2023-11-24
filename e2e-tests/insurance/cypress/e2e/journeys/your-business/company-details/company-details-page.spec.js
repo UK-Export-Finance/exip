@@ -1,6 +1,7 @@
 import { companyDetails } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
 import {
+  body,
   field,
   saveAndBackButton,
   yesRadioInput,
@@ -78,6 +79,10 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
 
     it('renders a heading caption', () => {
       cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
+
+    it('should render body text', () => {
+      cy.checkText(body(), CONTENT_STRINGS.BODY);
     });
 
     describe('companies house summary list', () => {
