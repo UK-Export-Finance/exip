@@ -7,7 +7,7 @@ import {
 } from '../constants';
 import { COMPANIES_HOUSE_NUMBER } from '../constants/examples';
 import { GBP_CURRENCY_CODE } from './currencies';
-import mockCountries from './countries';
+import { COUNTRY_APPLICATION_SUPPORT } from './countries';
 import mockCompanies from './companies';
 
 const {
@@ -98,7 +98,7 @@ export const endDate = new Date(date.setMonth((date.getMonth() + 6))); // Add 6 
 
 const application = {
   ELIGIBILITY: {
-    buyerCountryIsoCode: mockCountries[1].isoCode,
+    buyerCountryIsoCode: COUNTRY_APPLICATION_SUPPORT.ONLINE.ISO_CODE,
     [COVER_PERIOD_ID]: COVER_PERIOD_CONSTANTS.LESS_THAN_2_YEARS.DB_ID,
     [HAS_COMPANIES_HOUSE_NUMBER]: true,
     [HAS_END_BUYER]: true,
@@ -130,7 +130,7 @@ const application = {
   },
   EXPORT_CONTRACT: {
     [DESCRIPTION]: 'Mock description',
-    [FINAL_DESTINATION]: mockCountries[1].isoCode,
+    [FINAL_DESTINATION]: COUNTRY_APPLICATION_SUPPORT.ONLINE.ISO_CODE,
   },
   EXPORTER_BUSINESS: {
     [GOODS_OR_SERVICES]: 'abc',
@@ -153,7 +153,7 @@ const application = {
   BUYER: {
     [COMPANY_OR_ORGANISATION_NAME]: 'Test name',
     [ADDRESS]: 'Test address',
-    [COUNTRY]: mockCountries[1].name,
+    [COUNTRY]: COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME,
     [REGISTRATION_NUMBER]: '12345',
     [WEBSITE]: WEBSITE_EXAMPLES.VALID,
     [FIRST_NAME]: 'Bob',
@@ -172,8 +172,6 @@ const application = {
   },
 };
 
-export const country = {
-  ...mockCountries[1],
-};
+export const country = COUNTRY_APPLICATION_SUPPORT.ONLINE;
 
 export default application;

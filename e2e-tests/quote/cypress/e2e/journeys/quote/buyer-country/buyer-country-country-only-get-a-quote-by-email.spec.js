@@ -1,7 +1,7 @@
 import { backLink, countryInput, submitButton } from '../../../../../../pages/shared';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
-import { COUNTRY_SUPPORTRED_BY_EMAIL } from '../../../../../../fixtures/countries';
+import { COUNTRY_QUOTE_SUPPORT } from '../../../../../../fixtures/countries';
 
 const {
   QUOTE: {
@@ -21,7 +21,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
     cy.navigateToUrl(url);
     cy.assertUrl(url);
 
-    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_SUPPORTRED_BY_EMAIL.name);
+    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_QUOTE_SUPPORT.BY_EMAIL.NAME);
 
     const results = countryInput.field(FIELD_ID).results();
     results.first().click();
@@ -46,7 +46,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
   it('should prepopulate the field when going back to the page via back link', () => {
     cy.clickBackLink();
 
-    const expectedValue = COUNTRY_SUPPORTRED_BY_EMAIL.name;
+    const expectedValue = COUNTRY_QUOTE_SUPPORT.BY_EMAIL.NAME;
 
     cy.checkValue(countryInput.field(FIELD_ID), expectedValue);
 

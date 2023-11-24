@@ -1,7 +1,7 @@
 import { backLink, countryInput, submitButton } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { FIELD_IDS } from '../../../../../../constants';
-import { COUNTRY_SUPPORTRED_BY_EMAIL } from '../../../../../../fixtures/countries';
+import { COUNTRY_APPLICATION_SUPPORT } from '../../../../../../fixtures/countries';
 import { LINKS } from '../../../../../../content-strings';
 
 const {
@@ -33,7 +33,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
 
     cy.navigateToUrl(buyerCountryUrl);
 
-    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_SUPPORTRED_BY_EMAIL.name);
+    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_APPLICATION_SUPPORT.OFFLINE.NAME);
 
     const results = countryInput.field(FIELD_ID).results();
     results.first().click();
@@ -48,7 +48,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
   });
 
   it('renders a back link with correct url', () => {
-    const expectedHref = `${Cypress.config('baseUrl')}${BUYER_COUNTRY}`;
+    const expectedHref = `${baseUrl}${BUYER_COUNTRY}`;
 
     cy.checkLink(
       backLink(),
@@ -60,7 +60,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
   it('should prepopulate the field when going back to the page via back link', () => {
     cy.clickBackLink();
 
-    const expectedValue = COUNTRY_SUPPORTRED_BY_EMAIL.name;
+    const expectedValue = COUNTRY_APPLICATION_SUPPORT.OFFLINE.NAME;
 
     cy.checkValue(countryInput.field(FIELD_ID), expectedValue);
 

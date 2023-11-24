@@ -3,8 +3,8 @@ import { FIELD_IDS, FIELD_VALUES } from '../../constants';
 import { POLICY_FIELDS as FIELDS } from '../../content-strings/fields/insurance/policy';
 import account from '../../fixtures/account';
 import application from '../../fixtures/application';
-import countries from '../../fixtures/countries';
-import currencies from '../../fixtures/currencies';
+import COUNTRIES from '../../fixtures/countries';
+import CURRENCIES from '../../fixtures/currencies';
 import formatCurrency from '../../helpers/format-currency';
 import { createTimestampFromNumbers, formatDate } from '../../helpers/date';
 
@@ -58,7 +58,7 @@ const checkPolicySummaryList = ({
     const fieldId = POLICY_CURRENCY_CODE;
     const expectedKey = FIELDS.CONTRACT_POLICY[fieldId].SUMMARY.TITLE;
 
-    const currency = currencies.find((c) => c.isoCode === application.POLICY[fieldId]);
+    const currency = CURRENCIES.find((c) => c.isoCode === application.POLICY[fieldId]);
 
     const expectedValue = currency.name;
 
@@ -80,7 +80,7 @@ const checkPolicySummaryList = ({
     const fieldId = FINAL_DESTINATION;
     const expectedKey = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].SUMMARY.TITLE;
 
-    const country = countries.find((c) => c.isoCode === application.EXPORT_CONTRACT[fieldId]);
+    const country = COUNTRIES.find((c) => c.ISO_CODE === application.EXPORT_CONTRACT[fieldId]);
 
     const expectedValue = country.name;
 
