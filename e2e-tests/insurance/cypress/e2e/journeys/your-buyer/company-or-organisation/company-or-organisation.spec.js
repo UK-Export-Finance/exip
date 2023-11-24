@@ -86,7 +86,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       const field = countryInput.field(fieldId);
 
       cy.checkText(field.heading(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
-      cy.checkText(companyOrOrganisationPage[fieldId](), country.name);
+      cy.checkText(companyOrOrganisationPage[fieldId](), country.NAME);
     });
 
     it(`renders an ${NAME} label, and input`, () => {
