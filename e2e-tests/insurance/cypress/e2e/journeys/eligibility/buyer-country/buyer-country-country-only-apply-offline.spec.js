@@ -12,6 +12,8 @@ const {
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
+const COUNTRY_NAME = COUNTRY_APPLICATION_SUPPORT.OFFLINE.NAME;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Buyer country page - as an exporter, I want to check if UKEF issue credit insurance cover for where my buyer is based - submit country that can only apply offline/via a physical form', () => {
@@ -33,7 +35,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
 
     cy.navigateToUrl(buyerCountryUrl);
 
-    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_APPLICATION_SUPPORT.OFFLINE.NAME);
+    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_NAME);
 
     const results = countryInput.field(FIELD_ID).results();
     results.first().click();
@@ -60,7 +62,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
   it('should prepopulate the field when going back to the page via back link', () => {
     cy.clickBackLink();
 
-    const expectedValue = COUNTRY_APPLICATION_SUPPORT.OFFLINE.NAME;
+    const expectedValue = COUNTRY_NAME;
 
     cy.checkValue(countryInput.field(FIELD_ID), expectedValue);
 

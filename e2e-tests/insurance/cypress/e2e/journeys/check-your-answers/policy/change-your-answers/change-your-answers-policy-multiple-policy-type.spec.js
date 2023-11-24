@@ -33,6 +33,8 @@ const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
+const NEW_CURRENCY_INPUT = CURRENCIES[3].isoCode;
+
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
   checkYourAnswersRoute: TYPE_OF_POLICY,
@@ -283,7 +285,7 @@ context('Insurance - Change your answers - Policy - multiple contract policy - S
           cy.navigateToUrl(url);
           fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-          fieldVariables.newValueInput = CURRENCIES[3].isoCode;
+          fieldVariables.newValueInput = NEW_CURRENCY_INPUT;
           cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
       });
@@ -294,7 +296,7 @@ context('Insurance - Change your answers - Policy - multiple contract policy - S
 
           summaryList.field(fieldId).changeLink().click();
 
-          fieldVariables.newValueInput = CURRENCIES[3].isoCode;
+          fieldVariables.newValueInput = NEW_CURRENCY_INPUT;
           cy.changeAnswerSelectField(fieldVariables, policyCurrencyCodeFormField.input());
         });
 
