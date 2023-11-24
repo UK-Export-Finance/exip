@@ -25,7 +25,7 @@ export const COMPANIES_HOUSE_NUMBER = {
 export const COMPANY_DETAILS = {
   ...SHARED,
   PAGE_TITLE: 'Your company details',
-  TABLE_HEADING: 'Your company',
+  BODY: 'This information comes from Companies House.',
 };
 
 export const COMPANIES_HOUSE_UNAVAILABLE = {

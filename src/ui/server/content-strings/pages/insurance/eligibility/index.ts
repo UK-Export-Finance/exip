@@ -33,7 +33,7 @@ const LONG_TERM_COVER = {
       INTRO: "You can still apply, but you'll need to do so through",
       LINK: {
         TEXT: 'this PDF form instead',
-        HREF: LINKS.EXTERNAL.NBI_FORM,
+        HREF: LINKS.EXTERNAL.PROPOSAL_FORM,
       },
     },
     CONTACT_EFM: {
