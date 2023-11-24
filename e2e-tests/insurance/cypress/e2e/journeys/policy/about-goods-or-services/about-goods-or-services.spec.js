@@ -16,7 +16,7 @@ import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
-import countries from '../../../../../../fixtures/countries';
+import COUNTRIES from '../../../../../../fixtures/countries';
 import checkAutocompleteInput from '../../../../../../commands/shared-commands/assertions/check-autocomplete-input';
 
 const { taskList } = partials.insurancePartials;
@@ -140,7 +140,7 @@ context('Insurance - Policy - About goods or services page - As an exporter, I w
       });
 
       it('allows user to remove a selected country and search again', () => {
-        checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(field, countries[0].name, countries[1].name);
+        checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(field, COUNTRIES[0].NAME, COUNTRIES[1].NAME);
       });
     });
 
@@ -182,8 +182,8 @@ context('Insurance - Policy - About goods or services page - As an exporter, I w
 
         aboutGoodsOrServicesPage[DESCRIPTION].textarea().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
 
-        const country = countries.find((c) => c.isoCode === application.EXPORT_CONTRACT[FINAL_DESTINATION]);
-        cy.checkText(countryInput.field(FINAL_DESTINATION).results(), country.name);
+        const country = COUNTRIES.find((c) => c.ISO_CODE === application.EXPORT_CONTRACT[FINAL_DESTINATION]);
+        cy.checkText(countryInput.field(FINAL_DESTINATION).results(), country.NAME);
       });
     });
 

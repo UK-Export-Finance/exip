@@ -7,6 +7,7 @@ import {
 import { PAGES, LINKS } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { FIELD_IDS } from '../../../../../constants';
+import { COUNTRY_APPLICATION_SUPPORT } from '../../../../../fixtures/countries';
 
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 
@@ -17,7 +18,7 @@ const {
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
-const COUNTRY_NAME_UNSUPPORTED = 'France';
+const COUNTRY_NAME_UNSUPPORTED = COUNTRY_APPLICATION_SUPPORT.UNSUPPORTED.NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 

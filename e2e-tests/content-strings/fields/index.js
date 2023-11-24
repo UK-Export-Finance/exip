@@ -25,7 +25,7 @@ export const FIELDS = {
     },
   },
   [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: {
-    HINT: 'Cover is based on the country your buyer is located in, not the destination of your goods or services.',
+    HINT: "Credit insurance protects in the event your buyer doesn't pay you. That means that cover is based on the country your buyer is based in, not the destination of the goods or services.",
     SUMMARY: {
       TITLE: 'Buyer is based in',
     },

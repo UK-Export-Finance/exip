@@ -24,7 +24,7 @@ const checkYourAnswersEligibilitySummaryList = ({
     const fieldId = BUYER_COUNTRY;
 
     const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = country.name;
+    const expectedValue = country.NAME;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },

@@ -3,7 +3,7 @@ import {
 } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
-import { COUNTRY_UNSUPPORTRED } from '../../../../../../fixtures/countries';
+import { COUNTRY_QUOTE_SUPPORT } from '../../../../../../fixtures/countries';
 
 const CONTENT_STRINGS = PAGES.CANNOT_APPLY;
 
@@ -12,6 +12,8 @@ const {
 } = ROUTES;
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
+
+const NEW_COUNTRY_INPUT = COUNTRY_QUOTE_SUPPORT.UNSUPPORTED.NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -28,7 +30,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
 
     cy.navigateToUrl(url);
 
-    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_UNSUPPORTRED.name);
+    cy.keyboardInput(countryInput.field(FIELD_ID).input(), NEW_COUNTRY_INPUT);
 
     const results = countryInput.field(FIELD_ID).results();
     results.first().click();
@@ -52,14 +54,14 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
 
   it('renders a specific reason', () => {
     const { REASON } = CONTENT_STRINGS;
-    const expected = `${REASON.INTRO} ${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${COUNTRY_UNSUPPORTRED.name}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
+    const expected = `${REASON.INTRO} ${REASON.UNSUPPORTED_BUYER_COUNTRY_1} ${NEW_COUNTRY_INPUT}, ${REASON.UNSUPPORTED_BUYER_COUNTRY_2}`;
     cy.checkText(cannotApplyPage.reason(), expected);
   });
 
   it('should prepopulate the field when going back to the page via back link', () => {
     cy.clickBackLink();
 
-    const expectedValue = COUNTRY_UNSUPPORTRED.name;
+    const expectedValue = NEW_COUNTRY_INPUT;
 
     cy.checkValue(countryInput.field(FIELD_ID), expectedValue);
 

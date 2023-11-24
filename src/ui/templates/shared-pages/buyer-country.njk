@@ -31,22 +31,27 @@
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     <input type="hidden" name="{{ HIDDEN_FIELD_ID }}" id="{{ HIDDEN_FIELD_ID }}" value="{{ submittedValues[HIDDEN_FIELD_ID].name }}">
 
-    {{ govukLabel({
-      for: FIELD_ID_COUNTRY,
-      classes: "govuk-heading-l",
-      html: "<h1 class='govuk-heading-l' id='heading'><label for='" + FIELD_ID + "'>" + CONTENT_STRINGS.PAGE_TITLE + "</label></h1>",
-      attributes: {
-        "data-cy": DATA_CY.HEADING
-      }
-    }) }}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
 
-    {{ govukHint({
-      id: FIELD_ID + "-hint",
-      text: FIELD_HINT,
-      attributes: {
-        "data-cy": FIELD_ID + "-hint"
-      }
-    }) }}
+        {{ govukLabel({
+          for: FIELD_ID_COUNTRY,
+          classes: "govuk-heading-l",
+          html: "<h1 class='govuk-heading-l' id='heading'><label for='" + FIELD_ID + "'>" + CONTENT_STRINGS.PAGE_TITLE + "</label></h1>",
+          attributes: {
+            "data-cy": DATA_CY.HEADING
+          }
+        }) }}
+
+        {{ govukHint({
+          id: FIELD_ID + "-hint",
+          text: FIELD_HINT,
+          attributes: {
+            "data-cy": FIELD_ID + "-hint"
+          }
+        }) }}
+      </div>
+    </div>
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-half-from-desktop">

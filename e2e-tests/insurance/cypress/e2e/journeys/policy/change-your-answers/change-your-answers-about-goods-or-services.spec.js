@@ -4,7 +4,7 @@ import partials from '../../../../../../partials';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
-import countries from '../../../../../../fixtures/countries';
+import COUNTRIES from '../../../../../../fixtures/countries';
 
 const {
   POLICY: {
@@ -23,6 +23,8 @@ const {
 
 const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.policy;
+
+const NEW_COUNTRY_INPUT = COUNTRIES[0].NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -103,14 +105,12 @@ context('Insurance - Policy - Change your answers - About goods or services- As 
     });
 
     describe('form submission with a new answer', () => {
-      const newAnswer = countries[0].name;
-
       beforeEach(() => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(countryInput.field(fieldId).input(), newAnswer);
+        cy.keyboardInput(countryInput.field(fieldId).input(), NEW_COUNTRY_INPUT);
 
         submitButton().click();
       });
@@ -120,7 +120,7 @@ context('Insurance - Policy - Change your answers - About goods or services- As 
       });
 
       it('should render the new answer', () => {
-        const expected = countries[0].name;
+        const expected = NEW_COUNTRY_INPUT;
 
         cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
       });
