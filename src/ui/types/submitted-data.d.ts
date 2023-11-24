@@ -26,6 +26,7 @@ interface InsuranceEligibilityCore extends SharedEligibility {
   totalContractValue?: number;
   coverPeriod?: number;
   hasEndBuyer?: boolean;
+  hasReviewedEligibility?: boolean;
 }
 
 interface InsuranceEligibility extends InsuranceEligibilityCore {

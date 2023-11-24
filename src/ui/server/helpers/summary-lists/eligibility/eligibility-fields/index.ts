@@ -4,19 +4,23 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import mapTotalContractValueField from '../../../mappings/map-total-contract-value';
-import { InsuranceEligibility, SummaryListItemData } from '../../../../../types';
+import mapLengthOfPolicyField from '../../../mappings/map-cover-period';
+import { Company, InsuranceEligibility, SummaryListItemData } from '../../../../../types';
 
-const { ELIGIBILITY: FIELD_IDS } = INSURANCE_FIELD_IDS;
+const { ELIGIBILITY: FIELD_IDS, COMPANIES_HOUSE } = INSURANCE_FIELD_IDS;
 
 const {
   COVER_PERIOD: COVER_PERIOD_ELIGIBILITY,
   COVER_PERIOD,
-  COMPANIES_HOUSE_NUMBER,
+  HAS_COMPANIES_HOUSE_NUMBER,
   BUYER_COUNTRY,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_EXPORTER_LOCATION,
   TOTAL_CONTRACT_VALUE,
+  HAS_END_BUYER,
 } = FIELD_IDS;
+
+const { COMPANY_NUMBER, COMPANY_NAME } = COMPANIES_HOUSE;
 
 /**
  * generateEligibilityFields
@@ -25,7 +29,45 @@ const {
  * @returns {Object} All eligibility fields and values in an object structure for GOVUK summary list structure
  */
 const generateEligibilityFields = (answers: InsuranceEligibility) => {
+  let company = {} as Company;
+
+  if (answers.company) {
+    ({ company } = answers);
+  }
+
   const fields = [
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS_ELIGIBILITY, VALID_EXPORTER_LOCATION),
+        data: answers,
+        renderChangeLink: false,
+      },
+      mapYesNoField(answers[VALID_EXPORTER_LOCATION]),
+    ),
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS_ELIGIBILITY, HAS_COMPANIES_HOUSE_NUMBER),
+        data: answers,
+        renderChangeLink: false,
+      },
+      mapYesNoField(answers[HAS_COMPANIES_HOUSE_NUMBER]),
+    ),
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS_ELIGIBILITY, COMPANY_NUMBER),
+        data: answers,
+        renderChangeLink: false,
+      },
+      company[COMPANY_NUMBER],
+    ),
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS_ELIGIBILITY, COMPANY_NAME),
+        data: answers,
+        renderChangeLink: false,
+      },
+      company[COMPANY_NAME],
+    ),
     fieldGroupItem(
       {
         field: getFieldById(FIELDS_ELIGIBILITY, BUYER_COUNTRY),
@@ -36,11 +78,19 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, VALID_EXPORTER_LOCATION),
+        field: getFieldById(FIELDS_ELIGIBILITY, TOTAL_CONTRACT_VALUE),
         data: answers,
         renderChangeLink: false,
       },
-      mapYesNoField(answers[VALID_EXPORTER_LOCATION]),
+      mapTotalContractValueField(answers[TOTAL_CONTRACT_VALUE]),
+    ),
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS_ELIGIBILITY, COVER_PERIOD),
+        data: answers,
+        renderChangeLink: false,
+      },
+      mapLengthOfPolicyField(answers[COVER_PERIOD_ELIGIBILITY]),
     ),
     fieldGroupItem(
       {
@@ -52,27 +102,11 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS_ELIGIBILITY, TOTAL_CONTRACT_VALUE),
+        field: getFieldById(FIELDS_ELIGIBILITY, HAS_END_BUYER),
         data: answers,
         renderChangeLink: false,
       },
-      mapTotalContractValueField(answers[TOTAL_CONTRACT_VALUE].valueId),
-    ),
-    fieldGroupItem(
-      {
-        field: getFieldById(FIELDS_ELIGIBILITY, COVER_PERIOD),
-        data: answers,
-        renderChangeLink: false,
-      },
-      mapYesNoField(answers[COVER_PERIOD_ELIGIBILITY].valueId === 'TODO'),
-    ),
-    fieldGroupItem(
-      {
-        field: getFieldById(FIELDS_ELIGIBILITY, COMPANIES_HOUSE_NUMBER),
-        data: answers,
-        renderChangeLink: false,
-      },
-      mapYesNoField(answers[COMPANIES_HOUSE_NUMBER]),
+      mapYesNoField(answers[HAS_END_BUYER]),
     ),
   ] as Array<SummaryListItemData>;
 

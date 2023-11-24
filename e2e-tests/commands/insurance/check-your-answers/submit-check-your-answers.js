@@ -7,9 +7,6 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 export default () => {
   task.link().click();
 
-  // "Eligibility" check your answers
-  cy.submitCheckYourAnswersForm();
-
   // "Policy" check your answers
   cy.submitCheckYourAnswersForm();
 

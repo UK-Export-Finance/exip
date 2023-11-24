@@ -12,7 +12,6 @@ const {
   ROOT: INSURANCE_ROOT,
   ALL_SECTIONS,
   CHECK_YOUR_ANSWERS: {
-    ELIGIBILITY,
     TYPE_OF_POLICY,
     YOUR_BUSINESS,
   },
@@ -39,9 +38,6 @@ context('Insurance - Check your answers - Policy - I want to confirm my selectio
 
       task.link().click();
 
-      // To get past "Eligibility" check your answers page
-      cy.submitCheckYourAnswersForm();
-
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
       allSectionsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
@@ -62,7 +58,7 @@ context('Insurance - Check your answers - Policy - I want to confirm my selectio
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${ELIGIBILITY}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
       submitButtonCopy: BUTTONS.CONFIRM_AND_CONTINUE,
     });
   });

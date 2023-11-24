@@ -121,6 +121,9 @@ const CANNOT_APPLY_MULTIPLE_RISKS = {
 const CHECK_YOUR_ANSWERS = {
   HEADING_CAPTION: 'Eligibility',
   PAGE_TITLE: 'Check your answers',
+  WARNING: 'Check your answers carefully',
+  CANNOT_CHANGE:
+    "You cannot change your responses to the eligibility questions once you've submitted them. If you want to change them after this point, you will have to start again.",
 };
 
 const ELIGIBLE_TO_APPLY_ONLINE = {

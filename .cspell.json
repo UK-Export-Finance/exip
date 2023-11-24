@@ -24,6 +24,7 @@
         "**/src/api/test-mocks/mock-declarations.ts",
         "**/src/ui/server/test-mocks/mock-declarations.ts",
         "**/src/ui/server/test-mocks/mock-applications.ts",
+        "**/src/ui/server/test-mocks/mock-eligibility.ts",
         "**/server/test-mocks/mock-account.ts",
         "**/src/api/test-mocks/mock-buyer.ts"
     ],

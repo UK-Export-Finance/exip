@@ -15,7 +15,7 @@ describe('server/helpers/map-eligibility-answers', () => {
 
       const result = mapEligibilityAnswers(mockAnswers);
 
-      const { buyerCountry, totalContractValue, coverPeriod, ...otherAnswers } = mockAnswers;
+      const { buyerCountry, totalContractValue, coverPeriod, hasReviewedEligibility, ...otherAnswers } = mockAnswers;
 
       const expected = {
         ...otherAnswers,
