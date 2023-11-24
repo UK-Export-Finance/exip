@@ -2,7 +2,7 @@ import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
 
 const {
   CIS: {
-    SHORT_TERM_COVER_AVAILABLE: { YES, ILC, CILC, REFER },
+    SHORT_TERM_COVER_AVAILABLE: { YES, ILC, CILC, REFER, UNLISTED },
   },
 } = EXTERNAL_API_DEFINITIONS;
 
@@ -16,7 +16,7 @@ const {
  * - ILC
  * - CILC
  * - Refer
- * - Unlisted < TBC from BA.
+ * - Unlisted
  * @param {String} originalShortTermCover: Country original short term cover definition from CIS API.
  * @param {String} riskCategory: Country risk category.
  * @returns {Boolean}
@@ -35,7 +35,7 @@ export const canApplyForInsuranceOnline = (originalShortTermCover: string, riskC
     case riskCategory && REFER:
       return true;
 
-    case riskCategory && 'TBC-UNLISTED':
+    case riskCategory && UNLISTED:
       return true;
 
     default:

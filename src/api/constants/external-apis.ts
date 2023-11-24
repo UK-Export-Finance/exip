@@ -13,6 +13,7 @@ export const EXTERNAL_API_DEFINITIONS = {
       ILC: 'ILC Only',
       CILC: 'CILC Only',
       REFER: 'Refer',
+      UNLISTED: 'Unlisted',
     },
     NBI_ISSUE_AVAILABLE: {
       YES: 'Y',

@@ -3,7 +3,7 @@ import { EXTERNAL_API_DEFINITIONS } from '../../../../constants';
 
 const {
   CIS: {
-    SHORT_TERM_COVER_AVAILABLE: { YES, ILC, CILC, REFER },
+    SHORT_TERM_COVER_AVAILABLE: { YES, ILC, CILC, REFER, UNLISTED },
     RISK: { VERY_HIGH },
   },
 } = EXTERNAL_API_DEFINITIONS;
@@ -43,9 +43,9 @@ describe('helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-onli
     });
   });
 
-  describe('when a country has a riskCategory and originalShortTermCover is `TBC-UNLISTED`', () => {
+  describe(`when a country has a riskCategory and originalShortTermCover is ${UNLISTED}`, () => {
     it('should return true', () => {
-      const result = canApplyForInsuranceOnline('TBC-UNLISTED', mockRiskCategory);
+      const result = canApplyForInsuranceOnline(UNLISTED, mockRiskCategory);
 
       expect(result).toEqual(true);
     });
