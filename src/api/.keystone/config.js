@@ -466,7 +466,8 @@ var EXTERNAL_API_DEFINITIONS = {
       NO: "No",
       ILC: "ILC Only",
       CILC: "CILC Only",
-      REFER: "Refer"
+      REFER: "Refer",
+      UNLISTED: "Unlisted"
     },
     NBI_ISSUE_AVAILABLE: {
       YES: "Y",
@@ -4882,7 +4883,7 @@ var cannot_get_a_quote_default = cannotGetAQuote;
 // helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/index.ts
 var {
   CIS: {
-    SHORT_TERM_COVER_AVAILABLE: { YES, ILC, CILC, REFER }
+    SHORT_TERM_COVER_AVAILABLE: { YES, ILC, CILC, REFER, UNLISTED }
   }
 } = EXTERNAL_API_DEFINITIONS;
 var canApplyForInsuranceOnline = (originalShortTermCover, riskCategory) => {
@@ -4895,7 +4896,7 @@ var canApplyForInsuranceOnline = (originalShortTermCover, riskCategory) => {
       return true;
     case (riskCategory && REFER):
       return true;
-    case (riskCategory && "TBC-UNLISTED"):
+    case (riskCategory && UNLISTED):
       return true;
     default:
       return false;

@@ -82,7 +82,7 @@ const checkPolicySummaryList = ({
 
     const country = COUNTRIES.find((c) => c.ISO_CODE === application.EXPORT_CONTRACT[fieldId]);
 
-    const expectedValue = country.name;
+    const expectedValue = country.NAME;
 
     const expectedChangeLinkText = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].SUMMARY.TITLE;
 
