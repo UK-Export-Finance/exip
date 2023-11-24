@@ -109,7 +109,7 @@ context('Insurance - Policy - Change your answers - About goods or services- As 
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
-        
+
         cy.keyboardInput(countryInput.field(fieldId).input(), newAnswer);
 
         submitButton().click();
