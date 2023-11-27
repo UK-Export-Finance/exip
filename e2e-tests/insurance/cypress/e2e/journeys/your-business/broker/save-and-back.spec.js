@@ -47,7 +47,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
-      cy.completeAndSubmitCreditControlForm();
+      cy.completeAndSubmitCreditControlForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
@@ -105,7 +105,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       // submit turnover form
       submitButton().click();
       // submit credit control form
-      cy.completeAndSubmitCreditControlForm();
+      cy.completeAndSubmitCreditControlForm({});
 
       brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
       cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
@@ -153,7 +153,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
         // submit turnover form
         submitButton().click();
         // submit credit control form
-        cy.completeAndSubmitCreditControlForm();
+        cy.completeAndSubmitCreditControlForm({});
 
         brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
         cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
@@ -192,7 +192,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
         // submit turnover form
         submitButton().click();
         // submit credit control form
-        cy.completeAndSubmitCreditControlForm();
+        cy.completeAndSubmitCreditControlForm({});
 
         brokerPage[USING_BROKER].noRadioInput().should('be.checked');
       });

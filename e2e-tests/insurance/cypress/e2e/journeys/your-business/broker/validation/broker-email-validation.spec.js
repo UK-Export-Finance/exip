@@ -45,7 +45,7 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
-      cy.completeAndSubmitCreditControlForm();
+      cy.completeAndSubmitCreditControlForm({});
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
     });
