@@ -707,6 +707,7 @@ CREATE TABLE `Business` (
   `totalEmployeesUK` int DEFAULT NULL,
   `estimatedAnnualTurnover` int DEFAULT NULL,
   `exportsTurnoverPercentage` int DEFAULT NULL,
+  `hasCreditControlProcess` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Business_application_idx` (`application`),
   CONSTRAINT `Business_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
