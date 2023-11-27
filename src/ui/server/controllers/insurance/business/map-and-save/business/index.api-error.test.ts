@@ -9,7 +9,7 @@ const {
   },
 } = FIELD_IDS.INSURANCE;
 
-describe('controllers/insurance/business/map-and-save/-business - API error', () => {
+describe('controllers/insurance/business/map-and-save/business - API error', () => {
   jest.mock('../../save-data/business');
 
   const mockFormBody = {

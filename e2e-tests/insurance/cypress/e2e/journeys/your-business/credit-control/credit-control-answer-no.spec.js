@@ -11,7 +11,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your business - Credit control page - answer `no` - As an Exporter, I want to provide our late payment process  So that UKEF can have clarity on our credit control', () => {
+context('Insurance - Your business - Credit control page - answer `no` - As an Exporter, I want to provide our late payment process So that UKEF can have clarity on our credit control', () => {
   let referenceNumber;
   let url;
   let brokerUrl;
