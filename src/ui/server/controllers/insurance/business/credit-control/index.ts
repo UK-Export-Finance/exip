@@ -6,6 +6,7 @@ import singleInputPageVariables from '../../../../helpers/page-variables/single-
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import mapAndSave from '../map-and-save/business';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -61,7 +62,7 @@ export const get = (req: Request, res: Response) => {
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = (req: Request, res: Response) => {
+export const post = async (req: Request, res: Response) => {
   try {
     const { application } = res.locals;
 
@@ -85,6 +86,16 @@ export const post = (req: Request, res: Response) => {
         validationErrors,
         submittedValues: payload,
       });
+    }
+
+    /**
+     * No validation errors.
+     * call mapAndSave to call the API.
+     */
+    const saveResponse = await mapAndSave.business(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);

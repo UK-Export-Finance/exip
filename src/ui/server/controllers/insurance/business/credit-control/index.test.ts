@@ -7,6 +7,7 @@ import singleInputPageVariables from '../../../../helpers/page-variables/single-
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import mapAndSave from '../map-and-save/business';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -17,6 +18,8 @@ const {
   EXPORTER_BUSINESS: { BROKER_ROOT },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
+
+jest.mock('../map-and-save/business');
 
 describe('controllers/insurance/business/credit-control', () => {
   let req: Request;
@@ -84,17 +87,19 @@ describe('controllers/insurance/business/credit-control', () => {
   });
 
   describe('post', () => {
+    mapAndSave.business = jest.fn(() => Promise.resolve(true));
+
     const validBody = {
       [FIELD_ID]: 'true',
     };
 
     describe('when there are validation errors', () => {
-      it('should render template with validation errors and submitted values', () => {
+      it('should render template with validation errors and submitted values', async () => {
         req.body = {};
 
         const payload = constructPayload(req.body, [FIELD_ID]);
 
-        post(req, res);
+        await post(req, res);
 
         const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_ID].IS_EMPTY);
 
@@ -115,8 +120,18 @@ describe('controllers/insurance/business/credit-control', () => {
         req.body = validBody;
       });
 
-      it('should redirect to next page', () => {
-        post(req, res);
+      it('should call mapAndSave.business once with the data from constructPayload function and application', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        expect(mapAndSave.business).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.business).toHaveBeenCalledWith(payload, mockApplication);
+      });
+
+      it('should redirect to next page', async () => {
+        await post(req, res);
 
         const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_ROOT}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
@@ -128,8 +143,8 @@ describe('controllers/insurance/business/credit-control', () => {
         delete res.locals.application;
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
