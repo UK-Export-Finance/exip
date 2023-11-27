@@ -15,9 +15,9 @@ const {
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { CREDIT_CONTROL } = BUSINESS_FIELD_IDS;
+const { HAS_CREDIT_CONTROL } = BUSINESS_FIELD_IDS;
 
-export const FIELD_ID = CREDIT_CONTROL;
+export const FIELD_ID = HAS_CREDIT_CONTROL;
 
 export const TEMPLATE = TEMPLATES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL;
 
@@ -48,6 +48,7 @@ export const get = (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       userName: getUserNameFromSession(req.session.user),
+      application: application.business,
     });
   } catch (err) {
     console.error('Error getting credit control %O', err);

@@ -27,6 +27,8 @@
     }) }}
   {% endif %}
 
+  <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+
   <form method="POST" id="form" novalidate>
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
@@ -37,26 +39,28 @@
           fieldId: FIELD_ID,
           legendText: CONTENT_STRINGS.PAGE_TITLE,
           hintText: FIELD_HINT,
-          submittedAnswer: submittedValues[FIELD_ID],
+          submittedAnswer: application[FIELD_ID],
           errorMessage: validationErrors.errorList[FIELD_ID]
         }) }}
       </div>
     </div>
 
-    <div class="govuk-grid-column-three-quarters-from-desktop">
-      <div class="govuk-button-group">
-        {{ submitButton.render({
-          text: CONTENT_STRINGS.BUTTONS.CONTINUE
-        }) }}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="govuk-button-group">
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE
+          }) }}
 
-        {{ govukButton({
-          text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
-          classes: "govuk-button--secondary",
-          attributes: {
-            'data-cy': 'save-and-back-button',
-            'formaction': SAVE_AND_BACK_URL
-          }
-        }) }}
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button',
+              'formaction': SAVE_AND_BACK_URL
+            }
+          }) }}
+        </div>
       </div>
     </div>
 

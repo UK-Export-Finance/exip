@@ -11,7 +11,7 @@ import mapAndSave from '../map-and-save/business';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
-const { CREDIT_CONTROL } = BUSINESS_FIELD_IDS;
+const { HAS_CREDIT_CONTROL } = BUSINESS_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
@@ -36,7 +36,7 @@ describe('controllers/insurance/business/credit-control', () => {
 
   describe('FIELD_ID', () => {
     it('should have the correct ID', () => {
-      const expected = CREDIT_CONTROL;
+      const expected = HAS_CREDIT_CONTROL;
 
       expect(FIELD_ID).toEqual(expected);
     });
@@ -45,7 +45,7 @@ describe('controllers/insurance/business/credit-control', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: BUSINESS_FIELD_IDS.CREDIT_CONTROL,
+        FIELD_ID: BUSINESS_FIELD_IDS.HAS_CREDIT_CONTROL,
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL,
         SAVE_AND_BACK_URL: '',
       };
@@ -70,6 +70,7 @@ describe('controllers/insurance/business/credit-control', () => {
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),
+        application: res.locals.application?.business,
       });
     });
 

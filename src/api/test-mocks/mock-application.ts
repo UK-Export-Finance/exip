@@ -102,6 +102,7 @@ export const mockBusiness = {
   totalEmployeesUK: 400,
   estimatedAnnualTurnover: 155220,
   exportsTurnoverPercentage: 20,
+  hasCreditControlProcess: true,
 };
 
 export const mockBroker = {
