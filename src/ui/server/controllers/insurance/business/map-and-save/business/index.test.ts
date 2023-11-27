@@ -1,6 +1,6 @@
 import mapAndSave from '.';
 import save from '../../save-data/business';
-import mapNatureOfBusinessSubmittedData from '../../nature-of-business/map-submitted-data';
+import mapBusinessSubmittedData from '../../map-submitted-data/your-business';
 import { mockApplication } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { FIELD_IDS } from '../../../../../constants';
@@ -11,7 +11,7 @@ const {
   },
 } = FIELD_IDS.INSURANCE;
 
-describe('controllers/insurance/business/map-and-save/nature-of-business', () => {
+describe('controllers/insurance/business/map-and-save/business', () => {
   jest.mock('../../save-data/business');
 
   let mockFormBody = {
@@ -29,14 +29,14 @@ describe('controllers/insurance/business/map-and-save/nature-of-business', () =>
   describe('when the form has data', () => {
     describe('when the form has validation errors', () => {
       it('should call save.business with application, populated submitted data and validationErrors.errorList', async () => {
-        await mapAndSave.natureOfBusiness(mockFormBody, mockApplication, mockValidationErrors);
+        await mapAndSave.business(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(save.business).toHaveBeenCalledTimes(1);
-        expect(save.business).toHaveBeenCalledWith(mockApplication, mapNatureOfBusinessSubmittedData(mockFormBody), mockValidationErrors?.errorList);
+        expect(save.business).toHaveBeenCalledWith(mockApplication, mapBusinessSubmittedData(mockFormBody), mockValidationErrors?.errorList);
       });
 
       it('should return true', async () => {
-        const result = await mapAndSave.natureOfBusiness(mockFormBody, mockApplication, mockValidationErrors);
+        const result = await mapAndSave.business(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
@@ -51,15 +51,15 @@ describe('controllers/insurance/business/map-and-save/nature-of-business', () =>
       };
 
       it('should call save.business with application and populated submitted data', async () => {
-        await mapAndSave.natureOfBusiness(mockFormBody, mockApplication);
+        await mapAndSave.business(mockFormBody, mockApplication);
 
         expect(save.business).toHaveBeenCalledTimes(1);
 
-        expect(save.business).toHaveBeenCalledWith(mockApplication, mapNatureOfBusinessSubmittedData(mockFormBody));
+        expect(save.business).toHaveBeenCalledWith(mockApplication, mapBusinessSubmittedData(mockFormBody));
       });
 
       it('should return true', async () => {
-        const result = await mapAndSave.natureOfBusiness(mockFormBody, mockApplication, mockValidationErrors);
+        const result = await mapAndSave.business(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
@@ -70,7 +70,7 @@ describe('controllers/insurance/business/map-and-save/nature-of-business', () =>
     it('should return true', async () => {
       mockFormBody = { _csrf: '1234' };
 
-      const result = await mapAndSave.natureOfBusiness(mockFormBody, mockApplication, mockValidationErrors);
+      const result = await mapAndSave.business(mockFormBody, mockApplication, mockValidationErrors);
 
       expect(result).toEqual(true);
     });

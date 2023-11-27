@@ -9,7 +9,7 @@ const {
   },
 } = FIELD_IDS.INSURANCE;
 
-describe('controllers/insurance/business/map-and-save/nature-of-business - API error', () => {
+describe('controllers/insurance/business/map-and-save/-business - API error', () => {
   jest.mock('../../save-data/business');
 
   const mockFormBody = {
@@ -28,7 +28,7 @@ describe('controllers/insurance/business/map-and-save/nature-of-business - API e
     });
 
     it('should return false', async () => {
-      const result = await mapAndSave.natureOfBusiness(mockFormBody, mockApplication);
+      const result = await mapAndSave.business(mockFormBody, mockApplication);
 
       expect(result).toEqual(false);
     });
@@ -40,7 +40,7 @@ describe('controllers/insurance/business/map-and-save/nature-of-business - API e
     });
 
     it('should return false', async () => {
-      const result = await mapAndSave.natureOfBusiness(mockFormBody, mockApplication);
+      const result = await mapAndSave.business(mockFormBody, mockApplication);
 
       expect(result).toEqual(false);
     });
