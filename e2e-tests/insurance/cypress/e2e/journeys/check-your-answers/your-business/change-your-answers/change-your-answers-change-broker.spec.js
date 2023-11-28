@@ -230,7 +230,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_CHECK_AND_CHANGE, USING_BROKER });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_CHECK_AND_CHANGE, fieldId });
       });
     });
 
