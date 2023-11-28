@@ -230,6 +230,7 @@ var EXPORTER_BUSINESS = {
     ESTIMATED_ANNUAL_TURNOVER: "estimatedAnnualTurnover",
     PERCENTAGE_TURNOVER: "exportsTurnoverPercentage"
   },
+  HAS_CREDIT_CONTROL: "hasCreditControlProcess",
   BROKER: {
     HEADING: "broker",
     USING_BROKER: "isUsingBroker",
@@ -3936,7 +3937,8 @@ var {
   ALTERNATIVE_TRADING_ADDRESS,
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-  BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL4 }
+  BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL4 },
+  HAS_CREDIT_CONTROL
 } = EXPORTER_BUSINESS2;
 var FIELDS = {
   COMPANY_DETAILS: {
@@ -4021,6 +4023,11 @@ var FIELDS = {
       SUMMARY: {
         TITLE: "Percentage of turnover from exports"
       }
+    }
+  },
+  [HAS_CREDIT_CONTROL]: {
+    SUMMARY: {
+      TITLE: "Process for managing late payments"
     }
   },
   BROKER: {

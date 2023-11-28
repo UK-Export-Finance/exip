@@ -15,7 +15,8 @@ const { HAS_CREDIT_CONTROL } = BUSINESS_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { BROKER_ROOT, CREDIT_CONTROL_SAVE_AND_BACK: SAVE_AND_BACK },
+  EXPORTER_BUSINESS: { BROKER_ROOT, CREDIT_CONTROL_SAVE_AND_BACK: SAVE_AND_BACK, CHECK_YOUR_ANSWERS, COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE },
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -139,6 +140,32 @@ describe('controllers/insurance/business/credit-control', () => {
 
         const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_ROOT}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.body = validBody;
+
+          req.originalUrl = COMPANY_DETAILS_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.body = validBody;
+          req.originalUrl = COMPANY_DETAILS_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 

@@ -4,6 +4,7 @@ import generateNatureOfYourBusinessFields from './nature-of-your-business-fields
 import generateYourCompanyFields from './your-company-fields';
 import generateTurnoverFields from './turnover-fields';
 import { generateBrokerFields } from './broker-fields';
+import generateCreditControlFields from './credit-control-fields';
 import mockApplication, { mockCompany, mockBusiness, mockBroker } from '../../../test-mocks/mock-application';
 
 describe('server/helpers/summary-lists/your-business', () => {
@@ -18,6 +19,7 @@ describe('server/helpers/summary-lists/your-business', () => {
         ...generateYourCompanyFields(mockCompany, referenceNumber, checkAndChange),
         ...generateNatureOfYourBusinessFields(mockBusiness, referenceNumber, checkAndChange),
         ...generateTurnoverFields(mockBusiness, referenceNumber, checkAndChange),
+        ...generateCreditControlFields(mockBusiness, referenceNumber, checkAndChange),
         ...generateBrokerFields(mockBroker, referenceNumber, checkAndChange),
       ];
 

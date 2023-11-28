@@ -80,6 +80,11 @@ export const EXPORTER_BUSINESS_FIELDS = {
       },
     },
   },
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.HAS_CREDIT_CONTROL]: {
+    SUMMARY: {
+      TITLE: 'Process for managing late payments',
+    },
+  },
   BROKER: {
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.LEGEND]: {
       LEGEND: 'Enter contact details for your broker',

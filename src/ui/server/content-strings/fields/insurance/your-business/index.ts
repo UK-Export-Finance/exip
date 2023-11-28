@@ -8,6 +8,7 @@ const {
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
   TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   BROKER: { LEGEND, USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN, EMAIL },
+  HAS_CREDIT_CONTROL,
 } = EXPORTER_BUSINESS;
 
 export const FIELDS = {
@@ -79,6 +80,11 @@ export const FIELDS = {
       SUMMARY: {
         TITLE: 'Percentage of turnover from exports',
       },
+    },
+  },
+  [HAS_CREDIT_CONTROL]: {
+    SUMMARY: {
+      TITLE: 'Process for managing late payments',
     },
   },
   BROKER: {
