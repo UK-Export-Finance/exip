@@ -11,7 +11,7 @@ import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { BROKER_ROOT },
+  EXPORTER_BUSINESS: { BROKER_ROOT, CREDIT_CONTROL_SAVE_AND_BACK: SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -24,7 +24,6 @@ export const TEMPLATE = TEMPLATES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL;
 export const PAGE_VARIABLES = {
   FIELD_ID,
   PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL,
-  SAVE_AND_BACK_URL: '',
 };
 
 /**
@@ -42,6 +41,8 @@ export const get = (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    const { referenceNumber } = application;
+
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({
         ...PAGE_VARIABLES,
@@ -49,6 +50,7 @@ export const get = (req: Request, res: Response) => {
       }),
       userName: getUserNameFromSession(req.session.user),
       application: application.business,
+      SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
     });
   } catch (err) {
     console.error('Error getting credit control %O', err);
@@ -86,6 +88,7 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         validationErrors,
         submittedValues: payload,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
       });
     }
 
