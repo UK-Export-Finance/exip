@@ -15,9 +15,11 @@ const { HAS_CREDIT_CONTROL } = BUSINESS_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { BROKER_ROOT },
+  EXPORTER_BUSINESS: { BROKER_ROOT, CREDIT_CONTROL_SAVE_AND_BACK: SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
+
+const { referenceNumber } = mockApplication;
 
 jest.mock('../map-and-save/business');
 
@@ -47,7 +49,6 @@ describe('controllers/insurance/business/credit-control', () => {
       const expected = {
         FIELD_ID: BUSINESS_FIELD_IDS.HAS_CREDIT_CONTROL,
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL,
-        SAVE_AND_BACK_URL: '',
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -71,6 +72,7 @@ describe('controllers/insurance/business/credit-control', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         application: res.locals.application?.business,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
       });
     });
 
@@ -112,6 +114,7 @@ describe('controllers/insurance/business/credit-control', () => {
           userName: getUserNameFromSession(req.session.user),
           validationErrors,
           submittedValues: payload,
+          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
         });
       });
     });

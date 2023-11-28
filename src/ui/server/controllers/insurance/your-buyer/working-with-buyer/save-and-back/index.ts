@@ -8,7 +8,7 @@ import { Request, Response } from '../../../../../../types';
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 /**
- * saves and goes back to all sections from working with buyer page unless there are database errors
+ * saves and goes back to all sections from working with buyer page unless there are API errors
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} redirects to all sections page on success
