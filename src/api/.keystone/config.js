@@ -1233,7 +1233,8 @@ var lists = {
       totalYearsExporting: (0, import_fields.integer)(),
       totalEmployeesUK: (0, import_fields.integer)(),
       estimatedAnnualTurnover: (0, import_fields.integer)(),
-      exportsTurnoverPercentage: (0, import_fields.integer)()
+      exportsTurnoverPercentage: (0, import_fields.integer)(),
+      hasCreditControlProcess: nullable_checkbox_default()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

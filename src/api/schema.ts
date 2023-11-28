@@ -456,6 +456,7 @@ export const lists = {
       totalEmployeesUK: integer(),
       estimatedAnnualTurnover: integer(),
       exportsTurnoverPercentage: integer(),
+      hasCreditControlProcess: nullableCheckbox(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

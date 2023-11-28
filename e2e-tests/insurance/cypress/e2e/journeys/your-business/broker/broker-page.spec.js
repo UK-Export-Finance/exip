@@ -62,7 +62,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
-      cy.completeAndSubmitCreditControlForm();
+      cy.completeAndSubmitCreditControlForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;

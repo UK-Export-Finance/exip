@@ -1,26 +1,32 @@
 import partials from '../../../../../../partials';
-import { field as fieldSelector, saveAndBackButton } from '../../../../../../pages/shared';
-import { PAGES, BUTTONS } from '../../../../../../content-strings';
-import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
+import {
+  submitButton,
+  saveAndBackButton,
+  yesRadioInput,
+  yesRadio,
+  noRadio,
+} from '../../../../../../pages/shared';
+import { BUTTONS, ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
+import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/business';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL;
 
-const { CREDIT_CONTROL: FIELD_ID } = FIELD_IDS;
+const { HAS_CREDIT_CONTROL: FIELD_ID } = FIELD_IDS;
 
 const {
   ROOT,
   EXPORTER_BUSINESS: {
     BROKER_ROOT,
     CREDIT_CONTROL,
-    TURNOVER,
+    TURNOVER_ROOT,
   },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your business - Credit control page', () => {
+context('Insurance - Your business - Credit control page - answer `yes` - As an Exporter, I want to provide our late payment process  So that UKEF can have clarity on our credit control', () => {
   let referenceNumber;
   let url;
   let brokerUrl;
@@ -30,7 +36,6 @@ context('Insurance - Your business - Credit control page', () => {
       referenceNumber = refNumber;
 
       cy.startYourBusinessSection();
-
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
@@ -54,7 +59,7 @@ context('Insurance - Your business - Credit control page', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${CREDIT_CONTROL}`,
-      backLink: `${ROOT}/${referenceNumber}${TURNOVER}`,
+      backLink: `${ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
     });
   });
 
@@ -67,33 +72,61 @@ context('Insurance - Your business - Credit control page', () => {
       cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it(`should display ${FIELD_ID} label and input`, () => {
-      const fieldId = FIELD_ID;
-      const field = fieldSelector(fieldId);
+    it('renders a `yes` radio button', () => {
+      yesRadio().input().should('exist');
 
-      field.textarea().should('exist');
-      cy.checkText(field.label(), FIELDS[fieldId].LABEL);
+      cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
+
+      cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });
 
-    it('should display save and go back button', () => {
+    it('renders a `no` radio button', () => {
+      cy.checkText(noRadio().label(), FIELD_VALUES.NO);
+
+      cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
+    });
+
+    it('renders a `save and back` button', () => {
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${BROKER_ROOT}`, () => {
-      cy.navigateToUrl(url);
+    describe('when submitting an empty form', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-      cy.completeAndSubmitCreditControlForm();
+        submitButton().click();
+      });
 
-      cy.assertUrl(brokerUrl);
+      it('should render validation errors', () => {
+        const expectedErrorsCount = 1;
+
+        cy.submitAndAssertRadioErrors(
+          yesRadio(FIELD_ID),
+          0,
+          expectedErrorsCount,
+          ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_ID].IS_EMPTY,
+        );
+      });
+    });
+
+    describe('when submitting the answer as `yes`', () => {
+      it(`should redirect to ${BROKER_ROOT}`, () => {
+        cy.navigateToUrl(url);
+
+        cy.completeAndSubmitCreditControlForm({});
+
+        cy.assertUrl(brokerUrl);
+      });
     });
   });
 
-  // describe('when going back to the page', () => {
-  //   it('should have the submitted values', () => {
-  //     cy.navigateToUrl(url);
-  //     yesRadioInput().should('be.checked');
-  //   });
-  // });
+  describe('when going back to the page', () => {
+    it('should have the submitted values', () => {
+      cy.navigateToUrl(url);
+
+      yesRadioInput().should('be.checked');
+    });
+  });
 });

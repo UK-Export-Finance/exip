@@ -122,7 +122,7 @@ export const ERROR_MESSAGES = {
         BELOW_MINIMUM: 'Your percentage of turnover from exports must be a number between 0 to 100',
         ABOVE_MAXIMUM: 'Your percentage of turnover from exports must be a number between 0 to 100',
       },
-      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL]: {
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.HAS_CREDIT_CONTROL]: {
         IS_EMPTY: 'Select if you have a process for dealing with late payments',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.USING_BROKER]: {

@@ -1,21 +1,21 @@
 import hasFormData from '../../../../../helpers/has-form-data';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
-import mapNatureOfBusinessSubmittedData from '../../nature-of-business/map-submitted-data';
+import mapBusinessSubmittedData from '../../map-submitted-data/your-business';
 import save from '../../save-data/business';
 
 /**
- * maps nature of business request and calls save function
+ * maps business data and calls save function
  * returns true or false based on response from save function
  * @param {RequestBody} formBody
  * @param {Object} application
  * @param {Object} validationErrors
  * @returns {Boolean}
  */
-const natureOfBusiness = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
+const business = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
       // maps through formBody and puts fields in correct format
-      const dataToSave = mapNatureOfBusinessSubmittedData(formBody);
+      const dataToSave = mapBusinessSubmittedData(formBody);
       let saveResponse;
 
       if (validationErrors) {
@@ -38,4 +38,4 @@ const natureOfBusiness = async (formBody: RequestBody, application: Application,
   }
 };
 
-export default { natureOfBusiness };
+export default { business };

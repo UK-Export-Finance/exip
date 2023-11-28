@@ -48,7 +48,7 @@ const completePrepareYourApplicationSectionSingle = ({
 
   cy.completeAndSubmitNatureOfYourBusiness();
   cy.completeAndSubmitTurnoverForm();
-  cy.completeAndSubmitCreditControlForm();
+  cy.completeAndSubmitCreditControlForm({});
   cy.completeAndSubmitBrokerForm({ usingBroker });
 
   submitButton().click();

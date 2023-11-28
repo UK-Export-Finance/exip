@@ -214,6 +214,7 @@ jobs:
             "your-business/company-details/**/*.spec.js",
             "your-business/nature-of-business/**/*.spec.js",
             "your-business/turnover/**/*.spec.js",
+            "your-business/credit-control/**/*.spec.js",
             "your-buyer/**/*.spec.js",
           ]
 

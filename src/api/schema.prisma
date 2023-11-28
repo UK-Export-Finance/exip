@@ -200,6 +200,7 @@ model Business {
   totalEmployeesUK          Int?
   estimatedAnnualTurnover   Int?
   exportsTurnoverPercentage Int?
+  hasCreditControlProcess   Boolean?
   from_Application_business Application[] @relation("Application_business")
 
   @@index([applicationId])
