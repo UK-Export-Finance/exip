@@ -33,4 +33,17 @@ describe('server/helpers/generate-change-link', () => {
       expect(response).toEqual(expected);
     });
   });
+
+  describe('when isInsuranceEligibility is set to true', () => {
+    it('should return a url the original route and anchortag only', () => {
+      const checkAndChange = false;
+      const isInsuranceEligibility = true;
+
+      const response = generateChangeLink(route, routeCheckAndChange, anchorTag, referenceNumber, checkAndChange, isInsuranceEligibility);
+
+      const expected = `${route}${anchorTag}`;
+
+      expect(response).toEqual(expected);
+    });
+  });
 });

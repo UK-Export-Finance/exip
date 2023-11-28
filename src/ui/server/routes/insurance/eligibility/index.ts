@@ -31,14 +31,20 @@ insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE, 
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION, exporterLocationGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION, exporterLocationPost);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION_CHANGE, exporterLocationGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION_CHANGE, exporterLocationPost);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER, companiesHouseNumberGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER, companiesHouseNumberPost);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER_CHANGE, companiesHouseNumberGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER_CHANGE, companiesHouseNumberPost);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER, noCompaniesHouseNumberGet);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER, companiesHouseSearchGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER, companiesHouseSearchPost);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER_CHANGE, companiesHouseSearchGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER_CHANGE, companiesHouseSearchPost);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_UNAVAILABLE, companiesHouseUnavailableGet);
 
@@ -46,23 +52,35 @@ insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.COMPANY_NOT_ACTIVE, 
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.COMPANY_DETAILS, companyDetailsGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.COMPANY_DETAILS, companyDetailsPost);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.COMPANY_DETAILS_CHANGE, companyDetailsGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.COMPANY_DETAILS_CHANGE, companyDetailsPost);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, buyerCountryGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY, buyerCountryPost);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY_CHANGE, buyerCountryGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.BUYER_COUNTRY_CHANGE, buyerCountryPost);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED, totalValueInsuredGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED, totalValueInsuredPost);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED_CHANGE, totalValueInsuredGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED_CHANGE, totalValueInsuredPost);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD, coverPeriodGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD, coverPeriodPost);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD_CHANGE, coverPeriodGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD_CHANGE, coverPeriodPost);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER, longTermCoverGet);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, ukGoodsOrServicesGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, ukGoodsOrServicesPost);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES_CHANGE, ukGoodsOrServicesPost);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER, endBuyerGet);
 insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER, endBuyerPost);
+insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER_CHANGE, endBuyerGet);
+insuranceEligibilityRouter.post(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER_CHANGE, endBuyerPost);
 
 insuranceEligibilityRouter.get(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY_MULTIPLE_RISKS, cannotApplyMultipleRisksGet);
 

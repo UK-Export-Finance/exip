@@ -7,9 +7,10 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
+import isChangeRoute from '../../../../helpers/is-change-route';
 
 const {
-  ELIGIBILITY: { ENTER_COMPANIES_HOUSE_NUMBER },
+  ELIGIBILITY: { ENTER_COMPANIES_HOUSE_NUMBER, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 export const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_COMPANIES_HOUSE_NUMBER;
@@ -54,5 +55,10 @@ export const post = (req: Request, res: Response) => {
     ...req.session.submittedData,
     insuranceEligibility: updateSubmittedData({ [FIELD_ID]: answer }, req.session.submittedData.insuranceEligibility),
   };
+
+  if (isChangeRoute(req.originalUrl)) {
+    return res.redirect(CHECK_YOUR_ANSWERS);
+  }
+
   return res.redirect(ENTER_COMPANIES_HOUSE_NUMBER);
 };

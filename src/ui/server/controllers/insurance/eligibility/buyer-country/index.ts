@@ -1,5 +1,6 @@
 import { PAGES } from '../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { FIELD_IDS, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import api from '../../../../api';
 import { objectHasProperty } from '../../../../helpers/object';
 import { isPopulatedArray } from '../../../../helpers/array';
@@ -12,6 +13,7 @@ import getCountryByName from '../../../../helpers/get-country-by-name';
 import mapSubmittedEligibilityCountry from '../../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
+import isChangeRoute from '../../../../helpers/is-change-route';
 
 export const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
@@ -22,7 +24,11 @@ export const PAGE_VARIABLES = {
 
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.BUYER_COUNTRY;
 
-const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
+const {
+  PROBLEM_WITH_SERVICE,
+  APPLY_OFFLINE,
+  ELIGIBILITY: { CANNOT_APPLY: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, CHECK_YOUR_ANSWERS },
+} = INSURANCE_ROUTES;
 
 export const get = async (req: Request, res: Response) => {
   try {
@@ -94,7 +100,7 @@ export const post = async (req: Request, res: Response) => {
     const country = getCountryByName(countries, submittedCountryName);
 
     if (!country) {
-      return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+      return res.redirect(CANNOT_APPLY_ROUTE);
     }
 
     if (country.canApplyForInsuranceOnline) {
@@ -105,7 +111,11 @@ export const post = async (req: Request, res: Response) => {
         insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
       };
 
-      return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED);
+      if (isChangeRoute(req.originalUrl)) {
+        return res.redirect(CHECK_YOUR_ANSWERS);
+      }
+
+      return res.redirect(TOTAL_VALUE_INSURED);
     }
 
     if (country.canApplyForInsuranceOffline) {
@@ -116,7 +126,7 @@ export const post = async (req: Request, res: Response) => {
         insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
       };
 
-      return res.redirect(ROUTES.INSURANCE.APPLY_OFFLINE);
+      return res.redirect(APPLY_OFFLINE);
     }
 
     if (country.noInsuranceSupport) {
@@ -134,7 +144,7 @@ export const post = async (req: Request, res: Response) => {
 
       req.flash('exitReason', reason);
 
-      return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+      return res.redirect(CANNOT_APPLY_ROUTE);
     }
   } catch (err) {
     console.error('Error posting insurance - eligibility - buyer-country %O', err);

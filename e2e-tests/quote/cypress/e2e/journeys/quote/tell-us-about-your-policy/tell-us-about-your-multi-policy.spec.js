@@ -43,7 +43,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
   before(() => {
     cy.login();
 
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();

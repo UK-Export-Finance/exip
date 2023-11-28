@@ -31,7 +31,7 @@ context('Tell us about the policy you need page - form validation', () => {
     before(() => {
       cy.login();
 
-      completeAndSubmitBuyerCountryForm();
+      completeAndSubmitBuyerCountryForm({});
       completeAndSubmitBuyerBodyForm();
       completeAndSubmitExporterLocationForm();
       completeAndSubmitUkContentForm();

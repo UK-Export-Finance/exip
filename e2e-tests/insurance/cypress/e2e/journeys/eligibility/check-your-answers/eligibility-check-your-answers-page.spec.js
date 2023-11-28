@@ -41,7 +41,7 @@ context('Insurance - Eligibility - as an exporter, I want to confirm my selectio
     cy.completeCompaniesHouseNumberForm();
     cy.completeAndSubmitCompaniesHouseSearchForm({});
     cy.completeEligibilityCompanyDetailsForm();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     cy.completeAndSubmitTotalValueInsuredForm({});
     cy.completeCoverPeriodForm({});
     cy.completeUkGoodsAndServicesForm();

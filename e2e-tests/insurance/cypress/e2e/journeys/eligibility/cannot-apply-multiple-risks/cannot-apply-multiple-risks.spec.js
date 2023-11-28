@@ -33,7 +33,7 @@ context('Insurance - Cannot apply - multiple risks page - as an exporter, I want
     cy.completeCompaniesHouseNumberForm();
     cy.completeAndSubmitCompaniesHouseSearchForm({});
     cy.completeEligibilityCompanyDetailsForm();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     cy.completeAndSubmitTotalValueInsuredForm({});
     cy.completeCoverPeriodForm({});
     cy.completeUkGoodsAndServicesForm();

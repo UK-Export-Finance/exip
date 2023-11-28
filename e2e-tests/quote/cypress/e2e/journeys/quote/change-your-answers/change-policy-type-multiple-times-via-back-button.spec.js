@@ -32,7 +32,7 @@ context('Change your answers (policy type) - multiple times via back button - as
   const completePreviousForms = () => {
     cy.login();
 
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();

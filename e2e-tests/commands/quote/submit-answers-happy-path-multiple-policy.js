@@ -8,7 +8,7 @@ import {
 } from './forms';
 
 const submitAnswersHappyPathMultiplePolicy = () => {
-  completeAndSubmitBuyerCountryForm();
+  completeAndSubmitBuyerCountryForm({});
   completeAndSubmitBuyerBodyForm();
   completeAndSubmitExporterLocationForm();
   completeAndSubmitUkContentForm();

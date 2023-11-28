@@ -7,8 +7,8 @@ const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
  * completeAndSubmitBuyerCountryForm
  * Complete and submit a buyer country form.
  */
-export const completeAndSubmitBuyerCountryForm = () => {
-  cy.keyboardInput(countryInput.field(FIELD_ID).input(), 'Alg');
+export const completeAndSubmitBuyerCountryForm = ({ country = 'Alg' }) => {
+  cy.keyboardInput(countryInput.field(FIELD_ID).input(), country);
   const results = countryInput.field(FIELD_ID).results();
   results.first().click();
   submitButton().click();

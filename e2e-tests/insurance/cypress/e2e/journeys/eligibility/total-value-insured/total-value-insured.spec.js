@@ -37,7 +37,7 @@ context('Insurance - Total value insured page - I want to enter the value that I
     cy.completeCompaniesHouseNumberForm();
     cy.completeAndSubmitCompaniesHouseSearchForm({});
     cy.completeEligibilityCompanyDetailsForm();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
 
     url = `${baseUrl}${TOTAL_VALUE_INSURED}`;
 

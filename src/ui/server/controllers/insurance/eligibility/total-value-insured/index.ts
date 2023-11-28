@@ -1,5 +1,6 @@
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { FIELD_IDS, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -7,8 +8,13 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
+import isChangeRoute from '../../../../helpers/is-change-route';
 
 export const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.TOTAL_CONTRACT_VALUE;
+
+const {
+  ELIGIBILITY: { COVER_PERIOD, CHECK_YOUR_ANSWERS },
+} = INSURANCE_ROUTES;
 
 /**
  * page variables for total value insured
@@ -71,5 +77,9 @@ export const post = (req: Request, res: Response) => {
     insuranceEligibility: updateSubmittedData({ [FIELD_ID]: answer }, req.session.submittedData.insuranceEligibility),
   };
 
-  return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.COVER_PERIOD);
+  if (isChangeRoute(req.originalUrl)) {
+    return res.redirect(CHECK_YOUR_ANSWERS);
+  }
+
+  return res.redirect(COVER_PERIOD);
 };

@@ -13,7 +13,18 @@ const { INSURANCE_ROOT } = ROUTES.INSURANCE;
  * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns
  */
-const generateChangeLink = (route: string, routeCheckAndChange: string, anchorTag: string, referenceNumber: number, checkAndChange: boolean) => {
+const generateChangeLink = (
+  route: string,
+  routeCheckAndChange: string,
+  anchorTag: string,
+  referenceNumber?: number,
+  checkAndChange?: boolean,
+  isInsuranceEligibility = false,
+) => {
+  if (isInsuranceEligibility) {
+    return `${route}${anchorTag}`;
+  }
+
   const rootUrl = `${INSURANCE_ROOT}/${referenceNumber}`;
 
   if (checkAndChange) {
