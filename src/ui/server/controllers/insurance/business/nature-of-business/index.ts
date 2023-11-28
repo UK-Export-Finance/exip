@@ -6,7 +6,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import mapAndSave from '../map-and-save/nature-of-business';
+import mapAndSave from '../map-and-save/business';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
@@ -124,8 +124,11 @@ const post = async (req: Request, res: Response) => {
       });
     }
 
-    // if no errors, then runs save api call to db
-    const saveResponse = await mapAndSave.natureOfBusiness(payload, application);
+    /**
+     * No validation errors.
+     * call mapAndSave to call the API.
+     */
+    const saveResponse = await mapAndSave.business(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

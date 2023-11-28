@@ -51,7 +51,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
-      cy.completeAndSubmitCreditControlForm();
+      cy.completeAndSubmitCreditControlForm({});
       cy.completeAndSubmitBrokerForm({ usingBroker: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;

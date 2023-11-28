@@ -7,7 +7,7 @@ import { stripCommas } from '../../../../../helpers/string';
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK } = EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS;
 
-describe('controllers/insurance/business/nature-of-business/map-submitted-data', () => {
+describe('controllers/insurance/business/map-submitted-data/your-business', () => {
   describe('when all fields are provided and all number fields contain a comma', () => {
     it('should return the formBody with the commas replaced', () => {
       const mockBody = {

@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.2.2](https://github.com/UK-Export-Finance/exip/compare/v2.2.1...v2.2.2) (2023-11-28)
+
+
+### Bug Fixes
+
+* **prs:** Rename pull request template file ([#1401](https://github.com/UK-Export-Finance/exip/issues/1401)) ([79ba810](https://github.com/UK-Export-Finance/exip/commit/79ba8105155d50f008259b9fbea3c3847084b1d6))
+
+
+### Miscellaneous
+
+* **prs:** create pull request template ([#1399](https://github.com/UK-Export-Finance/exip/issues/1399)) ([e14d3f0](https://github.com/UK-Export-Finance/exip/commit/e14d3f00f5f791bd5f752c0067883fc77ff3ad80))
+
 ## [2.2.1](https://github.com/UK-Export-Finance/exip/compare/v2.2.0...v2.2.1) (2023-11-10)
 
 

@@ -1,7 +1,7 @@
 import { TEMPLATES, ROUTES } from '../../../../../constants';
 import { FIELD_IDS } from '..';
 import generateValidationErrors from '../validation';
-import mapAndSave from '../../map-and-save/nature-of-business';
+import mapAndSave from '../../map-and-save/business';
 import constructPayload from '../../../../../helpers/construct-payload';
 import { Request, Response } from '../../../../../../types';
 
@@ -35,7 +35,7 @@ const post = async (req: Request, res: Response) => {
     const validationErrors = generateValidationErrors(payload);
 
     // runs save and go back command
-    const saveResponse = await mapAndSave.natureOfBusiness(payload, application, validationErrors);
+    const saveResponse = await mapAndSave.business(payload, application, validationErrors);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

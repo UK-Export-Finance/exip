@@ -970,6 +970,7 @@ type Business {
   totalEmployeesUK: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
+  hasCreditControlProcess: Boolean
 }
 
 input BusinessWhereUniqueInput {
@@ -1005,6 +1006,7 @@ input BusinessUpdateInput {
   totalEmployeesUK: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
+  hasCreditControlProcess: Boolean
 }
 
 input BusinessUpdateArgs {
@@ -1019,6 +1021,7 @@ input BusinessCreateInput {
   totalEmployeesUK: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
+  hasCreditControlProcess: Boolean
 }
 
 type Broker {
