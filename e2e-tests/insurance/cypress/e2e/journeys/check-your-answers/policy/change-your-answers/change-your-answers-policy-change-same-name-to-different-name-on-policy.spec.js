@@ -96,7 +96,7 @@ context('Insurance - Change your answers - Policy - Change from same name to dif
 
         cy.completeAndSubmitDifferentNameOnPolicyForm({});
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
       });
 
       describe('should render new answers and change links for different name on policy', () => {

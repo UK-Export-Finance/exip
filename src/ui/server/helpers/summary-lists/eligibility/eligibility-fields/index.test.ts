@@ -107,7 +107,7 @@ describe('server/helpers/summary-lists/eligibility/eligibility-fields', () => {
       {
         field: getFieldById(FIELDS_ELIGIBILITY, BUYER_COUNTRY),
         data: mockAnswers,
-        href: generateChangeLink(BUYER_COUNTRY_CHANGE, checkAndChangeLink, `#${BUYER_COUNTRY_CHANGE}-label`, referenceNumber, isCheckAndChange, isEligibility),
+        href: generateChangeLink(BUYER_COUNTRY_CHANGE, checkAndChangeLink, `#${BUYER_COUNTRY}-label`, referenceNumber, isCheckAndChange, isEligibility),
         renderChangeLink: true,
       },
       mockAnswers[BUYER_COUNTRY].name,

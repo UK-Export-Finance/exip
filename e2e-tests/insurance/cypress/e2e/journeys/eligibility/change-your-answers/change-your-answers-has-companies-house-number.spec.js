@@ -1,6 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import { summaryList, noRadio, submitButton } from '../../../../../../pages/shared';
 
 const { HAS_COMPANIES_HOUSE_NUMBER } = INSURANCE_FIELD_IDS.ELIGIBILITY;
@@ -18,17 +17,7 @@ context('Insurance - Eligibility - Change your answers - Has companies house num
   before(() => {
     cy.navigateToUrl(START);
 
-    cy.completeStartForm();
-    cy.completeCheckIfEligibleForm();
-    cy.completeExporterLocationForm();
-    cy.completeCompaniesHouseNumberForm();
-    cy.completeAndSubmitCompaniesHouseSearchForm({});
-    cy.completeEligibilityCompanyDetailsForm();
-    completeAndSubmitBuyerCountryForm({});
-    cy.completeAndSubmitTotalValueInsuredForm({});
-    cy.completeCoverPeriodForm({});
-    cy.completeUkGoodsAndServicesForm();
-    cy.completeEndBuyerForm();
+    cy.completeAndSubmitAllInsuranceEligibilityAnswers();
 
     cy.assertUrl(url);
   });
@@ -45,7 +34,7 @@ context('Insurance - Eligibility - Change your answers - Has companies house num
 
       summaryList.field(fieldId).changeLink().click();
 
-      cy.assertChangeAnswersPageUrl(undefined, COMPANIES_HOUSE_NUMBER_CHANGE, fieldId, undefined, true);
+      cy.assertChangeAnswersPageUrl({ route: COMPANIES_HOUSE_NUMBER_CHANGE, fieldId, isInsuranceEligibility: true });
     });
   });
 
@@ -59,7 +48,7 @@ context('Insurance - Eligibility - Change your answers - Has companies house num
     });
 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      cy.assertChangeAnswersPageUrl(undefined, CHECK_YOUR_ANSWERS, fieldId, undefined, true);
+      cy.assertChangeAnswersPageUrl({ route: CHECK_YOUR_ANSWERS, fieldId, isInsuranceEligibility: true });
     });
   });
 
@@ -74,7 +63,7 @@ context('Insurance - Eligibility - Change your answers - Has companies house num
     });
 
     it(`should redirect to ${NO_COMPANIES_HOUSE_NUMBER}`, () => {
-      cy.assertChangeAnswersPageUrl(undefined, NO_COMPANIES_HOUSE_NUMBER, fieldId, undefined, true);
+      cy.assertChangeAnswersPageUrl({ route: NO_COMPANIES_HOUSE_NUMBER, fieldId, isInsuranceEligibility: true });
     });
   });
 });

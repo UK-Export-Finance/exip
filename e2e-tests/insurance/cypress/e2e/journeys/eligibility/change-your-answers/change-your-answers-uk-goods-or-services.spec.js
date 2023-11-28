@@ -1,6 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import { summaryList, noRadio, submitButton } from '../../../../../../pages/shared';
 
 const { HAS_MINIMUM_UK_GOODS_OR_SERVICES } = INSURANCE_FIELD_IDS.ELIGIBILITY;
@@ -18,17 +17,7 @@ context('Insurance - Eligibility - Change your answers - UK goods or services - 
   before(() => {
     cy.navigateToUrl(START);
 
-    cy.completeStartForm();
-    cy.completeCheckIfEligibleForm();
-    cy.completeExporterLocationForm();
-    cy.completeCompaniesHouseNumberForm();
-    cy.completeAndSubmitCompaniesHouseSearchForm({});
-    cy.completeEligibilityCompanyDetailsForm();
-    completeAndSubmitBuyerCountryForm({});
-    cy.completeAndSubmitTotalValueInsuredForm({});
-    cy.completeCoverPeriodForm({});
-    cy.completeUkGoodsAndServicesForm();
-    cy.completeEndBuyerForm();
+    cy.completeAndSubmitAllInsuranceEligibilityAnswers();
 
     cy.assertUrl(url);
   });
@@ -45,7 +34,7 @@ context('Insurance - Eligibility - Change your answers - UK goods or services - 
 
       summaryList.field(fieldId).changeLink().click();
 
-      cy.assertChangeAnswersPageUrl(undefined, UK_GOODS_OR_SERVICES_CHANGE, fieldId, undefined, true);
+      cy.assertChangeAnswersPageUrl({ route: UK_GOODS_OR_SERVICES_CHANGE, fieldId, isInsuranceEligibility: true });
     });
   });
 
@@ -59,7 +48,7 @@ context('Insurance - Eligibility - Change your answers - UK goods or services - 
     });
 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      cy.assertChangeAnswersPageUrl(undefined, CHECK_YOUR_ANSWERS, fieldId, undefined, true);
+      cy.assertChangeAnswersPageUrl({ route: CHECK_YOUR_ANSWERS, fieldId, isInsuranceEligibility: true });
     });
   });
 
@@ -74,7 +63,7 @@ context('Insurance - Eligibility - Change your answers - UK goods or services - 
     });
 
     it(`should redirect to ${CANNOT_APPLY}`, () => {
-      cy.assertChangeAnswersPageUrl(undefined, CANNOT_APPLY, fieldId, undefined, true);
+      cy.assertChangeAnswersPageUrl({ route: CANNOT_APPLY, fieldId, isInsuranceEligibility: true });
     });
   });
 });

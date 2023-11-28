@@ -10,10 +10,17 @@ const baseUrl = Cypress.config('baseUrl');
  * @param {String} Expected route
  * @param {String} Field ID for the field that is being changed/navigated to
  * @param {String} Optional fragment suffix for the URL. E.g 'heading', 'label'. Defaults to label.
+ * @param {Boolean} isInsuranceEligibility if check answers page is insurance eligibility or not - defaults to false
  */
-const assertChangeAnswersPageUrl = (referenceNumber, route, fieldId, fragmentSuffix, isInsuranceEligibility = false) => {
+const assertChangeAnswersPageUrl = ({
+  referenceNumber, route, fieldId, fragmentSuffix, isInsuranceEligibility = false,
+}) => {
   let expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${route}`;
 
+  /**
+   * if isInsuranceEligibility, then does not need reference number
+   * route will contain the full route including INSURANCE_ROUTE
+   */
   if (isInsuranceEligibility) {
     expected = `${baseUrl}${route}`;
   }
@@ -21,6 +28,10 @@ const assertChangeAnswersPageUrl = (referenceNumber, route, fieldId, fragmentSuf
   if (fieldId) {
     expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${route}#${fieldId}`;
 
+    /**
+   * if isInsuranceEligibility, then does not need reference number
+   * route will contain the full route including INSURANCE_ROUTE and fieldId needs to be added
+   */
     if (isInsuranceEligibility) {
       expected = `${baseUrl}${route}#${fieldId}`;
     }

@@ -1,6 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import { summaryList, submitButton } from '../../../../../../pages/shared';
 import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../../../content-strings/fields/insurance/eligibility';
 
@@ -19,17 +18,7 @@ context('Insurance - Eligibility - Change your answers - Total contract value - 
   before(() => {
     cy.navigateToUrl(START);
 
-    cy.completeStartForm();
-    cy.completeCheckIfEligibleForm();
-    cy.completeExporterLocationForm();
-    cy.completeCompaniesHouseNumberForm();
-    cy.completeAndSubmitCompaniesHouseSearchForm({});
-    cy.completeEligibilityCompanyDetailsForm();
-    completeAndSubmitBuyerCountryForm({});
-    cy.completeAndSubmitTotalValueInsuredForm({});
-    cy.completeCoverPeriodForm({});
-    cy.completeUkGoodsAndServicesForm();
-    cy.completeEndBuyerForm();
+    cy.completeAndSubmitAllInsuranceEligibilityAnswers();
 
     cy.assertUrl(url);
   });
@@ -47,7 +36,7 @@ context('Insurance - Eligibility - Change your answers - Total contract value - 
 
       summaryList.field(fieldId).changeLink().click();
 
-      cy.assertChangeAnswersPageUrl(undefined, TOTAL_VALUE_INSURED_CHANGE, fieldId, undefined, true);
+      cy.assertChangeAnswersPageUrl({ route: TOTAL_VALUE_INSURED_CHANGE, fieldId, isInsuranceEligibility: true });
     });
   });
 
@@ -61,7 +50,7 @@ context('Insurance - Eligibility - Change your answers - Total contract value - 
     });
 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      cy.assertChangeAnswersPageUrl(undefined, CHECK_YOUR_ANSWERS, fieldId, undefined, true);
+      cy.assertChangeAnswersPageUrl({ route: CHECK_YOUR_ANSWERS, fieldId, isInsuranceEligibility: true });
     });
   });
 
@@ -75,7 +64,7 @@ context('Insurance - Eligibility - Change your answers - Total contract value - 
     });
 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      cy.assertChangeAnswersPageUrl(undefined, CHECK_YOUR_ANSWERS, fieldId, undefined, true);
+      cy.assertChangeAnswersPageUrl({ route: CHECK_YOUR_ANSWERS, fieldId, isInsuranceEligibility: true });
     });
 
     it('should render the new answer', () => {

@@ -21,17 +21,7 @@ context('Insurance - Eligibility - Change your answers - Buyer country - As an e
   before(() => {
     cy.navigateToUrl(START);
 
-    cy.completeStartForm();
-    cy.completeCheckIfEligibleForm();
-    cy.completeExporterLocationForm();
-    cy.completeCompaniesHouseNumberForm();
-    cy.completeAndSubmitCompaniesHouseSearchForm({});
-    cy.completeEligibilityCompanyDetailsForm();
-    completeAndSubmitBuyerCountryForm({});
-    cy.completeAndSubmitTotalValueInsuredForm({});
-    cy.completeCoverPeriodForm({});
-    cy.completeUkGoodsAndServicesForm();
-    cy.completeEndBuyerForm();
+    cy.completeAndSubmitAllInsuranceEligibilityAnswers();
 
     cy.assertUrl(url);
   });
@@ -48,7 +38,7 @@ context('Insurance - Eligibility - Change your answers - Buyer country - As an e
 
       summaryList.field(fieldId).changeLink().click();
 
-      cy.assertChangeAnswersPageUrl(undefined, BUYER_COUNTRY_CHANGE, fieldId, undefined, true);
+      cy.assertChangeAnswersPageUrl({ route: BUYER_COUNTRY_CHANGE, fieldId, isInsuranceEligibility: true });
     });
   });
 
@@ -62,7 +52,7 @@ context('Insurance - Eligibility - Change your answers - Buyer country - As an e
     });
 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      cy.assertChangeAnswersPageUrl(undefined, CHECK_YOUR_ANSWERS, fieldId, undefined, true);
+      cy.assertChangeAnswersPageUrl({ route: CHECK_YOUR_ANSWERS, fieldId, isInsuranceEligibility: true });
     });
 
     it('should render the same answer', () => {
@@ -76,11 +66,11 @@ context('Insurance - Eligibility - Change your answers - Buyer country - As an e
 
       summaryList.field(fieldId).changeLink().click();
 
-      completeAndSubmitBuyerCountryForm({ country: newCountry });
+      completeAndSubmitBuyerCountryForm({ countryName: newCountry });
     });
 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      cy.assertChangeAnswersPageUrl(undefined, CHECK_YOUR_ANSWERS, fieldId, undefined, true);
+      cy.assertChangeAnswersPageUrl({ route: CHECK_YOUR_ANSWERS, fieldId, isInsuranceEligibility: true });
     });
 
     it('should render the new answer', () => {

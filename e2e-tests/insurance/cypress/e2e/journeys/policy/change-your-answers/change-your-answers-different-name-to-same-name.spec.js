@@ -61,7 +61,7 @@ context('Insurance - Policy - Change your answers - Policy contact- As an export
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, NAME_ON_POLICY_CHANGE, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: NAME_ON_POLICY_CHANGE, fieldId });
       });
     });
 

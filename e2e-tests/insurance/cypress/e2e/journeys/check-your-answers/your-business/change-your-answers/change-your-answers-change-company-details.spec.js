@@ -110,7 +110,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
@@ -151,7 +151,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
@@ -191,7 +191,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
@@ -232,7 +232,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {

@@ -92,7 +92,7 @@ context('Insurance - Change your answers - Policy - Change from different name t
       });
 
       it(`should redirect to ${TYPE_OF_POLICY} and display new answers`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
 
         const newName = `${account[FIRST_NAME]} ${account[LAST_NAME]}`;
         const newPosition = POLICY_CONTACT[POSITION];

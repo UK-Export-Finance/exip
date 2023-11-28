@@ -62,7 +62,7 @@ context('Insurance - Policy - Change your answers - About goods or services- As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, ABOUT_GOODS_OR_SERVICES_CHANGE, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: ABOUT_GOODS_OR_SERVICES_CHANGE, fieldId });
       });
     });
 
@@ -80,7 +80,7 @@ context('Insurance - Policy - Change your answers - About goods or services- As 
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -100,7 +100,7 @@ context('Insurance - Policy - Change your answers - About goods or services- As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, ABOUT_GOODS_OR_SERVICES_CHANGE, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: ABOUT_GOODS_OR_SERVICES_CHANGE, fieldId });
       });
     });
 
@@ -116,7 +116,7 @@ context('Insurance - Policy - Change your answers - About goods or services- As 
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
