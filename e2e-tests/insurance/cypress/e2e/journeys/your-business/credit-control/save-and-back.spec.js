@@ -95,7 +95,6 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
       cy.assertUrl(allSectionsUrl);
     });
 
-    // TODO is the task name the same?
     it(`should retain the status of task 'your business' as '${IN_PROGRESS}'`, () => {
       cy.navigateToUrl(allSectionsUrl);
 
