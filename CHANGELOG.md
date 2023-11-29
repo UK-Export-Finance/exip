@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.3](https://github.com/UK-Export-Finance/exip/compare/v2.2.2...v2.2.3) (2023-11-28)
+
+
+### Bug Fixes
+
+* **prs:** update pull request template emojis ([6519b10](https://github.com/UK-Export-Finance/exip/commit/6519b106fab3d31823298c754128a25840f7415b))
+
 ## [2.2.2](https://github.com/UK-Export-Finance/exip/compare/v2.2.1...v2.2.2) (2023-11-28)
 
 
