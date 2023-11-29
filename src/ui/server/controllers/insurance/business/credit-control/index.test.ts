@@ -1,5 +1,6 @@
 import { FIELD_ID, TEMPLATE, PAGE_VARIABLES, get, post } from '.';
 import { ERROR_MESSAGES, PAGES } from '../../../../content-strings';
+import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
@@ -71,6 +72,7 @@ describe('controllers/insurance/business/credit-control', () => {
           ...PAGE_VARIABLES,
           BACK_LINK: req.headers.referer,
         }),
+        FIELD_HINT: FIELDS[FIELD_ID].HINT,
         userName: getUserNameFromSession(req.session.user),
         application: res.locals.application?.business,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
@@ -112,6 +114,7 @@ describe('controllers/insurance/business/credit-control', () => {
             ...PAGE_VARIABLES,
             BACK_LINK: req.headers.referer,
           }),
+          FIELD_HINT: FIELDS[FIELD_ID].HINT,
           userName: getUserNameFromSession(req.session.user),
           validationErrors,
           submittedValues: payload,

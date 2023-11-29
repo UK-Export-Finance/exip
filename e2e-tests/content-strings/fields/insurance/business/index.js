@@ -81,6 +81,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
     },
   },
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.HAS_CREDIT_CONTROL]: {
+    HINT: 'These are often called credit control processes. They may be managed by your legal or financial team.',
     SUMMARY: {
       TITLE: 'Process for managing late payments',
     },
