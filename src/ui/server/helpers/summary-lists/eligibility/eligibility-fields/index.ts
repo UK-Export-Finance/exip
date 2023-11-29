@@ -39,7 +39,7 @@ const {
 const isCheckAndChange = false;
 const referenceNumber = undefined;
 const checkAndChangeLink = '';
-const isEligibility = true;
+const isInsuranceEligibility = true;
 
 /**
  * generateEligibilityFields
@@ -65,7 +65,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
           `#${VALID_EXPORTER_LOCATION}-label`,
           referenceNumber,
           isCheckAndChange,
-          isEligibility,
+          isInsuranceEligibility,
         ),
         renderChangeLink: true,
       },
@@ -81,7 +81,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
           `#${HAS_COMPANIES_HOUSE_NUMBER}-label`,
           referenceNumber,
           isCheckAndChange,
-          isEligibility,
+          isInsuranceEligibility,
         ),
         renderChangeLink: true,
       },
@@ -97,7 +97,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
           `#${COMPANY_NUMBER}-label`,
           referenceNumber,
           isCheckAndChange,
-          isEligibility,
+          isInsuranceEligibility,
         ),
         renderChangeLink: true,
       },
@@ -115,7 +115,14 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
       {
         field: getFieldById(FIELDS_ELIGIBILITY, BUYER_COUNTRY),
         data: answers,
-        href: generateChangeLink(BUYER_COUNTRY_CHANGE, checkAndChangeLink, `#${BUYER_COUNTRY}-label`, referenceNumber, isCheckAndChange, isEligibility),
+        href: generateChangeLink(
+          BUYER_COUNTRY_CHANGE,
+          checkAndChangeLink,
+          `#${BUYER_COUNTRY}-label`,
+          referenceNumber,
+          isCheckAndChange,
+          isInsuranceEligibility,
+        ),
         renderChangeLink: true,
       },
       answers[BUYER_COUNTRY].name,
@@ -130,7 +137,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
           `#${TOTAL_CONTRACT_VALUE}-label`,
           referenceNumber,
           isCheckAndChange,
-          isEligibility,
+          isInsuranceEligibility,
         ),
         renderChangeLink: true,
       },
@@ -140,7 +147,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
       {
         field: getFieldById(FIELDS_ELIGIBILITY, COVER_PERIOD),
         data: answers,
-        href: generateChangeLink(COVER_PERIOD_CHANGE, checkAndChangeLink, `#${COVER_PERIOD}-label`, referenceNumber, isCheckAndChange, isEligibility),
+        href: generateChangeLink(COVER_PERIOD_CHANGE, checkAndChangeLink, `#${COVER_PERIOD}-label`, referenceNumber, isCheckAndChange, isInsuranceEligibility),
         renderChangeLink: true,
       },
       mapCoverPeriodField(answers[COVER_PERIOD]),
@@ -155,7 +162,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
           `#${HAS_MINIMUM_UK_GOODS_OR_SERVICES}-label`,
           referenceNumber,
           isCheckAndChange,
-          isEligibility,
+          isInsuranceEligibility,
         ),
         renderChangeLink: true,
       },
@@ -165,7 +172,7 @@ const generateEligibilityFields = (answers: InsuranceEligibility) => {
       {
         field: getFieldById(FIELDS_ELIGIBILITY, HAS_END_BUYER),
         data: answers,
-        href: generateChangeLink(END_BUYER_CHANGE, checkAndChangeLink, `#${HAS_END_BUYER}-label`, referenceNumber, isCheckAndChange, isEligibility),
+        href: generateChangeLink(END_BUYER_CHANGE, checkAndChangeLink, `#${HAS_END_BUYER}-label`, referenceNumber, isCheckAndChange, isInsuranceEligibility),
         renderChangeLink: true,
       },
       mapYesNoField(answers[HAS_END_BUYER]),
