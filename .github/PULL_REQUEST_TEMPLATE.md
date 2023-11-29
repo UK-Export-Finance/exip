@@ -1,14 +1,14 @@
-## Introduction :pencil:
+## Introduction :pencil2:
 
 Include a summary of the changes and related feature(s) or issue(s).
 
-## Resolution :checkmark:
+## Resolution :heavy_check_mark:
 
 List all changes made to the codebase.
 
 -
 
-## Miscellaneous :plus:
+## Miscellaneous :heavy_plus_sign:
 
 List any additional fixes or improvements.
 
